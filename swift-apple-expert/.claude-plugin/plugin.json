@@ -1,25 +1,9 @@
 {
   "name": "swift-apple-expert",
+  "description": "Expert Swift 6 + SwiftUI for all Apple platforms with @Observable, actors, and best practices",
   "version": "1.0.0",
-  "description": "Expert Swift & SwiftUI development for all Apple platforms (iOS, macOS, iPadOS, watchOS, visionOS). Includes architecture patterns, concurrency, navigation, data persistence, testing, and performance optimization.",
   "author": {
-    "name": "Fusengine"
-  },
-  "agents": [
-    "./agents/swift-expert.md"
-  ],
-  "skills": [
-    "./skills/swiftui-components",
-    "./skills/swift-architecture",
-    "./skills/swift-concurrency",
-    "./skills/swiftui-navigation",
-    "./skills/swiftui-data",
-    "./skills/apple-platforms",
-    "./skills/swiftui-testing",
-    "./skills/swift-performance",
-    "./skills/swift-i18n",
-    "./skills/swift-app-icons",
-    "./skills/swift-build",
-    "./skills/solid-swift"
-  ]
+    "name": "Fusengine",
+    "email": "contact@fusengine.dev"
+  }
 }

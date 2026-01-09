@@ -1,17 +1,9 @@
 {
   "name": "nextjs-expert",
+  "description": "Expert Next.js 16 + React 19 with App Router, Server Components, Prisma 7, and Better Auth",
   "version": "1.0.0",
-  "description": "Expert Next.js 16+ avec App Router, Server Components, Prisma 7, Better Auth",
   "author": {
-    "name": "Fusengine"
-  },
-  "agents": [
-    "./agents/nextjs-expert.md"
-  ],
-  "skills": [
-    "./skills/nextjs-16",
-    "./skills/prisma-7",
-    "./skills/better-auth",
-    "./skills/solid-nextjs"
-  ]
+    "name": "Fusengine",
+    "email": "contact@fusengine.dev"
+  }
 }

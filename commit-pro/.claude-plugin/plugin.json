@@ -1,26 +1,9 @@
 {
   "name": "commit-pro",
+  "description": "Professional git commits with Conventional Commits, auto-detection, and security validation",
   "version": "1.2.1",
-  "description": "Professional git commits following Conventional Commits standard with smart auto-detection and security validation",
   "author": {
-    "name": "Fusengine"
-  },
-  "agents": [
-    "./agents/commit-detector.md"
-  ],
-  "commands": [
-    "./commands/commit.md",
-    "./commands/feat.md",
-    "./commands/fix.md",
-    "./commands/docs.md",
-    "./commands/refactor.md",
-    "./commands/test.md",
-    "./commands/chore.md",
-    "./commands/wip.md",
-    "./commands/amend.md",
-    "./commands/undo.md"
-  ],
-  "skills": [
-    "./skills/commit-detection"
-  ]
+    "name": "Fusengine",
+    "email": "contact@fusengine.dev"
+  }
 }
