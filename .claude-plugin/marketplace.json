@@ -1,9 +1,12 @@
 {
 	"name": "fusengine-plugins",
-	"description": "Collection of professional Claude Code plugins for enhanced development workflows",
 	"owner": {
 		"name": "Fusengine",
 		"url": "https://github.com/fusengine"
+	},
+	"metadata": {
+		"description": "Professional Claude Code plugins with APEX workflow, SOLID principles, and expert development agents for Laravel, Next.js, and Swift",
+		"version": "1.0.0"
 	},
 	"plugins": [
 		{
@@ -11,28 +14,177 @@
 			"source": "./commit-pro",
 			"description": "Professional git commits with Conventional Commits, auto-detection, and security validation",
 			"version": "1.2.1",
-			"keywords": ["git", "commit", "conventional-commits"]
+			"author": {
+				"name": "Fusengine",
+				"url": "https://github.com/fusengine"
+			},
+			"license": "MIT",
+			"keywords": ["git", "commit", "conventional-commits", "security"],
+			"category": "workflows",
+			"strict": false,
+			"commands": [
+				"./commands/commit.md",
+				"./commands/feat.md",
+				"./commands/fix.md",
+				"./commands/docs.md",
+				"./commands/refactor.md",
+				"./commands/test.md",
+				"./commands/chore.md",
+				"./commands/wip.md",
+				"./commands/amend.md",
+				"./commands/undo.md"
+			],
+			"agents": [
+				"./agents/commit-detector.md"
+			],
+			"skills": [
+				"./skills/commit-detection"
+			]
 		},
 		{
 			"name": "laravel-expert",
 			"source": "./laravel-expert",
-			"description": "Expert Laravel 12 + PHP 8.5 with SOLID principles, Eloquent, Livewire, and comprehensive documentation",
+			"description": "Expert Laravel 12 + PHP 8.5 with SOLID principles, Eloquent, Livewire, Blade, and comprehensive documentation",
 			"version": "1.1.0",
-			"keywords": ["laravel", "php", "eloquent", "livewire", "blade", "api", "solid"]
+			"author": {
+				"name": "Fusengine",
+				"url": "https://github.com/fusengine"
+			},
+			"license": "MIT",
+			"keywords": ["laravel", "php", "eloquent", "livewire", "blade", "api", "solid", "cashier"],
+			"category": "development",
+			"strict": false,
+			"agents": [
+				"./agents/laravel-expert.md"
+			],
+			"skills": [
+				"./skills/laravel-architecture",
+				"./skills/laravel-eloquent",
+				"./skills/laravel-api",
+				"./skills/laravel-auth",
+				"./skills/laravel-testing",
+				"./skills/laravel-queues",
+				"./skills/laravel-livewire",
+				"./skills/laravel-blade",
+				"./skills/laravel-migrations",
+				"./skills/laravel-billing",
+				"./skills/solid-php"
+			]
 		},
 		{
 			"name": "nextjs-expert",
 			"source": "./nextjs-expert",
 			"description": "Expert Next.js 16 + React 19 with App Router, Server Components, Prisma 7, Better Auth, and modular architecture",
 			"version": "1.0.0",
-			"keywords": ["nextjs", "react", "typescript", "prisma", "better-auth", "solid"]
+			"author": {
+				"name": "Fusengine",
+				"url": "https://github.com/fusengine"
+			},
+			"license": "MIT",
+			"keywords": ["nextjs", "react", "typescript", "prisma", "better-auth", "solid", "server-components"],
+			"category": "development",
+			"strict": false,
+			"agents": [
+				"./agents/nextjs-expert.md"
+			],
+			"skills": [
+				"./skills/nextjs-16",
+				"./skills/prisma-7",
+				"./skills/better-auth",
+				"./skills/solid-nextjs"
+			]
 		},
 		{
 			"name": "swift-apple-expert",
 			"source": "./swift-apple-expert",
 			"description": "Expert Swift 6 + SwiftUI for all Apple platforms with @Observable, actors, and WWDC 2025 best practices",
 			"version": "1.0.0",
-			"keywords": ["swift", "swiftui", "ios", "macos", "visionos", "apple", "solid"]
+			"author": {
+				"name": "Fusengine",
+				"url": "https://github.com/fusengine"
+			},
+			"license": "MIT",
+			"keywords": ["swift", "swiftui", "ios", "macos", "visionos", "watchos", "apple", "solid"],
+			"category": "development",
+			"strict": false,
+			"agents": [
+				"./agents/swift-expert.md"
+			],
+			"skills": [
+				"./skills/swiftui-components",
+				"./skills/swift-architecture",
+				"./skills/swift-concurrency",
+				"./skills/swiftui-navigation",
+				"./skills/swiftui-data",
+				"./skills/apple-platforms",
+				"./skills/swiftui-testing",
+				"./skills/swift-performance",
+				"./skills/swift-i18n",
+				"./skills/swift-app-icons",
+				"./skills/swift-build",
+				"./skills/solid-swift"
+			]
+		},
+		{
+			"name": "apex-solid",
+			"source": "./apex-solid",
+			"description": "SOLID principles enforcement with automatic project detection and validation hooks for all languages",
+			"version": "1.0.0",
+			"author": {
+				"name": "Fusengine",
+				"url": "https://github.com/fusengine"
+			},
+			"license": "MIT",
+			"keywords": ["solid", "architecture", "validation", "hooks", "multi-language", "nextjs", "laravel", "swift", "go", "python", "rust"],
+			"category": "quality",
+			"strict": false,
+			"agents": [
+				"./agents/solid-orchestrator.md"
+			],
+			"skills": [
+				"./skills/solid-detection"
+			]
+		},
+		{
+			"name": "apex-agents",
+			"source": "./apex-agents",
+			"description": "APEX workflow agents: sniper (code quality), research-expert, explore-codebase, seo-expert, websearch. Methodology: Analyze → Plan → Execute → eXamine",
+			"version": "1.0.0",
+			"author": {
+				"name": "Fusengine",
+				"url": "https://github.com/fusengine"
+			},
+			"license": "MIT",
+			"keywords": ["agents", "apex", "sniper", "research", "explore", "seo", "workflow", "code-quality"],
+			"category": "workflows",
+			"strict": false,
+			"commands": [
+				"./commands/apex.md",
+				"./commands/commit.md",
+				"./commands/epct.md",
+				"./commands/deep-code-analysis.md",
+				"./commands/explain-architecture.md",
+				"./commands/create-pull-request.md",
+				"./commands/fix-pr-comments.md",
+				"./commands/run-tasks.md",
+				"./commands/watch-ci.md",
+				"./commands/cleanup-context.md",
+				"./commands/prisma-optimize.md"
+			],
+			"agents": [
+				"./agents/sniper.md",
+				"./agents/sniper-faster.md",
+				"./agents/research-expert.md",
+				"./agents/explore-codebase.md",
+				"./agents/seo-expert.md",
+				"./agents/websearch.md"
+			],
+			"skills": [
+				"./skills/code-quality",
+				"./skills/research",
+				"./skills/exploration",
+				"./skills/seo"
+			]
 		}
 	]
 }

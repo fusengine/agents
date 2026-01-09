@@ -20,6 +20,8 @@ A collection of professional Claude Code plugins for enhanced development workfl
 | [laravel-expert](./laravel-expert) | 1.1.0 | Expert Laravel 12 + PHP 8.5 with SOLID |
 | [nextjs-expert](./nextjs-expert) | 1.0.0 | Expert Next.js 16 + React 19 with modular architecture |
 | [swift-apple-expert](./swift-apple-expert) | 1.0.0 | Expert Swift 6 + SwiftUI for Apple platforms |
+| [apex-solid](./apex-solid) | 1.0.0 | SOLID enforcement with auto-detection hooks |
+| [apex-agents](./apex-agents) | 1.0.0 | APEX agents: sniper, research, explore, experts |
 
 ## Plugins
 
@@ -79,6 +81,46 @@ Expert Swift 6 + SwiftUI for all Apple platforms.
 
 ```bash
 /plugin install swift-apple-expert@fusengine-plugins
+```
+
+### apex-solid
+
+SOLID principles enforcement with automatic hooks.
+
+**Features:**
+
+- Auto-detects project type (Next.js, Laravel, Swift, Go, Python, Rust)
+- Blocks interfaces in wrong locations (PreToolUse hook)
+- Warns on file size violations (PostToolUse hook)
+- Works with all expert plugins
+
+**Hooks:**
+| Hook | Action |
+|------|--------|
+| SessionStart | Detect project type |
+| PreToolUse | Validate interface locations |
+| PostToolUse | Check file size limits |
+
+```bash
+/plugin install apex-solid@fusengine-plugins
+```
+
+### apex-agents
+
+Collection d'agents spécialisés pour le workflow APEX.
+
+**Agents:**
+- **sniper** - Code quality expert, zero-error tolerance
+- **sniper-faster** - Rapid modifications, minimal output
+- **research-expert** - Context7 + Exa documentation research
+- **explore-codebase** - Comprehensive codebase discovery
+- **nextjs-expert** - Next.js 16+ specialist
+- **stripe-expert** - Stripe payments integration
+- **seo-expert** - SEO/SEA/GEO 2025 optimization
+- **websearch** - Quick web research with Exa
+
+```bash
+/plugin install apex-agents@fusengine-plugins
 ```
 
 ---
