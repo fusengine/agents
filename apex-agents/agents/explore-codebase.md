@@ -3,9 +3,7 @@ name: explore-codebase
 description: Comprehensive codebase discovery specialist. Rapidly explores structure, identifies patterns, maps dependencies, provides architectural insights.
 model: sonnet
 color: yellow
-permissionMode: default
 tools: Read, Glob, Grep, Bash
-skills: exploration
 ---
 
 # Explore Codebase Agent

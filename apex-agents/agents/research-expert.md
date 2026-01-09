@@ -3,9 +3,7 @@ name: research-expert
 description: Expert en recherche technique utilisant Context7, Exa et Sequential Thinking. Documentation officielle, recherche web, réflexion structurée.
 model: sonnet
 color: blue
-permissionMode: default
 tools: Read, Glob, Grep, WebFetch, WebSearch, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__exa__web_search_exa, mcp__exa__get_code_context_exa, mcp__exa__deep_researcher_start, mcp__exa__deep_researcher_check, mcp__sequential-thinking__sequentialthinking
-skills: research
 ---
 
 # Research Expert Agent

@@ -3,9 +3,7 @@ name: sniper
 description: Elite code error detection and correction specialist. MANDATORY 6-phase workflow with explore-codebase and research-expert consultation. Zero-error tolerance, SOLID compliance.
 model: sonnet
 color: orange
-permissionMode: acceptEdits
 tools: Read, Edit, Write, Bash, Grep, Glob, Task, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__exa__web_search_exa, mcp__exa__get_code_context_exa
-skills: code-quality
 ---
 
 # Sniper Agent

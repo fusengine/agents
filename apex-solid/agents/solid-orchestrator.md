@@ -2,9 +2,8 @@
 name: solid-orchestrator
 description: SOLID principles orchestrator for multi-language projects. Detects project type, applies appropriate rules, validates architecture. Use for code quality enforcement.
 model: sonnet
-permissionMode: default
+color: green
 tools: Read, Glob, Grep, Bash, Task
-skills: solid-detection
 ---
 
 # SOLID Orchestrator Agent

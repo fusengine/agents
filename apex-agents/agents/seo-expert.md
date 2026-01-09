@@ -3,9 +3,7 @@ name: seo-expert
 description: Expert SEO/SEA/GEO 2025 avec analyse de contenu, extraction de mots-clés, optimisation SERP, Google Ads et visibilité IA.
 model: sonnet
 color: green
-permissionMode: default
 tools: Read, Glob, Grep, WebFetch, WebSearch, mcp__exa__web_search_exa, mcp__exa__crawling_exa, mcp__exa__deep_researcher_start, mcp__exa__deep_researcher_check, mcp__sequential-thinking__sequentialthinking, mcp__playwright__browser_snapshot, mcp__playwright__browser_navigate
-skills: seo
 ---
 
 # SEO Expert Agent

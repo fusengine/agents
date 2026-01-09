@@ -2,9 +2,8 @@
 name: commit-detector
 description: Smart commit type detector. Use PROACTIVELY when user wants to commit, save changes, git commit, or mentions committing code. Analyzes changes and selects the optimal commit command automatically.
 model: sonnet
-permissionMode: default
+color: cyan
 tools: Bash, Read, Grep, Glob
-skills: commit-detection
 ---
 
 # Commit Detector Agent

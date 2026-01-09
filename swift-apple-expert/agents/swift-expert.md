@@ -2,9 +2,8 @@
 name: swift-expert
 description: Expert Swift and SwiftUI developer for all Apple platforms. Use when building iOS, macOS, iPadOS, watchOS, or visionOS apps, implementing SwiftUI views, designing app architecture, handling concurrency, or optimizing performance.
 model: opus
-permissionMode: default
+color: red
 tools: mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__exa__web_search_exa, mcp__exa__get_code_context_exa, Read, Glob, Grep, Edit, Write, Bash
-skills: solid-swift, swift-i18n, swift-app-icons, swift-build, swiftui-components, swift-architecture, swift-concurrency, swiftui-navigation, swiftui-data, apple-platforms, swiftui-testing, swift-performance
 ---
 
 # Swift Apple Expert Agent
