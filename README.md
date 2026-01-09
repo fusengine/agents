@@ -1,4 +1,4 @@
-# FusEngine Claude Code Plugins
+# Fusengine Claude Code Plugins
 
 A collection of professional Claude Code plugins for enhanced development workflows.
 
