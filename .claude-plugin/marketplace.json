@@ -1,0 +1,38 @@
+{
+	"name": "fusengine-plugins",
+	"description": "Collection of professional Claude Code plugins for enhanced development workflows",
+	"owner": {
+		"name": "Fusengine",
+		"url": "https://github.com/fusengine"
+	},
+	"plugins": [
+		{
+			"name": "commit-pro",
+			"source": "./commit-pro",
+			"description": "Professional git commits with Conventional Commits, auto-detection, and security validation",
+			"version": "1.2.1",
+			"keywords": ["git", "commit", "conventional-commits"]
+		},
+		{
+			"name": "laravel-expert",
+			"source": "./laravel-expert",
+			"description": "Expert Laravel 12 + PHP 8.5 with SOLID principles, Eloquent, Livewire, and comprehensive documentation",
+			"version": "1.1.0",
+			"keywords": ["laravel", "php", "eloquent", "livewire", "blade", "api", "solid"]
+		},
+		{
+			"name": "nextjs-expert",
+			"source": "./nextjs-expert",
+			"description": "Expert Next.js 16 + React 19 with App Router, Server Components, Prisma 7, Better Auth, and modular architecture",
+			"version": "1.0.0",
+			"keywords": ["nextjs", "react", "typescript", "prisma", "better-auth", "solid"]
+		},
+		{
+			"name": "swift-apple-expert",
+			"source": "./swift-apple-expert",
+			"description": "Expert Swift 6 + SwiftUI for all Apple platforms with @Observable, actors, and WWDC 2025 best practices",
+			"version": "1.0.0",
+			"keywords": ["swift", "swiftui", "ios", "macos", "visionos", "apple", "solid"]
+		}
+	]
+}

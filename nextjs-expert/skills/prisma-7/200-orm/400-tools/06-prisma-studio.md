@@ -1,0 +1,186 @@
+---
+title: 'Prisma Studio'
+metaTitle: 'Prisma Studio'
+metaDescription: 'Prisma Studio is a visual database editor.'
+toc_max_heading_level: 2
+---
+
+Prisma Studio is a standalone visual database editor that lets you view and manipulate data directly in your browser. Prisma 7 introduces a brand new standalone Studio, built from the ground up to work everywhere, with or without Prisma ORM. 
+
+Unlike previous versions, the new Prisma Studio is SQL-driven and does not rely on the Prisma schema file at all. Instead, it introspects your database directly to understand the schema structure. This means you can use it with any supported database without needing a Prisma schema or project.
+
+Note that Prisma Studio is not open source but you can still create issues in the [`prisma/studio`](https://github.com/prisma/studio) repo. All "old Studio" issues are being closed as there won't be any further work on the previous version.
+
+## Prerequisites
+
+Prisma Studio is a standalone tool that only requires a database connection. You have two options:
+
+### Option 1: Use with any database (no Prisma project required)
+
+Connect directly to any supported database using the `--url` flag:
+
+```terminal
+npx prisma studio --url="postgresql://user:password@localhost:5432/dbname"
+```
+
+This approach works without any Prisma ORM setup—Studio will introspect your database schema directly.
+
+### Option 2: Use with a Prisma ORM project
+
+If you have an existing Prisma project, Studio can read your database connection configuration:
+
+- A `prisma.config.ts` configuration file with database connection details
+- A configured database connection
+
+:::note
+
+The new Studio does not read the `prisma/schema.prisma` file. It introspects your database directly to understand the schema structure.
+
+:::
+
+## Getting started
+
+### Standalone usage (without Prisma ORM)
+
+To launch Prisma Studio with any database, provide a connection URL:
+
+```terminal
+npx prisma studio --url="postgresql://user:password@localhost:5432/dbname"
+```
+
+### With a Prisma ORM project
+
+If you have a Prisma project, run the following command in your project directory:
+
+```terminal
+npx prisma studio --config ./prisma.config.ts
+```
+
+Both commands start a local web server (default port `5555`) and open Prisma Studio in your browser. Studio connects directly to your database and introspects the schema in real-time to provide a visual interface for your data—no Prisma schema file required.
+
+## Core features
+
+Prisma Studio provides several key capabilities for working with your database:
+
+### Browse your data
+
+Studio displays all tables from your database in a sidebar. Select any table to view its data in a table format. You can open multiple tables in separate tabs to work with related data simultaneously.
+
+### View and edit records
+
+You can edit data in two ways:
+
+- **Inline editing**: Double-click any cell to edit its value directly in the table
+- **Side panel editing**: Click the edit icon next to a record to open a detailed view with all fields
+
+Changes are accumulated and must be saved explicitly using the save button. This lets you make multiple edits before committing them to the database.
+
+### Add new records
+
+Create new records by clicking the "Add record" button. Studio provides appropriate input controls based on each field's data type:
+
+- Text fields for strings
+- Number inputs for integers and decimals
+- Date pickers for datetime fields
+- Dropdowns for enums and boolean values
+- Relation selectors for foreign keys
+
+### Delete records
+
+Select one or more records using the checkboxes and click the delete button. Deletions require confirmation and are applied immediately (they cannot be batched with other changes).
+
+### Filter and search
+
+Use the Filters menu to narrow down your data:
+
+- Add conditions using comparison operators (equals, greater than, less than, etc.)
+- Combine multiple filters with AND logic
+- Clear individual filters or all filters at once
+
+### Control visibility
+
+Customize your view:
+
+- **Fields menu**: Show or hide specific columns
+- **Showing menu**: Control pagination with "Take" (limit) and "Skip" (offset) options
+
+### Sort data
+
+Click any column header to sort by that field. Click again to toggle between ascending and descending order.
+
+### Keyboard shortcuts
+
+Studio supports keyboard shortcuts for common operations. Press <kbd>Cmd</kbd>+<kbd>/</kbd> (macOS) or <kbd>Ctrl</kbd>+<kbd>/</kbd> (Windows) to view all available shortcuts.
+
+## Understanding data types
+
+Studio displays visual indicators for different field types in your database:
+
+- **Text fields**: String values
+- **Number fields**: Integers and decimals
+- **Date/time fields**: Timestamps and dates
+- **Boolean fields**: True/false values
+- **Enum fields**: Predefined list of options
+- **Relation fields**: References to records in other tables (foreign keys)
+- **JSON fields**: Structured JSON data
+
+These visual cues help you quickly understand your data structure as Studio introspects it directly from your database.
+
+## Working with relations
+
+When your database tables have foreign key relationships, Studio provides tools to navigate and edit related data:
+
+- Click on a relation field to view the related record
+- Use relation selectors when creating or editing records to link to existing data
+- Open related tables in separate tabs to work with connected data simultaneously
+
+## Databases supported by Prisma Studio
+
+Prisma Studio currently supports the following databases: PostgreSQL, MySQL, and SQLite.
+
+### SQLite requirements for Prisma Studio
+
+- File paths must have a `file:` protocol right now in the database url for SQLite
+- **Node.js 22.5+**: Works out of the box with the built-in `node:sqlite` module
+  - May require `NODE_OPTIONS=--experimental-sqlite` environment variable
+- **Node.js 20**: Requires installing `better-sqlite3` as a dependency
+  - If using pnpm 10+ with `pnpx`, you'll need the [`--allow-build=better-sqlite3`](https://pnpm.io/cli/dlx#--allow-build) flag
+- **Deno >= 2.2**: Supported via [built-in SQLite module](https://docs.deno.com/api/node/sqlite/)
+- **Bun**: Support for Prisma Studio with SQLite is coming soon and is not available yet
+
+:::tip[Using `npx` with `better-sqlite3`]
+
+If you don't have `node:sqlite` available in your runtime or prefer not to install `better-sqlite3` as a hard dependency (it adds ~10MB), you can use `npx` to temporarily install the required packages:
+
+```terminal
+npx -p better-sqlite3 -p prisma prisma studio --url file:./my_file.db
+```
+
+This command:
+- Temporarily installs `better-sqlite3` without adding it to your project dependencies
+- Runs Prisma Studio with the specified SQLite database file
+- Avoids the 10MB overhead of `better-sqlite3` in your project
+
+:::
+
+### Databases not yet supported
+
+Support for CockroachDB and MongoDB is not currently available but may be added in future releases. If you're using these databases:
+
+- CockroachDB: Explore the options suggested by [CockroachDB](https://www.cockroachlabs.com/blog/cockroachdb-gui-options/)
+- MongoDB: Use [MongoDB Atlas](https://www.mongodb.com/cloud/atlas), MongoDB Compass, or the MongoDB shell
+
+## Troubleshooting
+
+### Terminal: Failed to run script / Error in Prisma Client request
+
+Caching issues may cause Prisma Studio to use an older version of the query engine. You may see the following error:
+
+```terminal wrap
+Error in request:  PrismaClientKnownRequestError: Failed to validate the query Error occurred during query validation & transformation
+```
+
+To resolve, delete the following folders:
+
+- `~/.cache/prisma` on macOS and Linux
+- `%AppData%/Prisma/Studio` on Windows

@@ -1,0 +1,10 @@
+{
+  "name": "apex-agents",
+  "version": "1.0.0",
+  "description": "Collection d'agents spécialisés APEX: code quality (sniper), research, frameworks (Next.js, Stripe), SEO, et exploration de codebase. Workflow APEX: Analyze → Plan → Execute → eXamine.",
+  "author": {
+    "name": "Bruno Azoulay"
+  },
+  "agents": "./agents/",
+  "skills": "./skills/"
+}

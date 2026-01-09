@@ -1,0 +1,10 @@
+{
+  "name": "swift-apple-expert",
+  "version": "1.0.0",
+  "description": "Expert Swift & SwiftUI development for all Apple platforms (iOS, macOS, iPadOS, watchOS, visionOS). Includes architecture patterns, concurrency, navigation, data persistence, testing, and performance optimization.",
+  "author": {
+    "name": "Bruno Azoulay"
+  },
+  "agents": "./agents/swift-expert.md",
+  "skills": "./skills/"
+}

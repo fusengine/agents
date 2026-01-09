@@ -1,0 +1,10 @@
+{
+  "name": "laravel-expert",
+  "version": "1.0.0",
+  "description": "Expert Laravel 12 development with Eloquent ORM, API design, authentication, queues, Livewire, Blade, testing, and modern PHP 8.3+ patterns.",
+  "author": {
+    "name": "FusEngine"
+  },
+  "agents": "./agents/laravel-expert.md",
+  "skills": "./skills/"
+}
