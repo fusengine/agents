@@ -3,8 +3,33 @@
   "version": "1.0.0",
   "description": "Collection d'agents spécialisés APEX: code quality (sniper), research, frameworks (Next.js, Stripe), SEO, et exploration de codebase. Workflow APEX: Analyze → Plan → Execute → eXamine.",
   "author": {
-    "name": "Bruno Azoulay"
+    "name": "Fusengine"
   },
-  "agents": "./agents/",
-  "skills": "./skills/"
+  "agents": [
+    "./agents/sniper.md",
+    "./agents/sniper-faster.md",
+    "./agents/research-expert.md",
+    "./agents/explore-codebase.md",
+    "./agents/seo-expert.md",
+    "./agents/websearch.md"
+  ],
+  "commands": [
+    "./commands/apex.md",
+    "./commands/commit.md",
+    "./commands/epct.md",
+    "./commands/deep-code-analysis.md",
+    "./commands/explain-architecture.md",
+    "./commands/create-pull-request.md",
+    "./commands/fix-pr-comments.md",
+    "./commands/run-tasks.md",
+    "./commands/watch-ci.md",
+    "./commands/cleanup-context.md",
+    "./commands/prisma-optimize.md"
+  ],
+  "skills": [
+    "./skills/code-quality",
+    "./skills/research",
+    "./skills/exploration",
+    "./skills/seo"
+  ]
 }

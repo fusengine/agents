@@ -3,8 +3,15 @@
   "version": "1.0.0",
   "description": "Expert Next.js 16+ avec App Router, Server Components, Prisma 7, Better Auth",
   "author": {
-    "name": "Bruno Azoulay"
+    "name": "Fusengine"
   },
-  "agents": "./agents/",
-  "skills": "./skills/"
+  "agents": [
+    "./agents/nextjs-expert.md"
+  ],
+  "skills": [
+    "./skills/nextjs-16",
+    "./skills/prisma-7",
+    "./skills/better-auth",
+    "./skills/solid-nextjs"
+  ]
 }

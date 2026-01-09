@@ -2,6 +2,13 @@
   "name": "apex-solid",
   "version": "1.0.0",
   "description": "SOLID principles enforcement with automatic project detection and validation hooks for all languages",
-  "author": "Fusengine",
-  "repository": "https://github.com/fusengine/apex-solid"
+  "author": {
+    "name": "Fusengine"
+  },
+  "agents": [
+    "./agents/solid-orchestrator.md"
+  ],
+  "skills": [
+    "./skills/solid-detection"
+  ]
 }

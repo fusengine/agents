@@ -3,21 +3,24 @@
   "version": "1.2.1",
   "description": "Professional git commits following Conventional Commits standard with smart auto-detection and security validation",
   "author": {
-    "name": "Bruno Azoulay",
-    "url": "https://github.com/brunoazoulay"
+    "name": "Fusengine"
   },
-  "license": "MIT",
-  "keywords": [
-    "git",
-    "commit",
-    "conventional-commits",
-    "automation",
-    "best-practices",
-    "auto-detection"
+  "agents": [
+    "./agents/commit-detector.md"
   ],
-  "repository": "https://github.com/brunoazoulay/commit-pro",
-  "homepage": "https://github.com/brunoazoulay/commit-pro#readme",
-  "agents": "./agents/",
-  "commands": "./commands/",
-  "skills": "./skills/"
+  "commands": [
+    "./commands/commit.md",
+    "./commands/feat.md",
+    "./commands/fix.md",
+    "./commands/docs.md",
+    "./commands/refactor.md",
+    "./commands/test.md",
+    "./commands/chore.md",
+    "./commands/wip.md",
+    "./commands/amend.md",
+    "./commands/undo.md"
+  ],
+  "skills": [
+    "./skills/commit-detection"
+  ]
 }
