@@ -6,10 +6,10 @@ A collection of professional Claude Code plugins for enhanced development workfl
 
 ```bash
 # Add this marketplace
-/plugin marketplace add fusengine/claude-plugins
+/plugin marketplace add fusengine/claude-code-plugins
 
 # Or from local path
-/plugin marketplace add /path/to/claude-plugins
+/plugin marketplace add /path/to/claude-code-plugins
 ```
 
 ## Available Plugins
