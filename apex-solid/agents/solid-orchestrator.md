@@ -4,6 +4,7 @@ description: SOLID principles orchestrator for multi-language projects. Detects 
 model: sonnet
 color: green
 tools: Read, Glob, Grep, Bash, Task
+skills: solid-detection
 ---
 
 # SOLID Orchestrator Agent

@@ -4,6 +4,7 @@ description: Comprehensive codebase discovery specialist. Rapidly explores struc
 model: sonnet
 color: yellow
 tools: Read, Glob, Grep, Bash
+skills: exploration
 ---
 
 # Explore Codebase Agent

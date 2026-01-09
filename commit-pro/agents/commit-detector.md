@@ -4,6 +4,7 @@ description: Smart commit type detector. Use PROACTIVELY when user wants to comm
 model: sonnet
 color: cyan
 tools: Bash, Read, Grep, Glob
+skills: commit-detection
 ---
 
 # Commit Detector Agent
