@@ -4,9 +4,9 @@ Professional Claude Code plugins with APEX workflow, SOLID principles, and exper
 
 ## Overview
 
-- **6 plugins** - Focused, single-purpose plugins
-- **11 agents** - Specialized AI assistants
-- **32 skills** - Modular knowledge packages
+- **7 plugins** - Focused, single-purpose plugins
+- **12 agents** - Specialized AI assistants
+- **47 skills** - Modular knowledge packages
 - **21 commands** - User-invocable workflows
 
 ## Installation
@@ -26,6 +26,7 @@ Professional Claude Code plugins with APEX workflow, SOLID principles, and exper
 /plugin install fuse-nextjs
 /plugin install fuse-swift-apple-expert
 /plugin install fuse-solid
+/plugin install fuse-tailwindcss
 ```
 
 ### Interactive Menu
@@ -63,6 +64,7 @@ Professional Claude Code plugins with APEX workflow, SOLID principles, and exper
 | [fuse-nextjs](./plugins/nextjs-expert) | Expert Next.js 16 + React 19 development | development |
 | [fuse-swift-apple-expert](./plugins/swift-apple-expert) | Expert Swift 6 + SwiftUI for Apple platforms | development |
 | [fuse-solid](./plugins/solid) | SOLID principles enforcement for all languages | productivity |
+| [fuse-tailwindcss](./plugins/tailwindcss) | Expert Tailwind CSS v4.1 with CSS-first config | development |
 
 ## Documentation
 
@@ -114,6 +116,14 @@ SOLID principles enforcement with automatic project detection.
 
 **Skills:** solid-detection
 
+### fuse-tailwindcss
+
+Expert Tailwind CSS v4.1 with CSS-first configuration, Oxide engine, and OKLCH colors.
+
+**Agent:** tailwindcss-expert
+
+**Skills:** tailwindcss-v4, tailwindcss-core, tailwindcss-utilities, tailwindcss-responsive, tailwindcss-custom-styles, tailwindcss-layout, tailwindcss-spacing, tailwindcss-sizing, tailwindcss-typography, tailwindcss-backgrounds, tailwindcss-borders, tailwindcss-effects, tailwindcss-transforms, tailwindcss-interactivity
+
 ## Architecture
 
 ```
@@ -127,7 +137,8 @@ fusengine-plugins/
 │   ├── laravel-expert/
 │   ├── nextjs-expert/
 │   ├── solid/
-│   └── swift-apple-expert/
+│   ├── swift-apple-expert/
+│   └── tailwindcss/
 ├── LICENSE
 └── README.md
 ```

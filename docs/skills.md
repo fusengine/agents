@@ -56,3 +56,21 @@ Skills are modular knowledge packages that provide specialized context and docum
 ### fuse-solid (1 skill)
 
 - `solid-detection` - Multi-language SOLID detection rules
+
+### fuse-tailwindcss (15 skills)
+
+- `tailwindcss-v4` - Core v4.1, @theme, directives, migration
+- `tailwindcss-core` - @theme, @import, @source, @utility, @variant
+- `tailwindcss-utilities` - Complete utility classes reference
+- `tailwindcss-utility-classes` - Layout, spacing, typography, colors
+- `tailwindcss-responsive` - Breakpoints, container queries
+- `tailwindcss-custom-styles` - @utility, @variant, @apply, custom CSS
+- `tailwindcss-layout` - Flexbox, Grid, Position
+- `tailwindcss-spacing` - Margin, Padding, Space between
+- `tailwindcss-sizing` - Width, Height, h-dvh (NEW), aspect-ratio
+- `tailwindcss-typography` - Fonts, Text, text-shadow (NEW)
+- `tailwindcss-backgrounds` - Colors OKLCH, Gradients radial/conic (NEW)
+- `tailwindcss-borders` - Border, Outline, Ring, Divide
+- `tailwindcss-effects` - Shadows, Filters, mask-* (NEW)
+- `tailwindcss-transforms` - Transform, Transition, Animation
+- `tailwindcss-interactivity` - Cursor, Scroll, Touch, Accent-color

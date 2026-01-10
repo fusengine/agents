@@ -47,6 +47,12 @@ Agents are specialized AI assistants that can be invoked via the `Task` tool. Ea
 |-------|-------------|
 | `solid-orchestrator` | SOLID principles validation for multi-language projects |
 
+### fuse-tailwindcss
+
+| Agent | Description |
+|-------|-------------|
+| `tailwindcss-expert` | Expert Tailwind CSS v4.1 with CSS-first config, Oxide engine, OKLCH |
+
 ## Usage
 
 Agents are automatically available when their plugin is installed. They can be invoked through the `Task` tool with `subagent_type` parameter.

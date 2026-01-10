@@ -6,8 +6,8 @@
     "url": "https://github.com/fusengine"
   },
   "metadata": {
-    "description": "Professional Claude Code plugins with APEX workflow, SOLID principles, and expert development agents for Next.js, Laravel, Swift, and more",
-    "version": "1.1.0"
+    "description": "Professional Claude Code plugins with APEX workflow, SOLID principles, and expert development agents for Next.js, Laravel, Swift, Tailwind CSS, and more",
+    "version": "1.2.0"
   },
   "plugins": [
     {
@@ -241,6 +241,52 @@
       ],
       "skills": [
         "./skills/solid-detection"
+      ]
+    },
+    {
+      "name": "fuse-tailwindcss",
+      "source": "./plugins/tailwindcss",
+      "description": "Expert Tailwind CSS v4.1 with CSS-first config, @theme, @utility, @variant, Oxide engine, OKLCH colors, container queries",
+      "version": "1.0.0",
+      "author": {
+        "name": "Fusengine",
+        "url": "https://github.com/fusengine"
+      },
+      "homepage": "https://github.com/fusengine/agents",
+      "repository": "https://github.com/fusengine/agents",
+      "license": "MIT",
+      "keywords": [
+        "tailwindcss",
+        "tailwind",
+        "css",
+        "utility-first",
+        "v4.1",
+        "oxide-engine",
+        "oklch",
+        "container-queries"
+      ],
+      "category": "development",
+      "strict": true,
+      "commands": [],
+      "agents": [
+        "./agents/tailwindcss-expert.md"
+      ],
+      "skills": [
+        "./skills/tailwindcss-v4",
+        "./skills/tailwindcss-core",
+        "./skills/tailwindcss-utilities",
+        "./skills/tailwindcss-utility-classes",
+        "./skills/tailwindcss-responsive",
+        "./skills/tailwindcss-custom-styles",
+        "./skills/tailwindcss-layout",
+        "./skills/tailwindcss-spacing",
+        "./skills/tailwindcss-sizing",
+        "./skills/tailwindcss-typography",
+        "./skills/tailwindcss-backgrounds",
+        "./skills/tailwindcss-borders",
+        "./skills/tailwindcss-effects",
+        "./skills/tailwindcss-transforms",
+        "./skills/tailwindcss-interactivity"
       ]
     }
   ]

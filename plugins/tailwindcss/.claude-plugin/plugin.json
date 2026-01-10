@@ -1,0 +1,31 @@
+{
+  "name": "fuse-tailwindcss",
+  "version": "1.0.0",
+  "description": "Expert Tailwind CSS v4.1 - CSS-first configuration, @theme, @utility, @variant, Oxide engine 5x faster, OKLCH colors, container queries, 15 specialized skills",
+  "author": {
+    "name": "Fusengine",
+    "email": "hello@fusengine.ch",
+    "url": "https://github.com/fusengine"
+  },
+  "homepage": "https://github.com/fusengine/agents",
+  "repository": "https://github.com/fusengine/agents",
+  "license": "MIT",
+  "keywords": [
+    "tailwindcss",
+    "tailwind",
+    "css",
+    "utility-first",
+    "v4.1",
+    "oxide-engine",
+    "theme",
+    "directives",
+    "responsive",
+    "dark-mode",
+    "oklch",
+    "container-queries",
+    "flexbox",
+    "grid",
+    "typography",
+    "animations"
+  ]
+}

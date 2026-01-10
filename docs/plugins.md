@@ -2,7 +2,7 @@
 
 ## Overview
 
-This repository contains 6 professional Claude Code plugins designed for modern development workflows.
+This repository contains 7 professional Claude Code plugins designed for modern development workflows.
 
 ## Available Plugins
 
@@ -14,6 +14,7 @@ This repository contains 6 professional Claude Code plugins designed for modern 
 | `fuse-nextjs` | Expert Next.js 16 + React 19 development | development |
 | `fuse-swift-apple-expert` | Expert Swift 6 + SwiftUI for Apple platforms | development |
 | `fuse-solid` | SOLID principles enforcement for all languages | productivity |
+| `fuse-tailwindcss` | Expert Tailwind CSS v4.1 with CSS-first config | development |
 
 ## Installation
 
@@ -32,6 +33,7 @@ This repository contains 6 professional Claude Code plugins designed for modern 
 /plugin install fuse-nextjs
 /plugin install fuse-swift-apple-expert
 /plugin install fuse-solid
+/plugin install fuse-tailwindcss
 ```
 
 ### Interactive Menu
