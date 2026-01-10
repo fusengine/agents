@@ -1,5 +1,5 @@
 {
-  "name": "fuse:solid",
+  "name": "fuse-solid",
   "version": "1.0.0",
   "description": "SOLID principles enforcement with automatic project detection and validation for all languages",
   "author": {

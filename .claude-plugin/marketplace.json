@@ -11,7 +11,7 @@
   },
   "plugins": [
     {
-      "name": "fuse:ai-pilot",
+      "name": "fuse-ai-pilot",
       "source": "./plugins/ai-pilot",
       "description": "AI Pilot workflow agents: sniper (code quality), research-expert, explore-codebase, seo-expert, websearch",
       "version": "1.0.0",
@@ -31,7 +31,7 @@
         "seo"
       ],
       "category": "development",
-      "strict": false,
+      "strict": true,
       "commands": [
         "./commands/apex.md",
         "./commands/epct.md",
@@ -61,7 +61,7 @@
       ]
     },
     {
-      "name": "fuse:commit-pro",
+      "name": "fuse-commit-pro",
       "source": "./plugins/commit-pro",
       "description": "Professional git commits with Conventional Commits, auto-detection, and security validation",
       "version": "1.2.1",
@@ -80,7 +80,7 @@
         "automation"
       ],
       "category": "productivity",
-      "strict": false,
+      "strict": true,
       "commands": [
         "./commands/commit.md",
         "./commands/wip.md",
@@ -101,7 +101,7 @@
       ]
     },
     {
-      "name": "fuse:laravel",
+      "name": "fuse-laravel",
       "source": "./plugins/laravel-expert",
       "description": "Expert Laravel 12 + PHP 8.5 with SOLID principles, Eloquent, Livewire, and comprehensive documentation",
       "version": "1.1.0",
@@ -121,7 +121,7 @@
         "solid"
       ],
       "category": "development",
-      "strict": false,
+      "strict": true,
       "commands": [],
       "agents": [
         "./agents/laravel-expert.md"
@@ -141,7 +141,7 @@
       ]
     },
     {
-      "name": "fuse:nextjs",
+      "name": "fuse-nextjs",
       "source": "./plugins/nextjs-expert",
       "description": "Expert Next.js 16 + React 19 with App Router, Server Components, Prisma 7, and Better Auth",
       "version": "1.0.0",
@@ -161,7 +161,7 @@
         "server-components"
       ],
       "category": "development",
-      "strict": false,
+      "strict": true,
       "commands": [],
       "agents": [
         "./agents/nextjs-expert.md"
@@ -174,7 +174,7 @@
       ]
     },
     {
-      "name": "fuse:swift-apple-expert",
+      "name": "fuse-swift-apple-expert",
       "source": "./plugins/swift-apple-expert",
       "description": "Expert Swift 6 + SwiftUI for all Apple platforms with @Observable, actors, and best practices",
       "version": "1.0.0",
@@ -194,7 +194,7 @@
         "concurrency"
       ],
       "category": "development",
-      "strict": false,
+      "strict": true,
       "commands": [],
       "agents": [
         "./agents/swift-expert.md"
@@ -215,7 +215,7 @@
       ]
     },
     {
-      "name": "fuse:solid",
+      "name": "fuse-solid",
       "source": "./plugins/solid",
       "description": "SOLID principles enforcement with automatic project detection and validation for all languages",
       "version": "1.0.0",
@@ -234,7 +234,7 @@
         "multi-language"
       ],
       "category": "productivity",
-      "strict": false,
+      "strict": true,
       "commands": [],
       "agents": [
         "./agents/solid-orchestrator.md"

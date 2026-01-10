@@ -1,5 +1,5 @@
 {
-  "name": "fuse:nextjs",
+  "name": "fuse-nextjs",
   "version": "1.0.0",
   "description": "Expert Next.js 16 + React 19 with App Router, Server Components, Prisma 7, and Better Auth",
   "author": {
