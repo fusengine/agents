@@ -16,16 +16,16 @@ A collection of professional Claude Code plugins for enhanced development workfl
 
 | Plugin | Version | Description |
 |--------|---------|-------------|
-| [commit-pro](./commit-pro) | 1.2.1 | Professional git commits with auto-detection |
-| [laravel-expert](./laravel-expert) | 1.1.0 | Expert Laravel 12 + PHP 8.5 with SOLID |
-| [nextjs-expert](./nextjs-expert) | 1.0.0 | Expert Next.js 16 + React 19 with modular architecture |
-| [swift-apple-expert](./swift-apple-expert) | 1.0.0 | Expert Swift 6 + SwiftUI for Apple platforms |
-| [apex-solid](./apex-solid) | 1.0.0 | SOLID enforcement with auto-detection hooks |
-| [apex-agents](./apex-agents) | 1.0.0 | APEX agents: sniper, research, explore, experts |
+| [fuse:commit-pro](./commit-pro) | 1.2.1 | Professional git commits with auto-detection |
+| [fuse:laravel](./laravel-expert) | 1.1.0 | Expert Laravel 12 + PHP 8.5 with SOLID |
+| [fuse:nextjs](./nextjs-expert) | 1.0.0 | Expert Next.js 16 + React 19 with modular architecture |
+| [fuse:swift-apple-expert](./swift-apple-expert) | 1.0.0 | Expert Swift 6 + SwiftUI for Apple platforms |
+| [fuse:solid](./apex-solid) | 1.0.0 | SOLID enforcement with auto-detection hooks |
+| [fuse:ai-pilot](./ai-pilot) | 1.0.0 | AI Pilot agents: sniper, research, explore, experts |
 
 ## Plugins
 
-### commit-pro
+### fuse:commit-pro
 
 Professional git commits following Conventional Commits standard.
 
@@ -35,10 +35,10 @@ Professional git commits following Conventional Commits standard.
 - No AI signature in commits
 
 ```bash
-/plugin install commit-pro@fusengine-plugins
+/plugin install fuse:commit-pro@fusengine-plugins
 ```
 
-### laravel-expert
+### fuse:laravel
 
 Expert Laravel 12 development with comprehensive SOLID principles.
 
@@ -50,10 +50,10 @@ Expert Laravel 12 development with comprehensive SOLID principles.
 - Context7 + Exa research integration
 
 ```bash
-/plugin install laravel-expert@fusengine-plugins
+/plugin install fuse:laravel@fusengine-plugins
 ```
 
-### nextjs-expert
+### fuse:nextjs
 
 Expert Next.js 16 development with modular architecture.
 
@@ -65,10 +65,10 @@ Expert Next.js 16 development with modular architecture.
 - Context7 + Exa research integration
 
 ```bash
-/plugin install nextjs-expert@fusengine-plugins
+/plugin install fuse:nextjs@fusengine-plugins
 ```
 
-### swift-apple-expert
+### fuse:swift-apple-expert
 
 Expert Swift 6 + SwiftUI for all Apple platforms.
 
@@ -80,10 +80,10 @@ Expert Swift 6 + SwiftUI for all Apple platforms.
 - iOS, macOS, iPadOS, watchOS, visionOS support
 
 ```bash
-/plugin install swift-apple-expert@fusengine-plugins
+/plugin install fuse:swift-apple-expert@fusengine-plugins
 ```
 
-### apex-solid
+### fuse:solid
 
 SOLID principles enforcement with automatic hooks.
 
@@ -102,25 +102,23 @@ SOLID principles enforcement with automatic hooks.
 | PostToolUse | Check file size limits |
 
 ```bash
-/plugin install apex-solid@fusengine-plugins
+/plugin install fuse:solid@fusengine-plugins
 ```
 
-### apex-agents
+### fuse:ai-pilot
 
-Collection d'agents spécialisés pour le workflow APEX.
+Collection of specialized agents for AI-assisted development workflows.
 
 **Agents:**
 - **sniper** - Code quality expert, zero-error tolerance
 - **sniper-faster** - Rapid modifications, minimal output
 - **research-expert** - Context7 + Exa documentation research
 - **explore-codebase** - Comprehensive codebase discovery
-- **nextjs-expert** - Next.js 16+ specialist
-- **stripe-expert** - Stripe payments integration
 - **seo-expert** - SEO/SEA/GEO 2025 optimization
 - **websearch** - Quick web research with Exa
 
 ```bash
-/plugin install apex-agents@fusengine-plugins
+/plugin install fuse:ai-pilot@fusengine-plugins
 ```
 
 ---

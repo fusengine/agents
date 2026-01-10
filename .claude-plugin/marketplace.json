@@ -5,73 +5,73 @@
   "description": "Professional Claude Code plugins with APEX workflow, SOLID principles, and expert development agents",
   "owner": {
     "name": "Fusengine",
-    "email": "contact@fusengine.dev"
+    "email": "hello@fusengine.ch"
   },
   "plugins": [
     {
-      "name": "commit-pro",
+      "name": "fuse:commit-pro",
       "description": "Professional git commits with Conventional Commits, auto-detection, and security validation",
       "version": "1.2.1",
       "author": {
         "name": "Fusengine",
-        "email": "contact@fusengine.dev"
+        "email": "hello@fusengine.ch"
       },
       "source": "./commit-pro",
       "category": "productivity"
     },
     {
-      "name": "laravel-expert",
+      "name": "fuse:laravel",
       "description": "Expert Laravel 12 + PHP 8.5 with SOLID principles, Eloquent, Livewire, and comprehensive documentation",
       "version": "1.1.0",
       "author": {
         "name": "Fusengine",
-        "email": "contact@fusengine.dev"
+        "email": "hello@fusengine.ch"
       },
       "source": "./laravel-expert",
       "category": "development"
     },
     {
-      "name": "nextjs-expert",
+      "name": "fuse:nextjs",
       "description": "Expert Next.js 16 + React 19 with App Router, Server Components, Prisma 7, and Better Auth",
       "version": "1.0.0",
       "author": {
         "name": "Fusengine",
-        "email": "contact@fusengine.dev"
+        "email": "hello@fusengine.ch"
       },
       "source": "./nextjs-expert",
       "category": "development"
     },
     {
-      "name": "swift-apple-expert",
+      "name": "fuse:swift-apple-expert",
       "description": "Expert Swift 6 + SwiftUI for all Apple platforms with @Observable, actors, and best practices",
       "version": "1.0.0",
       "author": {
         "name": "Fusengine",
-        "email": "contact@fusengine.dev"
+        "email": "hello@fusengine.ch"
       },
       "source": "./swift-apple-expert",
       "category": "development"
     },
     {
-      "name": "apex-solid",
+      "name": "fuse:solid",
       "description": "SOLID principles enforcement with automatic project detection and validation for all languages",
       "version": "1.0.0",
       "author": {
         "name": "Fusengine",
-        "email": "contact@fusengine.dev"
+        "email": "hello@fusengine.ch"
       },
       "source": "./apex-solid",
       "category": "productivity"
     },
     {
-      "name": "apex-agents",
-      "description": "APEX workflow agents: sniper, research-expert, explore-codebase, seo-expert, websearch",
+      "name": "fuse:ai-pilot",
+      "description": "AI Pilot workflow agents: sniper, research-expert, explore-codebase, seo-expert, websearch",
       "version": "1.0.0",
       "author": {
         "name": "Fusengine",
-        "email": "contact@fusengine.dev"
+        "email": "hello@fusengine.ch"
       },
-      "source": "./apex-agents",
+      "source": "./ai-pilot",
       "category": "development"
     }
   ]
