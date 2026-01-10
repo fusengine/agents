@@ -4,18 +4,11 @@
   "description": "SOLID principles enforcement with automatic project detection and validation for all languages",
   "author": {
     "name": "Fusengine",
+    "email": "hello@fusengine.ch",
     "url": "https://github.com/fusengine"
   },
   "homepage": "https://github.com/fusengine/agents",
   "repository": "https://github.com/fusengine/agents",
   "license": "MIT",
-  "keywords": ["solid", "architecture", "code-quality", "validation", "multi-language"],
-  "commands": [],
-  "agents": [
-    "./agents/solid-orchestrator.md"
-  ],
-  "skills": [
-    "./skills/solid-detection"
-  ],
-  "hooks": "./hooks/hooks.json"
+  "keywords": ["solid", "architecture", "code-quality", "validation", "multi-language"]
 }

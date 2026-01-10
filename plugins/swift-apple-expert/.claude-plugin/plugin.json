@@ -4,28 +4,11 @@
   "description": "Expert Swift 6 + SwiftUI for all Apple platforms with @Observable, actors, and best practices",
   "author": {
     "name": "Fusengine",
+    "email": "hello@fusengine.ch",
     "url": "https://github.com/fusengine"
   },
   "homepage": "https://github.com/fusengine/agents",
   "repository": "https://github.com/fusengine/agents",
   "license": "MIT",
-  "keywords": ["swift", "swiftui", "ios", "macos", "apple", "concurrency"],
-  "commands": [],
-  "agents": [
-    "./agents/swift-expert.md"
-  ],
-  "skills": [
-    "./skills/swiftui-components",
-    "./skills/swift-architecture",
-    "./skills/swift-concurrency",
-    "./skills/swiftui-navigation",
-    "./skills/swiftui-data",
-    "./skills/apple-platforms",
-    "./skills/swiftui-testing",
-    "./skills/swift-performance",
-    "./skills/swift-i18n",
-    "./skills/swift-app-icons",
-    "./skills/swift-build",
-    "./skills/solid-swift"
-  ]
+  "keywords": ["swift", "swiftui", "ios", "macos", "apple", "concurrency"]
 }

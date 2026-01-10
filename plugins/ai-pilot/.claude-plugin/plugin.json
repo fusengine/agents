@@ -4,37 +4,11 @@
   "description": "AI Pilot workflow agents: sniper (code quality), research-expert, explore-codebase, seo-expert, websearch",
   "author": {
     "name": "Fusengine",
+    "email": "hello@fusengine.ch",
     "url": "https://github.com/fusengine"
   },
   "homepage": "https://github.com/fusengine/agents",
   "repository": "https://github.com/fusengine/agents",
   "license": "MIT",
-  "keywords": ["ai-pilot", "workflow", "apex", "code-quality", "research", "seo"],
-  "commands": [
-    "./commands/apex.md",
-    "./commands/epct.md",
-    "./commands/explain-architecture.md",
-    "./commands/deep-code-analysis.md",
-    "./commands/prisma-optimize.md",
-    "./commands/watch-ci.md",
-    "./commands/cleanup-context.md",
-    "./commands/fix-pr-comments.md",
-    "./commands/create-pull-request.md",
-    "./commands/commit.md",
-    "./commands/run-tasks.md"
-  ],
-  "agents": [
-    "./agents/sniper.md",
-    "./agents/sniper-faster.md",
-    "./agents/explore-codebase.md",
-    "./agents/research-expert.md",
-    "./agents/websearch.md",
-    "./agents/seo-expert.md"
-  ],
-  "skills": [
-    "./skills/research",
-    "./skills/exploration",
-    "./skills/code-quality",
-    "./skills/seo"
-  ]
+  "keywords": ["ai-pilot", "workflow", "apex", "code-quality", "research", "seo"]
 }
