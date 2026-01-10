@@ -30,7 +30,7 @@ fusengine-plugins/
 │   ├── swift-apple-expert/
 │   │   ├── agents/
 │   │   └── skills/
-│   └── apex-solid/
+│   └── solid/
 │       ├── agents/
 │       └── skills/
 ├── .gitignore

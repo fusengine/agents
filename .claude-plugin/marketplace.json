@@ -216,7 +216,7 @@
     },
     {
       "name": "fuse:solid",
-      "source": "./plugins/apex-solid",
+      "source": "./plugins/solid",
       "description": "SOLID principles enforcement with automatic project detection and validation for all languages",
       "version": "1.0.0",
       "author": {

@@ -28,7 +28,7 @@ claude plugins add /path/to/claude-code-plugins
 | [fuse:laravel](./plugins/laravel-expert) | Expert Laravel 12 + PHP 8.5 development | development |
 | [fuse:nextjs](./plugins/nextjs-expert) | Expert Next.js 16 + React 19 development | development |
 | [fuse:swift-apple-expert](./plugins/swift-apple-expert) | Expert Swift 6 + SwiftUI for Apple platforms | development |
-| [fuse:solid](./plugins/apex-solid) | SOLID principles enforcement for all languages | productivity |
+| [fuse:solid](./plugins/solid) | SOLID principles enforcement for all languages | productivity |
 
 ## Documentation
 
@@ -89,7 +89,7 @@ fusengine-plugins/
 ├── docs/
 ├── plugins/
 │   ├── ai-pilot/
-│   ├── apex-solid/
+│   ├── solid/
 │   ├── commit-pro/
 │   ├── laravel-expert/
 │   ├── nextjs-expert/
