@@ -19,8 +19,8 @@
         "name": "Fusengine",
         "url": "https://github.com/fusengine"
       },
-      "homepage": "https://github.com/fusengine/claude-code-plugins",
-      "repository": "https://github.com/fusengine/claude-code-plugins",
+      "homepage": "https://github.com/fusengine/agents",
+      "repository": "https://github.com/fusengine/agents",
       "license": "MIT",
       "keywords": [
         "ai-pilot",
@@ -69,8 +69,8 @@
         "name": "Fusengine",
         "url": "https://github.com/fusengine"
       },
-      "homepage": "https://github.com/fusengine/claude-code-plugins",
-      "repository": "https://github.com/fusengine/claude-code-plugins",
+      "homepage": "https://github.com/fusengine/agents",
+      "repository": "https://github.com/fusengine/agents",
       "license": "MIT",
       "keywords": [
         "git",
@@ -109,8 +109,8 @@
         "name": "Fusengine",
         "url": "https://github.com/fusengine"
       },
-      "homepage": "https://github.com/fusengine/claude-code-plugins",
-      "repository": "https://github.com/fusengine/claude-code-plugins",
+      "homepage": "https://github.com/fusengine/agents",
+      "repository": "https://github.com/fusengine/agents",
       "license": "MIT",
       "keywords": [
         "laravel",
@@ -149,8 +149,8 @@
         "name": "Fusengine",
         "url": "https://github.com/fusengine"
       },
-      "homepage": "https://github.com/fusengine/claude-code-plugins",
-      "repository": "https://github.com/fusengine/claude-code-plugins",
+      "homepage": "https://github.com/fusengine/agents",
+      "repository": "https://github.com/fusengine/agents",
       "license": "MIT",
       "keywords": [
         "nextjs",
@@ -182,8 +182,8 @@
         "name": "Fusengine",
         "url": "https://github.com/fusengine"
       },
-      "homepage": "https://github.com/fusengine/claude-code-plugins",
-      "repository": "https://github.com/fusengine/claude-code-plugins",
+      "homepage": "https://github.com/fusengine/agents",
+      "repository": "https://github.com/fusengine/agents",
       "license": "MIT",
       "keywords": [
         "swift",
@@ -223,8 +223,8 @@
         "name": "Fusengine",
         "url": "https://github.com/fusengine"
       },
-      "homepage": "https://github.com/fusengine/claude-code-plugins",
-      "repository": "https://github.com/fusengine/claude-code-plugins",
+      "homepage": "https://github.com/fusengine/agents",
+      "repository": "https://github.com/fusengine/agents",
       "license": "MIT",
       "keywords": [
         "solid",

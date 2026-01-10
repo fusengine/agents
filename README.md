@@ -13,7 +13,7 @@ Professional Claude Code plugins with APEX workflow, SOLID principles, and exper
 
 ```bash
 # Install from marketplace
-claude plugins add fusengine/claude-code-plugins
+claude plugins add fusengine/agents
 
 # Or from local path
 claude plugins add /path/to/claude-code-plugins
