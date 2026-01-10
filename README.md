@@ -20,12 +20,12 @@ Professional Claude Code plugins with APEX workflow, SOLID principles, and exper
 ### Install Plugins
 
 ```bash
-/plugin install ai-pilot
-/plugin install commit-pro
-/plugin install laravel-expert
-/plugin install nextjs-expert
-/plugin install swift-apple-expert
-/plugin install solid
+/plugin install fuse:ai-pilot
+/plugin install fuse:commit-pro
+/plugin install fuse:laravel
+/plugin install fuse:nextjs
+/plugin install fuse:swift-apple-expert
+/plugin install fuse:solid
 ```
 
 ### Interactive Menu

@@ -11,7 +11,7 @@
 ### Install a Plugin
 
 ```bash
-/plugin install ai-pilot
+/plugin install fuse:ai-pilot
 ```
 
 ### Interactive Menu
@@ -91,7 +91,7 @@ Access complete Laravel 12 documentation.
 
 Install the plugin:
 ```bash
-/plugin install nextjs-expert
+/plugin install fuse:nextjs
 ```
 
 Use the skills:

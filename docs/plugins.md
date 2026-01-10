@@ -26,12 +26,12 @@ This repository contains 6 professional Claude Code plugins designed for modern 
 ### Install Plugins
 
 ```bash
-/plugin install ai-pilot
-/plugin install commit-pro
-/plugin install laravel-expert
-/plugin install nextjs-expert
-/plugin install swift-apple-expert
-/plugin install solid
+/plugin install fuse:ai-pilot
+/plugin install fuse:commit-pro
+/plugin install fuse:laravel
+/plugin install fuse:nextjs
+/plugin install fuse:swift-apple-expert
+/plugin install fuse:solid
 ```
 
 ### Interactive Menu
