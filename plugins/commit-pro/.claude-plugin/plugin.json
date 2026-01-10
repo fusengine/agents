@@ -1,0 +1,31 @@
+{
+  "name": "fuse:commit-pro",
+  "version": "1.2.1",
+  "description": "Professional git commits with Conventional Commits, auto-detection, and security validation",
+  "author": {
+    "name": "Fusengine",
+    "url": "https://github.com/fusengine"
+  },
+  "homepage": "https://github.com/fusengine/agents",
+  "repository": "https://github.com/fusengine/agents",
+  "license": "MIT",
+  "keywords": ["git", "commit", "conventional-commits", "security", "automation"],
+  "commands": [
+    "./commands/commit.md",
+    "./commands/wip.md",
+    "./commands/fix.md",
+    "./commands/feat.md",
+    "./commands/refactor.md",
+    "./commands/chore.md",
+    "./commands/docs.md",
+    "./commands/test.md",
+    "./commands/undo.md",
+    "./commands/amend.md"
+  ],
+  "agents": [
+    "./agents/commit-detector.md"
+  ],
+  "skills": [
+    "./skills/commit-detection"
+  ]
+}
