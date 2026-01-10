@@ -6,18 +6,18 @@ Skills are modular knowledge packages that provide specialized context and docum
 
 ## Skills by Plugin
 
-### fuse:ai-pilot (4 skills)
+### fuse-ai-pilot (4 skills)
 
 - `research` - Technical research methodology
 - `exploration` - Codebase exploration techniques
 - `code-quality` - Code quality validation with SOLID
 - `seo` - SEO/SEA/GEO 2025 optimization
 
-### fuse:commit-pro (1 skill)
+### fuse-commit-pro (1 skill)
 
 - `commit-detection` - Detects optimal commit type from changes
 
-### fuse:laravel (11 skills)
+### fuse-laravel (11 skills)
 
 - `laravel-architecture` - App architecture, services, DI patterns
 - `laravel-eloquent` - ORM, relationships, scopes, casts
@@ -31,14 +31,14 @@ Skills are modular knowledge packages that provide specialized context and docum
 - `laravel-billing` - Stripe/Paddle with Cashier
 - `solid-php` - SOLID principles for PHP 8.5
 
-### fuse:nextjs (4 skills)
+### fuse-nextjs (4 skills)
 
 - `nextjs-16` - Next.js 16+ documentation
 - `prisma-7` - Prisma 7 ORM documentation
 - `better-auth` - Better Auth authentication
 - `solid-nextjs` - SOLID principles for Next.js
 
-### fuse:swift-apple-expert (12 skills)
+### fuse-swift-apple-expert (12 skills)
 
 - `swiftui-components` - Production SwiftUI views
 - `swift-architecture` - MVVM, Clean Architecture, DI
@@ -53,6 +53,6 @@ Skills are modular knowledge packages that provide specialized context and docum
 - `swift-build` - Build, archive, distribution
 - `solid-swift` - SOLID principles for Swift 6
 
-### fuse:solid (1 skill)
+### fuse-solid (1 skill)
 
 - `solid-detection` - Multi-language SOLID detection rules

@@ -8,12 +8,12 @@ This repository contains 6 professional Claude Code plugins designed for modern 
 
 | Plugin | Description | Category |
 |--------|-------------|----------|
-| `fuse:ai-pilot` | AI workflow agents with APEX methodology | development |
-| `fuse:commit-pro` | Professional git commits with Conventional Commits | productivity |
-| `fuse:laravel` | Expert Laravel 12 + PHP 8.5 development | development |
-| `fuse:nextjs` | Expert Next.js 16 + React 19 development | development |
-| `fuse:swift-apple-expert` | Expert Swift 6 + SwiftUI for Apple platforms | development |
-| `fuse:solid` | SOLID principles enforcement for all languages | productivity |
+| `fuse-ai-pilot` | AI workflow agents with APEX methodology | development |
+| `fuse-commit-pro` | Professional git commits with Conventional Commits | productivity |
+| `fuse-laravel` | Expert Laravel 12 + PHP 8.5 development | development |
+| `fuse-nextjs` | Expert Next.js 16 + React 19 development | development |
+| `fuse-swift-apple-expert` | Expert Swift 6 + SwiftUI for Apple platforms | development |
+| `fuse-solid` | SOLID principles enforcement for all languages | productivity |
 
 ## Installation
 
@@ -26,12 +26,12 @@ This repository contains 6 professional Claude Code plugins designed for modern 
 ### Install Plugins
 
 ```bash
-/plugin install fuse:ai-pilot
-/plugin install fuse:commit-pro
-/plugin install fuse:laravel
-/plugin install fuse:nextjs
-/plugin install fuse:swift-apple-expert
-/plugin install fuse:solid
+/plugin install fuse-ai-pilot
+/plugin install fuse-commit-pro
+/plugin install fuse-laravel
+/plugin install fuse-nextjs
+/plugin install fuse-swift-apple-expert
+/plugin install fuse-solid
 ```
 
 ### Interactive Menu

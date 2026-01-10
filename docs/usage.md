@@ -11,7 +11,7 @@
 ### Install a Plugin
 
 ```bash
-/plugin install fuse:ai-pilot
+/plugin install fuse-ai-pilot
 ```
 
 ### Interactive Menu
@@ -91,7 +91,7 @@ Access complete Laravel 12 documentation.
 
 Install the plugin:
 ```bash
-/plugin install fuse:nextjs
+/plugin install fuse-nextjs
 ```
 
 Use the skills:
@@ -113,4 +113,4 @@ Use the skills:
 
 1. **Combine skills**: Use multiple skills in one session for comprehensive context
 2. **Use agents**: For complex tasks, agents provide specialized capabilities
-3. **SOLID validation**: Enable `fuse:solid` for automatic code quality checks
+3. **SOLID validation**: Enable `fuse-solid` for automatic code quality checks

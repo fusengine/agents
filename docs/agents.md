@@ -6,7 +6,7 @@ Agents are specialized AI assistants that can be invoked via the `Task` tool. Ea
 
 ## Available Agents
 
-### fuse:ai-pilot
+### fuse-ai-pilot
 
 | Agent | Description |
 |-------|-------------|
@@ -17,31 +17,31 @@ Agents are specialized AI assistants that can be invoked via the `Task` tool. Ea
 | `websearch` | Quick web research using Exa |
 | `seo-expert` | SEO/SEA/GEO 2025 optimization |
 
-### fuse:commit-pro
+### fuse-commit-pro
 
 | Agent | Description |
 |-------|-------------|
 | `commit-detector` | Smart commit type detection from git changes |
 
-### fuse:laravel
+### fuse-laravel
 
 | Agent | Description |
 |-------|-------------|
 | `laravel-expert` | Expert Laravel 12 development with Context7 docs |
 
-### fuse:nextjs
+### fuse-nextjs
 
 | Agent | Description |
 |-------|-------------|
 | `nextjs-expert` | Expert Next.js 16+ with App Router, Prisma 7, Better Auth |
 
-### fuse:swift-apple-expert
+### fuse-swift-apple-expert
 
 | Agent | Description |
 |-------|-------------|
 | `swift-expert` | Expert Swift and SwiftUI for all Apple platforms |
 
-### fuse:solid
+### fuse-solid
 
 | Agent | Description |
 |-------|-------------|

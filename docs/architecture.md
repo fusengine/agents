@@ -48,9 +48,9 @@ Each plugin is isolated with its own agents, commands, and skills. Users load on
 
 All plugin metadata is defined in `.claude-plugin/marketplace.json`. No per-plugin configuration files.
 
-### 3. fuse: Namespace
+### 3. fuse- Namespace
 
-All plugins use the `fuse:` prefix for consistent branding and easy identification.
+All plugins use the `fuse-` prefix for consistent branding and easy identification.
 
 ### 4. SOLID Compliance
 

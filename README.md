@@ -20,12 +20,12 @@ Professional Claude Code plugins with APEX workflow, SOLID principles, and exper
 ### Install Plugins
 
 ```bash
-/plugin install fuse:ai-pilot
-/plugin install fuse:commit-pro
-/plugin install fuse:laravel
-/plugin install fuse:nextjs
-/plugin install fuse:swift-apple-expert
-/plugin install fuse:solid
+/plugin install fuse-ai-pilot
+/plugin install fuse-commit-pro
+/plugin install fuse-laravel
+/plugin install fuse-nextjs
+/plugin install fuse-swift-apple-expert
+/plugin install fuse-solid
 ```
 
 ### Interactive Menu
@@ -57,12 +57,12 @@ Professional Claude Code plugins with APEX workflow, SOLID principles, and exper
 
 | Plugin | Description | Category |
 |--------|-------------|----------|
-| [fuse:ai-pilot](./plugins/ai-pilot) | AI workflow agents with APEX methodology | development |
-| [fuse:commit-pro](./plugins/commit-pro) | Professional git commits with Conventional Commits | productivity |
-| [fuse:laravel](./plugins/laravel-expert) | Expert Laravel 12 + PHP 8.5 development | development |
-| [fuse:nextjs](./plugins/nextjs-expert) | Expert Next.js 16 + React 19 development | development |
-| [fuse:swift-apple-expert](./plugins/swift-apple-expert) | Expert Swift 6 + SwiftUI for Apple platforms | development |
-| [fuse:solid](./plugins/solid) | SOLID principles enforcement for all languages | productivity |
+| [fuse-ai-pilot](./plugins/ai-pilot) | AI workflow agents with APEX methodology | development |
+| [fuse-commit-pro](./plugins/commit-pro) | Professional git commits with Conventional Commits | productivity |
+| [fuse-laravel](./plugins/laravel-expert) | Expert Laravel 12 + PHP 8.5 development | development |
+| [fuse-nextjs](./plugins/nextjs-expert) | Expert Next.js 16 + React 19 development | development |
+| [fuse-swift-apple-expert](./plugins/swift-apple-expert) | Expert Swift 6 + SwiftUI for Apple platforms | development |
+| [fuse-solid](./plugins/solid) | SOLID principles enforcement for all languages | productivity |
 
 ## Documentation
 
@@ -74,7 +74,7 @@ Professional Claude Code plugins with APEX workflow, SOLID principles, and exper
 
 ## Plugin Details
 
-### fuse:ai-pilot
+### fuse-ai-pilot
 
 AI-powered workflow agents for intelligent development.
 
@@ -82,31 +82,31 @@ AI-powered workflow agents for intelligent development.
 
 **Agents:** sniper, sniper-faster, explore-codebase, research-expert, websearch, seo-expert
 
-### fuse:commit-pro
+### fuse-commit-pro
 
 Professional git commits with smart detection.
 
 **Commands:** `/commit`, `/wip`, `/fix`, `/feat`, `/refactor`, `/chore`, `/docs`, `/test`, `/undo`, `/amend`
 
-### fuse:laravel
+### fuse-laravel
 
 Expert Laravel 12 + PHP 8.5 with comprehensive documentation.
 
 **Skills:** laravel-architecture, laravel-eloquent, laravel-api, laravel-auth, laravel-testing, laravel-queues, laravel-livewire, laravel-blade, laravel-migrations, laravel-billing, solid-php
 
-### fuse:nextjs
+### fuse-nextjs
 
 Expert Next.js 16 with App Router, Server Components, Prisma 7, Better Auth.
 
 **Skills:** nextjs-16, prisma-7, better-auth, solid-nextjs
 
-### fuse:swift-apple-expert
+### fuse-swift-apple-expert
 
 Expert Swift 6 + SwiftUI for all Apple platforms.
 
 **Skills:** swiftui-components, swift-architecture, swift-concurrency, swiftui-navigation, swiftui-data, apple-platforms, swiftui-testing, swift-performance, swift-i18n, swift-app-icons, swift-build, solid-swift
 
-### fuse:solid
+### fuse-solid
 
 SOLID principles enforcement with automatic project detection.
 
