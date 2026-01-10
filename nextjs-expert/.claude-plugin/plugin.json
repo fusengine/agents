@@ -1,9 +1,0 @@
-{
-  "name": "fuse:nextjs",
-  "description": "Expert Next.js 16 + React 19 with App Router, Server Components, Prisma 7, and Better Auth",
-  "version": "1.0.0",
-  "author": {
-    "name": "Fusengine",
-    "email": "hello@fusengine.ch"
-  }
-}

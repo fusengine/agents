@@ -1,9 +1,0 @@
-{
-  "name": "fuse:commit-pro",
-  "description": "Professional git commits with Conventional Commits, auto-detection, and security validation",
-  "version": "1.2.1",
-  "author": {
-    "name": "Fusengine",
-    "email": "hello@fusengine.ch"
-  }
-}

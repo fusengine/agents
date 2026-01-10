@@ -1,137 +1,102 @@
 # Fusengine Claude Code Plugins
 
-A collection of professional Claude Code plugins for enhanced development workflows.
+Professional Claude Code plugins with APEX workflow, SOLID principles, and expert development agents.
 
-## Installation
+## Overview
+
+- **6 plugins** - Focused, single-purpose plugins
+- **11 agents** - Specialized AI assistants
+- **32 skills** - Modular knowledge packages
+- **21 commands** - User-invocable workflows
+
+## Quick Start
 
 ```bash
-# Add this marketplace
-/plugin marketplace add fusengine/claude-code-plugins
+# Install from marketplace
+claude plugins add fusengine/claude-code-plugins
 
 # Or from local path
-/plugin marketplace add /path/to/claude-code-plugins
+claude plugins add /path/to/claude-code-plugins
 ```
 
 ## Available Plugins
 
-| Plugin | Version | Description |
-|--------|---------|-------------|
-| [fuse:commit-pro](./commit-pro) | 1.2.1 | Professional git commits with auto-detection |
-| [fuse:laravel](./laravel-expert) | 1.1.0 | Expert Laravel 12 + PHP 8.5 with SOLID |
-| [fuse:nextjs](./nextjs-expert) | 1.0.0 | Expert Next.js 16 + React 19 with modular architecture |
-| [fuse:swift-apple-expert](./swift-apple-expert) | 1.0.0 | Expert Swift 6 + SwiftUI for Apple platforms |
-| [fuse:solid](./apex-solid) | 1.0.0 | SOLID enforcement with auto-detection hooks |
-| [fuse:ai-pilot](./ai-pilot) | 1.0.0 | AI Pilot agents: sniper, research, explore, experts |
+| Plugin | Description | Category |
+|--------|-------------|----------|
+| [fuse:ai-pilot](./plugins/ai-pilot) | AI workflow agents with APEX methodology | development |
+| [fuse:commit-pro](./plugins/commit-pro) | Professional git commits with Conventional Commits | productivity |
+| [fuse:laravel](./plugins/laravel-expert) | Expert Laravel 12 + PHP 8.5 development | development |
+| [fuse:nextjs](./plugins/nextjs-expert) | Expert Next.js 16 + React 19 development | development |
+| [fuse:swift-apple-expert](./plugins/swift-apple-expert) | Expert Swift 6 + SwiftUI for Apple platforms | development |
+| [fuse:solid](./plugins/apex-solid) | SOLID principles enforcement for all languages | productivity |
 
-## Plugins
+## Documentation
+
+- [Plugins Guide](./docs/plugins.md)
+- [Agents Reference](./docs/agents.md)
+- [Skills Reference](./docs/skills.md)
+- [Architecture](./docs/architecture.md)
+- [Usage Guide](./docs/usage.md)
+
+## Plugin Details
+
+### fuse:ai-pilot
+
+AI-powered workflow agents for intelligent development.
+
+**Commands:** `/apex`, `/epct`, `/commit`, `/watch-ci`, `/fix-pr-comments`, `/create-pull-request`
+
+**Agents:** sniper, sniper-faster, explore-codebase, research-expert, websearch, seo-expert
 
 ### fuse:commit-pro
 
-Professional git commits following Conventional Commits standard.
+Professional git commits with smart detection.
 
-**Features:**
-- Smart auto-detection of commit type
-- Security validation (blocks secrets)
-- No AI signature in commits
-
-```bash
-/plugin install fuse:commit-pro@fusengine-plugins
-```
+**Commands:** `/commit`, `/wip`, `/fix`, `/feat`, `/refactor`, `/chore`, `/docs`, `/test`, `/undo`, `/amend`
 
 ### fuse:laravel
 
-Expert Laravel 12 development with comprehensive SOLID principles.
+Expert Laravel 12 + PHP 8.5 with comprehensive documentation.
 
-**Features:**
-- SOLID PHP architecture (files < 100 lines)
-- Codebase analysis before coding
-- DRY - reuse before creating
-- Eloquent, Livewire, Blade, API skills
-- Context7 + Exa research integration
-
-```bash
-/plugin install fuse:laravel@fusengine-plugins
-```
+**Skills:** laravel-architecture, laravel-eloquent, laravel-api, laravel-auth, laravel-testing, laravel-queues, laravel-livewire, laravel-blade, laravel-migrations, laravel-billing, solid-php
 
 ### fuse:nextjs
 
-Expert Next.js 16 development with modular architecture.
+Expert Next.js 16 with App Router, Server Components, Prisma 7, Better Auth.
 
-**Features:**
-- SOLID Next.js with modular structure (`modules/cores/`, `modules/[feature]/`)
-- Codebase analysis before coding
-- DRY - reuse before creating
-- App Router, Server Components, Prisma 7, Better Auth
-- Context7 + Exa research integration
-
-```bash
-/plugin install fuse:nextjs@fusengine-plugins
-```
+**Skills:** nextjs-16, prisma-7, better-auth, solid-nextjs
 
 ### fuse:swift-apple-expert
 
 Expert Swift 6 + SwiftUI for all Apple platforms.
 
-**Features:**
-- SOLID Swift with Apple 2025 best practices
-- Codebase analysis before coding
-- DRY - reuse before creating
-- @Observable, actors, #Preview, String Catalogs
-- iOS, macOS, iPadOS, watchOS, visionOS support
-
-```bash
-/plugin install fuse:swift-apple-expert@fusengine-plugins
-```
+**Skills:** swiftui-components, swift-architecture, swift-concurrency, swiftui-navigation, swiftui-data, apple-platforms, swiftui-testing, swift-performance, swift-i18n, swift-app-icons, swift-build, solid-swift
 
 ### fuse:solid
 
-SOLID principles enforcement with automatic hooks.
+SOLID principles enforcement with automatic project detection.
 
-**Features:**
+**Agent:** solid-orchestrator
 
-- Auto-detects project type (Next.js, Laravel, Swift, Go, Python, Rust)
-- Blocks interfaces in wrong locations (PreToolUse hook)
-- Warns on file size violations (PostToolUse hook)
-- Works with all expert plugins
+**Skills:** solid-detection
 
-**Hooks:**
-| Hook | Action |
-|------|--------|
-| SessionStart | Detect project type |
-| PreToolUse | Validate interface locations |
-| PostToolUse | Check file size limits |
+## Architecture
 
-```bash
-/plugin install fuse:solid@fusengine-plugins
 ```
-
-### fuse:ai-pilot
-
-Collection of specialized agents for AI-assisted development workflows.
-
-**Agents:**
-- **sniper** - Code quality expert, zero-error tolerance
-- **sniper-faster** - Rapid modifications, minimal output
-- **research-expert** - Context7 + Exa documentation research
-- **explore-codebase** - Comprehensive codebase discovery
-- **seo-expert** - SEO/SEA/GEO 2025 optimization
-- **websearch** - Quick web research with Exa
-
-```bash
-/plugin install fuse:ai-pilot@fusengine-plugins
+fusengine-plugins/
+├── .claude-plugin/
+│   └── marketplace.json
+├── docs/
+├── plugins/
+│   ├── ai-pilot/
+│   ├── apex-solid/
+│   ├── commit-pro/
+│   ├── laravel-expert/
+│   ├── nextjs-expert/
+│   └── swift-apple-expert/
+├── LICENSE
+└── README.md
 ```
-
----
-
-## Common Features (All Expert Plugins)
-
-All expert plugins share these capabilities:
-
-1. **Research Before Coding** - Context7 + Exa documentation lookup
-2. **Codebase Analysis** - Understand architecture before implementing
-3. **DRY Enforcement** - Reuse existing code, extract shared helpers
-4. **SOLID Principles** - Files < 100-150 lines, interfaces separated
-5. **Documentation** - PHPDoc/JSDoc/Swift docs mandatory
 
 ## License
 

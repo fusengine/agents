@@ -1,9 +1,0 @@
-{
-  "name": "fuse:ai-pilot",
-  "description": "AI Pilot workflow agents: sniper (code quality), research-expert, explore-codebase, seo-expert, websearch",
-  "version": "1.0.0",
-  "author": {
-    "name": "Fusengine",
-    "email": "hello@fusengine.ch"
-  }
-}

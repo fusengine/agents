@@ -1,9 +1,0 @@
-{
-  "name": "fuse:swift-apple-expert",
-  "description": "Expert Swift 6 + SwiftUI for all Apple platforms with @Observable, actors, and best practices",
-  "version": "1.0.0",
-  "author": {
-    "name": "Fusengine",
-    "email": "hello@fusengine.ch"
-  }
-}

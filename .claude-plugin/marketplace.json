@@ -1,78 +1,247 @@
 {
-  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "fusengine-plugins",
-  "version": "1.0.0",
-  "description": "Professional Claude Code plugins with APEX workflow, SOLID principles, and expert development agents",
   "owner": {
     "name": "Fusengine",
-    "email": "hello@fusengine.ch"
+    "email": "hello@fusengine.ch",
+    "url": "https://github.com/fusengine"
+  },
+  "metadata": {
+    "description": "Professional Claude Code plugins with APEX workflow, SOLID principles, and expert development agents for Next.js, Laravel, Swift, and more",
+    "version": "1.1.0"
   },
   "plugins": [
     {
+      "name": "fuse:ai-pilot",
+      "source": "./plugins/ai-pilot",
+      "description": "AI Pilot workflow agents: sniper (code quality), research-expert, explore-codebase, seo-expert, websearch",
+      "version": "1.0.0",
+      "author": {
+        "name": "Fusengine",
+        "url": "https://github.com/fusengine"
+      },
+      "homepage": "https://github.com/fusengine/claude-code-plugins",
+      "repository": "https://github.com/fusengine/claude-code-plugins",
+      "license": "MIT",
+      "keywords": [
+        "ai-pilot",
+        "workflow",
+        "apex",
+        "code-quality",
+        "research",
+        "seo"
+      ],
+      "category": "development",
+      "strict": false,
+      "commands": [
+        "./commands/apex.md",
+        "./commands/epct.md",
+        "./commands/explain-architecture.md",
+        "./commands/deep-code-analysis.md",
+        "./commands/prisma-optimize.md",
+        "./commands/watch-ci.md",
+        "./commands/cleanup-context.md",
+        "./commands/fix-pr-comments.md",
+        "./commands/create-pull-request.md",
+        "./commands/commit.md",
+        "./commands/run-tasks.md"
+      ],
+      "agents": [
+        "./agents/sniper.md",
+        "./agents/sniper-faster.md",
+        "./agents/explore-codebase.md",
+        "./agents/research-expert.md",
+        "./agents/websearch.md",
+        "./agents/seo-expert.md"
+      ],
+      "skills": [
+        "./skills/research",
+        "./skills/exploration",
+        "./skills/code-quality",
+        "./skills/seo"
+      ]
+    },
+    {
       "name": "fuse:commit-pro",
+      "source": "./plugins/commit-pro",
       "description": "Professional git commits with Conventional Commits, auto-detection, and security validation",
       "version": "1.2.1",
       "author": {
         "name": "Fusengine",
-        "email": "hello@fusengine.ch"
+        "url": "https://github.com/fusengine"
       },
-      "source": "./commit-pro",
-      "category": "productivity"
+      "homepage": "https://github.com/fusengine/claude-code-plugins",
+      "repository": "https://github.com/fusengine/claude-code-plugins",
+      "license": "MIT",
+      "keywords": [
+        "git",
+        "commit",
+        "conventional-commits",
+        "security",
+        "automation"
+      ],
+      "category": "productivity",
+      "strict": false,
+      "commands": [
+        "./commands/commit.md",
+        "./commands/wip.md",
+        "./commands/fix.md",
+        "./commands/feat.md",
+        "./commands/refactor.md",
+        "./commands/chore.md",
+        "./commands/docs.md",
+        "./commands/test.md",
+        "./commands/undo.md",
+        "./commands/amend.md"
+      ],
+      "agents": [
+        "./agents/commit-detector.md"
+      ],
+      "skills": [
+        "./skills/commit-detection"
+      ]
     },
     {
       "name": "fuse:laravel",
+      "source": "./plugins/laravel-expert",
       "description": "Expert Laravel 12 + PHP 8.5 with SOLID principles, Eloquent, Livewire, and comprehensive documentation",
       "version": "1.1.0",
       "author": {
         "name": "Fusengine",
-        "email": "hello@fusengine.ch"
+        "url": "https://github.com/fusengine"
       },
-      "source": "./laravel-expert",
-      "category": "development"
+      "homepage": "https://github.com/fusengine/claude-code-plugins",
+      "repository": "https://github.com/fusengine/claude-code-plugins",
+      "license": "MIT",
+      "keywords": [
+        "laravel",
+        "php",
+        "eloquent",
+        "livewire",
+        "blade",
+        "solid"
+      ],
+      "category": "development",
+      "strict": false,
+      "commands": [],
+      "agents": [
+        "./agents/laravel-expert.md"
+      ],
+      "skills": [
+        "./skills/laravel-architecture",
+        "./skills/laravel-eloquent",
+        "./skills/laravel-api",
+        "./skills/laravel-auth",
+        "./skills/laravel-testing",
+        "./skills/laravel-queues",
+        "./skills/laravel-livewire",
+        "./skills/laravel-blade",
+        "./skills/laravel-migrations",
+        "./skills/laravel-billing",
+        "./skills/solid-php"
+      ]
     },
     {
       "name": "fuse:nextjs",
+      "source": "./plugins/nextjs-expert",
       "description": "Expert Next.js 16 + React 19 with App Router, Server Components, Prisma 7, and Better Auth",
       "version": "1.0.0",
       "author": {
         "name": "Fusengine",
-        "email": "hello@fusengine.ch"
+        "url": "https://github.com/fusengine"
       },
-      "source": "./nextjs-expert",
-      "category": "development"
+      "homepage": "https://github.com/fusengine/claude-code-plugins",
+      "repository": "https://github.com/fusengine/claude-code-plugins",
+      "license": "MIT",
+      "keywords": [
+        "nextjs",
+        "react",
+        "prisma",
+        "better-auth",
+        "app-router",
+        "server-components"
+      ],
+      "category": "development",
+      "strict": false,
+      "commands": [],
+      "agents": [
+        "./agents/nextjs-expert.md"
+      ],
+      "skills": [
+        "./skills/nextjs-16",
+        "./skills/prisma-7",
+        "./skills/better-auth",
+        "./skills/solid-nextjs"
+      ]
     },
     {
       "name": "fuse:swift-apple-expert",
+      "source": "./plugins/swift-apple-expert",
       "description": "Expert Swift 6 + SwiftUI for all Apple platforms with @Observable, actors, and best practices",
       "version": "1.0.0",
       "author": {
         "name": "Fusengine",
-        "email": "hello@fusengine.ch"
+        "url": "https://github.com/fusengine"
       },
-      "source": "./swift-apple-expert",
-      "category": "development"
+      "homepage": "https://github.com/fusengine/claude-code-plugins",
+      "repository": "https://github.com/fusengine/claude-code-plugins",
+      "license": "MIT",
+      "keywords": [
+        "swift",
+        "swiftui",
+        "ios",
+        "macos",
+        "apple",
+        "concurrency"
+      ],
+      "category": "development",
+      "strict": false,
+      "commands": [],
+      "agents": [
+        "./agents/swift-expert.md"
+      ],
+      "skills": [
+        "./skills/swiftui-components",
+        "./skills/swift-architecture",
+        "./skills/swift-concurrency",
+        "./skills/swiftui-navigation",
+        "./skills/swiftui-data",
+        "./skills/apple-platforms",
+        "./skills/swiftui-testing",
+        "./skills/swift-performance",
+        "./skills/swift-i18n",
+        "./skills/swift-app-icons",
+        "./skills/swift-build",
+        "./skills/solid-swift"
+      ]
     },
     {
       "name": "fuse:solid",
+      "source": "./plugins/apex-solid",
       "description": "SOLID principles enforcement with automatic project detection and validation for all languages",
       "version": "1.0.0",
       "author": {
         "name": "Fusengine",
-        "email": "hello@fusengine.ch"
+        "url": "https://github.com/fusengine"
       },
-      "source": "./apex-solid",
-      "category": "productivity"
-    },
-    {
-      "name": "fuse:ai-pilot",
-      "description": "AI Pilot workflow agents: sniper, research-expert, explore-codebase, seo-expert, websearch",
-      "version": "1.0.0",
-      "author": {
-        "name": "Fusengine",
-        "email": "hello@fusengine.ch"
-      },
-      "source": "./ai-pilot",
-      "category": "development"
+      "homepage": "https://github.com/fusengine/claude-code-plugins",
+      "repository": "https://github.com/fusengine/claude-code-plugins",
+      "license": "MIT",
+      "keywords": [
+        "solid",
+        "architecture",
+        "code-quality",
+        "validation",
+        "multi-language"
+      ],
+      "category": "productivity",
+      "strict": false,
+      "commands": [],
+      "agents": [
+        "./agents/solid-orchestrator.md"
+      ],
+      "skills": [
+        "./skills/solid-detection"
+      ]
     }
   ]
 }
