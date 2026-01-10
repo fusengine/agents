@@ -9,14 +9,48 @@ Professional Claude Code plugins with APEX workflow, SOLID principles, and exper
 - **32 skills** - Modular knowledge packages
 - **21 commands** - User-invocable workflows
 
-## Quick Start
+## Installation
+
+### Add Marketplace
 
 ```bash
-# Install from marketplace
-claude plugins add fusengine/agents
+/plugin marketplace add fusengine/agents
+```
 
-# Or from local path
-claude plugins add /path/to/claude-code-plugins
+### Install Plugins
+
+```bash
+/plugin install ai-pilot
+/plugin install commit-pro
+/plugin install laravel-expert
+/plugin install nextjs-expert
+/plugin install swift-apple-expert
+/plugin install solid
+```
+
+### Interactive Menu
+
+```bash
+/plugin
+```
+
+### List Installed Plugins
+
+```bash
+/plugin list
+```
+
+### Enable/Disable Plugin
+
+```bash
+/plugin enable <plugin-name>
+/plugin disable <plugin-name>
+```
+
+### Remove Marketplace
+
+```bash
+/plugin marketplace remove fusengine/agents
 ```
 
 ## Available Plugins
@@ -89,10 +123,10 @@ fusengine-plugins/
 ├── docs/
 ├── plugins/
 │   ├── ai-pilot/
-│   ├── solid/
 │   ├── commit-pro/
 │   ├── laravel-expert/
 │   ├── nextjs-expert/
+│   ├── solid/
 │   └── swift-apple-expert/
 ├── LICENSE
 └── README.md

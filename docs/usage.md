@@ -1,14 +1,45 @@
 # Usage Guide
 
-## Quick Start
+## Installation
+
+### Add Marketplace
+
+```bash
+/plugin marketplace add fusengine/agents
+```
 
 ### Install a Plugin
 
 ```bash
-claude plugins install fuse:ai-pilot
+/plugin install ai-pilot
 ```
 
-### Use Commands
+### Interactive Menu
+
+```bash
+/plugin
+```
+
+### List Installed Plugins
+
+```bash
+/plugin list
+```
+
+### Enable/Disable Plugin
+
+```bash
+/plugin enable <plugin-name>
+/plugin disable <plugin-name>
+```
+
+### Remove Marketplace
+
+```bash
+/plugin marketplace remove fusengine/agents
+```
+
+## Use Commands
 
 Commands are invoked with a `/` prefix:
 
@@ -18,7 +49,7 @@ Commands are invoked with a `/` prefix:
 /epct          # Explore-Plan-Code-Test workflow
 ```
 
-### Use Skills
+## Use Skills
 
 Skills are invoked with a `/` prefix:
 
@@ -60,7 +91,7 @@ Access complete Laravel 12 documentation.
 
 Install the plugin:
 ```bash
-claude plugins install fuse:nextjs
+/plugin install nextjs-expert
 ```
 
 Use the skills:

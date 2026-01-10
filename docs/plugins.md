@@ -17,15 +17,46 @@ This repository contains 6 professional Claude Code plugins designed for modern 
 
 ## Installation
 
-Each plugin can be installed individually using the Claude Code CLI:
+### Add Marketplace
 
 ```bash
-claude plugins install fuse:ai-pilot
-claude plugins install fuse:commit-pro
-claude plugins install fuse:laravel
-claude plugins install fuse:nextjs
-claude plugins install fuse:swift-apple-expert
-claude plugins install fuse:solid
+/plugin marketplace add fusengine/agents
+```
+
+### Install Plugins
+
+```bash
+/plugin install ai-pilot
+/plugin install commit-pro
+/plugin install laravel-expert
+/plugin install nextjs-expert
+/plugin install swift-apple-expert
+/plugin install solid
+```
+
+### Interactive Menu
+
+```bash
+/plugin
+```
+
+### List Installed Plugins
+
+```bash
+/plugin list
+```
+
+### Enable/Disable Plugin
+
+```bash
+/plugin enable <plugin-name>
+/plugin disable <plugin-name>
+```
+
+### Remove Marketplace
+
+```bash
+/plugin marketplace remove fusengine/agents
 ```
 
 ## Plugin Structure
