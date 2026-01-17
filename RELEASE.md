@@ -1,5 +1,15 @@
 # Release Notes
 
+## [1.5.0] - 18-01-2026
+
+### Added
+- Mandatory skills usage enforcement for nextjs-expert, react-expert, laravel-expert
+- Task-to-skill mapping tables in agent definitions
+- 4-step workflow: identify domain → load skill → follow docs → code
+
+### Changed
+- Updated marketplace.json to v1.5.0
+
 ## [1.4.0] - 17-01-2026
 
 ### Added
