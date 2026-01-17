@@ -114,11 +114,11 @@ Use `logo_search` to find brand logos:
 - `componentCode`: Main component implementation
 - `demoCode`: Usage example
 - `registryDependencies`: Required shadcn components
-- `npmDependencies`: Required npm packages
+- `npmDependencies`: Required packages (use `bun add`)
 
 ### Integration Steps
 
-1. Install dependencies from `npmDependencies`
+1. Install dependencies from `npmDependencies` with `bun add`
 2. Add shadcn components from `registryDependencies`
 3. Copy `componentCode` to your project
 4. Customize styles and content as needed

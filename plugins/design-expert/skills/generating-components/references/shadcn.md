@@ -2,7 +2,7 @@
 
 ## Overview
 
-shadcn/ui is a collection of reusable components built with Radix UI and Tailwind CSS. Components are copy-paste, not installed via npm.
+shadcn/ui is a collection of reusable components built with Radix UI and Tailwind CSS. Components are copy-paste, not installed via package manager.
 
 ## Available Tools
 

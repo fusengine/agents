@@ -3,7 +3,7 @@
 ## Installation
 
 ```bash
-npm install framer-motion
+bun add framer-motion
 ```
 
 ## Core Concepts
