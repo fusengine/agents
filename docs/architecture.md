@@ -30,7 +30,13 @@ fusengine-plugins/
 │   ├── swift-apple-expert/
 │   │   ├── agents/
 │   │   └── skills/
-│   └── solid/
+│   ├── solid/
+│   │   ├── agents/
+│   │   └── skills/
+│   ├── tailwindcss/
+│   │   ├── agents/
+│   │   └── skills/
+│   └── react-expert/
 │       ├── agents/
 │       └── skills/
 ├── .gitignore

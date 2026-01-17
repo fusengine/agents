@@ -31,12 +31,15 @@ Skills are modular knowledge packages that provide specialized context and docum
 - `laravel-billing` - Stripe/Paddle with Cashier
 - `solid-php` - SOLID principles for PHP 8.5
 
-### fuse-nextjs (4 skills)
+### fuse-nextjs (7 skills)
 
 - `nextjs-16` - Next.js 16+ documentation
 - `prisma-7` - Prisma 7 ORM documentation
 - `better-auth` - Better Auth authentication
 - `solid-nextjs` - SOLID principles for Next.js
+- `nextjs-tanstack-form` - TanStack Form with Server Actions
+- `nextjs-zustand` - Zustand for Client Components
+- `nextjs-shadcn` - shadcn/ui with Field components
 
 ### fuse-swift-apple-expert (12 skills)
 
@@ -74,3 +77,15 @@ Skills are modular knowledge packages that provide specialized context and docum
 - `tailwindcss-effects` - Shadows, Filters, mask-* (NEW)
 - `tailwindcss-transforms` - Transform, Transition, Animation
 - `tailwindcss-interactivity` - Cursor, Scroll, Touch, Accent-color
+
+### fuse-react (9 skills)
+
+- `solid-react` - SOLID principles for React 19 with modular architecture
+- `react-19` - React 19 features: `use()`, `useOptimistic`, `useActionState`
+- `react-hooks` - Custom hooks patterns and best practices
+- `react-tanstack-router` - File-based routing with type-safe search params
+- `react-state` - State management with Zustand and Jotai
+- `react-forms` - TanStack Form with Zod validation
+- `react-testing` - Testing Library with Vitest
+- `react-performance` - Performance optimization patterns
+- `react-shadcn` - shadcn/ui with TanStack Form integration

@@ -4,9 +4,9 @@ Professional Claude Code plugins with APEX workflow, SOLID principles, and exper
 
 ## Overview
 
-- **7 plugins** - Focused, single-purpose plugins
-- **12 agents** - Specialized AI assistants
-- **47 skills** - Modular knowledge packages
+- **8 plugins** - Focused, single-purpose plugins
+- **13 agents** - Specialized AI assistants
+- **56 skills** - Modular knowledge packages
 - **21 commands** - User-invocable workflows
 
 ## Installation
@@ -27,6 +27,7 @@ Professional Claude Code plugins with APEX workflow, SOLID principles, and exper
 /plugin install fuse-swift-apple-expert
 /plugin install fuse-solid
 /plugin install fuse-tailwindcss
+/plugin install fuse-react
 ```
 
 ### Interactive Menu
@@ -65,6 +66,7 @@ Professional Claude Code plugins with APEX workflow, SOLID principles, and exper
 | [fuse-swift-apple-expert](./plugins/swift-apple-expert) | Expert Swift 6 + SwiftUI for Apple platforms | development |
 | [fuse-solid](./plugins/solid) | SOLID principles enforcement for all languages | productivity |
 | [fuse-tailwindcss](./plugins/tailwindcss) | Expert Tailwind CSS v4.1 with CSS-first config | development |
+| [fuse-react](./plugins/react-expert) | Expert React 19 with TanStack Router, TanStack Form, Zustand, shadcn/ui | development |
 
 ## Documentation
 
@@ -98,9 +100,9 @@ Expert Laravel 12 + PHP 8.5 with comprehensive documentation.
 
 ### fuse-nextjs
 
-Expert Next.js 16 with App Router, Server Components, Prisma 7, Better Auth.
+Expert Next.js 16 with App Router, Server Components, Prisma 7, Better Auth, TanStack Form, Zustand, shadcn/ui.
 
-**Skills:** nextjs-16, prisma-7, better-auth, solid-nextjs
+**Skills:** nextjs-16, prisma-7, better-auth, solid-nextjs, nextjs-tanstack-form, nextjs-zustand, nextjs-shadcn
 
 ### fuse-swift-apple-expert
 
@@ -124,6 +126,14 @@ Expert Tailwind CSS v4.1 with CSS-first configuration, Oxide engine, and OKLCH c
 
 **Skills:** tailwindcss-v4, tailwindcss-core, tailwindcss-utilities, tailwindcss-responsive, tailwindcss-custom-styles, tailwindcss-layout, tailwindcss-spacing, tailwindcss-sizing, tailwindcss-typography, tailwindcss-backgrounds, tailwindcss-borders, tailwindcss-effects, tailwindcss-transforms, tailwindcss-interactivity
 
+### fuse-react
+
+Expert React 19 with TanStack Router, TanStack Form, Zustand, Testing Library, shadcn/ui.
+
+**Agent:** react-expert
+
+**Skills:** solid-react, react-19, react-hooks, react-tanstack-router, react-state, react-forms, react-testing, react-performance, react-shadcn
+
 ## Architecture
 
 ```
@@ -136,6 +146,7 @@ fusengine-plugins/
 │   ├── commit-pro/
 │   ├── laravel-expert/
 │   ├── nextjs-expert/
+│   ├── react-expert/
 │   ├── solid/
 │   ├── swift-apple-expert/
 │   └── tailwindcss/

@@ -143,8 +143,8 @@
     {
       "name": "fuse-nextjs",
       "source": "./plugins/nextjs-expert",
-      "description": "Expert Next.js 16 + React 19 with App Router, Server Components, Prisma 7, and Better Auth",
-      "version": "1.0.0",
+      "description": "Expert Next.js 16 + React 19 with App Router, Server Components, Prisma 7, Better Auth, TanStack Form, Zustand, shadcn/ui",
+      "version": "1.1.0",
       "author": {
         "name": "Fusengine",
         "url": "https://github.com/fusengine"
@@ -157,6 +157,9 @@
         "react",
         "prisma",
         "better-auth",
+        "tanstack-form",
+        "zustand",
+        "shadcn",
         "app-router",
         "server-components"
       ],
@@ -170,7 +173,10 @@
         "./skills/nextjs-16",
         "./skills/prisma-7",
         "./skills/better-auth",
-        "./skills/solid-nextjs"
+        "./skills/solid-nextjs",
+        "./skills/nextjs-tanstack-form",
+        "./skills/nextjs-zustand",
+        "./skills/nextjs-shadcn"
       ]
     },
     {
@@ -287,6 +293,47 @@
         "./skills/tailwindcss-effects",
         "./skills/tailwindcss-transforms",
         "./skills/tailwindcss-interactivity"
+      ]
+    },
+    {
+      "name": "fuse-react",
+      "source": "./plugins/react-expert",
+      "description": "Expert React 19 with hooks, TanStack Router, TanStack Form, Zustand, Testing Library, shadcn/ui, and SOLID principles",
+      "version": "1.0.0",
+      "author": {
+        "name": "Fusengine",
+        "url": "https://github.com/fusengine"
+      },
+      "homepage": "https://github.com/fusengine/agents",
+      "repository": "https://github.com/fusengine/agents",
+      "license": "MIT",
+      "keywords": [
+        "react",
+        "react-19",
+        "hooks",
+        "tanstack-router",
+        "tanstack-form",
+        "zustand",
+        "shadcn",
+        "testing-library",
+        "solid"
+      ],
+      "category": "development",
+      "strict": true,
+      "commands": [],
+      "agents": [
+        "./agents/react-expert.md"
+      ],
+      "skills": [
+        "./skills/solid-react",
+        "./skills/react-19",
+        "./skills/react-hooks",
+        "./skills/react-tanstack-router",
+        "./skills/react-state",
+        "./skills/react-forms",
+        "./skills/react-testing",
+        "./skills/react-performance",
+        "./skills/react-shadcn"
       ]
     }
   ]

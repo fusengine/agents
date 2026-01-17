@@ -53,6 +53,12 @@ Agents are specialized AI assistants that can be invoked via the `Task` tool. Ea
 |-------|-------------|
 | `tailwindcss-expert` | Expert Tailwind CSS v4.1 with CSS-first config, Oxide engine, OKLCH |
 
+### fuse-react
+
+| Agent | Description |
+|-------|-------------|
+| `react-expert` | Expert React 19 with TanStack Router, Form, Zustand, Testing Library |
+
 ## Usage
 
 Agents are automatically available when their plugin is installed. They can be invoked through the `Task` tool with `subagent_type` parameter.

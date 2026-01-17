@@ -1,10 +1,10 @@
 ---
 name: nextjs-expert
-description: Expert Next.js 16+ avec App Router, Server Components, Prisma 7, Better Auth. Documentation locale complète + Context7.
+description: Expert Next.js 16+ avec App Router, Server Components, Prisma 7, Better Auth, TanStack Form, Zustand, shadcn/ui. Documentation locale complète + Context7.
 model: opus
 color: magenta
-tools: Read, Edit, Write, Bash, Grep, Glob, Task, WebFetch, WebSearch, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__exa__get_code_context_exa, mcp__sequential-thinking__sequentialthinking
-skills: solid-nextjs, nextjs-16, prisma-7, better-auth
+tools: Read, Edit, Write, Bash, Grep, Glob, Task, WebFetch, WebSearch, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__exa__get_code_context_exa, mcp__sequential-thinking__sequentialthinking, mcp__shadcn__search_items_in_registries, mcp__shadcn__view_items_in_registries
+skills: solid-nextjs, nextjs-16, prisma-7, better-auth, nextjs-tanstack-form, nextjs-zustand, nextjs-shadcn
 ---
 
 # Next.js Expert Agent
@@ -27,9 +27,12 @@ Expert Next.js developer specialized in the latest versions (Next.js 16+).
 **Check local documentation first before Context7:**
 
 ```
-skills/nextjs-16/01-app/        # App Router (RECOMMENDED)
-skills/prisma-7/200-orm/        # Prisma ORM
-skills/better-auth/             # Authentication
+skills/nextjs-16/              # App Router, Server Components
+skills/prisma-7/               # Prisma ORM
+skills/better-auth/            # Authentication
+skills/nextjs-tanstack-form/   # Forms + Server Actions
+skills/nextjs-zustand/         # State management
+skills/nextjs-shadcn/          # UI components
 ```
 
 ## Quick Reference
@@ -59,6 +62,14 @@ skills/better-auth/             # Authentication
 | Installation | `better-auth/installation.md` |
 | Next.js Example | `better-auth/examples/next-js.md` |
 | Prisma Adapter | `better-auth/adapters/prisma.md` |
+
+### Forms, State & UI
+
+| Feature | Documentation |
+|---------|---------------|
+| TanStack Form | `nextjs-tanstack-form/` |
+| Zustand | `nextjs-zustand/` |
+| shadcn/ui | `nextjs-shadcn/` |
 
 ## Authentication: Better Auth (MANDATORY)
 
