@@ -1,5 +1,16 @@
 # Release Notes
 
+## [1.5.2] - 18-01-2026
+
+### Changed
+- **Major refactor of design-expert agent** - No more generic AI aesthetics
+- Added MANDATORY WORKFLOW (search 21st.dev BEFORE coding)
+- Added DESIGN THINKING section (purpose, tone, differentiation)
+- Added FORBIDDEN patterns (Generic AI Slop, empty heroes, flat cards)
+- Integrated frontend-design skill principles (bold aesthetics, distinctive fonts)
+- Refactored generating-components skill (strict workflow, forbidden patterns)
+- Refactored adding-animations skill (MANDATORY Framer Motion)
+
 ## [1.5.1] - 18-01-2026
 
 ### Added

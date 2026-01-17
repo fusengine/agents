@@ -8,166 +8,98 @@ allowed-tools: Read, Write, Edit, Glob, Grep, mcp__magic__21st_magic_component_b
 
 Generate production-ready React components with shadcn/ui, 21st.dev, and Tailwind CSS.
 
-## Workflow
-
-Copy this checklist and track progress:
+## MANDATORY WORKFLOW (ZERO TOLERANCE)
 
 ```
-Component Generation:
-- [ ] Step 1: Understand requirements
-- [ ] Step 2: Search examples on 21st.dev
-- [ ] Step 3: Check shadcn/ui registry
-- [ ] Step 4: Present 2-3 options to user
-- [ ] Step 5: Generate component with customizations
-- [ ] Step 6: Validate accessibility
-- [ ] Step 7: Add responsive styles
+BEFORE ANY CODE:
+[x] Step 1: Search 21st.dev with mcp__magic__21st_magic_component_inspiration
+[x] Step 2: Search shadcn/ui registry
+[x] Step 3: Present 2-3 options to user with previews
+[x] Step 4: User selects option
+[x] Step 5: Generate with Framer Motion animations
+[x] Step 6: Validate accessibility
 ```
 
-## Quick Start
+**NEVER skip steps 1-3. ALWAYS search inspiration BEFORE coding.**
 
-### Search Examples (21st.dev)
+## Quick Commands
 
-Use `mcp__magic__21st_magic_component_inspiration` to find design examples:
+### Search 21st.dev (MANDATORY FIRST)
 
-```
-Search: "hero section", "pricing table", "login form"
-→ Returns: Component previews with code
-```
-
-### Search Registry (shadcn/ui)
-
-Use `mcp__shadcn__search_items_in_registries` for base components:
-
-```
-Registries: ["@shadcn"]
-Query: "button", "card", "dialog", "form"
+```typescript
+mcp__magic__21st_magic_component_inspiration({
+  message: "Create a hero section for hosting company",
+  searchQuery: "hero section saas"
+})
 ```
 
-### Generate Component
+### Search shadcn/ui
 
-Use `mcp__magic__21st_magic_component_builder` for custom generation:
-
+```typescript
+mcp__shadcn__search_items_in_registries({
+  registries: ["@shadcn"],
+  query: "button"
+})
 ```
-Message: User's full request
-SearchQuery: 2-4 word description
-StandaloneRequestQuery: Detailed component description
-```
 
-## Component Structure
+## FORBIDDEN PATTERNS
 
-ALWAYS use this template structure:
+| Forbidden | Required Instead |
+|-----------|------------------|
+| Empty hero (text only) | Hero with orbs, gradients, mockups |
+| Flat cards | Cards with shadow, hover, glow |
+| No animations | Framer Motion on everything |
+| Static buttons | whileHover, whileTap effects |
+| Plain backgrounds | Gradient mesh, grid patterns |
+
+## Component Template
 
 ```tsx
 "use client";
 
+import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
-// Import shadcn components as needed
 
-interface ComponentNameProps {
+interface ComponentProps {
   className?: string;
-  // Define props with JSDoc
 }
 
-/**
- * ComponentName - Brief description
- * @param props - Component properties
- */
-export function ComponentName({ className, ...props }: ComponentNameProps) {
+const containerVariants = {
+  hidden: { opacity: 0 },
+  show: { opacity: 1, transition: { staggerChildren: 0.1 } }
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  show: { opacity: 1, y: 0 }
+};
+
+export function Component({ className }: ComponentProps) {
   return (
-    <div className={cn("base-styles", className)} {...props}>
-      {/* Content */}
-    </div>
+    <motion.div
+      className={cn("relative", className)}
+      variants={containerVariants}
+      initial="hidden"
+      animate="show"
+    >
+      {/* Background effects */}
+      <div className="absolute inset-0 -z-10">
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/20 rounded-full blur-3xl" />
+      </div>
+
+      {/* Content with animations */}
+      <motion.div variants={itemVariants}>
+        {/* Content here */}
+      </motion.div>
+    </motion.div>
   );
 }
 ```
-
-## Design Quality Standards
-
-### Modern Design Principles (2026)
-
-ALWAYS apply these principles for cohesive, modern UI:
-
-1. **Visual Hierarchy** - Size, weight, color guide attention
-2. **Whitespace** - Generous padding (p-6 minimum on cards)
-3. **Subtle Shadows** - `shadow-sm` to `shadow-md`, avoid harsh shadows
-4. **Rounded Corners** - `rounded-lg` to `rounded-2xl` for modern feel
-5. **Micro-interactions** - Hover states, transitions (150-300ms)
-6. **Gradient Accents** - Subtle gradients on backgrounds/CTAs
-
-### Style Checklist
-
-Before delivering any component:
-
-```text
-[ ] Semantic colors (bg-card, text-muted-foreground)
-[ ] Generous spacing (p-6 cards, gap-6 grids)
-[ ] Smooth transitions (transition-all duration-200)
-[ ] Hover states (hover:shadow-md, hover:scale-[1.02])
-[ ] Mobile-first responsive (sm: md: lg: prefixes)
-[ ] Dark mode compatible (using semantic tokens)
-[ ] Focus visible states (focus-visible:ring-2)
-```
-
-### Consistency Rules
-
-- **Spacing Scale**: Only 4, 6, 8, 12, 16, 20, 24 (in Tailwind units)
-- **Border Radius**: sm (4px), md (8px), lg (12px), xl (16px), 2xl (24px)
-- **Font Sizes**: Follow type scale, never arbitrary
-- **Colors**: ONLY semantic tokens, never hardcoded hex/rgb
-
-## Styling Guidelines
-
-### Tailwind CSS v4 Best Practices
-
-- Use semantic class names
-- Apply responsive prefixes: `sm:`, `md:`, `lg:`, `xl:`
-- Use container queries when needed: `@container`
-- Prefer OKLCH colors for wider gamut
-- Organize classes: layout → sizing → spacing → typography → visual → states
-
-### Common Patterns
-
-| Pattern  | Classes                                           |
-| -------- | ------------------------------------------------- |
-| Centered | `flex items-center justify-center`                |
-| Card     | `rounded-xl border bg-card p-6 shadow-sm`         |
-| Button   | `inline-flex items-center justify-center rounded-md` |
-| Input    | `flex h-10 w-full rounded-md border px-3 py-2`   |
 
 ## References
 
-For detailed documentation:
-
-- **Design patterns**: [references/design-patterns.md](references/design-patterns.md) - Visual hierarchy, cards, forms, navigation
-- **Component examples**: [references/component-examples.md](references/component-examples.md) - Production-ready code
-- **Tailwind best practices**: [references/tailwind-best-practices.md](references/tailwind-best-practices.md) - Class organization, anti-patterns
+- **Design patterns**: [references/design-patterns.md](references/design-patterns.md)
+- **Component examples**: [references/component-examples.md](references/component-examples.md)
+- **Tailwind best practices**: [references/tailwind-best-practices.md](references/tailwind-best-practices.md)
 - **shadcn/ui patterns**: [references/shadcn.md](references/shadcn.md)
 - **21st.dev usage**: [references/21st-dev.md](references/21st-dev.md)
-
-## Examples
-
-**Input**: "Create a hero section for a SaaS product"
-
-**Output**:
-```tsx
-export function HeroSection() {
-  return (
-    <section className="relative py-20 md:py-32">
-      <div className="container mx-auto px-4">
-        <div className="max-w-3xl mx-auto text-center">
-          <h1 className="text-4xl md:text-6xl font-bold tracking-tight">
-            Build faster with our platform
-          </h1>
-          <p className="mt-6 text-lg text-muted-foreground">
-            Ship products 10x faster with AI-powered tools
-          </p>
-          <div className="mt-10 flex gap-4 justify-center">
-            <Button size="lg">Get Started</Button>
-            <Button size="lg" variant="outline">Learn More</Button>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-```
