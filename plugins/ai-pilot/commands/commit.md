@@ -78,3 +78,18 @@ Create a conventional commit with the following workflow:
 **Example Usage**:
 - `/commit auth` → Commits auth-related changes
 - `/commit` → Commits all changes with auto-detected scope
+
+8. **Update RELEASE.md** (MANDATORY after commit):
+
+   **Semantic Versioning Rules:**
+   - `fix/chore/docs/style/refactor` → PATCH: 1.4.0 → 1.4.1
+   - `feat` → MINOR: 1.4.0 → 1.5.0
+   - `BREAKING CHANGE` → MAJOR: 1.4.0 → 2.0.0
+
+   **Format:**
+   ```markdown
+   ## [X.Y.Z] - DD-MM-YYYY
+
+   ### Added/Changed/Fixed
+   - Description of change
+   ```

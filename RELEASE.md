@@ -1,5 +1,15 @@
 # Release Notes
 
+## [1.5.1] - 18-01-2026
+
+### Added
+- Color pink to design-expert agent
+- Emoji icons prohibition (use Lucide React / Blade Icons only)
+- Semantic versioning rules in commit commands
+
+### Changed
+- Updated marketplace.json to v1.5.1
+
 ## [1.5.0] - 18-01-2026
 
 ### Added

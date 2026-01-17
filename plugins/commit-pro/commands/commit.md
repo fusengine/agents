@@ -96,3 +96,24 @@ EOF
 ```
 
 If $ARGUMENTS provided, use as hint for the message.
+
+### Step 6: Update RELEASE.md (MANDATORY)
+
+After commit, update `RELEASE.md` with semantic versioning:
+
+**Version Increment Rules:**
+- `fix` → PATCH: 1.4.0 → 1.4.1
+- `chore` → PATCH: 1.4.0 → 1.4.1
+- `docs` → PATCH: 1.4.0 → 1.4.1
+- `style` → PATCH: 1.4.0 → 1.4.1
+- `refactor` → PATCH: 1.4.0 → 1.4.1
+- `feat` → MINOR: 1.4.0 → 1.5.0
+- `BREAKING CHANGE` → MAJOR: 1.4.0 → 2.0.0
+
+**Format:**
+```markdown
+## [X.Y.Z] - DD-MM-YYYY
+
+### Added/Changed/Fixed
+- Description of change
+```

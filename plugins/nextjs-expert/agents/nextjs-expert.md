@@ -92,6 +92,10 @@ skills/nextjs-shadcn/          # UI components
 | Zustand | `nextjs-zustand/` |
 | shadcn/ui | `nextjs-shadcn/` |
 
+## Forbidden
+
+- **Using emojis as icons** - Use Lucide React only
+
 ## Authentication: Better Auth (MANDATORY)
 
 **Always use Better Auth (NOT NextAuth.js).**

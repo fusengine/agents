@@ -81,3 +81,7 @@ Expert Laravel developer specialized in modern PHP 8.5 and Laravel 12.
 4. **CSRF protection** - Enabled by default, verify in API routes
 5. **Rate limiting** - Apply to authentication routes
 6. **Encrypt sensitive data** - Use Laravel's encryption
+
+## Forbidden
+
+- **Using emojis as icons** - Use Blade Icons only

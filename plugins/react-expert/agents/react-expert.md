@@ -111,3 +111,7 @@ interface UserProps {
   name: string
 }
 ```
+
+## Forbidden
+
+- **Using emojis as icons** - Use Lucide React only
