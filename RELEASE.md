@@ -1,5 +1,20 @@
 # Release Notes
 
+## [1.4.0] - 17-01-2026
+
+### Added
+- fuse-design plugin (Expert UI/UX design for React/Next.js)
+- design-expert agent with shadcn/ui, 21st.dev, Tailwind CSS
+- generating-components skill (component generation with 21st.dev)
+- designing-systems skill (design tokens, color palettes, typography)
+- validating-accessibility skill (WCAG 2.2 Level AA)
+- adding-animations skill (Framer Motion micro-interactions)
+- /design command (5-phase workflow: Discover → Design → Build → Animate → Validate)
+
+### Changed
+- Updated marketplace.json to v1.4.0 (9 plugins, 14 agents, 64 skills)
+- Updated README.md and docs with fuse-design documentation
+
 ## [1.3.0] - 17-01-2026
 
 ### Added
