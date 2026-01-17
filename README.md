@@ -6,7 +6,7 @@ Professional Claude Code plugins with APEX workflow, SOLID principles, and exper
 
 - **8 plugins** - Focused, single-purpose plugins
 - **13 agents** - Specialized AI assistants
-- **56 skills** - Modular knowledge packages
+- **60 skills** - Modular knowledge packages
 - **21 commands** - User-invocable workflows
 
 ## Installation
@@ -96,13 +96,13 @@ Professional git commits with smart detection.
 
 Expert Laravel 12 + PHP 8.5 with comprehensive documentation.
 
-**Skills:** laravel-architecture, laravel-eloquent, laravel-api, laravel-auth, laravel-testing, laravel-queues, laravel-livewire, laravel-blade, laravel-migrations, laravel-billing, solid-php
+**Skills:** laravel-architecture, laravel-eloquent, laravel-api, laravel-auth, laravel-permission, laravel-testing, laravel-queues, laravel-livewire, laravel-blade, laravel-migrations, laravel-billing, laravel-i18n, solid-php
 
 ### fuse-nextjs
 
 Expert Next.js 16 with App Router, Server Components, Prisma 7, Better Auth, TanStack Form, Zustand, shadcn/ui.
 
-**Skills:** nextjs-16, prisma-7, better-auth, solid-nextjs, nextjs-tanstack-form, nextjs-zustand, nextjs-shadcn
+**Skills:** nextjs-16, prisma-7, better-auth, solid-nextjs, nextjs-tanstack-form, nextjs-zustand, nextjs-shadcn, nextjs-i18n
 
 ### fuse-swift-apple-expert
 
@@ -132,7 +132,7 @@ Expert React 19 with TanStack Router, TanStack Form, Zustand, Testing Library, s
 
 **Agent:** react-expert
 
-**Skills:** solid-react, react-19, react-hooks, react-tanstack-router, react-state, react-forms, react-testing, react-performance, react-shadcn
+**Skills:** solid-react, react-19, react-hooks, react-tanstack-router, react-state, react-forms, react-testing, react-performance, react-shadcn, react-i18n
 
 ## Architecture
 

@@ -7,7 +7,7 @@
   },
   "metadata": {
     "description": "Professional Claude Code plugins with APEX workflow, SOLID principles, and expert development agents for Next.js, Laravel, Swift, Tailwind CSS, and more",
-    "version": "1.2.0"
+    "version": "1.3.0"
   },
   "plugins": [
     {
@@ -137,6 +137,8 @@
         "./skills/laravel-blade",
         "./skills/laravel-migrations",
         "./skills/laravel-billing",
+        "./skills/laravel-i18n",
+        "./skills/laravel-permission",
         "./skills/solid-php"
       ]
     },
@@ -176,7 +178,8 @@
         "./skills/solid-nextjs",
         "./skills/nextjs-tanstack-form",
         "./skills/nextjs-zustand",
-        "./skills/nextjs-shadcn"
+        "./skills/nextjs-shadcn",
+        "./skills/nextjs-i18n"
       ]
     },
     {
@@ -333,7 +336,8 @@
         "./skills/react-forms",
         "./skills/react-testing",
         "./skills/react-performance",
-        "./skills/react-shadcn"
+        "./skills/react-shadcn",
+        "./skills/react-i18n"
       ]
     }
   ]
