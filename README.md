@@ -4,10 +4,10 @@ Professional Claude Code plugins with APEX workflow, SOLID principles, and exper
 
 ## Overview
 
-- **8 plugins** - Focused, single-purpose plugins
-- **13 agents** - Specialized AI assistants
-- **60 skills** - Modular knowledge packages
-- **21 commands** - User-invocable workflows
+- **9 plugins** - Focused, single-purpose plugins
+- **14 agents** - Specialized AI assistants
+- **64 skills** - Modular knowledge packages
+- **22 commands** - User-invocable workflows
 
 ## Installation
 
@@ -28,6 +28,7 @@ Professional Claude Code plugins with APEX workflow, SOLID principles, and exper
 /plugin install fuse-solid
 /plugin install fuse-tailwindcss
 /plugin install fuse-react
+/plugin install fuse-design
 ```
 
 ### Interactive Menu
@@ -67,6 +68,7 @@ Professional Claude Code plugins with APEX workflow, SOLID principles, and exper
 | [fuse-solid](./plugins/solid) | SOLID principles enforcement for all languages | productivity |
 | [fuse-tailwindcss](./plugins/tailwindcss) | Expert Tailwind CSS v4.1 with CSS-first config | development |
 | [fuse-react](./plugins/react-expert) | Expert React 19 with TanStack Router, TanStack Form, Zustand, shadcn/ui | development |
+| [fuse-design](./plugins/design-expert) | Expert UI/UX design with shadcn/ui, 21st.dev, Tailwind CSS | development |
 
 ## Documentation
 
@@ -134,6 +136,16 @@ Expert React 19 with TanStack Router, TanStack Form, Zustand, Testing Library, s
 
 **Skills:** solid-react, react-19, react-hooks, react-tanstack-router, react-state, react-forms, react-testing, react-performance, react-shadcn, react-i18n
 
+### fuse-design
+
+Expert UI/UX design for React/Next.js with Tailwind CSS, shadcn/ui, 21st.dev, WCAG 2.2 accessibility, and Framer Motion animations.
+
+**Commands:** `/design`
+
+**Agent:** design-expert
+
+**Skills:** generating-components, designing-systems, validating-accessibility, adding-animations
+
 ## Architecture
 
 ```
@@ -144,6 +156,7 @@ fusengine-plugins/
 ├── plugins/
 │   ├── ai-pilot/
 │   ├── commit-pro/
+│   ├── design-expert/
 │   ├── laravel-expert/
 │   ├── nextjs-expert/
 │   ├── react-expert/

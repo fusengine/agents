@@ -1,0 +1,28 @@
+{
+  "name": "fuse-design",
+  "version": "1.0.0",
+  "description": "Expert UI/UX Design for React/Next.js with Tailwind CSS. Generate production-ready components using shadcn/ui, 21st.dev, and modern design patterns. Includes accessibility validation (WCAG 2.2), design systems, and micro-interactions.",
+  "author": {
+    "name": "Fusengine",
+    "email": "hello@fusengine.ch",
+    "url": "https://github.com/fusengine"
+  },
+  "homepage": "https://github.com/fusengine/claude-plugins",
+  "repository": "https://github.com/fusengine/claude-plugins",
+  "license": "MIT",
+  "keywords": [
+    "design",
+    "ui-ux",
+    "react",
+    "nextjs",
+    "tailwind",
+    "shadcn",
+    "21st-dev",
+    "accessibility",
+    "wcag",
+    "design-systems",
+    "components",
+    "animations",
+    "framer-motion"
+  ]
+}

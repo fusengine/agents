@@ -89,3 +89,10 @@ Skills are modular knowledge packages that provide specialized context and docum
 - `react-testing` - Testing Library with Vitest
 - `react-performance` - Performance optimization patterns
 - `react-shadcn` - shadcn/ui with TanStack Form integration
+
+### fuse-design (4 skills)
+
+- `generating-components` - Generate React components with shadcn/ui, 21st.dev, Tailwind CSS
+- `designing-systems` - Design tokens, color palettes, typography, spacing
+- `validating-accessibility` - WCAG 2.2 Level AA validation, contrast, keyboard navigation
+- `adding-animations` - Framer Motion micro-interactions and transitions

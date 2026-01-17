@@ -59,6 +59,12 @@ Agents are specialized AI assistants that can be invoked via the `Task` tool. Ea
 |-------|-------------|
 | `react-expert` | Expert React 19 with TanStack Router, Form, Zustand, Testing Library |
 
+### fuse-design
+
+| Agent | Description |
+|-------|-------------|
+| `design-expert` | Expert UI/UX design with shadcn/ui, 21st.dev, Tailwind CSS, WCAG 2.2, Framer Motion |
+
 ## Usage
 
 Agents are automatically available when their plugin is installed. They can be invoked through the `Task` tool with `subagent_type` parameter.

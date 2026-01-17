@@ -2,7 +2,7 @@
 
 ## Overview
 
-This repository contains 8 professional Claude Code plugins designed for modern development workflows.
+This repository contains 9 professional Claude Code plugins designed for modern development workflows.
 
 ## Available Plugins
 
@@ -16,6 +16,7 @@ This repository contains 8 professional Claude Code plugins designed for modern 
 | `fuse-solid` | SOLID principles enforcement for all languages | productivity |
 | `fuse-tailwindcss` | Expert Tailwind CSS v4.1 with CSS-first config | development |
 | `fuse-react` | Expert React 19 with TanStack Router, Form, Zustand, shadcn/ui | development |
+| `fuse-design` | Expert UI/UX design with shadcn/ui, 21st.dev, Tailwind CSS | development |
 
 ## Installation
 
@@ -36,6 +37,7 @@ This repository contains 8 professional Claude Code plugins designed for modern 
 /plugin install fuse-solid
 /plugin install fuse-tailwindcss
 /plugin install fuse-react
+/plugin install fuse-design
 ```
 
 ### Interactive Menu

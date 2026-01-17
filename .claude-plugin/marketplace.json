@@ -339,6 +339,46 @@
         "./skills/react-shadcn",
         "./skills/react-i18n"
       ]
+    },
+    {
+      "name": "fuse-design",
+      "source": "./plugins/design-expert",
+      "description": "Expert UI/UX design for React/Next.js with Tailwind CSS, shadcn/ui, 21st.dev, WCAG 2.2 accessibility, and Framer Motion animations",
+      "version": "1.0.0",
+      "author": {
+        "name": "Fusengine",
+        "url": "https://github.com/fusengine"
+      },
+      "homepage": "https://github.com/fusengine/agents",
+      "repository": "https://github.com/fusengine/agents",
+      "license": "MIT",
+      "keywords": [
+        "design",
+        "ui-ux",
+        "react",
+        "nextjs",
+        "tailwind",
+        "shadcn",
+        "21st-dev",
+        "accessibility",
+        "wcag",
+        "framer-motion",
+        "oklch"
+      ],
+      "category": "development",
+      "strict": true,
+      "commands": [
+        "./commands/design.md"
+      ],
+      "agents": [
+        "./agents/design-expert.md"
+      ],
+      "skills": [
+        "./skills/generating-components",
+        "./skills/designing-systems",
+        "./skills/validating-accessibility",
+        "./skills/adding-animations"
+      ]
     }
   ]
 }
