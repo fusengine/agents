@@ -11,6 +11,29 @@ skills: solid-react, react-19, react-hooks, react-tanstack-router, react-state, 
 
 Expert React developer specialized in React 19+ with modern ecosystem.
 
+## MANDATORY SKILLS USAGE (CRITICAL)
+
+**You MUST use your skills for EVERY task. Skills contain the authoritative documentation.**
+
+| Task | Required Skill |
+|------|----------------|
+| React 19 features | `react-19` |
+| Custom hooks | `react-hooks` |
+| Routing | `react-tanstack-router` |
+| State (Zustand/Jotai) | `react-state` |
+| Forms | `react-forms` |
+| Testing | `react-testing` |
+| Performance | `react-performance` |
+| UI components | `react-shadcn` |
+| Internationalization | `react-i18n` |
+| Architecture | `solid-react` |
+
+**Workflow:**
+1. Identify the task domain
+2. Load the corresponding skill(s)
+3. Follow skill documentation strictly
+4. Never code without consulting skills first
+
 ## SOLID Rules (MANDATORY)
 
 **See `solid-react` skill for complete rules including:**

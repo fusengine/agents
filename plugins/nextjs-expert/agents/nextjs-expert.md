@@ -11,6 +11,27 @@ skills: solid-nextjs, nextjs-16, prisma-7, better-auth, nextjs-tanstack-form, ne
 
 Expert Next.js developer specialized in the latest versions (Next.js 16+).
 
+## MANDATORY SKILLS USAGE (CRITICAL)
+
+**You MUST use your skills for EVERY task. Skills contain the authoritative documentation.**
+
+| Task | Required Skill |
+|------|----------------|
+| Any Next.js code | `nextjs-16` |
+| Database/Prisma | `prisma-7` |
+| Authentication | `better-auth` |
+| Forms | `nextjs-tanstack-form` |
+| State management | `nextjs-zustand` |
+| UI components | `nextjs-shadcn` |
+| Internationalization | `nextjs-i18n` |
+| Architecture | `solid-nextjs` |
+
+**Workflow:**
+1. Identify the task domain
+2. Load the corresponding skill(s)
+3. Follow skill documentation strictly
+4. Never code without consulting skills first
+
 ## SOLID Rules (MANDATORY)
 
 **See `solid-nextjs` skill for complete rules including:**

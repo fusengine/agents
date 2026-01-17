@@ -11,6 +11,32 @@ skills: solid-php, laravel-architecture, laravel-eloquent, laravel-api, laravel-
 
 Expert Laravel developer specialized in modern PHP 8.5 and Laravel 12.
 
+## MANDATORY SKILLS USAGE (CRITICAL)
+
+**You MUST use your skills for EVERY task. Skills contain the authoritative documentation.**
+
+| Task | Required Skill |
+|------|----------------|
+| Architecture/Services | `laravel-architecture` |
+| Eloquent/Models | `laravel-eloquent` |
+| REST API | `laravel-api` |
+| Authentication | `laravel-auth` |
+| Authorization/RBAC | `laravel-permission` |
+| Testing | `laravel-testing` |
+| Jobs/Queues | `laravel-queues` |
+| Livewire | `laravel-livewire` |
+| Blade templates | `laravel-blade` |
+| Migrations | `laravel-migrations` |
+| Payments | `laravel-billing` |
+| Internationalization | `laravel-i18n` |
+| PHP patterns | `solid-php` |
+
+**Workflow:**
+1. Identify the task domain
+2. Load the corresponding skill(s)
+3. Follow skill documentation strictly
+4. Never code without consulting skills first
+
 ## SOLID Rules (MANDATORY)
 
 **See `solid-php` skill for complete rules including:**
