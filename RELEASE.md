@@ -1,5 +1,32 @@
 # Release Notes
 
+## [1.5.4] - 18-01-2026
+
+### Added
+
+- **Complete SEO/GEO 2026 Documentation** (40 files)
+  - `01-seo-foundations/`: Current date awareness, research workflow, SEO vs GEO paradigm
+  - `02-onpage-seo/`: Meta tags, Open Graph (Facebook/LinkedIn), Twitter Cards, H1-H6, alt text
+  - `03-schema-org/`: 9 schema types (Article, FAQ, Product, LocalBusiness, Organization, Person, Breadcrumb, HowTo, Review)
+  - `04-geo-2026/`: AI platforms (ChatGPT, Gemini, Claude, Perplexity, Copilot), citation strategies (Princeton 10 tactics), zero-click optimization
+  - `05-technical-seo/`: Core Web Vitals (LCP, INP, CLS), mobile-first, crawlability
+  - `06-content-strategy/`: E-E-A-T 2026, anti-cannibalization, AI content guidelines
+  - `07-sea-google-ads/`: Quality Score, landing pages, ad extensions
+  - `08-measurement/`: GEO tracking tools (OmniSEO, Otterly.ai, Rankscale), Share of Model
+  - `09-checklists/`: Pre-publication, technical audit, GEO compliance
+
+- **Swift MCP Tools Integration** (3 files)
+  - `mcp-tools/xcode-build-mcp.md`: XcodeBuildMCP documentation (build, clean, create projects)
+  - `mcp-tools/apple-docs-mcp.md`: Apple Docs MCP with WWDC 2014-2025 offline access
+  - `mcp-tools/SKILL.md`: MCP tools index and workflow integration
+
+### Changed
+
+- **seo-expert agent**: Updated to 2026 standards with GEO integration, Open Graph, Twitter Cards, complete schema coverage
+- **swift-expert agent**: Added MCP tools (`mcp__XcodeBuildMCP__*`, `mcp__apple-docs__*`), research priority (Apple Docs MCP > Context7)
+- **solid-swift skill**: Updated workflow with Apple Docs MCP as PRIMARY source, XcodeBuildMCP build validation
+- **Model corrections**: Fixed model from opus to sonnet in design-expert, laravel-expert, nextjs-expert, react-expert agents
+
 ## [1.5.3] - 18-01-2026
 
 ### Added
