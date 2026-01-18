@@ -12,15 +12,17 @@ Generate production-ready React components with shadcn/ui, 21st.dev, and Tailwin
 
 ```
 BEFORE ANY CODE:
+[x] Step 0: READ references/typography.md + references/color-system.md (ANTI-AI SLOP)
 [x] Step 1: Search 21st.dev with mcp__magic__21st_magic_component_inspiration
 [x] Step 2: Search shadcn/ui registry
 [x] Step 3: Present 2-3 options to user with previews
 [x] Step 4: User selects option
-[x] Step 5: Generate with Framer Motion animations
-[x] Step 6: Validate accessibility
+[x] Step 5: READ references/theme-presets.md - Choose theme, declare fonts/colors
+[x] Step 6: Generate with Framer Motion animations (see references/motion-patterns.md)
+[x] Step 7: Validate accessibility + anti-AI slop checklist
 ```
 
-**NEVER skip steps 1-3. ALWAYS search inspiration BEFORE coding.**
+**NEVER skip Step 0. ALWAYS read typography + color references BEFORE any design decision.**
 
 ## Quick Commands
 
@@ -97,6 +99,15 @@ export function Component({ className }: ComponentProps) {
 ```
 
 ## References
+
+### Anti-AI Slop (MANDATORY)
+
+- **Typography system**: [references/typography.md](references/typography.md) - Fonts FORBIDDEN/APPROVED
+- **Color system**: [references/color-system.md](references/color-system.md) - CSS variables, palettes
+- **Motion patterns**: [references/motion-patterns.md](references/motion-patterns.md) - Animations, hover states
+- **Theme presets**: [references/theme-presets.md](references/theme-presets.md) - Brutalist, Solarpunk, etc.
+
+### Component Resources
 
 - **Design patterns**: [references/design-patterns.md](references/design-patterns.md)
 - **Component examples**: [references/component-examples.md](references/component-examples.md)

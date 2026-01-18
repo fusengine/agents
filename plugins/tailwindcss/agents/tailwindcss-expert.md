@@ -66,3 +66,5 @@ Expert Tailwind CSS v4.1 avec configuration CSS-native. Maîtrise de @theme, @ut
 - theme() → utiliser var(--*)
 - Concaténation dynamique classes
 - @tailwind → utiliser @import
+- border-l-* coloré pour statuts/alerts → bg-*/10 + icon, shadow-*, corner ribbon (AI slop pattern)
+- Purple gradients (from-purple-* to-pink-*) → palettes distinctives

@@ -7,7 +7,7 @@
   },
   "metadata": {
     "description": "Professional Claude Code plugins with APEX workflow, SOLID principles, and expert development agents for Next.js, Laravel, Swift, Tailwind CSS, and more",
-    "version": "1.5.2"
+    "version": "1.5.3"
   },
   "plugins": [
     {
@@ -343,8 +343,8 @@
     {
       "name": "fuse-design",
       "source": "./plugins/design-expert",
-      "description": "Expert UI/UX design for React/Next.js with Tailwind CSS, shadcn/ui, 21st.dev, WCAG 2.2 accessibility, and Framer Motion animations",
-      "version": "1.0.0",
+      "description": "Expert UI/UX design with Anti-AI Slop system, 4-Pillar Framework (Typography, Colors, Motion, Backgrounds), Theme Presets (Brutalist, Solarpunk, Editorial, Cyberpunk, Luxury), shadcn/ui, 21st.dev, WCAG 2.2",
+      "version": "1.1.0",
       "author": {
         "name": "Fusengine",
         "url": "https://github.com/fusengine"

@@ -231,6 +231,61 @@ List items: space-y-2 (8px)
 </div>
 ```
 
+## Alert/Callout Patterns (NO border-left)
+
+### Icon-Led Alert (PREFERRED)
+
+```tsx
+<div className="flex gap-3 rounded-xl bg-blue-50 p-4 dark:bg-blue-950/50">
+  <AlertCircle className="h-5 w-5 shrink-0 text-blue-600" />
+  <div>
+    <p className="font-medium text-blue-900 dark:text-blue-100">Info</p>
+    <p className="text-sm text-blue-700 dark:text-blue-300">{message}</p>
+  </div>
+</div>
+```
+
+### Glassmorphism Alert
+
+```tsx
+<div className="rounded-2xl backdrop-blur-md bg-white/30 dark:bg-white/5 p-4 shadow-lg border border-white/20">
+  <div className="flex items-center gap-2">
+    <CheckCircle className="h-5 w-5 text-emerald-500" />
+    <span className="font-medium">Success</span>
+  </div>
+  <p className="mt-1 text-sm text-muted-foreground">{message}</p>
+</div>
+```
+
+### Corner Ribbon Status
+
+```tsx
+<div className="relative overflow-hidden rounded-xl bg-card p-6 shadow-md">
+  <div className="absolute -right-10 top-4 rotate-45 bg-gradient-to-r from-amber-500 to-orange-500 px-12 py-1 text-xs font-bold text-white shadow-lg">
+    NEW
+  </div>
+  {children}
+</div>
+```
+
+### Shadow-Based Status
+
+```tsx
+const statusShadows = {
+  info: 'shadow-blue-200/50 dark:shadow-blue-900/30',
+  success: 'shadow-emerald-200/50 dark:shadow-emerald-900/30',
+  warning: 'shadow-amber-200/50 dark:shadow-amber-900/30',
+  error: 'shadow-red-200/50 dark:shadow-red-900/30',
+};
+
+<div className={cn(
+  "rounded-2xl bg-card p-4 shadow-lg transition-shadow hover:shadow-xl",
+  statusShadows[status]
+)}>
+  {children}
+</div>
+```
+
 ## Dark Mode Patterns
 
 ### Semantic Colors

@@ -1,5 +1,27 @@
 # Release Notes
 
+## [1.5.3] - 18-01-2026
+
+### Added
+
+- **Anti-AI Slop System** for design-expert
+  - `references/typography.md` - Fonts FORBIDDEN/APPROVED list
+  - `references/color-system.md` - CSS variables, IDE-inspired palettes
+  - `references/motion-patterns.md` - Orchestrated animations, hover states
+  - `references/theme-presets.md` - Brutalist, Solarpunk, Editorial, Cyberpunk, Luxury
+- **4-Pillar Framework** in design-expert agent (Typography, Colors, Motion, Backgrounds)
+- **Theme Presets** with implementation examples
+- **Step 0** in generating-components workflow (MANDATORY read anti-AI slop refs)
+- Border-left colored indicators prohibition in all design agents
+
+### Changed
+
+- Optimized design-expert.md from 305 lines to 131 lines (following Anthropic best practices)
+- Moved detailed examples to reference files
+- Updated generating-components SKILL.md with 7-step workflow
+- Added anti-AI slop rules to react-expert and tailwindcss-expert agents
+- Updated marketplace.json to v1.5.3
+
 ## [1.5.2] - 18-01-2026
 
 ### Changed
