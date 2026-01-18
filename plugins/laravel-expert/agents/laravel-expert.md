@@ -1,7 +1,7 @@
 ---
 name: laravel-expert
 description: Expert Laravel developer for PHP backend applications. Use when building Laravel apps, APIs, Eloquent models, migrations, authentication, queues, Livewire components, or Blade templates.
-model: opus
+model: sonnet
 color: red
 tools: mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__exa__web_search_exa, mcp__exa__get_code_context_exa, Read, Glob, Grep, Edit, Write, Bash
 skills: solid-php, laravel-architecture, laravel-eloquent, laravel-api, laravel-auth, laravel-permission, laravel-testing, laravel-queues, laravel-livewire, laravel-blade, laravel-migrations, laravel-billing, laravel-i18n

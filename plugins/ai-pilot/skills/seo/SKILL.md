@@ -1,20 +1,38 @@
 ---
 name: seo
-description: SEO/SEA/GEO 2025 complete methodology for organic, paid, and AI search optimization.
+description: SEO/SEA/GEO 2026 complete methodology for organic, paid, and AI search optimization.
 ---
 
-# SEO/SEA/GEO Skill
+# SEO/SEA/GEO Skill (2026)
+
+**Complete SEO/GEO reference with 45+ detailed guides across 9 categories.**
+
+## Documentation Structure
+
+```
+01-seo-foundations/     → Current date, research workflow, SEO vs GEO
+02-onpage-seo/         → Meta tags, Open Graph, Twitter Cards, headers, alt text
+03-schema-org/         → 9 schema types (Article, FAQ, Product, etc.)
+04-geo-2026/           → AI platforms, citations, LLM crawlability
+05-technical-seo/      → Core Web Vitals, mobile-first, crawlability
+06-content-strategy/   → E-E-A-T, anti-cannibalization, AI content
+07-sea-google-ads/     → Quality Score, landing pages, extensions
+08-measurement/        → GEO tracking tools, Share of Model, analytics
+09-checklists/         → Pre-publication, technical audit, GEO compliance
+```
+
+---
 
 ## 7-Phase Workflow (MANDATORY)
 
 ```
 PHASE 1: ANALYZE → Extract content, detect intent
-PHASE 2: RESEARCH → SERP analysis, 2025 trends
+PHASE 2: RESEARCH → SERP analysis, 2026 trends, AI platforms
 PHASE 3: KEYWORDS → Extract with anti-cannibalization
-PHASE 4: STRUCTURE → Meta, Hn, URL, alt text
-PHASE 5: CONTENT → Write optimized content
+PHASE 4: STRUCTURE → Meta, OG, Twitter Cards, Hn, schema, alt text
+PHASE 5: CONTENT → Write SEO+GEO optimized content
 PHASE 6: SEA → Google Ads recommendations
-PHASE 7: VALIDATE → Compliance checklist
+PHASE 7: VALIDATE → SEO + GEO compliance checklists
 ```
 
 ## On-Page Structure
@@ -220,8 +238,127 @@ Example: "Core Web Vitals dashboard showing LCP 2.1s"
 - Cannibalization Risk: Low/Medium/High
 ```
 
+---
+
+## Quick Reference 2026
+
+### Core Documentation
+
+| Topic | Files | Key Concepts |
+|-------|-------|--------------|
+| **Foundations** | `01-seo-foundations/` | Current date (2026), SEO vs GEO paradigm shift, research-first |
+| **On-Page** | `02-onpage-seo/` | Meta tags, Open Graph (1200x630px), Twitter Cards, H1-H6, alt text |
+| **Schema** | `03-schema-org/` | Article, FAQ, Product, LocalBusiness, Organization, Breadcrumb |
+| **GEO 2026** | `04-geo-2026/` | ChatGPT, Gemini, Claude, Perplexity, Copilot, citations, zero-click |
+| **Technical** | `05-technical-seo/` | Core Web Vitals (LCP, INP, CLS), mobile-first, crawlability |
+| **Content** | `06-content-strategy/` | E-E-A-T, anti-cannibalization, AI content guidelines |
+| **SEA** | `07-sea-google-ads/` | Quality Score, landing pages, ad extensions |
+| **Measurement** | `08-measurement/` | OmniSEO®, Otterly.ai, Share of Model, analytics |
+| **Checklists** | `09-checklists/` | Pre-publication, technical audit, GEO compliance |
+
+---
+
+## New in 2026
+
+### GEO (Generative Engine Optimization)
+
+- **Zero-Click Reality**: 60% of searches don't click
+- **AI Platforms**: ChatGPT (72B messages/mo), Gemini, Claude, Perplexity, Copilot
+- **Share of Model**: % of AI citations in your niche
+- **Citation Strategies**: Princeton 10 tactics (40% visibility boost)
+- **Tracking Tools**: OmniSEO®, Otterly.ai, Rankscale
+
+### Open Graph & Twitter Cards (MANDATORY)
+
+- **Open Graph**: Facebook, LinkedIn, Discord previews (1200x630px)
+- **Twitter Cards**: X.com cards (1200x628px)
+- See: `02-onpage-seo/open-graph.md`, `twitter-cards.md`
+
+### Complete Schema Coverage
+
+- **9 Schema Types**: Article, FAQ, Product, LocalBusiness, Organization, Person, Breadcrumb, HowTo, Review
+- **E-E-A-T Signals**: Author/Publisher schema mandatory
+- See: `03-schema-org/` (all files)
+
+### E-E-A-T 2026 Updates
+
+- **Experience**: First-hand knowledge (NEW in 2022)
+- **AI Content**: Allowed if human value added
+- **Spam Update**: Scaled content abuse enforcement
+- See: `06-content-strategy/eeat-implementation.md`
+
+---
+
+## Workflow Examples
+
+### PHASE 2: Research (2026)
+
+```bash
+# Check official guidelines
+- Google Search Central (developers.google.com/search)
+- Quality Rater Guidelines (January 2025 update)
+
+# SERP Analysis
+- Top 10 results for target keyword
+- AI Overview presence? (16% of queries)
+- Featured snippet format?
+
+# AI Platform Testing
+1. ChatGPT: "Tell me about [keyword]"
+2. Google AI Overview: Search on Google
+3. Perplexity: "[keyword] latest information"
+4. Gemini: "[keyword] comprehensive guide"
+5. Copilot: "[keyword] recommendations"
+
+# Document which sources are cited
+```
+
+See: `01-seo-foundations/research-workflow.md`
+
+---
+
+### PHASE 4: Structure (Complete)
+
+```html
+<!-- Meta Tags -->
+<title>SEO Guide 2026: 47 Proven Techniques | Brand</title>
+<meta name="description" content="Discover 2026 SEO best practices...">
+<link rel="canonical" href="https://example.com/seo-guide-2026">
+
+<!-- Open Graph (Facebook, LinkedIn, Discord) -->
+<meta property="og:title" content="SEO Guide 2026: 47 Proven Techniques">
+<meta property="og:description" content="Discover 2026 SEO best practices...">
+<meta property="og:image" content="https://example.com/og-image.jpg">
+<meta property="og:url" content="https://example.com/seo-guide-2026">
+<meta property="og:type" content="article">
+
+<!-- Twitter Card (X.com) -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="SEO Guide 2026: 47 Proven Techniques">
+<meta name="twitter:description" content="Discover 2026 SEO best practices...">
+<meta name="twitter:image" content="https://example.com/twitter-card.jpg">
+
+<!-- Schema.org JSON-LD -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "SEO Guide 2026: 47 Proven Techniques",
+  "image": "https://example.com/featured.jpg",
+  "author": {"@type": "Person", "name": "Jean Dupont"},
+  "publisher": {"@type": "Organization", "name": "Brand"},
+  "datePublished": "2026-01-18T10:00:00+00:00"
+}
+</script>
+```
+
+See: `02-onpage-seo/meta-tags.md`, `open-graph.md`, `twitter-cards.md`, `03-schema-org/article-schema.md`
+
+---
+
 ## Forbidden Behaviors
 
+### SEO (Traditional)
 - ❌ Keyword stuffing (>3% density)
 - ❌ Cloaking or black-hat techniques
 - ❌ Duplicate or spun content
@@ -230,4 +367,13 @@ Example: "Core Web Vitals dashboard showing LCP 2.1s"
 - ❌ Meta title >60 chars
 - ❌ Generic alt text ("image", "photo")
 - ❌ Same primary keyword on multiple pages
-- ❌ Content AI cannot parse
+
+### GEO (New 2026)
+- ❌ No AI platform testing before publication
+- ❌ Missing Open Graph / Twitter Cards
+- ❌ No citations to sources
+- ❌ No statistics / expert quotes
+- ❌ Outdated references (pre-2025)
+- ❌ Generic content AI cannot parse
+- ❌ Missing FAQ schema on Q&A content
+- ❌ No quick answer in first 100 words

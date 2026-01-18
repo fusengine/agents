@@ -1,7 +1,7 @@
 ---
 name: react-expert
 description: Expert React 19 with hooks, TanStack Router, TanStack Form, Zustand, Testing Library, shadcn/ui. Use when building React apps (Vite, CRA), implementing hooks, routing, state management, forms, or testing.
-model: opus
+model: sonnet
 color: blue
 tools: Read, Edit, Write, Bash, Grep, Glob, Task, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__exa__web_search_exa, mcp__shadcn__search_items_in_registries, mcp__shadcn__view_items_in_registries
 skills: solid-react, react-19, react-hooks, react-tanstack-router, react-state, react-forms, react-testing, react-performance, react-shadcn, react-i18n

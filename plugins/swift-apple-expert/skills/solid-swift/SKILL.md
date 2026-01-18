@@ -14,20 +14,52 @@ Search with "2025" or "2026", NEVER with past years.
 
 **CRITICAL: Check today's date first, then search documentation and web BEFORE writing any code.**
 
-1. **Use Context7** to query Swift/SwiftUI official documentation
-2. **Use Exa web search** with current year for latest trends
-3. **Check Apple WWDC** of current year for new APIs
-4. **Verify API availability** for iOS/macOS current versions
+### Priority Order (2026)
+
+1. ⭐ **Apple Docs MCP** (PRIMARY) - Official Apple documentation with WWDC 2014-2025
+   - Search SwiftUI, UIKit, Foundation, CoreData, ARKit docs
+   - Get framework details and symbol information
+   - Search WWDC sessions with transcripts (offline access)
+   - Access Apple sample code
+   - See: `mcp-tools/apple-docs-mcp.md`
+
+2. **Context7** (SECONDARY) - For third-party libraries and community packages
+   - Use only if Apple Docs MCP doesn't have the answer
+   - Good for SPM packages, community libraries
+
+3. **Exa web search** (TERTIARY) - Latest trends and blog posts
+   - Use with current year for newest patterns
+   - Community tutorials and articles
+
+### Build Validation (NEW 2026)
+
+4. ⭐ **XcodeBuildMCP** (MANDATORY after code changes)
+   - Build project to validate changes
+   - Inspect build errors autonomously
+   - Clean builds when needed
+   - See: `mcp-tools/xcode-build-mcp.md`
 
 ```text
-WORKFLOW:
-1. Check date → 2. Research docs + web (current year) → 3. Apply latest patterns → 4. Code
+WORKFLOW (2026):
+1. Check date
+2. Apple Docs MCP: Search API/WWDC (current year)
+3. If not found → Context7 → Exa web search
+4. Apply latest patterns
+5. Code implementation
+6. XcodeBuildMCP: Build to validate
+7. Fix errors if any → Rebuild
 ```
 
 **Search queries (replace YYYY with current year):**
+
+**Apple Docs MCP**:
+- `SwiftUI [component] YYYY`
+- `[Framework] new APIs`
+- WWDC sessions: `[topic] WWDC YYYY`
+
+**Exa web search** (if Apple Docs insufficient):
 - `Swift [feature] YYYY best practices`
-- `SwiftUI [component] YYYY new APIs`
-- `Apple WWDC YYYY [topic]`
+- `SwiftUI [component] YYYY tutorial`
 
 Never assume - always verify current APIs and patterns exist for the current year.
 
