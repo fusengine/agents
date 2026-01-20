@@ -77,6 +77,7 @@ Professional Claude Code plugins with APEX workflow, SOLID principles, and exper
 - [Skills Reference](./docs/skills.md)
 - [Architecture](./docs/architecture.md)
 - [Usage Guide](./docs/usage.md)
+- [MCP API Keys Setup](./docs/setup-env.md)
 
 ## Plugin Details
 

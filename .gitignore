@@ -17,3 +17,8 @@ npm-debug.log*
 # Temp
 *.tmp
 *.temp
+
+# Environment secrets
+.env
+.env.*
+!.env.example
