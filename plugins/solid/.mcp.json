@@ -1,3 +1,18 @@
 {
-  "mcpServers": {}
+	"mcpServers": {
+		"sequential-thinking": {
+			"command": "npx",
+			"args": ["-y", "@modelcontextprotocol/server-sequential-thinking"],
+			"type": "stdio"
+		},
+		"context7": {
+			"command": "npx",
+			"args": ["-y", "@upstash/context7-mcp", "--api-key", "${CONTEXT7_API_KEY}"],
+			"type": "stdio"
+		},
+		"exa": {
+			"type": "http",
+			"url": "https://mcp.exa.ai/mcp?tools=web_search_exa,get_code_context_exa&exaApiKey=${EXA_API_KEY}"
+		}
+	}
 }
