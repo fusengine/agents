@@ -82,11 +82,19 @@ Professional Claude Code plugins with APEX workflow, SOLID principles, and exper
 
 ### fuse-ai-pilot
 
-AI-powered workflow agents for intelligent development.
+AI-powered workflow agents with APEX methodology (Analyze → Plan → Execute → eXamine).
+
+**Auto-détection:** Le skill `/apex` détecte automatiquement le projet et charge les références spécifiques:
+- Laravel (`composer.json` + `artisan`) → références Laravel 12
+- Next.js (`next.config.*`) → références Next.js 16
+- React (`package.json` react) → références React 19
+- Swift (`Package.swift`, `*.xcodeproj`) → références Swift 6
 
 **Commands:** `/apex`, `/epct`, `/commit`, `/watch-ci`, `/fix-pr-comments`, `/create-pull-request`
 
 **Agents:** sniper, sniper-faster, explore-codebase, research-expert, websearch, seo-expert
+
+**Skills:** apex, research, exploration, code-quality, seo
 
 ### fuse-commit-pro
 

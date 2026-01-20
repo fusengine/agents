@@ -13,7 +13,7 @@
     {
       "name": "fuse-ai-pilot",
       "source": "./plugins/ai-pilot",
-      "description": "AI Pilot workflow agents: sniper (code quality), research-expert, explore-codebase, seo-expert (SEO/GEO/Local SEO 2026), websearch",
+      "description": "AI Pilot workflow: APEX methodology (auto-detects Laravel/Next.js/React/Swift), sniper (code quality), research-expert, explore-codebase, seo-expert (SEO/GEO/Local SEO 2026)",
       "version": "1.1.0",
       "author": {
         "name": "Fusengine",
@@ -57,6 +57,7 @@
         "./agents/seo-expert.md"
       ],
       "skills": [
+        "./skills/apex",
         "./skills/research",
         "./skills/exploration",
         "./skills/code-quality",
