@@ -1,5 +1,32 @@
 # Release Notes
 
+## [1.6.0] - 21-01-2026
+
+### Added
+
+- **MCP Server Configurations** (9 .mcp.json files)
+  - context7, exa, sequential-thinking for all expert plugins
+  - shadcn for react-expert, nextjs-expert
+  - XcodeBuildMCP, apple-docs for swift-apple-expert
+  - magic for design-expert
+
+- **Shell Environment Scripts** (4 files)
+  - `scripts/env-shell/claude-env.bash` - Bash support
+  - `scripts/env-shell/claude-env.zsh` - Zsh support (macOS)
+  - `scripts/env-shell/claude-env.fish` - Fish support
+  - `scripts/env-shell/claude-env.ps1` - PowerShell support (Windows)
+
+- **API Keys Documentation**
+  - `docs/setup-env.md` - Complete setup guide
+  - `.env.example` - Template with required keys
+  - `~/.claude/.env` - Global keys location
+
+### Changed
+
+- Updated agents with additional MCP tools (sequential-thinking, exa)
+- Updated README.md with MCP documentation link
+- Updated .gitignore to exclude .env files
+
 ## [1.5.5] - 20-01-2026
 
 ### Added
