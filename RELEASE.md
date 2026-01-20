@@ -1,5 +1,11 @@
 # Release Notes
 
+## [1.6.1] - 21-01-2026
+
+### Added
+
+- Laravel Docs MCP server (`laravel-docs`) for laravel-expert plugin
+
 ## [1.6.0] - 21-01-2026
 
 ### Added
