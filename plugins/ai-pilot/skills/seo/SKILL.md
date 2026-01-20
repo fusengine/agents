@@ -5,7 +5,7 @@ description: SEO/SEA/GEO 2026 complete methodology for organic, paid, and AI sea
 
 # SEO/SEA/GEO Skill (2026)
 
-**Complete SEO/GEO reference with 45+ detailed guides across 9 categories.**
+**Complete SEO/GEO reference with 50+ detailed guides across 10 categories.**
 
 ## Documentation Structure
 
@@ -15,10 +15,11 @@ description: SEO/SEA/GEO 2026 complete methodology for organic, paid, and AI sea
 03-schema-org/         → 9 schema types (Article, FAQ, Product, etc.)
 04-geo-2026/           → AI platforms, citations, LLM crawlability
 05-technical-seo/      → Core Web Vitals, mobile-first, crawlability
-06-content-strategy/   → E-E-A-T, anti-cannibalization, AI content
+06-content-strategy/   → E-E-A-T, anti-cannibalization, AI content, keyword distribution
 07-sea-google-ads/     → Quality Score, landing pages, extensions
 08-measurement/        → GEO tracking tools, Share of Model, analytics
 09-checklists/         → Pre-publication, technical audit, GEO compliance
+10-local-seo/          → GBP, NAP citations, reviews, Local Pack, local pages
 ```
 
 ---
@@ -144,11 +145,28 @@ Example: "Core Web Vitals dashboard showing LCP 2.1s"
 
 ## Content Writing Rules
 
-### Keyword Distribution
-- Primary: 1-2% density
-- Secondary: <1% each
-- Long-tail: in H2/H3 + FAQ
-- Localities: intro + conclusion
+### Keyword Distribution (Natural Writing)
+
+See: `06-content-strategy/keyword-distribution.md`
+
+| Element | Target | Maximum |
+|---------|--------|---------|
+| Primary keyword | 0.5-2% | 3% |
+| Secondary keywords | 0.3-1% each | 2% |
+| Total all keywords | 2-3% | 5% |
+
+**Per page structure:**
+- 1 primary keyword
+- 3-5 secondary keywords
+- 5-10 semantic/related terms
+- 5-15 long-tail variations
+- 2-5 local modifiers (if local)
+
+**Anti-stuffing rules:**
+- Never >3% primary density
+- Spread keywords naturally
+- Use synonyms for variety
+- Read aloud test: if awkward, rewrite
 
 ### Paragraph Structure
 - Max 3-4 sentences per paragraph
@@ -255,6 +273,49 @@ Example: "Core Web Vitals dashboard showing LCP 2.1s"
 | **SEA** | `07-sea-google-ads/` | Quality Score, landing pages, ad extensions |
 | **Measurement** | `08-measurement/` | OmniSEO®, Otterly.ai, Share of Model, analytics |
 | **Checklists** | `09-checklists/` | Pre-publication, technical audit, GEO compliance |
+| **Local SEO** | `10-local-seo/` | GBP, NAP citations, reviews, Local Pack, local pages |
+
+---
+
+## Local SEO (2026)
+
+See: `10-local-seo/` (7 files)
+
+### Google Business Profile (32-35% ranking weight)
+
+- Complete all fields (categories, services, hours, photos)
+- Weekly posts for engagement (+30%)
+- Q&A section with seeded questions
+- Photos: geo-tagged, high quality
+
+### NAP Citations
+
+- **N**ame, **A**ddress, **P**hone must be identical everywhere
+- Priority directories: Yelp, Yellow Pages, BBB, TripAdvisor
+- Audit quarterly for inconsistencies
+
+### Reviews Strategy (19-20% ranking weight)
+
+- Velocity: consistent new reviews monthly
+- Respond to ALL reviews (positive + negative)
+- Keywords in reviews help ranking
+- Recent reviews matter more than total count
+
+### Local Pack (3-Pack) Ranking Factors
+
+1. **Proximity** to searcher
+2. **GBP completeness** and activity
+3. **Review signals** (quantity, velocity, rating)
+4. **NAP consistency** across web
+5. **Local backlinks** and citations
+6. **Behavioral signals** (clicks, calls, directions)
+
+### Local Landing Pages
+
+- Unique content per location (40-60% unique)
+- LocalBusiness schema required
+- Embed Google Map
+- Local testimonials and case studies
 
 ---
 
