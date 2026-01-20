@@ -1,5 +1,32 @@
 # Release Notes
 
+## [1.5.5] - 20-01-2026
+
+### Added
+
+- **APEX Methodology Skill** with framework auto-detection
+  - `skills/apex/SKILL.md`: Main skill with YAML frontmatter, auto-detection logic
+  - 10 generic reference phases (00-09): init-branch through create-pr
+  - Language-agnostic with multi-language tables (TypeScript, PHP, Swift, Go, Python)
+
+- **Framework-Specific References** (40 files)
+  - `references/laravel/`: Laravel 12 + PHP 8.5 (Larastan, Pint, PHPUnit, Pest)
+  - `references/nextjs/`: Next.js 16 + React 19 (ESLint, Vitest, App Router)
+  - `references/react/`: React 19 + TanStack (ESLint, Vitest, Testing Library)
+  - `references/swift/`: Swift 6 + SwiftUI (SwiftLint, XCTest, @Observable)
+
+- **Auto-Detection System**
+  - `composer.json` + `artisan` → Laravel references
+  - `next.config.*` → Next.js references
+  - `package.json` (react) → React references
+  - `Package.swift`, `*.xcodeproj` → Swift references
+
+### Changed
+
+- Updated marketplace.json with apex skill
+- Updated README.md with auto-detection documentation
+- Updated plugins/ai-pilot/README.md with APEX phases (00-09)
+
 ## [1.5.4] - 18-01-2026
 
 ### Added
