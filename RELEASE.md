@@ -1,5 +1,12 @@
 # Release Notes
 
+## [1.6.2] - 21-01-2026
+
+### Changed
+
+- Smart type detection for `/commit` command (HIGH/MEDIUM/LOW confidence)
+- Restored semantic versioning rules in commit workflow
+
 ## [1.6.1] - 21-01-2026
 
 ### Added
