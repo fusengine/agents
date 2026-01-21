@@ -1,95 +1,93 @@
 ---
-description: Fast conventional commits with automatic git add and push. Creates semantic commit messages following Conventional Commits spec.
+description: Smart conventional commits with auto-detection. Analyzes changes, detects type, commits with minimal interaction.
 ---
 
-# Fast Commit Workflow
+# Smart Commit Workflow
 
-Create a conventional commit with the following workflow:
+## 1. Pre-flight
 
-1. **Pre-flight: Clean .DS_Store** (MANDATORY):
-   ```bash
-   # Check if .gitignore exists and contains .DS_Store
-   if ! grep -q "^\.DS_Store$" .gitignore 2>/dev/null; then
-     echo ".DS_Store" >> .gitignore
-   fi
-   # Remove any tracked .DS_Store files
-   find . -name ".DS_Store" -type f -exec git rm --cached {} \; 2>/dev/null
-   ```
+```bash
+if ! grep -q "^\.DS_Store$" .gitignore 2>/dev/null; then
+  echo ".DS_Store" >> .gitignore
+fi
+find . -name ".DS_Store" -type f -exec git rm --cached {} \; 2>/dev/null
+git add .
+```
 
-2. **Stage Changes**:
-   ```bash
-   git add .
-   ```
+## 2. Analyze & Detect Type
 
-3. **Analyze Changes**:
-   - Run `git diff --cached --stat` to see what's being committed
-   - Identify the type of change (feat/fix/docs/style/refactor/test/chore)
+Run analysis:
+```bash
+git diff --cached --stat
+git diff --cached --name-only
+```
 
-4. **Draft Commit Message - 50/72 RULE STRICT**:
-   Format: `<type>(<scope>): <short description - MAX 50 chars>`
+**Detection Rules (priority order):**
 
-   **LENGTH REQUIREMENT**:
-   - Subject: **50 characters MAXIMUM** (never exceed)
-   - Message must be short, clear, self-sufficient
-   - NO body (lists, details, etc.) except exceptional cases
+| Files Pattern | Type | Confidence |
+|---------------|------|------------|
+| Only `*.md`, `README*`, `CHANGELOG*` | `docs` | HIGH |
+| Only `*.test.*`, `*.spec.*`, `__tests__/*` | `test` | HIGH |
+| Only `*.json`, `*.yml`, `.*rc`, configs | `chore` | HIGH |
+| Only `.github/*`, CI files | `ci` | HIGH |
+| Diff contains "fix", "bug", "error" | `fix` | MEDIUM |
+| New files with business logic | `feat` | MEDIUM |
+| Renamed/moved without logic change | `refactor` | MEDIUM |
+| Only formatting/whitespace | `style` | HIGH |
+| Mixed or unclear | analyze deeper | LOW |
 
-   Types:
-   - `feat`: New feature
-   - `fix`: Bug fix
-   - `docs`: Documentation only
-   - `style`: Formatting, missing semicolons, etc
-   - `refactor`: Code change that neither fixes bug nor adds feature
-   - `test`: Adding tests
-   - `chore`: Updating build tasks, configs, etc
+## 3. Determine Scope
 
-   **CORRECT EXAMPLES** (≤50 chars):
-   - `fix(auth): fix JWT token validation` (35) ✅
-   - `feat(api): add users endpoint` (30) ✅
-   - `refactor(db): optimize SQL queries` (35) ✅
+Extract from primary directory:
+```
+src/components/* → ui
+src/api/* → api
+plugins/* → plugins
+lib/utils/* → utils
+```
 
-5. **MANDATORY: Ask User Validation**:
-   - Present drafted commit message to user
-   - Show list of files being committed
-   - Wait for user confirmation before proceeding
-   - Allow user to modify message if needed
+## 4. Execute Based on Confidence
 
-6. **Commit** (WITHOUT Claude Code signatures):
-   ```bash
-   git commit -m "$(cat <<'EOF'
-   [TYPE](scope): [DESCRIPTION - 50 chars max]
-   EOF
-   )"
-   ```
+**HIGH confidence → Commit directly (no question)**
+```bash
+git commit -m "<type>(<scope>): <description>"
+```
 
-   **ABSOLUTE PROHIBITIONS**:
-   - ❌ NEVER add "🤖 Generated with Claude Code"
-   - ❌ NEVER add "Co-Authored-By: Claude <noreply@anthropic.com>"
-   - ❌ NEVER exceed 50 characters on subject line
-   - ❌ NEVER add body with lists/exhaustive details
+**MEDIUM confidence → Show proposal, ask confirmation**
+```
+Proposed: fix(auth): resolve token validation
+Files: src/auth/token.ts
+Confirm? [Y/n]
+```
 
-7. **Push Changes** (ONLY if requested):
-   ```bash
-   git push
-   ```
+**LOW confidence → Ask user for type**
 
-**Arguments**:
-- $ARGUMENTS will be used as commit scope or additional context
+## 5. Commit Rules (STRICT)
 
-**Example Usage**:
-- `/commit auth` → Commits auth-related changes
-- `/commit` → Commits all changes with auto-detected scope
+- **50 chars MAX** for subject line
+- **NO signatures** (no Claude, no Co-Authored-By)
+- **NO body** unless exceptional
+- Format: `<type>(<scope>): <description>`
 
-8. **Update RELEASE.md** (MANDATORY after commit):
+## 6. Post-Commit: Update RELEASE.md (MANDATORY)
 
-   **Semantic Versioning Rules:**
-   - `fix/chore/docs/style/refactor` → PATCH: 1.4.0 → 1.4.1
-   - `feat` → MINOR: 1.4.0 → 1.5.0
-   - `BREAKING CHANGE` → MAJOR: 1.4.0 → 2.0.0
+**Semantic Versioning Rules:**
+- `fix/chore/docs/style/refactor/test/ci` → PATCH: 1.5.4 → 1.5.5
+- `feat` → MINOR: 1.5.5 → 1.6.0
+- `BREAKING CHANGE` → MAJOR: 1.6.0 → 2.0.0
 
-   **Format:**
-   ```markdown
-   ## [X.Y.Z] - DD-MM-YYYY
+**Sequential chronology:** Increment by 1 only (no jumps: 1.5 → 1.6, not 1.5 → 1.8)
 
-   ### Added/Changed/Fixed
-   - Description of change
-   ```
+**Format:**
+```markdown
+## [X.Y.Z] - DD-MM-YYYY
+
+### Added/Changed/Fixed
+- Description of change
+```
+
+## Arguments
+
+- `$ARGUMENTS` = scope hint or context
+- `/commit auth` → scope = auth
+- `/commit` → auto-detect scope
