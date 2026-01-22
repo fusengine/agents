@@ -1,5 +1,15 @@
 # Release Notes
 
+## [1.8.1] - 22-01-2026
+
+### Changed
+
+- Add frontmatter (name/description) to 50 reference files for consistency
+  - Tailwind CSS references (28 files)
+  - Design-expert references (11 files)
+  - SEO references (11+ files)
+- Move `apex-methodology.md` from `doc/` to `docs/`
+
 ## [1.8.0] - 22-01-2026
 
 ### Added
@@ -21,7 +31,7 @@
   - 4 phases: Locate → Fix → Review → Verify
 
 - **Documentation**
-  - `doc/apex-methodology.md` (English documentation)
+  - `docs/apex-methodology.md` (English documentation)
   - Navigation frontmatter (prev_step/next_step) on all 55 reference files
 
 ### Changed
