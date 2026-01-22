@@ -5,7 +5,7 @@ description: "Effects utilities Tailwind CSS v4.1. Shadows (shadow-*, shadow-col
 
 # Tailwind CSS v4.1 Effects
 
-Effects utilities pour ajouter ombres, filtres, masques et effets visuels aux éléments.
+Effects utilities to add shadows, filters, masks and visual effects to elements.
 
 ## Box Shadow
 
@@ -166,7 +166,7 @@ Effects utilities pour ajouter ombres, filtres, masques et effets visuels aux é
 
 ## Backdrop Filters
 
-Applique des filtres au backdrop (element derriere).
+Applies filters to the backdrop (element behind).
 
 ### Backdrop Blur
 

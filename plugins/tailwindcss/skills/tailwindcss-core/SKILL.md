@@ -1,32 +1,32 @@
 ---
 name: tailwindcss-core
-description: "Configuration et directives Tailwind CSS v4.1. @theme, @import, @source, @utility, @variant, @apply, @config. Mode CSS-first sans tailwind.config.js."
+description: "Configuration and directives Tailwind CSS v4.1. @theme, @import, @source, @utility, @variant, @apply, @config. CSS-first mode without tailwind.config.js."
 ---
 
 # Tailwind CSS Core v4.1
 
-## Vue d'ensemble
+## Overview
 
-Tailwind CSS v4.1 introduit une approche **CSS-first** qui élimine le besoin d'un fichier `tailwind.config.js` traditionnel. Toute la configuration se fait maintenant directement dans vos fichiers CSS via des directives spécialisées.
+Tailwind CSS v4.1 introduces a **CSS-first** approach that eliminates the need for a traditional `tailwind.config.js` file. All configuration is now done directly in your CSS files via specialized directives.
 
-## Concepts clés
+## Key Concepts
 
 ### 1. @import "tailwindcss"
 
-Point d'entrée pour charger Tailwind CSS. À placer en début de votre fichier CSS principal.
+Entry point to load Tailwind CSS. Place at the beginning of your main CSS file.
 
 ```css
 @import "tailwindcss";
 ```
 
-Cette directive charge automatiquement:
-- Les utilitaires de base
-- Les variantes de réactivité
-- Les couches (theme, base, components, utilities)
+This directive automatically loads:
+- Base utilities
+- Responsive variants
+- Layers (theme, base, components, utilities)
 
 ### 2. @theme
 
-Directive pour définir ou personnaliser les valeurs de thème via des variables CSS (CSS custom properties).
+Directive to define or customize theme values via CSS custom properties.
 
 ```css
 @theme {
@@ -37,14 +37,14 @@ Directive pour définir ou personnaliser les valeurs de thème via des variables
 }
 ```
 
-Les variables sont accessibles dans les utilitaires générés:
+Variables are accessible in generated utilities:
 - `--color-*` → classes `bg-primary`, `text-primary`, etc.
 - `--spacing-*` → classes `p-custom`, `m-custom`, etc.
 - `--radius-*` → classes `rounded-lg`, etc.
 
 ### 3. @source
 
-Directive pour inclure des fichiers source supplémentaires avec glob patterns.
+Directive to include additional source files with glob patterns.
 
 ```css
 @source "./routes/**/*.{ts,tsx}";
@@ -52,11 +52,11 @@ Directive pour inclure des fichiers source supplémentaires avec glob patterns.
 @source "../packages/ui/src/**/*.{ts,tsx}";
 ```
 
-Tailwind scannera ces fichiers pour générer les utilitaires utilisés dans votre projet.
+Tailwind will scan these files to generate utilities used in your project.
 
-### 4. @utility et @variant
+### 4. @utility and @variant
 
-Directives pour créer des utilitaires et variantes personnalisés.
+Directives to create custom utilities and variants.
 
 ```css
 @utility truncate {
@@ -72,7 +72,7 @@ Directives pour créer des utilitaires et variantes personnalisés.
 
 ### 5. @apply
 
-Directive pour appliquer des classes Tailwind dans vos règles CSS personnalisées.
+Directive to apply Tailwind classes in your custom CSS rules.
 
 ```css
 .btn {
@@ -86,34 +86,34 @@ Directive pour appliquer des classes Tailwind dans vos règles CSS personnalisé
 
 ### 6. @config
 
-Directive pour charger une configuration externe si nécessaire.
+Directive to load external configuration if needed.
 
 ```css
 @config "./tailwind.config.js";
 ```
 
-(Optionnel en v4.1, utilisé principalement pour retrocompatibilité)
+(Optional in v4.1, mainly used for backward compatibility)
 
-## Mode sombre
+## Dark Mode
 
-Configuration du mode sombre dans Tailwind v4.1:
+Dark mode configuration in Tailwind v4.1:
 
 ```css
 @import "tailwindcss";
 
-/* Utiliser la préférence système */
+/* Use system preference */
 @variant dark (&:is(.dark *));
 ```
 
-Ou via une classe manuelle:
+Or via manual class:
 
 ```css
 @variant dark (&.dark);
 ```
 
-## Points d'arrêt réactifs
+## Responsive Breakpoints
 
-Les breakpoints sont définis via `@theme`:
+Breakpoints are defined via `@theme`:
 
 ```css
 @theme {
@@ -125,20 +125,20 @@ Les breakpoints sont définis via `@theme`:
 }
 ```
 
-Les variantes réactives s'utilisent avec les utilitaires:
+Responsive variants are used with utilities:
 
 ```html
 <div class="text-sm md:text-base lg:text-lg"></div>
 ```
 
-## Hiérarchie des couches
+## Layer Hierarchy
 
 ```css
 @layer theme, base, components, utilities;
 
 @import "tailwindcss";
 
-/* Vos personnalisations */
+/* Your customizations */
 @layer components {
   .btn { @apply px-4 py-2 rounded; }
 }
@@ -148,9 +148,9 @@ Les variantes réactives s'utilisent avec les utilitaires:
 }
 ```
 
-## Intégration avec plugins
+## Plugin Integration
 
-Charger des plugins Tailwind:
+Load Tailwind plugins:
 
 ```css
 @import "tailwindcss";
@@ -158,26 +158,26 @@ Charger des plugins Tailwind:
 @source "../node_modules/flowbite";
 ```
 
-## Ordre de spécificité
+## Specificity Order
 
-En CSS-first, l'ordre d'import et de déclaration détermine la spécificité:
+In CSS-first, import and declaration order determines specificity:
 
-1. `@import "tailwindcss"` - Utilitaires de base
-2. `@theme { ... }` - Variables de thème
-3. `@layer components { ... }` - Composants personnalisés
-4. `@layer utilities { ... }` - Utilitaires personnalisés
+1. `@import "tailwindcss"` - Base utilities
+2. `@theme { ... }` - Theme variables
+3. `@layer components { ... }` - Custom components
+4. `@layer utilities { ... }` - Custom utilities
 
-## Avantages du mode CSS-first
+## CSS-first Mode Benefits
 
-- Pas de fichier config JavaScript complexe
-- Type-safe via les variables CSS
-- Configuration déclarative et lisible
-- Meilleure intégration avec les preprocesseurs CSS
-- Maintenance simplifiée pour les projets larges
+- No complex JavaScript config file
+- Type-safe via CSS variables
+- Declarative and readable configuration
+- Better integration with CSS preprocessors
+- Simplified maintenance for large projects
 
-## Références détaillées
+## Detailed References
 
-Consultez les fichiers spécifiques pour:
-- `theme.md` - Configuration complète des variables de thème
-- `directives.md` - Syntaxe et exemples de toutes les directives
-- `config.md` - Configuration avancée et cas d'usage
+See specific files for:
+- `theme.md` - Complete theme variable configuration
+- `directives.md` - Syntax and examples of all directives
+- `config.md` - Advanced configuration and use cases

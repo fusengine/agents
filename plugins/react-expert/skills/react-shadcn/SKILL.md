@@ -39,7 +39,7 @@ bunx --bun shadcn@latest init
 }
 ```
 
-**Note:** Pour Tailwind CSS v4, le champ `config` doit être vide.
+**Note:** For Tailwind CSS v4, the `config` field must be empty.
 
 ---
 
@@ -160,7 +160,7 @@ import {
 import { Input } from '@/modules/cores/shadcn/components/ui/input'
 
 const formSchema = z.object({
-  username: z.string().min(2, 'Min 2 caractères').max(50),
+  username: z.string().min(2, 'Min 2 characters').max(50),
 })
 
 function ProfileForm() {

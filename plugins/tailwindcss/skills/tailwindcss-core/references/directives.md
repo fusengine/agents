@@ -3,32 +3,32 @@ name: directives
 description: Directives for Tailwind CSS v4.1
 ---
 
-# Directives Tailwind CSS v4.1
+# Tailwind CSS v4.1 Directives
 
 ## @import "tailwindcss"
 
-**Objectif**: Charger Tailwind CSS et tous ses utilitaires.
+**Purpose**: Load Tailwind CSS and all its utilities.
 
 ```css
 /* input.css */
 @import "tailwindcss";
 ```
 
-À placer en **début** de votre fichier CSS principal.
+Place at the **beginning** of your main CSS file.
 
-**Résultat**: Génère automatiquement:
-- Couches (theme, base, components, utilities)
-- Utilitaires de base
-- Variantes réactives (sm, md, lg, etc.)
-- Variantes d'état (hover, focus, active, etc.)
+**Result**: Automatically generates:
+- Layers (theme, base, components, utilities)
+- Base utilities
+- Responsive variants (sm, md, lg, etc.)
+- State variants (hover, focus, active, etc.)
 
 ---
 
 ## @theme
 
-**Objectif**: Définir ou personnaliser les valeurs de thème.
+**Purpose**: Define or customize theme values.
 
-### Syntaxe basique
+### Basic Syntax
 
 ```css
 @theme {
@@ -38,7 +38,7 @@ description: Directives for Tailwind CSS v4.1
 }
 ```
 
-### Avec variables CSS existantes
+### With Existing CSS Variables
 
 ```css
 @layer base {
@@ -53,19 +53,19 @@ description: Directives for Tailwind CSS v4.1
 }
 ```
 
-### Réinitialisation du thème
+### Theme Reset
 
 ```css
 @theme {
-  --*: initial;  /* Réinitialise tout */
-  --color-*: initial;  /* Réinitialise toutes les couleurs */
+  --*: initial;  /* Reset everything */
+  --color-*: initial;  /* Reset all colors */
 
-  /* Puis redéfinit les valeurs personnalisées */
+  /* Then redefine custom values */
   --color-primary: #3b82f6;
 }
 ```
 
-### Valeurs multiples avec variables CSS
+### Multiple Values with CSS Variables
 
 ```css
 @theme {
@@ -81,47 +81,47 @@ description: Directives for Tailwind CSS v4.1
 
 ## @source
 
-**Objectif**: Inclure des fichiers source supplémentaires pour la génération d'utilitaires.
+**Purpose**: Include additional source files for utility generation.
 
-### Syntaxe de base
+### Basic Syntax
 
 ```css
 @source "./components/**/*.{tsx,jsx}";
 @source "./pages/**/*.{ts,tsx}";
 ```
 
-### Avec chemins relatifs
+### With Relative Paths
 
 ```css
-/* Fichier: src/styles/input.css */
+/* File: src/styles/input.css */
 @source "../components/**/*.tsx";
 @source "../pages/**/*.tsx";
 @source "../hooks/**/*.ts";
 ```
 
-### Avec chemins absolus
+### With Absolute Paths
 
 ```css
 @source "./src/components/**/*.{ts,tsx}";
 @source "./node_modules/@company/ui/**/*.{js,jsx}";
 ```
 
-### Patterns Glob avancés
+### Advanced Glob Patterns
 
 ```css
-/* Extensions multiples */
+/* Multiple extensions */
 @source "./**/*.{html,js,ts,jsx,tsx,svelte,vue}";
 
 /* Exclusions */
 @source "./components/**/*.{tsx,!spec.tsx}";
 
-/* Profondeur variable */
-@source "./src/**/*.tsx";  /* Toute profondeur */
-@source "./src/*.tsx";     /* Niveau racine seulement */
-@source "./src/*/index.tsx"; /* Sous-dossiers directs */
+/* Variable depth */
+@source "./src/**/*.tsx";  /* Any depth */
+@source "./src/*.tsx";     /* Root level only */
+@source "./src/*/index.tsx"; /* Direct subfolders */
 ```
 
-### Avec les plugins
+### With Plugins
 
 ```css
 @source "./node_modules/flowbite";
@@ -133,9 +133,9 @@ description: Directives for Tailwind CSS v4.1
 
 ## @utility
 
-**Objectif**: Créer des classes utilitaires personnalisées.
+**Purpose**: Create custom utility classes.
 
-### Syntaxe simple
+### Simple Syntax
 
 ```css
 @utility truncate {
@@ -145,12 +145,12 @@ description: Directives for Tailwind CSS v4.1
 }
 ```
 
-Utilisation:
+Usage:
 ```html
-<p class="truncate">Texte très long qui sera tronqué</p>
+<p class="truncate">Very long text that will be truncated</p>
 ```
 
-### Avec variantes
+### With Variants
 
 ```css
 @utility card {
@@ -160,7 +160,7 @@ Utilisation:
 }
 ```
 
-### Utilitaires multiples
+### Multiple Utilities
 
 ```css
 @utility flex-center {
@@ -178,9 +178,9 @@ Utilisation:
 
 ## @variant
 
-**Objectif**: Créer des variantes personnalisées (sélecteurs généralisés).
+**Purpose**: Create custom variants (generalized selectors).
 
-### Variante de classe
+### Class Variant
 
 ```css
 @variant group-hover {
@@ -192,14 +192,14 @@ Utilisation:
 }
 ```
 
-Utilisation:
+Usage:
 ```html
 <div class="group">
-  <p class="text-gray-900 group-hover:text-blue-500">Texte</p>
+  <p class="text-gray-900 group-hover:text-blue-500">Text</p>
 </div>
 ```
 
-### Variante d'attribut
+### Attribute Variant
 
 ```css
 @variant data-active {
@@ -211,14 +211,14 @@ Utilisation:
 }
 ```
 
-Utilisation:
+Usage:
 ```html
 <button data-active="true" class="bg-white data-active:bg-blue-500">
-  Bouton
+  Button
 </button>
 ```
 
-### Variante de pseudo-classe
+### Pseudo-class Variant
 
 ```css
 @variant open {
@@ -234,7 +234,7 @@ Utilisation:
 }
 ```
 
-### Mode sombre
+### Dark Mode
 
 ```css
 @variant dark {
@@ -243,7 +243,7 @@ Utilisation:
   }
 }
 
-/* Ou avec classe manuelle */
+/* Or with manual class */
 @variant dark {
   .dark &
 }
@@ -253,9 +253,9 @@ Utilisation:
 
 ## @apply
 
-**Objectif**: Appliquer des classes Tailwind dans des règles CSS personnalisées.
+**Purpose**: Apply Tailwind classes within custom CSS rules.
 
-### Syntaxe simple
+### Simple Syntax
 
 ```css
 .btn {
@@ -263,13 +263,13 @@ Utilisation:
 }
 ```
 
-### Avec variantes
+### With Variants
 
 ```css
 .btn-primary {
   @apply bg-blue-500 text-white;
 
-  /* Variantes appliquées */
+  /* Applied variants */
   &:hover {
     @apply bg-blue-600;
   }
@@ -280,7 +280,7 @@ Utilisation:
 }
 ```
 
-### Combinaison avec CSS personnalisé
+### Combined with Custom CSS
 
 ```css
 .btn {
@@ -298,7 +298,7 @@ Utilisation:
 }
 ```
 
-### Avec média queries
+### With Media Queries
 
 ```css
 .responsive-grid {
@@ -314,7 +314,7 @@ Utilisation:
 }
 ```
 
-### Utilisation en @layer
+### Usage in @layer
 
 ```css
 @layer components {
@@ -336,9 +336,9 @@ Utilisation:
 
 ## @layer
 
-**Objectif**: Organiser les styles par couches (cascade et spécificité).
+**Purpose**: Organize styles by layers (cascade and specificity).
 
-### Couches standard
+### Standard Layers
 
 ```css
 @layer theme, base, components, utilities;
@@ -368,36 +368,36 @@ Utilisation:
 }
 ```
 
-### Ordre d'affichage
+### Layer Order
 
-1. **theme** - Valeurs de thème (variables CSS)
-2. **base** - Réinitialisation et styles de base
-3. **components** - Composants réutilisables
-4. **utilities** - Utilitaires (spécificité la plus élevée)
+1. **theme** - Theme values (CSS variables)
+2. **base** - Reset and base styles
+3. **components** - Reusable components
+4. **utilities** - Utilities (highest specificity)
 
 ---
 
 ## @config
 
-**Objectif**: Charger une configuration JavaScript (compatibilité v3).
+**Purpose**: Load a JavaScript configuration (v3 compatibility).
 
 ```css
 @config "./tailwind.config.js";
 ```
 
-**Note**: En Tailwind CSS v4.1, c'est généralement optionnel si vous utilisez `@theme`.
+**Note**: In Tailwind CSS v4.1, this is generally optional if you use `@theme`.
 
 ---
 
-## @custom-variant (Obsolète)
+## @custom-variant (Deprecated)
 
-Remplacé par `@variant` en v4.1:
+Replaced by `@variant` in v4.1:
 
 ```css
-/* Ancienne syntaxe (v3) */
+/* Old syntax (v3) */
 @custom-variant dark (&:is(.dark *));
 
-/* Nouvelle syntaxe (v4.1) */
+/* New syntax (v4.1) */
 @variant dark {
   &:is(.dark *)
 }
@@ -405,31 +405,31 @@ Remplacé par `@variant` en v4.1:
 
 ---
 
-## Ordre de chargement
+## Loading Order
 
 ```css
-/* 1. Import principal */
+/* 1. Main import */
 @import "tailwindcss";
 
-/* 2. Définir le thème */
+/* 2. Define theme */
 @theme {
   --color-primary: #3b82f6;
 }
 
-/* 3. Déclarer les couches */
+/* 3. Declare layers */
 @layer base { /* ... */ }
 @layer components { /* ... */ }
 @layer utilities { /* ... */ }
 
-/* 4. Inclure les sources */
+/* 4. Include sources */
 @source "./components/**/*.tsx";
 ```
 
 ---
 
-## Exemples complets
+## Complete Examples
 
-### Application React
+### React Application
 
 ```css
 /* src/index.css */
@@ -460,7 +460,7 @@ Remplacé par `@variant` en v4.1:
 }
 ```
 
-### Avec plugins Tailwind
+### With Tailwind Plugins
 
 ```css
 @import "tailwindcss";
@@ -482,7 +482,7 @@ Remplacé par `@variant` en v4.1:
 
 ---
 
-## Références
+## References
 
 - [Tailwind CSS v4.1 Functions & Directives](https://tailwindcss.com/docs/functions-and-directives)
 - [Custom Properties Documentation](https://tailwindcss.com/docs/theme)

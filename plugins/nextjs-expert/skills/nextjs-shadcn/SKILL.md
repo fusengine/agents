@@ -39,7 +39,7 @@ bunx --bun shadcn@latest init
 }
 ```
 
-**Note:** Pour Tailwind CSS v4, le champ `config` doit être vide.
+**Note:** For Tailwind CSS v4, the `config` field must be empty.
 
 ---
 

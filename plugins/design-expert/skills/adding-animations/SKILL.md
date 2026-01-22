@@ -1,26 +1,28 @@
 ---
 name: adding-animations
-description: Add micro-interactions and animations using Framer Motion and CSS. Use when user asks about animations, transitions, hover effects, loading states, or motion design. MANDATORY for every component.
-allowed-tools: Read, Write, Edit, Glob, Grep
+description: Add micro-interactions and animations using Framer Motion. Use when user asks about animations, transitions, hover effects, or motion design. MANDATORY for every component.
+allowed-tools: Read, Write, Edit, Glob, Grep, Task
 ---
 
 # Adding Animations (MANDATORY)
 
-**Every component MUST have Framer Motion animations. NO EXCEPTIONS.**
+Every component MUST have Framer Motion animations.
 
-## MANDATORY Animation Checklist
+## APEX WORKFLOW
+
+### Phase 0: ANALYZE EXISTING ANIMATIONS
 
 ```
-EVERY component must have:
-[x] Entrance animation (fade-in, slide-up)
-[x] Hover states (scale, glow, shadow)
-[x] Staggered children for lists
-[x] Reduced motion fallback
+Task: explore-codebase
+Prompt: "Find existing Framer Motion patterns: variants, timing,
+easing, hover effects. Report animation conventions."
 ```
 
-## Quick Patterns
+**RULE:** Match existing animation patterns OR propose migration.
 
-### Container + Items (REQUIRED PATTERN)
+## Standard Patterns
+
+### Container + Stagger (REQUIRED)
 
 ```tsx
 import { motion } from "framer-motion";
@@ -32,7 +34,7 @@ const container = {
 
 const item = {
   hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } }
+  show: { opacity: 1, y: 0 }
 };
 
 <motion.div variants={container} initial="hidden" animate="show">
@@ -41,41 +43,51 @@ const item = {
 </motion.div>
 ```
 
-### Button Feedback (REQUIRED)
+### Hover Effects (REQUIRED)
 
 ```tsx
+// Card hover
+<motion.div whileHover={{ y: -4 }} transition={{ duration: 0.2 }}>
+
+// Button hover
 <motion.button
-  whileHover={{ scale: 1.02, boxShadow: "0 10px 30px rgba(0,0,0,0.2)" }}
+  whileHover={{ scale: 1.02 }}
   whileTap={{ scale: 0.98 }}
-  transition={{ type: "spring", stiffness: 400, damping: 17 }}
 >
-  Click me
-</motion.button>
 ```
 
-### Card Hover (REQUIRED)
+### Scroll Animation
 
 ```tsx
 <motion.div
-  className="p-6 rounded-xl bg-card"
-  whileHover={{
-    y: -4,
-    boxShadow: "0 20px 40px rgba(0,0,0,0.15)"
-  }}
-  transition={{ duration: 0.2 }}
->
-  Card content
-</motion.div>
+  initial={{ opacity: 0, y: 40 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  viewport={{ once: true, margin: "-100px" }}
+/>
 ```
 
 ## Timing Guidelines
 
 | Interaction | Duration | Easing |
 |-------------|----------|--------|
-| Hover feedback | 50-100ms | ease-out |
+| Hover | 50-100ms | ease-out |
 | Button press | 100-150ms | ease-out |
 | Modal open | 200-300ms | ease-out |
 | Page transition | 300-400ms | ease-in-out |
+
+## FORBIDDEN
+
+```tsx
+// ❌ Random bouncing loops
+animate={{ y: [0, -10, 0] }}
+transition={{ repeat: Infinity }}
+
+// ❌ Excessive effects
+whileHover={{ scale: 1.2, rotate: 5 }}
+
+// ❌ Slow animations
+transition={{ duration: 1.5 }}
+```
 
 ## Accessibility (MANDATORY)
 
@@ -83,16 +95,28 @@ const item = {
 import { useReducedMotion } from "framer-motion";
 
 function Component() {
-  const shouldReduceMotion = useReducedMotion();
-
+  const shouldReduce = useReducedMotion();
   return (
     <motion.div
-      animate={shouldReduceMotion ? {} : { y: [0, -10, 0] }}
+      animate={shouldReduce ? {} : { y: 0 }}
+      transition={shouldReduce ? { duration: 0 } : { duration: 0.3 }}
     />
   );
 }
 ```
 
+## Validation
+
+```
+[ ] Existing animations analyzed (Phase 0)
+[ ] Patterns match existing OR migration proposed
+[ ] Stagger on lists/grids
+[ ] Hover on all interactive elements
+[ ] prefers-reduced-motion respected
+[ ] No excessive/random animations
+```
+
 ## References
 
-For detailed patterns: [references/framer-motion.md](references/framer-motion.md)
+- **APEX Motion**: `references/design/05-add-motion.md`
+- **Motion Patterns**: `references/motion-patterns.md`

@@ -3,27 +3,27 @@ name: config
 description: Advanced configuration for Tailwind CSS v4.1
 ---
 
-# Configuration avancée Tailwind CSS v4.1
+# Advanced Tailwind CSS v4.1 Configuration
 
-## Architecture de configuration CSS-first
+## CSS-first Configuration Architecture
 
-La configuration Tailwind v4.1 repose sur un seul fichier CSS (`input.css`) sans avoir besoin d'un fichier config JavaScript.
+Tailwind v4.1 configuration relies on a single CSS file (`input.css`) without needing a JavaScript config file.
 
-### Structure basique
+### Basic Structure
 
 ```
 project/
 ├── src/
 │   ├── styles/
-│   │   └── input.css          # Configuration principale
-│   ├── components/            # Scannés automatiquement
+│   │   └── input.css          # Main configuration
+│   ├── components/            # Scanned automatically
 │   ├── pages/
 │   └── index.tsx
 ├── package.json
-└── postcss.config.js          # Point d'entrée PostCSS
+└── postcss.config.js          # PostCSS entry point
 ```
 
-### PostCSS config
+### PostCSS Config
 
 ```javascript
 // postcss.config.js
@@ -36,33 +36,33 @@ export default {
 
 ---
 
-## Configuration complète - Exemple projet
+## Complete Configuration - Project Example
 
 ```css
 /* src/styles/input.css */
 
 /* ========================
-   1. IMPORT PRINCIPAL
+   1. MAIN IMPORT
    ======================== */
 @import "tailwindcss";
 
 /* ========================
-   2. DÉCLARATION DES COUCHES
+   2. LAYERS DECLARATION
    ======================== */
 @layer theme, base, components, utilities;
 
 /* ========================
-   3. THEME - Variables CSS
+   3. THEME - CSS Variables
    ======================== */
 @theme {
-  /* Initialisation */
+  /* Initialization */
   --*: initial;
 
-  /* COULEURS - Palette complète */
+  /* COLORS - Complete Palette */
   --color-white: #ffffff;
   --color-black: #000000;
 
-  /* Palette grise */
+  /* Gray Palette */
   --color-gray-50: #f9fafb;
   --color-gray-100: #f3f4f6;
   --color-gray-200: #e5e7eb;
@@ -74,7 +74,7 @@ export default {
   --color-gray-800: #1f2937;
   --color-gray-900: #111827;
 
-  /* Couleurs sémantiques */
+  /* Semantic Colors */
   --color-primary: oklch(0.65 0.2 240);
   --color-primary-light: oklch(0.85 0.15 240);
   --color-primary-dark: oklch(0.45 0.25 240);
@@ -84,7 +84,7 @@ export default {
   --color-warning: oklch(0.76 0.2 56);
   --color-error: oklch(0.65 0.22 28);
 
-  /* TYPOGRAPHIE */
+  /* TYPOGRAPHY */
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --font-serif: 'Merriweather', Georgia, serif;
   --font-mono: 'Menlo', 'Monaco', 'Courier New', monospace;
@@ -118,7 +118,7 @@ export default {
   --font-weight-semibold: 600;
   --font-weight-bold: 700;
 
-  /* ESPACES (Échelle 4px) */
+  /* SPACING (4px Scale) */
   --spacing-0: 0;
   --spacing-1: 0.25rem;
   --spacing-2: 0.5rem;
@@ -135,7 +135,7 @@ export default {
   --spacing-full: 100%;
   --spacing-screen: 100vw;
 
-  /* ARRONDIS */
+  /* BORDER RADIUS */
   --radius-none: 0;
   --radius-sm: 0.125rem;
   --radius-base: 0.25rem;
@@ -146,7 +146,7 @@ export default {
   --radius-3xl: 1.5rem;
   --radius-full: 9999px;
 
-  /* OMBRES */
+  /* SHADOWS */
   --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
   --shadow-base: 0 1px 3px 0 rgba(0, 0, 0, 0.1),
@@ -194,13 +194,13 @@ export default {
 }
 
 /* ========================
-   4. SOURCES À SCANNER
+   4. SOURCES TO SCAN
    ======================== */
 @source "./src/**/*.{ts,tsx}";
 @source "./src/**/*.{jsx,js}";
 
 /* ========================
-   5. COUCHE BASE
+   5. BASE LAYER
    ======================== */
 @layer base {
   /* Reset */
@@ -242,12 +242,12 @@ export default {
     @apply text-lg font-semibold;
   }
 
-  /* Paragraphes */
+  /* Paragraphs */
   p {
     @apply leading-relaxed;
   }
 
-  /* Listes */
+  /* Lists */
   ul, ol {
     @apply pl-6;
   }
@@ -256,7 +256,7 @@ export default {
     @apply mb-2;
   }
 
-  /* Liens */
+  /* Links */
   a {
     @apply text-primary underline hover:text-primary-dark transition-colors;
   }
@@ -281,10 +281,10 @@ export default {
 }
 
 /* ========================
-   6. COUCHE COMPONENTS
+   6. COMPONENTS LAYER
    ======================== */
 @layer components {
-  /* Boutons */
+  /* Buttons */
   .btn {
     @apply inline-flex items-center justify-center px-4 py-2 rounded-lg
            font-semibold transition-all duration-200;
@@ -314,7 +314,7 @@ export default {
     @apply opacity-50 cursor-not-allowed;
   }
 
-  /* Cartes */
+  /* Cards */
   .card {
     @apply bg-white rounded-lg shadow-md p-6;
   }
@@ -327,7 +327,7 @@ export default {
     @apply pt-4 border-t border-gray-200 mt-4;
   }
 
-  /* Conteneurs */
+  /* Containers */
   .container {
     @apply w-full mx-auto px-4;
   }
@@ -336,7 +336,7 @@ export default {
     max-width: var(--breakpoint-xl);
   }
 
-  /* Grilles */
+  /* Grids */
   .grid-cols-responsive {
     @apply grid gap-4;
 
@@ -372,7 +372,7 @@ export default {
 }
 
 /* ========================
-   7. COUCHE UTILITIES
+   7. UTILITIES LAYER
    ======================== */
 @layer utilities {
   /* Flexbox */
@@ -384,7 +384,7 @@ export default {
     @apply flex items-center justify-between;
   }
 
-  /* Texte */
+  /* Text */
   .text-shadow-sm {
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
   }
@@ -426,7 +426,7 @@ export default {
     @apply transition-all duration-300 ease-in-out;
   }
 
-  /* Accessibilité */
+  /* Accessibility */
   .sr-only {
     @apply absolute w-px h-px p-0 -m-px
            overflow-hidden clip-path-inset whitespace-nowrap
@@ -440,27 +440,27 @@ export default {
 }
 
 /* ========================
-   8. VARIANTES PERSONNALISÉES
+   8. CUSTOM VARIANTS
    ======================== */
 
-/* Mode sombre */
+/* Dark mode */
 @variant dark {
   @media (prefers-color-scheme: dark) {
     &
   }
 }
 
-/* Groupe hover */
+/* Group hover */
 @variant group-hover {
   .group:hover &
 }
 
-/* Groupe focus */
+/* Group focus */
 @variant group-focus {
   .group:focus-within &
 }
 
-/* Attributs data */
+/* Data attributes */
 @variant data-active {
   &[data-active="true"]
 }
@@ -501,19 +501,19 @@ export default {
 }
 
 /* ========================
-   10. PLUGINS EXTERNES
+   10. EXTERNAL PLUGINS
    ======================== */
 
-/* Optionnel: charger un plugin Tailwind */
+/* Optional: load a Tailwind plugin */
 /* @plugin "flowbite/plugin"; */
 /* @source "./node_modules/flowbite"; */
 ```
 
 ---
 
-## Configuration par cas d'usage
+## Configuration by Use Case
 
-### Application React/Next.js
+### React/Next.js Application
 
 ```css
 /* src/styles/globals.css */
@@ -533,7 +533,7 @@ export default {
 }
 ```
 
-### Avec Vite + Vue
+### With Vite + Vue
 
 ```css
 /* src/style.css */
@@ -546,7 +546,7 @@ export default {
 @source "./src/**/*.{vue,ts,js}";
 ```
 
-### Avec Astro
+### With Astro
 
 ```css
 /* src/styles/global.css */
@@ -562,78 +562,78 @@ export default {
 
 ---
 
-## Optimisations de performance
+## Performance Optimizations
 
-### Pré-charger les variables
+### Pre-load Variables
 
 ```css
 @theme {
-  /* Grouper les valeurs fréquemment utilisées */
+  /* Group frequently used values */
   --color-primary: #3b82f6;
   --color-white: #ffffff;
   --spacing-4: 1rem;
 }
 ```
 
-### Limiter les sources
+### Limit Sources
 
 ```css
-/* ✅ Bon */
+/* ✅ Good */
 @source "./src/components/**/*.tsx";
 
-/* ❌ À éviter */
-@source "./**/*.{*}";  /* Trop large */
+/* ❌ Avoid */
+@source "./**/*.{*}";  /* Too broad */
 ```
 
-### Utiliser des layer judicieusement
+### Use Layers Wisely
 
 ```css
-/* Réduire la spécificité */
+/* Reduce specificity */
 @layer utilities {
   .my-util { /* ... */ }
 }
 
-/* Au lieu de */
-.my-util { /* ... */ }  /* Plus spécifique */
+/* Instead of */
+.my-util { /* ... */ }  /* More specific */
 ```
 
 ---
 
-## Dépannage
+## Troubleshooting
 
-### Les classes n'apparaissent pas
+### Classes Don't Appear
 
-1. Vérifier que `@source` inclut les fichiers
-2. Vérifier les extensions de fichier (`.tsx` vs `.ts`)
-3. Redémarrer le serveur de développement
+1. Check that `@source` includes the files
+2. Check file extensions (`.tsx` vs `.ts`)
+3. Restart the development server
 
-### Conflits de variables
+### Variable Conflicts
 
 ```css
-/* Vérifier les noms uniques */
+/* Check for unique names */
 @theme {
   --color-primary: #3b82f6;  /* ✅ Unique */
-  --color: #000;             /* ❌ Trop générique */
+  --color: #000;             /* ❌ Too generic */
 }
 ```
 
-### Ordre de chargement important
+### Loading Order Matters
 
 ```css
-/* ✅ Bon ordre */
+/* ✅ Correct order */
 @import "tailwindcss";        /* 1. Import */
-@theme { /* ... */ }           /* 2. Thème */
+@theme { /* ... */ }           /* 2. Theme */
 @source "./components/**"; /* 3. Sources */
-@layer components { /* ... */ } /* 4. Couches */
+@layer components { /* ... */ } /* 4. Layers */
 
-/* ❌ Mauvais ordre */
+/* ❌ Wrong order */
 @source "./components/**";
 @import "tailwindcss";
 ```
 
 ---
 
-## Références
+## References
 
 - [Tailwind CSS v4.1 Configuration](https://tailwindcss.com/docs/configuration)
 - [PostCSS Configuration](https://postcss.org/docs/postcss-load-config)

@@ -1,6 +1,6 @@
 # Prompt Engineer Plugin
 
-Expert en création et optimisation de prompts IA. Maîtrise les meilleures pratiques 2025 : Context Engineering, Meta-Prompting, Chain-of-Thought avancé, et conception d'agents.
+Expert in AI prompt creation and optimization. Masters 2025 best practices: Context Engineering, Meta-Prompting, advanced Chain-of-Thought, and agent design.
 
 ## Installation
 
@@ -12,27 +12,27 @@ claude plugins install prompt-engineer
 
 ### prompt-engineer
 
-Expert en ingénierie de prompts et conception d'agents IA.
+Expert in prompt engineering and AI agent design.
 
-**Modèle:** Opus
-**Couleur:** Purple
+**Model:** Opus
+**Color:** Purple
 
-**Capacités:**
-- Création de prompts optimaux (system, task, few-shot, meta)
-- Optimisation de prompts existants
-- Conception d'agents complets
-- Implémentation de guardrails de sécurité
+**Capabilities:**
+- Optimal prompt creation (system, task, few-shot, meta)
+- Existing prompt optimization
+- Complete agent design
+- Security guardrails implementation
 
 ## Skills
 
 | Skill | Description |
 |-------|-------------|
-| `prompt-creation` | Techniques et templates pour créer des prompts |
-| `prompt-optimization` | Améliorer et optimiser des prompts existants |
-| `agent-design` | Concevoir des agents avec patterns recommandés |
-| `guardrails` | Sécurité et contrôle qualité |
+| `prompt-creation` | Techniques and templates for prompt creation |
+| `prompt-optimization` | Improve and optimize existing prompts |
+| `agent-design` | Design agents with recommended patterns |
+| `guardrails` | Security and quality control |
 
-## Commande
+## Command
 
 ### /prompt
 
@@ -41,22 +41,22 @@ Expert en ingénierie de prompts et conception d'agents IA.
 ```
 
 **Actions:**
-- `create` - Créer un nouveau prompt
-- `optimize` - Améliorer un prompt existant
-- `agent` - Concevoir un agent complet
-- `review` - Analyser un prompt
+- `create` - Create a new prompt
+- `optimize` - Improve an existing prompt
+- `agent` - Design a complete agent
+- `review` - Analyze a prompt
 
-## Techniques Maîtrisées
+## Mastered Techniques
 
-### Structuration
+### Structuring
 - Chain-of-Thought (Zero-shot, Few-shot, Extended Thinking)
-- Few-Shot Prompting (2-5 exemples optimaux)
-- XML Tags pour structure claire
+- Few-Shot Prompting (2-5 optimal examples)
+- XML Tags for clear structure
 - Structured Outputs (JSON Schema)
 
 ### Context Engineering
-- CLAUDE.md pour contexte automatique
-- Fresh Eyes Principle (isolation contextuelle)
+- CLAUDE.md for automatic context
+- Fresh Eyes Principle (contextual isolation)
 - Meta-Prompting (Conductor-Expert pattern)
 
 ### Guardrails
@@ -64,14 +64,14 @@ Expert en ingénierie de prompts et conception d'agents IA.
 - Output Guardrails (format, hallucination, compliance)
 - Ethical Boundaries
 
-## Structure du Plugin
+## Plugin Structure
 
 ```text
 prompt-engineer/
-├── .mcp.json                    # Config MCP servers
+├── .mcp.json                    # MCP servers config
 ├── README.md
 ├── agents/
-│   └── prompt-engineer.md       # Agent principal
+│   └── prompt-engineer.md       # Main agent
 ├── skills/
 │   ├── prompt-creation/
 │   │   ├── SKILL.md
@@ -91,35 +91,35 @@ prompt-engineer/
     └── prompt.md
 ```
 
-## Exemples d'utilisation
+## Usage Examples
 
-### Créer un assistant de support
+### Create a support assistant
 
 ```bash
-/prompt create un assistant de support technique pour une app mobile de e-commerce
+/prompt create a technical support assistant for an e-commerce mobile app
 ```
 
-### Optimiser un prompt existant
+### Optimize an existing prompt
 
 ```bash
 /prompt optimize
 
-[Coller votre prompt actuel]
+[Paste your current prompt]
 ```
 
-### Concevoir un agent de code review
+### Design a code review agent
 
 ```bash
-/prompt agent un revieweur de code spécialisé Python avec focus sur la sécurité
+/prompt agent a Python-specialized code reviewer focused on security
 ```
 
 ## Documentation
 
-- [Techniques de prompting](skills/prompt-creation/docs/techniques.md)
-- [Templates réutilisables](skills/prompt-creation/docs/templates.md)
-- [Patterns multi-agents](skills/agent-design/docs/patterns.md)
-- [Workflows recommandés](skills/agent-design/docs/workflows.md)
+- [Prompting techniques](skills/prompt-creation/docs/techniques.md)
+- [Reusable templates](skills/prompt-creation/docs/templates.md)
+- [Multi-agent patterns](skills/agent-design/docs/patterns.md)
+- [Recommended workflows](skills/agent-design/docs/workflows.md)
 
-## Licence
+## License
 
 MIT

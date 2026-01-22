@@ -3,11 +3,11 @@ name: theme
 description: Tailwind CSS v4.1 theme configuration
 ---
 
-# Configuration de thème Tailwind CSS v4.1
+# Tailwind CSS v4.1 Theme Configuration
 
-## Directive @theme
+## @theme Directive
 
-La directive `@theme` définit toutes les valeurs de votre système de design via des variables CSS.
+The `@theme` directive defines all your design system values via CSS variables.
 
 ```css
 @theme {
@@ -18,36 +18,36 @@ La directive `@theme` définit toutes les valeurs de votre système de design vi
 }
 ```
 
-## Catégories de thème
+## Theme Categories
 
-### 1. Couleurs
+### 1. Colors
 
 ```css
 @theme {
-  /* Palettes nommées */
+  /* Named palettes */
   --color-gray-50: #f8fafc;
   --color-gray-100: #f1f5f9;
   --color-gray-900: #0f172a;
 
-  /* Couleurs sémantiques */
+  /* Semantic colors */
   --color-primary: #3b82f6;
   --color-secondary: #ef4444;
   --color-success: #10b981;
   --color-warning: #f59e0b;
   --color-error: #ef4444;
 
-  /* Alias pour compatibilité */
+  /* Aliases for compatibility */
   --color-white: #ffffff;
   --color-black: #000000;
 }
 ```
 
-Génère des classes:
+Generates classes:
 - `.bg-primary`, `.bg-gray-50`
 - `.text-primary`, `.text-gray-900`
 - `.border-primary`, `.border-gray-100`
 
-### 2. Espaces (spacing)
+### 2. Spacing
 
 ```css
 @theme {
@@ -69,12 +69,12 @@ Génère des classes:
 }
 ```
 
-Génère des classes:
+Generates classes:
 - Padding: `.p-4`, `.px-6`, `.py-8`
 - Margin: `.m-4`, `.mx-auto`, `.mb-8`
 - Gap: `.gap-4`, `.gap-x-2`, `.gap-y-4`
 
-### 3. Polices
+### 3. Fonts
 
 ```css
 @theme {
@@ -82,7 +82,7 @@ Génère des classes:
   --font-serif: Georgia, Cambria, serif;
   --font-mono: 'Menlo', 'Monaco', 'Courier New', monospace;
 
-  /* Fonts personnalisées */
+  /* Custom fonts */
   --font-display: 'Playfair Display', serif;
   --font-body: 'Inter', sans-serif;
 }
@@ -111,7 +111,7 @@ Génère des classes:
 --letter-spacing-widest: 0.1em;
 ```
 
-### 4. Arrondis (border-radius)
+### 4. Border Radius
 
 ```css
 @theme {
@@ -131,9 +131,9 @@ Génère des classes:
 }
 ```
 
-Génère: `.rounded-lg`, `.rounded-full`, `.rounded-md`
+Generates: `.rounded-lg`, `.rounded-full`, `.rounded-md`
 
-### 5. Ombres
+### 5. Shadows
 
 ```css
 @theme {
@@ -152,7 +152,7 @@ Génère: `.rounded-lg`, `.rounded-full`, `.rounded-md`
 }
 ```
 
-### 6. Durées et timing
+### 6. Durations and Timing
 
 ```css
 @theme {
@@ -172,7 +172,7 @@ Génère: `.rounded-lg`, `.rounded-full`, `.rounded-md`
 }
 ```
 
-### 7. Largeurs et hauteurs
+### 7. Widths and Heights
 
 ```css
 @theme {
@@ -199,37 +199,37 @@ Génère: `.rounded-lg`, `.rounded-full`, `.rounded-md`
 }
 ```
 
-## Exemple complet
+## Complete Example
 
 ```css
 @import "tailwindcss";
 
 @theme {
-  /* Couleurs */
+  /* Colors */
   --color-primary: oklch(0.65 0.2 240);
   --color-secondary: oklch(0.72 0.15 30);
   --color-gray-50: #f9fafb;
   --color-gray-100: #f3f4f6;
   --color-gray-900: #111827;
 
-  /* Typographie */
+  /* Typography */
   --font-sans: 'Inter', system-ui, sans-serif;
   --font-size-sm: 0.875rem;
   --font-size-base: 1rem;
   --font-size-lg: 1.125rem;
   --line-height-normal: 1.5;
 
-  /* Espaces */
+  /* Spacing */
   --spacing-2: 0.5rem;
   --spacing-4: 1rem;
   --spacing-6: 1.5rem;
   --spacing-8: 2rem;
 
-  /* Arrondis */
+  /* Border radius */
   --radius-md: 0.5rem;
   --radius-lg: 0.75rem;
 
-  /* Ombres */
+  /* Shadows */
   --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
 
   /* Breakpoints */
@@ -238,7 +238,7 @@ Génère: `.rounded-lg`, `.rounded-full`, `.rounded-md`
   --breakpoint-lg: 1024px;
 }
 
-/* Composants personnalisés */
+/* Custom components */
 @layer components {
   .btn {
     @apply px-4 py-2 rounded-md font-medium transition-colors;
@@ -254,26 +254,26 @@ Génère: `.rounded-lg`, `.rounded-full`, `.rounded-md`
 }
 ```
 
-## Utilisation des variables
+## Using Variables
 
 ```html
-<!-- Couleurs -->
-<div class="bg-primary text-gray-900">Contenu</div>
+<!-- Colors -->
+<div class="bg-primary text-gray-900">Content</div>
 
-<!-- Espaces -->
-<div class="p-6 m-4 gap-8">Éléments</div>
+<!-- Spacing -->
+<div class="p-6 m-4 gap-8">Elements</div>
 
 <!-- Sizes -->
-<h1 class="text-2xl font-bold leading-tight">Titre</h1>
+<h1 class="text-2xl font-bold leading-tight">Title</h1>
 
-<!-- Arrondis -->
-<button class="rounded-lg">Bouton</button>
+<!-- Border radius -->
+<button class="rounded-lg">Button</button>
 
-<!-- Ombres -->
-<div class="shadow-lg">Contenu ombragé</div>
+<!-- Shadows -->
+<div class="shadow-lg">Shadowed content</div>
 ```
 
-## Références
+## References
 
 - [Tailwind CSS v4.1 Theme Documentation](https://tailwindcss.com/docs/theme)
-- [Configuration CSS Custom Properties](https://tailwindcss.com/docs/theme#customizing-with-css-custom-properties)
+- [CSS Custom Properties Configuration](https://tailwindcss.com/docs/theme#customizing-with-css-custom-properties)

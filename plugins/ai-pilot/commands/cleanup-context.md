@@ -4,61 +4,61 @@ description: Memory optimization - removes duplicates, consolidates knowledge, a
 
 # Cleanup Context
 
-Exécute le script de nettoyage automatique du contexte Claude Code.
+Executes the automatic cleanup script for Claude Code context.
 
 ## Script Automatique
 
-Lance le nettoyage complet:
+Run complete cleanup:
 
 ```bash
 ~/.claude/scripts/cleanup-context.sh
 ```
 
-## Ce qui est nettoyé (SUPPRESSION DÉFINITIVE):
+## What Gets Cleaned (PERMANENT DELETION):
 
-1. **file-history/** - Fichiers >7 jours supprimés
-2. **history.jsonl** - Supprimé et réinitialisé
-3. **hook-debug.log** - Supprimé et réinitialisé
-4. **security.log** - Supprimé et réinitialisé
-5. **session-env/** - Sessions >30 jours supprimées
-6. **projects/** - Fichiers >60 jours supprimés
-7. **statsig/** - Entièrement vidé
-8. **todos/** - Fichiers >30 jours supprimés
+1. **file-history/** - Files >7 days deleted
+2. **history.jsonl** - Deleted and reset
+3. **hook-debug.log** - Deleted and reset
+4. **security.log** - Deleted and reset
+5. **session-env/** - Sessions >30 days deleted
+6. **projects/** - Files >60 days deleted
+7. **statsig/** - Completely emptied
+8. **todos/** - Files >30 days deleted
 
-⚠️ **Aucune archive** - Suppression définitive
+⚠️ **No backup** - Permanent deletion
 
-## Rapport de Nettoyage
+## Cleanup Report
 
-Le script affiche:
-- État AVANT (nombre de fichiers, lignes, taille)
-- Actions effectuées
-- État APRÈS
-- Résumé des suppressions/archives
+The script displays:
+- BEFORE state (number of files, lines, size)
+- Actions performed
+- AFTER state
+- Summary of deletions/archives
 
-## Exemple de sortie:
+## Example output:
 
 ```
-🧹 Nettoyage du contexte Claude Code
+🧹 Claude Code context cleanup
 
-📊 État AVANT nettoyage:
-  File history: 1234 fichiers
-  History.jsonl: 5678 lignes
-  Sessions: 89 fichiers
-  Taille totale: 245MB
+📊 BEFORE cleanup state:
+  File history: 1234 files
+  History.jsonl: 5678 lines
+  Sessions: 89 files
+  Total size: 245MB
 
-🗑️ Nettoyage file-history (>7 jours)...
-  ✓ 856 fichiers supprimés
+🗑️ Cleaning file-history (>7 days)...
+  ✓ 856 files deleted
 
-🗑️ Suppression history.jsonl...
-  ✓ Supprimé et réinitialisé
+🗑️ Deleting history.jsonl...
+  ✓ Deleted and reset
 
-✅ Nettoyage terminé!
+✅ Cleanup complete!
 
-📈 Résumé:
-  File history: 856 fichiers supprimés
-  Sessions supprimées: 34
-  Logs supprimés: hook-debug.log, security.log, history.jsonl
+📈 Summary:
+  File history: 856 files deleted
+  Sessions deleted: 34
+  Logs deleted: hook-debug.log, security.log, history.jsonl
 ```
 
 **Example Usage**:
-- `/cleanup-context` → Lance le nettoyage complet
+- `/cleanup-context` → Run complete cleanup

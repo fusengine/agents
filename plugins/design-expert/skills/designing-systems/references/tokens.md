@@ -68,7 +68,7 @@ description: Design tokens reference
 ### Font Stack
 
 ```css
---font-sans: 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
+--font-sans: 'Satoshi Variable', ui-sans-serif, system-ui, sans-serif;
 --font-serif: 'Merriweather', ui-serif, Georgia, serif;
 --font-mono: 'JetBrains Mono', ui-monospace, monospace;
 ```

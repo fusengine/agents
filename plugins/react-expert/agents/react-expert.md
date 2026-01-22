@@ -115,5 +115,5 @@ interface UserProps {
 ## Forbidden
 
 - **Using emojis as icons** - Use Lucide React only
-- **Border-left coloré comme indicateur** - Utiliser shadow, background gradient, glassmorphism, ou corner ribbon
-- **Purple gradients** - Éviter les gradients violet/rose génériques (AI slop)
+- **Colored border-left as indicator** - Use shadow, background gradient, glassmorphism, or corner ribbon
+- **Purple gradients** - Avoid generic purple/pink gradients (AI slop)

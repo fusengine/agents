@@ -5,7 +5,7 @@ description: @utility, @variant, @apply, custom CSS
 
 # Custom Styles
 
-## @utility - Créer une utility
+## @utility - Create a utility
 ```css
 @utility glass-effect {
   backdrop-filter: blur(10px);
@@ -14,7 +14,7 @@ description: @utility, @variant, @apply, custom CSS
 /* Usage: class="glass-effect hover:glass-effect" */
 ```
 
-## @variant - Style conditionnel
+## @variant - Conditional style
 ```css
 .card {
   background: white;
@@ -23,7 +23,7 @@ description: @utility, @variant, @apply, custom CSS
 }
 ```
 
-## @custom-variant - Nouveau variant
+## @custom-variant - New variant
 ```css
 @custom-variant theme-midnight (&:where([data-theme="midnight"] *));
 /* Usage: theme-midnight:bg-black */
@@ -36,7 +36,7 @@ description: @utility, @variant, @apply, custom CSS
 }
 ```
 
-## @layer - Organisation CSS
+## @layer - CSS organization
 ```css
 @layer components {
   .card { @apply bg-white shadow-md rounded-xl p-4; }

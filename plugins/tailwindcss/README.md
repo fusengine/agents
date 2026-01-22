@@ -1,16 +1,16 @@
 # Tailwind CSS Expert v4.1
 
-Plugin expert pour Tailwind CSS v4.1 avec configuration CSS-native, @theme, @utility, @variant et Oxide engine.
+Expert plugin for Tailwind CSS v4.1 with CSS-native configuration, @theme, @utility, @variant and Oxide engine.
 
 ## Features
 
-- **CSS-first Configuration**: Plus besoin de tailwind.config.js
-- **@theme Directive**: Design tokens en CSS natif
-- **@utility/@variant**: Créer utilities et variants custom
-- **Oxide Engine**: Builds 5x plus rapides
-- **OKLCH Colors**: Support wide-gamut P3
+- **CSS-first Configuration**: No more tailwind.config.js needed
+- **@theme Directive**: Design tokens in native CSS
+- **@utility/@variant**: Create custom utilities and variants
+- **Oxide Engine**: 5x faster builds
+- **OKLCH Colors**: Wide-gamut P3 support
 - **Container Queries**: @container, @md:*, etc.
-- **15 Skills spécialisés**: Documentation complète v4.1
+- **15 Specialized Skills**: Complete v4.1 documentation
 
 ## Installation
 
@@ -26,7 +26,7 @@ claude mcp add-json fuse-tailwindcss '{"type":"local","path":"plugins/tailwindcs
 |-------|-------------|
 | `tailwindcss-v4` | Core v4.1, @theme, directives, migration guide |
 | `tailwindcss-core` | @theme, @import, @source, @utility, @variant, @apply, @config |
-| `tailwindcss-utilities` | Référence complète des utility classes |
+| `tailwindcss-utilities` | Complete utility classes reference |
 | `tailwindcss-utility-classes` | Layout, spacing, typography, colors, borders, effects |
 | `tailwindcss-responsive` | Breakpoints sm: md: lg: xl: 2xl:, container queries |
 | `tailwindcss-custom-styles` | @utility, @variant, @apply, custom CSS |
@@ -52,24 +52,24 @@ claude mcp add-json fuse-tailwindcss '{"type":"local","path":"plugins/tailwindcs
 
 ## Agent
 
-L'agent `tailwindcss-expert` s'active automatiquement quand vous mentionnez:
+The `tailwindcss-expert` agent activates automatically when you mention:
 - Tailwind CSS, utility classes
 - @theme, @utility, @variant
 - Responsive design, dark mode
 - Custom styles, configuration
 
-## Nouveautés v4.1
+## v4.1 New Features
 
 - `h-dvh` - Dynamic viewport height
-- `shadow-color-*` - Couleur des ombres
-- `inset-shadow-*` - Ombres internes
-- `mask-*` - Masques CSS
-- `text-shadow-*` - Ombres de texte
-- `text-wrap: balance/pretty` - Wrap intelligent
-- `bg-radial-*`, `bg-conic-*` - Gradients avancés
-- OKLCH - Palette wide-gamut P3
+- `shadow-color-*` - Shadow color
+- `inset-shadow-*` - Inner shadows
+- `mask-*` - CSS masks
+- `text-shadow-*` - Text shadows
+- `text-wrap: balance/pretty` - Smart text wrap
+- `bg-radial-*`, `bg-conic-*` - Advanced gradients
+- OKLCH - Wide-gamut P3 palette
 
-## Compatibilité
+## Compatibility
 
 - Safari 16.4+
 - Chrome 111+

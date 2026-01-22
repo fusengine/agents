@@ -1,70 +1,70 @@
 # APEX Agents Plugin
 
-Collection d'agents spécialisés pour le workflow APEX (Analyze → Plan → Execute → eXamine).
+Collection of specialized agents for the APEX workflow (Analyze → Plan → Execute → eXamine).
 
-## Skill APEX (Auto-détection)
+## APEX Skill (Auto-detection)
 
-Le skill `/apex` détecte automatiquement le type de projet et charge les références spécifiques:
+The `/apex` skill automatically detects the project type and loads framework-specific references:
 
-| Config détectée | Framework | Références chargées |
+| Config Detected | Framework | Loaded References |
 |-----------------|-----------|---------------------|
 | `composer.json` + `artisan` | Laravel | `references/laravel/*.md` |
 | `next.config.*` | Next.js | `references/nextjs/*.md` |
 | `package.json` (react) | React | `references/react/*.md` |
 | `Package.swift`, `*.xcodeproj` | Swift | `references/swift/*.md` |
 
-### Phases APEX (00-09)
+### APEX Phases (00-09)
 
-1. `00-init-branch` - Création branche, vérification état git
-2. `01-analyze` - Exploration codebase, patterns existants
-3. `02-features-plan` - TodoWrite, estimation fichiers <100 lignes
-4. `03-execution` - Implémentation SOLID, interfaces séparées
+1. `00-init-branch` - Create branch, verify git status
+2. `01-analyze` - Explore codebase, existing patterns
+3. `02-features-plan` - TodoWrite, estimate files <100 lines
+4. `03-execution` - SOLID implementation, separated interfaces
 5. `04-validation` - Linters, type-check, build
-6. `05-review` - Self-review, checklist qualité
-7. `06-fix-issue` - Correction des problèmes trouvés
-8. `07-add-test` - Tests unitaires et d'intégration
-9. `08-check-test` - Exécution et couverture
-10. `09-create-pr` - Pull request avec description
+6. `05-review` - Self-review, quality checklist
+7. `06-fix-issue` - Fix issues found
+8. `07-add-test` - Unit and integration tests
+9. `08-check-test` - Test execution and coverage
+10. `09-create-pr` - Pull request with description
 
-## Agents inclus
+## Included Agents
 
 ### Code Quality
-- **sniper** - Détection et correction d'erreurs, validation SOLID, linters
-- **sniper-faster** - Modifications rapides et silencieuses
+- **sniper** - Error detection and correction, SOLID validation, linters
+- **sniper-faster** - Fast and silent modifications
 
 ### Research
-- **research-expert** - Recherche technique (Context7, Exa, Sequential Thinking)
-- **websearch** - Recherche web rapide avec sources
+- **research-expert** - Technical research (Context7, Exa, Sequential Thinking)
+- **websearch** - Fast web search with sources
 
 ### SEO
 - **seo-expert** - SEO/SEA/GEO 2026, Local SEO, anti-cannibalization, AI optimization
 
 ### Exploration
-- **explore-codebase** - Découverte et analyse d'architecture
+- **explore-codebase** - Discovery and architecture analysis
 
-## Skills par domaine
+## Skills by Domain
 
-- `apex/` - Méthodologie APEX avec références par framework
-- `code-quality/` - Patterns linting, SOLID, architecture
-- `research/` - Méthodologies de recherche
-- `seo/` - Guidelines SEO/SEA/GEO/Local SEO
-- `exploration/` - Techniques d'exploration
+- `apex/` - APEX methodology with framework-specific references
+- `code-quality/` - Linting patterns, SOLID, architecture
+- `research/` - Research methodologies
+- `seo/` - SEO/SEA/GEO/Local SEO guidelines
+- `exploration/` - Exploration techniques
 
 ## Usage
 
 ```bash
-# Skill APEX (recommandé pour toute tâche de développement)
+# APEX Skill (recommended for any development task)
 /apex
 
-# Agents individuels
+# Individual agents
 > Use sniper to fix all TypeScript errors
 > Use research-expert to find Next.js 16 documentation
 > Use explore-codebase to understand the project structure
 ```
 
-## Workflow APEX
+## APEX Workflow
 
-1. **A**nalyze - `explore-codebase` + `research-expert` en parallèle
-2. **P**lan - `TodoWrite` pour planification, fichiers <100 lignes
-3. **E**xecute - Agents spécialisés, SOLID, interfaces séparées
-4. **e**Xamine - `sniper` pour validation finale (OBLIGATOIRE)
+1. **A**nalyze - `explore-codebase` + `research-expert` in parallel
+2. **P**lan - `TodoWrite` for planning, files <100 lines
+3. **E**xecute - Specialized agents, SOLID, separated interfaces
+4. **e**Xamine - `sniper` for final validation (MANDATORY)
