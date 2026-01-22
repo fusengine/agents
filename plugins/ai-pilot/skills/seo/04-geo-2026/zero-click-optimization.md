@@ -1,3 +1,8 @@
+---
+name: zero-click-optimization
+description: Zero-click optimization strategies
+---
+
 # Zero-Click Optimization (60% Reality)
 
 **Strategies for 60% of searches that don't result in clicks.**

@@ -1,3 +1,8 @@
+---
+name: scroll
+description: Scroll utilities for Tailwind CSS
+---
+
 # Scroll Utilities
 
 Control scroll behavior, scroll snap, and overscroll behavior.

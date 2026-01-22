@@ -1,3 +1,8 @@
+---
+name: twitter-cards
+description: Twitter/X cards implementation guide
+---
+
 # Twitter Cards (X.com 2026)
 
 **Complete implementation guide for Twitter/X Card markup.**

@@ -1,3 +1,8 @@
+---
+name: current-date
+description: Current date awareness (2026)
+---
+
 # Current Date Awareness (2026)
 
 **CRITICAL: Always use current year 2026 in all SEO/GEO recommendations.**

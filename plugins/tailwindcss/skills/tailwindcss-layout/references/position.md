@@ -1,3 +1,8 @@
+---
+name: position
+description: Position utilities for Tailwind CSS v4.1
+---
+
 # Position Utilities - Tailwind CSS v4.1
 
 ## Position Types

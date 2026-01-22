@@ -1,3 +1,8 @@
+---
+name: local-landing-pages
+description: Local SEO landing pages for geo-targeting
+---
+
 # Local SEO Landing Pages (2026)
 
 **City/area-optimized landing pages for local search ranking.**

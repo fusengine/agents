@@ -1,3 +1,8 @@
+---
+name: llm-crawlability
+description: LLM crawlability and technical SEO
+---
+
 # LLM Crawlability & Technical SEO for AI
 
 **Making content accessible to AI crawlers and language models.**

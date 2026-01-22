@@ -1,3 +1,8 @@
+---
+name: fonts
+description: Font utilities for Tailwind CSS v4.1
+---
+
 # Font Utilities - Tailwind CSS v4.1
 
 ## Font Family

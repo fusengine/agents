@@ -1,3 +1,8 @@
+---
+name: margin
+description: Margin utilities reference for Tailwind CSS
+---
+
 # Margin Utilities Reference
 
 ## Margin Classes (All Sides)

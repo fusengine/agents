@@ -1,3 +1,8 @@
+---
+name: local-backlinks
+description: Local backlinks strategy for local SEO
+---
+
 # Local Backlinks (2026)
 
 **Local links represent 13-15% of local ranking signals.**

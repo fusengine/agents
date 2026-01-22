@@ -1,3 +1,8 @@
+---
+name: article-schema
+description: Article schema for blog posts and news
+---
+
 # Article Schema (BlogPosting, NewsArticle)
 
 **JSON-LD structured data for blog posts and news articles (Schema.org 16.0).**

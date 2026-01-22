@@ -1,3 +1,8 @@
+---
+name: padding
+description: Padding utilities reference for Tailwind CSS
+---
+
 # Padding Utilities Reference
 
 ## Padding Classes (All Sides)

@@ -1,3 +1,8 @@
+---
+name: gradients
+description: Gradients reference for Tailwind CSS
+---
+
 # Tailwind CSS Gradients Reference
 
 ## Overview

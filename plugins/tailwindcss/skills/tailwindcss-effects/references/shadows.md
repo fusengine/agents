@@ -1,3 +1,8 @@
+---
+name: shadows
+description: Shadows reference for Tailwind CSS v4.1
+---
+
 # Shadows Reference - Tailwind CSS v4.1
 
 Comprehensive guide for shadow utilities in Tailwind CSS v4.1.

@@ -1,3 +1,8 @@
+---
+name: local-reviews
+description: Local reviews strategy for local SEO
+---
+
 # Local Reviews Strategy (2026)
 
 **Reviews represent 19-20% of local ranking signals.**

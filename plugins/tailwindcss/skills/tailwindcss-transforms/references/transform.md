@@ -1,3 +1,8 @@
+---
+name: transform
+description: Transform utilities for Tailwind CSS v4.1
+---
+
 # Transform Utilities - Tailwind CSS v4.1
 
 Complete reference for transform operations: scale, rotate, translate, skew, and transform-origin.

@@ -1,3 +1,8 @@
+---
+name: states
+description: Interactivity states and control utilities for Tailwind CSS
+---
+
 # Interactivity States & Control Utilities
 
 Control user interaction behavior, text selection, pointer events, touch actions, and form element styling.

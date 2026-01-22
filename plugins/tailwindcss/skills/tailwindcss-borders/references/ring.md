@@ -1,3 +1,8 @@
+---
+name: ring
+description: Ring and divide utilities for Tailwind CSS
+---
+
 # Ring & Divide Utilities
 
 ## Ring (Advanced)

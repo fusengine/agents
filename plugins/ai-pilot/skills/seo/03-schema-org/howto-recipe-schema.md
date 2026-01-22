@@ -1,3 +1,8 @@
+---
+name: howto-recipe-schema
+description: HowTo and recipe schema markup
+---
+
 # HowTo Schema
 
 **JSON-LD for step-by-step tutorials (featured snippet eligible).**

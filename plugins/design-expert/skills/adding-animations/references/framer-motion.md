@@ -1,3 +1,8 @@
+---
+name: framer-motion
+description: Framer Motion reference
+---
+
 # Framer Motion Reference
 
 ## Installation

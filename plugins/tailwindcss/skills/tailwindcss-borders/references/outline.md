@@ -1,3 +1,8 @@
+---
+name: outline
+description: Outline and ring utilities for Tailwind CSS
+---
+
 # Outline & Ring Utilities
 
 ## Outline

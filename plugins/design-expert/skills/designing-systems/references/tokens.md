@@ -1,3 +1,8 @@
+---
+name: tokens
+description: Design tokens reference
+---
+
 # Design Tokens Reference
 
 ## Token Architecture

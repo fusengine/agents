@@ -1,3 +1,8 @@
+---
+name: content-structure
+description: Content structure for AI extraction
+---
+
 # Content Structure for AI
 
 **How to format content for LLM extraction and citation.**

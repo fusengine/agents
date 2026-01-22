@@ -1,3 +1,8 @@
+---
+name: product-schema
+description: Product schema for e-commerce
+---
+
 # Product Schema (E-commerce)
 
 **JSON-LD structured data for product pages (critical for e-commerce SEO 2026).**

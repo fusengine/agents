@@ -1,3 +1,8 @@
+---
+name: open-graph
+description: Open Graph tags implementation guide
+---
+
 # Open Graph Tags (Facebook, LinkedIn, Discord)
 
 **Complete implementation guide for Open Graph protocol (OG 2.0 - 2026).**

@@ -1,3 +1,8 @@
+---
+name: google-business-profile
+description: Google Business Profile optimization guide
+---
+
 # Google Business Profile Optimization (2026)
 
 **Complete guide to optimize your Google Business Profile listing.**

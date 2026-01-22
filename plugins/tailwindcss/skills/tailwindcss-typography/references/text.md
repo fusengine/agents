@@ -1,3 +1,8 @@
+---
+name: text
+description: Text utilities for Tailwind CSS v4.1
+---
+
 # Text Utilities - Tailwind CSS v4.1
 
 ## Text Color

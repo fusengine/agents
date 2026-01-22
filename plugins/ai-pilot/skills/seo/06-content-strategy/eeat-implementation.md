@@ -1,3 +1,8 @@
+---
+name: eeat-implementation
+description: E-E-A-T implementation for Google Quality Guidelines
+---
+
 # E-E-A-T Implementation (2026)
 
 **Experience, Expertise, Authoritativeness, Trust - Google Quality Guidelines.**

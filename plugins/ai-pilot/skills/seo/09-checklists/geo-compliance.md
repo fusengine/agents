@@ -1,3 +1,8 @@
+---
+name: geo-compliance
+description: GEO compliance checklist for AI platforms
+---
+
 # GEO Compliance Checklist
 
 **Optimizing for AI platforms (2026).**

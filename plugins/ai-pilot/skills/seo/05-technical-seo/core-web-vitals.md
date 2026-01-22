@@ -1,3 +1,8 @@
+---
+name: core-web-vitals
+description: Core Web Vitals metrics (LCP, INP, CLS)
+---
+
 # Core Web Vitals (2026)
 
 **LCP, INP, CLS - Google's user experience metrics.**

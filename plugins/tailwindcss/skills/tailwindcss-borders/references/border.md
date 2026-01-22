@@ -1,3 +1,8 @@
+---
+name: border
+description: Border utilities for styling borders
+---
+
 # Border Utilities
 
 ## Border Width

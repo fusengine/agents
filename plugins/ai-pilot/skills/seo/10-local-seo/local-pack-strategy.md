@@ -1,3 +1,8 @@
+---
+name: local-pack-strategy
+description: Google Local Pack strategy for local search
+---
+
 # Google Local Pack Strategy (2026)
 
 **The Local Pack (3-pack) captures 44% of clicks on local searches.**

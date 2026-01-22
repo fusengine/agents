@@ -1,3 +1,8 @@
+---
+name: opacity
+description: Opacity reference for Tailwind CSS v4.1
+---
+
 # Opacity Reference - Tailwind CSS v4.1
 
 Complete guide for opacity and transparency utilities.

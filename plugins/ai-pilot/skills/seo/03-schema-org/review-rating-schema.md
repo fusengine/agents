@@ -1,3 +1,8 @@
+---
+name: review-rating-schema
+description: Review and rating schema markup
+---
+
 # Review & Rating Schema
 
 **JSON-LD for product/service reviews (trust signals).**

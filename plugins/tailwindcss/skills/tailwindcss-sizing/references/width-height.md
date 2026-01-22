@@ -1,3 +1,8 @@
+---
+name: width-height
+description: Width and height reference for Tailwind CSS
+---
+
 # Width & Height Reference
 
 ## Width Classes

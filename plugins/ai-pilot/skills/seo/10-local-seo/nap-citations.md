@@ -1,3 +1,8 @@
+---
+name: nap-citations
+description: NAP citations consistency and management
+---
+
 # NAP Citations - Consistency and Management
 
 **NAP = Name, Address, Phone. Foundation of local SEO.**

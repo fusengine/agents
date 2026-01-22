@@ -1,3 +1,8 @@
+---
+name: filters
+description: Filters reference for Tailwind CSS v4.1
+---
+
 # Filters Reference - Tailwind CSS v4.1
 
 Complete reference for filter and backdrop-filter utilities.

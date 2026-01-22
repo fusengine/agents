@@ -1,3 +1,8 @@
+---
+name: keyword-distribution
+description: Keyword distribution and natural writing for SEO
+---
+
 # Keyword Distribution & Natural Writing (2026)
 
 **Natural keyword integration without stuffing, using semantic variations and long-tail phrases.**

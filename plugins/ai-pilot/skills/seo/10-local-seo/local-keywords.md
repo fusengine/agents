@@ -1,3 +1,8 @@
+---
+name: local-keywords
+description: Local keywords and geo-targeting strategy
+---
+
 # Local Keywords and Geo-Targeting (2026)
 
 **Optimization for geo-localized and "near me" searches.**

@@ -1,3 +1,8 @@
+---
+name: alt-text-images
+description: Image alt text optimization guide
+---
+
 # Image Alt Text Optimization
 
 **Complete guide for writing SEO-friendly and accessible image alt text (2026).**

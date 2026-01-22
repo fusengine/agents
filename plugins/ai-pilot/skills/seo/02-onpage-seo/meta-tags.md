@@ -1,3 +1,8 @@
+---
+name: meta-tags
+description: Meta tags optimization guide
+---
+
 # Meta Tags Optimization
 
 **Complete guide for HTML meta tags (title, description, canonical, robots).**

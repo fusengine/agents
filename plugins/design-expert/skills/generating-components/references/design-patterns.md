@@ -1,3 +1,8 @@
+---
+name: design-patterns
+description: Design patterns UI/UX
+---
+
 # Design Patterns UI/UX
 
 ## Visual Hierarchy

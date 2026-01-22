@@ -1,3 +1,8 @@
+---
+name: analytics-setup
+description: Analytics setup for SEO and GEO
+---
+
 # Analytics Setup (SEO + GEO)
 
 **Tracking both traditional SEO and AI visibility.**

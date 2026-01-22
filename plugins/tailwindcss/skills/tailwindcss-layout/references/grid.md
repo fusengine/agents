@@ -1,3 +1,8 @@
+---
+name: grid
+description: Grid utilities for Tailwind CSS v4.1
+---
+
 # Grid Utilities - Tailwind CSS v4.1
 
 ## Display & Setup

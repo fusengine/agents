@@ -1,3 +1,8 @@
+---
+name: ai-platforms
+description: AI platforms overview for GEO 2026
+---
+
 # AI Platforms Overview (GEO 2026)
 
 **Complete guide to major AI search platforms (ChatGPT, Gemini, Claude, Perplexity, Copilot).**

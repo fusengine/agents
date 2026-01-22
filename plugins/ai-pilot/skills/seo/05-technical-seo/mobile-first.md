@@ -1,3 +1,8 @@
+---
+name: mobile-first
+description: Mobile-first indexing strategy
+---
+
 # Mobile-First Indexing (2026)
 
 **Google indexes mobile version by default.**

@@ -1,3 +1,8 @@
+---
+name: citation-strategies
+description: Citation strategies for GEO optimization
+---
+
 # Citation Strategies (Princeton 10 Tactics)
 
 **Research-backed GEO optimization techniques (30-40% visibility increase).**

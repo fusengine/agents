@@ -1,3 +1,8 @@
+---
+name: constraints
+description: Min/Max constraints reference for Tailwind CSS
+---
+
 # Min/Max Constraints Reference
 
 ## Min-Width Classes

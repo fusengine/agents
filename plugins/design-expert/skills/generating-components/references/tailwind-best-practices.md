@@ -1,3 +1,8 @@
+---
+name: tailwind-best-practices
+description: Tailwind CSS best practices
+---
+
 # Tailwind CSS Best Practices
 
 ## Class Organization

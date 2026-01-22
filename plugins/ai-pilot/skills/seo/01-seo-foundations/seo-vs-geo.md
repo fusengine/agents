@@ -1,3 +1,8 @@
+---
+name: seo-vs-geo
+description: SEO vs GEO paradigm shift in 2026
+---
+
 # SEO vs GEO: The 2026 Paradigm Shift
 
 **Critical Understanding: SEO and GEO are now EQUALLY important in 2026.**

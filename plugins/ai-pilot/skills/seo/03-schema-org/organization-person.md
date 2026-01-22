@@ -1,3 +1,8 @@
+---
+name: organization-person
+description: Organization and person schema for E-E-A-T
+---
+
 # Organization & Person Schema (E-E-A-T)
 
 **JSON-LD for Organization and Person entities (critical for E-E-A-T 2026).**

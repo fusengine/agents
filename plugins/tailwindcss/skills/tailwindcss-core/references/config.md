@@ -1,3 +1,8 @@
+---
+name: config
+description: Advanced configuration for Tailwind CSS v4.1
+---
+
 # Configuration avancée Tailwind CSS v4.1
 
 ## Architecture de configuration CSS-first

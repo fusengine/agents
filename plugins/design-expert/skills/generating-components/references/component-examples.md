@@ -1,3 +1,8 @@
+---
+name: component-examples
+description: Production-ready component examples
+---
+
 # Component Examples
 
 Production-ready component examples following best practices.

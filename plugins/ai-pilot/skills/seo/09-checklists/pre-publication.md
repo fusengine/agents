@@ -1,3 +1,8 @@
+---
+name: pre-publication
+description: Pre-publication SEO checklist
+---
+
 # Pre-Publication SEO Checklist
 
 **Verify before publishing content.**

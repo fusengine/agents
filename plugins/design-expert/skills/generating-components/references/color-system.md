@@ -1,3 +1,8 @@
+---
+name: color-system
+description: Color system
+---
+
 # Color System
 
 ## FORBIDDEN

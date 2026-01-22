@@ -1,3 +1,8 @@
+---
+name: research-workflow
+description: Research-first workflow for SEO/GEO
+---
+
 # Research-First Workflow
 
 **MANDATORY: Always research before implementing SEO/GEO strategies.**

@@ -1,3 +1,8 @@
+---
+name: anti-cannibalization
+description: Anti-cannibalization strategy for keywords
+---
+
 # Anti-Cannibalization Strategy
 
 **Preventing keyword conflicts between pages.**

@@ -1,3 +1,8 @@
+---
+name: header-structure
+description: Header structure and hierarchy guide
+---
+
 # Header Structure (H1-H6 Hierarchy)
 
 **Complete guide for semantic HTML heading hierarchy (2026 best practices).**

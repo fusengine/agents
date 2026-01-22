@@ -1,3 +1,8 @@
+---
+name: video-image-schema
+description: Video and image schema markup
+---
+
 # Video & Image Schema
 
 **JSON-LD for video and image content.**

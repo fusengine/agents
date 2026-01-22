@@ -1,3 +1,8 @@
+---
+name: directives
+description: Directives for Tailwind CSS v4.1
+---
+
 # Directives Tailwind CSS v4.1
 
 ## @import "tailwindcss"

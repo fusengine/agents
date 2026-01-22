@@ -1,3 +1,8 @@
+---
+name: theme-presets
+description: Theme presets
+---
+
 # Theme Presets
 
 ## Brutalist

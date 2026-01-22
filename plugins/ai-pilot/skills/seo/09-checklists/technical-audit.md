@@ -1,3 +1,8 @@
+---
+name: technical-audit
+description: Technical SEO audit checklist
+---
+
 # Technical SEO Audit Checklist
 
 **Comprehensive site health check.**

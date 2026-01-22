@@ -1,3 +1,8 @@
+---
+name: landing-pages
+description: Landing page optimization for Google Ads
+---
+
 # Landing Page Optimization (Google Ads)
 
 **Converting ad clicks to conversions.**

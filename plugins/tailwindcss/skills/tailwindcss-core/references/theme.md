@@ -1,3 +1,8 @@
+---
+name: theme
+description: Tailwind CSS v4.1 theme configuration
+---
+
 # Configuration de thème Tailwind CSS v4.1
 
 ## Directive @theme

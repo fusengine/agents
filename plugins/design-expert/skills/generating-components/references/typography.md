@@ -1,3 +1,8 @@
+---
+name: typography
+description: Typography system
+---
+
 # Typography System
 
 ## FORBIDDEN FONTS (NEVER USE)

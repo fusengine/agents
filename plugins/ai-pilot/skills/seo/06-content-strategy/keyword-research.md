@@ -1,3 +1,8 @@
+---
+name: keyword-research
+description: Keyword research for SEO and GEO
+---
+
 # Keyword Research (2026)
 
 **Finding and prioritizing keywords for SEO/GEO.**

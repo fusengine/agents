@@ -1,3 +1,8 @@
+---
+name: motion-patterns
+description: Motion patterns
+---
+
 # Motion Patterns
 
 ## PHILOSOPHY

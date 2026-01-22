@@ -1,3 +1,8 @@
+---
+name: ad-extensions
+description: Google Ads extensions for increased CTR
+---
+
 # Google Ads Extensions
 
 **Increasing ad size and CTR.**

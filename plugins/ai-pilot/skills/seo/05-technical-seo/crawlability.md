@@ -1,3 +1,8 @@
+---
+name: crawlability
+description: Crawlability and indexation guide
+---
+
 # Crawlability & Indexation
 
 **Ensuring search engines can discover and index content.**

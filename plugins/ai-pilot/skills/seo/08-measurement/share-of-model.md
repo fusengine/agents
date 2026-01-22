@@ -1,3 +1,8 @@
+---
+name: share-of-model
+description: Share of Model measurement for AI citations
+---
+
 # Share of Model (SoM)
 
 **Measuring your brand's AI citation percentage.**

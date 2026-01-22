@@ -1,3 +1,8 @@
+---
+name: images
+description: Background images reference for Tailwind CSS
+---
+
 # Tailwind CSS Background Images Reference
 
 ## Overview

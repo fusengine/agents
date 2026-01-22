@@ -1,3 +1,8 @@
+---
+name: colors
+description: Background colors reference for Tailwind CSS
+---
+
 # Tailwind CSS Background Colors Reference
 
 ## Overview

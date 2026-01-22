@@ -1,3 +1,8 @@
+---
+name: ai-content-guidelines
+description: AI-generated content guidelines
+---
+
 # AI-Generated Content Guidelines (2026)
 
 **Google's stance on AI content (2025 update).**

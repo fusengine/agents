@@ -1,3 +1,8 @@
+---
+name: local-business-schema
+description: Local business schema markup
+---
+
 # Local Business Schema
 
 **JSON-LD for local businesses (critical for local SEO 2026).**

@@ -1,3 +1,8 @@
+---
+name: transition
+description: Transition utilities for Tailwind CSS v4.1
+---
+
 # Transition Utilities - Tailwind CSS v4.1
 
 Complete reference for CSS transitions: properties, duration, timing functions, and delays.

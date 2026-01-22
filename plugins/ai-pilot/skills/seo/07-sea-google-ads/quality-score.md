@@ -1,3 +1,8 @@
+---
+name: quality-score
+description: Google Ads quality score optimization
+---
+
 # Google Ads Quality Score
 
 **Improving ad relevance, CTR, and landing page experience.**

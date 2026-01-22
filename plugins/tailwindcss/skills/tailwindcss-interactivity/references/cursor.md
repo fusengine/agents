@@ -1,3 +1,8 @@
+---
+name: cursor
+description: Cursor utilities for Tailwind CSS
+---
+
 # Cursor Utilities
 
 Control the cursor appearance when hovering over elements.

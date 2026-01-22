@@ -1,3 +1,8 @@
+---
+name: faq-schema
+description: FAQ schema markup
+---
+
 # FAQ Schema
 
 **JSON-LD structured data for Frequently Asked Questions (critical for GEO 2026).**

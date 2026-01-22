@@ -1,3 +1,8 @@
+---
+name: breadcrumb-schema
+description: Breadcrumb schema markup
+---
+
 # Breadcrumb Schema
 
 **JSON-LD for breadcrumb navigation (improves SERP display).**

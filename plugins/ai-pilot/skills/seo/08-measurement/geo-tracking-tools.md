@@ -1,3 +1,8 @@
+---
+name: geo-tracking-tools
+description: GEO tracking tools for AI visibility
+---
+
 # GEO Tracking Tools (2026)
 
 **Measuring AI visibility and citations.**

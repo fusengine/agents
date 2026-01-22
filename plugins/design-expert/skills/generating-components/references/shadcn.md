@@ -1,3 +1,8 @@
+---
+name: shadcn
+description: shadcn/ui reference
+---
+
 # shadcn/ui Reference
 
 ## Overview
