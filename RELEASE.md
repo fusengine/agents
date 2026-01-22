@@ -1,5 +1,17 @@
 # Release Notes
 
+## [1.8.2] - 22-01-2026
+
+### Changed
+
+- Translate all plugin documentation to English (24 files across 7 plugins)
+  - design-expert: restore APEX workflow table, translate all skills
+  - tailwindcss: translate core references (theme, directives, config)
+  - ai-pilot: translate README and cleanup-context command
+  - react-expert, nextjs-expert: fix remaining French text
+  - prompt-engineer: full translation
+- Replace "Inter Variable" with "Satoshi Variable" (anti-AI slop compliance)
+
 ## [1.8.1] - 22-01-2026
 
 ### Changed
