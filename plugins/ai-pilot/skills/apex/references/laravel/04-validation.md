@@ -1,3 +1,10 @@
+---
+name: 04-validation
+description: Verify code quality with Larastan, Pint, Pest
+prev_step: references/laravel/03.5-elicit.md
+next_step: references/laravel/05-review.md
+---
+
 # 04 - Validation (Laravel)
 
 **Verify code quality with Larastan, Pint, Pest (APEX Phase X).**

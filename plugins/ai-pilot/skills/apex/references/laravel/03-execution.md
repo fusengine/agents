@@ -1,3 +1,10 @@
+---
+name: 03-execution
+description: Implement Laravel features following SOLID principles
+prev_step: references/laravel/02-features-plan.md
+next_step: references/laravel/03.5-elicit.md
+---
+
 # 03 - Execution (Laravel)
 
 **Implement Laravel features following SOLID (APEX Phase E).**

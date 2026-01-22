@@ -1,3 +1,10 @@
+---
+name: 08-check-test
+description: Run and verify all tests pass
+prev_step: references/07-add-test.md
+next_step: references/09-create-pr.md
+---
+
 # 08 - Check Test
 
 **Run and verify all tests pass.**

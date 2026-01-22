@@ -1,3 +1,10 @@
+---
+name: 03-execution
+description: Implement Next.js features following SOLID principles
+prev_step: references/nextjs/02-features-plan.md
+next_step: references/nextjs/03.5-elicit.md
+---
+
 # 03 - Execution (Next.js)
 
 **Implement Next.js features following SOLID principles (APEX Phase E).**

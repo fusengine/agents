@@ -1,3 +1,10 @@
+---
+name: 08-check-test
+description: Run and verify all Vitest tests pass
+prev_step: references/react/07-add-test.md
+next_step: references/react/09-create-pr.md
+---
+
 # 08 - Check Test (React/Vite)
 
 **Run and verify all Vitest tests pass.**

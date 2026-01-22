@@ -1,3 +1,10 @@
+---
+name: 02-features-plan
+description: Create detailed implementation plan for Next.js features
+prev_step: references/nextjs/01-analyze-code.md
+next_step: references/nextjs/03-execution.md
+---
+
 # 02 - Features Plan (Next.js)
 
 **Create detailed implementation plan for Next.js features (APEX Phase P).**

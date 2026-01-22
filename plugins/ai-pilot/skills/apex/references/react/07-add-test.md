@@ -1,3 +1,10 @@
+---
+name: 07-add-test
+description: Write tests with Vitest and Testing Library
+prev_step: references/react/06-fix-issue.md
+next_step: references/react/08-check-test.md
+---
+
 # 07 - Add Test (React/Vite)
 
 **Write tests with Vitest and Testing Library.**

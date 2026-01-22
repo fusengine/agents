@@ -1,3 +1,10 @@
+---
+name: 04-validation
+description: Verify code quality with sniper agent (APEX Phase X)
+prev_step: references/03.5-elicit.md
+next_step: references/05-review.md
+---
+
 # 04 - Validation
 
 **Verify code quality with sniper agent (APEX Phase X).**

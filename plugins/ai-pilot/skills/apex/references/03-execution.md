@@ -1,3 +1,10 @@
+---
+name: 03-execution
+description: Implement code following plan (APEX Phase E)
+prev_step: references/02-features-plan.md
+next_step: references/03.5-elicit.md
+---
+
 # 03 - Execution
 
 **Implement code following plan (APEX Phase E).**

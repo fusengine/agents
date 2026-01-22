@@ -1,3 +1,10 @@
+---
+name: 00-init-branch
+description: Create feature branch following Git best practices
+prev_step: null
+next_step: references/01-analyze-code.md
+---
+
 # 00 - Init Branch
 
 **Create feature branch following Git best practices.**

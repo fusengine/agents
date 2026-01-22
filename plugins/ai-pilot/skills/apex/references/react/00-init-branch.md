@@ -1,3 +1,10 @@
+---
+name: 00-init-branch
+description: Create feature branch for React/Vite projects
+prev_step: null
+next_step: references/react/01-analyze-code.md
+---
+
 # 00 - Init Branch (React/Vite)
 
 **Create feature branch for React/Vite projects.**

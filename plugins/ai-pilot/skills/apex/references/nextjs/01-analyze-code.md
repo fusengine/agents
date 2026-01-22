@@ -1,3 +1,10 @@
+---
+name: 01-analyze-code
+description: Understand Next.js codebase before making changes
+prev_step: references/nextjs/00-init-branch.md
+next_step: references/nextjs/02-features-plan.md
+---
+
 # 01 - Analyze Code (Next.js)
 
 **Understand Next.js codebase before making changes (APEX Phase A).**

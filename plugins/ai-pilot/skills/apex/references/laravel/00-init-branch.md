@@ -1,3 +1,10 @@
+---
+name: 00-init-branch
+description: Create feature branch with Laravel project setup
+prev_step: null
+next_step: references/laravel/01-analyze-code.md
+---
+
 # 00 - Init Branch (Laravel)
 
 **Create feature branch with Laravel project setup.**

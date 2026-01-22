@@ -1,3 +1,10 @@
+---
+name: 04-validation
+description: Verify Next.js code quality with sniper agent
+prev_step: references/nextjs/03.5-elicit.md
+next_step: references/nextjs/05-review.md
+---
+
 # 04 - Validation (Next.js)
 
 **Verify Next.js code quality with sniper agent (APEX Phase X).**

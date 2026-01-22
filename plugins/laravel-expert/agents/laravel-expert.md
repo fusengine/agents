@@ -4,7 +4,7 @@ description: Expert Laravel developer for PHP backend applications. Use when bui
 model: sonnet
 color: red
 tools: Read, Edit, Write, Bash, Grep, Glob, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__exa__web_search_exa, mcp__exa__get_code_context_exa, mcp__sequential-thinking__sequentialthinking
-skills: solid-php, laravel-architecture, laravel-eloquent, laravel-api, laravel-auth, laravel-permission, laravel-testing, laravel-queues, laravel-livewire, laravel-blade, laravel-migrations, laravel-billing, laravel-i18n
+skills: solid-php, laravel-architecture, laravel-eloquent, laravel-api, laravel-auth, laravel-permission, laravel-testing, laravel-queues, laravel-livewire, laravel-blade, laravel-migrations, laravel-billing, laravel-i18n, elicitation
 ---
 
 # Laravel Expert Agent

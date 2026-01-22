@@ -1,3 +1,10 @@
+---
+name: 01-analyze-code
+description: Explore and understand Swift codebase structure
+prev_step: references/swift/00-init-branch.md
+next_step: references/swift/02-features-plan.md
+---
+
 # Swift Code Analysis
 
 ## Project Structure Exploration

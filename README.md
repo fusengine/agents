@@ -74,6 +74,10 @@ Professional Claude Code plugins with APEX workflow, SOLID principles, and exper
 
 ## Documentation
 
+### Core Methodology
+- **[APEX Methodology](./doc/apex-methodology.md)** - Complete guide to Analyze → Plan → Execute → eLicit → eXamine workflow
+
+### Reference
 - [Plugins Guide](./docs/plugins.md)
 - [Agents Reference](./docs/agents.md)
 - [Skills Reference](./docs/skills.md)
@@ -85,19 +89,23 @@ Professional Claude Code plugins with APEX workflow, SOLID principles, and exper
 
 ### fuse-ai-pilot
 
-AI-powered workflow agents with APEX methodology (Analyze → Plan → Execute → eXamine).
+AI-powered workflow agents with APEX methodology (Analyze → Plan → Execute → eLicit → eXamine).
 
-**Auto-détection:** Le skill `/apex` détecte automatiquement le projet et charge les références spécifiques:
-- Laravel (`composer.json` + `artisan`) → références Laravel 12
-- Next.js (`next.config.*`) → références Next.js 16
-- React (`package.json` react) → références React 19
-- Swift (`Package.swift`, `*.xcodeproj`) → références Swift 6
+**NEW: Elicitation Phase** - Expert agents self-review with 75 techniques before validation. 3 modes: `--auto`, `--manual`, `--skip-elicit`.
 
-**Commands:** `/apex`, `/epct`, `/commit`, `/watch-ci`, `/fix-pr-comments`, `/create-pull-request`
+**Auto-detection:** The `/apex` skill auto-detects project type and loads framework-specific references:
+- Laravel (`composer.json` + `artisan`) → Laravel 12 references
+- Next.js (`next.config.*`) → Next.js 16 references
+- React (`package.json` react) → React 19 references
+- Swift (`Package.swift`, `*.xcodeproj`) → Swift 6 references
+
+**Commands:** `/apex`, `/apex-quick`, `/epct`, `/commit`, `/watch-ci`, `/fix-pr-comments`, `/create-pull-request`
 
 **Agents:** sniper, sniper-faster, explore-codebase, research-expert, websearch, seo-expert
 
-**Skills:** apex, research, exploration, code-quality, seo
+**Skills:** apex, elicitation, research, exploration, code-quality, seo
+
+📖 **[Full APEX Documentation](./doc/apex-methodology.md)**
 
 ### fuse-commit-pro
 

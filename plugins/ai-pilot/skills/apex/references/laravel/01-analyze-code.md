@@ -1,3 +1,10 @@
+---
+name: 01-analyze-code
+description: Understand Laravel codebase before making changes
+prev_step: references/laravel/00-init-branch.md
+next_step: references/laravel/02-features-plan.md
+---
+
 # 01 - Analyze Code (Laravel)
 
 **Understand Laravel codebase before making changes (APEX Phase A).**

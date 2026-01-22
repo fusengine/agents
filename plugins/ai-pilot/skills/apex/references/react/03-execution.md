@@ -1,3 +1,10 @@
+---
+name: 03-execution
+description: Implement React code following SOLID principles
+prev_step: references/react/02-features-plan.md
+next_step: references/react/03.5-elicit.md
+---
+
 # 03 - Execution (React/Vite)
 
 **Implement React code following plan (APEX Phase E).**

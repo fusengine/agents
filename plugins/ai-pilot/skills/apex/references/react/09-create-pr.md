@@ -1,3 +1,10 @@
+---
+name: 09-create-pr
+description: Create Pull Request for React features
+prev_step: references/react/08-check-test.md
+next_step: null
+---
+
 # 09 - Create PR (React/Vite)
 
 **Create Pull Request for React features.**

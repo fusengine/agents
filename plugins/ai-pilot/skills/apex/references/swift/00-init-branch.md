@@ -1,3 +1,10 @@
+---
+name: 00-init-branch
+description: Git flow and branching strategy for Swift/iOS projects
+prev_step: null
+next_step: references/swift/01-analyze-code.md
+---
+
 # Swift Branching Strategy
 
 ## Git Flow for iOS Projects

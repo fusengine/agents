@@ -1,3 +1,10 @@
+---
+name: 07-add-test
+description: Write tests for implemented features
+prev_step: references/06-fix-issue.md
+next_step: references/08-check-test.md
+---
+
 # 07 - Add Test
 
 **Write tests for implemented features.**

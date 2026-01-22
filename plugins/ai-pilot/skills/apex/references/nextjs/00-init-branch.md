@@ -1,3 +1,10 @@
+---
+name: 00-init-branch
+description: Create feature branch for Next.js project
+prev_step: null
+next_step: references/nextjs/01-analyze-code.md
+---
+
 # 00 - Init Branch (Next.js)
 
 **Create feature branch for Next.js project.**

@@ -1,3 +1,10 @@
+---
+name: 05-review
+description: Self-review checklist for Swift code quality
+prev_step: references/swift/04-validation.md
+next_step: references/swift/06-fix-issue.md
+---
+
 # Swift Self-Review Checklist
 
 ## Code Quality

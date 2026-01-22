@@ -1,3 +1,10 @@
+---
+name: 07-add-test
+description: Write tests for Laravel features using Pest PHP
+prev_step: references/laravel/06-fix-issue.md
+next_step: references/laravel/08-check-test.md
+---
+
 # 07 - Add Test (Laravel)
 
 **Write tests for Laravel features using Pest PHP.**

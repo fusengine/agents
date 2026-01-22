@@ -1,3 +1,10 @@
+---
+name: 02-features-plan
+description: Plan Swift features with MVVM architecture
+prev_step: references/swift/01-analyze-code.md
+next_step: references/swift/03-execution.md
+---
+
 # Swift Features Planning
 
 ## Feature Structure (MVVM)

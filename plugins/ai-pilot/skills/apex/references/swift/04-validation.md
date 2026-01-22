@@ -1,3 +1,10 @@
+---
+name: 04-validation
+description: Verify Swift code with SwiftLint and build validation
+prev_step: references/swift/03.5-elicit.md
+next_step: references/swift/05-review.md
+---
+
 # Swift Code Validation
 
 ## SwiftLint Configuration (.swiftlint.yml)

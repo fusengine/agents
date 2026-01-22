@@ -1,3 +1,10 @@
+---
+name: 06-fix-issue
+description: Handle issues found during review or testing
+prev_step: references/05-review.md
+next_step: references/07-add-test.md
+---
+
 # 06 - Fix Issue
 
 **Handle issues found during review or testing.**

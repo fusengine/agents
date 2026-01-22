@@ -1,3 +1,10 @@
+---
+name: 08-check-test
+description: Run and verify all Laravel tests pass
+prev_step: references/laravel/07-add-test.md
+next_step: references/laravel/09-create-pr.md
+---
+
 # 08 - Check Test (Laravel)
 
 **Run and verify all tests pass.**

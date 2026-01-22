@@ -1,3 +1,10 @@
+---
+name: 02-features-plan
+description: Plan Laravel feature implementation
+prev_step: references/laravel/01-analyze-code.md
+next_step: references/laravel/03-execution.md
+---
+
 # 02 - Features Plan (Laravel)
 
 **Plan Laravel feature implementation (APEX Phase P).**

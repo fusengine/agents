@@ -1,3 +1,10 @@
+---
+name: 04-validation
+description: Verify React code quality with sniper agent
+prev_step: references/react/03.5-elicit.md
+next_step: references/react/05-review.md
+---
+
 # 04 - Validation (React/Vite)
 
 **Verify React code quality with sniper agent (APEX Phase X).**

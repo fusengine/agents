@@ -1,3 +1,10 @@
+---
+name: 01-analyze-code
+description: Understand codebase before making changes (APEX Phase A)
+prev_step: references/00-init-branch.md
+next_step: references/02-features-plan.md
+---
+
 # 01 - Analyze Code
 
 **Understand codebase before making changes (APEX Phase A).**

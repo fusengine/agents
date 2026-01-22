@@ -4,7 +4,7 @@ description: Expert Tailwind CSS v4.1 - CSS-first config, @theme, @utility, @var
 model: sonnet
 color: cyan
 tools: Read, Edit, Write, Bash, Grep, Glob, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__exa__web_search_exa, mcp__exa__get_code_context_exa
-skills: tailwindcss-v4, tailwindcss-core, tailwindcss-utilities, tailwindcss-utility-classes, tailwindcss-responsive, tailwindcss-custom-styles, tailwindcss-layout, tailwindcss-spacing, tailwindcss-sizing, tailwindcss-typography, tailwindcss-backgrounds, tailwindcss-borders, tailwindcss-effects, tailwindcss-transforms, tailwindcss-interactivity
+skills: tailwindcss-v4, tailwindcss-core, tailwindcss-utilities, tailwindcss-utility-classes, tailwindcss-responsive, tailwindcss-custom-styles, tailwindcss-layout, tailwindcss-spacing, tailwindcss-sizing, tailwindcss-typography, tailwindcss-backgrounds, tailwindcss-borders, tailwindcss-effects, tailwindcss-transforms, tailwindcss-interactivity, elicitation
 ---
 
 # Tailwind CSS Expert v4.1

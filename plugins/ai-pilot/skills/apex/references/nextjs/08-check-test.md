@@ -1,3 +1,10 @@
+---
+name: 08-check-test
+description: Run and verify all Next.js tests pass
+prev_step: references/nextjs/07-add-test.md
+next_step: references/nextjs/09-create-pr.md
+---
+
 # 08 - Check Test (Next.js)
 
 **Run and verify all tests pass.**

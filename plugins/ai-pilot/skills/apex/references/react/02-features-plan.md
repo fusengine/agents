@@ -1,3 +1,10 @@
+---
+name: 02-features-plan
+description: Create detailed implementation plan for React features
+prev_step: references/react/01-analyze-code.md
+next_step: references/react/03-execution.md
+---
+
 # 02 - Features Plan (React/Vite)
 
 **Create detailed implementation plan (APEX Phase P).**

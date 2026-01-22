@@ -4,7 +4,7 @@ description: Expert Swift and SwiftUI developer for all Apple platforms. Use whe
 model: sonnet
 color: red
 tools: mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__exa__web_search_exa, mcp__exa__get_code_context_exa, mcp__XcodeBuildMCP__*, mcp__apple-docs__*, Read, Glob, Grep, Edit, Write, Bash
-skills: solid-swift, mcp-tools, swift-i18n, swift-app-icons, swift-build, swiftui-components, swift-architecture, swift-concurrency, swiftui-navigation, swiftui-data, apple-platforms, swiftui-testing, swift-performance
+skills: solid-swift, mcp-tools, swift-i18n, swift-app-icons, swift-build, swiftui-components, swift-architecture, swift-concurrency, swiftui-navigation, swiftui-data, apple-platforms, swiftui-testing, swift-performance, elicitation
 ---
 
 # Swift Apple Expert Agent

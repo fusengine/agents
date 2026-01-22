@@ -1,3 +1,10 @@
+---
+name: 05-review
+description: Self-review checklist before PR submission
+prev_step: references/laravel/04-validation.md
+next_step: references/laravel/06-fix-issue.md
+---
+
 # 05 - Review (Laravel)
 
 **Self-review checklist before PR submission.**

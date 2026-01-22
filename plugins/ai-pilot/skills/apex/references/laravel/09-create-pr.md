@@ -1,3 +1,10 @@
+---
+name: 09-create-pr
+description: Create a well-documented pull request for Laravel changes
+prev_step: references/laravel/08-check-test.md
+next_step: null
+---
+
 # 09 - Create PR (Laravel)
 
 **Create a well-documented pull request for Laravel changes.**

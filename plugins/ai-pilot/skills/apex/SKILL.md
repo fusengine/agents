@@ -1,16 +1,17 @@
 ---
 name: APEX Methodology
 description: |
-  Systematic development workflow: Analyze → Plan → Execute → eXamine.
+  Systematic development workflow: Analyze → Plan → Execute → eLicit → eXamine.
   Use for ANY development task: features, bug fixes, refactoring, hotfixes.
   Triggers: "implement", "create", "build", "fix", "add feature", "refactor", "develop".
   Auto-detects project type (Laravel, Next.js, React, Swift) and loads framework-specific references.
-  Enforces: files <100 lines, interfaces separated, SOLID principles, sniper validation.
+  Enforces: files <100 lines, interfaces separated, SOLID principles, expert self-review, sniper validation.
+  Modes: --auto (default), --manual, --skip-elicit
 ---
 
 # APEX Methodology Skill
 
-**Analyze → Plan → Execute → eXamine**
+**Analyze → Plan → Execute → eLicit → eXamine**
 
 Complete development workflow for features, fixes, and refactoring.
 
@@ -26,6 +27,7 @@ Complete development workflow for features, fixes, and refactoring.
 │  01-analyze-code    → Understand codebase (A)                   │
 │  02-features-plan   → Plan implementation (P)                   │
 │  03-execution       → Write code (E)                            │
+│  03.5-elicit        → Expert self-review (L) ← NEW              │
 │  04-validation      → Verify quality (X)                        │
 │  05-review          → Self-review                               │
 │  06-fix-issue       → Handle issues                             │
@@ -45,6 +47,7 @@ Complete development workflow for features, fixes, and refactoring.
 | **01** | `references/01-analyze-code.md` | Explore + Research (APEX A) |
 | **02** | `references/02-features-plan.md` | TodoWrite planning (APEX P) |
 | **03** | `references/03-execution.md` | Implementation (APEX E) |
+| **03.5** | `references/03.5-elicit.md` | Expert self-review (APEX L) ← NEW |
 | **04** | `references/04-validation.md` | sniper validation (APEX X) |
 | **05** | `references/05-review.md` | Self-review checklist |
 | **06** | `references/06-fix-issue.md` | Fix validation/review issues |
@@ -63,11 +66,12 @@ Complete development workflow for features, fixes, and refactoring.
 2. 01-analyze-code    → explore-codebase + research-expert
 3. 02-features-plan   → TodoWrite task breakdown
 4. 03-execution       → Implement (files <100 lines)
-5. 04-validation      → sniper agent
-6. 07-add-test        → Write tests
-7. 08-check-test      → Run tests
-8. 05-review          → Self-review
-9. 09-create-pr       → gh pr create
+5. 03.5-elicit        → Expert self-review (75 techniques) ← NEW
+6. 04-validation      → sniper agent
+7. 07-add-test        → Write tests
+8. 08-check-test      → Run tests
+9. 05-review          → Self-review
+10. 09-create-pr      → gh pr create
 ```
 
 ### Bug Fix Flow

@@ -1,3 +1,10 @@
+---
+name: 07-add-test
+description: Write tests using Swift Testing and XCTest frameworks
+prev_step: references/swift/06-fix-issue.md
+next_step: references/swift/08-check-test.md
+---
+
 # Swift Testing Patterns
 
 ## Swift Testing Framework (iOS 18+)

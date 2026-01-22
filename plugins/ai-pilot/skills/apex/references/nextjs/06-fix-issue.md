@@ -1,3 +1,10 @@
+---
+name: 06-fix-issue
+description: Fix Next.js issues discovered during review or testing
+prev_step: references/nextjs/05-review.md
+next_step: references/nextjs/07-add-test.md
+---
+
 # 06 - Fix Issue (Next.js)
 
 **Fix Next.js issues discovered during review or testing.**

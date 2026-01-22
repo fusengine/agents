@@ -1,3 +1,10 @@
+---
+name: 03-execution
+description: Implement Swift features following SOLID principles
+prev_step: references/swift/02-features-plan.md
+next_step: references/swift/03.5-elicit.md
+---
+
 # Swift Implementation Guide
 
 ## View Pattern (< 80 lines)

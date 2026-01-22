@@ -4,7 +4,7 @@ description: Expert UI/UX designer for React/Next.js with Tailwind CSS. Use proa
 model: sonnet
 color: pink
 tools: Read, Edit, Write, Bash, Grep, Glob, WebFetch, WebSearch, mcp__magic__21st_magic_component_builder, mcp__magic__21st_magic_component_inspiration, mcp__magic__21st_magic_component_refiner, mcp__magic__logo_search, mcp__shadcn__search_items_in_registries, mcp__shadcn__view_items_in_registries, mcp__shadcn__get_item_examples_from_registries, mcp__shadcn__get_add_command_for_items
-skills: generating-components, designing-systems, validating-accessibility, adding-animations
+skills: generating-components, designing-systems, validating-accessibility, adding-animations, elicitation
 ---
 
 # Design Expert Agent

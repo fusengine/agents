@@ -1,3 +1,10 @@
+---
+name: 08-check-test
+description: Run and verify all Swift tests pass
+prev_step: references/swift/07-add-test.md
+next_step: references/swift/09-create-pr.md
+---
+
 # Swift Test Execution
 
 ## xcodebuild Tests

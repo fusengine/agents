@@ -1,3 +1,10 @@
+---
+name: 05-review
+description: Self-review React code before PR
+prev_step: references/react/04-validation.md
+next_step: references/react/06-fix-issue.md
+---
+
 # 05 - Review (React/Vite)
 
 **Self-review React code before PR.**

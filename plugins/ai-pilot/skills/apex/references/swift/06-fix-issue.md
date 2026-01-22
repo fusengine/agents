@@ -1,3 +1,10 @@
+---
+name: 06-fix-issue
+description: Systematic workflow for fixing Swift issues
+prev_step: references/swift/05-review.md
+next_step: references/swift/07-add-test.md
+---
+
 # Swift Fix Workflow
 
 ## 1. Reproduce Issue

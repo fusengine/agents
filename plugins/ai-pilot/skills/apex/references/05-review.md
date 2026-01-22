@@ -1,3 +1,10 @@
+---
+name: 05-review
+description: Self-review and prepare for code review
+prev_step: references/04-validation.md
+next_step: references/06-fix-issue.md
+---
+
 # 05 - Review
 
 **Self-review and prepare for code review.**

@@ -1,8 +1,9 @@
 ---
-description: APEX Methodology - The systematic Analyze-Plan-Execute-eXamine approach for intelligent development. Eliminates hallucinations, errors, and bugs to produce clean, maintainable code.
+description: APEX Methodology - The systematic Analyze-Plan-Execute-eLicit-eXamine approach for intelligent development. Eliminates hallucinations, errors, and bugs to produce clean, maintainable code.
+argument-hint: "[--auto] [--skip-elicit] <task description>"
 ---
 
-# APEX: Analyze-Plan-Execute-eXamine
+# APEX: Analyze-Plan-Execute-eLicit-eXamine
 
 Execute the comprehensive APEX methodology for professional-grade development.
 
@@ -72,6 +73,52 @@ Implement the solution:
 
 ---
 
+## Phase 3.5: eLICIT (Self-Review) - NEW
+
+> Expert agent self-reviews and self-corrects before sniper validation
+
+**Modes**:
+- `--auto`: Auto-select techniques based on code type (default)
+- `--manual`: Present 5 techniques, user chooses
+- `--skip-elicit`: Skip directly to eXamine
+
+**Workflow**:
+```
+┌─────────────────────────────────────────────────────────┐
+│  ELICIT (6 steps)                                       │
+│                                                         │
+│  Init → Analyze → Select → Apply → Correct → Report    │
+│                                                         │
+│  Expert applies elicitation techniques from 12 cats:   │
+│  - Security (7)      - Performance (6)                 │
+│  - Architecture (6)  - Testing (6)                     │
+│  - Documentation (6) - UX/a11y (6)                     │
+│  - Data (6)          - Concurrency (6)                 │
+│  - Integration (7)   - Observability (6)               │
+│  - Code Quality (7)  - Maintainability (6)             │
+│                                                         │
+│  Total: 75 techniques                                   │
+└─────────────────────────────────────────────────────────┘
+```
+
+**Auto-Detection Matrix**:
+| Code Type | Auto-Selected Techniques |
+|-----------|--------------------------|
+| Auth/Security | SEC-01, SEC-02, SEC-03 |
+| API Endpoints | INT-01, DOC-01, TEST-01 |
+| Database | PERF-01, DATA-02, CONC-06 |
+| UI Components | UX-01, TEST-01, ARCH-04 |
+| Business Logic | ARCH-01, TEST-01, CQ-01 |
+
+**Benefits**:
+- Expert catches own mistakes before sniper
+- Faster validation (less sniper corrections)
+- Knowledge retention (expert learns from self-review)
+
+**Full skill**: `skills/elicitation/SKILL.md`
+
+---
+
 ## Phase 4: eXAMINE (Rigorous Validation)
 
 Comprehensive validation:
@@ -127,6 +174,7 @@ Comprehensive validation:
 ✅ **Zero Linter Errors**: Sniper with zero tolerance
 ✅ **Zero Bugs**: Exhaustive tests + rigorous validation
 ✅ **Maintainable Code**: SOLID + established patterns
+✅ **Self-Corrected**: Expert auto-review before validation (NEW)
 
 ---
 

@@ -1,3 +1,10 @@
+---
+name: 05-review
+description: Self-review checklist for Next.js code quality
+prev_step: references/nextjs/04-validation.md
+next_step: references/nextjs/06-fix-issue.md
+---
+
 # 05 - Review (Next.js)
 
 **Self-review checklist for Next.js code quality.**

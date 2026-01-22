@@ -1,3 +1,10 @@
+---
+name: 06-fix-issue
+description: Handle React issues found during review or testing
+prev_step: references/react/05-review.md
+next_step: references/react/07-add-test.md
+---
+
 # 06 - Fix Issue (React/Vite)
 
 **Handle React issues found during review or testing.**

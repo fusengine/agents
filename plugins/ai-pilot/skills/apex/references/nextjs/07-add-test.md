@@ -1,3 +1,10 @@
+---
+name: 07-add-test
+description: Write tests for Next.js features using Vitest and Playwright
+prev_step: references/nextjs/06-fix-issue.md
+next_step: references/nextjs/08-check-test.md
+---
+
 # 07 - Add Test (Next.js)
 
 **Write tests for Next.js features using Vitest and Playwright.**

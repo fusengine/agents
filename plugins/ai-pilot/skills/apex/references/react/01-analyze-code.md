@@ -1,3 +1,10 @@
+---
+name: 01-analyze-code
+description: Understand React codebase before making changes
+prev_step: references/react/00-init-branch.md
+next_step: references/react/02-features-plan.md
+---
+
 # 01 - Analyze Code (React/Vite)
 
 **Understand React codebase before making changes (APEX Phase A).**

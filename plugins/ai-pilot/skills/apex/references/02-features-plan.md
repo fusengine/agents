@@ -1,3 +1,10 @@
+---
+name: 02-features-plan
+description: Create detailed implementation plan (APEX Phase P)
+prev_step: references/01-analyze-code.md
+next_step: references/03-execution.md
+---
+
 # 02 - Features Plan
 
 **Create detailed implementation plan (APEX Phase P).**

@@ -1,3 +1,10 @@
+---
+name: 06-fix-issue
+description: Systematic approach to fixing Laravel issues
+prev_step: references/laravel/05-review.md
+next_step: references/laravel/07-add-test.md
+---
+
 # 06 - Fix Issue (Laravel)
 
 **Systematic approach to fixing Laravel issues.**
