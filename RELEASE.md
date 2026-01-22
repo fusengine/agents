@@ -1,5 +1,21 @@
 # Release Notes
 
+## [1.9.0] - 22-01-2026
+
+### Added
+
+- **APEX Design References** (10 files in `references/design/`)
+  - 00-init-branch: Create design/ branch
+  - 01-analyze-design: Design tokens exploration
+  - 02-search-inspiration: 21st.dev + shadcn search
+  - 03-plan-component: TodoWrite + file planning
+  - 04-code-component: Delegate to react/nextjs-expert
+  - 05-add-motion: Framer Motion patterns
+  - 06-validate-a11y: WCAG 2.2 AA checklist
+  - 07-review-design: Elicitation self-review
+  - 08-sniper-check: Sniper validation
+  - 09-create-pr: PR with screenshots
+
 ## [1.8.2] - 22-01-2026
 
 ### Changed
