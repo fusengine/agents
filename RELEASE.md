@@ -1,5 +1,35 @@
 # Release Notes
 
+## [1.8.0] - 22-01-2026
+
+### Added
+
+- **APEX Elicitation Phase** (Phase 3.5 eLICIT)
+  - Expert self-review before sniper validation
+  - 75 elicitation techniques in 12 categories
+  - 3 modes: auto (default), manual, skip
+  - Auto-detection matrix for technique selection
+  - Framework-specific 03.5-elicit.md for Next.js, React, Laravel, Swift
+
+- **Elicitation Skill** (`plugins/ai-pilot/skills/elicitation/`)
+  - SKILL.md with 3-mode configuration
+  - 6-step workflow (init → analyze → select → apply → correct → report)
+  - Complete techniques catalog (75 techniques)
+
+- **Quick Flow Command** (`/apex-quick`)
+  - Single-pass workflow for simple fixes
+  - 4 phases: Locate → Fix → Review → Verify
+
+- **Documentation**
+  - `doc/apex-methodology.md` (English documentation)
+  - Navigation frontmatter (prev_step/next_step) on all 55 reference files
+
+### Changed
+
+- Updated APEX SKILL.md with Phase 3.5 integration
+- Updated apex.md command with eLICIT phase
+- Updated 6 expert agents with elicitation skill
+
 ## [1.7.0] - 22-01-2026
 
 ### Added
