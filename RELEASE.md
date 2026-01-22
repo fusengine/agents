@@ -1,5 +1,22 @@
 # Release Notes
 
+## [1.7.0] - 22-01-2026
+
+### Added
+
+- **fuse-prompt-engineer plugin** - Expert Prompt Engineering
+  - prompt-engineer agent (Opus) with Context7, Exa, Sequential-Thinking MCP
+  - 6 specialized skills: prompt-creation, prompt-optimization, agent-design, guardrails, prompt-library, prompt-testing
+  - `/prompt` command (create, optimize, agent, review actions)
+  - `/prompt-history` command for prompt versioning
+  - 50+ template library (agents, tasks, specialized)
+  - A/B testing methodology with metrics
+
+### Changed
+
+- Updated README.md (10 plugins, 15 agents, 70 skills, 24 commands)
+- Updated docs/plugins.md with prompt-engineer documentation
+
 ## [1.6.2] - 21-01-2026
 
 ### Changed
