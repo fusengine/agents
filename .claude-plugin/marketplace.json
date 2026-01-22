@@ -383,6 +383,48 @@
         "./skills/validating-accessibility",
         "./skills/adding-animations"
       ]
+    },
+    {
+      "name": "fuse-prompt-engineer",
+      "source": "./plugins/prompt-engineer",
+      "description": "Expert Prompt Engineer with Context Engineering, Meta-Prompting, Chain-of-Thought, Few-Shot, Agent Design, 50+ Template Library, and A/B Testing for creating optimal prompts and AI agents",
+      "version": "1.1.0",
+      "author": {
+        "name": "Fusengine",
+        "url": "https://github.com/fusengine"
+      },
+      "homepage": "https://github.com/fusengine/agents",
+      "repository": "https://github.com/fusengine/agents",
+      "license": "MIT",
+      "keywords": [
+        "prompt-engineering",
+        "context-engineering",
+        "meta-prompting",
+        "chain-of-thought",
+        "few-shot",
+        "agent-design",
+        "guardrails",
+        "prompt-library",
+        "ab-testing",
+        "llm"
+      ],
+      "category": "productivity",
+      "strict": true,
+      "commands": [
+        "./commands/prompt.md",
+        "./commands/prompt-history.md"
+      ],
+      "agents": [
+        "./agents/prompt-engineer.md"
+      ],
+      "skills": [
+        "./skills/prompt-creation",
+        "./skills/prompt-optimization",
+        "./skills/agent-design",
+        "./skills/guardrails",
+        "./skills/prompt-library",
+        "./skills/prompt-testing"
+      ]
     }
   ]
 }
