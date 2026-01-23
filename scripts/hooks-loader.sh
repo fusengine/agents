@@ -6,13 +6,18 @@
 set -e
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-PLUGINS_DIR="$(dirname "$SCRIPT_DIR")/plugins"
+ROOT_DIR="$(dirname "$SCRIPT_DIR")"
 HOOK_TYPE="${1:-PreToolUse}"  # PreToolUse, PostToolUse, UserPromptSubmit
+
+# Dossier marketplace fusengine-plugins uniquement
+PLUGINS_DIR="$HOME/.claude/plugins/marketplaces/fusengine-plugins/plugins"
 
 # Lire l'input une seule fois
 INPUT=$(cat)
 
-# Scanner tous les plugins pour leurs hooks
+# Scanner le marketplace
+[[ ! -d "$PLUGINS_DIR" ]] && exit 0
+
 for PLUGIN_DIR in "$PLUGINS_DIR"/*/; do
   PLUGIN_NAME=$(basename "$PLUGIN_DIR")
   HOOKS_FILE="$PLUGIN_DIR/hooks/hooks.json"

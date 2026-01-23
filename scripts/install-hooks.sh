@@ -11,15 +11,22 @@ LOADER_SCRIPT="$SCRIPT_DIR/hooks-loader.sh"
 
 echo "🔍 Détection des hooks dans les plugins..."
 
+# Dossier marketplace fusengine-plugins uniquement
+PLUGINS_DIR="$HOME/.claude/plugins/marketplaces/fusengine-plugins/plugins"
+
 # Compter les plugins avec hooks
 HOOK_COUNT=0
-for PLUGIN_DIR in "$PLUGINS_ROOT"/plugins/*/; do
-  if [[ -f "$PLUGIN_DIR/hooks/hooks.json" ]]; then
-    PLUGIN_NAME=$(basename "$PLUGIN_DIR")
-    echo "  ✅ $PLUGIN_NAME"
-    ((HOOK_COUNT++))
-  fi
-done
+if [[ -d "$PLUGINS_DIR" ]]; then
+  for PLUGIN_DIR in "$PLUGINS_DIR"/*/; do
+    if [[ -f "$PLUGIN_DIR/hooks/hooks.json" ]]; then
+      PLUGIN_NAME=$(basename "$PLUGIN_DIR")
+      echo "  ✅ $PLUGIN_NAME"
+      ((HOOK_COUNT++))
+    fi
+  done
+else
+  echo "⚠️  Marketplace fusengine-plugins non trouvé"
+fi
 
 echo ""
 echo "📦 $HOOK_COUNT plugins avec hooks détectés"
