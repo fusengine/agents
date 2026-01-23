@@ -1,5 +1,16 @@
 # Release Notes
 
+## [1.12.0] - 23-01-2026
+
+### Added
+
+- **APEX documentation tracking** - Track skill/doc consultations before code writing
+  - `init-apex-tracking.sh` - Initialize tracking state (.claude/apex/task.json)
+  - `track-doc-consultation.sh` - PostToolUse hook records Read operations on skills/docs
+  - Enhanced `enforce-apex-phases.sh` with framework detection and tracking check
+  - `docs/apex-tracking.md` - Complete documentation of the tracking system
+  - Prevents infinite hook loops with smart detection
+
 ## [1.11.0] - 23-01-2026
 
 ### Added

@@ -31,6 +31,15 @@
             "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/check-solid-compliance.sh"
           }
         ]
+      },
+      {
+        "matcher": "mcp__context7|mcp__exa|Read",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/track-doc-consultation.sh"
+          }
+        ]
       }
     ]
   }
