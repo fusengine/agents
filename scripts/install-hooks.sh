@@ -1,5 +1,6 @@
 #!/bin/bash
 # install-hooks.sh - Installe le loader de hooks dans ~/.claude/settings.json
+# IMPORTANT: Ce script FUSIONNE les hooks, il ne les écrase pas
 # Usage: ./scripts/install-hooks.sh
 
 set -e
@@ -35,52 +36,79 @@ echo ""
 # Créer le dossier ~/.claude si nécessaire
 mkdir -p "$HOME/.claude"
 
+# Fonction pour vérifier si un hook loader existe déjà
+has_loader_hook() {
+  local hook_type="$1"
+  local json="$2"
+  echo "$json" | jq -e ".hooks.${hook_type}[]?.hooks[]?.command | select(contains(\"hooks-loader.sh\"))" > /dev/null 2>&1
+}
+
 # Créer ou mettre à jour settings.json
 if [[ -f "$SETTINGS_FILE" ]]; then
-  echo "📝 Mise à jour de $SETTINGS_FILE..."
+  echo "📝 Fusion avec $SETTINGS_FILE existant..."
+  echo "   (vos hooks personnalisés seront préservés)"
+  echo ""
 
   # Backup
-  cp "$SETTINGS_FILE" "$SETTINGS_FILE.backup"
+  cp "$SETTINGS_FILE" "$SETTINGS_FILE.backup.$(date +%Y%m%d_%H%M%S)"
 
-  # Ajouter les hooks si pas déjà présents
-  EXISTING=$(jq '.hooks // {}' "$SETTINGS_FILE")
+  # Lire le fichier actuel
+  CURRENT_JSON=$(cat "$SETTINGS_FILE")
 
-  # Créer la nouvelle config avec le loader
-  jq --arg loader "$LOADER_SCRIPT" '.hooks = {
-    "UserPromptSubmit": [
-      {
-        "matcher": "",
-        "hooks": [
-          {
+  # Vérifier si les hooks loader sont déjà présents
+  LOADER_ALREADY_INSTALLED=false
+  if has_loader_hook "UserPromptSubmit" "$CURRENT_JSON" && \
+     has_loader_hook "PreToolUse" "$CURRENT_JSON" && \
+     has_loader_hook "PostToolUse" "$CURRENT_JSON"; then
+    LOADER_ALREADY_INSTALLED=true
+  fi
+
+  if [[ "$LOADER_ALREADY_INSTALLED" == "true" ]]; then
+    echo "ℹ️  Le loader est déjà installé. Aucune modification nécessaire."
+    exit 0
+  fi
+
+  # Fusionner les hooks sans écraser les existants
+  # On ajoute le loader UNIQUEMENT s'il n'existe pas déjà pour ce type
+  UPDATED_JSON=$(echo "$CURRENT_JSON" | jq --arg loader "$LOADER_SCRIPT" '
+    # Fonction pour ajouter un hook loader à un type existant
+    def add_loader_if_missing($hook_type; $matcher; $loader_cmd):
+      if .hooks[$hook_type] then
+        # Vérifier si le loader est déjà présent
+        if (.hooks[$hook_type] | any(.hooks[]?.command | contains("hooks-loader.sh"))) then
+          .
+        else
+          # Ajouter le loader aux hooks existants
+          .hooks[$hook_type] += [{
+            "matcher": $matcher,
+            "hooks": [{
+              "type": "command",
+              "command": $loader_cmd
+            }]
+          }]
+        end
+      else
+        # Créer la section si elle n existe pas
+        .hooks[$hook_type] = [{
+          "matcher": $matcher,
+          "hooks": [{
             "type": "command",
-            "command": ("bash " + $loader + " UserPromptSubmit")
-          }
-        ]
-      }
-    ],
-    "PreToolUse": [
-      {
-        "matcher": "Write|Edit",
-        "hooks": [
-          {
-            "type": "command",
-            "command": ("bash " + $loader + " PreToolUse")
-          }
-        ]
-      }
-    ],
-    "PostToolUse": [
-      {
-        "matcher": "Write|Edit",
-        "hooks": [
-          {
-            "type": "command",
-            "command": ("bash " + $loader + " PostToolUse")
-          }
-        ]
-      }
-    ]
-  }' "$SETTINGS_FILE" > "$SETTINGS_FILE.tmp" && mv "$SETTINGS_FILE.tmp" "$SETTINGS_FILE"
+            "command": $loader_cmd
+          }]
+        }]
+      end;
+
+    # Assurer que .hooks existe
+    .hooks //= {} |
+
+    # Ajouter les loaders pour chaque type
+    add_loader_if_missing("UserPromptSubmit"; ""; "bash " + $loader + " UserPromptSubmit") |
+    add_loader_if_missing("PreToolUse"; "Write|Edit"; "bash " + $loader + " PreToolUse") |
+    add_loader_if_missing("PostToolUse"; "Write|Edit"; "bash " + $loader + " PostToolUse")
+  ')
+
+  # Écrire le résultat
+  echo "$UPDATED_JSON" > "$SETTINGS_FILE"
 
 else
   echo "📝 Création de $SETTINGS_FILE..."
@@ -129,9 +157,11 @@ fi
 echo ""
 echo "✅ Installation terminée!"
 echo ""
-echo "Les hooks suivants sont maintenant actifs:"
+echo "Hooks loader ajoutés (vos hooks existants sont préservés):"
 echo "  - UserPromptSubmit → Détecte projet + injecte APEX"
 echo "  - PreToolUse → Bloque si skill non consulté"
 echo "  - PostToolUse → Valide SOLID après modification"
+echo ""
+echo "📁 Backup créé: $SETTINGS_FILE.backup.*"
 echo ""
 echo "Redémarrez Claude Code pour appliquer les changements."
