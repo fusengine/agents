@@ -105,7 +105,7 @@ AI-powered workflow agents with APEX methodology (Analyze → Plan → Execute �
 
 **Skills:** apex, elicitation, research, exploration, code-quality, seo
 
-📖 **[Full APEX Documentation](./doc/apex-methodology.md)**
+📖 **[Full APEX Documentation](./docs/apex-methodology.md)**
 
 ### fuse-commit-pro
 
