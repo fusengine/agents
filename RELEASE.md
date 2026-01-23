@@ -1,5 +1,14 @@
 # Release Notes
 
+## [1.10.2] - 23-01-2026
+
+### Fixed
+
+- **install-hooks.sh** - Merge hooks instead of overwriting `settings.json`
+  - Preserves user's custom hooks (SessionStart, Stop, Notification, SubagentStop, etc.)
+  - Creates timestamped backups before modification
+  - Skips installation if loader already present
+
 ## [1.10.1] - 23-01-2026
 
 ### Fixed
