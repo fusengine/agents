@@ -1,5 +1,15 @@
 # Release Notes
 
+## [1.10.3] - 23-01-2026
+
+### Changed
+
+- **Hooks skill detection** - Smarter pattern detection with enriched messages
+  - Add smart code pattern detection for each framework (React, Next.js, Laravel, Swift, Tailwind, Design)
+  - Skip non-code directories (node_modules, dist, build, vendor, .next, DerivedData)
+  - Enrich block messages with all available skills and MCP tools
+  - Simplify SOLID validation to reduce noise (validate-react-solid.sh)
+
 ## [1.10.2] - 23-01-2026
 
 ### Fixed
