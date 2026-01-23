@@ -75,7 +75,7 @@ Professional Claude Code plugins with APEX workflow, SOLID principles, and exper
 ## Documentation
 
 ### Core Methodology
-- **[APEX Methodology](./doc/apex-methodology.md)** - Complete guide to Analyze → Plan → Execute → eLicit → eXamine workflow
+- **[APEX Methodology](./docs/apex-methodology.md)** - Complete guide to Analyze → Plan → Execute → eLicit → eXamine workflow
 
 ### Reference
 - [Plugins Guide](./docs/plugins.md)

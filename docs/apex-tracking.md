@@ -1,71 +1,71 @@
 # APEX Documentation Tracking
 
-Système de tracking automatique des consultations de documentation pour le workflow APEX.
+Automatic tracking system for documentation consultations in the APEX workflow.
 
-## Problème résolu
+## Problem Solved
 
-Sans tracking, les hooks bloquaient en boucle infinie :
+Without tracking, hooks blocked in an infinite loop:
 ```
-Write/Edit → BLOCK "Consulte la doc"
+Write/Edit → BLOCK "Consult the docs"
    ↓
-Consulte Context7/Exa
+Consult Context7/Exa
    ↓
-Retry Write/Edit → BLOCK (encore!) ← Pas de mémoire
+Retry Write/Edit → BLOCK (again!) ← No memory
 ```
 
 ## Solution
 
-Le système track les consultations dans `.claude/apex/` par projet :
+The system tracks consultations in `.claude/apex/` per project:
 
 ```
-projet/
+project/
 └── .claude/
     └── apex/
-        ├── task.json              # État des tâches
-        └── docs/                  # Résumés auto-générés
+        ├── task.json              # Task state
+        └── docs/                  # Auto-generated summaries
             ├── task-1-react.md
             ├── task-1-tailwind.md
             └── task-2-nextjs.md
 ```
 
-## Initialisation
+## Initialization
 
 ```bash
-# Auto-init (le système crée la structure au premier tracking)
+# Auto-init (the system creates the structure on first tracking)
 
-# Ou init manuelle
+# Or manual init
 bash ~/.claude/plugins/marketplaces/fusengine-plugins/plugins/ai-pilot/scripts/init-apex-tracking.sh
 
-# Avec un task ID spécifique
+# With a specific task ID
 bash init-apex-tracking.sh "feat-button-component"
 ```
 
 ## Workflow
 
 ```
-1. Claude veut Write Button.tsx
+1. Claude wants to Write Button.tsx
          ↓
    [PreToolUse] enforce-apex-phases.sh
-   ├── Détecte: React code
-   ├── Vérifie: .claude/apex/task.json
+   ├── Detects: React code
+   ├── Checks: .claude/apex/task.json
    └── doc_consulted.react = false → 🚫 BLOCK
          ↓
-2. Claude consulte Context7 (react)
+2. Claude consults Context7 (react)
          ↓
    [PostToolUse] track-doc-consultation.sh
-   ├── Crée: .claude/apex/docs/task-1-react.md
+   ├── Creates: .claude/apex/docs/task-1-react.md
    └── Update: task.json["1"]["react"]["consulted"] = true
          ↓
-3. Claude retry Write Button.tsx
+3. Claude retries Write Button.tsx
          ↓
    [PreToolUse] enforce-apex-phases.sh
-   ├── Vérifie: task.json
+   ├── Checks: task.json
    └── doc_consulted.react = true → ✅ ALLOW
          ↓
-4. Écriture réussie
+4. Write succeeds
 ```
 
-## Structure task.json
+## task.json Structure
 
 ```json
 {
@@ -94,9 +94,9 @@ bash init-apex-tracking.sh "feat-button-component"
 }
 ```
 
-## Docs auto-générées
+## Auto-generated Docs
 
-Chaque consultation crée un fichier résumé :
+Each consultation creates a summary file:
 
 ```markdown
 # Task 1 - React Documentation
@@ -113,7 +113,7 @@ libraryId: /vercel/react
 query: react hooks patterns
 
 ## Key Information Extracted
-[Premiers 50 lignes de la réponse]
+[First 50 lines of the response]
 
 ## Patterns to Apply
 - [ ] Follow SOLID principles
@@ -122,17 +122,17 @@ query: react hooks patterns
 - [ ] Separate interfaces
 ```
 
-## Sources trackées
+## Tracked Sources
 
-| Source | Détection |
+| Source | Detection |
 |--------|-----------|
 | **Context7** | `mcp__context7__query-docs`, `mcp__context7__resolve-library-id` |
 | **Exa** | `mcp__exa__get_code_context_exa`, `mcp__exa__web_search_exa` |
 | **Skills** | `Read skills/*.md` |
 
-## Frameworks détectés
+## Detected Frameworks
 
-| Framework | Patterns détectés |
+| Framework | Detected Patterns |
 |-----------|-------------------|
 | `react` | `.tsx`, `.jsx`, `useState`, `useEffect`, `className=` |
 | `nextjs` | `page.tsx`, `layout.tsx`, `use client`, `NextRequest` |
@@ -141,17 +141,17 @@ query: react hooks patterns
 | `tailwind` | `.css`, `@tailwind`, `@apply`, `@theme` |
 | `design` | `className=`, `cn(`, `cva(`, `Button`, `Card` |
 
-## Hooks impliqués
+## Involved Hooks
 
-| Hook | Type | Fichier |
+| Hook | Type | File |
 |------|------|---------|
-| `track-doc-consultation.sh` | PostToolUse | Track Context7/Exa/skills |
-| `enforce-apex-phases.sh` | PreToolUse | Vérifie task.json avant Write |
-| `init-apex-tracking.sh` | Script | Initialisation manuelle |
+| `track-doc-consultation.sh` | PostToolUse | Tracks Context7/Exa/skills |
+| `enforce-apex-phases.sh` | PreToolUse | Checks task.json before Write |
+| `init-apex-tracking.sh` | Script | Manual initialization |
 
 ## Gitignore
 
-Le script d'init ajoute automatiquement au `.gitignore` :
+The init script automatically adds to `.gitignore`:
 
 ```
 # APEX tracking (auto-generated)
@@ -160,35 +160,35 @@ Le script d'init ajoute automatiquement au `.gitignore` :
 
 ## Reset
 
-Pour reset le tracking d'une tâche :
+To reset tracking for a task:
 
 ```bash
-# Supprimer le dossier
+# Delete the folder
 rm -rf .claude/apex/
 
-# Ou re-init
+# Or re-init
 bash init-apex-tracking.sh "new-task-id"
 ```
 
 ## Troubleshooting
 
-### Le hook bloque encore après consultation
+### Hook still blocks after consultation
 
-Vérifier que le framework détecté correspond :
+Check that the detected framework matches:
 
 ```bash
 cat .claude/apex/task.json | jq '.tasks["1"].doc_consulted'
 ```
 
-### Le tracking ne se fait pas
+### Tracking is not working
 
-Vérifier que le hook PostToolUse est bien configuré :
+Check that the PostToolUse hook is properly configured:
 
 ```bash
 cat ~/.claude/plugins/marketplaces/fusengine-plugins/plugins/ai-pilot/hooks/hooks.json
 ```
 
-### Tester manuellement
+### Manual test
 
 ```bash
 echo '{"tool_name":"mcp__context7__query-docs","tool_input":{"libraryId":"/vercel/react","query":"hooks"}}' | \
