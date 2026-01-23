@@ -1,5 +1,14 @@
 # Release Notes
 
+## [1.12.2] - 23-01-2026
+
+### Changed
+
+- Reorganize README.md with compact tables (203 → 117 lines)
+- Add Quick Start section with one-liner install
+- Group plugins by category (Development/Productivity)
+- Centralize documentation links in single table
+
 ## [1.12.1] - 23-01-2026
 
 ### Changed
