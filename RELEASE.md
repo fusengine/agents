@@ -1,5 +1,12 @@
 # Release Notes
 
+## [1.12.1] - 23-01-2026
+
+### Changed
+
+- Translate `docs/apex-tracking.md` from French to English for consistency
+- Fix README.md broken link (`./doc/` → `./docs/`)
+
 ## [1.12.0] - 23-01-2026
 
 ### Added
