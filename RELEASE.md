@@ -1,5 +1,11 @@
 # Release Notes
 
+## [1.10.1] - 23-01-2026
+
+### Fixed
+
+- **Hooks loader path** - Scan only marketplace `~/.claude/plugins/marketplaces/fusengine-plugins/plugins` (removed local plugins scanning)
+
 ## [1.10.0] - 23-01-2026
 
 ### Added
