@@ -4,176 +4,90 @@ Professional Claude Code plugins with APEX workflow, SOLID principles, and exper
 
 ## Overview
 
-- **10 plugins** - Focused, single-purpose plugins
-- **15 agents** - Specialized AI assistants
-- **70 skills** - Modular knowledge packages
-- **24 commands** - User-invocable workflows
+| Category | Count |
+|----------|-------|
+| Plugins | 10 |
+| Agents | 15 |
+| Skills | 70 |
+| Commands | 24 |
 
-## Installation
-
-### Add Marketplace
+## Quick Start
 
 ```bash
+# Add marketplace
 /plugin marketplace add fusengine/agents
-```
 
-### Install Plugins
+# Install all plugins
+/plugin install fuse-ai-pilot fuse-commit-pro fuse-laravel fuse-nextjs fuse-swift-apple-expert fuse-solid fuse-tailwindcss fuse-react fuse-design fuse-prompt-engineer
 
-```bash
-/plugin install fuse-ai-pilot
-/plugin install fuse-commit-pro
-/plugin install fuse-laravel
-/plugin install fuse-nextjs
-/plugin install fuse-swift-apple-expert
-/plugin install fuse-solid
-/plugin install fuse-tailwindcss
-/plugin install fuse-react
-/plugin install fuse-design
-/plugin install fuse-prompt-engineer
-```
-
-### Interactive Menu
-
-```bash
+# Or use interactive menu
 /plugin
 ```
 
-### List Installed Plugins
+## Plugins
 
-```bash
-/plugin list
-```
+### Development
 
-### Enable/Disable Plugin
+| Plugin | Stack | Key Features |
+|--------|-------|--------------|
+| [fuse-ai-pilot](./plugins/ai-pilot) | All | APEX methodology, sniper validation, code quality |
+| [fuse-laravel](./plugins/laravel-expert) | Laravel 12 + PHP 8.5 | Eloquent, Livewire, Blade, queues, testing |
+| [fuse-nextjs](./plugins/nextjs-expert) | Next.js 16 + React 19 | App Router, Server Components, Prisma 7, Better Auth |
+| [fuse-react](./plugins/react-expert) | React 19 | TanStack Router, TanStack Form, Zustand, shadcn/ui |
+| [fuse-swift-apple-expert](./plugins/swift-apple-expert) | Swift 6 + SwiftUI | iOS, macOS, watchOS, tvOS, visionOS |
+| [fuse-tailwindcss](./plugins/tailwindcss) | Tailwind CSS v4.1 | CSS-first config, Oxide engine, OKLCH colors |
+| [fuse-design](./plugins/design-expert) | UI/UX | shadcn/ui, 21st.dev, WCAG 2.2, Framer Motion |
 
-```bash
-/plugin enable <plugin-name>
-/plugin disable <plugin-name>
-```
+### Productivity
 
-### Remove Marketplace
+| Plugin | Purpose | Commands |
+|--------|---------|----------|
+| [fuse-commit-pro](./plugins/commit-pro) | Git commits | `/commit`, `/wip`, `/fix`, `/feat`, `/refactor`, `/undo` |
+| [fuse-solid](./plugins/solid) | SOLID enforcement | Auto-detection for all languages |
+| [fuse-prompt-engineer](./plugins/prompt-engineer) | Prompt design | `/prompt`, `/prompt-history` |
 
-```bash
-/plugin marketplace remove fusengine/agents
-```
+## APEX Methodology
 
-## Available Plugins
+**A**nalyze → **P**lan → **E**xecute → e**L**icit → e**X**amine
 
-| Plugin | Description | Category |
-|--------|-------------|----------|
-| [fuse-ai-pilot](./plugins/ai-pilot) | AI workflow agents with APEX methodology | development |
-| [fuse-commit-pro](./plugins/commit-pro) | Professional git commits with Conventional Commits | productivity |
-| [fuse-laravel](./plugins/laravel-expert) | Expert Laravel 12 + PHP 8.5 development | development |
-| [fuse-nextjs](./plugins/nextjs-expert) | Expert Next.js 16 + React 19 development | development |
-| [fuse-swift-apple-expert](./plugins/swift-apple-expert) | Expert Swift 6 + SwiftUI for Apple platforms | development |
-| [fuse-solid](./plugins/solid) | SOLID principles enforcement for all languages | productivity |
-| [fuse-tailwindcss](./plugins/tailwindcss) | Expert Tailwind CSS v4.1 with CSS-first config | development |
-| [fuse-react](./plugins/react-expert) | Expert React 19 with TanStack Router, TanStack Form, Zustand, shadcn/ui | development |
-| [fuse-design](./plugins/design-expert) | Expert UI/UX design with shadcn/ui, 21st.dev, Tailwind CSS | development |
-| [fuse-prompt-engineer](./plugins/prompt-engineer) | Expert Prompt Engineering with Context Engineering, Meta-Prompting, Agent Design | productivity |
+The core workflow for all development tasks with automatic framework detection:
+
+| Detection | Framework |
+|-----------|-----------|
+| `composer.json` + `artisan` | Laravel 12 |
+| `next.config.*` | Next.js 16 |
+| `package.json` (react) | React 19 |
+| `Package.swift`, `*.xcodeproj` | Swift 6 |
+
+**Commands:** `/apex`, `/apex-quick`, `/epct`
+
+[Full APEX Documentation](./docs/apex-methodology.md)
 
 ## Documentation
 
-### Core Methodology
-- **[APEX Methodology](./docs/apex-methodology.md)** - Complete guide to Analyze → Plan → Execute → eLicit → eXamine workflow
+| Document | Description |
+|----------|-------------|
+| [APEX Methodology](./docs/apex-methodology.md) | Complete APEX workflow guide |
+| [Plugins Guide](./docs/plugins.md) | Plugin installation and usage |
+| [Agents Reference](./docs/agents.md) | All 15 agents documentation |
+| [Skills Reference](./docs/skills.md) | All 70 skills documentation |
+| [Hooks System](./docs/hooks.md) | Automatic enforcement hooks |
+| [APEX Tracking](./docs/apex-tracking.md) | Documentation consultation tracking |
+| [MCP Setup](./docs/setup-env.md) | API keys and MCP configuration |
 
-### Reference
-- [Plugins Guide](./docs/plugins.md)
-- [Agents Reference](./docs/agents.md)
-- [Skills Reference](./docs/skills.md)
-- [Architecture](./docs/architecture.md)
-- [Usage Guide](./docs/usage.md)
-- [MCP API Keys Setup](./docs/setup-env.md)
+## Plugin Management
 
-## Plugin Details
+```bash
+# List installed
+/plugin list
 
-### fuse-ai-pilot
+# Enable/disable
+/plugin enable <plugin-name>
+/plugin disable <plugin-name>
 
-AI-powered workflow agents with APEX methodology (Analyze → Plan → Execute → eLicit → eXamine).
-
-**NEW: Elicitation Phase** - Expert agents self-review with 75 techniques before validation. 3 modes: `--auto`, `--manual`, `--skip-elicit`.
-
-**Auto-detection:** The `/apex` skill auto-detects project type and loads framework-specific references:
-- Laravel (`composer.json` + `artisan`) → Laravel 12 references
-- Next.js (`next.config.*`) → Next.js 16 references
-- React (`package.json` react) → React 19 references
-- Swift (`Package.swift`, `*.xcodeproj`) → Swift 6 references
-
-**Commands:** `/apex`, `/apex-quick`, `/epct`, `/commit`, `/watch-ci`, `/fix-pr-comments`, `/create-pull-request`
-
-**Agents:** sniper, sniper-faster, explore-codebase, research-expert, websearch, seo-expert
-
-**Skills:** apex, elicitation, research, exploration, code-quality, seo
-
-📖 **[Full APEX Documentation](./docs/apex-methodology.md)**
-
-### fuse-commit-pro
-
-Professional git commits with smart detection.
-
-**Commands:** `/commit`, `/wip`, `/fix`, `/feat`, `/refactor`, `/chore`, `/docs`, `/test`, `/undo`, `/amend`
-
-### fuse-laravel
-
-Expert Laravel 12 + PHP 8.5 with comprehensive documentation.
-
-**Skills:** laravel-architecture, laravel-eloquent, laravel-api, laravel-auth, laravel-permission, laravel-testing, laravel-queues, laravel-livewire, laravel-blade, laravel-migrations, laravel-billing, laravel-i18n, solid-php
-
-### fuse-nextjs
-
-Expert Next.js 16 with App Router, Server Components, Prisma 7, Better Auth, TanStack Form, Zustand, shadcn/ui.
-
-**Skills:** nextjs-16, prisma-7, better-auth, solid-nextjs, nextjs-tanstack-form, nextjs-zustand, nextjs-shadcn, nextjs-i18n
-
-### fuse-swift-apple-expert
-
-Expert Swift 6 + SwiftUI for all Apple platforms.
-
-**Skills:** swiftui-components, swift-architecture, swift-concurrency, swiftui-navigation, swiftui-data, apple-platforms, swiftui-testing, swift-performance, swift-i18n, swift-app-icons, swift-build, solid-swift
-
-### fuse-solid
-
-SOLID principles enforcement with automatic project detection.
-
-**Agent:** solid-orchestrator
-
-**Skills:** solid-detection
-
-### fuse-tailwindcss
-
-Expert Tailwind CSS v4.1 with CSS-first configuration, Oxide engine, and OKLCH colors.
-
-**Agent:** tailwindcss-expert
-
-**Skills:** tailwindcss-v4, tailwindcss-core, tailwindcss-utilities, tailwindcss-responsive, tailwindcss-custom-styles, tailwindcss-layout, tailwindcss-spacing, tailwindcss-sizing, tailwindcss-typography, tailwindcss-backgrounds, tailwindcss-borders, tailwindcss-effects, tailwindcss-transforms, tailwindcss-interactivity
-
-### fuse-react
-
-Expert React 19 with TanStack Router, TanStack Form, Zustand, Testing Library, shadcn/ui.
-
-**Agent:** react-expert
-
-**Skills:** solid-react, react-19, react-hooks, react-tanstack-router, react-state, react-forms, react-testing, react-performance, react-shadcn, react-i18n
-
-### fuse-design
-
-Expert UI/UX design for React/Next.js with Tailwind CSS, shadcn/ui, 21st.dev, WCAG 2.2 accessibility, and Framer Motion animations.
-
-**Commands:** `/design`
-
-**Agent:** design-expert
-
-**Skills:** generating-components, designing-systems, validating-accessibility, adding-animations
-
-### fuse-prompt-engineer
-
-Expert Prompt Engineering with Context Engineering, Meta-Prompting, Chain-of-Thought, Few-Shot Learning, Agent Design patterns, and 50+ template library.
-
-**Commands:** `/prompt`, `/prompt-history`
-
-**Agent:** prompt-engineer
-
-**Skills:** prompt-creation, prompt-optimization, agent-design, guardrails, prompt-library, prompt-testing
+# Remove marketplace
+/plugin marketplace remove fusengine/agents
+```
 
 ## Architecture
 
