@@ -1,6 +1,6 @@
 #!/bin/bash
 # check-skill-loaded.sh - PreToolUse hook for react-expert
-# Blocks Write/Edit on React files if no skill was consulted
+# Forces documentation consultation before writing React code (smart detection)
 
 set -e
 
@@ -13,25 +13,53 @@ if [[ "$TOOL_NAME" != "Write" && "$TOOL_NAME" != "Edit" ]]; then
   exit 0
 fi
 
-# Only check React/TypeScript files
+# Only check .tsx/.ts/.jsx/.js files
 if [[ ! "$FILE_PATH" =~ \.(tsx|ts|jsx|js)$ ]]; then
   exit 0
 fi
 
-# Check if file contains React code
+# Skip non-code directories
+if [[ "$FILE_PATH" =~ /(node_modules|dist|build|\.next)/ ]]; then
+  exit 0
+fi
+
+# Get content for smart detection
 CONTENT=$(echo "$INPUT" | jq -r '.tool_input.content // .tool_input.new_string // empty')
 
-# If it's a React component file, enforce skill check
-if echo "$CONTENT" | grep -qE "(import.*React|from 'react'|from \"react\"|useState|useEffect|export.*function|export.*const.*=)"; then
+# SMART DETECTION: Only block if it's actual React code
+# Check for React imports, hooks, or JSX
+if echo "$CONTENT" | grep -qE "(from ['\"]react['\"]|useState|useEffect|useRef|useMemo|useCallback|useContext|useReducer)" || \
+   echo "$CONTENT" | grep -qE "(<[A-Z][a-zA-Z]*|<div|<span|<button|<input|<form|<section|<article)" || \
+   echo "$CONTENT" | grep -qE "(React\.|jsx|tsx|className=)"; then
 
-  # Output instruction to load skill first
-  cat << 'EOF'
+  # Build block message with all skills and online sources
+  REASON="📚 REACT CODE DETECTED - Documentation required.\n\n"
+  REASON+="Consult ONE of these sources:\n\n"
+  REASON+="LOCAL SKILLS:\n"
+  REASON+="  • skills/react-19/SKILL.md (React 19 features)\n"
+  REASON+="  • skills/react-hooks/SKILL.md (hooks patterns)\n"
+  REASON+="  • skills/react-state/SKILL.md (state management)\n"
+  REASON+="  • skills/solid-react/SKILL.md (architecture SOLID)\n"
+  REASON+="  • skills/react-forms/SKILL.md (forms handling)\n"
+  REASON+="  • skills/react-testing/SKILL.md (testing)\n"
+  REASON+="  • skills/react-performance/SKILL.md (optimization)\n"
+  REASON+="  • skills/react-tanstack-router/SKILL.md (routing)\n"
+  REASON+="  • skills/react-shadcn/SKILL.md (UI components)\n"
+  REASON+="  • skills/react-i18n/SKILL.md (internationalization)\n\n"
+  REASON+="ONLINE DOCUMENTATION:\n"
+  REASON+="  • mcp__context7__resolve-library-id + mcp__context7__query-docs\n"
+  REASON+="  • mcp__exa__get_code_context_exa (code examples)\n"
+  REASON+="  • mcp__exa__web_search_exa (latest docs)\n\n"
+  REASON+="After consulting documentation, retry your Write/Edit."
+
+  cat << EOF
 {
   "decision": "block",
-  "reason": "⚠️ SKILL REQUIRED: Before writing React code, you MUST consult a skill first.\n\nINSTRUCTION: Read one of these skills:\n- skills/solid-react/SKILL.md (architecture)\n- skills/react-19/SKILL.md (React 19 features)\n- skills/react-hooks/SKILL.md (hooks patterns)\n\nThen retry your Write/Edit operation."
+  "reason": "$REASON"
 }
 EOF
   exit 2
 fi
 
+# Not React code - allow
 exit 0

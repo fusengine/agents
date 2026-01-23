@@ -1,6 +1,6 @@
 #!/bin/bash
 # check-tailwind-skill.sh - PreToolUse hook for tailwindcss
-# Blocks Write/Edit on CSS/config files if no skill was consulted
+# Forces documentation consultation before writing Tailwind code (smart detection)
 
 set -e
 
@@ -13,20 +13,68 @@ if [[ "$TOOL_NAME" != "Write" && "$TOOL_NAME" != "Edit" ]]; then
   exit 0
 fi
 
-# Check Tailwind config or CSS files
-if [[ "$FILE_PATH" =~ tailwind\.config\.(js|ts|mjs)$ ]] || [[ "$FILE_PATH" =~ \.css$ ]]; then
-  CONTENT=$(echo "$INPUT" | jq -r '.tool_input.content // .tool_input.new_string // empty')
+# Skip non-code directories
+if [[ "$FILE_PATH" =~ /(node_modules|dist|build|\.next)/ ]]; then
+  exit 0
+fi
 
-  # Check for Tailwind v4 patterns
-  if echo "$CONTENT" | grep -qE "(@theme|@utility|@variant|@import|@config|--tw-)"; then
-    cat << 'EOF'
+# Check Tailwind config files
+if [[ "$FILE_PATH" =~ tailwind\.config\.(js|ts|mjs)$ ]]; then
+  REASON="📚 TAILWIND CONFIG DETECTED - Documentation required.\n\n"
+  REASON+="Consult ONE of these sources:\n\n"
+  REASON+="LOCAL SKILLS:\n"
+  REASON+="  • skills/tailwindcss-v4/SKILL.md (v4 migration)\n"
+  REASON+="  • skills/tailwindcss-core/SKILL.md (@theme, directives)\n"
+  REASON+="  • skills/tailwindcss-custom-styles/SKILL.md (@utility, @variant)\n\n"
+  REASON+="ONLINE DOCUMENTATION:\n"
+  REASON+="  • mcp__context7__resolve-library-id + mcp__context7__query-docs\n"
+  REASON+="  • mcp__exa__get_code_context_exa (Tailwind examples)\n\n"
+  REASON+="After consulting documentation, retry your Write/Edit."
+
+  cat << EOF
 {
   "decision": "block",
-  "reason": "⚠️ SKILL REQUIRED: Before writing Tailwind CSS v4 code, you MUST consult a skill first.\n\nINSTRUCTION: Read one of these skills:\n- skills/tailwindcss-v4/SKILL.md (v4 core features)\n- skills/tailwindcss-core/SKILL.md (@theme, directives)\n- skills/tailwindcss-custom-styles/SKILL.md (@utility, @variant)\n- skills/tailwindcss-responsive/SKILL.md (breakpoints)\n\nThen retry your Write/Edit operation."
+  "reason": "$REASON"
+}
+EOF
+  exit 2
+fi
+
+# Check CSS files
+if [[ "$FILE_PATH" =~ \.css$ ]]; then
+  CONTENT=$(echo "$INPUT" | jq -r '.tool_input.content // .tool_input.new_string // empty')
+
+  # SMART DETECTION: Only block if it's Tailwind CSS
+  if echo "$CONTENT" | grep -qE "(@theme|@utility|@variant|@import|@config|--tw-)" || \
+     echo "$CONTENT" | grep -qE "(@tailwind|@apply|@layer|@screen)" || \
+     echo "$CONTENT" | grep -qE "(theme\(|config\()"; then
+
+    REASON="📚 TAILWIND CSS DETECTED - Documentation required.\n\n"
+    REASON+="Consult ONE of these sources:\n\n"
+    REASON+="LOCAL SKILLS:\n"
+    REASON+="  • skills/tailwindcss-v4/SKILL.md (v4 core features)\n"
+    REASON+="  • skills/tailwindcss-core/SKILL.md (@theme, directives)\n"
+    REASON+="  • skills/tailwindcss-custom-styles/SKILL.md (@utility, @variant)\n"
+    REASON+="  • skills/tailwindcss-responsive/SKILL.md (breakpoints, container queries)\n"
+    REASON+="  • skills/tailwindcss-layout/SKILL.md (flex, grid)\n"
+    REASON+="  • skills/tailwindcss-typography/SKILL.md (text, fonts)\n"
+    REASON+="  • skills/tailwindcss-backgrounds/SKILL.md (colors, gradients)\n"
+    REASON+="  • skills/tailwindcss-effects/SKILL.md (shadows, filters)\n"
+    REASON+="  • skills/tailwindcss-transforms/SKILL.md (animations)\n\n"
+    REASON+="ONLINE DOCUMENTATION:\n"
+    REASON+="  • mcp__context7__resolve-library-id + mcp__context7__query-docs\n"
+    REASON+="  • mcp__exa__get_code_context_exa (Tailwind examples)\n\n"
+    REASON+="After consulting documentation, retry your Write/Edit."
+
+    cat << EOF
+{
+  "decision": "block",
+  "reason": "$REASON"
 }
 EOF
     exit 2
   fi
 fi
 
+# Not Tailwind code - allow
 exit 0

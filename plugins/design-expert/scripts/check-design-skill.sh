@@ -1,6 +1,6 @@
 #!/bin/bash
 # check-design-skill.sh - PreToolUse hook for design-expert
-# Blocks Write/Edit on UI components if no skill was consulted
+# Forces documentation consultation before writing UI code (smart detection)
 
 set -e
 
@@ -13,25 +13,52 @@ if [[ "$TOOL_NAME" != "Write" && "$TOOL_NAME" != "Edit" ]]; then
   exit 0
 fi
 
-# Only check component files
-if [[ ! "$FILE_PATH" =~ \.(tsx|jsx)$ ]]; then
+# Only check .tsx/.jsx/.css files
+if [[ ! "$FILE_PATH" =~ \.(tsx|jsx|css)$ ]]; then
   exit 0
 fi
 
-# Check if file is in components/ or ui/ directory
-if [[ "$FILE_PATH" =~ /components/ ]] || [[ "$FILE_PATH" =~ /ui/ ]]; then
-  CONTENT=$(echo "$INPUT" | jq -r '.tool_input.content // .tool_input.new_string // empty')
-
-  # Check for UI patterns
-  if echo "$CONTENT" | grep -qE "(className=|tailwind|Button|Card|Modal|Dialog|Form|Input)"; then
-    cat << 'EOF'
-{
-  "decision": "block",
-  "reason": "⚠️ SKILL REQUIRED: Before writing UI components, you MUST consult design skills.\n\nINSTRUCTION: Read one of these skills:\n- skills/design-system/SKILL.md (design tokens)\n- skills/accessibility/SKILL.md (WCAG 2.2)\n- skills/animations/SKILL.md (Framer Motion)\n\nAlso consider using:\n- mcp__shadcn__search_items_in_registries for existing components\n- mcp__magic__21st_magic_component_builder for inspiration\n\nThen retry your Write/Edit operation."
-}
-EOF
-    exit 2
-  fi
+# Skip non-code directories
+if [[ "$FILE_PATH" =~ /(node_modules|dist|build|\.next)/ ]]; then
+  exit 0
 fi
 
+# Get content for smart detection
+CONTENT=$(echo "$INPUT" | jq -r '.tool_input.content // .tool_input.new_string // empty')
+
+# SMART DETECTION: Only block if it's actual UI/Design code
+# Check for: Tailwind classes, UI component patterns, animations, styling
+if echo "$CONTENT" | grep -qE "(className=|class=|cn\(|cva\(|clsx\()" || \
+   echo "$CONTENT" | grep -qE "(flex|grid|bg-|text-|p-[0-9]|m-[0-9]|w-|h-|rounded|shadow|border)" || \
+   echo "$CONTENT" | grep -qE "(forwardRef|displayName|variants|motion\.|animate|framer-motion)" || \
+   echo "$CONTENT" | grep -qE "(@apply|@layer|@tailwind|--tw-)" || \
+   echo "$CONTENT" | grep -qE "(Button|Card|Dialog|Modal|Input|Select|Dropdown|Menu|Toast|Alert)" || \
+   [[ "$FILE_PATH" =~ \.(css)$ ]]; then
+
+  REASON="📚 UI/DESIGN CODE DETECTED - Documentation required.\n\n"
+  REASON+="Consult ONE of these sources:\n\n"
+  REASON+="LOCAL SKILLS:\n"
+  REASON+="  • skills/designing-systems/SKILL.md (design tokens, theming)\n"
+  REASON+="  • skills/generating-components/SKILL.md (component patterns)\n"
+  REASON+="  • skills/adding-animations/SKILL.md (Framer Motion)\n"
+  REASON+="  • skills/validating-accessibility/SKILL.md (WCAG 2.2)\n\n"
+  REASON+="ONLINE TOOLS:\n"
+  REASON+="  • mcp__shadcn__search_items_in_registries (existing components)\n"
+  REASON+="  • mcp__magic__21st_magic_component_builder (AI component builder)\n"
+  REASON+="  • mcp__magic__21st_magic_component_inspiration (design inspiration)\n\n"
+  REASON+="ONLINE DOCUMENTATION:\n"
+  REASON+="  • mcp__context7__query-docs (Tailwind, Framer Motion docs)\n"
+  REASON+="  • mcp__exa__get_code_context_exa (code examples)\n\n"
+  REASON+="After consulting documentation, retry your Write/Edit."
+
+  cat << EOF
+{
+  "decision": "block",
+  "reason": "$REASON"
+}
+EOF
+  exit 2
+fi
+
+# Not UI/Design code - allow
 exit 0
