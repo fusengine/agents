@@ -1,8 +1,11 @@
 #!/bin/bash
 # check-laravel-skill.sh - PreToolUse hook for laravel-expert
-# Forces documentation consultation before writing Laravel code (smart detection)
+# Marks expert context + Forces documentation consultation (smart detection)
 
 set -e
+
+# Mark that we're in expert agent context (allows bypass of ai-pilot block)
+touch /tmp/.claude-expert-active
 
 INPUT=$(cat)
 TOOL_NAME=$(echo "$INPUT" | jq -r '.tool_name // empty')
@@ -25,14 +28,14 @@ fi
 
 CONTENT=$(echo "$INPUT" | jq -r '.tool_input.content // .tool_input.new_string // empty')
 
-# SMART DETECTION: Only block if it's actual Laravel code
+# SMART DETECTION: Laravel code
 if echo "$CONTENT" | grep -qE "(Illuminate\\\\|use App\\\\|extends Controller|extends Model)" || \
    echo "$CONTENT" | grep -qE "(Route::|Livewire|Blade::|Eloquent|HasFactory)" || \
    echo "$CONTENT" | grep -qE "(artisan|migrate|seeder|factory|middleware)" || \
    echo "$CONTENT" | grep -qE "(Request \\\$request|Validator::|FormRequest)"; then
 
   REASON="📚 LARAVEL CODE DETECTED - Documentation required.\n\n"
-  REASON+="Consult ONE of these sources:\n\n"
+  REASON+="Consult ONE of these sources FIRST:\n\n"
   REASON+="LOCAL SKILLS:\n"
   REASON+="  • skills/laravel-eloquent/SKILL.md (Models, relationships)\n"
   REASON+="  • skills/laravel-architecture/SKILL.md (structure, patterns)\n"
@@ -43,12 +46,10 @@ if echo "$CONTENT" | grep -qE "(Illuminate\\\\|use App\\\\|extends Controller|ex
   REASON+="  • skills/laravel-migrations/SKILL.md (database migrations)\n"
   REASON+="  • skills/laravel-queues/SKILL.md (jobs, queues)\n"
   REASON+="  • skills/laravel-testing/SKILL.md (Pest tests)\n"
-  REASON+="  • skills/laravel-i18n/SKILL.md (translations)\n"
   REASON+="  • skills/solid-php/SKILL.md (SOLID principles)\n\n"
   REASON+="ONLINE DOCUMENTATION:\n"
   REASON+="  • mcp__context7__resolve-library-id + mcp__context7__query-docs\n"
-  REASON+="  • mcp__exa__get_code_context_exa (code examples)\n"
-  REASON+="  • mcp__exa__web_search_exa (latest Laravel docs)\n\n"
+  REASON+="  • mcp__exa__get_code_context_exa (code examples)\n\n"
   REASON+="After consulting documentation, retry your Write/Edit."
 
   cat << EOF
@@ -60,5 +61,4 @@ EOF
   exit 2
 fi
 
-# Not Laravel code - allow
 exit 0

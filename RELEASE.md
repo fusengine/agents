@@ -1,5 +1,21 @@
 # Release Notes
 
+## [1.11.0] - 23-01-2026
+
+### Added
+
+- **Expert delegation enforcement** - ai-pilot blocks direct Write/Edit on code files
+  - Main agent must delegate to expert agents via Task tool
+  - Expert context marker system (`/tmp/.claude-expert-active`)
+  - Suggests appropriate expert agent based on file type
+
+### Changed
+
+- **Expert hooks** - All expert agents now mark their context
+  - design-expert, laravel-expert, nextjs-expert, react-expert, swift-expert, tailwindcss-expert
+  - Allows expert agents to write code while main agent is blocked
+  - Streamlined skill suggestions in block messages
+
 ## [1.10.3] - 23-01-2026
 
 ### Changed

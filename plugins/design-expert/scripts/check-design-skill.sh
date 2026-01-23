@@ -1,8 +1,11 @@
 #!/bin/bash
 # check-design-skill.sh - PreToolUse hook for design-expert
-# Forces documentation consultation before writing UI code (smart detection)
+# Marks expert context + Forces documentation consultation (smart detection)
 
 set -e
+
+# Mark that we're in expert agent context (allows bypass of ai-pilot block)
+touch /tmp/.claude-expert-active
 
 INPUT=$(cat)
 TOOL_NAME=$(echo "$INPUT" | jq -r '.tool_name // empty')
@@ -23,11 +26,9 @@ if [[ "$FILE_PATH" =~ /(node_modules|dist|build|\.next)/ ]]; then
   exit 0
 fi
 
-# Get content for smart detection
 CONTENT=$(echo "$INPUT" | jq -r '.tool_input.content // .tool_input.new_string // empty')
 
-# SMART DETECTION: Only block if it's actual UI/Design code
-# Check for: Tailwind classes, UI component patterns, animations, styling
+# SMART DETECTION: UI/Design code
 if echo "$CONTENT" | grep -qE "(className=|class=|cn\(|cva\(|clsx\()" || \
    echo "$CONTENT" | grep -qE "(flex|grid|bg-|text-|p-[0-9]|m-[0-9]|w-|h-|rounded|shadow|border)" || \
    echo "$CONTENT" | grep -qE "(forwardRef|displayName|variants|motion\.|animate|framer-motion)" || \
@@ -36,7 +37,7 @@ if echo "$CONTENT" | grep -qE "(className=|class=|cn\(|cva\(|clsx\()" || \
    [[ "$FILE_PATH" =~ \.(css)$ ]]; then
 
   REASON="📚 UI/DESIGN CODE DETECTED - Documentation required.\n\n"
-  REASON+="Consult ONE of these sources:\n\n"
+  REASON+="Consult ONE of these sources FIRST:\n\n"
   REASON+="LOCAL SKILLS:\n"
   REASON+="  • skills/designing-systems/SKILL.md (design tokens, theming)\n"
   REASON+="  • skills/generating-components/SKILL.md (component patterns)\n"
@@ -44,8 +45,7 @@ if echo "$CONTENT" | grep -qE "(className=|class=|cn\(|cva\(|clsx\()" || \
   REASON+="  • skills/validating-accessibility/SKILL.md (WCAG 2.2)\n\n"
   REASON+="ONLINE TOOLS:\n"
   REASON+="  • mcp__shadcn__search_items_in_registries (existing components)\n"
-  REASON+="  • mcp__magic__21st_magic_component_builder (AI component builder)\n"
-  REASON+="  • mcp__magic__21st_magic_component_inspiration (design inspiration)\n\n"
+  REASON+="  • mcp__magic__21st_magic_component_builder (AI component builder)\n\n"
   REASON+="ONLINE DOCUMENTATION:\n"
   REASON+="  • mcp__context7__query-docs (Tailwind, Framer Motion docs)\n"
   REASON+="  • mcp__exa__get_code_context_exa (code examples)\n\n"
@@ -60,5 +60,4 @@ EOF
   exit 2
 fi
 
-# Not UI/Design code - allow
 exit 0

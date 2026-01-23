@@ -1,8 +1,11 @@
 #!/bin/bash
 # check-skill-loaded.sh - PreToolUse hook for react-expert
-# Forces documentation consultation before writing React code (smart detection)
+# Marks expert context + Forces documentation consultation (smart detection)
 
 set -e
+
+# Mark that we're in expert agent context (allows bypass of ai-pilot block)
+touch /tmp/.claude-expert-active
 
 INPUT=$(cat)
 TOOL_NAME=$(echo "$INPUT" | jq -r '.tool_name // empty')
@@ -27,14 +30,12 @@ fi
 CONTENT=$(echo "$INPUT" | jq -r '.tool_input.content // .tool_input.new_string // empty')
 
 # SMART DETECTION: Only block if it's actual React code
-# Check for React imports, hooks, or JSX
 if echo "$CONTENT" | grep -qE "(from ['\"]react['\"]|useState|useEffect|useRef|useMemo|useCallback|useContext|useReducer)" || \
    echo "$CONTENT" | grep -qE "(<[A-Z][a-zA-Z]*|<div|<span|<button|<input|<form|<section|<article)" || \
    echo "$CONTENT" | grep -qE "(React\.|jsx|tsx|className=)"; then
 
-  # Build block message with all skills and online sources
   REASON="📚 REACT CODE DETECTED - Documentation required.\n\n"
-  REASON+="Consult ONE of these sources:\n\n"
+  REASON+="Consult ONE of these sources FIRST:\n\n"
   REASON+="LOCAL SKILLS:\n"
   REASON+="  • skills/react-19/SKILL.md (React 19 features)\n"
   REASON+="  • skills/react-hooks/SKILL.md (hooks patterns)\n"
@@ -48,8 +49,7 @@ if echo "$CONTENT" | grep -qE "(from ['\"]react['\"]|useState|useEffect|useRef|u
   REASON+="  • skills/react-i18n/SKILL.md (internationalization)\n\n"
   REASON+="ONLINE DOCUMENTATION:\n"
   REASON+="  • mcp__context7__resolve-library-id + mcp__context7__query-docs\n"
-  REASON+="  • mcp__exa__get_code_context_exa (code examples)\n"
-  REASON+="  • mcp__exa__web_search_exa (latest docs)\n\n"
+  REASON+="  • mcp__exa__get_code_context_exa (code examples)\n\n"
   REASON+="After consulting documentation, retry your Write/Edit."
 
   cat << EOF

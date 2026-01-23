@@ -1,8 +1,11 @@
 #!/bin/bash
 # check-tailwind-skill.sh - PreToolUse hook for tailwindcss
-# Forces documentation consultation before writing Tailwind code (smart detection)
+# Marks expert context + Forces documentation consultation (smart detection)
 
 set -e
+
+# Mark that we're in expert agent context (allows bypass of ai-pilot block)
+touch /tmp/.claude-expert-active
 
 INPUT=$(cat)
 TOOL_NAME=$(echo "$INPUT" | jq -r '.tool_name // empty')
@@ -21,7 +24,7 @@ fi
 # Check Tailwind config files
 if [[ "$FILE_PATH" =~ tailwind\.config\.(js|ts|mjs)$ ]]; then
   REASON="📚 TAILWIND CONFIG DETECTED - Documentation required.\n\n"
-  REASON+="Consult ONE of these sources:\n\n"
+  REASON+="Consult ONE of these sources FIRST:\n\n"
   REASON+="LOCAL SKILLS:\n"
   REASON+="  • skills/tailwindcss-v4/SKILL.md (v4 migration)\n"
   REASON+="  • skills/tailwindcss-core/SKILL.md (@theme, directives)\n"
@@ -44,23 +47,20 @@ fi
 if [[ "$FILE_PATH" =~ \.css$ ]]; then
   CONTENT=$(echo "$INPUT" | jq -r '.tool_input.content // .tool_input.new_string // empty')
 
-  # SMART DETECTION: Only block if it's Tailwind CSS
+  # SMART DETECTION: Tailwind CSS
   if echo "$CONTENT" | grep -qE "(@theme|@utility|@variant|@import|@config|--tw-)" || \
      echo "$CONTENT" | grep -qE "(@tailwind|@apply|@layer|@screen)" || \
      echo "$CONTENT" | grep -qE "(theme\(|config\()"; then
 
     REASON="📚 TAILWIND CSS DETECTED - Documentation required.\n\n"
-    REASON+="Consult ONE of these sources:\n\n"
+    REASON+="Consult ONE of these sources FIRST:\n\n"
     REASON+="LOCAL SKILLS:\n"
     REASON+="  • skills/tailwindcss-v4/SKILL.md (v4 core features)\n"
     REASON+="  • skills/tailwindcss-core/SKILL.md (@theme, directives)\n"
     REASON+="  • skills/tailwindcss-custom-styles/SKILL.md (@utility, @variant)\n"
-    REASON+="  • skills/tailwindcss-responsive/SKILL.md (breakpoints, container queries)\n"
+    REASON+="  • skills/tailwindcss-responsive/SKILL.md (breakpoints)\n"
     REASON+="  • skills/tailwindcss-layout/SKILL.md (flex, grid)\n"
-    REASON+="  • skills/tailwindcss-typography/SKILL.md (text, fonts)\n"
-    REASON+="  • skills/tailwindcss-backgrounds/SKILL.md (colors, gradients)\n"
-    REASON+="  • skills/tailwindcss-effects/SKILL.md (shadows, filters)\n"
-    REASON+="  • skills/tailwindcss-transforms/SKILL.md (animations)\n\n"
+    REASON+="  • skills/tailwindcss-typography/SKILL.md (text, fonts)\n\n"
     REASON+="ONLINE DOCUMENTATION:\n"
     REASON+="  • mcp__context7__resolve-library-id + mcp__context7__query-docs\n"
     REASON+="  • mcp__exa__get_code_context_exa (Tailwind examples)\n\n"
@@ -76,5 +76,4 @@ EOF
   fi
 fi
 
-# Not Tailwind code - allow
 exit 0

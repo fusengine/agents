@@ -1,8 +1,11 @@
 #!/bin/bash
 # check-swift-skill.sh - PreToolUse hook for swift-apple-expert
-# Forces documentation consultation before writing Swift code (smart detection)
+# Marks expert context + Forces documentation consultation (smart detection)
 
 set -e
+
+# Mark that we're in expert agent context (allows bypass of ai-pilot block)
+touch /tmp/.claude-expert-active
 
 INPUT=$(cat)
 TOOL_NAME=$(echo "$INPUT" | jq -r '.tool_name // empty')
@@ -25,7 +28,7 @@ fi
 
 CONTENT=$(echo "$INPUT" | jq -r '.tool_input.content // .tool_input.new_string // empty')
 
-# SMART DETECTION: Only block if it's actual Swift/SwiftUI code
+# SMART DETECTION: Swift/SwiftUI code
 if echo "$CONTENT" | grep -qE "(import SwiftUI|import UIKit|import Foundation)" || \
    echo "$CONTENT" | grep -qE "(@Observable|@State|@Binding|@Environment|@Published)" || \
    echo "$CONTENT" | grep -qE "(struct.*:.*View|class.*ViewController|actor )" || \
@@ -33,7 +36,7 @@ if echo "$CONTENT" | grep -qE "(import SwiftUI|import UIKit|import Foundation)" 
    echo "$CONTENT" | grep -qE "(NavigationStack|NavigationSplitView|TabView)"; then
 
   REASON="📚 SWIFT CODE DETECTED - Documentation required.\n\n"
-  REASON+="Consult ONE of these sources:\n\n"
+  REASON+="Consult ONE of these sources FIRST:\n\n"
   REASON+="LOCAL SKILLS:\n"
   REASON+="  • skills/swiftui-components/SKILL.md (SwiftUI views)\n"
   REASON+="  • skills/swift-concurrency/SKILL.md (async/await, actors)\n"
@@ -42,8 +45,6 @@ if echo "$CONTENT" | grep -qE "(import SwiftUI|import UIKit|import Foundation)" 
   REASON+="  • skills/swiftui-navigation/SKILL.md (NavigationStack)\n"
   REASON+="  • skills/swiftui-testing/SKILL.md (XCTest, UI tests)\n"
   REASON+="  • skills/swift-performance/SKILL.md (optimization)\n"
-  REASON+="  • skills/swift-i18n/SKILL.md (localization)\n"
-  REASON+="  • skills/apple-platforms/SKILL.md (iOS, macOS, visionOS)\n"
   REASON+="  • skills/solid-swift/SKILL.md (SOLID principles)\n\n"
   REASON+="ONLINE DOCUMENTATION:\n"
   REASON+="  • mcp__apple-docs__search_apple_docs (Apple docs)\n"
@@ -61,5 +62,4 @@ EOF
   exit 2
 fi
 
-# Not Swift/SwiftUI code - allow
 exit 0
