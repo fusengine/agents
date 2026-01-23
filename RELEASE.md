@@ -1,5 +1,32 @@
 # Release Notes
 
+## [1.10.0] - 23-01-2026
+
+### Added
+
+- **Hooks Enforcement System** - Automatic skill and SOLID compliance enforcement
+  - `scripts/hooks-loader.sh`: Dynamic hook detector for all plugins
+  - `scripts/install-hooks.sh`: One-click installation to `~/.claude/settings.json`
+  - `docs/hooks.md`: Comprehensive hooks documentation
+
+- **Plugin Hooks** (7 plugins, 18 scripts)
+  - **ai-pilot**: Project detection, APEX injection, SOLID compliance
+  - **react-expert**: Skill enforcement, React SOLID validation
+  - **nextjs-expert**: Skill enforcement, Next.js SOLID validation (150 lines for pages)
+  - **laravel-expert**: Skill enforcement, Laravel SOLID validation (Contracts/)
+  - **swift-apple-expert**: Skill enforcement, Swift SOLID validation (Protocols/, @MainActor)
+  - **tailwindcss**: Skill enforcement, v4 best practices (no deprecated @tailwind)
+  - **design-expert**: Skill enforcement, accessibility validation
+
+- **Hook Types**
+  - `UserPromptSubmit`: Auto-detect project type, inject APEX methodology
+  - `PreToolUse`: Block Write/Edit if skill not consulted first
+  - `PostToolUse`: Validate SOLID (file size, interface location, JSDoc)
+
+### Changed
+
+- Fix README.md link (`doc/` → `docs/`)
+
 ## [1.9.0] - 22-01-2026
 
 ### Added
