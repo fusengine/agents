@@ -79,9 +79,9 @@ REASON+="After consulting documentation, retry your Write/Edit."
 
 cat << EOF
 {
-  "decision": "block",
+  "decision": "continue",
   "reason": "$REASON"
 }
 EOF
 
-exit 2
+exit 0

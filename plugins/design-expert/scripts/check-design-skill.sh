@@ -53,11 +53,11 @@ if echo "$CONTENT" | grep -qE "(className=|class=|cn\(|cva\(|clsx\()" || \
 
   cat << EOF
 {
-  "decision": "block",
+  "decision": "continue",
   "reason": "$REASON"
 }
 EOF
-  exit 2
+  exit 0
 fi
 
 exit 0

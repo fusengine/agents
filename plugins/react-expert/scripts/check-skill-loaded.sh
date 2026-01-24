@@ -54,11 +54,11 @@ if echo "$CONTENT" | grep -qE "(from ['\"]react['\"]|useState|useEffect|useRef|u
 
   cat << EOF
 {
-  "decision": "block",
+  "decision": "continue",
   "reason": "$REASON"
 }
 EOF
-  exit 2
+  exit 0
 fi
 
 # Not React code - allow

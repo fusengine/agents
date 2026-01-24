@@ -36,11 +36,11 @@ if [[ "$FILE_PATH" =~ tailwind\.config\.(js|ts|mjs)$ ]]; then
 
   cat << EOF
 {
-  "decision": "block",
+  "decision": "continue",
   "reason": "$REASON"
 }
 EOF
-  exit 2
+  exit 0
 fi
 
 # Check CSS files
@@ -68,11 +68,11 @@ if [[ "$FILE_PATH" =~ \.css$ ]]; then
 
     cat << EOF
 {
-  "decision": "block",
+  "decision": "continue",
   "reason": "$REASON"
 }
 EOF
-    exit 2
+    exit 0
   fi
 fi
 

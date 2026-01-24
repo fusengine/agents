@@ -54,11 +54,11 @@ if echo "$CONTENT" | grep -qE "(Illuminate\\\\|use App\\\\|extends Controller|ex
 
   cat << EOF
 {
-  "decision": "block",
+  "decision": "continue",
   "reason": "$REASON"
 }
 EOF
-  exit 2
+  exit 0
 fi
 
 exit 0
