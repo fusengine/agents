@@ -97,9 +97,9 @@ EOF
 
 If $ARGUMENTS provided, use as hint for the message.
 
-### Step 6: Update RELEASE.md (MANDATORY)
+### Step 6: Update CHANGELOG.md (MANDATORY)
 
-After commit, update `RELEASE.md` with semantic versioning:
+After commit, update `CHANGELOG.md` with semantic versioning:
 
 **Version Increment Rules:**
 - `fix` → PATCH: 1.4.0 → 1.4.1

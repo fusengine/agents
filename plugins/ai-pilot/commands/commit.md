@@ -69,7 +69,7 @@ Confirm? [Y/n]
 - **NO body** unless exceptional
 - Format: `<type>(<scope>): <description>`
 
-## 6. Post-Commit: Update RELEASE.md (MANDATORY)
+## 6. Post-Commit: Update CHANGELOG.md (MANDATORY)
 
 **Semantic Versioning Rules:**
 - `fix/chore/docs/style/refactor/test/ci` → PATCH: 1.5.4 → 1.5.5
