@@ -1,5 +1,13 @@
 # Release Notes
 
+## [1.13.1] - 24-01-2026
+
+### Fixed
+
+- **APEX tracking creation**: Create tracking BEFORE dev keywords check
+  - Fixes: tracking not created when prompt lacks keywords (e.g., "refaire design")
+  - Now `/apex` always creates tracking regardless of prompt content
+
 ## [1.13.0] - 24-01-2026
 
 ### Added
