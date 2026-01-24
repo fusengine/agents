@@ -1,5 +1,23 @@
 # Release Notes
 
+## [1.12.3] - 24-01-2026
+
+### Changed
+
+- **Skills alignment with official Claude Code spec** (96 files, 10 plugins)
+  - Add `user-invocable` field to 70+ skills across all plugins
+  - Add `${CLAUDE_SESSION_ID}` tracking to exploration, research, pr-summary
+  - Add scoped hooks to apex for auto-sniper validation after each Edit/Write
+  - Fix `tools` → `allowed-tools` in commit-detection (invalid field)
+  - Add `context: fork` and `agent` fields to research/exploration skills
+  - Split large skills into `references/` (code-quality, solid-php, solid-nextjs, guardrails, react-forms, solid-swift)
+
+### Added
+
+- **pr-summary skill** with dynamic context injection (`!`command``)
+  - Uses `gh pr diff`, `gh pr view --comments` for live PR data
+  - Runs in forked context with explore-codebase agent
+
 ## [1.12.2] - 23-01-2026
 
 ### Changed
