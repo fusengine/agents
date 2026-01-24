@@ -1,5 +1,14 @@
 # Release Notes
 
+## [1.13.0] - 24-01-2026
+
+### Added
+
+- **APEX tracking on /apex command**: Create `.claude/apex/task.json` only when `/apex` or `/fuse-ai-pilot:apex` is explicitly called
+  - Hook detects `/apex` pattern in prompt
+  - Creates tracking in PWD immediately
+  - Dev keywords still trigger APEX instructions but not tracking creation
+
 ## [1.12.8] - 24-01-2026
 
 ### Changed
