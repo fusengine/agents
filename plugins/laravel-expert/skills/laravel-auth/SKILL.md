@@ -1,6 +1,7 @@
 ---
 name: laravel-auth
 description: Implement authentication with Sanctum, Passport, Socialite, Fortify, policies, and gates. Use when setting up user authentication, API tokens, social login, or authorization.
+user-invocable: false
 ---
 
 # Laravel Authentication & Authorization

@@ -1,6 +1,7 @@
 ---
 name: solid-php
 description: SOLID principles for Laravel 12 and PHP 8.5. Files < 100 lines, interfaces separated, PHPDoc mandatory.
+user-invocable: false
 ---
 
 # SOLID PHP - Laravel 12 + PHP 8.5
@@ -105,270 +106,27 @@ UserService.php (main)
 
 ---
 
-## SOLID Principles
+## References
 
-### S - Single Responsibility
+### SOLID Principles
+See: [`references/solid-principles.md`](./references/solid-principles.md)
 
-**1 class = 1 responsibility**
+Detailed implementation of S, O, L, I, D principles with PHP examples.
 
-```php
-// ❌ BAD - Fat Controller
-class UserController extends Controller
-{
-    public function store(Request $request)
-    {
-        $validated = $request->validate([...]);
-        $user = User::create($validated);
-        Mail::send(new WelcomeEmail($user));
-        return response()->json($user);
-    }
-}
+### PHP 8.5 Features
+See: [`references/php85-features.md`](./references/php85-features.md)
 
-// ✅ GOOD - Thin Controller
-class UserController extends Controller
-{
-    public function __construct(
-        private UserService $userService,
-    ) {}
+Pipe operator, clone with, and no-discard attribute patterns.
 
-    public function store(StoreUserRequest $request): JsonResponse
-    {
-        $user = $this->userService->create(
-            CreateUserDTO::fromRequest($request)
-        );
+### Laravel 12 Structure
+See: [`references/laravel12-structure.md`](./references/laravel12-structure.md)
 
-        return response()->json($user, 201);
-    }
-}
-```
+Recommended directory structure and guidelines by layer.
 
-### O - Open/Closed
+### Code Templates
+See: [`references/code-templates.md`](./references/code-templates.md)
 
-**Open for extension, closed for modification**
-
-```php
-// Extensible interface
-interface PaymentGatewayInterface
-{
-    public function charge(Money $amount): PaymentResult;
-}
-
-// New implementations without modifying existing code
-class StripeGateway implements PaymentGatewayInterface { }
-class PayPalGateway implements PaymentGatewayInterface { }
-```
-
-### L - Liskov Substitution
-
-**Subtypes must be substitutable**
-
-```php
-interface NotificationInterface
-{
-    public function send(User $user, string $message): bool;
-}
-
-// All implementations respect the contract
-class EmailNotification implements NotificationInterface { }
-class SmsNotification implements NotificationInterface { }
-```
-
-### I - Interface Segregation
-
-**Specific interfaces, not generic ones**
-
-```php
-// ❌ BAD - Interface too broad
-interface UserInterface
-{
-    public function create();
-    public function sendEmail();
-    public function generateReport();
-}
-
-// ✅ GOOD - Separated interfaces
-interface CrudInterface { }
-interface NotifiableInterface { }
-interface ReportableInterface { }
-```
-
-### D - Dependency Inversion
-
-**Depend on abstractions**
-
-```php
-// app/Providers/AppServiceProvider.php
-public function register(): void
-{
-    $this->app->bind(
-        UserRepositoryInterface::class,
-        EloquentUserRepository::class
-    );
-}
-
-// Service depends on interface
-class UserService
-{
-    public function __construct(
-        private UserRepositoryInterface $repository,
-    ) {}
-}
-```
-
----
-
-## PHP 8.5 Features
-
-### Pipe Operator
-```php
-// ❌ Old style
-$result = array_sum(array_filter(array_map(fn($x) => $x * 2, $data)));
-
-// ✅ PHP 8.5 - Pipe operator
-$result = $data
-    |> array_map(fn($x) => $x * 2, ...)
-    |> array_filter(...)
-    |> array_sum(...);
-```
-
-### Clone With (readonly classes)
-```php
-readonly class UserDTO
-{
-    public function __construct(
-        public string $name,
-        public string $email,
-    ) {}
-}
-
-// PHP 8.5 - clone with
-$updated = clone($dto, email: 'new@email.com');
-```
-
-### #[\NoDiscard] Attribute
-```php
-#[\NoDiscard("Result must be used")]
-public function calculate(): Result
-{
-    return new Result();
-}
-
-// Warning if result ignored
-$this->calculate(); // ⚠️ Warning
-$result = $this->calculate(); // ✅ OK
-```
-
----
-
-## Laravel 12 Structure
-
-```
-app/
-├── Http/
-│   ├── Controllers/      # < 50 lines each
-│   ├── Requests/         # Form validation
-│   └── Resources/        # API transformations
-├── Models/               # < 80 lines (excluding relations)
-├── Services/             # < 100 lines
-├── Contracts/            # Interfaces ONLY
-├── Repositories/         # Data access
-├── Actions/              # Single-purpose (< 50 lines)
-├── DTOs/                 # Data transfer objects
-├── Enums/                # PHP 8.1+ enums
-├── Events/               # Domain events
-├── Listeners/            # Event handlers
-└── Policies/             # Authorization
-```
-
----
-
-## Templates
-
-### Service Template (< 100 lines)
-```php
-<?php
-
-declare(strict_types=1);
-
-namespace App\Services;
-
-use App\Contracts\UserRepositoryInterface;
-use App\DTOs\CreateUserDTO;
-use App\Models\User;
-
-/**
- * User service for business logic.
- */
-final readonly class UserService
-{
-    public function __construct(
-        private UserRepositoryInterface $repository,
-    ) {}
-
-    /**
-     * Create a new user.
-     */
-    public function create(CreateUserDTO $dto): User
-    {
-        return $this->repository->create($dto);
-    }
-}
-```
-
-### DTO Template
-```php
-<?php
-
-declare(strict_types=1);
-
-namespace App\DTOs;
-
-use App\Http\Requests\StoreUserRequest;
-
-/**
- * User creation data transfer object.
- */
-readonly class CreateUserDTO
-{
-    public function __construct(
-        public string $name,
-        public string $email,
-        public ?string $phone = null,
-    ) {}
-
-    public static function fromRequest(StoreUserRequest $request): self
-    {
-        return new self(
-            name: $request->validated('name'),
-            email: $request->validated('email'),
-            phone: $request->validated('phone'),
-        );
-    }
-}
-```
-
-### Interface Template
-```php
-<?php
-
-declare(strict_types=1);
-
-namespace App\Contracts;
-
-use App\DTOs\CreateUserDTO;
-use App\Models\User;
-use Illuminate\Support\Collection;
-
-/**
- * User repository contract.
- */
-interface UserRepositoryInterface
-{
-    public function create(CreateUserDTO $dto): User;
-    public function findById(int $id): ?User;
-    public function findAll(): Collection;
-}
-```
+Service, DTO, Interface, and Repository templates.
 
 ---
 

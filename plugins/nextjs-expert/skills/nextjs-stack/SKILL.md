@@ -1,6 +1,7 @@
 ---
 name: nextjs-stack
 description: Next.js 16+ avec App Router, Prisma 7, Better Auth. Documentation locale complète.
+user-invocable: false
 ---
 
 # Next.js Stack Skill

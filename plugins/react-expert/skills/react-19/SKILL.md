@@ -1,6 +1,7 @@
 ---
 name: react-19
 description: React 19 core features - use() hook, useOptimistic, useActionState, Actions, Transitions, Server Components. Use when implementing React 19 patterns.
+user-invocable: false
 ---
 
 # React 19 Core Features

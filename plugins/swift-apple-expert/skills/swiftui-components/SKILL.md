@@ -1,6 +1,7 @@
 ---
 name: swiftui-components
 description: Build production SwiftUI views, custom components, layouts, and view modifiers. Use when creating iOS/macOS UI components, implementing responsive layouts, building custom modifiers, or designing reusable view hierarchies with @ViewBuilder.
+user-invocable: false
 ---
 
 # SwiftUI Components & Views

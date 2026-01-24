@@ -1,6 +1,7 @@
 ---
 name: react-shadcn
 description: shadcn/ui components - Button, Card, Dialog, Form, Input, Table. Use when building UI with shadcn/ui in React apps.
+user-invocable: false
 ---
 
 # shadcn/ui

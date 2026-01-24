@@ -1,6 +1,7 @@
 ---
 name: tailwindcss-utilities
 description: Complete reference for Tailwind CSS utility classes
+user-invocable: false
 ---
 
 # Tailwind CSS Utilities Reference

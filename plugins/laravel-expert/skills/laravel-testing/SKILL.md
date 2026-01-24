@@ -1,6 +1,7 @@
 ---
 name: laravel-testing
 description: Write tests with Pest/PHPUnit, feature tests, unit tests, mocking, and factories. Use when testing controllers, services, models, or implementing TDD.
+user-invocable: false
 ---
 
 # Laravel Testing

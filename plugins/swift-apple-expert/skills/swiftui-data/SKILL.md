@@ -1,6 +1,7 @@
 ---
 name: swiftui-data
 description: Implement data persistence with SwiftData, Core Data, CloudKit sync, and local storage. Use when storing app data, creating database models, syncing with iCloud, or managing user preferences with AppStorage.
+user-invocable: false
 ---
 
 # SwiftUI Data Persistence

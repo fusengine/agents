@@ -1,6 +1,7 @@
 ---
 name: laravel-billing
 description: Integrate Stripe and Paddle payments with Laravel Cashier. Use when implementing subscriptions, invoices, payment methods, or billing portals.
+user-invocable: false
 ---
 
 # Laravel Billing (Cashier)

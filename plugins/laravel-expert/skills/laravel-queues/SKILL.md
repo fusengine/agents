@@ -1,6 +1,7 @@
 ---
 name: laravel-queues
 description: Implement background jobs with queues, workers, batches, chains, events, broadcasting, and failure handling. Use when processing async tasks, sending emails, or handling long-running operations.
+user-invocable: false
 ---
 
 # Laravel Queues & Events

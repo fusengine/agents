@@ -1,6 +1,7 @@
 ---
 name: laravel-permission
 description: Spatie Laravel Permission - roles, permissions, middleware, Blade directives. Use when implementing RBAC, role-based access control, or user authorization.
+user-invocable: false
 ---
 
 # Laravel Permission (Spatie)

@@ -1,7 +1,15 @@
 ---
 name: research
 description: Technical research methodology using Context7, Exa, and Sequential Thinking for documentation, best practices, and complex investigations.
+argument-hint: "[topic] [--deep]"
+context: fork
+agent: fuse-ai-pilot:research-expert
+user-invocable: false
 ---
+
+**Session:** ${CLAUDE_SESSION_ID}
+
+**Research Topic:** $ARGUMENTS
 
 # Research Skill
 

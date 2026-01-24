@@ -195,300 +195,36 @@ final class UserViewModel {
 
 ## SOLID Principles for Swift
 
-### S - Single Responsibility
+Each principle has detailed code examples:
 
-1 type = 1 purpose
+**See [references/solid-patterns.md](references/solid-patterns.md)** for comprehensive Swift implementations:
+- **S** - Single Responsibility: View, ViewModel, Service patterns
+- **O** - Open/Closed: Protocol-based extensibility
+- **L** - Liskov Substitution: Protocol implementation guarantees
+- **I** - Interface Segregation: Small, focused protocols
+- **D** - Dependency Inversion: Service injection patterns
 
-```swift
-// ❌ BAD - View does everything
-struct UserView: View {
-    @State private var user: User?
-
-    var body: some View {
-        // fetching, validation, formatting, rendering...
-    }
-}
-
-// ✅ GOOD - Separation
-struct UserView: View {
-    @State private var viewModel: UserViewModel
-
-    var body: some View {
-        UserContent(user: viewModel.user)
-    }
-}
-```
-
-### O - Open/Closed
-
-Protocols for extensibility
-
-```swift
-// Protocols/AuthProviderProtocol.swift
-protocol AuthProviderProtocol: Sendable {
-    func signIn(credentials: Credentials) async throws -> Session
-    func signOut() async
-}
-
-// Services/AppleAuthProvider.swift
-final class AppleAuthProvider: AuthProviderProtocol { }
-
-// Services/GoogleAuthProvider.swift
-final class GoogleAuthProvider: AuthProviderProtocol { }
-```
-
-### L - Liskov Substitution
-
-All implementations respect contracts
-
-```swift
-// Any provider works
-let auth: AuthProviderProtocol = AppleAuthProvider()
-// or
-let auth: AuthProviderProtocol = GoogleAuthProvider()
-
-// Both work identically
-try await auth.signIn(credentials: creds)
-```
-
-### I - Interface Segregation
-
-Small, focused protocols
-
-```swift
-// ❌ BAD - Too broad
-protocol UserProtocol {
-    func fetch() async
-    func update() async
-    func delete() async
-    func sendNotification() async
-}
-
-// ✅ GOOD - Separated
-protocol Fetchable { func fetch() async }
-protocol Updatable { func update() async }
-protocol Deletable { func delete() async }
-```
-
-### D - Dependency Inversion
-
-Depend on protocols, inject implementations
-
-```swift
-// ViewModel depends on protocol
-@Observable
-final class UserViewModel {
-    private let service: UserServiceProtocol
-
-    init(service: UserServiceProtocol) {
-        self.service = service
-    }
-}
-
-// Injection at app level
-@main
-struct MyApp: App {
-    var body: some Scene {
-        WindowGroup {
-            ContentView()
-                .environment(UserViewModel(service: UserService()))
-        }
-    }
-}
-```
+Also includes concurrency patterns: actors, @MainActor, Sendable types, structured concurrency.
 
 ---
 
 ## Swift 6 Concurrency
 
-### Actor for Shared State
-
-```swift
-actor UserCache {
-    private var users: [String: User] = [:]
-
-    func get(_ id: String) -> User? {
-        users[id]
-    }
-
-    func set(_ user: User) {
-        users[user.id] = user
-    }
-}
-```
-
-### @MainActor for UI
-
-```swift
-@MainActor
-@Observable
-final class UserViewModel {
-    var user: User?
-    var isLoading = false
-
-    func load() async {
-        isLoading = true
-        defer { isLoading = false }
-
-        user = try? await service.fetchUser()
-    }
-}
-```
-
-### Sendable Types
-
-```swift
-// Models must be Sendable for concurrency
-struct User: Codable, Sendable {
-    let id: String
-    let name: String
-    let email: String
-}
-```
-
-### Structured Concurrency
-
-```swift
-// ✅ GOOD - Task groups
-func loadDashboard() async throws -> Dashboard {
-    async let user = fetchUser()
-    async let stats = fetchStats()
-    async let notifications = fetchNotifications()
-
-    return Dashboard(
-        user: try await user,
-        stats: try await stats,
-        notifications: try await notifications
-    )
-}
-```
+Complete patterns in [references/solid-patterns.md](references/solid-patterns.md):
+- **Actor** for shared state protection
+- **@MainActor** for UI updates
+- **Sendable** types for concurrent safety
+- **Structured Concurrency** with async/let for parallel operations
 
 ---
 
 ## SwiftUI Templates
 
-### View (< 80 lines)
-
-```swift
-import SwiftUI
-
-/// User profile view displaying user information.
-struct UserProfileView: View {
-    let user: User?
-
-    var body: some View {
-        Group {
-            if let user {
-                UserContent(user: user)
-            } else {
-                ProgressView()
-            }
-        }
-        .navigationTitle("profile.title")
-    }
-}
-
-// MARK: - Subviews
-
-private struct UserContent: View {
-    let user: User
-
-    var body: some View {
-        VStack {
-            Text(user.name)
-            Text(user.email)
-        }
-    }
-}
-
-// MARK: - Preview
-
-#Preview {
-    UserProfileView(user: .preview)
-}
-```
-
-### ViewModel (< 100 lines)
-
-```swift
-import Foundation
-
-/// ViewModel for user profile screen.
-@MainActor
-@Observable
-final class UserProfileViewModel {
-    // MARK: - State
-
-    var user: User?
-    var isLoading = false
-    var error: Error?
-
-    // MARK: - Dependencies
-
-    private let service: UserServiceProtocol
-
-    // MARK: - Init
-
-    init(service: UserServiceProtocol) {
-        self.service = service
-    }
-
-    // MARK: - Actions
-
-    /// Loads user profile from API.
-    func load() async {
-        isLoading = true
-        defer { isLoading = false }
-
-        do {
-            user = try await service.fetchCurrentUser()
-        } catch {
-            self.error = error
-        }
-    }
-}
-```
-
-### Protocol
-
-```swift
-import Foundation
-
-/// Protocol for user-related operations.
-protocol UserServiceProtocol: Sendable {
-    /// Fetches the current authenticated user.
-    func fetchCurrentUser() async throws -> User
-
-    /// Updates user profile.
-    func updateUser(_ user: User) async throws -> User
-}
-```
-
-### Service
-
-```swift
-import Foundation
-
-/// Implementation of UserServiceProtocol using URLSession.
-final class UserService: UserServiceProtocol {
-    private let session: URLSession
-
-    init(session: URLSession = .shared) {
-        self.session = session
-    }
-
-    func fetchCurrentUser() async throws -> User {
-        let url = URL(string: "https://api.example.com/me")!
-        let (data, _) = try await session.data(from: url)
-        return try JSONDecoder().decode(User.self, from: data)
-    }
-
-    func updateUser(_ user: User) async throws -> User {
-        // Implementation...
-        return user
-    }
-}
-```
+Complete working templates available in [references/solid-patterns.md](references/solid-patterns.md):
+- **View**: < 80 lines with subviews and #Preview
+- **ViewModel**: < 100 lines with @MainActor and @Observable
+- **Protocol**: UserServiceProtocol with documentation
+- **Service**: URLSession-based implementation
 
 ---
 
@@ -547,6 +283,19 @@ SpatialLayout {
 5. **Handle errors** - Never ignore, always handle gracefully
 6. **Consider accessibility** - VoiceOver, Dynamic Type
 7. **Document code** - /// for public APIs
+
+---
+
+## Anti-Patterns & Violations
+
+**Common mistakes and their fixes in [references/anti-patterns.md](references/anti-patterns.md)**:
+- Single Responsibility violations (views doing too much)
+- Open/Closed violations (hardcoded auth logic)
+- Interface Segregation (bloated protocols)
+- Dependency Inversion (hardcoded service dependencies)
+- Architecture violations (mixed protocols/implementations)
+- Concurrency violations (@MainActor, Sendable issues)
+- File size violations (> 150 lines)
 
 ---
 

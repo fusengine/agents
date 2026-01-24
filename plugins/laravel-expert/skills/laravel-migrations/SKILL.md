@@ -1,6 +1,7 @@
 ---
 name: laravel-migrations
 description: Create database migrations with schema builder, indexes, foreign keys, and seeders. Use when designing database schema, creating tables, or modifying columns.
+user-invocable: false
 ---
 
 # Laravel Migrations

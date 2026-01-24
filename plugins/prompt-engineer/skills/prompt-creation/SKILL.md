@@ -1,6 +1,7 @@
 ---
 name: prompt-creation
 description: Techniques and templates for creating optimal prompts following Anthropic conventions
+allowed-tools: Read, Write
 ---
 
 # Prompt Creation

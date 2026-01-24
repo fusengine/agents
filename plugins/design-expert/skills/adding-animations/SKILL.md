@@ -2,6 +2,7 @@
 name: adding-animations
 description: Add micro-interactions and animations using Framer Motion. Use when user asks about animations, transitions, hover effects, or motion design. MANDATORY for every component.
 allowed-tools: Read, Write, Edit, Glob, Grep, Task
+user-invocable: true
 ---
 
 # Adding Animations (MANDATORY)

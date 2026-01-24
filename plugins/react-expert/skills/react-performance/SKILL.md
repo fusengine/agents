@@ -1,6 +1,7 @@
 ---
 name: react-performance
 description: React performance optimization - memo, useMemo, useCallback, lazy loading, virtualization. Use when optimizing React app performance.
+user-invocable: false
 ---
 
 # React Performance Optimization

@@ -1,6 +1,8 @@
 ---
 name: solid-detection
 description: Multi-language SOLID detection rules. Project type detection, interface locations, file size limits per language.
+argument-hint: "[file-or-directory] [--language]"
+user-invocable: false
 ---
 
 # SOLID Detection Skill

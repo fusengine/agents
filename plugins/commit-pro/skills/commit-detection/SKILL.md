@@ -1,7 +1,7 @@
 ---
 name: commit-detection
 description: Detects optimal commit type from git changes. Use when analyzing commits, determining commit type, or before committing.
-tools: Bash, Read, Grep
+allowed-tools: Bash, Read, Grep
 ---
 
 # Commit Type Detection Skill

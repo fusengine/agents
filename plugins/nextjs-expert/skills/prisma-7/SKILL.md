@@ -1,6 +1,7 @@
 ---
 name: prisma-7
 description: Expert Prisma 7 ORM with Rust-free client, 90% smaller bundles, 3x faster queries, TypedSQL, Omit API, and ESM-first architecture. Use when working with databases, Prisma schemas, queries, migrations, relations, or database optimization.
+user-invocable: false
 ---
 
 # Prisma 7 Expert

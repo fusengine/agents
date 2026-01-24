@@ -1,6 +1,7 @@
 ---
 name: swift-architecture
 description: Design Swift app architecture with MVVM, Clean Architecture, dependency injection, and repository patterns. Use when structuring iOS/macOS projects, creating ViewModels, implementing DI, or organizing code layers.
+user-invocable: false
 ---
 
 # Swift Architecture Patterns

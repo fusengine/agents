@@ -1,6 +1,7 @@
 ---
 name: laravel-livewire
 description: Build reactive components with Livewire 3, wire:model, actions, lifecycle hooks, Volt, and Folio. Use when creating interactive UI without JavaScript, forms, or real-time updates.
+user-invocable: false
 ---
 
 # Laravel Livewire 3

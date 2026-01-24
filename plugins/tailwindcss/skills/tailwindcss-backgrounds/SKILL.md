@@ -1,6 +1,7 @@
 ---
 name: tailwindcss-backgrounds
 description: "Background utilities Tailwind CSS v4.1. Colors (bg-{color}, palette OKLCH P3), Gradients (bg-linear-*, bg-radial-*, bg-conic-* NEW), Images (bg-cover, bg-contain, bg-repeat), Blend modes."
+user-invocable: false
 ---
 
 # Tailwind CSS Backgrounds Skill

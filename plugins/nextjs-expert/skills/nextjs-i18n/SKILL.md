@@ -1,6 +1,7 @@
 ---
 name: nextjs-i18n
 description: Next.js 16 i18n modular SOLID - proxy.ts, modules/cores/i18n/, [lang] segment, await params. Use when implementing translations in Next.js App Router.
+user-invocable: false
 ---
 
 # Next.js 16 Internationalization (SOLID)

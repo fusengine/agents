@@ -1,6 +1,7 @@
 ---
 name: nextjs-tanstack-form
 description: TanStack Form for Next.js App Router - Server Actions, server validation, useActionState, Zod integration. Use when building forms in Next.js.
+user-invocable: false
 ---
 
 # TanStack Form for Next.js

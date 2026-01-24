@@ -1,6 +1,8 @@
 ---
 name: seo
 description: SEO/SEA/GEO 2026 complete methodology for organic, paid, and AI search optimization.
+argument-hint: "[url-or-content]"
+user-invocable: false
 ---
 
 # SEO/SEA/GEO Skill (2026)

@@ -1,6 +1,7 @@
 ---
 name: swiftui-navigation
 description: Implement SwiftUI navigation with NavigationStack, NavigationSplitView, deep linking, and programmatic routing. Use when building navigation flows, handling deep links, implementing tab bars, or creating multi-column layouts.
+user-invocable: false
 ---
 
 # SwiftUI Navigation

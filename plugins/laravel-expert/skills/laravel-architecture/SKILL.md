@@ -1,6 +1,7 @@
 ---
 name: laravel-architecture
 description: Design Laravel app architecture with services, repositories, actions, and clean code patterns. Use when structuring projects, creating services, implementing DI, or organizing code layers.
+user-invocable: false
 ---
 
 # Laravel Architecture Patterns

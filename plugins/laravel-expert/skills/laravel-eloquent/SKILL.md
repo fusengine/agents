@@ -1,6 +1,7 @@
 ---
 name: laravel-eloquent
 description: Master Eloquent ORM with relationships, scopes, casts, observers, and query optimization. Use when creating models, defining relationships, writing queries, or optimizing database access.
+user-invocable: false
 ---
 
 # Laravel Eloquent ORM

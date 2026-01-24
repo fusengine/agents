@@ -1,6 +1,7 @@
 ---
 name: react-testing
 description: Testing Library for React - render, screen, userEvent, waitFor. Use when writing tests for React components with Vitest or Jest.
+user-invocable: false
 ---
 
 # React Testing Library

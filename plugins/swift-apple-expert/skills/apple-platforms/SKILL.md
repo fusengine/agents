@@ -1,6 +1,7 @@
 ---
 name: apple-platforms
 description: Build apps for macOS, iPadOS, watchOS, and visionOS with platform-specific features. Use when creating menu bar apps, iPad split views, Apple Watch complications, Vision Pro immersive experiences, or multi-platform adaptations.
+user-invocable: false
 ---
 
 # Apple Platform Development

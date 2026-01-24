@@ -1,6 +1,7 @@
 ---
 name: nextjs-zustand
 description: Zustand for Next.js App Router - Client Components only, hydration handling, persist middleware. Use when implementing global state in Next.js.
+user-invocable: false
 ---
 
 # Zustand for Next.js

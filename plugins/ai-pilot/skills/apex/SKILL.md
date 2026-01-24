@@ -7,7 +7,23 @@ description: |
   Auto-detects project type (Laravel, Next.js, React, Swift) and loads framework-specific references.
   Enforces: files <100 lines, interfaces separated, SOLID principles, expert self-review, sniper validation.
   Modes: --auto (default), --manual, --skip-elicit
+argument-hint: "[task-description]"
+user-invocable: false
+hooks:
+  PostToolUse:
+    - matcher: Edit
+      hooks:
+        - type: command
+          command: |
+            echo '{"decision":"block","reason":"APEX RULE: File modified via Edit. You MUST immediately launch sniper agent to validate this change before proceeding."}'
+    - matcher: Write
+      hooks:
+        - type: command
+          command: |
+            echo '{"decision":"block","reason":"APEX RULE: File created via Write. You MUST immediately launch sniper agent to validate this change before proceeding."}'
 ---
+
+**Current Task:** $ARGUMENTS
 
 # APEX Methodology Skill
 

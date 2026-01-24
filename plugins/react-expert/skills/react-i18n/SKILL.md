@@ -1,6 +1,7 @@
 ---
 name: react-i18n
 description: react-i18next modular SOLID - modules/cores/i18n/, useTranslation hook, namespaces, pluralization. Use when implementing translations in React apps (not Next.js).
+user-invocable: false
 ---
 
 # React Internationalization (SOLID)

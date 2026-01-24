@@ -1,6 +1,7 @@
 ---
 name: swift-build
 description: Build, archive, code signing, and App Store distribution for iOS/macOS apps. Use when configuring build settings, signing, TestFlight, notarization, or CI/CD pipelines.
+user-invocable: false
 ---
 
 # Swift Build & Distribution

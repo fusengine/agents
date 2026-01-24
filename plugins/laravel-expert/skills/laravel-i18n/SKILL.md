@@ -1,6 +1,7 @@
 ---
 name: laravel-i18n
 description: Laravel localization - __(), trans_choice(), lang files, JSON translations, pluralization. Use when implementing translations in Laravel apps.
+user-invocable: false
 ---
 
 # Laravel Internationalization

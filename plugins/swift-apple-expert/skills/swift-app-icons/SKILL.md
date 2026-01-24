@@ -1,6 +1,7 @@
 ---
 name: swift-app-icons
 description: App icons, SF Symbols, and launch screens for iOS/macOS/watchOS/visionOS. Use when adding app icons, using SF Symbols, configuring launch screens, or setting up Asset Catalogs.
+user-invocable: false
 ---
 
 # Swift App Icons & Assets

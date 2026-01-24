@@ -1,6 +1,7 @@
 ---
 name: swift-performance
 description: Optimize SwiftUI and Swift app performance with Instruments profiling, lazy loading, memory management, and view optimization. Use when diagnosing slow UI, fixing memory leaks, optimizing scroll performance, or reducing app launch time.
+user-invocable: false
 ---
 
 # Swift Performance Optimization

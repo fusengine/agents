@@ -1,6 +1,7 @@
 ---
 name: swift-concurrency
 description: Implement Swift 6 concurrency with async/await, actors, Sendable, Task, MainActor. Use when handling asynchronous operations, managing shared state safely, fixing data race errors, or migrating to Swift 6 strict concurrency.
+user-invocable: false
 ---
 
 # Swift 6 Concurrency

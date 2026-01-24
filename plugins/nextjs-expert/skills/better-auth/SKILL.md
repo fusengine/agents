@@ -1,6 +1,7 @@
 ---
 name: better-auth
 description: Expert Better Auth implementation for TypeScript/JavaScript authentication. Covers sessions, OAuth providers, plugins, adapters, and security. Use when working with authentication, login, signup, sessions, OAuth, social login, or user management.
+user-invocable: false
 ---
 
 # Better Auth Expert

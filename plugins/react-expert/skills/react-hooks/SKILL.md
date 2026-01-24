@@ -1,6 +1,7 @@
 ---
 name: react-hooks
 description: React hooks patterns - useState, useEffect, useCallback, useMemo, useRef, custom hooks. Use when implementing React hooks or creating custom hooks.
+user-invocable: false
 ---
 
 # React Hooks Guide

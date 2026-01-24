@@ -1,6 +1,14 @@
 ---
 name: solid-nextjs
-description: SOLID principles for Next.js 16 with modular architecture. Files < 100 lines, interfaces separated, JSDoc mandatory.
+description: SOLID principles for Next.js 16 with modular architecture. Files < 150 lines, interfaces separated, JSDoc mandatory.
+user-invocable: false
+references:
+  - path: references/solid-principles.md
+    title: SOLID Principles
+  - path: references/architecture-patterns.md
+    title: Architecture Patterns
+  - path: references/code-templates.md
+    title: Code Templates
 ---
 
 # SOLID Next.js - Modular Architecture
@@ -19,18 +27,11 @@ Search with "2025" or "2026", NEVER with past years.
 3. **Check Vercel Blog** of current year for new features
 4. **Verify package versions** for Next.js 16 compatibility
 
-```text
-WORKFLOW:
-1. Check date → 2. Research docs + web (current year) → 3. Apply latest patterns → 4. Code
-```
-
 **Search queries (replace YYYY with current year):**
 - `Next.js [feature] YYYY best practices`
 - `React 19 [component] YYYY`
 - `TypeScript [pattern] YYYY`
 - `Prisma 7 [feature] YYYY`
-
-Never assume - always verify current APIs and patterns exist for the current year.
 
 ---
 
@@ -42,24 +43,12 @@ Never assume - always verify current APIs and patterns exist for the current yea
 3. Identify naming conventions, coding style, and patterns used
 4. Understand data flow and dependencies
 
-**Continue implementation by:**
-- Following existing patterns and conventions
-- Matching the coding style already in place
-- Respecting the established architecture
-- Integrating with existing services/components
-
 ## DRY - Reuse Before Creating (MANDATORY)
 
 **Before writing ANY new code:**
 1. Search existing codebase for similar functionality
 2. Check shared locations: `modules/cores/lib/`, `modules/cores/components/`
 3. If similar code exists → extend/reuse instead of duplicate
-
-**When creating new code:**
-- Extract repeated logic (3+ occurrences) into shared helpers
-- Place shared utilities in `modules/cores/lib/`
-- Place shared components in `modules/cores/components/`
-- Document reusable functions with JSDoc
 
 ---
 
@@ -75,31 +64,7 @@ Never assume - always verify current APIs and patterns exist for the current yea
 
 ### 2. Modular Architecture
 
-```text
-src/
-├── app/                        # Routes (orchestration ONLY)
-│   ├── (auth)/login/page.tsx   # Imports from modules/auth
-│   └── layout.tsx
-│
-└── modules/                    # ALL modules here
-    ├── cores/                  # Shared (global to app)
-    │   ├── components/         # Shared UI (Button, Modal)
-    │   ├── database/           # Prisma client
-    │   ├── lib/                # Utilities
-    │   ├── middleware/         # Next.js middlewares
-    │   └── stores/             # Global state
-    │
-    ├── auth/                   # Feature module
-    │   ├── api/
-    │   ├── components/
-    │   └── src/
-    │       ├── interfaces/
-    │       ├── services/
-    │       ├── hooks/
-    │       └── stores/
-    │
-    └── [feature]/              # Other feature modules
-```
+See `references/architecture-patterns.md` for complete structure with feature modules and cores directory.
 
 ### 3. JSDoc Mandatory
 
@@ -127,211 +92,15 @@ modules/auth/src/
 
 ---
 
-## Module Structure
-
-### Feature Module
-
-```text
-modules/[feature]/
-├── api/                 # API routes
-├── components/          # UI (< 100 lines each)
-└── src/
-    ├── interfaces/      # Types ONLY
-    ├── services/        # Business logic
-    ├── hooks/           # React hooks
-    └── stores/          # State
-```
-
-### Cores Module (Shared)
-
-```text
-modules/cores/
-├── components/          # Shared UI (Button, Modal)
-├── database/            # Prisma singleton
-│   └── prisma.ts
-├── lib/                 # Utilities
-├── middleware/          # Auth, rate limiting
-└── stores/              # Global state
-```
-
----
-
-## Import Patterns
-
-### Page imports Module
-
-```typescript
-// app/(auth)/login/page.tsx
-import { LoginForm } from '@/modules/auth/components/LoginForm'
-
-export default function LoginPage() {
-  return <LoginForm />
-}
-```
-
-### Module imports Cores
-
-```typescript
-// modules/auth/src/services/user.service.ts
-import { prisma } from '@/modules/cores/database/prisma'
-import { hashPassword } from '@/modules/cores/lib/crypto'
-```
-
-### Module imports own src
-
-```typescript
-// modules/auth/components/LoginForm.tsx
-import type { LoginFormProps } from '../src/interfaces/form.interface'
-import { useAuth } from '../src/hooks/useAuth'
-```
-
----
-
 ## SOLID Principles
 
-### S - Single Responsibility
-
-1 module = 1 feature domain
-
-```typescript
-// ❌ BAD - Mixed concerns in page
-export default function LoginPage() {
-  // validation, API calls, formatting, rendering...
-}
-
-// ✅ GOOD - Page orchestrates modules
-import { LoginForm } from '@/modules/auth/components/LoginForm'
-
-export default function LoginPage() {
-  return <LoginForm />
-}
-```
-
-### O - Open/Closed
-
-Modules extensible without modification
-
-```typescript
-// modules/auth/src/interfaces/provider.interface.ts
-export interface AuthProvider {
-  login(credentials: Credentials): Promise<Session>
-  logout(): Promise<void>
-}
-
-// New providers without modifying existing code
-// modules/auth/src/services/github.provider.ts
-// modules/auth/src/services/google.provider.ts
-```
-
-### L - Liskov Substitution
-
-All implementations respect contracts
-
-```typescript
-// Any AuthProvider can be swapped
-const provider: AuthProvider = new GitHubProvider()
-// or
-const provider: AuthProvider = new GoogleProvider()
-```
-
-### I - Interface Segregation
-
-Small, focused interfaces
-
-```typescript
-// ❌ BAD
-interface UserModule {
-  login(): void
-  logout(): void
-  updateProfile(): void
-  sendEmail(): void
-}
-
-// ✅ GOOD - Separated
-interface Authenticatable { login(): void; logout(): void }
-interface Editable { updateProfile(): void }
-```
-
-### D - Dependency Inversion
-
-Depend on interfaces, not implementations
-
-```typescript
-// modules/auth/src/services/auth.service.ts
-import type { AuthProvider } from '../interfaces/provider.interface'
-
-export function createAuthService(provider: AuthProvider) {
-  return {
-    async authenticate(credentials: Credentials) {
-      return provider.login(credentials)
-    }
-  }
-}
-```
+See `references/solid-principles.md` for detailed S-O-L-I-D principles with examples.
 
 ---
 
-## Templates
+## Code Templates
 
-### Server Component (< 80 lines)
-
-```typescript
-// app/(dashboard)/users/page.tsx
-import { UserList } from '@/modules/users/components/UserList'
-import { getUsers } from '@/modules/users/src/services/user.service'
-
-/**
- * Users list page - Server Component.
- */
-export default async function UsersPage() {
-  const users = await getUsers()
-  return <UserList users={users} />
-}
-```
-
-### Client Component (< 60 lines)
-
-```typescript
-// modules/auth/components/LoginForm.tsx
-'use client'
-
-import { useState } from 'react'
-import type { LoginFormProps } from '../src/interfaces/form.interface'
-
-/**
- * Login form - Client Component.
- */
-export function LoginForm({ onSuccess }: LoginFormProps) {
-  const [email, setEmail] = useState('')
-
-  return (
-    <form onSubmit={() => onSuccess()}>
-      <input value={email} onChange={(e) => setEmail(e.target.value)} />
-      <button>Login</button>
-    </form>
-  )
-}
-```
-
-### Service File
-
-```typescript
-// modules/auth/src/services/auth.service.ts
-import { prisma } from '@/modules/cores/database/prisma'
-import type { Credentials, Session } from '../interfaces/user.interface'
-
-/**
- * Authenticate user with credentials.
- */
-export async function authenticate(credentials: Credentials): Promise<Session | null> {
-  const user = await prisma.user.findUnique({
-    where: { email: credentials.email }
-  })
-
-  if (!user) return null
-  return { user, token: '...', expiresAt: new Date() }
-}
-```
+See `references/code-templates.md` for Server Components, Client Components, Services, Hooks, and Interfaces.
 
 ---
 

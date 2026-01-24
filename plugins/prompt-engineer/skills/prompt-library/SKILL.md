@@ -1,6 +1,7 @@
 ---
 name: prompt-library
 description: Library of 18+ ready-to-use prompt templates and executable agents
+allowed-tools: Read
 ---
 
 # Prompt Library

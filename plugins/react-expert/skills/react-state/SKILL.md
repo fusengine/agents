@@ -1,6 +1,7 @@
 ---
 name: react-state
 description: State management with Zustand, Jotai, Context API. Use when implementing global state, stores, or state management patterns in React.
+user-invocable: false
 ---
 
 # React State Management

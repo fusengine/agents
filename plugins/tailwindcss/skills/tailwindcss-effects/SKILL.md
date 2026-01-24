@@ -1,6 +1,7 @@
 ---
 name: tailwindcss-effects
 description: "Effects utilities Tailwind CSS v4.1. Shadows (shadow-*, shadow-color, inset-shadow-* NEW), Opacity (opacity-*), Filters (blur, brightness, contrast, grayscale, sepia), Backdrop filters (backdrop-blur-*, backdrop-brightness-*), Masks (mask-* NEW)."
+user-invocable: false
 ---
 
 # Tailwind CSS v4.1 Effects

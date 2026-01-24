@@ -2,6 +2,7 @@
 name: validating-accessibility
 description: Validate UI components for WCAG 2.2 Level AA compliance. Use when checking accessibility, color contrast, keyboard navigation, screen reader support, or ARIA attributes.
 allowed-tools: Read, Edit, Glob, Grep
+user-invocable: true
 ---
 
 # Validating Accessibility

@@ -1,6 +1,7 @@
 ---
 name: nextjs-shadcn
 description: shadcn/ui for Next.js App Router - Field components, TanStack Form integration, Server/Client Components. Use when building UI with shadcn in Next.js.
+user-invocable: false
 ---
 
 # shadcn/ui for Next.js

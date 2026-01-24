@@ -1,6 +1,7 @@
 ---
 name: swiftui-testing
 description: Test SwiftUI apps with XCTest, UI tests, snapshot testing, and async testing. Use when writing unit tests for ViewModels, creating UI automation tests, implementing snapshot tests, or testing async code.
+user-invocable: false
 ---
 
 # SwiftUI Testing

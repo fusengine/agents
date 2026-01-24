@@ -1,6 +1,7 @@
 ---
 name: swift-i18n
 description: Automatic internationalization for Swift/SwiftUI apps. Use when writing ANY user-facing text - always localize with String Catalogs, LocalizedStringResource, and proper pluralization patterns.
+user-invocable: false
 ---
 
 # Swift Internationalization (i18n)

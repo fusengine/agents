@@ -1,6 +1,7 @@
 ---
 name: nextjs-16
 description: Expert Next.js 16 development with Turbopack default, Cache Components, use cache directive, proxy.ts, React Compiler, and React 19.2. Use when working with Next.js projects, App Router, Server Components, caching, routing, data fetching, or deployment.
+user-invocable: false
 ---
 
 # Next.js 16 Expert

@@ -2,6 +2,7 @@
 name: designing-systems
 description: Create and manage design systems with tokens, color palettes, typography scales, and spacing systems. Use when user asks about design tokens, theming, color schemes, or consistent styling.
 allowed-tools: Read, Write, Edit, Glob, Grep, Task
+user-invocable: true
 ---
 
 # Designing Systems

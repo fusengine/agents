@@ -1,6 +1,7 @@
 ---
 name: prompt-testing
 description: A/B testing and performance metrics for prompts
+allowed-tools: Read, Write, Bash
 ---
 
 # Prompt Testing
