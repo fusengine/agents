@@ -13,13 +13,35 @@ PROMPT_LOWER=$(echo "$PROMPT" | tr '[:upper:]' '[:lower:]')
 APEX_COMMAND=false
 if echo "$PROMPT_LOWER" | grep -qE "(^|[[:space:]])/apex|/fuse-ai-pilot:apex"; then
   APEX_COMMAND=true
+
+  # Create tracking IMMEDIATELY when /apex is called
+  APEX_DIR="${PWD}/.claude/apex"
+  TASK_FILE="$APEX_DIR/task.json"
+  mkdir -p "$APEX_DIR/docs"
+
+  if [[ ! -f "$TASK_FILE" ]]; then
+    TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+    cat > "$TASK_FILE" << INITEOF
+{
+  "current_task": "1",
+  "created_at": "$TIMESTAMP",
+  "tasks": {
+    "1": {
+      "status": "in_progress",
+      "started_at": "$TIMESTAMP",
+      "doc_consulted": {}
+    }
+  }
+}
+INITEOF
+  fi
 fi
 
 # Keywords that trigger APEX methodology
 DEV_KEYWORDS="implement|create|build|fix|add|refactor|develop|feature|bug|update|modify|change|write|code"
 
-# Check if prompt contains development keywords
-if echo "$PROMPT_LOWER" | grep -qiE "($DEV_KEYWORDS)"; then
+# Check if prompt contains development keywords OR /apex command
+if echo "$PROMPT_LOWER" | grep -qiE "($DEV_KEYWORDS)" || [[ "$APEX_COMMAND" == "true" ]]; then
 
   # Detect project type from current directory
   PROJECT_TYPE="generic"
@@ -69,30 +91,6 @@ if echo "$PROMPT_LOWER" | grep -qiE "($DEV_KEYWORDS)"; then
     PROJECT_TYPE="elixir"
   elif [[ -f "Gemfile" ]]; then
     PROJECT_TYPE="ruby"
-  fi
-
-  # Create tracking ONLY if /apex command is explicitly called
-  if [[ "$APEX_COMMAND" == "true" ]]; then
-    APEX_DIR="${PWD}/.claude/apex"
-    TASK_FILE="$APEX_DIR/task.json"
-    mkdir -p "$APEX_DIR/docs"
-
-    if [[ ! -f "$TASK_FILE" ]]; then
-      TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
-      cat > "$TASK_FILE" << INITEOF
-{
-  "current_task": "1",
-  "created_at": "$TIMESTAMP",
-  "tasks": {
-    "1": {
-      "status": "in_progress",
-      "started_at": "$TIMESTAMP",
-      "doc_consulted": {}
-    }
-  }
-}
-INITEOF
-    fi
   fi
 
   # Map project type to expert agent
