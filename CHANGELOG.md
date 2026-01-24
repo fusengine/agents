@@ -1,5 +1,14 @@
 # Release Notes
 
+## [1.13.2] - 24-01-2026
+
+### Fixed
+
+- **Remove expert bypass mechanism**: `/tmp/.claude-expert-active` was never cleaned up
+  - Removed bypass check from `enforce-apex-phases.sh`
+  - Removed `touch /tmp/.claude-expert-active` from all 6 expert hooks
+  - APEX blocking now works correctly at all times
+
 ## [1.13.1] - 24-01-2026
 
 ### Fixed
