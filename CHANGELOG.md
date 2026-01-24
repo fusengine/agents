@@ -1,5 +1,14 @@
 # Release Notes
 
+## [1.12.7] - 24-01-2026
+
+### Fixed
+
+- **Project root detection**: Detect project from file path instead of PWD
+  - Add `find_project_root()` to walk up directory tree
+  - Detect by package.json, composer.json, .git, Cargo.toml, go.mod, Package.swift
+  - Tracking now created in correct project when working cross-project
+
 ## [1.12.6] - 24-01-2026
 
 ### Fixed
