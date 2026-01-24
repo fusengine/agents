@@ -29,8 +29,23 @@ if [[ -f "/tmp/.claude-expert-active" ]]; then
   exit 0
 fi
 
-# Get project root and task file
-PROJECT_ROOT="${PWD}"
+# Get project root from FILE_PATH (not PWD)
+# Walk up from file to find project root (has package.json, composer.json, etc.)
+find_project_root() {
+  local dir="$1"
+  while [[ "$dir" != "/" ]]; do
+    if [[ -f "$dir/package.json" ]] || [[ -f "$dir/composer.json" ]] || \
+       [[ -f "$dir/Cargo.toml" ]] || [[ -f "$dir/go.mod" ]] || \
+       [[ -f "$dir/Package.swift" ]] || [[ -d "$dir/.git" ]]; then
+      echo "$dir"
+      return
+    fi
+    dir=$(dirname "$dir")
+  done
+  echo "${PWD}"  # Fallback to PWD
+}
+
+PROJECT_ROOT=$(find_project_root "$(dirname "$FILE_PATH")")
 TASK_FILE="$PROJECT_ROOT/.claude/apex/task.json"
 
 # Detect framework from file path and content

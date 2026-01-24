@@ -61,8 +61,28 @@ case "$FRAMEWORK" in
   *) FRAMEWORK="generic" ;;
 esac
 
-# Get project root (current working directory)
-PROJECT_ROOT="${PWD}"
+# Get project root from file path or PWD
+find_project_root() {
+  local dir="$1"
+  while [[ "$dir" != "/" ]]; do
+    if [[ -f "$dir/package.json" ]] || [[ -f "$dir/composer.json" ]] || \
+       [[ -f "$dir/Cargo.toml" ]] || [[ -f "$dir/go.mod" ]] || \
+       [[ -f "$dir/Package.swift" ]] || [[ -d "$dir/.git" ]]; then
+      echo "$dir"
+      return
+    fi
+    dir=$(dirname "$dir")
+  done
+  echo "${PWD}"  # Fallback to PWD
+}
+
+# Try to get project root from FILE_PATH if available
+FILE_PATH=$(echo "$INPUT" | jq -r '.tool_input.file_path // empty')
+if [[ -n "$FILE_PATH" ]]; then
+  PROJECT_ROOT=$(find_project_root "$(dirname "$FILE_PATH")")
+else
+  PROJECT_ROOT="${PWD}"
+fi
 APEX_DIR="$PROJECT_ROOT/.claude/apex"
 DOCS_DIR="$APEX_DIR/docs"
 TASK_FILE="$APEX_DIR/task.json"
