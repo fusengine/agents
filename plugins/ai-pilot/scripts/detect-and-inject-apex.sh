@@ -6,13 +6,20 @@
 set -e
 
 INPUT=$(cat)
-PROMPT=$(echo "$INPUT" | jq -r '.prompt // empty' | tr '[:upper:]' '[:lower:]')
+PROMPT=$(echo "$INPUT" | jq -r '.prompt // empty')
+PROMPT_LOWER=$(echo "$PROMPT" | tr '[:upper:]' '[:lower:]')
+
+# Check if /apex command is explicitly called
+APEX_COMMAND=false
+if echo "$PROMPT_LOWER" | grep -qE "(^|[[:space:]])/apex|/fuse-ai-pilot:apex"; then
+  APEX_COMMAND=true
+fi
 
 # Keywords that trigger APEX methodology
 DEV_KEYWORDS="implement|create|build|fix|add|refactor|develop|feature|bug|update|modify|change|write|code"
 
 # Check if prompt contains development keywords
-if echo "$PROMPT" | grep -qiE "($DEV_KEYWORDS)"; then
+if echo "$PROMPT_LOWER" | grep -qiE "($DEV_KEYWORDS)"; then
 
   # Detect project type from current directory
   PROJECT_TYPE="generic"
@@ -64,9 +71,29 @@ if echo "$PROMPT" | grep -qiE "($DEV_KEYWORDS)"; then
     PROJECT_TYPE="ruby"
   fi
 
-  # NOTE: Don't create tracking here - let PreToolUse hooks create it
-  # in the correct project based on FILE_PATH (not PWD)
-  # enforce-apex-phases.sh and track-doc-consultation.sh will auto-create
+  # Create tracking ONLY if /apex command is explicitly called
+  if [[ "$APEX_COMMAND" == "true" ]]; then
+    APEX_DIR="${PWD}/.claude/apex"
+    TASK_FILE="$APEX_DIR/task.json"
+    mkdir -p "$APEX_DIR/docs"
+
+    if [[ ! -f "$TASK_FILE" ]]; then
+      TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+      cat > "$TASK_FILE" << INITEOF
+{
+  "current_task": "1",
+  "created_at": "$TIMESTAMP",
+  "tasks": {
+    "1": {
+      "status": "in_progress",
+      "started_at": "$TIMESTAMP",
+      "doc_consulted": {}
+    }
+  }
+}
+INITEOF
+    fi
+  fi
 
   # Map project type to expert agent
   case "$PROJECT_TYPE" in
