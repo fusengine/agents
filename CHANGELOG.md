@@ -1,5 +1,15 @@
 # Release Notes
 
+## [1.12.6] - 24-01-2026
+
+### Fixed
+
+- **APEX tracking auto-init**: Always create `.claude/apex/docs/` directory
+- **Tracking status display**: Show doc_consulted status in APEX instruction
+- **Skill paths**: Use absolute paths (`$HOME/.claude/plugins/...`) for skill references
+- **JSON escaping**: Use `jq` for proper JSON output in hook responses
+- **Expert hooks**: Simplified messages with full plugin paths
+
 ## [1.12.5] - 24-01-2026
 
 ### Changed
