@@ -1,5 +1,12 @@
 # Release Notes
 
+## [1.12.4] - 24-01-2026
+
+### Changed
+
+- Rename `RELEASE.md` to `CHANGELOG.md` (Keep a Changelog standard)
+- Update all references in commit commands and CLAUDE.md
+
 ## [1.12.3] - 24-01-2026
 
 ### Changed
