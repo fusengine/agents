@@ -69,8 +69,10 @@ if echo "$PROMPT" | grep -qiE "($DEV_KEYWORDS)"; then
   APEX_DIR="$PROJECT_ROOT/.claude/apex"
   TASK_FILE="$APEX_DIR/task.json"
 
-  if [[ ! -d "$APEX_DIR" ]]; then
-    mkdir -p "$APEX_DIR/docs"
+  # Always ensure docs directory exists
+  mkdir -p "$APEX_DIR/docs"
+
+  if [[ ! -f "$TASK_FILE" ]]; then
     TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
     cat > "$TASK_FILE" << TASKEOF
 {
@@ -104,9 +106,26 @@ TASKEOF
     *) EXPERT_AGENT="general-purpose" ;;
   esac
 
+  # Read current tracking status
+  DOC_STATUS=""
+  if [[ -f "$TASK_FILE" ]]; then
+    CURRENT_TASK=$(jq -r '.current_task // "1"' "$TASK_FILE")
+    DOC_CONSULTED=$(jq -r --arg task "$CURRENT_TASK" '.tasks[$task].doc_consulted | keys | join(", ")' "$TASK_FILE" 2>/dev/null || echo "")
+    if [[ -n "$DOC_CONSULTED" ]]; then
+      DOC_STATUS="Documentation already consulted for: $DOC_CONSULTED"
+    else
+      DOC_STATUS="No documentation consulted yet for task $CURRENT_TASK"
+    fi
+  else
+    DOC_STATUS="New session - tracking initialized"
+  fi
+
   # Output instruction to use APEX
   cat << EOF
 INSTRUCTION: This is a development task. Use APEX methodology:
+
+**TRACKING STATUS**: $DOC_STATUS
+**TRACKING FILE**: .claude/apex/task.json
 
 1. **ANALYZE** (MANDATORY - 3 AGENTS IN PARALLEL):
    - Launch explore-codebase agent (architecture)
@@ -122,6 +141,8 @@ INSTRUCTION: This is a development task. Use APEX methodology:
 
 Expert agent for this project: $EXPERT_AGENT
 Framework references: references/$PROJECT_TYPE/
+
+**IMPORTANT**: Read .claude/apex/task.json to check documentation status before writing code.
 EOF
 
 fi

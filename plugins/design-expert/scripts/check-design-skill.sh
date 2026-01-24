@@ -36,27 +36,9 @@ if echo "$CONTENT" | grep -qE "(className=|class=|cn\(|cva\(|clsx\()" || \
    echo "$CONTENT" | grep -qE "(Button|Card|Dialog|Modal|Input|Select|Dropdown|Menu|Toast|Alert)" || \
    [[ "$FILE_PATH" =~ \.(css)$ ]]; then
 
-  REASON="📚 UI/DESIGN CODE DETECTED - Documentation required.\n\n"
-  REASON+="Consult ONE of these sources FIRST:\n\n"
-  REASON+="LOCAL SKILLS:\n"
-  REASON+="  • skills/designing-systems/SKILL.md (design tokens, theming)\n"
-  REASON+="  • skills/generating-components/SKILL.md (component patterns)\n"
-  REASON+="  • skills/adding-animations/SKILL.md (Framer Motion)\n"
-  REASON+="  • skills/validating-accessibility/SKILL.md (WCAG 2.2)\n\n"
-  REASON+="ONLINE TOOLS:\n"
-  REASON+="  • mcp__shadcn__search_items_in_registries (existing components)\n"
-  REASON+="  • mcp__magic__21st_magic_component_builder (AI component builder)\n\n"
-  REASON+="ONLINE DOCUMENTATION:\n"
-  REASON+="  • mcp__context7__query-docs (Tailwind, Framer Motion docs)\n"
-  REASON+="  • mcp__exa__get_code_context_exa (code examples)\n\n"
-  REASON+="After consulting documentation, retry your Write/Edit."
-
-  cat << EOF
-{
-  "decision": "continue",
-  "reason": "$REASON"
-}
-EOF
+  PLUGINS_DIR="$HOME/.claude/plugins/marketplaces/fusengine-plugins/plugins"
+  REASON="📚 UI/DESIGN CODE DETECTED. Read skills from: $PLUGINS_DIR/design-expert/skills/ (designing-systems, generating-components, adding-animations, validating-accessibility). Then retry Write/Edit."
+  jq -n --arg reason "$REASON" '{"decision": "continue", "reason": $reason}'
   exit 0
 fi
 

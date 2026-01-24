@@ -34,30 +34,9 @@ if echo "$CONTENT" | grep -qE "(Illuminate\\\\|use App\\\\|extends Controller|ex
    echo "$CONTENT" | grep -qE "(artisan|migrate|seeder|factory|middleware)" || \
    echo "$CONTENT" | grep -qE "(Request \\\$request|Validator::|FormRequest)"; then
 
-  REASON="📚 LARAVEL CODE DETECTED - Documentation required.\n\n"
-  REASON+="Consult ONE of these sources FIRST:\n\n"
-  REASON+="LOCAL SKILLS:\n"
-  REASON+="  • skills/laravel-eloquent/SKILL.md (Models, relationships)\n"
-  REASON+="  • skills/laravel-architecture/SKILL.md (structure, patterns)\n"
-  REASON+="  • skills/laravel-api/SKILL.md (API resources)\n"
-  REASON+="  • skills/laravel-auth/SKILL.md (authentication)\n"
-  REASON+="  • skills/laravel-livewire/SKILL.md (Livewire components)\n"
-  REASON+="  • skills/laravel-blade/SKILL.md (Blade templates)\n"
-  REASON+="  • skills/laravel-migrations/SKILL.md (database migrations)\n"
-  REASON+="  • skills/laravel-queues/SKILL.md (jobs, queues)\n"
-  REASON+="  • skills/laravel-testing/SKILL.md (Pest tests)\n"
-  REASON+="  • skills/solid-php/SKILL.md (SOLID principles)\n\n"
-  REASON+="ONLINE DOCUMENTATION:\n"
-  REASON+="  • mcp__context7__resolve-library-id + mcp__context7__query-docs\n"
-  REASON+="  • mcp__exa__get_code_context_exa (code examples)\n\n"
-  REASON+="After consulting documentation, retry your Write/Edit."
-
-  cat << EOF
-{
-  "decision": "continue",
-  "reason": "$REASON"
-}
-EOF
+  PLUGINS_DIR="$HOME/.claude/plugins/marketplaces/fusengine-plugins/plugins"
+  REASON="📚 LARAVEL CODE DETECTED. Read skills from: $PLUGINS_DIR/laravel-expert/skills/ (laravel-eloquent, laravel-architecture, laravel-api, laravel-auth, laravel-livewire, laravel-blade, solid-php). Then retry Write/Edit."
+  jq -n --arg reason "$REASON" '{"decision": "continue", "reason": $reason}'
   exit 0
 fi
 

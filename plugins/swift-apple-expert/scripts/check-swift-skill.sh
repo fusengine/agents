@@ -35,30 +35,9 @@ if echo "$CONTENT" | grep -qE "(import SwiftUI|import UIKit|import Foundation)" 
    echo "$CONTENT" | grep -qE "(async |await |Task \{|MainActor)" || \
    echo "$CONTENT" | grep -qE "(NavigationStack|NavigationSplitView|TabView)"; then
 
-  REASON="📚 SWIFT CODE DETECTED - Documentation required.\n\n"
-  REASON+="Consult ONE of these sources FIRST:\n\n"
-  REASON+="LOCAL SKILLS:\n"
-  REASON+="  • skills/swiftui-components/SKILL.md (SwiftUI views)\n"
-  REASON+="  • skills/swift-concurrency/SKILL.md (async/await, actors)\n"
-  REASON+="  • skills/swift-architecture/SKILL.md (MVVM, DI)\n"
-  REASON+="  • skills/swiftui-data/SKILL.md (SwiftData, Core Data)\n"
-  REASON+="  • skills/swiftui-navigation/SKILL.md (NavigationStack)\n"
-  REASON+="  • skills/swiftui-testing/SKILL.md (XCTest, UI tests)\n"
-  REASON+="  • skills/swift-performance/SKILL.md (optimization)\n"
-  REASON+="  • skills/solid-swift/SKILL.md (SOLID principles)\n\n"
-  REASON+="ONLINE DOCUMENTATION:\n"
-  REASON+="  • mcp__apple-docs__search_apple_docs (Apple docs)\n"
-  REASON+="  • mcp__apple-docs__search_wwdc_content (WWDC videos)\n"
-  REASON+="  • mcp__context7__resolve-library-id + mcp__context7__query-docs\n"
-  REASON+="  • mcp__exa__get_code_context_exa (Swift examples)\n\n"
-  REASON+="After consulting documentation, retry your Write/Edit."
-
-  cat << EOF
-{
-  "decision": "continue",
-  "reason": "$REASON"
-}
-EOF
+  PLUGINS_DIR="$HOME/.claude/plugins/marketplaces/fusengine-plugins/plugins"
+  REASON="📚 SWIFT CODE DETECTED. Read skills from: $PLUGINS_DIR/swift-apple-expert/skills/ (swiftui-components, swift-concurrency, swift-architecture, swiftui-data, swiftui-navigation, solid-swift). Then retry Write/Edit."
+  jq -n --arg reason "$REASON" '{"decision": "continue", "reason": $reason}'
   exit 0
 fi
 

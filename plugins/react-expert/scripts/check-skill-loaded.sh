@@ -34,30 +34,9 @@ if echo "$CONTENT" | grep -qE "(from ['\"]react['\"]|useState|useEffect|useRef|u
    echo "$CONTENT" | grep -qE "(<[A-Z][a-zA-Z]*|<div|<span|<button|<input|<form|<section|<article)" || \
    echo "$CONTENT" | grep -qE "(React\.|jsx|tsx|className=)"; then
 
-  REASON="📚 REACT CODE DETECTED - Documentation required.\n\n"
-  REASON+="Consult ONE of these sources FIRST:\n\n"
-  REASON+="LOCAL SKILLS:\n"
-  REASON+="  • skills/react-19/SKILL.md (React 19 features)\n"
-  REASON+="  • skills/react-hooks/SKILL.md (hooks patterns)\n"
-  REASON+="  • skills/react-state/SKILL.md (state management)\n"
-  REASON+="  • skills/solid-react/SKILL.md (architecture SOLID)\n"
-  REASON+="  • skills/react-forms/SKILL.md (forms handling)\n"
-  REASON+="  • skills/react-testing/SKILL.md (testing)\n"
-  REASON+="  • skills/react-performance/SKILL.md (optimization)\n"
-  REASON+="  • skills/react-tanstack-router/SKILL.md (routing)\n"
-  REASON+="  • skills/react-shadcn/SKILL.md (UI components)\n"
-  REASON+="  • skills/react-i18n/SKILL.md (internationalization)\n\n"
-  REASON+="ONLINE DOCUMENTATION:\n"
-  REASON+="  • mcp__context7__resolve-library-id + mcp__context7__query-docs\n"
-  REASON+="  • mcp__exa__get_code_context_exa (code examples)\n\n"
-  REASON+="After consulting documentation, retry your Write/Edit."
-
-  cat << EOF
-{
-  "decision": "continue",
-  "reason": "$REASON"
-}
-EOF
+  PLUGINS_DIR="$HOME/.claude/plugins/marketplaces/fusengine-plugins/plugins"
+  REASON="📚 REACT CODE DETECTED. Read skills from: $PLUGINS_DIR/react-expert/skills/ (react-19, react-hooks, react-state, react-forms, react-testing, solid-react). Then retry Write/Edit."
+  jq -n --arg reason "$REASON" '{"decision": "continue", "reason": $reason}'
   exit 0
 fi
 

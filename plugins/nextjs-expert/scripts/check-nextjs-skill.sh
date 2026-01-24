@@ -56,32 +56,17 @@ else
 fi
 REASON+=" - Documentation required.\n\n"
 REASON+="Consult ONE of these sources FIRST:\n\n"
-REASON+="LOCAL SKILLS:\n"
+PLUGINS_DIR="$HOME/.claude/plugins/marketplaces/fusengine-plugins/plugins"
+REASON+="Read skills from: "
 
 if [[ "$IS_NEXTJS" == "true" ]]; then
-  REASON+="  • skills/nextjs-16/SKILL.md (App Router, Server Components)\n"
-  REASON+="  • skills/nextjs-stack/SKILL.md (full stack patterns)\n"
-  REASON+="  • skills/solid-nextjs/SKILL.md (architecture SOLID)\n"
-  REASON+="  • skills/prisma-7/SKILL.md (database)\n"
-  REASON+="  • skills/better-auth/SKILL.md (authentication)\n"
-  REASON+="  • skills/nextjs-zustand/SKILL.md (state management)\n"
+  REASON+="$PLUGINS_DIR/nextjs-expert/skills/ (nextjs-16, nextjs-stack, solid-nextjs, prisma-7, better-auth, nextjs-zustand)"
 fi
-
 if [[ "$IS_REACT" == "true" ]]; then
-  REASON+="  • skills/react-19/SKILL.md (React 19 features)\n"
-  REASON+="  • skills/react-hooks/SKILL.md (hooks patterns)\n"
+  REASON+=" $PLUGINS_DIR/react-expert/skills/ (react-19, react-hooks, react-state, react-forms)"
 fi
 
-REASON+="\nONLINE DOCUMENTATION:\n"
-REASON+="  • mcp__context7__resolve-library-id + mcp__context7__query-docs\n"
-REASON+="  • mcp__exa__get_code_context_exa (code examples)\n\n"
-REASON+="After consulting documentation, retry your Write/Edit."
+REASON+=". Then retry Write/Edit."
 
-cat << EOF
-{
-  "decision": "continue",
-  "reason": "$REASON"
-}
-EOF
-
+jq -n --arg reason "$REASON" '{"decision": "continue", "reason": $reason}'
 exit 0

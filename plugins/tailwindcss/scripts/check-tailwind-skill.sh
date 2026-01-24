@@ -23,23 +23,9 @@ fi
 
 # Check Tailwind config files
 if [[ "$FILE_PATH" =~ tailwind\.config\.(js|ts|mjs)$ ]]; then
-  REASON="📚 TAILWIND CONFIG DETECTED - Documentation required.\n\n"
-  REASON+="Consult ONE of these sources FIRST:\n\n"
-  REASON+="LOCAL SKILLS:\n"
-  REASON+="  • skills/tailwindcss-v4/SKILL.md (v4 migration)\n"
-  REASON+="  • skills/tailwindcss-core/SKILL.md (@theme, directives)\n"
-  REASON+="  • skills/tailwindcss-custom-styles/SKILL.md (@utility, @variant)\n\n"
-  REASON+="ONLINE DOCUMENTATION:\n"
-  REASON+="  • mcp__context7__resolve-library-id + mcp__context7__query-docs\n"
-  REASON+="  • mcp__exa__get_code_context_exa (Tailwind examples)\n\n"
-  REASON+="After consulting documentation, retry your Write/Edit."
-
-  cat << EOF
-{
-  "decision": "continue",
-  "reason": "$REASON"
-}
-EOF
+  PLUGINS_DIR="$HOME/.claude/plugins/marketplaces/fusengine-plugins/plugins"
+  REASON="📚 TAILWIND CONFIG DETECTED. Read skills from: $PLUGINS_DIR/tailwindcss/skills/ (tailwindcss-v4, tailwindcss-core, tailwindcss-custom-styles). Then retry Write/Edit."
+  jq -n --arg reason "$REASON" '{"decision": "continue", "reason": $reason}'
   exit 0
 fi
 
@@ -52,26 +38,9 @@ if [[ "$FILE_PATH" =~ \.css$ ]]; then
      echo "$CONTENT" | grep -qE "(@tailwind|@apply|@layer|@screen)" || \
      echo "$CONTENT" | grep -qE "(theme\(|config\()"; then
 
-    REASON="📚 TAILWIND CSS DETECTED - Documentation required.\n\n"
-    REASON+="Consult ONE of these sources FIRST:\n\n"
-    REASON+="LOCAL SKILLS:\n"
-    REASON+="  • skills/tailwindcss-v4/SKILL.md (v4 core features)\n"
-    REASON+="  • skills/tailwindcss-core/SKILL.md (@theme, directives)\n"
-    REASON+="  • skills/tailwindcss-custom-styles/SKILL.md (@utility, @variant)\n"
-    REASON+="  • skills/tailwindcss-responsive/SKILL.md (breakpoints)\n"
-    REASON+="  • skills/tailwindcss-layout/SKILL.md (flex, grid)\n"
-    REASON+="  • skills/tailwindcss-typography/SKILL.md (text, fonts)\n\n"
-    REASON+="ONLINE DOCUMENTATION:\n"
-    REASON+="  • mcp__context7__resolve-library-id + mcp__context7__query-docs\n"
-    REASON+="  • mcp__exa__get_code_context_exa (Tailwind examples)\n\n"
-    REASON+="After consulting documentation, retry your Write/Edit."
-
-    cat << EOF
-{
-  "decision": "continue",
-  "reason": "$REASON"
-}
-EOF
+    PLUGINS_DIR="$HOME/.claude/plugins/marketplaces/fusengine-plugins/plugins"
+    REASON="📚 TAILWIND CSS DETECTED. Read skills from: $PLUGINS_DIR/tailwindcss/skills/ (tailwindcss-v4, tailwindcss-core, tailwindcss-layout, tailwindcss-typography). Then retry Write/Edit."
+    jq -n --arg reason "$REASON" '{"decision": "continue", "reason": $reason}'
     exit 0
   fi
 fi
