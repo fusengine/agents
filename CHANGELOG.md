@@ -1,5 +1,13 @@
 # Release Notes
 
+## [1.12.8] - 24-01-2026
+
+### Changed
+
+- **UserPromptSubmit hook**: Remove tracking init (no FILE_PATH, only PWD)
+  - Delegates tracking creation to PreToolUse/PostToolUse hooks
+  - Fixes cross-project tracking (working on project A from project B)
+
 ## [1.12.7] - 24-01-2026
 
 ### Fixed
