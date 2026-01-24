@@ -24,11 +24,6 @@ if [[ "$FILE_PATH" =~ /(node_modules|vendor|dist|build|\.next|DerivedData|Pods|\
   exit 0
 fi
 
-# Allow if running inside a subagent (expert-agent context)
-if [[ -f "/tmp/.claude-expert-active" ]]; then
-  exit 0
-fi
-
 # Get project root from FILE_PATH (not PWD)
 # Walk up from file to find project root (has package.json, composer.json, etc.)
 find_project_root() {

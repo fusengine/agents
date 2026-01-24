@@ -1,11 +1,8 @@
 #!/bin/bash
 # check-laravel-skill.sh - PreToolUse hook for laravel-expert
-# Marks expert context + Forces documentation consultation (smart detection)
+# Forces documentation consultation (smart detection)
 
 set -e
-
-# Mark that we're in expert agent context (allows bypass of ai-pilot block)
-touch /tmp/.claude-expert-active
 
 INPUT=$(cat)
 TOOL_NAME=$(echo "$INPUT" | jq -r '.tool_name // empty')
