@@ -64,30 +64,9 @@ if echo "$PROMPT" | grep -qiE "($DEV_KEYWORDS)"; then
     PROJECT_TYPE="ruby"
   fi
 
-  # AUTO-INITIALIZE APEX TRACKING
-  PROJECT_ROOT="${PWD}"
-  APEX_DIR="$PROJECT_ROOT/.claude/apex"
-  TASK_FILE="$APEX_DIR/task.json"
-
-  # Always ensure docs directory exists
-  mkdir -p "$APEX_DIR/docs"
-
-  if [[ ! -f "$TASK_FILE" ]]; then
-    TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
-    cat > "$TASK_FILE" << TASKEOF
-{
-  "current_task": "1",
-  "created_at": "$TIMESTAMP",
-  "tasks": {
-    "1": {
-      "status": "in_progress",
-      "started_at": "$TIMESTAMP",
-      "doc_consulted": {}
-    }
-  }
-}
-TASKEOF
-  fi
+  # NOTE: Don't create tracking here - let PreToolUse hooks create it
+  # in the correct project based on FILE_PATH (not PWD)
+  # enforce-apex-phases.sh and track-doc-consultation.sh will auto-create
 
   # Map project type to expert agent
   case "$PROJECT_TYPE" in
@@ -106,26 +85,12 @@ TASKEOF
     *) EXPERT_AGENT="general-purpose" ;;
   esac
 
-  # Read current tracking status
-  DOC_STATUS=""
-  if [[ -f "$TASK_FILE" ]]; then
-    CURRENT_TASK=$(jq -r '.current_task // "1"' "$TASK_FILE")
-    DOC_CONSULTED=$(jq -r --arg task "$CURRENT_TASK" '.tasks[$task].doc_consulted | keys | join(", ")' "$TASK_FILE" 2>/dev/null || echo "")
-    if [[ -n "$DOC_CONSULTED" ]]; then
-      DOC_STATUS="Documentation already consulted for: $DOC_CONSULTED"
-    else
-      DOC_STATUS="No documentation consulted yet for task $CURRENT_TASK"
-    fi
-  else
-    DOC_STATUS="New session - tracking initialized"
-  fi
-
   # Output instruction to use APEX
+  # NOTE: Tracking status is shown by PreToolUse hooks when writing code
   cat << EOF
 INSTRUCTION: This is a development task. Use APEX methodology:
 
-**TRACKING STATUS**: $DOC_STATUS
-**TRACKING FILE**: .claude/apex/task.json
+**TRACKING FILE**: [project]/.claude/apex/task.json (auto-created on first Write/Edit)
 
 1. **ANALYZE** (MANDATORY - 3 AGENTS IN PARALLEL):
    - Launch explore-codebase agent (architecture)
