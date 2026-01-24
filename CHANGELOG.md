@@ -1,5 +1,17 @@
 # Release Notes
 
+## [1.12.5] - 24-01-2026
+
+### Changed
+
+- **Expert hooks**: Change from `block` to `continue` (inform without blocking)
+  - design-expert, react-expert, swift-apple-expert, laravel-expert, nextjs-expert, tailwindcss
+  - APEX now handles blocking if documentation not consulted
+- **APEX detection**: Add 15+ language/framework detection
+  - Added: go, rust, python, django, java, scala, ruby, rails, vue, nuxt, angular, svelte, elixir
+- **APEX auto-init**: Automatically initialize tracking on dev task detection
+- **APEX agent injection**: Inject correct expert agent based on project type
+
 ## [1.12.4] - 24-01-2026
 
 ### Changed
