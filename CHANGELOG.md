@@ -1,5 +1,22 @@
 # Release Notes
 
+## [1.16.0] - 25-01-2026
+
+### Added
+
+- **TaskCreate sync**: Hook now syncs `TaskCreate` to task.json (not just TaskUpdate)
+- **Enhanced AGENTS.md**:
+  - Sub-agents read their skills and SOLID principles first
+  - Read last 3 completed tasks and their research notes
+  - Research tools reference (Context7, Exa, skills paths)
+  - Validation section with sniper
+  - Notes format: `task-{ID}-{subject}.md`
+
+### Changed
+
+- **inject-apex-context.sh**: Simplified output with clear workflow steps
+- **hooks.json**: Matcher updated to `TaskCreate|TaskUpdate`
+
 ## [1.15.1] - 25-01-2026
 
 ### Fixed
