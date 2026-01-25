@@ -1,5 +1,30 @@
 # Release Notes
 
+## [1.15.0] - 25-01-2026
+
+### Added
+
+- **Task sync with auto-commit** (`sync-task-tracking.sh`):
+  - Syncs Claude's TaskUpdate with `.claude/apex/task.json`
+  - Auto-commits on task completion: `feat(task-X): subject`
+  - Blocks completion if no code changes exist
+  - Updates `current_task` when task starts
+
+- **Agent context injection** (`inject-apex-context.sh`):
+  - Injects AGENTS.md content to agents on Task launch
+  - Provides current task state (phase, docs consulted)
+  - Recommends expert agent based on project type
+
+- **AGENTS.md generation** (in `init-apex-tracking.sh`):
+  - Creates `.claude/apex/AGENTS.md` with APEX workflow rules
+  - Documents blocking rules, auto-commit behavior
+  - Tells agents not to commit manually
+
+### Changed
+
+- **Block messages improved**: Now show 3 options (skill, Context7, Exa) and docs path
+- **task.json structure**: Added `subject`, `description`, `phase`, `files_modified`
+
 ## [1.14.0] - 25-01-2026
 
 ### Added
