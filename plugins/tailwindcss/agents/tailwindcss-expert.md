@@ -5,6 +5,25 @@ model: sonnet
 color: cyan
 tools: Read, Edit, Write, Bash, Grep, Glob, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__exa__web_search_exa, mcp__exa__get_code_context_exa
 skills: tailwindcss-v4, tailwindcss-core, tailwindcss-utilities, tailwindcss-utility-classes, tailwindcss-responsive, tailwindcss-custom-styles, tailwindcss-layout, tailwindcss-spacing, tailwindcss-sizing, tailwindcss-typography, tailwindcss-backgrounds, tailwindcss-borders, tailwindcss-effects, tailwindcss-transforms, tailwindcss-interactivity, elicitation
+hooks:
+  PreToolUse:
+    - matcher: "Write|Edit"
+      hooks:
+        - type: command
+          command: "bash ${CLAUDE_PLUGIN_ROOT}/scripts/check-tailwind-skill.sh"
+  PostToolUse:
+    - matcher: "Read"
+      hooks:
+        - type: command
+          command: "bash ${CLAUDE_PLUGIN_ROOT}/scripts/track-skill-read.sh"
+    - matcher: "mcp__context7__|mcp__exa__"
+      hooks:
+        - type: command
+          command: "bash ${CLAUDE_PLUGIN_ROOT}/scripts/track-mcp-research.sh"
+    - matcher: "Write|Edit"
+      hooks:
+        - type: command
+          command: "bash ${CLAUDE_PLUGIN_ROOT}/scripts/validate-tailwind.sh"
 ---
 
 # Tailwind CSS Expert v4.1

@@ -5,6 +5,29 @@ model: sonnet
 color: pink
 tools: Read, Edit, Write, Bash, Grep, Glob, WebFetch, WebSearch, mcp__magic__21st_magic_component_builder, mcp__magic__21st_magic_component_inspiration, mcp__magic__21st_magic_component_refiner, mcp__magic__logo_search, mcp__shadcn__search_items_in_registries, mcp__shadcn__view_items_in_registries, mcp__shadcn__get_item_examples_from_registries, mcp__shadcn__get_add_command_for_items
 skills: generating-components, designing-systems, validating-accessibility, adding-animations, elicitation
+hooks:
+  PreToolUse:
+    - matcher: "Write|Edit"
+      hooks:
+        - type: command
+          command: "bash ${CLAUDE_PLUGIN_ROOT}/scripts/check-design-skill.sh"
+    - matcher: "Write"
+      hooks:
+        - type: command
+          command: "bash ${CLAUDE_PLUGIN_ROOT}/scripts/check-shadcn-install.sh"
+  PostToolUse:
+    - matcher: "Read"
+      hooks:
+        - type: command
+          command: "bash ${CLAUDE_PLUGIN_ROOT}/scripts/track-skill-read.sh"
+    - matcher: "mcp__context7__|mcp__exa__|mcp__magic__|mcp__shadcn__"
+      hooks:
+        - type: command
+          command: "bash ${CLAUDE_PLUGIN_ROOT}/scripts/track-mcp-research.sh"
+    - matcher: "Write|Edit"
+      hooks:
+        - type: command
+          command: "bash ${CLAUDE_PLUGIN_ROOT}/scripts/validate-design.sh"
 ---
 
 # Design Expert Agent

@@ -1,6 +1,6 @@
 #!/bin/bash
-# check-tailwind-skill.sh - PreToolUse hook for tailwindcss
-# Forces documentation consultation (smart detection)
+# check-tailwind-skill.sh - PreToolUse hook for tailwindcss-expert
+# BLOCKS Write/Edit if documentation not consulted
 
 set -e
 
@@ -20,26 +20,58 @@ fi
 
 # Check Tailwind config files
 if [[ "$FILE_PATH" =~ tailwind\.config\.(js|ts|mjs)$ ]]; then
-  PLUGINS_DIR="$HOME/.claude/plugins/marketplaces/fusengine-plugins/plugins"
-  REASON="📚 TAILWIND CONFIG DETECTED. Read skills from: $PLUGINS_DIR/tailwindcss/skills/ (tailwindcss-v4, tailwindcss-core, tailwindcss-custom-styles). Then retry Write/Edit."
-  jq -n --arg reason "$REASON" '{"decision": "continue", "reason": $reason}'
+  # Always check for Tailwind config
+  :
+elif [[ "$FILE_PATH" =~ \.css$ ]]; then
+  CONTENT=$(echo "$INPUT" | jq -r '.tool_input.content // .tool_input.new_string // empty')
+  # SMART DETECTION: Tailwind CSS
+  if ! echo "$CONTENT" | grep -qE "(@theme|@utility|@variant|@import|@config|--tw-)" && \
+     ! echo "$CONTENT" | grep -qE "(@tailwind|@apply|@layer|@screen)" && \
+     ! echo "$CONTENT" | grep -qE "(theme\(|config\()"; then
+    # Not Tailwind code - allow
+    exit 0
+  fi
+else
+  # Not a CSS or config file - allow
   exit 0
 fi
 
-# Check CSS files
-if [[ "$FILE_PATH" =~ \.css$ ]]; then
-  CONTENT=$(echo "$INPUT" | jq -r '.tool_input.content // .tool_input.new_string // empty')
+# Get project root from FILE_PATH
+find_project_root() {
+  local dir="$1"
+  while [[ "$dir" != "/" ]]; do
+    if [[ -f "$dir/package.json" ]] || [[ -d "$dir/.git" ]]; then
+      echo "$dir"
+      return
+    fi
+    dir=$(dirname "$dir")
+  done
+  echo "${PWD}"
+}
 
-  # SMART DETECTION: Tailwind CSS
-  if echo "$CONTENT" | grep -qE "(@theme|@utility|@variant|@import|@config|--tw-)" || \
-     echo "$CONTENT" | grep -qE "(@tailwind|@apply|@layer|@screen)" || \
-     echo "$CONTENT" | grep -qE "(theme\(|config\()"; then
+PROJECT_ROOT=$(find_project_root "$(dirname "$FILE_PATH")")
+TASK_FILE="$PROJECT_ROOT/.claude/apex/task.json"
 
-    PLUGINS_DIR="$HOME/.claude/plugins/marketplaces/fusengine-plugins/plugins"
-    REASON="📚 TAILWIND CSS DETECTED. Read skills from: $PLUGINS_DIR/tailwindcss/skills/ (tailwindcss-v4, tailwindcss-core, tailwindcss-layout, tailwindcss-typography). Then retry Write/Edit."
-    jq -n --arg reason "$REASON" '{"decision": "continue", "reason": $reason}'
-    exit 0
-  fi
+# No task.json = not in APEX mode = allow freely
+if [[ ! -f "$TASK_FILE" ]]; then
+  exit 0
 fi
 
-exit 0
+# In APEX mode - check if doc was consulted
+CURRENT_TASK=$(jq -r '.current_task // "1"' "$TASK_FILE")
+DOC_CONSULTED=$(jq -r --arg task "$CURRENT_TASK" \
+  '.tasks[$task].doc_consulted.tailwind.consulted // false' "$TASK_FILE")
+
+if [[ "$DOC_CONSULTED" == "true" ]]; then
+  exit 0
+fi
+
+# APEX mode + documentation NOT consulted - BLOCK
+PLUGINS_DIR="$HOME/.claude/plugins/marketplaces/fusengine-plugins/plugins"
+REASON="🚫 TAILWIND: Documentation not consulted! "
+REASON+="Before writing Tailwind code, you MUST read skills. "
+REASON+="Read: $PLUGINS_DIR/tailwindcss/skills/tailwindcss-v4/SKILL.md or tailwindcss-core/SKILL.md. "
+REASON+="After reading, retry Write/Edit."
+
+jq -n --arg reason "$REASON" '{"decision": "block", "reason": $reason}'
+exit 2

@@ -5,6 +5,29 @@ model: sonnet
 color: red
 tools: Read, Edit, Write, Bash, Grep, Glob, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__exa__web_search_exa, mcp__exa__get_code_context_exa, mcp__sequential-thinking__sequentialthinking
 skills: solid-php, laravel-architecture, laravel-eloquent, laravel-api, laravel-auth, laravel-permission, laravel-testing, laravel-queues, laravel-livewire, laravel-blade, laravel-migrations, laravel-billing, laravel-i18n, elicitation
+hooks:
+  PreToolUse:
+    - matcher: "Write|Edit"
+      hooks:
+        - type: command
+          command: "bash ${CLAUDE_PLUGIN_ROOT}/scripts/check-laravel-skill.sh"
+    - matcher: "Write"
+      hooks:
+        - type: command
+          command: "bash ${CLAUDE_PLUGIN_ROOT}/scripts/check-shadcn-install.sh"
+  PostToolUse:
+    - matcher: "Read"
+      hooks:
+        - type: command
+          command: "bash ${CLAUDE_PLUGIN_ROOT}/scripts/track-skill-read.sh"
+    - matcher: "mcp__context7__|mcp__exa__"
+      hooks:
+        - type: command
+          command: "bash ${CLAUDE_PLUGIN_ROOT}/scripts/track-mcp-research.sh"
+    - matcher: "Write|Edit"
+      hooks:
+        - type: command
+          command: "bash ${CLAUDE_PLUGIN_ROOT}/scripts/validate-laravel-solid.sh"
 ---
 
 # Laravel Expert Agent

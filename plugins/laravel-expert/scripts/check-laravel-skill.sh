@@ -1,6 +1,6 @@
 #!/bin/bash
 # check-laravel-skill.sh - PreToolUse hook for laravel-expert
-# Forces documentation consultation (smart detection)
+# BLOCKS Write/Edit if documentation not consulted
 
 set -e
 
@@ -13,7 +13,7 @@ if [[ "$TOOL_NAME" != "Write" && "$TOOL_NAME" != "Edit" ]]; then
   exit 0
 fi
 
-# Only check PHP files
+# Only check .php files
 if [[ ! "$FILE_PATH" =~ \.php$ ]]; then
   exit 0
 fi
@@ -23,18 +23,42 @@ if [[ "$FILE_PATH" =~ /(vendor|storage|bootstrap/cache)/ ]]; then
   exit 0
 fi
 
-CONTENT=$(echo "$INPUT" | jq -r '.tool_input.content // .tool_input.new_string // empty')
+# Get project root from FILE_PATH
+find_project_root() {
+  local dir="$1"
+  while [[ "$dir" != "/" ]]; do
+    if [[ -f "$dir/composer.json" ]] || [[ -f "$dir/artisan" ]] || [[ -d "$dir/.git" ]]; then
+      echo "$dir"
+      return
+    fi
+    dir=$(dirname "$dir")
+  done
+  echo "${PWD}"
+}
 
-# SMART DETECTION: Laravel code
-if echo "$CONTENT" | grep -qE "(Illuminate\\\\|use App\\\\|extends Controller|extends Model)" || \
-   echo "$CONTENT" | grep -qE "(Route::|Livewire|Blade::|Eloquent|HasFactory)" || \
-   echo "$CONTENT" | grep -qE "(artisan|migrate|seeder|factory|middleware)" || \
-   echo "$CONTENT" | grep -qE "(Request \\\$request|Validator::|FormRequest)"; then
+PROJECT_ROOT=$(find_project_root "$(dirname "$FILE_PATH")")
+TASK_FILE="$PROJECT_ROOT/.claude/apex/task.json"
 
-  PLUGINS_DIR="$HOME/.claude/plugins/marketplaces/fusengine-plugins/plugins"
-  REASON="📚 LARAVEL CODE DETECTED. Read skills from: $PLUGINS_DIR/laravel-expert/skills/ (laravel-eloquent, laravel-architecture, laravel-api, laravel-auth, laravel-livewire, laravel-blade, solid-php). Then retry Write/Edit."
-  jq -n --arg reason "$REASON" '{"decision": "continue", "reason": $reason}'
+# No task.json = not in APEX mode = allow freely
+if [[ ! -f "$TASK_FILE" ]]; then
   exit 0
 fi
 
-exit 0
+# In APEX mode - check if doc was consulted
+CURRENT_TASK=$(jq -r '.current_task // "1"' "$TASK_FILE")
+DOC_CONSULTED=$(jq -r --arg task "$CURRENT_TASK" \
+  '.tasks[$task].doc_consulted.laravel.consulted // false' "$TASK_FILE")
+
+if [[ "$DOC_CONSULTED" == "true" ]]; then
+  exit 0
+fi
+
+# APEX mode + documentation NOT consulted - BLOCK
+PLUGINS_DIR="$HOME/.claude/plugins/marketplaces/fusengine-plugins/plugins"
+REASON="🚫 LARAVEL: Documentation not consulted! "
+REASON+="Before writing Laravel code, you MUST read skills. "
+REASON+="Read: $PLUGINS_DIR/laravel-expert/skills/laravel-eloquent/SKILL.md or solid-php/SKILL.md. "
+REASON+="After reading, retry Write/Edit."
+
+jq -n --arg reason "$REASON" '{"decision": "block", "reason": $reason}'
+exit 2

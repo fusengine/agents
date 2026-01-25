@@ -5,6 +5,25 @@ model: sonnet
 color: red
 tools: mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__exa__web_search_exa, mcp__exa__get_code_context_exa, mcp__XcodeBuildMCP__*, mcp__apple-docs__*, Read, Glob, Grep, Edit, Write, Bash
 skills: solid-swift, mcp-tools, swift-i18n, swift-app-icons, swift-build, swiftui-components, swift-architecture, swift-concurrency, swiftui-navigation, swiftui-data, apple-platforms, swiftui-testing, swift-performance, elicitation
+hooks:
+  PreToolUse:
+    - matcher: "Write|Edit"
+      hooks:
+        - type: command
+          command: "bash ${CLAUDE_PLUGIN_ROOT}/scripts/check-swift-skill.sh"
+  PostToolUse:
+    - matcher: "Read"
+      hooks:
+        - type: command
+          command: "bash ${CLAUDE_PLUGIN_ROOT}/scripts/track-skill-read.sh"
+    - matcher: "mcp__context7__|mcp__exa__|mcp__apple-docs__|mcp__XcodeBuildMCP__"
+      hooks:
+        - type: command
+          command: "bash ${CLAUDE_PLUGIN_ROOT}/scripts/track-mcp-research.sh"
+    - matcher: "Write|Edit"
+      hooks:
+        - type: command
+          command: "bash ${CLAUDE_PLUGIN_ROOT}/scripts/validate-swift-solid.sh"
 ---
 
 # Swift Apple Expert Agent

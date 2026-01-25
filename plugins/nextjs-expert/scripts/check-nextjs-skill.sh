@@ -1,6 +1,6 @@
 #!/bin/bash
 # check-nextjs-skill.sh - PreToolUse hook for nextjs-expert
-# Forces documentation consultation (smart detection)
+# BLOCKS Write/Edit if documentation not consulted
 
 set -e
 
@@ -19,51 +19,57 @@ if [[ ! "$FILE_PATH" =~ \.(tsx|ts|jsx|js)$ ]]; then
 fi
 
 # Skip non-code directories
-if [[ "$FILE_PATH" =~ /(node_modules|\.next|dist|build)/ ]]; then
+if [[ "$FILE_PATH" =~ /(node_modules|dist|build|\.next)/ ]]; then
   exit 0
 fi
 
+# Get content for smart detection
 CONTENT=$(echo "$INPUT" | jq -r '.tool_input.content // .tool_input.new_string // empty')
 
-# SMART DETECTION
-IS_NEXTJS=false
-IS_REACT=false
-
-if echo "$CONTENT" | grep -qE "(use client|use server|generateMetadata|generateStaticParams|NextRequest|NextResponse)" || \
-   echo "$CONTENT" | grep -qE "(from ['\"]next/|@next/)" || \
-   [[ "$FILE_PATH" =~ /(page|layout|loading|error|not-found|route)\.(tsx|ts)$ ]]; then
-  IS_NEXTJS=true
-fi
-
-if echo "$CONTENT" | grep -qE "(from ['\"]react['\"]|useState|useEffect|useRef|useMemo|useCallback|useContext|useReducer)" || \
-   echo "$CONTENT" | grep -qE "(<[A-Z][a-zA-Z]*|<div|<span|<button|<input|<form)" || \
-   echo "$CONTENT" | grep -qE "(React\.|jsx|tsx|className=)"; then
-  IS_REACT=true
-fi
-
-if [[ "$IS_NEXTJS" == "false" && "$IS_REACT" == "false" ]]; then
+# SMART DETECTION: Only block if it's actual Next.js code
+if ! echo "$CONTENT" | grep -qE "(use client|use server|NextRequest|NextResponse)" && \
+   ! echo "$CONTENT" | grep -qE "(from ['\"]next|getServerSideProps|getStaticProps)" && \
+   ! [[ "$FILE_PATH" =~ (page|layout|loading|error|route|middleware)\.(ts|tsx)$ ]]; then
+  # Not Next.js code - allow
   exit 0
 fi
 
-REASON="📚 "
-if [[ "$IS_NEXTJS" == "true" ]]; then
-  REASON+="NEXT.JS CODE DETECTED"
-else
-  REASON+="REACT CODE DETECTED"
+# Get project root from FILE_PATH
+find_project_root() {
+  local dir="$1"
+  while [[ "$dir" != "/" ]]; do
+    if [[ -f "$dir/package.json" ]] || [[ -d "$dir/.git" ]]; then
+      echo "$dir"
+      return
+    fi
+    dir=$(dirname "$dir")
+  done
+  echo "${PWD}"
+}
+
+PROJECT_ROOT=$(find_project_root "$(dirname "$FILE_PATH")")
+TASK_FILE="$PROJECT_ROOT/.claude/apex/task.json"
+
+# No task.json = not in APEX mode = allow freely
+if [[ ! -f "$TASK_FILE" ]]; then
+  exit 0
 fi
-REASON+=" - Documentation required.\n\n"
-REASON+="Consult ONE of these sources FIRST:\n\n"
+
+# In APEX mode - check if doc was consulted
+CURRENT_TASK=$(jq -r '.current_task // "1"' "$TASK_FILE")
+DOC_CONSULTED=$(jq -r --arg task "$CURRENT_TASK" \
+  '.tasks[$task].doc_consulted.nextjs.consulted // false' "$TASK_FILE")
+
+if [[ "$DOC_CONSULTED" == "true" ]]; then
+  exit 0
+fi
+
+# APEX mode + documentation NOT consulted - BLOCK
 PLUGINS_DIR="$HOME/.claude/plugins/marketplaces/fusengine-plugins/plugins"
-REASON+="Read skills from: "
+REASON="🚫 NEXT.JS: Documentation not consulted! "
+REASON+="Before writing Next.js code, you MUST read skills. "
+REASON+="Read: $PLUGINS_DIR/nextjs-expert/skills/nextjs-16/SKILL.md or solid-nextjs/SKILL.md. "
+REASON+="After reading, retry Write/Edit."
 
-if [[ "$IS_NEXTJS" == "true" ]]; then
-  REASON+="$PLUGINS_DIR/nextjs-expert/skills/ (nextjs-16, nextjs-stack, solid-nextjs, prisma-7, better-auth, nextjs-zustand)"
-fi
-if [[ "$IS_REACT" == "true" ]]; then
-  REASON+=" $PLUGINS_DIR/react-expert/skills/ (react-19, react-hooks, react-state, react-forms)"
-fi
-
-REASON+=". Then retry Write/Edit."
-
-jq -n --arg reason "$REASON" '{"decision": "continue", "reason": $reason}'
-exit 0
+jq -n --arg reason "$REASON" '{"decision": "block", "reason": $reason}'
+exit 2

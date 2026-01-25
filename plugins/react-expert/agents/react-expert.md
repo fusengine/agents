@@ -5,6 +5,29 @@ model: sonnet
 color: blue
 tools: Read, Edit, Write, Bash, Grep, Glob, Task, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__exa__web_search_exa, mcp__exa__get_code_context_exa, mcp__sequential-thinking__sequentialthinking, mcp__shadcn__search_items_in_registries, mcp__shadcn__view_items_in_registries
 skills: solid-react, react-19, react-hooks, react-tanstack-router, react-state, react-forms, react-testing, react-performance, react-shadcn, react-i18n, elicitation
+hooks:
+  PreToolUse:
+    - matcher: "Write|Edit"
+      hooks:
+        - type: command
+          command: "bash ${CLAUDE_PLUGIN_ROOT}/scripts/check-skill-loaded.sh"
+    - matcher: "Write"
+      hooks:
+        - type: command
+          command: "bash ${CLAUDE_PLUGIN_ROOT}/scripts/check-shadcn-install.sh"
+  PostToolUse:
+    - matcher: "Read"
+      hooks:
+        - type: command
+          command: "bash ${CLAUDE_PLUGIN_ROOT}/scripts/track-skill-read.sh"
+    - matcher: "mcp__context7__|mcp__exa__"
+      hooks:
+        - type: command
+          command: "bash ${CLAUDE_PLUGIN_ROOT}/scripts/track-mcp-research.sh"
+    - matcher: "Write|Edit"
+      hooks:
+        - type: command
+          command: "bash ${CLAUDE_PLUGIN_ROOT}/scripts/validate-react-solid.sh"
 ---
 
 # React Expert Agent

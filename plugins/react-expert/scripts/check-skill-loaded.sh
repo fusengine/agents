@@ -1,6 +1,6 @@
 #!/bin/bash
 # check-skill-loaded.sh - PreToolUse hook for react-expert
-# Forces documentation consultation (smart detection)
+# BLOCKS Write/Edit if documentation not consulted
 
 set -e
 
@@ -27,15 +27,49 @@ fi
 CONTENT=$(echo "$INPUT" | jq -r '.tool_input.content // .tool_input.new_string // empty')
 
 # SMART DETECTION: Only block if it's actual React code
-if echo "$CONTENT" | grep -qE "(from ['\"]react['\"]|useState|useEffect|useRef|useMemo|useCallback|useContext|useReducer)" || \
-   echo "$CONTENT" | grep -qE "(<[A-Z][a-zA-Z]*|<div|<span|<button|<input|<form|<section|<article)" || \
-   echo "$CONTENT" | grep -qE "(React\.|jsx|tsx|className=)"; then
-
-  PLUGINS_DIR="$HOME/.claude/plugins/marketplaces/fusengine-plugins/plugins"
-  REASON="📚 REACT CODE DETECTED. Read skills from: $PLUGINS_DIR/react-expert/skills/ (react-19, react-hooks, react-state, react-forms, react-testing, solid-react). Then retry Write/Edit."
-  jq -n --arg reason "$REASON" '{"decision": "continue", "reason": $reason}'
+if ! echo "$CONTENT" | grep -qE "(from ['\"]react['\"]|useState|useEffect|useRef|useMemo|useCallback|useContext|useReducer)" && \
+   ! echo "$CONTENT" | grep -qE "(<[A-Z][a-zA-Z]*|<div|<span|<button|<input|<form|<section|<article)" && \
+   ! echo "$CONTENT" | grep -qE "(React\.|jsx|tsx|className=)"; then
+  # Not React code - allow
   exit 0
 fi
 
-# Not React code - allow
-exit 0
+# Get project root from FILE_PATH
+find_project_root() {
+  local dir="$1"
+  while [[ "$dir" != "/" ]]; do
+    if [[ -f "$dir/package.json" ]] || [[ -d "$dir/.git" ]]; then
+      echo "$dir"
+      return
+    fi
+    dir=$(dirname "$dir")
+  done
+  echo "${PWD}"
+}
+
+PROJECT_ROOT=$(find_project_root "$(dirname "$FILE_PATH")")
+TASK_FILE="$PROJECT_ROOT/.claude/apex/task.json"
+
+# No task.json = not in APEX mode = allow freely
+if [[ ! -f "$TASK_FILE" ]]; then
+  exit 0
+fi
+
+# In APEX mode - check if doc was consulted
+CURRENT_TASK=$(jq -r '.current_task // "1"' "$TASK_FILE")
+DOC_CONSULTED=$(jq -r --arg task "$CURRENT_TASK" \
+  '.tasks[$task].doc_consulted.react.consulted // false' "$TASK_FILE")
+
+if [[ "$DOC_CONSULTED" == "true" ]]; then
+  exit 0
+fi
+
+# APEX mode + documentation NOT consulted - BLOCK
+PLUGINS_DIR="$HOME/.claude/plugins/marketplaces/fusengine-plugins/plugins"
+REASON="🚫 REACT: Documentation not consulted! "
+REASON+="Before writing React code, you MUST read skills. "
+REASON+="Read: $PLUGINS_DIR/react-expert/skills/react-19/SKILL.md or react-hooks/SKILL.md. "
+REASON+="After reading, retry Write/Edit."
+
+jq -n --arg reason "$REASON" '{"decision": "block", "reason": $reason}'
+exit 2

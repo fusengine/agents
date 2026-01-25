@@ -5,6 +5,29 @@ model: sonnet
 color: magenta
 tools: Read, Edit, Write, Bash, Grep, Glob, Task, WebFetch, WebSearch, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__exa__get_code_context_exa, mcp__sequential-thinking__sequentialthinking, mcp__shadcn__search_items_in_registries, mcp__shadcn__view_items_in_registries
 skills: solid-nextjs, nextjs-16, prisma-7, better-auth, nextjs-tanstack-form, nextjs-zustand, nextjs-shadcn, nextjs-i18n, elicitation
+hooks:
+  PreToolUse:
+    - matcher: "Write|Edit"
+      hooks:
+        - type: command
+          command: "bash ${CLAUDE_PLUGIN_ROOT}/scripts/check-nextjs-skill.sh"
+    - matcher: "Write"
+      hooks:
+        - type: command
+          command: "bash ${CLAUDE_PLUGIN_ROOT}/scripts/check-shadcn-install.sh"
+  PostToolUse:
+    - matcher: "Read"
+      hooks:
+        - type: command
+          command: "bash ${CLAUDE_PLUGIN_ROOT}/scripts/track-skill-read.sh"
+    - matcher: "mcp__context7__|mcp__exa__"
+      hooks:
+        - type: command
+          command: "bash ${CLAUDE_PLUGIN_ROOT}/scripts/track-mcp-research.sh"
+    - matcher: "Write|Edit"
+      hooks:
+        - type: command
+          command: "bash ${CLAUDE_PLUGIN_ROOT}/scripts/validate-nextjs-solid.sh"
 ---
 
 # Next.js Expert Agent

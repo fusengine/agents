@@ -1,6 +1,6 @@
 #!/bin/bash
 # check-swift-skill.sh - PreToolUse hook for swift-apple-expert
-# Forces documentation consultation (smart detection)
+# BLOCKS Write/Edit if documentation not consulted
 
 set -e
 
@@ -23,19 +23,43 @@ if [[ "$FILE_PATH" =~ /(\.build|DerivedData|Pods)/ ]]; then
   exit 0
 fi
 
-CONTENT=$(echo "$INPUT" | jq -r '.tool_input.content // .tool_input.new_string // empty')
+# Get project root from FILE_PATH
+find_project_root() {
+  local dir="$1"
+  while [[ "$dir" != "/" ]]; do
+    if [[ -f "$dir/Package.swift" ]] || [[ -d "$dir/.git" ]] || \
+       ls "$dir"/*.xcodeproj 1>/dev/null 2>&1; then
+      echo "$dir"
+      return
+    fi
+    dir=$(dirname "$dir")
+  done
+  echo "${PWD}"
+}
 
-# SMART DETECTION: Swift/SwiftUI code
-if echo "$CONTENT" | grep -qE "(import SwiftUI|import UIKit|import Foundation)" || \
-   echo "$CONTENT" | grep -qE "(@Observable|@State|@Binding|@Environment|@Published)" || \
-   echo "$CONTENT" | grep -qE "(struct.*:.*View|class.*ViewController|actor )" || \
-   echo "$CONTENT" | grep -qE "(async |await |Task \{|MainActor)" || \
-   echo "$CONTENT" | grep -qE "(NavigationStack|NavigationSplitView|TabView)"; then
+PROJECT_ROOT=$(find_project_root "$(dirname "$FILE_PATH")")
+TASK_FILE="$PROJECT_ROOT/.claude/apex/task.json"
 
-  PLUGINS_DIR="$HOME/.claude/plugins/marketplaces/fusengine-plugins/plugins"
-  REASON="📚 SWIFT CODE DETECTED. Read skills from: $PLUGINS_DIR/swift-apple-expert/skills/ (swiftui-components, swift-concurrency, swift-architecture, swiftui-data, swiftui-navigation, solid-swift). Then retry Write/Edit."
-  jq -n --arg reason "$REASON" '{"decision": "continue", "reason": $reason}'
+# No task.json = not in APEX mode = allow freely
+if [[ ! -f "$TASK_FILE" ]]; then
   exit 0
 fi
 
-exit 0
+# In APEX mode - check if doc was consulted
+CURRENT_TASK=$(jq -r '.current_task // "1"' "$TASK_FILE")
+DOC_CONSULTED=$(jq -r --arg task "$CURRENT_TASK" \
+  '.tasks[$task].doc_consulted.swift.consulted // false' "$TASK_FILE")
+
+if [[ "$DOC_CONSULTED" == "true" ]]; then
+  exit 0
+fi
+
+# APEX mode + documentation NOT consulted - BLOCK
+PLUGINS_DIR="$HOME/.claude/plugins/marketplaces/fusengine-plugins/plugins"
+REASON="🚫 SWIFT: Documentation not consulted! "
+REASON+="Before writing Swift code, you MUST read skills. "
+REASON+="Read: $PLUGINS_DIR/swift-apple-expert/skills/swiftui-components/SKILL.md or solid-swift/SKILL.md. "
+REASON+="After reading, retry Write/Edit."
+
+jq -n --arg reason "$REASON" '{"decision": "block", "reason": $reason}'
+exit 2
