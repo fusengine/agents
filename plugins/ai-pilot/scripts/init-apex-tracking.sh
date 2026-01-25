@@ -41,60 +41,61 @@ EOF
 cat > "$AGENTS_FILE" << 'EOF'
 # APEX Agent Rules
 
-## Current State
-Read `task.json` to know:
-- `current_task`: Which task you're working on
-- `tasks[X].phase`: Current phase (analyze/plan/execute/examine)
-- `tasks[X].doc_consulted`: Which docs were consulted
-- `tasks[X].subject`: Task description
+## For Main Agent (Orchestrator)
+1. Use `TaskCreate` to add tasks to task.json
+2. Use `TaskUpdate` to change task status
+3. Fill task.json with subject, description for each task
+4. Consult docs BEFORE writing code (MCP or skills)
 
-## Workflow (MANDATORY)
+## For Sub-Agents (Expert Agents)
+1. **Read your skills first**: Check your SOLID principles in your agent config
+2. Read `task.json` - find last 3 completed tasks (status: "completed")
+3. Read their research notes in `docs/` folder
+4. Use `TaskList` to see pending tasks
+5. Pick a task not blocked by others
+6. Use `TaskUpdate(taskId, status: "in_progress")` before starting
+7. Apply YOUR SOLID principles (from your agent definition)
+8. Use `TaskUpdate(taskId, status: "completed")` when done
 
-### 1. ANALYZE (First)
-Before ANY code:
-- Read skills: `plugins/[expert]/skills/[skill]/SKILL.md`
-- OR use MCP: `mcp__context7__query-docs` / `mcp__exa__web_search_exa`
-- Write learnings to: `docs/task-{ID}-research.md`
+## Research Tools (Use BEFORE coding)
+- `mcp__context7__resolve-library-id` + `mcp__context7__query-docs` → Official docs
+- `mcp__exa__web_search_exa` → Web search for examples
+- Skills: `plugins/[expert]/skills/[skill]/SKILL.md`
 
-### 2. PLAN
-- Break task into subtasks (<100 lines per file)
-- Use TaskCreate for each subtask
-
-### 3. EXECUTE
-- Follow SOLID principles
+## SOLID Rules (ALL Agents)
 - Files < 100 lines (split at 90)
 - Interfaces in `src/interfaces/` or `Contracts/`
+- Single Responsibility: one purpose per file
+- Each agent has specific SOLID rules - READ YOUR AGENT CONFIG
 
-### 4. EXAMINE
-- Run sniper validation after modifications
-- ZERO linter errors required
+## Documentation (MANDATORY)
+Write notes to: `docs/task-{ID}-{subject-slug}.md`
+Example: `docs/task-3-create-header-component.md`
 
-## Blocking Rules
+Content:
+- What you consulted (MCP, skills, web)
+- Key findings relevant to the task
+- Decisions made and why
+- Files created/modified
 
-| Action | Blocked If |
-|--------|-----------|
-| Write/Edit code | `doc_consulted.[framework] != true` |
-| Complete task | No git commit (no changes) |
-| shadcn components | Manual write instead of CLI install |
+## Validation
+After modifications, run `sniper` agent for:
+- Linter errors → ZERO tolerance
+- SOLID compliance check
+- Code quality validation
 
-## Auto-Commit (AUTOMATIC - DO NOT COMMIT MANUALLY)
-When you call `TaskUpdate(taskId: "X", status: "completed")`:
-1. Hook automatically runs `git add -A`
-2. Hook automatically creates commit: `feat(task-X): subject`
-3. Hook updates task.json with `completed_at`
+## Auto-Commit
+- Do NOT run `git commit` - hooks handle it
+- `TaskUpdate(status: "completed")` triggers auto-commit
+- Blocked if no code changes exist
 
-**IMPORTANT:**
-- Do NOT run `git commit` yourself - it's automatic
-- If no code changes exist → completion is BLOCKED
-- You must write actual code before marking complete
-
-## Files Structure
+## Files
 ```
 .claude/apex/
-├── task.json      # Tracking state (READ THIS FIRST)
-├── AGENTS.md      # This file (rules)
-└── docs/          # Your research notes
-    └── task-{ID}-research.md
+├── task.json   # Task state (read first)
+├── AGENTS.md   # This file (rules)
+└── docs/       # Agents write notes here
+    └── task-{ID}-{subject}.md
 ```
 EOF
 
@@ -117,6 +118,7 @@ echo "  └── docs/ (research notes)"
 echo ""
 echo "Agents will now:"
 echo "  1. Read AGENTS.md for rules"
-echo "  2. Consult docs before writing code"
-echo "  3. Auto-commit on task completion"
-echo "  4. Write research to docs/task-{ID}-research.md"
+echo "  2. Read their skills and SOLID principles"
+echo "  3. Consult MCP (Context7/Exa) before coding"
+echo "  4. Write notes to docs/task-{ID}-{subject}.md"
+echo "  5. Auto-commit on task completion"

@@ -1,6 +1,6 @@
 #!/bin/bash
-# sync-task-tracking.sh - PostToolUse hook for TaskUpdate
-# Synchronizes Claude's TaskUpdate with APEX task.json tracking
+# sync-task-tracking.sh - PostToolUse hook for TaskCreate and TaskUpdate
+# Synchronizes Claude's task tools with APEX task.json tracking
 # Also auto-commits when a task is completed
 
 set -e
@@ -8,19 +8,8 @@ set -e
 INPUT=$(cat)
 TOOL_NAME=$(echo "$INPUT" | jq -r '.tool_name // empty')
 
-# Only handle TaskUpdate
-if [[ "$TOOL_NAME" != "TaskUpdate" ]]; then
-  exit 0
-fi
-
-# Get task details from tool input
-TASK_ID=$(echo "$INPUT" | jq -r '.tool_input.taskId // empty')
-NEW_STATUS=$(echo "$INPUT" | jq -r '.tool_input.status // empty')
-TASK_SUBJECT=$(echo "$INPUT" | jq -r '.tool_input.subject // empty')
-TASK_DESCRIPTION=$(echo "$INPUT" | jq -r '.tool_input.description // empty')
-BLOCKED_BY=$(echo "$INPUT" | jq -r '.tool_input.addBlockedBy // [] | join(",")')
-
-if [[ -z "$TASK_ID" ]]; then
+# Only handle TaskCreate and TaskUpdate
+if [[ "$TOOL_NAME" != "TaskCreate" && "$TOOL_NAME" != "TaskUpdate" ]]; then
   exit 0
 fi
 
@@ -34,6 +23,56 @@ if [[ ! -f "$TASK_FILE" ]]; then
 fi
 
 TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+
+# ============================================
+# Handle TaskCreate - Add new task to task.json
+# ============================================
+if [[ "$TOOL_NAME" == "TaskCreate" ]]; then
+  TASK_SUBJECT=$(echo "$INPUT" | jq -r '.tool_input.subject // empty')
+  TASK_DESCRIPTION=$(echo "$INPUT" | jq -r '.tool_input.description // empty')
+
+  # Get task ID from tool result (Claude assigns it)
+  TASK_ID=$(echo "$INPUT" | jq -r '.tool_result.id // empty')
+
+  # If no ID in result, try to find next available ID
+  if [[ -z "$TASK_ID" ]]; then
+    TASK_ID=$(jq -r '[.tasks | keys[] | tonumber] | max + 1 // 1' "$TASK_FILE")
+  fi
+
+  # Add task to task.json
+  UPDATED_JSON=$(jq --arg task "$TASK_ID" \
+                    --arg time "$TIMESTAMP" \
+                    --arg subject "$TASK_SUBJECT" \
+                    --arg desc "$TASK_DESCRIPTION" '
+    .tasks[$task] = {
+      "subject": $subject,
+      "description": $desc,
+      "status": "pending",
+      "phase": "pending",
+      "created_at": $time,
+      "doc_consulted": {},
+      "files_modified": [],
+      "blockedBy": []
+    }
+  ' "$TASK_FILE")
+  echo "$UPDATED_JSON" > "$TASK_FILE"
+
+  exit 0
+fi
+
+# ============================================
+# Handle TaskUpdate - Update existing task
+# ============================================
+# Get task details from tool input
+TASK_ID=$(echo "$INPUT" | jq -r '.tool_input.taskId // empty')
+NEW_STATUS=$(echo "$INPUT" | jq -r '.tool_input.status // empty')
+TASK_SUBJECT=$(echo "$INPUT" | jq -r '.tool_input.subject // empty')
+TASK_DESCRIPTION=$(echo "$INPUT" | jq -r '.tool_input.description // empty')
+BLOCKED_BY=$(echo "$INPUT" | jq -r '.tool_input.addBlockedBy // [] | join(",")')
+
+if [[ -z "$TASK_ID" ]]; then
+  exit 0
+fi
 
 # Handle task starting (in_progress)
 if [[ "$NEW_STATUS" == "in_progress" ]]; then
