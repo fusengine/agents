@@ -1,5 +1,33 @@
 # Release Notes
 
+## [1.14.0] - 25-01-2026
+
+### Added
+
+- **Agent frontmatter hooks**: Hooks now work in Task subagents (hooks.json doesn't inherit)
+  - Added hooks directly in agent YAML frontmatter for all 6 experts
+  - PreToolUse: `check-*-skill.sh` blocks Write/Edit without doc consultation
+  - PostToolUse: tracking and validation scripts
+
+- **Skill read tracking** (`track-skill-read.sh`):
+  - Tracks when agents read skill documentation files
+  - Dynamic framework detection from skill path
+  - Updates `task.json` with `doc_consulted` status
+
+- **MCP research tracking** (`track-mcp-research.sh`):
+  - Tracks Context7 and Exa documentation calls
+  - Counts as valid documentation consultation for APEX
+
+- **shadcn installation enforcement** (`check-shadcn-install.sh`):
+  - Blocks manual writing of shadcn components in `components/ui/`
+  - Forces usage of `npx shadcn@latest add` CLI
+  - Applied to: design-expert, nextjs-expert, react-expert, laravel-expert
+
+### Changed
+
+- **Blocking mechanism**: All `check-*-skill.sh` scripts now use `decision: block` instead of `continue`
+- **APEX mode check**: Scripts only block if `task.json` exists (APEX mode active)
+
 ## [1.13.2] - 24-01-2026
 
 ### Fixed
