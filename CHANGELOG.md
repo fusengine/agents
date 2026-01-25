@@ -1,5 +1,11 @@
 # Release Notes
 
+## [1.15.1] - 25-01-2026
+
+### Fixed
+
+- **APEX init DRY refactor**: `detect-and-inject-apex.sh` now calls `init-apex-tracking.sh` instead of duplicating code. Ensures AGENTS.md is always created.
+
 ## [1.15.0] - 25-01-2026
 
 ### Added
