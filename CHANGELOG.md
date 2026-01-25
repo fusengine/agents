@@ -1,5 +1,18 @@
 # Release Notes
 
+## [1.18.0] - 25-01-2026
+
+### Added
+
+- **hooks-loader.sh**: Added `SubagentStart` to supported hook types
+- **install-hooks.sh**: Added `TaskCreate|TaskUpdate` matcher for PostToolUse
+- **install-hooks.sh**: Added `SubagentStart` hook configuration
+- **~/.claude/settings.json**: Updated with new matchers (manual step documented)
+
+### Changed
+
+- Translated install-hooks.sh output messages to English
+
 ## [1.17.0] - 25-01-2026
 
 ### Added
