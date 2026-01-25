@@ -7,7 +7,7 @@ set -e
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ROOT_DIR="$(dirname "$SCRIPT_DIR")"
-HOOK_TYPE="${1:-PreToolUse}"  # PreToolUse, PostToolUse, UserPromptSubmit
+HOOK_TYPE="${1:-PreToolUse}"  # PreToolUse, PostToolUse, UserPromptSubmit, SubagentStart
 
 # Dossier marketplace fusengine-plugins uniquement
 PLUGINS_DIR="$HOME/.claude/plugins/marketplaces/fusengine-plugins/plugins"

@@ -59,7 +59,8 @@ if [[ -f "$SETTINGS_FILE" ]]; then
   LOADER_ALREADY_INSTALLED=false
   if has_loader_hook "UserPromptSubmit" "$CURRENT_JSON" && \
      has_loader_hook "PreToolUse" "$CURRENT_JSON" && \
-     has_loader_hook "PostToolUse" "$CURRENT_JSON"; then
+     has_loader_hook "PostToolUse" "$CURRENT_JSON" && \
+     has_loader_hook "SubagentStart" "$CURRENT_JSON"; then
     LOADER_ALREADY_INSTALLED=true
   fi
 
@@ -104,7 +105,9 @@ if [[ -f "$SETTINGS_FILE" ]]; then
     # Ajouter les loaders pour chaque type
     add_loader_if_missing("UserPromptSubmit"; ""; "bash " + $loader + " UserPromptSubmit") |
     add_loader_if_missing("PreToolUse"; "Write|Edit"; "bash " + $loader + " PreToolUse") |
-    add_loader_if_missing("PostToolUse"; "Write|Edit"; "bash " + $loader + " PostToolUse")
+    add_loader_if_missing("PostToolUse"; "Write|Edit"; "bash " + $loader + " PostToolUse") |
+    add_loader_if_missing("PostToolUse"; "TaskCreate|TaskUpdate"; "bash " + $loader + " PostToolUse") |
+    add_loader_if_missing("SubagentStart"; ""; "bash " + $loader + " SubagentStart")
   ')
 
   # Écrire le résultat
@@ -147,6 +150,26 @@ else
             "command": "bash $LOADER_SCRIPT PostToolUse"
           }
         ]
+      },
+      {
+        "matcher": "TaskCreate|TaskUpdate",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash $LOADER_SCRIPT PostToolUse"
+          }
+        ]
+      }
+    ],
+    "SubagentStart": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash $LOADER_SCRIPT SubagentStart"
+          }
+        ]
       }
     ]
   }
@@ -157,10 +180,12 @@ fi
 echo ""
 echo "✅ Installation terminée!"
 echo ""
-echo "Hooks loader ajoutés (vos hooks existants sont préservés):"
-echo "  - UserPromptSubmit → Détecte projet + injecte APEX"
-echo "  - PreToolUse → Bloque si skill non consulté"
-echo "  - PostToolUse → Valide SOLID après modification"
+echo "Hooks loader added (your existing hooks are preserved):"
+echo "  - UserPromptSubmit → Detect project + inject APEX"
+echo "  - PreToolUse → Block if skill not consulted"
+echo "  - PostToolUse (Write|Edit) → Validate SOLID after modification"
+echo "  - PostToolUse (TaskCreate|TaskUpdate) → Sync tasks to task.json"
+echo "  - SubagentStart → Inject APEX context into sub-agents"
 echo ""
 echo "📁 Backup créé: $SETTINGS_FILE.backup.*"
 echo ""
