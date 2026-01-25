@@ -31,8 +31,8 @@ if [[ "$TOOL_NAME" == "TaskCreate" ]]; then
   TASK_SUBJECT=$(echo "$INPUT" | jq -r '.tool_input.subject // empty')
   TASK_DESCRIPTION=$(echo "$INPUT" | jq -r '.tool_input.description // empty')
 
-  # Get task ID from tool result (Claude assigns it)
-  TASK_ID=$(echo "$INPUT" | jq -r '.tool_result.id // empty')
+  # Get task ID from tool response (Claude assigns it)
+  TASK_ID=$(echo "$INPUT" | jq -r '.tool_response.id // empty')
 
   # If no ID in result, try to find next available ID
   if [[ -z "$TASK_ID" ]]; then
