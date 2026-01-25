@@ -17,23 +17,11 @@ if echo "$PROMPT_LOWER" | grep -qE "(^|[[:space:]])/apex|/fuse-ai-pilot:apex"; t
   # Create tracking IMMEDIATELY when /apex is called
   APEX_DIR="${PWD}/.claude/apex"
   TASK_FILE="$APEX_DIR/task.json"
-  mkdir -p "$APEX_DIR/docs"
 
   if [[ ! -f "$TASK_FILE" ]]; then
-    TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
-    cat > "$TASK_FILE" << INITEOF
-{
-  "current_task": "1",
-  "created_at": "$TIMESTAMP",
-  "tasks": {
-    "1": {
-      "status": "in_progress",
-      "started_at": "$TIMESTAMP",
-      "doc_consulted": {}
-    }
-  }
-}
-INITEOF
+    # Call init-apex-tracking.sh to create full structure (task.json + AGENTS.md)
+    SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+    bash "$SCRIPT_DIR/init-apex-tracking.sh" "1"
   fi
 fi
 
