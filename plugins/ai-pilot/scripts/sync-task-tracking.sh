@@ -16,11 +16,40 @@ fi
 # Find project root
 PROJECT_ROOT="${CLAUDE_PROJECT_DIR:-${PWD}}"
 TASK_FILE="$PROJECT_ROOT/.claude/apex/task.json"
+LOCK_FILE="$PROJECT_ROOT/.claude/apex/.task.lock"
 
 # No task.json = not in APEX mode
 if [[ ! -f "$TASK_FILE" ]]; then
   exit 0
 fi
+
+# ============================================
+# File locking to prevent concurrent writes
+# ============================================
+acquire_lock() {
+  local max_wait=10
+  local wait_time=0
+  while ! mkdir "$LOCK_FILE" 2>/dev/null; do
+    sleep 0.1
+    wait_time=$((wait_time + 1))
+    if [[ $wait_time -ge $((max_wait * 10)) ]]; then
+      # Lock timeout - remove stale lock and retry
+      rm -rf "$LOCK_FILE" 2>/dev/null
+      mkdir "$LOCK_FILE" 2>/dev/null || true
+      break
+    fi
+  done
+}
+
+release_lock() {
+  rm -rf "$LOCK_FILE" 2>/dev/null
+}
+
+# Ensure lock is released on exit
+trap release_lock EXIT
+
+# Acquire lock before any file operations
+acquire_lock
 
 TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
 
