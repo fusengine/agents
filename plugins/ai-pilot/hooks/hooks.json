@@ -20,6 +20,15 @@
             "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/enforce-apex-phases.sh"
           }
         ]
+      },
+      {
+        "matcher": "Task",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/inject-apex-context.sh"
+          }
+        ]
       }
     ],
     "PostToolUse": [
@@ -38,6 +47,15 @@
           {
             "type": "command",
             "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/track-doc-consultation.sh"
+          }
+        ]
+      },
+      {
+        "matcher": "TaskUpdate",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/sync-task-tracking.sh"
           }
         ]
       }

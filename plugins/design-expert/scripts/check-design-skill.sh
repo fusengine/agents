@@ -68,10 +68,14 @@ fi
 
 # APEX mode + documentation NOT consulted - BLOCK
 PLUGINS_DIR="$HOME/.claude/plugins/marketplaces/fusengine-plugins/plugins"
-REASON="🚫 DESIGN: Documentation not consulted! "
-REASON+="Before writing UI code, you MUST read skills. "
-REASON+="Read: $PLUGINS_DIR/design-expert/skills/designing-systems/SKILL.md or generating-components/SKILL.md. "
-REASON+="After reading, retry Write/Edit."
+DOCS_DIR="$PROJECT_ROOT/.claude/apex/docs"
+REASON="🚫 APEX BLOCK: Design documentation not consulted! "
+REASON+="CONSULT ONE: "
+REASON+="A) Read: $PLUGINS_DIR/design-expert/skills/designing-systems/SKILL.md | "
+REASON+="B) MCP: mcp__context7__query-docs (topic: tailwind ui) | "
+REASON+="C) MCP: mcp__exa__web_search_exa (query: ui design system). "
+REASON+="THEN: Write learnings to $DOCS_DIR/task-${CURRENT_TASK}-research.md. "
+REASON+="Auto-tracked in: $TASK_FILE. Retry after consulting."
 
 jq -n --arg reason "$REASON" '{"decision": "block", "reason": $reason}'
 exit 2

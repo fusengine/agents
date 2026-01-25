@@ -56,10 +56,14 @@ fi
 
 # APEX mode + documentation NOT consulted - BLOCK
 PLUGINS_DIR="$HOME/.claude/plugins/marketplaces/fusengine-plugins/plugins"
-REASON="🚫 SWIFT: Documentation not consulted! "
-REASON+="Before writing Swift code, you MUST read skills. "
-REASON+="Read: $PLUGINS_DIR/swift-apple-expert/skills/swiftui-components/SKILL.md or solid-swift/SKILL.md. "
-REASON+="After reading, retry Write/Edit."
+DOCS_DIR="$PROJECT_ROOT/.claude/apex/docs"
+REASON="🚫 APEX BLOCK: Swift documentation not consulted! "
+REASON+="CONSULT ONE: "
+REASON+="A) Read: $PLUGINS_DIR/swift-apple-expert/skills/swiftui-components/SKILL.md | "
+REASON+="B) MCP: mcp__context7__query-docs (topic: swiftui) | "
+REASON+="C) MCP: mcp__exa__web_search_exa (query: swiftui ios 18 docs). "
+REASON+="THEN: Write learnings to $DOCS_DIR/task-${CURRENT_TASK}-research.md. "
+REASON+="Auto-tracked in: $TASK_FILE. Retry after consulting."
 
 jq -n --arg reason "$REASON" '{"decision": "block", "reason": $reason}'
 exit 2
