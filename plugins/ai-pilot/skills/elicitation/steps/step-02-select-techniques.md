@@ -37,7 +37,7 @@ next_step: steps/step-03-apply-review.md
 #### 1. Present 5 Most Relevant Techniques
 
 ```markdown
-"J'ai analysé le code. Pour l'auto-review, je propose ces techniques:"
+"I analyzed the code. For auto-review, I propose these techniques:"
 
 1. **{technique_1}** ({category})
    → {what_it_checks}

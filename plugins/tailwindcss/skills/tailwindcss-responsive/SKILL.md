@@ -6,9 +6,9 @@ user-invocable: false
 
 # Responsive Design
 
-## Breakpoints par défaut
+## Default Breakpoints
 
-| Variant | Taille | CSS |
+| Variant | Size | CSS |
 |---------|--------|-----|
 | `sm:` | 40rem (640px) | `@media (width >= 40rem)` |
 | `md:` | 48rem (768px) | `@media (width >= 48rem)` |
@@ -28,7 +28,7 @@ user-invocable: false
 ```html
 <div class="@container">
   <div class="@md:grid-cols-2 @lg:grid-cols-3">
-    <!-- Responsive au conteneur -->
+    <!-- Responsive to container -->
   </div>
 </div>
 ```
@@ -36,6 +36,6 @@ user-invocable: false
 ## Mobile-first
 ```html
 <div class="text-sm md:text-base lg:text-lg">
-  <!-- Petits écrans d'abord -->
+  <!-- Small screens first -->
 </div>
 ```

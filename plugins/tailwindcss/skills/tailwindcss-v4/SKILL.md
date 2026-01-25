@@ -16,7 +16,7 @@ user-invocable: false
 
 ## Quick Reference - @theme Namespaces
 
-| Namespace | Utilities generees |
+| Namespace | Generated Utilities |
 |-----------|-------------------|
 | `--color-*` | bg-*, text-*, border-*, fill-* |
 | `--font-*` | font-* |
@@ -30,7 +30,7 @@ user-invocable: false
 
 ## Configuration CSS-first
 
-### Avant (v3)
+### Before (v3)
 ```javascript
 // tailwind.config.js
 module.exports = {
@@ -42,7 +42,7 @@ module.exports = {
 }
 ```
 
-### Apres (v4)
+### After (v4)
 ```css
 @import "tailwindcss";
 
@@ -53,7 +53,7 @@ module.exports = {
 
 ## Directives v4
 
-### @utility - Creer une utility
+### @utility - Create a utility
 ```css
 @utility tab-4 {
   tab-size: 4;
@@ -61,7 +61,7 @@ module.exports = {
 /* Usage: class="tab-4" */
 ```
 
-### @variant - Style conditionnel
+### @variant - Conditional style
 ```css
 .card {
   @variant dark {
@@ -70,7 +70,7 @@ module.exports = {
 }
 ```
 
-### @custom-variant - Nouveau variant
+### @custom-variant - New variant
 ```css
 @custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 /* Usage: dark:bg-gray-900 */

@@ -1,6 +1,6 @@
 ---
 name: seo-expert
-description: Expert SEO/SEA/GEO 2026 avec analyse de contenu, extraction de mots-clés, optimisation SERP, Google Ads et visibilité IA.
+description: SEO/SEA/GEO 2026 expert with content analysis, keyword extraction, SERP optimization, Google Ads and AI visibility.
 model: sonnet
 color: green
 tools: Read, Edit, Write, Glob, Grep, WebFetch, WebSearch, mcp__exa__web_search_exa, mcp__exa__crawling_exa, mcp__exa__deep_researcher_start, mcp__exa__deep_researcher_check, mcp__sequential-thinking__sequentialthinking, mcp__playwright__browser_snapshot, mcp__playwright__browser_navigate
