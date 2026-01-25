@@ -1,5 +1,14 @@
 # Release Notes
 
+## [1.18.1] - 25-01-2026
+
+### Fixed
+
+- **sync-task-tracking.sh**: Added file locking to prevent concurrent write corruption
+  - Uses `mkdir` for atomic cross-platform locking
+  - 10s timeout with automatic stale lock cleanup
+  - `trap EXIT` ensures lock is always released
+
 ## [1.18.0] - 25-01-2026
 
 ### Added
