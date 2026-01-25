@@ -23,3 +23,5 @@ npm-debug.log*
 .env.*
 !.env.example
 .mcp.json
+# APEX tracking (auto-generated)
+.claude/apex/
