@@ -1,5 +1,24 @@
 # Release Notes
 
+## [1.17.0] - 25-01-2026
+
+### Added
+
+- **SubagentStart hook** (`inject-subagent-context.sh`):
+  - Injects APEX rules directly into sub-agent prompts via `additionalContext`
+  - Provides last 3 completed tasks for context continuity
+  - Lists pending tasks
+  - Includes SOLID rules and research-before-code instructions
+
+### Fixed
+
+- **sync-task-tracking.sh**: Changed `tool_result` → `tool_response` (correct hook format per Claude Code docs)
+
+### Changed
+
+- **hooks.json**: Replaced ineffective `PreToolUse/Task` with `SubagentStart` hook
+- **i18n**: Translated French text to English in 6 files (agents, skills)
+
 ## [1.16.0] - 25-01-2026
 
 ### Added
