@@ -110,6 +110,7 @@ Read skills/adding-animations/SKILL.md       → Framer Motion
 
 ## FORBIDDEN (NEVER)
 
+- **Documentation**: NEVER create .md files (README, DESIGN, BEFORE_AFTER, etc.) - CODE ONLY
 - **AI Slop**: Inter/Roboto, purple gradients, cookie-cutter cards, border-left indicators
 - **Technical**: Emojis as icons (use Lucide), coding without 21st.dev search, incomplete TODOs
 - See `references/typography.md` and `references/color-system.md` for complete lists
