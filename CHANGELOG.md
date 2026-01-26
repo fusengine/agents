@@ -1,5 +1,17 @@
 # Release Notes
 
+## [1.18.3] - 26-01-2026
+
+### Changed
+
+- **design-expert**: Major reorganization
+  - Moved references from skills/ to agent-level references/
+  - Added `ux-principles.md` (Nielsen heuristics, Laws of UX, WCAG 2.2, forms)
+  - Added `ui-visual-design.md` (visual hierarchy, spacing, 2026 trends)
+  - Removed delegation workflow (subagents cannot spawn subagents)
+  - Added explicit skill loading step (00-load-skills) in APEX workflow
+  - Mandatory sniper validation after code
+
 ## [1.18.2] - 26-01-2026
 
 ### Fixed
