@@ -1,5 +1,26 @@
 # Release Notes
 
+## [1.18.2] - 26-01-2026
+
+### Fixed
+
+- **validate-*-solid.sh**: Moved from PostToolUse to PreToolUse for actual blocking
+  - PostToolUse cannot undo writes (file already written)
+  - PreToolUse blocks BEFORE write/edit happens
+  - Now analyzes `tool_input.content` instead of file on disk
+- **check-*-skill.sh**: Added session-based tracking (works without APEX)
+  - Uses `/tmp/claude-skill-tracking/{framework}-{SESSION_ID}`
+  - Agents must read skills BEFORE writing code in ANY context
+  - APEX task.json tracking kept as bonus when available
+- **All blocking hooks**: Use official Claude Code JSON format
+  - Changed from `exit 2` to `permissionDecision: "deny"` with `exit 0`
+  - Follows official documentation best practices
+
+### Changed
+
+- **Agents config**: Moved `validate-*-solid.sh` hook declaration to PreToolUse
+- **15 files updated**: react, nextjs, laravel, swift, tailwindcss, design experts
+
 ## [1.18.1] - 25-01-2026
 
 ### Fixed
