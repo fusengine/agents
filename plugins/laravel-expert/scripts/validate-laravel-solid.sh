@@ -1,6 +1,7 @@
 #!/bin/bash
-# validate-laravel-solid.sh - PostToolUse hook for laravel-expert
-# Validates SOLID principles for Laravel after Write/Edit
+# validate-laravel-solid.sh - PreToolUse hook for laravel-expert
+# Validates SOLID principles BEFORE Write/Edit on Laravel files
+# Uses official Claude Code hook format with permissionDecision
 
 set -e
 
@@ -18,42 +19,59 @@ if [[ ! "$FILE_PATH" =~ \.php$ ]]; then
   exit 0
 fi
 
-# Skip if file doesn't exist
-if [[ ! -f "$FILE_PATH" ]]; then
+# Skip vendor directory
+if [[ "$FILE_PATH" =~ /vendor/ ]]; then
+  exit 0
+fi
+
+# Get content that WILL BE written
+CONTENT=$(echo "$INPUT" | jq -r '.tool_input.content // .tool_input.new_string // empty')
+
+if [[ -z "$CONTENT" ]]; then
   exit 0
 fi
 
 # Count lines
-LINE_COUNT=$(grep -v '^\s*$' "$FILE_PATH" | grep -v '^\s*//' | grep -v '^\s*\*' | wc -l | tr -d ' ')
+LINE_COUNT=$(echo "$CONTENT" | grep -v '^\s*$' | grep -v '^\s*//' | grep -v '^\s*\*' | wc -l | tr -d ' ')
 
+VIOLATIONS=()
+
+# Check file size
 if [[ $LINE_COUNT -gt 100 ]]; then
-  echo "⚠️ SOLID VIOLATION: File has $LINE_COUNT lines (limit: 100)"
-  echo "INSTRUCTION: Split this file using Services, Actions, or Traits"
+  VIOLATIONS+=("File has $LINE_COUNT lines (limit: 100). Split using Services, Actions, or Traits.")
 fi
 
 # Check for interfaces outside Contracts/
-if grep -qE "^interface " "$FILE_PATH" 2>/dev/null; then
+if echo "$CONTENT" | grep -qE "^interface "; then
   if [[ ! "$FILE_PATH" =~ /Contracts/ ]]; then
-    echo "⚠️ SOLID VIOLATION: Interface defined outside app/Contracts/"
-    echo "INSTRUCTION: Move interface to app/Contracts/ directory"
-  fi
-fi
-
-# Check for missing PHPDoc
-if grep -qE "^(public|protected|private) function" "$FILE_PATH" 2>/dev/null; then
-  FUNCTIONS_WITHOUT_DOC=$(grep -B1 "^\s*(public|protected|private) function" "$FILE_PATH" | grep -v "/\*\*" | grep -c "function" || true)
-  if [[ $FUNCTIONS_WITHOUT_DOC -gt 0 ]]; then
-    echo "⚠️ PHPDoc missing on $FUNCTIONS_WITHOUT_DOC function(s)"
-    echo "INSTRUCTION: Add PHPDoc to all public/protected functions"
+    VIOLATIONS+=("Interface defined outside app/Contracts/. Move to app/Contracts/ directory.")
   fi
 fi
 
 # Check for fat controllers
 if [[ "$FILE_PATH" =~ /Controllers/ ]]; then
   if [[ $LINE_COUNT -gt 80 ]]; then
-    echo "⚠️ Fat controller detected ($LINE_COUNT lines)"
-    echo "INSTRUCTION: Extract logic to Services or Actions"
+    VIOLATIONS+=("Fat controller ($LINE_COUNT lines). Extract logic to Services or Actions.")
   fi
+fi
+
+# If violations found, BLOCK
+if [[ ${#VIOLATIONS[@]} -gt 0 ]]; then
+  REASON="SOLID VIOLATION in $FILE_PATH: "
+  for v in "${VIOLATIONS[@]}"; do
+    REASON+="$v "
+  done
+
+  cat <<EOF
+{
+  "hookSpecificOutput": {
+    "hookEventName": "PreToolUse",
+    "permissionDecision": "deny",
+    "permissionDecisionReason": "$REASON"
+  }
+}
+EOF
+  exit 0
 fi
 
 exit 0

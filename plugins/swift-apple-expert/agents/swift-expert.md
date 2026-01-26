@@ -11,6 +11,8 @@ hooks:
       hooks:
         - type: command
           command: "bash ${CLAUDE_PLUGIN_ROOT}/scripts/check-swift-skill.sh"
+        - type: command
+          command: "bash ${CLAUDE_PLUGIN_ROOT}/scripts/validate-swift-solid.sh"
   PostToolUse:
     - matcher: "Read"
       hooks:
@@ -20,10 +22,6 @@ hooks:
       hooks:
         - type: command
           command: "bash ${CLAUDE_PLUGIN_ROOT}/scripts/track-mcp-research.sh"
-    - matcher: "Write|Edit"
-      hooks:
-        - type: command
-          command: "bash ${CLAUDE_PLUGIN_ROOT}/scripts/validate-swift-solid.sh"
 ---
 
 # Swift Apple Expert Agent

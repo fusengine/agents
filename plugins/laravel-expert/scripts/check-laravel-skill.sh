@@ -1,6 +1,6 @@
 #!/bin/bash
 # check-laravel-skill.sh - PreToolUse hook for laravel-expert
-# BLOCKS Write/Edit if documentation not consulted
+# BLOCKS Write/Edit if skill not consulted - WORKS ALWAYS (no APEX dependency)
 
 set -e
 
@@ -23,7 +23,17 @@ if [[ "$FILE_PATH" =~ /(vendor|storage|bootstrap/cache)/ ]]; then
   exit 0
 fi
 
-# Get project root from FILE_PATH
+# Session-based tracking (works without APEX)
+SESSION_ID="${CLAUDE_SESSION_ID:-$$}"
+TRACKING_DIR="/tmp/claude-skill-tracking"
+TRACKING_FILE="$TRACKING_DIR/laravel-$SESSION_ID"
+
+# Check if skill was read in this session
+if [[ -f "$TRACKING_FILE" ]]; then
+  exit 0
+fi
+
+# Also check APEX task.json if it exists (bonus)
 find_project_root() {
   local dir="$1"
   while [[ "$dir" != "/" ]]; do
@@ -39,30 +49,32 @@ find_project_root() {
 PROJECT_ROOT=$(find_project_root "$(dirname "$FILE_PATH")")
 TASK_FILE="$PROJECT_ROOT/.claude/apex/task.json"
 
-# No task.json = not in APEX mode = allow freely
-if [[ ! -f "$TASK_FILE" ]]; then
-  exit 0
+if [[ -f "$TASK_FILE" ]]; then
+  CURRENT_TASK=$(jq -r '.current_task // "1"' "$TASK_FILE")
+  DOC_CONSULTED=$(jq -r --arg task "$CURRENT_TASK" \
+    '.tasks[$task].doc_consulted.laravel.consulted // false' "$TASK_FILE")
+
+  if [[ "$DOC_CONSULTED" == "true" ]]; then
+    exit 0
+  fi
 fi
 
-# In APEX mode - check if doc was consulted
-CURRENT_TASK=$(jq -r '.current_task // "1"' "$TASK_FILE")
-DOC_CONSULTED=$(jq -r --arg task "$CURRENT_TASK" \
-  '.tasks[$task].doc_consulted.laravel.consulted // false' "$TASK_FILE")
-
-if [[ "$DOC_CONSULTED" == "true" ]]; then
-  exit 0
-fi
-
-# APEX mode + documentation NOT consulted - BLOCK
+# NOT consulted - BLOCK with official format
 PLUGINS_DIR="$HOME/.claude/plugins/marketplaces/fusengine-plugins/plugins"
-DOCS_DIR="$PROJECT_ROOT/.claude/apex/docs"
-REASON="🚫 APEX BLOCK: Laravel documentation not consulted! "
-REASON+="CONSULT ONE: "
-REASON+="A) Read: $PLUGINS_DIR/laravel-expert/skills/laravel-eloquent/SKILL.md | "
-REASON+="B) MCP: mcp__context7__query-docs (topic: laravel) | "
-REASON+="C) MCP: mcp__exa__web_search_exa (query: laravel 12 docs). "
-REASON+="THEN: Write learnings to $DOCS_DIR/task-${CURRENT_TASK}-research.md. "
-REASON+="Auto-tracked in: $TASK_FILE. Retry after consulting."
+REASON="BLOCKED: Laravel skill not consulted. "
+REASON+="READ ONE: "
+REASON+="1) $PLUGINS_DIR/laravel-expert/skills/solid-php/SKILL.md | "
+REASON+="2) $PLUGINS_DIR/laravel-expert/skills/laravel-eloquent/SKILL.md | "
+REASON+="3) Use mcp__context7__query-docs (topic: laravel). "
+REASON+="After reading, retry your Write/Edit."
 
-jq -n --arg reason "$REASON" '{"decision": "block", "reason": $reason}'
-exit 2
+cat <<EOF
+{
+  "hookSpecificOutput": {
+    "hookEventName": "PreToolUse",
+    "permissionDecision": "deny",
+    "permissionDecisionReason": "$REASON"
+  }
+}
+EOF
+exit 0

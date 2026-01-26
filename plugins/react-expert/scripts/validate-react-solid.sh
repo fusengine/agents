@@ -1,6 +1,7 @@
 #!/bin/bash
-# validate-react-solid.sh - PostToolUse hook for react-expert
-# Validates SOLID principles after Write/Edit on React files
+# validate-react-solid.sh - PreToolUse hook for react-expert
+# Validates SOLID principles BEFORE Write/Edit on React files
+# Uses official Claude Code hook format with permissionDecision
 
 set -e
 
@@ -18,30 +19,53 @@ if [[ ! "$FILE_PATH" =~ \.(tsx|ts|jsx|js)$ ]]; then
   exit 0
 fi
 
-# Skip if file doesn't exist
-if [[ ! -f "$FILE_PATH" ]]; then
+# Skip non-code directories
+if [[ "$FILE_PATH" =~ /(node_modules|dist|build|\.next)/ ]]; then
   exit 0
 fi
 
-# Skip non-component directories for interface check
-IS_COMPONENT_DIR=false
-if [[ "$FILE_PATH" =~ /components/ ]]; then
-  IS_COMPONENT_DIR=true
+# Get content that WILL BE written (not file on disk)
+CONTENT=$(echo "$INPUT" | jq -r '.tool_input.content // .tool_input.new_string // empty')
+
+# Skip if no content to analyze
+if [[ -z "$CONTENT" ]]; then
+  exit 0
 fi
 
-# Count lines (excluding empty lines and comments)
-LINE_COUNT=$(grep -v '^\s*$' "$FILE_PATH" | grep -v '^\s*//' | grep -v '^\s*\*' | wc -l | tr -d ' ')
+# Count lines in content (excluding empty lines and comments)
+LINE_COUNT=$(echo "$CONTENT" | grep -v '^\s*$' | grep -v '^\s*//' | grep -v '^\s*\*' | wc -l | tr -d ' ')
 
-# Check file size limit (applies to all files)
+VIOLATIONS=()
+
+# Check file size limit
 if [[ $LINE_COUNT -gt 100 ]]; then
-  echo "⚠️ SOLID: $LINE_COUNT lines (limit: 100) - Split file"
+  VIOLATIONS+=("File has $LINE_COUNT lines (limit: 100). Split into smaller modules.")
 fi
 
-# Check for inline interfaces only in component files
-if [[ "$IS_COMPONENT_DIR" == true ]]; then
-  if grep -qE "^(export )?(interface|type) [A-Z]" "$FILE_PATH" 2>/dev/null; then
-    echo "⚠️ SOLID: Interface in component - Move to interfaces/"
+# Check for inline interfaces in component directories
+if [[ "$FILE_PATH" =~ /(components|modules)/ ]]; then
+  if echo "$CONTENT" | grep -qE "^(export )?(interface|type) [A-Z]"; then
+    VIOLATIONS+=("Interface/type in component file. Move to src/interfaces/ directory.")
   fi
+fi
+
+# If violations found, BLOCK with official format
+if [[ ${#VIOLATIONS[@]} -gt 0 ]]; then
+  REASON="SOLID VIOLATION in $FILE_PATH: "
+  for v in "${VIOLATIONS[@]}"; do
+    REASON+="$v "
+  done
+
+  cat <<EOF
+{
+  "hookSpecificOutput": {
+    "hookEventName": "PreToolUse",
+    "permissionDecision": "deny",
+    "permissionDecisionReason": "$REASON"
+  }
+}
+EOF
+  exit 0
 fi
 
 exit 0

@@ -11,6 +11,8 @@ hooks:
       hooks:
         - type: command
           command: "bash ${CLAUDE_PLUGIN_ROOT}/scripts/check-skill-loaded.sh"
+        - type: command
+          command: "bash ${CLAUDE_PLUGIN_ROOT}/scripts/validate-react-solid.sh"
     - matcher: "Write"
       hooks:
         - type: command
@@ -24,10 +26,6 @@ hooks:
       hooks:
         - type: command
           command: "bash ${CLAUDE_PLUGIN_ROOT}/scripts/track-mcp-research.sh"
-    - matcher: "Write|Edit"
-      hooks:
-        - type: command
-          command: "bash ${CLAUDE_PLUGIN_ROOT}/scripts/validate-react-solid.sh"
 ---
 
 # React Expert Agent

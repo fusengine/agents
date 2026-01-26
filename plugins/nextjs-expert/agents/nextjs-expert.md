@@ -11,6 +11,8 @@ hooks:
       hooks:
         - type: command
           command: "bash ${CLAUDE_PLUGIN_ROOT}/scripts/check-nextjs-skill.sh"
+        - type: command
+          command: "bash ${CLAUDE_PLUGIN_ROOT}/scripts/validate-nextjs-solid.sh"
     - matcher: "Write"
       hooks:
         - type: command
@@ -24,10 +26,6 @@ hooks:
       hooks:
         - type: command
           command: "bash ${CLAUDE_PLUGIN_ROOT}/scripts/track-mcp-research.sh"
-    - matcher: "Write|Edit"
-      hooks:
-        - type: command
-          command: "bash ${CLAUDE_PLUGIN_ROOT}/scripts/validate-nextjs-solid.sh"
 ---
 
 # Next.js Expert Agent

@@ -1,6 +1,7 @@
 #!/bin/bash
-# validate-swift-solid.sh - PostToolUse hook for swift-apple-expert
-# Validates SOLID principles for Swift after Write/Edit
+# validate-swift-solid.sh - PreToolUse hook for swift-apple-expert
+# Validates SOLID principles BEFORE Write/Edit on Swift files
+# Uses official Claude Code hook format with permissionDecision
 
 set -e
 
@@ -18,46 +19,72 @@ if [[ ! "$FILE_PATH" =~ \.swift$ ]]; then
   exit 0
 fi
 
-# Skip if file doesn't exist
-if [[ ! -f "$FILE_PATH" ]]; then
+# Skip build directories
+if [[ "$FILE_PATH" =~ /(\.build|DerivedData|Pods)/ ]]; then
+  exit 0
+fi
+
+# Get content that WILL BE written
+CONTENT=$(echo "$INPUT" | jq -r '.tool_input.content // .tool_input.new_string // empty')
+
+if [[ -z "$CONTENT" ]]; then
   exit 0
 fi
 
 # Count lines
-LINE_COUNT=$(grep -v '^\s*$' "$FILE_PATH" | grep -v '^\s*//' | wc -l | tr -d ' ')
+LINE_COUNT=$(echo "$CONTENT" | grep -v '^\s*$' | grep -v '^\s*//' | wc -l | tr -d ' ')
 
 # Swift allows 150 lines for Views
 MAX_LINES=100
-if [[ "$FILE_PATH" =~ View\.swift$ ]] || [[ "$FILE_PATH" =~ Screen\.swift$ ]]; then
+if [[ "$FILE_PATH" =~ (View|Screen)\.swift$ ]]; then
   MAX_LINES=150
 fi
 
+VIOLATIONS=()
+
+# Check file size
 if [[ $LINE_COUNT -gt $MAX_LINES ]]; then
-  echo "⚠️ SOLID VIOLATION: File has $LINE_COUNT lines (limit: $MAX_LINES)"
-  echo "INSTRUCTION: Extract to ViewModels, Services, or subviews"
+  VIOLATIONS+=("File has $LINE_COUNT lines (limit: $MAX_LINES). Extract to ViewModels, Services, or subviews.")
 fi
 
 # Check for protocols outside Protocols/
-if grep -qE "^protocol " "$FILE_PATH" 2>/dev/null; then
+if echo "$CONTENT" | grep -qE "^protocol "; then
   if [[ ! "$FILE_PATH" =~ /Protocols/ ]]; then
-    echo "⚠️ SOLID VIOLATION: Protocol defined outside Protocols/ directory"
-    echo "INSTRUCTION: Move protocol to Protocols/ directory"
+    VIOLATIONS+=("Protocol defined outside Protocols/ directory. Move to Protocols/.")
   fi
 fi
 
 # Check for @MainActor on ViewModels
 if [[ "$FILE_PATH" =~ ViewModel\.swift$ ]]; then
-  if ! grep -q "@MainActor" "$FILE_PATH" 2>/dev/null; then
-    echo "⚠️ Swift 6: ViewModel missing @MainActor annotation"
-    echo "INSTRUCTION: Add @MainActor to ViewModel class"
+  if ! echo "$CONTENT" | grep -q "@MainActor"; then
+    VIOLATIONS+=("ViewModel missing @MainActor annotation for Swift 6 concurrency.")
   fi
 fi
 
 # Check for Sendable compliance
-if grep -qE "^(class|struct) .* {" "$FILE_PATH" 2>/dev/null; then
-  if grep -q "async " "$FILE_PATH" && ! grep -qE "(Sendable|@unchecked Sendable)" "$FILE_PATH"; then
-    echo "⚠️ Swift 6: Type uses async but doesn't conform to Sendable"
+if echo "$CONTENT" | grep -qE "^(class|struct) .* \{"; then
+  if echo "$CONTENT" | grep -q "async " && ! echo "$CONTENT" | grep -qE "(Sendable|@unchecked Sendable)"; then
+    VIOLATIONS+=("Type uses async but doesn't conform to Sendable (Swift 6 requirement).")
   fi
+fi
+
+# If violations found, BLOCK
+if [[ ${#VIOLATIONS[@]} -gt 0 ]]; then
+  REASON="SOLID VIOLATION in $FILE_PATH: "
+  for v in "${VIOLATIONS[@]}"; do
+    REASON+="$v "
+  done
+
+  cat <<EOF
+{
+  "hookSpecificOutput": {
+    "hookEventName": "PreToolUse",
+    "permissionDecision": "deny",
+    "permissionDecisionReason": "$REASON"
+  }
+}
+EOF
+  exit 0
 fi
 
 exit 0

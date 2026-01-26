@@ -1,6 +1,6 @@
 #!/bin/bash
 # track-skill-read.sh - PostToolUse hook for tracking skill reads
-# Detects framework from skill path (not hardcoded)
+# WORKS ALWAYS (session-based) + APEX bonus if available
 
 set -e
 
@@ -19,7 +19,7 @@ if [[ ! "$FILE_PATH" =~ skills/.*\.(md|txt)$ ]]; then
   exit 0
 fi
 
-# Detect framework from skill path (dynamic, not hardcoded)
+# Detect framework from skill path
 FRAMEWORK=""
 if [[ "$FILE_PATH" =~ tailwindcss|tailwind ]]; then FRAMEWORK="tailwind"
 elif [[ "$FILE_PATH" =~ shadcn ]]; then FRAMEWORK="shadcn"
@@ -32,32 +32,38 @@ elif [[ "$FILE_PATH" =~ solid ]]; then FRAMEWORK="solid"
 else FRAMEWORK="generic"
 fi
 
-# Get project root
+# Session-based tracking (ALWAYS works, no APEX needed)
+SESSION_ID="${CLAUDE_SESSION_ID:-$$}"
+TRACKING_DIR="/tmp/claude-skill-tracking"
+mkdir -p "$TRACKING_DIR"
+TRACKING_FILE="$TRACKING_DIR/$FRAMEWORK-$SESSION_ID"
+
+# Mark as consulted for this session
+echo "$(date -u +%Y-%m-%dT%H:%M:%SZ) $FILE_PATH" >> "$TRACKING_FILE"
+
+# Also update APEX task.json if it exists (bonus)
 PROJECT_ROOT="${CLAUDE_PROJECT_DIR:-${PWD}}"
 TASK_FILE="$PROJECT_ROOT/.claude/apex/task.json"
 
-# Only update if task.json exists (APEX mode)
-if [[ ! -f "$TASK_FILE" ]]; then
-  exit 0
+if [[ -f "$TASK_FILE" ]]; then
+  CURRENT_TASK=$(jq -r '.current_task // "1"' "$TASK_FILE")
+  TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+
+  UPDATED_JSON=$(jq --arg task "$CURRENT_TASK" \
+                    --arg fw "$FRAMEWORK" \
+                    --arg file "$FILE_PATH" \
+                    --arg time "$TIMESTAMP" '
+    .tasks[$task] //= {} |
+    .tasks[$task].doc_consulted //= {} |
+    .tasks[$task].doc_consulted[$fw] = {
+      "consulted": true,
+      "file": $file,
+      "source": "skill:Read",
+      "timestamp": $time
+    }
+  ' "$TASK_FILE")
+
+  echo "$UPDATED_JSON" > "$TASK_FILE"
 fi
 
-CURRENT_TASK=$(jq -r '.current_task // "1"' "$TASK_FILE")
-TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
-
-# Update task.json
-UPDATED_JSON=$(jq --arg task "$CURRENT_TASK" \
-                  --arg fw "$FRAMEWORK" \
-                  --arg file "$FILE_PATH" \
-                  --arg time "$TIMESTAMP" '
-  .tasks[$task] //= {} |
-  .tasks[$task].doc_consulted //= {} |
-  .tasks[$task].doc_consulted[$fw] = {
-    "consulted": true,
-    "file": $file,
-    "source": "skill:Read",
-    "timestamp": $time
-  }
-' "$TASK_FILE")
-
-echo "$UPDATED_JSON" > "$TASK_FILE"
 exit 0
