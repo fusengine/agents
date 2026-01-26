@@ -1,6 +1,6 @@
 #!/bin/bash
 # track-skill-read.sh - PostToolUse hook for tracking skill reads
-# WORKS ALWAYS (session-based) + APEX bonus if available
+# WORKS ALWAYS (session-based + APEX)
 
 set -e
 
@@ -19,8 +19,8 @@ if [[ ! "$FILE_PATH" =~ skills/.*\.(md|txt)$ ]]; then
   exit 0
 fi
 
-# Detect framework from skill path
-FRAMEWORK=""
+# Detect framework from skill path (dynamic, not hardcoded)
+FRAMEWORK="generic"
 if [[ "$FILE_PATH" =~ tailwindcss|tailwind ]]; then FRAMEWORK="tailwind"
 elif [[ "$FILE_PATH" =~ shadcn ]]; then FRAMEWORK="shadcn"
 elif [[ "$FILE_PATH" =~ nextjs|next-expert ]]; then FRAMEWORK="nextjs"
@@ -29,26 +29,29 @@ elif [[ "$FILE_PATH" =~ laravel|php ]]; then FRAMEWORK="laravel"
 elif [[ "$FILE_PATH" =~ swift|swiftui|apple ]]; then FRAMEWORK="swift"
 elif [[ "$FILE_PATH" =~ design-expert ]]; then FRAMEWORK="design"
 elif [[ "$FILE_PATH" =~ solid ]]; then FRAMEWORK="solid"
-else FRAMEWORK="generic"
 fi
 
-# Session-based tracking (ALWAYS works, no APEX needed)
+TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+
+# SESSION-BASED TRACKING (ALWAYS works, no APEX needed)
 SESSION_ID="${CLAUDE_SESSION_ID:-$$}"
 TRACKING_DIR="/tmp/claude-skill-tracking"
 mkdir -p "$TRACKING_DIR"
 TRACKING_FILE="$TRACKING_DIR/$FRAMEWORK-$SESSION_ID"
+echo "$TIMESTAMP skill:Read $FILE_PATH" >> "$TRACKING_FILE"
 
-# Mark as consulted for this session
-echo "$(date -u +%Y-%m-%dT%H:%M:%SZ) $FILE_PATH" >> "$TRACKING_FILE"
+# Also track "generic" for any skill read (allows general-purpose agent)
+if [[ "$FRAMEWORK" != "generic" ]]; then
+  GENERIC_FILE="$TRACKING_DIR/generic-$SESSION_ID"
+  echo "$TIMESTAMP skill:Read $FILE_PATH" >> "$GENERIC_FILE"
+fi
 
-# Also update APEX task.json if it exists (bonus)
+# APEX tracking (bonus - if task.json exists)
 PROJECT_ROOT="${CLAUDE_PROJECT_DIR:-${PWD}}"
 TASK_FILE="$PROJECT_ROOT/.claude/apex/task.json"
 
 if [[ -f "$TASK_FILE" ]]; then
   CURRENT_TASK=$(jq -r '.current_task // "1"' "$TASK_FILE")
-  TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
-
   UPDATED_JSON=$(jq --arg task "$CURRENT_TASK" \
                     --arg fw "$FRAMEWORK" \
                     --arg file "$FILE_PATH" \
@@ -62,7 +65,6 @@ if [[ -f "$TASK_FILE" ]]; then
       "timestamp": $time
     }
   ' "$TASK_FILE")
-
   echo "$UPDATED_JSON" > "$TASK_FILE"
 fi
 
