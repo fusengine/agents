@@ -1,5 +1,14 @@
 # Release Notes
 
+## [1.18.5] - 26-01-2026
+
+### Fixed
+
+- **design-expert**: Enforce project structure conventions
+  - Edit existing files instead of creating `*Redesigned.tsx`
+  - Follow project conventions (`modules/` vs `src/`)
+  - Step 01 must identify project structure before coding
+
 ## [1.18.4] - 26-01-2026
 
 ### Fixed
