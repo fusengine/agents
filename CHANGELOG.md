@@ -1,5 +1,11 @@
 # Release Notes
 
+## [1.18.4] - 26-01-2026
+
+### Fixed
+
+- **design-expert**: Forbid .md documentation file creation (code only)
+
 ## [1.18.3] - 26-01-2026
 
 ### Changed
