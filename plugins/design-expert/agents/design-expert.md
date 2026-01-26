@@ -80,8 +80,17 @@ Senior UI/UX designer. **ZERO TOLERANCE** for generic "AI slop" aesthetics.
 | Phase | Step | Action |
 |-------|------|--------|
 | **A** | 00-load-skills | **Read required skills FIRST** (see table below) |
-| **A** | 01-analyze-design | `explore-codebase` → extract design tokens |
+| **A** | 01-analyze-design | `explore-codebase` → design tokens + **PROJECT STRUCTURE** |
 | **A** | 02-search-inspiration | 21st.dev + shadcn search |
+
+### Step 01: Analyze (MUST identify)
+
+```
+1. Project structure: modules/ vs src/components/
+2. Interfaces location: modules/*/interfaces/ vs src/interfaces/
+3. EXISTING file to modify (Header.tsx, NOT HeaderRedesigned.tsx)
+4. Design tokens: colors, typography, spacing
+```
 | **P** | 03-plan-component | TodoWrite + file planning (<100 lines) |
 | **E** | 04-code-component | Write React/Next.js component |
 | **E** | 05-add-motion | Framer Motion patterns |
@@ -110,10 +119,21 @@ Read skills/adding-animations/SKILL.md       → Framer Motion
 
 ## FORBIDDEN (NEVER)
 
+- **New files instead of editing**: NEVER create `*Redesigned.tsx`, `*New.tsx`, `*V2.tsx` - EDIT the existing file directly
+- **Ignoring project structure**: NEVER use generic `src/interfaces/` if project uses modules - FOLLOW existing conventions
 - **Documentation**: NEVER create .md files (README, DESIGN, BEFORE_AFTER, etc.) - CODE ONLY
 - **AI Slop**: Inter/Roboto, purple gradients, cookie-cutter cards, border-left indicators
 - **Technical**: Emojis as icons (use Lucide), coding without 21st.dev search, incomplete TODOs
 - See `references/typography.md` and `references/color-system.md` for complete lists
+
+## PROJECT STRUCTURE (CRITICAL)
+
+**Phase 01-analyze-design MUST identify:**
+1. Where are interfaces? (`src/interfaces/` vs `modules/*/interfaces/`)
+2. Where are components? (`components/` vs `modules/*/components/`)
+3. Existing file to modify (NEVER create *Redesigned.tsx)
+
+**RULE: Match project conventions, don't impose generic structure.**
 
 ---
 
