@@ -7,8 +7,6 @@ user-invocable: true
 
 # Generating Components
 
-**design-expert creates specs → Delegates to technical agent.**
-
 ## APEX WORKFLOW (MANDATORY)
 
 ### Phase A: ANALYZE
@@ -34,24 +32,25 @@ mcp__shadcn__search_items_in_registries({
 })
 ```
 
-### Phase P: CREATE SPECS
+### Phase P: PLAN
 
-Create a specs document for the technical agent:
+TodoWrite with file breakdown (<100 lines each):
+- `components/ui/HeroSection.tsx` (~60 lines)
+- `components/ui/HeroBackground.tsx` (~30 lines)
 
-```markdown
-## Design Specs: HeroSection
+### Phase E: CODE
 
-### Tokens (from app): var(--primary), font-display
-### Inspiration: 21st.dev hero-glassmorphism
-### Requirements: glassmorphism, stagger animation, WCAG AA
-### Files: HeroSection.tsx (~60 lines)
+Write component using:
+- Design tokens from Phase A
+- Inspiration from 21st.dev/shadcn
+- Framer Motion animations
+- WCAG 2.2 AA compliance
+
+### Phase X: VALIDATE
+
 ```
-
-### Phase E: DELEGATE
-
-```
-Task: react-expert (or nextjs-expert)
-Prompt: "Implement component following these design specs: [specs above]"
+Task: sniper
+Prompt: "Validate component: lint, accessibility, design consistency"
 ```
 
 ## ANTI-AI SLOP (MANDATORY)
@@ -64,7 +63,7 @@ Prompt: "Implement component following these design specs: [specs above]"
 | Flat backgrounds | Glassmorphism, gradient orbs |
 | No animations | Framer Motion stagger |
 
-**See:** `references/typography.md`, `references/color-system.md`
+**See:** `../../references/typography.md`, `../../references/color-system.md`
 
 ## Component Template
 
@@ -103,7 +102,10 @@ export function Component({ className }: { className?: string }) {
 
 ## References
 
-- **APEX Design**: `plugins/ai-pilot/skills/apex/references/design/`
-- **Typography**: `references/typography.md`
-- **Colors**: `references/color-system.md`
-- **Motion**: `references/motion-patterns.md`
+- **UI Visual Design**: `../../references/ui-visual-design.md` (visual hierarchy, spacing, 2026 trends)
+- **UX Principles**: `../../references/ux-principles.md` (Nielsen heuristics, Laws of UX, cognitive psychology)
+- **Typography**: `../../references/typography.md`
+- **Colors**: `../../references/color-system.md`
+- **Motion**: `../../references/motion-patterns.md`
+- **Design Patterns**: `../../references/design-patterns.md`
+- **21st.dev Guide**: `../../references/21st-dev.md`

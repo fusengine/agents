@@ -61,21 +61,35 @@ Use extremes (100/200 vs 800/900), ratios 3x+ for headings.
 ## CSS IMPLEMENTATION
 
 ```css
-/* Google Fonts import */
-@import url('https://fonts.googleapis.com/css2?family=Clash+Display:wght@400;500;600;700&family=Satoshi:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap');
+/* Fontshare imports (MANDATORY - NOT Google Fonts) */
+@import url('https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&display=swap');
+@import url('https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&display=swap');
 
 :root {
-  --font-heading: 'Clash Display', sans-serif;
-  --font-body: 'Satoshi', sans-serif;
+  --font-display: 'Clash Display', sans-serif;
+  --font-sans: 'Satoshi', sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
 }
+```
 
-/* Tailwind config */
-fontFamily: {
-  heading: ['Clash Display', 'sans-serif'],
-  body: ['Satoshi', 'sans-serif'],
-  mono: ['JetBrains Mono', 'monospace'],
+## TAILWIND V4 CONFIG
+
+```css
+/* index.css */
+@import "tailwindcss";
+
+@theme inline {
+  --font-display: var(--font-display);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
 }
+```
+
+```tsx
+/* Usage */
+<h1 className="font-display text-5xl font-bold">Heading</h1>
+<p className="font-sans text-base">Body text</p>
+<code className="font-mono">Code</code>
 ```
 
 ## TYPOGRAPHY SCALE

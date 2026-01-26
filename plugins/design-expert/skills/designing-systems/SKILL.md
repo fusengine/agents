@@ -104,6 +104,8 @@ color palette, typography, spacing patterns"
 
 ## References
 
-- **APEX Design**: `references/design/01-analyze-design.md`
-- **Color System**: `references/color-system.md`
-- **Typography**: `references/typography.md`
+- **UI Visual Design**: `../../references/ui-visual-design.md` (visual hierarchy, spacing system, 2026 trends)
+- **Color System**: `../../references/color-system.md`
+- **Typography**: `../../references/typography.md`
+- **Theme Presets**: `../../references/theme-presets.md`
+- **Tailwind Best Practices**: `../../references/tailwind-best-practices.md`

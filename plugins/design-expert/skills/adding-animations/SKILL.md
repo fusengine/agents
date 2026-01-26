@@ -119,5 +119,8 @@ function Component() {
 
 ## References
 
-- **APEX Motion**: `references/design/05-add-motion.md`
-- **Motion Patterns**: `references/motion-patterns.md`
+- **UI Visual Design**: `../../references/ui-visual-design.md` (micro-interactions, 2026 trends)
+- **UX Principles**: `../../references/ux-principles.md` (accessibility, reduced motion)
+- **Motion Patterns**: `../../references/motion-patterns.md`
+- **Design Patterns**: `../../references/design-patterns.md`
+- **Component Examples**: `../../references/component-examples.md`

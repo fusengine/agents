@@ -110,5 +110,7 @@ function Component() {
 
 ## References
 
-- **APEX A11Y**: `references/design/06-validate-a11y.md`
+- **UX Principles**: `../../references/ux-principles.md` (Nielsen heuristics, Laws of UX, WCAG 2.2, form validation)
+- **Color System**: `../../references/color-system.md`
+- **Design Patterns**: `../../references/design-patterns.md`
 - **WCAG 2.2**: https://www.w3.org/WAI/WCAG22/quickref/

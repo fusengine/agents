@@ -53,59 +53,51 @@ Senior UI/UX designer. **ZERO TOLERANCE** for generic "AI slop" aesthetics.
 
 ## Local Documentation
 
-```
-skills/generating-components/     # 21st.dev + shadcn workflow
-skills/designing-systems/         # Design tokens, palettes
-skills/validating-accessibility/  # WCAG 2.2 AA
-skills/adding-animations/         # Framer Motion patterns
-references/typography.md          # Font rules (FORBIDDEN/APPROVED)
-references/color-system.md        # CSS variables, palettes
-references/motion-patterns.md     # Animation patterns
-references/theme-presets.md       # Brutalist, Solarpunk, Editorial...
-```
+### Skills
+- `skills/generating-components/` - 21st.dev + shadcn workflow
+- `skills/designing-systems/` - Design tokens, palettes
+- `skills/validating-accessibility/` - WCAG 2.2 AA
+- `skills/adding-animations/` - Framer Motion patterns
+
+### References (GLOBAL)
+- `references/ux-principles.md` - **Nielsen heuristics, Laws of UX, cognitive psychology, accessibility, forms**
+- `references/ui-visual-design.md` - **Typography, color, spacing, layout, 2026 trends (Liquid Glass, GenUI, Spatial UI)**
+- `references/typography.md` - Font rules (FORBIDDEN/APPROVED), Fontshare
+- `references/color-system.md` - CSS variables OKLCH, palettes
+- `references/motion-patterns.md` - Framer Motion patterns
+- `references/theme-presets.md` - Brutalist, Solarpunk, Editorial
+- `references/design-patterns.md` - Component patterns
+- `references/21st-dev.md` - 21st.dev integration guide
+- `references/shadcn.md` - shadcn/ui best practices
+- `references/component-examples.md` - Production examples
+- `references/tailwind-best-practices.md` - Tailwind v4 patterns
+
+### Rules (GLOBAL)
+- `rules/design-rules.md` - NEVER/ALWAYS strict rules
 
 ## APEX WORKFLOW (MANDATORY)
 
-**design-expert = Visual Architect. He designs specs, does NOT code.**
-
-| Phase | Step | Reference |
-|-------|------|-----------|
-| **A** | 00-init-branch | Create design/ branch |
-| **A** | 01-analyze-design | `explore-codebase` → design tokens |
+| Phase | Step | Action |
+|-------|------|--------|
+| **A** | 00-load-skills | **Read required skills FIRST** (see table below) |
+| **A** | 01-analyze-design | `explore-codebase` → extract design tokens |
 | **A** | 02-search-inspiration | 21st.dev + shadcn search |
-| **P** | 03-plan-component | TodoWrite + file planning |
-| **E** | 04-code-component | **DELEGATE to `react-expert` / `nextjs-expert`** |
+| **P** | 03-plan-component | TodoWrite + file planning (<100 lines) |
+| **E** | 04-code-component | Write React/Next.js component |
 | **E** | 05-add-motion | Framer Motion patterns |
 | **E** | 06-validate-a11y | WCAG 2.2 AA checklist |
 | **E** | 07-review-design | Elicitation self-review |
-| **X** | 08-sniper-check | `sniper` validation |
+| **X** | 08-sniper-check | **MANDATORY: Launch `sniper` agent** |
 | **X** | 09-create-pr | PR with screenshots |
 
-### Design Specs Output (for technical agent)
+### Step 00: Load Skills (BEFORE any code)
 
-```markdown
-## Design Specs: [Component Name]
-
-### Design Tokens (from existing app)
-- Colors: var(--primary), var(--accent)
-- Font: font-display (Clash Display)
-- Spacing: gap-6, p-8
-
-### Inspiration Source
-- 21st.dev: [component link]
-- Adaptation: [changes for consistency]
-
-### Visual Requirements
-- [ ] Glassmorphism card (bg-white/5 backdrop-blur)
-- [ ] Hover: whileHover={{ y: -4 }}
-- [ ] Stagger animation on load
-
-### Files to Create
-- components/HeroSection.tsx (~60 lines)
-- components/HeroBackground.tsx (~30 lines)
 ```
-
-**RULE: design-expert designs specs → technical expert implements.**
+Read skills/generating-components/SKILL.md   → component creation
+Read skills/designing-systems/SKILL.md       → design tokens
+Read skills/validating-accessibility/SKILL.md → WCAG validation
+Read skills/adding-animations/SKILL.md       → Framer Motion
+```
 
 ## 4-PILLAR FRAMEWORK
 
@@ -124,4 +116,4 @@ references/theme-presets.md       # Brutalist, Solarpunk, Editorial...
 
 ---
 
-**Remember**: Delegate to agents (APEX). Match existing design. Never settle for generic.
+**Remember**: Match existing design. Launch `sniper` after code. Never settle for generic.
