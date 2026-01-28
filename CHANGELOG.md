@@ -1,16 +1,22 @@
 # Release Notes
 
+## [1.24.1] - 28-01-2026
+
+### Changed
+
+- **env**: Remove `inject-keys.sh` - MCP servers use `${VAR}` interpolation directly
+  - Claude Code interpolates env vars from shell environment at startup
+  - No script needed, just configure shell to load `~/.claude/.env`
+- **docs**: Simplify `setup-env.md` documentation
+
 ## [1.24.0] - 28-01-2026
 
 ### Added
 
-- **env**: Add `inject-keys.sh` script for MCP API key configuration
-  - Reads keys from `~/.claude/.env` and injects into plugin `.mcp.json` files
-  - Run after plugin installation or key updates
 - **env**: Add `install-env.sh` for cross-platform shell auto-detection
   - Supports bash, zsh, fish on macOS/Linux/WSL
 - **env**: Add `install-env.ps1` for Windows PowerShell support
-- **docs**: Update `setup-env.md` with new streamlined setup workflow
+- **docs**: Update `setup-env.md` with setup workflow
 
 ## [1.23.2] - 28-01-2026
 
