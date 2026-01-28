@@ -1,5 +1,14 @@
 # Release Notes
 
+## [1.21.4] - 28-01-2026
+
+### Fixed
+
+- **scripts**: Fix statusline detection and use marketplace paths
+  - Fix jq condition that captured "false\nno" instead of "no"
+  - Copy hooks-loader.sh to marketplace for portability
+  - Use $HOME-based paths resolved at install time
+
 ## [1.21.3] - 28-01-2026
 
 ### Fixed
