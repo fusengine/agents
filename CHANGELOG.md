@@ -1,5 +1,16 @@
 # Release Notes
 
+## [1.25.1] - 28-01-2026
+
+### Fixed
+
+- **statusline**: Correct context calculation using `used_percentage` from Claude Code API
+- **statusline**: Display usable space (167K) instead of total (200K) for accurate autocompact threshold
+- **statusline**: Fix AUTOCOMPACT_BUFFER from 45K to 33K (16.5%)
+- **statusline**: Fix spacing in limits segment (`5h: 20%` instead of `5h:20%`)
+- **statusline**: Fix double `$` in cost segment
+- **ai-pilot**: Fix MCP tool detection pattern in doc tracking hook
+
 ## [1.25.0] - 28-01-2026
 
 ### Added
