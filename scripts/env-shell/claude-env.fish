@@ -1,10 +1,20 @@
 # Claude Code - Load API keys from ~/.claude/.env
-# Copy to ~/.config/fish/conf.d/claude-env.fish
+# Install: copy to ~/.config/fish/conf.d/claude-env.fish
 
 if test -f ~/.claude/.env
-    for line in (grep -v '^#' ~/.claude/.env | grep -v '^$')
-        set -l key (echo $line | sed 's/^export //' | cut -d= -f1)
-        set -l val (echo $line | sed 's/^export //' | cut -d= -f2- | sed 's/^"//' | sed 's/"$//')
+    # Load each export line
+    for line in (grep '^export' ~/.claude/.env)
+        # Parse: export KEY="value" or export KEY=value
+        set -l keyval (string replace 'export ' '' $line)
+        set -l key (string split -m1 '=' $keyval)[1]
+        set -l val (string split -m1 '=' $keyval)[2]
+        # Remove quotes if present
+        set val (string trim -c '"' $val)
+        set val (string trim -c "'" $val)
+        # Export globally
         set -gx $key $val
     end
+
+    # Tell bash to load .env for non-interactive shells (Claude Code uses bash)
+    set -gx BASH_ENV ~/.claude/.env
 end
