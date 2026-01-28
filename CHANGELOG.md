@@ -1,5 +1,22 @@
 # Release Notes
 
+## [1.25.0] - 28-01-2026
+
+### Added
+
+- **config**: Add optimized `CLAUDE.md` with APEX workflow rules
+  - Parallel research phase (explore-codebase + research-expert)
+  - Sequential code phase with mandatory sniper validation
+  - Project detection → auto-launch matching expert agent
+  - Git commits trigger `/fuse-commit-pro:commit`
+
+### Changed
+
+- **install-hooks.sh**: Add `language=french` and `attribution` settings
+  - Auto-install CLAUDE.md to `~/.claude/`
+- **install-env.sh**: Detect and install only for user's default shell
+  - No longer installs for all shells (bash + zsh)
+
 ## [1.24.1] - 28-01-2026
 
 ### Changed
