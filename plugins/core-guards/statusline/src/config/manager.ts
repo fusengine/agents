@@ -7,15 +7,17 @@
 
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { homedir } from "node:os";
-import { join } from "node:path";
+import { dirname, join } from "node:path";
 import {
 	StatuslineConfigSchema,
 	defaultConfig,
 	type StatuslineConfig,
 } from "./schema";
 
-const CONFIG_DIR = join(homedir(), ".claude", "scripts", "statusline");
-const CONFIG_FILE = join(CONFIG_DIR, "config.json");
+// Config du plugin (relatif au script installe)
+const PLUGIN_CONFIG = join(dirname(__dirname), "..", "config.json");
+// Config utilisateur pour overrides (optionnel)
+const USER_CONFIG = join(homedir(), ".claude", "scripts", "statusline", "config.json");
 
 /**
  * Interface pour le gestionnaire de configuration
@@ -31,27 +33,26 @@ export interface IConfigManager {
  * Gestionnaire de configuration du statusline
  */
 export class ConfigManager implements IConfigManager {
-	private configPath: string;
-
-	constructor(configPath: string = CONFIG_FILE) {
-		this.configPath = configPath;
-	}
-
 	/**
 	 * Charge la configuration depuis le fichier
-	 * Retourne la config par defaut si le fichier n'existe pas
+	 * Priorite: USER_CONFIG > PLUGIN_CONFIG > defaultConfig
 	 */
 	async load(): Promise<StatuslineConfig> {
 		try {
-			if (!existsSync(this.configPath)) {
-				return defaultConfig;
+			// 1. Config utilisateur (prioritaire)
+			if (existsSync(USER_CONFIG)) {
+				const content = readFileSync(USER_CONFIG, "utf-8");
+				return StatuslineConfigSchema.parse(JSON.parse(content));
 			}
 
-			const content = readFileSync(this.configPath, "utf-8");
-			const parsed = JSON.parse(content);
+			// 2. Config du plugin
+			if (existsSync(PLUGIN_CONFIG)) {
+				const content = readFileSync(PLUGIN_CONFIG, "utf-8");
+				return StatuslineConfigSchema.parse(JSON.parse(content));
+			}
 
-			// Valide et complete avec les valeurs par defaut
-			return StatuslineConfigSchema.parse(parsed);
+			// 3. Config par defaut
+			return defaultConfig;
 		} catch (error) {
 			console.error(`Config error: ${error}`);
 			return defaultConfig;
@@ -59,11 +60,11 @@ export class ConfigManager implements IConfigManager {
 	}
 
 	/**
-	 * Sauvegarde la configuration dans le fichier
+	 * Sauvegarde la configuration dans le fichier utilisateur
 	 */
 	async save(config: StatuslineConfig): Promise<void> {
 		const validated = StatuslineConfigSchema.parse(config);
-		writeFileSync(this.configPath, JSON.stringify(validated, null, 2));
+		writeFileSync(USER_CONFIG, JSON.stringify(validated, null, 2));
 	}
 
 	/**

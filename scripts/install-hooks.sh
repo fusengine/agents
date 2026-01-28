@@ -11,7 +11,9 @@ LOADER_SCRIPT="$MARKETPLACE_DIR/scripts/hooks-loader.sh"
 
 # Copy hooks-loader.sh to marketplace if not already there
 mkdir -p "$MARKETPLACE_DIR/scripts"
-cp "$SCRIPT_DIR/hooks-loader.sh" "$LOADER_SCRIPT"
+if [[ "$SCRIPT_DIR/hooks-loader.sh" != "$LOADER_SCRIPT" ]]; then
+  cp "$SCRIPT_DIR/hooks-loader.sh" "$LOADER_SCRIPT"
+fi
 
 echo "🔍 Detecting hooks in plugins..."
 
