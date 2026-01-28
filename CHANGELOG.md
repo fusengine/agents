@@ -1,5 +1,12 @@
 # Release Notes
 
+## [1.21.3] - 28-01-2026
+
+### Fixed
+
+- **scripts**: Fix statusline detection in install-hooks
+  - Replace `!= null` with `type == "object"` to avoid bash `!` interpretation issues
+
 ## [1.21.2] - 28-01-2026
 
 ### Changed
