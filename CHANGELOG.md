@@ -1,5 +1,14 @@
 # Release Notes
 
+## [1.23.1] - 28-01-2026
+
+### Fixed
+
+- **statusline**: Load config.json from plugin directory instead of hardcoded path
+  - ConfigManager now loads config from plugin install path first
+  - User config in ~/.claude/scripts/statusline/ can override plugin config
+  - Fix install-hooks.sh cp error when source and destination are identical
+
 ## [1.23.0] - 28-01-2026
 
 ### Added
