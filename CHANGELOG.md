@@ -1,5 +1,16 @@
 # Release Notes
 
+## [1.26.0] - 28-01-2026
+
+### Added
+
+- **mcp**: Add `gemini-design-mcp` for AI-powered frontend generation
+  - Tools: `create_frontend`, `modify_frontend`, `snippet_frontend`
+  - Integrated in: ai-pilot, design-expert, tailwindcss, react-expert
+  - Supports Google API key or platform key
+- **websearch**: Prioritize Exa MCP tools over WebSearch fallback
+- **env**: Add `GEMINI_DESIGN_API_KEY` to `.env.example`
+
 ## [1.25.1] - 28-01-2026
 
 ### Fixed
