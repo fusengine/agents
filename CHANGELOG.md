@@ -1,5 +1,14 @@
 # Release Notes
 
+## [1.22.0] - 28-01-2026
+
+### Added
+
+- **hooks**: Add PermissionRequest hook for permission sound alerts
+  - Play `permission-need.mp3` on ALL permission dialogs (system + hooks)
+  - Works for git-guard, install-guard, and system permissions
+  - Update install-hooks.sh to include PermissionRequest in loader
+
 ## [1.21.4] - 28-01-2026
 
 ### Fixed
