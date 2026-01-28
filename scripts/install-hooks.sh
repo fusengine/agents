@@ -54,6 +54,7 @@ UPDATED_JSON=$(echo "$CURRENT_JSON" | jq --arg loader "$LOADER_SCRIPT" '
     "UserPromptSubmit": [{"matcher": "", "hooks": [{"type": "command", "command": "bash \($loader) UserPromptSubmit"}]}],
     "PreToolUse": [{"matcher": "", "hooks": [{"type": "command", "command": "bash \($loader) PreToolUse"}]}],
     "PostToolUse": [{"matcher": "", "hooks": [{"type": "command", "command": "bash \($loader) PostToolUse"}]}],
+    "PermissionRequest": [{"matcher": "", "hooks": [{"type": "command", "command": "bash \($loader) PermissionRequest"}]}],
     "SubagentStart": [{"matcher": "", "hooks": [{"type": "command", "command": "bash \($loader) SubagentStart"}]}],
     "SubagentStop": [{"matcher": "", "hooks": [{"type": "command", "command": "bash \($loader) SubagentStop"}]}],
     "SessionStart": [{"matcher": "", "hooks": [{"type": "command", "command": "bash \($loader) SessionStart"}]}],

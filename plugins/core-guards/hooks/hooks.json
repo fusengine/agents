@@ -140,6 +140,20 @@
       }
     ],
 
+    "PermissionRequest": [
+      {
+        "_description": "Sound for ALL permission dialogs (system + hook-triggered)",
+        "matcher": "",
+        "hooks": [
+          {
+            "_description": "Play permission request sound",
+            "type": "command",
+            "command": "afplay ${CLAUDE_PLUGIN_ROOT}/song/permission-need.mp3"
+          }
+        ]
+      }
+    ],
+
     "Notification": [
       {
         "_description": "Sound for permission requests (Bash, Write, Edit confirmations)",

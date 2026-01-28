@@ -43,6 +43,7 @@ This installs the hooks loader in `~/.claude/settings.json`. All plugin hooks ar
 | **PostToolUse** | After Write/Edit | Validate SOLID compliance, track changes |
 | **SubagentStop** | Subagent completes | Track agent memory for context persistence |
 | **Stop** | Claude finishes responding | Play completion sound notification |
+| **PermissionRequest** | Permission dialog shown | Play sound for ALL permission prompts |
 | **Notification** | Permission/idle/elicitation | Play sound alerts for user attention |
 
 ## Plugins with Hooks
@@ -90,7 +91,8 @@ This installs the hooks loader in `~/.claude/settings.json`. All plugin hooks ar
 | Sound | Hook | Matcher | Trigger |
 |-------|------|---------|---------|
 | `finish.mp3` | Stop | - | Claude finishes responding |
-| `permission-need.mp3` | Notification | `permission_prompt` | Permission request (Bash, Write, Edit) |
+| `permission-need.mp3` | PermissionRequest | - | ALL permission dialogs (system + hooks) |
+| `permission-need.mp3` | Notification | `permission_prompt` | System permission notifications |
 | `need-human.mp3` | Notification | `idle_prompt` | Claude waiting for user (60+ sec) |
 | `need-human.mp3` | Notification | `elicitation_dialog` | MCP tool input required |
 
