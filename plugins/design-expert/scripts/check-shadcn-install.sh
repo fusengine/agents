@@ -2,7 +2,17 @@
 # check-shadcn-install.sh - Wrapper calling shared shadcn check
 set -euo pipefail
 
-SHARED_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../_shared/scripts" && pwd)"
+# Resolve shared scripts: try marketplace first, fallback to relative path
+MARKETPLACE_SHARED="$HOME/.claude/plugins/marketplaces/fusengine-plugins/plugins/_shared/scripts"
+RELATIVE_SHARED="$(dirname "${BASH_SOURCE[0]}")/../../_shared/scripts"
+if [[ -d "$MARKETPLACE_SHARED" ]]; then
+  SHARED_DIR="$MARKETPLACE_SHARED"
+elif [[ -d "$RELATIVE_SHARED" ]]; then
+  SHARED_DIR="$(cd "$RELATIVE_SHARED" && pwd)"
+else
+  echo "Warning: _shared scripts not found" >&2
+  exit 0
+fi
 source "$SHARED_DIR/shadcn-check.sh"
 
 INPUT=$(cat)

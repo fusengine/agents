@@ -36,11 +36,12 @@ echo ""
 # Create ~/.claude directory if needed
 mkdir -p "$HOME/.claude"
 
-# Function to check if a hook loader already exists
-has_loader_hook() {
+# Function to check if a hook already exists (by searching for a pattern in command)
+has_hook() {
   local hook_type="$1"
-  local json="$2"
-  echo "$json" | jq -e ".hooks.${hook_type}[]?.hooks[]?.command | select(contains(\"hooks-loader.sh\"))" > /dev/null 2>&1
+  local pattern="$2"
+  local json="$3"
+  echo "$json" | jq -e ".hooks.${hook_type}[]?.hooks[]?.command | select(contains(\"${pattern}\"))" > /dev/null 2>&1
 }
 
 # Create or update settings.json
@@ -55,34 +56,37 @@ if [[ -f "$SETTINGS_FILE" ]]; then
   # Read current file
   CURRENT_JSON=$(cat "$SETTINGS_FILE")
 
-  # Check if hook loaders are already present
-  LOADER_ALREADY_INSTALLED=false
-  if has_loader_hook "UserPromptSubmit" "$CURRENT_JSON" && \
-     has_loader_hook "PreToolUse" "$CURRENT_JSON" && \
-     has_loader_hook "PostToolUse" "$CURRENT_JSON" && \
-     has_loader_hook "SubagentStart" "$CURRENT_JSON"; then
-    LOADER_ALREADY_INSTALLED=true
+  # Check if ALL hooks are already present (loaders + sounds)
+  ALL_INSTALLED=false
+  if has_hook "UserPromptSubmit" "hooks-loader.sh" "$CURRENT_JSON" && \
+     has_hook "PreToolUse" "hooks-loader.sh" "$CURRENT_JSON" && \
+     has_hook "PostToolUse" "hooks-loader.sh" "$CURRENT_JSON" && \
+     has_hook "SubagentStart" "hooks-loader.sh" "$CURRENT_JSON" && \
+     has_hook "Stop" "finish.mp3" "$CURRENT_JSON" && \
+     has_hook "Notification" "permission-need.mp3" "$CURRENT_JSON" && \
+     has_hook "Notification" "need-human.mp3" "$CURRENT_JSON"; then
+    ALL_INSTALLED=true
   fi
 
-  if [[ "$LOADER_ALREADY_INSTALLED" == "true" ]]; then
-    echo "ℹ️  Loader already installed. No changes needed."
+  if [[ "$ALL_INSTALLED" == "true" ]]; then
+    echo "ℹ️  All hooks already installed. No changes needed."
   else
     # Merge hooks without overwriting existing ones
     # Add loader ONLY if it doesn't exist for this type
-    UPDATED_JSON=$(echo "$CURRENT_JSON" | jq --arg loader "$LOADER_SCRIPT" '
-      # Function to add a hook loader to an existing type
-      def add_loader_if_missing($hook_type; $matcher; $loader_cmd):
+    UPDATED_JSON=$(echo "$CURRENT_JSON" | jq --arg loader "$LOADER_SCRIPT" --arg plugins_dir "$PLUGINS_DIR" '
+      # Function to add a hook if not already present (checks for pattern in command)
+      def add_hook_if_missing($hook_type; $matcher; $cmd; $check_pattern):
         if .hooks[$hook_type] then
-          # Check if loader is already present
-          if (.hooks[$hook_type] | any(.hooks[]?.command | contains("hooks-loader.sh"))) then
+          # Check if this specific hook is already present
+          if (.hooks[$hook_type] | any(.hooks[]?.command | contains($check_pattern))) then
             .
           else
-            # Add loader to existing hooks
+            # Add hook to existing hooks
             .hooks[$hook_type] += [{
               "matcher": $matcher,
               "hooks": [{
                 "type": "command",
-                "command": $loader_cmd
+                "command": $cmd
               }]
             }]
           end
@@ -92,7 +96,7 @@ if [[ -f "$SETTINGS_FILE" ]]; then
             "matcher": $matcher,
             "hooks": [{
               "type": "command",
-              "command": $loader_cmd
+              "command": $cmd
             }]
           }]
         end;
@@ -100,12 +104,16 @@ if [[ -f "$SETTINGS_FILE" ]]; then
       # Ensure .hooks exists
       .hooks //= {} |
 
-      # Add loaders for each type
-      add_loader_if_missing("UserPromptSubmit"; ""; "bash " + $loader + " UserPromptSubmit") |
-      add_loader_if_missing("PreToolUse"; "Write|Edit"; "bash " + $loader + " PreToolUse") |
-      add_loader_if_missing("PostToolUse"; "Write|Edit"; "bash " + $loader + " PostToolUse") |
-      add_loader_if_missing("PostToolUse"; "TaskCreate|TaskUpdate"; "bash " + $loader + " PostToolUse") |
-      add_loader_if_missing("SubagentStart"; ""; "bash " + $loader + " SubagentStart")
+      # Add loaders for each type (check for hooks-loader.sh)
+      add_hook_if_missing("UserPromptSubmit"; ""; "bash " + $loader + " UserPromptSubmit"; "hooks-loader.sh") |
+      add_hook_if_missing("PreToolUse"; "Write|Edit"; "bash " + $loader + " PreToolUse"; "hooks-loader.sh") |
+      add_hook_if_missing("PostToolUse"; "Write|Edit"; "bash " + $loader + " PostToolUse"; "hooks-loader.sh") |
+      add_hook_if_missing("PostToolUse"; "TaskCreate|TaskUpdate"; "bash " + $loader + " PostToolUse"; "hooks-loader.sh") |
+      add_hook_if_missing("SubagentStart"; ""; "bash " + $loader + " SubagentStart"; "hooks-loader.sh") |
+      # Add sound hooks (check for afplay)
+      add_hook_if_missing("Stop"; ""; "afplay " + $plugins_dir + "/core-guards/song/finish.mp3"; "finish.mp3") |
+      add_hook_if_missing("Notification"; "permission"; "afplay " + $plugins_dir + "/core-guards/song/permission-need.mp3"; "permission-need.mp3") |
+      add_hook_if_missing("Notification"; ""; "afplay " + $plugins_dir + "/core-guards/song/need-human.mp3"; "need-human.mp3")
     ')
 
     # Write result
@@ -167,6 +175,37 @@ else
           {
             "type": "command",
             "command": "bash $LOADER_SCRIPT SubagentStart"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "afplay $PLUGINS_DIR/core-guards/song/finish.mp3"
+          }
+        ]
+      }
+    ],
+    "Notification": [
+      {
+        "matcher": "permission",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "afplay $PLUGINS_DIR/core-guards/song/permission-need.mp3"
+          }
+        ]
+      },
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "afplay $PLUGINS_DIR/core-guards/song/need-human.mp3"
           }
         ]
       }

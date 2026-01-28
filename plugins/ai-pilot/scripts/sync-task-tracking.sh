@@ -3,7 +3,17 @@
 # Synchronizes Claude's task tools with APEX task.json + auto-commit on complete
 set -euo pipefail
 
-SHARED_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../_shared/scripts" && pwd)"
+# Resolve shared scripts: try marketplace first, fallback to relative path
+MARKETPLACE_SHARED="$HOME/.claude/plugins/marketplaces/fusengine-plugins/plugins/_shared/scripts"
+RELATIVE_SHARED="$(dirname "${BASH_SOURCE[0]}")/../../_shared/scripts"
+if [[ -d "$MARKETPLACE_SHARED" ]]; then
+  SHARED_DIR="$MARKETPLACE_SHARED"
+elif [[ -d "$RELATIVE_SHARED" ]]; then
+  SHARED_DIR="$(cd "$RELATIVE_SHARED" && pwd)"
+else
+  echo "Warning: _shared scripts not found" >&2
+  exit 0
+fi
 source "$SHARED_DIR/locking-core.sh"
 source "$SHARED_DIR/apex-task-helpers.sh"
 
