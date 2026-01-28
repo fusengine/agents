@@ -1,5 +1,14 @@
 # Release Notes
 
+## [1.23.2] - 28-01-2026
+
+### Fixed
+
+- **mcp**: Correct MCP server configurations
+  - Remove non-existent `laravel-docs` server (uvx package doesn't exist)
+  - Fix `sequential-thinking` package in prompt-engineer (`@anthropic/` → `@modelcontextprotocol/`)
+  - Move `sequential-thinking` inside `mcpServers` in design-expert
+
 ## [1.23.1] - 28-01-2026
 
 ### Fixed
