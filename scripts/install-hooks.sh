@@ -49,8 +49,12 @@ fi
 
 echo "📝 Configuring hooks loader..."
 
-# Update settings with loader-only hooks
+# Update settings with loader-only hooks + language + attribution
 UPDATED_JSON=$(echo "$CURRENT_JSON" | jq --arg loader "$LOADER_SCRIPT" '
+  # Language setting (French)
+  .language = "french" |
+  # Attribution (empty = hidden)
+  .attribution = {"commit": "", "pr": ""} |
   # Define all hook types that should use the loader
   .hooks = {
     "UserPromptSubmit": [{"matcher": "", "hooks": [{"type": "command", "command": "bash \($loader) UserPromptSubmit"}]}],
@@ -66,6 +70,24 @@ UPDATED_JSON=$(echo "$CURRENT_JSON" | jq --arg loader "$LOADER_SCRIPT" '
 ')
 
 echo "$UPDATED_JSON" > "$SETTINGS_FILE"
+
+# ============================================
+# CLAUDE.md INSTALLATION (Global Rules)
+# ============================================
+
+PROJECT_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+CLAUDE_MD_SRC="$PROJECT_ROOT/CLAUDE.md"
+CLAUDE_MD_DEST="$HOME/.claude/CLAUDE.md"
+
+if [[ -f "$CLAUDE_MD_SRC" ]]; then
+  echo "📋 Installing CLAUDE.md (global rules)..."
+  if [[ -f "$CLAUDE_MD_DEST" ]] && diff -q "$CLAUDE_MD_SRC" "$CLAUDE_MD_DEST" > /dev/null 2>&1; then
+    echo "  ℹ️  CLAUDE.md already up to date"
+  else
+    cp "$CLAUDE_MD_SRC" "$CLAUDE_MD_DEST"
+    echo "  ✅ CLAUDE.md installed"
+  fi
+fi
 
 # ============================================
 # STATUSLINE INSTALLATION

@@ -6,7 +6,9 @@
 set -e
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PROJECT_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
 ENV_FILE="$HOME/.claude/.env"
+ENV_EXAMPLE="$PROJECT_ROOT/.env.example"
 
 # Colors
 RED='\033[0;31m'
@@ -140,55 +142,66 @@ echo -e "OS detected:          ${BLUE}$OS${NC}"
 echo -e "User's default shell: ${BLUE}$USER_SHELL${NC}"
 echo ""
 
-# Check if .env exists
+# Create .env from .env.example if not exists
 if [[ ! -f "$ENV_FILE" ]]; then
-    echo -e "${YELLOW}Warning: $ENV_FILE does not exist${NC}"
+    echo -e "${YELLOW}$ENV_FILE does not exist${NC}"
+
+    if [[ -f "$ENV_EXAMPLE" ]]; then
+        mkdir -p "$(dirname "$ENV_FILE")"
+        # Copy and convert VAR=value to export VAR=value
+        sed 's/^[[:space:]]*\([A-Z_][A-Z0-9_]*\)=/export \1=/g' "$ENV_EXAMPLE" > "$ENV_FILE"
+        echo -e "${GREEN}Created $ENV_FILE from .env.example${NC}"
+        echo -e "${YELLOW}Edit it with your API keys!${NC}"
+    else
+        echo -e "${RED}.env.example not found at $ENV_EXAMPLE${NC}"
+        echo ""
+        echo "Create manually:"
+        echo "  mkdir -p ~/.claude"
+        echo "  cat > ~/.claude/.env << 'EOF'"
+        echo "  export CONTEXT7_API_KEY=\"ctx7sk-xxx\""
+        echo "  export EXA_API_KEY=\"xxx\""
+        echo "  export MAGIC_API_KEY=\"xxx\""
+        echo "  EOF"
+    fi
     echo ""
-    echo "Create it with your API keys:"
-    echo "  mkdir -p ~/.claude"
-    echo "  cat > ~/.claude/.env << 'EOF'"
-    echo "  export CONTEXT7_API_KEY=\"ctx7sk-xxx\""
-    echo "  export EXA_API_KEY=\"xxx\""
-    echo "  export MAGIC_API_KEY=\"xxx\""
-    echo "  EOF"
+else
+    echo -e "${GREEN}$ENV_FILE exists${NC}"
     echo ""
 fi
 
-# Install for all shells Claude Code might use
-echo "Installing for Claude Code shells..."
-install_posix_shell "bash" "$HOME/.bashrc"
-install_posix_shell "zsh" "$HOME/.zshrc"
-
-# Install for user's shell if different
-echo ""
-echo "Installing for user shell ($USER_SHELL)..."
+# Install ONLY for user's default shell
+echo "Installing for default shell ($USER_SHELL)..."
 case "$USER_SHELL" in
+    bash)
+        install_posix_shell "bash" "$HOME/.bashrc"
+        ;;
+    zsh)
+        install_posix_shell "zsh" "$HOME/.zshrc"
+        ;;
     fish)
         install_fish
-        ;;
-    zsh|bash)
-        echo -e "  ${YELLOW}Already covered above${NC}"
         ;;
     pwsh|powershell)
         install_powershell
         ;;
+    *)
+        echo -e "  ${RED}Unknown shell: $USER_SHELL${NC}"
+        echo -e "  ${YELLOW}Falling back to bash${NC}"
+        install_posix_shell "bash" "$HOME/.bashrc"
+        ;;
 esac
 
-# Install PowerShell if on Windows
-if [[ "$OS" == "windows-bash" || "$OS" == "wsl" ]]; then
-    echo ""
-    echo "Installing for PowerShell (Windows)..."
-    install_powershell
-fi
 
 echo ""
 echo -e "${GREEN}Done!${NC}"
 echo ""
-echo "Shells configured:"
-echo "  - bash (~/.bashrc)"
-echo "  - zsh (~/.zshrc)"
-[[ "$USER_SHELL" == "fish" ]] && echo "  - fish (~/.config/fish/conf.d/claude-env.fish)"
-[[ "$OS" == "windows-bash" || "$OS" == "wsl" ]] && echo "  - powershell"
+echo "Shell configured:"
+case "$USER_SHELL" in
+    bash) echo "  - bash (~/.bashrc)" ;;
+    zsh) echo "  - zsh (~/.zshrc)" ;;
+    fish) echo "  - fish (~/.config/fish/conf.d/claude-env.fish)" ;;
+    pwsh|powershell) echo "  - powershell" ;;
+esac
 echo ""
 echo "Next steps:"
 echo "  1. Ensure ~/.claude/.env exists with your API keys"
