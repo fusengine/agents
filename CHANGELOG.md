@@ -1,5 +1,15 @@
 # Release Notes
 
+## [1.23.0] - 28-01-2026
+
+### Added
+
+- **statusline**: Improve default configuration for installation
+  - Enable time, weekly, dailySpend segments by default
+  - Change separator from `|` to `·` (middle dot)
+  - Set progress bars to 4 characters with "blocks" style
+  - Enable showDecimals for token display
+
 ## [1.22.0] - 28-01-2026
 
 ### Added
