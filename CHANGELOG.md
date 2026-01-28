@@ -1,5 +1,28 @@
 # Release Notes
 
+## [1.19.0] - 28-01-2026
+
+### Added
+
+- **core-guards plugin** - Security guards and SOLID enforcement hooks
+  - `git-guard.sh`: Blocks destructive git commands (push --force, reset --hard), asks confirmation for others
+  - `install-guard.sh`: Asks confirmation before package installations (npm, pip, brew, etc.)
+  - `security-guard.sh`: Validates dangerous bash commands via security rules
+  - `pre-commit-guard.sh`: Runs linters (ESLint, TypeScript, Prettier, Ruff) before git commit
+  - `enforce-interfaces.sh`: Blocks interfaces/types in component files
+  - `enforce-file-size.sh`: Blocks files > 100 lines
+  - `track-session-changes.sh`: Tracks cumulative code changes for sniper trigger
+  - `inject-claude-md.sh`, `load-dev-context.sh`, `cleanup-session-states.sh`: SessionStart hooks
+  - `read-claude-md.sh`: UserPromptSubmit hook with APEX auto-trigger
+  - `track-agent-memory.sh`: SubagentStop hook for context persistence
+  - Ralph Mode support for autonomous development (auto-approve safe commands)
+
+### Changed
+
+- Updated README.md (11 plugins)
+- Updated docs/plugins.md with core-guards
+- Updated docs/hooks.md with all core-guards scripts and hook types
+
 ## [1.18.5] - 26-01-2026
 
 ### Fixed
