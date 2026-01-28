@@ -1,5 +1,15 @@
 # Release Notes
 
+## [1.20.0] - 28-01-2026
+
+### Added
+
+- **core-guards**: Sound notifications for Stop and Notification hooks
+  - `finish.mp3`: Task completion sound (Stop hook)
+  - `permission-need.mp3`: Permission request sound (permission_prompt)
+  - `need-human.mp3`: User input waiting sound (idle_prompt, elicitation_dialog)
+  - Configurable matchers for different notification types
+
 ## [1.19.0] - 28-01-2026
 
 ### Added
