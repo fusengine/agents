@@ -1,5 +1,19 @@
 # Release Notes
 
+## [1.21.0] - 28-01-2026
+
+### Added
+
+- **core-guards**: Modular SOLID statusline with auto-install
+  - 9 segments: claude, directory, model, context, cost, limits, dailySpend, node, edits
+  - Auto-install via `install-hooks.sh` (detects bun, installs deps, configures settings.json)
+  - Web and terminal configurators (`bun run config`, `bun run config:term`)
+  - Progress bar styles: filled, braille, dots, line, blocks, vertical
+
+### Fixed
+
+- **statusline**: Add "vertical" to ProgressBarStyle union type
+
 ## [1.20.0] - 28-01-2026
 
 ### Added
