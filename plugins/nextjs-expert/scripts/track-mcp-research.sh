@@ -34,8 +34,9 @@ fi
 
 TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
 
-# SESSION-BASED TRACKING (ALWAYS works, no APEX needed)
-SESSION_ID="${CLAUDE_SESSION_ID:-$$}"
+# SESSION-BASED TRACKING (extract session_id from JSON stdin)
+SESSION_ID=$(echo "$INPUT" | jq -r '.session_id // empty')
+[[ -z "$SESSION_ID" ]] && SESSION_ID="fallback-$$"
 TRACKING_DIR="/tmp/claude-skill-tracking"
 mkdir -p "$TRACKING_DIR"
 TRACKING_FILE="$TRACKING_DIR/$FRAMEWORK-$SESSION_ID"

@@ -34,8 +34,9 @@ if ! echo "$CONTENT" | grep -qE "(use client|use server|NextRequest|NextResponse
   exit 0
 fi
 
-# Session-based tracking (works without APEX)
-SESSION_ID="${CLAUDE_SESSION_ID:-$$}"
+# Session-based tracking (extract session_id from JSON stdin)
+SESSION_ID=$(echo "$INPUT" | jq -r '.session_id // empty')
+[[ -z "$SESSION_ID" ]] && SESSION_ID="fallback-$$"
 TRACKING_DIR="/tmp/claude-skill-tracking"
 TRACKING_FILE="$TRACKING_DIR/nextjs-$SESSION_ID"
 
