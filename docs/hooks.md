@@ -94,6 +94,21 @@ This installs the hooks loader in `~/.claude/settings.json`. All plugin hooks ar
 | `need-human.mp3` | Notification | `idle_prompt` | Claude waiting for user (60+ sec) |
 | `need-human.mp3` | Notification | `elicitation_dialog` | MCP tool input required |
 
+#### Statusline (separate config)
+
+Modular SOLID statusline for Claude Code. **Note:** Not a hook, requires manual `settings.json` configuration.
+
+| Segment | Description |
+|---------|-------------|
+| `claude` | Version |
+| `directory` | Path + git status |
+| `model` | Model + tokens |
+| `context` | Context progress bar |
+| `cost` | Session cost |
+| `limits` | 5h/7d limits |
+
+See `plugins/core-guards/statusline/README.md` for installation.
+
 ### Expert Agents (react, nextjs, laravel, swift)
 
 | Script | Purpose |

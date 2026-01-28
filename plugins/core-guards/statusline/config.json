@@ -1,0 +1,130 @@
+{
+  "version": "1.0.0",
+  "time": {
+    "enabled": true,
+    "showDate": true,
+    "showTime": true
+  },
+  "claude": {
+    "enabled": true,
+    "showVersion": true
+  },
+  "directory": {
+    "enabled": true,
+    "showGit": true,
+    "showBranch": true,
+    "showDirtyIndicator": true,
+    "showStagedCount": true,
+    "showUnstagedCount": true,
+    "pathStyle": "truncated"
+  },
+  "model": {
+    "enabled": true,
+    "showTokens": true,
+    "showMaxTokens": true,
+    "showDecimals": true
+  },
+  "context": {
+    "enabled": true,
+    "progressBar": {
+      "enabled": true,
+      "style": "blocks",
+      "length": 4,
+      "color": "progressive",
+      "useProgressiveColor": true
+    },
+    "estimateOverhead": false
+  },
+  "cost": {
+    "enabled": true,
+    "decimals": 2,
+    "showLabel": false
+  },
+  "fiveHour": {
+    "enabled": false,
+    "showTimeLeft": true,
+    "showCost": false,
+    "showPercentage": true,
+    "progressBar": {
+      "enabled": true,
+      "style": "braille",
+      "length": 4,
+      "color": "progressive",
+      "useProgressiveColor": true
+    },
+    "subscriptionPlan": "max"
+  },
+  "limits": {
+    "enabled": true,
+    "show5h": true,
+    "show7d": true,
+    "showOpus": false,
+    "showSonnet": false,
+    "showResetTime": true,
+    "progressBar": {
+      "enabled": true,
+      "style": "filled",
+      "length": 4,
+      "color": "progressive",
+      "useProgressiveColor": true
+    }
+  },
+  "weekly": {
+    "enabled": false,
+    "showTimeLeft": true,
+    "showCost": false,
+    "showPercentage": true,
+    "progressBar": {
+      "enabled": true,
+      "style": "braille",
+      "length": 4,
+      "color": "progressive",
+      "useProgressiveColor": true
+    }
+  },
+  "dailySpend": {
+    "enabled": true,
+    "showBudget": false,
+    "warnThreshold": 80
+  },
+  "node": {
+    "enabled": true
+  },
+  "edits": {
+    "enabled": true,
+    "showLabel": false
+  },
+  "global": {
+    "separator": "·",
+    "showLabels": false,
+    "compactMode": false
+  },
+  "colors": {
+    "blue": "\u001b[0;34m",
+    "cyan": "\u001b[0;36m",
+    "purple": "\u001b[38;5;135m",
+    "yellow": "\u001b[0;33m",
+    "green": "\u001b[0;32m",
+    "red": "\u001b[0;31m",
+    "orange": "\u001b[38;5;208m",
+    "white": "\u001b[0;37m",
+    "magenta": "\u001b[0;35m",
+    "gray": "\u001b[38;5;240m",
+    "reset": "\u001b[0m"
+  },
+  "icons": {
+    "claude": "◆",
+    "directory": "⌂",
+    "git": "⎇",
+    "model": "⚙",
+    "node": "⬢",
+    "cost": "$",
+    "edits": "±",
+    "usage": "⏱",
+    "time": "",
+    "warning": "⚠",
+    "check": "✓",
+    "cross": "✗",
+    "arrow": "❯"
+  }
+}

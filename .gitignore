@@ -25,3 +25,6 @@ npm-debug.log*
 .mcp.json
 # APEX tracking (auto-generated)
 .claude/apex/
+plugins/core-guards/statusline/node_modules
+plugins/core-guards/statusline/bun.lock
+plugins/core-guards/statusline/dist

@@ -1,0 +1,131 @@
+#!/usr/bin/env bun
+
+/**
+ * Statusline Configuration Tool
+ *
+ * Interactive configuration tool with live preview for customizing
+ * the Claude Code statusline display.
+ *
+ * Features:
+ * - Live preview on top
+ * - Checkbox interface (SPACE to toggle)
+ * - Real-time updates
+ * - Validation with Zod
+ *
+ * Usage:
+ *   bun run configure.ts
+ */
+
+import * as p from "@clack/prompts";
+import {
+	handleCancel,
+	handleReset,
+	handleSave,
+	showActionMenu,
+} from "./src/configurator/actions-handler";
+import { buildMenuOptions } from "./src/configurator/menu-options";
+import { toggleOption } from "./src/configurator/option-toggler";
+import {
+	applySelectedOptions,
+	buildEnabledOptions,
+} from "./src/configurator/options-builder";
+import { renderStatuslinePreview } from "./src/configurator/preview-renderer";
+import { ConfigManager } from "./src/lib/config.manager";
+
+const manager = new ConfigManager();
+
+/**
+ * Main menu - Entry point for the configuration tool
+ */
+async function mainMenu(): Promise<void> {
+	// Directly launch interactive mode (no menu)
+	await interactivePreviewMode();
+	p.outro("✨ Configuration tool closed");
+	process.exit(0);
+}
+
+/**
+ * Interactive Preview Mode - Configure with REAL-TIME live preview
+ * This is the MAIN interface for configuration
+ */
+async function interactivePreviewMode(): Promise<void> {
+	let currentConfig = await manager.load();
+	const configuringOptions = true;
+
+	// ===== OPTIONS TOGGLE LOOP (LIVE PREVIEW) =====
+	while (configuringOptions) {
+		console.clear();
+		p.intro("🎨 Statusline Configurator - LIVE PREVIEW");
+
+		// ===== LIVE PREVIEW ON TOP (UPDATES IN REAL-TIME) =====
+		console.log("\n📺 LIVE PREVIEW (se met à jour instantanément):");
+		console.log(`┌${"─".repeat(98)}┐`);
+		console.log(`│ ${renderStatuslinePreview(currentConfig).padEnd(97)}│`);
+		console.log(`└${"─".repeat(98)}┘`);
+		console.log();
+
+		// ===== TOGGLE MENU =====
+		const menuOptions = buildMenuOptions(currentConfig);
+		const allOptions = [
+			...menuOptions,
+			{ value: "separator", label: "───────────────────", hint: "" },
+			{ value: "save", label: "💾 Sauvegarder & Quitter", hint: "" },
+			{ value: "reset", label: "🔄 Réinitialiser", hint: "" },
+			{ value: "cancel", label: "❌ Annuler", hint: "" },
+		];
+
+		const choice = (await p.select({
+			message:
+				"Sélectionner une option à TOGGLE (ou action):\n💡 Les options 'Style:' cyclent entre filled → braille → dots → line\n💡 L'option 'Separator:' cycle entre │ → - → espace",
+			options: allOptions,
+		})) as string;
+
+		if (p.isCancel(choice)) {
+			p.cancel("Configuration cancelled");
+			break;
+		}
+
+		// Handle actions
+		if (choice === "save") {
+			const result = await handleSave(manager, currentConfig);
+			if (!result.shouldContinue) break;
+			continue;
+		}
+
+		if (choice === "reset") {
+			const result = await handleReset(manager, currentConfig);
+			currentConfig = result.config;
+			continue;
+		}
+
+		if (choice === "cancel") {
+			handleCancel();
+			break;
+		}
+
+		if (choice === "separator" || choice.startsWith("header.")) {
+			// Ignore separators
+			continue;
+		}
+
+		// ===== TOGGLE THE OPTION =====
+		currentConfig = toggleOption(currentConfig, choice);
+		// Loop back immediately to show updated preview!
+	}
+}
+
+/**
+ * Application entry point
+ */
+async function main() {
+	try {
+		await mainMenu();
+	} catch (error) {
+		p.log.error(
+			`Configuration error: ${error instanceof Error ? error.message : String(error)}`,
+		);
+		process.exit(1);
+	}
+}
+
+main();

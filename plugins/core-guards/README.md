@@ -55,10 +55,62 @@ Security guards and SOLID enforcement hooks for Claude Code.
 | **idle_prompt** | `need-human.mp3` | Claude waiting for user input (60+ sec) |
 | **elicitation_dialog** | `need-human.mp3` | MCP tool input required |
 
+### Statusline
+
+Modular SOLID statusline for Claude Code terminal.
+
+| Segment | Description |
+|---------|-------------|
+| **claude** | Claude version |
+| **directory** | Path + git (branch, dirty, staged/unstaged) |
+| **model** | Model name + tokens |
+| **context** | Context usage progress bar |
+| **cost** | Session cost |
+| **limits** | 5h/7d limits with reset time |
+| **dailySpend** | Daily spending |
+| **node** | Node.js version |
+| **edits** | Edit counter |
+
 ## Installation
+
+### 1. Install Plugin
 
 ```bash
 /plugin install core-guards
+```
+
+### 2. Install Hooks + Statusline
+
+```bash
+~/.claude/plugins/marketplaces/fusengine-plugins/scripts/install-hooks.sh
+```
+
+This script will:
+- Install hooks loader in `~/.claude/settings.json`
+- Install statusline bun dependencies
+- Configure `statusLine` in `~/.claude/settings.json`
+- Create a backup of your settings
+
+### 3. Configure Statusline Options
+
+Edit `statusline/config.json` to enable/disable segments:
+
+```json
+{
+  "claude": { "enabled": true },
+  "directory": { "enabled": true, "showGit": true },
+  "model": { "enabled": true, "showTokens": true },
+  "context": { "enabled": true, "progressBar": { "style": "blocks" } },
+  "cost": { "enabled": true },
+  "limits": { "enabled": true, "show5h": true, "show7d": true }
+}
+```
+
+Or use the interactive configurator:
+
+```bash
+bun run config        # Web configurator
+bun run config:term   # Terminal configurator
 ```
 
 ## Configuration
