@@ -1,5 +1,14 @@
 # Release Notes
 
+## [1.21.2] - 28-01-2026
+
+### Changed
+
+- **scripts**: Simplify install-hooks and improve loader
+  - `install-hooks.sh` now generates loader-only `settings.json`
+  - `hooks-loader.sh` handles Notification matcher on type field
+  - `afplay` commands run in background without stdin
+
 ## [1.21.1] - 28-01-2026
 
 ### Fixed
