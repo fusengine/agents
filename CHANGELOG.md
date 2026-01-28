@@ -1,5 +1,15 @@
 # Release Notes
 
+## [1.21.1] - 28-01-2026
+
+### Fixed
+
+- **scripts**: Resolve shared scripts path from marketplace instead of relative
+  - Fix 28 hook scripts that used relative path `../../_shared/scripts`
+  - Scripts now check marketplace path first, fallback to relative
+  - Add automatic sound hooks (Stop, Notification) to `install-hooks.sh`
+  - Add `permission-need.mp3` sound for permission prompts
+
 ## [1.21.0] - 28-01-2026
 
 ### Added
