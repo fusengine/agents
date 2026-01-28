@@ -1,5 +1,15 @@
 # Release Notes
 
+## [1.26.1] - 28-01-2026
+
+### Changed
+
+- **docs**: Add mandatory Gemini Design MCP rules to all frontend agents
+  - FORBIDDEN: Creating React components with styling without Gemini
+  - ALLOWED: Text changes, JavaScript logic, data wiring
+  - Document `generate_vibes` workflow for design systems
+- **nextjs-expert**: Add gemini-design tools to agent and .mcp.json
+
 ## [1.26.0] - 28-01-2026
 
 ### Added
