@@ -46,14 +46,14 @@ echo "📝 Configuring hooks loader..."
 UPDATED_JSON=$(echo "$CURRENT_JSON" | jq --arg loader "$LOADER_SCRIPT" '
   # Define all hook types that should use the loader
   .hooks = {
-    "UserPromptSubmit": [{"matcher": "", "hooks": [{"type": "command", "command": "bash " + $loader + " UserPromptSubmit"}]}],
-    "PreToolUse": [{"matcher": "", "hooks": [{"type": "command", "command": "bash " + $loader + " PreToolUse"}]}],
-    "PostToolUse": [{"matcher": "", "hooks": [{"type": "command", "command": "bash " + $loader + " PostToolUse"}]}],
-    "SubagentStart": [{"matcher": "", "hooks": [{"type": "command", "command": "bash " + $loader + " SubagentStart"}]}],
-    "SubagentStop": [{"matcher": "", "hooks": [{"type": "command", "command": "bash " + $loader + " SubagentStop"}]}],
-    "SessionStart": [{"matcher": "", "hooks": [{"type": "command", "command": "bash " + $loader + " SessionStart"}]}],
-    "Stop": [{"matcher": "", "hooks": [{"type": "command", "command": "bash " + $loader + " Stop"}]}],
-    "Notification": [{"matcher": "", "hooks": [{"type": "command", "command": "bash " + $loader + " Notification"}]}]
+    "UserPromptSubmit": [{"matcher": "", "hooks": [{"type": "command", "command": "bash \($loader) UserPromptSubmit"}]}],
+    "PreToolUse": [{"matcher": "", "hooks": [{"type": "command", "command": "bash \($loader) PreToolUse"}]}],
+    "PostToolUse": [{"matcher": "", "hooks": [{"type": "command", "command": "bash \($loader) PostToolUse"}]}],
+    "SubagentStart": [{"matcher": "", "hooks": [{"type": "command", "command": "bash \($loader) SubagentStart"}]}],
+    "SubagentStop": [{"matcher": "", "hooks": [{"type": "command", "command": "bash \($loader) SubagentStop"}]}],
+    "SessionStart": [{"matcher": "", "hooks": [{"type": "command", "command": "bash \($loader) SessionStart"}]}],
+    "Stop": [{"matcher": "", "hooks": [{"type": "command", "command": "bash \($loader) Stop"}]}],
+    "Notification": [{"matcher": "", "hooks": [{"type": "command", "command": "bash \($loader) Notification"}]}]
   }
 ')
 
@@ -74,7 +74,7 @@ if [[ -d "$STATUSLINE_DIR" ]]; then
     cd - > /dev/null
 
     STATUSLINE_CMD="bun $STATUSLINE_DIR/src/index.ts"
-    HAS_STATUSLINE=$(jq -e '.statusLine' "$SETTINGS_FILE" 2>/dev/null && echo "yes" || echo "no")
+    HAS_STATUSLINE=$(jq -e '.statusLine | type == "object"' "$SETTINGS_FILE" 2>/dev/null && echo "yes" || echo "no")
 
     if [[ "$HAS_STATUSLINE" == "no" ]]; then
       UPDATED_JSON=$(cat "$SETTINGS_FILE" | jq --arg cmd "$STATUSLINE_CMD" '.statusLine = {
