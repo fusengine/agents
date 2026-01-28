@@ -5,8 +5,13 @@ set -e
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 SETTINGS_FILE="$HOME/.claude/settings.json"
-LOADER_SCRIPT="$SCRIPT_DIR/hooks-loader.sh"
-PLUGINS_DIR="$HOME/.claude/plugins/marketplaces/fusengine-plugins/plugins"
+MARKETPLACE_DIR="$HOME/.claude/plugins/marketplaces/fusengine-plugins"
+PLUGINS_DIR="$MARKETPLACE_DIR/plugins"
+LOADER_SCRIPT="$MARKETPLACE_DIR/scripts/hooks-loader.sh"
+
+# Copy hooks-loader.sh to marketplace if not already there
+mkdir -p "$MARKETPLACE_DIR/scripts"
+cp "$SCRIPT_DIR/hooks-loader.sh" "$LOADER_SCRIPT"
 
 echo "🔍 Detecting hooks in plugins..."
 
@@ -74,9 +79,9 @@ if [[ -d "$STATUSLINE_DIR" ]]; then
     cd - > /dev/null
 
     STATUSLINE_CMD="bun $STATUSLINE_DIR/src/index.ts"
-    HAS_STATUSLINE=$(jq -e '.statusLine | type == "object"' "$SETTINGS_FILE" 2>/dev/null && echo "yes" || echo "no")
 
-    if [[ "$HAS_STATUSLINE" == "no" ]]; then
+    # Check if statusLine already exists (redirect jq output to avoid capturing "false")
+    if ! jq -e '.statusLine | type == "object"' "$SETTINGS_FILE" >/dev/null 2>&1; then
       UPDATED_JSON=$(cat "$SETTINGS_FILE" | jq --arg cmd "$STATUSLINE_CMD" '.statusLine = {
         "type": "command",
         "command": $cmd,
