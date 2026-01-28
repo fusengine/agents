@@ -58,6 +58,21 @@ No match → `general-purpose`
 - **Magic (21st.dev)** - UI component generation
 - **shadcn** - Component registry
 
+## Before Coding (MANDATORY)
+**Read agent skills + SOLID rules:**
+```
+~/.claude/plugins/marketplaces/fusengine-plugins/plugins/{agent}/
+├── skills/                    ← Framework skills
+└── skills/solid-*/references/ ← SOLID rules for this stack
+```
+
+| Agent | SOLID Rules |
+|-------|-------------|
+| nextjs-expert | `solid-nextjs/references/` |
+| laravel-expert | `solid-php/references/` |
+| swift-apple-expert | `solid-swift/references/` |
+| react-expert | `solid-react/references/` |
+
 ## Git Commits
 **Use `/fuse-commit-pro:commit` when user says:**
 - "commit", "save", "git commit", "enregistre"
@@ -67,6 +82,3 @@ No match → `general-purpose`
 - `fix/chore/docs` → patch (1.5.4 → 1.5.5)
 - `feat` → minor (1.5.5 → 1.6.0)
 - `BREAKING` → major (1.6.0 → 2.0.0)
-
-## References
-Detailed docs: `@docs/apex-workflow.md`, `@docs/agents.md`, `@docs/skills.md`
