@@ -1,19 +1,7 @@
 # MCP API Keys Configuration
 
 Plugins use MCP servers that require API keys.
-
-## Quick Setup (Recommended)
-
-**After installing plugins, run:**
-
-```bash
-# Inject your API keys into plugin configurations
-~/.claude/plugins/marketplaces/fusengine-plugins/scripts/env-shell/inject-keys.sh
-
-# Restart Claude Code
-```
-
-This script reads keys from `~/.claude/.env` and injects them into all plugin `.mcp.json` files.
+Keys are stored in `~/.claude/.env` and loaded via your shell.
 
 ## Required Keys
 
@@ -23,12 +11,13 @@ This script reads keys from `~/.claude/.env` and injects them into all plugin `.
 | `EXA_API_KEY` | Web search | https://exa.ai |
 | `MAGIC_API_KEY` | UI components | https://21st.dev |
 
-## Step 1: Create ~/.claude/.env
+## Setup
+
+### Step 1: Create ~/.claude/.env
 
 ```bash
 mkdir -p ~/.claude
 cat > ~/.claude/.env << 'EOF'
-# Claude Code - Global API Keys
 export CONTEXT7_API_KEY="ctx7sk-xxx"
 export EXA_API_KEY="xxx"
 export MAGIC_API_KEY="xxx"
@@ -37,89 +26,67 @@ EOF
 
 Replace `xxx` with your actual API keys.
 
-## Step 2: Inject Keys
+### Step 2: Configure your shell
+
+Run the install script (detects bash/zsh/fish automatically):
 
 ```bash
-# Run after plugin installation or key updates
-~/.claude/plugins/marketplaces/fusengine-plugins/scripts/env-shell/inject-keys.sh
+~/.claude/plugins/marketplaces/fusengine-plugins/scripts/env-shell/install-env.sh
 ```
 
-**Important:** Run this script every time you:
-- Install or update plugins
-- Change your API keys
+Or configure manually:
 
-## Step 3: Restart Claude Code
+#### Fish
 
-```bash
-# Exit current session and restart
-claude
+```fish
+cp ~/.claude/plugins/marketplaces/fusengine-plugins/scripts/env-shell/claude-env.fish ~/.config/fish/conf.d/
 ```
 
-## Available Scripts
-
-| Script | Purpose |
-|--------|---------|
-| `inject-keys.sh` | **Main script** - Injects keys into plugin configs |
-| `install-env.sh` | Auto-install shell config (bash/zsh/fish) |
-| `install-env.ps1` | Auto-install for PowerShell (Windows) |
-
-## Manual Shell Configuration (Optional)
-
-If you prefer environment variables in your shell:
-
-### Auto-Install (All Shells)
-
-```bash
-# Detects your shell and installs automatically
-./scripts/env-shell/install-env.sh
-```
-
-### Zsh
+#### Zsh
 
 ```bash
 echo 'if [[ -f ~/.claude/.env ]]; then source ~/.claude/.env; fi' >> ~/.zshrc
 ```
 
-### Bash
+#### Bash
 
 ```bash
 echo 'if [[ -f ~/.claude/.env ]]; then source ~/.claude/.env; fi' >> ~/.bashrc
 ```
 
-### Fish
-
-```fish
-cp scripts/env-shell/claude-env.fish ~/.config/fish/conf.d/
-```
-
-### PowerShell
+#### PowerShell
 
 ```powershell
-.\scripts\env-shell\install-env.ps1
+~/.claude/plugins/marketplaces/fusengine-plugins/scripts/env-shell/install-env.ps1
 ```
 
-## Verify Keys
+### Step 3: Restart terminal & Claude Code
+
+**Important:** You must restart your terminal completely (not just Claude Code) for the variables to be loaded.
 
 ```bash
-# Check .env file
-cat ~/.claude/.env | grep -E "^export"
-
-# After inject-keys.sh, check a plugin config
-cat ~/.claude/plugins/marketplaces/fusengine-plugins/plugins/ai-pilot/.mcp.json | grep -o "exaApiKey=[^&]*" | head -1
+# Open a NEW terminal, then:
+claude
 ```
+
+## Verify
+
+```bash
+# In your shell, before launching Claude Code:
+env | grep -E "(CONTEXT7|EXA|MAGIC)"
+```
+
+All 3 keys should be displayed.
 
 ## Troubleshooting
 
 ### MCP servers fail with 401/Invalid API key
 
-1. Verify your keys are in `~/.claude/.env`
-2. Run `inject-keys.sh` again
-3. Restart Claude Code
+1. Check variables are in your environment: `env | grep EXA`
+2. If not, restart your **terminal** (not just Claude Code)
+3. Verify `~/.claude/.env` has correct keys
 
-### Keys not working after plugin update
+### Variables show in shell but not in Claude Code
 
-Run `inject-keys.sh` again - plugin updates overwrite the configs.
-
-### Environment variables not inherited
-
-Claude Code may not inherit shell variables. Use `inject-keys.sh` instead.
+Make sure you opened a **new terminal** after configuring your shell.
+Claude Code inherits environment variables from the terminal that launched it.
