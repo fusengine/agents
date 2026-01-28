@@ -57,6 +57,36 @@ No match → `general-purpose`
 - **Exa** - Web search, code context
 - **Magic (21st.dev)** - UI component generation
 - **shadcn** - Component registry
+- **Gemini Design** - AI frontend generation (Tailwind, shadcn)
+
+## Frontend/Design Tasks (GEMINI DESIGN MCP - MANDATORY)
+
+**NEVER write frontend/UI code yourself. ALWAYS use Gemini Design MCP.**
+
+### Tools
+| Tool | Usage |
+|------|-------|
+| `create_frontend` | Complete responsive views from scratch |
+| `modify_frontend` | Surgical redesign (margins, colors, layout) |
+| `snippet_frontend` | Isolated components (modals, charts, tables) |
+| `generate_vibes` | Generate design system options |
+
+### FORBIDDEN without Gemini Design
+- Creating React components with styling
+- Writing CSS/Tailwind manually for UI
+- Using existing styles as excuse to skip Gemini
+
+### ALLOWED without Gemini
+- Text/copy changes only
+- JavaScript logic without UI changes
+- Data wiring (useQuery, useMutation)
+
+### Design System Workflow
+1. `generate_vibes` → user picks style
+2. `create_frontend` with `generateDesignSystem: true`
+3. Save to `design-system.md`
+
+**Benefits:** Zero backend risk, mobile-first, direct filesystem write
 
 ## Before Coding (MANDATORY)
 **Read agent skills + SOLID rules:**

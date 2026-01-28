@@ -80,13 +80,26 @@ Expert Tailwind CSS v4.1 with CSS-native configuration. Mastery of @theme, @util
 | `@apply` | Inline utilities |
 | `@source` | Detect classes |
 
-## Gemini Design MCP (Frontend Generation)
+## GEMINI DESIGN MCP (MANDATORY FOR ALL UI)
 
+**NEVER write Tailwind UI code yourself. ALWAYS use Gemini Design MCP.**
+
+### Tools
 | Tool | Usage |
 |------|-------|
-| `mcp__gemini-design__create_frontend` | Generate complete responsive views with Tailwind |
-| `mcp__gemini-design__modify_frontend` | Surgical CSS edits (margins, colors, layouts) |
-| `mcp__gemini-design__snippet_frontend` | Isolated Tailwind components |
+| `create_frontend` | Complete responsive views with Tailwind |
+| `modify_frontend` | Surgical CSS edits (margins, colors, layout) |
+| `snippet_frontend` | Isolated Tailwind components |
+
+### FORBIDDEN without Gemini Design
+- Writing Tailwind classes for new UI components
+- Creating layouts manually
+- Using existing styles as excuse to skip Gemini
+
+### ALLOWED without Gemini
+- Utility class fixes (typos, minor adjustments)
+- Configuration (@theme, @utility definitions)
+- Non-visual Tailwind config
 
 ## Forbidden
 - tailwind.config.js for v4 → use @theme

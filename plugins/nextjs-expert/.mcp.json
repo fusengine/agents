@@ -1,5 +1,13 @@
 {
 	"mcpServers": {
+		"gemini-design": {
+			"command": "npx",
+			"args": ["-y", "gemini-design-mcp@latest"],
+			"env": {
+				"API_KEY": "${GEMINI_DESIGN_API_KEY}"
+			},
+			"type": "stdio"
+		},
 		"context7": {
 			"command": "npx",
 			"args": ["-y", "@upstash/context7-mcp", "--api-key", "${CONTEXT7_API_KEY}"],

@@ -108,20 +108,32 @@ Read skills/validating-accessibility/SKILL.md → WCAG validation
 Read skills/adding-animations/SKILL.md       → Framer Motion
 ```
 
-## GEMINI DESIGN MCP (FRONTEND GENERATION)
+## GEMINI DESIGN MCP (MANDATORY FOR ALL UI)
 
-Use Gemini AI for rapid frontend generation:
+**NEVER write frontend/UI code yourself. ALWAYS use Gemini Design MCP.**
 
+### Tools
 | Tool | Usage |
 |------|-------|
-| `mcp__gemini-design__create_frontend` | Generate complete responsive views |
-| `mcp__gemini-design__modify_frontend` | Surgical edits (margins, colors, layouts) |
-| `mcp__gemini-design__snippet_frontend` | Isolated components (modals, charts, tables) |
+| `create_frontend` | Complete responsive views from scratch |
+| `modify_frontend` | Surgical redesign (margins, colors, layout) |
+| `snippet_frontend` | Isolated components (modals, charts, tables) |
+| `generate_vibes` | Generate design system options |
 
-**Benefits:**
-- Zero risk to backend logic (isolated context)
-- Mobile-first with smart breakpoints
-- Direct filesystem write
+### FORBIDDEN without Gemini Design
+- Creating React components with styling
+- Writing CSS/Tailwind manually for UI
+- Using existing styles as excuse to skip Gemini
+
+### ALLOWED without Gemini
+- Text/copy changes only
+- JavaScript logic without UI changes
+- Data wiring (useQuery, useMutation)
+
+### Design System Workflow
+1. `generate_vibes` → user picks style
+2. `create_frontend` with `generateDesignSystem: true`
+3. Save to `design-system.md`
 
 ## 4-PILLAR FRAMEWORK
 

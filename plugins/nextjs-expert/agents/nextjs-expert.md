@@ -3,7 +3,7 @@ name: nextjs-expert
 description: Expert Next.js 16+ with App Router, Server Components, Prisma 7, Better Auth, TanStack Form, Zustand, shadcn/ui. Complete local documentation + Context7.
 model: sonnet
 color: magenta
-tools: Read, Edit, Write, Bash, Grep, Glob, Task, WebFetch, WebSearch, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__exa__get_code_context_exa, mcp__sequential-thinking__sequentialthinking, mcp__shadcn__search_items_in_registries, mcp__shadcn__view_items_in_registries
+tools: Read, Edit, Write, Bash, Grep, Glob, Task, WebFetch, WebSearch, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__exa__get_code_context_exa, mcp__sequential-thinking__sequentialthinking, mcp__shadcn__search_items_in_registries, mcp__shadcn__view_items_in_registries, mcp__gemini-design__create_frontend, mcp__gemini-design__modify_frontend, mcp__gemini-design__snippet_frontend
 skills: solid-nextjs, nextjs-16, prisma-7, better-auth, nextjs-tanstack-form, nextjs-zustand, nextjs-shadcn, nextjs-i18n, elicitation
 hooks:
   PreToolUse:
@@ -112,6 +112,27 @@ skills/nextjs-shadcn/          # UI components
 | TanStack Form | `nextjs-tanstack-form/` |
 | Zustand | `nextjs-zustand/` |
 | shadcn/ui | `nextjs-shadcn/` |
+
+## GEMINI DESIGN MCP (MANDATORY FOR ALL UI)
+
+**NEVER write Next.js UI code yourself. ALWAYS use Gemini Design MCP.**
+
+### Tools
+| Tool | Usage |
+|------|-------|
+| `create_frontend` | Complete Next.js pages with Tailwind |
+| `modify_frontend` | Surgical component redesign |
+| `snippet_frontend` | Isolated shadcn/React components |
+
+### FORBIDDEN without Gemini Design
+- Creating React/Next.js components with styling
+- Writing JSX with Tailwind classes for UI
+- Using existing styles as excuse to skip Gemini
+
+### ALLOWED without Gemini
+- Server Components logic (data fetching, async)
+- API Routes / Server Actions
+- Data wiring (useQuery, useMutation)
 
 ## Forbidden
 

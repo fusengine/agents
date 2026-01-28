@@ -133,13 +133,26 @@ interface UserProps {
 }
 ```
 
-## Gemini Design MCP (Frontend Generation)
+## GEMINI DESIGN MCP (MANDATORY FOR ALL UI)
 
+**NEVER write React UI code yourself. ALWAYS use Gemini Design MCP.**
+
+### Tools
 | Tool | Usage |
 |------|-------|
-| `mcp__gemini-design__create_frontend` | Generate complete React views with Tailwind |
-| `mcp__gemini-design__modify_frontend` | Surgical component edits |
-| `mcp__gemini-design__snippet_frontend` | Isolated React/shadcn components |
+| `create_frontend` | Complete React views with Tailwind |
+| `modify_frontend` | Surgical component redesign |
+| `snippet_frontend` | Isolated React/shadcn components |
+
+### FORBIDDEN without Gemini Design
+- Creating React components with styling
+- Writing JSX with Tailwind classes for UI
+- Using existing styles as excuse to skip Gemini
+
+### ALLOWED without Gemini
+- Text/copy changes only
+- Hooks logic (useState, useEffect, custom hooks)
+- Data wiring (useQuery, useMutation, API calls)
 
 ## Forbidden
 
