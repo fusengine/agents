@@ -22,13 +22,14 @@ INPUT=$(cat)
 TOOL_NAME=$(echo "$INPUT" | jq -r '.tool_name // empty')
 
 # Determine source and framework based on tool
+# Note: Tool names may have plugin prefix like mcp__plugin_fuse-ai-pilot_context7__query-docs
 case "$TOOL_NAME" in
-  mcp__context7__query-docs|mcp__context7__resolve-library-id)
+  *context7__query-docs|*context7__resolve-library-id)
     FRAMEWORK=$(echo "$INPUT" | jq -r '.tool_input.libraryId // .tool_input.libraryName // empty')
     FRAMEWORK=$(detect_framework_from_string "$FRAMEWORK")
     SOURCE="context7"
     ;;
-  mcp__exa__get_code_context_exa|mcp__exa__web_search_exa)
+  *exa__get_code_context_exa|*exa__web_search_exa)
     QUERY=$(echo "$INPUT" | jq -r '.tool_input.query // empty')
     FRAMEWORK=$(detect_framework_from_string "$QUERY")
     SOURCE="exa"

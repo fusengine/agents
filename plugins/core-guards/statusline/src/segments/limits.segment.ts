@@ -48,7 +48,7 @@ export class LimitsSegment implements ISegment {
 
 		if (limitsConfig.show5h !== false) {
 			const pct = Math.round(formatted.fiveHour.percentage);
-			const seg = [`${colors.cyan("5h:")}${progressiveColor(pct, `${pct}%`)}`];
+			const seg = [`${colors.cyan("5h:")} ${progressiveColor(pct, `${pct}%`)}`];
 			if (barCfg.enabled) {
 				seg.push(generateProgressBar(pct, { style: barCfg.style, length: barCfg.length, useProgressiveColor: true }));
 			}
@@ -62,7 +62,7 @@ export class LimitsSegment implements ISegment {
 
 		if (limitsConfig.show7d !== false) {
 			const pct = Math.round(formatted.sevenDay.percentage);
-			const seg = [`${colors.blue("7d:")}${progressiveColor(pct, `${pct}%`)}`];
+			const seg = [`${colors.blue("7d:")} ${progressiveColor(pct, `${pct}%`)}`];
 			if (barCfg.enabled) {
 				seg.push(generateProgressBar(pct, { style: barCfg.style, length: barCfg.length, useProgressiveColor: true }));
 			}
@@ -74,7 +74,7 @@ export class LimitsSegment implements ISegment {
 
 		if (limitsConfig.showOpus) {
 			const pct = Math.round(formatted.opus.percentage);
-			const seg = [`${colors.magenta("Opus:")}${progressiveColor(pct, `${pct}%`)}`];
+			const seg = [`${colors.magenta("Opus:")} ${progressiveColor(pct, `${pct}%`)}`];
 			if (barCfg.enabled) {
 				seg.push(generateProgressBar(pct, { style: barCfg.style, length: barCfg.length, useProgressiveColor: true }));
 			}

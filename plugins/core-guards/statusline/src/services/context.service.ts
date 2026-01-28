@@ -37,8 +37,8 @@ function calculateSystemOverhead(estimateOverhead: boolean, overheadTokens?: num
 
 export function getContextFromInput(
 	input: HookInput,
-	estimateOverhead: boolean = true,
-	overheadTokens?: number,
+	_estimateOverhead: boolean = false,
+	_overheadTokens?: number,
 ): ContextResult {
 	const contextWindow = input.context_window;
 
@@ -46,15 +46,22 @@ export function getContextFromInput(
 		return { tokens: 0, maxTokens: TOKEN_LIMITS.CONTEXT_WINDOW, percentage: 0 };
 	}
 
-	const usage = contextWindow.current_usage;
-	const baseTokens = usage ? calculateTotalTokens(usage) : 0;
-	const overhead = calculateSystemOverhead(estimateOverhead, overheadTokens);
-	const realTokens = baseTokens + overhead;
-
 	const windowSize = contextWindow.context_window_size || TOKEN_LIMITS.CONTEXT_WINDOW;
-	const autocompactBuffer = 45_000; // Buffer réservé pour autocompact
-	const usableSpace = windowSize - autocompactBuffer;
-	const percentage = Math.min((realTokens / usableSpace) * 100, 100);
+	// Espace utilisable = taille totale - buffer autocompact (16.5%)
+	const usableSpace = windowSize - OVERHEAD_ESTIMATION.AUTOCOMPACT_BUFFER;
 
-	return { tokens: realTokens, maxTokens: usableSpace, percentage };
+	// Utiliser used_percentage pré-calculé par Claude Code (le plus précis)
+	// Sinon fallback sur le calcul manuel
+	// @see https://code.claude.com/docs/en/statusline
+	if (contextWindow.used_percentage !== undefined) {
+		const tokens = Math.round((contextWindow.used_percentage / 100) * windowSize);
+		const percentage = Math.min((tokens / usableSpace) * 100, 100);
+		return { tokens, maxTokens: usableSpace, percentage };
+	}
+
+	// Fallback: calcul depuis totaux (moins précis car inclut tokens compactés)
+	const totalTokens = contextWindow.total_input_tokens + contextWindow.total_output_tokens;
+	const percentage = Math.min((totalTokens / usableSpace) * 100, 100);
+
+	return { tokens: totalTokens, maxTokens: usableSpace, percentage };
 }

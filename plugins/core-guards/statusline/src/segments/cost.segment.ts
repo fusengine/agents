@@ -19,12 +19,14 @@ export class CostSegment implements ISegment {
 	async render(context: SegmentContext, config: StatuslineConfig): Promise<string> {
 		const { icons, global, cost } = config;
 		const totalCost = context.input.cost.total_cost_usd;
+		const costStr = formatCost(totalCost, cost.decimals);
 
-		let label = icons.cost;
+		// Si label texte (cost:), afficher label + coût
+		// Si icône $ (défaut), formatCost inclut déjà le $, pas besoin de label
 		if (global.showLabels || cost.showLabel) {
-			label = "cost:";
+			return `${colors.yellow("cost:")} ${costStr}`;
 		}
 
-		return `${colors.yellow(label)} ${formatCost(totalCost, cost.decimals)}`;
+		return colors.yellow(costStr);
 	}
 }

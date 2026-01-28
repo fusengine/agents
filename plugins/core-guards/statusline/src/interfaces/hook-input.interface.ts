@@ -37,6 +37,8 @@ export interface HookInput {
 		total_input_tokens: number;
 		total_output_tokens: number;
 		context_window_size: number;
+		used_percentage?: number;
+		remaining_percentage?: number;
 		current_usage: TokenUsage;
 	};
 	exceeds_200k_tokens?: boolean;

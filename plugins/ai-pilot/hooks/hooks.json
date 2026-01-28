@@ -44,7 +44,7 @@
         ]
       },
       {
-        "matcher": "mcp__context7|mcp__exa|Read",
+        "matcher": "mcp__.*context7|mcp__.*exa|Read",
         "hooks": [
           {
             "type": "command",
