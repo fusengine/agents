@@ -41,6 +41,20 @@ Security guards and SOLID enforcement hooks for Claude Code.
 |--------|-------------|
 | **track-agent-memory** | Tracks agent completion for context persistence |
 
+### Stop
+
+| Event | Sound | Description |
+|-------|-------|-------------|
+| **Task complete** | `finish.mp3` | Plays when Claude finishes responding |
+
+### Notification
+
+| Matcher | Sound | Description |
+|---------|-------|-------------|
+| **permission_prompt** | `permission-need.mp3` | Permission request (Bash, Write, Edit) |
+| **idle_prompt** | `need-human.mp3` | Claude waiting for user input (60+ sec) |
+| **elicitation_dialog** | `need-human.mp3` | MCP tool input required |
+
 ## Installation
 
 ```bash

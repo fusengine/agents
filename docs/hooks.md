@@ -42,19 +42,21 @@ This installs the hooks loader in `~/.claude/settings.json`. All plugin hooks ar
 | **PreToolUse** | Before Write/Edit/Bash | Block if skill not consulted, validate git/install commands |
 | **PostToolUse** | After Write/Edit | Validate SOLID compliance, track changes |
 | **SubagentStop** | Subagent completes | Track agent memory for context persistence |
+| **Stop** | Claude finishes responding | Play completion sound notification |
+| **Notification** | Permission/idle/elicitation | Play sound alerts for user attention |
 
 ## Plugins with Hooks
 
-| Plugin | PreToolUse | PostToolUse | UserPromptSubmit | SessionStart | SubagentStop |
-|--------|------------|-------------|------------------|--------------|--------------|
-| **ai-pilot** | APEX reminder | SOLID check | Project detection + APEX injection | - | - |
-| **core-guards** | Git guard, Install guard, Security guard, Interface enforcement | File size check, Session tracking | CLAUDE.md injection | Context loading, Cleanup | Memory tracking |
-| **react-expert** | Block without skill | React SOLID validation | - | - | - |
-| **nextjs-expert** | Block without skill | Next.js SOLID validation | - | - | - |
-| **laravel-expert** | Block without skill | Laravel SOLID validation | - | - | - |
-| **swift-apple-expert** | Block without skill | Swift SOLID validation | - | - | - |
-| **tailwindcss** | Block without skill | Tailwind best practices | - | - | - |
-| **design-expert** | Block without skill | Accessibility check | - | - | - |
+| Plugin | PreToolUse | PostToolUse | UserPromptSubmit | SessionStart | SubagentStop | Stop | Notification |
+|--------|------------|-------------|------------------|--------------|--------------|------|--------------|
+| **ai-pilot** | APEX reminder | SOLID check | Project detection + APEX injection | - | - | - | - |
+| **core-guards** | Git, Install, Security guards | File size, Session tracking | CLAUDE.md injection | Context, Cleanup | Memory | Sound | Sounds |
+| **react-expert** | Block without skill | React SOLID validation | - | - | - | - | - |
+| **nextjs-expert** | Block without skill | Next.js SOLID validation | - | - | - | - | - |
+| **laravel-expert** | Block without skill | Laravel SOLID validation | - | - | - | - | - |
+| **swift-apple-expert** | Block without skill | Swift SOLID validation | - | - | - | - | - |
+| **tailwindcss** | Block without skill | Tailwind best practices | - | - | - | - | - |
+| **design-expert** | Block without skill | Accessibility check | - | - | - | - | - |
 
 ## Hook Scripts
 
@@ -82,6 +84,15 @@ This installs the hooks loader in `~/.claude/settings.json`. All plugin hooks ar
 | `cleanup-session-states.sh` | SessionStart | Cleans up stale session state files |
 | `read-claude-md.sh` | UserPromptSubmit | Reads CLAUDE.md + auto-triggers APEX for dev tasks |
 | `track-agent-memory.sh` | SubagentStop | Tracks agent completion for context persistence |
+
+#### Sound Notifications
+
+| Sound | Hook | Matcher | Trigger |
+|-------|------|---------|---------|
+| `finish.mp3` | Stop | - | Claude finishes responding |
+| `permission-need.mp3` | Notification | `permission_prompt` | Permission request (Bash, Write, Edit) |
+| `need-human.mp3` | Notification | `idle_prompt` | Claude waiting for user (60+ sec) |
+| `need-human.mp3` | Notification | `elicitation_dialog` | MCP tool input required |
 
 ### Expert Agents (react, nextjs, laravel, swift)
 

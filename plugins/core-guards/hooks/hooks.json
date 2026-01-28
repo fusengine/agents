@@ -124,6 +124,56 @@
           }
         ]
       }
+    ],
+
+    "Stop": [
+      {
+        "_description": "Sound notification when Claude finishes responding (not on user interrupt)",
+        "matcher": "",
+        "hooks": [
+          {
+            "_description": "Play task completion sound",
+            "type": "command",
+            "command": "afplay ${CLAUDE_PLUGIN_ROOT}/song/finish.mp3"
+          }
+        ]
+      }
+    ],
+
+    "Notification": [
+      {
+        "_description": "Sound for permission requests (Bash, Write, Edit confirmations)",
+        "matcher": "permission_prompt",
+        "hooks": [
+          {
+            "_description": "Play permission request sound",
+            "type": "command",
+            "command": "afplay ${CLAUDE_PLUGIN_ROOT}/song/permission-need.mp3"
+          }
+        ]
+      },
+      {
+        "_description": "Sound when Claude waits for user input (60+ sec idle)",
+        "matcher": "idle_prompt",
+        "hooks": [
+          {
+            "_description": "Play idle/waiting sound",
+            "type": "command",
+            "command": "afplay ${CLAUDE_PLUGIN_ROOT}/song/need-human.mp3"
+          }
+        ]
+      },
+      {
+        "_description": "Sound for MCP tool elicitation dialogs",
+        "matcher": "elicitation_dialog",
+        "hooks": [
+          {
+            "_description": "Play elicitation dialog sound",
+            "type": "command",
+            "command": "afplay ${CLAUDE_PLUGIN_ROOT}/song/need-human.mp3"
+          }
+        ]
+      }
     ]
   }
 }
