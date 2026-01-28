@@ -1,71 +1,39 @@
 #!/bin/bash
-# validate-react-solid.sh - PreToolUse hook for react-expert
-# Validates SOLID principles BEFORE Write/Edit on React files
-# Uses official Claude Code hook format with permissionDecision
+# validate-react-solid.sh - SOLID validation for React
+set -euo pipefail
 
-set -e
+SHARED_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../_shared/scripts" && pwd)"
+source "$SHARED_DIR/validate-solid-common.sh"
 
 INPUT=$(cat)
 TOOL_NAME=$(echo "$INPUT" | jq -r '.tool_name // empty')
 FILE_PATH=$(echo "$INPUT" | jq -r '.tool_input.file_path // empty')
 
-# Only check for Write/Edit tools
-if [[ "$TOOL_NAME" != "Write" && "$TOOL_NAME" != "Edit" ]]; then
-  exit 0
-fi
+[[ "$TOOL_NAME" != "Write" && "$TOOL_NAME" != "Edit" ]] && exit 0
+[[ ! "$FILE_PATH" =~ \.(tsx|ts|jsx|js)$ ]] && exit 0
+[[ "$FILE_PATH" =~ /(node_modules|dist|build)/ ]] && exit 0
 
-# Only check TypeScript/JavaScript files
-if [[ ! "$FILE_PATH" =~ \.(tsx|ts|jsx|js)$ ]]; then
-  exit 0
-fi
-
-# Skip non-code directories
-if [[ "$FILE_PATH" =~ /(node_modules|dist|build|\.next)/ ]]; then
-  exit 0
-fi
-
-# Get content that WILL BE written (not file on disk)
+# Skip if Next.js code (handled by nextjs-expert)
 CONTENT=$(echo "$INPUT" | jq -r '.tool_input.content // .tool_input.new_string // empty')
+echo "$CONTENT" | grep -qE "(use client|use server|NextRequest|NextResponse|from ['\"]next)" && exit 0
+[[ -z "$CONTENT" ]] && exit 0
 
-# Skip if no content to analyze
-if [[ -z "$CONTENT" ]]; then
-  exit 0
-fi
-
-# Count lines in content (excluding empty lines and comments)
-LINE_COUNT=$(echo "$CONTENT" | grep -v '^\s*$' | grep -v '^\s*//' | grep -v '^\s*\*' | wc -l | tr -d ' ')
-
+LINE_COUNT=$(count_code_lines "$CONTENT")
 VIOLATIONS=()
 
-# Check file size limit
-if [[ $LINE_COUNT -gt 100 ]]; then
-  VIOLATIONS+=("File has $LINE_COUNT lines (limit: 100). Split into smaller modules.")
+# React specific rules
+[[ $LINE_COUNT -gt 100 ]] && VIOLATIONS+=("File has $LINE_COUNT lines (limit: 100). Split to hooks/, components/, or utils/.")
+
+if [[ "$FILE_PATH" =~ /components/ ]]; then
+  echo "$CONTENT" | grep -qE "^(export )?(interface|type) [A-Z]" && \
+    VIOLATIONS+=("Interface/type in component. Move to src/interfaces/ or src/types/.")
 fi
 
-# Check for inline interfaces in component directories
-if [[ "$FILE_PATH" =~ /(components|modules)/ ]]; then
-  if echo "$CONTENT" | grep -qE "^(export )?(interface|type) [A-Z]"; then
-    VIOLATIONS+=("Interface/type in component file. Move to src/interfaces/ directory.")
-  fi
+# Check hooks are in hooks/ directory
+if echo "$CONTENT" | grep -qE "^export (function|const) use[A-Z]"; then
+  [[ ! "$FILE_PATH" =~ /hooks/ ]] && \
+    VIOLATIONS+=("Custom hook defined outside hooks/ directory. Move to hooks/.")
 fi
 
-# If violations found, BLOCK with official format
-if [[ ${#VIOLATIONS[@]} -gt 0 ]]; then
-  REASON="SOLID VIOLATION in $FILE_PATH: "
-  for v in "${VIOLATIONS[@]}"; do
-    REASON+="$v "
-  done
-
-  cat <<EOF
-{
-  "hookSpecificOutput": {
-    "hookEventName": "PreToolUse",
-    "permissionDecision": "deny",
-    "permissionDecisionReason": "$REASON"
-  }
-}
-EOF
-  exit 0
-fi
-
+[[ ${#VIOLATIONS[@]} -gt 0 ]] && { deny_solid_violation "$FILE_PATH" "${VIOLATIONS[@]}"; exit 0; }
 exit 0

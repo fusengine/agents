@@ -27,29 +27,17 @@ if [[ ! -d "$APEX_DIR" ]]; then
   exit 0
 fi
 
-# Get last 3 completed tasks for context
-COMPLETED_TASKS=""
-if [[ -f "$TASK_FILE" ]]; then
-  COMPLETED_TASKS=$(jq -r '
-    .tasks | to_entries
-    | map(select(.value.status == "completed"))
-    | sort_by(.value.completed_at)
-    | reverse
-    | .[0:3]
-    | map("#" + .key + ": " + .value.subject)
-    | join(", ")
-  ' "$TASK_FILE" 2>/dev/null || echo "none")
+# Read AGENTS.md content if exists
+AGENTS_CONTENT=""
+if [[ -f "$AGENTS_FILE" ]]; then
+  AGENTS_CONTENT=$(cat "$AGENTS_FILE" | head -100)
 fi
 
-# Get pending tasks
-PENDING_TASKS=""
+# Get task context (completed + pending)
+COMPLETED_TASKS="none"; PENDING_TASKS="none"
 if [[ -f "$TASK_FILE" ]]; then
-  PENDING_TASKS=$(jq -r '
-    .tasks | to_entries
-    | map(select(.value.status == "pending"))
-    | map("#" + .key + ": " + .value.subject)
-    | join(", ")
-  ' "$TASK_FILE" 2>/dev/null || echo "none")
+  COMPLETED_TASKS=$(jq -r '.tasks|to_entries|map(select(.value.status=="completed"))|sort_by(.value.completed_at)|reverse|.[0:3]|map("#"+.key+": "+.value.subject)|join(", ")' "$TASK_FILE" 2>/dev/null || echo "none")
+  PENDING_TASKS=$(jq -r '.tasks|to_entries|map(select(.value.status=="pending"))|map("#"+.key+": "+.value.subject)|join(", ")' "$TASK_FILE" 2>/dev/null || echo "none")
 fi
 
 # Build context message
@@ -58,38 +46,28 @@ read -r -d '' CONTEXT << 'ENDCONTEXT' || true
 
 You are a sub-agent in APEX workflow. Follow these rules:
 
-### 1. Read Context First
-- Read `.claude/apex/AGENTS.md` for full rules
-- Read `.claude/apex/task.json` for task state
+### 1. AGENTS.md Rules (Injected)
+${AGENTS_CONTENT}
 
-### 2. Check Completed Tasks
-Last 3 completed: ${COMPLETED_TASKS}
-- Read their notes in `.claude/apex/docs/task-{ID}-{subject}.md`
+### 2. Task Context
+- Last completed: ${COMPLETED_TASKS}
+- Pending: ${PENDING_TASKS}
 
-### 3. Available Tasks
-Pending: ${PENDING_TASKS}
-
-### 4. Before Starting Work
-- Use `TaskList` to see all tasks
+### 3. Before Starting Work
 - Use `TaskUpdate(taskId, status: "in_progress")` before starting
-- Read your agent skills and SOLID principles
 
-### 5. SOLID Rules (Mandatory)
-- Files < 100 lines (split at 90)
-- Interfaces in `src/interfaces/`
-- JSDoc/PHPDoc on every function
+### 4. SOLID Rules
+- Files < 100 lines | Interfaces in `src/interfaces/` | JSDoc/PHPDoc required
 
-### 6. Research Before Code
-- Use Context7 for official docs
-- Use Exa for patterns/examples
-- Write notes to `.claude/apex/docs/task-{ID}-{subject}.md`
+### 5. Research Before Code
+- Use Context7/Exa for docs | Write notes to `.claude/apex/docs/`
 
-### 7. When Done
-- Use `TaskUpdate(taskId, status: "completed")`
-- This triggers auto-commit
+### 6. When Done
+- `TaskUpdate(taskId, status: "completed")` triggers auto-commit
 ENDCONTEXT
 
 # Replace placeholders
+CONTEXT="${CONTEXT//\$\{AGENTS_CONTENT\}/$AGENTS_CONTENT}"
 CONTEXT="${CONTEXT//\$\{COMPLETED_TASKS\}/$COMPLETED_TASKS}"
 CONTEXT="${CONTEXT//\$\{PENDING_TASKS\}/$PENDING_TASKS}"
 
