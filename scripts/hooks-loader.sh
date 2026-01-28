@@ -37,15 +37,28 @@ for PLUGIN_DIR in "$PLUGINS_DIR"/*/; do
 
         # Vérifier le matcher si présent
         if [[ -n "$MATCHER" ]]; then
-          TOOL_NAME=$(echo "$INPUT" | jq -r '.tool_name // empty')
-          if [[ ! "$TOOL_NAME" =~ $MATCHER ]]; then
-            continue
+          # Pour Notification: matcher sur type, pour autres: matcher sur tool_name
+          if [[ "$HOOK_TYPE" == "Notification" ]]; then
+            NOTIF_TYPE=$(echo "$INPUT" | jq -r '.type // .notification_type // empty')
+            if [[ ! "$NOTIF_TYPE" =~ $MATCHER ]]; then
+              continue
+            fi
+          else
+            TOOL_NAME=$(echo "$INPUT" | jq -r '.tool_name // empty')
+            if [[ ! "$TOOL_NAME" =~ $MATCHER ]]; then
+              continue
+            fi
           fi
         fi
 
         # Exécuter le hook
         if [[ -n "$COMMAND" ]]; then
-          echo "$INPUT" | bash -c "$COMMAND" 2>&1
+          # Pour Stop/Notification avec afplay: pas besoin de stdin
+          if [[ "$COMMAND" =~ ^afplay ]]; then
+            bash -c "$COMMAND" 2>&1 &
+          else
+            echo "$INPUT" | bash -c "$COMMAND" 2>&1
+          fi
         fi
       done
     fi
