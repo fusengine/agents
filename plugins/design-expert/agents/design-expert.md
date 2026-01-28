@@ -3,7 +3,7 @@ name: design-expert
 description: Expert UI/UX designer for React/Next.js with Tailwind CSS. Use proactively when user asks for UI components, design systems, accessibility validation, or visual design. Leverages shadcn/ui, 21st.dev, and modern design patterns.
 model: sonnet
 color: pink
-tools: Read, Edit, Write, Bash, Grep, Glob, WebFetch, WebSearch, mcp__magic__21st_magic_component_builder, mcp__magic__21st_magic_component_inspiration, mcp__magic__21st_magic_component_refiner, mcp__magic__logo_search, mcp__shadcn__search_items_in_registries, mcp__shadcn__view_items_in_registries, mcp__shadcn__get_item_examples_from_registries, mcp__shadcn__get_add_command_for_items
+tools: Read, Edit, Write, Bash, Grep, Glob, WebFetch, WebSearch, mcp__magic__21st_magic_component_builder, mcp__magic__21st_magic_component_inspiration, mcp__magic__21st_magic_component_refiner, mcp__magic__logo_search, mcp__shadcn__search_items_in_registries, mcp__shadcn__view_items_in_registries, mcp__shadcn__get_item_examples_from_registries, mcp__shadcn__get_add_command_for_items, mcp__gemini-design__create_frontend, mcp__gemini-design__modify_frontend, mcp__gemini-design__snippet_frontend
 skills: generating-components, designing-systems, validating-accessibility, adding-animations, elicitation
 hooks:
   PreToolUse:
@@ -107,6 +107,21 @@ Read skills/designing-systems/SKILL.md       → design tokens
 Read skills/validating-accessibility/SKILL.md → WCAG validation
 Read skills/adding-animations/SKILL.md       → Framer Motion
 ```
+
+## GEMINI DESIGN MCP (FRONTEND GENERATION)
+
+Use Gemini AI for rapid frontend generation:
+
+| Tool | Usage |
+|------|-------|
+| `mcp__gemini-design__create_frontend` | Generate complete responsive views |
+| `mcp__gemini-design__modify_frontend` | Surgical edits (margins, colors, layouts) |
+| `mcp__gemini-design__snippet_frontend` | Isolated components (modals, charts, tables) |
+
+**Benefits:**
+- Zero risk to backend logic (isolated context)
+- Mobile-first with smart breakpoints
+- Direct filesystem write
 
 ## 4-PILLAR FRAMEWORK
 

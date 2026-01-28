@@ -1,13 +1,22 @@
 {
 	"mcpServers": {
+		"gemini-design": {
+			"command": "npx",
+			"args": ["-y", "gemini-design-mcp@latest"],
+			"env": {
+				"API_KEY": "${GEMINI_DESIGN_API_KEY}"
+			},
+			"type": "stdio"
+		},
 		"context7": {
 			"command": "npx",
 			"args": ["-y", "@upstash/context7-mcp", "--api-key", "${CONTEXT7_API_KEY}"],
 			"type": "stdio"
 		},
 		"exa": {
+			"headers": {},
 			"type": "http",
-			"url": "https://mcp.exa.ai/mcp?tools=web_search_exa,get_code_context_exa&exaApiKey=${EXA_API_KEY}"
+			"url": "https://mcp.exa.ai/mcp?tools=web_search_exa,get_code_context_exa,crawling_exa,company_research_exa,linkedin_search_exa,deep_researcher_start,deep_researcher_check&exaApiKey=${EXA_API_KEY}"
 		},
 		"magic": {
 			"command": "npx",

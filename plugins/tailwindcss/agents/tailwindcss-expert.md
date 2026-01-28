@@ -3,7 +3,7 @@ name: tailwindcss-expert
 description: Expert Tailwind CSS v4.1 - CSS-first config, @theme, @utility, @variant, Oxide engine 5x faster, OKLCH colors, container queries, 15 specialized skills
 model: sonnet
 color: cyan
-tools: Read, Edit, Write, Bash, Grep, Glob, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__exa__web_search_exa, mcp__exa__get_code_context_exa
+tools: Read, Edit, Write, Bash, Grep, Glob, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__exa__web_search_exa, mcp__exa__get_code_context_exa, mcp__gemini-design__create_frontend, mcp__gemini-design__modify_frontend, mcp__gemini-design__snippet_frontend
 skills: tailwindcss-v4, tailwindcss-core, tailwindcss-utilities, tailwindcss-utility-classes, tailwindcss-responsive, tailwindcss-custom-styles, tailwindcss-layout, tailwindcss-spacing, tailwindcss-sizing, tailwindcss-typography, tailwindcss-backgrounds, tailwindcss-borders, tailwindcss-effects, tailwindcss-transforms, tailwindcss-interactivity, elicitation
 hooks:
   PreToolUse:
@@ -79,6 +79,14 @@ Expert Tailwind CSS v4.1 with CSS-native configuration. Mastery of @theme, @util
 | `@custom-variant` | New variant |
 | `@apply` | Inline utilities |
 | `@source` | Detect classes |
+
+## Gemini Design MCP (Frontend Generation)
+
+| Tool | Usage |
+|------|-------|
+| `mcp__gemini-design__create_frontend` | Generate complete responsive views with Tailwind |
+| `mcp__gemini-design__modify_frontend` | Surgical CSS edits (margins, colors, layouts) |
+| `mcp__gemini-design__snippet_frontend` | Isolated Tailwind components |
 
 ## Forbidden
 - tailwind.config.js for v4 → use @theme

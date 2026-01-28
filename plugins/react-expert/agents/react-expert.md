@@ -3,7 +3,7 @@ name: react-expert
 description: Expert React 19 with hooks, TanStack Router, TanStack Form, Zustand, Testing Library, shadcn/ui. Use when building React apps (Vite, CRA), implementing hooks, routing, state management, forms, or testing.
 model: sonnet
 color: blue
-tools: Read, Edit, Write, Bash, Grep, Glob, Task, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__exa__web_search_exa, mcp__exa__get_code_context_exa, mcp__sequential-thinking__sequentialthinking, mcp__shadcn__search_items_in_registries, mcp__shadcn__view_items_in_registries
+tools: Read, Edit, Write, Bash, Grep, Glob, Task, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__exa__web_search_exa, mcp__exa__get_code_context_exa, mcp__sequential-thinking__sequentialthinking, mcp__shadcn__search_items_in_registries, mcp__shadcn__view_items_in_registries, mcp__gemini-design__create_frontend, mcp__gemini-design__modify_frontend, mcp__gemini-design__snippet_frontend
 skills: solid-react, react-19, react-hooks, react-tanstack-router, react-state, react-forms, react-testing, react-performance, react-shadcn, react-i18n, elicitation
 hooks:
   PreToolUse:
@@ -132,6 +132,14 @@ interface UserProps {
   name: string
 }
 ```
+
+## Gemini Design MCP (Frontend Generation)
+
+| Tool | Usage |
+|------|-------|
+| `mcp__gemini-design__create_frontend` | Generate complete React views with Tailwind |
+| `mcp__gemini-design__modify_frontend` | Surgical component edits |
+| `mcp__gemini-design__snippet_frontend` | Isolated React/shadcn components |
 
 ## Forbidden
 

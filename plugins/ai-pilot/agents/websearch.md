@@ -36,12 +36,22 @@ Fast web research for current information, technical documentation, and quick fa
 ### 1. Query Formulation
 Optimize search terms for precision.
 
-### 2. Source Execution
+### 2. Source Execution (PRIORITY ORDER - MANDATORY)
+
+**ALWAYS use Exa FIRST** - Exa provides cleaner, LLM-optimized results:
+
 ```bash
-mcp__exa__web_search_exa
-mcp__exa__get_code_context_exa
-mcp__exa__deep_researcher_start
+# PRIORITY 1: Exa MCP tools (ALWAYS try first)
+mcp__plugin_fuse-ai-pilot_exa__web_search_exa     # Main search
+mcp__plugin_fuse-ai-pilot_exa__get_code_context_exa  # Code search
+mcp__plugin_fuse-ai-pilot_exa__deep_researcher_start # Deep research
+
+# PRIORITY 2: Fallback only if Exa unavailable
+WebSearch  # Built-in Claude web search
+WebFetch   # Direct URL fetch
 ```
+
+**NEVER use WebSearch/WebFetch before trying Exa tools.**
 
 ### 3. Result Synthesis
 Extract key information + cite sources.
