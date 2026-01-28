@@ -37,21 +37,24 @@ This installs the hooks loader in `~/.claude/settings.json`. All plugin hooks ar
 
 | Hook | Trigger | Purpose |
 |------|---------|---------|
+| **SessionStart** | Session starts | Load context, inject CLAUDE.md, cleanup states |
 | **UserPromptSubmit** | User sends message | Detect project type, inject APEX instruction |
-| **PreToolUse** | Before Write/Edit | Block if skill not consulted |
-| **PostToolUse** | After Write/Edit | Validate SOLID compliance |
+| **PreToolUse** | Before Write/Edit/Bash | Block if skill not consulted, validate git/install commands |
+| **PostToolUse** | After Write/Edit | Validate SOLID compliance, track changes |
+| **SubagentStop** | Subagent completes | Track agent memory for context persistence |
 
 ## Plugins with Hooks
 
-| Plugin | PreToolUse | PostToolUse | UserPromptSubmit |
-|--------|------------|-------------|------------------|
-| **ai-pilot** | APEX reminder | SOLID check | Project detection + APEX injection |
-| **react-expert** | Block without skill | React SOLID validation | - |
-| **nextjs-expert** | Block without skill | Next.js SOLID validation | - |
-| **laravel-expert** | Block without skill | Laravel SOLID validation | - |
-| **swift-apple-expert** | Block without skill | Swift SOLID validation | - |
-| **tailwindcss** | Block without skill | Tailwind best practices | - |
-| **design-expert** | Block without skill | Accessibility check | - |
+| Plugin | PreToolUse | PostToolUse | UserPromptSubmit | SessionStart | SubagentStop |
+|--------|------------|-------------|------------------|--------------|--------------|
+| **ai-pilot** | APEX reminder | SOLID check | Project detection + APEX injection | - | - |
+| **core-guards** | Git guard, Install guard, Security guard, Interface enforcement | File size check, Session tracking | CLAUDE.md injection | Context loading, Cleanup | Memory tracking |
+| **react-expert** | Block without skill | React SOLID validation | - | - | - |
+| **nextjs-expert** | Block without skill | Next.js SOLID validation | - | - | - |
+| **laravel-expert** | Block without skill | Laravel SOLID validation | - | - | - |
+| **swift-apple-expert** | Block without skill | Swift SOLID validation | - | - | - |
+| **tailwindcss** | Block without skill | Tailwind best practices | - | - | - |
+| **design-expert** | Block without skill | Accessibility check | - | - | - |
 
 ## Hook Scripts
 
@@ -62,6 +65,23 @@ This installs the hooks loader in `~/.claude/settings.json`. All plugin hooks ar
 | `detect-and-inject-apex.sh` | Detects project type (Next.js, Laravel, Swift, React) and injects APEX methodology |
 | `enforce-apex-phases.sh` | Reminds to follow APEX phases before coding |
 | `check-solid-compliance.sh` | Validates file size < 100 lines, interface location |
+
+### core-guards
+
+| Script | Hook | Purpose |
+|--------|------|---------|
+| `git-guard.sh` | PreToolUse | Blocks destructive git commands (push --force, reset --hard), asks for confirmation on others |
+| `install-guard.sh` | PreToolUse | Asks confirmation before package installations (npm, pip, brew, etc.) |
+| `security-guard.sh` | PreToolUse | Validates dangerous bash commands via security rules |
+| `pre-commit-guard.sh` | PreToolUse | Runs linters (ESLint, TypeScript, Prettier, Ruff) before git commit |
+| `enforce-interfaces.sh` | PreToolUse | Blocks interfaces/types in component files - must be in `src/interfaces/` |
+| `enforce-file-size.sh` | PostToolUse | Blocks files > 100 lines - must split into modules |
+| `track-session-changes.sh` | PostToolUse | Tracks cumulative code changes for sniper trigger |
+| `inject-claude-md.sh` | SessionStart | Injects CLAUDE.md content into session context |
+| `load-dev-context.sh` | SessionStart | Loads git status, detects project type |
+| `cleanup-session-states.sh` | SessionStart | Cleans up stale session state files |
+| `read-claude-md.sh` | UserPromptSubmit | Reads CLAUDE.md + auto-triggers APEX for dev tasks |
+| `track-agent-memory.sh` | SubagentStop | Tracks agent completion for context persistence |
 
 ### Expert Agents (react, nextjs, laravel, swift)
 

@@ -1,0 +1,129 @@
+{
+  "_description": "Core Guards - Security and SOLID enforcement hooks",
+  "_version": "1.0.0",
+  "_author": "fusengine-plugins",
+
+  "hooks": {
+    "PreToolUse": [
+      {
+        "_description": "Git & Install & Security guards for Bash commands",
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "_description": "Block destructive git commands (push --force, reset --hard, etc.)",
+            "type": "command",
+            "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/pre-tool-use/git-guard.sh"
+          },
+          {
+            "_description": "Ask confirmation before installing packages (npm, pip, brew, etc.)",
+            "type": "command",
+            "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/pre-tool-use/install-guard.sh"
+          },
+          {
+            "_description": "Validate dangerous commands via security rules",
+            "type": "command",
+            "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/pre-tool-use/security-guard.sh"
+          }
+        ]
+      },
+      {
+        "_description": "Pre-commit validation (linters, tests) before git commit",
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "_description": "Run ESLint, TypeScript, Prettier, Ruff before commit",
+            "type": "command",
+            "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/pre-tool-use/pre-commit-guard.sh"
+          }
+        ]
+      },
+      {
+        "_description": "SOLID: Enforce interface separation in component files",
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "_description": "Block interfaces/types in .tsx/.jsx/.vue files - must be in src/interfaces/",
+            "type": "command",
+            "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/pre-tool-use/enforce-interfaces.sh"
+          }
+        ]
+      }
+    ],
+
+    "PostToolUse": [
+      {
+        "_description": "SOLID validation and session tracking after file modifications",
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "_description": "SOLID: Block files exceeding 100 lines - must split into modules",
+            "type": "command",
+            "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/post-tool-use/enforce-file-size.sh"
+          },
+          {
+            "_description": "Track cumulative code file changes per session for sniper trigger",
+            "type": "command",
+            "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/post-tool-use/track-session-changes.sh"
+          },
+          {
+            "_description": "Post-edit TypeScript validation",
+            "type": "command",
+            "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/post-tool-use/post-edit-typescript.sh"
+          }
+        ]
+      }
+    ],
+
+    "SessionStart": [
+      {
+        "_description": "Session initialization - load context and cleanup stale states",
+        "matcher": "",
+        "hooks": [
+          {
+            "_description": "Inject CLAUDE.md content into session context",
+            "type": "command",
+            "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/session-start/inject-claude-md.sh"
+          },
+          {
+            "_description": "Load development context (git status, project type detection)",
+            "type": "command",
+            "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/session-start/load-dev-context.sh"
+          },
+          {
+            "_description": "Cleanup stale session state files from /tmp",
+            "type": "command",
+            "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/session-start/cleanup-session-states.sh"
+          }
+        ]
+      }
+    ],
+
+    "UserPromptSubmit": [
+      {
+        "_description": "Process user prompt - detect APEX triggers and inject rules",
+        "matcher": "",
+        "hooks": [
+          {
+            "_description": "Read CLAUDE.md + auto-detect if APEX workflow should be triggered",
+            "type": "command",
+            "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/user-prompt/read-claude-md.sh"
+          }
+        ]
+      }
+    ],
+
+    "SubagentStop": [
+      {
+        "_description": "Track sub-agent completion and memory",
+        "matcher": "",
+        "hooks": [
+          {
+            "_description": "Track agent memory and completion for context persistence",
+            "type": "command",
+            "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/subagent-stop/track-agent-memory.sh"
+          }
+        ]
+      }
+    ]
+  }
+}

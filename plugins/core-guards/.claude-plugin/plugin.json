@@ -1,0 +1,14 @@
+{
+  "name": "core-guards",
+  "version": "1.0.0",
+  "description": "Core security guards (git, install, security) and SOLID enforcement hooks for Claude Code",
+  "author": {
+    "name": "Fusengine",
+    "email": "hello@fusengine.ch",
+    "url": "https://github.com/fusengine"
+  },
+  "homepage": "https://github.com/fusengine/agents",
+  "repository": "https://github.com/fusengine/agents",
+  "license": "MIT",
+  "keywords": ["security", "guards", "solid", "hooks", "git", "linter", "pre-commit"]
+}

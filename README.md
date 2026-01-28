@@ -6,7 +6,7 @@ Professional Claude Code plugins with APEX workflow, SOLID principles, and exper
 
 | Category | Count |
 |----------|-------|
-| Plugins | 10 |
+| Plugins | 11 |
 | Agents | 15 |
 | Skills | 70 |
 | Commands | 24 |
@@ -45,6 +45,7 @@ Professional Claude Code plugins with APEX workflow, SOLID principles, and exper
 | [fuse-commit-pro](./plugins/commit-pro) | Git commits | `/commit`, `/wip`, `/fix`, `/feat`, `/refactor`, `/undo` |
 | [fuse-solid](./plugins/solid) | SOLID enforcement | Auto-detection for all languages |
 | [fuse-prompt-engineer](./plugins/prompt-engineer) | Prompt design | `/prompt`, `/prompt-history` |
+| [core-guards](./plugins/core-guards) | Security & SOLID hooks | Git guard, install guard, file size, interfaces |
 
 ## APEX Methodology
 
@@ -106,7 +107,8 @@ fusengine-plugins/
 │   ├── solid/
 │   ├── swift-apple-expert/
 │   ├── tailwindcss/
-│   └── prompt-engineer/
+│   ├── prompt-engineer/
+│   └── core-guards/
 ├── LICENSE
 └── README.md
 ```
