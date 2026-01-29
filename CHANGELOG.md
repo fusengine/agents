@@ -1,5 +1,16 @@
 # Release Notes
 
+## [1.28.0] - 29-01-2026
+
+### Added
+
+- **hooks**: Add hookSpecificOutput permission dialog support
+  - Implement Claude Code standard format for Yes/No dialogs
+  - git-guard: ask for commit/push, deny for --force
+  - install-guard: ask for npm/brew install
+  - security-guard: ask for rm, deny for rm -rf /, allow trash
+  - hook-executor: pass hookSpecificOutput to Claude Code
+
 ## [1.27.1] - 29-01-2026
 
 ### Changed
