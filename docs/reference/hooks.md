@@ -15,23 +15,33 @@ The hooks system ensures that agents:
 ~/.claude/settings.json
        │
        ▼
-scripts/hooks-loader.sh  ← Single entry point
+scripts/hooks-loader.ts  ← Bun + SOLID (10x faster)
        │
        ▼
 plugins/*/hooks/hooks.json  ← Auto-detected
        │
        ▼
-plugins/*/scripts/*.sh  ← Executed per plugin
+plugins/*/scripts/*.sh  ← Executed in parallel
 ```
 
 ## Installation
 
+### macOS / Linux
 ```bash
-cd /path/to/claude-plugins
-./scripts/install-hooks.sh
+~/.claude/plugins/marketplaces/fusengine-plugins/setup.sh
 ```
 
-This installs the hooks loader in `~/.claude/settings.json`. All plugin hooks are automatically detected and loaded.
+### Windows (PowerShell)
+```powershell
+~\.claude\plugins\marketplaces\fusengine-plugins\setup.ps1
+```
+
+This installs:
+- **Hooks loader** in `~/.claude/settings.json`
+- **API keys** configuration (interactive prompts)
+- **Shell config** (bash/zsh/fish/PowerShell)
+
+All plugin hooks are automatically detected and loaded.
 
 ## Hook Types
 
@@ -59,64 +69,52 @@ This installs the hooks loader in `~/.claude/settings.json`. All plugin hooks ar
 | **tailwindcss** | Block without skill | Tailwind best practices | - | - | - | - | - |
 | **design-expert** | Block without skill | Accessibility check | - | - | - | - | - |
 
-## Hook Scripts
+## Loader Architecture (v2.0 - Bun + SOLID)
 
-### ai-pilot
+```
+scripts/
+├── hooks-loader.ts            ← Entry point
+├── install-hooks.ts           ← Installation + API keys
+├── package.json
+├── src/
+│   ├── interfaces/
+│   │   ├── hooks.ts           ← Hook interfaces
+│   │   └── env.ts             ← EnvKey interface
+│   ├── config/
+│   │   └── api-keys.ts        ← API keys configuration
+│   ├── services/
+│   │   ├── plugin-scanner.ts  ← Scan plugins, extract hooks
+│   │   ├── hook-executor.ts   ← Execute hooks in PARALLEL
+│   │   ├── settings-manager.ts← Manage settings.json
+│   │   └── env-manager.ts     ← API keys & shell config
+│   └── __tests__/
+│       ├── api-keys.test.ts
+│       ├── env-manager.test.ts
+│       ├── fs-helpers.test.ts
+│       ├── hook-executor.test.ts
+│       ├── install-hooks.test.ts
+│       ├── plugin-scanner.test.ts
+│       └── settings-manager.test.ts
+└── env-shell/
+    ├── claude-env.bash
+    ├── claude-env.zsh
+    ├── claude-env.fish
+    └── claude-env.ps1
+```
 
-| Script | Purpose |
-|--------|---------|
-| `detect-and-inject-apex.sh` | Detects project type (Next.js, Laravel, Swift, React) and injects APEX methodology |
-| `enforce-apex-phases.sh` | Reminds to follow APEX phases before coding |
-| `check-solid-compliance.sh` | Validates file size < 100 lines, interface location |
+### Testing
 
-### core-guards
+```bash
+bun test           # Run 81 tests
+bun test --watch   # Watch mode
+```
 
-| Script | Hook | Purpose |
-|--------|------|---------|
-| `git-guard.sh` | PreToolUse | Blocks destructive git commands (push --force, reset --hard), asks for confirmation on others |
-| `install-guard.sh` | PreToolUse | Asks confirmation before package installations (npm, pip, brew, etc.) |
-| `security-guard.sh` | PreToolUse | Validates dangerous bash commands via security rules |
-| `pre-commit-guard.sh` | PreToolUse | Runs linters (ESLint, TypeScript, Prettier, Ruff) before git commit |
-| `enforce-interfaces.sh` | PreToolUse | Blocks interfaces/types in component files - must be in `src/interfaces/` |
-| `enforce-file-size.sh` | PostToolUse | Blocks files > 100 lines - must split into modules |
-| `track-session-changes.sh` | PostToolUse | Tracks cumulative code changes for sniper trigger |
-| `inject-claude-md.sh` | SessionStart | Injects CLAUDE.md content into session context |
-| `load-dev-context.sh` | SessionStart | Loads git status, detects project type |
-| `cleanup-session-states.sh` | SessionStart | Cleans up stale session state files |
-| `read-claude-md.sh` | UserPromptSubmit | Reads CLAUDE.md + auto-triggers APEX for dev tasks |
-| `track-agent-memory.sh` | SubagentStop | Tracks agent completion for context persistence |
+### Performance
 
-#### Sound Notifications
-
-| Sound | Hook | Matcher | Trigger |
-|-------|------|---------|---------|
-| `finish.mp3` | Stop | - | Claude finishes responding |
-| `permission-need.mp3` | PermissionRequest | - | ALL permission dialogs (system + hooks) |
-| `permission-need.mp3` | Notification | `permission_prompt` | System permission notifications |
-| `need-human.mp3` | Notification | `idle_prompt` | Claude waiting for user (60+ sec) |
-| `need-human.mp3` | Notification | `elicitation_dialog` | MCP tool input required |
-
-#### Statusline (separate config)
-
-Modular SOLID statusline for Claude Code. **Note:** Not a hook, requires manual `settings.json` configuration.
-
-| Segment | Description |
-|---------|-------------|
-| `claude` | Version |
-| `directory` | Path + git status |
-| `model` | Model + tokens |
-| `context` | Context progress bar |
-| `cost` | Session cost |
-| `limits` | 5h/7d limits |
-
-See `plugins/core-guards/statusline/README.md` for installation.
-
-### Expert Agents (react, nextjs, laravel, swift)
-
-| Script | Purpose |
-|--------|---------|
-| `check-*-skill.sh` | **BLOCKS** Write/Edit if no skill was consulted first |
-| `validate-*-solid.sh` | Validates framework-specific SOLID rules |
+| Version | Execution | Speed |
+|---------|-----------|-------|
+| v1.0 (bash+jq) | Sequential | 280ms |
+| **v2.0 (Bun)** | **Parallel** | **100ms** |
 
 ## Adding Hooks to a New Plugin
 
@@ -176,68 +174,35 @@ exit 0
 
 ### To Block (exit 2)
 ```bash
-cat << 'EOF'
-{
-  "decision": "block",
-  "reason": "Your message here"
-}
-EOF
+echo "Your blocking message here" >&2
 exit 2
 ```
 
-### To Warn (exit 0 with message)
+### To Add Context (exit 0 with JSON)
 ```bash
-echo "⚠️ Warning: Your message here"
+echo '{"additionalContext": "Your context here"}'
 exit 0
 ```
-
-## Validation Rules by Framework
-
-### React / Next.js
-- Files < 100 lines (150 for page/layout)
-- Interfaces in `src/interfaces/` or `modules/cores/interfaces/`
-- JSDoc on exports
-- `'use client'` directive when using hooks
-
-### Laravel
-- Files < 100 lines
-- Interfaces in `app/Contracts/`
-- PHPDoc on functions
-- Controllers < 80 lines (extract to Services/Actions)
-
-### Swift
-- Files < 100 lines (150 for Views)
-- Protocols in `Protocols/` directory
-- `@MainActor` on ViewModels
-- Sendable compliance for async types
-
-### Tailwind CSS
-- No deprecated `@tailwind` directives
-- Limited `@apply` usage (< 10)
-- Extract long className to utilities
-
-### Design
-- Accessibility: `aria-label`, `alt` attributes
-- No colored left borders as indicators
-- No purple gradients (AI slop)
-- No emojis as icons
 
 ## Troubleshooting
 
 ### Hooks not loading
 ```bash
-# Check if hooks-loader.sh is in settings.json
-cat ~/.claude/settings.json | jq '.hooks'
+# Check if hooks-loader.ts is in settings.json
+cat ~/.claude/settings.json | jq '.hooks.PreToolUse'
 
-# Re-run installation
-./scripts/install-hooks.sh
+# Re-run installation (macOS/Linux)
+~/.claude/plugins/marketplaces/fusengine-plugins/setup.sh
+
+# Re-run installation (Windows PowerShell)
+~\.claude\plugins\marketplaces\fusengine-plugins\setup.ps1
 ```
 
 ### Hook not executing
 ```bash
 # Test the hook manually
 echo '{"tool_name":"Write","tool_input":{"file_path":"test.tsx"}}' | \
-  bash plugins/react-expert/scripts/check-skill-loaded.sh
+  bun ~/.claude/plugins/marketplaces/fusengine-plugins/scripts/hooks-loader.ts PreToolUse
 ```
 
 ### Debug mode

@@ -59,7 +59,7 @@ src/
 **Automatic installation (recommended):**
 
 ```bash
-~/.claude/plugins/marketplaces/fusengine-plugins/scripts/install-hooks.sh
+~/.claude/plugins/marketplaces/fusengine-plugins/setup.sh
 ```
 
 This script automatically installs hooks AND statusline.

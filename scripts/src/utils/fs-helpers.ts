@@ -1,0 +1,43 @@
+/**
+ * Helpers pour les opérations fichiers
+ */
+import { existsSync, copyFileSync, mkdirSync } from "fs";
+import { dirname } from "path";
+import { $ } from "bun";
+
+/**
+ * Copie un fichier avec création du dossier destination
+ */
+export function copyFile(src: string, dest: string): boolean {
+  if (!existsSync(src)) return false;
+
+  mkdirSync(dirname(dest), { recursive: true });
+  copyFileSync(src, dest);
+  return true;
+}
+
+/**
+ * Copie un fichier et le rend exécutable
+ */
+export async function copyExecutable(
+  src: string,
+  dest: string
+): Promise<boolean> {
+  if (!copyFile(src, dest)) return false;
+  await $`chmod +x ${dest}`.quiet();
+  return true;
+}
+
+/**
+ * Compare le contenu de deux fichiers
+ */
+export async function filesAreEqual(
+  path1: string,
+  path2: string
+): Promise<boolean> {
+  if (!existsSync(path1) || !existsSync(path2)) return false;
+
+  const content1 = await Bun.file(path1).text();
+  const content2 = await Bun.file(path2).text();
+  return content1 === content2;
+}

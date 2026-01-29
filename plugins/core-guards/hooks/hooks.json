@@ -47,10 +47,43 @@
             "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/pre-tool-use/enforce-interfaces.sh"
           }
         ]
+      },
+      {
+        "_description": "SOLID: Block edits to files > 100 lines - must split first",
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "_description": "PreToolUse blocker for oversized files",
+            "type": "command",
+            "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/pre-tool-use/enforce-file-size.sh"
+          }
+        ]
+      },
+      {
+        "_description": "SOLID: Require reading SOLID principles before coding",
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "_description": "Block code modifications if SOLID rules not read",
+            "type": "command",
+            "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/pre-tool-use/require-solid-read.sh"
+          }
+        ]
       }
     ],
 
     "PostToolUse": [
+      {
+        "_description": "Track SOLID reference file reads",
+        "matcher": "Read",
+        "hooks": [
+          {
+            "_description": "Record when SOLID principles are read for session verification",
+            "type": "command",
+            "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/post-tool-use/track-solid-reads.sh"
+          }
+        ]
+      },
       {
         "_description": "SOLID validation and session tracking after file modifications",
         "matcher": "Write|Edit",

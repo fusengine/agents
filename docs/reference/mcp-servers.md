@@ -93,4 +93,4 @@ export EXA_API_KEY="xxx"
 export MAGIC_API_KEY="xxx"
 ```
 
-Run `install-env.sh` to configure your shell to load these.
+API keys are configured automatically during setup.

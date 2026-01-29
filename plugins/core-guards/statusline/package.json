@@ -13,7 +13,7 @@
 		"format": "biome format src/ --write"
 	},
 	"dependencies": {
-		"@clack/prompts": "^0.11.0",
+		"@clack/prompts": "^1.0.0",
 		"blessed": "^0.1.81",
 		"enquirer": "^2.4.1",
 		"picocolors": "^1.1.1",

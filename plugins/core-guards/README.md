@@ -82,7 +82,7 @@ Modular SOLID statusline for Claude Code terminal.
 ### 2. Install Hooks + Statusline
 
 ```bash
-~/.claude/plugins/marketplaces/fusengine-plugins/scripts/install-hooks.sh
+~/.claude/plugins/marketplaces/fusengine-plugins/setup.sh
 ```
 
 This script will:

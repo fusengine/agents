@@ -31,6 +31,15 @@
             "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/enforce-apex-phases.sh"
           }
         ]
+      },
+      {
+        "matcher": "Task",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/inject-apex-context.sh"
+          }
+        ]
       }
     ],
     "PostToolUse": [

@@ -1,5 +1,10 @@
 # Installation
 
+## Prerequisites
+
+- **Bun** - Install from [bun.sh](https://bun.sh)
+- **Claude Code** - Anthropic CLI
+
 ## 1. Add Marketplace
 
 ```bash
@@ -18,41 +23,30 @@
 /plugin install fuse-ai-pilot fuse-nextjs  # Just AI pilot + Next.js
 ```
 
-## 3. Configure Environment
+## 3. Run Setup
 
-Set up API keys for MCP servers (Context7, Exa, Magic):
+### macOS / Linux
 
 ```bash
-bash ~/.claude/plugins/marketplaces/fusengine-plugins/scripts/env-shell/install-env.sh
+~/.claude/plugins/marketplaces/fusengine-plugins/setup.sh
 ```
 
-This will:
-- Create `~/.claude/.env` from template
-- Configure your shell (fish/bash/zsh) to load env vars
+### Windows (PowerShell)
 
-**Edit `~/.claude/.env` with your keys:**
-```bash
-export CONTEXT7_API_KEY="ctx7sk-xxx"
-export EXA_API_KEY="xxx"
-export MAGIC_API_KEY="xxx"
-```
-
-## 4. Install Hooks + CLAUDE.md
-
-```bash
-bash ~/.claude/plugins/marketplaces/fusengine-plugins/scripts/install-hooks.sh
+```powershell
+~\.claude\plugins\marketplaces\fusengine-plugins\setup.ps1
 ```
 
 This installs:
-- All hooks (UserPromptSubmit, PreToolUse, PostToolUse, etc.)
-- `~/.claude/CLAUDE.md` (global rules)
-- `language: "french"` setting
-- Statusline
+- **Hooks** (PreToolUse, PostToolUse, etc.) via Bun
+- **CLAUDE.md** (global rules)
+- **API keys** (interactive prompts if missing)
+- **Shell config** (bash/zsh/fish/PowerShell)
+- **Statusline**
 
-## 5. Restart Claude Code
+## 4. Restart Claude Code
 
 ```bash
-# Exit and restart
 exit
 claude
 ```
@@ -61,4 +55,36 @@ claude
 
 ```bash
 /plugin list  # Shows installed plugins
+```
+
+## Manual API Keys Configuration
+
+If you skipped API keys during setup, edit `~/.claude/.env`:
+
+```bash
+export CONTEXT7_API_KEY="ctx7sk-xxx"
+export EXA_API_KEY="xxx"
+export MAGIC_API_KEY="xxx"
+export GEMINI_DESIGN_API_KEY="xxx"
+```
+
+Then re-run setup or restart your terminal.
+
+## Troubleshooting
+
+### Bun not found
+```bash
+# Install Bun
+curl -fsSL https://bun.sh/install | bash
+```
+
+### Hooks not working
+```bash
+# Re-run setup
+~/.claude/plugins/marketplaces/fusengine-plugins/setup.sh  # or setup.ps1 on Windows
+```
+
+### Check settings.json
+```bash
+cat ~/.claude/settings.json | grep hooks-loader
 ```

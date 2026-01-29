@@ -4,6 +4,7 @@ Professional Claude Code plugins with APEX workflow, SOLID principles, and exper
 
 ## Quick Install
 
+### macOS / Linux
 ```bash
 # Add marketplace
 /plugin marketplace add fusengine/agents
@@ -11,11 +12,20 @@ Professional Claude Code plugins with APEX workflow, SOLID principles, and exper
 # Install all plugins
 /plugin install fuse-ai-pilot fuse-commit-pro fuse-laravel fuse-nextjs fuse-react fuse-swift-apple-expert fuse-solid fuse-tailwindcss fuse-design fuse-prompt-engineer
 
-# Configure environment (API keys)
-bash ~/.claude/plugins/marketplaces/fusengine-plugins/scripts/env-shell/install-env.sh
+# Setup (hooks + API keys + CLAUDE.md)
+~/.claude/plugins/marketplaces/fusengine-plugins/setup.sh
+```
 
-# Install hooks + CLAUDE.md
-bash ~/.claude/plugins/marketplaces/fusengine-plugins/scripts/install-hooks.sh
+### Windows (PowerShell)
+```powershell
+# Add marketplace
+/plugin marketplace add fusengine/agents
+
+# Install all plugins
+/plugin install fuse-ai-pilot fuse-commit-pro fuse-laravel fuse-nextjs fuse-react fuse-swift-apple-expert fuse-solid fuse-tailwindcss fuse-design fuse-prompt-engineer
+
+# Setup (hooks + API keys + CLAUDE.md)
+~\.claude\plugins\marketplaces\fusengine-plugins\setup.ps1
 ```
 
 ## Stats
