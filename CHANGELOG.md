@@ -1,5 +1,16 @@
 # Release Notes
 
+## [1.29.2] - 29-01-2026
+
+### Fixed
+
+- **hooks**: Use hookSpecificOutput format for all 19 hooks
+  - PreToolUse: permissionDecision "deny"/"ask" with permissionDecisionReason
+  - PostToolUse: additionalContext for feedback to Claude
+  - SessionStart/UserPromptSubmit: additionalContext for context injection
+  - SubagentStart/SubagentStop: additionalContext for agent context
+  - Replace exit 2 + stderr with official Claude Code JSON format
+
 ## [1.29.1] - 29-01-2026
 
 ### Fixed
