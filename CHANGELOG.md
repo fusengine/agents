@@ -1,5 +1,15 @@
 # Release Notes
 
+## [1.27.1] - 29-01-2026
+
+### Changed
+
+- **scripts**: Simplify hooks and services with SOLID extraction
+  - Reduce code complexity across shell scripts (-117 lines net)
+  - Extract SOLID services: api-keys-config, env-file, shell-detection, shell-installers
+  - Add skill tracking hooks to expert plugins (design, laravel, nextjs, react, swift, tailwind)
+  - Streamline hook-executor and plugin-scanner
+
 ## [1.27.0] - 29-01-2026
 
 ### Added
