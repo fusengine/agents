@@ -1,5 +1,21 @@
 # Release Notes
 
+## [1.29.0] - 29-01-2026
+
+### Added
+
+- **mcp**: Interactive MCP server installer with 27 servers
+  - Add mcp.json catalog with server descriptions in English
+  - Add mcp-installer.ts and mcp-setup.ts services (SOLID)
+  - Add McpCatalog, McpServerConfig, SetupPaths interfaces
+  - Add unit tests for MCP installer functions (95 tests pass)
+  - Update documentation with full MCP server reference
+  - Update .env.example with all API key variables
+
+### Changed
+
+- **archives**: Remove from git tracking (already in .gitignore)
+
 ## [1.28.1] - 29-01-2026
 
 ### Fixed
