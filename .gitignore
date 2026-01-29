@@ -29,3 +29,4 @@ plugins/core-guards/statusline/node_modules
 plugins/core-guards/statusline/bun.lock
 plugins/core-guards/statusline/dist
 archives
+scripts/.claude/*
