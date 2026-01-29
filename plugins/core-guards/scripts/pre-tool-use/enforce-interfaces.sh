@@ -1,6 +1,6 @@
 #!/bin/bash
 # Enforce: No interfaces/types in component/view files (ALL languages)
-# IMPORTANT: exit 2 + stderr = block, exit 0 = allow
+# Uses hookSpecificOutput format: permissionDecision=deny to block
 
 INPUT=$(cat)
 FILE_PATH=$(echo "$INPUT" | jq -r '.tool_input.file_path // empty')
@@ -50,10 +50,18 @@ if [[ -z "$BLOCK_REASON" && "$FILE_PATH" =~ (Views?|Components?)/.*\.swift$ ]]; 
   fi
 fi
 
-# Block with exit 2 + stderr
+# Block with hookSpecificOutput format
 if [[ -n "$BLOCK_REASON" ]]; then
-  echo "SOLID VIOLATION: $BLOCK_REASON" >&2
-  exit 2
+  cat << EOF
+{
+  "hookSpecificOutput": {
+    "hookEventName": "PreToolUse",
+    "permissionDecision": "deny",
+    "permissionDecisionReason": "SOLID VIOLATION: $BLOCK_REASON"
+  }
+}
+EOF
+  exit 0
 fi
 
 exit 0

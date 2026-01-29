@@ -1,6 +1,6 @@
 #!/bin/bash
 # read-claude-md.sh - UserPromptSubmit hook
-# Injects CLAUDE.md as JSON additionalContext + detects APEX triggers
+# Injects CLAUDE.md + APEX detection via hookSpecificOutput
 
 CLAUDE_MD="$HOME/.claude/CLAUDE.md"
 [[ ! -f "$CLAUDE_MD" ]] && exit 0
@@ -22,7 +22,10 @@ ESCAPED=$(echo -e "$FULL_CONTENT" | jq -Rs .)
 
 cat << EOF
 {
-  "additionalContext": $ESCAPED
+  "hookSpecificOutput": {
+    "hookEventName": "UserPromptSubmit",
+    "additionalContext": $ESCAPED
+  }
 }
 EOF
 

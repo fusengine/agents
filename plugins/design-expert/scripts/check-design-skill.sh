@@ -32,11 +32,9 @@ PROJECT_ROOT=$(find_project_root "$(dirname "$FILE_PATH")" "package.json" ".git"
 
 skill_was_consulted "design" "$SESSION_ID" "$PROJECT_ROOT" && exit 0
 
-# Block with exit 2 + stderr
 PLUGINS_DIR="$HOME/.claude/plugins/marketplaces/fusengine-plugins/plugins"
-MSG="Design skill not consulted. READ ONE: "
+MSG="BLOCKED: Design skill not consulted. READ ONE: "
 MSG+="1) $PLUGINS_DIR/design-expert/skills/generating-components/SKILL.md | "
 MSG+="2) $PLUGINS_DIR/design-expert/skills/designing-systems/SKILL.md | "
-MSG+="3) Use mcp__context7__query-docs (topic: tailwindcss)"
-echo "$MSG" >&2
-exit 2
+MSG+="3) Use mcp__context7__query-docs (topic: tailwindcss). After reading, retry."
+deny_block "$MSG"

@@ -41,7 +41,10 @@ if is_code_file "$FILE_PATH"; then
     FILENAME=$(basename "$FILE_PATH")
     cat <<EOF
 {
-  "additionalContext": "SNIPER VALIDATION REQUIRED: Code file '$FILENAME' was modified. You MUST now run the sniper agent (fuse-ai-pilot:sniper) to validate this modification before continuing. This is mandatory per CLAUDE.md rules."
+  "hookSpecificOutput": {
+    "hookEventName": "PostToolUse",
+    "additionalContext": "SNIPER VALIDATION REQUIRED: Code file '$FILENAME' was modified. You MUST now run the sniper agent (fuse-ai-pilot:sniper) to validate this modification before continuing. This is mandatory per CLAUDE.md rules."
+  }
 }
 EOF
 fi

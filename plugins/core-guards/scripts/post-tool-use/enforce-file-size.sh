@@ -51,18 +51,17 @@ FILENAME=$(basename "$FILE_PATH")
 SOLID_REF=$(get_solid_reference "$FILE_PATH")
 
 if (( LINES > 100 )); then
-  # Exit 2 = BLOCK - stderr is shown to Claude
-  cat >&2 << EOF
-SOLID VIOLATION BLOCKED: '$FILENAME' has $LINES lines (max: 100).
+  REASON="SOLID VIOLATION: '$FILENAME' has $LINES lines (max: 100). ACTION REQUIRED: 1) Read SOLID principles: ~/.claude/plugins/marketplaces/fusengine-plugins/plugins/$SOLID_REF 2) Split this file into smaller modules (<90 lines each) 3) Follow Single Responsibility Principle. This is a hard requirement per CLAUDE.md rules."
 
-ACTION REQUIRED:
-1. Read SOLID principles: ~/.claude/plugins/marketplaces/fusengine-plugins/plugins/$SOLID_REF
-2. Split this file into smaller modules (<90 lines each)
-3. Follow Single Responsibility Principle
-
-This is a hard requirement per CLAUDE.md rules.
+  cat << EOF
+{
+  "hookSpecificOutput": {
+    "hookEventName": "PostToolUse",
+    "additionalContext": "$REASON"
+  }
+}
 EOF
-  exit 2
+  exit 0
 fi
 
 exit 0

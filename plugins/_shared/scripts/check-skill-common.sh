@@ -32,12 +32,20 @@ skill_was_consulted() {
   return 1
 }
 
-# @description Block with exit 2 + stderr (for PreToolUse)
+# @description Block with hookSpecificOutput format (for PreToolUse)
 # @param $1 Reason message
 deny_block() {
   local reason="$1"
-  echo "$reason" >&2
-  exit 2
+  cat << EOF
+{
+  "hookSpecificOutput": {
+    "hookEventName": "PreToolUse",
+    "permissionDecision": "deny",
+    "permissionDecisionReason": "$reason"
+  }
+}
+EOF
+  exit 0
 }
 
 export -f find_project_root

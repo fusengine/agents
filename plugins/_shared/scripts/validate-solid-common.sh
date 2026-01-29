@@ -9,7 +9,7 @@ count_code_lines() {
   echo "$content" | grep -v '^\s*$' | grep -v "^\s*$comment" | grep -v '^\s*\*' | wc -l | tr -d ' '
 }
 
-# @description Block with exit 2 + stderr for SOLID violation
+# @description Block with hookSpecificOutput format for SOLID violation
 # @param $1 File path  @param $2+ Violations
 deny_solid_violation() {
   local file_path="$1"; shift
@@ -18,8 +18,16 @@ deny_solid_violation() {
   for v in "${violations[@]}"; do
     reason+="$v "
   done
-  echo "$reason" >&2
-  exit 2
+  cat << EOF
+{
+  "hookSpecificOutput": {
+    "hookEventName": "PreToolUse",
+    "permissionDecision": "deny",
+    "permissionDecisionReason": "$reason"
+  }
+}
+EOF
+  exit 0
 }
 
 export -f count_code_lines

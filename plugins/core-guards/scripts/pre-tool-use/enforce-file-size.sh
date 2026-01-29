@@ -54,15 +54,16 @@ get_solid_reference() {
 
 SOLID_REF=$(get_solid_reference "$FILE_PATH")
 
-# Block with instructions
-cat >&2 << EOF
-BLOCKED: '$FILENAME' has $CURRENT_LINES lines (max: 100).
+# Block with hookSpecificOutput format
+REASON="BLOCKED: '$FILENAME' has $CURRENT_LINES lines (max: 100). TO SPLIT: 1) Read SOLID rules: ~/.claude/plugins/marketplaces/fusengine-plugins/plugins/$SOLID_REF 2) Create new module files (<90 lines each) 3) Use Write to replace '$FILENAME' with <100 lines version. Write with content <100 lines is ALLOWED for refactoring."
 
-TO SPLIT THIS FILE:
-1. Read SOLID rules: ~/.claude/plugins/marketplaces/fusengine-plugins/plugins/$SOLID_REF
-2. Create new module files (<90 lines each) with extracted code
-3. Use Write tool to replace '$FILENAME' with reduced version (<100 lines) that imports the new modules
-
-Write with content <100 lines is ALLOWED for refactoring.
+cat << EOF
+{
+  "hookSpecificOutput": {
+    "hookEventName": "PreToolUse",
+    "permissionDecision": "deny",
+    "permissionDecisionReason": "$REASON"
+  }
+}
 EOF
-exit 2
+exit 0

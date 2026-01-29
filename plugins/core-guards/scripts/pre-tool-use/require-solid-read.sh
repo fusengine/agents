@@ -59,15 +59,18 @@ if [[ -z "$SOLID_READ" ]]; then
   PLUGIN_FOLDER="${REQUIRED_SOLID%/*}"
   SOLID_PATH="~/.claude/plugins/marketplaces/fusengine-plugins/plugins/${PLUGIN_FOLDER}/skills/${SKILL_NAME}/"
 
-  cat >&2 << EOF
-BLOCKED: You must read SOLID principles before modifying '$FILENAME'.
+  REASON="BLOCKED: You must read SOLID principles before modifying '$FILENAME'. REQUIRED ACTION: Read the SOLID rules first: ${SOLID_PATH}SKILL.md - After reading, you can modify code files."
 
-REQUIRED ACTION:
-Read the SOLID rules first: ${SOLID_PATH}SKILL.md
-
-After reading, you can modify code files.
+  cat << EOF
+{
+  "hookSpecificOutput": {
+    "hookEventName": "PreToolUse",
+    "permissionDecision": "deny",
+    "permissionDecisionReason": "$REASON"
+  }
+}
 EOF
-  exit 2
+  exit 0
 fi
 
 exit 0

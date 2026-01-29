@@ -33,7 +33,10 @@ if [ -n "$CONTEXT" ]; then
   ESCAPED=$(echo -e "$CONTEXT" | jq -Rs .)
   cat << EOF
 {
-  "additionalContext": $ESCAPED
+  "hookSpecificOutput": {
+    "hookEventName": "SessionStart",
+    "additionalContext": $ESCAPED
+  }
 }
 EOF
 fi

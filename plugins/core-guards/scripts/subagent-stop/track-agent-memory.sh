@@ -41,8 +41,10 @@ if [[ -f "$STATE_FILE" ]]; then
 
     cat << EOF
 {
-  "message": "Agent $AGENT_TYPE: $MODIFIED_COUNT files modified - SNIPER REQUIRED",
-  "additionalContext": "SNIPER VALIDATION REQUIRED: Agent '$AGENT_TYPE' modified $MODIFIED_COUNT code file(s): $MODIFIED_FILES. Run sniper agent now."
+  "hookSpecificOutput": {
+    "hookEventName": "SubagentStop",
+    "additionalContext": "SNIPER VALIDATION REQUIRED: Agent '$AGENT_TYPE' modified $MODIFIED_COUNT code file(s): $MODIFIED_FILES. Run sniper agent now."
+  }
 }
 EOF
     exit 0

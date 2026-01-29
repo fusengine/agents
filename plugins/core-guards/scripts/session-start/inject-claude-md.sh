@@ -1,5 +1,5 @@
 #!/bin/bash
-# SessionStart: Inject CLAUDE.md as JSON additionalContext
+# SessionStart: Inject CLAUDE.md via hookSpecificOutput
 
 CLAUDE_MD="$HOME/.claude/CLAUDE.md"
 [[ ! -f "$CLAUDE_MD" ]] && exit 0
@@ -9,7 +9,10 @@ CONTENT=$(cat "$CLAUDE_MD" | jq -Rs .)
 
 cat << EOF
 {
-  "additionalContext": $CONTENT
+  "hookSpecificOutput": {
+    "hookEventName": "SessionStart",
+    "additionalContext": $CONTENT
+  }
 }
 EOF
 

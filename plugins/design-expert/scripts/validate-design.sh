@@ -50,10 +50,17 @@ if grep -qE ">[🎯🚀💡🔥⚡️✨🎨📊💼🏆]<" "$FILE_PATH" 2>/dev/
   WARNINGS+="Design: Avoid emojis as icons - use Lucide React. "
 fi
 
-# Output warnings as additionalContext if any
+# Output warnings as hookSpecificOutput if any
 if [[ -n "$WARNINGS" ]]; then
   ESCAPED=$(echo "$WARNINGS" | jq -Rs '.')
-  echo "{\"additionalContext\": $ESCAPED, \"message\": \"Design warnings detected\"}"
+  cat << EOF
+{
+  "hookSpecificOutput": {
+    "hookEventName": "PostToolUse",
+    "additionalContext": $ESCAPED
+  }
+}
+EOF
 fi
 
 exit 0

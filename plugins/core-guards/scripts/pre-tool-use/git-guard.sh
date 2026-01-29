@@ -18,11 +18,13 @@ is_ralph_mode() {
     return 1
 }
 
-# Block with exit 2 + stderr
+# Block with hookSpecificOutput format (deny)
 output_block() {
     local reason="$1"
-    echo "GIT GUARD: $reason" >&2
-    exit 2
+    cat <<EOF
+{"hookSpecificOutput":{"hookEventName":"PreToolUse","permissionDecision":"deny","permissionDecisionReason":"GIT GUARD: $reason"}}
+EOF
+    exit 0
 }
 
 # Ask with hookSpecificOutput format (Claude Code standard)

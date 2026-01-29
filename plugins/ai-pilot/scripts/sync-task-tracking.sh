@@ -58,7 +58,10 @@ fi
 if [[ "$NEW_STATUS" == "completed" ]]; then
   cd "$PROJECT_ROOT"
   if [[ -z $(git status --porcelain 2>/dev/null) ]]; then
-    echo '{"decision":"block","reason":"No changes to commit for task completion"}' && exit 2
+    cat << 'EOF'
+{"hookSpecificOutput":{"hookEventName":"PostToolUse","additionalContext":"No changes to commit for task completion"}}
+EOF
+    exit 0
   fi
   SUBJECT=$(jq -r --arg t "$TASK_ID" '.tasks[$t].subject // "Task"' "$TASK_FILE")
   git add -A
@@ -66,7 +69,10 @@ if [[ "$NEW_STATUS" == "completed" ]]; then
     apex_task_complete "$TASK_FILE" "$TASK_ID"
     echo "✅ Auto-committed: feat(task-$TASK_ID): $SUBJECT"
   else
-    echo '{"decision":"block","reason":"Git commit failed"}' && exit 2
+    cat << 'EOF'
+{"hookSpecificOutput":{"hookEventName":"PostToolUse","additionalContext":"Git commit failed for task completion"}}
+EOF
+    exit 0
   fi
 fi
 

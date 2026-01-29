@@ -68,4 +68,9 @@ ${AGENTS_CONTENT}
 CONTEXT_ESCAPED=$(echo "$CONTEXT" | jq -Rs '.')
 
 cat << EOF
-{ "additionalContext": $CONTEXT_ESCAPED }
+{
+  "hookSpecificOutput": {
+    "hookEventName": "SubagentStart",
+    "additionalContext": $CONTEXT_ESCAPED
+  }
+}

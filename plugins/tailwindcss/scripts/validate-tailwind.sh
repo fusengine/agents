@@ -38,10 +38,17 @@ if [[ "$FILE_PATH" =~ \.(tsx|jsx)$ ]]; then
   fi
 fi
 
-# Output warnings as additionalContext if any
+# Output warnings as hookSpecificOutput if any
 if [[ -n "$WARNINGS" ]]; then
   ESCAPED=$(echo "$WARNINGS" | jq -Rs '.')
-  echo "{\"additionalContext\": $ESCAPED, \"message\": \"Tailwind warnings detected\"}"
+  cat << EOF
+{
+  "hookSpecificOutput": {
+    "hookEventName": "PostToolUse",
+    "additionalContext": $ESCAPED
+  }
+}
+EOF
 fi
 
 exit 0

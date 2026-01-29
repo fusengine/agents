@@ -119,6 +119,12 @@ esac
 
 REASON+="Sources: $SOURCES. After consulting, retry Write/Edit."
 
-# Use jq to properly escape the JSON
-jq -n --arg reason "$REASON" '{"decision": "block", "reason": $reason}'
-exit 2
+# Use hookSpecificOutput format
+jq -n --arg reason "$REASON" '{
+  "hookSpecificOutput": {
+    "hookEventName": "PreToolUse",
+    "permissionDecision": "deny",
+    "permissionDecisionReason": $reason
+  }
+}'
+exit 0
