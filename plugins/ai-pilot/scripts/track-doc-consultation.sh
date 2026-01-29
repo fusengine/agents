@@ -69,8 +69,11 @@ DOC_FILE="$DOCS_DIR/task-${CURRENT_TASK}-${FRAMEWORK}.md"
 TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
 TOOL_OUTPUT=$(echo "$INPUT" | jq -r '.tool_output // empty' | head -c 3000)
 
+# Capitalize first letter (bash 3.x compatible)
+FRAMEWORK_TITLE=$(echo "$FRAMEWORK" | awk '{print toupper(substr($0,1,1)) substr($0,2)}')
+
 cat > "$DOC_FILE" << EOF
-# Task $CURRENT_TASK - ${FRAMEWORK^} Documentation
+# Task $CURRENT_TASK - $FRAMEWORK_TITLE Documentation
 ## Consulted: $TIMESTAMP | Source: $SOURCE:$TOOL_NAME
 ## Key Info
 $(echo "$TOOL_OUTPUT" | head -30)
