@@ -1,5 +1,16 @@
 # Release Notes
 
+## [1.29.3] - 29-01-2026
+
+### Changed
+
+- **claude-md**: Enhance workflow rules and expand to 99 lines
+  - Add mandatory agent workflow before any code action
+  - Include full agent names (fuse-ai-pilot:*, fuse-nextjs:*, etc.)
+  - Add Gemini Design MCP detailed rules (FORBIDDEN/ALLOWED)
+  - Add SOLID rules location per agent
+  - Enforce /fuse-commit-pro:commit for all commits
+
 ## [1.29.2] - 29-01-2026
 
 ### Fixed
