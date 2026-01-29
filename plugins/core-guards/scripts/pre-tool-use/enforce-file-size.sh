@@ -41,13 +41,13 @@ get_solid_reference() {
   case "$ext" in
     ts|tsx|js|jsx)
       if [[ -f "$(dirname "$1")/next.config.js" || -f "$(dirname "$1")/next.config.ts" ]]; then
-        echo "fuse-nextjs/skills/solid-nextjs/references/"
+        echo "nextjs-expert/skills/solid-nextjs/"
       else
-        echo "fuse-react/skills/solid-react/references/"
+        echo "react-expert/skills/solid-react/"
       fi
       ;;
-    php) echo "fuse-laravel/skills/solid-php/references/" ;;
-    swift) echo "fuse-swift-apple-expert/skills/solid-swift/references/" ;;
+    php) echo "laravel-expert/skills/solid-php/" ;;
+    swift) echo "swift-apple-expert/skills/solid-swift/" ;;
     *) echo "generic/" ;;
   esac
 }

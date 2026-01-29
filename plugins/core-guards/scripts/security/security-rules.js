@@ -39,10 +39,9 @@ const SECURITY_RULES = {
  * @returns {string} Command without heredoc body
  */
 function extractCommandPart(command) {
-  // Remove heredoc content (everything after << 'DELIMITER' until DELIMITER)
   const heredocMatch = command.match(/^([^<]*<<\s*['"]?(\w+)['"]?)/);
   if (heredocMatch) {
-    return heredocMatch[1]; // Return only the part before heredoc body
+    return heredocMatch[1];
   }
   return command;
 }
@@ -54,34 +53,28 @@ function extractCommandPart(command) {
  */
 function validateCommand(command) {
   const violations = [];
-
-  // Extract command part only (exclude heredoc content)
   const cmdPart = extractCommandPart(command);
   const tokens = cmdPart.split(/[\s|;&]+/).filter(t => t.length > 0);
 
-  // Check critical commands
   for (const criticalCmd of SECURITY_RULES.CRITICAL_COMMANDS) {
     if (tokens.some(t => t === criticalCmd || t.startsWith(criticalCmd + ' '))) {
       violations.push(`CRITICAL: Detected dangerous command '${criticalCmd}'`);
     }
   }
 
-  // Check dangerous patterns (only on command part)
   for (const pattern of SECURITY_RULES.DANGEROUS_PATTERNS) {
     if (pattern.test(cmdPart)) {
       violations.push(`DANGEROUS PATTERN: ${pattern.toString()}`);
     }
   }
 
-  // Check ALL rm/rmdir/unlink commands
   if (/\brm\s+/.test(cmdPart)) {
-    violations.push(`DELETE: Commande 'rm' détectée - confirmation requise`);
+    violations.push(`DELETE: 'rm' command detected - confirmation required`);
   }
   if (/\b(rmdir|unlink)\s+/.test(cmdPart)) {
-    violations.push(`DELETE: Commande de suppression détectée - confirmation requise`);
+    violations.push(`DELETE: Deletion command detected - confirmation required`);
   }
 
-  // Check privilege escalation with word boundaries (not in heredoc content)
   for (const privCmd of SECURITY_RULES.PRIVILEGE_COMMANDS) {
     const regex = new RegExp(`(^|\\s|;|\\||&)${privCmd}(\\s|$|;|\\||&)`, 'i');
     if (regex.test(cmdPart)) {

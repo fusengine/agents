@@ -1,21 +1,41 @@
 #!/bin/bash
+# SessionStart: Load development context (git, project type)
 
-echo "🚀 Loading development context..."
+CONTEXT=""
 
+# Git context
 if [ -d .git ]; then
-  git status > /tmp/claude-git-context.txt
-  echo "✅ Git context loaded"
+  BRANCH=$(git branch --show-current 2>/dev/null || echo "unknown")
+  STATUS=$(git status --porcelain 2>/dev/null | head -5)
+  CONTEXT="Git branch: $BRANCH"
+  if [ -n "$STATUS" ]; then
+    CONTEXT="$CONTEXT\nModified files:\n$STATUS"
+  fi
 fi
 
-if [ -f package.json ]; then
-  echo "📦 Node.js project detected"
-  node --version 2>/dev/null || echo "⚠️  Node.js not found"
+# Project type detection
+if [ -f "next.config.js" ] || [ -f "next.config.ts" ] || [ -f "next.config.mjs" ]; then
+  CONTEXT="$CONTEXT\nProject: Next.js"
+elif [ -f "package.json" ]; then
+  CONTEXT="$CONTEXT\nProject: Node.js"
 fi
 
-if [ -f requirements.txt ] || [ -f pyproject.toml ]; then
-  echo "🐍 Python project detected"
-  python --version 2>/dev/null || python3 --version 2>/dev/null || echo "⚠️  Python not found"
+if [ -f "composer.json" ] && [ -f "artisan" ]; then
+  CONTEXT="$CONTEXT\nProject: Laravel"
 fi
 
-echo "✨ Development context ready"
+if [ -f "Package.swift" ]; then
+  CONTEXT="$CONTEXT\nProject: Swift"
+fi
+
+# Output JSON only if we have context
+if [ -n "$CONTEXT" ]; then
+  ESCAPED=$(echo -e "$CONTEXT" | jq -Rs .)
+  cat << EOF
+{
+  "additionalContext": $ESCAPED
+}
+EOF
+fi
+
 exit 0

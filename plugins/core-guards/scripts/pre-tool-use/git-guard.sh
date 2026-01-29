@@ -18,30 +18,35 @@ is_ralph_mode() {
     return 1
 }
 
-# Output permission JSON
-output_permission() {
-    local decision="$1" reason="$2"
-    cat << ENDJSON
-{"hookSpecificOutput":{"hookEventName":"PreToolUse","permissionDecision":"$decision","permissionDecisionReason":"$reason"}}
-ENDJSON
+# Block with exit 2 + stderr
+output_block() {
+    local reason="$1"
+    echo "GIT GUARD: $reason" >&2
+    exit 2
+}
+
+# Ask with JSON output
+output_ask() {
+    local reason="$1"
+    echo "{\"decision\": \"ask\", \"reason\": \"GIT GUARD: $reason\"}"
     exit 0
 }
 
 # Ralph mode: auto-approve safe commands
 if is_ralph_mode; then
     for safe_cmd in "${RALPH_SAFE_COMMANDS[@]}"; do
-        [[ "$COMMAND" =~ ^$safe_cmd ]] && output_permission "allow" "🤖 RALPH MODE: '$safe_cmd' auto-approved"
+        [[ "$COMMAND" =~ ^$safe_cmd ]] && exit 0
     done
 fi
 
 # Check BLOCKED patterns
 for pattern in "${BLOCKED_GIT_PATTERNS[@]}"; do
-    [[ "$COMMAND" =~ $pattern ]] && output_permission "deny" "🚫 GIT GUARD: Destructive command '$pattern' BLOCKED"
+    [[ "$COMMAND" =~ $pattern ]] && output_block "Destructive command '$pattern' BLOCKED"
 done
 
 # Check ASK patterns
 for pattern in "${ASK_GIT_PATTERNS[@]}"; do
-    [[ "$COMMAND" =~ $pattern ]] && output_permission "ask" "🔐 GIT GUARD: '$pattern' detected. Authorize?"
+    [[ "$COMMAND" =~ $pattern ]] && output_ask "'$pattern' detected. Authorize?"
 done
 
 exit 0

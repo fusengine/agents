@@ -2,7 +2,7 @@
 # check-design-skill.sh - PreToolUse hook for design-expert
 set -euo pipefail
 
-# Resolve shared scripts: try marketplace first, fallback to relative path
+# Resolve shared scripts
 MARKETPLACE_SHARED="$HOME/.claude/plugins/marketplaces/fusengine-plugins/plugins/_shared/scripts"
 RELATIVE_SHARED="$(dirname "${BASH_SOURCE[0]}")/../../_shared/scripts"
 if [[ -d "$MARKETPLACE_SHARED" ]]; then
@@ -10,7 +10,6 @@ if [[ -d "$MARKETPLACE_SHARED" ]]; then
 elif [[ -d "$RELATIVE_SHARED" ]]; then
   SHARED_DIR="$(cd "$RELATIVE_SHARED" && pwd)"
 else
-  echo "Warning: _shared scripts not found" >&2
   exit 0
 fi
 source "$SHARED_DIR/check-skill-common.sh"
@@ -33,9 +32,11 @@ PROJECT_ROOT=$(find_project_root "$(dirname "$FILE_PATH")" "package.json" ".git"
 
 skill_was_consulted "design" "$SESSION_ID" "$PROJECT_ROOT" && exit 0
 
+# Block with exit 2 + stderr
 PLUGINS_DIR="$HOME/.claude/plugins/marketplaces/fusengine-plugins/plugins"
-MSG="BLOCKED: Design skill not consulted. READ ONE: "
+MSG="Design skill not consulted. READ ONE: "
 MSG+="1) $PLUGINS_DIR/design-expert/skills/generating-components/SKILL.md | "
 MSG+="2) $PLUGINS_DIR/design-expert/skills/designing-systems/SKILL.md | "
-MSG+="3) Use mcp__context7__query-docs (topic: tailwindcss). After reading, retry."
-deny_block "$MSG"
+MSG+="3) Use mcp__context7__query-docs (topic: tailwindcss)"
+echo "$MSG" >&2
+exit 2

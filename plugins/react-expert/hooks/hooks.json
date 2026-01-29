@@ -1,7 +1,11 @@
 {
+  "_description": "React Expert - React 19 validation hooks",
+  "_version": "1.0.0",
+  
   "hooks": {
     "PreToolUse": [
       {
+        "_description": "Block React edits if skill not consulted",
         "matcher": "Write|Edit",
         "hooks": [
           {
@@ -13,11 +17,32 @@
     ],
     "PostToolUse": [
       {
+        "_description": "Validate React SOLID principles after Write/Edit",
         "matcher": "Write|Edit",
         "hooks": [
           {
             "type": "command",
             "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/validate-react-solid.sh"
+          }
+        ]
+      },
+      {
+        "_description": "Track skill file reads",
+        "matcher": "Read",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/track-skill-read.sh"
+          }
+        ]
+      },
+      {
+        "_description": "Track MCP research calls",
+        "matcher": "mcp__.*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/track-mcp-research.sh"
           }
         ]
       }

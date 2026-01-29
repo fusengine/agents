@@ -9,40 +9,39 @@ TOOL_NAME=$(echo "$INPUT" | jq -r '.tool_name // empty')
 FILE_PATH=$(echo "$INPUT" | jq -r '.tool_input.file_path // empty')
 
 # Only check for Write/Edit tools
-if [[ "$TOOL_NAME" != "Write" && "$TOOL_NAME" != "Edit" ]]; then
-  exit 0
-fi
+[[ "$TOOL_NAME" != "Write" && "$TOOL_NAME" != "Edit" ]] && exit 0
 
 # Skip if file doesn't exist
-if [[ ! -f "$FILE_PATH" ]]; then
-  exit 0
-fi
+[[ ! -f "$FILE_PATH" ]] && exit 0
+
+WARNINGS=""
 
 # Check CSS files
 if [[ "$FILE_PATH" =~ \.css$ ]]; then
   # Check for deprecated Tailwind v3 patterns
   if grep -qE "@tailwind (base|components|utilities)" "$FILE_PATH" 2>/dev/null; then
-    echo "⚠️ Tailwind v4: @tailwind directives are deprecated"
-    echo "INSTRUCTION: Use @import 'tailwindcss' instead"
+    WARNINGS+="Tailwind v4: @tailwind directives are deprecated - use @import 'tailwindcss'. "
   fi
 
   # Check for @apply overuse
   APPLY_COUNT=$(grep -c "@apply" "$FILE_PATH" 2>/dev/null || echo 0)
   if [[ $APPLY_COUNT -gt 10 ]]; then
-    echo "⚠️ Tailwind: Excessive @apply usage ($APPLY_COUNT occurrences)"
-    echo "INSTRUCTION: Prefer utility classes directly in HTML/JSX"
+    WARNINGS+="Excessive @apply usage ($APPLY_COUNT) - prefer utility classes directly. "
   fi
 fi
 
 # Check TSX/JSX files for long class strings
 if [[ "$FILE_PATH" =~ \.(tsx|jsx)$ ]]; then
-  # Find lines with very long className strings
-  LONG_CLASSES=$(grep -n 'className="[^"]\{150,\}"' "$FILE_PATH" 2>/dev/null | head -3)
-  if [[ -n "$LONG_CLASSES" ]]; then
-    echo "⚠️ Tailwind: Very long className strings detected"
-    echo "INSTRUCTION: Extract to @utility or use cn() helper with clsx"
-    echo "$LONG_CLASSES"
+  LONG_CLASSES=$(grep -c 'className="[^"]\{150,\}"' "$FILE_PATH" 2>/dev/null || echo 0)
+  if [[ $LONG_CLASSES -gt 0 ]]; then
+    WARNINGS+="Very long className ($LONG_CLASSES lines) - extract to @utility or use cn(). "
   fi
+fi
+
+# Output warnings as additionalContext if any
+if [[ -n "$WARNINGS" ]]; then
+  ESCAPED=$(echo "$WARNINGS" | jq -Rs '.')
+  echo "{\"additionalContext\": $ESCAPED, \"message\": \"Tailwind warnings detected\"}"
 fi
 
 exit 0

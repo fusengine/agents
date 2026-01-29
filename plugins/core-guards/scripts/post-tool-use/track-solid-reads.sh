@@ -11,8 +11,8 @@ SESSION_ID=$(echo "$INPUT" | jq -r '.session_id // "unknown"')
 [[ "$TOOL_NAME" != "Read" ]] && exit 0
 [[ -z "$FILE_PATH" ]] && exit 0
 
-# Check if it's a SOLID reference file
-if [[ "$FILE_PATH" =~ solid-.*/references/ ]]; then
+# Check if it's a SOLID file (references/ or SKILL.md)
+if [[ "$FILE_PATH" =~ solid-.*/(references/|SKILL\.md) ]]; then
   STATE_DIR="/tmp/claude-code-sessions"
   mkdir -p "$STATE_DIR"
   SOLID_STATE="$STATE_DIR/session-${SESSION_ID}-solid.json"

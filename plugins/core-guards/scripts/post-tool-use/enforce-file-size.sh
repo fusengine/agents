@@ -14,16 +14,16 @@ get_solid_reference() {
   case "$ext" in
     ts|tsx|js|jsx)
       if [[ -f "next.config.js" || -f "next.config.ts" || -f "next.config.mjs" ]]; then
-        echo "fuse-nextjs/skills/solid-nextjs/references/"
+        echo "nextjs-expert/skills/solid-nextjs/"
       else
-        echo "fuse-react/skills/solid-react/references/"
+        echo "react-expert/skills/solid-react/"
       fi
       ;;
     php)
-      echo "fuse-laravel/skills/solid-php/references/"
+      echo "laravel-expert/skills/solid-php/"
       ;;
     swift)
-      echo "fuse-swift-apple-expert/skills/solid-swift/references/"
+      echo "swift-apple-expert/skills/solid-swift/"
       ;;
     py)
       echo "generic/solid-python/"

@@ -1,7 +1,6 @@
 #!/bin/bash
 # Enforce: No interfaces/types in component/view files (ALL languages)
-# Updated: Uses correct hookSpecificOutput format
-# IMPORTANT: exit 0 + JSON stdout = Claude reads JSON
+# IMPORTANT: exit 2 + stderr = block, exit 0 = allow
 
 INPUT=$(cat)
 FILE_PATH=$(echo "$INPUT" | jq -r '.tool_input.file_path // empty')
@@ -51,17 +50,10 @@ if [[ -z "$BLOCK_REASON" && "$FILE_PATH" =~ (Views?|Components?)/.*\.swift$ ]]; 
   fi
 fi
 
-# Output JSON if blocking, then exit 0 (so Claude reads it)
+# Block with exit 2 + stderr
 if [[ -n "$BLOCK_REASON" ]]; then
-  cat << EOF
-{
-  "hookSpecificOutput": {
-    "hookEventName": "PreToolUse",
-    "permissionDecision": "deny",
-    "permissionDecisionReason": "🚫 SOLID VIOLATION: $BLOCK_REASON"
-  }
-}
-EOF
+  echo "SOLID VIOLATION: $BLOCK_REASON" >&2
+  exit 2
 fi
 
 exit 0

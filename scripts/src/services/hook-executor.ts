@@ -1,30 +1,15 @@
 /**
- * Service d'exécution des hooks
- * Single Responsibility: Exécuter les commandes et collecter les résultats
+ * Hook execution service
+ * Single Responsibility: Execute commands and collect results
  */
 import type { ExecutableHook, HookResult } from "../interfaces/hooks";
 
-/**
- * Exécute un hook et retourne le résultat
- */
-export async function executeHook(
-  hook: ExecutableHook,
-  input: string
-): Promise<HookResult> {
+/** Execute a hook and return the result */
+export async function executeHook(hook: ExecutableHook, input: string): Promise<HookResult> {
   if (hook.isAsync) {
-    // Fire and forget pour les sons
-    Bun.spawn(["bash", "-c", hook.command], {
-      stdout: "ignore",
-      stderr: "ignore",
-    });
-
-    return {
-      success: true,
-      exitCode: 0,
-      stdout: "",
-      stderr: "",
-      blocked: false,
-    };
+    // Fire and forget for sounds
+    Bun.spawn(["bash", "-c", hook.command], { stdout: "ignore", stderr: "ignore" });
+    return { success: true, exitCode: 0, stdout: "", stderr: "", blocked: false };
   }
 
   const proc = Bun.spawn(["bash", "-c", hook.command], {
@@ -37,19 +22,10 @@ export async function executeHook(
   const stdout = await new Response(proc.stdout).text();
   const stderr = await new Response(proc.stderr).text();
 
-  return {
-    success: exitCode === 0,
-    exitCode,
-    stdout,
-    stderr,
-    blocked: exitCode === 2,
-  };
+  return { success: exitCode === 0, exitCode, stdout, stderr, blocked: exitCode === 2 };
 }
 
-/**
- * Exécute une liste de hooks en PARALLÈLE
- * Vérifie les blocages après exécution
- */
+/** Execute a list of hooks in PARALLEL, check for blocks after execution */
 export async function executeHooks(
   hooks: ExecutableHook[],
   input: string
@@ -58,22 +34,13 @@ export async function executeHooks(
     return { blocked: false, stderr: "", output: "" };
   }
 
-  // Exécuter tous les hooks en parallèle
-  const results = await Promise.all(
-    hooks.map((hook) => executeHook(hook, input))
-  );
+  const results = await Promise.all(hooks.map((hook) => executeHook(hook, input)));
 
-  // Vérifier si un hook a bloqué
   const blockedResult = results.find((r) => r.blocked);
   if (blockedResult) {
-    return {
-      blocked: true,
-      stderr: blockedResult.stderr,
-      output: "",
-    };
+    return { blocked: true, stderr: blockedResult.stderr, output: "" };
   }
 
-  // Collecter tous les outputs JSON
   let collectedOutput = "";
   for (const result of results) {
     if (result.stdout.trim()) {
@@ -81,16 +48,10 @@ export async function executeHooks(
     }
   }
 
-  return {
-    blocked: false,
-    stderr: "",
-    output: collectedOutput,
-  };
+  return { blocked: false, stderr: "", output: collectedOutput };
 }
 
-/**
- * Fusionne les outputs JSON avec additionalContext
- */
+/** Merge JSON outputs with additionalContext */
 function mergeJsonOutput(existing: string, newOutput: string): string {
   try {
     const json = JSON.parse(newOutput);

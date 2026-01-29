@@ -1,20 +1,17 @@
 /**
- * Service de scan des plugins
- * Single Responsibility: Scanner et charger les configurations des plugins
+ * Plugin scanning service
+ * Single Responsibility: Scan and load plugin configurations
  */
 import { existsSync, readdirSync, readFileSync } from "fs";
 import { join } from "path";
 import type {
-  HooksConfig,
   HookEntry,
   ExecutableHook,
   ScannerConfig,
   PluginInfo,
 } from "../interfaces/hooks";
 
-/**
- * Scanne les plugins et retourne leurs configurations
- */
+/** Scan plugins and return their configurations */
 export function scanPlugins(config: ScannerConfig): PluginInfo[] {
   const { pluginsDir } = config;
   const plugins: PluginInfo[] = [];
@@ -45,9 +42,7 @@ export function scanPlugins(config: ScannerConfig): PluginInfo[] {
   return plugins;
 }
 
-/**
- * Extrait les hooks exécutables pour un type donné
- */
+/** Extract executable hooks for a given type */
 export function extractHooks(
   plugins: PluginInfo[],
   hookType: string,
@@ -62,16 +57,10 @@ export function extractHooks(
     const entries: HookEntry[] = plugin.config.hooks?.[hookType] ?? [];
 
     for (const entry of entries) {
-      if (!matchesFilter(entry.matcher, hookType, toolName, notifType)) {
-        continue;
-      }
+      if (!matchesFilter(entry.matcher, hookType, toolName, notifType)) continue;
 
       for (const hook of entry.hooks) {
-        const command = hook.command.replace(
-          /\$\{CLAUDE_PLUGIN_ROOT\}/g,
-          plugin.path
-        );
-
+        const command = hook.command.replace(/\$\{CLAUDE_PLUGIN_ROOT\}/g, plugin.path);
         hooks.push({
           command,
           isAsync: command.startsWith("afplay"),
@@ -84,9 +73,7 @@ export function extractHooks(
   return hooks;
 }
 
-/**
- * Vérifie si un matcher correspond
- */
+/** Check if a matcher matches */
 function matchesFilter(
   matcher: string | undefined,
   hookType: string,

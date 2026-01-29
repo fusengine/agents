@@ -41,12 +41,11 @@ if [[ -f "$TASK_FILE" ]]; then
 fi
 
 # Build context message
-read -r -d '' CONTEXT << 'ENDCONTEXT' || true
-## APEX Sub-Agent Instructions
+CONTEXT="## APEX Sub-Agent Instructions
 
 You are a sub-agent in APEX workflow. Follow these rules:
 
-### 1. AGENTS.md Rules (Injected)
+### 1. AGENTS.md Rules
 ${AGENTS_CONTENT}
 
 ### 2. Task Context
@@ -54,34 +53,19 @@ ${AGENTS_CONTENT}
 - Pending: ${PENDING_TASKS}
 
 ### 3. Before Starting Work
-- Use `TaskUpdate(taskId, status: "in_progress")` before starting
+- Use TaskUpdate(taskId, status: in_progress) before starting
 
 ### 4. SOLID Rules
-- Files < 100 lines | Interfaces in `src/interfaces/` | JSDoc/PHPDoc required
+- Files < 100 lines | Interfaces in src/interfaces/ | JSDoc/PHPDoc required
 
 ### 5. Research Before Code
-- Use Context7/Exa for docs | Write notes to `.claude/apex/docs/`
+- Use Context7/Exa for docs | Write notes to .claude/apex/docs/
 
 ### 6. When Done
-- `TaskUpdate(taskId, status: "completed")` triggers auto-commit
-ENDCONTEXT
+- TaskUpdate(taskId, status: completed) triggers auto-commit"
 
-# Replace placeholders
-CONTEXT="${CONTEXT//\$\{AGENTS_CONTENT\}/$AGENTS_CONTENT}"
-CONTEXT="${CONTEXT//\$\{COMPLETED_TASKS\}/$COMPLETED_TASKS}"
-CONTEXT="${CONTEXT//\$\{PENDING_TASKS\}/$PENDING_TASKS}"
-
-# Escape for JSON
+# Escape for JSON and output
 CONTEXT_ESCAPED=$(echo "$CONTEXT" | jq -Rs '.')
 
-# Return JSON with additionalContext
 cat << EOF
-{
-  "hookSpecificOutput": {
-    "hookEventName": "SubagentStart",
-    "additionalContext": $CONTEXT_ESCAPED
-  }
-}
-EOF
-
-exit 0
+{ "additionalContext": $CONTEXT_ESCAPED }

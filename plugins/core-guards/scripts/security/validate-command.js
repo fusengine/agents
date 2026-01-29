@@ -40,24 +40,11 @@ const logEntry = {
 };
 fs.appendFileSync(logPath, JSON.stringify(logEntry) + "\n");
 
-// Output response
+// Output response - only if blocking/asking
 if (!result.isValid) {
-  const reason = `⚠️  COMMANDE DANGEREUSE DÉTECTÉE\n\nViolations:\n${result.violations.join("\n")}\n\nCommande: ${command}\n\nVoulez-vous vraiment exécuter cette commande ?`;
-  console.log(JSON.stringify({
-    hookSpecificOutput: {
-      hookEventName: "PreToolUse",
-      permissionDecision: "ask",
-      permissionDecisionReason: reason
-    }
-  }));
-} else {
-  console.log(JSON.stringify({
-    hookSpecificOutput: {
-      hookEventName: "PreToolUse",
-      permissionDecision: "allow",
-      permissionDecisionReason: "Commande validée par le système de sécurité"
-    }
-  }));
+  const reason = `DANGEROUS COMMAND DETECTED\nViolations: ${result.violations.join(", ")}\nCommand: ${command}`;
+  console.log(JSON.stringify({ decision: "ask", reason }));
 }
+// If valid, no output = allow by default
 
 process.exit(0);

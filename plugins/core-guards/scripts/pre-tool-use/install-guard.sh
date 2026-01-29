@@ -20,25 +20,23 @@ is_ralph_mode() {
     return 1
 }
 
-# Output permission JSON
-output_permission() {
-    local decision="$1" reason="$2"
-    cat << ENDJSON
-{"hookSpecificOutput":{"hookEventName":"PreToolUse","permissionDecision":"$decision","permissionDecisionReason":"$reason"}}
-ENDJSON
+# Output ask decision JSON
+output_ask() {
+    local reason="$1"
+    echo "{\"decision\": \"ask\", \"reason\": \"$reason\"}"
     exit 0
 }
 
 # System installs: ALWAYS ask
 for pattern in "${SYSTEM_INSTALL_PATTERNS[@]}"; do
-    [[ "$COMMAND" =~ $pattern ]] && output_permission "ask" "🔒 SYSTEM INSTALL: '$pattern' requires confirmation"
+    [[ "$COMMAND" =~ $pattern ]] && output_ask "SYSTEM INSTALL: '$pattern' requires confirmation"
 done
 
-# Project installs: auto-approve in Ralph mode
+# Project installs: auto-approve in Ralph mode, ask otherwise
 for pattern in "${PROJECT_INSTALL_PATTERNS[@]}"; do
     if [[ "$COMMAND" =~ $pattern ]]; then
-        is_ralph_mode && output_permission "allow" "🤖 RALPH MODE: '$pattern' auto-approved"
-        output_permission "ask" "📦 INSTALL GUARD: '$pattern' detected. Authorize?"
+        is_ralph_mode && exit 0  # Auto-approve in Ralph mode
+        output_ask "INSTALL GUARD: '$pattern' detected. Authorize?"
     fi
 done
 
