@@ -1,5 +1,12 @@
 # Release Notes
 
+## [1.28.1] - 29-01-2026
+
+### Fixed
+
+- **hooks**: Use bash 3.x compatible syntax for uppercase conversion
+  - Replace `${FRAMEWORK^}` with awk for macOS compatibility
+
 ## [1.28.0] - 29-01-2026
 
 ### Added
