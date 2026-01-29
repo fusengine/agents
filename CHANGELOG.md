@@ -1,5 +1,11 @@
 # Release Notes
 
+## [1.29.5] - 29-01-2026
+
+### Changed
+
+- **gitignore**: Broaden .claude exclusion pattern to .claude/*
+
 ## [1.29.4] - 29-01-2026
 
 ### Changed
