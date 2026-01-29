@@ -1,96 +1,113 @@
 # MCP Servers
 
-Model Context Protocol servers available in the plugins.
+27 Model Context Protocol servers available for global installation.
 
-## Context7
+## Installation
 
-**Purpose**: Official documentation lookup
+During setup, select MCP servers to install globally:
 
-**Used by**: `research-expert` agent
-
-**Tools**:
-- `resolve-library-id` - Find library ID
-- `query-docs` - Query documentation
-
-**Example**:
 ```
-"How to use React Server Components?"
-→ Context7 fetches official React docs
+◆  Select MCP servers to install globally:
+│  ◻ sequential-thinking  Dynamic problem-solving with step-by-step reasoning
+│  ◻ memory               Knowledge graph-based persistent memory system
+│  ◻ context7 [✓]         Up-to-date documentation for any library
+│  ◻ exa [⚠ key missing]  Advanced AI-powered web search and research
 ```
 
-**API Key**: `CONTEXT7_API_KEY`
-Get at: https://context7.com
+Servers with `[✓]` have API keys configured. Servers with `[⚠ key missing]` require an API key.
 
-## Exa
+## No API Key Required
 
-**Purpose**: Web search, code context, deep research
+| Server | Description |
+|--------|-------------|
+| sequential-thinking | Dynamic problem-solving with step-by-step reasoning |
+| memory | Knowledge graph-based persistent memory system |
+| filesystem | Secure local file operations with configurable access |
+| git | Read, search and manipulate local Git repositories |
+| fetch | Web content fetching and conversion for LLMs |
+| time | Time and timezone conversion capabilities |
+| playwright | Browser automation, E2E testing and screenshots |
+| puppeteer | Headless Chrome automation and web scraping |
+| postgres | PostgreSQL database operations and queries |
+| sqlite | SQLite database for local data persistence |
+| docker | Docker container management and operations |
 
-**Used by**: `research-expert`, `websearch` agents
+## API Key Required
 
-**Tools**:
-- `web_search_exa` - Web search
-- `get_code_context_exa` - Code examples
-- `deep_researcher_start` - Deep research
-- `deep_researcher_check` - Check status
+| Server | Description | Env Variable |
+|--------|-------------|--------------|
+| context7 | Up-to-date documentation for any library | `CONTEXT7_API_KEY` |
+| exa | Advanced AI-powered web search and research | `EXA_API_KEY` |
+| magic | AI-powered UI component generation (21st.dev) | `MAGIC_API_KEY` |
+| gemini-design | Google Gemini for frontend generation | `GEMINI_DESIGN_API_KEY` |
+| shadcn | shadcn/ui component registry | - |
+| next-devtools | Next.js development tools and debugging | - |
+| XcodeBuildMCP | Xcode build, run and test automation | - |
+| apple-docs | Apple developer documentation and WWDC | - |
+| github | GitHub repository operations | `GITHUB_TOKEN` |
+| brave-search | Privacy-focused web search engine | `BRAVE_API_KEY` |
+| supabase | Supabase backend-as-a-service | `SUPABASE_ACCESS_TOKEN` |
+| notion | Notion workspace and page management | `NOTION_TOKEN` |
+| slack | Slack workspace messaging | `SLACK_TOKEN` |
+| stripe | Stripe payment processing | `STRIPE_SECRET_KEY` |
+| sentry | Sentry error tracking and monitoring | `SENTRY_AUTH_TOKEN` |
+| replicate | Replicate AI model hosting | `REPLICATE_API_TOKEN` |
 
-**Example**:
-```
-"Latest Next.js 16 features"
-→ Exa searches recent articles, tutorials
-```
+## API Key URLs
 
-**API Key**: `EXA_API_KEY`
-Get at: https://exa.ai
-
-## Magic (21st.dev)
-
-**Purpose**: UI component generation
-
-**Used by**: `design-expert` agent
-
-**Tools**:
-- `21st_magic_component_builder` - Generate components
-- `21st_magic_component_inspiration` - Get inspiration
-- `21st_magic_component_refiner` - Refine components
-- `logo_search` - Search logos
-
-**Example**:
-```
-"Create a pricing card component"
-→ Magic generates production-ready React component
-```
-
-**API Key**: `MAGIC_API_KEY`
-Get at: https://21st.dev
-
-## shadcn
-
-**Purpose**: Component registry
-
-**Used by**: `design-expert`, `nextjs-expert`, `react-expert`
-
-**Tools**:
-- `search_items_in_registries` - Search components
-- `view_items_in_registries` - View component code
-- `get_item_examples_from_registries` - Get examples
-- `get_add_command_for_items` - Get install command
-
-**Example**:
-```
-"Add a button component"
-→ shadcn provides: npx shadcn@latest add button
-```
-
-**No API key required** (public registry)
+| Service | Get API Key |
+|---------|-------------|
+| Context7 | https://context7.com |
+| Exa | https://exa.ai |
+| Magic | https://21st.dev |
+| Gemini Design | https://ai.google.dev |
+| GitHub | https://github.com/settings/tokens |
+| Brave | https://brave.com/search/api |
+| Supabase | https://supabase.com/dashboard |
+| Notion | https://developers.notion.com |
+| Slack | https://api.slack.com/apps |
+| Stripe | https://dashboard.stripe.com/apikeys |
+| Sentry | https://sentry.io/settings/account/api/auth-tokens |
+| Replicate | https://replicate.com/account/api-tokens |
 
 ## Configuration
 
 API keys are stored in `~/.claude/.env`:
 
 ```bash
+# Core (used by plugins)
 export CONTEXT7_API_KEY="ctx7sk-xxx"
 export EXA_API_KEY="xxx"
 export MAGIC_API_KEY="xxx"
+export GEMINI_DESIGN_API_KEY="xxx"
+
+# Optional
+export GITHUB_TOKEN="ghp_xxx"
+export BRAVE_API_KEY="xxx"
+export SUPABASE_ACCESS_TOKEN="xxx"
+export NOTION_TOKEN="xxx"
+export SLACK_TOKEN="xoxb-xxx"
+export STRIPE_SECRET_KEY="sk_xxx"
+export SENTRY_AUTH_TOKEN="xxx"
+export REPLICATE_API_TOKEN="xxx"
 ```
 
-API keys are configured automatically during setup.
+## Manual Installation
+
+Install a specific MCP server manually:
+
+```bash
+claude mcp add-json --scope=user sequential-thinking '{"command":"npx","args":["-y","@modelcontextprotocol/server-sequential-thinking"],"type":"stdio"}'
+```
+
+List installed MCP servers:
+
+```bash
+claude mcp list
+```
+
+Remove an MCP server:
+
+```bash
+claude mcp remove sequential-thinking
+```

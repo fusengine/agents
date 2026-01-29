@@ -1,0 +1,250 @@
+{
+	"mcpServers": {
+		"_comment": "MCP Servers catalog for Fusengine Plugins installer",
+
+		"sequential-thinking": {
+			"_description": "Dynamic problem-solving with step-by-step reasoning",
+			"command": "npx",
+			"args": ["-y", "@modelcontextprotocol/server-sequential-thinking"],
+			"type": "stdio",
+			"requiresApiKey": false
+		},
+		"memory": {
+			"_description": "Knowledge graph-based persistent memory system",
+			"command": "npx",
+			"args": ["-y", "@modelcontextprotocol/server-memory"],
+			"type": "stdio",
+			"requiresApiKey": false
+		},
+		"filesystem": {
+			"_description": "Secure local file operations with configurable access",
+			"command": "npx",
+			"args": ["-y", "@modelcontextprotocol/server-filesystem", "${HOME}"],
+			"type": "stdio",
+			"requiresApiKey": false
+		},
+		"git": {
+			"_description": "Read, search and manipulate local Git repositories",
+			"command": "npx",
+			"args": ["-y", "@modelcontextprotocol/server-git"],
+			"type": "stdio",
+			"requiresApiKey": false
+		},
+		"fetch": {
+			"_description": "Web content fetching and conversion for LLMs",
+			"command": "npx",
+			"args": ["-y", "@modelcontextprotocol/server-fetch"],
+			"type": "stdio",
+			"requiresApiKey": false
+		},
+		"time": {
+			"_description": "Time and timezone conversion capabilities",
+			"command": "npx",
+			"args": ["-y", "@modelcontextprotocol/server-time"],
+			"type": "stdio",
+			"requiresApiKey": false
+		},
+		"playwright": {
+			"_description": "Browser automation, E2E testing and screenshots",
+			"command": "npx",
+			"args": ["-y", "@anthropic/mcp-server-playwright"],
+			"type": "stdio",
+			"requiresApiKey": false
+		},
+		"puppeteer": {
+			"_description": "Headless Chrome automation and web scraping",
+			"command": "npx",
+			"args": ["-y", "@anthropic/mcp-server-puppeteer"],
+			"type": "stdio",
+			"requiresApiKey": false
+		},
+		"postgres": {
+			"_description": "PostgreSQL database queries via natural language",
+			"command": "npx",
+			"args": ["-y", "@modelcontextprotocol/server-postgres"],
+			"type": "stdio",
+			"requiresApiKey": false,
+			"env": {
+				"DATABASE_URL": "${DATABASE_URL}"
+			}
+		},
+		"sqlite": {
+			"_description": "Local SQLite database operations",
+			"command": "npx",
+			"args": ["-y", "@modelcontextprotocol/server-sqlite"],
+			"type": "stdio",
+			"requiresApiKey": false
+		},
+		"docker": {
+			"_description": "Docker container management, logs and images",
+			"command": "npx",
+			"args": ["-y", "@anthropic/mcp-server-docker"],
+			"type": "stdio",
+			"requiresApiKey": false
+		},
+		"shadcn": {
+			"_description": "shadcn/ui component registry and installation",
+			"command": "npx",
+			"args": ["shadcn@latest", "mcp"],
+			"type": "stdio",
+			"requiresApiKey": false
+		},
+		"next-devtools": {
+			"_description": "Next.js development tools and debugging",
+			"command": "npx",
+			"args": ["-y", "next-devtools-mcp@latest"],
+			"type": "stdio",
+			"requiresApiKey": false
+		},
+		"XcodeBuildMCP": {
+			"_description": "Xcode build, test and simulator automation for iOS/macOS",
+			"command": "npx",
+			"args": ["-y", "xcodebuildmcp@latest"],
+			"type": "stdio",
+			"requiresApiKey": false
+		},
+		"apple-docs": {
+			"_description": "Apple developer documentation and WWDC content",
+			"command": "npx",
+			"args": ["-y", "@kimsungwhee/apple-docs-mcp"],
+			"type": "stdio",
+			"requiresApiKey": false
+		},
+
+		"context7": {
+			"_description": "Up-to-date documentation lookup to reduce AI hallucinations",
+			"command": "npx",
+			"args": ["-y", "@upstash/context7-mcp", "--api-key", "${CONTEXT7_API_KEY}"],
+			"type": "stdio",
+			"requiresApiKey": true,
+			"apiKeyEnv": "CONTEXT7_API_KEY",
+			"apiKeyUrl": "https://context7.com"
+		},
+		"exa": {
+			"_description": "AI-powered web search, code context and deep research",
+			"type": "http",
+			"url": "https://mcp.exa.ai/mcp?tools=web_search_exa,get_code_context_exa,crawling_exa,company_research_exa,linkedin_search_exa,deep_researcher_start,deep_researcher_check&exaApiKey=${EXA_API_KEY}",
+			"headers": {},
+			"requiresApiKey": true,
+			"apiKeyEnv": "EXA_API_KEY",
+			"apiKeyUrl": "https://exa.ai"
+		},
+		"magic": {
+			"_description": "AI-powered UI component generation from 21st.dev",
+			"command": "npx",
+			"args": ["-y", "@21st-dev/magic@latest"],
+			"env": {
+				"MAGIC_API_KEY": "${MAGIC_API_KEY}"
+			},
+			"type": "stdio",
+			"requiresApiKey": true,
+			"apiKeyEnv": "MAGIC_API_KEY",
+			"apiKeyUrl": "https://21st.dev"
+		},
+		"gemini-design": {
+			"_description": "AI frontend generation with Tailwind CSS and shadcn/ui",
+			"command": "npx",
+			"args": ["-y", "gemini-design-mcp@latest"],
+			"env": {
+				"API_KEY": "${GEMINI_DESIGN_API_KEY}"
+			},
+			"type": "stdio",
+			"requiresApiKey": true,
+			"apiKeyEnv": "GEMINI_DESIGN_API_KEY",
+			"apiKeyUrl": "https://gemini-design-mcp.com"
+		},
+		"github": {
+			"_description": "GitHub repos, PRs, issues, commits and code review",
+			"command": "npx",
+			"args": ["-y", "@modelcontextprotocol/server-github"],
+			"env": {
+				"GITHUB_TOKEN": "${GITHUB_TOKEN}"
+			},
+			"type": "stdio",
+			"requiresApiKey": true,
+			"apiKeyEnv": "GITHUB_TOKEN",
+			"apiKeyUrl": "https://github.com/settings/tokens"
+		},
+		"brave-search": {
+			"_description": "Private web search via Brave Search API",
+			"command": "npx",
+			"args": ["-y", "@anthropic/mcp-server-brave-search"],
+			"env": {
+				"BRAVE_API_KEY": "${BRAVE_API_KEY}"
+			},
+			"type": "stdio",
+			"requiresApiKey": true,
+			"apiKeyEnv": "BRAVE_API_KEY",
+			"apiKeyUrl": "https://brave.com/search/api"
+		},
+		"supabase": {
+			"_description": "Supabase database, auth, storage and migrations",
+			"command": "npx",
+			"args": ["-y", "supabase", "mcp"],
+			"env": {
+				"SUPABASE_ACCESS_TOKEN": "${SUPABASE_ACCESS_TOKEN}"
+			},
+			"type": "stdio",
+			"requiresApiKey": true,
+			"apiKeyEnv": "SUPABASE_ACCESS_TOKEN",
+			"apiKeyUrl": "https://supabase.com/dashboard/account/tokens"
+		},
+		"notion": {
+			"_description": "Notion pages, databases and knowledge base access",
+			"command": "npx",
+			"args": ["-y", "@notionhq/mcp-server"],
+			"env": {
+				"NOTION_TOKEN": "${NOTION_TOKEN}"
+			},
+			"type": "stdio",
+			"requiresApiKey": true,
+			"apiKeyEnv": "NOTION_TOKEN",
+			"apiKeyUrl": "https://www.notion.so/my-integrations"
+		},
+		"slack": {
+			"_description": "Slack messages, channels and workspace management",
+			"command": "npx",
+			"args": ["-y", "@modelcontextprotocol/server-slack"],
+			"env": {
+				"SLACK_TOKEN": "${SLACK_TOKEN}"
+			},
+			"type": "stdio",
+			"requiresApiKey": true,
+			"apiKeyEnv": "SLACK_TOKEN",
+			"apiKeyUrl": "https://api.slack.com/apps"
+		},
+		"stripe": {
+			"_description": "Stripe payments, invoices, customers and subscriptions",
+			"command": "npx",
+			"args": ["-y", "@stripe/mcp-server"],
+			"env": {
+				"STRIPE_SECRET_KEY": "${STRIPE_SECRET_KEY}"
+			},
+			"type": "stdio",
+			"requiresApiKey": true,
+			"apiKeyEnv": "STRIPE_SECRET_KEY",
+			"apiKeyUrl": "https://dashboard.stripe.com/apikeys"
+		},
+		"sentry": {
+			"_description": "Sentry error tracking, issues and debugging",
+			"command": "npx",
+			"args": ["-y", "@sentry/mcp-server"],
+			"env": {
+				"SENTRY_AUTH_TOKEN": "${SENTRY_AUTH_TOKEN}"
+			},
+			"type": "stdio",
+			"requiresApiKey": true,
+			"apiKeyEnv": "SENTRY_AUTH_TOKEN",
+			"apiKeyUrl": "https://sentry.io/settings/auth-tokens"
+		},
+		"replicate": {
+			"_description": "Run 1000+ AI models (Stable Diffusion, Whisper, etc.)",
+			"type": "http",
+			"url": "https://replicate.com/mcp?token=${REPLICATE_API_TOKEN}",
+			"headers": {},
+			"requiresApiKey": true,
+			"apiKeyEnv": "REPLICATE_API_TOKEN",
+			"apiKeyUrl": "https://replicate.com/account/api-tokens"
+		}
+	}
+}

@@ -17,14 +17,8 @@ import {
 } from "./settings-manager";
 import { copyExecutable, filesAreEqual } from "../utils/fs-helpers";
 import { configureApiKeys, configureShell, checkApiKeys } from "./env-manager";
-
-interface SetupPaths {
-  settings: string;
-  marketplace: string;
-  loaderSrc: string;
-  claudeMdSrc: string;
-  claudeMdDest: string;
-}
+import { configureMcpServers } from "./mcp-setup";
+import type { SetupPaths } from "../interfaces/setup";
 
 /** Run the complete setup process */
 export async function runSetup(paths: SetupPaths, skipEnv: boolean): Promise<void> {
@@ -81,6 +75,7 @@ export async function runSetup(paths: SetupPaths, skipEnv: boolean): Promise<voi
       p.log.success("All API keys configured");
     }
     await configureShell();
+    await configureMcpServers();
   }
 
   p.outro("✅ Setup complete! Restart Claude Code to apply.");

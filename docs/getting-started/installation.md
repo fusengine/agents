@@ -43,15 +43,39 @@ This installs:
 - **API keys** (interactive prompts if missing)
 - **Shell config** (bash/zsh/fish/PowerShell)
 - **Statusline**
+- **MCP servers** (interactive selection of 27 servers)
 
-## 4. Restart Claude Code
+## 4. MCP Server Selection
+
+During setup, you'll see an interactive MCP server selector:
+
+```
+◆  Install MCP servers to global scope?
+│  ● Yes / ○ No
+
+◆  Select MCP servers to install globally:
+│  ◻ sequential-thinking  Dynamic problem-solving with step-by-step reasoning
+│  ◻ memory               Knowledge graph-based persistent memory system
+│  ◻ filesystem           Secure local file operations with configurable access
+│  ◻ context7 [✓]         Up-to-date documentation for any library
+│  ◻ exa [⚠ key missing]  Advanced AI-powered web search and research
+```
+
+- `[✓]` = API key configured
+- `[⚠ key missing]` = requires API key (will still work, just configure key later)
+
+Use arrow keys to navigate, space to select, enter to confirm.
+
+See [MCP Servers Reference](../reference/mcp-servers.md) for full list of 27 available servers.
+
+## 5. Restart Claude Code
 
 ```bash
 exit
 claude
 ```
 
-## Verify Installation
+## 6. Verify Installation
 
 ```bash
 /plugin list  # Shows installed plugins
