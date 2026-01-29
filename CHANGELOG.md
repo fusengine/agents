@@ -1,5 +1,23 @@
 # Release Notes
 
+## [1.27.0] - 29-01-2026
+
+### Added
+
+- **hooks**: Migrate hooks-loader from bash to Bun with SOLID architecture
+  - Replace bash+jq with Bun TypeScript for 3x faster execution
+  - Implement parallel hook execution (280ms → 100ms)
+  - Add SOLID architecture with interfaces, services, config separation
+  - Add 81 unit tests with full coverage (`bun test`)
+  - Add cross-platform setup scripts (`setup.sh`, `setup.ps1`)
+  - Add interactive API keys configuration with @clack/prompts
+  - Support Windows installation natively
+
+### Changed
+
+- **docs**: Update installation guide for Bun-based setup
+- **docs**: Add Windows PowerShell instructions
+
 ## [1.26.1] - 28-01-2026
 
 ### Changed
