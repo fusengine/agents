@@ -1,5 +1,11 @@
 # Release Notes
 
+## [1.29.4] - 29-01-2026
+
+### Changed
+
+- **gitignore**: Remove scripts/.claude/apex from git tracking
+
 ## [1.29.3] - 29-01-2026
 
 ### Changed
