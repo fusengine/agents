@@ -51,12 +51,18 @@ export async function executeHooks(
   return { blocked: false, stderr: "", output: collectedOutput };
 }
 
-/** Merge JSON outputs with additionalContext */
+/** Merge JSON outputs (additionalContext and hookSpecificOutput) */
 function mergeJsonOutput(existing: string, newOutput: string): string {
   try {
     const json = JSON.parse(newOutput);
-    if (!json.additionalContext) return existing;
 
+    // hookSpecificOutput takes priority (permission decisions)
+    if (json.hookSpecificOutput) {
+      return newOutput;
+    }
+
+    // Merge additionalContext
+    if (!json.additionalContext) return existing;
     if (!existing) return newOutput;
 
     const existingJson = JSON.parse(existing);

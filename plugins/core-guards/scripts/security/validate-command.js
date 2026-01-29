@@ -42,8 +42,20 @@ fs.appendFileSync(logPath, JSON.stringify(logEntry) + "\n");
 
 // Output response - only if blocking/asking
 if (!result.isValid) {
-  const reason = `DANGEROUS COMMAND DETECTED\nViolations: ${result.violations.join(", ")}\nCommand: ${command}`;
-  console.log(JSON.stringify({ decision: "ask", reason }));
+  const reason = `SECURITY: ${result.violations.join(", ")}`;
+
+  // CRITICAL violations = DENY (no choice), others = ASK (Yes/No)
+  const hasCritical = result.violations.some(v =>
+    v.includes("CRITICAL") || v.includes("DANGEROUS PATTERN") || v.includes("PRIVILEGE ESCALATION")
+  );
+
+  console.log(JSON.stringify({
+    hookSpecificOutput: {
+      hookEventName: "PreToolUse",
+      permissionDecision: hasCritical ? "deny" : "ask",
+      permissionDecisionReason: reason
+    }
+  }));
 }
 // If valid, no output = allow by default
 

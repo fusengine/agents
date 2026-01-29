@@ -68,12 +68,16 @@ function validateCommand(command) {
     }
   }
 
-  if (/\brm\s+/.test(cmdPart)) {
-    violations.push(`DELETE: 'rm' command detected - confirmation required`);
+  // All rm commands require confirmation (permanent deletion)
+  // But NOT trash/corbeille commands (recoverable)
+  if (/\brm\s+/.test(cmdPart) && !/trash/i.test(cmdPart)) {
+    violations.push(`DELETE: 'rm' supprime définitivement - confirmation required`);
   }
-  if (/\b(rmdir|unlink)\s+/.test(cmdPart)) {
-    violations.push(`DELETE: Deletion command detected - confirmation required`);
+  // unlink is also permanent deletion
+  if (/\bunlink\s+/.test(cmdPart)) {
+    violations.push(`DELETE: 'unlink' command detected - confirmation required`);
   }
+  // rmdir is safe (only removes empty dirs) - no confirmation needed
 
   for (const privCmd of SECURITY_RULES.PRIVILEGE_COMMANDS) {
     const regex = new RegExp(`(^|\\s|;|\\||&)${privCmd}(\\s|$|;|\\||&)`, 'i');

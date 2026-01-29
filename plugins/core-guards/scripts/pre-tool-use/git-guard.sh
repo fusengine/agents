@@ -25,10 +25,12 @@ output_block() {
     exit 2
 }
 
-# Ask with JSON output
+# Ask with hookSpecificOutput format (Claude Code standard)
 output_ask() {
     local reason="$1"
-    echo "{\"decision\": \"ask\", \"reason\": \"GIT GUARD: $reason\"}"
+    cat <<EOF
+{"hookSpecificOutput":{"hookEventName":"PreToolUse","permissionDecision":"ask","permissionDecisionReason":"GIT GUARD: $reason"}}
+EOF
     exit 0
 }
 

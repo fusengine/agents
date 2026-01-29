@@ -20,10 +20,12 @@ is_ralph_mode() {
     return 1
 }
 
-# Output ask decision JSON
+# Output ask decision (hookSpecificOutput format for Claude Code)
 output_ask() {
     local reason="$1"
-    echo "{\"decision\": \"ask\", \"reason\": \"$reason\"}"
+    cat <<EOF
+{"hookSpecificOutput":{"hookEventName":"PreToolUse","permissionDecision":"ask","permissionDecisionReason":"$reason"}}
+EOF
     exit 0
 }
 
