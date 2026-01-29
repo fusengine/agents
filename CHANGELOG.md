@@ -1,5 +1,11 @@
 # Release Notes
 
+## [1.29.1] - 29-01-2026
+
+### Fixed
+
+- **hooks**: Output JSON format for CLAUDE.md injection (SessionStart + UserPromptSubmit)
+
 ## [1.29.0] - 29-01-2026
 
 ### Added
