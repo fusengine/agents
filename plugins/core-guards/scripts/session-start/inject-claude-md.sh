@@ -1,12 +1,16 @@
 #!/bin/bash
-# SessionStart: Inject CLAUDE.md as PLAIN TEXT (mandatory instructions)
+# SessionStart: Inject CLAUDE.md as JSON additionalContext
 
 CLAUDE_MD="$HOME/.claude/CLAUDE.md"
 [[ ! -f "$CLAUDE_MD" ]] && exit 0
 
-# Output as PLAIN TEXT (visible in transcript, treated as instruction)
-echo "=== MANDATORY INSTRUCTIONS (from ~/.claude/CLAUDE.md) ==="
-cat "$CLAUDE_MD"
-echo "=== END MANDATORY INSTRUCTIONS ==="
+# Read and escape content for JSON
+CONTENT=$(cat "$CLAUDE_MD" | jq -Rs .)
+
+cat << EOF
+{
+  "additionalContext": $CONTENT
+}
+EOF
 
 exit 0
