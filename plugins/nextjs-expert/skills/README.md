@@ -1,33 +1,33 @@
 # Next.js Expert Skills
 
-Documentation et conventions pour les skills du plugin nextjs-expert.
+Documentation and conventions for nextjs-expert plugin skills.
 
-## Structure des Skills
+## Skill Structure
 
-### 3 Patterns selon la taille
+### 3 Patterns by Size
 
-| Pattern | Taille | Structure |
-|---------|--------|-----------|
-| **Standalone** | < 150 lignes | Tout dans SKILL.md |
-| **Hub Léger** | 150-500 lignes | SKILL.md + references/ |
-| **Hub Complet** | > 500 lignes | SKILL.md index + arborescence |
+| Pattern | Size | Structure |
+|---------|------|-----------|
+| **Standalone** | < 150 lines | Everything in SKILL.md |
+| **Light Hub** | 150-500 lines | SKILL.md + references/ |
+| **Full Hub** | > 500 lines | SKILL.md index + tree |
 
-### Structure Standard (Hub Léger)
+### Standard Structure (Light Hub)
 
 ```
 skill-name/
-├── SKILL.md                    # Index + Quick Start (< 150 lignes)
+├── SKILL.md                    # Index + Quick Start (< 150 lines)
 └── references/
-    ├── patterns.md             # Patterns de code
-    ├── examples.md             # Exemples avancés
-    └── api.md                  # Référence API (optionnel)
+    ├── patterns.md             # Code patterns
+    ├── examples.md             # Advanced examples
+    └── api.md                  # API reference (optional)
 ```
 
-### Structure Hub Complet
+### Full Hub Structure
 
 ```
 skill-name/
-├── SKILL.md                    # Index uniquement
+├── SKILL.md                    # Index only
 ├── getting-started/
 ├── concepts/
 ├── api-reference/
@@ -36,91 +36,91 @@ skill-name/
 
 ---
 
-## Skills Disponibles
+## Available Skills
 
-### Standalone Skills (< 150 lignes)
-- `nextjs-stack` - Orchestrateur de stack
+### Standalone Skills (< 150 lines)
+- `nextjs-stack` - Stack orchestrator
 
-### Hub Léger Skills (150-500 lignes)
-- `nextjs-shadcn` - Composants UI shadcn/ui
+### Light Hub Skills (150-500 lines)
+- `nextjs-shadcn` - shadcn/ui components
 - `nextjs-zustand` - State management
-- `nextjs-tanstack-form` - Formulaires avec Server Actions
-- `nextjs-i18n` - Internationalisation
-- `solid-nextjs` - Architecture SOLID
+- `nextjs-tanstack-form` - Forms with Server Actions
+- `nextjs-i18n` - Internationalization
+- `solid-nextjs` - SOLID architecture
 
-### Hub Complet Skills (> 500 lignes)
-- `better-auth` - Authentification (145 fichiers)
-- `nextjs-16` - Documentation Next.js (376 fichiers)
-- `prisma-7` - ORM Prisma (415 fichiers)
-
----
-
-## Convention de Nommage
-
-### Noms de skills
-- Minuscules uniquement
-- Format `kebab-case`
-- Max 64 caractères
-- Exemples: `nextjs-shadcn`, `better-auth`, `prisma-7`
-
-### Fichiers
-- `SKILL.md` - Fichier principal (MAJUSCULES)
-- `references/` - Dossier de références (minuscules)
-- Fichiers markdown en `kebab-case.md`
+### Full Hub Skills (> 500 lines)
+- `better-auth` - Authentication (145 files)
+- `nextjs-16` - Next.js documentation (376 files)
+- `prisma-7` - Prisma ORM (415 files)
 
 ---
 
-## Frontmatter SKILL.md
+## Naming Convention
+
+### Skill names
+- Lowercase only
+- `kebab-case` format
+- Max 64 characters
+- Examples: `nextjs-shadcn`, `better-auth`, `prisma-7`
+
+### Files
+- `SKILL.md` - Main file (UPPERCASE)
+- `references/` - References folder (lowercase)
+- Markdown files in `kebab-case.md`
+
+---
+
+## SKILL.md Frontmatter
 
 ```yaml
 ---
 name: skill-name
-description: Description claire pour auto-invocation
+description: Clear description for auto-invocation
 version: 1.0.0
 user-invocable: false
 references:
   - path: references/patterns.md
-    title: Patterns de code
+    title: Code Patterns
   - path: references/examples.md
-    title: Exemples avancés
+    title: Advanced Examples
 ---
 ```
 
-### Champs obligatoires
-- `name` - Identifiant unique
-- `description` - Description pour Claude
+### Required fields
+- `name` - Unique identifier
+- `description` - Description for Claude
 
-### Champs recommandés
-- `version` - Versioning sémantique
-- `user-invocable` - `false` pour knowledge-only
-- `references` - Liste des fichiers de référence
+### Recommended fields
+- `version` - Semantic versioning
+- `user-invocable` - `false` for knowledge-only
+- `references` - List of reference files
 
 ---
 
 ## Best Practices
 
 ### SKILL.md
-1. **< 150 lignes** - Garder concis
-2. **Quick Start en premier** - Installation, config de base
-3. **Exemples essentiels** - Un exemple complet
-4. **Liens vers references/** - Pour les détails
+1. **< 150 lines** - Keep it concise
+2. **Quick Start first** - Installation, basic config
+3. **Essential examples** - One complete example
+4. **Links to references/** - For details
 
 ### References
-1. **patterns.md** - Patterns de code réutilisables
-2. **examples.md** - Exemples avancés et cas d'usage
-3. **api.md** - Référence API complète (si nécessaire)
+1. **patterns.md** - Reusable code patterns
+2. **examples.md** - Advanced examples and use cases
+3. **api.md** - Complete API reference (if needed)
 
-### Documentation volumineuse
-1. **Diviser par thème** - Un fichier par concept
-2. **Max 500 lignes/fichier** - Respecter SOLID
-3. **Index clair** - Navigation facile dans SKILL.md
+### Large documentation
+1. **Split by theme** - One file per concept
+2. **Max 500 lines/file** - Respect SOLID
+3. **Clear index** - Easy navigation in SKILL.md
 
 ---
 
-## Workflow de Création
+## Creation Workflow
 
-1. Identifier le type de skill (standalone/hub léger/hub complet)
-2. Créer la structure de dossiers appropriée
-3. Rédiger SKILL.md avec frontmatter complet
-4. Extraire patterns vers references/ si > 150 lignes
-5. Ajouter les références dans le frontmatter
+1. Identify skill type (standalone/light hub/full hub)
+2. Create appropriate folder structure
+3. Write SKILL.md with complete frontmatter
+4. Extract patterns to references/ if > 150 lines
+5. Add references in frontmatter
