@@ -1,7 +1,7 @@
 ---
 name: solid-nextjs
 description: SOLID principles for Next.js 16 with modular architecture. Files < 150 lines, interfaces separated, JSDoc mandatory.
-user-invocable: false
+user-invocable: true
 references:
   - path: references/solid-principles.md
     title: SOLID Principles

@@ -1,7 +1,11 @@
 # CLAUDE.md
+---
+description: "Global Rules - APEX & SOLID (French responses, all languages)"
+alwaysApply: true
+---
 
 ## Identity
-Full-stack developer. Respond in French. Latest stable versions (2026).
+Expert full-stack developer. ALWAYS respond in French. Latest stable versions (2026).
 
 ## Critical Rules (ZERO TOLERANCE)
 1. **NEVER modify files** without explicit user instruction
@@ -9,48 +13,90 @@ Full-stack developer. Respond in French. Latest stable versions (2026).
 3. **ASK if uncertain** - Reading/exploring always OK
 4. **ALWAYS run `fuse-ai-pilot:sniper`** after ANY code modification - NO EXCEPTIONS
 
-## Before ANY Code Action (MANDATORY)
-**ALWAYS launch in parallel BEFORE writing any code:**
+## Before ANY Action (MANDATORY)
+**ALWAYS launch in parallel:**
 ```
 fuse-ai-pilot:explore-codebase + fuse-ai-pilot:research-expert → domain agent → fuse-ai-pilot:sniper
 ```
-This applies to: new features, fixes, refactoring, ANY modification.
+This applies to: ALL tasks (questions, features, fixes, refactoring, exploration)
 
-**Exceptions (no agents needed):**
-- Questions / Exploration (Read/Grep/Glob only)
-- Git operations (status, log, diff, commit)
+**Only exception:** Git read-only (status, log, diff)
 
 ## Project Detection → Domain Agent
-| Config | Agent |
-|--------|-------|
-| `next.config.*` | `fuse-nextjs:nextjs-expert` |
-| `composer.json`+`artisan` | `fuse-laravel:laravel-expert` |
-| `package.json`+React | `fuse-react:react-expert` |
-| `Package.swift` | `fuse-swift-apple-expert:swift-expert` |
+| Config Files | Agent |
+|--------------|-------|
+| `next.config.*`, `app/layout.tsx` | `fuse-nextjs:nextjs-expert` |
+| `composer.json` + `artisan` | `fuse-laravel:laravel-expert` |
+| `package.json` + React | `fuse-react:react-expert` |
+| `Package.swift`, `*.xcodeproj` | `fuse-swift-apple-expert:swift-expert` |
 | `tailwind.config.*` | `fuse-tailwindcss:tailwindcss-expert` |
+| `Cargo.toml` | `rust-expert` |
+| `go.mod` | `go-expert` |
 | No match | `general-purpose` |
 
-## APEX Workflow
+## APEX Workflow (MANDATORY)
 **A**nalyze → **P**lan → **E**xecute → e**L**icit → e**X**amine
 
-**USE `/fuse-ai-pilot:apex`:** new features, multi-file changes, architecture, refactoring
-**SKIP:** questions, trivial fixes (1-3 lines), read-only, simple git
-**FLAGS:** `--quick` (skip Analyze), `--skip-elicit`, `--no-sniper`
+### A - Analyze (ALWAYS 3 AGENTS IN PARALLEL)
+`explore-codebase` (architecture) + `research-expert` (docs) + `[detected-expert-agent]`
+
+### P - Plan
+`TodoWrite` task breakdown, estimate files <100 lines, identify modifications
+
+### E - Execute
+Use `expert-agent`, follow SOLID rules, split files at 90 lines
+
+### L - eLicit (Expert Auto-Review)
+Expert auto-review with 75 elicitation techniques before sniper
+- `--auto` (default): Auto-detect code type → select techniques
+- `--manual`: Expert proposes 5 techniques, user chooses
+- `--skip-elicit`: Skip directly to eXamine
+
+### X - eXamine (MANDATORY - NEVER SKIP)
+**ALWAYS `sniper`** after ANY modification → 6-phase validation, zero linter errors, auto-correct
+
+**sniper 6 Phases:** explore-codebase → research-expert → grep usages → run linters → apply fixes → **ZERO errors**
+
+## APEX Auto-Trigger
+
+### ALWAYS use APEX when:
+- **Action verbs**: create, implement, add, develop, build, refactor, migrate
+- **New component/file** requested
+- **Multi-file**: task touching >2 files
+- **Architecture**: modifying existing structure
+
+### SKIP APEX when:
+- **Question**: exploration, explanation, "how does it work?"
+- **Trivial fix**: typo, 1-3 lines, obvious correction
+- **Read-only**: search, debug, inspection
+- **Simple git**: status, log, diff (without commit)
+
+### Shortcuts:
+- `--quick`: Skip Analyze, direct Execute
+- `--skip-elicit`: Skip eLicit, direct eXamine
+- `--no-sniper`: Skip eXamine (not recommended)
 
 ## SOLID Rules (All Languages)
-- Files < 100 lines (split at 90)
-- Interfaces in `src/interfaces/` or `Contracts/`
-- JSDoc/PHPDoc mandatory
+1. **Files < 100 lines** - Split at 90 (ts/js/py/go/rs/java/php/cpp/rb/swift)
+2. **Interfaces separated** - Location defined in `solid-*/references/` for each stack
+3. **Research first** - `research-expert` before ANY code
+4. **Validate after** - `sniper` after ANY modification
+5. **JSDoc/PHPDoc** - Every function documented
 
-| Agent | SOLID Rules Location |
-|-------|---------------------|
-| nextjs-expert | `solid-nextjs/references/` |
-| laravel-expert | `solid-php/references/` |
-| swift-expert | `solid-swift/references/` |
-| react-expert | `solid-react/references/` |
+**MANDATORY: Read the SOLID skill for your stack before coding:**
 
-## Frontend Tasks (MANDATORY - Gemini Design MCP)
-**ALWAYS use Gemini Design MCP** - NEVER write UI code manually.
+| Agent | Skill | Interfaces Location |
+|-------|-------|---------------------|
+| nextjs-expert | `solid-nextjs/references/` | `modules/[feature]/src/interfaces/` |
+| laravel-expert | `solid-php/references/` | `app/Contracts/` |
+| swift-expert | `solid-swift/references/` | `Sources/Interfaces/` |
+| react-expert | `solid-react/references/` | `modules/[feature]/src/interfaces/` |
+
+**Split Strategy:** `main.ts` + `validators.ts` + `types.ts` + `utils.ts` + `constants.ts`
+
+## Frontend Tasks (MANDATORY)
+**ALWAYS use `fuse-design:design-expert`** → calls Gemini Design MCP automatically.
+NEVER write UI code manually.
 
 | Tool | Usage |
 |------|-------|
@@ -62,34 +108,35 @@ This applies to: new features, fixes, refactoring, ANY modification.
 **FORBIDDEN without Gemini Design:**
 - Creating React components with styling
 - Writing CSS/Tailwind manually for UI
-- Using existing styles as excuse to skip Gemini
 
 **ALLOWED without Gemini:**
 - Text/copy changes only
 - JavaScript logic without UI changes
 - Data wiring (useQuery, useMutation)
 
-**Design System Workflow:**
-1. `generate_vibes` → user picks style
-2. `create_frontend` with `generateDesignSystem: true`
-3. Save to `design-system.md`
-
 ## Git Commits (MANDATORY)
 **ALWAYS use `/fuse-commit-pro:commit`** - NEVER use `git commit` directly.
-Triggers: "commit", "save", "enregistre"
-Auto-updates CHANGELOG.md with semantic versioning:
-- `fix/chore/docs` → patch (1.5.4 → 1.5.5)
-- `feat` → minor (1.5.5 → 1.6.0)
-- `BREAKING` → major (1.6.0 → 2.0.0)
+
+**Semantic Versioning (STRICT):**
+- `fix`, `chore`, `docs` → patch: 1.5.4 → 1.5.5
+- `feat` → minor: 1.5.5 → 1.6.0
+- `BREAKING CHANGE` → major: 1.6.0 → 2.0.0
 
 ## MCP Servers Available
 | Server | Usage |
 |--------|-------|
-| **Context7** | Documentation lookup (`fuse-ai-pilot:research-expert`) |
+| **Context7** | Documentation lookup (`research-expert`) |
 | **Exa** | Web search, code context |
 | **Magic (21st.dev)** | UI component generation |
 | **shadcn** | Component registry |
 | **Gemini Design** | AI frontend generation (Tailwind, shadcn) |
+
+## Enforcement (Hooks)
+- `PreToolUse`: Block interfaces in components, dangerous git
+- `PostToolUse`: Block files >100 lines, auto-sniper on 2+ changes
+
+## Documentation Rules
+Check/create `docs/` folder → ALL docs in `docs/` → NEVER outside except root README.md
 
 ## Agent Skills Location
 ```

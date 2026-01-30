@@ -1,8 +1,18 @@
 ---
 name: solid-react
 description: SOLID principles for React 19. Files < 100 lines, hooks separated, interfaces in src/interfaces/, JSDoc mandatory. Use for React architecture and code quality.
-user-invocable: false
+user-invocable: true
 ---
+
+## References (MANDATORY READ)
+
+Before any implementation, consult these reference files:
+
+| File | Content |
+|------|---------|
+| `references/solid-principles.md` | S.O.L.I.D. principles with React examples |
+| `references/code-templates.md` | Component, Hook, Service, Store templates |
+| `references/architecture-patterns.md` | Modular structure, imports, split strategy |
 
 # SOLID React - Component Architecture
 

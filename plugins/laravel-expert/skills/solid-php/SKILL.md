@@ -1,7 +1,7 @@
 ---
 name: solid-php
 description: SOLID principles for Laravel 12 and PHP 8.5. Files < 100 lines, interfaces separated, PHPDoc mandatory.
-user-invocable: false
+user-invocable: true
 ---
 
 # SOLID PHP - Laravel 12 + PHP 8.5
