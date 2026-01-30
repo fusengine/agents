@@ -1,6 +1,7 @@
 ---
 name: solid-nextjs
-description: SOLID principles for Next.js 16 with modular architecture. Files < 150 lines, interfaces separated, JSDoc mandatory.
+description: This skill should be used when the user asks about "SOLID principles", "Next.js architecture", "modular structure", "code organization", "file size limits", "interface separation", or "JSDoc documentation". Enforces files < 150 lines with mandatory JSDoc and separated interfaces.
+version: 1.0.0
 user-invocable: true
 references:
   - path: references/solid-principles.md

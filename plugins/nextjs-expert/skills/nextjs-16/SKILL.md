@@ -1,7 +1,17 @@
 ---
 name: nextjs-16
-description: Expert Next.js 16 development with Turbopack default, Cache Components, use cache directive, proxy.ts, React Compiler, and React 19.2. Use when working with Next.js projects, App Router, Server Components, caching, routing, data fetching, or deployment.
+description: This skill should be used when the user asks about "Next.js", "App Router", "Server Components", "Server Actions", "caching", "routing", "data fetching", "Turbopack", "use cache directive", "proxy.ts", or "React Compiler". Covers Next.js 16 with React 19.2 features.
+version: 1.0.0
 user-invocable: false
+references:
+  - path: 01-app/
+    title: App Router (Recommended) - Getting started, guides, API reference
+  - path: 02-pages/
+    title: Pages Router (Legacy) - Installation, guides, API
+  - path: 03-architecture/
+    title: Architecture - Accessibility, Fast Refresh, compiler
+  - path: 04-community/
+    title: Community - Contribution guide, Rspack
 ---
 
 # Next.js 16 Expert

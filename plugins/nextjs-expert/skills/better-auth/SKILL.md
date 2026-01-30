@@ -1,7 +1,27 @@
 ---
 name: better-auth
-description: Expert Better Auth implementation for TypeScript/JavaScript authentication. Covers sessions, OAuth providers, plugins, adapters, and security. Use when working with authentication, login, signup, sessions, OAuth, social login, or user management.
+description: This skill should be used when the user asks about "authentication", "login", "signup", "sessions", "OAuth", "social login", "user management", "Better Auth", or "auth setup". Covers Better Auth with sessions, OAuth providers, plugins, adapters, and security.
+version: 1.0.0
 user-invocable: false
+references:
+  - path: installation.md
+    title: Installation and Setup
+  - path: basic-usage.md
+    title: Basic Usage Patterns
+  - path: introduction.md
+    title: Introduction to Better Auth
+  - path: concepts/
+    title: Core Concepts (sessions, database, plugins)
+  - path: authentication/
+    title: Auth Methods (email, OAuth, passkeys)
+  - path: plugins/
+    title: Available Plugins
+  - path: adapters/
+    title: Database Adapters
+  - path: integrations/
+    title: Framework Integrations
+  - path: examples/
+    title: Example Implementations
 ---
 
 # Better Auth Expert

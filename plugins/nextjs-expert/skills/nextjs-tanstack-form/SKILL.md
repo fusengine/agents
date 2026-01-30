@@ -1,6 +1,7 @@
 ---
 name: nextjs-tanstack-form
-description: TanStack Form for Next.js App Router - Server Actions, server validation, useActionState, Zod integration. Use when building forms in Next.js.
+description: This skill should be used when the user asks about "forms", "form validation", "TanStack Form", "Server Actions forms", "useActionState", or "Zod validation". Covers TanStack Form for Next.js App Router with server-side validation.
+version: 1.0.0
 user-invocable: false
 ---
 

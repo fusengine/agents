@@ -1,6 +1,7 @@
 ---
 name: nextjs-shadcn
-description: shadcn/ui for Next.js App Router - Field components, TanStack Form integration, Server/Client Components. Use when building UI with shadcn in Next.js.
+description: This skill should be used when the user asks about "shadcn", "UI components", "form fields", "button", "input", "dialog", "card", or "accessible components". Covers shadcn/ui for Next.js App Router with TanStack Form integration.
+version: 1.0.0
 user-invocable: false
 ---
 

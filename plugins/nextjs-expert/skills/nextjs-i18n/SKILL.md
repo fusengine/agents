@@ -1,6 +1,7 @@
 ---
 name: nextjs-i18n
-description: Next.js 16 i18n modular SOLID - proxy.ts, modules/cores/i18n/, [lang] segment, await params. Use when implementing translations in Next.js App Router.
+description: This skill should be used when the user asks about "internationalization", "i18n", "translations", "localization", "multilingual", "language switch", or "[lang] routing". Covers Next.js 16 i18n with modular SOLID architecture and proxy.ts.
+version: 1.0.0
 user-invocable: false
 ---
 
@@ -36,7 +37,7 @@ src/
 
 ```typescript
 /** Supported locales configuration. */
-export const locales = ['en', 'fr', 'de'] as const
+export const locales = ['en', 'fr','it','es', 'de'] as const
 
 /** Default locale. */
 export const defaultLocale = 'en'

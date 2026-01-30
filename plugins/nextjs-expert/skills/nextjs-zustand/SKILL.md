@@ -1,6 +1,7 @@
 ---
 name: nextjs-zustand
-description: Zustand for Next.js App Router - Client Components only, hydration handling, persist middleware. Use when implementing global state in Next.js.
+description: This skill should be used when the user asks about "state management", "global state", "Zustand", "client state", "store", or "persist state". Covers Zustand for Next.js App Router with hydration handling and persist middleware.
+version: 1.0.0
 user-invocable: false
 ---
 

@@ -1,7 +1,21 @@
 ---
 name: prisma-7
-description: Expert Prisma 7 ORM with Rust-free client, 90% smaller bundles, 3x faster queries, TypedSQL, Omit API, and ESM-first architecture. Use when working with databases, Prisma schemas, queries, migrations, relations, or database optimization.
+description: This skill should be used when the user asks about "Prisma", "database", "ORM", "schema", "migrations", "queries", "relations", "TypedSQL", or "database optimization". Covers Prisma 7 with Rust-free client and ESM-first architecture.
+version: 1.0.0
 user-invocable: false
+references:
+  - path: 100-getting-started/
+    title: Quick Start Guides
+  - path: 200-orm/
+    title: ORM Reference (schema, client, queries, migrations)
+  - path: 250-postgres/
+    title: PostgreSQL Specific Features
+  - path: 300-accelerate/
+    title: Prisma Accelerate
+  - path: 700-optimize/
+    title: Query Optimization
+  - path: 800-guides/
+    title: Guides (Next.js, Auth.js, etc.)
 ---
 
 # Prisma 7 Expert
