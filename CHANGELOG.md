@@ -1,5 +1,14 @@
 # Release Notes
 
+## [1.29.6] - 30-01-2026
+
+### Changed
+
+- **skills**: Standardize SOLID skills format with version, type, category
+- **solid-react**: Add references directory with 3 documentation files
+- **CLAUDE.md**: Correct Laravel interfaces location to app/Contracts/
+- **hooks**: Improve session-start and user-prompt scripts with logging
+
 ## [1.29.5] - 29-01-2026
 
 ### Changed
