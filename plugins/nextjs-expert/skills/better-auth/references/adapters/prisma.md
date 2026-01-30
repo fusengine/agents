@@ -3,7 +3,7 @@
 ## Installation
 
 ```bash
-npm install @prisma/client prisma
+bun add @prisma/client prisma
 ```
 
 ## Configuration
@@ -26,8 +26,8 @@ export const auth = betterAuth({
 ## Generate Schema
 
 ```bash
-npx @better-auth/cli generate
-npx prisma migrate dev --name init
+bunx @better-auth/cli generate
+bunx prisma migrate dev --name init
 ```
 
 ## Required Tables
@@ -93,6 +93,6 @@ if (process.env.NODE_ENV !== "production") {
 Some plugins require additional tables. Run generate after adding plugins:
 
 ```bash
-npx @better-auth/cli generate
-npx prisma migrate dev
+bunx @better-auth/cli generate
+bunx prisma migrate dev
 ```

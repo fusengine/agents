@@ -1,6 +1,6 @@
-# Configuration Serveur Better Auth
+# Better Auth Server Configuration
 
-## Configuration de Base
+## Basic Configuration
 
 ```typescript
 // lib/auth.ts
@@ -18,7 +18,7 @@ export const auth = betterAuth({
   },
 
   session: {
-    expiresIn: 60 * 60 * 24 * 7,  // 7 jours
+    expiresIn: 60 * 60 * 24 * 7,  // 7 days
     updateAge: 60 * 60 * 24,       // Refresh 24h
     cookieCache: {
       enabled: true,
@@ -30,15 +30,15 @@ export const auth = betterAuth({
 export type Session = typeof auth.$Infer.Session
 ```
 
-## Options Principales
+## Main Options
 
 | Option | Type | Description |
 |--------|------|-------------|
-| `database` | Adapter | Prisma, Drizzle, ou config directe |
-| `emailAndPassword` | object | Auth email/password |
+| `database` | Adapter | Prisma, Drizzle, or direct config |
+| `emailAndPassword` | object | Email/password auth |
 | `socialProviders` | object | OAuth providers |
-| `session` | object | Config sessions |
-| `plugins` | array | Plugins à activer |
+| `session` | object | Session config |
+| `plugins` | array | Plugins to enable |
 | `hooks` | object | Before/after hooks |
 
 ## Social Providers
@@ -56,30 +56,30 @@ socialProviders: {
 }
 ```
 
-## Hooks Personnalisés
+## Custom Hooks
 
 ```typescript
 hooks: {
   before: createAuthMiddleware(async (ctx) => {
-    // Validation avant action
+    // Validation before action
     if (ctx.path === "/sign-up/email") {
-      // Logique custom
+      // Custom logic
     }
   }),
   after: createAuthMiddleware(async (ctx) => {
-    // Actions après auth
+    // Actions after auth
   })
 }
 ```
 
-## Avec Plugins
+## With Plugins
 
 ```typescript
 import { twoFactor } from "better-auth/plugins/two-factor"
 import { organization } from "better-auth/plugins/organization"
 
 export const auth = betterAuth({
-  // ... config de base
+  // ... base config
   plugins: [
     twoFactor(),
     organization()
@@ -90,7 +90,7 @@ export const auth = betterAuth({
 ## Type Export
 
 ```typescript
-// Pour typage dans l'app
+// For typing in the app
 export type Session = typeof auth.$Infer.Session
 export type User = typeof auth.$Infer.Session.user
 ```

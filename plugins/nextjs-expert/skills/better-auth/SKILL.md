@@ -20,7 +20,7 @@ references:
 ## Quick Start
 
 ```bash
-npm install better-auth
+bun add better-auth
 ```
 
 ## File Structure

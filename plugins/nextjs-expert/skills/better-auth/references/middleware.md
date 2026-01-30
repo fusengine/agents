@@ -1,6 +1,6 @@
-# Middleware Protection Routes
+# Middleware Route Protection
 
-## Middleware Basique
+## Basic Middleware
 
 ```typescript
 // middleware.ts
@@ -11,18 +11,18 @@ export async function middleware(request: NextRequest) {
   const session = getSessionCookie(request)
   const { pathname } = request.nextUrl
 
-  // Routes protégées
+  // Protected routes
   const protectedRoutes = ["/dashboard", "/settings", "/profile"]
   const isProtected = protectedRoutes.some(route =>
     pathname.startsWith(route)
   )
 
-  // Rediriger si non authentifié
+  // Redirect if not authenticated
   if (!session && isProtected) {
     return NextResponse.redirect(new URL("/login", request.url))
   }
 
-  // Rediriger si déjà connecté
+  // Redirect if already logged in
   const authRoutes = ["/login", "/signup"]
   if (session && authRoutes.includes(pathname)) {
     return NextResponse.redirect(new URL("/dashboard", request.url))
@@ -42,13 +42,13 @@ export const config = {
 }
 ```
 
-## Avec Cookie Cache
+## With Cookie Cache
 
 ```typescript
 import { getCookieCache } from "better-auth/cookies"
 
 export async function middleware(request: NextRequest) {
-  // Utilise le cache pour éviter appels DB
+  // Use cache to avoid DB calls
   const session = await getCookieCache(request)
 
   if (!session && request.nextUrl.pathname.startsWith("/dashboard")) {
@@ -64,13 +64,13 @@ export async function middleware(request: NextRequest) {
 ```typescript
 export const config = {
   matcher: [
-    // Tout sauf static, api, _next
+    // Everything except static, api, _next
     "/((?!api|_next/static|_next/image|favicon.ico).*)"
   ]
 }
 ```
 
-## Routes Publiques
+## Public Routes
 
 ```typescript
 const publicRoutes = ["/", "/about", "/pricing", "/login", "/signup"]
@@ -78,12 +78,12 @@ const publicRoutes = ["/", "/about", "/pricing", "/login", "/signup"]
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
 
-  // Skip routes publiques
+  // Skip public routes
   if (publicRoutes.includes(pathname)) {
     return NextResponse.next()
   }
 
-  // Vérifier auth pour le reste
+  // Check auth for the rest
   const session = getSessionCookie(request)
   if (!session) {
     return NextResponse.redirect(new URL("/login", request.url))
@@ -93,14 +93,14 @@ export async function middleware(request: NextRequest) {
 }
 ```
 
-## Headers Personnalisés
+## Custom Headers
 
 ```typescript
 export async function middleware(request: NextRequest) {
   const session = getSessionCookie(request)
   const response = NextResponse.next()
 
-  // Ajouter info session aux headers
+  // Add session info to headers
   if (session) {
     response.headers.set("x-user-authenticated", "true")
   }

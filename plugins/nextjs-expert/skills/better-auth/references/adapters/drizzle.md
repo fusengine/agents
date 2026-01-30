@@ -3,7 +3,7 @@
 ## Installation
 
 ```bash
-npm install drizzle-orm drizzle-kit
+bun add drizzle-orm drizzle-kit
 ```
 
 ## Configuration
@@ -94,6 +94,6 @@ export const db = drizzle(pool, { schema })
 ## Generate Migrations
 
 ```bash
-npx drizzle-kit generate
-npx drizzle-kit migrate
+bunx drizzle-kit generate
+bunx drizzle-kit migrate
 ```

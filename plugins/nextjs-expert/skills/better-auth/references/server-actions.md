@@ -1,6 +1,6 @@
 # Server Actions & Server Components
 
-## Récupérer Session (Server Component)
+## Get Session (Server Component)
 
 ```typescript
 // app/dashboard/page.tsx
@@ -19,14 +19,14 @@ export default async function DashboardPage() {
 
   return (
     <div>
-      <h1>Bienvenue {session.user.name}</h1>
+      <h1>Welcome {session.user.name}</h1>
       <p>Email: {session.user.email}</p>
     </div>
   )
 }
 ```
 
-## Helper Réutilisable
+## Reusable Helper
 
 ```typescript
 // lib/auth-server.ts
@@ -46,7 +46,7 @@ export const getUser = cache(async () => {
 })
 ```
 
-## Server Action Protégée
+## Protected Server Action
 
 ```typescript
 // app/actions/profile.ts
@@ -62,7 +62,7 @@ export async function updateProfile(formData: FormData) {
   })
 
   if (!session) {
-    throw new Error("Non authentifié")
+    throw new Error("Unauthorized")
   }
 
   const name = formData.get("name") as string
@@ -77,7 +77,7 @@ export async function updateProfile(formData: FormData) {
 }
 ```
 
-## API Route Protégée
+## Protected API Route
 
 ```typescript
 // app/api/user/route.ts
@@ -92,7 +92,7 @@ export async function GET() {
 
   if (!session) {
     return NextResponse.json(
-      { error: "Non authentifié" },
+      { error: "Unauthorized" },
       { status: 401 }
     )
   }
@@ -101,7 +101,7 @@ export async function GET() {
 }
 ```
 
-## Méthodes API Disponibles
+## Available API Methods
 
 ```typescript
 // Session
@@ -110,7 +110,7 @@ auth.api.getSession({ headers })
 // User
 auth.api.getUser({ headers })
 
-// Avec Organization plugin
+// With Organization plugin
 auth.api.getFullOrganization({
   headers,
   query: { organizationId }

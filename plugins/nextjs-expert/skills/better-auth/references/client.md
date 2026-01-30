@@ -1,17 +1,17 @@
-# Client Better Auth (React)
+# Better Auth Client (React)
 
-## Configuration Client
+## Client Configuration
 
 ```typescript
 // lib/auth-client.ts
 import { createAuthClient } from "better-auth/react"
 
 export const authClient = createAuthClient({
-  baseURL: process.env.NEXT_PUBLIC_APP_URL // Optionnel
+  baseURL: process.env.NEXT_PUBLIC_APP_URL // Optional
 })
 ```
 
-## Hook useSession
+## useSession Hook
 
 ```typescript
 "use client"
@@ -20,9 +20,9 @@ import { authClient } from "@/lib/auth-client"
 export function UserProfile() {
   const { data: session, isPending, error } = authClient.useSession()
 
-  if (isPending) return <div>Chargement...</div>
-  if (error) return <div>Erreur: {error.message}</div>
-  if (!session) return <div>Non connecté</div>
+  if (isPending) return <div>Loading...</div>
+  if (error) return <div>Error: {error.message}</div>
+  if (!session) return <div>Not logged in</div>
 
   return (
     <div>
@@ -92,13 +92,13 @@ const handleLogout = async () => {
 }
 ```
 
-## Méthodes Disponibles
+## Available Methods
 
-| Méthode | Description |
-|---------|-------------|
-| `useSession()` | Hook React pour session |
-| `signIn.email()` | Login email/password |
-| `signIn.social()` | Login OAuth |
-| `signUp.email()` | Inscription |
-| `signOut()` | Déconnexion |
-| `getSession()` | Récupérer session (non-hook) |
+| Method | Description |
+|--------|-------------|
+| `useSession()` | React hook for session |
+| `signIn.email()` | Email/password login |
+| `signIn.social()` | OAuth login |
+| `signUp.email()` | Registration |
+| `signOut()` | Logout |
+| `getSession()` | Get session (non-hook) |

@@ -1,23 +1,23 @@
-# Gestion des Sessions
+# Session Management
 
-## Configuration Session
+## Session Configuration
 
 ```typescript
 // lib/auth.ts
 export const auth = betterAuth({
   session: {
-    expiresIn: 60 * 60 * 24 * 7,  // 7 jours (secondes)
-    updateAge: 60 * 60 * 24,       // Refresh après 24h
-    freshAge: 60 * 10,             // Session "fraîche" 10 min
+    expiresIn: 60 * 60 * 24 * 7,  // 7 days (seconds)
+    updateAge: 60 * 60 * 24,       // Refresh after 24h
+    freshAge: 60 * 10,             // "Fresh" session 10 min
     cookieCache: {
       enabled: true,
-      maxAge: 60 * 5               // Cache cookie 5 min
+      maxAge: 60 * 5               // Cookie cache 5 min
     }
   }
 })
 ```
 
-## Structure Session
+## Session Structure
 
 ```typescript
 interface Session {
@@ -42,33 +42,33 @@ interface User {
 }
 ```
 
-## Cookie Session
+## Session Cookie
 
-Better Auth stocke le token de session dans un cookie HTTP-only:
+Better Auth stores session token in HTTP-only cookie:
 
 ```
 better-auth.session_token=xxx
 ```
 
-Options cookie:
+Cookie options:
 - `httpOnly: true`
 - `secure: true` (production)
 - `sameSite: "lax"`
 
-## Vérifier Session (Client)
+## Verify Session (Client)
 
 ```typescript
 "use client"
 import { authClient } from "@/lib/auth-client"
 
-// Hook React
+// React hook
 const { data: session } = authClient.useSession()
 
-// Sans hook
+// Without hook
 const session = await authClient.getSession()
 ```
 
-## Vérifier Session (Serveur)
+## Verify Session (Server)
 
 ```typescript
 // Server Component / Server Action
@@ -80,20 +80,20 @@ const session = await auth.api.getSession({
 })
 ```
 
-## Lister Sessions Actives
+## List Active Sessions
 
 ```typescript
-// Toutes les sessions de l'utilisateur
+// All user sessions
 const sessions = await authClient.listSessions()
 
-// Révoquer une session
+// Revoke a session
 await authClient.revokeSession({ token: sessionToken })
 
-// Révoquer toutes sauf courante
+// Revoke all except current
 await authClient.revokeOtherSessions()
 ```
 
-## Désactiver Cookie Cache
+## Disable Cookie Cache
 
 ```typescript
 session: {

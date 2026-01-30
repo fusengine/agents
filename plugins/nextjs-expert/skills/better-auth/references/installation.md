@@ -1,26 +1,24 @@
-# Installation Better Auth
+# Better Auth Installation
 
 ## Installation
 
 ```bash
-npm install better-auth
-# ou
 bun add better-auth
 ```
 
-## Structure Projet
+## Project Structure
 
 ```
 lib/
-├── auth.ts              # Configuration serveur
-├── auth-client.ts       # Configuration client
-└── prisma.ts            # Instance Prisma
+├── auth.ts              # Server config
+├── auth-client.ts       # Client config
+└── prisma.ts            # Prisma instance
 app/api/auth/[...all]/
-└── route.ts             # Handler API
-middleware.ts            # Protection routes
+└── route.ts             # API handler
+middleware.ts            # Route protection
 ```
 
-## Variables d'environnement
+## Environment Variables
 
 ```bash
 # .env
@@ -28,21 +26,18 @@ DATABASE_URL=postgresql://user:pass@localhost:5432/db
 BETTER_AUTH_SECRET=openssl-rand-base64-32
 BETTER_AUTH_URL=http://localhost:3000
 
-# OAuth (optionnel)
+# OAuth (optional)
 GITHUB_CLIENT_ID=xxx
 GITHUB_CLIENT_SECRET=xxx
 GOOGLE_CLIENT_ID=xxx
 GOOGLE_CLIENT_SECRET=xxx
 ```
 
-## Génération Schéma DB
+## Generate DB Schema
 
 ```bash
-# Générer les migrations Prisma
-npx @better-auth/cli generate
-
-# Appliquer
-npx prisma migrate dev
+bunx @better-auth/cli generate
+bunx prisma migrate dev
 ```
 
 ## Route API Handler
@@ -55,27 +50,26 @@ import { toNextJsHandler } from "better-auth/next-js"
 export const { GET, POST } = toNextJsHandler(auth)
 ```
 
-## Vérification Installation
+## Verify Installation
 
 ```typescript
-// Test en console
 import { auth } from "@/lib/auth"
-console.log(auth.api) // Doit afficher les méthodes disponibles
+console.log(auth.api) // Should display available methods
 ```
 
-## Ordre d'installation
+## Installation Order
 
-1. `npm install better-auth`
-2. Créer `lib/auth.ts` (serveur)
-3. Créer `lib/auth-client.ts` (client)
-4. Créer `app/api/auth/[...all]/route.ts`
-5. Générer schéma DB
-6. Configurer middleware (optionnel)
+1. `bun add better-auth`
+2. Create `lib/auth.ts` (server)
+3. Create `lib/auth-client.ts` (client)
+4. Create `app/api/auth/[...all]/route.ts`
+5. Generate DB schema
+6. Configure middleware (optional)
 
-## Dépendances Recommandées
+## Recommended Dependencies
 
 ```bash
-npm install @prisma/client prisma
-# ou pour Drizzle
-npm install drizzle-orm
+bun add @prisma/client prisma
+# or for Drizzle
+bun add drizzle-orm
 ```
