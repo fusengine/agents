@@ -3,10 +3,10 @@
 ## Basic Configuration
 
 ```typescript
-// lib/auth.ts
+// modules/auth/src/services/auth.ts
 import { betterAuth } from "better-auth"
 import { prismaAdapter } from "better-auth/adapters/prisma"
-import { prisma } from "./prisma"
+import { prisma } from "@/modules/cores/database/prisma"
 
 export const auth = betterAuth({
   database: prismaAdapter(prisma, { provider: "postgresql" }),
@@ -20,10 +20,7 @@ export const auth = betterAuth({
   session: {
     expiresIn: 60 * 60 * 24 * 7,  // 7 days
     updateAge: 60 * 60 * 24,       // Refresh 24h
-    cookieCache: {
-      enabled: true,
-      maxAge: 60 * 5               // Cache 5 min
-    }
+    cookieCache: { enabled: true, maxAge: 60 * 5 }
   }
 })
 
@@ -39,7 +36,6 @@ export type Session = typeof auth.$Infer.Session
 | `socialProviders` | object | OAuth providers |
 | `session` | object | Session config |
 | `plugins` | array | Plugins to enable |
-| `hooks` | object | Before/after hooks |
 
 ## Social Providers
 
@@ -62,9 +58,6 @@ socialProviders: {
 hooks: {
   before: createAuthMiddleware(async (ctx) => {
     // Validation before action
-    if (ctx.path === "/sign-up/email") {
-      // Custom logic
-    }
   }),
   after: createAuthMiddleware(async (ctx) => {
     // Actions after auth
@@ -76,21 +69,15 @@ hooks: {
 
 ```typescript
 import { twoFactor } from "better-auth/plugins/two-factor"
-import { organization } from "better-auth/plugins/organization"
 
 export const auth = betterAuth({
-  // ... base config
-  plugins: [
-    twoFactor(),
-    organization()
-  ]
+  plugins: [twoFactor()]
 })
 ```
 
 ## Type Export
 
 ```typescript
-// For typing in the app
 export type Session = typeof auth.$Infer.Session
 export type User = typeof auth.$Infer.Session.user
 ```

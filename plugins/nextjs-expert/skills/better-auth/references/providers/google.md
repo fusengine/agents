@@ -1,19 +1,19 @@
 # Google OAuth Provider
 
-## Configuration Google Cloud Console
+## Google Cloud Console Setup
 
-1. Aller sur https://console.cloud.google.com
-2. Créer un projet ou sélectionner existant
+1. Go to https://console.cloud.google.com
+2. Create a project or select existing
 3. APIs & Services > Credentials
 4. Create Credentials > OAuth client ID
 5. Application type: Web application
-6. Ajouter Authorized redirect URI:
+6. Add Authorized redirect URI:
    ```
    http://localhost:3000/api/auth/callback/google
-   https://votre-domaine.com/api/auth/callback/google
+   https://your-domain.com/api/auth/callback/google
    ```
 
-## Configuration Better Auth
+## Better Auth Configuration
 
 ```typescript
 // lib/auth.ts
@@ -29,14 +29,14 @@ export const auth = betterAuth({
 })
 ```
 
-## Variables d'environnement
+## Environment Variables
 
 ```bash
 GOOGLE_CLIENT_ID=123456789.apps.googleusercontent.com
 GOOGLE_CLIENT_SECRET=GOCSPX-xxxxx
 ```
 
-## Utilisation Client
+## Client Usage
 
 ```typescript
 "use client"
@@ -52,21 +52,21 @@ export function GoogleSignIn() {
 
   return (
     <button onClick={handleGoogleLogin}>
-      Continuer avec Google
+      Continue with Google
     </button>
   )
 }
 ```
 
-## Scopes Disponibles
+## Available Scopes
 
 | Scope | Description |
 |-------|-------------|
-| `email` | Adresse email |
-| `profile` | Nom, photo |
+| `email` | Email address |
+| `profile` | Name, photo |
 | `openid` | OpenID Connect |
 
-## Scopes Personnalisés
+## Custom Scopes
 
 ```typescript
 google: {

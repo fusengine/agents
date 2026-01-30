@@ -1,156 +1,68 @@
 ---
 name: nextjs-16
-description: This skill should be used when the user asks about "Next.js", "App Router", "Server Components", "Server Actions", "caching", "routing", "data fetching", "Turbopack", "use cache directive", "proxy.ts", or "React Compiler". Covers Next.js 16 with React 19.2 features.
-version: 1.0.0
-user-invocable: false
+description: Next.js 16 with Turbopack, Cache Components, proxy.ts, React Compiler. Use when building Next.js apps, App Router, Server Components, data fetching, caching.
+version: 2.0.0
+user-invocable: true
 references:
-  - path: 01-app/
-    title: App Router (Recommended) - Getting started, guides, API reference
-  - path: 02-pages/
-    title: Pages Router (Legacy) - Installation, guides, API
-  - path: 03-architecture/
-    title: Architecture - Accessibility, Fast Refresh, compiler
-  - path: 04-community/
-    title: Community - Contribution guide, Rspack
+  - path: references/installation.md
+  - path: references/app-router.md
+  - path: references/server-components.md
+  - path: references/data-fetching.md
+  - path: references/caching.md
+  - path: references/proxy.md
+  - path: references/turbopack.md
 ---
 
 # Next.js 16 Expert
 
-## Overview
-
-Next.js 16 (released October 21, 2025) is a major release with Turbopack as default bundler, Cache Components model, and significant architectural improvements.
-
 ## Quick Start
 
 ```bash
-# Upgrade existing project
-bunx @next/codemod@canary upgrade latest
-
-# Or manual upgrade
-bun add next@latest react@latest react-dom@latest
-
-# Or new project
 bunx create-next-app@latest
+# or upgrade
+bunx @next/codemod@canary upgrade latest
 ```
 
-## Key Features
+## Key Features (v16)
 
-### 1. Turbopack (Now Default)
-- **2-5x faster production builds**
-- **Up to 10x faster Fast Refresh**
-- Filesystem caching (beta)
+| Feature | Description |
+|---------|-------------|
+| **Turbopack** | Default bundler (2-5x faster builds) |
+| **Cache Components** | Explicit caching with `use cache` |
+| **proxy.ts** | Replaces middleware.ts |
+| **React Compiler** | Automatic memoization (stable) |
+| **React 19.2** | View Transitions, useEffectEvent |
 
-To use webpack instead:
-```bash
-next dev --webpack
-next build --webpack
-```
-
-### 2. Cache Components
-New explicit caching model with `use cache` directive:
-
-```typescript
-// next.config.ts
-const nextConfig = {
-  cacheComponents: true,
-};
-```
-
-### 3. proxy.ts (Replaces middleware.ts)
-Clearer network boundary, runs on Node.js runtime:
-
-```typescript
-// proxy.ts
-export default function proxy(request: NextRequest) {
-  return NextResponse.redirect(new URL('/home', request.url));
-}
-```
-
-### 4. React Compiler (Stable)
-Automatic memoization:
-
-```typescript
-// next.config.ts
-const nextConfig = {
-  reactCompiler: true,
-};
-```
-
-```bash
-bun add babel-plugin-react-compiler@latest
-```
-
-### 5. React 19.2 Features
-- **View Transitions**: Animate elements in Transitions
-- **useEffectEvent**: Extract non-reactive Effect logic
-- **Activity**: Background rendering with state preservation
-
-## Version Requirements
+## Requirements
 
 | Requirement | Version |
 |-------------|---------|
 | Node.js | 20.9+ (LTS) |
 | TypeScript | 5.1.0+ |
-| Chrome/Edge | 111+ |
-| Firefox | 111+ |
-| Safari | 16.4+ |
-
-## Documentation Structure
-
-This skill contains the complete official Next.js 16 documentation:
-
-### App Router (Recommended)
-- [01-app/01-getting-started](01-app/01-getting-started/) - Installation, project structure, layouts, pages
-- [01-app/02-guides](01-app/02-guides/) - Authentication, forms, caching, testing, deployment
-- [01-app/03-api-reference](01-app/03-api-reference/) - Components, functions, config, CLI
-
-### Pages Router (Legacy)
-- [02-pages/01-getting-started](02-pages/01-getting-started/) - Installation for Pages Router
-- [02-pages/02-guides](02-pages/02-guides/) - Pages Router specific guides
-- [02-pages/03-building-your-application](02-pages/03-building-your-application/) - Routing, rendering, data fetching
-- [02-pages/04-api-reference](02-pages/04-api-reference/) - Pages Router API
-
-### Architecture
-- [03-architecture](03-architecture/) - Accessibility, Fast Refresh, compiler, browsers
-
-### Community
-- [04-community](04-community/) - Contribution guide, Rspack
 
 ## Breaking Changes from v15
 
-### Removals
-- AMP support removed
-- `next lint` removed (use ESLint/Biome directly)
-- `serverRuntimeConfig`/`publicRuntimeConfig` removed
-- Sync `params`/`searchParams` access removed
-- Sync `cookies()`/`headers()`/`draftMode()` removed
-
-### Behavior Changes
-- Turbopack is default bundler
-- `images.minimumCacheTTL` default: 4 hours
-- `revalidateTag()` requires cacheLife profile
-- Parallel routes require explicit `default.js`
-
-### Deprecations
 - `middleware.ts` → `proxy.ts`
-- `next/legacy/image` → `next/image`
-- `images.domains` → `images.remotePatterns`
+- Async `cookies()`, `headers()`, `params`
+- `next lint` removed
+- AMP support removed
+- Turbopack is default
 
-## Instructions
+## Project Structure
 
-1. **ALWAYS** use App Router patterns for new projects
-2. Use `use cache` directive for explicit caching
-3. Use `proxy.ts` instead of `middleware.ts`
-4. Enable React Compiler for automatic memoization
-5. Use `updateTag()` in Server Actions for immediate updates
-6. Use `revalidateTag()` with cacheLife for background revalidation
-7. Reference the complete docs in subdirectories for detailed patterns
-
-## Documentation Reference
-
-For latest official docs, use Context7 MCP:
 ```
-mcp__context7__get-library-docs with context7CompatibleLibraryID="/vercel/next.js"
+proxy.ts                    # Route protection (root)
+app/
+├── layout.tsx              # Root layout (required)
+├── page.tsx                # Home page
+├── loading.tsx             # Loading UI
+├── error.tsx               # Error boundary
+└── api/route.ts            # API routes
+modules/                    # SOLID architecture
+└── [feature]/src/
 ```
 
-Official site: https://nextjs.org/docs
+## Documentation
+
+- Official: https://nextjs.org/docs
+- See `references/` for detailed guides

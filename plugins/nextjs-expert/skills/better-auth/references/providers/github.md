@@ -1,11 +1,11 @@
 # GitHub OAuth Provider
 
-## Configuration GitHub
+## GitHub Setup
 
-1. Aller sur https://github.com/settings/developers
+1. Go to https://github.com/settings/developers
 2. OAuth Apps > New OAuth App
-3. Remplir:
-   - Application name: Nom de l'app
+3. Fill in:
+   - Application name: Your app name
    - Homepage URL: `http://localhost:3000`
    - Authorization callback URL:
      ```
@@ -14,7 +14,7 @@
 4. Register application
 5. Generate a new client secret
 
-## Configuration Better Auth
+## Better Auth Configuration
 
 ```typescript
 // lib/auth.ts
@@ -30,14 +30,14 @@ export const auth = betterAuth({
 })
 ```
 
-## Variables d'environnement
+## Environment Variables
 
 ```bash
 GITHUB_CLIENT_ID=Iv1.xxxxxxxxxx
 GITHUB_CLIENT_SECRET=xxxxxxxxxxxxxxxxxxxxx
 ```
 
-## Utilisation Client
+## Client Usage
 
 ```typescript
 "use client"
@@ -53,21 +53,21 @@ export function GitHubSignIn() {
 
   return (
     <button onClick={handleGitHubLogin}>
-      Continuer avec GitHub
+      Continue with GitHub
     </button>
   )
 }
 ```
 
-## Scopes Disponibles
+## Available Scopes
 
 | Scope | Description |
 |-------|-------------|
-| `user:email` | Email (privé inclus) |
-| `read:user` | Profil public |
-| `repo` | Accès repositories |
+| `user:email` | Email (private included) |
+| `read:user` | Public profile |
+| `repo` | Repository access |
 
-## Scopes Personnalisés
+## Custom Scopes
 
 ```typescript
 github: {
@@ -79,7 +79,7 @@ github: {
 
 ## Production
 
-Mettre à jour le callback URL:
+Update callback URL:
 ```
-https://votre-domaine.com/api/auth/callback/github
+https://your-domain.com/api/auth/callback/github
 ```

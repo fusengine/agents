@@ -3,7 +3,7 @@
 ## Client Configuration
 
 ```typescript
-// lib/auth-client.ts
+// modules/auth/src/hooks/auth-client.ts
 import { createAuthClient } from "better-auth/react"
 
 export const authClient = createAuthClient({
@@ -15,7 +15,7 @@ export const authClient = createAuthClient({
 
 ```typescript
 "use client"
-import { authClient } from "@/lib/auth-client"
+import { authClient } from "@/modules/auth/src/hooks/auth-client"
 
 export function UserProfile() {
   const { data: session, isPending, error } = authClient.useSession()
@@ -24,12 +24,7 @@ export function UserProfile() {
   if (error) return <div>Error: {error.message}</div>
   if (!session) return <div>Not logged in</div>
 
-  return (
-    <div>
-      <p>{session.user.email}</p>
-      <p>{session.user.name}</p>
-    </div>
-  )
+  return <p>{session.user.email}</p>
 }
 ```
 
@@ -42,38 +37,26 @@ const handleLogin = async (email: string, password: string) => {
     password,
     callbackURL: "/dashboard"
   })
-
-  if (error) {
-    console.error(error.message)
-  }
+  if (error) console.error(error.message)
 }
 ```
 
 ## Sign Up
 
 ```typescript
-const handleSignUp = async (email: string, password: string, name: string) => {
-  const { data, error } = await authClient.signUp.email({
-    email,
-    password,
-    name,
-    callbackURL: "/dashboard"
-  })
-}
+const { data, error } = await authClient.signUp.email({
+  email,
+  password,
+  name,
+  callbackURL: "/dashboard"
+})
 ```
 
 ## Sign In OAuth
 
 ```typescript
-// Google
 await authClient.signIn.social({
-  provider: "google",
-  callbackURL: "/dashboard"
-})
-
-// GitHub
-await authClient.signIn.social({
-  provider: "github",
+  provider: "google", // or "github"
   callbackURL: "/dashboard"
 })
 ```
@@ -81,15 +64,9 @@ await authClient.signIn.social({
 ## Sign Out
 
 ```typescript
-const handleLogout = async () => {
-  await authClient.signOut({
-    fetchOptions: {
-      onSuccess: () => {
-        window.location.href = "/"
-      }
-    }
-  })
-}
+await authClient.signOut({
+  fetchOptions: { onSuccess: () => window.location.href = "/" }
+})
 ```
 
 ## Available Methods
@@ -101,4 +78,3 @@ const handleLogout = async () => {
 | `signIn.social()` | OAuth login |
 | `signUp.email()` | Registration |
 | `signOut()` | Logout |
-| `getSession()` | Get session (non-hook) |

@@ -1,8 +1,8 @@
 # Generic OAuth Provider
 
-## Plugin Generic OAuth
+## Generic OAuth Plugin
 
-Pour les providers non supportés nativement.
+For providers not natively supported.
 
 ```typescript
 import { betterAuth } from "better-auth"
@@ -27,7 +27,7 @@ export const auth = betterAuth({
 })
 ```
 
-## Configuration Client
+## Client Configuration
 
 ```typescript
 // lib/auth-client.ts
@@ -39,7 +39,7 @@ export const authClient = createAuthClient({
 })
 ```
 
-## Utilisation
+## Usage
 
 ```typescript
 await authClient.signIn.oauth2({
@@ -48,18 +48,18 @@ await authClient.signIn.oauth2({
 })
 ```
 
-## Options Disponibles
+## Available Options
 
 | Option | Required | Description |
 |--------|----------|-------------|
-| `providerId` | Oui | ID unique du provider |
-| `clientId` | Oui | Client ID OAuth |
-| `clientSecret` | Oui | Client Secret |
-| `authorizationUrl` | Oui | URL autorisation |
-| `tokenUrl` | Oui | URL token |
-| `userInfoUrl` | Non | URL user info |
-| `scopes` | Non | Scopes demandés |
-| `pkce` | Non | Activer PKCE |
+| `providerId` | Yes | Unique provider ID |
+| `clientId` | Yes | OAuth Client ID |
+| `clientSecret` | Yes | Client Secret |
+| `authorizationUrl` | Yes | Authorization URL |
+| `tokenUrl` | Yes | Token URL |
+| `userInfoUrl` | No | User info URL |
+| `scopes` | No | Requested scopes |
+| `pkce` | No | Enable PKCE |
 
 ## Mapping User Info
 

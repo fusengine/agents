@@ -1,9 +1,9 @@
 # OAuth Providers Overview
 
-## Providers Supportés
+## Supported Providers
 
-| Provider | Config Key | Scopes par défaut |
-|----------|------------|-------------------|
+| Provider | Config Key | Default Scopes |
+|----------|------------|----------------|
 | Google | `google` | email, profile |
 | GitHub | `github` | user:email |
 | Discord | `discord` | identify, email |
@@ -14,7 +14,7 @@
 | LinkedIn | `linkedin` | openid, profile, email |
 | Spotify | `spotify` | user-read-email |
 
-## Configuration Générale
+## General Configuration
 
 ```typescript
 // lib/auth.ts
@@ -34,30 +34,30 @@ export const auth = betterAuth({
 })
 ```
 
-## Utilisation Client
+## Client Usage
 
 ```typescript
 import { authClient } from "@/lib/auth-client"
 
-// Login avec provider
+// Login with provider
 await authClient.signIn.social({
-  provider: "google", // ou "github", "discord", etc.
+  provider: "google", // or "github", "discord", etc.
   callbackURL: "/dashboard"
 })
 ```
 
 ## Callback URL
 
-Configurer dans chaque provider:
+Configure in each provider:
 ```
-https://votre-domaine.com/api/auth/callback/{provider}
+https://your-domain.com/api/auth/callback/{provider}
 ```
 
-Exemples:
+Examples:
 - Google: `https://example.com/api/auth/callback/google`
 - GitHub: `https://example.com/api/auth/callback/github`
 
-## Variables d'environnement
+## Environment Variables
 
 ```bash
 # Google
@@ -73,7 +73,7 @@ DISCORD_CLIENT_ID=xxx
 DISCORD_CLIENT_SECRET=xxx
 ```
 
-## Scopes Personnalisés
+## Custom Scopes
 
 ```typescript
 google: {

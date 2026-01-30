@@ -23,23 +23,26 @@ references:
 bun add better-auth
 ```
 
-## File Structure
+## SOLID File Structure (Next.js 16)
 
 ```
-lib/
-├── auth.ts              # Server config (betterAuth)
-└── auth-client.ts       # Client config (createAuthClient)
-app/api/auth/[...all]/
-└── route.ts             # API handler
+proxy.ts                              # Same level as app/
+app/api/auth/[...all]/route.ts
+modules/
+├── cores/database/prisma.ts
+└── auth/src/
+    ├── interfaces/session.interface.ts
+    ├── services/auth.ts              # betterAuth
+    └── hooks/auth-client.ts          # createAuthClient
 ```
 
 ## Minimal Setup
 
-### 1. Server (`lib/auth.ts`)
+### 1. Server (`modules/auth/src/services/auth.ts`)
 ```typescript
 import { betterAuth } from "better-auth"
 import { prismaAdapter } from "better-auth/adapters/prisma"
-import { prisma } from "./prisma"
+import { prisma } from "@/modules/cores/database/prisma"
 
 export const auth = betterAuth({
   database: prismaAdapter(prisma, { provider: "postgresql" }),
@@ -47,7 +50,7 @@ export const auth = betterAuth({
 })
 ```
 
-### 2. Client (`lib/auth-client.ts`)
+### 2. Client (`modules/auth/src/hooks/auth-client.ts`)
 ```typescript
 import { createAuthClient } from "better-auth/react"
 export const authClient = createAuthClient()
@@ -55,7 +58,7 @@ export const authClient = createAuthClient()
 
 ### 3. Route (`app/api/auth/[...all]/route.ts`)
 ```typescript
-import { auth } from "@/lib/auth"
+import { auth } from "@/modules/auth/src/services/auth"
 import { toNextJsHandler } from "better-auth/next-js"
 export const { GET, POST } = toNextJsHandler(auth)
 ```
@@ -74,9 +77,8 @@ BETTER_AUTH_URL=http://localhost:3000
 - OAuth providers (Google, GitHub, Discord, etc.)
 - Prisma/Drizzle adapters
 - Plugin system (2FA, Organizations, Admin, etc.)
-- Middleware protection
+- proxy.ts protection (Next.js 16)
 
 ## Documentation
 
 - Official: https://www.better-auth.com/docs
-- See `references/` for detailed guides

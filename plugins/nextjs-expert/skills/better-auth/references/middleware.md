@@ -1,30 +1,36 @@
-# Middleware Route Protection
+# Route Protection with proxy.ts (Next.js 16)
 
-## Basic Middleware
+> **Note**: `middleware.ts` is deprecated. Use `proxy.ts` at **same level as app/**.
+
+## File Location
+
+```
+# With src/
+src/proxy.ts    ← Same level as src/app/
+
+# Without src/
+proxy.ts        ← Project root, same level as app/
+```
+
+## Basic proxy.ts
 
 ```typescript
-// middleware.ts
+// proxy.ts (same level as app/)
 import { NextRequest, NextResponse } from "next/server"
 import { getSessionCookie } from "better-auth/cookies"
 
-export async function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const session = getSessionCookie(request)
   const { pathname } = request.nextUrl
 
-  // Protected routes
   const protectedRoutes = ["/dashboard", "/settings", "/profile"]
-  const isProtected = protectedRoutes.some(route =>
-    pathname.startsWith(route)
-  )
+  const isProtected = protectedRoutes.some(r => pathname.startsWith(r))
 
-  // Redirect if not authenticated
   if (!session && isProtected) {
     return NextResponse.redirect(new URL("/login", request.url))
   }
 
-  // Redirect if already logged in
-  const authRoutes = ["/login", "/signup"]
-  if (session && authRoutes.includes(pathname)) {
+  if (session && ["/login", "/signup"].includes(pathname)) {
     return NextResponse.redirect(new URL("/dashboard", request.url))
   }
 
@@ -32,13 +38,7 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: [
-    "/dashboard/:path*",
-    "/settings/:path*",
-    "/profile/:path*",
-    "/login",
-    "/signup"
-  ]
+  matcher: ["/dashboard/:path*", "/settings/:path*", "/login", "/signup"]
 }
 ```
 
@@ -47,64 +47,21 @@ export const config = {
 ```typescript
 import { getCookieCache } from "better-auth/cookies"
 
-export async function middleware(request: NextRequest) {
-  // Use cache to avoid DB calls
+export async function proxy(request: NextRequest) {
   const session = await getCookieCache(request)
-
   if (!session && request.nextUrl.pathname.startsWith("/dashboard")) {
     return NextResponse.redirect(new URL("/login", request.url))
   }
-
   return NextResponse.next()
 }
 ```
 
-## Pattern Matcher
+## Migration from Middleware
 
-```typescript
-export const config = {
-  matcher: [
-    // Everything except static, api, _next
-    "/((?!api|_next/static|_next/image|favicon.ico).*)"
-  ]
-}
+```bash
+bunx @next/codemod middleware-to-proxy .
 ```
 
-## Public Routes
-
-```typescript
-const publicRoutes = ["/", "/about", "/pricing", "/login", "/signup"]
-
-export async function middleware(request: NextRequest) {
-  const { pathname } = request.nextUrl
-
-  // Skip public routes
-  if (publicRoutes.includes(pathname)) {
-    return NextResponse.next()
-  }
-
-  // Check auth for the rest
-  const session = getSessionCookie(request)
-  if (!session) {
-    return NextResponse.redirect(new URL("/login", request.url))
-  }
-
-  return NextResponse.next()
-}
-```
-
-## Custom Headers
-
-```typescript
-export async function middleware(request: NextRequest) {
-  const session = getSessionCookie(request)
-  const response = NextResponse.next()
-
-  // Add session info to headers
-  if (session) {
-    response.headers.set("x-user-authenticated", "true")
-  }
-
-  return response
-}
-```
+Sources:
+- [Next.js proxy.ts](https://nextjs.org/docs/app/api-reference/file-conventions/proxy)
+- [Next.js 16 Proxy Guide](https://nextjs.org/docs/app/getting-started/proxy)
