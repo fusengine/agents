@@ -1,0 +1,91 @@
+# Dynamic Imports & Lazy Loading
+
+## next/dynamic (No SSR)
+```typescript
+import dynamic from 'next/dynamic'
+
+const HeavyChart = dynamic(() => import('@/components/Chart'), {
+  ssr: false,
+  loading: () => <ChartSkeleton />,
+})
+
+export default function Dashboard() {
+  return <HeavyChart data={chartData} />
+}
+```
+
+## Named Exports
+```typescript
+const Modal = dynamic(
+  () => import('@/components/Modal').then(mod => mod.Modal),
+  { ssr: false }
+)
+```
+
+## React.lazy with Suspense
+```typescript
+'use client'
+import { lazy, Suspense } from 'react'
+
+const AdminPanel = lazy(() => import('./AdminPanel'))
+
+export default function App({ isAdmin }: { isAdmin: boolean }) {
+  return (
+    <div>
+      {isAdmin && (
+        <Suspense fallback={<div>Loading...</div>}>
+          <AdminPanel />
+        </Suspense>
+      )}
+    </div>
+  )
+}
+```
+
+## Conditional Loading
+```typescript
+'use client'
+import dynamic from 'next/dynamic'
+import { useState } from 'react'
+
+const Editor = dynamic(() => import('./Editor'), { ssr: false })
+
+export default function Page() {
+  const [showEditor, setShowEditor] = useState(false)
+
+  return (
+    <div>
+      <button onClick={() => setShowEditor(true)}>Open Editor</button>
+      {showEditor && <Editor />}
+    </div>
+  )
+}
+```
+
+## Loading External Libraries
+```typescript
+'use client'
+import { useEffect, useState } from 'react'
+
+export default function MapComponent() {
+  const [Map, setMap] = useState<any>(null)
+
+  useEffect(() => {
+    import('leaflet').then(L => setMap(L))
+  }, [])
+
+  if (!Map) return <div>Loading map...</div>
+  return <div id="map" />
+}
+```
+
+## Auto Code Splitting
+```
+app/
+├── dashboard/
+│   ├── page.tsx      # Bundle A
+│   └── settings/
+│       └── page.tsx  # Bundle B (auto-split)
+└── blog/
+    └── page.tsx      # Bundle C (auto-split)
+```
