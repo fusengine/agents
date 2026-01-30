@@ -1,74 +1,82 @@
 ---
 name: better-auth
-description: This skill should be used when the user asks about "authentication", "login", "signup", "sessions", "OAuth", "social login", "user management", "Better Auth", or "auth setup". Covers Better Auth with sessions, OAuth providers, plugins, adapters, and security.
-version: 1.0.0
-user-invocable: false
+description: Authentication with Better Auth - sessions, OAuth, plugins. Use when implementing login, signup, OAuth providers, session management, or user authentication in Next.js.
+version: 2.0.0
+user-invocable: true
 references:
-  - path: installation.md
-    title: Installation and Setup
-  - path: basic-usage.md
-    title: Basic Usage Patterns
-  - path: introduction.md
-    title: Introduction to Better Auth
-  - path: concepts/
-    title: Core Concepts (sessions, database, plugins)
-  - path: authentication/
-    title: Auth Methods (email, OAuth, passkeys)
-  - path: plugins/
-    title: Available Plugins
-  - path: adapters/
-    title: Database Adapters
-  - path: integrations/
-    title: Framework Integrations
-  - path: examples/
-    title: Example Implementations
+  - path: references/installation.md
+  - path: references/server-config.md
+  - path: references/client.md
+  - path: references/session.md
+  - path: references/middleware.md
+  - path: references/server-actions.md
+  - path: references/providers/
+  - path: references/adapters/
+  - path: references/plugins/
 ---
 
-# Better Auth Expert
-
-## Overview
-
-Better Auth is a comprehensive authentication library for TypeScript/JavaScript applications with built-in support for sessions, OAuth, plugins, and multiple database adapters.
+# Better Auth for Next.js
 
 ## Quick Start
 
 ```bash
-bun add better-auth
+npm install better-auth
 ```
 
-## Documentation Structure
+## File Structure
 
-- [installation.md](installation.md) - Installation and setup
-- [basic-usage.md](basic-usage.md) - Basic usage patterns
-- [introduction.md](introduction.md) - Introduction to Better Auth
-- [concepts/](concepts/) - Core concepts (sessions, database, plugins)
-- [authentication/](authentication/) - Auth methods (email, OAuth, passkeys)
-- [plugins/](plugins/) - Available plugins
-- [adapters/](adapters/) - Database adapters
-- [integrations/](integrations/) - Framework integrations
-- [guides/](guides/) - How-to guides
-- [reference/](reference/) - API reference
-- [examples/](examples/) - Example implementations
-- [errors/](errors/) - Error handling
+```
+lib/
+├── auth.ts              # Server config (betterAuth)
+└── auth-client.ts       # Client config (createAuthClient)
+app/api/auth/[...all]/
+└── route.ts             # API handler
+```
+
+## Minimal Setup
+
+### 1. Server (`lib/auth.ts`)
+```typescript
+import { betterAuth } from "better-auth"
+import { prismaAdapter } from "better-auth/adapters/prisma"
+import { prisma } from "./prisma"
+
+export const auth = betterAuth({
+  database: prismaAdapter(prisma, { provider: "postgresql" }),
+  emailAndPassword: { enabled: true }
+})
+```
+
+### 2. Client (`lib/auth-client.ts`)
+```typescript
+import { createAuthClient } from "better-auth/react"
+export const authClient = createAuthClient()
+```
+
+### 3. Route (`app/api/auth/[...all]/route.ts`)
+```typescript
+import { auth } from "@/lib/auth"
+import { toNextJsHandler } from "better-auth/next-js"
+export const { GET, POST } = toNextJsHandler(auth)
+```
+
+## Environment Variables
+
+```bash
+DATABASE_URL=postgresql://...
+BETTER_AUTH_SECRET=your-secret-key
+BETTER_AUTH_URL=http://localhost:3000
+```
 
 ## Key Features
 
-- Session-based authentication
+- Session-based authentication with cookies
 - OAuth providers (Google, GitHub, Discord, etc.)
-- Email/Password authentication
-- Passkeys/WebAuthn
-- Two-factor authentication
-- Multiple database adapters
-- Plugin system
+- Prisma/Drizzle adapters
+- Plugin system (2FA, Organizations, Admin, etc.)
+- Middleware protection
 
-## Instructions
+## Documentation
 
-1. Configure auth instance with database adapter
-2. Set up session management
-3. Add authentication providers as needed
-4. Use plugins for extended functionality
-5. Integrate with your framework
-
-## Documentation Reference
-
-Official site: https://www.better-auth.com
+- Official: https://www.better-auth.com/docs
+- See `references/` for detailed guides
