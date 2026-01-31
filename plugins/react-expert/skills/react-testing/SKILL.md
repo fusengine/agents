@@ -8,6 +8,18 @@ user-invocable: false
 
 Test React components the way users interact with them.
 
+## Agent Workflow (MANDATORY)
+
+Before ANY implementation, launch in parallel:
+
+1. **fuse-ai-pilot:explore-codebase** - Analyze existing test patterns and setup
+2. **fuse-ai-pilot:research-expert** - Verify latest Testing Library docs via Context7/Exa
+3. **mcp__context7__query-docs** - Check userEvent, waitFor, and async patterns
+
+After implementation, run **fuse-ai-pilot:sniper** for validation.
+
+---
+
 ## Installation
 
 ```bash

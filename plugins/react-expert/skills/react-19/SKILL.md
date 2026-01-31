@@ -3,7 +3,7 @@ name: react-19
 description: React 19.2 features - use(), useOptimistic, useActionState, useEffectEvent, Activity component, React Compiler. Use when implementing React 19 patterns.
 version: 19.2.0
 user-invocable: true
-references: references/new-hooks.md, references/activity-component.md, references/actions-api.md, references/react-compiler.md, references/ref-as-prop.md, references/context-improvements.md, references/suspense-patterns.md, references/document-metadata.md, references/resource-loading.md, references/migration-18-19.md, references/templates/action-form.md, references/templates/optimistic-update.md, references/templates/activity-tabs.md, references/templates/use-promise.md, references/templates/use-context.md, references/templates/use-effect-event.md, references/templates/error-boundary.md, references/templates/ref-as-prop.md, references/templates/document-metadata.md, references/templates/resource-loading.md, references/hooks-improved.md, references/templates/use-deferred-value.md, references/templates/use-transition-async.md, references/use-state.md, references/use-effect.md, references/use-ref.md, references/use-memo.md, references/use-callback.md, references/use-layout-effect.md, references/use-id.md, references/use-imperative-handle.md, references/use-sync-external-store.md, references/custom-hooks-patterns.md, references/templates/state-patterns.md, references/templates/effect-patterns.md, references/templates/ref-patterns.md, references/templates/custom-hooks.md, references/templates/external-store.md
+references: references/new-hooks.md, references/activity-component.md, references/actions-api.md, references/react-compiler.md, references/ref-as-prop.md, references/context-improvements.md, references/suspense-patterns.md, references/document-metadata.md, references/resource-loading.md, references/migration-18-19.md, references/virtualization.md, references/lazy-loading.md, references/profiling.md, references/templates/action-form.md, references/templates/optimistic-update.md, references/templates/activity-tabs.md, references/templates/use-promise.md, references/templates/use-context.md, references/templates/use-effect-event.md, references/templates/error-boundary.md, references/templates/ref-as-prop.md, references/templates/document-metadata.md, references/templates/resource-loading.md, references/templates/virtual-list.md, references/templates/lazy-components.md, references/templates/profiling-devtools.md, references/hooks-improved.md, references/templates/use-deferred-value.md, references/templates/use-transition-async.md, references/use-state.md, references/use-effect.md, references/use-ref.md, references/use-memo.md, references/use-callback.md, references/use-layout-effect.md, references/use-id.md, references/use-imperative-handle.md, references/use-sync-external-store.md, references/custom-hooks-patterns.md, references/templates/state-patterns.md, references/templates/effect-patterns.md, references/templates/ref-patterns.md, references/templates/custom-hooks.md, references/templates/external-store.md
 ---
 
 # React 19.2 Core Features
@@ -199,6 +199,32 @@ useEffect(() => {
 | `templates/ref-patterns.md` | useRef patterns |
 | `templates/custom-hooks.md` | Custom hooks implementations |
 | `templates/external-store.md` | useSyncExternalStore patterns |
+
+### Performance Patterns
+
+| Template | Use Case |
+|----------|----------|
+| `templates/virtual-list.md` | TanStack Virtual for long lists |
+| `templates/lazy-components.md` | Code splitting and lazy loading |
+| `templates/profiling-devtools.md` | React DevTools Profiler |
+
+---
+
+## Performance
+
+### Virtualization
+Render only visible items for large lists (100+ items).
+→ See `references/virtualization.md`
+
+### Lazy Loading
+Code split routes and heavy components for smaller bundles.
+→ See `references/lazy-loading.md`
+
+### Profiling
+Measure render performance with DevTools Profiler.
+→ See `references/profiling.md`
+
+**Note:** With React Compiler (19.1+), manual memo/useMemo/useCallback optimizations are mostly obsolete. Profile first to verify if optimization is needed.
 
 ---
 

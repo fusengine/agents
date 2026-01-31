@@ -11,14 +11,13 @@ Expert React 19 development with TanStack Router, TanStack Form, Zustand, Testin
 | Skill | Description |
 |-------|-------------|
 | solid-react | SOLID principles for React 19 with modular architecture |
-| react-19 | React 19 features: `use()`, `useOptimistic`, `useActionState` |
-| react-hooks | Custom hooks patterns and best practices |
+| react-19 | React 19 features: `use()`, `useOptimistic`, `useActionState`, custom hooks patterns |
 | react-tanstack-router | File-based routing with type-safe search params |
 | react-state | State management with Zustand and Jotai |
 | react-forms | TanStack Form with Zod validation |
 | react-testing | Testing Library with Vitest |
-| react-performance | Performance optimization patterns |
 | react-shadcn | shadcn/ui components with TanStack Form integration |
+| react-i18n | react-i18next for internationalization |
 
 ## Architecture
 

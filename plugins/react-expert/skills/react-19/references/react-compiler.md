@@ -4,7 +4,7 @@ description: React Compiler - automatic memoization, useMemo/useCallback mostly 
 when-to-use: performance optimization, understanding when to still memoize
 keywords: React Compiler, memoization, useMemo, useCallback, memo, performance
 priority: high
-related: ../react-performance/SKILL.md
+related: virtualization.md, lazy-loading.md, profiling.md
 ---
 
 # React Compiler
@@ -91,4 +91,4 @@ Some libraries need stable references that Compiler might not optimize.
 
 ## Related
 
-→ See `react-performance` skill for comprehensive performance guide
+→ See `virtualization.md`, `lazy-loading.md`, `profiling.md` for performance optimization techniques

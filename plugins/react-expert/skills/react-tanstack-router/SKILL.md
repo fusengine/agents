@@ -8,6 +8,18 @@ user-invocable: false
 
 100% type-safe router for React with file-based routing.
 
+## Agent Workflow (MANDATORY)
+
+Before ANY implementation, launch in parallel:
+
+1. **fuse-ai-pilot:explore-codebase** - Analyze existing routes and navigation patterns
+2. **fuse-ai-pilot:research-expert** - Verify latest TanStack Router docs via Context7/Exa
+3. **mcp__context7__query-docs** - Check file-based routing and type-safe patterns
+
+After implementation, run **fuse-ai-pilot:sniper** for validation.
+
+---
+
 ## Installation
 
 ```bash

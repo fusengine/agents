@@ -8,6 +8,18 @@ user-invocable: false
 
 Beautiful, accessible components built with Radix UI and Tailwind CSS.
 
+## Agent Workflow (MANDATORY)
+
+Before ANY implementation, launch in parallel:
+
+1. **fuse-ai-pilot:explore-codebase** - Analyze existing UI components and design patterns
+2. **fuse-ai-pilot:research-expert** - Verify latest shadcn/ui docs via Context7/Exa
+3. **mcp__context7__query-docs** - Check component APIs and Tailwind v4 patterns
+
+After implementation, run **fuse-ai-pilot:sniper** for validation.
+
+---
+
 ## Installation
 
 ```bash

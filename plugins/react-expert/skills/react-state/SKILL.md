@@ -6,6 +6,18 @@ user-invocable: false
 
 # React State Management
 
+## Agent Workflow (MANDATORY)
+
+Before ANY implementation, launch in parallel:
+
+1. **fuse-ai-pilot:explore-codebase** - Analyze existing stores and state patterns
+2. **fuse-ai-pilot:research-expert** - Verify latest Zustand/Jotai docs via Context7/Exa
+3. **mcp__context7__query-docs** - Check middleware and TypeScript patterns
+
+After implementation, run **fuse-ai-pilot:sniper** for validation.
+
+---
+
 ## Zustand (Recommended)
 
 Simple, fast, and scalable state management.

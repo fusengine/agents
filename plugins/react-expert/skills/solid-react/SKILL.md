@@ -8,27 +8,6 @@ references: references/solid-principles.md, references/single-responsibility.md,
 
 # SOLID React - Component Architecture
 
-## Current Date (CRITICAL)
-
-**Today: January 2026** - ALWAYS use the current year for your searches.
-Search with "2025" or "2026", NEVER with past years.
-
-## MANDATORY: Research Before Coding
-
-**CRITICAL: Check today's date first, then search documentation and web BEFORE writing any code.**
-
-1. **Use Context7** to query React official documentation
-2. **Use Exa web search** with current year for latest trends
-3. **Verify package versions** for React 19 compatibility
-
-**Search queries (replace YYYY with current year):**
-- `React 19 [feature] YYYY best practices`
-- `TanStack Router [pattern] YYYY`
-- `TypeScript [pattern] YYYY`
-- `Zustand [feature] YYYY`
-
----
-
 ## Codebase Analysis (MANDATORY)
 
 **Before ANY implementation:**
