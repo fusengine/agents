@@ -57,23 +57,23 @@ fi
 
 if [[ "$NEW_STATUS" == "completed" ]]; then
   cd "$PROJECT_ROOT"
+
+  # Mark task as completed in task.json
+  apex_task_complete "$TASK_FILE" "$TASK_ID"
+
+  # Check if there are changes to commit
   if [[ -z $(git status --porcelain 2>/dev/null) ]]; then
     cat << 'EOF'
-{"hookSpecificOutput":{"hookEventName":"PostToolUse","additionalContext":"No changes to commit for task completion"}}
+{"hookSpecificOutput":{"hookEventName":"PostToolUse","additionalContext":"✅ Task completed. No changes to commit."}}
 EOF
     exit 0
   fi
+
+  # Request Claude to run smart commit via /fuse-commit-pro:commit
   SUBJECT=$(jq -r --arg t "$TASK_ID" '.tasks[$t].subject // "Task"' "$TASK_FILE")
-  git add -A
-  if git commit -m "feat(task-$TASK_ID): $SUBJECT" --no-verify 2>/dev/null; then
-    apex_task_complete "$TASK_FILE" "$TASK_ID"
-    echo "✅ Auto-committed: feat(task-$TASK_ID): $SUBJECT"
-  else
-    cat << 'EOF'
-{"hookSpecificOutput":{"hookEventName":"PostToolUse","additionalContext":"Git commit failed for task completion"}}
+  cat << EOF
+{"hookSpecificOutput":{"hookEventName":"PostToolUse","additionalContext":"✅ Task #$TASK_ID completed: $SUBJECT\n\n📦 Changes detected. MANDATORY: Run /fuse-commit-pro:commit to commit with smart detection."}}
 EOF
-    exit 0
-  fi
 fi
 
 exit 0

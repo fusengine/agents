@@ -5,7 +5,7 @@ versions:
   tanstack-router: "1.x (latest)"
   react: 19
   zod: 3.x
-user-invocable: false
+user-invocable: true
 references: references/installation.md, references/file-based-routing.md, references/route-params.md, references/search-params.md, references/loaders.md, references/navigation.md, references/route-context.md, references/nested-routes.md, references/error-handling.md, references/code-splitting.md, references/preloading.md, references/auth-guards.md, references/tanstack-query.md, references/ssr.md, references/typescript.md, references/devtools.md, references/hooks.md, references/components.md, references/templates/basic-setup.md, references/templates/feature-module.md, references/templates/auth-protected-routes.md, references/templates/search-filters.md, references/templates/dashboard-layout.md
 related-skills: react-forms, react-state, react-19, solid-react
 ---
