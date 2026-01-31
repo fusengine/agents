@@ -1,5 +1,15 @@
 # Better Auth Security
 
+## Threat Model
+
+| Attack | Protection | Built-in |
+|--------|------------|----------|
+| **XSS** | HTTP-only cookies | Yes |
+| **CSRF** | SameSite + origin check | Yes |
+| **Brute Force** | Account lockout | Yes |
+| **Session Hijack** | Secure cookies + IP check | Yes |
+| **Clickjacking** | X-Frame-Options | Manual |
+
 ## CSRF Protection
 
 Built-in via non-simple headers, origin validation, SameSite=Lax cookies.
@@ -42,17 +52,7 @@ emailAndPassword: {
 }
 ```
 
-## Session Security
-
-```typescript
-session: {
-  expiresIn: 60 * 60 * 24 * 7,  // 7 days
-  updateAge: 60 * 60 * 24,       // Update daily
-  cookieCache: { enabled: true, maxAge: 60 * 5 }
-}
-```
-
-## Account Lockout
+## Brute Force Protection
 
 ```typescript
 emailAndPassword: {
@@ -61,9 +61,20 @@ emailAndPassword: {
 }
 ```
 
+## Session Security
+
+```typescript
+session: {
+  expiresIn: 60 * 60 * 24 * 7,  // 7 days max
+  updateAge: 60 * 60 * 24,       // Rotate daily
+  cookieCache: { enabled: true, maxAge: 60 * 5 }
+}
+```
+
 ## Environment Variables
 
 ```bash
+# Generate secure secret (32+ bytes)
 BETTER_AUTH_SECRET=$(openssl rand -base64 32)
 BETTER_AUTH_URL=https://yourapp.com
 ```
@@ -75,6 +86,16 @@ export default function proxy(request: NextRequest) {
   const response = NextResponse.next()
   response.headers.set("X-Frame-Options", "DENY")
   response.headers.set("X-Content-Type-Options", "nosniff")
+  response.headers.set("Referrer-Policy", "strict-origin-when-cross-origin")
   return response
 }
 ```
+
+## Checklist
+
+- [ ] `BETTER_AUTH_SECRET` is 32+ random bytes
+- [ ] `useSecureCookies: true` in production
+- [ ] `trustedOrigins` configured
+- [ ] Password validation enabled
+- [ ] Account lockout configured
+- [ ] Security headers in proxy.ts
