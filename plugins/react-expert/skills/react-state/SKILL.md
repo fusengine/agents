@@ -1,252 +1,133 @@
 ---
 name: react-state
-description: State management with Zustand, Jotai, Context API. Use when implementing global state, stores, or state management patterns in React.
-user-invocable: false
+description: Zustand v5 state management for React. Use when implementing global state, stores, persist, or client-side state.
+versions:
+  zustand: 5.0
+  react: 19
+user-invocable: true
+references: references/installation.md, references/store-patterns.md, references/middleware.md, references/typescript.md, references/slices.md, references/auto-selectors.md, references/reset-state.md, references/subscribe-api.md, references/testing.md, references/migration-v5.md
+related-skills: react-19, react-forms, solid-react
 ---
 
-# React State Management
+# Zustand for React
+
+Minimal, scalable state management with React 18+ useSyncExternalStore.
 
 ## Agent Workflow (MANDATORY)
 
 Before ANY implementation, launch in parallel:
 
 1. **fuse-ai-pilot:explore-codebase** - Analyze existing stores and state patterns
-2. **fuse-ai-pilot:research-expert** - Verify latest Zustand/Jotai docs via Context7/Exa
+2. **fuse-ai-pilot:research-expert** - Verify latest Zustand v5 docs via Context7/Exa
 3. **mcp__context7__query-docs** - Check middleware and TypeScript patterns
 
 After implementation, run **fuse-ai-pilot:sniper** for validation.
 
 ---
 
-## Zustand (Recommended)
+## Overview
 
-Simple, fast, and scalable state management.
+### When to Use
 
-### Installation
+- Managing global state in React applications
+- Need state shared across components
+- Persisting state to localStorage/sessionStorage
+- Building UI state (modals, sidebars, theme, cart)
+- Replacing React Context for complex state
 
-```bash
-bun add zustand
-```
+### Why Zustand v5
 
-### Basic Store
-
-```typescript
-// src/stores/useCounterStore.ts
-import { create } from 'zustand'
-
-interface CounterState {
-  count: number
-  increment: () => void
-  decrement: () => void
-  reset: () => void
-}
-
-export const useCounterStore = create<CounterState>((set) => ({
-  count: 0,
-  increment: () => set((state) => ({ count: state.count + 1 })),
-  decrement: () => set((state) => ({ count: state.count - 1 })),
-  reset: () => set({ count: 0 }),
-}))
-
-// Usage
-function Counter() {
-  const { count, increment } = useCounterStore()
-  return <button onClick={increment}>{count}</button>
-}
-```
-
-### Store with Async Actions
-
-```typescript
-// src/stores/useUserStore.ts
-import { create } from 'zustand'
-import type { User } from '../interfaces/user.interface'
-
-interface UserState {
-  user: User | null
-  loading: boolean
-  error: string | null
-  fetchUser: (id: string) => Promise<void>
-  logout: () => void
-}
-
-export const useUserStore = create<UserState>((set) => ({
-  user: null,
-  loading: false,
-  error: null,
-
-  fetchUser: async (id) => {
-    set({ loading: true, error: null })
-    try {
-      const res = await fetch(`/api/users/${id}`)
-      const user = await res.json()
-      set({ user, loading: false })
-    } catch (err) {
-      set({ error: 'Failed to fetch user', loading: false })
-    }
-  },
-
-  logout: () => set({ user: null }),
-}))
-```
-
-### Persist Middleware
-
-```typescript
-// src/stores/useAuthStore.ts
-import { create } from 'zustand'
-import { persist, createJSONStorage } from 'zustand/middleware'
-
-interface AuthState {
-  token: string | null
-  setToken: (token: string) => void
-  clearToken: () => void
-}
-
-export const useAuthStore = create<AuthState>()(
-  persist(
-    (set) => ({
-      token: null,
-      setToken: (token) => set({ token }),
-      clearToken: () => set({ token: null }),
-    }),
-    {
-      name: 'auth-storage',
-      storage: createJSONStorage(() => localStorage),
-    }
-  )
-)
-```
-
-### Devtools Middleware
-
-```typescript
-// src/stores/useTodoStore.ts
-import { create } from 'zustand'
-import { devtools } from 'zustand/middleware'
-
-interface TodoState {
-  todos: Todo[]
-  addTodo: (text: string) => void
-}
-
-export const useTodoStore = create<TodoState>()(
-  devtools(
-    (set) => ({
-      todos: [],
-      addTodo: (text) => set(
-        (state) => ({ todos: [...state.todos, { id: Date.now(), text }] }),
-        false,
-        'addTodo' // Action name for devtools
-      ),
-    }),
-    { name: 'TodoStore' }
-  )
-)
-```
-
-### Combined Middlewares
-
-```typescript
-import { create } from 'zustand'
-import { devtools, persist } from 'zustand/middleware'
-
-export const useStore = create<State>()(
-  devtools(
-    persist(
-      (set) => ({
-        // state and actions
-      }),
-      { name: 'app-storage' }
-    ),
-    { name: 'AppStore' }
-  )
-)
-```
+| Feature | Benefit |
+|---------|---------|
+| Minimal API | Simple create() function, no boilerplate |
+| React 18 native | useSyncExternalStore, no shims needed |
+| TypeScript first | Full inference with currying pattern |
+| Middleware stack | devtools, persist, immer composable |
+| Bundle size | ~2KB gzipped, smallest state library |
+| No providers | Direct store access, no Context wrapper |
 
 ---
 
-## Jotai (Alternative)
+## Critical Rules
 
-Atomic state management.
-
-### Installation
-
-```bash
-bun add jotai
-```
-
-### Basic Atoms
-
-```typescript
-// src/atoms/counterAtom.ts
-import { atom, useAtom } from 'jotai'
-
-export const countAtom = atom(0)
-
-// Derived atom
-export const doubleCountAtom = atom((get) => get(countAtom) * 2)
-
-// Writable derived atom
-export const incrementAtom = atom(
-  null,
-  (get, set) => set(countAtom, get(countAtom) + 1)
-)
-
-// Usage
-function Counter() {
-  const [count, setCount] = useAtom(countAtom)
-  return <button onClick={() => setCount(c => c + 1)}>{count}</button>
-}
-```
+1. **useShallow for arrays/objects** - Prevent unnecessary re-renders
+2. **Currying syntax v5** - `create<State>()((set) => ({...}))`
+3. **SOLID paths** - Stores in `modules/[feature]/src/stores/`
+4. **Separate stores** - One store per domain (auth, cart, ui, theme)
+5. **Server state elsewhere** - Use TanStack Query for server state
 
 ---
 
-## Context API (Simple Cases)
+## SOLID Architecture
 
-For small, localized state.
+### Module Structure
 
-```typescript
-// src/contexts/ThemeContext.tsx
-import { createContext, useContext, useState, ReactNode } from 'react'
+Stores organized by feature module:
 
-type Theme = 'light' | 'dark'
+- `modules/cores/stores/` - Shared stores (theme, ui)
+- `modules/auth/src/stores/` - Auth state
+- `modules/cart/src/stores/` - Cart state
+- `modules/[feature]/src/interfaces/` - Store types
 
-interface ThemeContextType {
-  theme: Theme
-  toggleTheme: () => void
-}
+### File Organization
 
-const ThemeContext = createContext<ThemeContextType | null>(null)
-
-export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [theme, setTheme] = useState<Theme>('light')
-
-  const toggleTheme = () => setTheme(t => t === 'light' ? 'dark' : 'light')
-
-  return (
-    <ThemeContext.Provider value={{ theme, toggleTheme }}>
-      {children}
-    </ThemeContext.Provider>
-  )
-}
-
-export function useTheme() {
-  const context = useContext(ThemeContext)
-  if (!context) throw new Error('useTheme must be within ThemeProvider')
-  return context
-}
-```
+| File | Purpose | Max Lines |
+|------|---------|-----------|
+| `store.ts` | Store creation with create() | 50 |
+| `store.interface.ts` | TypeScript interfaces | 30 |
+| `use-store.ts` | Custom hook with selector | 20 |
 
 ---
 
-## When to Use What
+## Key Concepts
 
-| Scenario | Solution |
-|----------|----------|
-| Global app state | Zustand |
-| Server state | TanStack Query |
-| Form state | React Hook Form |
-| Local component state | useState |
-| Shared UI state | Zustand or Context |
-| Complex derived state | Jotai |
+### Store Creation (v5 Syntax)
+
+Double parentheses required for TypeScript inference. Currying pattern ensures full type safety.
+
+### Middleware Composition
+
+Stack middlewares: devtools -> persist -> immer. Order matters for TypeScript types.
+
+### Selector Pattern
+
+Always use `useStore((s) => s.field)` for performance. Use `useShallow` for array/object selectors.
+
+---
+
+## Reference Guide
+
+| Need | Reference |
+|------|-----------|
+| Initial setup | [installation.md](references/installation.md) |
+| Store patterns | [store-patterns.md](references/store-patterns.md) |
+| Middleware | [middleware.md](references/middleware.md) |
+| TypeScript | [typescript.md](references/typescript.md) |
+| Slices pattern | [slices.md](references/slices.md) |
+| Auto selectors | [auto-selectors.md](references/auto-selectors.md) |
+| Reset state | [reset-state.md](references/reset-state.md) |
+| Subscribe API | [subscribe-api.md](references/subscribe-api.md) |
+| Testing | [testing.md](references/testing.md) |
+| Migration v4→v5 | [migration-v5.md](references/migration-v5.md) |
+
+---
+
+## Best Practices
+
+1. **Selector pattern** - Always use `useStore((s) => s.field)` for performance
+2. **useShallow** - Wrap array/object selectors to prevent re-renders
+3. **Separate stores** - One store per domain (auth, cart, ui, theme)
+4. **Server data elsewhere** - Use TanStack Query for server state
+5. **DevTools in dev only** - Wrap devtools in process.env check
+6. **Partialize persist** - Only persist necessary fields, never tokens
+
+---
+
+## Forbidden Patterns
+
+| Pattern | Reason | Alternative |
+|---------|--------|-------------|
+| Persisting auth tokens | Security vulnerability | httpOnly cookies |
+| Without useShallow on objects | Excessive re-renders | `useShallow(selector)` |
+| v4 syntax | TypeScript inference broken | v5 currying `create<T>()()` |
+| Giant monolithic store | Hard to maintain | Slices or separate stores |

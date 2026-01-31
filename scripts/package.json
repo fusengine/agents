@@ -1,21 +1,21 @@
 {
-  "name": "@fusengine/hooks-loader",
-  "version": "2.0.0",
-  "devDependencies": {
-    "@types/bun": "^1.3.7"
-  },
-  "description": "Hooks loader for Claude Code plugins - Bun + SOLID",
-  "engines": {
-    "bun": ">=1.0.0"
-  },
-  "scripts": {
-    "install-hooks": "bun install-hooks.ts",
-    "typecheck": "bunx tsc --noEmit",
-    "test": "bun test",
-    "test:watch": "bun test --watch"
-  },
-  "type": "module",
-  "dependencies": {
-    "@clack/prompts": "^1.0.0"
-  }
+	"name": "@fusengine/hooks-loader",
+	"version": "2.0.0",
+	"devDependencies": {
+		"@types/bun": "^1.3.8"
+	},
+	"description": "Hooks loader for Claude Code plugins - Bun + SOLID",
+	"engines": {
+		"bun": ">=1.0.0"
+	},
+	"scripts": {
+		"install-hooks": "bun install-hooks.ts",
+		"typecheck": "bunx tsc --noEmit",
+		"test": "bun test",
+		"test:watch": "bun test --watch"
+	},
+	"type": "module",
+	"dependencies": {
+		"@clack/prompts": "^1.0.0"
+	}
 }
