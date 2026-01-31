@@ -1,5 +1,16 @@
 # Release Notes
 
+## [1.33.3] - 31-01-2026
+
+### Changed
+
+- **react-testing**: Restructure skill with proper skill-creator conventions
+  - Add 10 conceptual references (queries, async, msw, accessibility, etc.)
+  - Add 9 templates with complete copy-paste ready code
+  - Separate concepts from templates per skill-creator rules
+  - Add React 19 hooks testing (useActionState, useOptimistic, use())
+  - Add accessibility testing with axe-core and vitest-axe
+
 ## [1.33.2] - 31-01-2026
 
 ### Changed
