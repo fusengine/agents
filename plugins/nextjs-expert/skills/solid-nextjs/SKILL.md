@@ -3,13 +3,7 @@ name: solid-nextjs
 description: This skill should be used when the user asks about "SOLID principles", "Next.js architecture", "modular structure", "code organization", "file size limits", "interface separation", or "JSDoc documentation". Enforces files < 150 lines with mandatory JSDoc and separated interfaces.
 version: 1.0.0
 user-invocable: true
-references:
-  - path: references/solid-principles.md
-    title: SOLID Principles
-  - path: references/architecture-patterns.md
-    title: Architecture Patterns
-  - path: references/code-templates.md
-    title: Code Templates
+references: references/solid-principles.md, references/single-responsibility.md, references/open-closed.md, references/liskov-substitution.md, references/interface-segregation.md, references/dependency-inversion.md, references/architecture-patterns.md, references/templates/server-component.md, references/templates/client-component.md, references/templates/service.md, references/templates/hook.md, references/templates/interface.md, references/templates/store.md, references/templates/action.md, references/templates/api-route.md, references/templates/validator.md, references/templates/factory.md, references/templates/adapter.md, references/templates/error.md, references/templates/test.md, references/templates/middleware.md, references/templates/prisma.md, references/templates/i18n.md, references/templates/query.md
 ---
 
 # SOLID Next.js - Modular Architecture
@@ -44,12 +38,25 @@ Search with "2025" or "2026", NEVER with past years.
 3. Identify naming conventions, coding style, and patterns used
 4. Understand data flow and dependencies
 
-## DRY - Reuse Before Creating (MANDATORY)
+## DRY - Reuse or Create Shared (MANDATORY)
 
 **Before writing ANY new code:**
 1. Search existing codebase for similar functionality
 2. Check shared locations: `modules/cores/lib/`, `modules/cores/components/`
 3. If similar code exists → extend/reuse instead of duplicate
+4. If code will be used by 2+ features → create it in `modules/cores/` directly
+
+---
+
+## Agent Workflow (MANDATORY)
+
+Before ANY implementation, launch in parallel:
+
+1. **fuse-ai-pilot:explore-codebase** - Analyze project structure and existing patterns
+2. **fuse-ai-pilot:research-expert** - Verify latest docs for all stack technologies
+3. **mcp__context7__query-docs** - Check integration compatibility
+
+After implementation, run **fuse-ai-pilot:sniper** for validation.
 
 ---
 
@@ -93,15 +100,64 @@ modules/auth/src/
 
 ---
 
-## SOLID Principles
+## SOLID Principles (Detailed Guides)
 
-See `references/solid-principles.md` for detailed S-O-L-I-D principles with examples.
+Each SOLID principle has a dedicated reference guide:
+
+1. **`references/single-responsibility.md`** - One class/function = one reason to change
+   - File splitting at 90 lines (pages < 50, components < 60, services < 80)
+   - Component composition patterns
+   - Next.js page & server action examples
+
+2. **`references/open-closed.md`** - Extend via composition, not modification
+   - Plugin architecture patterns
+   - Provider patterns for multiple implementations
+   - Adapter and strategy patterns
+   - Adding features without changing existing code
+
+3. **`references/liskov-substitution.md`** - Contract compliance & behavioral subtyping
+   - Subtypes must be substitutable for base types
+   - Exception and return type contracts
+   - Testing LSP compliance
+
+4. **`references/interface-segregation.md`** - Many focused interfaces beat one fat interface
+   - Role-based interfaces
+   - Avoiding bloated contracts
+   - Client-specific interfaces
+
+5. **`references/dependency-inversion.md`** - Depend on abstractions, not implementations
+   - Constructor injection patterns
+   - Factory patterns for creation
+   - IoC containers
+   - Easy mocking for tests
+
+See `references/solid-principles.md` for overview and quick reference.
 
 ---
 
 ## Code Templates
 
-See `references/code-templates.md` for Server Components, Client Components, Services, Hooks, and Interfaces.
+Ready-to-copy code in `references/templates/`:
+
+| Template | Usage |
+|----------|-------|
+| `server-component.md` | Server Component with data fetching |
+| `client-component.md` | Client Component with hooks |
+| `service.md` | Service with dependency injection |
+| `hook.md` | React hook with state |
+| `interface.md` | TypeScript interfaces |
+| `store.md` | Zustand store with persistence |
+| `action.md` | Server Action with validation |
+| `api-route.md` | API Route Handler |
+| `validator.md` | Zod validation schemas |
+| `factory.md` | Factory pattern |
+| `adapter.md` | Adapter pattern |
+| `error.md` | Custom error classes |
+| `test.md` | Test templates |
+| `middleware.md` | Auth middleware |
+| `prisma.md` | Prisma singleton |
+| `i18n.md` | Feature/global translations |
+| `query.md` | Database queries (Prisma 7) |
 
 ---
 
