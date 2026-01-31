@@ -1,5 +1,16 @@
 # Release Notes
 
+## [1.32.4] - 31-01-2026
+
+### Changed
+
+- **react-expert**: Consolidate performance skill into react-19 and standardize agent workflow
+  - Merge react-performance into react-19 (virtualization, lazy-loading, profiling)
+  - Add 3 conceptual references and 3 code templates for performance patterns
+  - Add standardized "Agent Workflow (MANDATORY)" to all SKILL.md files
+  - Remove deprecated react-hooks and elicitation from skills list
+  - Delete redundant react-performance skill
+
 ## [1.32.3] - 31-01-2026
 
 ### Added
