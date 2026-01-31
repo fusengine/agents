@@ -1,5 +1,15 @@
 # Release Notes
 
+## [1.33.2] - 31-01-2026
+
+### Changed
+
+- **ai-pilot**: Replace direct git commit with smart commit request in sync-task-tracking.sh
+  - Now outputs MANDATORY instruction to run `/fuse-commit-pro:commit`
+  - Removes unsafe `--no-verify` flag and blind `git add -A`
+  - Enables smart commit type detection (docs/fix/feat/chore)
+- **react-tanstack-router**: Set skill as user-invocable
+
 ## [1.33.1] - 31-01-2026
 
 ### Changed
