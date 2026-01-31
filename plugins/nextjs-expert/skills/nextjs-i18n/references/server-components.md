@@ -1,9 +1,25 @@
 # next-intl Server Components
 
-## Server Component Usage
+## Quand utiliser
+
+- Pages et layouts (Server Components par défaut)
+- Metadata (generateMetadata)
+- Route Handlers (API routes)
+- Server Actions
+
+## Pourquoi Server Components pour i18n
+
+| Avantage | Explication |
+|----------|-------------|
+| **Zero JS client** | Traductions rendues côté serveur, pas de bundle |
+| **SEO optimal** | Contenu traduit dans le HTML initial |
+| **Performance** | Pas d'hydratation nécessaire |
+| **Sécurité** | Messages sensibles jamais exposés au client |
+
+## getTranslations
 
 ```typescript
-// app/[locale]/page.tsx (Server Component by default)
+// app/[locale]/page.tsx (Server Component)
 import { getTranslations } from 'next-intl/server'
 
 export default async function Page() {
@@ -12,21 +28,11 @@ export default async function Page() {
 }
 ```
 
-## getTranslations
-
 ```typescript
-import { getTranslations } from 'next-intl/server'
-
-// With namespace
-const t = await getTranslations('Namespace')
-t('key')
-
-// Without namespace
-const t = await getTranslations()
-t('Namespace.key')
-
-// With locale override
-const t = await getTranslations({ locale: 'fr', namespace: 'Namespace' })
+// Variantes
+const t = await getTranslations('Namespace')      // Avec namespace
+const t = await getTranslations()                  // Sans namespace → t('Namespace.key')
+const t = await getTranslations({ locale: 'fr' }) // Override locale
 ```
 
 ## getFormatter
@@ -36,10 +42,7 @@ import { getFormatter } from 'next-intl/server'
 
 export default async function Page() {
   const format = await getFormatter()
-
-  return (
-    <p>{format.dateTime(new Date(), { dateStyle: 'full' })}</p>
-  )
+  return <p>{format.dateTime(new Date(), { dateStyle: 'full' })}</p>
 }
 ```
 
@@ -51,24 +54,19 @@ import { getLocale, getMessages } from 'next-intl/server'
 export default async function Page() {
   const locale = await getLocale()
   const messages = await getMessages()
-
-  return <div>Current: {locale}</div>
+  return <div>Locale: {locale}</div>
 }
 ```
 
-## Metadata
+## Metadata (SEO)
 
 ```typescript
 import { getTranslations } from 'next-intl/server'
 import type { Metadata } from 'next'
 
 export async function generateMetadata(): Promise<Metadata> {
-  const t = await getTranslations('Metadata')
-
-  return {
-    title: t('title'),
-    description: t('description')
-  }
+  const t = await getTranslations('Meta')
+  return { title: t('title'), description: t('description') }
 }
 ```
 
@@ -92,7 +90,15 @@ import { getTranslations } from 'next-intl/server'
 
 export async function submitForm(data: FormData) {
   const t = await getTranslations('Form')
-  // Use translations in server action
   return { message: t('success') }
 }
 ```
+
+## Server vs Client
+
+| Critère | Server | Client |
+|---------|--------|--------|
+| Import | `next-intl/server` | `next-intl` |
+| Fonction | `getTranslations` (async) | `useTranslations` (hook) |
+| Bundle | 0 KB | Messages inclus |
+| Interactivité | Non | Oui |
