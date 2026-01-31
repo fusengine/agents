@@ -57,7 +57,7 @@ Prompt: "Validate component: lint, accessibility, design consistency"
 
 | FORBIDDEN | USE INSTEAD |
 |-----------|-------------|
-| Inter, Roboto, Arial | Clash Display, Satoshi, Syne |
+| Roboto, Arial, system default | Inter, Clash Display, Satoshi, Syne |
 | Purple/pink gradients | CSS variables, sharp accents |
 | Border-left indicators | Icon + bg-*/10 rounded |
 | Flat backgrounds | Glassmorphism, gradient orbs |
@@ -104,8 +104,12 @@ export function Component({ className }: { className?: string }) {
 
 - **UI Visual Design**: `../../references/ui-visual-design.md` (visual hierarchy, spacing, 2026 trends)
 - **UX Principles**: `../../references/ux-principles.md` (Nielsen heuristics, Laws of UX, cognitive psychology)
-- **Typography**: `../../references/typography.md`
-- **Colors**: `../../references/color-system.md`
+- **Typography**: `../../references/typography.md` (fonts, sizes, line-height, mobile guidelines)
+- **Colors**: `../../references/color-system.md` (psychology, palettes, OKLCH, 60-30-10)
+- **Buttons**: `../../references/buttons-guide.md` (states, sizing, accessibility)
+- **Forms**: `../../references/forms-guide.md` (validation, layout, states)
+- **Icons**: `../../references/icons-guide.md` (types, consistency, scalability)
+- **Grids & Layout**: `../../references/grids-layout.md` (12-column, responsive, containers)
 - **Motion**: `../../references/motion-patterns.md`
 - **Design Patterns**: `../../references/design-patterns.md`
 - **21st.dev Guide**: `../../references/21st-dev.md`

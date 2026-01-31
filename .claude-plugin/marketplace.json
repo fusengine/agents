@@ -383,7 +383,15 @@
         "./skills/generating-components",
         "./skills/designing-systems",
         "./skills/validating-accessibility",
-        "./skills/adding-animations"
+        "./skills/adding-animations",
+        "./skills/glassmorphism-advanced",
+        "./skills/theming-tokens",
+        "./skills/component-variants",
+        "./skills/dark-light-modes",
+        "./skills/responsive-system",
+        "./skills/interactive-states",
+        "./skills/component-composition",
+        "./skills/layered-backgrounds"
       ]
     },
     {

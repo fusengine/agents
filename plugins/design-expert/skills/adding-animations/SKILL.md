@@ -119,8 +119,10 @@ function Component() {
 
 ## References
 
+- **Motion Patterns**: `../../references/motion-patterns.md` (Framer Motion patterns)
+- **Buttons Guide**: `../../references/buttons-guide.md` (hover 50-100ms, press 100-150ms)
+- **Cards Guide**: `../../references/cards-guide.md` (whileHover y: -4, shadow transitions)
 - **UI Visual Design**: `../../references/ui-visual-design.md` (micro-interactions, 2026 trends)
 - **UX Principles**: `../../references/ux-principles.md` (accessibility, reduced motion)
-- **Motion Patterns**: `../../references/motion-patterns.md`
 - **Design Patterns**: `../../references/design-patterns.md`
 - **Component Examples**: `../../references/component-examples.md`

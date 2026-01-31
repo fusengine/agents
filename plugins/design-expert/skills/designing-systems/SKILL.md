@@ -104,8 +104,9 @@ color palette, typography, spacing patterns"
 
 ## References
 
-- **UI Visual Design**: `../../references/ui-visual-design.md` (visual hierarchy, spacing system, 2026 trends)
-- **Color System**: `../../references/color-system.md`
-- **Typography**: `../../references/typography.md`
-- **Theme Presets**: `../../references/theme-presets.md`
+- **Color System**: `../../references/color-system.md` (psychology, 60-30-10 rule, OKLCH)
+- **Typography**: `../../references/typography.md` (mobile sizes, line-height, weights)
+- **Grids & Layout**: `../../references/grids-layout.md` (12-column, gutters, margins)
+- **UI Visual Design**: `../../references/ui-visual-design.md` (hierarchy, 2026 trends)
+- **Theme Presets**: `../../references/theme-presets.md` (Brutalist, Solarpunk, etc.)
 - **Tailwind Best Practices**: `../../references/tailwind-best-practices.md`

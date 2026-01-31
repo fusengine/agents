@@ -7,8 +7,8 @@
     "email": "hello@fusengine.ch",
     "url": "https://github.com/fusengine"
   },
-  "homepage": "https://github.com/fusengine/claude-plugins",
-  "repository": "https://github.com/fusengine/claude-plugins",
+  "homepage": "https://github.com/fusengine/agents",
+  "repository": "https://github.com/fusengine/agents",
   "license": "MIT",
   "keywords": [
     "design",

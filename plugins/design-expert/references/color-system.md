@@ -1,9 +1,22 @@
 ---
 name: color-system
-description: Color system
+description: Complete color system with psychology, palettes, and OKLCH tokens
+keywords: color, palette, psychology, OKLCH, CSS variables, semantic tokens, notification colors
 ---
 
 # Color System
+
+## COLOR PSYCHOLOGY (Source: UI+UX Guide 2.0)
+
+| Color | Emotions | Use Cases |
+|-------|----------|-----------|
+| **Red** | Passion, energy, urgency, danger | Sales, CTAs, Netflix, YouTube, CocaCola |
+| **Blue** | Trust, calm, professionalism | Tech, finance, Facebook, LinkedIn, Dropbox |
+| **Yellow** | Optimism, happiness, warning | Food, local services, IKEA, McDonalds |
+| **Orange** | Energy, creativity, youth | E-commerce, telecom, Amazon, Nike |
+| **Green** | Health, nature, tranquility | Health, finance, Spotify, Starbucks |
+| **Pink** | Femininity, romance, gentleness | Cosmetics, fashion, Airbnb |
+| **Purple** | Luxury, power, uniqueness | Premium products, Twitch, Yahoo |
 
 ## FORBIDDEN
 
@@ -11,6 +24,8 @@ description: Color system
 - Indigo/blue defaults
 - Random hex codes without system
 - Timid, evenly-distributed palettes
+- Hard-coded hex values (NEVER)
+- Default Recharts colors
 
 ## CSS VARIABLES (MANDATORY - OKLCH)
 
@@ -141,3 +156,52 @@ description: Color system
 <Bar fill="var(--color-chart-1)" />
 <Cell fill="var(--color-chart-2)" />
 ```
+
+## PALETTE CREATION WORKFLOW (7 Steps)
+
+### Step 1: Choose Primary Color
+Based on color psychology and brand values.
+
+### Step 2: Secondary Color (Optional)
+For secondary actions. Usually same hue, different saturation.
+
+### Step 3: Notification Colors
+```css
+--color-success: oklch(60% 0.18 145);  /* Green */
+--color-warning: oklch(75% 0.15 85);   /* Orange */
+--color-error: oklch(55% 0.22 25);     /* Red */
+```
+
+### Step 4: Create Shades (Darker variants)
+Decrease Lightness by 10% at each step.
+
+### Step 5: Create Tints (Lighter variants)
+Increase Lightness by 10% at each step.
+
+### Step 6: Create Grayscale
+Set Saturation to 20 (cold) or 0 (neutral), Lightness from 10% to 100%.
+
+### Step 7: Apply with 60-30-10 Rule
+```
+60% → Background/Surface colors
+30% → Text/Content colors
+10% → Primary/Accent (CTAs, buttons)
+```
+
+## COLOR WHEEL STRATEGIES
+
+| Strategy | Description | Use Case |
+|----------|-------------|----------|
+| **Monochromatic** | Single hue, various shades | Safe, elegant, minimal |
+| **Complementary** | Opposite sides of wheel | High contrast, vibrant |
+| **Analogous** | Adjacent colors | Harmonious, subtle |
+| **Triadic** | Equilateral triangle | Balanced, playful |
+| **Split-Complementary** | One + two adjacent opposites | Reliable harmony |
+
+## KEY TERMINOLOGY
+
+- **Hue**: The color itself (red, blue, green)
+- **Saturation**: From pure color to gray (0-100%)
+- **Lightness**: From black to white (0-100%)
+- **Tint**: Color + white (lighter)
+- **Shade**: Color + black (darker)

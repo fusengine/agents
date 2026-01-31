@@ -110,7 +110,10 @@ function Component() {
 
 ## References
 
-- **UX Principles**: `../../references/ux-principles.md` (Nielsen heuristics, Laws of UX, WCAG 2.2, form validation)
-- **Color System**: `../../references/color-system.md`
+- **UX Principles**: `../../references/ux-principles.md` (Nielsen heuristics, WCAG 2.2)
+- **Forms Guide**: `../../references/forms-guide.md` (validation states, labels, error messages)
+- **Buttons Guide**: `../../references/buttons-guide.md` (touch targets 44x44px, focus states)
+- **Icons Guide**: `../../references/icons-guide.md` (aria-label for icon buttons)
+- **Color System**: `../../references/color-system.md` (contrast ratios)
 - **Design Patterns**: `../../references/design-patterns.md`
 - **WCAG 2.2**: https://www.w3.org/WAI/WCAG22/quickref/
