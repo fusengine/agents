@@ -1,5 +1,18 @@
 # Release Notes
 
+## [1.33.1] - 31-01-2026
+
+### Changed
+
+- **react-tanstack-router**: Restructure skill with 23 English reference files
+  - Add 18 concept references + 5 complete code templates
+  - Topics: installation, file-based routing, params, loaders, auth, query integration
+  - All content converted from French to English
+- **ai-pilot**: Add CRITICAL Language Requirement to skill-creator and agent-creator
+  - Enforce English-only content for all generated skills and agents
+  - Add language validation as first item in validation checklists
+  - Improve skill-creator workflow with 4-phase methodology
+
 ## [1.33.0] - 31-01-2026
 
 ### Added
