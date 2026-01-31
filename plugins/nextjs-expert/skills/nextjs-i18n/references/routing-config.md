@@ -1,9 +1,16 @@
 # next-intl Routing Configuration
 
-## Basic Config
+## Quand configurer le routing
+
+- Projet multilingue avec URLs localisées
+- SEO international (hreflang)
+- Domaines par langue (example.fr, example.de)
+- URLs traduites (/about → /a-propos)
+
+## Config de base
 
 ```typescript
-// i18n/routing.ts
+// modules/cores/i18n/src/config/routing.ts
 import { defineRouting } from 'next-intl/routing'
 
 export const routing = defineRouting({
@@ -12,28 +19,28 @@ export const routing = defineRouting({
 })
 ```
 
-## Locale Prefix Strategies
+## Stratégies de préfixe locale
+
+| Stratégie | URL EN | URL FR | Recommandation |
+|-----------|--------|--------|----------------|
+| `always` | `/en/about` | `/fr/about` | **SEO optimal** |
+| `as-needed` | `/about` | `/fr/about` | URLs courtes pour défaut |
+| `never` | `/about` | `/about` | SPA, détection cookie |
 
 ```typescript
-// Always show prefix (default)
-defineRouting({
-  locales: ['en', 'fr'],
-  defaultLocale: 'en',
-  localePrefix: 'always'  // /en/about, /fr/about
-})
+// always (défaut) - Recommandé pour SEO
+defineRouting({ localePrefix: 'always' })  // /en/about, /fr/about
 
-// Hide default locale prefix
-defineRouting({
-  localePrefix: 'as-needed'  // /about (en), /fr/about
-})
+// as-needed - Cache le préfixe pour defaultLocale
+defineRouting({ localePrefix: 'as-needed' })  // /about (en), /fr/about
 
-// Never show prefix
-defineRouting({
-  localePrefix: 'never'  // /about (locale from cookie/header)
-})
+// never - Locale via cookie/header uniquement
+defineRouting({ localePrefix: 'never' })  // /about (détection auto)
 ```
 
-## Domain-Based Routing
+## Routing par domaine
+
+Pour sites avec domaines dédiés par langue.
 
 ```typescript
 defineRouting({
@@ -47,41 +54,37 @@ defineRouting({
 })
 ```
 
-## Pathnames (Localized URLs)
+## URLs traduites (pathnames)
+
+Traduit les slugs pour meilleur SEO local.
 
 ```typescript
 defineRouting({
   locales: ['en', 'fr'],
   defaultLocale: 'en',
   pathnames: {
-    '/about': {
-      en: '/about',
-      fr: '/a-propos'
-    },
-    '/products/[slug]': {
-      en: '/products/[slug]',
-      fr: '/produits/[slug]'
-    }
+    '/about': { en: '/about', fr: '/a-propos' },
+    '/products/[slug]': { en: '/products/[slug]', fr: '/produits/[slug]' }
   }
 })
 ```
 
-## Locale Detection
+## Options SEO
 
 ```typescript
 defineRouting({
   locales: ['en', 'fr'],
   defaultLocale: 'en',
-  localeDetection: true  // Detect from Accept-Language header
+  localeDetection: true,  // Détecte Accept-Language header
+  alternateLinks: true    // Ajoute <link hreflang> automatiquement
 })
 ```
 
-## Alternate Links (SEO)
+## Recommandations
 
-```typescript
-defineRouting({
-  locales: ['en', 'fr'],
-  defaultLocale: 'en',
-  alternateLinks: true  // Add hreflang links to <head>
-})
-```
+| Cas d'usage | Stratégie | Pourquoi |
+|-------------|-----------|----------|
+| E-commerce international | `always` + `pathnames` | SEO maximal |
+| SaaS B2B | `as-needed` | URLs propres |
+| App interne | `never` | Simplicité |
+| Multi-domaines | `domains` | Séparation claire |
