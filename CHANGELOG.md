@@ -1,5 +1,14 @@
 # Release Notes
 
+## [1.34.0] - 31-01-2026
+
+### Added
+
+- **design-expert**: Add 8 new skills and 7 reference guides
+  - Skills: glassmorphism-advanced, theming-tokens, component-variants, dark-light-modes, responsive-system, interactive-states, component-composition, layered-backgrounds
+  - References: buttons-guide, cards-guide, forms-guide, gradients-guide, grids-layout, icons-guide, photos-images
+  - Enrich color-system, typography, and design-rules references
+
 ## [1.33.3] - 31-01-2026
 
 ### Changed
