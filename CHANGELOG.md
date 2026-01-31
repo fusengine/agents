@@ -1,5 +1,19 @@
 # Release Notes
 
+## [1.32.2] - 31-01-2026
+
+### Changed
+
+- **react-expert**: Consolidate React hooks documentation into react-19 skill
+  - Add 10 explanatory references for classic hooks (useState, useEffect, useRef, etc.)
+  - Add 5 code templates (state-patterns, effect-patterns, ref-patterns, custom-hooks, external-store)
+  - Remove redundant react-hooks skill (merged into react-19)
+  - react-19 now covers all React hooks (classic + new)
+
+### Fixed
+
+- **core-guards**: Add execute permissions to pre-tool-use scripts (enforce-file-size.sh, require-solid-read.sh)
+
 ## [1.32.1] - 31-01-2026
 
 ### Added
