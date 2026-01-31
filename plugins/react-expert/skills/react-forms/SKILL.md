@@ -8,24 +8,15 @@ references: references/tanstack-form-basics.md, references/zod-validation.md, re
 
 # TanStack Form v1 Core Features
 
-## Current Date (CRITICAL)
+## Agent Workflow (MANDATORY)
 
-**Today: January 2026** - TanStack Form v1 stable.
-ALWAYS verify latest API with Context7 + Exa.
+Before ANY implementation, launch in parallel:
 
-## MANDATORY: Research Before Coding
+1. **fuse-ai-pilot:explore-codebase** - Analyze existing form components and validation patterns
+2. **fuse-ai-pilot:research-expert** - Verify latest TanStack Form v1 docs via Context7/Exa
+3. **mcp__context7__query-docs** - Check Zod validation and React 19 Server Actions patterns
 
-**CRITICAL: Check today's date first, then search documentation and web BEFORE writing any code.**
-
-1. **Use Context7** to query TanStack Form official documentation
-2. **Use Exa web search** with current year for latest patterns
-3. **Check TanStack GitHub** for v1 updates
-4. **Verify package versions** for React 19 compatibility
-
-**Search queries (replace YYYY with current year):**
-- `TanStack Form [feature] YYYY best practices`
-- `React 19 forms [pattern] YYYY`
-- `Zod validation [feature] YYYY`
+After implementation, run **fuse-ai-pilot:sniper** for validation.
 
 ---
 

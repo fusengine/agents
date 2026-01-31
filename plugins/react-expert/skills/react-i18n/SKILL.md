@@ -1,12 +1,127 @@
 ---
 name: react-i18n
-description: react-i18next modular SOLID - modules/cores/i18n/, useTranslation hook, namespaces, pluralization. Use when implementing translations in React apps (not Next.js).
-user-invocable: false
+description: react-i18next for React 19 - useTranslation hook, TypeScript Selector API, namespaces, pluralization, lazy loading, Suspense integration. Use when implementing translations in React apps (not Next.js).
+version: 1.0.0
+user-invocable: true
+references: references/i18next-basics.md, references/typescript-types.md, references/namespaces.md, references/pluralization.md, references/interpolation.md, references/lazy-loading.md, references/language-detection.md, references/react-19-integration.md, references/trans-component.md, references/testing.md, references/rtl-support.md, references/fallback-strategies.md, references/templates/basic-setup.md, references/templates/language-switcher.md, references/templates/typed-translations.md, references/templates/form-validation-i18n.md, references/templates/lazy-loading-routes.md, references/templates/date-number-formatter.md, references/templates/plural-interpolation.md, references/templates/trans-component-examples.md, references/templates/testing-i18n.md
 ---
 
-# React Internationalization (SOLID)
+# react-i18next for React 19
 
-## Modular Architecture
+## Agent Workflow (MANDATORY)
+
+Before ANY implementation, launch in parallel:
+
+1. **fuse-ai-pilot:explore-codebase** - Analyze existing i18n setup and translation patterns
+2. **fuse-ai-pilot:research-expert** - Verify latest react-i18next/i18next docs via Context7/Exa
+3. **mcp__context7__query-docs** - Check TypeScript Selector API and React 19 Suspense patterns
+
+After implementation, run **fuse-ai-pilot:sniper** for validation.
+
+---
+
+## MANDATORY: SOLID Principles
+
+**ALWAYS apply SOLID principles from `solid-react` skill.**
+
+→ See `../solid-react/SKILL.md` for complete rules
+
+**Key Rules:**
+- Files < 100 lines (split at 90)
+- Interfaces in `modules/[feature]/src/interfaces/`
+- JSDoc mandatory on all exports
+- No business logic in components
+
+---
+
+## Core Hooks
+
+| Hook | Purpose | Guide |
+|------|---------|-------|
+| `useTranslation()` | Access translations and i18n instance | `references/i18next-basics.md` |
+| `useTranslation(ns)` | Load specific namespace | `references/namespaces.md` |
+| `useTranslation([ns])` | Load multiple namespaces | `references/namespaces.md` |
+
+→ See `references/i18next-basics.md` for detailed usage
+
+---
+
+## Key Packages
+
+| Package | Purpose | Size |
+|---------|---------|------|
+| `i18next` | Core library | ~40KB |
+| `react-i18next` | React bindings | ~12KB |
+| `i18next-http-backend` | Lazy loading | ~5KB |
+| `i18next-browser-languagedetector` | Auto-detection | ~8KB |
+
+---
+
+## Key Features
+
+### TypeScript Selector API (i18next ≥25.4)
+Type-safe translations with autocompletion.
+→ See `references/typescript-types.md`
+
+### Namespaces
+Organize translations by feature for code splitting.
+→ See `references/namespaces.md`
+
+### Pluralization
+Count-based rules with ICU MessageFormat support.
+→ See `references/pluralization.md`
+
+### Interpolation
+Variables, dates, numbers, and currency formatting.
+→ See `references/interpolation.md`
+
+### Lazy Loading
+Load translations on-demand per route.
+→ See `references/lazy-loading.md`
+
+### Language Detection
+Auto-detect from browser, URL, cookie, localStorage.
+→ See `references/language-detection.md`
+
+### React 19 Integration
+Suspense, useTransition, Concurrent Rendering.
+→ See `references/react-19-integration.md`
+
+### Trans Component
+JSX elements inside translations.
+→ See `references/trans-component.md`
+
+### Testing
+Mock i18n for unit tests.
+→ See `references/testing.md`
+
+### RTL Support
+Right-to-left languages (Arabic, Hebrew).
+→ See `references/rtl-support.md`
+
+### Fallback Strategies
+Handle missing keys gracefully.
+→ See `references/fallback-strategies.md`
+
+---
+
+## Templates
+
+| Template | Use Case |
+|----------|----------|
+| `templates/basic-setup.md` | Configuration with React 19 |
+| `templates/language-switcher.md` | Dropdown component |
+| `templates/typed-translations.md` | TypeScript Selector API |
+| `templates/form-validation-i18n.md` | Translated form errors |
+| `templates/lazy-loading-routes.md` | Per-route loading |
+| `templates/date-number-formatter.md` | Intl formatting |
+| `templates/plural-interpolation.md` | Count-based messages |
+| `templates/trans-component-examples.md` | JSX in translations |
+| `templates/testing-i18n.md` | Unit test setup |
+
+---
+
+## Modular Architecture (SOLID)
 
 ```text
 src/
@@ -27,261 +142,27 @@ src/
 │       │   └── translation.json
 │       └── fr/
 │           └── translation.json
-│
 └── main.tsx
-```
-
----
-
-## Config (modules/cores/i18n/src/config/i18n.config.ts)
-
-```typescript
-/** Supported locales. */
-export const locales = ['en', 'fr', 'de'] as const
-
-/** Default locale. */
-export const defaultLocale = 'en'
-
-/** Locale type. */
-export type Locale = (typeof locales)[number]
-
-/** Namespaces for translations. */
-export const namespaces = ['translation', 'common'] as const
-
-/** Namespace type. */
-export type Namespace = (typeof namespaces)[number]
-```
-
----
-
-## Interfaces (modules/cores/i18n/src/interfaces/i18n.interface.ts)
-
-```typescript
-import type { Locale, Namespace } from '../config/i18n.config'
-
-/** Language switcher props. */
-export interface LanguageSwitcherProps {
-  className?: string
-}
-
-/** i18n context value. */
-export interface I18nContextValue {
-  locale: Locale
-  changeLanguage: (lng: Locale) => Promise<void>
-}
-```
-
----
-
-## Service (modules/cores/i18n/src/services/i18n.service.ts)
-
-```typescript
-import i18n from 'i18next'
-import { initReactI18next } from 'react-i18next'
-import Backend from 'i18next-http-backend'
-import LanguageDetector from 'i18next-browser-languagedetector'
-import { defaultLocale, namespaces } from '../config/i18n.config'
-
-/**
- * Initialize i18n instance.
- *
- * @returns Configured i18n instance
- */
-export function initI18n() {
-  i18n
-    .use(Backend)
-    .use(LanguageDetector)
-    .use(initReactI18next)
-    .init({
-      fallbackLng: defaultLocale,
-      ns: [...namespaces],
-      defaultNS: 'translation',
-      interpolation: { escapeValue: false },
-      backend: { loadPath: '/locales/{{lng}}/{{ns}}.json' },
-    })
-
-  return i18n
-}
-
-export { i18n }
-```
-
----
-
-## Hook (modules/cores/i18n/src/hooks/useLanguage.ts)
-
-```typescript
-import { useTranslation } from 'react-i18next'
-import type { Locale } from '../config/i18n.config'
-
-/**
- * Language management hook.
- *
- * @returns Current locale and change function
- */
-export function useLanguage() {
-  const { i18n } = useTranslation()
-
-  const changeLanguage = async (lng: Locale) => {
-    await i18n.changeLanguage(lng)
-  }
-
-  return {
-    locale: i18n.language as Locale,
-    changeLanguage,
-  }
-}
-```
-
----
-
-## Component (modules/cores/i18n/components/LanguageSwitcher.tsx)
-
-```typescript
-import { locales } from '../src/config/i18n.config'
-import { useLanguage } from '../src/hooks/useLanguage'
-import type { LanguageSwitcherProps } from '../src/interfaces/i18n.interface'
-
-/**
- * Language switcher component.
- */
-export function LanguageSwitcher({ className }: LanguageSwitcherProps) {
-  const { locale, changeLanguage } = useLanguage()
-
-  return (
-    <div className={className}>
-      {locales.map((lng) => (
-        <button
-          key={lng}
-          onClick={() => changeLanguage(lng)}
-          disabled={locale === lng}
-        >
-          {lng.toUpperCase()}
-        </button>
-      ))}
-    </div>
-  )
-}
-```
-
----
-
-## Entry Point (main.tsx)
-
-```typescript
-import { Suspense } from 'react'
-import { createRoot } from 'react-dom/client'
-import { initI18n } from '@/modules/cores/i18n/src/services/i18n.service'
-import App from './App'
-
-// Initialize i18n
-initI18n()
-
-createRoot(document.getElementById('root')!).render(
-  <Suspense fallback="Loading...">
-    <App />
-  </Suspense>
-)
-```
-
----
-
-## Usage in Components
-
-```typescript
-import { useTranslation } from 'react-i18next'
-import { LanguageSwitcher } from '@/modules/cores/i18n/components/LanguageSwitcher'
-
-/**
- * Home page component.
- */
-export function HomePage() {
-  const { t } = useTranslation()
-
-  return (
-    <div>
-      <h1>{t('welcome.title')}</h1>
-      <p>{t('hello', { name: 'John' })}</p>
-      <LanguageSwitcher />
-    </div>
-  )
-}
-```
-
----
-
-## Namespace Usage
-
-```typescript
-import { useTranslation } from 'react-i18next'
-
-// Single namespace
-const { t } = useTranslation('common')
-
-// Multiple namespaces
-const { t } = useTranslation(['translation', 'common'])
-t('translation:welcome')
-t('common:buttons.save')
-```
-
----
-
-## Trans Component (JSX in translations)
-
-```typescript
-import { Trans } from 'react-i18next'
-
-<Trans
-  i18nKey="richText"
-  values={{ name: 'Alice' }}
-  components={{
-    bold: <strong />,
-    link: <a href="/docs" />,
-  }}
-/>
-```
-
-```json
-{
-  "richText": "Hello <bold>{{name}}</bold>! <link>Read docs</link>"
-}
-```
-
----
-
-## Pluralization
-
-```json
-{
-  "items": "{{count}} item",
-  "items_plural": "{{count}} items",
-  "items_0": "No items"
-}
-```
-
-```typescript
-t('items', { count: 0 })  // "No items"
-t('items', { count: 1 })  // "1 item"
-t('items', { count: 5 })  // "5 items"
-```
-
----
-
-## Dependencies
-
-```bash
-bun add i18next react-i18next i18next-http-backend i18next-browser-languagedetector
 ```
 
 ---
 
 ## Best Practices
 
-1. **Module in `modules/cores/i18n/`** - Shared across app
-2. **Interfaces separated** - `src/interfaces/i18n.interface.ts`
-3. **Service for init** - `i18n.service.ts`
-4. **Custom hook** - `useLanguage.ts` for language management
-5. **Config centralized** - `config/i18n.config.ts`
-6. **JSDoc on exports** - All public functions documented
-7. **Use namespaces** - Organize by feature
-8. **Suspense** - For loading states
+1. **Suspense**: Wrap app with `<Suspense>` for loading states
+2. **Namespaces**: One namespace per feature/module
+3. **TypeScript**: Use Selector API for type-safe keys
+4. **Lazy Loading**: Load namespaces on-demand
+5. **Detection**: Configure language detection order
+6. **Fallback**: Always set `fallbackLng`
+
+---
+
+## Forbidden (Anti-Patterns)
+
+- ❌ Hardcoded strings → use `t('key')`
+- ❌ No Suspense → causes loading flicker
+- ❌ All translations in one file → use namespaces
+- ❌ No fallback language → broken UI
+- ❌ String concatenation → use interpolation `{{var}}`
+- ❌ Manual language state → use `i18n.changeLanguage()`

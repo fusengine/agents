@@ -8,16 +8,15 @@ references: references/new-hooks.md, references/activity-component.md, reference
 
 # React 19.2 Core Features
 
-## Current Date (CRITICAL)
+## Agent Workflow (MANDATORY)
 
-**Today: January 2026** - React 19.2 released October 2025.
-ALWAYS verify latest API with Context7 + Exa.
+Before ANY implementation, launch in parallel:
 
-## MANDATORY: Research Before Coding
+1. **fuse-ai-pilot:explore-codebase** - Analyze existing React patterns and component structure
+2. **fuse-ai-pilot:research-expert** - Verify latest React 19.2 docs via Context7/Exa
+3. **mcp__context7__query-docs** - Check use(), useOptimistic, useActionState, Activity patterns
 
-1. **Use Context7** to query React official documentation
-2. **Use Exa web search** with "React 19.2 2026" for latest patterns
-3. **Check React Blog** for updates
+After implementation, run **fuse-ai-pilot:sniper** for validation.
 
 ---
 
