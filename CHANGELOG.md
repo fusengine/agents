@@ -1,5 +1,17 @@
 # Release Notes
 
+## [1.32.1] - 31-01-2026
+
+### Added
+
+- **react-forms**: Complete TanStack Form v1 documentation with 34 files
+  - 16 explanatory references (no code, conceptual)
+  - 17 code templates with full TypeScript/JSDoc
+  - Core: useForm, useField, form.Field, form.Subscribe
+  - Validation: Zod, Yup, Valibot, async, Standard Schema
+  - Advanced: listeners, linked fields, reactivity, reset API
+  - Integrations: shadcn/ui, SSR/hydration, React Native, Devtools
+
 ## [1.32.0] - 31-01-2026
 
 ### Added
