@@ -1,7 +1,15 @@
 ---
 name: react-testing
-description: Testing Library for React - render, screen, userEvent, waitFor. Use when writing tests for React components with Vitest or Jest.
-user-invocable: false
+description: Testing Library for React 19 - render, screen, userEvent, waitFor, Suspense. Use when writing tests for React components with Vitest.
+versions:
+  "@testing-library/react": 16.1.0
+  "@testing-library/user-event": 14.5.2
+  vitest: 2.1.8
+  msw: 2.7.0
+  react: 19
+user-invocable: true
+references: references/installation.md, references/queries.md, references/user-events.md, references/async-testing.md, references/msw-setup.md, references/react-19-hooks.md, references/accessibility-testing.md, references/hooks-testing.md, references/vitest-config.md, references/mocking-patterns.md, references/templates/basic-setup.md, references/templates/component-basic.md, references/templates/component-async.md, references/templates/form-testing.md, references/templates/hook-basic.md, references/templates/api-integration.md, references/templates/suspense-testing.md, references/templates/error-boundary.md, references/templates/accessibility-audit.md
+related-skills: react-19, solid-react, react-state, react-forms
 ---
 
 # React Testing Library
@@ -12,230 +20,150 @@ Test React components the way users interact with them.
 
 Before ANY implementation, launch in parallel:
 
-1. **fuse-ai-pilot:explore-codebase** - Analyze existing test patterns and setup
+1. **fuse-ai-pilot:explore-codebase** - Analyze existing test patterns
 2. **fuse-ai-pilot:research-expert** - Verify latest Testing Library docs via Context7/Exa
-3. **mcp__context7__query-docs** - Check userEvent, waitFor, and async patterns
+3. **mcp__context7__query-docs** - Check userEvent, waitFor patterns
 
 After implementation, run **fuse-ai-pilot:sniper** for validation.
 
 ---
 
-## Installation
+## Overview
+
+### When to Use
+
+- Testing React component behavior
+- Validating user interactions
+- Ensuring accessibility compliance
+- Mocking API calls with MSW
+- Testing custom hooks
+- Testing React 19 features (useActionState, use())
+
+### Why React Testing Library
+
+| Feature | Benefit |
+|---------|---------|
+| User-centric | Tests what users see |
+| Accessible queries | Encourages a11y markup |
+| No implementation details | Resilient to refactoring |
+| Vitest integration | 10-20x faster than Jest |
+
+---
+
+## Critical Rules
+
+1. **Query by role first** - `getByRole` is most accessible
+2. **Use userEvent, not fireEvent** - Realistic interactions
+3. **waitFor for async** - Never `setTimeout`
+4. **MSW for API mocking** - Don't mock fetch
+5. **Test behavior, not implementation** - No internal state testing
+
+---
+
+## Reference Guide
+
+### Concepts
+
+| Topic | Reference |
+|-------|-----------|
+| Setup & installation | `references/installation.md` |
+| Query priority | `references/queries.md` |
+| User interactions | `references/user-events.md` |
+| Async patterns | `references/async-testing.md` |
+| API mocking | `references/msw-setup.md` |
+| React 19 hooks | `references/react-19-hooks.md` |
+| Accessibility | `references/accessibility-testing.md` |
+| Custom hooks | `references/hooks-testing.md` |
+| Vitest config | `references/vitest-config.md` |
+| Mocking patterns | `references/mocking-patterns.md` |
+
+### Templates
+
+| Template | Use Case |
+|----------|----------|
+| `templates/basic-setup.md` | Vitest + RTL + MSW config |
+| `templates/component-basic.md` | Simple component tests |
+| `templates/component-async.md` | Loading/error/success |
+| `templates/form-testing.md` | Forms + useActionState |
+| `templates/hook-basic.md` | Custom hook tests |
+| `templates/api-integration.md` | MSW integration tests |
+| `templates/suspense-testing.md` | Suspense + use() |
+| `templates/error-boundary.md` | Error boundary tests |
+| `templates/accessibility-audit.md` | axe-core a11y audit |
+
+---
+
+## Forbidden Patterns
+
+| Pattern | Reason | Alternative |
+|---------|--------|-------------|
+| `fireEvent` | Not realistic | `userEvent` |
+| `setTimeout` | Flaky | `waitFor`, `findBy` |
+| `getByTestId` first | Not accessible | `getByRole` |
+| Direct fetch mocking | Hard to maintain | MSW |
+| Empty `waitFor` | No assertion | Add `expect()` |
+
+---
+
+## Quick Start
+
+### Install
 
 ```bash
-bun add -D @testing-library/react @testing-library/user-event @testing-library/jest-dom vitest jsdom
+npm install -D vitest @testing-library/react \
+  @testing-library/user-event @testing-library/jest-dom \
+  jsdom msw
 ```
 
-## Vitest Configuration
+→ See `templates/basic-setup.md` for complete configuration
+
+### Basic Test
 
 ```typescript
-// vite.config.ts
-import { defineConfig } from 'vitest/config'
-import react from '@vitejs/plugin-react'
-
-export default defineConfig({
-  plugins: [react()],
-  test: {
-    environment: 'jsdom',
-    globals: true,
-    setupFiles: './src/test/setup.ts',
-  },
-})
-```
-
-```typescript
-// src/test/setup.ts
-import '@testing-library/jest-dom/vitest'
-```
-
----
-
-## Basic Testing
-
-```typescript
-// src/components/__tests__/Button.test.tsx
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { Button } from '../Button'
 
-describe('Button', () => {
-  it('renders with text', () => {
-    render(<Button>Click me</Button>)
-    expect(screen.getByRole('button', { name: /click me/i })).toBeInTheDocument()
-  })
+test('button click works', async () => {
+  const user = userEvent.setup()
+  render(<Button onClick={fn}>Click</Button>)
 
-  it('calls onClick when clicked', async () => {
-    const handleClick = vi.fn()
-    render(<Button onClick={handleClick}>Click me</Button>)
+  await user.click(screen.getByRole('button'))
 
-    await userEvent.click(screen.getByRole('button'))
-
-    expect(handleClick).toHaveBeenCalledTimes(1)
-  })
-
-  it('is disabled when disabled prop is true', () => {
-    render(<Button disabled>Click me</Button>)
-    expect(screen.getByRole('button')).toBeDisabled()
-  })
+  expect(fn).toHaveBeenCalled()
 })
 ```
 
----
-
-## Queries
-
-### Priority Order (Recommended)
-
-1. **getByRole** - Most accessible
-2. **getByLabelText** - Form inputs
-3. **getByPlaceholderText** - Inputs
-4. **getByText** - Text content
-5. **getByTestId** - Last resort
-
-```typescript
-// Accessible queries
-screen.getByRole('button', { name: /submit/i })
-screen.getByRole('textbox', { name: /email/i })
-screen.getByRole('heading', { level: 1 })
-screen.getByLabelText(/password/i)
-
-// Text queries
-screen.getByText(/welcome/i)
-screen.getByPlaceholderText(/search/i)
-
-// Test ID (avoid if possible)
-screen.getByTestId('custom-element')
-```
-
-### Query Variants
-
-```typescript
-// getBy - Throws if not found (sync)
-screen.getByRole('button')
-
-// queryBy - Returns null if not found (sync)
-screen.queryByRole('button')
-
-// findBy - Returns promise (async)
-await screen.findByRole('button')
-
-// getAllBy, queryAllBy, findAllBy - Multiple elements
-screen.getAllByRole('listitem')
-```
-
----
-
-## User Events
-
-```typescript
-import userEvent from '@testing-library/user-event'
-
-describe('Form', () => {
-  it('submits form data', async () => {
-    const user = userEvent.setup()
-    const handleSubmit = vi.fn()
-    render(<LoginForm onSubmit={handleSubmit} />)
-
-    // Type in inputs
-    await user.type(screen.getByLabelText(/email/i), 'test@example.com')
-    await user.type(screen.getByLabelText(/password/i), 'password123')
-
-    // Click submit
-    await user.click(screen.getByRole('button', { name: /login/i }))
-
-    expect(handleSubmit).toHaveBeenCalledWith({
-      email: 'test@example.com',
-      password: 'password123',
-    })
-  })
-
-  it('shows error on invalid input', async () => {
-    const user = userEvent.setup()
-    render(<LoginForm />)
-
-    await user.type(screen.getByLabelText(/email/i), 'invalid')
-    await user.click(screen.getByRole('button', { name: /login/i }))
-
-    expect(await screen.findByText(/invalid email/i)).toBeInTheDocument()
-  })
-})
-```
-
----
-
-## Async Testing
-
-```typescript
-import { render, screen, waitFor } from '@testing-library/react'
-
-describe('UserProfile', () => {
-  it('loads and displays user data', async () => {
-    render(<UserProfile userId="1" />)
-
-    // Wait for loading to finish
-    expect(screen.getByText(/loading/i)).toBeInTheDocument()
-
-    // Wait for data
-    await waitFor(() => {
-      expect(screen.getByText('John Doe')).toBeInTheDocument()
-    })
-  })
-
-  it('shows error on failure', async () => {
-    server.use(
-      http.get('/api/users/:id', () => {
-        return HttpResponse.error()
-      })
-    )
-
-    render(<UserProfile userId="1" />)
-
-    expect(await screen.findByText(/error loading/i)).toBeInTheDocument()
-  })
-})
-```
-
----
-
-## Mocking
-
-### Mock Functions
-
-```typescript
-const mockFn = vi.fn()
-mockFn.mockReturnValue('value')
-mockFn.mockResolvedValue('async value')
-mockFn.mockImplementation((x) => x * 2)
-```
-
-### Mock Modules
-
-```typescript
-vi.mock('../services/api', () => ({
-  fetchUser: vi.fn().mockResolvedValue({ name: 'John' }),
-}))
-```
-
-### MSW for API Mocking
-
-```typescript
-// src/test/mocks/handlers.ts
-import { http, HttpResponse } from 'msw'
-
-export const handlers = [
-  http.get('/api/users/:id', ({ params }) => {
-    return HttpResponse.json({ id: params.id, name: 'John' })
-  }),
-]
-```
+→ See `templates/component-basic.md` for more examples
 
 ---
 
 ## Best Practices
 
-1. **Query by role** - Most accessible and robust
-2. **Use userEvent** - More realistic than fireEvent
-3. **Avoid implementation details** - Test behavior, not internals
-4. **Use async utilities** - waitFor, findBy for async
-5. **Mock at network level** - Use MSW for API mocking
-6. **Write descriptive test names** - Clear intent
+### Query Priority
+
+1. `getByRole` - Buttons, headings, inputs
+2. `getByLabelText` - Form inputs
+3. `getByText` - Static text
+4. `getByTestId` - Last resort
+
+### Async Pattern
+
+```typescript
+// Preferred: findBy
+await screen.findByText('Loaded')
+
+// Alternative: waitFor
+await waitFor(() => expect(...).toBeInTheDocument())
+```
+
+→ See `templates/component-async.md`
+
+### userEvent Setup
+
+```typescript
+const user = userEvent.setup()
+await user.click(button)
+await user.type(input, 'text')
+```
+
+→ See `references/user-events.md`
