@@ -1,4 +1,28 @@
+---
+name: migrations
+description: Migrate from NextAuth, Clerk, Supabase to Better Auth with database schema setup
+when-to-use: migrating auth, switching providers, changing frameworks, data migration, schema setup
+keywords: migration, NextAuth, Clerk, Supabase, Auth0, database migration, schema, switch auth
+priority: medium
+related: concepts/database.md, adapters/prisma.md, guides/authjs-migration.md, guides/clerk-migration.md
+---
+
 # Better Auth Migrations
+
+## When to Use
+
+- Migrating from NextAuth/Auth.js
+- Migrating from Clerk
+- Migrating from Supabase Auth
+- Setting up database schema
+
+## Why Migrate
+
+| From | Benefit |
+|------|---------|
+| NextAuth | Better types, more plugins |
+| Clerk | Self-hosted, no vendor lock |
+| Supabase | Full control, custom DB |
 
 ## From Auth.js (NextAuth)
 
@@ -17,8 +41,6 @@ export const auth = betterAuth({
 // Route: app/api/auth/[...all]/route.ts
 import { toNextJsHandler } from "better-auth/next-js"
 export const { GET, POST } = toNextJsHandler(auth)
-
-// Client: import { authClient } from "@/lib/auth-client"
 ```
 
 ## From Clerk

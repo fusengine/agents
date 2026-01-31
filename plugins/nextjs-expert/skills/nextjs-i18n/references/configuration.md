@@ -1,3 +1,13 @@
+---
+name: configuration
+description: Request config, formats globaux, plugin next.config, variables env
+when-to-use: customiser comportement, formats dates/nombres, timezone, fallbacks
+keywords: getRequestConfig, formats, timeZone, onError, getMessageFallback
+priority: medium
+requires: installation.md
+related: plugin.md, runtime-requirements.md
+---
+
 # next-intl Configuration
 
 ## Request Configuration

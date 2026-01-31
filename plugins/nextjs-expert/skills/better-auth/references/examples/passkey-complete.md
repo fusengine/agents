@@ -1,4 +1,30 @@
+---
+name: passkey-complete
+description: Complete example of passkey/WebAuthn authentication
+when-to-use: passwordless implementation, webauthn example, passkey example
+keywords: passkey example, webauthn, passwordless, complete
+priority: medium
+requires: basic-usage.md, plugins/passkey.md
+related: plugins/passkey.md, plugins/2fa.md
+---
+
 # Better Auth Passkey Complete Example
+
+## When to Use
+
+- Implementing passwordless WebAuthn
+- Passkey registration flow
+- Passkey-based login
+- Managing multiple passkeys
+
+## Why This Example
+
+| Feature | Coverage |
+|---------|----------|
+| Registration | Device naming |
+| Login | One-click auth |
+| Management | List, delete |
+| Platform | Cross-device support |
 
 ## Setup
 

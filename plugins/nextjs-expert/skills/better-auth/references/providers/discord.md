@@ -1,4 +1,30 @@
+---
+name: discord
+description: Discord OAuth provider setup and configuration
+when-to-use: discord oauth, gaming communities, discord integration
+keywords: Discord, OAuth, gaming, communities, sign-in
+priority: medium
+requires: server-config.md, providers/overview.md
+related: providers/overview.md, concepts/oauth.md
+---
+
 # Better Auth Discord Provider
+
+## When to Use
+
+- Gaming communities
+- Discord bot integrations
+- Server membership verification
+- Community-focused products
+
+## Why Discord
+
+| Consideration | Value |
+|---------------|-------|
+| Gaming audience | 150M+ monthly users |
+| Guild access | Server membership data |
+| Community | Built-in social graph |
+| Bot ecosystem | Deep integrations |
 
 ## Setup
 

@@ -1,4 +1,30 @@
+---
+name: images
+description: Image optimization with next/image, lazy loading, responsive images
+when-to-use: all images in Next.js, LCP optimization, responsive design
+keywords: next/image, optimization, lazy loading, blur placeholder, responsive
+priority: medium
+requires: app-router.md
+related: fonts.md
+---
+
 # Image Optimization
+
+## When to Use
+
+- All images in Next.js
+- LCP optimization with priority
+- Responsive image srcset
+- Remote image loading
+
+## Why next/image
+
+| Feature | Benefit |
+|---------|---------|
+| Auto-optimize | WebP/AVIF conversion |
+| Lazy loading | Viewport-based load |
+| Blur placeholder | Better UX |
+| Prevent CLS | Reserved space |
 
 ## Basic Usage
 ```typescript

@@ -1,4 +1,30 @@
+---
+name: plugins
+description: Understand plugin architecture, how plugins work, isolation, and plugin system design
+when-to-use: understanding plugin system, building custom plugins, evaluating plugins, plugin architecture
+keywords: plugins, architecture, plugin system, isolation, endpoints, middleware, schema, design
+priority: medium
+requires: server-config.md
+related: plugins/overview.md, guides/plugin-development.md
+---
+
 # Better Auth Plugins Concept
+
+## When to Use
+
+- Understanding plugin system
+- Evaluating plugin options
+- Building custom plugins
+- Troubleshooting plugin issues
+
+## Why Plugins
+
+| Monolithic | Plugin-based |
+|------------|--------------|
+| All-or-nothing | Pick what you need |
+| Large bundle | Tree-shakable |
+| Fixed features | Extensible |
+| Core-coupled | Isolated logic |
 
 ## Plugin Architecture
 

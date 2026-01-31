@@ -1,4 +1,30 @@
+---
+name: jwt
+description: JWT token generation and validation
+when-to-use: jwt tokens, token-based auth, api protection
+keywords: JWT, JSON Web Token, tokens, api auth, verification
+priority: low
+requires: server-config.md
+related: plugins/bearer.md
+---
+
 # Better Auth JWT Plugin
+
+## When to Use
+
+- Microservices token verification
+- External service authorization
+- Stateless token validation
+- Cross-domain authentication
+
+## Why JWT
+
+| Session lookup | JWT |
+|----------------|-----|
+| DB query each request | No DB needed |
+| Centralized validation | Distributed |
+| Single point of failure | Decentralized |
+| Stateful | Stateless |
 
 ## Installation
 

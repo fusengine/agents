@@ -1,4 +1,29 @@
+---
+name: testing
+description: Unit, component, and E2E testing with Jest, RTL, and Playwright
+when-to-use: adding tests, component testing, E2E testing
+keywords: Jest, RTL, Playwright, testing, unit tests
+priority: medium
+requires: app-router.md
+---
+
 # Testing
+
+## When to Use
+
+- Unit tests with Jest
+- Component tests with RTL
+- E2E tests with Playwright
+- Integration testing
+
+## Why This Stack
+
+| Tool | Purpose |
+|------|---------|
+| Jest | Unit tests |
+| RTL | Component tests |
+| Playwright | E2E tests |
+| MSW | API mocking |
 
 ## Jest Setup
 ```bash

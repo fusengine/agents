@@ -1,4 +1,30 @@
+---
+name: authjs-migration
+description: Migrate from NextAuth/Auth.js to Better Auth
+when-to-use: nextauth migration, auth.js migration, switching from next-auth
+keywords: NextAuth, Auth.js, migration, switching, from NextAuth
+priority: low
+requires: migrations.md
+related: migrations.md, guides/supabase-migration.md
+---
+
 # Better Auth Auth.js Migration Guide
+
+## When to Use
+
+- Migrating from NextAuth/Auth.js
+- Need better TypeScript support
+- Want more built-in plugins
+- Enterprise features required
+
+## Why Migrate
+
+| Auth.js | Better Auth |
+|---------|-------------|
+| Partial TS | First-class TS |
+| Limited plugins | 50+ plugins |
+| Community 2FA | Built-in 2FA |
+| No organizations | Organizations built-in |
 
 ## Key Differences
 

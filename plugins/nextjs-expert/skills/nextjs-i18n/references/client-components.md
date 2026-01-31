@@ -1,3 +1,13 @@
+---
+name: client-components
+description: Provider setup, useTranslations, useFormatter, optimisation messages
+when-to-use: composants interactifs, hooks, formulaires, hydration, composants animés
+keywords: NextIntlClientProvider, useTranslations, useFormatter, use client
+priority: high
+requires: installation.md, server-components.md
+related: server-components.md, formatting.md
+---
+
 # next-intl Client Components
 
 ## When to Use

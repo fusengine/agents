@@ -1,4 +1,29 @@
+---
+name: turbopack
+description: Turbopack bundler with faster builds and improved performance
+when-to-use: all Next.js 16 projects, build performance optimization
+keywords: Turbopack, bundler, build, performance, webpack migration
+priority: medium
+requires: installation.md
+---
+
 # Turbopack
+
+## When to Use
+
+- All Next.js 16 projects (default)
+- Need faster development builds
+- Want improved HMR performance
+- Migrating from webpack
+
+## Why Turbopack
+
+| Metric | Improvement |
+|--------|-------------|
+| Production builds | 2-5x faster |
+| Fast Refresh | Up to 10x faster |
+| Cold start | 3x faster |
+| Memory usage | 40% less |
 
 ## Default Bundler in v16
 Turbopack is now the **only bundler** for Next.js 16.

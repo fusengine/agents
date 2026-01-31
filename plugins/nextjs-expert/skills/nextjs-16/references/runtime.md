@@ -1,4 +1,30 @@
+---
+name: runtime
+description: Choosing between Edge and Node.js runtime for routes and functions
+when-to-use: runtime selection, latency optimization, API capabilities
+keywords: runtime, Edge, Node.js, cold start, performance
+priority: medium
+requires: app-router.md, api-routes.md
+related: proxy.md, route-segment-config.md
+---
+
 # Runtime (Edge vs Node.js)
+
+## When to Use
+
+- Node.js: Database, files, native
+- Edge: Low latency, geo-routing
+- Choosing runtime per route
+- proxy.ts considerations
+
+## Why Different Runtimes
+
+| Runtime | Best For |
+|---------|----------|
+| Node.js | Full capabilities |
+| Edge | Fast cold starts |
+| Node.js | Heavy computation |
+| Edge | Simple transforms |
 
 ## Node.js Runtime (Default)
 ```typescript

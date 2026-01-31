@@ -1,4 +1,29 @@
+---
+name: basic-usage
+description: Step-by-step guide to set up auth instance, API route, client, and session management
+when-to-use: first time setup, minimal working example, tutorial, getting started, core authentication
+keywords: quickstart, auth instance, sign up, sign in, sign out, useSession, minimal example
+priority: high
+requires: installation.md
+related: server-config.md, client.md, server-actions.md
+---
+
 # Better Auth Basic Usage
+
+## When to Use
+
+- Quick start guide for new projects
+- Step-by-step authentication setup
+- Minimal working example
+
+## Why Follow This Order
+
+| Step | Purpose |
+|------|---------|
+| 1. Auth instance | Server-side config |
+| 2. API route | Handle auth requests |
+| 3. Client | React hooks and methods |
+| 4. proxy.ts | Route protection |
 
 ## 1. Create Auth Instance
 

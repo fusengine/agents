@@ -1,4 +1,30 @@
+---
+name: scim
+description: SCIM 2.0 protocol for user provisioning and management
+when-to-use: enterprise sso, user provisioning, identity management
+keywords: SCIM, provisioning, enterprise, identity management, sso
+priority: low
+requires: server-config.md
+related: plugins/sso.md
+---
+
 # Better Auth SCIM Plugin
+
+## When to Use
+
+- Enterprise IT admin requirements
+- Automatic user provisioning/deprovisioning
+- Okta, Azure AD, OneLogin integration
+- SOC2/compliance directory sync
+
+## Why SCIM
+
+| Manual provisioning | SCIM |
+|---------------------|------|
+| Admin creates users | Auto-sync from IdP |
+| Manual deprovisioning | Instant offboarding |
+| Out-of-sync data | Real-time sync |
+| No audit trail | Full provisioning logs |
 
 ## Overview
 SCIM 2.0 provisioning for enterprise identity providers (Okta, Azure AD, etc.).

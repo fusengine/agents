@@ -1,3 +1,13 @@
+---
+name: extraction
+description: Hook useExtracted, scripts extraction messages, merge translations, CI
+when-to-use: auto-extraction messages, clés depuis composants, default values, workflow CI
+keywords: useExtracted, extract script, extraction config, merge translations
+priority: low
+requires: translations.md, messages-validation.md
+related: messages-validation.md
+---
+
 # next-intl Message Extraction
 
 ## useExtracted Hook (Beta)

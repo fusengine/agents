@@ -1,4 +1,30 @@
+---
+name: diy-dictionaries
+description: Approche minimaliste sans dépendance, contrôle complet chargement messages
+when-to-use: zéro dépendances, projets simples, contrôle complet, server components only
+keywords: DIY i18n, dictionaries, getDictionary, minimaliste, zéro deps
+priority: low
+requires:
+related: diy-locale-detection.md, core-library.md
+---
+
 # DIY i18n - Dictionaries (No Library)
+
+## When to Use
+
+- Minimal i18n without dependencies
+- Full control over translation loading
+- Server Components only (no client hydration)
+- Simple projects with few translations
+
+## Why DIY vs next-intl
+
+| DIY | next-intl |
+|-----|-----------|
+| 0 dependencies | ~50KB |
+| Manual pluralization | ICU format |
+| No client hooks | useTranslations |
+| Full control | Convention-based |
 
 ## Structure
 
@@ -36,11 +62,6 @@ export interface Dictionary {
 export interface LangPageProps {
   params: Promise<{ lang: Locale }>
 }
-
-export interface LangLayoutProps {
-  children: React.ReactNode
-  params: Promise<{ lang: Locale }>
-}
 ```
 
 ## Dictionary Service
@@ -62,23 +83,7 @@ export async function getDictionary(locale: Locale): Promise<Dictionary> {
 }
 ```
 
-## Dictionary JSON
-
-```json
-// modules/cores/i18n/dictionaries/en.json
-{
-  "home": {
-    "title": "Welcome",
-    "description": "This is the home page"
-  },
-  "nav": {
-    "home": "Home",
-    "about": "About"
-  }
-}
-```
-
-## Usage in Page
+## Usage
 
 ```typescript
 // app/[lang]/page.tsx

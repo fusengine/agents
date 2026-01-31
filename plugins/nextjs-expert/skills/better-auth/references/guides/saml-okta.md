@@ -1,4 +1,30 @@
+---
+name: saml-okta
+description: SAML and Okta integration guide for enterprise SSO
+when-to-use: okta integration, saml authentication, enterprise sso
+keywords: SAML, Okta, enterprise, SSO, SAML configuration
+priority: low
+requires: server-config.md
+related: plugins/sso.md
+---
+
 # Better Auth SAML/Okta SSO Guide
+
+## When to Use
+
+- Enterprise customer requirements
+- Okta/Azure AD integration
+- SAML 2.0 compliance
+- Corporate SSO deployment
+
+## Why SAML SSO
+
+| Password auth | SAML SSO |
+|---------------|----------|
+| Per-app credentials | One corporate login |
+| No IT control | Centralized management |
+| Manual offboarding | Auto-deprovisioning |
+| Audit complexity | IdP audit logs |
 
 ## Prerequisites
 

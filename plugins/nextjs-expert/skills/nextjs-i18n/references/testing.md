@@ -1,4 +1,29 @@
+---
+name: testing
+description: Render avec provider, mock server functions, navigation, Vitest setup
+when-to-use: unit tests, composants traduites, navigation tests, mock i18n
+keywords: renderWithIntl, testing-library, Vitest, mocking, NextIntlClientProvider
+priority: medium
+requires: client-components.md, server-components.md
+related: testing best practices
+---
+
 # next-intl Testing
+
+## When to Use
+
+- Unit test components with translations
+- Mock server functions in tests
+- Test navigation with locale preservation
+- Vitest/Jest setup for i18n
+
+## Why Test i18n
+
+| Test | Catches |
+|------|---------|
+| Render with provider | Missing provider errors |
+| Multi-locale | Translation mismatches |
+| Navigation mock | Broken locale switching |
 
 ## Setup for Tests
 
@@ -41,7 +66,6 @@ test('renders in French', () => {
 ## Mocking Server Functions
 
 ```typescript
-// For server components
 vi.mock('next-intl/server', () => ({
   getTranslations: vi.fn(() => Promise.resolve((key: string) => key)),
   getLocale: vi.fn(() => Promise.resolve('en')),
@@ -49,16 +73,13 @@ vi.mock('next-intl/server', () => ({
 }))
 ```
 
-## Testing Navigation
+## Mocking Navigation
 
 ```typescript
-import { useRouter } from '@/i18n/routing'
+import { useRouter } from '@/modules/cores/i18n/src/config/routing'
 
-vi.mock('@/i18n/routing', () => ({
-  useRouter: vi.fn(() => ({
-    push: vi.fn(),
-    replace: vi.fn()
-  })),
+vi.mock('@/modules/cores/i18n/src/config/routing', () => ({
+  useRouter: vi.fn(() => ({ push: vi.fn(), replace: vi.fn() })),
   usePathname: vi.fn(() => '/about')
 }))
 ```

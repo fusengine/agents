@@ -1,4 +1,30 @@
+---
+name: stripe
+description: Stripe integration for payments and subscriptions
+when-to-use: stripe payments, subscriptions, billing integration
+keywords: Stripe, payments, subscriptions, billing, integration
+priority: low
+requires: server-config.md
+related: plugins/overview.md
+---
+
 # Better Auth Stripe Plugin
+
+## When to Use
+
+- SaaS subscription billing
+- One-time payment flows
+- User-linked Stripe customers
+- Subscription management portals
+
+## Why Stripe Integration
+
+| Separate systems | Integrated |
+|------------------|------------|
+| Manual user-customer link | Auto-sync |
+| Separate webhooks | Unified handling |
+| Custom portal | Stripe Portal |
+| Manual subscription checks | Built-in status |
 
 ## Overview
 Integrate Stripe for payments, subscriptions, and customer management.

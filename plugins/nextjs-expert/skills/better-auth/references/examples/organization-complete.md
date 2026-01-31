@@ -1,4 +1,30 @@
+---
+name: organization-complete
+description: Complete example of organization/multi-tenant setup
+when-to-use: saas app, multi-tenant, organization example
+keywords: organization example, saas, multi-tenant, teams
+priority: medium
+requires: basic-usage.md, plugins/organization.md
+related: plugins/organization.md
+---
+
 # Better Auth Organization Complete Example
+
+## When to Use
+
+- Building B2B/SaaS multi-tenant apps
+- Team management implementation
+- Role-based access within orgs
+- Organization switcher UI
+
+## Why This Example
+
+| Feature | Coverage |
+|---------|----------|
+| Create org | Name, slug, limits |
+| Members | Invite, remove, roles |
+| Switcher | Multi-org navigation |
+| Permissions | RBAC configuration |
 
 ## Server Setup
 

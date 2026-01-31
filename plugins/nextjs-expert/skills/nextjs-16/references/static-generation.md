@@ -1,4 +1,30 @@
+---
+name: static-generation
+description: Pre-rendering pages with generateStaticParams, ISR, and on-demand revalidation
+when-to-use: dynamic routes, blog posts, product pages, build-time rendering
+keywords: generateStaticParams, ISR, revalidate, dynamicParams, pre-rendering
+priority: high
+requires: app-router.md, rendering.md
+related: caching.md, rendering.md
+---
+
 # Static Generation
+
+## When to Use
+
+- Pre-rendering dynamic pages
+- Build-time data fetching
+- ISR with revalidation
+- Static export
+
+## Why Static Generation
+
+| Feature | Benefit |
+|---------|---------|
+| Build-time | Fast page loads |
+| CDN | Global distribution |
+| ISR | Background updates |
+| On-demand | Lazy generation |
 
 ## generateStaticParams
 ```typescript

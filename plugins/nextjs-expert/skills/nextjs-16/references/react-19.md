@@ -1,4 +1,30 @@
+---
+name: react-19
+description: React 19 features including useActionState, useOptimistic, use()
+when-to-use: advanced hooks, form handling, optimistic UI
+keywords: React 19, useActionState, useOptimistic, use, useEffectEvent
+priority: medium
+requires: forms.md
+related: forms.md
+---
+
 # React 19 Features
+
+## When to Use
+
+- View transitions (animations)
+- Effect event handlers
+- Optimistic updates
+- Form handling with actions
+
+## Why React 19
+
+| Feature | Purpose |
+|---------|---------|
+| use() | Suspend on promises |
+| useActionState | Form state |
+| useOptimistic | Instant UI |
+| useEffectEvent | Non-reactive callbacks |
 
 ## View Transitions
 ```typescript

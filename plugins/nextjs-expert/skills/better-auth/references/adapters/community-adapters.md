@@ -1,4 +1,30 @@
+---
+name: community-adapters
+description: Community-maintained adapters for serverless, edge, and specialized database platforms
+when-to-use: serverless platforms, edge functions, managed services, turso, planetscale, neon, d1
+keywords: community adapters, turso, planetscale, neon, supabase, d1, cloudflare, edge, serverless
+priority: medium
+requires: installation.md, server-config.md
+related: adapters/prisma.md, adapters/drizzle.md, concepts/database.md
+---
+
 # Better Auth Community Adapters
+
+## When to Use
+
+- Serverless database platforms
+- Edge-compatible databases
+- Managed database services
+- Custom database requirements
+
+## Why Community Adapters
+
+| Built-in | Community |
+|----------|-----------|
+| Standard databases | Specialized platforms |
+| Self-managed | Managed services |
+| Traditional hosting | Edge/serverless |
+| General purpose | Optimized for platform |
 
 ## Available Community Adapters
 

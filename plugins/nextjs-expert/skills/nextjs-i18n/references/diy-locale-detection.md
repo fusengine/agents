@@ -1,4 +1,29 @@
+---
+name: diy-locale-detection
+description: Détection manuelle locale, Accept-Language header, Negotiator, logique custom
+when-to-use: contrôle détection, combo avec auth, sans next-intl middleware, règles custom
+keywords: DIY detection, Accept-Language, Negotiator, intl-localematcher, custom rules
+priority: low
+requires: diy-dictionaries.md
+related: middleware-proxy.md, diy-dictionaries.md
+---
+
 # DIY i18n - Locale Detection (No Library)
+
+## When to Use
+
+- Custom locale detection logic
+- DIY approach without next-intl middleware
+- Full control over redirect behavior
+- Combine with custom auth logic in proxy
+
+## Why DIY Detection
+
+| next-intl middleware | DIY detection |
+|----------------------|---------------|
+| Automatic | Manual control |
+| Standard behavior | Custom rules |
+| Less code | More flexibility |
 
 ## Dependencies
 

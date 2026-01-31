@@ -1,4 +1,28 @@
+---
+name: instrumentation
+description: Error tracking and monitoring with Sentry, OpenTelemetry
+when-to-use: error tracking, performance monitoring, observability
+keywords: Sentry, OpenTelemetry, instrumentation, error tracking
+priority: low
+related: devtools-mcp.md, security.md
+---
+
 # Instrumentation & Monitoring
+
+## When to Use
+
+- Error tracking (Sentry)
+- OpenTelemetry tracing
+- Performance monitoring
+- Server/client error capture
+
+## Why Instrumentation
+
+| File | Purpose |
+|------|---------|
+| instrumentation.ts | Server startup |
+| instrumentation-client.ts | Client errors |
+| Both | Full observability |
 
 ## instrumentation.ts (Server)
 ```typescript

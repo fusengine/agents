@@ -1,4 +1,29 @@
+---
+name: pages-router
+description: Legacy Pages Router for migration and gradual app transition
+when-to-use: migrating existing v12/v13 apps, coexistence with App Router
+keywords: pages, legacy, migration, getServerSideProps, gradual
+priority: low
+related: app-router.md, upgrade.md
+---
+
 # Pages Router (Legacy)
+
+## When to Use
+
+- Migrating existing v12/v13 apps
+- Legacy API routes
+- Gradual migration strategy
+- Coexistence with App Router
+
+## Why Migrate to App Router
+
+| Pages Router | App Router |
+|--------------|------------|
+| Client-centric | Server-first |
+| Full JS bundle | Selective hydration |
+| getServerSideProps | Server Components |
+| _app.tsx | Nested layouts |
 
 ## Status in v16
 - Pages Router is **still supported**

@@ -1,4 +1,30 @@
+---
+name: oauth-complete
+description: Complete example of OAuth provider setup and usage
+when-to-use: oauth implementation, multiple providers, oauth example
+keywords: OAuth example, providers, complete, implementation
+priority: medium
+requires: basic-usage.md, providers/overview.md
+related: providers/overview.md
+---
+
 # Better Auth OAuth Complete Example
+
+## When to Use
+
+- Setting up multiple OAuth providers
+- Social login buttons component
+- Account linking UI
+- OAuth callback configuration
+
+## Why This Example
+
+| Feature | Coverage |
+|---------|----------|
+| Multi-provider | Google, GitHub, Discord |
+| Login buttons | One-click social |
+| Account linking | Add/remove providers |
+| Callbacks | Environment setup |
 
 ## Multi-Provider Setup
 

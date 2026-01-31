@@ -1,4 +1,31 @@
+---
+name: faq
+description: Common questions and answers about Better Auth features, setup, and troubleshooting
+when-to-use: quick answers, common questions, feature availability, troubleshooting, learning
+keywords: FAQ, questions, answers, common issues, features, comparison, free, open source
+priority: medium
+related: comparison.md, installation.md, basic-usage.md
+---
+
 # Better Auth FAQ
+
+## When to Use
+
+- Quick answers to common questions
+- Troubleshooting specific issues
+- Understanding feature availability
+- Evaluating Better Auth for your project
+
+## Why Read the FAQ
+
+| Question Type | Section |
+|---------------|---------|
+| Getting started | General |
+| Login/signup issues | Authentication |
+| Token expiration | Sessions |
+| Vulnerabilities | Security |
+| Extending functionality | Plugins |
+| Switching from other libs | Migration |
 
 ## General
 

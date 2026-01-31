@@ -1,4 +1,30 @@
+---
+name: middleware-migration
+description: Migration from deprecated middleware.ts to proxy.ts with Node.js runtime
+when-to-use: upgrading from Next.js 15, migrating middleware patterns
+keywords: middleware, proxy.ts, migration, Node.js runtime
+priority: medium
+requires: upgrade.md, proxy.md
+related: proxy.md, security.md
+---
+
 # Migration: Middleware → Proxy
+
+## When to Use
+
+- Upgrading from Next.js 15
+- middleware.ts deprecation
+- Moving to Node.js runtime
+- Route protection patterns
+
+## Why proxy.ts
+
+| Feature | Improvement |
+|---------|-------------|
+| Runtime | Node.js (not Edge) |
+| APIs | Full Node.js access |
+| File | Root proxy.ts |
+| Function | proxy() export |
 
 ## Breaking Change in v16
 `middleware.ts` is **deprecated**. Use `proxy.ts` instead.

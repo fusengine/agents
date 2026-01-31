@@ -1,18 +1,33 @@
+---
+name: cli
+description: Command-line interface for generating schema, secrets, and database migrations
+when-to-use: generate schema, create migrations, generate secrets, database setup, integration setup
+keywords: CLI, generate, migrate, secret, schema generation, database setup, bunx
+priority: high
+requires: installation.md, server-config.md
+related: installation.md, adapters/prisma.md, adapters/drizzle.md
+---
+
 # Better Auth CLI
 
-## Overview
-CLI tool for database migrations, schema generation, and utilities.
+## When to Use
 
-## Installation
+- Generate database schema from auth config
+- Push schema changes to database
+- Generate secure secrets
+- Integrate with Prisma/Drizzle migrations
 
-```bash
-bun add better-auth
-```
+## Why Use CLI
+
+| Task | Command |
+|------|---------|
+| Initial setup | `generate` |
+| Schema changes | `migrate` |
+| New secret | `secret` |
 
 ## Commands
 
 ### Generate Schema
-Generate database schema from auth configuration:
 
 ```bash
 bunx @better-auth/cli generate
@@ -26,14 +41,12 @@ Options:
 ```
 
 ### Push Schema
-Push schema changes to database:
 
 ```bash
 bunx @better-auth/cli migrate
 ```
 
 ### Generate Secret
-Generate a secure secret for `BETTER_AUTH_SECRET`:
 
 ```bash
 bunx @better-auth/cli secret
@@ -64,9 +77,9 @@ bunx @better-auth/cli generate --output src/db/auth-schema.ts
 bunx drizzle-kit push
 ```
 
-## Configuration File
+## Config Auto-Detection
 
-The CLI auto-detects your auth configuration from:
+The CLI auto-detects your auth config from:
 - `auth.ts`
 - `src/auth.ts`
 - `lib/auth.ts`
@@ -79,7 +92,6 @@ bunx @better-auth/cli generate --config ./modules/auth/src/services/auth.ts
 
 ## Environment
 
-Ensure environment variables are set:
 ```bash
 DATABASE_URL=postgresql://...
 BETTER_AUTH_SECRET=your-secret

@@ -1,4 +1,30 @@
+---
+name: social-providers
+description: Overview of all supported social OAuth providers
+when-to-use: comparing providers, choosing social login, multi-provider setup
+keywords: social, providers, oauth, facebook, spotify, linkedin, twitter
+priority: medium
+requires: providers/overview.md
+related: providers/overview.md, concepts/oauth.md
+---
+
 # Better Auth Social Providers
+
+## When to Use
+
+- Targeting specific platforms (Twitter, TikTok)
+- Media/entertainment applications
+- Creator economy products
+- Platform-specific integrations
+
+## Why Multiple Providers
+
+| Single provider | Multiple providers |
+|-----------------|-------------------|
+| Limited audience | Broader reach |
+| Single point of failure | Redundancy |
+| Platform-specific | User choice |
+| Simpler setup | More conversions |
 
 ## Twitter/X
 

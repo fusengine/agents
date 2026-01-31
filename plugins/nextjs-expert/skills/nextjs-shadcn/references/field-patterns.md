@@ -1,3 +1,13 @@
+---
+name: field-patterns
+description: shadcn/ui field component patterns and usage with TanStack Form integration
+when-to-use: form fields, input validation, field errors, field layouts, shadcn components, form structure
+keywords: field components, shadcn/ui, form fields, field groups, fieldset, TanStack Form, field layout
+priority: high
+requires: form-examples.md
+related: form-examples.md
+---
+
 # Field Component Patterns
 
 Field component patterns for shadcn/ui with TanStack Form integration.

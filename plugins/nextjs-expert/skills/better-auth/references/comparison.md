@@ -1,4 +1,29 @@
+---
+name: comparison
+description: Compare Better Auth with Auth.js, Clerk, Supabase, and Firebase authentication
+when-to-use: evaluating auth solutions, migration decision, technology choice justification, comparing features
+keywords: comparison, versus, Auth.js, Clerk, Supabase, Firebase, differences, self-hosted, features
+priority: low
+related: faq.md, guides/authjs-migration.md, guides/clerk-migration.md
+---
+
 # Better Auth vs Alternatives
+
+## When to Use
+
+- Evaluating authentication solutions
+- Migrating from another provider
+- Justifying technology choice
+- Understanding trade-offs
+
+## Why Compare Auth Solutions
+
+| Factor | Consideration |
+|--------|---------------|
+| Cost | Free/OSS vs Paid SaaS |
+| Control | Self-hosted vs Vendor-hosted |
+| Features | Built-in vs Plugins/Add-ons |
+| Lock-in | Portable vs Proprietary |
 
 ## Better Auth vs Auth.js (NextAuth)
 

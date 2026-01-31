@@ -1,4 +1,30 @@
+---
+name: forms
+description: Form handling with Server Actions, validation, optimistic updates
+when-to-use: building forms, handling submissions, validation, optimistic UI
+keywords: Server Actions, useActionState, useFormStatus, useOptimistic
+priority: high
+requires: server-components.md, directives.md
+related: data-fetching.md
+---
+
 # Forms & Server Actions
+
+## When to Use
+
+- Form submissions with validation
+- Server-side mutations
+- Optimistic UI updates
+- Pending states
+
+## Why Server Actions
+
+| Feature | Benefit |
+|---------|---------|
+| No API route | Direct function call |
+| Type-safe | End-to-end types |
+| Progressive | Works without JS |
+| Revalidation | Automatic cache update |
 
 ## Server Action
 ```typescript

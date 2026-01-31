@@ -1,4 +1,30 @@
+---
+name: prisma
+description: Use Prisma ORM for type-safe database operations with Better Auth
+when-to-use: existing prisma setup, type-safe queries, multiple database support, schema-first development
+keywords: Prisma, adapter, type-safe, schema, migrations, ORM, database adapter, postgresql, mysql, sqlite
+priority: high
+requires: installation.md, server-config.md
+related: adapters/drizzle.md, adapters/mongodb.md, concepts/database.md
+---
+
 # Prisma Adapter
+
+## When to Use
+
+- Existing Prisma setup in project
+- Type-safe database queries needed
+- Multiple database support required
+- Schema-first development
+
+## Why Prisma
+
+| Raw SQL | Prisma |
+|---------|--------|
+| Manual types | Auto-generated |
+| No migrations | Schema migrations |
+| Error-prone | Type-safe queries |
+| No relation handling | Relation support |
 
 ## Installation
 

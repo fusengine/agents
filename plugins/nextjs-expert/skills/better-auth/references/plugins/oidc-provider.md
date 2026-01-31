@@ -1,4 +1,30 @@
+---
+name: oidc-provider
+description: OpenID Connect provider functionality
+when-to-use: oidc provider, enterprise integrations, identity provider role
+keywords: OIDC, OpenID Connect, provider, identity provider
+priority: low
+requires: server-config.md
+related: plugins/sso.md
+---
+
 # Better Auth OIDC Provider Plugin
+
+## When to Use
+
+- Building platforms with third-party integrations
+- "Login with YourApp" functionality
+- API marketplace authentication
+- Developer ecosystem enablement
+
+## Why Be an OIDC Provider
+
+| Consumer only | Provider |
+|---------------|----------|
+| Use others' APIs | Others use yours |
+| Limited ecosystem | Platform growth |
+| No developer tools | Dev portal ready |
+| Single product | Platform business |
 
 ## Overview
 Transform your app into an OAuth 2.1 / OIDC provider for third-party integrations.

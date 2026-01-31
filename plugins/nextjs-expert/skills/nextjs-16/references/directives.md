@@ -1,4 +1,28 @@
+---
+name: directives
+description: React directives - use client, use server, use cache
+when-to-use: understanding render boundaries, Server Actions, caching
+keywords: use client, use server, use cache, directives
+priority: high
+requires: app-router.md, server-components.md, cache-components.md
+---
+
 # Directives
+
+## When to Use
+
+- `'use client'`: Interactive components
+- `'use server'`: Server Actions
+- `'use cache'`: Cached functions
+- Understanding render boundaries
+
+## Why Directives
+
+| Directive | Purpose |
+|-----------|---------|
+| use client | Client Component marker |
+| use server | Server Action marker |
+| use cache | Cache output marker |
 
 ## 'use client'
 Mark a component as Client Component.

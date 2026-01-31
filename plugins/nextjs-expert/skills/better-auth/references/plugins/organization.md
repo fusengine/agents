@@ -1,4 +1,30 @@
+---
+name: organization
+description: Multi-tenant organizations and teams with role-based access
+when-to-use: saas applications, multi-tenant features, team management, workspace separation
+keywords: organization, teams, multi-tenant, roles, permissions, workspace, members
+priority: medium
+requires: server-config.md
+related: plugins/overview.md, concepts/plugins.md
+---
+
 # Organization Plugin
+
+## When to Use
+
+- B2B SaaS with team workspaces
+- Multi-tenant applications
+- Role-based access within teams
+- Invitation-based onboarding
+
+## Why Organizations
+
+| Without | With |
+|---------|------|
+| Single user scope | Team collaboration |
+| Manual role logic | Built-in RBAC |
+| Custom invitations | Managed invites |
+| No data isolation | Tenant separation |
 
 ## Server Configuration
 

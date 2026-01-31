@@ -1,4 +1,30 @@
+---
+name: fonts
+description: Font optimization with next/font, Google Fonts, and local fonts
+when-to-use: font loading, performance, custom fonts
+keywords: next/font, Google Fonts, local fonts, optimization
+priority: medium
+requires: app-router.md
+related: images.md
+---
+
 # Font Optimization
+
+## When to Use
+
+- Loading Google Fonts
+- Using local custom fonts
+- Optimizing font loading
+- Tailwind CSS integration
+
+## Why next/font
+
+| Feature | Benefit |
+|---------|---------|
+| Self-hosted | No external requests |
+| No layout shift | Size-adjusted fallback |
+| Subset | Load only needed chars |
+| CSS Variables | Easy theming |
 
 ## Google Fonts
 ```typescript

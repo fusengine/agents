@@ -1,8 +1,32 @@
+---
+name: typescript
+description: Leverage type inference, custom fields, and plugin types for full TypeScript support
+when-to-use: typescript projects, type-safe auth, extending user type, plugin typing, IDE autocomplete
+keywords: type inference, session type, user type, custom fields, plugin types, generics, IDE support
+priority: medium
+requires: server-config.md, client.md
+related: server-config.md
+---
+
 # Better Auth TypeScript
 
-## Type Inference
+## When to Use
 
-Better Auth provides full TypeScript support with automatic type inference.
+- Type-safe authentication in TypeScript projects
+- Extend user model with custom fields
+- Share types between server and client
+- Plugin type inference
+
+## Why Type Safety
+
+| Feature | Benefit |
+|---------|---------|
+| Auto-inference | No manual type definitions |
+| Custom fields | Extends User/Session types |
+| Plugin types | Methods auto-typed |
+| IDE support | Full autocomplete |
+
+## Type Inference
 
 ```typescript
 import { betterAuth } from "better-auth"
@@ -20,8 +44,6 @@ type User = Auth["$Infer"]["User"]
 ## Extending User Type
 
 ```typescript
-import { betterAuth } from "better-auth"
-
 export const auth = betterAuth({
   user: {
     additionalFields: {
@@ -71,7 +93,6 @@ export async function GET(request: Request) {
   const session = await auth.api.getSession({ headers: request.headers })
 
   if (session) {
-    // session.user is fully typed
     console.log(session.user.email)
     console.log(session.user.role)  // Custom field
   }
@@ -81,10 +102,5 @@ export async function GET(request: Request) {
 ## Type Exports
 
 ```typescript
-import type {
-  Session,
-  User,
-  Account,
-  BetterAuthOptions
-} from "better-auth"
+import type { Session, User, Account, BetterAuthOptions } from "better-auth"
 ```

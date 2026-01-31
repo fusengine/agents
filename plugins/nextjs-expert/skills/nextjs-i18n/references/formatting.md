@@ -1,4 +1,27 @@
+---
+name: formatting
+description: Format nombres, dates, temps relatif, listes selon locale et Intl APIs
+when-to-use: prix en devises, dates localisées, temps relatif, listes conjonctions
+keywords: useFormatter, number, dateTime, relativeTime, list, currency, localization
+priority: medium
+requires: client-components.md
+related: translations.md, configuration.md
+---
+
 # next-intl Formatting
+
+## When to Use
+
+- Display prices in local currency format
+- Format dates according to user's locale
+- Show relative time ("5 days ago")
+- Format lists with proper conjunctions
+
+## Why useFormatter
+
+- **Locale-aware**: Automatically uses current locale
+- **Consistent**: Same API for numbers, dates, lists
+- **ICU standard**: Uses Intl APIs under the hood
 
 ## Numbers
 
@@ -34,11 +57,7 @@ format.dateTime(date, { dateStyle: 'full' })
 format.dateTime(date, { timeStyle: 'short' })
 // "10:30 AM"
 
-format.dateTime(date, {
-  year: 'numeric',
-  month: 'long',
-  day: 'numeric'
-})
+format.dateTime(date, { year: 'numeric', month: 'long', day: 'numeric' })
 // "January 15, 2024"
 ```
 
@@ -72,7 +91,7 @@ format.list(items, { type: 'disjunction' })
 // "Apple, Banana, or Orange"
 ```
 
-## In Messages
+## In Messages (ICU)
 
 ```json
 {

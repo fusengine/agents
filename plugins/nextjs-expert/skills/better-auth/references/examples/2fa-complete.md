@@ -1,4 +1,30 @@
+---
+name: 2fa-complete
+description: Complete example of two-factor authentication setup
+when-to-use: 2fa implementation, security, complete example
+keywords: 2FA example, totp, complete, implementation
+priority: medium
+requires: basic-usage.md, plugins/2fa.md
+related: plugins/2fa.md, plugins/passkey.md
+---
+
 # Better Auth 2FA Complete Example
+
+## When to Use
+
+- Implementing complete 2FA flow
+- QR code setup + verification
+- Backup codes handling
+- Login with 2FA challenge
+
+## Why This Example
+
+| Flow | Coverage |
+|------|----------|
+| Enable 2FA | QR + backup codes |
+| Verify setup | TOTP validation |
+| Login with 2FA | Challenge handling |
+| Disable 2FA | Clean removal |
 
 ## Server Setup
 

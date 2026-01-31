@@ -1,4 +1,30 @@
+---
+name: plugin-development
+description: Guide to building custom Better Auth plugins
+when-to-use: custom plugins, plugin development, extending better-auth
+keywords: plugin development, custom plugins, extending, plugin api
+priority: low
+requires: server-config.md, concepts/plugins.md
+related: concepts/plugins.md
+---
+
 # Better Auth Plugin Development
+
+## When to Use
+
+- Building custom authentication features
+- Packaging reusable auth logic
+- Contributing to Better Auth ecosystem
+- Integrating proprietary systems
+
+## Why Build Plugins
+
+| Inline code | Plugin |
+|-------------|--------|
+| App-coupled | Reusable |
+| No structure | Standard API |
+| Hard to maintain | Isolated |
+| Not shareable | Publishable |
 
 ## Plugin Structure
 

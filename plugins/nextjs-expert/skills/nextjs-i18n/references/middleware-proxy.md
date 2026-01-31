@@ -1,6 +1,31 @@
+---
+name: middleware-proxy
+description: proxy.ts pour Next.js 16, détection locale, routing avant app, combinaison auth
+when-to-use: détection Accept-Language, redirection locales, auth + i18n, domaines multiples
+keywords: proxy.ts, createMiddleware, matcher, localeDetection, domain-based routing
+priority: high
+requires: routing-setup.md
+related: routing-config.md, diy-locale-detection.md, pages-router.md
+---
+
 # next-intl Middleware/Proxy (SOLID)
 
-## Next.js 16: proxy.ts
+## When to Use
+
+- Locale detection from Accept-Language header
+- Redirect users to their preferred locale
+- Protect routes with auth + i18n combined
+- Domain-based locale routing
+
+## Why proxy.ts (Next.js 16)
+
+| middleware.ts | proxy.ts |
+|---------------|----------|
+| Deprecated | Recommended |
+| Runs after routing | Runs before routing |
+| Limited access | Full request access |
+
+## Basic Setup
 
 ```typescript
 // proxy.ts (root level)
@@ -24,7 +49,7 @@ export default createMiddleware(routing, {
 })
 ```
 
-## Custom Logic in Proxy
+## Combined Auth + i18n
 
 ```typescript
 // proxy.ts

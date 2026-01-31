@@ -1,4 +1,30 @@
+---
+name: auth0-migration
+description: Migrate from Auth0 to Better Auth
+when-to-use: auth0 migration, switching from auth0, migration guide
+keywords: Auth0, migration, switching, from Auth0, migration guide
+priority: low
+requires: migrations.md
+related: migrations.md, guides/clerk-migration.md
+---
+
 # Better Auth Migration from Auth0
+
+## When to Use
+
+- Migrating from Auth0 to self-hosted
+- Reducing authentication costs
+- Need more customization control
+- Eliminating vendor dependency
+
+## Why Migrate
+
+| Auth0 | Better Auth |
+|-------|-------------|
+| Usage-based pricing | Free/OSS |
+| Vendor hosted | Self-hosted |
+| Limited customization | Full control |
+| Vendor lock-in | Portable |
 
 ## 1. Install Better Auth
 

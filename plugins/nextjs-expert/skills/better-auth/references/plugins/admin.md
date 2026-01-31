@@ -1,4 +1,30 @@
+---
+name: admin
+description: Admin dashboard for managing users, sessions, and authentication
+when-to-use: user management, admin dashboard, user moderation, account deletion
+keywords: admin, dashboard, user management, moderation, delete users, manage sessions
+priority: low
+requires: server-config.md
+related: plugins/overview.md, user-accounts.md
+---
+
 # Admin Plugin
+
+## When to Use
+
+- Building admin dashboards
+- User management interfaces
+- Support team impersonation
+- Compliance user actions (ban, delete)
+
+## Why Admin Plugin
+
+| Manual | With Plugin |
+|--------|-------------|
+| Custom queries | `listUsers` API |
+| Build CRUD | Ready-to-use |
+| Risky impersonation | Secure, logged |
+| No audit trail | Action history |
 
 ## Server Configuration
 

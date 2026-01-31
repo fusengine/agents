@@ -1,4 +1,30 @@
+---
+name: multi-session
+description: Support multiple concurrent sessions per user
+when-to-use: multiple devices, multi-session support, device management
+keywords: multi-session, multiple sessions, device sessions, concurrent login
+priority: low
+requires: server-config.md, session.md
+related: session.md, concepts/sessions.md
+---
+
 # Better Auth Multi-Session Plugin
+
+## When to Use
+
+- Users accessing from multiple devices
+- Session management security features
+- "Sign out of all devices" functionality
+- Account security dashboards
+
+## Why Multi-Session
+
+| Single session | Multi-session |
+|----------------|---------------|
+| One device only | Any device |
+| No visibility | Session list |
+| No remote logout | Revoke anywhere |
+| Shared credentials | Device isolation |
 
 ## Installation
 

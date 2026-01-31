@@ -1,4 +1,30 @@
+---
+name: polar
+description: Polar integration for subscriptions and monetization
+when-to-use: polar subscriptions, monetization, recurring payments
+keywords: Polar, subscriptions, monetization, payments
+priority: low
+requires: server-config.md
+related: plugins/stripe.md
+---
+
 # Better Auth Polar Plugin
+
+## When to Use
+
+- Open source monetization
+- Developer-focused subscriptions
+- GitHub sponsor alternative
+- Community-supported products
+
+## Why Polar
+
+| Stripe | Polar |
+|--------|-------|
+| General payments | Open source focus |
+| Complex setup | OSS-optimized |
+| Generic billing | Developer experience |
+| Manual integration | Built-in user sync |
 
 ## Installation
 

@@ -1,4 +1,30 @@
+---
+name: apple
+description: Apple OAuth provider setup and configuration
+when-to-use: apple oauth, ios apps, sign in with apple
+keywords: Apple, OAuth, iOS, sign-in with apple, authentication
+priority: medium
+requires: server-config.md, providers/overview.md
+related: providers/overview.md, concepts/oauth.md
+---
+
 # Better Auth Apple Provider
+
+## When to Use
+
+- iOS/macOS native apps
+- App Store requirement compliance
+- Privacy-focused users
+- Apple ecosystem products
+
+## Why Apple
+
+| Consideration | Value |
+|---------------|-------|
+| iOS requirement | Mandatory if other social |
+| Privacy | Hide My Email option |
+| Device auth | Face/Touch ID |
+| User trust | Apple security reputation |
 
 ## Setup
 

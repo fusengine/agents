@@ -1,4 +1,30 @@
+---
+name: overview
+description: Complete guide to all available plugins for extending Better Auth functionality
+when-to-use: extending auth, adding features, 2fa, organizations, magic links, oidc, stripe, scim
+keywords: plugins overview, 2fa, organization, passkey, magic link, admin, sso, scim, stripe
+priority: medium
+requires: server-config.md
+related: concepts/plugins.md, guides/plugin-development.md
+---
+
 # Better Auth Plugins Overview
+
+## When to Use
+
+- Extending core authentication features
+- Adding 2FA, passkeys, organizations
+- Integrating third-party services (Stripe, SCIM)
+- Building admin dashboards
+
+## Why Use Plugins
+
+| Need | Plugin |
+|------|--------|
+| Security layer | `twoFactor`, `passkey` |
+| Multi-tenancy | `organization` |
+| Passwordless | `magicLink`, `anonymous` |
+| Enterprise | `sso`, `scim`, `bearer` |
 
 ## Available Plugins
 

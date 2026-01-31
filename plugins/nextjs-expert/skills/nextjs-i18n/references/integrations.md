@@ -1,20 +1,45 @@
+---
+name: integrations
+description: i18n-ally VSCode, Crowdin, Storybook, CI/CD validation messages
+when-to-use: outillage, traduction teams, Storybook development, CI workflows
+keywords: i18n-ally, Crowdin, Storybook, VSCode extension, CI/CD, validation
+priority: low
+requires: installation.md, messages-validation.md
+related: testing.md
+---
+
 # next-intl Integrations
 
-## VSCode Extension
+## When to Use
 
-Install `lokalise.i18n-ally` for:
-- Inline translation preview
-- Auto-complete for keys
-- Missing translation detection
+- IDE support with i18n-ally extension
+- Translation management with Crowdin/Lokalise
+- Storybook for component development
+- CI/CD for message validation
+
+## Why Integrate Tooling
+
+| Manual | With Tooling |
+|--------|--------------|
+| Check JSON files manually | Inline preview in IDE |
+| Email translators | Crowdin workflow |
+| No Storybook locale | Locale switcher in Storybook |
+
+## VSCode Extension (i18n-ally)
 
 ```json
 // .vscode/settings.json
 {
-  "i18n-ally.localesPaths": ["messages"],
+  "i18n-ally.localesPaths": ["modules/cores/i18n/messages"],
   "i18n-ally.keystyle": "nested",
   "i18n-ally.sourceLanguage": "en"
 }
 ```
+
+Features:
+- Inline translation preview
+- Auto-complete for keys
+- Missing translation detection
 
 ## Crowdin Integration
 
@@ -24,16 +49,13 @@ project_id: "your-project-id"
 api_token_env: "CROWDIN_TOKEN"
 
 files:
-  - source: /messages/en.json
-    translation: /messages/%locale%.json
+  - source: /modules/cores/i18n/messages/en.json
+    translation: /modules/cores/i18n/messages/%locale%.json
 ```
 
 ```bash
-# Push source to Crowdin
-crowdin push
-
-# Pull translations
-crowdin pull
+crowdin push   # Push source to Crowdin
+crowdin pull   # Pull translations
 ```
 
 ## Storybook
@@ -41,7 +63,7 @@ crowdin pull
 ```typescript
 // .storybook/preview.tsx
 import { NextIntlClientProvider } from 'next-intl'
-import messages from '../messages/en.json'
+import messages from '../modules/cores/i18n/messages/en.json'
 
 export const decorators = [
   (Story) => (
@@ -60,31 +82,17 @@ export const globalTypes = {
   locale: {
     name: 'Locale',
     defaultValue: 'en',
-    toolbar: {
-      icon: 'globe',
-      items: ['en', 'fr', 'de']
-    }
+    toolbar: { icon: 'globe', items: ['en', 'fr', 'de'] }
   }
 }
 ```
 
-## Message Validation
+## CI Message Validation
 
-```typescript
-// scripts/validate-messages.ts
-import en from '../messages/en.json'
-import fr from '../messages/fr.json'
-
-function validateMessages(source: object, target: object, path = '') {
-  for (const key in source) {
-    const currentPath = path ? `${path}.${key}` : key
-    if (!(key in target)) {
-      console.error(`Missing: ${currentPath}`)
-    } else if (typeof source[key] === 'object') {
-      validateMessages(source[key], target[key], currentPath)
-    }
-  }
-}
-
-validateMessages(en, fr)
+```yaml
+# .github/workflows/i18n.yml
+jobs:
+  validate:
+    steps:
+      - run: bun run validate:i18n
 ```

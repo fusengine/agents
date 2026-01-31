@@ -1,3 +1,13 @@
+---
+name: messages-validation
+description: Script validation clés manquantes, syntaxe ICU, clés inutilisées, CI/CD
+when-to-use: validation traductions, clés manquantes, syntaxe ICU, CI checks, cleanup
+keywords: validateMessages, ICU syntax, unused keys detection, missing translations
+priority: low
+requires: translations.md
+related: extraction.md, integrations.md
+---
+
 # next-intl Messages Validation
 
 ## Script de Validation

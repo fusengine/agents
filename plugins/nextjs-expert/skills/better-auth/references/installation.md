@@ -1,4 +1,30 @@
+---
+name: installation
+description: Setup Better Auth in your project with database, environment variables, and dependencies
+when-to-use: installing better-auth, initial setup, new project, adding authentication library
+keywords: setup, npm install, environment variables, database url, prisma, initial config
+priority: high
+requires: none
+related: basic-usage.md, server-config.md, cli.md
+---
+
 # Better Auth Installation
+
+## When to Use
+
+- New authentication setup
+- Migrating from another auth library
+- Adding auth to existing Next.js project
+
+## Why Better Auth
+
+| Feature | Better Auth |
+|---------|-------------|
+| TypeScript | First-class |
+| Bundle size | ~50KB |
+| Plugins | 20+ |
+| OAuth providers | 40+ |
+| Framework lock-in | None |
 
 ## Installation
 
@@ -9,7 +35,6 @@ bun add better-auth
 ## SOLID Project Structure (Next.js 16)
 
 ```
-# With src/ directory
 src/
 ├── proxy.ts                           # Same level as app/
 ├── app/
@@ -20,13 +45,6 @@ src/
         ├── interfaces/session.interface.ts
         ├── services/auth.ts
         └── hooks/auth-client.ts
-
-# Without src/ directory
-proxy.ts                               # Project root
-app/
-└── api/auth/[...all]/route.ts
-modules/
-└── ...
 ```
 
 ## Environment Variables

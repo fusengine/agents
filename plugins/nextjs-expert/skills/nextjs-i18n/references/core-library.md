@@ -1,8 +1,32 @@
+---
+name: core-library
+description: use-intl pour React/Vite/non-Next.js, API Node.js, Cloudflare Workers
+when-to-use: projets Vite, React classique, APIs Node, workers edge, packages partagés
+keywords: use-intl, createTranslator, createFormatter, runtime agnostique
+priority: high
+requires:
+related: installation.md
+---
+
 # next-intl Core Library
 
-## Standalone Usage (Without Next.js)
+## When to Use
 
-next-intl can be used outside Next.js via `use-intl` package.
+- Non-Next.js React apps (Vite, CRA)
+- Node.js APIs or workers
+- Edge functions (Cloudflare Workers)
+- Shared packages used by multiple apps
+- Testing utilities
+
+## Why use-intl
+
+| next-intl | use-intl |
+|-----------|----------|
+| Next.js only | Any runtime |
+| Full framework | Core only |
+| Server Components | React/vanilla |
+
+## Installation
 
 ```bash
 bun add use-intl
@@ -58,20 +82,23 @@ async function handler(locale: string) {
 }
 ```
 
-## API
+## API Reference
 
 ```typescript
 // Translator
-createTranslator({ locale, messages, namespace?, onError?, getMessageFallback? })
+createTranslator({
+  locale,
+  messages,
+  namespace?,
+  onError?,
+  getMessageFallback?
+})
 
 // Formatter
-createFormatter({ locale, timeZone?, now?, formats? })
+createFormatter({
+  locale,
+  timeZone?,
+  now?,
+  formats?
+})
 ```
-
-## When to Use Core Library
-
-- Non-Next.js React apps
-- Node.js APIs/workers
-- Edge functions
-- Testing utilities
-- Shared packages

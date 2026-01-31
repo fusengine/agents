@@ -1,4 +1,30 @@
+---
+name: api
+description: API endpoints and server methods for authentication, user management, and sessions
+when-to-use: direct API calls, server actions, API routes, custom implementations, debugging
+keywords: auth.api, endpoints, /sign-up, /sign-in, /get-session, server API, error codes
+priority: medium
+requires: server-config.md, client.md
+related: server-actions.md, errors.md
+---
+
 # Better Auth API Reference
+
+## When to Use
+
+- Direct API calls without SDK
+- Server-side user management
+- Custom integrations
+- Debugging authentication flow
+
+## Why Know the API
+
+| Context | Usage |
+|---------|-------|
+| Server Actions | `auth.api.*` methods |
+| Client | SDK wraps these endpoints |
+| Debugging | Check network requests |
+| Custom UI | Build own forms |
 
 ## Core Endpoints
 

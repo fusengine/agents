@@ -1,4 +1,30 @@
+---
+name: generic-oauth
+description: Custom OAuth provider configuration for any OAuth service
+when-to-use: custom oauth, unsupported providers, custom oauth setup
+keywords: custom oauth, generic provider, oauth config, custom authentication
+priority: low
+requires: server-config.md, providers/overview.md
+related: providers/overview.md, concepts/oauth.md
+---
+
 # Generic OAuth Provider
+
+## When to Use
+
+- Custom identity providers
+- Enterprise IdPs (OneLogin, Auth0)
+- Regional providers (WeChat, LINE)
+- Internal OAuth servers
+
+## Why Generic OAuth
+
+| Built-in providers | Generic OAuth |
+|--------------------|---------------|
+| Limited selection | Any provider |
+| Fixed configuration | Full control |
+| Standard mapping | Custom mapping |
+| Preset scopes | Custom scopes |
 
 ## Generic OAuth Plugin
 

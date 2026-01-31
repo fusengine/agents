@@ -1,4 +1,30 @@
+---
+name: workos-migration
+description: Migrate from WorkOS to Better Auth
+when-to-use: workos migration, switching from workos, migration guide
+keywords: WorkOS, migration, switching, from WorkOS, migration guide
+priority: low
+requires: migrations.md
+related: migrations.md
+---
+
 # Better Auth WorkOS Migration Guide
+
+## When to Use
+
+- Migrating from WorkOS SSO/SCIM
+- Eliminating per-connection pricing
+- Self-hosting enterprise auth
+- Full control over SSO
+
+## Why Migrate
+
+| WorkOS | Better Auth |
+|--------|-------------|
+| Per-connection $ | Free |
+| Hosted service | Self-hosted |
+| WorkOS dashboard | Your database |
+| Limited customization | Full control |
 
 ## Key Differences
 

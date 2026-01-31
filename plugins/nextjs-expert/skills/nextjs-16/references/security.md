@@ -1,4 +1,30 @@
+---
+name: security
+description: Content Security Policy, nonces, and security headers
+when-to-use: XSS protection, clickjacking prevention, security hardening
+keywords: CSP, nonce, security headers, HSTS, X-Frame-Options
+priority: medium
+requires: proxy.md
+related: proxy.md, config-advanced.md
+---
+
 # Security (Content Security Policy)
+
+## When to Use
+
+- Content Security Policy setup
+- Nonce-based script loading
+- Security headers
+- XSS protection
+
+## Why CSP
+
+| Header | Protection |
+|--------|------------|
+| CSP | XSS, injection |
+| X-Frame-Options | Clickjacking |
+| HSTS | HTTPS enforcement |
+| Referrer-Policy | Privacy |
 
 ## CSP with Nonces
 ```typescript

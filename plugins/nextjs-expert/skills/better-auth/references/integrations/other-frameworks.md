@@ -1,4 +1,30 @@
+---
+name: other-frameworks
+description: Integration guide for non-Next.js frameworks
+when-to-use: sveltekit, nuxt, remix, astro, other frameworks
+keywords: frameworks, sveltekit, nuxt, remix, astro, svelte
+priority: medium
+requires: installation.md, basic-usage.md
+related: integrations/nextjs.md
+---
+
 # Better Auth Framework Integrations
+
+## When to Use
+
+- Non-Next.js framework integration
+- SvelteKit, Nuxt, Remix, Astro setup
+- Express, Hono, Fastify backend
+- Framework-specific handler patterns
+
+## Why Same Auth, Different Handlers
+
+| Component | Shared |
+|-----------|--------|
+| Auth config | Same `betterAuth()` |
+| Plugins | Same plugins |
+| Database | Same adapters |
+| Client | Framework-specific |
 
 ## SvelteKit
 

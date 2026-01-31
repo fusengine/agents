@@ -1,4 +1,30 @@
+---
+name: proxy
+description: Route protection with proxy.ts for authentication, redirects, and headers
+when-to-use: protecting routes, authentication, URL rewriting
+keywords: proxy.ts, authentication, redirect, matcher, Node.js runtime
+priority: high
+requires: app-router.md
+related: security.md, middleware-migration.md, cookies-headers.md
+---
+
 # proxy.ts (Route Protection)
+
+## When to Use
+
+- Protecting authenticated routes
+- Implementing redirects
+- Adding request/response headers
+- URL rewriting
+
+## Why proxy.ts
+
+| Feature | Improvement |
+|---------|-------------|
+| Node.js Runtime | Full Node.js API access |
+| Clearer API | Explicit network boundary |
+| Better Perf | No Edge runtime limitations |
+| Simpler | Direct function export |
 
 > **Note**: `middleware.ts` is deprecated in Next.js 16. Use `proxy.ts`.
 

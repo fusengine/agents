@@ -1,4 +1,30 @@
+---
+name: oauth
+description: Understand OAuth 2.0 flow, provider configuration, token management, and account linking
+when-to-use: understanding OAuth, custom provider integration, debugging OAuth, token management, account linking
+keywords: OAuth, oauth2, flow, provider, token, account linking, authorization, authentication
+priority: medium
+requires: server-config.md
+related: providers/overview.md, concepts/security.md, user-accounts.md
+---
+
 # Better Auth OAuth Concept
+
+## When to Use
+
+- Understanding OAuth flow
+- Debugging OAuth issues
+- Custom provider integration
+- Token management strategies
+
+## Why OAuth
+
+| Email/Password | OAuth |
+|----------------|-------|
+| Password storage | Delegated auth |
+| Verification needed | Pre-verified |
+| User friction | One-click |
+| No API access | Provider APIs |
 
 ## OAuth 2.0 Flow
 

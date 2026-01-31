@@ -1,4 +1,28 @@
+---
+name: installation
+description: Setup and installation guide for Next.js 16 projects with TypeScript and Turbopack
+when-to-use: starting new project, upgrading from v14/v15, setting up TypeScript
+keywords: setup, init, project creation, environment variables, requirements
+priority: high
+---
+
 # Next.js 16 Installation
+
+## When to Use
+
+- Starting a new Next.js 16 project
+- Upgrading from Next.js 14/15
+- Setting up TypeScript configuration
+- Configuring environment variables
+
+## Why Next.js 16
+
+| Feature | Improvement |
+|---------|-------------|
+| Turbopack | Default bundler, 2-5x faster builds |
+| Cache Components | Explicit caching with `use cache` |
+| React Compiler | Automatic memoization |
+| proxy.ts | Clearer route protection |
 
 ## New Project
 

@@ -1,4 +1,30 @@
+---
+name: streaming
+description: Server-Sent Events, streaming responses, and real-time updates
+when-to-use: real-time updates, AI chat, progressive loading
+keywords: SSE, EventSource, streaming, ReadableStream
+priority: medium
+requires: api-routes.md, data-fetching.md
+related: loading-patterns.md
+---
+
 # Streaming & SSE
+
+## When to Use
+
+- Server-Sent Events
+- AI chat responses
+- Real-time updates
+- Progressive loading
+
+## Why Streaming
+
+| Feature | Use Case |
+|---------|----------|
+| SSE | Live updates |
+| ReadableStream | Chunked data |
+| AI SDK | Chat responses |
+| Text | Typewriter effect |
 
 ## Server-Sent Events (SSE)
 ```typescript

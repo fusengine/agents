@@ -1,4 +1,30 @@
+---
+name: upgrade
+description: Upgrading to Next.js 16 with breaking changes and codemods
+when-to-use: migrating from v14/v15, handling breaking changes
+keywords: upgrade, migration, codemod, breaking changes
+priority: high
+requires: installation.md
+related: middleware-migration.md
+---
+
 # Upgrade to Next.js 16
+
+## When to Use
+
+- Migrating from v14/v15
+- middleware.ts deprecation
+- Async APIs changes
+- Turbopack migration
+
+## Why Upgrade
+
+| Change | Benefit |
+|--------|---------|
+| Turbopack | 2-5x faster builds |
+| proxy.ts | Node.js runtime |
+| Cache Components | Explicit caching |
+| React Compiler | Auto-memoization |
 
 ## Automatic Upgrade
 ```bash

@@ -1,4 +1,30 @@
+---
+name: react-compiler
+description: Automatic memoization and performance optimization with React Compiler
+when-to-use: performance optimization, removing useMemo/useCallback boilerplate
+keywords: React Compiler, memoization, useMemo, useCallback, auto-optimize
+priority: medium
+requires: react-19.md
+related: react-19.md
+---
+
 # React Compiler
+
+## When to Use
+
+- Automatic memoization
+- Removing useMemo/useCallback
+- Performance optimization
+- Clean component code
+
+## Why React Compiler
+
+| Feature | Benefit |
+|---------|---------|
+| Auto memo | No manual useMemo |
+| Zero runtime | Build-time transforms |
+| Optimal | Compiler knows best |
+| Clean code | Remove boilerplate |
 
 ## Enable in Next.js 16
 ```typescript

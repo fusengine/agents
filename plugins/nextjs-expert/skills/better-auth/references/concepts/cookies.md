@@ -1,4 +1,30 @@
+---
+name: cookies
+description: Understand cookie strategy, security attributes, and cross-domain authentication
+when-to-use: understanding cookies, security configuration, cross-domain auth, cookie debugging
+keywords: cookies, http-only, secure, sameSite, session cookie, csrf protection, cross-domain
+priority: medium
+requires: session.md, security.md
+related: session.md, concepts/sessions.md, concepts/security.md
+---
+
 # Better Auth Cookies Concept
+
+## When to Use
+
+- Understanding cookie strategy
+- Cross-domain authentication
+- Cookie security configuration
+- Debugging cookie issues
+
+## Why Cookies
+
+| LocalStorage | Cookies |
+|--------------|---------|
+| XSS vulnerable | HttpOnly protection |
+| Manual handling | Automatic |
+| No CSRF protection | SameSite attribute |
+| Client-only | Server accessible |
 
 ## Session Cookie
 

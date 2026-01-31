@@ -1,4 +1,29 @@
+---
+name: server-actions
+description: Use Server Components and Actions for protected endpoints and reusable auth helpers
+when-to-use: server components, protected api routes, server actions, cache wrappers, auth helpers
+keywords: server actions, server components, protected routes, cache, getSession, headers
+priority: high
+requires: basic-usage.md, client.md
+related: middleware.md, api.md
+---
+
 # Server Actions & Server Components
+
+## When to Use
+
+- Protected Server Components (dashboard, profile)
+- Server Actions that require authentication
+- API Routes with auth checks
+- Reusable auth helpers with caching
+
+## Why Server-Side Auth
+
+| Pattern | Benefit |
+|---------|---------|
+| `cache()` wrapper | Single DB call per request |
+| `headers()` | Access cookies server-side |
+| Server Components | No client JS for auth check |
 
 ## Get Session (Server Component)
 

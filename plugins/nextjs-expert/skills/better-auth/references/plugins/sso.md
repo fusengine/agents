@@ -1,4 +1,30 @@
+---
+name: sso
+description: Single Sign-On for enterprise authentication
+when-to-use: enterprise auth, multiple applications, sso setup
+keywords: SSO, single sign-on, enterprise, saml, oidc
+priority: medium
+requires: server-config.md
+related: plugins/oidc-provider.md, guides/saml-okta.md
+---
+
 # Better Auth SSO Plugin (Enterprise)
+
+## When to Use
+
+- Enterprise B2B sales requirements
+- Customer IT security compliance
+- Okta/Azure AD/Google Workspace integration
+- Eliminating password management for employees
+
+## Why SSO
+
+| Without SSO | With SSO |
+|-------------|----------|
+| Separate credentials | One corporate login |
+| No enterprise deals | Enterprise-ready |
+| Manual provisioning | Automatic provisioning |
+| Audit complexity | Centralized audit |
 
 ## Overview
 SAML 2.0 and OIDC single sign-on for enterprise customers.

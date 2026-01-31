@@ -1,4 +1,30 @@
+---
+name: api-key
+description: API key generation and management for service-to-service auth
+when-to-use: api keys, service authentication, third-party access
+keywords: API key, service auth, third-party, key management
+priority: low
+requires: server-config.md
+related: plugins/bearer.md, plugins/jwt.md
+---
+
 # Better Auth API Key Plugin
+
+## When to Use
+
+- Developer API access
+- Long-lived automation credentials
+- Service account authentication
+- Integration key management
+
+## Why API Keys
+
+| Session | API Key |
+|---------|---------|
+| Browser-bound | Any client |
+| Short-lived | Long-lived |
+| User interaction | Automated |
+| Cookie-based | Header-based |
 
 ## Overview
 Generate and manage API keys for programmatic access.

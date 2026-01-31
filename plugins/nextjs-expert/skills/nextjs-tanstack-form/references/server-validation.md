@@ -1,3 +1,13 @@
+---
+name: server-validation
+description: Server validation patterns with TanStack Form and Next.js Server Actions
+when-to-use: server-side validation, database checks, form validation on server, Server Actions
+keywords: server validation, Server Actions, TanStack Form, database validation, createServerValidate, ServerValidateError
+priority: high
+requires: client-form.md
+related: client-form.md
+---
+
 # Server Validation Patterns
 
 Server validation with TanStack Form and Server Actions.

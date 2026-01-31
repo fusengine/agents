@@ -1,4 +1,30 @@
+---
+name: server-components
+description: Understanding Server Components, Client Components, and composition patterns
+when-to-use: data fetching, database access, performance optimization, component architecture
+keywords: Server Components, Client Components, use client, async components, rendering
+priority: high
+requires: app-router.md, data-fetching.md
+related: directives.md, rendering.md
+---
+
 # Server Components vs Client Components
+
+## When to Use
+
+- **Server**: Data fetching, DB access, secrets
+- **Client**: Interactivity, state, browser APIs
+- Choosing rendering strategy
+- Optimizing bundle size
+
+## Why Server Components
+
+| Feature | Benefit |
+|---------|---------|
+| Zero JS | No client bundle for server code |
+| Direct DB | No API layer needed |
+| Secure | Secrets never leak to client |
+| SEO | Full HTML on first render |
 
 ## Server Components (Default)
 All components are Server Components by default.

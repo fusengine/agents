@@ -1,4 +1,29 @@
+---
+name: installation
+description: Installation et configuration initiale de next-intl avec structure SOLID
+when-to-use: ajouter i18n, nouveau projet multilingue, setup initial, configuration
+keywords: setup, bun add, package, messages, routing, configuration
+priority: high
+requires: routing-setup.md
+related: core-library.md, plugin.md
+---
+
 # next-intl Installation
+
+## When to Use
+
+- New multilingual Next.js project
+- Adding i18n to existing project
+- Need full-featured i18n (ICU, pluralization, formatting)
+
+## Why next-intl
+
+| Feature | next-intl | DIY |
+|---------|-----------|-----|
+| ICU format | Yes | Manual |
+| Pluralization | Built-in | Manual |
+| Type safety | Yes | Manual |
+| Client hooks | Yes | No |
 
 ## Install
 

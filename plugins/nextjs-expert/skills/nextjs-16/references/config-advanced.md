@@ -1,4 +1,30 @@
+---
+name: config-advanced
+description: Advanced configuration with headers, redirects, rewrites, and experimental features
+when-to-use: security headers, URL migrations, proxy routing
+keywords: headers, redirects, rewrites, next.config.ts
+priority: medium
+requires: installation.md
+related: security.md, proxy.md
+---
+
 # Advanced Configuration
+
+## When to Use
+
+- Custom HTTP headers
+- URL redirects and rewrites
+- Experimental features
+- Build output configuration
+
+## Why next.config.ts
+
+| Feature | Purpose |
+|---------|---------|
+| Headers | Security, CORS |
+| Redirects | URL migrations |
+| Rewrites | Proxy, URL masking |
+| Output | Deployment mode |
 
 ## Headers
 ```typescript

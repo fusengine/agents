@@ -1,4 +1,30 @@
+---
+name: errors
+description: Handle authentication error codes with recovery flows and user-friendly messages
+when-to-use: error handling, debugging auth failures, user feedback, recovery flows, error messages
+keywords: error codes, INVALID_CREDENTIALS, 2FA_REQUIRED, rate limit, error handling, recovery
+priority: medium
+requires: basic-usage.md, client.md
+related: rate-limiting.md, security.md
+---
+
 # Better Auth Error Codes
+
+## When to Use
+
+- Building user-friendly error messages
+- Implementing error recovery flows
+- Debugging authentication issues
+- Handling 2FA and rate limit scenarios
+
+## Why Handle Errors Properly
+
+| Without | With |
+|---------|------|
+| Generic "error" | Specific "Wrong password" |
+| User confusion | Clear next steps |
+| Support tickets | Self-service recovery |
+| Silent failures | Logged and monitored |
 
 ## Authentication Errors
 

@@ -1,4 +1,30 @@
+---
+name: passkey
+description: WebAuthn/Passkey authentication for passwordless sign-in
+when-to-use: passwordless auth, high-security requirements, webauthn, biometric login
+keywords: passkey, webauthn, passwordless, biometric, fido2, hardware keys
+priority: medium
+requires: server-config.md
+related: plugins/2fa.md, security.md
+---
+
 # Passkey Plugin (WebAuthn)
+
+## When to Use
+
+- Passwordless authentication strategy
+- Phishing-resistant login requirements
+- Modern UX with biometrics/security keys
+- Apple/Google passkey ecosystem
+
+## Why Passkeys
+
+| Traditional | Passkey |
+|-------------|---------|
+| Passwords stolen | Cryptographic proof |
+| Phishing attacks | Origin-bound |
+| Password fatigue | Biometric ease |
+| Database breaches | No server secrets |
 
 ## Server Configuration
 

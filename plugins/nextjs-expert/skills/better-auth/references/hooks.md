@@ -1,7 +1,31 @@
+---
+name: hooks
+description: Implement before/after hooks for custom logic, audit logging, and event handling
+when-to-use: custom validation, audit logging, welcome emails, tracking events, custom rate limiting
+keywords: hooks, before, after, onCreate, onSessionCreate, middleware, custom logic, events
+priority: medium
+requires: server-config.md
+related: server-config.md, email.md
+---
+
 # Better Auth Hooks
 
-## Overview
-Hooks allow intercepting and modifying auth behavior at key points.
+## When to Use
+
+- Custom validation before auth actions
+- Audit logging for compliance
+- Send emails on user creation
+- Track login events
+- Custom rate limiting logic
+
+## Why Hooks
+
+| Hook Type | Use Case |
+|-----------|----------|
+| `before` | Validate, rate limit, modify request |
+| `after` | Log, notify, modify response |
+| `onCreate` | Welcome email, setup defaults |
+| `onSessionCreate` | Track logins |
 
 ## Server Hooks
 
@@ -24,7 +48,6 @@ export const auth = betterAuth({
       {
         matcher: (context) => context.path.startsWith("/sign"),
         handler: async (ctx) => {
-          // Log successful auth events
           await logAuthEvent(ctx.path, ctx.context.session?.userId)
           return { response: ctx.response }
         }
@@ -33,18 +56,6 @@ export const auth = betterAuth({
   }
 })
 ```
-
-## Hook Types
-
-### Before Hooks
-- Run before request processing
-- Can modify request context
-- Can short-circuit with early response
-
-### After Hooks
-- Run after request processing
-- Can modify response
-- Access to session data
 
 ## Common Use Cases
 
@@ -91,3 +102,12 @@ export const auth = betterAuth({
   }
 })
 ```
+
+## Hook Types
+
+| Type | Timing | Can Modify |
+|------|--------|------------|
+| `before` | Pre-request | Request context |
+| `after` | Post-request | Response |
+| `onCreate` | User created | N/A |
+| `onSessionCreate` | Session created | N/A |

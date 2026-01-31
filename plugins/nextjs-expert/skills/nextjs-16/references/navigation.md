@@ -1,4 +1,30 @@
+---
+name: navigation
+description: Client and server-side navigation with Link, useRouter, and redirects
+when-to-use: linking between pages, programmatic navigation, redirects
+keywords: Link, useRouter, redirect, push, query params
+priority: high
+requires: app-router.md
+related: app-router.md
+---
+
 # Navigation
+
+## When to Use
+
+- Linking between pages
+- Programmatic navigation
+- Server-side redirects
+- Reading current URL
+
+## Why next/link
+
+| Feature | Benefit |
+|---------|---------|
+| Prefetch | Instant transitions |
+| Client-side | No full reload |
+| SPA-like | State preserved |
+| Scroll | Position management |
 
 ## next/link
 ```typescript

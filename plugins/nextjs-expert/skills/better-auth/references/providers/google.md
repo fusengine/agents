@@ -1,4 +1,30 @@
+---
+name: google
+description: Google OAuth provider setup and configuration
+when-to-use: google oauth, google sign-in, google workspace integration
+keywords: Google, OAuth, Google Cloud, sign-in with google, credentials
+priority: high
+requires: server-config.md, providers/overview.md
+related: providers/overview.md, concepts/oauth.md
+---
+
 # Google OAuth Provider
+
+## When to Use
+
+- B2C applications with mainstream users
+- Google Workspace integration
+- Android/Chrome ecosystem apps
+- Highest OAuth provider adoption
+
+## Why Google
+
+| Consideration | Value |
+|---------------|-------|
+| Market share | ~90% browser/search |
+| User trust | High familiarity |
+| Email quality | Verified, real |
+| Integration | Drive, Calendar, etc. |
 
 ## Google Cloud Console Setup
 

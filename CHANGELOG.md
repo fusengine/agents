@@ -1,5 +1,15 @@
 # Release Notes
 
+## [1.30.0] - 31-01-2026
+
+### Added
+
+- **solid-nextjs**: Restructure SOLID skill with modular architecture
+  - 7 explanatory references (SOLID principles + architecture)
+  - 17 code templates (components, services, queries, stores, i18n, etc.)
+  - Add stores/, queries/, i18n/ to modular structure
+  - Complete checklists with all file locations
+
 ## [1.29.6] - 30-01-2026
 
 ### Changed

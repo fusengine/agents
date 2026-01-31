@@ -1,4 +1,30 @@
+---
+name: app-router
+description: File-based routing system with layouts, Server Components, and streaming
+when-to-use: building new Next.js apps, implementing layouts and nested routes, using Server Components
+keywords: routing, layouts, file structure, pages, dynamic routes
+priority: high
+requires: installation.md, server-components.md
+related: routing-advanced.md, pages-router.md
+---
+
 # App Router
+
+## When to Use
+
+- Building new Next.js applications (recommended)
+- Need Server Components and streaming
+- Want file-based routing with layouts
+- Using React 19 features
+
+## Why App Router
+
+| Feature | Benefit |
+|---------|---------|
+| Server Components | Smaller bundles, direct DB access |
+| Nested Layouts | Shared UI without re-renders |
+| Streaming | Progressive page loading |
+| Route Groups | Organize without URL impact |
 
 ## File Structure (SOLID Architecture)
 ```

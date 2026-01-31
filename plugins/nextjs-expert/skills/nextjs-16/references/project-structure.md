@@ -1,4 +1,30 @@
+---
+name: project-structure
+description: SOLID architecture with modules, cores, and interfaces organization
+when-to-use: starting new project, organizing code, feature isolation
+keywords: modules, cores, SOLID, architecture, file organization
+priority: high
+requires: installation.md, app-router.md
+related: app-router.md
+---
+
 # Project Structure
+
+## When to Use
+
+- Starting new Next.js 16 project
+- SOLID architecture setup
+- Module organization
+- File conventions
+
+## Why SOLID Modules
+
+| Pattern | Benefit |
+|---------|---------|
+| modules/ | Feature isolation |
+| cores/ | Shared utilities |
+| interfaces/ | Type separation |
+| src/ | Clean separation |
 
 ## SOLID Architecture
 ```

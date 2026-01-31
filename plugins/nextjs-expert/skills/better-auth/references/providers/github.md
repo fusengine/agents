@@ -1,4 +1,30 @@
+---
+name: github
+description: GitHub OAuth provider setup and configuration
+when-to-use: github oauth, developer signin, github integration
+keywords: GitHub, OAuth, developer, sign-in with github, repos
+priority: high
+requires: server-config.md, providers/overview.md
+related: providers/overview.md, concepts/oauth.md
+---
+
 # GitHub OAuth Provider
+
+## When to Use
+
+- Developer-focused products
+- Open source projects
+- DevTools and integrations
+- Repository access requirements
+
+## Why GitHub
+
+| Consideration | Value |
+|---------------|-------|
+| Developer reach | 100M+ developers |
+| Repo access | Code integration |
+| Trust signal | Verified developers |
+| API access | Issues, PRs, etc. |
 
 ## GitHub Setup
 

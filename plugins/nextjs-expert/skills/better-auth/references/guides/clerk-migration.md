@@ -1,4 +1,30 @@
+---
+name: clerk-migration
+description: Migrate from Clerk to Better Auth
+when-to-use: clerk migration, switching from clerk, migration guide
+keywords: Clerk, migration, switching, from Clerk, migration guide
+priority: low
+requires: migrations.md
+related: migrations.md, guides/authjs-migration.md
+---
+
 # Better Auth Clerk Migration Guide
+
+## When to Use
+
+- Migrating from Clerk to self-hosted
+- Eliminating per-MAU pricing
+- Need full customization control
+- Avoiding vendor lock-in
+
+## Why Migrate
+
+| Clerk | Better Auth |
+|-------|-------------|
+| Paid per MAU | Free/OSS |
+| Pre-built UI | Custom components |
+| Vendor hosted | Self-hosted |
+| Limited control | Full control |
 
 ## Key Differences
 

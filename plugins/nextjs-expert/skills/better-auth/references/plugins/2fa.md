@@ -1,4 +1,30 @@
+---
+name: 2fa
+description: Two-factor authentication with TOTP for enhanced security
+when-to-use: securing accounts, compliance requirements, admin protection, financial apps
+keywords: 2FA, TOTP, two-factor, otp, security, mfa, backup codes
+priority: medium
+requires: server-config.md
+related: plugins/passkey.md, security.md
+---
+
 # Two-Factor Authentication Plugin
+
+## When to Use
+
+- Securing sensitive user accounts
+- Compliance requirements (PCI, SOC2)
+- Admin/elevated privilege protection
+- Financial or healthcare applications
+
+## Why 2FA
+
+| Without | With |
+|---------|------|
+| Password only | Password + TOTP |
+| Single point of failure | Defense in depth |
+| Credential stuffing risk | Phishing resistant |
+| Account takeover | Protected accounts |
 
 ## Server Configuration
 

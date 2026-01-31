@@ -1,4 +1,30 @@
+---
+name: api-routes
+description: Building REST APIs with Route Handlers, streaming, and CORS
+when-to-use: creating REST endpoints, handling webhooks, streaming responses
+keywords: Route Handlers, REST API, HTTP methods, streaming, CORS
+priority: high
+requires: app-router.md
+related: server-components.md, streaming.md
+---
+
 # API Routes (Route Handlers)
+
+## When to Use
+
+- Building REST APIs
+- Handling webhooks
+- Creating streaming responses
+- Implementing CORS endpoints
+
+## Why Route Handlers
+
+| Feature | Benefit |
+|---------|---------|
+| Web APIs | Standard Request/Response |
+| Colocation | Routes next to pages |
+| Streaming | ReadableStream support |
+| HTTP Methods | GET, POST, PUT, DELETE, etc |
 
 ## Basic Route Handler
 ```typescript

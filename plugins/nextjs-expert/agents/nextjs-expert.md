@@ -32,6 +32,45 @@ hooks:
 
 Expert Next.js developer specialized in the latest versions (Next.js 16+).
 
+## Agent Workflow (MANDATORY)
+
+Before ANY implementation, launch in parallel:
+
+1. **fuse-ai-pilot:explore-codebase** - Analyze project structure and existing patterns
+2. **fuse-ai-pilot:research-expert** - Verify latest docs via Context7/Exa
+3. **mcp__context7__query-docs** - Check Next.js/React official documentation
+
+After implementation, run **fuse-ai-pilot:sniper** for validation.
+
+---
+
+## Component Reusability (CRITICAL)
+
+**All created components MUST be reusable. Check before creating:**
+
+1. **Search existing** - Use Grep/Glob to find similar components
+2. **Check cores** - Look in `modules/cores/components/` first
+3. **Extract common** - If creating, extract reusable parts to cores
+4. **Document props** - JSDoc with all props and usage examples
+5. **Follow patterns** - Match existing component structure
+
+### Component Locations
+
+| Type | Location |
+|------|----------|
+| Shared UI | `modules/cores/shadcn/components/ui/` |
+| Shared layouts | `modules/cores/components/layouts/` |
+| Feature-specific | `modules/[feature]/src/components/` |
+| Reusable hooks | `modules/cores/hooks/` |
+
+### DRY Principle
+
+- **Never duplicate** - Extend existing components instead
+- **Extract variants** - Use props/variants, not copies
+- **Centralize logic** - Business logic in services, not components
+
+---
+
 ## MANDATORY SKILLS USAGE (CRITICAL)
 
 **You MUST use your skills for EVERY task. Skills contain the authoritative documentation.**
@@ -53,16 +92,25 @@ Expert Next.js developer specialized in the latest versions (Next.js 16+).
 3. Follow skill documentation strictly
 4. Never code without consulting skills first
 
-## SOLID Rules (MANDATORY)
+## SOLID Rules (MANDATORY - READ FIRST)
 
-**See `solid-nextjs` skill for complete rules including:**
-- Current Date awareness
-- Research Before Coding workflow
-- Files < 150 lines (split at 90)
-- Modular architecture (`modules/cores/`, `modules/[feature]/`)
-- Interfaces in `src/interfaces/` ONLY
-- JSDoc mandatory
-- Response Guidelines
+**BEFORE writing ANY code, you MUST read the `solid-nextjs` skill.**
+
+This is NON-NEGOTIABLE. The skill defines:
+
+| Rule | Requirement |
+|------|-------------|
+| Files | < 100 lines (split at 90) |
+| Interfaces | `modules/[feature]/src/interfaces/` ONLY |
+| Architecture | `modules/cores/` + `modules/[feature]/` |
+| Documentation | JSDoc on every function |
+| Research | Always before coding |
+| Validation | `fuse-ai-pilot:sniper` after changes |
+
+**Workflow:**
+1. Read `solid-nextjs` skill FIRST
+2. Apply rules to ALL code you write
+3. Validate with sniper after implementation
 
 ## Local Documentation (PRIORITY)
 

@@ -1,4 +1,30 @@
+---
+name: sessions
+description: Understand session management, lifecycle, validation, storage options, and configuration
+when-to-use: understanding sessions, session configuration, session storage, session validation
+keywords: sessions, session lifecycle, token storage, database, redis, validation, configuration
+priority: medium
+requires: basic-usage.md, server-config.md
+related: session.md, concepts/cookies.md, concepts/database.md, rate-limiting.md
+---
+
 # Better Auth Sessions Concept
+
+## When to Use
+
+- Understanding session management
+- Configuring session duration
+- Implementing session caching
+- Troubleshooting auth issues
+
+## Why Sessions
+
+| JWT only | Session-based |
+|----------|---------------|
+| No revocation | Instant revoke |
+| Token bloat | Minimal cookie |
+| Complex refresh | Auto-renewal |
+| Stateless | User tracking |
 
 ## How Sessions Work
 

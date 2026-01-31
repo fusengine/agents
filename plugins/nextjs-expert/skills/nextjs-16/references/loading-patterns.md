@@ -1,4 +1,30 @@
+---
+name: loading-patterns
+description: Loading states with loading.tsx, Suspense, and streaming
+when-to-use: showing loading UI, streaming content, parallel loading
+keywords: loading.tsx, Suspense, streaming, skeleton, useTransition
+priority: medium
+requires: app-router.md, streaming.md
+related: streaming.md, error-handling.md
+---
+
 # Loading Patterns
+
+## When to Use
+
+- Route-level loading states
+- Component-level streaming
+- Parallel data loading
+- Client-side transitions
+
+## Why Suspense Streaming
+
+| Feature | Benefit |
+|---------|---------|
+| Instant shell | loading.tsx shows first |
+| Streaming | Progressive content |
+| Parallel | Multiple suspense bounds |
+| Graceful | No blocking |
 
 ## loading.tsx (Instant Loading UI)
 ```typescript

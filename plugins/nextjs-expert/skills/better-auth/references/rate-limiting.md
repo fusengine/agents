@@ -1,7 +1,29 @@
+---
+name: rate-limiting
+description: Configure rate limiting to prevent brute force, credential stuffing, and DDoS attacks
+when-to-use: production security, attack prevention, brute force protection, endpoint limiting
+keywords: rate limiting, brute force, DDoS, window, max requests, storage, redis, IP detection
+priority: high
+requires: server-config.md, security.md
+related: security.md, concepts/security.md
+---
+
 # Better Auth Rate Limiting
 
-## Overview
-Built-in rate limiting protects against brute force and DDoS attacks.
+## When to Use
+
+- Protect against brute force attacks
+- Prevent account enumeration
+- Limit signup spam
+- Secure password reset endpoint
+
+## Why Rate Limiting
+
+| Without | With |
+|---------|------|
+| Unlimited login attempts | 3 per 10 seconds |
+| Credential stuffing | Blocked after threshold |
+| DDoS vulnerable | Protected |
 
 ## Basic Configuration
 
@@ -45,10 +67,7 @@ rateLimit: { storage: "memory" }
 // Database (multi-instance)
 rateLimit: { storage: "database" }
 
-// Secondary storage (Redis)
-rateLimit: { storage: "secondary-storage" }
-
-// With Redis
+// Redis (recommended for production)
 import { redis } from "./redis"
 
 export const auth = betterAuth({
@@ -61,7 +80,7 @@ export const auth = betterAuth({
 })
 ```
 
-## IP Address Detection
+## IP Detection
 
 ```typescript
 rateLimit: {

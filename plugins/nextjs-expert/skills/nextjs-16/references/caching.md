@@ -1,4 +1,30 @@
+---
+name: caching
+description: Caching strategies with use cache directive, tags, and revalidation
+when-to-use: performance optimization, cache invalidation, stale-while-revalidate patterns
+keywords: cache, revalidate, cacheTag, cacheLife, ISR
+priority: medium
+requires: data-fetching.md, cache-components.md
+related: rendering.md, static-generation.md
+---
+
 # Caching with Cache Components
+
+## When to Use
+
+- Optimizing data fetching performance
+- Implementing stale-while-revalidate patterns
+- Caching expensive computations
+- Managing cache invalidation
+
+## Why Cache Components
+
+| Feature | Benefit |
+|---------|---------|
+| `use cache` | Explicit, predictable caching |
+| cacheTag | Granular invalidation |
+| cacheLife | Automatic TTL management |
+| updateTag | Immediate cache refresh |
 
 ## Enable Cache Components
 ```typescript

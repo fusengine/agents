@@ -1,4 +1,30 @@
+---
+name: security
+description: Learn security layers, cookie security, password hashing, rate limiting, and trusted origins
+when-to-use: security understanding, threat model, security architecture, hardening, compliance
+keywords: security concept, CSRF, XSS, rate limiting, password hashing, cookie security, defense layers
+priority: medium
+requires: security.md, rate-limiting.md
+related: security.md, rate-limiting.md, concepts/cookies.md
+---
+
 # Better Auth Security Concept
+
+## When to Use
+
+- Security audit preparation
+- Understanding protection layers
+- Custom security configuration
+- Compliance requirements
+
+## Why Security-First
+
+| DIY auth | Better Auth |
+|----------|-------------|
+| Missed vulnerabilities | Built-in protection |
+| Ad-hoc security | Defense in depth |
+| No rate limiting | Configurable limits |
+| Plain cookies | Secure defaults |
 
 ## Security Layers
 

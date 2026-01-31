@@ -1,4 +1,30 @@
+---
+name: anonymous
+description: Anonymous user sessions without authentication
+when-to-use: anonymous sessions, user tracking before signup, temp users
+keywords: anonymous, guest users, temp sessions, tracking
+priority: low
+requires: server-config.md, session.md
+related: plugins/overview.md
+---
+
 # Better Auth Anonymous Plugin
+
+## When to Use
+
+- Guest checkout in e-commerce
+- Try-before-signup experiences
+- Progressive user onboarding
+- Data collection before account creation
+
+## Why Anonymous Auth
+
+| Force signup | Anonymous first |
+|--------------|-----------------|
+| High friction | Zero friction |
+| Lost conversions | Try → convert |
+| No data until signup | Data preserved |
+| User abandonment | Gradual commitment |
 
 ## Overview
 Allow users to use your app without creating an account, then link to a real account later.

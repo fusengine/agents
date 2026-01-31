@@ -1,4 +1,30 @@
+---
+name: siwe
+description: Sign-In with Ethereum for Web3 authentication
+when-to-use: web3, blockchain, ethereum wallets, crypto auth
+keywords: SIWE, Ethereum, Web3, blockchain, wallet auth
+priority: low
+requires: server-config.md
+related: plugins/overview.md
+---
+
 # Better Auth SIWE Plugin
+
+## When to Use
+
+- Web3/dApp authentication
+- Crypto-native user base
+- Wallet-based identity
+- NFT/token-gated access
+
+## Why SIWE
+
+| Traditional auth | SIWE |
+|------------------|------|
+| Email/password | Wallet signature |
+| Server stores credentials | No password storage |
+| Identity provider trust | Cryptographic proof |
+| Central authority | User-controlled |
 
 ## Overview
 Sign-In with Ethereum - Web3 wallet authentication.

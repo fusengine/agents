@@ -1,4 +1,30 @@
+---
+name: captcha
+description: CAPTCHA protection for signup and login
+when-to-use: bot protection, signup security, login protection
+keywords: captcha, bot protection, recaptcha, form protection
+priority: low
+requires: server-config.md
+related: security.md, rate-limiting.md
+---
+
 # Better Auth Captcha Plugin
+
+## When to Use
+
+- Protecting signup from bot abuse
+- Preventing credential stuffing
+- Reducing spam registrations
+- Compliance with anti-bot policies
+
+## Why CAPTCHA
+
+| Without | With |
+|---------|------|
+| Bot signups | Human verification |
+| Credential stuffing | Challenge required |
+| Resource abuse | Rate + CAPTCHA |
+| Spam accounts | Verified humans |
 
 ## Overview
 Add CAPTCHA verification to protect against bots.

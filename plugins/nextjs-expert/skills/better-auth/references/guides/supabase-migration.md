@@ -1,4 +1,30 @@
+---
+name: supabase-migration
+description: Migrate from Supabase Auth to Better Auth
+when-to-use: supabase migration, switching from supabase, migration guide
+keywords: Supabase, migration, switching, from Supabase, migration guide
+priority: low
+requires: migrations.md
+related: migrations.md
+---
+
 # Better Auth Supabase Auth Migration Guide
+
+## When to Use
+
+- Keep Supabase DB, replace auth
+- Need auth features not in Supabase
+- Want 2FA, organizations, SSO
+- Separating auth from database
+
+## Why Migrate
+
+| Supabase Auth | Better Auth |
+|---------------|-------------|
+| Supabase-only | Any database |
+| Limited plugins | 50+ plugins |
+| RLS-based | Middleware/proxy |
+| Basic 2FA | Full 2FA + passkeys |
 
 ## Key Differences
 

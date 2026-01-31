@@ -1,4 +1,30 @@
+---
+name: frameworks-all
+description: Overview of all 18+ supported frameworks
+when-to-use: framework discovery, finding framework integration, framework list
+keywords: frameworks, integration, supported, list, all frameworks
+priority: medium
+requires: installation.md
+related: integrations/nextjs.md, integrations/other-frameworks.md
+---
+
 # Better Auth - All Framework Integrations
+
+## When to Use
+
+- Complete framework reference
+- React Native/Expo setup
+- Server framework integrations
+- Choosing framework handler
+
+## Why Framework Adapters
+
+| Framework | Adapter |
+|-----------|---------|
+| Next.js | `toNextJsHandler` |
+| Node/Express | `toNodeHandler` |
+| Hono/Elysia | Native Web API |
+| Expo | `@better-auth/expo` |
 
 ## Expo (React Native)
 

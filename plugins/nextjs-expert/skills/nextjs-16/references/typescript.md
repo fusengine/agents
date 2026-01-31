@@ -1,4 +1,30 @@
+---
+name: typescript
+description: TypeScript setup, async params typing, and type-safe routes
+when-to-use: TypeScript setup, type safety, generated types
+keywords: TypeScript, tsconfig, async params, typed routes
+priority: medium
+requires: installation.md
+related: app-router.md
+---
+
 # TypeScript Configuration
+
+## When to Use
+
+- TypeScript setup
+- Async params typing (v16)
+- Route handler types
+- Generated route types
+
+## Why TypeScript in Next.js
+
+| Feature | Benefit |
+|---------|---------|
+| Auto-types | next-env.d.ts |
+| Plugin | IntelliSense |
+| Route types | Type-safe links |
+| Strict | Catch errors early |
 
 ## tsconfig.json
 ```json

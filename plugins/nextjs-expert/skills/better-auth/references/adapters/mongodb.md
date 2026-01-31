@@ -1,4 +1,30 @@
+---
+name: mongodb
+description: Document database integration with MongoDB for flexible schema authentication
+when-to-use: document database, flexible schema, MongoDB Atlas, existing mongodb infrastructure
+keywords: MongoDB, NoSQL, adapter, document database, collections, flexible schema, atlas
+priority: high
+requires: installation.md, server-config.md
+related: adapters/prisma.md, adapters/drizzle.md, concepts/database.md
+---
+
 # Better Auth MongoDB Adapter
+
+## When to Use
+
+- Document database requirements
+- Flexible schema needed
+- MongoDB Atlas deployment
+- Existing MongoDB infrastructure
+
+## Why MongoDB
+
+| SQL | MongoDB |
+|-----|---------|
+| Fixed schema | Flexible documents |
+| Relations required | Embedded data |
+| Strict types | Schema-less |
+| Vertical scaling | Horizontal scaling |
 
 ## Installation
 

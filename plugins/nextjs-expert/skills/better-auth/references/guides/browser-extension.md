@@ -1,4 +1,30 @@
+---
+name: browser-extension
+description: Implement Better Auth in browser extensions
+when-to-use: browser extension, chrome extension, extension auth
+keywords: browser extension, chrome extension, extension authentication
+priority: low
+requires: client.md
+related: integrations/other-frameworks.md
+---
+
 # Better Auth Browser Extension Guide
+
+## When to Use
+
+- Building Chrome/Firefox extensions
+- Extension-to-webapp authentication
+- OAuth in extension context
+- Shared auth across extension/web
+
+## Why Extension Auth
+
+| Separate auth | Shared auth |
+|---------------|-------------|
+| Duplicate login | Single session |
+| Sync complexity | Automatic sync |
+| Extension-only data | Unified user |
+| No web features | Full webapp access |
 
 ## Manifest
 

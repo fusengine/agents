@@ -1,4 +1,30 @@
+---
+name: username
+description: Username-based authentication with email fallback
+when-to-use: username login, alternative to email login, community features
+keywords: username, usernames, login, alternative auth, community
+priority: low
+requires: server-config.md
+related: basic-usage.md
+---
+
 # Better Auth Username Plugin
+
+## When to Use
+
+- Gaming or social platforms
+- Public profiles with @handles
+- Email-optional applications
+- Community-based products
+
+## Why Username Auth
+
+| Email only | With username |
+|------------|---------------|
+| Long identifier | Short @handle |
+| Private by default | Public identity |
+| Formal | Casual/gaming |
+| No uniqueness display | Visible uniqueness |
 
 ## Overview
 Enable username-based authentication alongside or instead of email.

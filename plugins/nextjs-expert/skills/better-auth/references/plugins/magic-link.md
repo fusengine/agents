@@ -1,4 +1,30 @@
+---
+name: magic-link
+description: Passwordless authentication via email magic links
+when-to-use: passwordless sign-in, email authentication, no password friction
+keywords: magic link, passwordless, email auth, one-time link, sign-in link
+priority: medium
+requires: server-config.md, email.md
+related: plugins/email-otp.md, email.md
+---
+
 # Better Auth Magic Link Plugin
+
+## When to Use
+
+- Passwordless authentication UX
+- Email-first user experience
+- Reducing password reset friction
+- Low-frequency login applications
+
+## Why Magic Links
+
+| Password | Magic Link |
+|----------|------------|
+| User forgets | Email always works |
+| Reset flow needed | Direct sign-in |
+| Credential stuffing | No stored password |
+| User friction | One-click login |
 
 ## Installation
 

@@ -1,3 +1,13 @@
+---
+name: session
+description: Manage sessions with cookies, expiration, renewal, and multi-session support
+when-to-use: session configuration, session duration, token refresh, cookie settings, session validation
+keywords: session, cookie, expiration, updateAge, cookieCache, token refresh, http-only
+priority: high
+requires: basic-usage.md, server-config.md
+related: security.md, concepts/sessions.md, concepts/cookies.md
+---
+
 # Session Management
 
 ## When to Use

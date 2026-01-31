@@ -1,4 +1,30 @@
+---
+name: client
+description: React client SDK for authentication with hooks, sign in/up, OAuth, and session management
+when-to-use: client-side auth, react components, login forms, session state, useSession hook
+keywords: createAuthClient, useSession, signIn, signUp, signOut, authClient, react hooks
+priority: high
+requires: server-config.md, basic-usage.md
+related: hooks.md, server-actions.md
+---
+
 # Better Auth Client (React)
+
+## When to Use
+
+- Client-side authentication in React
+- Login/logout forms
+- Session state in components
+- OAuth social login buttons
+
+## Why Client SDK
+
+| Feature | Benefit |
+|---------|---------|
+| `useSession()` | React hook with loading state |
+| Type-safe | Full TypeScript support |
+| Auto-refresh | Session refreshes automatically |
+| Optimistic | UI updates before API response |
 
 ## Client Configuration
 

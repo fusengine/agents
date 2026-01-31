@@ -1,4 +1,30 @@
+---
+name: drizzle
+description: Lightweight Drizzle ORM integration with Better Auth for edge runtime compatibility
+when-to-use: lightweight ORM, edge functions, SQL-like syntax preference, existing drizzle setup
+keywords: Drizzle, adapter, lightweight, edge-first, ORM, sql-like, typescript schema, migration
+priority: high
+requires: installation.md, server-config.md
+related: adapters/prisma.md, adapters/mongodb.md, concepts/database.md
+---
+
 # Drizzle Adapter
+
+## When to Use
+
+- Lightweight ORM preference
+- SQL-like syntax preferred
+- Edge runtime compatibility
+- Existing Drizzle setup
+
+## Why Drizzle
+
+| Prisma | Drizzle |
+|--------|---------|
+| Schema file | TypeScript schema |
+| Heavy runtime | Lightweight |
+| Query abstraction | SQL-like |
+| Edge limitations | Edge-first |
 
 ## Installation
 

@@ -1,3 +1,13 @@
+---
+name: security
+description: Implement security measures including CSRF, rate limiting, passwords, and secure cookies
+when-to-use: production deployment, security hardening, compliance checklist, protecting against attacks
+keywords: CSRF protection, rate limiting, password hashing, secure cookies, brute force, XSS, CSRF
+priority: high
+requires: server-config.md, session.md
+related: middleware.md, rate-limiting.md, concepts/security.md
+---
+
 # Better Auth Security
 
 ## Threat Model

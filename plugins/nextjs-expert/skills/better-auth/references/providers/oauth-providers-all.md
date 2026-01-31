@@ -1,4 +1,30 @@
+---
+name: oauth-providers-all
+description: Complete list of all 40+ supported OAuth providers
+when-to-use: provider discovery, finding supported services, provider list
+keywords: providers list, all providers, oauth services, supported providers
+priority: medium
+requires: providers/overview.md
+related: providers/overview.md
+---
+
 # Better Auth - All OAuth Providers
+
+## When to Use
+
+- Quick reference for all providers
+- Finding provider-specific scopes
+- Choosing providers for your audience
+- Setting up multiple providers
+
+## Why Reference This List
+
+| Need | Solution |
+|------|----------|
+| All config keys | Provider table |
+| Default scopes | Scope column |
+| Custom provider | Generic OAuth |
+| Region-specific | Kakao, LINE, Naver, VK |
 
 ## Built-in Providers
 

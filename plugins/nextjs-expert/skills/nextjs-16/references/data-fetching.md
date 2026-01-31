@@ -1,4 +1,30 @@
+---
+name: data-fetching
+description: Server-side data fetching with fetch, Prisma, Server Actions, and Suspense
+when-to-use: fetching data in Server Components, database queries, mutations with forms
+keywords: fetch, database, Prisma, Server Actions, Suspense, streaming
+priority: high
+requires: server-components.md, forms.md
+related: caching.md, streaming.md
+---
+
 # Data Fetching
+
+## When to Use
+
+- Fetching data in Server Components
+- Direct database access with Prisma
+- Server Actions for mutations
+- Parallel data loading patterns
+
+## Why Server-Side Fetching
+
+| Feature | Benefit |
+|---------|---------|
+| Direct DB | No API layer needed |
+| Caching | Automatic with `use cache` |
+| Streaming | Progressive UI with Suspense |
+| Security | Secrets stay on server |
 
 ## Fetch in Server Components
 ```typescript

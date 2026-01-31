@@ -1,4 +1,30 @@
+---
+name: rendering
+description: Rendering strategies including SSR, SSG, ISR, and Partial Pre-rendering
+when-to-use: choosing rendering strategy, performance optimization, caching decisions
+keywords: SSR, SSG, ISR, PPR, dynamic, revalidate, force-static
+priority: high
+requires: app-router.md, static-generation.md, caching.md
+related: cache-components.md, static-generation.md
+---
+
 # Rendering (SSR, SSG, ISR, PPR)
+
+## When to Use
+
+- SSR: Real-time data
+- SSG: Static content
+- ISR: Periodic updates
+- PPR: Mixed static/dynamic
+
+## Why Different Strategies
+
+| Strategy | Best For |
+|----------|----------|
+| SSR | Personalized pages |
+| SSG | Marketing pages |
+| ISR | Blog posts |
+| PPR | Dashboard shells |
 
 ## Dynamic Rendering (SSR)
 ```typescript

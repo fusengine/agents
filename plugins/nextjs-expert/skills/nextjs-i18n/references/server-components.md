@@ -1,3 +1,13 @@
+---
+name: server-components
+description: Utilisation de getTranslations côté serveur, metadata SEO, Route Handlers
+when-to-use: pages, layouts, metadata, route handlers, server actions, zéro JS client
+keywords: getTranslations, getFormatter, getLocale, getMessages, async, metadata
+priority: high
+requires: installation.md, routing-setup.md
+related: client-components.md, seo.md
+---
+
 # next-intl Server Components
 
 ## When to Use

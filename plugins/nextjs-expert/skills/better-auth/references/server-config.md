@@ -1,4 +1,32 @@
+---
+name: server-config
+description: Configure Better Auth server with database, OAuth, session, plugins, and hooks
+when-to-use: configure authentication, add providers, customize behavior, production setup
+keywords: betterAuth config, database adapter, socialProviders, session options, plugins, hooks
+priority: high
+requires: installation.md
+related: basic-usage.md, session.md, hooks.md, plugins/overview.md
+---
+
 # Better Auth Server Configuration
+
+## When to Use
+
+- Initial setup of authentication
+- Configure database adapter
+- Enable OAuth providers
+- Set session options
+- Add plugins (2FA, SSO, etc.)
+
+## Why Server Config
+
+| Config | Purpose |
+|--------|---------|
+| database | Connect to Prisma/Drizzle |
+| emailAndPassword | Enable credential auth |
+| socialProviders | Enable OAuth |
+| session | Cookie/expiry settings |
+| plugins | Extend functionality |
 
 ## Basic Configuration
 
@@ -26,16 +54,6 @@ export const auth = betterAuth({
 
 export type Session = typeof auth.$Infer.Session
 ```
-
-## Main Options
-
-| Option | Type | Description |
-|--------|------|-------------|
-| `database` | Adapter | Prisma, Drizzle, or direct config |
-| `emailAndPassword` | object | Email/password auth |
-| `socialProviders` | object | OAuth providers |
-| `session` | object | Session config |
-| `plugins` | array | Plugins to enable |
 
 ## Social Providers
 

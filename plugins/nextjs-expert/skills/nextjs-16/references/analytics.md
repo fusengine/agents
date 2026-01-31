@@ -1,4 +1,29 @@
+---
+name: analytics
+description: Web Vitals monitoring and analytics integration
+when-to-use: tracking Core Web Vitals, performance monitoring
+keywords: Web Vitals, LCP, FID, CLS, useReportWebVitals
+priority: medium
+related: third-party.md, scripts.md
+---
+
 # Analytics & Web Vitals
+
+## When to Use
+
+- Monitoring Core Web Vitals
+- Integrating analytics providers
+- Tracking user experience metrics
+- Performance optimization
+
+## Why Web Vitals
+
+| Metric | Measures |
+|--------|----------|
+| LCP | Largest Contentful Paint |
+| FID | First Input Delay |
+| CLS | Cumulative Layout Shift |
+| INP | Interaction to Next Paint |
 
 ## useReportWebVitals
 ```typescript

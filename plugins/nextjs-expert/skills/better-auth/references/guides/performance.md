@@ -1,4 +1,30 @@
+---
+name: performance
+description: Performance optimization guide for high-traffic applications
+when-to-use: performance tuning, high-traffic, optimization, caching, redis
+keywords: performance, optimization, caching, redis, secondary storage, edge
+priority: medium
+requires: server-config.md, session.md
+related: rate-limiting.md
+---
+
 # Better Auth Performance Guide
+
+## When to Use
+
+- High-traffic applications
+- Reducing database load
+- Edge runtime deployment
+- Production optimization
+
+## Why Optimize
+
+| Default | Optimized |
+|---------|-----------|
+| DB lookup each request | Cached sessions |
+| Memory rate limiting | Redis distributed |
+| Single instance | Multi-instance ready |
+| Cold start | Pre-warmed |
 
 ## Session Caching
 

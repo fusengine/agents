@@ -1,4 +1,30 @@
+---
+name: nextjs
+description: Next.js integration guide for App Router and Server Components
+when-to-use: next.js app router, server components, server actions, proxy.ts
+keywords: Next.js, integration, app router, server components, server actions
+priority: high
+requires: installation.md, basic-usage.md
+related: server-actions.md, middleware.md
+---
+
 # Better Auth Next.js Integration
+
+## When to Use
+
+- Next.js App Router setup
+- Server Components with auth
+- Server Actions with session
+- proxy.ts route protection
+
+## Why Next.js Specific
+
+| Feature | Next.js Pattern |
+|---------|-----------------|
+| API route | `toNextJsHandler` |
+| Server Components | `headers()` async |
+| Server Actions | `"use server"` |
+| Protection | `proxy.ts` (v16+) |
 
 ## API Route
 

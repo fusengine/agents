@@ -1,4 +1,30 @@
+---
+name: phone
+description: Phone number authentication with SMS verification
+when-to-use: phone verification, sms otp, phone-based authentication
+keywords: phone, SMS, OTP, phone authentication, verification
+priority: low
+requires: server-config.md
+related: plugins/email-otp.md
+---
+
 # Better Auth Phone Number Plugin
+
+## When to Use
+
+- Phone-first authentication (emerging markets)
+- SMS verification as second factor
+- Users without email addresses
+- Delivery/logistics applications
+
+## Why Phone Auth
+
+| Email | Phone |
+|-------|-------|
+| Requires email account | Universal phone ownership |
+| Spam folder issues | Direct SMS delivery |
+| Typing email address | Auto-fill phone number |
+| Desktop-first | Mobile-first |
 
 ## Installation
 

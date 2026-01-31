@@ -1,7 +1,30 @@
+---
+name: email
+description: Configure email providers for verification, password reset, and transactional emails
+when-to-use: email verification, password reset, magic links, transactional emails, resend, nodemailer
+keywords: email, resend, nodemailer, smtp, verification, password reset, magic link, transactional
+priority: medium
+requires: server-config.md
+related: plugins/magic-link.md, plugins/email-otp.md
+---
+
 # Better Auth Email
 
-## Overview
-Email configuration for verification, password reset, and magic links.
+## When to Use
+
+- Email verification on signup
+- Password reset flow
+- Magic link authentication
+- 2FA backup codes via email
+
+## Why Configure Email
+
+| Feature | Requires Email |
+|---------|----------------|
+| Email verification | Yes |
+| Password reset | Yes |
+| Magic links | Yes |
+| Account recovery | Yes |
 
 ## Email Provider Setup
 
@@ -50,12 +73,12 @@ export const auth = betterAuth({
 
 ## Email Providers
 
-### Resend
+### Resend (Recommended)
 ```bash
 bun add resend
 ```
 
-### Nodemailer
+### Nodemailer (SMTP)
 ```typescript
 import nodemailer from "nodemailer"
 
@@ -74,9 +97,6 @@ sendVerificationEmail: async ({ user, url }) => {
   })
 }
 ```
-
-### SendGrid, Postmark, AWS SES
-Same pattern - implement `sendVerificationEmail` and `sendResetPassword` functions.
 
 ## Environment Variables
 

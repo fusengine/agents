@@ -1,3 +1,13 @@
+---
+name: form-examples
+description: Complete form examples with shadcn/ui components and TanStack Form validation
+when-to-use: form implementation, profile forms, form validation, toast notifications, card layouts
+keywords: form examples, TanStack Form, validation, toast notifications, shadcn cards, form submission
+priority: high
+requires: field-patterns.md
+related: field-patterns.md
+---
+
 # Form Examples
 
 Complete form examples with shadcn/ui and TanStack Form.

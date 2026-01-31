@@ -1,4 +1,30 @@
+---
+name: microsoft
+description: Microsoft OAuth provider setup and configuration
+when-to-use: microsoft oauth, azure ad, office 365 integration
+keywords: Microsoft, OAuth, Azure, Office 365, enterprise
+priority: medium
+requires: server-config.md, providers/overview.md
+related: providers/overview.md, concepts/oauth.md
+---
+
 # Better Auth Microsoft Provider
+
+## When to Use
+
+- Enterprise/B2B applications
+- Microsoft 365 integration
+- Azure Active Directory SSO
+- Windows ecosystem products
+
+## Why Microsoft
+
+| Consideration | Value |
+|---------------|-------|
+| Enterprise reach | Dominant in B2B |
+| Graph API | Office, Teams, etc. |
+| Tenant control | Organization-specific |
+| Compliance | Azure security |
 
 ## Setup
 

@@ -1,11 +1,36 @@
+---
+name: seo
+description: Hreflang alternates, sitemaps multilingues, metadata traduites, JSON-LD
+when-to-use: SEO international, hreflang, sitemaps, contenu dupliqué, rankings locaux
+keywords: hreflang, alternates, sitemap, metadata, JSON-LD, canonical, international SEO
+priority: medium
+requires: routing-config.md, server-components.md
+related: routing-config.md, translations.md
+---
+
 # next-intl SEO
+
+## When to Use
+
+- International SEO with hreflang tags
+- Localized sitemaps for Google
+- Translated metadata (title, description, OG)
+- JSON-LD with language information
+
+## Why hreflang Matters
+
+| Without hreflang | With hreflang |
+|------------------|---------------|
+| Google may index wrong version | Correct version per region |
+| Duplicate content penalty | No penalty |
+| Poor local rankings | Better local SEO |
 
 ## Alternate Links (hreflang)
 
 ```typescript
 // app/[locale]/layout.tsx
 import { getLocale } from 'next-intl/server'
-import { routing } from '@/i18n/routing'
+import { routing } from '@/modules/cores/i18n/src/config/routing'
 
 export async function generateMetadata() {
   const locale = await getLocale()
@@ -24,7 +49,7 @@ export async function generateMetadata() {
 
 ```typescript
 // app/sitemap.ts
-import { routing } from '@/i18n/routing'
+import { routing } from '@/modules/cores/i18n/src/config/routing'
 
 export default function sitemap() {
   const baseUrl = 'https://example.com'
@@ -50,7 +75,7 @@ export default function sitemap() {
 import { getTranslations } from 'next-intl/server'
 
 export async function generateMetadata() {
-  const t = await getTranslations('Metadata')
+  const t = await getTranslations('Meta')
   return {
     title: t('title'),
     description: t('description'),

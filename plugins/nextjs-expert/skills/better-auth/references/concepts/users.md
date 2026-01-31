@@ -1,4 +1,30 @@
+---
+name: users
+description: Understand user data model, lifecycle, custom fields, account linking, and user operations
+when-to-use: understanding user model, extending user type, user lifecycle, multiple accounts
+keywords: users, user model, account linking, custom fields, user lifecycle, authentication
+priority: medium
+requires: server-config.md
+related: user-accounts.md, concepts/oauth.md
+---
+
 # Better Auth Users Concept
+
+## When to Use
+
+- Understanding user data model
+- Extending user fields
+- Implementing user management
+- Account linking strategies
+
+## Why User-Centric Model
+
+| Session-only | User model |
+|--------------|------------|
+| No profile | Rich data |
+| Anonymous | Identifiable |
+| No linking | Multi-provider |
+| Stateless | Full history |
 
 ## User Lifecycle
 

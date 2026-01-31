@@ -1,4 +1,29 @@
+---
+name: pages-router
+description: Utilisation next-intl avec Pages Router legacy, getStaticProps, middleware.ts
+when-to-use: projets Pages Router legacy, migration, projets non-upgradeable
+keywords: Pages Router, getStaticProps, getStaticPaths, middleware.ts, legacy
+priority: low
+requires: installation.md
+related: routing-setup.md, middleware-proxy.md
+---
+
 # next-intl Pages Router
+
+## When to Use
+
+- Legacy Next.js projects using Pages Router
+- Migration path before App Router
+- Existing projects that cannot upgrade
+
+## Why Pages Router is Different
+
+| App Router | Pages Router |
+|------------|--------------|
+| proxy.ts | middleware.ts |
+| Server Components | getStaticProps |
+| getMessages() | Manual message loading |
+| Recommended | Legacy |
 
 ## Installation
 
@@ -82,6 +107,4 @@ export const config = {
 }
 ```
 
-## Note
-
-Pages Router est legacy. Préférez App Router pour les nouveaux projets.
+> **Note**: Pages Router is legacy. Prefer App Router for new projects.

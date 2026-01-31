@@ -1,4 +1,29 @@
+---
+name: styling
+description: CSS Modules, global CSS, Sass, and CSS-in-JS integration
+when-to-use: styling components, scoped styles, global styles
+keywords: CSS Modules, global CSS, Sass, CSS-in-JS, styled-components
+priority: medium
+related: fonts.md, third-party.md
+---
+
 # Styling
+
+## When to Use
+
+- CSS Modules
+- Global CSS
+- Sass integration
+- CSS-in-JS (client)
+
+## Why CSS Modules
+
+| Feature | Benefit |
+|---------|---------|
+| Scoped | No class conflicts |
+| Turbopack | Optimized loading |
+| Co-located | Next to components |
+| Type-safe | With typed-css-modules |
 
 > **Note**: For Tailwind CSS, use the `tailwindcss` skill.
 

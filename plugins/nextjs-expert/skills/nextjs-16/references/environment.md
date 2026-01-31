@@ -1,4 +1,28 @@
+---
+name: environment
+description: Environment variables with NEXT_PUBLIC_ prefix and type safety
+when-to-use: configuration, secrets, environment-specific settings
+keywords: env, NEXT_PUBLIC_, Zod validation, secrets
+priority: medium
+requires: installation.md
+related: deployment.md
+---
+
 # Environment Variables
+
+## When to Use
+
+- Server-only secrets (DB, API keys)
+- Client-side config (NEXT_PUBLIC_)
+- Environment-specific settings
+- Type-safe env validation
+
+## Why NEXT_PUBLIC_ Prefix
+
+| Prefix | Availability |
+|--------|--------------|
+| None | Server only |
+| NEXT_PUBLIC_ | Client & Server |
 
 ## File Priority
 ```

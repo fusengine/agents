@@ -1,4 +1,30 @@
+---
+name: overview
+description: Guide to 40+ OAuth providers with configuration, callback URLs, and environment setup
+when-to-use: adding social login, reducing signup friction, multi-provider setup, platform integration
+keywords: OAuth providers, Google, GitHub, Discord, Apple, Microsoft, social login, oauth callback
+priority: high
+requires: server-config.md
+related: concepts/oauth.md
+---
+
 # OAuth Providers Overview
+
+## When to Use
+
+- Reducing signup friction with social login
+- Accessing user data from providers (email, profile)
+- Building platform-specific integrations (GitHub repos, Discord guilds)
+- Offering multiple login options
+
+## Why OAuth Providers
+
+| Email/Password | OAuth |
+|----------------|-------|
+| User creates password | One-click login |
+| Password reset flow | No password to forget |
+| Manual verification | Pre-verified email |
+| Friction | Familiar UX |
 
 ## Supported Providers
 

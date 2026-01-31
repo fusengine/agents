@@ -1,4 +1,30 @@
+---
+name: nextjs-app-router
+description: Complete Next.js App Router example with authentication
+when-to-use: starting new project, reference implementation, solid structure
+keywords: example, next.js, app router, complete example, solid structure
+priority: high
+requires: installation.md, basic-usage.md
+related: integrations/nextjs.md
+---
+
 # Better Auth Next.js App Router Example
+
+## When to Use
+
+- Starting a new Next.js 16+ project
+- Complete working example reference
+- Understanding SOLID file structure
+- Quick-start authentication setup
+
+## Why This Structure
+
+| Aspect | Benefit |
+|--------|---------|
+| `modules/` | SOLID separation |
+| `proxy.ts` | Next.js 16 standard |
+| `[...all]` route | Catch-all auth |
+| Client hooks | Reusable auth state |
 
 ## File Structure
 

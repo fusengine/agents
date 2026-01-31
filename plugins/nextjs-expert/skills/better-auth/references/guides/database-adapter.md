@@ -1,4 +1,30 @@
+---
+name: database-adapter
+description: Guide to creating custom database adapters
+when-to-use: custom database, unsupported database, adapter development
+keywords: adapter, custom database, database integration, adapter api
+priority: low
+requires: server-config.md, concepts/database.md
+related: concepts/database.md, adapters/prisma.md
+---
+
 # Better Auth Custom Database Adapter
+
+## When to Use
+
+- Unsupported database backends
+- Custom data layer requirements
+- Proprietary database systems
+- Contributing community adapters
+
+## Why Custom Adapters
+
+| Wait for support | Build adapter |
+|------------------|---------------|
+| Blocked on maintainers | Immediate use |
+| Generic implementation | Optimized for your DB |
+| No control | Full customization |
+| Dependency | Self-sufficient |
 
 ## Adapter Interface
 

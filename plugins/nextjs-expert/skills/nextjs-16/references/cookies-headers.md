@@ -1,4 +1,29 @@
+---
+name: cookies-headers
+description: Reading and setting cookies, headers in Server Components and Route Handlers
+when-to-use: authentication, session management, header manipulation
+keywords: cookies, headers, async, httpOnly, sameSite
+priority: medium
+requires: server-components.md, api-routes.md
+related: security.md, proxy.md
+---
+
 # Cookies & Headers
+
+## When to Use
+
+- Reading/setting cookies
+- Accessing request headers
+- Theme persistence
+- Session management
+
+## Why Async APIs
+
+| API | Change in v16 |
+|-----|---------------|
+| cookies() | Returns Promise |
+| headers() | Returns Promise |
+| Both | Must `await` now |
 
 ## Reading Cookies (Server Components)
 ```typescript

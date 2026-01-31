@@ -1,4 +1,29 @@
+---
+name: third-party
+description: Third-party libraries integration with @next/third-parties
+when-to-use: Google Analytics, Google Maps, YouTube, analytics providers
+keywords: @next/third-parties, Google Analytics, GTM, Vercel Analytics
+priority: low
+related: scripts.md, analytics.md
+---
+
 # Third-Party Integration
+
+## When to Use
+
+- Google Analytics/GTM
+- YouTube embeds
+- Google Maps
+- Vercel Analytics
+
+## Why @next/third-parties
+
+| Feature | Benefit |
+|---------|---------|
+| Optimized | Lazy loading |
+| Tree-shaken | Minimal code |
+| Privacy | Built-in consent |
+| TypeScript | Full types |
 
 ## @next/third-parties
 ```bash

@@ -1,4 +1,29 @@
+---
+name: navigation
+description: Link preservant locale, useRouter, usePathname, redirect, language switcher
+when-to-use: navigation entre pages, préservation locale, sélecteur langue, navigation client
+keywords: Link, useRouter, usePathname, redirect, locale switcher, programmatic nav
+priority: high
+requires: routing-setup.md
+related: routing-config.md, client-components.md
+---
+
 # next-intl Navigation (SOLID)
+
+## When to Use
+
+- Navigate between pages while preserving locale
+- Build language switcher component
+- Programmatic navigation in client components
+- Server-side redirects with locale
+
+## Why Custom Navigation
+
+| next/link | next-intl Link |
+|-----------|----------------|
+| Loses locale on navigate | Auto-preserves locale |
+| Manual locale handling | Built-in locale support |
+| No typed routes | Type-safe with pathnames |
 
 ## Setup
 
@@ -45,7 +70,7 @@ function Component() {
 import { usePathname } from '@/modules/cores/i18n/src/config/routing'
 
 function Component() {
-  const pathname = usePathname()  // Returns path WITHOUT locale
+  const pathname = usePathname()  // Returns path WITHOUT locale prefix
 }
 ```
 

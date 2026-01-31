@@ -1,4 +1,30 @@
+---
+name: user-accounts
+description: Manage user profiles, custom fields, OAuth account linking, and user lifecycle
+when-to-use: user management, custom user fields, account linking, profile updates, user deletion
+keywords: user model, account linking, custom fields, updateUser, linkSocial, user lifecycle
+priority: medium
+requires: server-config.md, concepts/users.md
+related: concepts/users.md, concepts/oauth.md
+---
+
 # Better Auth User & Accounts
+
+## When to Use
+
+- Managing user profiles and custom fields
+- Linking multiple OAuth providers to one user
+- User lifecycle hooks (welcome emails, sync)
+- Admin user management
+
+## Why User & Account Models
+
+| Model | Purpose |
+|-------|---------|
+| User | Core identity (email, name, image) |
+| Account | OAuth provider connections |
+| Custom fields | Business logic (role, plan) |
+| Hooks | Side effects on CRUD |
 
 ## User Model
 

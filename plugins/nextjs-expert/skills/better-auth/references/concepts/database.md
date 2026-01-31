@@ -1,4 +1,30 @@
+---
+name: database
+description: Understand data model, adapter pattern, tables, and auto-migration in Better Auth
+when-to-use: understanding architecture, custom queries, database optimization, admin interfaces
+keywords: database concept, data model, tables, adapter pattern, users, sessions, accounts, migrations
+priority: medium
+requires: server-config.md
+related: adapters/prisma.md, adapters/drizzle.md, adapters/mongodb.md, concepts/sessions.md
+---
+
 # Better Auth Database Concept
+
+## When to Use
+
+- Understanding data model
+- Custom queries on auth data
+- Database optimization
+- Building admin interfaces
+
+## Why Database-First
+
+| Stateless (JWT) | Database |
+|-----------------|----------|
+| No user data | Rich profiles |
+| No session list | Session management |
+| No revocation | Instant logout |
+| Token-only | Full audit trail |
 
 ## Core Tables
 

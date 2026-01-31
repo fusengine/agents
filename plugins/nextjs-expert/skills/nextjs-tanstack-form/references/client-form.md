@@ -1,3 +1,13 @@
+---
+name: client-form
+description: Client form patterns with TanStack Form and React 19 useActionState
+when-to-use: client-side form handling, form state management, field validation, form submission
+keywords: TanStack Form, client forms, useActionState, form validation, form submission, React 19
+priority: high
+requires: server-validation.md
+related: server-validation.md
+---
+
 # Client Form Patterns
 
 Client form patterns with TanStack Form and React 19.

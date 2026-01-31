@@ -1,4 +1,30 @@
+---
+name: metadata
+description: Static and dynamic metadata, OpenGraph images, and SEO optimization
+when-to-use: SEO, social media previews, dynamic page titles
+keywords: metadata, OpenGraph, OG image, SEO, generateMetadata
+priority: medium
+requires: app-router.md
+related: metadata-files.md
+---
+
 # Metadata & SEO
+
+## When to Use
+
+- Static page metadata
+- Dynamic metadata from DB
+- OpenGraph image generation
+- Icons and manifest
+
+## Why Built-in Metadata
+
+| Feature | Benefit |
+|---------|---------|
+| Type-safe | Full IntelliSense |
+| Colocated | Next to pages |
+| Dynamic | Async generation |
+| OG Images | JSX to image |
 
 ## Static Metadata
 ```typescript

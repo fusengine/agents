@@ -1,4 +1,29 @@
+---
+name: telemetry
+description: Understand and configure telemetry collection for privacy and compliance
+when-to-use: privacy concerns, GDPR compliance, CI/CD environment, telemetry disabling, audit
+keywords: telemetry, privacy, GDPR, compliance, anonymous usage data, disableTelemetry, opt-out
+priority: low
+related: security.md, concepts/security.md
+---
+
 # Better Auth Telemetry
+
+## When to Use
+
+- Understanding what data is collected
+- Disabling telemetry for compliance
+- Privacy audits and GDPR compliance
+- CI/CD environment configuration
+
+## Why Telemetry Matters
+
+| Concern | Resolution |
+|---------|------------|
+| Privacy | No personal data collected |
+| Compliance | GDPR compliant, opt-out available |
+| CI/CD | Auto-disabled in pipelines |
+| Transparency | Open source, auditable |
 
 ## Overview
 

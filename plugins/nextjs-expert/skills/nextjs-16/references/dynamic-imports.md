@@ -1,4 +1,30 @@
+---
+name: dynamic-imports
+description: Lazy loading and code splitting with next/dynamic and React.lazy
+when-to-use: reducing bundle size, conditional loading, heavy components
+keywords: dynamic imports, lazy loading, code splitting, ssr false
+priority: medium
+requires: app-router.md
+related: styling.md
+---
+
 # Dynamic Imports & Lazy Loading
+
+## When to Use
+
+- Browser-only libraries (maps, editors)
+- Heavy components (charts, PDFs)
+- Conditional loading (admin panels)
+- Reducing initial bundle size
+
+## Why Lazy Loading
+
+| Feature | Benefit |
+|---------|---------|
+| Code splitting | Smaller initial load |
+| No SSR | Client-only libraries |
+| On-demand | Load when needed |
+| Auto-split | Route-based chunks |
 
 ## next/dynamic (No SSR)
 ```typescript

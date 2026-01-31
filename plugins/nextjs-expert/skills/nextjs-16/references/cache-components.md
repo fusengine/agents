@@ -1,4 +1,30 @@
+---
+name: cache-components
+description: Explicit caching control with use cache directive, tags, and lifetime
+when-to-use: caching functions and components, granular cache invalidation
+keywords: use cache, cacheTag, cacheLife, updateTag, revalidateTag
+priority: medium
+requires: caching.md, directives.md
+related: rendering.md
+---
+
 # Cache Components (use cache)
+
+## When to Use
+
+- Explicit control over caching
+- Setting cache lifetimes
+- Tagging cached data
+- Immediate vs background revalidation
+
+## Why Cache Components
+
+| Feature | Benefit |
+|---------|---------|
+| Explicit | No implicit caching surprises |
+| Tags | Granular invalidation |
+| Profiles | Preset lifetimes |
+| Variants | Private vs public cache |
 
 ## Enable Cache Components
 ```typescript

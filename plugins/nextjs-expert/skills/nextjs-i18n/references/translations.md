@@ -1,4 +1,30 @@
+---
+name: translations
+description: Utilisation des messages ICU, interpolation, pluralisation et texte enrichi
+when-to-use: afficher texte traduit, pluralisation, variables dans texte, composants React
+keywords: useTranslations, ICU format, t.rich, t.markup, messages, namespaces
+priority: high
+requires: installation.md, translations.md
+related: formatting.md, messages-validation.md
+---
+
 # next-intl Translations
+
+## When to Use
+
+- Display text in user's language
+- Handle pluralization (1 item vs 5 items)
+- Inject variables into messages
+- Render rich text with HTML/React components
+
+## Why ICU Message Format
+
+| Feature | Template Strings | ICU Format |
+|---------|------------------|------------|
+| Pluralization | Manual if/else | Built-in |
+| Gender | Not supported | `{gender, select, ...}` |
+| Rich text | Dangerous innerHTML | Safe `t.rich()` |
+| Tooling | None | Industry standard |
 
 ## useTranslations Hook
 
@@ -40,7 +66,7 @@ t('plural', { count: 1 })  // → "You have 1 item"
 t('plural', { count: 5 })  // → "You have 5 items"
 ```
 
-## Rich Text (HTML)
+## Rich Text (React Components)
 
 ```typescript
 t.rich('rich', {
@@ -49,7 +75,7 @@ t.rich('rich', {
 // → "Please <a href="/docs">click here</a>"
 ```
 
-## Raw HTML
+## Raw Markup
 
 ```typescript
 t.markup('html', {

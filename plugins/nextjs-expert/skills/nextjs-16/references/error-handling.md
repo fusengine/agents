@@ -1,4 +1,29 @@
+---
+name: error-handling
+description: Error boundaries with error.tsx, global-error.tsx, and not-found patterns
+when-to-use: catching errors in routes, 404 pages, error recovery
+keywords: error boundaries, error.tsx, not-found, global-error
+priority: high
+requires: app-router.md
+related: app-router.md
+---
+
 # Error Handling
+
+## When to Use
+
+- Route-level error boundaries
+- Global error handling
+- Custom 404 pages
+- Error recovery with reset
+
+## Why File-Based Errors
+
+| File | Scope |
+|------|-------|
+| error.tsx | Route segment |
+| global-error.tsx | Entire app |
+| not-found.tsx | 404 page |
 
 ## error.tsx (Route Error Boundary)
 ```typescript

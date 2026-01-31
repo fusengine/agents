@@ -1,4 +1,30 @@
+---
+name: routing-advanced
+description: Advanced routing patterns with parallel routes, intercepting routes, and conditionals
+when-to-use: multi-pane layouts, modals, complex UI patterns, conditional rendering
+keywords: parallel routes, intercepting routes, modals, slots, conditional
+priority: medium
+requires: app-router.md
+related: app-router.md, error-handling.md
+---
+
 # Advanced Routing
+
+## When to Use
+
+- Parallel routes (@slots)
+- Intercepting routes (modals)
+- Conditional rendering
+- Complex layouts
+
+## Why Advanced Routing
+
+| Pattern | Use Case |
+|---------|----------|
+| Parallel | Multi-pane layouts |
+| Intercepting | Modal overlays |
+| Default | Fallback slots |
+| Conditional | Role-based UI |
 
 ## Parallel Routes
 Load multiple pages simultaneously in the same layout.

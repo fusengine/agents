@@ -1,4 +1,29 @@
+---
+name: devtools-mcp
+description: DevTools MCP for AI-assisted debugging and error resolution
+when-to-use: debugging errors, AI assistance, migration help
+keywords: DevTools, MCP, debugging, error resolution
+priority: low
+related: instrumentation.md
+---
+
 # DevTools MCP (AI Debugging)
+
+## When to Use
+
+- AI-assisted debugging
+- Automated error resolution
+- Migration assistance
+- Build error analysis
+
+## Why DevTools MCP
+
+| Feature | Benefit |
+|---------|---------|
+| Context | Full error context to AI |
+| Docs | Integrated Next.js docs |
+| Codemods | AI-driven migrations |
+| Real-time | Live error capture |
 
 ## Configuration
 ```json

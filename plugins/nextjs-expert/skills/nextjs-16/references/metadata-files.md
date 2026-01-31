@@ -1,4 +1,30 @@
+---
+name: metadata-files
+description: File-based metadata with favicon, sitemap, robots, and OG images
+when-to-use: SEO, dynamic OG images, PWA manifest, robots.txt
+keywords: favicon, sitemap, robots, manifest, opengraph-image
+priority: medium
+requires: app-router.md, metadata.md
+related: metadata.md
+---
+
 # Metadata Files
+
+## When to Use
+
+- Favicon and app icons
+- Dynamic OG images
+- Sitemap generation
+- Robots.txt and manifest
+
+## Why File-Based Metadata
+
+| File | Auto-Generated |
+|------|----------------|
+| sitemap.ts | Sitemap XML |
+| robots.ts | Robots rules |
+| opengraph-image.tsx | OG images |
+| manifest.ts | PWA manifest |
 
 ## File-based Metadata
 ```

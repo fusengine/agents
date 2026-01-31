@@ -1,4 +1,30 @@
+---
+name: deployment
+description: Deployment to Vercel, Docker, and static export
+when-to-use: deploying to production, containerization, self-hosting
+keywords: Vercel, Docker, deployment, standalone, environment variables
+priority: high
+requires: installation.md
+related: environment.md
+---
+
 # Deployment
+
+## When to Use
+
+- Deploying to Vercel (recommended)
+- Self-hosting with Docker
+- Static export for CDN
+- Environment configuration
+
+## Why Standalone Output
+
+| Feature | Benefit |
+|---------|---------|
+| Smaller image | Only necessary files |
+| No node_modules | Dependencies traced |
+| Docker ready | Easy containerization |
+| Fast startup | Minimal runtime |
 
 ## Vercel (Recommended)
 ```bash

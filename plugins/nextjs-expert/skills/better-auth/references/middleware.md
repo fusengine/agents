@@ -1,3 +1,13 @@
+---
+name: middleware
+description: Protect routes using proxy.ts for authentication checks and redirects at edge
+when-to-use: protect routes, redirect authenticated users, role-based access, route guards
+keywords: proxy.ts, middleware, route protection, redirect, dashboard protection, authentication check
+priority: high
+requires: basic-usage.md, session.md
+related: security.md, server-actions.md
+---
+
 # Route Protection with proxy.ts (Next.js 16)
 
 ## When to Use

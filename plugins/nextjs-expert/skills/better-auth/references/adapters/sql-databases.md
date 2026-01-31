@@ -1,4 +1,30 @@
+---
+name: sql-databases
+description: Direct SQL database drivers for PostgreSQL, MySQL, SQLite without ORM overhead
+when-to-use: direct database access, orm overhead reduction, specific database features, simple setup
+keywords: SQL, PostgreSQL, MySQL, SQLite, direct driver, pool, kysely, raw sql, lightweight
+priority: medium
+requires: installation.md, server-config.md
+related: adapters/prisma.md, adapters/drizzle.md, concepts/database.md
+---
+
 # Better Auth SQL Adapters
+
+## When to Use
+
+- Direct database driver access
+- No ORM overhead needed
+- Specific database features
+- Simple setup without dependencies
+
+## Why Direct SQL
+
+| ORM | Direct SQL |
+|-----|------------|
+| Extra dependency | Driver only |
+| Query abstraction | Full control |
+| ORM overhead | Minimal footprint |
+| Learning curve | SQL knowledge |
 
 ## PostgreSQL
 

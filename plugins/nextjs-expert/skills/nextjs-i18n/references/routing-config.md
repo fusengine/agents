@@ -1,3 +1,13 @@
+---
+name: routing-config
+description: Stratégies de préfixes de locale (always, as-needed, never), domaines, URLs traduites
+when-to-use: SEO, domaines par langue, URLs traduites, préfixes locales, production setup
+keywords: localePrefix, domains, pathnames, as-needed, always, never
+priority: high
+requires: routing-setup.md
+related: seo.md, middleware-proxy.md
+---
+
 # next-intl Routing Configuration
 
 ## When to Configure

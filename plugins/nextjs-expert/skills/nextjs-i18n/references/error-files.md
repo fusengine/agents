@@ -1,4 +1,29 @@
+---
+name: error-files
+description: Fichiers d'erreur localisés (not-found, error, loading) avec traductions
+when-to-use: pages 404, pages d'erreur, états loading, fallbacks non trouvés, UX localisée
+keywords: not-found.tsx, error.tsx, loading.tsx, error boundaries, custom errors
+priority: medium
+requires: client-components.md, server-components.md
+related: error handling
+---
+
 # next-intl Error Files
+
+## When to Use
+
+- Localized 404 pages (not-found.tsx)
+- Localized error pages (error.tsx)
+- Loading states with translations
+- Global fallback for unmatched routes
+
+## Why Localized Error Pages
+
+| Standard Error | Localized Error |
+|----------------|-----------------|
+| English only | User's language |
+| Generic text | Helpful context |
+| Poor UX | Professional UX |
 
 ## not-found.tsx
 

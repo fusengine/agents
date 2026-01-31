@@ -1,4 +1,30 @@
+---
+name: bearer
+description: Bearer token authentication for API access
+when-to-use: api authentication, bearer tokens, token-based access
+keywords: bearer token, api auth, token authentication
+priority: low
+requires: server-config.md
+related: plugins/jwt.md, plugins/api-key.md
+---
+
 # Better Auth Bearer Plugin
+
+## When to Use
+
+- API integrations and webhooks
+- CLI tools and scripts
+- Server-to-server authentication
+- Mobile apps without cookie support
+
+## Why Bearer Tokens
+
+| Cookies | Bearer tokens |
+|---------|---------------|
+| Browser-only | Any HTTP client |
+| Domain-bound | Portable |
+| Automatic handling | Explicit control |
+| Session-based | Stateless |
 
 ## Overview
 API key / Bearer token authentication as alternative to cookies.

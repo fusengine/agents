@@ -1,4 +1,30 @@
+---
+name: route-segment-config
+description: Per-route configuration for rendering, caching, runtime, and revalidation
+when-to-use: configuring individual routes, dynamic rendering, edge runtime
+keywords: dynamic, revalidate, runtime, dynamicParams, fetchCache
+priority: medium
+requires: app-router.md, rendering.md
+related: routing-advanced.md
+---
+
 # Route Segment Config
+
+## When to Use
+
+- Configure rendering mode
+- Set cache behavior
+- Choose runtime
+- Configure regions
+
+## Why Segment Config
+
+| Export | Controls |
+|--------|----------|
+| dynamic | Rendering strategy |
+| revalidate | Cache lifetime |
+| runtime | Node.js vs Edge |
+| maxDuration | Function timeout |
 
 ## Export Options
 ```typescript

@@ -1,14 +1,39 @@
+---
+name: runtime-requirements
+description: Support Node.js, Edge, Cloudflare, Intl APIs, polyfills, timezone, memory
+when-to-use: edge deployment, vieux navigateurs, timezone-specific, optimisation mémoire
+keywords: Node.js 18+, Edge Runtime, Intl APIs, polyfills, browser support, optimization
+priority: low
+requires: installation.md
+related: configuration.md
+---
+
 # next-intl Runtime Requirements
+
+## When to Check
+
+- Deploying to edge/serverless environments
+- Supporting older browsers
+- Using timezone-specific formatting
+- Optimizing for memory usage
+
+## Why Runtime Matters
+
+| Runtime | Consideration |
+|---------|---------------|
+| Node.js | Full Intl support |
+| Edge | Limited bundle size |
+| Older browsers | May need polyfills |
 
 ## Supported Environments
 
 | Environment | Support |
 |-------------|---------|
-| Node.js 18+ | ✓ Full |
-| Edge Runtime | ✓ Full |
-| Cloudflare Workers | ✓ Full |
-| Vercel Edge | ✓ Full |
-| Deno | ✓ Partial |
+| Node.js 18+ | Full |
+| Edge Runtime | Full |
+| Cloudflare Workers | Full |
+| Vercel Edge | Full |
+| Deno | Partial |
 
 ## Browser Support
 
@@ -42,18 +67,7 @@ import '@formatjs/intl-numberformat/polyfill'
 import '@formatjs/intl-datetimeformat/polyfill'
 ```
 
-## Edge Runtime Configuration
-
-```typescript
-// next.config.ts
-export default {
-  experimental: {
-    runtime: 'edge'
-  }
-}
-```
-
-## Memory Considerations
+## Memory Optimization
 
 - Messages are loaded per-locale
 - Use message splitting for large apps

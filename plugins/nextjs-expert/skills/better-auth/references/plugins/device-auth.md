@@ -1,4 +1,30 @@
+---
+name: device-auth
+description: Device-based authentication for IoT and mobile
+when-to-use: iot devices, mobile apps, device authentication
+keywords: device auth, IoT, mobile, device-based, authentication
+priority: low
+requires: server-config.md
+related: plugins/overview.md
+---
+
 # Better Auth Device Authorization Plugin
+
+## When to Use
+
+- CLI tools requiring user login
+- Smart TV applications
+- IoT devices without keyboards
+- Game console authentication
+
+## Why Device Authorization
+
+| Traditional login | Device flow |
+|-------------------|-------------|
+| Keyboard required | Code + browser |
+| On-device password | Phone/computer auth |
+| Input challenges | Simple code entry |
+| Unsafe keyboard | Secure browser auth |
 
 ## Overview
 OAuth 2.0 Device Authorization Grant for TV, CLI, and limited-input devices.

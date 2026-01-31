@@ -1,4 +1,29 @@
+---
+name: scripts
+description: Script loading optimization with next/script and different strategies
+when-to-use: third-party scripts, analytics, performance control
+keywords: next/script, strategy, lazyOnload, afterInteractive
+priority: medium
+related: third-party.md, analytics.md
+---
+
 # Script Optimization
+
+## When to Use
+
+- Third-party scripts
+- Analytics integration
+- Widget loading
+- Performance control
+
+## Why next/script
+
+| Strategy | Loading |
+|----------|---------|
+| beforeInteractive | Before hydration |
+| afterInteractive | After hydration |
+| lazyOnload | Browser idle |
+| worker | Web Worker |
 
 ## Loading Strategies
 ```typescript
