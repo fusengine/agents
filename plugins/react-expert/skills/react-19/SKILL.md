@@ -3,7 +3,7 @@ name: react-19
 description: React 19.2 features - use(), useOptimistic, useActionState, useEffectEvent, Activity component, React Compiler. Use when implementing React 19 patterns.
 version: 19.2.0
 user-invocable: true
-references: references/new-hooks.md, references/activity-component.md, references/actions-api.md, references/react-compiler.md, references/ref-as-prop.md, references/context-improvements.md, references/suspense-patterns.md, references/document-metadata.md, references/resource-loading.md, references/migration-18-19.md, references/templates/action-form.md, references/templates/optimistic-update.md, references/templates/activity-tabs.md, references/templates/use-promise.md, references/templates/use-context.md, references/templates/use-effect-event.md, references/templates/error-boundary.md, references/templates/ref-as-prop.md, references/templates/document-metadata.md, references/templates/resource-loading.md, references/hooks-improved.md, references/templates/use-deferred-value.md, references/templates/use-transition-async.md
+references: references/new-hooks.md, references/activity-component.md, references/actions-api.md, references/react-compiler.md, references/ref-as-prop.md, references/context-improvements.md, references/suspense-patterns.md, references/document-metadata.md, references/resource-loading.md, references/migration-18-19.md, references/templates/action-form.md, references/templates/optimistic-update.md, references/templates/activity-tabs.md, references/templates/use-promise.md, references/templates/use-context.md, references/templates/use-effect-event.md, references/templates/error-boundary.md, references/templates/ref-as-prop.md, references/templates/document-metadata.md, references/templates/resource-loading.md, references/hooks-improved.md, references/templates/use-deferred-value.md, references/templates/use-transition-async.md, references/use-state.md, references/use-effect.md, references/use-ref.md, references/use-memo.md, references/use-callback.md, references/use-layout-effect.md, references/use-id.md, references/use-imperative-handle.md, references/use-sync-external-store.md, references/custom-hooks-patterns.md, references/templates/state-patterns.md, references/templates/effect-patterns.md, references/templates/ref-patterns.md, references/templates/custom-hooks.md, references/templates/external-store.md
 ---
 
 # React 19.2 Core Features
@@ -34,6 +34,55 @@ ALWAYS verify latest API with Context7 + Exa.
 | `useEffectEvent` | Non-reactive callbacks in effects | `references/new-hooks.md` |
 
 → See `references/new-hooks.md` for detailed usage
+
+---
+
+## Classic Hooks (React 18+)
+
+### State Hooks
+
+| Hook | Purpose | Guide |
+|------|---------|-------|
+| `useState` | Local component state | `references/use-state.md` |
+
+→ For global state, see `react-state` skill
+
+### Effect Hooks
+
+| Hook | Purpose | Guide |
+|------|---------|-------|
+| `useEffect` | Side effects after paint | `references/use-effect.md` |
+| `useLayoutEffect` | Sync DOM before paint | `references/use-layout-effect.md` |
+
+### Ref Hooks
+
+| Hook | Purpose | Guide |
+|------|---------|-------|
+| `useRef` | DOM access, mutable values | `references/use-ref.md` |
+| `useImperativeHandle` | Customize ref API | `references/use-imperative-handle.md` |
+
+### Performance Hooks (Rare with Compiler)
+
+| Hook | Purpose | Guide |
+|------|---------|-------|
+| `useMemo` | Memoize expensive values | `references/use-memo.md` |
+| `useCallback` | Memoize functions | `references/use-callback.md` |
+
+→ React Compiler handles most memoization automatically
+
+### Other Hooks
+
+| Hook | Purpose | Guide |
+|------|---------|-------|
+| `useId` | Unique IDs for accessibility | `references/use-id.md` |
+| `useSyncExternalStore` | External store subscription | `references/use-sync-external-store.md` |
+
+### Custom Hooks
+
+→ See `references/custom-hooks-patterns.md` for patterns
+→ See `references/templates/custom-hooks.md` for implementations
+
+---
 
 ### Activity Component (19.2)
 
@@ -133,12 +182,24 @@ useEffect(() => {
 
 ## Templates
 
+### React 19 Patterns
+
 | Template | Use Case |
 |----------|----------|
 | `templates/action-form.md` | Form with useActionState |
 | `templates/optimistic-update.md` | useOptimistic pattern |
 | `templates/activity-tabs.md` | Activity component tabs |
 | `templates/use-promise.md` | use() with promises |
+
+### Classic Hooks Patterns
+
+| Template | Use Case |
+|----------|----------|
+| `templates/state-patterns.md` | useState patterns |
+| `templates/effect-patterns.md` | useEffect patterns |
+| `templates/ref-patterns.md` | useRef patterns |
+| `templates/custom-hooks.md` | Custom hooks implementations |
+| `templates/external-store.md` | useSyncExternalStore patterns |
 
 ---
 
