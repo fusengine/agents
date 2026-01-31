@@ -1,5 +1,20 @@
 # Release Notes
 
+## [1.31.0] - 31-01-2026
+
+### Added
+
+- **nextjs-shadcn**: Add 50+ component references (button, card, dialog, etc.)
+- **nextjs-tanstack-form**: Add 15 references (validation, server-actions, etc.)
+- **nextjs-zustand**: Add 12 references (middleware, slices, testing, etc.)
+- **prisma-7**: Add 100+ references with complete documentation
+
+### Changed
+
+- **better-auth**: Add frontmatter to all 80+ reference files
+- **nextjs-16**: Add frontmatter to all 40+ reference files
+- **nextjs-i18n**: Add frontmatter to all 20+ reference files
+
 ## [1.30.0] - 31-01-2026
 
 ### Added
