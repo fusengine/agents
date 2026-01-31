@@ -1,13 +1,13 @@
 # next-intl Routing Configuration
 
-## Quand configurer le routing
+## When to Configure
 
-- Projet multilingue avec URLs localisées
-- SEO international (hreflang)
-- Domaines par langue (example.fr, example.de)
-- URLs traduites (/about → /a-propos)
+- Multilingual project with localized URLs
+- International SEO (hreflang)
+- Domain-per-language (example.fr, example.de)
+- Translated URLs (/about → /a-propos)
 
-## Config de base
+## Basic Config
 
 ```typescript
 // modules/cores/i18n/src/config/routing.ts
@@ -19,28 +19,28 @@ export const routing = defineRouting({
 })
 ```
 
-## Stratégies de préfixe locale
+## Locale Prefix Strategies
 
-| Stratégie | URL EN | URL FR | Recommandation |
-|-----------|--------|--------|----------------|
+| Strategy | EN URL | FR URL | Recommendation |
+|----------|--------|--------|----------------|
 | `always` | `/en/about` | `/fr/about` | **SEO optimal** |
-| `as-needed` | `/about` | `/fr/about` | URLs courtes pour défaut |
-| `never` | `/about` | `/about` | SPA, détection cookie |
+| `as-needed` | `/about` | `/fr/about` | Short URLs for default |
+| `never` | `/about` | `/about` | SPA, cookie detection |
 
 ```typescript
-// always (défaut) - Recommandé pour SEO
+// always (default) - Recommended for SEO
 defineRouting({ localePrefix: 'always' })  // /en/about, /fr/about
 
-// as-needed - Cache le préfixe pour defaultLocale
+// as-needed - Hides prefix for defaultLocale
 defineRouting({ localePrefix: 'as-needed' })  // /about (en), /fr/about
 
-// never - Locale via cookie/header uniquement
-defineRouting({ localePrefix: 'never' })  // /about (détection auto)
+// never - Locale via cookie/header only
+defineRouting({ localePrefix: 'never' })  // /about (auto-detection)
 ```
 
-## Routing par domaine
+## Domain-Based Routing
 
-Pour sites avec domaines dédiés par langue.
+For sites with dedicated domains per language.
 
 ```typescript
 defineRouting({
@@ -54,9 +54,9 @@ defineRouting({
 })
 ```
 
-## URLs traduites (pathnames)
+## Translated URLs (pathnames)
 
-Traduit les slugs pour meilleur SEO local.
+Translates slugs for better local SEO.
 
 ```typescript
 defineRouting({
@@ -69,22 +69,22 @@ defineRouting({
 })
 ```
 
-## Options SEO
+## SEO Options
 
 ```typescript
 defineRouting({
   locales: ['en', 'fr'],
   defaultLocale: 'en',
-  localeDetection: true,  // Détecte Accept-Language header
-  alternateLinks: true    // Ajoute <link hreflang> automatiquement
+  localeDetection: true,  // Detect Accept-Language header
+  alternateLinks: true    // Auto-add <link hreflang>
 })
 ```
 
-## Recommandations
+## Recommendations
 
-| Cas d'usage | Stratégie | Pourquoi |
-|-------------|-----------|----------|
-| E-commerce international | `always` + `pathnames` | SEO maximal |
-| SaaS B2B | `as-needed` | URLs propres |
-| App interne | `never` | Simplicité |
-| Multi-domaines | `domains` | Séparation claire |
+| Use Case | Strategy | Why |
+|----------|----------|-----|
+| International e-commerce | `always` + `pathnames` | Maximum SEO |
+| B2B SaaS | `as-needed` | Clean URLs |
+| Internal app | `never` | Simplicity |
+| Multi-domain | `domains` | Clear separation |

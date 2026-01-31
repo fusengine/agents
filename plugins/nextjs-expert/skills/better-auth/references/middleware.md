@@ -1,5 +1,20 @@
 # Route Protection with proxy.ts (Next.js 16)
 
+## When to Use
+
+- Protect routes before rendering (dashboard, settings, admin)
+- Redirect authenticated users away from login/signup
+- Role-based access control at edge
+
+## Why proxy.ts (Not middleware.ts)
+
+| Aspect | middleware.ts | proxy.ts (Next.js 16) |
+|--------|---------------|----------------------|
+| Status | Deprecated | Recommended |
+| Location | Root or src/ | Same level as app/ |
+| Performance | Runs after routing | Runs before routing |
+| Use case | Business logic | Network/auth checks |
+
 > **Note**: `middleware.ts` is deprecated. Use `proxy.ts` at **same level as app/**.
 
 ## File Location
@@ -15,7 +30,7 @@ proxy.ts        ← Project root, same level as app/
 ## Basic proxy.ts
 
 ```typescript
-// proxy.ts (same level as app/)
+// proxy.ts
 import { NextRequest, NextResponse } from "next/server"
 import { getSessionCookie } from "better-auth/cookies"
 
@@ -62,6 +77,7 @@ export async function proxy(request: NextRequest) {
 bunx @next/codemod middleware-to-proxy .
 ```
 
-Sources:
+## Sources
+
 - [Next.js proxy.ts](https://nextjs.org/docs/app/api-reference/file-conventions/proxy)
 - [Next.js 16 Proxy Guide](https://nextjs.org/docs/app/getting-started/proxy)

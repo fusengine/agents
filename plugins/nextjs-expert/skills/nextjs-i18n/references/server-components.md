@@ -1,20 +1,20 @@
 # next-intl Server Components
 
-## Quand utiliser
+## When to Use
 
-- Pages et layouts (Server Components par défaut)
+- Pages and layouts (Server Components by default)
 - Metadata (generateMetadata)
 - Route Handlers (API routes)
 - Server Actions
 
-## Pourquoi Server Components pour i18n
+## Why Server Components for i18n
 
-| Avantage | Explication |
-|----------|-------------|
-| **Zero JS client** | Traductions rendues côté serveur, pas de bundle |
-| **SEO optimal** | Contenu traduit dans le HTML initial |
-| **Performance** | Pas d'hydratation nécessaire |
-| **Sécurité** | Messages sensibles jamais exposés au client |
+| Benefit | Explanation |
+|---------|-------------|
+| **Zero client JS** | Translations rendered server-side, no bundle |
+| **SEO optimal** | Translated content in initial HTML |
+| **Performance** | No hydration needed |
+| **Security** | Sensitive messages never exposed to client |
 
 ## getTranslations
 
@@ -29,9 +29,9 @@ export default async function Page() {
 ```
 
 ```typescript
-// Variantes
-const t = await getTranslations('Namespace')      // Avec namespace
-const t = await getTranslations()                  // Sans namespace → t('Namespace.key')
+// Variants
+const t = await getTranslations('Namespace')      // With namespace
+const t = await getTranslations()                  // Without → t('Namespace.key')
 const t = await getTranslations({ locale: 'fr' }) // Override locale
 ```
 
@@ -96,9 +96,9 @@ export async function submitForm(data: FormData) {
 
 ## Server vs Client
 
-| Critère | Server | Client |
-|---------|--------|--------|
+| Criteria | Server | Client |
+|----------|--------|--------|
 | Import | `next-intl/server` | `next-intl` |
-| Fonction | `getTranslations` (async) | `useTranslations` (hook) |
-| Bundle | 0 KB | Messages inclus |
-| Interactivité | Non | Oui |
+| Function | `getTranslations` (async) | `useTranslations` (hook) |
+| Bundle | 0 KB | Messages included |
+| Interactivity | No | Yes |

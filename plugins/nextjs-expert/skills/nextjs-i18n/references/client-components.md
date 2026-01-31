@@ -1,17 +1,19 @@
 # next-intl Client Components
 
-## Quand utiliser
+## When to Use
 
-- Composants avec `'use client'` directive
-- Interactivité (boutons, formulaires, modals)
-- Hooks React (useState, useEffect)
-- Affichage temps réel (horloge, compteurs)
+- Components with `'use client'` directive
+- Interactive UI (buttons, forms, modals)
+- React hooks (useState, useEffect)
+- Real-time display (clock, counters)
 
-## Pourquoi NextIntlClientProvider
+## Why NextIntlClientProvider
 
-- **Hydratation**: Synchronise serveur/client pour éviter les mismatches
-- **Performance**: Ne charge que les messages nécessaires côté client
-- **Contexte React**: Permet aux hooks `useTranslations` de fonctionner
+| Benefit | Explanation |
+|---------|-------------|
+| **Hydration** | Syncs server/client to avoid mismatches |
+| **Performance** | Only loads needed messages client-side |
+| **React Context** | Enables `useTranslations` hooks |
 
 ## Provider Setup
 
@@ -74,12 +76,11 @@ export function Clock() {
 }
 ```
 
-## Optimisation: Messages partiels
+## Optimization: Partial Messages
 
-Réduit le bundle client en ne passant que les namespaces nécessaires.
+Reduces client bundle by passing only needed namespaces.
 
 ```typescript
-// Passe uniquement Common et Nav au client (pas tout messages)
 <NextIntlClientProvider messages={pick(messages, ['Common', 'Nav'])}>
   {children}
 </NextIntlClientProvider>
@@ -96,7 +97,7 @@ function pick<T extends object>(obj: T, keys: string[]): Partial<T> {
 
 ## Server vs Client
 
-| Contexte | Hook | Import |
-|----------|------|--------|
+| Context | Hook | Import |
+|---------|------|--------|
 | Server Component | `getTranslations` | `next-intl/server` |
 | Client Component | `useTranslations` | `next-intl` |
