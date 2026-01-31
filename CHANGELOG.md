@@ -1,5 +1,14 @@
 # Release Notes
 
+## [1.33.0] - 31-01-2026
+
+### Added
+
+- **ai-pilot**: Add skill-creator and agent-creator commands
+  - skill-creator: Document skill architecture, frontmatter, Agent Workflow, copy & adapt patterns
+  - agent-creator: Document agent frontmatter, required sections, hooks, validation checklist
+  - Both include registration steps for marketplace.json
+
 ## [1.32.6] - 31-01-2026
 
 ### Changed
