@@ -1,5 +1,15 @@
 # Release Notes
 
+## [1.32.6] - 31-01-2026
+
+### Changed
+
+- **react-state**: Restructure skill with 10 Zustand reference files
+  - Copy and adapt references from nextjs-zustand pattern
+  - Add installation, store-patterns, middleware, typescript docs
+  - Add slices, auto-selectors, reset-state, subscribe-api, testing, migration-v5
+  - Remove SSR-specific files (hydration, nextjs-integration)
+
 ## [1.32.5] - 31-01-2026
 
 ### Changed
