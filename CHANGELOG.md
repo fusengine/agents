@@ -1,5 +1,14 @@
 # Release Notes
 
+## [1.32.3] - 31-01-2026
+
+### Added
+
+- **setup**: Auto-make shell scripts executable during installation
+  - Add `makeScriptsExecutable()` function in fs-helpers.ts
+  - Automatically chmod +x all .sh files in plugins directory
+  - Ensures hooks work immediately after installation
+
 ## [1.32.2] - 31-01-2026
 
 ### Changed
