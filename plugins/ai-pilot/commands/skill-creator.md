@@ -9,19 +9,114 @@ Create or restructure skills following established patterns and conventions.
 
 ---
 
+## CRITICAL: Language Requirement (MANDATORY)
+
+**ALL skill content MUST be written in English only.**
+
+This applies to:
+- SKILL.md (frontmatter, sections, descriptions)
+- All reference files (references/*.md)
+- All template files (references/templates/*.md)
+- Code comments
+- Documentation text
+- Examples and explanations
+
+**NEVER write skill content in French or any other language.**
+
+The only exception is user-facing UI strings in code examples (if the target app requires localization).
+
+---
+
+## Skill Creator Workflow (MANDATORY)
+
+**Before creating or improving ANY skill, ALWAYS launch in parallel:**
+
+### Phase 1: Analyze (3 agents in parallel)
+
+```
+1. fuse-ai-pilot:explore-codebase
+   - Check if skill already exists in plugins/
+   - Analyze existing skill structure if present
+   - Identify similar skills to use as reference
+
+2. fuse-ai-pilot:research-expert
+   - Search latest official documentation online
+   - Get current stable version number
+   - Identify key features and patterns
+
+3. mcp__context7__query-docs OR mcp__exa__web_search_exa
+   - Fetch real documentation from official sources
+   - Get code examples from official docs
+   - Verify best practices and patterns
+```
+
+### Phase 2: Plan
+
+Based on research results:
+- List all topics to cover (installation, core concepts, patterns, etc.)
+- Identify reference files needed
+- Identify template files needed (complete code examples)
+- Estimate file count and structure
+
+### Phase 3: Execute
+
+- Create SKILL.md with descriptive content
+- Create reference files (conceptual documentation)
+- Create templates (complete, copy-paste ready code)
+- Link references to templates throughout
+
+### Phase 4: Validate
+
+Run **fuse-ai-pilot:sniper** to verify:
+- All files exist and have proper frontmatter
+- No broken links
+- All references listed in SKILL.md frontmatter
+- Templates contain complete, working code
+
+---
+
+## Example Workflow
+
+```bash
+# User request: Improve skill react-tanstack-router
+
+# Phase 1: Analyze (parallel)
+→ explore-codebase: Found existing skill with only SKILL.md (241 lines)
+→ research-expert: TanStack Router v1.131.2, file-based routing, type-safe
+→ context7/exa: Fetched official docs, API reference, patterns
+
+# Phase 2: Plan
+→ Need 18 reference files + 5 templates
+→ Topics: installation, routing, params, loaders, auth, query integration...
+
+# Phase 3: Execute
+→ Created 23 files (8,406 lines of documentation)
+→ All references link to relevant templates
+
+# Phase 4: Validate
+→ sniper: All files valid, no broken links, frontmatter complete
+```
+
+---
+
 ## Skill Architecture
 
 ```
 skills/<skill-name>/
-├── SKILL.md                    # Main entry point (index)
-├── references/                 # Conceptual documentation (NO CODE)
-│   ├── installation.md
-│   ├── patterns.md
-│   └── ...
-└── templates/                  # Full code examples (OPTIONAL)
-    ├── basic-example.md
-    └── ...
+├── SKILL.md                    # Main entry point (descriptive, guides agent)
+└── references/                 # All documentation and code examples
+    ├── installation.md         # Conceptual: setup, configuration
+    ├── patterns.md             # Conceptual: core patterns
+    ├── ...                     # Other conceptual references
+    └── templates/              # Full code examples (MANDATORY for complete skills)
+        ├── basic-setup.md      # Complete project setup
+        ├── feature-module.md   # Feature module example
+        └── ...                 # Other complete templates
 ```
+
+**Key principle:**
+- `references/*.md` = Conceptual documentation (WHY + minimal code snippets)
+- `references/templates/*.md` = Complete code examples (copy-paste ready)
 
 ---
 
@@ -58,12 +153,21 @@ After implementation, run **fuse-ai-pilot:sniper** for validation.
 
 ### Required Sections
 
-1. **Overview** - When to use, Why this library
-2. **Critical Rules** - Non-negotiable patterns
-3. **Architecture** - SOLID module structure
-4. **Key Concepts** - Core patterns (conceptual)
-5. **Reference Guide** - Table linking to references/
-6. **Best Practices** - Do's and don'ts
+1. **Overview** - When to use, Why this library, comparison table
+2. **Critical Rules** - Non-negotiable patterns (numbered list)
+3. **Architecture** - SOLID module structure with link to template
+4. **Reference Guide** - Two tables:
+   - **Concepts** (references/*.md) - Explanatory documentation
+   - **Templates** (references/templates/*.md) - Complete code examples
+5. **Core Patterns** - Key patterns with links to templates
+6. **Best Practices** - Do's and Don'ts with code snippets
+
+### SKILL.md Guidelines
+
+- **Be descriptive** - Guide the agent to the right reference/template
+- **Link to templates** - Each concept should point to a template for implementation
+- **Use tables** - Organize references by topic and priority
+- **Include "See [template.md]"** - After each pattern, link to the complete example
 
 ---
 
@@ -86,29 +190,82 @@ related: related1.md, related2.md
 ### Content Rules
 
 - **Conceptual first** - Explain WHY, not just HOW
-- **Code in templates/** - References have minimal inline code
+- **Code in references/templates/** - References have minimal inline code, templates have complete examples
 - **Max 150 lines** - Split large topics
-- **Links to related** - Cross-reference other docs
+- **Links to templates** - Each reference should link to relevant templates for implementation
+- **Cross-reference** - Link to related references and templates
+
+### Template File Structure
+
+```yaml
+---
+name: template-name
+description: Complete example of [what this template demonstrates]
+keywords: keyword1, keyword2, keyword3
+---
+```
+
+Templates should include:
+- Complete file structure
+- All necessary interfaces/types
+- Full implementation code
+- Ready to copy-paste
 
 ---
 
 ## Creation Workflow
 
-### Option 1: From Scratch
+### Option 1: New Skill (From Online Documentation)
 
+**Step 1: Research (MANDATORY)**
 ```bash
-# 1. Create structure
-mkdir -p plugins/<agent>/skills/<skill-name>/references
+# Launch research-expert to fetch latest documentation
+→ research-expert: "Research complete documentation for [library-name]"
 
-# 2. Create SKILL.md with frontmatter + sections
-
-# 3. Create reference files
-
-# 4. Commit with pattern:
-# docs(<skill-name>): create skill with X reference files
+# Use Context7 or Exa to get official docs
+→ mcp__context7__resolve-library-id: Find library ID
+→ mcp__context7__query-docs: Fetch specific topics
+→ mcp__exa__web_search_exa: Search for latest patterns/tutorials
 ```
 
-### Option 2: Copy & Adapt (RECOMMENDED)
+**Step 2: Create Structure**
+```bash
+mkdir -p plugins/<agent>/skills/<skill-name>/references/templates
+```
+
+**Step 3: Transcribe Documentation**
+- SKILL.md: Overview, critical rules, architecture, reference guide
+- references/*.md: Conceptual documentation from official docs
+- references/templates/*.md: Complete code examples from official docs
+
+**Step 4: Validate**
+```bash
+# Run sniper to validate
+→ sniper: Validate all files, links, frontmatter
+```
+
+### Option 2: Improve Existing Skill
+
+**Step 1: Analyze**
+```bash
+# Explore existing skill structure
+→ explore-codebase: Analyze plugins/<agent>/skills/<skill-name>/
+```
+
+**Step 2: Research Updates**
+```bash
+# Fetch latest documentation
+→ research-expert: "Get latest [library] documentation for 2026"
+→ context7/exa: Fetch new features, patterns, best practices
+```
+
+**Step 3: Update**
+- Add missing reference files
+- Add missing templates
+- Update version numbers
+- Add new patterns/features
+
+### Option 3: Copy & Adapt
 
 ```bash
 # 1. Find similar skill
@@ -126,9 +283,11 @@ done
 # 4. Remove non-applicable files
 rm references/hydration.md  # If no SSR
 
-# 5. Update SKILL.md
+# 5. Research to fill gaps
+→ research-expert: Get missing documentation
 
-# 6. Commit
+# 6. Validate
+→ sniper: Validate all files
 ```
 
 ---
@@ -156,11 +315,15 @@ sed -i '' "s/'use client'//g" *.md
 
 ## Validation Checklist
 
-- [ ] SKILL.md has proper frontmatter
+- [ ] **ALL content in English** (CRITICAL - no French or other languages)
+- [ ] SKILL.md has proper frontmatter with all references listed
+- [ ] SKILL.md is descriptive and guides agent to correct references/templates
 - [ ] Agent Workflow section present
-- [ ] All references listed in frontmatter
-- [ ] No code in references (code in templates/)
-- [ ] Keywords in each reference frontmatter
+- [ ] Reference Guide has two tables: Concepts + Templates
+- [ ] Each concept links to relevant template ("See [template.md]")
+- [ ] Templates in `references/templates/` folder
+- [ ] Templates have complete, copy-paste ready code
+- [ ] Keywords in each reference/template frontmatter
 - [ ] related-skills points to valid skills
 - [ ] No Next.js references in React skills
 - [ ] No 'use client' in React SPA skills

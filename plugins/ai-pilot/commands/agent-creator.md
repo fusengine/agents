@@ -9,6 +9,21 @@ Create expert agents following established patterns and conventions.
 
 ---
 
+## CRITICAL: Language Requirement (MANDATORY)
+
+**ALL agent content MUST be written in English only.**
+
+This applies to:
+- Agent frontmatter (name, description)
+- All markdown sections
+- Code examples
+- Documentation text
+- Comments and explanations
+
+**NEVER write agent content in French or any other language.**
+
+---
+
 ## Agent Architecture
 
 ```
@@ -265,6 +280,7 @@ cp plugins/nextjs-expert/scripts/*.sh plugins/new-plugin/scripts/
 
 ## Validation Checklist
 
+- [ ] **ALL content in English** (CRITICAL - no French or other languages)
 - [ ] Frontmatter complete (name, description, model, color, tools, skills)
 - [ ] Agent Workflow section present
 - [ ] Mandatory Skills Usage table
