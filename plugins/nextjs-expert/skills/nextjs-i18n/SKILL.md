@@ -1,84 +1,71 @@
 ---
 name: nextjs-i18n
-description: This skill should be used when the user asks about "internationalization", "i18n", "translations", "localization", "multilingual", "language switch", or "[lang] routing". Covers Next.js 16 i18n with modular SOLID architecture and proxy.ts.
-version: 1.0.0
-user-invocable: false
-references:
-  - path: references/services.md
-    title: i18n Services
-  - path: references/proxy-middleware.md
-    title: Proxy Configuration
+description: Next.js 16 internationalization with next-intl or DIY. Use when implementing i18n, translations, localization, multilingual, language switch, [locale] routing, or formatters.
+user-invocable: true
+references: [references/installation.md, references/pages-router.md, references/routing-setup.md, references/routing-config.md, references/translations.md, references/formatting.md, references/navigation.md, references/server-components.md, references/client-components.md, references/middleware-proxy.md, references/error-files.md, references/configuration.md, references/plugin.md, references/extraction.md, references/messages-validation.md, references/typescript.md, references/testing.md, references/integrations.md, references/seo.md, references/core-library.md, references/runtime-requirements.md, references/diy-dictionaries.md, references/diy-locale-detection.md]
+related-skills: [nextjs-16]
 ---
 
 # Next.js 16 Internationalization (SOLID)
 
 ## Modular Architecture
 
-```text
+```
 src/
-├── app/[lang]/
+├── app/[locale]/
 │   ├── layout.tsx
 │   └── page.tsx
-│
 ├── modules/cores/i18n/
 │   ├── src/
+│   │   ├── config/
+│   │   │   └── routing.ts
 │   │   ├── interfaces/
 │   │   │   └── i18n.interface.ts
-│   │   ├── services/
-│   │   │   ├── dictionary.service.ts
-│   │   │   └── locale.service.ts
-│   │   └── config/
-│   │       └── locales.ts
-│   └── dictionaries/
+│   │   └── services/
+│   │       └── request.ts
+│   └── messages/
 │       ├── en.json
 │       └── fr.json
-│
-└── proxy.ts                  # Root level (Next.js 16)
+└── proxy.ts
 ```
 
----
+## Quick Start
 
-## Config
+```bash
+bun add next-intl
+```
+
+## Two Approaches
+
+### 1. next-intl (Recommended)
 
 ```typescript
-// modules/cores/i18n/src/config/locales.ts
-export const locales = ['en', 'fr', 'de'] as const
-export const defaultLocale = 'en'
-export type Locale = (typeof locales)[number]
+// modules/cores/i18n/src/config/routing.ts
+import { defineRouting } from 'next-intl/routing'
+import { createNavigation } from 'next-intl/navigation'
+
+export const routing = defineRouting({
+  locales: ['en', 'fr', 'de'],
+  defaultLocale: 'en'
+})
+
+export const { Link, redirect, usePathname, useRouter } = createNavigation(routing)
 ```
 
----
+### 2. DIY (No Library)
 
-## Dictionaries
-
-```json
-// modules/cores/i18n/dictionaries/en.json
-{
-  "home": {
-    "title": "Welcome",
-    "description": "This is the home page"
-  }
+```typescript
+// modules/cores/i18n/src/services/dictionary.service.ts
+export async function getDictionary(locale: Locale) {
+  return import(`../../messages/${locale}.json`)
 }
 ```
 
----
+## When to Use References
 
-## Dependencies
-
-```bash
-bun add @formatjs/intl-localematcher negotiator
-bun add -D @types/negotiator
-```
-
----
-
-## Best Practices
-
-1. **Module in `modules/cores/i18n/`** - Shared across app
-2. **Interfaces separated** - `src/interfaces/i18n.interface.ts`
-3. **Services for logic** - `dictionary.service.ts`, `locale.service.ts`
-4. **`proxy.ts`** - NOT middleware (Next.js 16)
-5. **`await params`** - Promise-based params
-6. **`server-only`** - Dictionaries stay on server
-
-See [Services](references/services.md) and [Proxy](references/proxy-middleware.md) for complete implementation.
+- **Setup**: installation, routing-setup, routing-config
+- **Usage**: translations, formatting, navigation
+- **Components**: server-components, client-components
+- **Routing**: middleware-proxy, error-files
+- **Quality**: typescript, testing, seo
+- **DIY**: diy-dictionaries, diy-locale-detection
