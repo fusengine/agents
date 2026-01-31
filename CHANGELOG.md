@@ -1,5 +1,14 @@
 # Release Notes
 
+## [1.32.5] - 31-01-2026
+
+### Changed
+
+- **react-shadcn**: Restructure skill with 51 component references
+  - Add complete component documentation from nextjs-shadcn pattern
+  - Replace Next.js imports with TanStack Router Link
+  - Update SKILL.md with versions, references list, and Agent Workflow
+
 ## [1.32.4] - 31-01-2026
 
 ### Changed
