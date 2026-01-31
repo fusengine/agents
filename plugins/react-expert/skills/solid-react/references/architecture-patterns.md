@@ -1,80 +1,178 @@
+---
+name: architecture-patterns
+description: React modular architecture with TanStack Router, feature modules, cores
+when-to-use: project setup, architecture decisions, code organization
+keywords: architecture, modular, structure, TanStack Router, modules, cores
+priority: high
+related: single-responsibility.md, templates/component.md, templates/service.md
+---
+
 # Architecture Patterns for React 19
 
-## Modular Architecture
+## Modular Architecture Overview
 
 ```text
 src/
-├── modules/                    # ALL modules here
+├── modules/                    # ALL business logic here
 │   ├── cores/                  # Shared (global to app)
-│   │   ├── components/         # Shared UI (Button, Modal)
+│   │   ├── components/         # Shared UI
 │   │   ├── lib/                # Utilities
 │   │   └── stores/             # Global state
 │   │
-│   ├── auth/                   # Feature module
-│   │   ├── components/
-│   │   └── src/
-│   │       ├── interfaces/
-│   │       ├── services/
-│   │       ├── hooks/
-│   │       └── stores/
-│   │
-│   └── [feature]/              # Other feature modules
+│   └── [feature]/              # Feature modules
+│       ├── components/
+│       └── src/
+│           ├── interfaces/
+│           ├── services/
+│           ├── hooks/
+│           └── stores/
 │
-├── routes/                     # TanStack Router routes
+├── routes/                     # TanStack Router
 └── main.tsx
+```
+
+---
+
+## Feature Module Structure
+
+Each feature is self-contained:
+
+```text
+modules/[feature]/
+├── components/          # UI (< 50 lines each)
+└── src/
+    ├── interfaces/      # Types ONLY
+    ├── services/        # Business logic
+    ├── hooks/           # React hooks
+    ├── stores/          # Zustand state
+    └── validators/      # Zod schemas
+```
+
+→ See `templates/` for each file type
+
+---
+
+## Cores Module (Shared)
+
+Used by all features:
+
+```text
+modules/cores/
+├── components/          # Button, Modal, Input
+├── lib/                 # cn(), formatters, helpers
+├── interfaces/          # Shared interfaces (HttpClient)
+├── factories/           # DI factories
+├── errors/              # Base error classes
+└── stores/              # Theme, session
 ```
 
 ---
 
 ## File Size Rules
 
-| Type | Max Lines |
-|------|-----------|
-| Component | 50 |
-| Hook | 30 |
-| Service | 40 |
-| Total file | 100 (split at 90) |
+| Type | Max Lines | Purpose |
+|------|-----------|---------|
+| Component | 50 | UI rendering only |
+| Hook | 30 | Single logic concern |
+| Service | 40 | API operations |
+| Store | 40 | State management |
+| Total file | 100 | Split at 90 |
 
 ---
 
-## Import Patterns
+## Import Rules
+
+### 1. Routes import Modules
 
 ```typescript
-// Module imports cores
-import { Button } from '@/modules/cores/components/Button'
-import { cn } from '@/modules/cores/lib/utils'
+// routes/users.tsx
+import { UserList } from '@/modules/users/components/UserList'
+```
 
-// Module imports own src
+### 2. Feature imports Cores
+
+```typescript
+// modules/users/components/UserCard.tsx
+import { Button } from '@/modules/cores/components/Button'
+```
+
+### 3. Feature imports own src
+
+```typescript
+// modules/users/components/UserCard.tsx
 import type { User } from '../src/interfaces/user.interface'
 import { useUser } from '../src/hooks/useUser'
 ```
 
+### 4. FORBIDDEN: Feature imports another Feature
+
+```typescript
+// ❌ NEVER DO THIS
+// modules/users/components/UserCard.tsx
+import { OrderList } from '@/modules/orders/components/OrderList'
+```
+
+If needed → move to `cores/`
+
 ---
 
-## Split Strategy
+## TanStack Router Integration
 
-When a file exceeds 90 lines, split into:
+### Route with Loader
 
-```text
-feature/
-├── main.ts          # Entry point, orchestration
-├── validators.ts    # Validation logic
-├── types.ts         # Type definitions
-├── utils.ts         # Helper functions
-└── constants.ts     # Static values
+```typescript
+// routes/users.$id.tsx
+export const Route = createFileRoute('/users/$id')({
+  loader: ({ params }) => userService.getById(params.id),
+  component: UserPage
+})
 ```
+
+→ See `react-tanstack-router` skill for details
+
+### Route with Search Params
+
+```typescript
+// routes/products.tsx
+export const Route = createFileRoute('/products')({
+  validateSearch: (search) => productSearchSchema.parse(search),
+  component: ProductsPage
+})
+```
+
+→ See `templates/validator.md` for search schemas
+
+---
+
+## State Management Strategy
+
+| State Type | Solution |
+|------------|----------|
+| Server state | TanStack Query |
+| URL state | TanStack Router |
+| Component state | useState |
+| Global UI state | Zustand |
+| Form state | TanStack Form / React Hook Form |
 
 ---
 
 ## Forbidden Patterns
 
-| Pattern | Why |
-|---------|-----|
-| Interfaces in components | Violates separation |
-| Files > 100 lines | Must split |
-| Business logic in components | Use hooks/services |
-| Class components | Use function components |
-| Missing JSDoc | All exports documented |
-| `any` type | Use proper types |
-| Barrel exports (index.ts) | Direct imports only |
-| `useEffect` for data fetching | Use TanStack Query |
+| Pattern | Why | Solution |
+|---------|-----|----------|
+| Types in component | Violates SRP | → `interfaces/` |
+| Logic in component | Violates SRP | → `hooks/` or `services/` |
+| Files > 100 lines | Hard to maintain | → Split |
+| Feature → Feature import | Tight coupling | → `cores/` |
+| `useEffect` for fetch | Race conditions | → TanStack Query |
+| Barrel exports | Bundle bloat | Direct imports |
+
+---
+
+## Where to Find Code Templates?
+
+→ `templates/component.md` - Component structure
+→ `templates/hook.md` - Hook with TanStack Query
+→ `templates/service.md` - Service with DI
+→ `templates/store.md` - Zustand patterns
+→ `templates/interface.md` - Type definitions

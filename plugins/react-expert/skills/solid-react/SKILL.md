@@ -1,38 +1,31 @@
 ---
 name: solid-react
 description: SOLID principles for React 19. Files < 100 lines, hooks separated, interfaces in src/interfaces/, JSDoc mandatory. Use for React architecture and code quality.
+version: 1.0.0
 user-invocable: true
+references: references/solid-principles.md, references/single-responsibility.md, references/open-closed.md, references/liskov-substitution.md, references/interface-segregation.md, references/dependency-inversion.md, references/architecture-patterns.md, references/templates/component.md, references/templates/hook.md, references/templates/service.md, references/templates/store.md, references/templates/interface.md, references/templates/validator.md, references/templates/factory.md, references/templates/adapter.md, references/templates/error.md, references/templates/test.md
 ---
-
-## References (MANDATORY READ)
-
-Before any implementation, consult these reference files:
-
-| File | Content |
-|------|---------|
-| `references/solid-principles.md` | S.O.L.I.D. principles with React examples |
-| `references/code-templates.md` | Component, Hook, Service, Store templates |
-| `references/architecture-patterns.md` | Modular structure, imports, split strategy |
 
 # SOLID React - Component Architecture
 
 ## Current Date (CRITICAL)
 
-**Today: January 2026** - ALWAYS use the current year for searches.
+**Today: January 2026** - ALWAYS use the current year for your searches.
 Search with "2025" or "2026", NEVER with past years.
 
 ## MANDATORY: Research Before Coding
 
-**CRITICAL: Check today's date first, then search documentation BEFORE writing any code.**
+**CRITICAL: Check today's date first, then search documentation and web BEFORE writing any code.**
 
 1. **Use Context7** to query React official documentation
 2. **Use Exa web search** with current year for latest trends
 3. **Verify package versions** for React 19 compatibility
 
-```text
-WORKFLOW:
-1. Check date → 2. Research docs + web (current year) → 3. Apply latest patterns → 4. Code
-```
+**Search queries (replace YYYY with current year):**
+- `React 19 [feature] YYYY best practices`
+- `TanStack Router [pattern] YYYY`
+- `TypeScript [pattern] YYYY`
+- `Zustand [feature] YYYY`
 
 ---
 
@@ -42,6 +35,27 @@ WORKFLOW:
 1. Explore project structure to understand architecture
 2. Read existing related files to follow established patterns
 3. Identify naming conventions, coding style, and patterns used
+4. Understand data flow and dependencies
+
+## DRY - Reuse or Create Shared (MANDATORY)
+
+**Before writing ANY new code:**
+1. Search existing codebase for similar functionality
+2. Check shared locations: `modules/cores/lib/`, `modules/cores/components/`
+3. If similar code exists → extend/reuse instead of duplicate
+4. If code will be used by 2+ features → create it in `modules/cores/` directly
+
+---
+
+## Agent Workflow (MANDATORY)
+
+Before ANY implementation, launch in parallel:
+
+1. **fuse-ai-pilot:explore-codebase** - Analyze project structure and existing patterns
+2. **fuse-ai-pilot:research-expert** - Verify latest docs for all stack technologies
+3. **mcp__context7__query-docs** - Check integration compatibility
+
+After implementation, run **fuse-ai-pilot:sniper** for validation.
 
 ---
 
@@ -56,27 +70,7 @@ WORKFLOW:
 
 ### 2. Modular Architecture
 
-```text
-src/
-├── modules/                    # ALL modules here
-│   ├── cores/                  # Shared (global to app)
-│   │   ├── components/         # Shared UI (Button, Modal)
-│   │   ├── lib/                # Utilities
-│   │   └── stores/             # Global state
-│   │
-│   ├── auth/                   # Feature module
-│   │   ├── components/
-│   │   └── src/
-│   │       ├── interfaces/
-│   │       ├── services/
-│   │       ├── hooks/
-│   │       └── stores/
-│   │
-│   └── [feature]/              # Other feature modules
-│
-├── routes/                     # TanStack Router routes
-└── main.tsx
-```
+See `references/architecture-patterns.md` for complete structure with feature modules and cores directory.
 
 ### 3. JSDoc Mandatory
 
@@ -103,183 +97,80 @@ modules/[feature]/src/interfaces/
 
 ---
 
-## SOLID Principles
+## SOLID Principles (Detailed Guides)
 
-### S - Single Responsibility
+Each SOLID principle has a dedicated reference guide:
 
-1 component = 1 UI concern
-1 hook = 1 logic concern
+1. **`references/single-responsibility.md`** - One function = one reason to change
+   - File splitting at 90 lines (components < 50, hooks < 30)
+   - Component composition patterns
+   - Split strategy
 
-```typescript
-// ❌ BAD - Mixed concerns
-function UserProfile() {
-  // fetching, formatting, validation, rendering...
-}
+2. **`references/open-closed.md`** - Extend via composition, not modification
+   - Plugin architecture patterns
+   - Render props and slots
+   - Strategy patterns
 
-// ✅ GOOD - Separated
-function UserProfile({ user }: UserProfileProps) {
-  return <UserCard user={user} />
-}
+3. **`references/liskov-substitution.md`** - Contract compliance & behavioral subtyping
+   - Interface contracts
+   - Swappable implementations
+   - Testing compliance
 
-function useUser(id: string) {
-  // fetching logic only
-}
-```
+4. **`references/interface-segregation.md`** - Many focused interfaces beat one fat interface
+   - Role-based interfaces
+   - Props segregation
+   - Context splitting
 
-### O - Open/Closed
+5. **`references/dependency-inversion.md`** - Depend on abstractions, not implementations
+   - Constructor injection patterns
+   - Factory patterns
+   - Context for DI
 
-Components extensible without modification
-
-```typescript
-// Extensible via props
-interface ButtonProps {
-  variant?: 'primary' | 'secondary'
-  size?: 'sm' | 'md' | 'lg'
-  children: React.ReactNode
-}
-```
-
-### L - Liskov Substitution
-
-All implementations respect contracts
-
-```typescript
-interface DataSource<T> {
-  fetch(): Promise<T[]>
-}
-
-// Any DataSource can be swapped
-const apiSource: DataSource<User> = new ApiDataSource()
-const mockSource: DataSource<User> = new MockDataSource()
-```
-
-### I - Interface Segregation
-
-Small, focused interfaces
-
-```typescript
-// ❌ BAD
-interface UserModule {
-  login(): void
-  logout(): void
-  updateProfile(): void
-  sendEmail(): void
-}
-
-// ✅ GOOD
-interface Authenticatable { login(): void; logout(): void }
-interface Editable { updateProfile(): void }
-```
-
-### D - Dependency Inversion
-
-Depend on interfaces, not implementations
-
-```typescript
-// src/services/user.service.ts
-import type { HttpClient } from '../interfaces/http.interface'
-
-export function createUserService(client: HttpClient) {
-  return {
-    async getUser(id: string) {
-      return client.get(`/users/${id}`)
-    }
-  }
-}
-```
+See `references/solid-principles.md` for overview and quick reference.
 
 ---
 
-## Templates
+## Code Templates
 
-### Component (< 50 lines)
+Ready-to-copy code in `references/templates/`:
 
-```typescript
-// modules/users/components/UserCard.tsx
-import type { UserCardProps } from '../src/interfaces/user.interface'
+| Template | Usage | Max Lines |
+|----------|-------|-----------|
+| `component.md` | React functional component | 50 |
+| `hook.md` | Custom hook with TanStack Query | 30 |
+| `service.md` | Service with dependency injection | 40 |
+| `store.md` | Zustand store with persistence | 40 |
+| `interface.md` | TypeScript interfaces | - |
+| `validator.md` | Zod validation schemas | 30 |
+| `factory.md` | Factory pattern | 40 |
+| `adapter.md` | Adapter pattern | 40 |
+| `error.md` | Custom error classes | 30 |
+| `test.md` | Vitest + Testing Library | - |
 
-/**
- * User card component.
- */
-export function UserCard({ user, onEdit }: UserCardProps) {
-  return (
-    <div className="rounded-lg border p-4">
-      <h3>{user.name}</h3>
-      <p>{user.email}</p>
-      <button onClick={() => onEdit(user.id)}>Edit</button>
-    </div>
-  )
-}
-```
+---
 
-### Custom Hook (< 30 lines)
+## Response Guidelines
 
-```typescript
-// modules/users/src/hooks/useUser.ts
-import { useState, useEffect } from 'react'
-import type { User } from '../interfaces/user.interface'
-import { userService } from '../services/user.service'
-
-/**
- * Fetch and manage user state.
- */
-export function useUser(id: string) {
-  const [user, setUser] = useState<User | null>(null)
-  const [loading, setLoading] = useState(true)
-
-  useEffect(() => {
-    userService.getById(id).then(setUser).finally(() => setLoading(false))
-  }, [id])
-
-  return { user, loading }
-}
-```
-
-### Service (< 40 lines)
-
-```typescript
-// modules/users/src/services/user.service.ts
-import type { User } from '../interfaces/user.interface'
-
-/**
- * User service for API calls.
- */
-export const userService = {
-  async getById(id: string): Promise<User | null> {
-    const res = await fetch(`/api/users/${id}`)
-    if (!res.ok) return null
-    return res.json()
-  },
-
-  async getAll(): Promise<User[]> {
-    const res = await fetch('/api/users')
-    return res.json()
-  },
-}
-```
-
-### Import Patterns
-
-```typescript
-// Module imports cores
-import { Button } from '@/modules/cores/components/Button'
-import { cn } from '@/modules/cores/lib/utils'
-
-// Module imports own src
-import type { User } from '../src/interfaces/user.interface'
-import { useUser } from '../src/hooks/useUser'
-```
+1. **Research first** - MANDATORY: Search Context7 + Exa before ANY code
+2. **Show complete code** - Working examples, not snippets
+3. **Explain decisions** - Why this pattern over alternatives
+4. **Include tests** - Always suggest test cases
+5. **Handle errors** - Never ignore, use error boundaries
+6. **Type everything** - Full TypeScript, no `any`
+7. **Document code** - JSDoc for complex functions
 
 ---
 
 ## Forbidden
 
-- ❌ Coding without researching docs first
-- ❌ Files > 100 lines
-- ❌ Interfaces in component files
-- ❌ Business logic in components
-- ❌ Class components
-- ❌ Missing JSDoc on exports
-- ❌ `any` type
-- ❌ Barrel exports (index.ts re-exports)
-- ❌ `useEffect` for data fetching (use TanStack Query or Router loaders)
+- Coding without researching docs first (ALWAYS research)
+- Using outdated APIs without checking current year docs
+- Files > 100 lines
+- Interfaces in component files
+- Business logic in components
+- Class components
+- Missing JSDoc on exports
+- `any` type
+- Barrel exports (index.ts re-exports)
+- `useEffect` for data fetching (use TanStack Query or Router loaders)
+- Module importing another module (except cores)
