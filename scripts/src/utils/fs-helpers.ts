@@ -29,6 +29,18 @@ export async function copyExecutable(
 }
 
 /**
+ * Rend tous les scripts .sh exécutables dans un répertoire
+ */
+export async function makeScriptsExecutable(dir: string): Promise<number> {
+  const result = await $`find ${dir} -name "*.sh" -type f`.quiet();
+  const files = result.text().trim().split("\n").filter(Boolean);
+  for (const file of files) {
+    await $`chmod +x ${file}`.quiet();
+  }
+  return files.length;
+}
+
+/**
  * Compare le contenu de deux fichiers
  */
 export async function filesAreEqual(

@@ -15,7 +15,7 @@ import {
   configureDefaults,
   configureStatusLine,
 } from "./settings-manager";
-import { copyExecutable, filesAreEqual } from "../utils/fs-helpers";
+import { copyExecutable, filesAreEqual, makeScriptsExecutable } from "../utils/fs-helpers";
 import { configureApiKeys, configureShell, checkApiKeys } from "./env-manager";
 import { configureMcpServers } from "./mcp-setup";
 import type { SetupPaths } from "../interfaces/setup";
@@ -34,6 +34,10 @@ export async function runSetup(paths: SetupPaths, skipEnv: boolean): Promise<voi
   const plugins = scanPlugins({ pluginsDir });
   const withHooks = plugins.filter((pl) => pl.hasHooks);
   s.stop(`${withHooks.length} plugins with hooks detected`);
+
+  s.start("Making scripts executable...");
+  const scriptCount = await makeScriptsExecutable(pluginsDir);
+  s.stop(`${scriptCount} scripts made executable`);
 
   s.start("Configuring hooks loader...");
   backupSettings(paths.settings);
