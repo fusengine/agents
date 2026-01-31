@@ -1,145 +1,133 @@
 ---
-title: TanStack Form Basics
-description: Core hooks, configuration, and field management
+name: tanstack-form-basics
+description: TanStack Form core hooks and field management for React forms
+when-to-use: form state management, field validation, dynamic forms, multi-step forms
+keywords: form, useForm, useField, form.Field, form.Subscribe, state, validation
+priority: high
+related: templates/basic-form.md, zod-validation.md
 ---
 
 # TanStack Form Basics
 
-## Installation
-
-```bash
-bun add @tanstack/react-form zod
-```
-
 ## useForm Hook
 
-Core hook for managing form state and submission.
+**Core hook for managing entire form state, submission, and field lifecycle.**
 
-```typescript
-import { useForm } from '@tanstack/react-form'
+### Purpose
+- Initialize form state with default values
+- Handle form submission with async support
+- Manage form-wide state (canSubmit, isSubmitting, isDirty, errors)
+- Track field values, touch states, and validation status
 
-function LoginForm() {
-  const form = useForm({
-    defaultValues: {
-      email: '',
-      password: '',
-    },
-    onSubmit: async ({ value }) => {
-      console.log(value)
-      await loginUser(value)
-    },
-  })
+### When to Use
+- Creating any form (login, registration, settings)
+- Forms with complex state management
+- Forms with server-side validation
+- Multi-step or dynamic forms
 
-  return (
-    <form
-      onSubmit={(e) => {
-        e.preventDefault()
-        form.handleSubmit()
-      }}
-    >
-      <form.Field
-        name="email"
-        children={(field) => (
-          <div>
-            <label htmlFor={field.name}>Email</label>
-            <input
-              id={field.name}
-              value={field.state.value}
-              onBlur={field.handleBlur}
-              onChange={(e) => field.handleChange(e.target.value)}
-            />
-          </div>
-        )}
-      />
+### Key Points
+- Accepts options object: `defaultValues`, `onSubmit`, `validators`
+- Returns form instance with methods: `handleSubmit()`, `reset()`, `getFieldValue()`
+- Form state includes: `values`, `errors`, `isSubmitting`, `canSubmit`, `isDirty`
+- Can be combined with Zod or custom validators
+- Manages field registration and lifecycle automatically
 
-      <form.Field
-        name="password"
-        children={(field) => (
-          <div>
-            <label htmlFor={field.name}>Password</label>
-            <input
-              id={field.name}
-              type="password"
-              value={field.state.value}
-              onBlur={field.handleBlur}
-              onChange={(e) => field.handleChange(e.target.value)}
-            />
-          </div>
-        )}
-      />
+→ See `templates/basic-form.md` for code examples
 
-      <button type="submit">Login</button>
-    </form>
-  )
-}
-```
+---
 
-## Form State Subscription
+## useField Hook
 
-Subscribe to specific form states for optimized re-renders.
+**Field-level hook for accessing and manipulating individual field state.**
 
-```typescript
-<form.Subscribe
-  selector={(state) => ({
-    canSubmit: state.canSubmit,
-    isSubmitting: state.isSubmitting,
-    isDirty: state.isDirty,
-    isValid: state.isValid,
-  })}
-  children={({ canSubmit, isSubmitting, isDirty }) => (
-    <div>
-      <button type="submit" disabled={!canSubmit}>
-        {isSubmitting ? 'Saving...' : 'Save'}
-      </button>
-      {isDirty && <span>Unsaved changes</span>}
-    </div>
-  )}
-/>
-```
+### Purpose
+- Register and manage single field instance
+- Access field value, status, and validation state
+- Handle field blur, change, and touch events
 
-## Field Arrays
+### When to Use
+- When building custom field components
+- When you need programmatic field access
+- For advanced field-specific logic
 
-Manage dynamic field arrays with add/remove operations.
+### Key Points
+- Must be called inside a component rendered by `form.Field`
+- Returns field instance with state and handlers
+- Handlers include: `handleChange()`, `handleBlur()`, `getValue()`, `setValue()`
+- Field state includes: `value`, `meta` (touched, isDirty, errors)
+- Can be extended with custom validators per field
 
-```typescript
-function TodoForm() {
-  const form = useForm({
-    defaultValues: {
-      todos: [{ text: '' }],
-    },
-    onSubmit: async ({ value }) => {
-      await saveTodos(value.todos)
-    },
-  })
+→ See `templates/basic-form.md` for code examples
 
-  return (
-    <form onSubmit={(e) => { e.preventDefault(); form.handleSubmit() }}>
-      <form.Field name="todos" mode="array">
-        {(field) => (
-          <div>
-            {field.state.value.map((_, i) => (
-              <form.Field key={i} name={`todos[${i}].text`}>
-                {(subField) => (
-                  <div className="flex gap-2">
-                    <input
-                      value={subField.state.value}
-                      onChange={(e) => subField.handleChange(e.target.value)}
-                    />
-                    <button type="button" onClick={() => field.removeValue(i)}>
-                      Remove
-                    </button>
-                  </div>
-                )}
-              </form.Field>
-            ))}
-            <button type="button" onClick={() => field.pushValue({ text: '' })}>
-              Add Todo
-            </button>
-          </div>
-        )}
-      </form.Field>
-      <button type="submit">Save</button>
-    </form>
-  )
-}
-```
+---
+
+## form.Field Component
+
+**Renders field with children function pattern for fine-grained control.**
+
+### Purpose
+- Declare form fields declaratively
+- Subscribe to field-level changes
+- Wrap custom field components
+
+### When to Use
+- Every input, textarea, select in the form
+- Creating isolated field components
+- Fields with custom rendering logic
+
+### Key Points
+- Uses children render function pattern: `children={(field) => ...}`
+- Props include: `name`, `validators`, `asyncValidators`, `mode` (text, array, object)
+- Field parameter provides: `state`, `getValue()`, `setValue()`, `handleChange()`, `handleBlur()`
+- Each field is independent and only re-renders when its value changes
+- Can nest fields for complex structures using array or object mode
+
+→ See `templates/basic-form.md` for code examples
+
+---
+
+## form.Subscribe
+
+**Selectively subscribe to form state changes without full re-render.**
+
+### Purpose
+- Watch specific form state slices (canSubmit, isSubmitting, isDirty)
+- Render submit buttons, error messages, or save indicators
+- Optimize performance by avoiding unnecessary re-renders
+
+### When to Use
+- Submit button state (disabled while submitting)
+- Form-level error display
+- Showing "unsaved changes" indicator
+- Displaying validation summary
+
+### Key Points
+- Uses `selector` function to pick specific state properties
+- Returns only selected values to children function
+- Only triggers re-render when selected state changes
+- Selector must return consistent object reference
+- Common selections: `canSubmit`, `isSubmitting`, `isDirty`, `isValid`
+
+### Form State Structure
+- **values**: Current field values object
+- **errors**: Field-level validation errors
+- **isSubmitting**: Boolean, true during submission
+- **canSubmit**: Boolean, true if form is valid and touched
+- **isDirty**: Boolean, true if any field changed from default
+- **isValid**: Boolean, true if all validations pass
+
+→ See `templates/basic-form.md` for code examples
+
+---
+
+## Field Modes for Complex Structures
+
+### Array Mode
+Manage dynamic lists of fields with `mode="array"`. Provides `pushValue()` and `removeValue()` methods for adding/removing items.
+
+### Object Mode
+Manage nested object structures with `mode="object"`. Child fields use dot notation for nested names.
+
+→ See `templates/basic-form.md` for code examples
+
+---

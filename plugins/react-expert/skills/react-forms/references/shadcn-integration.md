@@ -1,126 +1,115 @@
 ---
-title: shadcn/ui Integration
-description: Using TanStack Form with shadcn/ui Field components
+name: shadcn-integration
+description: shadcn/ui component integration for accessible, composable form building
+when-to-use: form inputs, field wrappers, button states, accessible form construction
+keywords: shadcn/ui, form components, accessibility, field wrapper, composable UI
+priority: high
+related: templates/form-composition.md, templates/basic-form.md
 ---
 
-# shadcn/ui Integration
+# shadcn/ui Integration for Forms
 
-Integrate TanStack Form with shadcn/ui components.
+## Purpose
 
-## Contact Form Example
+shadcn/ui provides a collection of accessible, composable React components built on Radix UI primitives. For form building, shadcn/ui offers pre-styled, unstyled-by-default components that work seamlessly with form libraries like TanStack Form.
 
-Complete form with Input, Label, and Button components.
+### Key Points
+- Components built on Radix UI (WAI-ARIA compliant)
+- Customizable with Tailwind CSS
+- Composable and headless by nature
+- Pair with TanStack Form or React Hook Form for state management
+- No external dependency lock-in
 
-```typescript
-import { useForm } from '@tanstack/react-form'
-import { z } from 'zod'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
+---
 
-function ContactForm() {
-  const form = useForm({
-    defaultValues: { name: '', email: '' },
-    onSubmit: async ({ value }) => await sendContact(value),
-  })
+## shadcn/ui Form Components
 
-  return (
-    <form onSubmit={(e) => { e.preventDefault(); form.handleSubmit() }} className="space-y-4">
-      <form.Field
-        name="name"
-        validators={{ onChange: z.string().min(2) }}
-        children={(field) => (
-          <div className="space-y-2">
-            <Label htmlFor={field.name}>Name</Label>
-            <Input
-              id={field.name}
-              value={field.state.value}
-              onChange={(e) => field.handleChange(e.target.value)}
-            />
-            {field.state.meta.errors.length > 0 && (
-              <p className="text-sm text-red-500">{field.state.meta.errors[0]}</p>
-            )}
-          </div>
-        )}
-      />
+| Component | Purpose | Accessibility |
+|-----------|---------|----------------|
+| `Input` | Text, email, password fields | ARIA labels, error messaging |
+| `Button` | Submit, reset, action buttons | Semantic HTML, disabled states |
+| `Label` | Field labels with `htmlFor` linking | Associates with inputs |
+| `FormField` | Custom: field wrapper with error display | Manages state, errors, touched state |
+| `Select` | Dropdown selections | Keyboard navigation, ARIA roles |
+| `Checkbox` | Toggle boolean values | Checked state, labels |
+| `RadioGroup` | Exclusive selections | ARIA roles, keyboard support |
+| `Textarea` | Multi-line text input | Resize, placeholder support |
 
-      <form.Subscribe
-        selector={(s) => [s.canSubmit, s.isSubmitting]}
-        children={([canSubmit, isSubmitting]) => (
-          <Button type="submit" disabled={!canSubmit}>
-            {isSubmitting ? 'Sending...' : 'Send'}
-          </Button>
-        )}
-      />
-    </form>
-  )
-}
+---
+
+## Field Wrapper Pattern
+
+**Key Principle**: Extract field rendering logic into reusable wrapper components.
+
+### Why Wrap Fields
+- Consistent error display across forms
+- Centralized label and validation UI
+- Reduced boilerplate in form declarations
+- Easier to adjust styling globally
+
+### Field Wrapper Responsibilities
+- Render label with correct associations
+- Display input/select/checkbox component
+- Show validation errors when touched
+- Handle blur and change events
+- Manage visual error states (borders, colors)
+
+### Accessibility Requirements
+- Label `htmlFor` must match input `id`
+- Error messages linked via `aria-describedby`
+- Required fields marked with `aria-required`
+- Disabled state properly announced
+
+---
+
+## Form State Integration
+
+shadcn/ui components are **stateless UI components**. State management must come from:
+
+### State Management Options
+1. **TanStack Form** - Form-centric, field-by-field state
+2. **React Hook Form** - Hook-based, minimal re-renders
+3. **Zod/Yup** - Validation schemas
+4. **Custom useForm Hook** - Light form orchestration
+
+### State Flow Pattern
+```
+Form → useForm Hook → Field State
+Field State → FormField Component
+FormField → shadcn/ui Input/Select/etc
+User Action → Handler → Update State → Re-render
 ```
 
-## Integration Patterns
+### Essential State Properties
+- **value**: Current field value
+- **error**: Validation error messages
+- **touched**: Whether field has been interacted with
+- **disabled**: Button/field disabled during submission
+- **isSubmitting**: Form submission in progress
 
-### Field Component Wrapper
+---
 
-Create reusable field components.
-
-```typescript
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import type { AnyFieldApi } from '@tanstack/react-form'
-
-interface FormFieldProps {
-  field: AnyFieldApi
-  label: string
-  placeholder?: string
-  type?: string
-}
-
-export function FormField({
-  field,
-  label,
-  placeholder,
-  type = 'text',
-}: FormFieldProps) {
-  return (
-    <div className="space-y-2">
-      <Label htmlFor={field.name}>{label}</Label>
-      <Input
-        id={field.name}
-        type={type}
-        placeholder={placeholder}
-        value={field.state.value}
-        onChange={(e) => field.handleChange(e.target.value)}
-        onBlur={field.handleBlur}
-      />
-      {field.state.meta.isTouched && field.state.meta.errors.length > 0 && (
-        <p className="text-sm text-red-500">{field.state.meta.errors[0]}</p>
-      )}
-    </div>
-  )
-}
-```
+## Form Submission Pattern
 
 ### Button State Management
+- Disable submit button while form is invalid
+- Show loading indicator during submission
+- Update button text (e.g., "Sending..." vs "Send")
+- Re-enable when submission completes
 
-Use form subscribe for button states.
+### Error Handling
+- Display inline field errors below inputs
+- Show form-level errors in alert or toast
+- Clear errors on successful submission
+- Preserve errors on failed submission
 
-```typescript
-<form.Subscribe
-  selector={(state) => ({
-    canSubmit: state.canSubmit,
-    isSubmitting: state.isSubmitting,
-  })}
-  children={({ canSubmit, isSubmitting }) => (
-    <Button type="submit" disabled={!canSubmit} className="w-full">
-      {isSubmitting ? 'Processing...' : 'Submit'}
-    </Button>
-  )}
-/>
-```
+### Best Practices
+- Never throw errors in handlers; return error objects
+- Validate on blur for better UX (show errors after interaction)
+- Debounce async validation (checking username availability, etc.)
+- Show success feedback (toast, redirect, or message)
 
-## Best Practices
+---
 
-1. **Extract field wrappers** - Reuse field UI across forms
-2. **Use form.Subscribe** - Optimize re-renders with state selectors
-3. **Handle submit state** - Disable button during submission
+→ See `templates/form-composition.md` for code examples
+→ See `templates/basic-form.md` for basic setup
