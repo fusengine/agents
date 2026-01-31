@@ -1,5 +1,18 @@
 # next-intl Client Components
 
+## Quand utiliser
+
+- Composants avec `'use client'` directive
+- Interactivité (boutons, formulaires, modals)
+- Hooks React (useState, useEffect)
+- Affichage temps réel (horloge, compteurs)
+
+## Pourquoi NextIntlClientProvider
+
+- **Hydratation**: Synchronise serveur/client pour éviter les mismatches
+- **Performance**: Ne charge que les messages nécessaires côté client
+- **Contexte React**: Permet aux hooks `useTranslations` de fonctionner
+
 ## Provider Setup
 
 ```typescript
@@ -15,7 +28,6 @@ export default async function LocaleLayout({
   params: Promise<{ locale: string }>
 }) {
   const messages = await getMessages()
-
   return (
     <NextIntlClientProvider messages={messages}>
       {children}
@@ -24,69 +36,56 @@ export default async function LocaleLayout({
 }
 ```
 
-## useTranslations (Client)
+## useTranslations
 
 ```typescript
 'use client'
 import { useTranslations } from 'next-intl'
 
-export function ClientComponent() {
-  const t = useTranslations('Namespace')
+export function ClientButton() {
+  const t = useTranslations('Actions')
   return <button>{t('submit')}</button>
 }
 ```
 
-## useFormatter (Client)
+## useFormatter
 
 ```typescript
 'use client'
 import { useFormatter } from 'next-intl'
 
-export function PriceDisplay({ price }: { price: number }) {
+export function Price({ value }: { value: number }) {
   const format = useFormatter()
-  return <span>{format.number(price, { style: 'currency', currency: 'EUR' })}</span>
+  return <span>{format.number(value, { style: 'currency', currency: 'EUR' })}</span>
 }
 ```
 
-## useLocale
+## useLocale / useNow / useTimeZone
 
 ```typescript
 'use client'
-import { useLocale } from 'next-intl'
+import { useLocale, useNow, useTimeZone } from 'next-intl'
 
-export function LocaleDisplay() {
+export function Clock() {
   const locale = useLocale()
-  return <span>Current: {locale}</span>
-}
-```
-
-## useNow & useTimeZone
-
-```typescript
-'use client'
-import { useNow, useTimeZone } from 'next-intl'
-
-export function TimeDisplay() {
   const now = useNow({ updateInterval: 1000 })
-  const timeZone = useTimeZone()
-
-  return <span>{now.toLocaleTimeString()} ({timeZone})</span>
+  const tz = useTimeZone()
+  return <span>{now.toLocaleTimeString(locale)} ({tz})</span>
 }
 ```
 
-## Partial Messages (Optimization)
+## Optimisation: Messages partiels
+
+Réduit le bundle client en ne passant que les namespaces nécessaires.
 
 ```typescript
-// Only pass needed messages to client
-<NextIntlClientProvider
-  messages={pick(messages, ['Common', 'Navigation'])}
->
+// Passe uniquement Common et Nav au client (pas tout messages)
+<NextIntlClientProvider messages={pick(messages, ['Common', 'Nav'])}>
   {children}
 </NextIntlClientProvider>
 ```
 
 ```typescript
-// Helper function
 function pick<T extends object>(obj: T, keys: string[]): Partial<T> {
   return keys.reduce((acc, key) => {
     if (key in obj) acc[key] = obj[key]
@@ -94,3 +93,10 @@ function pick<T extends object>(obj: T, keys: string[]): Partial<T> {
   }, {} as any)
 }
 ```
+
+## Server vs Client
+
+| Contexte | Hook | Import |
+|----------|------|--------|
+| Server Component | `getTranslations` | `next-intl/server` |
+| Client Component | `useTranslations` | `next-intl` |
