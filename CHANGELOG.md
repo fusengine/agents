@@ -1,5 +1,21 @@
 # Release Notes
 
+## [1.32.0] - 31-01-2026
+
+### Added
+
+- **react-19**: Complete React 19 documentation with 23 reference files
+  - 11 conceptual references (hooks, APIs, compiler, migration)
+  - 12 code templates with practical examples
+  - Cover: use(), useActionState, useOptimistic, useFormStatus
+  - Cover: useDeferredValue initialValue, useTransition async
+  - Cover: Document Metadata, Resource Preloading APIs
+  - Cover: Activity component, React Compiler (marked experimental)
+
+- **solid-react**: Restructure SOLID skill with modular architecture
+  - 6 explanatory references (SOLID principles + architecture)
+  - 10 code templates (component, hook, service, store, etc.)
+
 ## [1.31.0] - 31-01-2026
 
 ### Added
