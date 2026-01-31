@@ -46,7 +46,9 @@
         "./commands/fix-pr-comments.md",
         "./commands/create-pull-request.md",
         "./commands/commit.md",
-        "./commands/run-tasks.md"
+        "./commands/run-tasks.md",
+        "./commands/skill-creator.md",
+        "./commands/agent-creator.md"
       ],
       "agents": [
         "./agents/sniper.md",
