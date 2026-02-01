@@ -1,3 +1,11 @@
+---
+name: laravel12-structure
+description: Laravel Laravel 12 Recommended Structure documentation and patterns
+when-to-use: Consult when working with laravel12 structure
+keywords: laravel, php, laravel12structure
+priority: medium
+---
+
 # Laravel 12 Recommended Structure
 
 ```

@@ -1,99 +1,81 @@
 ---
 name: laravel-queues
 description: Implement background jobs with queues, workers, batches, chains, events, broadcasting, and failure handling. Use when processing async tasks, sending emails, or handling long-running operations.
+versions:
+  laravel: "12.46"
+  horizon: "5.43"
+  php: "8.5"
 user-invocable: false
+references: references/queues.md, references/horizon.md, references/scheduling.md, references/events.md, references/broadcasting.md, references/notifications.md, references/mail.md, references/cache.md, references/redis.md, references/telescope.md, references/pulse.md
+related-skills: laravel-architecture
 ---
 
 # Laravel Queues & Events
 
-## Documentation
+## Agent Workflow (MANDATORY)
 
-### Queues & Jobs
-- [queues.md](docs/queues.md) - Queue system
-- [horizon.md](docs/horizon.md) - Queue monitoring
-- [scheduling.md](docs/scheduling.md) - Task scheduling
+Before ANY implementation, launch in parallel:
 
-### Events & Broadcasting
-- [events.md](docs/events.md) - Events & Listeners
-- [broadcasting.md](docs/broadcasting.md) - WebSocket broadcasting
-- [reverb.md](docs/reverb.md) - Laravel Reverb (WebSockets)
+1. **fuse-ai-pilot:explore-codebase** - Analyze existing job patterns
+2. **fuse-ai-pilot:research-expert** - Verify Queue docs via Context7
+3. **mcp__context7__query-docs** - Check job and event patterns
 
-### Notifications & Mail
-- [notifications.md](docs/notifications.md) - Notifications
-- [mail.md](docs/mail.md) - Email sending
+After implementation, run **fuse-ai-pilot:sniper** for validation.
 
-### Caching & Storage
-- [cache.md](docs/cache.md) - Caching
-- [redis.md](docs/redis.md) - Redis
+---
 
-### Monitoring
-- [telescope.md](docs/telescope.md) - Debug assistant
-- [pulse.md](docs/pulse.md) - Application monitoring
+## Overview
 
-## Job Class
+Queues process tasks asynchronously for better performance.
+
+| Component | Purpose |
+|-----------|---------|
+| **Jobs** | Background tasks |
+| **Events** | Domain events |
+| **Listeners** | Event handlers |
+| **Notifications** | Multi-channel alerts |
+| **Batches** | Grouped job processing |
+
+---
+
+## Critical Rules
+
+1. **Use ShouldQueue** for async processing
+2. **Set retries and backoff** for resilience
+3. **Handle failures** with failed() method
+4. **Monitor with Horizon** in production
+
+---
+
+## Reference Guide
+
+### Concepts
+
+| Topic | Reference | When to consult |
+|-------|-----------|-----------------|
+| **Queues** | [queues.md](references/queues.md) | Job processing |
+| **Horizon** | [horizon.md](references/horizon.md) | Queue monitoring |
+| **Scheduling** | [scheduling.md](references/scheduling.md) | Cron jobs |
+| **Events** | [events.md](references/events.md) | Event system |
+| **Broadcasting** | [broadcasting.md](references/broadcasting.md) | WebSockets |
+| **Notifications** | [notifications.md](references/notifications.md) | Alerts |
+| **Mail** | [mail.md](references/mail.md) | Email |
+
+---
+
+## Quick Reference
 
 ```php
-<?php
-
-declare(strict_types=1);
-
-namespace App\Jobs;
-
-final class SendWelcomeEmail implements ShouldQueue
+// Job
+final class SendEmail implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-
     public int $tries = 3;
     public int $backoff = 60;
 
-    public function __construct(
-        public readonly User $user,
-    ) {}
-
-    public function handle(EmailService $emailService): void
-    {
-        $emailService->sendWelcome($this->user);
-    }
-
-    public function failed(\Throwable $exception): void
-    {
-        Log::error('Welcome email failed', ['user_id' => $this->user->id]);
-    }
-}
-```
-
-## Events & Listeners
-
-```php
-// Event
-class OrderShipped
-{
-    public function __construct(
-        public readonly Order $order,
-    ) {}
-}
-
-// Listener
-class SendShipmentNotification
-{
-    public function handle(OrderShipped $event): void
-    {
-        $event->order->user->notify(new OrderShippedNotification($event->order));
-    }
+    public function handle(): void { ... }
+    public function failed(\Throwable $e): void { ... }
 }
 
 // Dispatch
-OrderShipped::dispatch($order);
-```
-
-## Job Batches
-
-```php
-Bus::batch([
-    new ProcessPodcast($podcast1),
-    new ProcessPodcast($podcast2),
-])
-->then(fn (Batch $batch) => Log::info('All completed!'))
-->catch(fn (Batch $batch, Throwable $e) => Log::error('Failed'))
-->dispatch();
+SendEmail::dispatch($user);
 ```

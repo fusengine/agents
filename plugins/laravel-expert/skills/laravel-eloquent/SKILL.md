@@ -1,67 +1,74 @@
 ---
 name: laravel-eloquent
 description: Master Eloquent ORM with relationships, scopes, casts, observers, and query optimization. Use when creating models, defining relationships, writing queries, or optimizing database access.
+versions:
+  laravel: "12.46"
+  php: "8.5"
 user-invocable: false
+references: references/eloquent.md, references/eloquent-relationships.md, references/eloquent-collections.md, references/eloquent-mutators.md, references/eloquent-serialization.md, references/eloquent-factories.md, references/eloquent-resources.md, references/collections.md, references/scout.md
+related-skills: laravel-migrations
 ---
 
 # Laravel Eloquent ORM
 
-## Documentation
+## Agent Workflow (MANDATORY)
 
-### Eloquent Core
-- [eloquent.md](docs/eloquent.md) - Eloquent ORM basics
-- [eloquent-relationships.md](docs/eloquent-relationships.md) - Relationships
-- [eloquent-collections.md](docs/eloquent-collections.md) - Eloquent collections
-- [eloquent-mutators.md](docs/eloquent-mutators.md) - Accessors, mutators & casting
-- [eloquent-serialization.md](docs/eloquent-serialization.md) - Serialization
-- [eloquent-factories.md](docs/eloquent-factories.md) - Model factories
-- [eloquent-resources.md](docs/eloquent-resources.md) - API Resources
+Before ANY implementation, launch in parallel:
 
-### Collections & Search
-- [collections.md](docs/collections.md) - Laravel collections
-- [scout.md](docs/scout.md) - Full-text search
+1. **fuse-ai-pilot:explore-codebase** - Analyze existing model patterns
+2. **fuse-ai-pilot:research-expert** - Verify Eloquent docs via Context7
+3. **mcp__context7__query-docs** - Check relationship and query patterns
 
-## Model Template
+After implementation, run **fuse-ai-pilot:sniper** for validation.
 
-```php
-<?php
+---
 
-declare(strict_types=1);
+## Overview
 
-namespace App\Models;
+Eloquent is Laravel's ActiveRecord ORM for database interactions.
 
-final class Post extends Model
-{
-    protected $fillable = ['title', 'slug', 'content', 'user_id'];
+---
 
-    protected function casts(): array
-    {
-        return [
-            'status' => PostStatus::class,
-            'published_at' => 'datetime',
-        ];
-    }
+## Critical Rules
 
-    public function user(): BelongsTo
-    {
-        return $this->belongsTo(User::class);
-    }
+1. **Use eager loading** - Prevent N+1 queries with `with()`
+2. **Use scopes** for reusable query constraints
+3. **Use casts** for attribute transformation
+4. **Models are data only** - No business logic
 
-    public function scopePublished(Builder $query): Builder
-    {
-        return $query->where('status', PostStatus::Published);
-    }
-}
-```
+---
 
-## Query Optimization
+## Reference Guide
+
+### Concepts
+
+| Topic | Reference | When to consult |
+|-------|-----------|-----------------|
+| **Eloquent** | [eloquent.md](references/eloquent.md) | ORM basics |
+| **Relationships** | [eloquent-relationships.md](references/eloquent-relationships.md) | Model relations |
+| **Collections** | [eloquent-collections.md](references/eloquent-collections.md) | Eloquent collections |
+| **Mutators** | [eloquent-mutators.md](references/eloquent-mutators.md) | Accessors & casts |
+| **Factories** | [eloquent-factories.md](references/eloquent-factories.md) | Test data |
+| **Resources** | [eloquent-resources.md](references/eloquent-resources.md) | API Resources |
+| **Scout** | [scout.md](references/scout.md) | Full-text search |
+
+---
+
+## Quick Reference
 
 ```php
-// Eager loading (prevent N+1)
+// Eager loading
 $posts = Post::with(['user', 'comments.user'])->get();
 
-// Chunking for large datasets
-User::chunk(100, function ($users) {
-    foreach ($users as $user) { }
-});
+// Scope
+public function scopePublished(Builder $query): Builder
+{
+    return $query->where('status', PostStatus::Published);
+}
+
+// Cast
+protected function casts(): array
+{
+    return ['status' => PostStatus::class];
+}
 ```

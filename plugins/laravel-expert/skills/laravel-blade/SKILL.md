@@ -1,97 +1,71 @@
 ---
 name: laravel-blade
 description: Create Blade templates with components, slots, layouts, and directives. Use when building views, reusable components, or templating.
+versions:
+  laravel: "12.46"
+  php: "8.5"
 user-invocable: false
+references: references/blade.md, references/views.md, references/localization.md, references/frontend.md, references/vite.md
+related-skills: laravel-i18n, laravel-livewire
 ---
 
 # Laravel Blade Templates
 
-## Documentation
+## Agent Workflow (MANDATORY)
 
-### Views & Templates
-- [blade.md](docs/blade.md) - Blade templating
-- [views.md](docs/views.md) - Views
-- [localization.md](docs/localization.md) - Localization
+Before ANY implementation, launch in parallel:
 
-### Frontend
-- [frontend.md](docs/frontend.md) - Frontend scaffolding
-- [vite.md](docs/vite.md) - Vite asset bundling
+1. **fuse-ai-pilot:explore-codebase** - Analyze existing Blade patterns
+2. **fuse-ai-pilot:research-expert** - Verify Laravel Blade docs via Context7
+3. **mcp__context7__query-docs** - Check component and directive patterns
 
-## Component Class
+After implementation, run **fuse-ai-pilot:sniper** for validation.
 
-```php
-<?php
+---
 
-declare(strict_types=1);
+## Overview
 
-namespace App\View\Components;
+Blade is Laravel's templating engine with components, slots, layouts, and directives.
 
-final class Button extends Component
-{
-    public function __construct(
-        public string $type = 'button',
-        public string $variant = 'primary',
-        public bool $disabled = false,
-    ) {}
+---
 
-    public function variantClasses(): string
-    {
-        return match ($this->variant) {
-            'primary' => 'bg-blue-500 text-white',
-            'danger' => 'bg-red-500 text-white',
-            default => 'bg-gray-200 text-gray-800',
-        };
-    }
+## Critical Rules
 
-    public function render(): View
-    {
-        return view('components.button');
-    }
-}
-```
+1. **Use components** for reusable UI elements
+2. **Never put logic in views** - Use view composers or components
+3. **Escape output** - `{{ }}` auto-escapes, `{!! !!}` for raw HTML
+4. **Use @vite** for assets, not manual includes
 
-## Component View
+---
+
+## Reference Guide
+
+### Concepts
+
+| Topic | Reference | When to consult |
+|-------|-----------|-----------------|
+| **Blade** | [blade.md](references/blade.md) | Templating syntax |
+| **Views** | [views.md](references/views.md) | View rendering |
+| **Frontend** | [frontend.md](references/frontend.md) | Frontend setup |
+| **Vite** | [vite.md](references/vite.md) | Asset bundling |
+| **i18n** | [localization.md](references/localization.md) | Translations |
+
+---
+
+## Quick Reference
 
 ```blade
-<button
-    type="{{ $type }}"
-    {{ $disabled ? 'disabled' : '' }}
-    {{ $attributes->merge(['class' => 'px-4 py-2 rounded ' . $variantClasses()]) }}
->
-    {{ $slot }}
-</button>
-```
+{{-- Component usage --}}
+<x-button type="submit" variant="primary">Save</x-button>
 
-## Layout
+{{-- Layout --}}
+<x-layouts.app>
+    <x-slot:title>Page Title</x-slot:title>
+    Content here
+</x-layouts.app>
 
-```blade
-{{-- resources/views/layouts/app.blade.php --}}
-<!DOCTYPE html>
-<html>
-<head>
-    <title>{{ $title ?? 'My App' }}</title>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-</head>
-<body>
-    <x-navigation />
-    <main>{{ $slot }}</main>
-    <x-footer />
-</body>
-</html>
-```
-
-## Directives
-
-```blade
-@foreach($items as $item)
-    {{ $loop->index }} - {{ $loop->first }} - {{ $loop->last }}
-@endforeach
-
-@auth
-    Welcome, {{ auth()->user()->name }}
-@endauth
-
-@can('update', $post)
-    <button>Edit</button>
-@endcan
+{{-- Directives --}}
+@auth ... @endauth
+@can('update', $post) ... @endcan
+@foreach($items as $item) ... @endforeach
 ```

@@ -1,104 +1,80 @@
 ---
 name: laravel-livewire
-description: Build reactive components with Livewire 3, wire:model, actions, lifecycle hooks, Volt, and Folio. Use when creating interactive UI without JavaScript, forms, or real-time updates.
+description: Build reactive components with Livewire 4, wire:model, actions, lifecycle hooks, Volt, and Folio. Use when creating interactive UI without JavaScript, forms, or real-time updates.
+versions:
+  laravel: "12.46"
+  livewire: "4.1"
+  php: "8.5"
 user-invocable: false
+references: references/folio.md, references/precognition.md, references/prompts.md, references/reverb.md
+related-skills: laravel-blade
 ---
 
 # Laravel Livewire 3
 
-## Documentation
+## Agent Workflow (MANDATORY)
 
-### Livewire & Related
-- [folio.md](docs/folio.md) - File-based routing
-- [precognition.md](docs/precognition.md) - Live validation
-- [prompts.md](docs/prompts.md) - CLI prompts
-- [reverb.md](docs/reverb.md) - WebSockets
+Before ANY implementation, launch in parallel:
 
-## Component Class
+1. **fuse-ai-pilot:explore-codebase** - Analyze existing Livewire components
+2. **fuse-ai-pilot:research-expert** - Verify Livewire 3 docs via Context7
+3. **mcp__context7__query-docs** - Check component and action patterns
+
+After implementation, run **fuse-ai-pilot:sniper** for validation.
+
+---
+
+## Overview
+
+Livewire enables reactive UI without writing JavaScript.
+
+| Feature | Description |
+|---------|-------------|
+| **Components** | PHP classes with Blade views |
+| **wire:model** | Two-way data binding |
+| **Actions** | PHP methods called from UI |
+| **Volt** | Single-file components |
+| **Folio** | File-based routing |
+
+---
+
+## Critical Rules
+
+1. **Use wire:key** in loops for proper DOM diffing
+2. **Debounce search** with `wire:model.live.debounce.300ms`
+3. **Use computed** for derived data
+4. **Dispatch events** for component communication
+
+---
+
+## Reference Guide
+
+### Concepts
+
+| Topic | Reference | When to consult |
+|-------|-----------|-----------------|
+| **Folio** | [folio.md](references/folio.md) | File-based routing |
+| **Precognition** | [precognition.md](references/precognition.md) | Live validation |
+| **Reverb** | [reverb.md](references/reverb.md) | WebSockets |
+| **Prompts** | [prompts.md](references/prompts.md) | CLI prompts |
+
+---
+
+## Quick Reference
 
 ```php
-<?php
+// Component
+#[Rule('required|min:3')]
+public string $title = '';
 
-declare(strict_types=1);
+#[Computed]
+public function posts() { ... }
 
-namespace App\Livewire;
-
-use Livewire\Component;
-use Livewire\WithPagination;
-use Livewire\Attributes\Rule;
-use Livewire\Attributes\Computed;
-
-final class PostList extends Component
-{
-    use WithPagination;
-
-    public string $search = '';
-
-    #[Rule('required|min:3')]
-    public string $title = '';
-
-    #[Computed]
-    public function posts()
-    {
-        return Post::query()
-            ->when($this->search, fn ($q) => $q->where('title', 'like', "%{$this->search}%"))
-            ->paginate(10);
-    }
-
-    public function create(): void
-    {
-        $this->validate();
-        Post::create(['title' => $this->title]);
-        $this->reset('title');
-        $this->dispatch('post-created');
-    }
-
-    public function render()
-    {
-        return view('livewire.post-list');
-    }
-}
+public function create(): void { ... }
 ```
-
-## Blade View
 
 ```blade
-<div>
-    <input type="text" wire:model.live.debounce.300ms="search">
-
-    <form wire:submit="create">
-        <input type="text" wire:model="title">
-        @error('title') <span>{{ $message }}</span> @enderror
-        <button type="submit">Create</button>
-    </form>
-
-    @foreach($this->posts as $post)
-        <div wire:key="{{ $post->id }}">
-            {{ $post->title }}
-            <button wire:click="delete({{ $post->id }})" wire:confirm="Delete?">
-                Delete
-            </button>
-        </div>
-    @endforeach
-
-    {{ $this->posts->links() }}
-</div>
-```
-
-## Volt (Single-File)
-
-```php
-<?php
-use function Livewire\Volt\{state, computed};
-
-state(['count' => 0]);
-$increment = fn () => $this->count++;
-$doubled = computed(fn () => $this->count * 2);
-?>
-
-<div>
-    <h1>{{ $count }}</h1>
-    <p>Doubled: {{ $this->doubled }}</p>
-    <button wire:click="increment">+</button>
-</div>
+{{-- View --}}
+<input wire:model.live.debounce.300ms="search">
+<button wire:click="create">Save</button>
 ```

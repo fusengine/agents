@@ -1,3 +1,11 @@
+---
+name: solid-principles
+description: Laravel SOLID Principles - PHP Implementation documentation and patterns
+when-to-use: Consult when working with solid principles
+keywords: laravel, php, solidprinciples
+priority: medium
+---
+
 # SOLID Principles - PHP Implementation
 
 ## S - Single Responsibility

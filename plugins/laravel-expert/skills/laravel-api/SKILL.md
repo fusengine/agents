@@ -1,67 +1,77 @@
 ---
 name: laravel-api
 description: Build RESTful APIs with Laravel using API Resources, Sanctum authentication, rate limiting, and versioning. Use when creating API endpoints, transforming responses, or handling API authentication.
+versions:
+  laravel: "12.46"
+  php: "8.5"
 user-invocable: false
+references: references/routing.md, references/controllers.md, references/middleware.md, references/requests.md, references/responses.md, references/redirects.md, references/rate-limiting.md, references/pagination.md, references/http-client.md, references/validation.md, references/strings.md
+related-skills: laravel-auth
 ---
 
 # Laravel API Development
 
-## Documentation
+## Agent Workflow (MANDATORY)
 
-### HTTP Layer
-- [routing.md](docs/routing.md) - Routing
-- [controllers.md](docs/controllers.md) - Controllers
-- [middleware.md](docs/middleware.md) - Middleware
-- [requests.md](docs/requests.md) - HTTP requests
-- [responses.md](docs/responses.md) - HTTP responses
-- [redirects.md](docs/redirects.md) - Redirects
-- [urls.md](docs/urls.md) - URL generation
+Before ANY implementation, launch in parallel:
 
-### API Features
-- [rate-limiting.md](docs/rate-limiting.md) - Rate limiting
-- [pagination.md](docs/pagination.md) - Pagination
-- [http-client.md](docs/http-client.md) - HTTP client
+1. **fuse-ai-pilot:explore-codebase** - Analyze existing API patterns
+2. **fuse-ai-pilot:research-expert** - Verify Laravel API docs via Context7
+3. **mcp__context7__query-docs** - Check API Resources and Sanctum
 
-### Validation & Helpers
-- [validation.md](docs/validation.md) - Validation rules
-- [strings.md](docs/strings.md) - String helpers
+After implementation, run **fuse-ai-pilot:sniper** for validation.
 
-## API Controller
+---
+
+## Overview
+
+Build RESTful APIs with Laravel using API Resources for response transformation and Sanctum for authentication.
+
+---
+
+## Critical Rules
+
+1. **Always use API Resources** - Never return Eloquent models directly
+2. **Versioned routes** - Prefix with `/v1/`, `/v2/`
+3. **Validate all input** - Use Form Requests
+4. **Rate limiting** - Configure per-route limits
+
+---
+
+## Reference Guide
+
+### Concepts
+
+| Topic | Reference | When to consult |
+|-------|-----------|-----------------|
+| **Routing** | [routing.md](references/routing.md) | API route definition |
+| **Controllers** | [controllers.md](references/controllers.md) | Controller patterns |
+| **Middleware** | [middleware.md](references/middleware.md) | Request filtering |
+| **Requests** | [requests.md](references/requests.md) | HTTP request handling |
+| **Responses** | [responses.md](references/responses.md) | Response formatting |
+| **Rate Limiting** | [rate-limiting.md](references/rate-limiting.md) | Throttling |
+| **Pagination** | [pagination.md](references/pagination.md) | Result pagination |
+| **Validation** | [validation.md](references/validation.md) | Input validation |
+| **HTTP Client** | [http-client.md](references/http-client.md) | External API calls |
+
+### Templates
+
+| Template | When to use |
+|----------|-------------|
+| [ApiController.php.md](references/templates/ApiController.php.md) | CRUD controller + resource |
+| [api-routes.md](references/templates/api-routes.md) | Versioned routes setup |
+
+---
+
+## Quick Reference
 
 ```php
-<?php
+// Resource
+return PostResource::collection($posts);
 
-declare(strict_types=1);
+// Status codes
+return response()->json($data, 201);
 
-namespace App\Http\Controllers\Api\V1;
-
-final class PostController extends Controller
-{
-    public function __construct(
-        private readonly PostService $postService,
-    ) {}
-
-    public function index(): AnonymousResourceCollection
-    {
-        return PostResource::collection($this->postService->paginate(15));
-    }
-
-    public function store(StorePostRequest $request): JsonResponse
-    {
-        $post = $this->postService->create($request->validated());
-        return PostResource::make($post)->response()->setStatusCode(201);
-    }
-}
-```
-
-## API Routes
-
-```php
-Route::prefix('v1')->group(function () {
-    Route::get('posts', [PostController::class, 'index']);
-
-    Route::middleware('auth:sanctum')->group(function () {
-        Route::post('posts', [PostController::class, 'store']);
-    });
-});
+// Rate limiting
+Route::middleware('throttle:60,1')->group(...);
 ```

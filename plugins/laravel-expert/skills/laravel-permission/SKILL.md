@@ -1,157 +1,82 @@
 ---
 name: laravel-permission
 description: Spatie Laravel Permission - roles, permissions, middleware, Blade directives. Use when implementing RBAC, role-based access control, or user authorization.
+versions:
+  laravel: "12.46"
+  spatie-permission: "6.24"
+  php: "8.5"
 user-invocable: false
+references: references/spatie-permission.md, references/middleware.md, references/blade-directives.md
+related-skills: laravel-auth
 ---
 
 # Laravel Permission (Spatie)
 
-## Installation
+## Agent Workflow (MANDATORY)
 
-```bash
-composer require spatie/laravel-permission
-php artisan vendor:publish --provider="Spatie\Permission\PermissionServiceProvider"
-php artisan optimize:clear
-php artisan migrate
-```
+Before ANY implementation, launch in parallel:
 
----
+1. **fuse-ai-pilot:explore-codebase** - Check existing auth patterns
+2. **fuse-ai-pilot:research-expert** - Verify Spatie Permission docs via Context7
+3. **mcp__context7__query-docs** - Check Laravel authorization patterns
 
-## User Model Setup
-
-```php
-use Spatie\Permission\Traits\HasRoles;
-
-class User extends Authenticatable
-{
-    use HasRoles;
-}
-```
+After implementation, run **fuse-ai-pilot:sniper** for validation.
 
 ---
 
-## Create Roles & Permissions
+## Overview
 
-```php
-use Spatie\Permission\Models\Role;
-use Spatie\Permission\Models\Permission;
+Spatie Laravel Permission provides role-based access control (RBAC) for Laravel applications.
 
-// Roles
-$admin = Role::create(['name' => 'admin']);
-$writer = Role::create(['name' => 'writer']);
-
-// Permissions
-Permission::create(['name' => 'edit articles']);
-Permission::create(['name' => 'publish articles']);
-
-// Assign permissions to role
-$admin->givePermissionTo(['edit articles', 'publish articles']);
-```
+| Component | Purpose |
+|-----------|---------|
+| **Role** | Group of permissions (admin, writer) |
+| **Permission** | Single ability (edit articles) |
+| **Middleware** | Route protection |
+| **Blade Directives** | UI authorization |
 
 ---
 
-## Assign to Users
-
-```php
-// Assign role
-$user->assignRole('writer');
-$user->assignRole(['writer', 'admin']);
-
-// Direct permissions
-$user->givePermissionTo('edit articles');
-
-// Sync (replace all)
-$user->syncRoles(['writer']);
-$user->syncPermissions(['edit articles']);
-
-// Remove
-$user->removeRole('writer');
-$user->revokePermissionTo('edit articles');
-```
-
----
-
-## Check Permissions
-
-```php
-// Check role
-$user->hasRole('admin');
-$user->hasAnyRole(['writer', 'admin']);
-$user->hasAllRoles(['writer', 'admin']);
-
-// Check permission
-$user->hasPermissionTo('edit articles');
-$user->can('edit articles');
-
-// Get all
-$user->getRoleNames();
-$user->getPermissionNames();
-```
-
----
-
-## Middleware
-
-```php
-// routes/web.php
-Route::middleware(['role:admin'])->group(function () {
-    Route::get('/admin', [AdminController::class, 'index']);
-});
-
-Route::middleware(['permission:publish articles'])->group(function () {
-    Route::post('/publish', [ArticleController::class, 'publish']);
-});
-
-// Role OR permission
-Route::middleware(['role_or_permission:admin|edit articles'])->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index']);
-});
-```
-
----
-
-## Blade Directives
-
-```blade
-@role('admin')
-    <a href="/admin">Admin Panel</a>
-@endrole
-
-@hasrole('writer|admin')
-    <p>Editor access</p>
-@endhasrole
-
-@can('edit articles')
-    <button>Edit</button>
-@endcan
-
-@canany(['edit articles', 'publish articles'])
-    <div>Actions available</div>
-@endcanany
-```
-
----
-
-## Seeder Example
-
-```php
-// database/seeders/RoleSeeder.php
-public function run(): void
-{
-    $admin = Role::create(['name' => 'admin']);
-    $admin->givePermissionTo(Permission::all());
-
-    $writer = Role::create(['name' => 'writer']);
-    $writer->givePermissionTo(['edit articles']);
-}
-```
-
----
-
-## Best Practices
+## Critical Rules
 
 1. **Seed roles/permissions** in `DatabaseSeeder`
 2. **Cache reset** after changes: `php artisan permission:cache-reset`
-3. **Multi-guard** support in `config/permission.php`
-4. **Teams** for multi-tenant: `'teams' => true`
-5. **Naming** use kebab-case: `edit-articles`
+3. **Use kebab-case** for naming: `edit-articles`
+4. **Never hardcode** role checks in controllers - use middleware
+
+---
+
+## Reference Guide
+
+### Concepts
+
+| Topic | Reference | When to consult |
+|-------|-----------|-----------------|
+| **Setup** | [spatie-permission.md](references/spatie-permission.md) | Installation, model setup |
+| **Middleware** | [middleware.md](references/middleware.md) | Route protection |
+| **Blade** | [blade-directives.md](references/blade-directives.md) | UI authorization |
+
+### Templates
+
+| Template | When to use |
+|----------|-------------|
+| [RoleSeeder.php.md](references/templates/RoleSeeder.php.md) | Database seeding |
+| [routes-example.md](references/templates/routes-example.md) | Protected routes |
+
+---
+
+## Quick Reference
+
+```php
+// Assign role
+$user->assignRole('admin');
+
+// Check permission
+$user->can('edit articles');
+
+// Middleware
+Route::middleware(['role:admin'])->group(fn () => ...);
+
+// Blade
+@role('admin') ... @endrole
+```

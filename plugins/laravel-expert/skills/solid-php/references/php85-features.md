@@ -1,3 +1,11 @@
+---
+name: php85-features
+description: Laravel PHP 8.5 Features documentation and patterns
+when-to-use: Consult when working with php85 features
+keywords: laravel, php, php85features
+priority: medium
+---
+
 # PHP 8.5 Features
 
 ## Pipe Operator

@@ -1,102 +1,72 @@
 ---
 name: laravel-migrations
 description: Create database migrations with schema builder, indexes, foreign keys, and seeders. Use when designing database schema, creating tables, or modifying columns.
+versions:
+  laravel: "12.46"
+  php: "8.5"
 user-invocable: false
+references: references/database.md, references/migrations.md, references/seeding.md, references/queries.md, references/mongodb.md
+related-skills: laravel-eloquent
 ---
 
 # Laravel Migrations
 
-## Documentation
+## Agent Workflow (MANDATORY)
 
-### Database
-- [database.md](docs/database.md) - Database basics
-- [migrations.md](docs/migrations.md) - Migrations
-- [seeding.md](docs/seeding.md) - Database seeding
-- [queries.md](docs/queries.md) - Query builder
-- [mongodb.md](docs/mongodb.md) - MongoDB integration
+Before ANY implementation, launch in parallel:
 
-## Migration Template
+1. **fuse-ai-pilot:explore-codebase** - Analyze existing migration patterns
+2. **fuse-ai-pilot:research-expert** - Verify Schema Builder docs via Context7
+3. **mcp__context7__query-docs** - Check column types and constraints
 
-```php
-<?php
+After implementation, run **fuse-ai-pilot:sniper** for validation.
 
-declare(strict_types=1);
+---
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
+## Overview
 
-return new class extends Migration
-{
-    public function up(): void
-    {
-        Schema::create('posts', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
-            $table->string('title');
-            $table->string('slug')->unique();
-            $table->text('content');
-            $table->string('status')->default('draft');
-            $table->timestamp('published_at')->nullable();
-            $table->timestamps();
-            $table->softDeletes();
+Migrations are version control for database schema.
 
-            $table->index(['status', 'published_at']);
-        });
-    }
+---
 
-    public function down(): void
-    {
-        Schema::dropIfExists('posts');
-    }
-};
-```
+## Critical Rules
 
-## Column Types
+1. **Always define down()** for rollback capability
+2. **Use foreignId()** with constrained() for relationships
+3. **Add indexes** on frequently queried columns
+4. **Use factories** for test data
+
+---
+
+## Reference Guide
+
+### Concepts
+
+| Topic | Reference | When to consult |
+|-------|-----------|-----------------|
+| **Database** | [database.md](references/database.md) | DB basics |
+| **Migrations** | [migrations.md](references/migrations.md) | Schema changes |
+| **Seeding** | [seeding.md](references/seeding.md) | Test data |
+| **Queries** | [queries.md](references/queries.md) | Query builder |
+| **MongoDB** | [mongodb.md](references/mongodb.md) | NoSQL |
+
+---
+
+## Quick Reference
 
 ```php
-$table->string('name', 100);           // VARCHAR(100)
-$table->text('description');           // TEXT
-$table->integer('count');              // INT
-$table->decimal('price', 8, 2);        // DECIMAL(8,2)
-$table->boolean('is_active');          // BOOLEAN
-$table->json('metadata');              // JSON
-$table->timestamps();                  // created_at, updated_at
-$table->softDeletes();                 // deleted_at
+// Migration
+Schema::create('posts', function (Blueprint $table) {
+    $table->id();
+    $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+    $table->string('title');
+    $table->timestamps();
+    $table->index(['status', 'published_at']);
+});
 ```
-
-## Foreign Keys
-
-```php
-$table->foreignId('user_id')->constrained()->cascadeOnDelete();
-$table->foreignId('author_id')->constrained('users')->nullOnDelete();
-```
-
-## Seeder
-
-```php
-<?php
-
-declare(strict_types=1);
-
-namespace Database\Seeders;
-
-final class PostSeeder extends Seeder
-{
-    public function run(): void
-    {
-        User::factory()->count(10)->create()->each(function (User $user) {
-            Post::factory()->count(5)->for($user)->create();
-        });
-    }
-}
-```
-
-## Commands
 
 ```bash
 php artisan make:migration create_posts_table
 php artisan migrate
 php artisan migrate:fresh --seed
-php artisan migrate:rollback --step=3
 ```

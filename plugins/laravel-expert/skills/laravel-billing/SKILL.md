@@ -1,116 +1,73 @@
 ---
 name: laravel-billing
 description: Integrate Stripe and Paddle payments with Laravel Cashier. Use when implementing subscriptions, invoices, payment methods, or billing portals.
+versions:
+  laravel: "12.46"
+  cashier-stripe: "16.2"
+  cashier-paddle: "2.6"
+  php: "8.5"
 user-invocable: false
+references: references/billing.md, references/cashier-paddle.md
+related-skills: laravel-auth
 ---
 
 # Laravel Billing (Cashier)
 
-## Documentation
+## Agent Workflow (MANDATORY)
 
-### Billing
-- [billing.md](docs/billing.md) - Stripe Cashier
-- [cashier-paddle.md](docs/cashier-paddle.md) - Paddle Cashier
+Before ANY implementation, launch in parallel:
 
-## Stripe Setup
+1. **fuse-ai-pilot:explore-codebase** - Check existing billing setup
+2. **fuse-ai-pilot:research-expert** - Verify Cashier docs via Context7
+3. **mcp__context7__query-docs** - Check subscription patterns
 
-```php
-// Install
-composer require laravel/cashier
+After implementation, run **fuse-ai-pilot:sniper** for validation.
 
-// User model
-use Laravel\Cashier\Billable;
+---
 
-class User extends Authenticatable
-{
-    use Billable;
-}
-```
+## Overview
 
-## Subscription Controller
+Laravel Cashier provides subscription billing with Stripe or Paddle.
 
-```php
-<?php
+| Provider | Package |
+|----------|---------|
+| Stripe | `laravel/cashier` |
+| Paddle | `laravel/cashier-paddle` |
 
-declare(strict_types=1);
+---
 
-namespace App\Http\Controllers;
+## Critical Rules
 
-final class SubscriptionController extends Controller
-{
-    public function store(Request $request)
-    {
-        $request->user()
-            ->newSubscription('default', 'price_monthly')
-            ->create($request->paymentMethodId);
+1. **Use webhooks** for payment confirmations
+2. **Handle grace periods** after cancellation
+3. **Never store card details** - Use payment tokens
+4. **Test with test keys** before production
 
-        return redirect()->route('dashboard');
-    }
+---
 
-    public function cancel(Request $request)
-    {
-        $request->user()->subscription('default')->cancel();
-        return back();
-    }
+## Reference Guide
 
-    public function resume(Request $request)
-    {
-        $request->user()->subscription('default')->resume();
-        return back();
-    }
-}
-```
+### Concepts
 
-## Check Subscription Status
+| Topic | Reference | When to consult |
+|-------|-----------|-----------------|
+| **Stripe** | [billing.md](references/billing.md) | Stripe Cashier |
+| **Paddle** | [cashier-paddle.md](references/cashier-paddle.md) | Paddle Cashier |
+
+---
+
+## Quick Reference
 
 ```php
-if ($user->subscribed('default')) {
-    // Has active subscription
-}
+// Check subscription
+$user->subscribed('default');
+$user->onTrial('default');
+$user->subscription('default')->cancelled();
 
-if ($user->subscribedToPrice('price_monthly', 'default')) {
-    // On monthly plan
-}
+// Create subscription
+$user->newSubscription('default', 'price_monthly')
+    ->create($paymentMethodId);
 
-if ($user->onTrial('default')) {
-    // Currently on trial
-}
-
-if ($user->subscription('default')->cancelled()) {
-    // Subscription cancelled
-}
-
-if ($user->subscription('default')->onGracePeriod()) {
-    // Still has access after cancellation
-}
-```
-
-## Single Charges
-
-```php
-$user->charge(1000, $paymentMethodId);
-$user->invoiceFor('Product Name', 1500);
-$user->refund($paymentIntentId);
-```
-
-## Billing Portal
-
-```php
-Route::get('/billing', function (Request $request) {
-    return $request->user()->redirectToBillingPortal(route('dashboard'));
-})->middleware('auth');
-```
-
-## Webhooks
-
-```php
-Route::post('/stripe/webhook', [WebhookController::class, 'handleWebhook']);
-
-class WebhookController extends CashierController
-{
-    public function handleInvoicePaymentSucceeded($payload)
-    {
-        // Handle successful payment
-    }
-}
+// Billing portal
+return $user->redirectToBillingPortal(route('dashboard'));
 ```

@@ -1,71 +1,83 @@
 ---
 name: laravel-auth
 description: Implement authentication with Sanctum, Passport, Socialite, Fortify, policies, and gates. Use when setting up user authentication, API tokens, social login, or authorization.
+versions:
+  laravel: "12.46"
+  sanctum: "4.0"
+  php: "8.5"
 user-invocable: false
+references: references/authentication.md, references/authorization.md, references/sanctum.md, references/passport.md, references/fortify.md, references/socialite.md, references/starter-kits.md, references/verification.md, references/passwords.md, references/encryption.md, references/hashing.md, references/csrf.md, references/session.md
+related-skills: laravel-api, laravel-permission
 ---
 
 # Laravel Authentication & Authorization
 
-## Documentation
+## Agent Workflow (MANDATORY)
 
-### Authentication
-- [authentication.md](docs/authentication.md) - Authentication basics
-- [sanctum.md](docs/sanctum.md) - API token authentication
-- [passport.md](docs/passport.md) - OAuth2 server
-- [fortify.md](docs/fortify.md) - Authentication backend
-- [socialite.md](docs/socialite.md) - Social authentication
-- [starter-kits.md](docs/starter-kits.md) - Breeze & Jetstream
+Before ANY implementation, launch in parallel:
 
-### Authorization
-- [authorization.md](docs/authorization.md) - Gates & Policies
+1. **fuse-ai-pilot:explore-codebase** - Check existing auth setup
+2. **fuse-ai-pilot:research-expert** - Verify Sanctum/Passport docs via Context7
+3. **mcp__context7__query-docs** - Check Laravel authorization patterns
 
-### Security
-- [verification.md](docs/verification.md) - Email verification
-- [passwords.md](docs/passwords.md) - Password reset
-- [encryption.md](docs/encryption.md) - Encryption
-- [hashing.md](docs/hashing.md) - Hashing
-- [csrf.md](docs/csrf.md) - CSRF protection
-- [session.md](docs/session.md) - Session management
+After implementation, run **fuse-ai-pilot:sniper** for validation.
 
-## Sanctum Setup
+---
+
+## Overview
+
+Laravel provides multiple authentication options:
+
+| Package | Use Case |
+|---------|----------|
+| **Sanctum** | SPA + mobile API tokens |
+| **Passport** | Full OAuth2 server |
+| **Fortify** | Backend authentication logic |
+| **Socialite** | Social login (Google, GitHub, etc.) |
+
+---
+
+## Critical Rules
+
+1. **Use policies** for model authorization - Not inline checks
+2. **Hash passwords** - Use `Hash::make()` or `'hashed'` cast
+3. **Verify email** for sensitive actions
+4. **Token abilities** - Define specific abilities per token
+
+---
+
+## Reference Guide
+
+### Concepts
+
+| Topic | Reference | When to consult |
+|-------|-----------|-----------------|
+| **Authentication** | [authentication.md](references/authentication.md) | Login/logout |
+| **Authorization** | [authorization.md](references/authorization.md) | Gates & policies |
+| **Sanctum** | [sanctum.md](references/sanctum.md) | API tokens |
+| **Passport** | [passport.md](references/passport.md) | OAuth2 |
+| **Socialite** | [socialite.md](references/socialite.md) | Social login |
+| **Email Verification** | [verification.md](references/verification.md) | Email confirm |
+| **Password Reset** | [passwords.md](references/passwords.md) | Forgot password |
+
+### Templates
+
+| Template | When to use |
+|----------|-------------|
+| [PostPolicy.php.md](references/templates/PostPolicy.php.md) | Model policy |
+| [sanctum-setup.md](references/templates/sanctum-setup.md) | API auth setup |
+
+---
+
+## Quick Reference
 
 ```php
-use Laravel\Sanctum\HasApiTokens;
+// Policy
+$this->authorize('update', $post);
 
-class User extends Authenticatable
-{
-    use HasApiTokens, HasFactory, Notifiable;
-}
-```
+// Gate
+Gate::define('admin', fn (User $user) => $user->isAdmin());
 
-## Policy
-
-```php
-<?php
-
-declare(strict_types=1);
-
-namespace App\Policies;
-
-final class PostPolicy
-{
-    public function update(User $user, Post $post): bool
-    {
-        return $user->id === $post->user_id;
-    }
-
-    public function delete(User $user, Post $post): bool
-    {
-        return $user->id === $post->user_id || $user->isAdmin();
-    }
-}
-```
-
-## Gates
-
-```php
-Gate::define('admin', fn (User $user) => $user->role === UserRole::Admin);
-
-// Usage
-if (Gate::allows('admin')) { }
+// Sanctum token
+$token = $user->createToken('api')->plainTextToken;
 ```
