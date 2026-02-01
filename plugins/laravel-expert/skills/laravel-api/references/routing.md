@@ -11,109 +11,98 @@ related: controllers.md, middleware.md
 
 ## Overview
 
-Laravel routing maps HTTP requests to controllers. For APIs, routes are defined in `routes/api.php` with automatic `/api` prefix.
+Laravel routing maps incoming HTTP requests to controller actions. For APIs, routes are defined in `routes/api.php` which automatically applies the `/api` prefix and `api` middleware group (stateless, no sessions).
 
-## Route Files
+## Why Separate API Routes
 
-| File | Purpose | Middleware |
-|------|---------|------------|
-| `routes/api.php` | Stateless API routes | `api` group |
-| `routes/web.php` | Web routes with sessions | `web` group |
+API routes differ from web routes in important ways:
 
-## HTTP Methods
+| Aspect | API Routes | Web Routes |
+|--------|------------|------------|
+| **State** | Stateless (no sessions) | Sessions enabled |
+| **Auth** | Token-based (Sanctum) | Cookie-based |
+| **Response** | JSON always | Views or JSON |
+| **CSRF** | Not required | Required for forms |
 
-| Method | Purpose | Example |
-|--------|---------|---------|
-| `Route::get()` | Read resource | List, Show |
-| `Route::post()` | Create resource | Store |
-| `Route::put()` | Full update | Update all fields |
-| `Route::patch()` | Partial update | Update some fields |
-| `Route::delete()` | Delete resource | Destroy |
+## Route Files Structure
+
+`routes/api.php` is created when you run `php artisan install:api`. This also installs Sanctum for token authentication. The `/api` prefix is applied automatically, so a route defined as `/posts` becomes `/api/posts`.
+
+## HTTP Methods and REST
+
+RESTful APIs use HTTP methods semantically:
+
+| Method | Meaning | Controller action |
+|--------|---------|-------------------|
+| GET | Retrieve | index, show |
+| POST | Create | store |
+| PUT | Full update | update (all fields) |
+| PATCH | Partial update | update (some fields) |
+| DELETE | Remove | destroy |
 
 ## Route Parameters
 
-| Type | Syntax | Example |
-|------|--------|---------|
-| Required | `{id}` | `/posts/{id}` |
-| Optional | `{id?}` | `/posts/{id?}` |
-| Constrained | `->where('id', '[0-9]+')` | Numeric only |
+**Required parameters** use `{param}` syntax. Laravel passes these to controller methods automatically.
 
-## Route Groups
+**Optional parameters** use `{param?}` and require a default value in the controller.
 
-| Feature | Method | Purpose |
-|---------|--------|---------|
-| Prefix | `->prefix('v1')` | URL prefix |
-| Middleware | `->middleware('auth:sanctum')` | Protection |
-| Controller | `->controller(PostController::class)` | Shared controller |
-| Name | `->name('posts.')` | Route name prefix |
+**Constraints** limit what values a parameter accepts. Use `whereNumber('id')` for numeric IDs, `whereAlpha('slug')` for letters only.
 
 ## Model Binding
 
-| Type | Description |
-|------|-------------|
-| Implicit | `Route::get('/posts/{post}', ...)` - Auto resolves Post model |
-| Custom key | `{post:slug}` - Use slug instead of id |
-| Scoped | `{user}/{post}` - Post must belong to User |
+Laravel automatically resolves Eloquent models from route parameters. When you type-hint `Post $post` in a controller method and have `{post}` in the route, Laravel fetches the Post by ID automatically. Returns 404 if not found.
+
+Use `{post:slug}` to resolve by a different column than ID.
+
+## Route Groups
+
+Groups apply shared attributes to multiple routes:
+
+**Prefix** adds URL segments: `prefix('v1')` makes routes start with `/v1/`
+
+**Middleware** applies authentication or rate limiting to all routes in group
+
+**Controller** shares controller class when all routes use same controller
+
+**Name prefix** adds prefix to route names for easier generation
 
 ## API Versioning
 
-| Pattern | Example |
-|---------|---------|
-| URL prefix | `/api/v1/posts`, `/api/v2/posts` |
-| Controller namespace | `Api\V1\PostController` |
-| Route group | `Route::prefix('v1')->group(...)` |
+Version your API to maintain backward compatibility. Common pattern:
 
-## Resource Routes
+1. Use URL prefix: `/v1/posts`, `/v2/posts`
+2. Organize controllers: `Api\V1\PostController`, `Api\V2\PostController`
+3. Group routes by version in `routes/api.php`
 
-| Method | Verb | URI | Action |
-|--------|------|-----|--------|
-| index | GET | /posts | List all |
-| store | POST | /posts | Create |
-| show | GET | /posts/{id} | Show one |
-| update | PUT/PATCH | /posts/{id} | Update |
-| destroy | DELETE | /posts/{id} | Delete |
+This lets you evolve the API without breaking existing clients.
 
 ## Rate Limiting
 
-| Method | Purpose |
-|--------|---------|
-| `RateLimiter::for()` | Define limiter in AppServiceProvider |
-| `->middleware('throttle:api')` | Apply to routes |
-| `throttle:60,1` | 60 requests per minute |
+Protect your API from abuse with rate limiting. Define limiters in `AppServiceProvider` using `RateLimiter::for()`. Apply via `throttle:limiter-name` middleware.
+
+Common approach: 60 requests per minute per user, or by IP for unauthenticated requests.
 
 ## Route Caching
 
-| Command | Purpose |
-|---------|---------|
-| `php artisan route:cache` | Cache routes for production |
-| `php artisan route:clear` | Clear route cache |
-| `php artisan route:list` | List all routes |
+In production, cache routes with `php artisan route:cache` for faster route resolution. Clear with `route:clear` when routes change. Never cache in development.
 
 ## Best Practices
 
-1. **Version your API** - Use `/v1/`, `/v2/` prefixes
-2. **Use resource routes** - `Route::apiResource()` for CRUD
-3. **Group by feature** - Organize routes logically
-4. **Apply middleware to groups** - Not individual routes
-5. **Cache in production** - `route:cache` for performance
-
-## Common Patterns
-
-| Pattern | Use Case |
-|---------|----------|
-| Public + Protected | Some routes open, others require auth |
-| Nested resources | `/posts/{post}/comments` |
-| Singleton | `/user/profile` (no ID needed) |
+1. **Version from day one** - Add `/v1/` prefix even for first version
+2. **Use resource routes** - `Route::apiResource()` for consistent CRUD
+3. **Group by feature** - Organize related routes together
+4. **Protect by default** - Put authenticated routes inside `auth:sanctum` group
+5. **Rate limit everything** - Especially public endpoints
 
 ## Related Templates
 
 | Template | Purpose |
 |----------|---------|
-| [api-routes.md](templates/api-routes.md) | Complete versioned API routes |
-| [routing-examples.md](templates/routing-examples.md) | Detailed routing examples |
+| [api-routes.md](templates/api-routes.md) | Complete versioned API routes example |
+| [routing-examples.md](templates/routing-examples.md) | Detailed routing patterns |
 
 ## Related References
 
-- [controllers.md](controllers.md) - Controller patterns
-- [middleware.md](middleware.md) - Route protection
-- [rate-limiting.md](rate-limiting.md) - Throttling
+- [controllers.md](controllers.md) - Controller that routes point to
+- [middleware.md](middleware.md) - Protecting routes with middleware
+- [rate-limiting.md](rate-limiting.md) - Throttling configuration
