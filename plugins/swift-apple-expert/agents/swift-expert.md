@@ -1,10 +1,10 @@
 ---
 name: swift-expert
-description: Expert Swift and SwiftUI developer for all Apple platforms. Use when building iOS, macOS, iPadOS, watchOS, or visionOS apps, implementing SwiftUI views, designing app architecture, handling concurrency, or optimizing performance.
+description: Expert Swift 6.2 and SwiftUI developer for all Apple platforms. Use when building iOS, macOS, iPadOS, watchOS, visionOS, or tvOS apps, implementing SwiftUI views, designing app architecture, handling concurrency, or optimizing performance.
 model: sonnet
 color: red
 tools: mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__exa__web_search_exa, mcp__exa__get_code_context_exa, mcp__XcodeBuildMCP__*, mcp__apple-docs__*, Read, Glob, Grep, Edit, Write, Bash
-skills: swift-core, swiftui-core, ios, macos, ipados, watchos, visionos, mcp-tools, build-distribution, solid-swift, elicitation
+skills: swift-core, swiftui-core, ios, macos, ipados, watchos, visionos, tvos, mcp-tools, build-distribution, solid-swift, elicitation
 hooks:
   PreToolUse:
     - matcher: "Write|Edit"
@@ -100,6 +100,7 @@ When asked about specific platforms:
 - **iPadOS**: Adaptive layouts, split views, keyboard support
 - **watchOS**: Compact UI, complications, HealthKit
 - **visionOS**: Spatial computing, RealityKit, immersive spaces
+- **tvOS**: Focus system, large screen UI, Siri Remote, media playback
 
 ## Coding Standards
 

@@ -133,6 +133,7 @@
         "./agents/laravel-expert.md"
       ],
       "skills": [
+        "./skills/fusecore",
         "./skills/laravel-architecture",
         "./skills/laravel-eloquent",
         "./skills/laravel-api",
@@ -191,8 +192,8 @@
     {
       "name": "fuse-swift-apple-expert",
       "source": "./plugins/swift-apple-expert",
-      "description": "Expert Swift 6 + SwiftUI for all Apple platforms with @Observable, actors, and best practices",
-      "version": "1.0.0",
+      "description": "Expert Swift 6.2 + SwiftUI for iOS 26, macOS 26, iPadOS 26, watchOS 26, visionOS 26, tvOS 26 with Liquid Glass, @Observable, actors, SwiftData inheritance",
+      "version": "1.1.0",
       "author": {
         "name": "Fusengine",
         "url": "https://github.com/fusengine"
@@ -205,8 +206,13 @@
         "swiftui",
         "ios",
         "macos",
+        "ipados",
+        "watchos",
+        "visionos",
+        "tvos",
         "apple",
-        "concurrency"
+        "concurrency",
+        "liquid-glass"
       ],
       "category": "development",
       "strict": true,
@@ -215,17 +221,16 @@
         "./agents/swift-expert.md"
       ],
       "skills": [
-        "./skills/swiftui-components",
-        "./skills/swift-architecture",
-        "./skills/swift-concurrency",
-        "./skills/swiftui-navigation",
-        "./skills/swiftui-data",
-        "./skills/apple-platforms",
-        "./skills/swiftui-testing",
-        "./skills/swift-performance",
-        "./skills/swift-i18n",
-        "./skills/swift-app-icons",
-        "./skills/swift-build",
+        "./skills/swift-core",
+        "./skills/swiftui-core",
+        "./skills/ios",
+        "./skills/macos",
+        "./skills/ipados",
+        "./skills/watchos",
+        "./skills/visionos",
+        "./skills/tvos",
+        "./skills/mcp-tools",
+        "./skills/build-distribution",
         "./skills/solid-swift"
       ]
     },

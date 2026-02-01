@@ -66,12 +66,61 @@ Visual regression testing with point-free/swift-snapshot-testing.
 
 ---
 
-## Test Structure (AAA Pattern)
+## Swift 6 Async Testing Patterns
 
+### Testing Actors
+```swift
+func testActorMethod() async throws {
+    let actor = MyActor()
+    let value = await actor.getValue()
+    XCTAssertEqual(value, 42)
+}
 ```
-// Arrange - Set up test data and mocks
-// Act - Execute the code under test
-// Assert - Verify the results
+
+### Testing Task Cancellation
+```swift
+func testCancellation() async throws {
+    let task = Task { try await longRunningOperation() }
+    task.cancel()
+    do {
+        _ = try await task.value
+        XCTFail("Should have been cancelled")
+    } catch is CancellationError { /* Expected */ }
+}
+```
+
+### Testing AsyncSequences
+```swift
+func testAsyncStream() async throws {
+    let stream = AsyncStream<Int> { c in c.yield(1); c.yield(2); c.finish() }
+    var values: [Int] = []
+    for await value in stream { values.append(value) }
+    XCTAssertEqual(values, [1, 2])
+}
+```
+
+### Swift Testing Framework (Modern)
+
+```swift
+import Testing
+
+// Basic test
+@Test func asyncOperation() async throws {
+    #expect(await service.fetch().count == 10)
+}
+
+// Test errors
+@Test func throwsError() throws {
+    #expect(throws: ValidationError.self) {
+        try validate(invalid)
+    }
+}
+
+// Parameterized tests
+@Test(arguments: [1, 2, 3])
+func testMultiple(value: Int) {
+    #expect(value > 0)
+}
 ```
 
 ---
@@ -83,11 +132,8 @@ Visual regression testing with point-free/swift-snapshot-testing.
 - ✅ Test behavior, not implementation
 - ✅ Mock external dependencies
 - ✅ Use @MainActor for ViewModel tests
-- ✅ Clean up in tearDown
 - ❌ Don't test private methods directly
-- ❌ Don't make tests dependent on each other
-- ❌ Don't use real network in unit tests
-- ❌ Don't sleep() - use async/await or waitForExistence
+- ❌ Don't sleep() - use async/await
 
 ---
 
@@ -96,10 +142,5 @@ Visual regression testing with point-free/swift-snapshot-testing.
 ```
 test_[methodName]_[scenario]_[expectedResult]
 ```
-
-Examples:
-- `test_loadUser_success_updatesState`
-- `test_loadUser_networkError_showsError`
-- `test_saveButton_tapped_savesData`
 
 → See `templates/viewmodel-tests.md` for code examples

@@ -1,7 +1,7 @@
 {
   "name": "fuse-swift-apple-expert",
-  "version": "1.0.0",
-  "description": "Expert Swift 6 + SwiftUI for all Apple platforms with @Observable, actors, and best practices",
+  "version": "1.1.0",
+  "description": "Expert Swift 6.2 + SwiftUI for iOS 26, macOS 26, iPadOS 26, watchOS 26, visionOS 26, tvOS 26 with Liquid Glass, @Observable, actors, SwiftData inheritance",
   "author": {
     "name": "Fusengine",
     "email": "hello@fusengine.ch",
@@ -10,5 +10,5 @@
   "homepage": "https://github.com/fusengine/agents",
   "repository": "https://github.com/fusengine/agents",
   "license": "MIT",
-  "keywords": ["swift", "swiftui", "ios", "macos", "apple", "concurrency"]
+  "keywords": ["swift", "swiftui", "ios", "macos", "ipados", "watchos", "visionos", "tvos", "apple", "concurrency", "liquid-glass"]
 }

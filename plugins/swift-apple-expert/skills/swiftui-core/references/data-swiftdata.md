@@ -89,15 +89,59 @@ Automatic iCloud synchronization.
 
 ---
 
+## iOS 26: Model Inheritance
+
+SwiftData now supports class inheritance.
+
+```swift
+@Model class Vehicle {
+    var manufacturer: String
+    var year: Int
+}
+
+@Model class Car: Vehicle {
+    var numberOfDoors: Int
+}
+
+@Model class Motorcycle: Vehicle {
+    var hasWindshield: Bool
+}
+```
+
+**Use when:** Natural "is-a" relationships, shared properties.
+**Avoid when:** Single shared property (use protocols), leaf-only queries.
+
+### Schema Migrations with Inheritance
+
+```swift
+@Schema(version: 2, migratingFrom: .version(1)) {
+    // Migration logic
+}
+```
+
+### Query Subclasses
+
+```swift
+// All vehicles
+let all = try context.fetch(FetchDescriptor<Vehicle>())
+
+// Only cars with predicate
+let sedans = try context.fetch(
+    FetchDescriptor(predicate: #Predicate<Car> { $0.numberOfDoors == 4 })
+)
+```
+
+---
+
 ## Best Practices
 
 - ✅ Use @Attribute(.unique) for identifiers
 - ✅ Define deleteRule on relationships
 - ✅ Use @Query instead of manual fetches
-- ✅ Let auto-save handle persistence
+- ✅ Use inheritance for true "is-a" hierarchies
 - ✅ Test CloudKit with real devices
 - ❌ Don't store sensitive data (use Keychain)
 - ❌ Don't store large blobs (use FileManager)
-- ❌ Don't create multiple ModelContainers
+- ❌ Don't overuse inheritance (prefer composition)
 
 → See `templates/swiftdata-model.md` for code examples

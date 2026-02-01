@@ -5,8 +5,8 @@ versions:
   swiftui: 6
   ios: 26
 user-invocable: false
-references: references/views-modifiers.md, references/navigation.md, references/data-swiftdata.md, references/state-management.md
-related-skills: swift-core, solid-swift, ios, macos, ipados, watchos, visionos
+references: references/views-modifiers.md, references/navigation.md, references/data-swiftdata.md, references/state-management.md, references/liquid-glass.md
+related-skills: swift-core, solid-swift, ios, macos, ipados, watchos, visionos, tvos
 ---
 
 # SwiftUI Core
@@ -70,6 +70,7 @@ Modern persistence with @Model. Replaces Core Data for most use cases.
 | NavigationStack, deep linking | [navigation.md](references/navigation.md) |
 | SwiftData, @Query, CloudKit | [data-swiftdata.md](references/data-swiftdata.md) |
 | @State, @Observable, Environment | [state-management.md](references/state-management.md) |
+| Liquid Glass all platforms | [liquid-glass.md](references/liquid-glass.md) |
 
 ---
 

@@ -98,4 +98,39 @@ Top-level tab-based navigation.
 - New transition animations
 - Improved deep link handling
 
+---
+
+## Matched Geometry Effect
+
+Animate shared elements between views.
+
+### @Namespace
+
+```swift
+struct ContentView: View {
+    @Namespace private var animation
+
+    var body: some View {
+        CardView()
+            .matchedGeometryEffect(id: "card", in: animation)
+    }
+}
+```
+
+### Navigation Transitions (iOS 26)
+
+```swift
+NavigationLink {
+    DetailView()
+        .navigationTransition(.zoom(sourceID: "card", in: animation))
+} label: {
+    CardView()
+        .matchedGeometryEffect(id: "card", in: animation)
+}
+
+// Other transitions
+.navigationTransition(.slide(axis: .horizontal))
+.navigationTransition(.zoom, interactivity: .pan)
+```
+
 → See `templates/navigation-stack.md` for code examples

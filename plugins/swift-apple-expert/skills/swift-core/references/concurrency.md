@@ -1,84 +1,113 @@
 ---
 name: concurrency
-description: Swift 6 concurrency with async/await, actors, Sendable, TaskGroups, MainActor
-when-to-use: implementing async operations, managing shared state, fixing data races, migrating to Swift 6 strict concurrency
-keywords: async, await, actor, Sendable, Task, MainActor, nonisolated, TaskGroup
+description: Swift 6.2 concurrency with async/await, actors, Sendable, nonisolated(nonsending), InlineArray, Span
+when-to-use: implementing async operations, managing shared state, fixing data races, using Swift 6.2 features
+keywords: async, await, actor, Sendable, Task, MainActor, nonisolated, TaskGroup, InlineArray, Span
 priority: high
 related: architecture.md, testing.md, performance.md
 ---
 
-# Swift 6 Concurrency
+# Swift 6.2 Concurrency
 
-## When to Use
+## Swift 6.2 New Features (2026)
 
-- Async operations (network, file I/O, database)
-- Shared mutable state across threads
-- Parallel data processing
-- Migrating to Swift 6 strict concurrency
-- Fixing data race warnings
+### nonisolated(nonsending) - SE-0461
+Default behavior change: async functions stay on caller's executor.
 
-## Key Concepts
+**Activation:**
+```swift
+// Build Setting: SWIFT_APPROACHABLE_CONCURRENCY = YES
+// Or: -enable-upcoming-feature NonisolatedNonsendingByDefault
+```
 
-### Async/Await
-Replaces completion handlers. Cleaner syntax, better error handling.
+**Impact:**
+- Async functions on classes can access `self` without data races
+- Fewer context switches
+- Use `@concurrent` for explicit parallelism opt-in
 
-**Key Points:**
-- `async` marks functions that can suspend
-- `await` suspends until result is ready
-- Errors propagate naturally with `try await`
+### @InlineArray - SE-0453
+Fixed-size stack-allocated arrays for performance.
 
-### Actors
-Thread-safe encapsulation of mutable state. All access is serialized automatically.
+```swift
+var colors: InlineArray<3, UInt8> = [255, 128, 64]
+```
 
-**Key Points:**
-- Properties and methods are isolated by default
-- Requires `await` for external access
-- Use for caches, shared state managers
-- Replace classes with locks
+**Use for:** Graphics (RGB), protocol headers, small fixed buffers.
 
-### Sendable Protocol
-Marks types safe to share across concurrency domains.
+### Span & RawSpan
+Safe non-owning memory views (replaces UnsafePointer).
 
-**Key Points:**
-- Structs with Sendable properties are automatic
-- Classes must be `final` + immutable OR `@unchecked Sendable`
-- Closures passed to Tasks must be `@Sendable`
+```swift
+func parseHeader(_ data: Span<UInt8>) -> String? {
+    guard data.count >= 8 else { return nil }
+    let header = data.prefix(8)  // Safe slicing
+    return String(bytes: header, encoding: .utf8)
+}
 
-### @MainActor
-Isolates code to main thread for UI operations.
+// Usage
+let array: [UInt8] = [...]
+parseHeader(array.span)  // Zero-copy
+```
 
-**Key Points:**
-- Apply to ViewModels that update UI
-- Use `MainActor.run {}` for specific code blocks
-- Entire class or specific methods
+**Features:** Bounds-checking, lifetime tracking, compiler-enforced safety, zero-copy.
 
-### nonisolated(nonsending) (Swift 6.2)
-Methods that can be called without await but don't cross isolation boundaries.
+### Named Tasks - SE-0469
+Name tasks for debugging and profiling.
 
-**Key Points:**
-- Read-only access to actor state
-- No await required
-- Cannot be called from different isolation domain
+```swift
+Task { @TaskName("ImageDownload") await downloadImage() }
 
-### Task Groups
-Parallel execution with structured concurrency.
+// In TaskGroups
+await withTaskGroup(of: Int.self) { group in
+    group.addTask { @TaskName("Worker-1") return await process(1) }
+}
+```
 
-**Key Points:**
-- `withTaskGroup` for parallel operations
-- Results collected as they complete
-- Automatic cancellation propagation
+**Visibility:** Instruments profiler, Xcode debugger, crash logs.
+
+### Task.immediate - SE-0472
+Tasks start synchronously on caller's context if possible.
+
+```swift
+// Standard: queued, respects backpressure
+Task { await operation() }
+
+// Immediate: starts inline if budget available
+Task.immediate { await operation() }
+```
+
+**Use for:** Reducing latency on short tasks.
 
 ---
 
-## Common Swift 6 Migration Fixes
+## Core Concepts
+
+### Async/Await
+- `async` marks suspendable functions
+- `await` suspends until result ready
+- `try await` for error propagation
+
+### Actors
+Thread-safe state encapsulation. All access serialized.
+
+### Sendable
+Types safe to share across concurrency domains.
+
+### @MainActor
+Isolates code to main thread for UI.
+
+### Task Groups
+`withTaskGroup` for parallel operations with automatic cancellation.
+
+---
+
+## Migration Fixes
 
 | Error | Solution |
 |-------|----------|
 | "not Sendable" | Make struct Sendable or use actor |
 | "actor-isolated" | Add `await` or use `nonisolated` |
 | "main actor-isolated" | Use `@MainActor` or `MainActor.run` |
-| "capture of mutable" | Use `let` or capture in Task |
-| "Sending poses risk" | Mark closure `@Sendable` |
 
 ---
 
@@ -86,11 +115,7 @@ Parallel execution with structured concurrency.
 
 - ✅ Use actors for shared mutable state
 - ✅ Mark types Sendable when possible
-- ✅ Use nonisolated for read-only methods
-- ✅ Prefer async/await over completion handlers
-- ✅ Use TaskGroups for parallel operations
+- ✅ Use `@InlineArray` for small fixed collections
+- ✅ Use `Span` instead of `UnsafePointer`
 - ❌ Don't use locks with actors
 - ❌ Don't capture non-Sendable types in Tasks
-- ❌ Don't block main thread with heavy async work
-
-→ See `templates/actor-pattern.md` for code examples

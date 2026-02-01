@@ -91,9 +91,9 @@ RealityView { content, attachments in
 
 iOS 26 / visionOS 26 default styling:
 - Translucent backgrounds
-- Blur effects
-- `.glassBackgroundEffect()`
-- `.liquidGlassEffect()`
+- Light lensing effects (not blur)
+- `.glassBackgroundEffect()` (visionOS-specific for windows)
+- `.glassEffect(.regular)` (standard glass modifier)
 
 ---
 

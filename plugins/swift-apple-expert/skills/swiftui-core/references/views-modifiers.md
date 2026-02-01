@@ -83,12 +83,46 @@ Adapt to different screen sizes and orientations.
 
 ## iOS 26 Liquid Glass
 
-New design language with translucent materials.
+New design language using light lensing (not blur).
 
-**Key Points:**
-- Toolbars automatically adopt glass style
-- Use `.liquidGlassEffect()` for custom views
-- Navigation bars have new appearance
-- Tab bars adapt to scroll position
+### Automatic Application (Xcode 26 recompile)
+- NavigationBar, TabBar, Toolbar
+- Sheets, Popovers, Menus, Alerts
+- Search bars, Controls (during interaction)
+
+### Manual API
+```swift
+MyView()
+    .glassEffect(.regular)              // Default
+    .glassEffect(.prominent)            // Stronger
+    .glassEffect(.regular, in: .capsule) // Custom shape
+```
+
+### TabBar iOS 26
+```swift
+TabView {
+    ScrollView { }
+        .tabBarMinimizingBehavior(.automatic)
+}
+.tabBarAccessory { HStack { Button("Action") { } } }
+.tabBarFloatingButton {
+    Button { } label: { Image(systemName: "magnifyingglass") }
+}
+```
+
+### View Transitions
+```swift
+// Combined transitions
+.transition(.move(edge: .bottom).combined(with: .opacity))
+
+// Navigation with zoom
+.navigationTransition(.zoom(sourceID: "card", in: animation))
+```
+
+### Design Principles
+1. **Layering** - Content under glass remains visible
+2. **Depth** - Visual hierarchy via translucency
+3. **Responsiveness** - Glass reacts to interactions
+4. **Adaptivity** - Automatic light/dark mode
 
 → See `templates/view-structure.md` for code examples
