@@ -11,186 +11,90 @@ related: sail.md, homestead.md, installation.md
 
 ## Overview
 
-Valet is a blazing-fast macOS development environment for minimalists. It configures your Mac to always run Nginx in the background and uses DnsMasq to proxy `*.test` domains to local sites. Valet uses roughly 7MB of RAM, making it extremely lightweight compared to virtual machines.
-
-**Note**: For an even easier experience, consider [Laravel Herd](https://herd.laravel.com), which bundles Valet, PHP, and Composer in a native app.
+Valet is a blazing-fast macOS development environment using Nginx and DnsMasq. Sites are served at `*.test` domains with ~7MB RAM. Consider [Laravel Herd](https://herd.laravel.com) for an easier GUI experience.
 
 ## Installation
 
 ```shell
-# Install Homebrew PHP
 brew update && brew install php
-
-# Install Valet globally
 composer global require laravel/valet
-
-# Install and configure Valet
 valet install
 ```
 
-Verify by pinging any `*.test` domain - it should resolve to `127.0.0.1`.
-
 ## Serving Sites
 
-### Park Command (Multiple Sites)
-
-Parks a directory so all subdirectories become accessible:
+### Park (Multiple Sites)
 
 ```shell
 cd ~/Sites
 valet park
+# ~/Sites/laravel → http://laravel.test
 ```
 
-Now `~/Sites/laravel` is accessible at `http://laravel.test`.
-
-### Link Command (Single Site)
-
-Links a specific directory:
+### Link (Single Site)
 
 ```shell
 cd ~/Sites/my-project
 valet link
-# Accessible at http://my-project.test
-
-# With custom name
-valet link my-app
-# Accessible at http://my-app.test
+# → http://my-project.test
 ```
 
 ## PHP Versions
 
-### Global Version
-
 ```shell
-valet use php@8.2
-valet use php  # Latest version
+valet use php@8.2        # Global
+valet isolate php@8.1    # Per-site
+valet unisolate          # Revert
 ```
 
-### Per-Site Version
+Or create `.valetrc` in project: `php=php@8.1`
+
+## HTTPS
 
 ```shell
-cd ~/Sites/legacy-app
-valet isolate php@8.1
-```
-
-Or create `.valetrc` in project root:
-
-```shell
-php=php@8.1
-```
-
-Check isolated sites:
-
-```shell
-valet isolated
-valet unisolate  # Revert to global
-```
-
-## HTTPS Support
-
-```shell
-valet secure laravel    # Enable HTTPS
-valet unsecure laravel  # Disable HTTPS
+valet secure laravel     # Enable
+valet unsecure laravel   # Disable
 ```
 
 ## Sharing Sites
 
-Configure sharing tool first:
-
 ```shell
-valet share-tool ngrok  # or expose, cloudflared
-```
-
-Then share:
-
-```shell
-cd ~/Sites/my-project
-valet share
-```
-
-For ngrok, set your auth token:
-
-```shell
-valet set-ngrok-token YOUR_TOKEN
+valet share-tool ngrok   # Configure tool
+valet share              # Share current site
 ```
 
 ## Proxying Services
 
-Proxy Valet domains to other local services:
-
 ```shell
-# Proxy to Docker container
 valet proxy elasticsearch http://127.0.0.1:9200
-
-# With HTTPS
-valet proxy elasticsearch http://127.0.0.1:9200 --secure
-
-# Remove proxy
 valet unproxy elasticsearch
-```
-
-## Custom Drivers
-
-Create custom drivers for non-Laravel frameworks. Place in `~/.config/valet/Drivers/` with naming convention `FrameworkValetDriver.php`.
-
-A driver implements three methods:
-- `serves()` - Returns true if this driver handles the site
-- `isStaticFile()` - Returns path if request is for static file
-- `frontControllerPath()` - Returns path to front controller
-
-For project-specific drivers, create `LocalValetDriver.php` in project root.
-
-## Environment Variables
-
-Create `.valet-env.php` in project root:
-
-```php
-return [
-    'my-site' => [
-        'APP_ENV' => 'local',
-        'DB_HOST' => 'localhost',
-    ],
-    '*' => [
-        'DEFAULT_KEY' => 'value',
-    ],
-];
 ```
 
 ## Common Commands
 
 | Command | Description |
 |---------|-------------|
-| `valet park` | Serve all directories |
-| `valet link` | Serve current directory |
-| `valet links` | List all links |
-| `valet unlink` | Remove link |
+| `valet park` | Serve directory |
+| `valet link` | Serve current |
+| `valet links` | List links |
 | `valet secure` | Enable HTTPS |
-| `valet unsecure` | Disable HTTPS |
-| `valet isolate` | Set per-site PHP |
 | `valet restart` | Restart services |
-| `valet stop` | Stop services |
 | `valet diagnose` | Debug issues |
-| `valet trust` | Allow passwordless commands |
 
-## Configuration Files
+## Configuration
 
 | Location | Purpose |
 |----------|---------|
-| `~/.config/valet/` | Main config directory |
-| `~/.config/valet/config.json` | Master configuration |
+| `~/.config/valet/config.json` | Main config |
 | `~/.config/valet/Drivers/` | Custom drivers |
-| `~/.config/valet/Nginx/` | Site configurations |
-| `~/.config/valet/Sites/` | Symlinks for linked sites |
 
 ## Best Practices
 
-1. **Use Herd** - Provides GUI and easier management
-2. **Park, don't link** - Simpler for multiple projects
-3. **Isolate PHP per-site** - For legacy project compatibility
-4. **Use databases separately** - Install via DBngin or Homebrew
-5. **Check Full Disk Access** - Required for protected directories
+1. **Use Herd** - Easier GUI management
+2. **Park directories** - Simpler than linking each
+3. **Isolate PHP** - For legacy projects
+4. **Use DBngin** - For database management
 
 ## Related References
 
 - [sail.md](sail.md) - Docker alternative
-- [homestead.md](homestead.md) - Vagrant alternative

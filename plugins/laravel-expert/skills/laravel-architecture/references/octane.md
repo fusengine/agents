@@ -11,27 +11,19 @@ related: deployment.md, configuration.md
 
 ## Overview
 
-Octane supercharges Laravel applications by keeping them in memory between requests. Instead of bootstrapping the framework for each request, Octane boots once and serves subsequent requests at supersonic speeds. This can provide 10-100x performance improvements.
+Octane supercharges Laravel by keeping applications in memory between requests. Instead of bootstrapping for each request, Octane boots once and serves subsequent requests at supersonic speeds (10-100x improvement).
 
-## When to Use Octane
+## When to Use
 
-Use Octane when you need:
-- High request throughput
-- Low latency responses
-- Real-time features
-- Concurrent task execution
-- In-memory caching at extreme speeds
-
-Avoid Octane if your application relies heavily on mutable global state or poorly designed singletons.
+Use Octane for high throughput, low latency, real-time features, and concurrent tasks. Avoid if your app relies on mutable global state.
 
 ## Available Servers
 
-| Server | Language | Best For |
-|--------|----------|----------|
-| **FrankenPHP** | Go | Modern PHP, HTTP/2, HTTP/3 |
-| **Swoole** | C | Concurrent tasks, ticks, tables |
-| **Open Swoole** | C | Same as Swoole, open source |
-| **RoadRunner** | Go | Cross-platform, simple setup |
+| Server | Best For |
+|--------|----------|
+| **FrankenPHP** | Modern PHP, HTTP/2, HTTP/3 |
+| **Swoole** | Concurrent tasks, ticks, tables |
+| **RoadRunner** | Cross-platform, simple setup |
 
 ## Installation
 
@@ -40,40 +32,24 @@ composer require laravel/octane
 php artisan octane:install
 ```
 
-The installer prompts you to choose a server and downloads the necessary binaries.
-
-## Basic Usage
+## Basic Commands
 
 ```shell
-# Start server
-php artisan octane:start
-
-# With file watching (development)
-php artisan octane:start --watch
-
-# Specify workers
+php artisan octane:start           # Start
+php artisan octane:start --watch   # Dev with reload
 php artisan octane:start --workers=4
-
-# Reload workers (deployment)
-php artisan octane:reload
-
-# Stop server
-php artisan octane:stop
+php artisan octane:reload          # Reload workers
+php artisan octane:stop            # Stop
 ```
 
-## Critical Concepts
+## Critical: Persistence Problem
 
-### The Persistence Problem
-
-Since your application stays in memory, you must be careful about:
-
-1. **Singletons** - Objects bound as singletons persist across requests
-2. **Static properties** - Static arrays will accumulate data (memory leak)
-3. **Request injection** - Never inject Request into singleton constructors
+Since app stays in memory, be careful about:
+1. **Singletons** - Persist across requests
+2. **Static arrays** - Accumulate data (memory leak)
+3. **Request injection** - Never in singleton constructors
 
 ### Safe Patterns
-
-**Container injection** - Use closures instead of direct injection:
 
 ```php
 // Bad - stale container
@@ -85,80 +61,44 @@ $this->app->singleton(Service::class, fn () =>
 );
 ```
 
-**Request data** - Pass at method call time, not construction:
+**Safe globals**: `app()`, `request()`, `config()` - always fresh.
 
-```php
-// Bad - stale request
-return new Service($app['request']);
+## Production
 
-// Good - pass when needed
-$service->process($request->input('name'));
-```
-
-### Safe Globals
-
-These always return fresh values:
-- `app()` and `Container::getInstance()`
-- `request()` helper
-- `config()` helper
-
-## Production Deployment
-
-### Supervisor Configuration
+Use Supervisor to keep Octane running:
 
 ```ini
 [program:octane]
-command=php /var/www/app/artisan octane:start --server=frankenphp --host=127.0.0.1 --port=8000
+command=php /var/www/app/artisan octane:start --server=frankenphp --port=8000
 autostart=true
 autorestart=true
-user=www-data
-redirect_stderr=true
-stdout_logfile=/var/www/app/storage/logs/octane.log
 ```
 
-### Nginx Proxy
+Place Nginx in front for SSL and static assets.
 
-Place Nginx in front of Octane for static assets and SSL termination. Configure `location @octane` to proxy requests to Octane on port 8000.
-
-## Swoole-Specific Features
-
-These features require Swoole or Open Swoole:
-
-### Concurrent Tasks
+## Swoole Features
 
 ```php
+// Concurrent tasks
 [$users, $posts] = Octane::concurrently([
     fn () => User::all(),
     fn () => Post::all(),
 ]);
-```
 
-### Ticks (Intervals)
+// Ticks
+Octane::tick('heartbeat', fn () => Log::info('alive'))->seconds(10);
 
-```php
-Octane::tick('heartbeat', fn () =>
-    Log::info('Still alive')
-)->seconds(10);
-```
-
-### Octane Cache
-
-Provides 2M ops/sec caching using Swoole tables:
-
-```php
+// Octane cache (2M ops/sec)
 Cache::store('octane')->put('key', 'value', 30);
 ```
 
 ## Best Practices
 
 1. **Avoid memory leaks** - Don't append to static arrays
-2. **Test thoroughly** - Behavior may differ from traditional PHP
-3. **Use --watch in dev** - For automatic reloading
-4. **Monitor memory** - Watch for gradual increases
-5. **Reset state** - Use Octane's flush callbacks if needed
-6. **Proxy with Nginx** - For SSL and static files in production
+2. **Test thoroughly** - Behavior differs from traditional PHP
+3. **Monitor memory** - Watch for gradual increases
+4. **Proxy with Nginx** - For SSL and static files
 
 ## Related References
 
 - [deployment.md](deployment.md) - Production deployment
-- [configuration.md](configuration.md) - Environment setup

@@ -1,26 +1,17 @@
 ---
 name: pennant
-description: Laravel Pennant feature flags for gradual rollouts
-when-to-use: Implementing feature flags, A/B testing, gradual rollouts
-keywords: laravel, php, pennant, feature flags, a/b testing
-priority: medium
-related: configuration.md, providers.md
+description: Laravel Pennant for feature flags
+when-to-use: Feature toggles, A/B testing, gradual rollouts
+keywords: laravel, php, pennant, feature-flags, toggles
+priority: low
+related: configuration.md
 ---
 
 # Laravel Pennant
 
 ## Overview
 
-Laravel Pennant is a lightweight feature flag package for incremental feature rollouts, A/B testing, and trunk-based development. It enables toggling features per user, team, or any scope.
-
-## Why Feature Flags
-
-| Use Case | Description |
-|----------|-------------|
-| **Gradual Rollout** | Enable for 10%, then 50%, then 100% of users |
-| **A/B Testing** | Show different UIs to different user groups |
-| **Kill Switch** | Instantly disable problematic features |
-| **Beta Access** | Enable for specific users/teams |
+Pennant is Laravel's feature flag package for incremental rollouts, A/B testing, and trunk-based development. It supports multiple storage drivers (database, array) and rich scoping.
 
 ## Installation
 
@@ -32,21 +23,22 @@ php artisan migrate
 
 ## Defining Features
 
-### Closure-Based
-
 ```php
-// In AppServiceProvider boot()
-Feature::define('new-dashboard', fn (User $user) => $user->isAdmin());
+// app/Providers/AppServiceProvider.php
+use Laravel\Pennant\Feature;
+
+public function boot(): void
+{
+    Feature::define('new-dashboard', fn (User $user) =>
+        $user->is_beta_tester
+    );
+}
 ```
 
-### Class-Based
-
-```shell
-php artisan pennant:feature NewDashboard
-```
+### Class-Based Features
 
 ```php
-class NewDashboard
+class NewApi
 {
     public function resolve(User $user): bool
     {
@@ -57,23 +49,21 @@ class NewDashboard
 
 ## Checking Features
 
-| Method | Purpose |
-|--------|---------|
-| `Feature::active('feature')` | Check if active |
-| `Feature::inactive('feature')` | Check if inactive |
-| `Feature::when('feature', fn() => ...)` | Conditional execution |
-| `Feature::value('feature')` | Get rich value |
-
-### In Controllers
-
 ```php
-if (Feature::active('new-dashboard')) {
-    return view('dashboard.new');
-}
-return view('dashboard.old');
+// Boolean check
+if (Feature::active('new-dashboard')) { }
+
+// For specific scope
+Feature::for($team)->active('new-dashboard');
+
+// Conditional execution
+Feature::when('new-dashboard',
+    fn () => /* active */,
+    fn () => /* inactive */
+);
 ```
 
-### Blade Directive
+## Blade Directives
 
 ```blade
 @feature('new-dashboard')
@@ -83,95 +73,53 @@ return view('dashboard.old');
 @endfeature
 ```
 
-### Middleware
+## Middleware
 
 ```php
 Route::get('/dashboard', DashboardController::class)
     ->middleware('feature:new-dashboard');
 ```
 
-## Scope
+## Rich Values
 
-Features are resolved per scope (usually the authenticated user).
-
-### Explicit Scope
+Return values beyond boolean:
 
 ```php
-Feature::for($team)->active('billing-v2');
+Feature::define('theme', fn () =>
+    match (true) {
+        $user->is_admin => 'admin',
+        default => 'default',
+    }
+);
+
+$theme = Feature::value('theme');
 ```
 
-### Default Scope
-
-Configure default scope in config or service provider.
-
-## Rich Feature Values
-
-Return more than boolean:
+## Storage & Performance
 
 ```php
-Feature::define('purchase-button', fn (User $user) => match (true) {
-    $user->isVip() => 'blue-purchase-button',
-    default => 'green-purchase-button',
-});
+// Eager load
+Feature::load(['new-dashboard', 'new-api']);
 
-$color = Feature::value('purchase-button');
+// Purge stored values
+Feature::purge('new-dashboard');
+
+// Store drivers: database (default), array
 ```
-
-## Managing Features
-
-| Method | Purpose |
-|--------|---------|
-| `Feature::activate('feature')` | Enable for current scope |
-| `Feature::deactivate('feature')` | Disable for current scope |
-| `Feature::activateForEveryone('feature')` | Enable globally |
-| `Feature::deactivateForEveryone('feature')` | Disable globally |
-| `Feature::purge('feature')` | Remove stored values |
-
-## Eager Loading
-
-Prevent N+1 when checking features for multiple users:
-
-```php
-Feature::for($users)->load(['new-dashboard', 'billing-v2']);
-```
-
-## Testing
-
-```php
-Feature::define('new-dashboard', true); // Always active in test
-Feature::define('new-dashboard', false); // Always inactive
-```
-
-Or use `Feature::fake()`:
-
-```php
-Feature::fake(['new-dashboard' => true]);
-```
-
-## Storage Drivers
-
-| Driver | Use Case |
-|--------|----------|
-| `database` | Persistent, default |
-| `array` | Testing, in-memory |
 
 ## Events
 
-| Event | Triggered When |
-|-------|----------------|
-| `FeatureResolved` | Feature value resolved |
-| `FeatureUpdated` | Feature value changed |
-| `AllFeaturesPurged` | All features purged |
+- `FeatureRetrieved` - Feature checked
+- `FeatureResolved` - Feature resolved (first time)
+- `AllFeaturesPurged` - All features purged
 
 ## Best Practices
 
-1. **Use class-based** - For complex logic, easier to test
-2. **Clean up** - Remove old feature flags after full rollout
-3. **Default to off** - New features should be inactive by default
-4. **Scope appropriately** - User, team, or organization level
-5. **Monitor** - Track feature flag states in production
+1. **Class-based for complex** - Better organization
+2. **Eager load** - Reduce queries
+3. **Purge on deploy** - Clear stale values
+4. **Scope appropriately** - User, team, or global
 
 ## Related References
 
-- [configuration.md](configuration.md) - Environment-based config
-- [Laravel Pennant Docs](https://laravel.com/docs/12.x/pennant) - Full documentation
+- [configuration.md](configuration.md) - Environment config

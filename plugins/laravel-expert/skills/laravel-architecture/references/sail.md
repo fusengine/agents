@@ -11,137 +11,82 @@ related: installation.md, homestead.md
 
 ## Overview
 
-Sail is Laravel's official Docker development environment. It provides a lightweight CLI for interacting with Docker containers without requiring Docker expertise. Sail is ideal for teams needing consistent development environments across different operating systems.
-
-## Why Use Sail
-
-- **Zero local requirements** - Only Docker needed
-- **Consistent environments** - Identical setup for all team members
-- **Easy services** - MySQL, Redis, Meilisearch, etc. pre-configured
-- **Isolated** - Doesn't conflict with local installations
+Sail is Laravel's Docker development environment with a lightweight CLI. It provides consistent environments across teams without Docker expertise. Only Docker is required locally.
 
 ## Installation
-
-Sail comes with new Laravel applications. For existing projects:
 
 ```shell
 composer require laravel/sail --dev
 php artisan sail:install
 ```
 
-The installer lets you choose services (MySQL, Redis, Meilisearch, etc.).
-
 ## Basic Commands
 
 ```shell
-# Start containers
-./vendor/bin/sail up
-
-# Start in background
-./vendor/bin/sail up -d
-
-# Stop containers
-./vendor/bin/sail stop
-
-# Destroy containers
-./vendor/bin/sail down
+sail up              # Start containers
+sail up -d           # Start in background
+sail stop            # Stop containers
+sail down            # Destroy containers
 ```
 
-### Shell Alias (Recommended)
-
+**Shell alias** (add to ~/.zshrc):
 ```shell
 alias sail='sh $([ -f sail ] && echo sail || echo vendor/bin/sail)'
 ```
 
-Add to `~/.zshrc` or `~/.bashrc` for permanent use.
-
 ## Executing Commands
-
-Sail wraps common commands to run inside containers:
 
 | Command | Description |
 |---------|-------------|
-| `sail php` | Run PHP commands |
-| `sail artisan` | Run Artisan commands |
-| `sail composer` | Run Composer commands |
-| `sail npm` | Run NPM commands |
-| `sail node` | Run Node commands |
+| `sail artisan` | Run Artisan |
+| `sail composer` | Run Composer |
+| `sail npm` | Run NPM |
 | `sail test` | Run tests |
-| `sail tinker` | Start Tinker REPL |
+| `sail tinker` | Start REPL |
+| `sail shell` | Container bash |
 
 ## Database Services
 
-### MySQL
+- **MySQL**: `mysql` host inside, `localhost:3306` from host
+- **Redis**: `redis` host inside, `localhost:6379` from host
+- **PostgreSQL**: `pgsql` host inside, `localhost:5432` from host
 
-- Connects via `mysql` hostname inside containers
-- Accessible at `localhost:3306` from host
-- Creates `testing` database automatically for tests
-
-### Redis/Valkey
-
-- Connects via `redis` or `valkey` hostname
-- Accessible at `localhost:6379` from host
-
-### MongoDB
-
-```ini
-MONGODB_URI=mongodb://mongodb:27017
-```
-
-## Additional Services
-
-Add services after initial setup:
-
-```shell
-php artisan sail:add
-```
-
-Available services include MySQL, PostgreSQL, MariaDB, Redis, Valkey, Meilisearch, Typesense, MinIO, Mailpit, and Selenium.
+Add services: `php artisan sail:add`
 
 ## PHP Versions
 
-Change PHP version in `compose.yaml`:
-
+Edit `compose.yaml`:
 ```yaml
 build:
-    context: ./vendor/laravel/sail/runtimes/8.3  # or 8.4, 8.2, 8.1
+    context: ./vendor/laravel/sail/runtimes/8.3
 ```
 
-Then rebuild:
+Then: `sail build --no-cache && sail up`
 
-```shell
-sail build --no-cache && sail up
+## Debugging (Xdebug)
+
+```ini
+# .env
+SAIL_XDEBUG_MODE=develop,debug,coverage
 ```
 
-## Testing
+Rebuild after changes. Use `sail debug artisan migrate` for CLI.
 
-```shell
-sail test
-sail test --group=feature
-sail artisan test
+## Email Preview
+
+Mailpit at `http://localhost:8025`:
+```ini
+MAIL_HOST=mailpit
+MAIL_PORT=1025
 ```
 
-Sail automatically uses the `testing` database.
+## File Storage (MinIO)
 
-### Laravel Dusk
-
-Uncomment the Selenium service in `compose.yaml`, add `depends_on`, then:
-
-```shell
-sail dusk
-```
-
-## Debugging with Xdebug
-
-1. Publish Sail configuration: `sail artisan sail:publish`
-2. Add to `.env`: `SAIL_XDEBUG_MODE=develop,debug,coverage`
-3. Configure `php.ini` with `xdebug.mode=${XDEBUG_MODE}`
-4. Rebuild: `sail build --no-cache`
-
-Use `sail debug` for CLI debugging:
-
-```shell
-sail debug artisan migrate
+S3-compatible storage at `http://localhost:8900`:
+```ini
+AWS_ENDPOINT=http://minio:9000
+AWS_ACCESS_KEY_ID=sail
+AWS_SECRET_ACCESS_KEY=password
 ```
 
 ## Sharing Sites
@@ -150,53 +95,14 @@ sail debug artisan migrate
 sail share
 ```
 
-Creates a public URL via Expose. Configure trusted proxies in `bootstrap/app.php`:
-
-```php
-$middleware->trustProxies(at: '*');
-```
-
-## File Storage with MinIO
-
-For S3-compatible local storage:
-
-```ini
-FILESYSTEM_DISK=s3
-AWS_ENDPOINT=http://minio:9000
-AWS_ACCESS_KEY_ID=sail
-AWS_SECRET_ACCESS_KEY=password
-```
-
-Access MinIO console at `http://localhost:8900`.
-
-## Email Preview
-
-Mailpit captures all outgoing emails at `http://localhost:8025`:
-
-```ini
-MAIL_HOST=mailpit
-MAIL_PORT=1025
-```
-
-## Customization
-
-Publish Dockerfiles for customization:
-
-```shell
-sail artisan sail:publish
-```
-
-This creates a `docker/` directory with customizable configurations.
+Configure trusted proxies in `bootstrap/app.php`.
 
 ## Best Practices
 
-1. **Use the alias** - Saves typing `./vendor/bin/sail`
-2. **Run in background** - Use `-d` for detached mode
-3. **Rebuild after changes** - PHP version, extensions
-4. **Use sail shell** - For interactive container access
-5. **Don't edit compose.yaml directly** - Publish first
+1. **Use alias** - Saves typing
+2. **Run detached** - Use `-d` flag
+3. **Rebuild after PHP changes** - `sail build --no-cache`
 
 ## Related References
 
 - [installation.md](installation.md) - Laravel installation
-- [homestead.md](homestead.md) - Vagrant alternative

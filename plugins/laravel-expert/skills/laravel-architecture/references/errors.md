@@ -11,16 +11,16 @@ related: logging.md, configuration.md
 
 ## Overview
 
-Laravel's exception handler manages all exceptions thrown by your application. It controls how exceptions are reported (logged) and rendered (shown to users).
+Laravel's exception handler manages how exceptions are reported (logged) and rendered (shown to users).
 
-## Exception Handler
+## Configuration
 
-Located at `bootstrap/app.php`, configure exception handling:
+In `bootstrap/app.php`:
 
 ```php
 ->withExceptions(function (Exceptions $exceptions) {
     $exceptions->report(function (Throwable $e) {
-        // Custom reporting logic
+        // Custom reporting
     });
 
     $exceptions->render(function (NotFoundHttpException $e) {
@@ -29,51 +29,27 @@ Located at `bootstrap/app.php`, configure exception handling:
 })
 ```
 
-## Reporting Exceptions
-
-### Custom Reporting
+## Reporting
 
 ```php
 $exceptions->report(function (PaymentException $e) {
-    // Send to external service
     Sentry::captureException($e);
-});
+})->stop();  // Stop propagation
+
+$exceptions->dontReport([InvalidOrderException::class]);
 ```
 
-### Stop Propagation
-
-```php
-$exceptions->report(function (PaymentException $e) {
-    // Handle and stop
-})->stop();
-```
-
-### Don't Report
-
-```php
-$exceptions->dontReport([
-    InvalidOrderException::class,
-]);
-```
-
-## Rendering Exceptions
-
-### Custom Response
+## Rendering
 
 ```php
 $exceptions->render(function (InvalidOrderException $e, Request $request) {
     return response()->view('errors.invalid-order', [], 500);
 });
-```
 
-### API Responses
-
-```php
+// API responses
 $exceptions->render(function (Throwable $e, Request $request) {
     if ($request->expectsJson()) {
-        return response()->json([
-            'message' => $e->getMessage(),
-        ], 500);
+        return response()->json(['message' => $e->getMessage()], 500);
     }
 });
 ```
@@ -82,7 +58,7 @@ $exceptions->render(function (Throwable $e, Request $request) {
 
 ```php
 abort(404);
-abort(403, 'Unauthorized action.');
+abort(403, 'Unauthorized.');
 abort_if(!$user->isAdmin(), 403);
 abort_unless($user->isAdmin(), 403);
 ```
@@ -94,60 +70,28 @@ class InsufficientFundsException extends Exception
 {
     public function report(): void
     {
-        Log::warning('Insufficient funds', ['user' => auth()->id()]);
+        Log::warning('Insufficient funds');
     }
 
     public function render(Request $request): Response
     {
-        return response()->json([
-            'error' => 'Insufficient funds',
-        ], 402);
+        return response()->json(['error' => 'Insufficient funds'], 402);
     }
 }
 ```
 
 ## Error Pages
 
-Create custom error views in `resources/views/errors/`:
-
-- `404.blade.php` - Not found
-- `403.blade.php` - Forbidden
-- `500.blade.php` - Server error
-- `503.blade.php` - Maintenance
-
-## API Error Format
-
-Consistent JSON error responses:
-
-```php
-$exceptions->render(function (Throwable $e, Request $request) {
-    if ($request->expectsJson()) {
-        return response()->json([
-            'message' => $e->getMessage(),
-            'code' => $e->getCode(),
-        ], $this->getStatusCode($e));
-    }
-});
-```
-
-## Ignoring Exceptions
-
-```php
-$exceptions->dontFlash([
-    'password',
-    'password_confirmation',
-]);
-```
+Create in `resources/views/errors/`:
+- `404.blade.php`, `403.blade.php`, `500.blade.php`, `503.blade.php`
 
 ## Best Practices
 
-1. **Custom exceptions** - For domain-specific errors
+1. **Custom exceptions** - For domain errors
 2. **Consistent API format** - Same error structure
-3. **Don't expose internals** - Hide stack traces in production
-4. **Report to services** - Sentry, Bugsnag in production
-5. **User-friendly pages** - Custom error views
+3. **Hide internals** - No stack traces in production
+4. **Report to services** - Sentry, Bugsnag
 
 ## Related References
 
 - [logging.md](logging.md) - Logging exceptions
-- [configuration.md](configuration.md) - Debug mode
