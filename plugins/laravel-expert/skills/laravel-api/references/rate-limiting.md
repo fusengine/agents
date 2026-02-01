@@ -4,6 +4,7 @@ description: Laravel Rate Limiting documentation and patterns
 when-to-use: Consult when working with rate limiting
 keywords: laravel, php, ratelimiting
 priority: medium
+related: routing.md, middleware.md
 ---
 
 # Rate Limiting

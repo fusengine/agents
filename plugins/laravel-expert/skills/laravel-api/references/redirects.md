@@ -4,6 +4,7 @@ description: Laravel HTTP Redirects documentation and patterns
 when-to-use: Consult when working with redirects
 keywords: laravel, php, redirects
 priority: medium
+related: routing.md, responses.md
 ---
 
 # HTTP Redirects
