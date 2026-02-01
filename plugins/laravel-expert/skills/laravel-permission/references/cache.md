@@ -11,135 +11,123 @@ related: spatie-permission.md
 
 ## Overview
 
-Spatie caches permissions for performance. Understanding cache behavior is crucial for debugging.
+Spatie caches permissions for performance. This cache stores all roles, permissions, and their relationships, avoiding database queries on every authorization check.
 
-## Configuration
+## Why Caching Matters
 
-```php
-// config/permission.php
-'cache' => [
-    'expiration_time' => \DateInterval::createFromDateString('24 hours'),
-    'key' => 'spatie.permission.cache',
-    'store' => 'default', // or 'redis', 'memcached', etc.
-],
-```
+| Without Cache | With Cache |
+|---------------|------------|
+| DB query per `can()` check | Single query, then memory |
+| Slow on high-traffic pages | Fast lookups |
+| Database load increases | Minimal DB impact |
 
-## Using Redis for Cache
+## Cache Configuration
 
-```php
-// config/permission.php
-'cache' => [
-    'store' => 'redis',
-    'expiration_time' => \DateInterval::createFromDateString('1 hour'),
-],
-```
+### Key Settings
 
-## Clearing Cache Manually
+| Setting | Purpose | Default |
+|---------|---------|---------|
+| `expiration_time` | How long to keep cache | 24 hours |
+| `key` | Cache key prefix | `spatie.permission.cache` |
+| `store` | Which cache driver | `default` |
 
-### Via Artisan
+### Cache Stores
 
-```bash
-php artisan permission:cache-reset
-```
+| Store | Use Case |
+|-------|----------|
+| `default` | Single server |
+| `redis` | Multi-server / high performance |
+| `memcached` | Alternative to Redis |
+| `file` | Development only |
 
-### Via Code
+## Automatic Invalidation
 
-```php
-use Spatie\Permission\PermissionRegistrar;
-
-app(PermissionRegistrar::class)->forgetCachedPermissions();
-```
-
-## Automatic Cache Invalidation
-
-Cache is automatically cleared when:
+Cache is **automatically cleared** when using Spatie's methods:
 
 | Action | Auto-Clear |
 |--------|------------|
-| Role created/updated/deleted | ✅ |
-| Permission created/updated/deleted | ✅ |
-| Permission assigned/removed from role | ✅ |
-| Permission assigned/removed from user | ✅ |
-| Role assigned/removed from user | ✅ |
+| Role created/updated/deleted | Yes |
+| Permission created/updated/deleted | Yes |
+| Permission assigned/removed from role | Yes |
+| Permission assigned/removed from user | Yes |
+| Role assigned/removed from user | Yes |
 
-## Manual Database Operations
+## Manual Invalidation Required
 
-Direct DB queries bypass auto-invalidation:
+Cache is **NOT automatically cleared** for:
 
-```php
-// This WON'T clear cache automatically!
-\DB::table('role_has_permissions')->insert([
-    'role_id' => $role->id,
-    'permission_id' => $permission->id,
-]);
-
-// You MUST clear cache manually
-app(PermissionRegistrar::class)->forgetCachedPermissions();
-```
+| Action | Solution |
+|--------|----------|
+| Direct DB queries | Call `forgetCachedPermissions()` |
+| Raw SQL migrations | Run `permission:cache-reset` |
+| DB imports | Run `permission:cache-reset` |
 
 ## Debugging Cache Issues
 
-### Check if Cache is Working
+### Symptoms
 
-```php
-// Get cache key
-$cacheKey = config('permission.cache.key');
+| Symptom | Likely Cause |
+|---------|--------------|
+| New permission not working | Stale cache |
+| Removed permission still works | Stale cache |
+| Works after artisan call | Was stale cache |
 
-// Check cache contents
-$cached = cache()->get($cacheKey);
-dd($cached);
-```
+### Diagnosis Steps
 
-### Force Fresh Permissions
+1. Clear cache manually
+2. Test again
+3. If fixed, identify what bypassed auto-clear
 
-```php
-// Clear cache before checking
-app(PermissionRegistrar::class)->forgetCachedPermissions();
+## Performance Optimization
 
-// Now check permissions (will rebuild cache)
-$user->hasPermissionTo('edit articles');
-```
+### Cache Driver Selection
 
-## Seeder Best Practice
+| Environment | Recommended Store |
+|-------------|-------------------|
+| Local development | File or array |
+| Single production server | Redis or file |
+| Load-balanced servers | Redis (shared) |
 
-```php
-public function run(): void
-{
-    // Reset cache at START of seeder
-    app(PermissionRegistrar::class)->forgetCachedPermissions();
+### TTL Considerations
 
-    // Create permissions and roles
-    Permission::create(['name' => 'edit articles']);
-    $role = Role::create(['name' => 'editor']);
-    $role->givePermissionTo('edit articles');
+| Permission Change Frequency | Recommended TTL |
+|-----------------------------|-----------------|
+| Rarely (seeder only) | 24 hours |
+| Occasionally (admin panel) | 1 hour |
+| Frequently (self-service) | 15 minutes |
 
-    // Cache will be fresh after seeder completes
-}
-```
+## Deployment Checklist
 
-## Testing with Cache
+| Step | Command/Action |
+|------|----------------|
+| After deploy | `php artisan permission:cache-reset` |
+| After seeder | Automatic (if using Spatie methods) |
+| After raw SQL | `php artisan permission:cache-reset` |
 
-```php
-// In tests, reset cache before each test
-protected function setUp(): void
-{
-    parent::setUp();
+## Testing Considerations
 
-    app(PermissionRegistrar::class)->forgetCachedPermissions();
-}
-```
+| Context | Recommendation |
+|---------|----------------|
+| Test setUp | Clear cache before each test |
+| Parallel tests | Use separate cache keys |
+| CI/CD | Reset cache after migrations |
 
-## Performance Tips
+## Best Practices
 
-1. **Use Redis** for shared cache across servers
-2. **Set appropriate TTL** based on how often permissions change
-3. **Batch operations** to minimize cache clears
-4. **Warm cache** after deployments
+1. **Use Redis** for multi-server deployments
+2. **Set appropriate TTL** based on change frequency
+3. **Always clear after deploy** as part of deployment script
+4. **Avoid raw SQL** for permission changes
+5. **Monitor cache hits** in production
 
-```php
-// Warm cache after deploy
-Artisan::call('permission:cache-reset');
+## Related Templates
 
-// Force rebuild
-Permission::all(); // Rebuilds cache
-```
+| Template | Purpose |
+|----------|---------|
+| [CacheConfig.php.md](templates/CacheConfig.php.md) | Cache configuration examples |
+| [DeployScript.sh.md](templates/DeployScript.sh.md) | Deployment cache reset |
+
+## Related References
+
+- [spatie-permission.md](spatie-permission.md) - Core concepts
+- [artisan-commands.md](artisan-commands.md) - Cache reset command

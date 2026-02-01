@@ -1,3 +1,12 @@
+---
+name: apple-docs-mcp
+description: Apple Docs MCP for official documentation, WWDC sessions, and sample code with offline access
+when-to-use: researching Apple APIs, searching WWDC sessions, getting symbol documentation, finding sample code
+keywords: Apple Docs, WWDC, documentation, SwiftUI, UIKit, Foundation, CoreData, sample code
+priority: high
+related: xcodebuild-mcp.md
+---
+
 # Apple Docs MCP Usage Guide
 
 **MCP Server for Apple Developer Documentation with offline WWDC access.**

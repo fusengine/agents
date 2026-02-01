@@ -1,3 +1,12 @@
+---
+name: xcodebuild-mcp
+description: XcodeBuildMCP for Xcode project management, building, and automation
+when-to-use: building projects, validating code changes, creating projects, running tests, inspecting build errors
+keywords: Xcode, build, compile, project, scheme, simulator, device, clean, archive
+priority: high
+related: apple-docs-mcp.md
+---
+
 # XcodeBuildMCP Usage Guide
 
 **MCP Server for Xcode project management and automation.**

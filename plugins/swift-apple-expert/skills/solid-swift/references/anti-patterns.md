@@ -1,3 +1,12 @@
+---
+name: anti-patterns
+description: Common SOLID violations in Swift with code examples and fixes
+when-to-use: reviewing code quality, identifying anti-patterns, refactoring legacy code, learning SOLID by counter-examples
+keywords: anti-patterns, violations, bad code, refactoring, SOLID, single responsibility, dependency injection
+priority: high
+related: solid-patterns.md
+---
+
 # Anti-Patterns - Common Violations & Fixes
 
 ## Single Responsibility Violations

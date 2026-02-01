@@ -11,167 +11,147 @@ related: spatie-permission.md
 
 ## Overview
 
-Spatie provides artisan commands for managing roles and permissions from CLI.
+Spatie provides artisan commands for managing roles and permissions from the CLI. Useful for quick setup, debugging, and CI/CD scripts.
 
-## Create Permission
+## Available Commands
 
-```bash
-# Basic
-php artisan permission:create-permission "edit articles"
+| Command | Purpose |
+|---------|---------|
+| `permission:create-permission` | Create a new permission |
+| `permission:create-role` | Create a new role |
+| `permission:show` | Display all roles and permissions |
+| `permission:cache-reset` | Clear permission cache |
+| `permission:upgrade-teams` | Add team support to existing tables |
 
-# With specific guard
-php artisan permission:create-permission "edit articles" api
+## Command: create-permission
 
-# Multiple permissions
-php artisan permission:create-permission "create articles"
-php artisan permission:create-permission "delete articles"
-```
+### Syntax
 
-## Create Role
+| Argument | Required | Description |
+|----------|----------|-------------|
+| `name` | Yes | Permission name |
+| `guard` | No | Guard name (default: config default) |
 
-```bash
-# Basic
-php artisan permission:create-role editor
+### Usage Scenarios
 
-# With specific guard
-php artisan permission:create-role editor web
+| Scenario | Arguments |
+|----------|-----------|
+| Basic permission | `"edit articles"` |
+| Specific guard | `"edit articles" api` |
+| Kebab-case naming | `"edit-articles"` |
 
-# With permissions (pipe-separated)
-php artisan permission:create-role editor web "edit articles|delete articles"
+## Command: create-role
 
-# With team ID (when teams enabled)
-php artisan permission:create-role editor --team-id=1
-php artisan permission:create-role editor api --team-id=1
-```
+### Syntax
 
-## Show Permissions and Roles
+| Argument | Required | Description |
+|----------|----------|-------------|
+| `name` | Yes | Role name |
+| `guard` | No | Guard name |
+| `permissions` | No | Pipe-separated permissions |
+| `--team-id` | No | Team ID for multi-tenant |
 
-```bash
-php artisan permission:show
-```
+### Usage Scenarios
 
-Output example:
+| Scenario | Arguments |
+|----------|-----------|
+| Basic role | `editor` |
+| With guard | `editor web` |
+| With permissions | `editor web "edit articles\|delete articles"` |
+| With team | `editor --team-id=1` |
 
-```
-+-------+-------------------+
-| Guard | Permissions       |
-+-------+-------------------+
-| web   | edit articles     |
-|       | delete articles   |
-|       | publish articles  |
-+-------+-------------------+
-| api   | api-access        |
-+-------+-------------------+
+## Command: show
 
-+-------+-------------------+
-| Guard | Roles             |
-+-------+-------------------+
-| web   | admin             |
-|       | editor            |
-|       | writer            |
-+-------+-------------------+
-```
+Displays a formatted table of all roles and permissions grouped by guard.
 
-## Reset Permission Cache
+### Output Sections
 
-```bash
-php artisan permission:cache-reset
-```
+| Section | Shows |
+|---------|-------|
+| Permissions | All permissions grouped by guard |
+| Roles | All roles grouped by guard |
 
-Use after:
-- Direct database modifications
-- Deployment with permission changes
-- Debugging permission issues
+## Command: cache-reset
 
-## Upgrade Teams
+### When to Use
 
-```bash
-php artisan permission:upgrade-teams
-```
+| Scenario | Needed |
+|----------|--------|
+| After direct DB changes | Yes |
+| After deployment | Yes |
+| After seeder | Automatic |
+| After using Spatie methods | Automatic |
+
+### Deployment Integration
+
+Include in deployment scripts:
+
+| Position | Reason |
+|----------|--------|
+| After migrations | Tables might have changed |
+| After seeders | Permissions might have changed |
+| Before app restart | Ensure fresh cache |
+
+## Command: upgrade-teams
+
+### Purpose
 
 Adds `team_id` column to permission tables when enabling teams feature.
 
+### Prerequisites
+
+1. Set `'teams' => true` in config
+2. Run this command
+3. Run `migrate`
+
 ## Custom Commands
 
-### Create Setup Command
+### Creating Setup Commands
 
-```php
-<?php
+For reproducible permission setup, create custom artisan commands that:
 
-declare(strict_types=1);
+1. Reset cache at start
+2. Create all permissions
+3. Create all roles
+4. Assign permissions to roles
+5. Optionally create default users
 
-namespace App\Console\Commands;
+### Benefits
 
-use Illuminate\Console\Command;
-use Spatie\Permission\Models\Permission;
-use Spatie\Permission\Models\Role;
-use Spatie\Permission\PermissionRegistrar;
+| Benefit | Description |
+|---------|-------------|
+| Reproducible | Same result every time |
+| Documented | Code shows permission structure |
+| CI/CD friendly | Easy to automate |
+| Environment-specific | Can vary by environment |
 
-final class SetupPermissions extends Command
-{
-    protected $signature = 'app:setup-permissions';
-    protected $description = 'Setup default roles and permissions';
+## CI/CD Integration
 
-    public function handle(): int
-    {
-        app(PermissionRegistrar::class)->forgetCachedPermissions();
+### Deployment Script Steps
 
-        $this->createPermissions();
-        $this->createRoles();
+| Step | Command |
+|------|---------|
+| 1 | Run migrations |
+| 2 | Run permission setup command |
+| 3 | Reset permission cache |
+| 4 | Verify with `permission:show` |
 
-        $this->info('Permissions setup complete!');
+## Best Practices
 
-        return Command::SUCCESS;
-    }
+1. **Script, don't type** - Use custom commands over manual CLI
+2. **Reset cache** - Always after permission changes
+3. **Verify with show** - Check result after changes
+4. **Version control** - Keep setup commands in repository
+5. **Idempotent** - Use `firstOrCreate` not `create`
 
-    private function createPermissions(): void
-    {
-        $permissions = [
-            'view articles',
-            'create articles',
-            'edit articles',
-            'delete articles',
-            'publish articles',
-        ];
+## Related Templates
 
-        foreach ($permissions as $permission) {
-            Permission::firstOrCreate(['name' => $permission]);
-            $this->line("Created permission: $permission");
-        }
-    }
+| Template | Purpose |
+|----------|---------|
+| [SetupPermissions.php.md](templates/SetupPermissions.php.md) | Custom artisan command |
+| [DeployScript.sh.md](templates/DeployScript.sh.md) | CI/CD deployment script |
 
-    private function createRoles(): void
-    {
-        $roles = [
-            'admin' => Permission::all(),
-            'editor' => ['view articles', 'create articles', 'edit articles'],
-            'writer' => ['view articles', 'create articles'],
-        ];
+## Related References
 
-        foreach ($roles as $roleName => $permissions) {
-            $role = Role::firstOrCreate(['name' => $roleName]);
-            $role->syncPermissions($permissions);
-            $this->line("Created role: $roleName");
-        }
-    }
-}
-```
-
-### Usage
-
-```bash
-php artisan app:setup-permissions
-```
-
-## Scripts for CI/CD
-
-```bash
-#!/bin/bash
-# deploy.sh
-
-# Clear permission cache after deployment
-php artisan permission:cache-reset
-
-# Show current state
-php artisan permission:show
-```
+- [spatie-permission.md](spatie-permission.md) - Core concepts
+- [cache.md](cache.md) - Cache management

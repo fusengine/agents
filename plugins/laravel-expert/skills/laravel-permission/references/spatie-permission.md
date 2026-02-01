@@ -11,75 +11,101 @@ related: middleware.md, blade-directives.md
 
 ## Overview
 
-Spatie's Laravel Permission package provides a simple way to manage roles and permissions in Laravel applications.
+Spatie's Laravel Permission package provides a simple way to manage roles and permissions in Laravel applications. It integrates seamlessly with Laravel's Gate and authorization system.
 
-## Installation
+## Why Use This Package
 
-```bash
-composer require spatie/laravel-permission
-php artisan vendor:publish --provider="Spatie\Permission\PermissionServiceProvider"
-php artisan optimize:clear
-php artisan migrate
-```
-
-## User Model Setup
-
-```php
-use Spatie\Permission\Traits\HasRoles;
-
-class User extends Authenticatable
-{
-    use HasRoles;
-}
-```
+| Benefit | Description |
+|---------|-------------|
+| **Simplicity** | Clean API for role/permission management |
+| **Integration** | Works with Laravel's native Gate and policies |
+| **Caching** | Built-in permission caching for performance |
+| **Multi-guard** | Support for multiple authentication guards |
+| **Teams** | Optional multi-tenant team support |
 
 ## Core Concepts
 
-| Concept | Description |
-|---------|-------------|
-| **Role** | Group of permissions (admin, writer) |
-| **Permission** | Single ability (edit articles) |
-| **Direct Permission** | Permission assigned directly to user |
-| **Role Permission** | Permission inherited via role |
+| Concept | Description | Use Case |
+|---------|-------------|----------|
+| **Role** | Group of permissions | `admin`, `writer`, `subscriber` |
+| **Permission** | Single ability | `edit articles`, `publish posts` |
+| **Direct Permission** | Assigned directly to user | Override role for specific user |
+| **Role Permission** | Inherited via assigned roles | Standard access pattern |
 
-## Creating Roles & Permissions
+## Installation Requirements
 
-```php
-use Spatie\Permission\Models\Role;
-use Spatie\Permission\Models\Permission;
+1. Require the package via Composer
+2. Publish the config and migrations
+3. Run migrations to create permission tables
+4. Add the `HasRoles` trait to your User model
 
-// Create role
-$admin = Role::create(['name' => 'admin']);
+See [UserModel.php.md](templates/UserModel.php.md) for complete setup example.
 
-// Create permission
-Permission::create(['name' => 'edit articles']);
+## Model Setup
 
-// Assign permissions to role
-$admin->givePermissionTo(['edit articles', 'publish articles']);
-```
+The User model must use the `HasRoles` trait from Spatie. This adds all permission-related methods to the model.
 
-## Assigning to Users
+## Key Methods
+
+### Assigning Roles
 
 | Method | Description |
 |--------|-------------|
-| `assignRole('admin')` | Add role |
+| `assignRole('admin')` | Add a single role |
+| `assignRole(['writer', 'admin'])` | Add multiple roles |
 | `syncRoles(['writer'])` | Replace all roles |
-| `removeRole('writer')` | Remove role |
-| `givePermissionTo('edit')` | Direct permission |
+| `removeRole('writer')` | Remove a role |
+
+### Assigning Permissions
+
+| Method | Description |
+|--------|-------------|
+| `givePermissionTo('edit')` | Add direct permission |
+| `givePermissionTo(['edit', 'view'])` | Add multiple |
+| `syncPermissions(['edit'])` | Replace all |
 | `revokePermissionTo('edit')` | Remove permission |
 
-## Checking Permissions
+### Checking Permissions
 
-```php
-$user->hasRole('admin');
-$user->hasAnyRole(['writer', 'admin']);
-$user->hasPermissionTo('edit articles');
-$user->can('edit articles');
-```
+| Method | Description |
+|--------|-------------|
+| `hasRole('admin')` | Check single role |
+| `hasAnyRole(['writer', 'admin'])` | Check any role |
+| `hasAllRoles(['writer', 'admin'])` | Check all roles |
+| `hasPermissionTo('edit articles')` | Check permission |
+| `can('edit articles')` | Laravel Gate check |
+
+## Guard System
+
+Spatie supports multiple guards for different authentication types:
+
+| Guard | Use Case |
+|-------|----------|
+| `web` | Browser sessions (default) |
+| `api` | API token authentication |
+| `admin` | Separate admin authentication |
+
+Roles and permissions are guard-specific. A role in `web` guard is different from a role in `api` guard.
 
 ## Best Practices
 
-1. **Seed roles/permissions** in `DatabaseSeeder`
-2. **Cache reset** after changes: `php artisan permission:cache-reset`
-3. **Naming** use kebab-case: `edit-articles`
-4. **Teams** for multi-tenant: `'teams' => true`
+1. **Seed roles/permissions** - Define in `DatabaseSeeder` for consistency
+2. **Use kebab-case** - `edit-articles` not `editArticles`
+3. **Reset cache** - After direct DB changes: `php artisan permission:cache-reset`
+4. **Check via middleware** - Don't hardcode role checks in controllers
+5. **Use permissions, not roles** - Check `can('edit')` not `hasRole('admin')`
+
+## Related Templates
+
+| Template | Purpose |
+|----------|---------|
+| [UserModel.php.md](templates/UserModel.php.md) | User model with HasRoles trait |
+| [RoleSeeder.php.md](templates/RoleSeeder.php.md) | Database seeding example |
+| [PermissionSeeder.php.md](templates/PermissionSeeder.php.md) | Permission creation seeder |
+
+## Related References
+
+- [middleware.md](middleware.md) - Route protection
+- [blade-directives.md](blade-directives.md) - View authorization
+- [direct-permissions.md](direct-permissions.md) - Permission inheritance
+- [cache.md](cache.md) - Performance optimization

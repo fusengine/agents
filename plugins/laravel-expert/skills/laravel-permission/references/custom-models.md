@@ -11,242 +11,141 @@ related: spatie-permission.md
 
 ## Overview
 
-Extend Spatie's Role and Permission models for custom behavior like UUIDs or additional attributes.
+Extend Spatie's Role and Permission models for custom behavior like UUIDs, additional attributes, or custom relationships.
 
-## UUID Support (Laravel 9+)
+## When to Extend
 
-### Custom Role Model
+| Requirement | Need Custom Model |
+|-------------|-------------------|
+| UUID primary keys | Yes |
+| Additional columns | Yes |
+| Custom relationships | Yes |
+| Custom scopes | Yes |
+| Standard usage | No |
 
-```php
-<?php
+## Extension Approach
 
-declare(strict_types=1);
+### Key Principle
 
-namespace App\Models;
+**Extend, don't replace**. Custom models inherit from Spatie models, preserving all functionality.
 
-use Illuminate\Database\Eloquent\Concerns\HasUuids;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Spatie\Permission\Models\Role as SpatieRole;
+| Do | Don't |
+|----|-------|
+| Extend `SpatieRole` | Implement from scratch |
+| Add to `$fillable` | Override parent behavior |
+| Register in config | Modify package files |
 
-final class Role extends SpatieRole
-{
-    use HasFactory;
-    use HasUuids;
+## UUID Support
 
-    protected $primaryKey = 'uuid';
-    public $incrementing = false;
-    protected $keyType = 'string';
-}
-```
+### Requirements
 
-### Custom Permission Model
+1. Custom Role model with `HasUuids` trait
+2. Custom Permission model with `HasUuids` trait
+3. Updated migrations for UUID columns
+4. Updated pivot table migrations
+5. Register models in config
 
-```php
-<?php
+### Configuration Changes
 
-declare(strict_types=1);
+| Setting | Value |
+|---------|-------|
+| `models.permission` | `App\Models\Permission::class` |
+| `models.role` | `App\Models\Role::class` |
 
-namespace App\Models;
+### Migration Changes
 
-use Illuminate\Database\Eloquent\Concerns\HasUuids;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Spatie\Permission\Models\Permission as SpatiePermission;
+| Table | Primary Key Change |
+|-------|-------------------|
+| `roles` | `uuid` instead of `id` |
+| `permissions` | `uuid` instead of `id` |
+| `role_has_permissions` | UUID foreign keys |
+| `model_has_roles` | UUID foreign keys |
+| `model_has_permissions` | UUID foreign keys |
 
-final class Permission extends SpatiePermission
-{
-    use HasFactory;
-    use HasUuids;
+## Custom Attributes
 
-    protected $primaryKey = 'uuid';
-    public $incrementing = false;
-    protected $keyType = 'string';
-}
-```
+### Common Additions
 
-### Register Custom Models
+| Attribute | Purpose | Type |
+|-----------|---------|------|
+| `description` | Human-readable explanation | String |
+| `is_default` | Auto-assign to new users | Boolean |
+| `priority` | Ordering/precedence | Integer |
+| `category` | Grouping permissions | String |
 
-```php
-// config/permission.php
-'models' => [
-    'permission' => App\Models\Permission::class,
-    'role' => App\Models\Role::class,
-],
-```
+### Implementation Requirements
 
-### UUID Migrations
+1. Add columns via migration
+2. Add to `$fillable` array
+3. Add to `casts()` method if needed
+4. Create scopes for querying
 
-```php
-// Update migration for UUIDs
-public function up(): void
-{
-    Schema::create('roles', function (Blueprint $table) {
-        $table->uuid('uuid')->primary();
-        $table->string('name');
-        $table->string('guard_name');
-        $table->timestamps();
+## Custom Relationships
 
-        $table->unique(['name', 'guard_name']);
-    });
+### Common Relationships
 
-    Schema::create('permissions', function (Blueprint $table) {
-        $table->uuid('uuid')->primary();
-        $table->string('name');
-        $table->string('guard_name');
-        $table->timestamps();
+| Relationship | Purpose |
+|--------------|---------|
+| Role → Department | Roles belong to departments |
+| Permission → Category | Organize permissions |
+| Role → Parent Role | Hierarchical roles |
 
-        $table->unique(['name', 'guard_name']);
-    });
+### Implementation
 
-    // Update pivot tables
-    Schema::create('role_has_permissions', function (Blueprint $table) {
-        $table->uuid('permission_uuid');
-        $table->uuid('role_uuid');
-
-        $table->foreign('permission_uuid')
-            ->references('uuid')->on('permissions')->cascadeOnDelete();
-        $table->foreign('role_uuid')
-            ->references('uuid')->on('roles')->cascadeOnDelete();
-
-        $table->primary(['permission_uuid', 'role_uuid']);
-    });
-}
-```
-
-## Adding Custom Attributes
-
-```php
-<?php
-
-declare(strict_types=1);
-
-namespace App\Models;
-
-use Spatie\Permission\Models\Role as SpatieRole;
-
-final class Role extends SpatieRole
-{
-    protected $fillable = [
-        'name',
-        'guard_name',
-        'description',    // Custom
-        'is_default',     // Custom
-        'priority',       // Custom
-    ];
-
-    protected function casts(): array
-    {
-        return [
-            'is_default' => 'boolean',
-            'priority' => 'integer',
-        ];
-    }
-
-    /**
-     * Get default role for new users.
-     */
-    public static function getDefault(): ?self
-    {
-        return static::where('is_default', true)->first();
-    }
-
-    /**
-     * Scope to order by priority.
-     */
-    public function scopeByPriority($query)
-    {
-        return $query->orderBy('priority', 'desc');
-    }
-}
-```
-
-### Migration for Custom Attributes
-
-```php
-public function up(): void
-{
-    Schema::table('roles', function (Blueprint $table) {
-        $table->string('description')->nullable()->after('guard_name');
-        $table->boolean('is_default')->default(false)->after('description');
-        $table->integer('priority')->default(0)->after('is_default');
-    });
-}
-```
-
-## Adding Relationships
-
-```php
-<?php
-
-declare(strict_types=1);
-
-namespace App\Models;
-
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Spatie\Permission\Models\Role as SpatieRole;
-
-final class Role extends SpatieRole
-{
-    /**
-     * Role belongs to a department.
-     */
-    public function department(): BelongsTo
-    {
-        return $this->belongsTo(Department::class);
-    }
-
-    /**
-     * Get roles for a specific department.
-     */
-    public function scopeForDepartment($query, int $departmentId)
-    {
-        return $query->where('department_id', $departmentId);
-    }
-}
-```
+Extend model and add relationship methods. Use standard Eloquent relationships.
 
 ## Permission Categories
 
-```php
-<?php
+### Use Case
 
-declare(strict_types=1);
+Group permissions by feature area in admin UI:
 
-namespace App\Models;
+| Category | Permissions |
+|----------|-------------|
+| Articles | `articles.create`, `articles.edit` |
+| Users | `users.view`, `users.manage` |
+| Settings | `settings.view`, `settings.edit` |
 
-use Spatie\Permission\Models\Permission as SpatiePermission;
+### Implementation
 
-final class Permission extends SpatiePermission
-{
-    protected $fillable = [
-        'name',
-        'guard_name',
-        'category',     // Group permissions by category
-        'description',
-    ];
+Add `category` column to permissions table, add to fillable, create scope.
 
-    /**
-     * Group permissions by category.
-     */
-    public static function grouped(): array
-    {
-        return static::all()
-            ->groupBy('category')
-            ->toArray();
-    }
+## Custom Scopes
 
-    /**
-     * Scope by category.
-     */
-    public function scopeCategory($query, string $category)
-    {
-        return $query->where('category', $category);
-    }
-}
-```
+### Common Scopes
+
+| Scope | Purpose |
+|-------|---------|
+| `byPriority()` | Order by priority |
+| `forDepartment()` | Filter by department |
+| `category()` | Filter by category |
+| `isDefault()` | Get default roles |
+
+## Testing Considerations
+
+| Concern | Solution |
+|---------|----------|
+| Cache invalidation | Clear cache in setUp |
+| Custom attributes | Factory definitions |
+| UUID testing | Use UUID factory state |
 
 ## Best Practices
 
 1. **Extend, don't replace** - Always extend Spatie models
-2. **Update config** - Register custom models in `config/permission.php`
+2. **Update config** - Register custom models in config
 3. **Test thoroughly** - Custom models may affect caching
 4. **Document changes** - Team should know about customizations
+5. **Keep sync** - Watch Spatie updates for breaking changes
+
+## Related Templates
+
+| Template | Purpose |
+|----------|---------|
+| [CustomRole.php.md](templates/CustomRole.php.md) | Extended Role model |
+| [CustomPermission.php.md](templates/CustomPermission.php.md) | Extended Permission model |
+| [UUIDMigration.php.md](templates/UUIDMigration.php.md) | UUID table migration |
+
+## Related References
+
+- [spatie-permission.md](spatie-permission.md) - Core concepts
+- [cache.md](cache.md) - Cache with custom models

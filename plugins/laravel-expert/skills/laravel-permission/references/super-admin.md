@@ -11,124 +11,103 @@ related: spatie-permission.md
 
 ## Overview
 
-A Super Admin bypasses all permission checks using Laravel's `Gate::before()` hook.
-
-## Implementation
-
-Add to `AppServiceProvider` (Laravel 11+) or `AuthServiceProvider` (Laravel 10):
-
-```php
-<?php
-
-declare(strict_types=1);
-
-namespace App\Providers;
-
-use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\ServiceProvider;
-
-final class AppServiceProvider extends ServiceProvider
-{
-    public function boot(): void
-    {
-        // Super Admin bypasses all permission checks
-        Gate::before(function ($user, $ability) {
-            return $user->hasRole('Super-Admin') ? true : null;
-        });
-    }
-}
-```
-
-## Create Super Admin Role
-
-```php
-use Spatie\Permission\Models\Role;
-
-// In seeder or tinker
-$superAdmin = Role::create(['name' => 'Super-Admin']);
-
-// Assign to user
-$user->assignRole('Super-Admin');
-```
+A Super Admin bypasses all permission checks. This is implemented using Laravel's `Gate::before()` hook, which runs before any authorization check.
 
 ## How It Works
 
-| Gate::before Return | Effect |
-|---------------------|--------|
-| `true` | Authorized (bypass) |
-| `false` | Denied |
-| `null` | Continue to normal checks |
+### Gate::before Mechanism
 
-The `null` return is crucial - it allows non-super-admins to go through normal permission checks.
+| Return Value | Effect |
+|--------------|--------|
+| `true` | **Authorized** - bypass all checks |
+| `false` | **Denied** - stop immediately |
+| `null` | **Continue** - proceed to normal checks |
 
-## Multiple Super Admin Roles
+The key is returning `null` for non-super-admins, allowing normal permission logic to run.
 
-```php
-Gate::before(function ($user, $ability) {
-    if ($user->hasAnyRole(['Super-Admin', 'Owner', 'Root'])) {
-        return true;
-    }
-    return null;
-});
-```
+## Implementation Location
 
-## With Specific Exceptions
+| Laravel Version | File |
+|-----------------|------|
+| Laravel 11+ | `AppServiceProvider::boot()` |
+| Laravel 10 | `AuthServiceProvider::boot()` |
 
-```php
-Gate::before(function ($user, $ability) {
-    // Super admin can do everything EXCEPT delete users
-    if ($user->hasRole('Super-Admin')) {
-        if ($ability === 'delete users') {
-            return null; // Let normal checks proceed
-        }
-        return true;
-    }
-    return null;
-});
-```
+## Role Naming
 
-## Checking Super Admin Status
+| Convention | Example |
+|------------|---------|
+| Standard | `Super-Admin` |
+| Alternative | `super-admin`, `SuperAdmin` |
 
-```php
-// In controller or service
-if ($user->hasRole('Super-Admin')) {
-    // Show admin-only features
-}
+Use consistent naming across seeders, code, and Blade directives.
 
-// In Blade
-@role('Super-Admin')
-    <a href="/admin/dangerous-action">Danger Zone</a>
-@endrole
-```
+## Behavior Characteristics
+
+| Scenario | Super Admin Behavior |
+|----------|---------------------|
+| `can('any-permission')` | Always true |
+| `can('non-existent')` | Always true |
+| Middleware checks | Always passes |
+| Policy checks | Always passes |
+| Blade `@can` | Always shows content |
 
 ## Security Considerations
 
-1. **Limit Super-Admin assignment** - Only via seeder or trusted admin action
-2. **Audit Super-Admin actions** - Log all operations
+### Assignment Protection
+
+| Concern | Mitigation |
+|---------|------------|
+| Self-assignment | Only Super-Admin can assign Super-Admin |
+| UI visibility | Don't show assignment option to non-super-admins |
+| Seeder only | Consider only creating via seeder |
+
+### Audit Trail
+
+| Recommendation | Purpose |
+|----------------|---------|
+| Log all actions | Track what Super-Admin does |
+| Separate audit log | Don't let Super-Admin clear logs |
+| Alert on sensitive actions | Real-time monitoring |
+
+## Variations
+
+### Multiple Super Admin Roles
+
+Support multiple roles that bypass checks: `Super-Admin`, `Owner`, `Root`.
+
+### Partial Super Admin
+
+Super Admin bypasses everything **except** certain dangerous actions. Return `null` for those specific abilities to let normal checks run.
+
+### Environment-Based
+
+Disable Super Admin in production or require additional verification.
+
+## Testing Considerations
+
+| Test Case | Expected |
+|-----------|----------|
+| Super Admin has any permission | True |
+| Super Admin accesses all routes | 200 OK |
+| Regular user cannot self-assign | Forbidden |
+| Non-existent permission check | True for Super Admin |
+
+## Best Practices
+
+1. **Limit assignment** - Only via seeder or trusted admin action
+2. **Audit everything** - Log all Super Admin operations
 3. **Use sparingly** - Prefer specific permissions when possible
-4. **Protect the role** - Don't allow self-assignment
+4. **Don't allow self-assignment** - Prevent privilege escalation
+5. **Document holders** - Know who has Super Admin access
 
-```php
-// Prevent non-super-admins from assigning Super-Admin role
-public function assignRole(User $user, string $role): void
-{
-    if ($role === 'Super-Admin' && !auth()->user()->hasRole('Super-Admin')) {
-        abort(403, 'Cannot assign Super-Admin role');
-    }
+## Related Templates
 
-    $user->assignRole($role);
-}
-```
+| Template | Purpose |
+|----------|---------|
+| [SuperAdminSetup.php.md](templates/SuperAdminSetup.php.md) | Complete Gate::before setup |
+| [SuperAdminSeeder.php.md](templates/SuperAdminSeeder.php.md) | Seeding Super Admin role and user |
 
-## Testing Super Admin
+## Related References
 
-```php
-it('super admin bypasses all permissions', function () {
-    $superAdmin = User::factory()->create();
-    $superAdmin->assignRole('Super-Admin');
-
-    // Should pass any permission check
-    expect($superAdmin->can('any-permission'))->toBeTrue();
-    expect($superAdmin->can('non-existent-permission'))->toBeTrue();
-});
-```
+- [spatie-permission.md](spatie-permission.md) - Core concepts
+- [middleware.md](middleware.md) - Route protection (bypassed by Super Admin)

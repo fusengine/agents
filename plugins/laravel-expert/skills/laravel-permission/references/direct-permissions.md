@@ -11,135 +11,118 @@ related: spatie-permission.md
 
 ## Overview
 
-Permissions can be assigned directly to users or inherited through roles.
+Permissions can be assigned directly to users or inherited through roles. Understanding this distinction is crucial for debugging and permission management.
 
-## Types of Permissions
+## Permission Types
 
-| Type | Description |
-|------|-------------|
-| **Direct** | Assigned directly to user |
-| **Via Role** | Inherited from assigned roles |
-| **All** | Combination of both |
+| Type | Assignment | Use Case |
+|------|------------|----------|
+| **Direct** | `$user->givePermissionTo()` | Override role for specific user |
+| **Via Role** | `$role->givePermissionTo()` | Standard access pattern |
+| **All** | Combination | What user can actually do |
 
-## Retrieving Permissions
+## How Permission Inheritance Works
 
-```php
-// Get only direct permissions
-$directPermissions = $user->getDirectPermissions();
-// or
-$directPermissions = $user->permissions;
+```
+User
+├── Direct Permissions: [delete articles]
+└── Roles
+    └── Editor Role
+        └── Permissions: [edit articles, view articles]
 
-// Get permissions inherited from roles
-$rolePermissions = $user->getPermissionsViaRoles();
-
-// Get ALL permissions (direct + via roles)
-$allPermissions = $user->getAllPermissions();
-
-// Get permission names as collection of strings
-$permissionNames = $user->getPermissionNames();
-
-// Get role names
-$roleNames = $user->getRoleNames();
+→ User's All Permissions: [delete articles, edit articles, view articles]
 ```
 
-## Checking Direct Permissions
+## Retrieval Methods
 
-```php
-// Check if permission is assigned DIRECTLY (not via role)
-$user->hasDirectPermission('edit articles');
+| Method | Returns | Description |
+|--------|---------|-------------|
+| `getDirectPermissions()` | Collection | Only directly assigned |
+| `permissions` (property) | Collection | Alias for direct |
+| `getPermissionsViaRoles()` | Collection | Only from roles |
+| `getAllPermissions()` | Collection | Both combined |
+| `getPermissionNames()` | Collection | Names only (strings) |
+| `getRoleNames()` | Collection | Role names (strings) |
 
-// Check all direct permissions
-$user->hasAllDirectPermissions(['edit articles', 'delete articles']);
+## Checking Methods
 
-// Check any direct permission
-$user->hasAnyDirectPermission(['create articles', 'delete articles']);
-```
-
-## Example Scenario
-
-```php
-// Setup
-$editorRole = Role::create(['name' => 'editor']);
-$editorRole->givePermissionTo(['edit articles', 'view articles']);
-
-$user = User::find(1);
-$user->assignRole('editor');
-$user->givePermissionTo('delete articles'); // Direct permission
-
-// Results
-$user->getDirectPermissions()->pluck('name');
-// ['delete articles']
-
-$user->getPermissionsViaRoles()->pluck('name');
-// ['edit articles', 'view articles']
-
-$user->getAllPermissions()->pluck('name');
-// ['delete articles', 'edit articles', 'view articles']
-```
-
-## Checking Permission Source
-
-```php
-// Check if permission comes from role
-$hasViaRole = $user->getPermissionsViaRoles()
-    ->contains('name', 'edit articles');
-
-// Check if permission is direct
-$hasDirect = $user->hasDirectPermission('edit articles');
-
-// Determine source
-function getPermissionSource(User $user, string $permission): string
-{
-    if ($user->hasDirectPermission($permission)) {
-        return 'direct';
-    }
-    if ($user->getPermissionsViaRoles()->contains('name', $permission)) {
-        return 'role';
-    }
-    return 'none';
-}
-```
-
-## Revoking Permissions
-
-```php
-// Remove direct permission
-$user->revokePermissionTo('delete articles');
-
-// Remove permission from role (affects all users with role)
-$role->revokePermissionTo('edit articles');
-
-// Sync direct permissions (replace all)
-$user->syncPermissions(['view articles', 'create articles']);
-```
+| Method | Checks | Returns |
+|--------|--------|---------|
+| `hasDirectPermission('edit')` | Direct only | Boolean |
+| `hasAllDirectPermissions([...])` | All must be direct | Boolean |
+| `hasAnyDirectPermission([...])` | Any must be direct | Boolean |
+| `hasPermissionTo('edit')` | Direct + via role | Boolean |
+| `can('edit')` | Direct + via role + policies | Boolean |
 
 ## Use Cases
 
-### Override Role Permission
+### Override Role for User
 
-```php
-// User has 'viewer' role with 'view articles' only
-// Give direct permission to also edit
-$user->givePermissionTo('edit articles');
-```
+Give specific user an extra permission without creating a new role.
 
-### Temporary Permissions
+| Situation | Solution |
+|-----------|----------|
+| User needs `delete` but role only has `edit` | Add `delete` as direct permission |
 
-```php
-// Give temporary access directly
-$user->givePermissionTo('admin-panel');
+### Temporary Access
 
-// Later, revoke without affecting role
-$user->revokePermissionTo('admin-panel');
-```
+| Action | Method |
+|--------|--------|
+| Grant temporary access | `givePermissionTo()` directly |
+| Revoke after period | `revokePermissionTo()` on user |
+| Role users unaffected | Direct permissions don't touch role |
 
-### Audit Permissions
+### Permission Audit
 
-```php
-// Show permission breakdown in admin panel
-$breakdown = [
-    'direct' => $user->getDirectPermissions()->pluck('name'),
-    'via_roles' => $user->getPermissionsViaRoles()->pluck('name'),
-    'roles' => $user->getRoleNames(),
-];
-```
+Show where each permission comes from in admin panel.
+
+| Permission | Source |
+|------------|--------|
+| edit articles | Editor role |
+| delete articles | Direct assignment |
+| view articles | Editor role |
+
+## Revoking Permissions
+
+| Action | Effect |
+|--------|--------|
+| Revoke direct permission | Only removes from user |
+| Revoke from role | Removes from ALL users with role |
+| Sync permissions | Replaces all direct permissions |
+
+## Debugging Authorization
+
+When `can('edit')` fails unexpectedly:
+
+1. Check `getAllPermissions()` - Does permission exist?
+2. Check `hasDirectPermission('edit')` - Is it direct?
+3. Check `getPermissionsViaRoles()` - Is it via role?
+4. Check role assignment - Does user have the role?
+5. Check guard - Is permission in correct guard?
+
+## Best Practices
+
+1. **Prefer roles** - Easier to manage at scale
+2. **Use direct sparingly** - For exceptions only
+3. **Document direct assignments** - They're harder to track
+4. **Audit periodically** - Review direct permissions
+5. **Consider time limits** - Remove temporary direct permissions
+
+## Common Patterns
+
+| Pattern | Implementation |
+|---------|----------------|
+| Exception user | Direct permission for override |
+| Trial access | Direct permission with expiry check |
+| Grandfathered users | Direct permission from migration |
+
+## Related Templates
+
+| Template | Purpose |
+|----------|---------|
+| [PermissionAudit.php.md](templates/PermissionAudit.php.md) | Audit user permissions |
+
+## Related References
+
+- [spatie-permission.md](spatie-permission.md) - Core concepts
+- [cache.md](cache.md) - Cache affects all permission types

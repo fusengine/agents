@@ -1,3 +1,12 @@
+---
+name: solid-patterns
+description: SOLID principle implementations with Swift 6 code examples
+when-to-use: implementing SOLID patterns, creating protocols, dependency injection, actor patterns, @MainActor usage
+keywords: SOLID, patterns, Swift 6, protocols, dependency injection, actor, MainActor, Sendable
+priority: high
+related: anti-patterns.md
+---
+
 # SOLID Patterns - Swift Code Examples
 
 ## S - Single Responsibility

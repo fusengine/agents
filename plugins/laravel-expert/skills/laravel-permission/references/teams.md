@@ -11,133 +11,111 @@ related: spatie-permission.md
 
 ## Overview
 
-Teams allow scoping roles and permissions to specific teams/organizations in multi-tenant applications.
+Teams allow scoping roles and permissions to specific teams or organizations. Each team has its own set of role assignments, enabling true multi-tenant authorization.
 
-## Enable Teams
+## When to Use Teams
 
-```php
-// config/permission.php
-'teams' => true,
-```
+| Scenario | Teams Needed |
+|----------|--------------|
+| SaaS with organizations | Yes |
+| Multi-company platform | Yes |
+| Single company app | No |
+| User groups without isolation | No |
 
-Run migration upgrade:
+## How Teams Work
 
-```bash
-php artisan permission:upgrade-teams
-php artisan migrate
-```
+### Conceptual Model
 
-## Setting Team Context
+| Concept | Description |
+|---------|-------------|
+| **Team Context** | Current active team for permission checks |
+| **Team-Scoped Role** | Role exists within a specific team |
+| **Global Role** | Role with `team_id = null`, works across teams |
+| **Team Switch** | Changing context changes visible permissions |
 
-```php
-use App\Models\Team;
+### Permission Resolution
 
-// Set current team context
-$team = Team::find(1);
-setPermissionsTeamId($team->id);
+1. System checks current team context (via `getPermissionsTeamId()`)
+2. Queries roles where `team_id = current_team_id` OR `team_id = null`
+3. User permissions are intersection of assigned roles in that team
 
-// Get current team ID
-$currentTeamId = getPermissionsTeamId();
-```
+## Team Context Management
 
-## Team-Scoped Roles
+### Setting Context
 
-```php
-use Spatie\Permission\Models\Role;
+Team context must be set **early** in the request lifecycle, typically in middleware. All subsequent permission checks use this context.
 
-// Create role for specific team
-$teamEditor = Role::create([
-    'name' => 'editor',
-    'team_id' => $team->id
-]);
+### Context Priority
 
-// Global role (no team restriction)
-$globalAdmin = Role::create([
-    'name' => 'super-admin',
-    'team_id' => null
-]);
-```
+| Source | Priority | Use Case |
+|--------|----------|----------|
+| Route parameter | Highest | `/teams/{team}/dashboard` |
+| Session | Medium | "Switch team" feature |
+| User default | Lowest | `$user->current_team_id` |
 
-## Team-Scoped Permissions
+## Global vs Team-Scoped Roles
 
-```php
-use Spatie\Permission\Models\Permission;
+### Global Roles
 
-// Create permission for specific team
-$teamPermission = Permission::create([
-    'name' => 'edit team articles',
-    'team_id' => $team->id
-]);
+| Characteristic | Example |
+|----------------|---------|
+| `team_id = null` | Super-Admin |
+| Works in ALL teams | Platform owner |
+| Bypass team isolation | Support staff |
 
-// Assign to role
-$teamEditor->givePermissionTo($teamPermission);
-```
+### Team-Scoped Roles
 
-## Assigning Roles Within Team
+| Characteristic | Example |
+|----------------|---------|
+| `team_id = specific ID` | Team Admin |
+| Only works in that team | Project manager |
+| Isolated per organization | Department head |
 
-```php
-// Set team context BEFORE assigning
-setPermissionsTeamId($team->id);
-$user->assignRole('editor');
+## Common Patterns
 
-// Switch team context
-$otherTeam = Team::find(2);
-setPermissionsTeamId($otherTeam->id);
+### Team Creation
 
-// User's permissions are now scoped to other team
-if (!$user->hasRole('editor')) {
-    // User might not have editor role in THIS team
-}
-```
+When creating a team, automatically assign the creator as team admin. Store/restore context to avoid affecting other code.
 
-## Team Model Boot Example
+### Team Switching
 
-```php
-namespace App\Models;
+When user switches teams:
+1. Update session with new team ID
+2. Call `setPermissionsTeamId()` with new ID
+3. User's effective permissions change immediately
 
-class Team extends Model
-{
-    public static function boot()
-    {
-        parent::boot();
+### Team Invitations
 
-        self::created(function ($model) {
-            // Store current team
-            $previousTeamId = getPermissionsTeamId();
-
-            // Set new team context
-            setPermissionsTeamId($model->id);
-
-            // Assign role to creator
-            auth()->user()->assignRole('team-admin');
-
-            // Restore previous context
-            setPermissionsTeamId($previousTeamId);
-        });
-    }
-}
-```
-
-## Middleware for Team Context
-
-```php
-// app/Http/Middleware/SetTeamPermissions.php
-public function handle(Request $request, Closure $next): Response
-{
-    if ($user = $request->user()) {
-        $teamId = $request->route('team')?->id
-            ?? $user->current_team_id;
-
-        setPermissionsTeamId($teamId);
-    }
-
-    return $next($request);
-}
-```
+When inviting users:
+1. Set team context to target team
+2. Assign role to invited user
+3. Restore previous context if needed
 
 ## Best Practices
 
-1. **Set team context early** in request lifecycle (middleware)
-2. **Store/restore context** when switching teams temporarily
-3. **Use global roles** for super-admins (`team_id = null`)
-4. **Create team on registration** with default roles
+1. **Set context in middleware** - Before any controller logic
+2. **Use global roles sparingly** - Only for true cross-team access
+3. **Store/restore context** - When temporarily switching teams
+4. **Create default roles per team** - On team creation seeder
+5. **Validate team membership** - Before setting context
+
+## Migration Requirements
+
+Enabling teams requires:
+
+1. Set `'teams' => true` in config
+2. Run `php artisan permission:upgrade-teams`
+3. Migrate to add `team_id` columns
+
+## Related Templates
+
+| Template | Purpose |
+|----------|---------|
+| [TeamMiddleware.php.md](templates/TeamMiddleware.php.md) | Middleware for setting team context |
+| [TeamSeeder.php.md](templates/TeamSeeder.php.md) | Seeding team roles |
+| [TeamModel.php.md](templates/TeamModel.php.md) | Team model with boot example |
+
+## Related References
+
+- [spatie-permission.md](spatie-permission.md) - Core concepts
+- [cache.md](cache.md) - Cache with teams
