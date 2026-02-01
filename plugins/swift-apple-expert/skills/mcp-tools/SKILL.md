@@ -1,7 +1,9 @@
 ---
 name: mcp-tools
-description: MCP tools for Xcode automation and Apple documentation access. XcodeBuildMCP for builds, apple-docs for WWDC and API docs.
+description: MCP tools for Xcode automation and Apple documentation access. XcodeBuildMCP for builds, apple-docs for WWDC and API docs. Use when building projects, searching documentation, or accessing WWDC content.
 user-invocable: false
+references: references/xcodebuild-mcp.md, references/apple-docs-mcp.md
+related-skills: swift-core, ios, macos
 ---
 
 # MCP Tools for Swift Development
