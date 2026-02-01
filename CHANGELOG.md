@@ -1,5 +1,22 @@
 # Release Notes
 
+## [1.35.0] - 01-02-2026
+
+### Added
+
+- **swift-apple-expert**: Add Swift 6.2, iOS 26 Liquid Glass, and tvOS support
+  - Swift 6.2 features: nonisolated(nonsending), @InlineArray, Span, Named Tasks, Task.immediate
+  - iOS 26 Liquid Glass: .glassEffect() API, GlassEffectContainer, .buttonStyle(.glass)
+  - SwiftData model inheritance for iOS 26
+  - Swift Testing framework with @Test and #expect
+  - New tvOS skill with focus system, media playback, remote control
+  - Plugin version updated to 1.1.0
+
+- **laravel-permission**: Restructure skill with references and templates
+  - Add 6 references: api-usage, events, performance, policies, query-scopes, testing
+  - Add 12 PHP templates for common permission patterns
+  - Add fusecore skill for Laravel Fusengine integration
+
 ## [1.34.0] - 31-01-2026
 
 ### Added
