@@ -1,5 +1,12 @@
 # Release Notes
 
+## [1.36.1] - 02-02-2026
+
+### Added
+
+- Add statusline screenshot and configuration commands to README
+- Cross-platform commands for macOS/Linux and Windows
+
 ## [1.36.0] - 02-02-2026
 
 ### Added
