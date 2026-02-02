@@ -1,233 +1,110 @@
 ---
 name: console-tests
-description: Laravel Console Tests documentation and patterns
-when-to-use: Consult when working with console tests
-keywords: laravel, php, consoletests
-priority: medium
+description: Testing Artisan commands
+file-type: markdown
 ---
 
-# Console Tests
+# Console Testing
 
-- [Introduction](#introduction)
-- [Success / Failure Expectations](#success-failure-expectations)
-- [Input / Output Expectations](#input-output-expectations)
-- [Console Events](#console-events)
-
-<a name="introduction"></a>
-## Introduction
-
-In addition to simplifying HTTP testing, Laravel provides a simple API for testing your application's [custom console commands](/docs/{{version}}/artisan).
-
-<a name="success-failure-expectations"></a>
-## Success / Failure Expectations
-
-To get started, let's explore how to make assertions regarding an Artisan command's exit code. To accomplish this, we will use the `artisan` method to invoke an Artisan command from our test. Then, we will use the `assertExitCode` method to assert that the command completed with a given exit code:
-
-```php tab=Pest
-test('console command', function () {
-    $this->artisan('inspire')->assertExitCode(0);
-});
-```
-
-```php tab=PHPUnit
-/**
- * Test a console command.
- */
-public function test_console_command(): void
-{
-    $this->artisan('inspire')->assertExitCode(0);
-}
-```
-
-You may use the `assertNotExitCode` method to assert that the command did not exit with a given exit code:
-
-```php
-$this->artisan('inspire')->assertNotExitCode(1);
-```
-
-Of course, all terminal commands typically exit with a status code of `0` when they are successful and a non-zero exit code when they are not successful. Therefore, for convenience, you may utilize the `assertSuccessful` and `assertFailed` assertions to assert that a given command exited with a successful exit code or not:
+## Basic Command Test
 
 ```php
 $this->artisan('inspire')->assertSuccessful();
-
-$this->artisan('inspire')->assertFailed();
+$this->artisan('inspire')->assertExitCode(0);
+$this->artisan('invalid')->assertFailed();
 ```
 
-<a name="input-output-expectations"></a>
-## Input / Output Expectations
+---
 
-Laravel allows you to easily "mock" user input for your console commands using the `expectsQuestion` method. In addition, you may specify the exit code and text that you expect to be output by the console command using the `assertExitCode` and `expectsOutput` methods. For example, consider the following console command:
+## Exit Code Assertions
+
+| Assertion | Code |
+|-----------|------|
+| `assertSuccessful()` | 0 |
+| `assertFailed()` | ≠ 0 |
+| `assertExitCode($n)` | Specific |
+| `assertNotExitCode($n)` | Not specific |
+
+---
+
+## Output Assertions
 
 ```php
-Artisan::command('question', function () {
-    $name = $this->ask('What is your name?');
-
-    $language = $this->choice('Which language do you prefer?', [
-        'PHP',
-        'Ruby',
-        'Python',
-    ]);
-
-    $this->line('Your name is '.$name.' and you prefer '.$language.'.');
-});
+$this->artisan('greet', ['name' => 'Taylor'])
+    ->expectsOutput('Hello, Taylor!')
+    ->expectsOutputToContain('Taylor')
+    ->doesntExpectOutput('Error')
+    ->assertSuccessful();
 ```
 
-You may test this command with the following test:
+---
 
-```php tab=Pest
-test('console command', function () {
-    $this->artisan('question')
-        ->expectsQuestion('What is your name?', 'Taylor Otwell')
-        ->expectsQuestion('Which language do you prefer?', 'PHP')
-        ->expectsOutput('Your name is Taylor Otwell and you prefer PHP.')
-        ->doesntExpectOutput('Your name is Taylor Otwell and you prefer Ruby.')
-        ->assertExitCode(0);
-});
-```
-
-```php tab=PHPUnit
-/**
- * Test a console command.
- */
-public function test_console_command(): void
-{
-    $this->artisan('question')
-        ->expectsQuestion('What is your name?', 'Taylor Otwell')
-        ->expectsQuestion('Which language do you prefer?', 'PHP')
-        ->expectsOutput('Your name is Taylor Otwell and you prefer PHP.')
-        ->doesntExpectOutput('Your name is Taylor Otwell and you prefer Ruby.')
-        ->assertExitCode(0);
-}
-```
-
-If you are utilizing the `search` or `multisearch` functions provided by [Laravel Prompts](/docs/{{version}}/prompts), you may use the `expectsSearch` assertion to mock the user's input, search results, and selection:
-
-```php tab=Pest
-test('console command', function () {
-    $this->artisan('example')
-        ->expectsSearch('What is your name?', search: 'Tay', answers: [
-            'Taylor Otwell',
-            'Taylor Swift',
-            'Darian Taylor'
-        ], answer: 'Taylor Otwell')
-        ->assertExitCode(0);
-});
-```
-
-```php tab=PHPUnit
-/**
- * Test a console command.
- */
-public function test_console_command(): void
-{
-    $this->artisan('example')
-        ->expectsSearch('What is your name?', search: 'Tay', answers: [
-            'Taylor Otwell',
-            'Taylor Swift',
-            'Darian Taylor'
-        ], answer: 'Taylor Otwell')
-        ->assertExitCode(0);
-}
-```
-
-You may also assert that a console command does not generate any output using the `doesntExpectOutput` method:
-
-```php tab=Pest
-test('console command', function () {
-    $this->artisan('example')
-        ->doesntExpectOutput()
-        ->assertExitCode(0);
-});
-```
-
-```php tab=PHPUnit
-/**
- * Test a console command.
- */
-public function test_console_command(): void
-{
-    $this->artisan('example')
-        ->doesntExpectOutput()
-        ->assertExitCode(0);
-}
-```
-
-The `expectsOutputToContain` and `doesntExpectOutputToContain` methods may be used to make assertions against a portion of the output:
-
-```php tab=Pest
-test('console command', function () {
-    $this->artisan('example')
-        ->expectsOutputToContain('Taylor')
-        ->assertExitCode(0);
-});
-```
-
-```php tab=PHPUnit
-/**
- * Test a console command.
- */
-public function test_console_command(): void
-{
-    $this->artisan('example')
-        ->expectsOutputToContain('Taylor')
-        ->assertExitCode(0);
-}
-```
-
-<a name="confirmation-expectations"></a>
-#### Confirmation Expectations
-
-When writing a command which expects confirmation in the form of a "yes" or "no" answer, you may utilize the `expectsConfirmation` method:
+## Interactive Commands
 
 ```php
-$this->artisan('module:import')
-    ->expectsConfirmation('Do you really wish to run this command?', 'no')
-    ->assertExitCode(1);
+$this->artisan('make:user')
+    ->expectsQuestion('What is the name?', 'John')
+    ->expectsQuestion('What is the email?', 'john@example.com')
+    ->expectsConfirmation('Are you sure?', 'yes')
+    ->expectsChoice('Select role', 'admin', ['admin', 'user'])
+    ->expectsOutput('User created!')
+    ->assertSuccessful();
 ```
 
-<a name="table-expectations"></a>
-#### Table Expectations
+---
 
-If your command displays a table of information using Artisan's `table` method, it can be cumbersome to write output expectations for the entire table. Instead, you may use the `expectsTable` method. This method accepts the table's headers as its first argument and the table's data as its second argument:
+## Table Output
 
 ```php
-$this->artisan('users:all')
-    ->expectsTable([
-        'ID',
-        'Email',
-    ], [
-        [1, 'taylor@example.com'],
-        [2, 'abigail@example.com'],
-    ]);
+$this->artisan('users:list')
+    ->expectsTable(['ID', 'Name'], [[1, 'John'], [2, 'Jane']])
+    ->assertSuccessful();
 ```
 
-<a name="console-events"></a>
-## Console Events
+---
 
-By default, the `Illuminate\Console\Events\CommandStarting` and `Illuminate\Console\Events\CommandFinished` events are not dispatched while running your application's tests. However, you can enable these events for a given test class by adding the `Illuminate\Foundation\Testing\WithConsoleEvents` trait to the class:
+## With Arguments & Options
 
-```php tab=Pest
-<?php
-
-use Illuminate\Foundation\Testing\WithConsoleEvents;
-
-pest()->use(WithConsoleEvents::class);
-
-// ...
+```php
+$this->artisan('user:show', ['user' => 1])->assertSuccessful();
+$this->artisan('migrate', ['--seed' => true])->assertSuccessful();
+$this->artisan('email:send', ['user' => 1, '--queue' => true, '--delay' => 60]);
 ```
 
-```php tab=PHPUnit
-<?php
+---
 
-namespace Tests\Feature;
+## Testing Scheduled Commands
 
-use Illuminate\Foundation\Testing\WithConsoleEvents;
-use Tests\TestCase;
-
-class ConsoleEventTest extends TestCase
-{
-    use WithConsoleEvents;
-
-    // ...
-}
+```php
+it('schedules daily backup', function () {
+    $events = collect(app(Schedule::class)->events())
+        ->filter(fn ($e) => str_contains($e->command, 'backup:run'));
+    expect($events)->toHaveCount(1);
+    expect($events->first()->expression)->toBe('0 0 * * *');
+});
 ```
+
+---
+
+## Decision Tree
+
+```
+Console test?
+├── Simple run → assertSuccessful()
+├── Check output → expectsOutput()
+├── Interactive → expectsQuestion()
+├── Confirm → expectsConfirmation()
+├── Choice → expectsChoice()
+├── With args → artisan('cmd', ['arg' => 'val'])
+└── Schedule → Check Schedule events
+```
+
+---
+
+## Best Practices
+
+| DO | DON'T |
+|----|-------|
+| Test success and failure paths | Skip testing user prompts |
+| Test interactive flows | Forget output assertions |
+| Use meaningful exit codes | Test framework commands |
