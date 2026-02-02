@@ -1,5 +1,15 @@
 # Release Notes
 
+## [1.36.6] - 02-02-2026
+
+### Changed
+
+- **laravel-expert**: Restructure laravel-i18n skill with complete coverage
+  - Add 4 new references: middleware (locale detection), formatting (date/number/currency), packages (vendor translations), best-practices (large app organization)
+  - Add 2 new templates: LocaleServiceProvider (centralized service with helpers), LocaleRoutes (URL prefix routing with SEO)
+  - Update SKILL.md with complete reference guide and decision trees
+  - Coverage increased from 5 to 16 topics (+220%)
+
 ## [1.36.5] - 02-02-2026
 
 ### Changed
