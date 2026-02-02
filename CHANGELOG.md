@@ -1,5 +1,16 @@
 # Release Notes
 
+## [1.36.9] - 02-02-2026
+
+### Changed
+
+- **laravel-expert**: Restructure laravel-queues skill with complete Jobs & Queues coverage
+  - Replace 11 massive files (13K+ lines) with 10 modular references (<150 lines each)
+  - Add 10 references: jobs, dispatching, workers, batching, chaining, middleware, failed-jobs, horizon, testing, troubleshooting
+  - Add 5 complete templates: QueueableJob, BatchJob, ChainedJobs, JobMiddleware, JobTest
+  - Remove out-of-scope topics (notifications, broadcasting, mail, events, cache → separate skills)
+  - Focus scope exclusively on Jobs & Queues (-80% lines, +100% clarity)
+
 ## [1.36.8] - 02-02-2026
 
 ### Changed
