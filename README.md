@@ -2,7 +2,23 @@
 
 Professional Claude Code plugins with APEX workflow, SOLID principles, and expert agents.
 
+![Statusline](docs/img/statusline.png)
+
 ## Quick Install
+
+### Statusline Configuration (Optional)
+
+**macOS / Linux:**
+```bash
+bun --cwd ~/.claude/plugins/marketplaces/fusengine-plugins/plugins/core-guards/statusline run config       # Web
+bun --cwd ~/.claude/plugins/marketplaces/fusengine-plugins/plugins/core-guards/statusline run config:term  # Terminal
+```
+
+**Windows (PowerShell):**
+```powershell
+bun --cwd $env:USERPROFILE\.claude\plugins\marketplaces\fusengine-plugins\plugins\core-guards\statusline run config       # Web
+bun --cwd $env:USERPROFILE\.claude\plugins\marketplaces\fusengine-plugins\plugins\core-guards\statusline run config:term  # Terminal
+```
 
 ### macOS / Linux
 ```bash
