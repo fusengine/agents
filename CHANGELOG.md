@@ -1,5 +1,15 @@
 # Release Notes
 
+## [1.36.0] - 02-02-2026
+
+### Added
+
+- **ai-pilot**: Transform skill-creator and agent-creator from commands to skills
+  - skill-creator: SKILL.md + 5 references + 3 templates (workflow, architecture, content-rules, registration, adaptation)
+  - agent-creator: SKILL.md + 5 references + 2 templates (architecture, frontmatter, required-sections, hooks, registration)
+  - Add docs/reference/creating-skills-agents.md guide
+  - Update docs/plugins/ai-pilot.md and docs/workflow/skills.md (6 → 8 skills)
+
 ## [1.35.1] - 02-02-2026
 
 ### Changed
