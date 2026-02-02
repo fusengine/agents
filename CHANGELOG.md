@@ -1,5 +1,16 @@
 # Release Notes
 
+## [1.36.7] - 02-02-2026
+
+### Changed
+
+- **laravel-expert**: Restructure laravel-livewire skill with complete Livewire 3 coverage
+  - Add 13 new core references (components, wire-directives, lifecycle, forms-validation, events, alpine-integration, file-uploads, nesting, loading-states, navigation, testing, security, volt)
+  - Add 7 complete templates (BasicComponent, FormComponent, VoltComponent, DataTableComponent, FileUploadComponent, NestedComponents, ComponentTest)
+  - Restructure folio.md, precognition.md, reverb.md to follow skill-creator pattern (< 150 lines, tables, decision trees)
+  - Remove out-of-scope prompts.md (Laravel Prompts CLI, not Livewire)
+  - Coverage increased from 4 satellite files to 23 comprehensive references (+475%)
+
 ## [1.36.6] - 02-02-2026
 
 ### Changed
