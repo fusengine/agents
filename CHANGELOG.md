@@ -1,5 +1,15 @@
 # Release Notes
 
+## [1.36.8] - 02-02-2026
+
+### Changed
+
+- **laravel-expert**: Restructure laravel-migrations skill with complete Laravel 12 coverage
+  - Add 9 modular references (schema, columns, indexes, foreign-keys, commands, seeding, testing, production, troubleshooting)
+  - Add 5 complete templates (CreateTableMigration, ModifyTableMigration, PivotTableMigration, Seeder, MigrationTest)
+  - Remove out-of-scope files (queries.md → laravel-eloquent, database.md, mongodb.md)
+  - All references < 150 lines with tables and decision trees (100% skill-creator compliant)
+
 ## [1.36.7] - 02-02-2026
 
 ### Changed
