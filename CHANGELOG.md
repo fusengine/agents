@@ -1,5 +1,23 @@
 # Release Notes
 
+## [1.36.2] - 02-02-2026
+
+### Added
+
+- **laravel-expert**: Add laravel-stripe-connect skill for marketplaces
+  - 8 concept references (account-types, payment-flows, onboarding, fees, payouts, refunds, compliance)
+  - 6 code templates (Seller, Onboarding, Payments, Payouts, Webhooks, Routes)
+  - Support for Express/Standard/Custom accounts
+  - Destination charges with application fees
+
+### Changed
+
+- **laravel-expert**: Restructure laravel-billing with concepts/templates separation
+  - 12 concept references (stripe, paddle, subscriptions, webhooks, invoices, checkout, etc.)
+  - 11 code templates (UserBillable, Controllers, Routes, Tests)
+  - Add advanced SaaS features: metered billing, team billing, dunning, feature flags
+  - Remove obsolete billing.md and cashier-paddle.md
+
 ## [1.36.1] - 02-02-2026
 
 ### Added
