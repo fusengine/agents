@@ -7,7 +7,7 @@
   },
   "metadata": {
     "description": "Professional Claude Code plugins with APEX workflow, SOLID principles, and expert development agents for Next.js, Laravel, Swift, Tailwind CSS, and more",
-    "version": "1.36.1"
+    "version": "1.36.2"
   },
   "plugins": [
     {
@@ -144,6 +144,7 @@
         "./skills/laravel-blade",
         "./skills/laravel-migrations",
         "./skills/laravel-billing",
+        "./skills/laravel-stripe-connect",
         "./skills/laravel-i18n",
         "./skills/laravel-permission",
         "./skills/solid-php"
