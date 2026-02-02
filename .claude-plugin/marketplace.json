@@ -46,9 +46,7 @@
         "./commands/fix-pr-comments.md",
         "./commands/create-pull-request.md",
         "./commands/commit.md",
-        "./commands/run-tasks.md",
-        "./commands/skill-creator.md",
-        "./commands/agent-creator.md"
+        "./commands/run-tasks.md"
       ],
       "agents": [
         "./agents/sniper.md",
@@ -63,7 +61,9 @@
         "./skills/research",
         "./skills/exploration",
         "./skills/code-quality",
-        "./skills/seo"
+        "./skills/seo",
+        "./skills/skill-creator",
+        "./skills/agent-creator"
       ]
     },
     {

@@ -2,7 +2,7 @@
 
 70 specialized skills across all plugins.
 
-## fuse-ai-pilot (6 skills)
+## fuse-ai-pilot (8 skills)
 
 | Skill | Description |
 |-------|-------------|
@@ -12,6 +12,8 @@
 | `exploration` | Codebase discovery techniques |
 | `code-quality` | Validation with linters |
 | `elicitation` | Self-review techniques |
+| `skill-creator` | Create/restructure skills with SKILL.md + references/ |
+| `agent-creator` | Create expert agents with frontmatter, hooks, skills |
 
 ## fuse-commit-pro (10 skills)
 

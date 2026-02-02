@@ -32,6 +32,8 @@ APEX workflow orchestrator with sniper validation and research capabilities.
 - `exploration` - Discovery techniques
 - `code-quality` - Validation
 - `elicitation` - Self-review (75 techniques)
+- `skill-creator` - Create/restructure skills with SKILL.md + references/
+- `agent-creator` - Create expert agents with frontmatter, hooks, skills
 
 ## MCP Servers
 

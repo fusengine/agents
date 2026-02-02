@@ -26,3 +26,4 @@
 - [Architecture](reference/architecture.md) - Repository structure
 - [Hooks](reference/hooks.md) - Hook system documentation
 - [MCP Servers](reference/mcp-servers.md) - Context7, Exa, Magic, shadcn
+- [Creating Skills & Agents](reference/creating-skills-agents.md) - Build custom skills/agents
