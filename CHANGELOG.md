@@ -1,5 +1,16 @@
 # Release Notes
 
+## [1.36.5] - 02-02-2026
+
+### Changed
+
+- **laravel-expert**: Restructure laravel-eloquent skill with modular references
+  - Split monolithic files (13,254 lines) into 21 focused references (<150 lines each)
+  - 21 conceptual references: models, relationships (basic, many-to-many, advanced, polymorphic), eager-loading, scopes, casts, accessors-mutators, events-observers, soft-deletes, collections, serialization, factories, performance, resources, transactions, pagination, aggregates, batch-operations, query-debugging
+  - 7 complete code templates: ModelBasic.php, ModelRelationships.php, ModelCasts.php, Observer.php, Factory.php, Resource.php, EagerLoadingExamples.php
+  - Add 5 new critical references: transactions, pagination, aggregates, batch-operations, query-debugging
+  - Remove deprecated eloquent-*.md files in favor of modular structure
+
 ## [1.36.4] - 02-02-2026
 
 ### Added
