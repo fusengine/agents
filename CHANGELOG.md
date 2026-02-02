@@ -1,5 +1,18 @@
 # Release Notes
 
+## [1.36.4] - 02-02-2026
+
+### Added
+
+- **laravel-expert**: Add laravel-vite skill with complete Vite/Inertia documentation
+  - 12 conceptual references (setup, entry-points, preprocessors, assets, environment, dev-server, build-optimization, ssr, inertia, frameworks, security, deployment)
+  - 4 complete code templates (ViteConfig.js, ViteConfigAdvanced.js, InertiaSetup, SSRSetup)
+  - Full Inertia.js integration with Vue and React
+  - SSR configuration with Supervisor/PM2
+  - Docker/Sail HMR configuration
+  - CSP nonce security
+  - Production deployment with CDN support
+
 ## [1.36.3] - 02-02-2026
 
 ### Changed
