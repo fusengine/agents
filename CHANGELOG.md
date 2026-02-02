@@ -1,5 +1,16 @@
 # Release Notes
 
+## [1.36.12] - 02-02-2026
+
+### Changed
+
+- **laravel-expert**: Restructure solid-php skill with complete SOLID and FuseCore coverage
+  - Add anti-patterns detection guide with code smells and fixes
+  - Add decision guide for pattern selection (Service vs Action vs Repository)
+  - Add complete FuseCore modular architecture documentation (Laravel + React)
+  - Add controller, action, FormRequest, policy templates
+  - Add step-by-step refactoring guide for legacy code migration
+
 ## [1.36.11] - 02-02-2026
 
 ### Fixed
