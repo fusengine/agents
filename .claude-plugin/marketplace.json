@@ -142,6 +142,7 @@
         "./skills/laravel-queues",
         "./skills/laravel-livewire",
         "./skills/laravel-blade",
+        "./skills/laravel-vite",
         "./skills/laravel-migrations",
         "./skills/laravel-billing",
         "./skills/laravel-stripe-connect",
