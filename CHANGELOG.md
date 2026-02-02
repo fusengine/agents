@@ -1,5 +1,11 @@
 # Release Notes
 
+## [1.36.13] - 02-02-2026
+
+### Fixed
+
+- **laravel-expert**: Add complete frontmatter to solid-php references and templates (when-to-use, keywords, priority, related)
+
 ## [1.36.12] - 02-02-2026
 
 ### Changed
