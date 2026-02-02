@@ -1,5 +1,11 @@
 # Release Notes
 
+## [1.36.11] - 02-02-2026
+
+### Fixed
+
+- **laravel-expert**: Remove deprecated laravel-testing reference files (database-testing.md, dusk.md, http-tests.md, mocking.md, pint.md, testing.md)
+
 ## [1.36.10] - 02-02-2026
 
 ### Changed
