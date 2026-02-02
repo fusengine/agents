@@ -1,5 +1,19 @@
 # Release Notes
 
+## [1.36.3] - 02-02-2026
+
+### Changed
+
+- **laravel-expert**: Restructure laravel-blade skill with complete Blade coverage
+  - 11 guiding references (components, slots, layouts, directives, security, vite, advanced-directives, custom-directives, advanced-components, forms-validation, fragments)
+  - 10 code templates (ClassComponent, AnonymousComponent, LayoutComponent, FormComponent, CardWithSlots, DynamicComponent, AdvancedDirectives, CustomDirectives, AdvancedComponents, Fragments)
+  - Add Laravel 12 features: @fragment, @use, @inject, @once, @aware, @hasStack
+  - Add forms-validation.md with @error and form attribute helpers
+  - Add fragments.md for HTMX/Turbo integration
+  - Add custom directives documentation (Blade::if, Blade::directive)
+  - Add SSR, Inertia.js, CSP configuration to vite.md
+  - Remove obsolete files: blade.md, frontend.md, localization.md, views.md
+
 ## [1.36.2] - 02-02-2026
 
 ### Added
