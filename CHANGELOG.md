@@ -1,5 +1,18 @@
 # Release Notes
 
+## [1.35.1] - 02-02-2026
+
+### Changed
+
+- **laravel-expert**: Restructure skills with skill-creator pattern
+  - laravel-auth: Convert 13 references to conceptual docs (<150 lines each)
+  - laravel-auth: Add 8 code templates (Sanctum, Passport, Fortify, Socialite, Policies)
+  - laravel-auth: Add FuseCore integration section with module-level auth
+  - laravel-architecture: Rewrite lifecycle, releases, concurrency as decision guides
+  - laravel-architecture: Add 6 templates (Artisan, Envoy, MCP, Pennant, Octane, Sail)
+  - fusecore: Add module-level Config/ support documentation
+  - fusecore: Update traits.md with loadModuleConfig() examples
+
 ## [1.35.0] - 01-02-2026
 
 ### Added
