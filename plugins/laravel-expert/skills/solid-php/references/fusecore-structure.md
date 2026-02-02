@@ -1,7 +1,10 @@
 ---
 name: fusecore-structure
 description: FuseCore modular architecture structure (Laravel + React)
-file-type: markdown
+when-to-use: Working with FuseCore modules, module discovery, cross-module communication
+keywords: fusecore, modules, modular, react, frontend, backend
+priority: high
+related: laravel12-structure.md, solid-principles.md
 ---
 
 # FuseCore Modular Architecture

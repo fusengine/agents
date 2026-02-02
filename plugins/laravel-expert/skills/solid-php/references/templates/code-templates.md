@@ -1,3 +1,9 @@
+---
+name: code-templates
+description: Complete Service, DTO, Repository, Interface templates
+keywords: service, dto, repository, interface, templates
+---
+
 # Code Templates
 
 ## Service Template (< 100 lines)

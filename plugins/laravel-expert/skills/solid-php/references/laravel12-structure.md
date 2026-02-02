@@ -1,7 +1,10 @@
 ---
 name: laravel12-structure
 description: Laravel 12 standard directory structure with SOLID principles
-file-type: markdown
+when-to-use: Standard Laravel projects without FuseCore modules
+keywords: laravel, structure, directory, app, contracts, services
+priority: high
+related: fusecore-structure.md, solid-principles.md
 ---
 
 # Laravel 12 Structure

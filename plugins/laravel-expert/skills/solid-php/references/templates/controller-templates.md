@@ -1,7 +1,7 @@
 ---
 name: controller-templates
-description: Controller, Action, and FormRequest templates
-file-type: template
+description: Complete Controller, Action, FormRequest, Resource, Policy templates
+keywords: controller, action, formrequest, resource, policy, templates
 ---
 
 # Controller & Action Templates

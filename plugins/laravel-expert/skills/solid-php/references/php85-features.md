@@ -1,9 +1,10 @@
 ---
 name: php85-features
-description: Laravel PHP 8.5 Features documentation and patterns
-when-to-use: Consult when working with php85 features
-keywords: laravel, php, php85features
+description: PHP 8.5 features for Laravel development
+when-to-use: Using readonly classes, constructor promotion, pipe operator, strict types
+keywords: php85, readonly, constructor-promotion, pipe-operator, strict-types
 priority: medium
+related: solid-principles.md, laravel12-structure.md
 ---
 
 # PHP 8.5 Features

@@ -1,7 +1,7 @@
 ---
 name: refactoring-guide
-description: Guide for refactoring legacy code to SOLID
-file-type: template
+description: Step-by-step guide for refactoring legacy code to SOLID
+keywords: refactoring, migration, legacy, solid, extraction
 ---
 
 # Refactoring Guide

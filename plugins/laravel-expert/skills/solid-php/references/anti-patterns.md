@@ -1,7 +1,10 @@
 ---
 name: anti-patterns
 description: Common SOLID violations and how to fix them
-file-type: markdown
+when-to-use: Detecting code smells, fat controllers, god classes, concrete coupling
+keywords: code-smells, violations, fat-controller, god-class, refactoring
+priority: high
+related: solid-principles.md, decision-guide.md
 ---
 
 # Anti-Patterns & Code Smells

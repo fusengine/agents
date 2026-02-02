@@ -1,7 +1,10 @@
 ---
 name: decision-guide
 description: Decision tables for pattern selection
-file-type: markdown
+when-to-use: Choosing between Service, Action, Repository patterns
+keywords: patterns, service, action, repository, dto, decision-tree
+priority: high
+related: solid-principles.md, anti-patterns.md
 ---
 
 # Decision Guide

@@ -1,7 +1,10 @@
 ---
 name: solid-principles
 description: SOLID Principles implementation in Laravel 12 + PHP 8.5
-file-type: markdown
+when-to-use: Understanding SRP, OCP, LSP, ISP, DIP in Laravel context
+keywords: solid, srp, ocp, lsp, isp, dip, principles, clean-code
+priority: high
+related: anti-patterns.md, decision-guide.md
 ---
 
 # SOLID Principles
