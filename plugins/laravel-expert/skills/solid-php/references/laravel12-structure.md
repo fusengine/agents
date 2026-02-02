@@ -1,12 +1,12 @@
 ---
 name: laravel12-structure
-description: Laravel Laravel 12 Recommended Structure documentation and patterns
-when-to-use: Consult when working with laravel12 structure
-keywords: laravel, php, laravel12structure
-priority: medium
+description: Laravel 12 standard directory structure with SOLID principles
+file-type: markdown
 ---
 
-# Laravel 12 Recommended Structure
+# Laravel 12 Structure
+
+## Directory Layout
 
 ```
 app/
@@ -14,8 +14,8 @@ app/
 │   ├── Controllers/      # < 50 lines each
 │   ├── Requests/         # Form validation
 │   └── Resources/        # API transformations
-├── Models/               # < 80 lines (excluding relations)
-├── Services/             # < 100 lines
+├── Models/               # < 80 lines (relations only)
+├── Services/             # < 100 lines (business logic)
 ├── Contracts/            # Interfaces ONLY
 ├── Repositories/         # Data access
 ├── Actions/              # Single-purpose (< 50 lines)
@@ -26,46 +26,88 @@ app/
 └── Policies/             # Authorization
 ```
 
-## Directory Guidelines
+---
 
-### Controllers
-- Maximum 50 lines per file
-- Only handle HTTP concerns
-- Delegate business logic to Services
-- Use dependency injection
+## Responsibility Matrix
 
-### Services
-- Maximum 100 lines per file
-- Contain business logic
-- Depend on interfaces (Contracts)
-- No direct model queries
+| Directory | Responsibility | Max Lines | Depends On |
+|-----------|---------------|-----------|------------|
+| Controllers | HTTP handling | 50 | Services |
+| Requests | Validation | 50 | - |
+| Resources | API transform | 50 | Models |
+| Services | Business logic | 100 | Repositories |
+| Repositories | Data access | 100 | Models |
+| Actions | Single operation | 50 | Services/Repos |
+| Models | Relations/Casts | 80 | - |
+| DTOs | Data structure | 50 | - |
+| Contracts | Interfaces | 30 | - |
 
-### Models
-- Maximum 80 lines (excluding relations)
-- Relations only, no business logic
-- Use casts for type safety
-- Use scopes for reusable queries
+---
 
-### Contracts (Interfaces)
-- Define repository interfaces
-- Define service interfaces
-- Single responsibility
-- Located in `app/Contracts/`
+## Code Placement Flowchart
 
-### DTOs (Data Transfer Objects)
-- Immutable value objects
-- Hold data for transfer between layers
-- Type-safe alternative to arrays
-- Static factory methods
+```
+Where does this code belong?
+│
+├── Handles HTTP? ──────────────→ Controllers/
+├── Validates input? ───────────→ Requests/
+├── Transforms for API? ────────→ Resources/
+├── Single focused task? ───────→ Actions/
+├── Complex business rules? ────→ Services/
+├── Database queries? ──────────→ Repositories/
+├── Data structure? ────────────→ DTOs/
+├── Contract definition? ───────→ Contracts/
+├── Reacts to event? ───────────→ Listeners/
+└── Authorizes action? ─────────→ Policies/
+```
 
-### Actions
-- Single, focused business action
-- Invocable class `__invoke()`
-- Maximum 50 lines
-- Reusable across controllers
+---
 
-### Repositories
-- Implement Contracts
-- Encapsulate data access
-- Use Eloquent queries
-- No business logic
+## Layer Communication
+
+```
+Controller → Service → Repository → Model
+     ↓           ↓           ↓
+  Request      DTO       Eloquent
+```
+
+**Rules:**
+- Controllers ONLY call Services
+- Services ONLY call Repositories
+- Repositories ONLY use Models
+- No layer skipping
+
+---
+
+## Interface Locations
+
+| Type | Location |
+|------|----------|
+| Repository contracts | `app/Contracts/Repositories/` |
+| Service contracts | `app/Contracts/Services/` |
+| External services | `app/Contracts/External/` |
+
+---
+
+## File Size Limits
+
+| Type | Max Lines | Split Strategy |
+|------|-----------|----------------|
+| Controller | 50 | Extract to Service |
+| Service | 100 | Split into Actions |
+| Repository | 100 | Split by entity |
+| Model | 80 | Extract scopes |
+| Action | 50 | Single purpose |
+| DTO | 50 | One per use case |
+
+---
+
+## Best Practices
+
+| DO | DON'T |
+|----|-------|
+| Keep Controllers thin | Put logic in Controllers |
+| Use DTOs for data | Pass arrays |
+| Define interfaces in Contracts | Mix interfaces with impl |
+| One Model per table | Business logic in Models |
+| Repository for queries | Query in Services |
