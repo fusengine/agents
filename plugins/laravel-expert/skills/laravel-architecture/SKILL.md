@@ -4,7 +4,7 @@ description: Design Laravel app architecture with services, repositories, action
 versions:
   laravel: "12.46"
   php: "8.5"
-user-invocable: false
+user-invocable: true
 references: references/container.md, references/providers.md, references/facades.md, references/contracts.md, references/structure.md, references/lifecycle.md, references/configuration.md, references/installation.md, references/upgrade.md, references/releases.md, references/sail.md, references/valet.md, references/homestead.md, references/octane.md, references/artisan.md, references/helpers.md, references/filesystem.md, references/processes.md, references/context.md, references/pennant.md, references/mcp.md, references/concurrency.md, references/deployment.md, references/envoy.md, references/logging.md, references/errors.md, references/packages.md
 related-skills: solid-php, laravel-api, laravel-eloquent
 ---
@@ -139,6 +139,12 @@ app/
 |----------|---------|
 | [UserService.php.md](references/templates/UserService.php.md) | Service + repository pattern |
 | [AppServiceProvider.php.md](references/templates/AppServiceProvider.php.md) | DI bindings, bootstrapping |
+| [ArtisanCommand.php.md](references/templates/ArtisanCommand.php.md) | CLI commands, signatures, I/O |
+| [McpServer.php.md](references/templates/McpServer.php.md) | MCP servers, tools, resources, prompts |
+| [PennantFeature.php.md](references/templates/PennantFeature.php.md) | Feature flags, A/B testing |
+| [Envoy.blade.php.md](references/templates/Envoy.blade.php.md) | SSH deployment automation |
+| [sail-config.md](references/templates/sail-config.md) | Docker Sail configuration |
+| [octane-config.md](references/templates/octane-config.md) | FrankenPHP, Swoole, RoadRunner |
 
 ---
 

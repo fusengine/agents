@@ -67,6 +67,7 @@ FuseCore/
 │
 ├── User/                    # Auth module
 │   ├── App/Models/          # User.php, Profile.php
+│   ├── Config/              # Module config (sanctum.php, etc.)
 │   ├── Database/Migrations/
 │   ├── Resources/React/     # Isolated React
 │   ├── Routes/api.php
@@ -78,6 +79,7 @@ FuseCore/
     │   ├── Http/Controllers/
     │   ├── Services/
     │   └── Providers/{YourModule}ServiceProvider.php
+    ├── Config/              # Module-specific config
     ├── Database/Migrations/
     ├── Resources/React/
     ├── Routes/api.php

@@ -1,77 +1,117 @@
 ---
 name: releases
-description: Laravel Release Notes documentation and patterns
-when-to-use: Consult when working with releases
-keywords: laravel, php, releases
+description: Laravel version support policy and upgrade guidance
+when-to-use: Consult when choosing Laravel version, planning upgrades, or checking support status
+keywords: version, release, support, upgrade, php, breaking changes, lts
 priority: medium
+related: lifecycle.md
 ---
 
-# Release Notes
+# Laravel Releases
 
-- [Versioning Scheme](#versioning-scheme)
-- [Support Policy](#support-policy)
-- [Laravel 12](#laravel-12)
+## Overview
 
-<a name="versioning-scheme"></a>
+Laravel follows semantic versioning with annual major releases. Choose versions based on support timeline and PHP requirements.
+
+---
+
 ## Versioning Scheme
 
-Laravel and its other first-party packages follow [Semantic Versioning](https://semver.org). Major framework releases are released every year (~Q1), while minor and patch releases may be released as often as every week. Minor and patch releases should **never** contain breaking changes.
+| Type | Frequency | Breaking Changes |
+|------|-----------|------------------|
+| **Major** (12.0) | Yearly (~Q1) | Yes |
+| **Minor** (12.1) | Weekly | No |
+| **Patch** (12.0.1) | As needed | No |
 
-When referencing the Laravel framework or its components from your application or package, you should always use a version constraint such as `^12.0`, since major releases of Laravel do include breaking changes. However, we strive to always ensure you may update to a new major release in one day or less.
+**Constraint**: Always use `^12.0` in `composer.json` (not `12.*`).
 
-<a name="named-arguments"></a>
-#### Named Arguments
+---
 
-[Named arguments](https://www.php.net/manual/en/functions.arguments.php#functions.named-arguments) are not covered by Laravel's backwards compatibility guidelines. We may choose to rename function arguments when necessary in order to improve the Laravel codebase. Therefore, using named arguments when calling Laravel methods should be done cautiously and with the understanding that the parameter names may change in the future.
-
-<a name="support-policy"></a>
 ## Support Policy
 
-For all Laravel releases, bug fixes are provided for 18 months and security fixes are provided for 2 years. For all additional libraries, only the latest major release receives bug fixes. In addition, please review the database versions [supported by Laravel](/docs/{{version}}/database#introduction).
+| Duration | Type |
+|----------|------|
+| **18 months** | Bug fixes |
+| **2 years** | Security fixes |
 
-<div class="overflow-auto">
+---
 
-| Version | PHP (*)   | Release             | Bug Fixes Until     | Security Fixes Until |
-| ------- | --------- | ------------------- | ------------------- | -------------------- |
-| 10      | 8.1 - 8.3 | February 14th, 2023 | August 6th, 2024    | February 4th, 2025   |
-| 11      | 8.2 - 8.4 | March 12th, 2024    | September 3rd, 2025 | March 12th, 2026     |
-| 12      | 8.2 - 8.4 | February 24th, 2025 | August 13th, 2026   | February 24th, 2027  |
-| 13      | 8.3 - 8.4 | Q1 2026             | Q3 2027             | Q1 2028              |
+## Version Matrix (2025-2028)
 
-</div>
+| Version | PHP | Release | Bug Fixes | Security |
+|---------|-----|---------|-----------|----------|
+| **12** | 8.2 - 8.4 | Feb 2025 | Aug 2026 | Feb 2027 |
+| **13** | 8.3 - 8.4 | Q1 2026 | Q3 2027 | Q1 2028 |
 
-<div class="version-colors">
-    <div class="end-of-life">
-        <div class="color-box"></div>
-        <div>End of life</div>
-    </div>
-    <div class="security-fixes">
-        <div class="color-box"></div>
-        <div>Security fixes only</div>
-    </div>
-</div>
+**Recommendation**: Use Laravel 12 for new projects (current stable).
 
-(*) Supported PHP versions
+---
 
-<a name="laravel-12"></a>
-## Laravel 12
+## Laravel 12 Highlights
 
-Laravel 12 continues the improvements made in Laravel 11.x by updating upstream dependencies and introducing new starter kits for React, Vue, and Livewire, including the option of using [WorkOS AuthKit](https://authkit.com) for user authentication. The WorkOS variant of our starter kits offers social authentication, passkeys, and SSO support.
+| Feature | Description |
+|---------|-------------|
+| **Minimal breaking changes** | Upgrade in < 1 day |
+| **New starter kits** | React, Vue, Livewire with shadcn/ui |
+| **WorkOS AuthKit** | Social auth, passkeys, SSO |
+| **Inertia 2** | TypeScript support |
 
-<a name="minimal-breaking-changes"></a>
-### Minimal Breaking Changes
+### Deprecated
 
-Much of our focus during this release cycle has been minimizing breaking changes. Instead, we have dedicated ourselves to shipping continuous quality-of-life improvements throughout the year that do not break existing applications.
+| Package | Status | Alternative |
+|---------|--------|-------------|
+| Laravel Breeze | No more updates | New starter kits |
+| Laravel Jetstream | No more updates | New starter kits |
 
-Therefore, the Laravel 12 release is a relatively minor "maintenance release" in order to upgrade existing dependencies. In light of this, most Laravel applications may upgrade to Laravel 12 without changing any application code.
+---
 
-<a name="new-application-starter-kits"></a>
-### New Application Starter Kits
+## Upgrade Decision Guide
 
-Laravel 12 introduces new [application starter kits](/docs/{{version}}/starter-kits) for React, Vue, and Livewire. The React and Vue starter kits utilize Inertia 2, TypeScript, [shadcn/ui](https://ui.shadcn.com), and Tailwind, while the Livewire starter kits utilize the Tailwind-based [Flux UI](https://fluxui.dev) component library and Laravel Volt.
+```
+Current version supported?
+├── Yes → Need new features?
+│   ├── Yes → Plan upgrade during maintenance window
+│   └── No → Stay on current version
+└── No (EOL) → Upgrade immediately (security risk)
+```
 
-The React, Vue, and Livewire starter kits all utilize Laravel's built-in authentication system to offer login, registration, password reset, email verification, and more. In addition, we are introducing a [WorkOS AuthKit-powered](https://authkit.com) variant of each starter kit, offering social authentication, passkeys, and SSO support. WorkOS offers free authentication for applications up to 1 million monthly active users.
+---
 
-With the introduction of our new application starter kits, Laravel Breeze and Laravel Jetstream will no longer receive additional updates.
+## PHP Compatibility
 
-To get started with our new starter kits, check out the [starter kit documentation](/docs/{{version}}/starter-kits).
+| Laravel | Minimum PHP | Maximum PHP |
+|---------|-------------|-------------|
+| 10 | 8.1 | 8.3 |
+| 11 | 8.2 | 8.4 |
+| 12 | 8.2 | 8.4 |
+| 13 | 8.3 | 8.4+ |
+
+**Tip**: Target PHP 8.4 for best performance and features.
+
+---
+
+## Upgrade Checklist
+
+- [ ] Check PHP version compatibility
+- [ ] Review breaking changes in upgrade guide
+- [ ] Update `composer.json` constraint
+- [ ] Run `composer update`
+- [ ] Run test suite
+- [ ] Check deprecated features
+- [ ] Update deprecated code
+
+---
+
+## Best Practices
+
+### DO
+- Upgrade within 6 months of new major release
+- Test thoroughly in staging first
+- Read the official upgrade guide
+- Keep PHP version current
+
+### DON'T
+- Don't skip major versions (10 → 12)
+- Don't upgrade without test coverage
+- Don't ignore deprecation warnings
+- Don't stay on EOL versions

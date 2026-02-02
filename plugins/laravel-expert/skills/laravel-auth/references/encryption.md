@@ -1,89 +1,98 @@
 ---
 name: encryption
-description: Laravel Encryption documentation and patterns
-when-to-use: Consult when working with encryption
-keywords: laravel, php, encryption
+description: Laravel Encryption - encrypting/decrypting sensitive data with AES-256
+when-to-use: Consult when storing sensitive data (API keys, tokens, PII)
+keywords: laravel, encryption, crypt, decrypt, aes, sensitive, data
 priority: medium
+related: hashing.md, session.md
 ---
 
 # Encryption
 
-- [Introduction](#introduction)
-- [Configuration](#configuration)
-    - [Gracefully Rotating Encryption Keys](#gracefully-rotating-encryption-keys)
-- [Using the Encrypter](#using-the-encrypter)
+## What is Laravel Encryption?
 
-<a name="introduction"></a>
-## Introduction
+Laravel provides symmetric encryption using AES-256-CBC with OpenSSL. Unlike hashing (one-way), encryption is **reversible** - you can decrypt data back to its original form.
 
-Laravel's encryption services provide a simple, convenient interface for encrypting and decrypting text via OpenSSL using AES-256 and AES-128 encryption. All of Laravel's encrypted values are signed using a message authentication code (MAC) so that their underlying value cannot be modified or tampered with once encrypted.
+**Use encryption for:** Data you need to read back (API keys, tokens, sensitive user data)
+**Use hashing for:** Data you only need to verify (passwords)
 
-<a name="configuration"></a>
-## Configuration
+---
 
-Before using Laravel's encrypter, you must set the `key` configuration option in your `config/app.php` configuration file. This configuration value is driven by the `APP_KEY` environment variable. You should use the `php artisan key:generate` command to generate this variable's value since the `key:generate` command will use PHP's secure random bytes generator to build a cryptographically secure key for your application. Typically, the value of the `APP_KEY` environment variable will be generated for you during [Laravel's installation](/docs/{{version}}/installation).
+## How It Works
 
-<a name="gracefully-rotating-encryption-keys"></a>
-### Gracefully Rotating Encryption Keys
+1. **APP_KEY** in `.env` is your encryption key
+2. `Crypt::encryptString()` encrypts data
+3. Data is signed with MAC (Message Authentication Code)
+4. `Crypt::decryptString()` decrypts and verifies MAC
+5. Tampered data throws `DecryptException`
 
-If you change your application's encryption key, all authenticated user sessions will be logged out of your application. This is because every cookie, including session cookies, are encrypted by Laravel. In addition, it will no longer be possible to decrypt any data that was encrypted with your previous encryption key.
+The MAC prevents attackers from modifying encrypted data.
 
-To mitigate this issue, Laravel allows you to list your previous encryption keys in your application's `APP_PREVIOUS_KEYS` environment variable. This variable may contain a comma-delimited list of all of your previous encryption keys:
+---
 
-```ini
-APP_KEY="base64:J63qRTDLub5NuZvP+kb8YIorGS6qFYHKVo6u7179stY="
-APP_PREVIOUS_KEYS="base64:2nLsGFGzyoae2ax3EF2Lyq/hH6QghBGLIq5uL+Gp8/w="
-```
+## When to Use Encryption
 
-When you set this environment variable, Laravel will always use the "current" encryption key when encrypting values. However, when decrypting values, Laravel will first try the current key, and if decryption fails using the current key, Laravel will try all previous keys until one of the keys is able to decrypt the value.
+| Data Type | Encryption | Hashing |
+|-----------|-----------|---------|
+| Passwords | ❌ | ✅ Hash::make() |
+| API keys | ✅ | ❌ |
+| OAuth tokens | ✅ | ❌ |
+| Credit card tokens | ✅ | ❌ |
+| User PII (optional) | ✅ | ❌ |
 
-This approach to graceful decryption allows users to keep using your application uninterrupted even if your encryption key is rotated.
+---
 
-<a name="using-the-encrypter"></a>
-## Using the Encrypter
-
-<a name="encrypting-a-value"></a>
-#### Encrypting a Value
-
-You may encrypt a value using the `encryptString` method provided by the `Crypt` facade. All encrypted values are encrypted using OpenSSL and the AES-256-CBC cipher. Furthermore, all encrypted values are signed with a message authentication code (MAC). The integrated message authentication code will prevent the decryption of any values that have been tampered with by malicious users:
+## Key Methods
 
 ```php
-<?php
-
-namespace App\Http\Controllers;
-
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 
-class DigitalOceanTokenController extends Controller
-{
-    /**
-     * Store a DigitalOcean API token for the user.
-     */
-    public function store(Request $request): RedirectResponse
-    {
-        $request->user()->fill([
-            'token' => Crypt::encryptString($request->token),
-        ])->save();
+// Encrypt
+$encrypted = Crypt::encryptString($apiKey);
 
-        return redirect('/secrets');
-    }
-}
+// Decrypt
+$decrypted = Crypt::decryptString($encrypted);
 ```
 
-<a name="decrypting-a-value"></a>
-#### Decrypting a Value
-
-You may decrypt values using the `decryptString` method provided by the `Crypt` facade. If the value cannot be properly decrypted, such as when the message authentication code is invalid, an `Illuminate\Contracts\Encryption\DecryptException` will be thrown:
-
+Always wrap decryption in try/catch:
 ```php
-use Illuminate\Contracts\Encryption\DecryptException;
-use Illuminate\Support\Facades\Crypt;
-
 try {
-    $decrypted = Crypt::decryptString($encryptedValue);
+    $value = Crypt::decryptString($encrypted);
 } catch (DecryptException $e) {
-    // ...
+    // Data tampered or wrong key
 }
 ```
+
+---
+
+## Key Rotation
+
+When rotating `APP_KEY`, old encrypted data becomes unreadable. Use `APP_PREVIOUS_KEYS` for graceful rotation:
+
+```env
+APP_KEY="base64:newkey..."
+APP_PREVIOUS_KEYS="base64:oldkey..."
+```
+
+Laravel tries current key first, then previous keys.
+
+---
+
+## Automatic Encryption
+
+Laravel automatically encrypts:
+- Session data (when using cookie driver)
+- Cookies
+- XSRF tokens
+
+No manual encryption needed for these.
+
+---
+
+## Security Considerations
+
+1. **Never expose APP_KEY** - Treat like a password
+2. **Generate with artisan** - `php artisan key:generate`
+3. **Different keys per environment** - Dev ≠ Production
+4. **Backup keys** - Lost key = lost data
+5. **Use for reversible data only** - Hash passwords instead

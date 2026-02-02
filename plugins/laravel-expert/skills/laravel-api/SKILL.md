@@ -4,7 +4,7 @@ description: Build RESTful APIs with Laravel using API Resources, Sanctum authen
 versions:
   laravel: "12.46"
   php: "8.5"
-user-invocable: false
+user-invocable: true
 references: references/routing.md, references/controllers.md, references/middleware.md, references/requests.md, references/responses.md, references/validation.md, references/pagination.md, references/http-client.md, references/rate-limiting.md, references/redirects.md, references/urls.md, references/strings.md
 related-skills: laravel-auth, laravel-eloquent, laravel-testing
 ---

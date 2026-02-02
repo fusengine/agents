@@ -1,75 +1,142 @@
 ---
 name: concurrency
-description: Laravel Concurrency documentation and patterns
-when-to-use: Consult when working with concurrency
-keywords: laravel, php, concurrency
+description: Laravel Concurrency facade for parallel task execution
+when-to-use: Consult when running multiple slow tasks in parallel, optimizing performance
+keywords: concurrency, parallel, async, fork, process, defer, performance
 priority: medium
+related: queues.md, jobs.md
 ---
 
 # Concurrency
 
-- [Introduction](#introduction)
-- [Running Concurrent Tasks](#running-concurrent-tasks)
-- [Deferring Concurrent Tasks](#deferring-concurrent-tasks)
+## Overview
 
-<a name="introduction"></a>
-## Introduction
+The `Concurrency` facade executes multiple slow, independent tasks in parallel for performance gains.
 
-Sometimes you may need to execute several slow tasks which do not depend on one another. In many cases, significant performance improvements can be realized by executing the tasks concurrently. Laravel's `Concurrency` facade provides a simple, convenient API for executing closures concurrently.
+---
 
-<a name="how-it-works"></a>
-#### How it Works
+## When to Use
 
-Laravel achieves concurrency by serializing the given closures and dispatching them to a hidden Artisan CLI command, which unserializes the closures and invokes it within its own PHP process. After the closure has been invoked, the resulting value is serialized back to the parent process.
+| Scenario | Use Concurrency | Alternative |
+|----------|-----------------|-------------|
+| Multiple independent DB queries | ✅ Yes | - |
+| External API calls in parallel | ✅ Yes | - |
+| Tasks dependent on each other | ❌ No | Sequential |
+| Long-running background work | ❌ No | Queues |
+| Fire-and-forget tasks | ✅ `defer()` | Events |
 
-The `Concurrency` facade supports three drivers: `process` (the default), `fork`, and `sync`.
+---
 
-The `fork` driver offers improved performance compared to the default `process` driver, but it may only be used within PHP's CLI context, as PHP does not support forking during web requests. Before using the `fork` driver, you need to install the `spatie/fork` package:
+## Drivers
 
-```shell
+| Driver | Context | Performance | Setup |
+|--------|---------|-------------|-------|
+| **process** | Web + CLI | Good | Default |
+| **fork** | CLI only | Better | `spatie/fork` |
+| **sync** | Testing | None (sequential) | Built-in |
+
+### Fork Driver Setup
+
+```bash
 composer require spatie/fork
 ```
 
-The `sync` driver is primarily useful during testing when you want to disable all concurrency and simply execute the given closures in sequence within the parent process.
+**Note**: Fork only works in CLI (Artisan commands, queues). Not in web requests.
 
-<a name="running-concurrent-tasks"></a>
-## Running Concurrent Tasks
+---
 
-To run concurrent tasks, you may invoke the `Concurrency` facade's `run` method. The `run` method accepts an array of closures which should be executed simultaneously in child PHP processes:
+## Key Methods
+
+| Method | Purpose | Returns |
+|--------|---------|---------|
+| `run([closures])` | Execute in parallel | Array of results |
+| `defer([closures])` | Execute after response | void |
+| `driver('fork')` | Use specific driver | Concurrency instance |
+
+---
+
+## Decision Guide
+
+```
+Tasks independent?
+├── No → Run sequentially
+└── Yes → Need results?
+    ├── Yes → Concurrency::run()
+    └── No → Concurrency::defer()
+```
+
+---
+
+## How It Works
+
+1. Closures are **serialized**
+2. Dispatched to **hidden Artisan command**
+3. Each runs in **separate PHP process**
+4. Results **serialized back** to parent
+
+**Important**: Closures must be serializable (no anonymous classes, no `$this` from non-serializable objects).
+
+---
+
+## Performance Patterns
+
+| Pattern | Without Concurrency | With Concurrency |
+|---------|---------------------|------------------|
+| 3 queries × 100ms each | 300ms | ~100ms |
+| 5 API calls × 500ms each | 2500ms | ~500ms |
+
+---
+
+## Use Cases
+
+### Aggregating Counts
+
+Multiple independent database counts executed in parallel.
+
+### Multiple API Calls
+
+Fetching data from multiple external services simultaneously.
+
+### Post-Response Tasks
+
+Using `defer()` for analytics, logging, or notifications after sending response.
+
+---
+
+## Constraints
+
+| Constraint | Reason |
+|------------|--------|
+| Closures must be serializable | Sent to child process |
+| No shared state | Each process isolated |
+| Fork only CLI | PHP limitation |
+| Results must be serializable | Returned to parent |
+
+---
+
+## Best Practices
+
+### DO
+- Use for truly independent tasks
+- Use `defer()` for non-critical post-response work
+- Consider `fork` driver in CLI for performance
+- Keep closures simple and serializable
+
+### DON'T
+- Don't use for dependent tasks (use sequential)
+- Don't expect shared memory
+- Don't use fork in web requests
+- Don't defer critical operations
+
+---
+
+## Testing
+
+Use `sync` driver in tests:
 
 ```php
-use Illuminate\Support\Facades\Concurrency;
-use Illuminate\Support\Facades\DB;
-
-[$userCount, $orderCount] = Concurrency::run([
-    fn () => DB::table('users')->count(),
-    fn () => DB::table('orders')->count(),
-]);
+// config/concurrency.php or test setup
+'default' => 'sync'
 ```
 
-To use a specific driver, you may use the `driver` method:
-
-```php
-$results = Concurrency::driver('fork')->run(...);
-```
-
-Or, to change the default concurrency driver, you should publish the `concurrency` configuration file via the `config:publish` Artisan command and update the `default` option within the file:
-
-```shell
-php artisan config:publish concurrency
-```
-
-<a name="deferring-concurrent-tasks"></a>
-## Deferring Concurrent Tasks
-
-If you would like to execute an array of closures concurrently, but are not interested in the results returned by those closures, you should consider using the `defer` method. When the `defer` method is invoked, the given closures are not executed immediately. Instead, Laravel will execute the closures concurrently after the HTTP response has been sent to the user:
-
-```php
-use App\Services\Metrics;
-use Illuminate\Support\Facades\Concurrency;
-
-Concurrency::defer([
-    fn () => Metrics::report('users'),
-    fn () => Metrics::report('orders'),
-]);
-```
+This runs closures sequentially for predictable test results.

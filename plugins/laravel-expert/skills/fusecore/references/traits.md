@@ -116,7 +116,7 @@ class MyModuleServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->loadAllModuleResources();
-        // Loads: migrations, views, translations
+        // Loads: migrations, views, translations, config
     }
 }
 ```
@@ -131,8 +131,8 @@ class MyModuleServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->loadModuleMigrations();
-        $this->loadModuleViews();
-        // Skip translations if not needed
+        $this->loadModuleConfig();      // Load /Config/*.php
+        // Skip views/translations if API-only
     }
 }
 ```
