@@ -1,5 +1,16 @@
 # Release Notes
 
+## [1.36.10] - 02-02-2026
+
+### Changed
+
+- **laravel-expert**: Restructure laravel-testing skill with complete Pest 3 coverage
+  - Split monolithic files into 15 modular references (<150 lines each)
+  - Add 15 references: pest-basics, pest-datasets, pest-arch, http-requests, http-json, http-auth, http-assertions, database-basics, database-factories, database-assertions, mocking-services, mocking-fakes, mocking-http, console-tests, troubleshooting
+  - Add 5 complete templates: FeatureTest, UnitTest, ArchTest, ApiTest, PestConfig
+  - Remove out-of-scope files (dusk.md → browser testing, pint.md → code style)
+  - Total reduction: 6,098 → 2,657 lines (56% reduction)
+
 ## [1.36.9] - 02-02-2026
 
 ### Changed
