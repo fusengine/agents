@@ -1,5 +1,16 @@
 # Release Notes
 
+## [1.36.14] - 03-02-2026
+
+### Changed
+
+- **hooks**: Rewrite APEX/SOLID enforcement with session-based 2min TTL
+  - Unified state file in ~/.claude/logs/00-apex/
+  - Session isolation for multi-project support
+  - 2-minute TTL for doc consultation validity
+  - Portable file locking (mkdir-based for macOS)
+  - Simplified framework detection logic
+
 ## [1.36.13] - 02-02-2026
 
 ### Fixed
