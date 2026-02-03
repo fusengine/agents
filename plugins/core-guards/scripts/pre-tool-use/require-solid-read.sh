@@ -1,76 +1,106 @@
 #!/bin/bash
-# PreToolUse: Block Write/Edit on code files if SOLID principles not read
-# Exit 2 = Block operation
+# require-solid-read.sh - PreToolUse hook (v4.0)
+# READS: ~/.claude/logs/00-apex/solid-reads.json
+# CHECKS: last entry for framework+session < 2 minutes
 
 INPUT=$(cat)
 FILE_PATH=$(echo "$INPUT" | jq -r '.tool_input.file_path // empty')
-SESSION_ID=$(echo "$INPUT" | jq -r '.session_id // "unknown"')
+SESSION_ID=$(echo "$INPUT" | jq -r '.session_id // empty')
 
-# Skip if no file path
 [[ -z "$FILE_PATH" ]] && exit 0
 
-# Skip non-code files
-if [[ ! "$FILE_PATH" =~ \.(ts|tsx|js|jsx|py|go|rs|java|php|cpp|c|rb|swift|kt|dart|vue|svelte)$ ]]; then
-  exit 0
-fi
+# Only check code files
+[[ ! "$FILE_PATH" =~ \.(ts|tsx|js|jsx|py|go|rs|java|php|cpp|c|rb|swift|kt|dart|vue|svelte)$ ]] && exit 0
 
-# Detect required SOLID type based on file extension
-# Returns: plugin-folder/skill-name format
-get_required_solid() {
+# Detect framework
+get_framework() {
   local ext="${1##*.}"
   case "$ext" in
     ts|tsx|js|jsx|vue|svelte)
-      # Check if Next.js project
       if [[ -f "$(dirname "$1")/next.config.js" ]] || \
          [[ -f "$(dirname "$1")/next.config.ts" ]] || \
          [[ -f "$(dirname "$1")/next.config.mjs" ]]; then
-        echo "nextjs-expert/solid-nextjs"
+        echo "nextjs"
       else
-        echo "react-expert/solid-react"
-      fi
-      ;;
-    php) echo "laravel-expert/solid-php" ;;
-    swift) echo "swift-apple-expert/solid-swift" ;;
-    *) echo "" ;;  # No SOLID check for other languages yet
+        echo "react"
+      fi ;;
+    php) echo "php" ;;
+    swift) echo "swift" ;;
+    *) echo "" ;;
   esac
 }
 
-REQUIRED_SOLID=$(get_required_solid "$FILE_PATH")
+FRAMEWORK=$(get_framework "$FILE_PATH")
+[[ -z "$FRAMEWORK" ]] && exit 0
 
-# If no SOLID rules for this language, allow
-[[ -z "$REQUIRED_SOLID" ]] && exit 0
-
-# Check session state for SOLID reads
-STATE_DIR="/tmp/claude-code-sessions"
-SOLID_STATE="$STATE_DIR/session-${SESSION_ID}-solid.json"
-
-# Extract simple SOLID type for state lookup (react, nextjs, php, swift)
-SKILL_NAME="${REQUIRED_SOLID#*/}"  # solid-react, solid-nextjs, etc.
-SOLID_TYPE="${SKILL_NAME#solid-}"  # react, nextjs, php, swift
-
-SOLID_READ=""
-if [[ -f "$SOLID_STATE" ]]; then
-  SOLID_READ=$(jq -r ".solidReads.$SOLID_TYPE // empty" "$SOLID_STATE" 2>/dev/null)
-fi
-
-if [[ -z "$SOLID_READ" ]]; then
-  FILENAME=$(basename "$FILE_PATH")
-  # REQUIRED_SOLID format: plugin-folder/skill-name (e.g., react-expert/solid-react)
-  PLUGIN_FOLDER="${REQUIRED_SOLID%/*}"
-  SOLID_PATH="~/.claude/plugins/marketplaces/fusengine-plugins/plugins/${PLUGIN_FOLDER}/skills/${SKILL_NAME}/"
-
-  REASON="BLOCKED: You must read SOLID principles before modifying '$FILENAME'. REQUIRED ACTION: Read the SOLID rules first: ${SOLID_PATH}SKILL.md - After reading, you can modify code files."
-
-  cat << EOF
-{
-  "hookSpecificOutput": {
-    "hookEventName": "PreToolUse",
-    "permissionDecision": "deny",
-    "permissionDecisionReason": "$REASON"
-  }
+# Find project root
+find_project_root() {
+  local dir="$1"
+  while [[ "$dir" != "/" ]]; do
+    [[ -f "$dir/package.json" || -f "$dir/composer.json" || -d "$dir/.git" ]] && { echo "$dir"; return; }
+    dir=$(dirname "$dir")
+  done
+  echo "${PWD}"
 }
-EOF
-  exit 0
+
+PROJECT_ROOT=$(find_project_root "$(dirname "$FILE_PATH")")
+
+# Files
+LOG_DIR="$HOME/.claude/logs/00-apex"
+mkdir -p "$LOG_DIR"
+LOG_FILE="$LOG_DIR/solid-reads.json"
+TODAY=$(date +%Y-%m-%d)
+STATE_FILE="$LOG_DIR/${TODAY}-state.json"
+
+# Check last read for framework + session in JSON
+VALID="false"
+if [[ -f "$LOG_FILE" ]]; then
+  # Get last entry matching framework and session
+  LAST_TS=$(jq -r --arg fw "$FRAMEWORK" --arg sess "$SESSION_ID" \
+    '[.reads[] | select(.framework == $fw and .session == $sess)] | last | .timestamp // empty' \
+    "$LOG_FILE" 2>/dev/null)
+
+  if [[ -n "$LAST_TS" && "$LAST_TS" != "null" ]]; then
+    # Check if less than 2 minutes (120 seconds)
+    READ_EPOCH=$(date -j -f "%Y-%m-%dT%H:%M:%SZ" "$LAST_TS" "+%s" 2>/dev/null)
+    NOW_EPOCH=$(date "+%s")
+    if [[ -n "$READ_EPOCH" ]]; then
+      DIFF=$((NOW_EPOCH - READ_EPOCH))
+      [[ $DIFF -lt 120 ]] && VALID="true"
+    fi
+  fi
 fi
 
+[[ "$VALID" == "true" ]] && exit 0
+
+# BLOCKED - Write target info to state file
+TIMESTAMP=$(date +%Y-%m-%dT%H:%M:%SZ)
+DEFAULT_STATE='{"$schema":"apex-state-v1","target":{}}'
+
+if [[ -f "$STATE_FILE" ]] && jq -e . "$STATE_FILE" >/dev/null 2>&1; then
+  STATE=$(cat "$STATE_FILE")
+else
+  STATE="$DEFAULT_STATE"
+fi
+
+STATE=$(echo "$STATE" | jq \
+  --arg proj "$PROJECT_ROOT" \
+  --arg fw "$FRAMEWORK" \
+  --arg ts "$TIMESTAMP" \
+  '.target = {"project": $proj, "framework": $fw, "set_by": "require-solid-read.sh", "set_at": $ts}')
+echo "$STATE" > "$STATE_FILE"
+
+# Map framework to skill path
+case "$FRAMEWORK" in
+  react) SKILL_PATH="react-expert/skills/solid-react" ;;
+  nextjs) SKILL_PATH="nextjs-expert/skills/solid-nextjs" ;;
+  php) SKILL_PATH="laravel-expert/skills/solid-php" ;;
+  swift) SKILL_PATH="swift-apple-expert/skills/solid-swift" ;;
+esac
+
+REASON="BLOCKED: Read SOLID first (expires every 2min): ~/.claude/plugins/marketplaces/fusengine-plugins/plugins/${SKILL_PATH}/SKILL.md"
+
+cat << EOF
+{"hookSpecificOutput":{"hookEventName":"PreToolUse","permissionDecision":"deny","permissionDecisionReason":"$REASON"}}
+EOF
 exit 0

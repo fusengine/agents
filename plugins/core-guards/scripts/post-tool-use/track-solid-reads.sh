@@ -1,45 +1,72 @@
 #!/bin/bash
-# PostToolUse Read: Track when SOLID reference files are read
-# Stores in session state for PreToolUse verification
+# track-solid-reads.sh - PostToolUse hook (v4.0)
+# APPENDS to JSON array: ~/.claude/logs/00-apex/solid-reads.json
+# FORMAT: {"reads": [{...}, {...}]}
 
 INPUT=$(cat)
 TOOL_NAME=$(echo "$INPUT" | jq -r '.tool_name // empty')
 FILE_PATH=$(echo "$INPUT" | jq -r '.tool_input.file_path // empty')
-SESSION_ID=$(echo "$INPUT" | jq -r '.session_id // "unknown"')
+SESSION_ID=$(echo "$INPUT" | jq -r '.session_id // empty')
 
-# Only track Read tool
 [[ "$TOOL_NAME" != "Read" ]] && exit 0
 [[ -z "$FILE_PATH" ]] && exit 0
 
-# Check if it's a SOLID file (references/ or SKILL.md)
-if [[ "$FILE_PATH" =~ solid-.*/(references/|SKILL\.md) ]]; then
-  STATE_DIR="/tmp/claude-code-sessions"
-  mkdir -p "$STATE_DIR"
-  SOLID_STATE="$STATE_DIR/session-${SESSION_ID}-solid.json"
+# Only track SOLID files (skills/solid-*/SKILL.md or skills/solid-*/references/)
+[[ ! "$FILE_PATH" =~ solid-[^/]+/(references/|SKILL\.md) ]] && exit 0
 
-  # Detect which SOLID type was read
-  SOLID_TYPE=""
-  [[ "$FILE_PATH" =~ solid-nextjs ]] && SOLID_TYPE="nextjs"
-  [[ "$FILE_PATH" =~ solid-react ]] && SOLID_TYPE="react"
-  [[ "$FILE_PATH" =~ solid-php ]] && SOLID_TYPE="php"
-  [[ "$FILE_PATH" =~ solid-swift ]] && SOLID_TYPE="swift"
+# Detect framework
+FRAMEWORK=""
+[[ "$FILE_PATH" =~ solid-nextjs ]] && FRAMEWORK="nextjs"
+[[ "$FILE_PATH" =~ solid-react ]] && FRAMEWORK="react"
+[[ "$FILE_PATH" =~ solid-php ]] && FRAMEWORK="php"
+[[ "$FILE_PATH" =~ solid-swift ]] && FRAMEWORK="swift"
+[[ -z "$FRAMEWORK" ]] && exit 0
 
-  if [[ -n "$SOLID_TYPE" ]]; then
-    TIMESTAMP=$(date -u +%Y-%m-%dT%H:%M:%SZ)
+# Log file
+LOG_DIR="$HOME/.claude/logs/00-apex"
+mkdir -p "$LOG_DIR"
+LOG_FILE="$LOG_DIR/solid-reads.json"
+LOCK_DIR="$LOG_DIR/.reads.lock"
+TIMESTAMP=$(date +%Y-%m-%dT%H:%M:%SZ)
 
-    # Load or create state
-    if [[ -f "$SOLID_STATE" ]]; then
-      STATE=$(cat "$SOLID_STATE")
-    else
-      STATE='{"solidReads":{}}'
-    fi
+# Get project from state file if exists
+STATE_FILE="$LOG_DIR/$(date +%Y-%m-%d)-state.json"
+PROJECT=""
+if [[ -f "$STATE_FILE" ]]; then
+  PROJECT=$(jq -r '.target.project // empty' "$STATE_FILE" 2>/dev/null)
+fi
+[[ -z "$PROJECT" ]] && PROJECT="unknown"
 
-    # Add this read
-    STATE=$(echo "$STATE" | jq --arg type "$SOLID_TYPE" --arg ts "$TIMESTAMP" \
-      '.solidReads[$type] = $ts')
+# Lock
+acquire_lock() {
+  local max_wait=5 waited=0
+  while ! mkdir "$LOCK_DIR" 2>/dev/null; do
+    sleep 0.1
+    waited=$((waited + 1))
+    [[ $waited -gt $((max_wait * 10)) ]] && return 1
+  done
+  trap 'rmdir "$LOCK_DIR" 2>/dev/null' EXIT
+  return 0
+}
 
-    echo "$STATE" > "$SOLID_STATE"
-  fi
+acquire_lock || exit 0
+
+# Load or create JSON
+DEFAULT='{"reads":[]}'
+if [[ -f "$LOG_FILE" ]] && jq -e . "$LOG_FILE" >/dev/null 2>&1; then
+  DATA=$(cat "$LOG_FILE")
+else
+  DATA="$DEFAULT"
 fi
 
+# Append new entry
+DATA=$(echo "$DATA" | jq \
+  --arg ts "$TIMESTAMP" \
+  --arg fw "$FRAMEWORK" \
+  --arg sess "$SESSION_ID" \
+  --arg proj "$PROJECT" \
+  --arg file "$FILE_PATH" \
+  '.reads += [{"timestamp": $ts, "framework": $fw, "session": $sess, "project": $proj, "file": $file}]')
+
+echo "$DATA" > "$LOG_FILE"
 exit 0

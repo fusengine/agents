@@ -1,130 +1,115 @@
 #!/bin/bash
-# enforce-apex-phases.sh - PreToolUse hook for ai-pilot
-# BLOCKS direct Write/Edit if documentation not consulted for current task
-# Checks .claude/apex/task.json for doc_consulted status
+# enforce-apex-phases.sh - PreToolUse hook
+# READS: authorizations.{framework}.doc_consulted + session + timestamp
+# VALIDITY: same session + less than 2 minutes old
+# FILE: ~/.claude/logs/00-apex/YYYY-MM-DD-state.json
 
 set -e
 
 INPUT=$(cat)
 TOOL_NAME=$(echo "$INPUT" | jq -r '.tool_name // empty')
 FILE_PATH=$(echo "$INPUT" | jq -r '.tool_input.file_path // empty')
+SESSION_ID=$(echo "$INPUT" | jq -r '.session_id // empty')
 
-# Only check for Write/Edit tools
-if [[ "$TOOL_NAME" != "Write" && "$TOOL_NAME" != "Edit" ]]; then
-  exit 0
-fi
+[[ "$TOOL_NAME" != "Write" && "$TOOL_NAME" != "Edit" ]] && exit 0
+[[ ! "$FILE_PATH" =~ \.(ts|tsx|js|jsx|py|php|swift|go|rs|rb|java|vue|svelte|css)$ ]] && exit 0
+[[ "$FILE_PATH" =~ /(node_modules|vendor|dist|build|\.next|DerivedData)/ ]] && exit 0
 
-# Only check code files
-if [[ ! "$FILE_PATH" =~ \.(ts|tsx|js|jsx|py|php|swift|go|rs|rb|java|vue|svelte|css)$ ]]; then
-  exit 0
-fi
-
-# Skip non-code directories
-if [[ "$FILE_PATH" =~ /(node_modules|vendor|dist|build|\.next|DerivedData|Pods|\.build)/ ]]; then
-  exit 0
-fi
-
-# Get project root from FILE_PATH (not PWD)
-# Walk up from file to find project root (has package.json, composer.json, etc.)
+# Find project root
 find_project_root() {
   local dir="$1"
   while [[ "$dir" != "/" ]]; do
-    if [[ -f "$dir/package.json" ]] || [[ -f "$dir/composer.json" ]] || \
-       [[ -f "$dir/Cargo.toml" ]] || [[ -f "$dir/go.mod" ]] || \
-       [[ -f "$dir/Package.swift" ]] || [[ -d "$dir/.git" ]]; then
-      echo "$dir"
-      return
-    fi
+    [[ -f "$dir/package.json" || -f "$dir/composer.json" || -d "$dir/.git" ]] && { echo "$dir"; return; }
     dir=$(dirname "$dir")
   done
-  echo "${PWD}"  # Fallback to PWD
+  echo "${PWD}"
 }
 
 PROJECT_ROOT=$(find_project_root "$(dirname "$FILE_PATH")")
-TASK_FILE="$PROJECT_ROOT/.claude/apex/task.json"
-
-# Detect framework from file path and content
-CONTENT=$(echo "$INPUT" | jq -r '.tool_input.content // .tool_input.new_string // empty')
-FRAMEWORK=""
 
 # Detect framework
-if [[ "$FILE_PATH" =~ \.(tsx|jsx)$ ]] || echo "$CONTENT" | grep -qE "(from ['\"]react|useState|useEffect|className=)"; then
-  if [[ "$FILE_PATH" =~ (page|layout|loading|error|route)\.(ts|tsx)$ ]] || echo "$CONTENT" | grep -qE "(use client|use server|NextRequest)"; then
+CONTENT=$(echo "$INPUT" | jq -r '.tool_input.content // .tool_input.new_string // empty')
+FRAMEWORK="generic"
+
+if [[ "$FILE_PATH" =~ \.(tsx|jsx)$ ]] || echo "$CONTENT" | grep -qE "(from ['\"]react|useState|className=)"; then
+  if [[ "$FILE_PATH" =~ (page|layout|loading|error|route)\.(ts|tsx)$ ]] || echo "$CONTENT" | grep -qE "(use client|use server)"; then
     FRAMEWORK="nextjs"
   else
     FRAMEWORK="react"
   fi
-elif [[ "$FILE_PATH" =~ \.swift$ ]]; then
-  FRAMEWORK="swift"
-elif [[ "$FILE_PATH" =~ \.php$ ]]; then
-  FRAMEWORK="laravel"
-elif [[ "$FILE_PATH" =~ \.css$ ]] || echo "$CONTENT" | grep -qE "(@tailwind|@apply|@theme)"; then
-  FRAMEWORK="tailwind"
-elif echo "$CONTENT" | grep -qE "(className=|cn\(|cva\()"; then
-  FRAMEWORK="design"
-else
-  FRAMEWORK="generic"
+elif [[ "$FILE_PATH" =~ \.swift$ ]]; then FRAMEWORK="swift"
+elif [[ "$FILE_PATH" =~ \.php$ ]]; then FRAMEWORK="laravel"
+elif [[ "$FILE_PATH" =~ \.css$ ]] || echo "$CONTENT" | grep -qE "(@tailwind|@apply)"; then FRAMEWORK="tailwind"
 fi
 
-# Check if APEX tracking is initialized - AUTO-INIT if missing
-APEX_DIR="$PROJECT_ROOT/.claude/apex"
-# Always ensure docs directory exists
-mkdir -p "$APEX_DIR/docs"
+# State file
+STATE_DIR="$HOME/.claude/logs/00-apex"
+mkdir -p "$STATE_DIR"
+TODAY=$(date +%Y-%m-%d)
+STATE_FILE="$STATE_DIR/${TODAY}-state.json"
+LOCK_DIR="$STATE_DIR/.state.lock"
+DEFAULT_STATE='{"$schema":"apex-state-v1","description":"État APEX/SOLID - session + 2min expiry","target":{},"authorizations":{}}'
 
-if [[ ! -f "$TASK_FILE" ]]; then
-  # Auto-initialize task.json
-  TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
-  cat > "$TASK_FILE" << INITEOF
-{
-  "current_task": "1",
-  "created_at": "$TIMESTAMP",
-  "tasks": {
-    "1": {
-      "status": "in_progress",
-      "started_at": "$TIMESTAMP",
-      "doc_consulted": {}
-    }
-  }
+# Portable lock using mkdir (atomic on all POSIX systems including macOS)
+acquire_lock() {
+  local max_wait=5 waited=0
+  while ! mkdir "$LOCK_DIR" 2>/dev/null; do
+    sleep 0.1
+    waited=$((waited + 1))
+    [[ $waited -gt $((max_wait * 10)) ]] && return 1
+  done
+  trap 'rmdir "$LOCK_DIR" 2>/dev/null' EXIT
+  return 0
 }
-INITEOF
+
+# Acquire lock BEFORE reading state (fix race condition)
+acquire_lock || exit 0
+
+# Load state (now protected by lock)
+if [[ -f "$STATE_FILE" ]] && jq -e . "$STATE_FILE" >/dev/null 2>&1; then
+  STATE=$(cat "$STATE_FILE")
+else
+  STATE="$DEFAULT_STATE"
 fi
 
-# Check if task.json exists and doc was consulted
-if [[ -f "$TASK_FILE" ]]; then
-  CURRENT_TASK=$(jq -r '.current_task // "1"' "$TASK_FILE")
-  DOC_CONSULTED=$(jq -r --arg task "$CURRENT_TASK" --arg fw "$FRAMEWORK" \
-    '.tasks[$task].doc_consulted[$fw].consulted // false' "$TASK_FILE")
+# Check if doc was consulted (same session + less than 2 min)
+VALID="false"
+STORED_SESSION=$(echo "$STATE" | jq -r --arg fw "$FRAMEWORK" '.authorizations[$fw].session // empty')
+DOC_CONSULTED=$(echo "$STATE" | jq -r --arg fw "$FRAMEWORK" '.authorizations[$fw].doc_consulted // empty')
 
-  if [[ "$DOC_CONSULTED" == "true" ]]; then
-    # Documentation was consulted, allow write
-    exit 0
+if [[ -n "$DOC_CONSULTED" && "$STORED_SESSION" == "$SESSION_ID" ]]; then
+  # Check if less than 2 minutes (120 seconds) - macOS compatible
+  READ_EPOCH=$(date -j -f "%Y-%m-%dT%H:%M:%SZ" "$DOC_CONSULTED" "+%s" 2>/dev/null)
+  NOW_EPOCH=$(date "+%s")
+  if [[ -n "$READ_EPOCH" ]]; then
+    DIFF=$((NOW_EPOCH - READ_EPOCH))
+    [[ $DIFF -lt 120 ]] && VALID="true"
   fi
 fi
 
-# Documentation NOT consulted - BLOCK
-REASON="🚫 APEX: Documentation not consulted for $FRAMEWORK! "
-REASON+="Before writing $FRAMEWORK code, you MUST consult documentation. "
-REASON+="STEP 1 - Consult ONE of these sources: "
+[[ "$VALID" == "true" ]] && exit 0
+
+# BLOCKED - Write target (lock already acquired)
+TIMESTAMP=$(date +%Y-%m-%dT%H:%M:%SZ)
+STATE=$(echo "$STATE" | jq \
+  --arg proj "$PROJECT_ROOT" \
+  --arg fw "$FRAMEWORK" \
+  --arg ts "$TIMESTAMP" \
+  '.target = {"project": $proj, "framework": $fw, "set_by": "enforce-apex-phases.sh", "set_at": $ts}')
+echo "$STATE" > "$STATE_FILE"
 
 PLUGINS_DIR="$HOME/.claude/plugins/marketplaces/fusengine-plugins/plugins"
 case "$FRAMEWORK" in
-  react) SOURCES="Read $PLUGINS_DIR/react-expert/skills/react-19/SKILL.md" ;;
-  nextjs) SOURCES="Read $PLUGINS_DIR/nextjs-expert/skills/nextjs-16/SKILL.md" ;;
-  swift) SOURCES="Read $PLUGINS_DIR/swift-apple-expert/skills/swiftui-components/SKILL.md" ;;
-  laravel) SOURCES="Read $PLUGINS_DIR/laravel-expert/skills/laravel-eloquent/SKILL.md" ;;
-  tailwind) SOURCES="Read $PLUGINS_DIR/tailwindcss/skills/tailwindcss-v4/SKILL.md" ;;
-  design) SOURCES="Read $PLUGINS_DIR/design-expert/skills/designing-systems/SKILL.md" ;;
-  *) SOURCES="mcp__context7__query-docs, mcp__exa__get_code_context_exa" ;;
+  react) SRC="$PLUGINS_DIR/react-expert/skills/react-19/SKILL.md" ;;
+  nextjs) SRC="$PLUGINS_DIR/nextjs-expert/skills/nextjs-16/SKILL.md" ;;
+  swift) SRC="$PLUGINS_DIR/swift-apple-expert/skills/swiftui-components/SKILL.md" ;;
+  laravel) SRC="$PLUGINS_DIR/laravel-expert/skills/laravel-eloquent/SKILL.md" ;;
+  tailwind) SRC="$PLUGINS_DIR/tailwindcss/skills/tailwindcss-v4/SKILL.md" ;;
+  *) SRC="mcp__context7__query-docs" ;;
 esac
 
-REASON+="Sources: $SOURCES. After consulting, retry Write/Edit."
+REASON="🚫 APEX: Read doc first (expires every 2min) for $FRAMEWORK! Source: $SRC"
 
-# Use hookSpecificOutput format
-jq -n --arg reason "$REASON" '{
-  "hookSpecificOutput": {
-    "hookEventName": "PreToolUse",
-    "permissionDecision": "deny",
-    "permissionDecisionReason": $reason
-  }
-}'
+# Output JSON - Claude Code interprets permissionDecision:"deny"
+jq -n --arg reason "$REASON" '{"hookSpecificOutput":{"hookEventName":"PreToolUse","permissionDecision":"deny","permissionDecisionReason":$reason}}'
 exit 0

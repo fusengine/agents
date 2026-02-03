@@ -1,85 +1,77 @@
 #!/bin/bash
-# track-doc-consultation.sh - PostToolUse hook for doc consultation tracking
-# Updates .claude/apex/task.json when Context7, Exa, or skills are consulted
-set -euo pipefail
+# track-doc-consultation.sh - PostToolUse hook
+# WRITES: authorizations.{framework}.doc_consulted + session
+# FILE: ~/.claude/logs/00-apex/YYYY-MM-DD-state.json
 
-# Resolve shared scripts: try marketplace first, fallback to relative path
-MARKETPLACE_SHARED="$HOME/.claude/plugins/marketplaces/fusengine-plugins/plugins/_shared/scripts"
-RELATIVE_SHARED="$(dirname "${BASH_SOURCE[0]}")/../../_shared/scripts"
-if [[ -d "$MARKETPLACE_SHARED" ]]; then
-  SHARED_DIR="$MARKETPLACE_SHARED"
-elif [[ -d "$RELATIVE_SHARED" ]]; then
-  SHARED_DIR="$(cd "$RELATIVE_SHARED" && pwd)"
-else
-  echo "Warning: _shared scripts not found" >&2
-  exit 0
-fi
-source "$SHARED_DIR/framework-detection.sh"
-source "$SHARED_DIR/check-skill-common.sh"
-source "$SHARED_DIR/apex-task-helpers.sh"
+set -euo pipefail
 
 INPUT=$(cat)
 TOOL_NAME=$(echo "$INPUT" | jq -r '.tool_name // empty')
+SESSION_ID=$(echo "$INPUT" | jq -r '.session_id // empty')
 
-# Determine source and framework based on tool
-# Note: Tool names may have plugin prefix like mcp__plugin_fuse-ai-pilot_context7__query-docs
+# Determine source and query
 case "$TOOL_NAME" in
   *context7__query-docs|*context7__resolve-library-id)
-    FRAMEWORK=$(echo "$INPUT" | jq -r '.tool_input.libraryId // .tool_input.libraryName // empty')
-    FRAMEWORK=$(detect_framework_from_string "$FRAMEWORK")
-    SOURCE="context7"
-    ;;
+    QUERY=$(echo "$INPUT" | jq -r '.tool_input.libraryId // .tool_input.libraryName // empty')
+    SOURCE="context7" ;;
   *exa__get_code_context_exa|*exa__web_search_exa)
     QUERY=$(echo "$INPUT" | jq -r '.tool_input.query // empty')
-    FRAMEWORK=$(detect_framework_from_string "$QUERY")
-    SOURCE="exa"
-    ;;
+    SOURCE="exa" ;;
   Read)
     FILE_PATH=$(echo "$INPUT" | jq -r '.tool_input.file_path // empty')
     [[ ! "$FILE_PATH" =~ skills/.*\.md$ ]] && exit 0
-    FRAMEWORK=$(detect_framework_from_string "$FILE_PATH")
-    SOURCE="skill"
-    ;;
+    # Skip SOLID files - handled by track-solid-reads.sh
+    [[ "$FILE_PATH" =~ solid-[^/]+/ ]] && exit 0
+    QUERY="$FILE_PATH"
+    SOURCE="skill" ;;
   *) exit 0 ;;
 esac
 
-# Find project root
-FILE_PATH=$(echo "$INPUT" | jq -r '.tool_input.file_path // empty')
-if [[ -n "$FILE_PATH" ]]; then
-  PROJECT_ROOT=$(find_project_root "$(dirname "$FILE_PATH")" "package.json" "composer.json" ".git")
+# Detect framework from query
+FRAMEWORK="generic"
+[[ "$QUERY" =~ (next|nextjs|Next) ]] && FRAMEWORK="nextjs"
+[[ "$QUERY" =~ (react|React) ]] && FRAMEWORK="react"
+[[ "$QUERY" =~ (laravel|Laravel|php|PHP) ]] && FRAMEWORK="laravel"
+[[ "$QUERY" =~ (swift|Swift|swiftui|SwiftUI) ]] && FRAMEWORK="swift"
+[[ "$QUERY" =~ (tailwind|Tailwind) ]] && FRAMEWORK="tailwind"
+
+# State file
+STATE_DIR="$HOME/.claude/logs/00-apex"
+mkdir -p "$STATE_DIR"
+TODAY=$(date +%Y-%m-%d)
+STATE_FILE="$STATE_DIR/${TODAY}-state.json"
+LOCK_DIR="$STATE_DIR/.state.lock"
+TIMESTAMP=$(date +%Y-%m-%dT%H:%M:%SZ)
+
+# Portable lock using mkdir (atomic on all POSIX systems including macOS)
+acquire_lock() {
+  local max_wait=5 waited=0
+  while ! mkdir "$LOCK_DIR" 2>/dev/null; do
+    sleep 0.1
+    waited=$((waited + 1))
+    [[ $waited -gt $((max_wait * 10)) ]] && return 1
+  done
+  trap 'rmdir "$LOCK_DIR" 2>/dev/null' EXIT
+  return 0
+}
+
+acquire_lock || exit 0
+
+# Load or create state (validate JSON)
+DEFAULT_STATE='{"$schema":"apex-state-v1","description":"État APEX/SOLID - session + 2min expiry","target":{},"authorizations":{}}'
+if [[ -f "$STATE_FILE" ]] && jq -e . "$STATE_FILE" >/dev/null 2>&1; then
+  STATE=$(cat "$STATE_FILE")
 else
-  PROJECT_ROOT="${PWD}"
+  STATE="$DEFAULT_STATE"
 fi
 
-APEX_DIR="$PROJECT_ROOT/.claude/apex"
-DOCS_DIR="$APEX_DIR/docs"
-TASK_FILE="$APEX_DIR/task.json"
-mkdir -p "$DOCS_DIR"
+# Update: mark doc as consulted with session
+STATE=$(echo "$STATE" | jq \
+  --arg fw "$FRAMEWORK" \
+  --arg ts "$TIMESTAMP" \
+  --arg src "$SOURCE:$TOOL_NAME" \
+  --arg sess "$SESSION_ID" \
+  '.authorizations[$fw].doc_consulted = $ts | .authorizations[$fw].source = $src | .authorizations[$fw].session = $sess')
 
-# Get or init current task
-if [[ -f "$TASK_FILE" ]]; then
-  CURRENT_TASK=$(jq -r '.current_task // "1"' "$TASK_FILE")
-else
-  CURRENT_TASK="1"
-  echo '{"current_task":"1","tasks":{}}' > "$TASK_FILE"
-fi
-
-# Create doc summary
-DOC_FILE="$DOCS_DIR/task-${CURRENT_TASK}-${FRAMEWORK}.md"
-TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
-TOOL_OUTPUT=$(echo "$INPUT" | jq -r '.tool_output // empty' | head -c 3000)
-
-# Capitalize first letter (bash 3.x compatible)
-FRAMEWORK_TITLE=$(echo "$FRAMEWORK" | awk '{print toupper(substr($0,1,1)) substr($0,2)}')
-
-cat > "$DOC_FILE" << EOF
-# Task $CURRENT_TASK - $FRAMEWORK_TITLE Documentation
-## Consulted: $TIMESTAMP | Source: $SOURCE:$TOOL_NAME
-## Key Info
-$(echo "$TOOL_OUTPUT" | head -30)
-EOF
-
-# Update task.json
-apex_task_doc_consulted "$TASK_FILE" "$CURRENT_TASK" "$FRAMEWORK" "$SOURCE:$TOOL_NAME" "docs/task-${CURRENT_TASK}-${FRAMEWORK}.md"
-
+echo "$STATE" > "$STATE_FILE"
 exit 0
