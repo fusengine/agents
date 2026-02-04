@@ -1,5 +1,17 @@
 # Release Notes
 
+## [1.36.15] - 04-02-2026
+
+### Added
+
+- **mcp**: Add 8 missing API keys support (GitHub, Supabase, Slack, Sentry, Brave, Stripe, Notion, Replicate)
+- **mcp**: Update mcp.json with verified packages (Playwright logging, Brave, Stripe, Notion)
+- **hooks**: Add auto-document-reads hook for tracking documentation reads
+
+### Changed
+
+- **versioning**: Simplify to PATCH-only (+0.0.1) across all commit types
+
 ## [1.36.14] - 03-02-2026
 
 ### Changed
