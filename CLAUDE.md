@@ -117,10 +117,8 @@ NEVER write UI code manually.
 ## Git Commits (MANDATORY)
 **ALWAYS use `/fuse-commit-pro:commit`** - NEVER use `git commit` directly.
 
-**Semantic Versioning (STRICT):**
-- `fix`, `chore`, `docs` → patch: 1.5.4 → 1.5.5
-- `feat` → minor: 1.5.5 → 1.6.0
-- `BREAKING CHANGE` → major: 1.6.0 → 2.0.0
+**Version Increment (PATCH only):**
+- ALL commit types → +0.0.1: 1.5.4 → 1.5.5 → 1.5.6 → ...
 
 ## MCP Servers Available
 | Server | Usage |

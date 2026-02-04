@@ -30,8 +30,8 @@ describe("api-keys config", () => {
 
   test("key names follow naming convention", () => {
     for (const key of API_KEYS) {
-      // Should be UPPER_SNAKE_CASE ending with _API_KEY
-      expect(key.name).toMatch(/^[A-Z][A-Z0-9_]*_API_KEY$/);
+      // Should be UPPER_SNAKE_CASE ending with _API_KEY, _TOKEN, _SECRET_KEY, _ACCESS_TOKEN, _AUTH_TOKEN, or _API_TOKEN
+      expect(key.name).toMatch(/^[A-Z][A-Z0-9_]*_(API_KEY|TOKEN|SECRET_KEY|ACCESS_TOKEN|AUTH_TOKEN|API_TOKEN)$/);
     }
   });
 
@@ -45,5 +45,24 @@ describe("api-keys config", () => {
     const testKey: EnvKey = API_KEYS[0];
     expect(testKey.name).toBeDefined();
     expect(testKey.description).toBeDefined();
+  });
+
+  test("url field is optional and valid when present", () => {
+    for (const key of API_KEYS) {
+      if (key.url) {
+        // Should be a valid URL
+        expect(key.url).toMatch(/^https?:\/\/.+/);
+      }
+    }
+  });
+
+  test("all keys have url field populated", () => {
+    for (const key of API_KEYS) {
+      expect(key.url).toBeDefined();
+      if (key.url) {
+        expect(typeof key.url).toBe("string");
+        expect(key.url.length).toBeGreaterThan(0);
+      }
+    }
   });
 });

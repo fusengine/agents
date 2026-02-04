@@ -101,14 +101,9 @@ If $ARGUMENTS provided, use as hint for the message.
 
 After commit, update `CHANGELOG.md` with semantic versioning:
 
-**Version Increment Rules:**
-- `fix` → PATCH: 1.4.0 → 1.4.1
-- `chore` → PATCH: 1.4.0 → 1.4.1
-- `docs` → PATCH: 1.4.0 → 1.4.1
-- `style` → PATCH: 1.4.0 → 1.4.1
-- `refactor` → PATCH: 1.4.0 → 1.4.1
-- `feat` → MINOR: 1.4.0 → 1.5.0
-- `BREAKING CHANGE` → MAJOR: 1.4.0 → 2.0.0
+**Version Increment Rules (PATCH only):**
+- ALL commit types → PATCH: 1.4.0 → 1.4.1 → 1.4.2 → ...
+- `fix`, `feat`, `chore`, `docs`, `style`, `refactor`, `test`, `ci` → +0.0.1
 
 **Format:**
 ```markdown

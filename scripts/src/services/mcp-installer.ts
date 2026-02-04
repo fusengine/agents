@@ -61,10 +61,30 @@ export async function installMcpServer(name: string, config: McpServerConfig): P
   }
 }
 
-/** Build Claude-compatible config (remove our custom fields) */
+/** Replace environment variables in string */
+function expandEnvVars(value: string): string {
+  const home = process.env.HOME || process.env.USERPROFILE || "";
+  return value.replace(/\$\{HOME\}/g, home).replace(/\$HOME/g, home);
+}
+
+/** Recursively expand env vars in config */
+function expandConfigVars(obj: unknown): unknown {
+  if (typeof obj === "string") return expandEnvVars(obj);
+  if (Array.isArray(obj)) return obj.map(expandConfigVars);
+  if (obj && typeof obj === "object") {
+    const result: Record<string, unknown> = {};
+    for (const [k, v] of Object.entries(obj)) {
+      result[k] = expandConfigVars(v);
+    }
+    return result;
+  }
+  return obj;
+}
+
+/** Build Claude-compatible config (remove our custom fields, expand vars) */
 function buildClaudeConfig(config: McpServerConfig): Record<string, unknown> {
   const { _description, requiresApiKey, apiKeyEnv, apiKeyUrl, ...claudeConfig } = config;
-  return claudeConfig;
+  return expandConfigVars(claudeConfig) as Record<string, unknown>;
 }
 
 /** Install multiple MCP servers with progress */

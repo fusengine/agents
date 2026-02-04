@@ -1,6 +1,6 @@
 {
 	"mcpServers": {
-		"_comment": "MCP Servers catalog for Fusengine Plugins installer",
+		"_comment": "MCP Servers catalog for Fusengine Plugins installer - Verified packages only",
 
 		"sequential-thinking": {
 			"_description": "Dynamic problem-solving with step-by-step reasoning",
@@ -23,38 +23,16 @@
 			"type": "stdio",
 			"requiresApiKey": false
 		},
-		"git": {
-			"_description": "Read, search and manipulate local Git repositories",
-			"command": "npx",
-			"args": ["-y", "@modelcontextprotocol/server-git"],
-			"type": "stdio",
-			"requiresApiKey": false
-		},
-		"fetch": {
-			"_description": "Web content fetching and conversion for LLMs",
-			"command": "npx",
-			"args": ["-y", "@modelcontextprotocol/server-fetch"],
-			"type": "stdio",
-			"requiresApiKey": false
-		},
-		"time": {
-			"_description": "Time and timezone conversion capabilities",
-			"command": "npx",
-			"args": ["-y", "@modelcontextprotocol/server-time"],
-			"type": "stdio",
-			"requiresApiKey": false
-		},
 		"playwright": {
-			"_description": "Browser automation, E2E testing and screenshots",
+			"_description": "Browser automation via accessibility tree (official Microsoft)",
 			"command": "npx",
-			"args": ["-y", "@anthropic/mcp-server-playwright"],
-			"type": "stdio",
-			"requiresApiKey": false
-		},
-		"puppeteer": {
-			"_description": "Headless Chrome automation and web scraping",
-			"command": "npx",
-			"args": ["-y", "@anthropic/mcp-server-puppeteer"],
+			"args": [
+				"@playwright/mcp@latest",
+				"--output-dir",
+				"${HOME}/.claude/logs/playwright",
+				"--save-session",
+				"--save-trace"
+			],
 			"type": "stdio",
 			"requiresApiKey": false
 		},
@@ -67,20 +45,6 @@
 			"env": {
 				"DATABASE_URL": "${DATABASE_URL}"
 			}
-		},
-		"sqlite": {
-			"_description": "Local SQLite database operations",
-			"command": "npx",
-			"args": ["-y", "@modelcontextprotocol/server-sqlite"],
-			"type": "stdio",
-			"requiresApiKey": false
-		},
-		"docker": {
-			"_description": "Docker container management, logs and images",
-			"command": "npx",
-			"args": ["-y", "@anthropic/mcp-server-docker"],
-			"type": "stdio",
-			"requiresApiKey": false
 		},
 		"shadcn": {
 			"_description": "shadcn/ui component registry and installation",
@@ -165,18 +129,6 @@
 			"apiKeyEnv": "GITHUB_TOKEN",
 			"apiKeyUrl": "https://github.com/settings/tokens"
 		},
-		"brave-search": {
-			"_description": "Private web search via Brave Search API",
-			"command": "npx",
-			"args": ["-y", "@anthropic/mcp-server-brave-search"],
-			"env": {
-				"BRAVE_API_KEY": "${BRAVE_API_KEY}"
-			},
-			"type": "stdio",
-			"requiresApiKey": true,
-			"apiKeyEnv": "BRAVE_API_KEY",
-			"apiKeyUrl": "https://brave.com/search/api"
-		},
 		"supabase": {
 			"_description": "Supabase database, auth, storage and migrations",
 			"command": "npx",
@@ -188,18 +140,6 @@
 			"requiresApiKey": true,
 			"apiKeyEnv": "SUPABASE_ACCESS_TOKEN",
 			"apiKeyUrl": "https://supabase.com/dashboard/account/tokens"
-		},
-		"notion": {
-			"_description": "Notion pages, databases and knowledge base access",
-			"command": "npx",
-			"args": ["-y", "@notionhq/mcp-server"],
-			"env": {
-				"NOTION_TOKEN": "${NOTION_TOKEN}"
-			},
-			"type": "stdio",
-			"requiresApiKey": true,
-			"apiKeyEnv": "NOTION_TOKEN",
-			"apiKeyUrl": "https://www.notion.so/my-integrations"
 		},
 		"slack": {
 			"_description": "Slack messages, channels and workspace management",
@@ -213,18 +153,6 @@
 			"apiKeyEnv": "SLACK_TOKEN",
 			"apiKeyUrl": "https://api.slack.com/apps"
 		},
-		"stripe": {
-			"_description": "Stripe payments, invoices, customers and subscriptions",
-			"command": "npx",
-			"args": ["-y", "@stripe/mcp-server"],
-			"env": {
-				"STRIPE_SECRET_KEY": "${STRIPE_SECRET_KEY}"
-			},
-			"type": "stdio",
-			"requiresApiKey": true,
-			"apiKeyEnv": "STRIPE_SECRET_KEY",
-			"apiKeyUrl": "https://dashboard.stripe.com/apikeys"
-		},
 		"sentry": {
 			"_description": "Sentry error tracking, issues and debugging",
 			"command": "npx",
@@ -236,6 +164,42 @@
 			"requiresApiKey": true,
 			"apiKeyEnv": "SENTRY_AUTH_TOKEN",
 			"apiKeyUrl": "https://sentry.io/settings/auth-tokens"
+		},
+		"brave-search": {
+			"_description": "Private web search via Brave Search API",
+			"command": "npx",
+			"args": ["-y", "@brave/brave-search-mcp-server"],
+			"env": {
+				"BRAVE_API_KEY": "${BRAVE_API_KEY}"
+			},
+			"type": "stdio",
+			"requiresApiKey": true,
+			"apiKeyEnv": "BRAVE_API_KEY",
+			"apiKeyUrl": "https://brave.com/search/api"
+		},
+		"stripe": {
+			"_description": "Stripe payments, invoices, customers and subscriptions",
+			"command": "npx",
+			"args": ["-y", "@stripe/mcp"],
+			"env": {
+				"STRIPE_SECRET_KEY": "${STRIPE_SECRET_KEY}"
+			},
+			"type": "stdio",
+			"requiresApiKey": true,
+			"apiKeyEnv": "STRIPE_SECRET_KEY",
+			"apiKeyUrl": "https://dashboard.stripe.com/apikeys"
+		},
+		"notion": {
+			"_description": "Notion pages, databases and knowledge base access",
+			"command": "npx",
+			"args": ["-y", "@notionhq/notion-mcp-server"],
+			"env": {
+				"NOTION_TOKEN": "${NOTION_TOKEN}"
+			},
+			"type": "stdio",
+			"requiresApiKey": true,
+			"apiKeyEnv": "NOTION_TOKEN",
+			"apiKeyUrl": "https://www.notion.so/my-integrations"
 		},
 		"replicate": {
 			"_description": "Run 1000+ AI models (Stable Diffusion, Whisper, etc.)",

@@ -71,10 +71,9 @@ Confirm? [Y/n]
 
 ## 6. Post-Commit: Update CHANGELOG.md (MANDATORY)
 
-**Semantic Versioning Rules:**
-- `fix/chore/docs/style/refactor/test/ci` → PATCH: 1.5.4 → 1.5.5
-- `feat` → MINOR: 1.5.5 → 1.6.0
-- `BREAKING CHANGE` → MAJOR: 1.6.0 → 2.0.0
+**Version Increment Rules (PATCH only):**
+- ALL commit types → PATCH: 1.5.4 → 1.5.5 → 1.5.6 → ...
+- `fix`, `feat`, `chore`, `docs`, `style`, `refactor`, `test`, `ci` → +0.0.1
 
 **Sequential chronology:** Increment by 1 only (no jumps: 1.5 → 1.6, not 1.5 → 1.8)
 

@@ -4,4 +4,5 @@
 export interface EnvKey {
   name: string;
   description: string;
+  url?: string;
 }

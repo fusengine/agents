@@ -74,9 +74,14 @@
 
     "PostToolUse": [
       {
-        "_description": "Track SOLID reference file reads",
+        "_description": "Track file reads (documentation and SOLID references)",
         "matcher": "Read",
         "hooks": [
+          {
+            "_description": "Auto-document important file reads to task docs",
+            "type": "command",
+            "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/post-tool-use/auto-document-reads.sh"
+          },
           {
             "_description": "Record when SOLID principles are read for session verification",
             "type": "command",
