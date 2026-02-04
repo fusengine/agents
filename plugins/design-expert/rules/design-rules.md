@@ -11,18 +11,17 @@
 
 ### ALWAYS USE (Copy these imports)
 ```css
-/* Display headings - Option A: Fontshare */
+/* Display headings - Fontshare (MANDATORY) */
 @import url('https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&display=swap');
 
-/* Body text - Option A: Fontshare */
+/* Body text - Fontshare (MANDATORY) */
 @import url('https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&display=swap');
 
 /* Alternative display */
 @import url('https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@400,500,700,800&display=swap');
 
-/* Option B: Inter (DesignCode UI style) */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Inter+Display:wght@100..900&display=swap');
+/* Code/Monospace */
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap');
 ```
 
 ## COLORS - MANDATORY

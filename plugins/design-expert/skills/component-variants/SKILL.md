@@ -1,23 +1,27 @@
 ---
 name: component-variants
-description: Component variant system with Glass, Outline, and Flat styles. Use when creating multi-style components, variant props, or style switching.
-allowed-tools: Read, Write, Edit, Glob, Grep
+description: Use when creating multi-style components, variant props, or style switching. Covers Glass, Outline, and Flat styles with CVA.
+versions:
+  cva: "1.x"
 user-invocable: true
+allowed-tools: Read, Write, Edit, Glob, Grep
+related-skills: glassmorphism-advanced, generating-components
 ---
 
 # Component Variants
 
-Three-style system inspired by DesignCode UI: Glass, Outline, Flat.
-
 ## Agent Workflow (MANDATORY)
 
-Before implementation:
+Before implementation, launch in parallel:
+
 1. **fuse-ai-pilot:explore-codebase** - Check existing variant patterns
 2. **fuse-ai-pilot:research-expert** - cva/class-variance-authority docs
 
 After: Run **fuse-ai-pilot:sniper** for validation.
 
-## The Three Styles
+---
+
+## Overview
 
 | Style | Characteristics | Use Case |
 |-------|-----------------|----------|
@@ -25,13 +29,17 @@ After: Run **fuse-ai-pilot:sniper** for validation.
 | **Outline** | Border only, no fill | Secondary actions |
 | **Flat** | Solid color, no effects | Dense UI, fallback |
 
-## Implementation with CVA
+---
+
+## Quick Reference
+
+### CVA Card Variants
 
 ```tsx
 import { cva, type VariantProps } from "class-variance-authority";
 
 const cardVariants = cva(
-  "rounded-2xl p-6 transition-all duration-200", // base
+  "rounded-2xl p-6 transition-all duration-200",
   {
     variants: {
       variant: {
@@ -50,36 +58,15 @@ const cardVariants = cva(
           "border border-border",
         ],
       },
-      size: {
-        sm: "p-4 rounded-xl",
-        default: "p-6 rounded-2xl",
-        lg: "p-8 rounded-3xl",
-      },
     },
     defaultVariants: {
       variant: "glass",
-      size: "default",
     },
   }
 );
-
-interface CardProps extends VariantProps<typeof cardVariants> {
-  children: React.ReactNode;
-}
-
-export function Card({ variant, size, children }: CardProps) {
-  return (
-    <motion.div
-      className={cardVariants({ variant, size })}
-      whileHover={{ y: -4 }}
-    >
-      {children}
-    </motion.div>
-  );
-}
 ```
 
-## Button Variants
+### Button Variants
 
 ```tsx
 const buttonVariants = cva(
@@ -87,48 +74,16 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        glass: [
-          "bg-white/20 backdrop-blur-md",
-          "border border-white/30",
-          "text-foreground",
-          "hover:bg-white/30",
-        ],
-        outline: [
-          "bg-transparent",
-          "border-2 border-primary",
-          "text-primary",
-          "hover:bg-primary/10",
-        ],
-        flat: [
-          "bg-primary",
-          "text-primary-foreground",
-          "hover:bg-primary/90",
-        ],
+        glass: "bg-white/20 backdrop-blur-md border border-white/30",
+        outline: "bg-transparent border-2 border-primary text-primary",
+        flat: "bg-primary text-primary-foreground",
       },
     },
   }
 );
 ```
 
-## Automatic Style Detection
-
-```tsx
-function usePreferredVariant() {
-  // Detect background type for auto-variant
-  const [variant, setVariant] = useState<"glass" | "outline" | "flat">("glass");
-
-  useEffect(() => {
-    // Glass works best on gradient/image backgrounds
-    // Flat works best on solid backgrounds
-    const bgType = detectBackgroundType();
-    setVariant(bgType === "gradient" ? "glass" : "flat");
-  }, []);
-
-  return variant;
-}
-```
-
-## Dark Mode Variants
+### Dark Mode Per Variant
 
 ```tsx
 const glassVariant = {
@@ -136,35 +91,13 @@ const glassVariant = {
   dark: "bg-black/40 backdrop-blur-xl border-white/10",
 };
 
-// Usage with Tailwind
-className="bg-white/80 dark:bg-black/40 backdrop-blur-xl
-           border-white/20 dark:border-white/10"
+// Tailwind
+className="bg-white/80 dark:bg-black/40 backdrop-blur-xl"
 ```
 
-## Style Switching UI
+---
 
-```tsx
-function StyleSwitcher({ value, onChange }) {
-  return (
-    <div className="flex gap-1 p-1 bg-muted rounded-lg">
-      {["glass", "outline", "flat"].map((style) => (
-        <button
-          key={style}
-          onClick={() => onChange(style)}
-          className={cn(
-            "px-3 py-1 rounded-md text-sm capitalize",
-            value === style && "bg-background shadow-sm"
-          )}
-        >
-          {style}
-        </button>
-      ))}
-    </div>
-  );
-}
-```
-
-## Validation
+## Validation Checklist
 
 ```
 [ ] All 3 variants defined (glass, outline, flat)
@@ -174,7 +107,18 @@ function StyleSwitcher({ value, onChange }) {
 [ ] Hover states per variant
 ```
 
-## References
+---
 
-- `../../references/design-patterns.md` - Component patterns
-- `../../skills/glassmorphism-advanced/SKILL.md` - Glass details
+## Best Practices
+
+### DO
+- Use CVA for type-safe variants
+- Define all three styles consistently
+- Handle dark mode per variant
+- Add hover/focus states
+
+### DON'T
+- Mix variant systems
+- Forget default variant
+- Skip dark mode
+- Ignore hover states
