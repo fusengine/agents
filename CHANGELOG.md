@@ -1,5 +1,16 @@
 # Release Notes
 
+## [1.36.16] - 04-02-2026
+
+### Changed
+
+- **design-expert**: Restructure to skill-creator pattern with modular rules
+  - Move references from root to skills/*/references/
+  - Extract APEX workflow, Gemini Design, Framework Integration to rules/
+  - Add Playwright browser preview tools (navigate, snapshot, screenshot)
+  - Reduce agent file from 216 to 94 lines
+  - Split large references (>150 lines) into focused files
+
 ## [1.36.15] - 04-02-2026
 
 ### Added
