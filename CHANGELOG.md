@@ -1,5 +1,11 @@
 # Release Notes
 
+## [1.36.19] - 07-02-2026
+
+### Added
+
+- **security**: Add SECURITY.md with vulnerability reporting policy and scope
+
 ## [1.36.18] - 07-02-2026
 
 ### Added
