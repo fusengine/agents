@@ -343,12 +343,10 @@
       "skills": [
         "./skills/solid-react",
         "./skills/react-19",
-        "./skills/react-hooks",
         "./skills/react-tanstack-router",
         "./skills/react-state",
         "./skills/react-forms",
         "./skills/react-testing",
-        "./skills/react-performance",
         "./skills/react-shadcn",
         "./skills/react-i18n"
       ]

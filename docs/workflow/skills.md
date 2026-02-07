@@ -61,18 +61,16 @@
 | `laravel-i18n` | Localization |
 | `solid-php` | SOLID for PHP |
 
-## fuse-react (10 skills)
+## fuse-react (8 skills)
 
 | Skill | Description |
 |-------|-------------|
-| `react-19` | Core React 19 |
-| `react-hooks` | Hooks patterns |
+| `react-19` | Core React 19, hooks, performance |
 | `react-state` | Zustand, Jotai |
 | `react-forms` | TanStack Form |
 | `react-tanstack-router` | TanStack Router |
 | `react-shadcn` | shadcn/ui |
 | `react-testing` | Testing Library |
-| `react-performance` | Optimization |
 | `react-i18n` | react-i18next |
 | `solid-react` | SOLID for React |
 
