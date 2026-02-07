@@ -1,5 +1,23 @@
 # Release Notes
 
+## [1.36.18] - 07-02-2026
+
+### Added
+
+- **agent-teams**: Add delegation rules to CLAUDE.md (lead-as-coordinator, file ownership, max 4 teammates)
+- **agent-teams**: Create docs/workflow/agent-teams.md with full delegation guide
+- **hooks**: Add 3 new lifecycle hooks: PreCompact, SessionEnd, Setup
+- **hooks**: Add bash scripts for pre-compact, session-end, and setup hooks
+- **installer**: Add Agent Teams prompt in setup-runner (enable/disable)
+- **installer**: Add enableAgentTeams/isAgentTeamsEnabled to settings-manager
+
+### Changed
+
+- **apex**: Migrate TodoWrite → TaskCreate/TaskUpdate across 17 APEX references
+- **skills**: Replace "launch in parallel" → TeamCreate across 61 skills/agents
+- **hooks**: Add PreCompact, SessionEnd, Setup to HookType interface
+- **docs**: Update README, docs index, agents doc with Agent Teams links
+
 ## [1.36.16] - 04-02-2026
 
 ### Changed
