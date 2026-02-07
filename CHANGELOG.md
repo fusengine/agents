@@ -1,5 +1,12 @@
 # Release Notes
 
+## [1.36.20] - 07-02-2026
+
+### Fixed
+
+- **fuse-react**: Remove orphan skill references for `react-hooks` and `react-performance` in marketplace.json
+- **docs**: Update react.md and skills.md to reflect merged skills (8 instead of 10)
+
 ## [1.36.19] - 07-02-2026
 
 ### Added
