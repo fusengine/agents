@@ -12,7 +12,7 @@ related-skills: designing-systems, dark-light-modes
 
 ## Agent Workflow (MANDATORY)
 
-Before implementation, launch in parallel:
+Before implementation, use `TeamCreate` to spawn 3 agents:
 
 1. **fuse-ai-pilot:explore-codebase** - Find existing tokens
 2. **fuse-ai-pilot:research-expert** - Tailwind v4 @theme patterns

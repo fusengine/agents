@@ -102,7 +102,7 @@ hooks:
 
 ### Required Sections
 
-1. **Agent Workflow (MANDATORY)** - 3 parallel agents
+1. **Agent Workflow (MANDATORY)** - use `TeamCreate` to spawn 3 agents
 2. **MANDATORY SKILLS USAGE** - Skill mapping table
 3. **SOLID Rules** - Reference to solid-[stack]
 4. **Local Documentation** - Skill paths

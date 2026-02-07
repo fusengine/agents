@@ -192,6 +192,48 @@
       }
     ],
 
+    "PreCompact": [
+      {
+        "_description": "Save APEX state before context compression",
+        "matcher": "",
+        "hooks": [
+          {
+            "_description": "Persist current task state and decisions to .claude/apex/",
+            "type": "command",
+            "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/pre-compact/save-apex-state.sh"
+          }
+        ]
+      }
+    ],
+
+    "SessionEnd": [
+      {
+        "_description": "Cleanup session and save stats",
+        "matcher": "",
+        "hooks": [
+          {
+            "_description": "Remove temp files and save session statistics",
+            "type": "command",
+            "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/session-end/cleanup-session.sh"
+          }
+        ]
+      }
+    ],
+
+    "Setup": [
+      {
+        "_description": "First-run validation on plugin installation",
+        "matcher": "",
+        "hooks": [
+          {
+            "_description": "Validate API keys and dependencies are configured",
+            "type": "command",
+            "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/setup/validate-setup.sh"
+          }
+        ]
+      }
+    ],
+
     "Notification": [
       {
         "_description": "Sound for permission requests (Bash, Write, Edit confirmations)",

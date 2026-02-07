@@ -16,7 +16,7 @@ Beautiful, accessible components built on Radix UI with Tailwind CSS styling.
 
 ## Agent Workflow (MANDATORY)
 
-Before ANY implementation, launch in parallel:
+Before ANY implementation, use `TeamCreate` to spawn 3 agents:
 
 1. **fuse-ai-pilot:explore-codebase** - Analyze existing components and patterns
 2. **fuse-ai-pilot:research-expert** - Verify latest shadcn/ui docs via Context7/Exa

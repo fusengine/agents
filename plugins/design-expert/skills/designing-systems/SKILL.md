@@ -13,7 +13,7 @@ related-skills: generating-components, theming-tokens, dark-light-modes
 
 ## Agent Workflow (MANDATORY)
 
-Before ANY design system work, launch in parallel:
+Before ANY design system work, use `TeamCreate` to spawn 3 agents:
 
 1. **fuse-ai-pilot:explore-codebase** - Find existing CSS variables, Tailwind config, colors
 2. **fuse-ai-pilot:research-expert** - Verify latest OKLCH and Tailwind v4 patterns

@@ -15,7 +15,7 @@ related-skills: solid-php, laravel-permission, laravel-api
 
 ## Agent Workflow (MANDATORY)
 
-Before ANY implementation in FuseCore project, launch in parallel:
+Before ANY implementation in FuseCore project, use `TeamCreate` to spawn 3 agents:
 
 1. **fuse-ai-pilot:explore-codebase** - Analyze existing modules in `/FuseCore/`
 2. **fuse-ai-pilot:research-expert** - Verify Laravel 12 patterns via Context7

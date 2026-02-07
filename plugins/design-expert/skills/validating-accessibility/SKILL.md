@@ -13,7 +13,7 @@ related-skills: generating-components, interactive-states
 
 ## Agent Workflow (MANDATORY)
 
-Before ANY accessibility validation, launch in parallel:
+Before ANY accessibility validation, use `TeamCreate` to spawn 3 agents:
 
 1. **fuse-ai-pilot:explore-codebase** - Find components to audit
 2. **fuse-ai-pilot:research-expert** - Verify latest WCAG 2.2 requirements

@@ -44,6 +44,16 @@ bun --cwd $env:USERPROFILE\.claude\plugins\marketplaces\fusengine-plugins\plugin
 ~\.claude\plugins\marketplaces\fusengine-plugins\setup.ps1
 ```
 
+## Features
+
+- **APEX Workflow** - Systematic Analyze → Plan → Execute → eLicit → eXamine methodology
+- **[Agent Teams](docs/workflow/agent-teams.md) (beta)** - Parallel delegation with file ownership, max 4 teammates, lead-as-coordinator
+- **15 Expert Agents** - Next.js, Laravel, React, Swift, Tailwind, Design, and more
+- **70 Skills** - Framework-specific knowledge modules
+- **SOLID Enforcement** - Automatic file size limits, interface separation, quality gates
+- **12 Lifecycle Hooks** - PreToolUse, PostToolUse, PreCompact, SessionEnd, Setup, and more
+- **Smart Commits** - Conventional commits with auto-detection
+
 ## Stats
 
 | Category | Count |
@@ -52,6 +62,7 @@ bun --cwd $env:USERPROFILE\.claude\plugins\marketplaces\fusengine-plugins\plugin
 | Agents | 15 |
 | Skills | 70 |
 | Commands | 24 |
+| Hooks | 12 |
 
 ## Documentation
 

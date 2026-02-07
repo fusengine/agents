@@ -12,7 +12,7 @@ next_step: references/nextjs/03.5-elicit.md
 ## When to Use
 
 - After planning phase complete
-- Following TodoWrite task order
+- Following TaskCreate task order
 - With verified APIs from research
 
 ---

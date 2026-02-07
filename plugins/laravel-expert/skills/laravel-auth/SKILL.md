@@ -14,7 +14,7 @@ related-skills: laravel-api, laravel-permission, fusecore
 
 ## Agent Workflow (MANDATORY)
 
-Before ANY implementation, launch in parallel:
+Before ANY implementation, use `TeamCreate` to spawn 3 agents:
 
 1. **fuse-ai-pilot:explore-codebase** - Check existing auth setup, guards, policies
 2. **fuse-ai-pilot:research-expert** - Verify latest Laravel 12 auth docs via Context7

@@ -15,7 +15,7 @@ iOS-specific development with XcodeBuildMCP automation tools.
 
 ## Agent Workflow (MANDATORY)
 
-Before ANY implementation, launch in parallel:
+Before ANY implementation, use `TeamCreate` to spawn 3 agents:
 
 1. **fuse-ai-pilot:explore-codebase** - Analyze existing iOS patterns
 2. **fuse-ai-pilot:research-expert** - Verify latest iOS 26 docs via Context7/Exa

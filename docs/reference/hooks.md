@@ -55,19 +55,22 @@ All plugin hooks are automatically detected and loaded.
 | **Stop** | Claude finishes responding | Play completion sound notification |
 | **PermissionRequest** | Permission dialog shown | Play sound for ALL permission prompts |
 | **Notification** | Permission/idle/elicitation | Play sound alerts for user attention |
+| **PreCompact** | Before context compression | Save APEX state, preserve task decisions |
+| **SessionEnd** | Session closes | Cleanup temp files, save session stats |
+| **Setup** | Plugin first-run | Validate API keys and dependencies |
 
 ## Plugins with Hooks
 
-| Plugin | PreToolUse | PostToolUse | UserPromptSubmit | SessionStart | SubagentStop | Stop | Notification |
-|--------|------------|-------------|------------------|--------------|--------------|------|--------------|
-| **ai-pilot** | APEX reminder | SOLID check | Project detection + APEX injection | - | - | - | - |
-| **core-guards** | Git, Install, Security guards | File size, Session tracking | CLAUDE.md injection | Context, Cleanup | Memory | Sound | Sounds |
-| **react-expert** | Block without skill | React SOLID validation | - | - | - | - | - |
-| **nextjs-expert** | Block without skill | Next.js SOLID validation | - | - | - | - | - |
-| **laravel-expert** | Block without skill | Laravel SOLID validation | - | - | - | - | - |
-| **swift-apple-expert** | Block without skill | Swift SOLID validation | - | - | - | - | - |
-| **tailwindcss** | Block without skill | Tailwind best practices | - | - | - | - | - |
-| **design-expert** | Block without skill | Accessibility check | - | - | - | - | - |
+| Plugin | PreToolUse | PostToolUse | UserPromptSubmit | SessionStart | SubagentStop | Stop | Notification | PreCompact | SessionEnd | Setup |
+|--------|------------|-------------|------------------|--------------|--------------|------|--------------|------------|------------|-------|
+| **ai-pilot** | APEX reminder | SOLID check | Project detection + APEX injection | - | - | - | - | - | - | - |
+| **core-guards** | Git, Install, Security guards | File size, Session tracking | CLAUDE.md injection | Context, Cleanup | Memory | Sound | Sounds | APEX state | Cleanup, Stats | API keys |
+| **react-expert** | Block without skill | React SOLID validation | - | - | - | - | - | - | - | - |
+| **nextjs-expert** | Block without skill | Next.js SOLID validation | - | - | - | - | - | - | - | - |
+| **laravel-expert** | Block without skill | Laravel SOLID validation | - | - | - | - | - | - | - | - |
+| **swift-apple-expert** | Block without skill | Swift SOLID validation | - | - | - | - | - | - | - | - |
+| **tailwindcss** | Block without skill | Tailwind best practices | - | - | - | - | - | - | - | - |
+| **design-expert** | Block without skill | Accessibility check | - | - | - | - | - | - | - | - |
 
 ## Loader Architecture (v2.0 - Bun + SOLID)
 

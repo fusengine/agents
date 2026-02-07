@@ -90,7 +90,7 @@ This creates:
 | --- | --- | --- |
 | **00** | `references/00-init-branch.md` | Create feature branch |
 | **01** | `references/01-analyze-code.md` | Explore + Research (APEX A) |
-| **02** | `references/02-features-plan.md` | TodoWrite planning (APEX P) |
+| **02** | `references/02-features-plan.md` | TaskCreate planning (APEX P) |
 | **03** | `references/03-execution.md` | Implementation (APEX E) |
 | **03.5** | `references/03.5-elicit.md` | Expert self-review (APEX L) ← NEW |
 | **04** | `references/04-validation.md` | sniper validation (APEX X) |
@@ -109,7 +109,7 @@ This creates:
 ```text
 1. 00-init-branch     → git checkout -b feature/xxx
 2. 01-analyze-code    → explore-codebase + research-expert
-3. 02-features-plan   → TodoWrite task breakdown
+3. 02-features-plan   → TaskCreate task breakdown
 4. 03-execution       → Implement (files <100 lines)
 5. 03.5-elicit        → Expert self-review (75 techniques) ← NEW
 6. 04-validation      → sniper agent
@@ -192,12 +192,12 @@ ALWAYS run 2 agents in parallel:
 ### P - Plan
 
 ```text
-ALWAYS use TodoWrite:
+ALWAYS use TaskCreate:
 
 1. Break down into tasks
 2. Each task <100 lines
 3. Plan file splits FIRST
-4. Map dependencies
+4. Map dependencies (addBlockedBy)
 ```
 
 ### E - Execute
@@ -338,7 +338,7 @@ refactor(api): extract fetch utilities
                       │
                       ▼
               ┌───────────────┐
-              │ 02-plan       │ ← TodoWrite
+              │ 02-plan       │ ← TaskCreate
               └───────┬───────┘
                       │
                       ▼

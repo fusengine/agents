@@ -32,7 +32,7 @@ Every agent file must include these sections after the frontmatter.
 ```markdown
 ## Agent Workflow (MANDATORY)
 
-Before ANY implementation, launch in parallel:
+Before ANY implementation, use `TeamCreate` to spawn 3 agents:
 
 1. **fuse-ai-pilot:explore-codebase** - Analyze [domain] patterns
 2. **fuse-ai-pilot:research-expert** - Verify latest [tech] docs via Context7/Exa

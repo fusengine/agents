@@ -15,7 +15,7 @@ Swift 6 fundamentals shared across all Apple platforms.
 
 ## Agent Workflow (MANDATORY)
 
-Before ANY implementation, launch in parallel:
+Before ANY implementation, use `TeamCreate` to spawn 3 agents:
 
 1. **fuse-ai-pilot:explore-codebase** - Analyze existing Swift patterns
 2. **fuse-ai-pilot:research-expert** - Verify latest Swift 6 docs via Context7/Exa

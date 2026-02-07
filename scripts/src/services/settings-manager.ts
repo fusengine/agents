@@ -56,6 +56,20 @@ export function configureDefaults(settings: Settings): Settings {
   return settings;
 }
 
+/** Enable Agent Teams experimental feature */
+export function enableAgentTeams(settings: Settings): Settings {
+  const env = (settings.env as Record<string, string>) || {};
+  env.CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS = "1";
+  settings.env = env;
+  return settings;
+}
+
+/** Check if Agent Teams is already enabled */
+export function isAgentTeamsEnabled(settings: Settings): boolean {
+  const env = settings.env as Record<string, string> | undefined;
+  return env?.CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS === "1";
+}
+
 /** Configure the statusline */
 export function configureStatusLine(settings: Settings, statuslineDir: string): Settings {
   if (!settings.statusLine) {

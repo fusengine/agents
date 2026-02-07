@@ -1,13 +1,13 @@
 ---
 name: 03-plan-component
-description: Plan component implementation with TodoWrite
+description: Plan component implementation with TaskCreate
 prev_step: references/design/02-search-inspiration.md
 next_step: references/design/04-code-component.md
 ---
 
 # 03 - Plan Component (APEX Phase P)
 
-**Plan implementation using TodoWrite before coding.**
+**Plan implementation using TaskCreate before coding.**
 
 ## When to Use
 
@@ -17,12 +17,12 @@ next_step: references/design/04-code-component.md
 
 ---
 
-## TodoWrite Structure
+## TaskCreate Structure
 
 ### Example: Hero Section
 
 ```text
-TodoWrite:
+TaskCreate for each step:
 1. [ ] Create HeroSection component shell
 2. [ ] Add typography (heading, subheading)
 3. [ ] Implement background (gradient orbs)
@@ -30,12 +30,13 @@ TodoWrite:
 5. [ ] Implement Framer Motion animations
 6. [ ] Add responsive styles
 7. [ ] Validate accessibility
+Use addBlockedBy to set dependencies. TaskUpdate to track progress.
 ```
 
 ### Example: Card Component
 
 ```text
-TodoWrite:
+TaskCreate for each step:
 1. [ ] Create Card base component
 2. [ ] Add CardHeader, CardContent, CardFooter
 3. [ ] Implement hover animation
@@ -98,7 +99,7 @@ If component > 90 lines:
 ## Validation Checklist
 
 ```text
-[ ] TodoWrite created
+[ ] TaskCreate plan created
 [ ] Tasks are atomic
 [ ] File sizes estimated (< 100 lines each)
 [ ] Design tokens documented

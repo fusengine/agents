@@ -15,7 +15,7 @@ related-skills: designing-systems, adding-animations, validating-accessibility
 
 ## Agent Workflow (MANDATORY)
 
-Before ANY component generation, launch in parallel:
+Before ANY component generation, use `TeamCreate` to spawn 3 agents:
 
 1. **fuse-ai-pilot:explore-codebase** - Analyze existing UI patterns, colors, typography
 2. **fuse-ai-pilot:research-expert** - Verify latest component patterns via Context7

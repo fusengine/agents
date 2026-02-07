@@ -12,7 +12,7 @@ related-skills: research, exploration
 
 ## Agent Workflow (MANDATORY)
 
-Before ANY skill creation, launch in parallel:
+Before ANY skill creation, use `TeamCreate` to spawn 3 agents:
 
 1. **fuse-ai-pilot:explore-codebase** - Check existing skills, analyze structure
 2. **fuse-ai-pilot:research-expert** - Fetch latest official documentation online

@@ -17,16 +17,17 @@ next_step: references/03-execution.md
 
 ---
 
-## TodoWrite Planning
+## TaskCreate Planning
 
 ### Create Task Breakdown
 
 ```text
-Use TodoWrite tool to create:
+Use TaskCreate tool to create:
 1. Ordered list of implementation steps
 2. Each step <100 lines of code
 3. Clear acceptance criteria
-4. Dependencies between tasks
+4. Dependencies between tasks (addBlockedBy)
+Use TaskUpdate to track status (in_progress/completed).
 ```
 
 ### Task Structure
@@ -201,7 +202,7 @@ tests
 ## Validation Checklist
 
 ```text
-□ TodoWrite plan created
+□ TaskCreate plan created
 □ All tasks <100 lines each
 □ Interfaces planned FIRST
 □ File splits pre-planned

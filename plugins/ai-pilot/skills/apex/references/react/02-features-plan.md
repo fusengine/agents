@@ -17,7 +17,7 @@ next_step: references/react/03-execution.md
 
 ---
 
-## TodoWrite Planning
+## TaskCreate Planning
 
 ### React Feature Breakdown
 
@@ -151,7 +151,7 @@ modules/[feature]/
 ## Validation Checklist
 
 ```text
-[ ] TodoWrite plan created
+[ ] TaskCreate plan created
 [ ] All tasks <100 lines each
 [ ] Interfaces planned FIRST
 [ ] Hooks separated from components

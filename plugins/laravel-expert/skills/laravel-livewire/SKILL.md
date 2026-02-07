@@ -14,7 +14,7 @@ related-skills: laravel-blade, laravel-testing, laravel-api
 
 ## Agent Workflow (MANDATORY)
 
-Before ANY implementation, launch in parallel:
+Before ANY implementation, use `TeamCreate` to spawn 3 agents:
 
 1. **fuse-ai-pilot:explore-codebase** - Check existing Livewire components
 2. **fuse-ai-pilot:research-expert** - Verify Livewire 3 patterns via Context7

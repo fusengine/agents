@@ -25,7 +25,7 @@ X - eXamine    : Validate the result
 ┌─────────────────────────────────────────────────────┐
 │                     P - PLAN                         │
 ├─────────────────────────────────────────────────────┤
-│ 1. Use TodoWrite to decompose                       │
+│ 1. Use TaskCreate to decompose                       │
 │ 2. Estimate file sizes (<100 lines)                 │
 │ 3. Identify necessary modifications                 │
 │ 4. Validate plan (optional: EnterPlanMode)          │

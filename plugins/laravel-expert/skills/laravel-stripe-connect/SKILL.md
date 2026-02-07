@@ -14,7 +14,7 @@ related-skills: laravel-billing, laravel-api, laravel-auth
 
 ## Agent Workflow (MANDATORY)
 
-Before ANY implementation, launch in parallel:
+Before ANY implementation, use `TeamCreate` to spawn 3 agents:
 
 1. **fuse-ai-pilot:explore-codebase** - Check existing payment setup, Seller model
 2. **fuse-ai-pilot:research-expert** - Verify latest Stripe Connect docs via Context7

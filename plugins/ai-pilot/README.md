@@ -17,7 +17,7 @@ The `/apex` skill automatically detects the project type and loads framework-spe
 
 1. `00-init-branch` - Create branch, verify git status
 2. `01-analyze` - Explore codebase, existing patterns
-3. `02-features-plan` - TodoWrite, estimate files <100 lines
+3. `02-features-plan` - TaskCreate, estimate files <100 lines
 4. `03-execution` - SOLID implementation, separated interfaces
 5. `04-validation` - Linters, type-check, build
 6. `05-review` - Self-review, quality checklist
@@ -65,6 +65,6 @@ The `/apex` skill automatically detects the project type and loads framework-spe
 ## APEX Workflow
 
 1. **A**nalyze - `explore-codebase` + `research-expert` in parallel
-2. **P**lan - `TodoWrite` for planning, files <100 lines
+2. **P**lan - `TaskCreate` for planning, files <100 lines
 3. **E**xecute - Specialized agents, SOLID, separated interfaces
 4. **e**Xamine - `sniper` for final validation (MANDATORY)

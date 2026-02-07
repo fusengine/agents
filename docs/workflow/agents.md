@@ -32,6 +32,12 @@
 | `commit-detector` | fuse-commit-pro | Detect optimal commit type |
 | `solid-orchestrator` | fuse-solid | SOLID validation across languages |
 
+## Agent Teams
+
+Agents can work in parallel via `TeamCreate` with separate context windows. The lead delegates tasks with exclusive file ownership per teammate.
+
+See [Agent Teams](agent-teams.md) for delegation rules, anti-patterns, and examples.
+
 ## Usage
 
 Agents are launched automatically based on project detection, or manually:

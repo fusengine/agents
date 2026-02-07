@@ -13,7 +13,7 @@ related-skills: generating-components, interactive-states
 
 ## Agent Workflow (MANDATORY)
 
-Before ANY animation work, launch in parallel:
+Before ANY animation work, use `TeamCreate` to spawn 3 agents:
 
 1. **fuse-ai-pilot:explore-codebase** - Find existing Framer Motion patterns
 2. **fuse-ai-pilot:research-expert** - Verify latest Framer Motion v11 API

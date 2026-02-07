@@ -7,6 +7,7 @@
 ## Workflow
 - [APEX Methodology](workflow/apex.md) - Analyze → Plan → Execute → eLicit → eXamine
 - [Agents](workflow/agents.md) - 15 specialized agents
+- [Agent Teams](workflow/agent-teams.md) - Delegation, parallel execution, coordination
 - [Skills](workflow/skills.md) - 70 framework skills
 - [Commands](workflow/commands.md) - 24 slash commands
 

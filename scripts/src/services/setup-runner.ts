@@ -14,6 +14,8 @@ import {
   configureHooks,
   configureDefaults,
   configureStatusLine,
+  enableAgentTeams,
+  isAgentTeamsEnabled,
 } from "./settings-manager";
 import { copyExecutable, filesAreEqual, makeScriptsExecutable } from "../utils/fs-helpers";
 import { configureApiKeys, configureShell, checkApiKeys } from "./env-manager";
@@ -66,6 +68,16 @@ export async function runSetup(paths: SetupPaths, skipEnv: boolean): Promise<voi
     } catch {
       s.stop("Statusline installation failed");
     }
+  }
+
+  if (!isAgentTeamsEnabled(settings)) {
+    const enable = await p.confirm({ message: "Enable Agent Teams? (beta)", initialValue: true });
+    if (enable && !p.isCancel(enable)) {
+      settings = enableAgentTeams(settings);
+      p.log.success("Agent Teams enabled");
+    }
+  } else {
+    p.log.info("Agent Teams already enabled");
   }
 
   await saveSettings(paths.settings, settings);

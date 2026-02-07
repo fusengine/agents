@@ -14,9 +14,11 @@ Expert full-stack developer. ALWAYS respond in French. Latest stable versions (2
 4. **ALWAYS run `fuse-ai-pilot:sniper`** after ANY code modification - NO EXCEPTIONS
 
 ## Before ANY Action (MANDATORY)
-**ALWAYS launch in parallel:**
+**ALWAYS launch agents in parallel (Agent Teams for complex tasks):**
 ```
-fuse-ai-pilot:explore-codebase + fuse-ai-pilot:research-expert → domain agent → fuse-ai-pilot:sniper
+fuse-ai-pilot:explore-codebase + fuse-ai-pilot:research-expert + [domain-expert]
+→ TeamCreate for multi-file tasks (true parallel, separate contexts)
+→ fuse-ai-pilot:sniper after ANY modification
 ```
 This applies to: ALL tasks (questions, features, fixes, refactoring, exploration)
 
@@ -37,11 +39,15 @@ This applies to: ALL tasks (questions, features, fixes, refactoring, exploration
 ## APEX Workflow (MANDATORY)
 **A**nalyze → **P**lan → **E**xecute → e**L**icit → e**X**amine
 
-### A - Analyze (ALWAYS 3 AGENTS IN PARALLEL)
-`explore-codebase` (architecture) + `research-expert` (docs) + `[detected-expert-agent]`
+### A - Analyze (ALWAYS via TeamCreate)
+`TeamCreate` → spawn 3 teammates in parallel:
+- `explore-codebase` (architecture)
+- `research-expert` (docs)
+- `[detected-expert-agent]` (framework expertise)
 
 ### P - Plan
-`TodoWrite` task breakdown, estimate files <100 lines, identify modifications
+`TaskCreate` task breakdown with dependencies (`addBlockedBy`), estimate files <100 lines, identify modifications
+`TaskUpdate` tracks status: pending → in_progress → completed
 
 ### E - Execute
 Use `expert-agent`, follow SOLID rules, split files at 90 lines
@@ -75,6 +81,24 @@ Expert auto-review with 75 elicitation techniques before sniper
 - `--quick`: Skip Analyze, direct Execute
 - `--skip-elicit`: Skip eLicit, direct eXamine
 - `--no-sniper`: Skip eXamine (not recommended)
+
+## Agent Teams - Delegation (MANDATORY)
+
+**Lead = Coordinator ONLY.** Le lead ne code JAMAIS, il orchestre.
+
+### Rules:
+1. **File ownership exclusif** - Chaque teammate possede ses fichiers, JAMAIS d'edits partages
+2. **Tasks bien scopees** - Chaque `TaskCreate` precise: fichiers cibles, output attendu, criteres
+3. **`mode: "delegate"`** - Toujours pour le lead (restreint aux outils de coordination)
+4. **`TaskUpdate` obligatoire** - Chaque teammate DOIT marquer `completed` avant idle
+5. **Max 4 teammates** - Au-dela, overhead coordination > gains parallelisme
+6. **80% planning, 20% execution** - Specs detaillees = meilleurs resultats agents
+
+### Anti-patterns (FORBIDDEN):
+- Lead qui implemente au lieu de deleguer
+- 2 agents qui editent le meme fichier simultanement
+- Tasks vagues ("build this feature") sans specs de fichiers
+- Oublier `TaskUpdate` → taches bloquees indefiniment
 
 ## SOLID Rules (All Languages)
 1. **Files < 100 lines** - Split at 90 (ts/js/py/go/rs/java/php/cpp/rb/swift)
@@ -132,6 +156,9 @@ NEVER write UI code manually.
 ## Enforcement (Hooks)
 - `PreToolUse`: Block interfaces in components, dangerous git
 - `PostToolUse`: Block files >100 lines, auto-sniper on 2+ changes
+- `PreCompact`: Save APEX state before context compression
+- `SessionEnd`: Cleanup temp files, save session stats
+- `Setup`: First-run validation of API keys and dependencies
 
 ## Documentation Rules
 Check/create `docs/` folder → ALL docs in `docs/` → NEVER outside except root README.md

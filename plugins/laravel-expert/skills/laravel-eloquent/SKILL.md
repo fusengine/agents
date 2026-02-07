@@ -13,7 +13,7 @@ related-skills: laravel-migrations, laravel-api, laravel-testing
 
 ## Agent Workflow (MANDATORY)
 
-Before ANY implementation, launch in parallel:
+Before ANY implementation, use `TeamCreate` to spawn 3 agents:
 
 1. **fuse-ai-pilot:explore-codebase** - Check existing models, relationships
 2. **fuse-ai-pilot:research-expert** - Verify latest Eloquent docs via Context7

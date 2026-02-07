@@ -15,7 +15,7 @@ related-skills: laravel-auth, laravel-api, fusecore
 
 ## Agent Workflow (MANDATORY)
 
-Before ANY implementation, launch in parallel:
+Before ANY implementation, use `TeamCreate` to spawn 3 agents:
 
 1. **fuse-ai-pilot:explore-codebase** - Check existing billing setup, User model
 2. **fuse-ai-pilot:research-expert** - Verify latest Cashier docs via Context7

@@ -12,7 +12,7 @@ related-skills: theming-tokens, designing-systems
 
 ## Agent Workflow (MANDATORY)
 
-Before implementation, launch in parallel:
+Before implementation, use `TeamCreate` to spawn 3 agents:
 
 1. **fuse-ai-pilot:explore-codebase** - Check existing theme setup
 2. **fuse-ai-pilot:research-expert** - next-themes or theme provider docs

@@ -7,7 +7,7 @@
 | **A** | 00-load-skills | Read required skills FIRST |
 | **A** | 01-analyze-design | `explore-codebase` → design tokens + PROJECT STRUCTURE |
 | **A** | 02-search-inspiration | 21st.dev + shadcn search |
-| **P** | 03-plan-component | TodoWrite + file planning (<100 lines) |
+| **P** | 03-plan-component | TaskCreate + file planning (<100 lines) |
 | **E** | 04-code-component | Write React/Next.js component via Gemini |
 | **E** | 05-add-motion | Framer Motion patterns |
 | **E** | 06-validate-a11y | WCAG 2.2 AA checklist |

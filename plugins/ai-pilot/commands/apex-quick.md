@@ -118,7 +118,7 @@ Quick verification:
 |--------|-----------|------------|
 | Agents | 3+ parallel | 1 expert |
 | Phases | 4-5 (A-P-E-L-X) | 4 (Locate-Fix-Review-Verify) |
-| TodoWrite | Yes | No |
+| TaskCreate | Yes | No |
 | Sniper | Full 6-phase | Linter only |
 | Use case | Features, refactoring | Fixes, typos |
 

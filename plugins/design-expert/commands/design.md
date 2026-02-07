@@ -16,7 +16,7 @@ Create production-ready UI components following APEX methodology.
 | **A** | 00-init-branch | Create design/ branch |
 | **A** | 01-analyze-design | `explore-codebase` → design tokens |
 | **A** | 02-search-inspiration | 21st.dev + shadcn search |
-| **P** | 03-plan-component | TodoWrite + file planning |
+| **P** | 03-plan-component | TaskCreate + file planning |
 | **E** | 04-code-component | **DELEGATE to `react-expert` / `nextjs-expert`** |
 | **E** | 05-add-motion | Framer Motion patterns |
 | **E** | 06-validate-a11y | WCAG 2.2 AA checklist |

@@ -12,7 +12,7 @@ next_step: references/03.5-elicit.md
 ## When to Use
 
 - After plan is complete and approved
-- Follow TodoWrite task order
+- Follow TaskCreate task order
 - Update progress as you go
 
 ---
@@ -142,14 +142,14 @@ test(auth): add login component tests
 
 ## Progress Tracking
 
-### Update TodoWrite
+### Update tasks via TaskUpdate
 
 ```text
 After each task:
-1. Mark task as completed
+1. Mark task as completed (TaskUpdate status: completed)
 2. Note any deviations
 3. Update estimates if needed
-4. Flag blockers immediately
+4. Flag blockers immediately (addBlockedBy)
 ```
 
 ---
@@ -202,7 +202,7 @@ If you encounter:
 □ Existing patterns followed
 □ No duplicate utilities
 □ Atomic commits made
-□ TodoWrite updated
+□ Tasks updated via TaskUpdate
 □ Local testing passed
 ```
 

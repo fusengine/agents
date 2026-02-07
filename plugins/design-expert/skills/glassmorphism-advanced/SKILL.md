@@ -12,7 +12,7 @@ related-skills: designing-systems, generating-components
 
 ## Agent Workflow (MANDATORY)
 
-Before implementation, launch in parallel:
+Before implementation, use `TeamCreate` to spawn 3 agents:
 
 1. **fuse-ai-pilot:explore-codebase** - Check existing glass patterns
 2. **fuse-ai-pilot:research-expert** - Latest backdrop-filter support

@@ -8,8 +8,8 @@
 ┌─────────────────────────────────────────────────────────────────┐
 │                     APEX WORKFLOW                               │
 ├─────────────────────────────────────────────────────────────────┤
-│  A - Analyze    → Understand codebase (explore + research)     │
-│  P - Plan       → Break down tasks (TodoWrite)                  │
+│  A - Analyze    → TeamCreate (explore + research + expert)      │
+│  P - Plan       → Break down tasks (TaskCreate)                 │
 │  E - Execute    → Write code (expert agent)                     │
 │  L - eLicit     → Self-review (75 techniques)                   │
 │  X - eXamine    → Validate (sniper agent)                       │
@@ -18,18 +18,22 @@
 
 ## Phases
 
-### A - Analyze (Parallel)
+### A - Analyze (via TeamCreate)
 
-Launch together for speed:
+Use `TeamCreate` to spawn 3 teammates in true parallel (separate contexts):
 - `explore-codebase` - Map structure, find patterns
 - `research-expert` - Documentation, best practices
+- `[domain-expert]` - Framework-specific analysis
+
+Each agent works in its own context window, results synthesized by team lead.
 
 ### P - Plan
 
-Use `TodoWrite` to break down:
+Use `TaskCreate` to break down with dependencies (`addBlockedBy`):
 - Task list with estimates
 - Files < 100 lines each
 - Edge cases identified
+- `TaskUpdate` tracks status: pending → in_progress → completed
 
 ### E - Execute
 

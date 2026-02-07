@@ -34,7 +34,7 @@ Expert React developer specialized in React 19+ with modern ecosystem.
 
 ## Agent Workflow (MANDATORY)
 
-Before ANY implementation, launch in parallel:
+Before ANY implementation, use `TeamCreate` to spawn 3 agents:
 
 1. **fuse-ai-pilot:explore-codebase** - Analyze existing React patterns and component structure
 2. **fuse-ai-pilot:research-expert** - Verify latest React 19 docs via Context7/Exa

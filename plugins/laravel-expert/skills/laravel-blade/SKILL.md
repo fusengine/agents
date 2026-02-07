@@ -13,7 +13,7 @@ related-skills: laravel-livewire, laravel-i18n, fusecore
 
 ## Agent Workflow (MANDATORY)
 
-Before ANY implementation, launch in parallel:
+Before ANY implementation, use `TeamCreate` to spawn 3 agents:
 
 1. **fuse-ai-pilot:explore-codebase** - Check existing views, components structure
 2. **fuse-ai-pilot:research-expert** - Verify latest Blade docs via Context7

@@ -50,7 +50,7 @@ Search with "2025" or "2026", NEVER with past years.
 
 ## Agent Workflow (MANDATORY)
 
-Before ANY implementation, launch in parallel:
+Before ANY implementation, use `TeamCreate` to spawn 3 agents:
 
 1. **fuse-ai-pilot:explore-codebase** - Analyze project structure and existing patterns
 2. **fuse-ai-pilot:research-expert** - Verify latest docs for all stack technologies

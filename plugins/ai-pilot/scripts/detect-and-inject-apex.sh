@@ -111,7 +111,7 @@ INSTRUCTION: This is a development task. Use APEX methodology:
    - Launch $EXPERT_AGENT agent (framework expertise)
    - Project type detected: $PROJECT_TYPE
 
-2. **PLAN**: Use TodoWrite to break down tasks (<100 lines per file)
+2. **PLAN**: Use TaskCreate to break down tasks (<100 lines per file)
 
 3. **EXECUTE**: Use $EXPERT_AGENT, follow SOLID principles, split at 90 lines
 

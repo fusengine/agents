@@ -53,7 +53,10 @@ export type HookType =
   | "SubagentStop"
   | "SessionStart"
   | "Stop"
-  | "Notification";
+  | "Notification"
+  | "PreCompact"
+  | "SessionEnd"
+  | "Setup";
 
 export const HOOK_TYPES: HookType[] = [
   "UserPromptSubmit",
@@ -65,6 +68,9 @@ export const HOOK_TYPES: HookType[] = [
   "SessionStart",
   "Stop",
   "Notification",
+  "PreCompact",
+  "SessionEnd",
+  "Setup",
 ];
 
 /** Configuration du scanner de plugins */
