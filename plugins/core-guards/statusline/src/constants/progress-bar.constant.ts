@@ -12,8 +12,15 @@ export const PROGRESS_CHARS = {
 } as const;
 
 export const GRADIENT_BLOCKS = [
-	" ", "\u258F", "\u258E", "\u258D", "\u258C",
-	"\u258B", "\u258A", "\u2589", "\u2588",
+	" ",
+	"\u258F",
+	"\u258E",
+	"\u258D",
+	"\u258C",
+	"\u258B",
+	"\u258A",
+	"\u2589",
+	"\u2588",
 ] as const;
 // " ", ▏, ▎, ▍, ▌, ▋, ▊, ▉, █
 

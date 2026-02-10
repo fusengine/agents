@@ -13,6 +13,7 @@ export interface FiveHourUsage {
 	maxTokens: number;
 	timeLeft: number;
 	percentage: number;
+	cost?: number;
 }
 
 export interface WeeklyUsage {

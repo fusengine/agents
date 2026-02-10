@@ -42,4 +42,7 @@ export interface HookInput {
 		current_usage: TokenUsage;
 	};
 	exceeds_200k_tokens?: boolean;
+	agent?: {
+		name: string;
+	};
 }

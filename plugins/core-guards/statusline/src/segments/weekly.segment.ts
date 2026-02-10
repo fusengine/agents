@@ -6,7 +6,13 @@
 
 import type { StatuslineConfig } from "../config/schema";
 import type { ISegment, SegmentContext } from "../interfaces";
-import { colors, formatCost, formatTimeLeft, generateProgressBar, progressiveColor } from "../utils";
+import {
+	colors,
+	formatCost,
+	formatTimeLeft,
+	generateProgressBar,
+	progressiveColor,
+} from "../utils";
 
 export class WeeklySegment implements ISegment {
 	readonly name = "weekly";

@@ -22,9 +22,7 @@ export function getStyleIcon(currentStyle: string): string {
 		{ name: "line", icon: "━━━━━━━━╌╌" },
 	];
 
-	return styles
-		.map((s) => (s.name === currentStyle ? `[${s.icon}]` : s.icon))
-		.join(" ");
+	return styles.map((s) => (s.name === currentStyle ? `[${s.icon}]` : s.icon)).join(" ");
 }
 
 /**
@@ -37,7 +35,5 @@ export function getSeparatorDisplay(currentSep: string): string {
 		{ value: " ", label: "space ( )" },
 	];
 
-	return separators
-		.map((s) => (s.value === currentSep ? `[${s.label}]` : s.label))
-		.join(" ");
+	return separators.map((s) => (s.value === currentSep ? `[${s.label}]` : s.label)).join(" ");
 }

@@ -8,11 +8,7 @@
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { homedir } from "node:os";
 import { dirname, join } from "node:path";
-import {
-	StatuslineConfigSchema,
-	defaultConfig,
-	type StatuslineConfig,
-} from "./schema";
+import { defaultConfig, type StatuslineConfig, StatuslineConfigSchema } from "./schema";
 
 // Config du plugin (relatif au script installe)
 const PLUGIN_CONFIG = join(dirname(__dirname), "..", "config.json");
@@ -26,7 +22,7 @@ const USER_CONFIG = join(homedir(), ".claude", "scripts", "statusline", "config.
 export interface IConfigManager {
 	load(): Promise<StatuslineConfig>;
 	save(config: StatuslineConfig): Promise<void>;
-	reset(): Promise<void>;
+	reset(): Promise<StatuslineConfig>;
 }
 
 /**

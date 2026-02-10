@@ -14,10 +14,7 @@ export interface ProgressBarOptions {
 	showPercentage?: boolean;
 }
 
-export function generateProgressBar(
-	percentage: number,
-	options: ProgressBarOptions = {},
-): string {
+export function generateProgressBar(percentage: number, options: ProgressBarOptions = {}): string {
 	const {
 		style = PROGRESS_BAR_DEFAULTS.STYLE,
 		length = PROGRESS_BAR_DEFAULTS.LENGTH,

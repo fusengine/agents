@@ -60,7 +60,7 @@ function detectSubscription(
 	if (modelId.includes("opus")) return "max";
 
 	// 3. Vérifier l'historique pour détecter si l'utilisateur a déjà utilisé Opus
-	const hasUsedOpus = data.sessions.some(s => s.modelId?.includes("opus"));
+	const hasUsedOpus = data.sessions.some((s) => s.modelId?.includes("opus"));
 	if (hasUsedOpus) return "max";
 
 	// 4. Par défaut, plan pro
@@ -69,9 +69,12 @@ function detectSubscription(
 
 function getMaxTokens(subscription: SubscriptionType): number {
 	switch (subscription) {
-		case "free": return TOKEN_LIMITS.FREE.MAX_PER_5_HOURS;
-		case "pro": return TOKEN_LIMITS.PRO.MAX_PER_5_HOURS;
-		case "max": return TOKEN_LIMITS.MAX.MAX_PER_5_HOURS;
+		case "free":
+			return TOKEN_LIMITS.FREE.MAX_PER_5_HOURS;
+		case "pro":
+			return TOKEN_LIMITS.PRO.MAX_PER_5_HOURS;
+		case "max":
+			return TOKEN_LIMITS.MAX.MAX_PER_5_HOURS;
 	}
 }
 
@@ -95,10 +98,7 @@ export function trackFiveHourUsage(
 
 	const subscription = detectSubscription(modelId, data, configPlan);
 	const maxTokens = getMaxTokens(subscription);
-	const timeLeft = Math.max(
-		0,
-		data.windowStart + TIME_INTERVALS.FIVE_HOURS_MS - Date.now(),
-	);
+	const timeLeft = Math.max(0, data.windowStart + TIME_INTERVALS.FIVE_HOURS_MS - Date.now());
 
 	return {
 		tokens: data.totalTokens,

@@ -20,9 +20,7 @@ export function renderStatuslinePreview(config: StatuslineConfig): string {
 	// Claude version
 	if (config.claude.enabled) {
 		const claudeLabel = showLabels ? " Claude:" : "";
-		parts.push(
-			`${colors.blue}${icons.claude}${claudeLabel}${colors.reset} 2.0.76`,
-		);
+		parts.push(`${colors.blue}${icons.claude}${claudeLabel}${colors.reset} 2.0.76`);
 	}
 
 	// Directory + Git
@@ -120,9 +118,7 @@ export function renderStatuslinePreview(config: StatuslineConfig): string {
 	// Node version
 	if (config.node.enabled) {
 		const nodeLabel = showLabels ? " node:" : "";
-		parts.push(
-			`${colors.green}${icons.node}${nodeLabel}${colors.reset} v24.3.0`,
-		);
+		parts.push(`${colors.green}${icons.node}${nodeLabel}${colors.reset} v24.3.0`);
 	}
 
 	// Edits count

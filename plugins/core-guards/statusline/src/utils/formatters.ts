@@ -7,7 +7,10 @@
 import { basename } from "node:path";
 import { TIME_INTERVALS } from "../constants";
 
-export function formatPath(path: string, style: "truncated" | "full" | "relative" | "basename" = "truncated"): string {
+export function formatPath(
+	path: string,
+	style: "truncated" | "full" | "relative" | "basename" = "truncated",
+): string {
 	const home = process.env.HOME || "";
 	const isUnderHome = path.startsWith(home);
 	const withTilde = isUnderHome ? path.replace(home, "~") : path;
@@ -21,7 +24,6 @@ export function formatPath(path: string, style: "truncated" | "full" | "relative
 			return name;
 		case "relative":
 			return withTilde;
-		case "truncated":
 		default:
 			// For paths under home with subdirs: ~/../basename
 			if (isUnderHome && parts.length > 2) {

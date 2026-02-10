@@ -10,7 +10,7 @@ import { colors } from "../utils";
 
 export class NodeSegment implements ISegment {
 	readonly name = "node";
-	readonly priority = 15;  // Juste après Claude (10)
+	readonly priority = 15; // Juste après Claude (10)
 
 	isEnabled(config: StatuslineConfig): boolean {
 		return config.node.enabled;

@@ -21,7 +21,10 @@ export function getNestedValue(obj: unknown, path: string): unknown {
  */
 export function setNestedValue(obj: unknown, path: string, value: unknown): unknown {
 	const keys = path.split(".");
-	const lastKey = keys.pop()!;
+	const lastKey = keys.pop();
+	if (!lastKey) {
+		throw new Error("Invalid path: path cannot be empty");
+	}
 
 	// Clone and navigate to parent
 	const clone = JSON.parse(JSON.stringify(obj));

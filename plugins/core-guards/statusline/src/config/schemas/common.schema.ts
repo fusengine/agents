@@ -6,6 +6,17 @@
 
 import { z } from "zod";
 
+/**
+ * Zod v4 helper: resolves field-level defaults into a typed default value
+ * Fixes `.default({})` incompatibility where Zod v4 expects full output type
+ */
+export function zd<T extends z.ZodType>(
+	schema: T,
+	overrides: Record<string, unknown> = {},
+): z.output<T> {
+	return schema.parse(overrides);
+}
+
 // Progress bar styles
 export const ProgressBarStyleSchema = z.enum([
 	"filled",
@@ -26,13 +37,11 @@ export const PathDisplaySchema = z.enum(["truncated", "full", "relative", "basen
 export type PathDisplay = z.infer<typeof PathDisplaySchema>;
 
 // Progress bar config
-export const ProgressBarConfigSchema = z
-	.object({
-		enabled: z.boolean().default(true),
-		style: ProgressBarStyleSchema.default("filled"),
-		length: z.number().min(1).max(50).default(10),
-		color: ProgressBarColorSchema.default("progressive"),
-		useProgressiveColor: z.boolean().default(true),
-	})
-	.default({});
+export const ProgressBarConfigSchema = z.object({
+	enabled: z.boolean().default(true),
+	style: ProgressBarStyleSchema.default("filled"),
+	length: z.number().min(1).max(50).default(10),
+	color: ProgressBarColorSchema.default("progressive"),
+	useProgressiveColor: z.boolean().default(true),
+});
 export type ProgressBarConfig = z.infer<typeof ProgressBarConfigSchema>;

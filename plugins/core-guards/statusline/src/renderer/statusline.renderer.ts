@@ -56,25 +56,34 @@ export class StatuslineRenderer implements IStatuslineRenderer {
 	}
 
 	/**
-	 * Rend le statusline complet
+	 * Rend le statusline complet (1 ou 2 lignes)
 	 */
-	async render(
-		context: SegmentContext,
-		config: StatuslineConfig,
-	): Promise<string> {
+	async render(context: SegmentContext, config: StatuslineConfig): Promise<string> {
 		const sep = colors.gray(config.global.separator);
 		const separator = config.global.compactMode ? sep : ` ${sep} `;
-		const parts: string[] = [];
 
+		const rendered: Array<{ priority: number; output: string }> = [];
 		for (const segment of this.segments) {
 			if (segment.isEnabled(config)) {
-				const rendered = await segment.render(context, config);
-				if (rendered && rendered.trim()) {
-					parts.push(rendered);
+				const output = await segment.render(context, config);
+				if (output?.trim()) {
+					rendered.push({ priority: segment.priority, output });
 				}
 			}
 		}
 
-		return parts.join(separator);
+		if (!config.global.twoLineMode) {
+			return rendered.map((r) => r.output).join(separator);
+		}
+
+		const splitAt = config.global.lineSplitPriority ?? 45;
+		const line1 = rendered.filter((r) => r.priority <= splitAt);
+		const line2 = rendered.filter((r) => r.priority > splitAt);
+
+		const lines = [line1, line2]
+			.filter((l) => l.length > 0)
+			.map((l) => l.map((r) => r.output).join(separator));
+
+		return lines.join("\n");
 	}
 }

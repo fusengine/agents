@@ -5,6 +5,7 @@
  */
 
 import type { ISegment } from "../interfaces";
+import { AgentSegment } from "./agent.segment";
 import { ClaudeSegment } from "./claude.segment";
 import { ContextSegment } from "./context.segment";
 import { CostSegment } from "./cost.segment";
@@ -23,6 +24,7 @@ export function createDefaultSegments(): ISegment[] {
 		new TimeSegment(),
 		new ClaudeSegment(),
 		new DirectorySegment(),
+		new AgentSegment(),
 		new ModelSegment(),
 		new ContextSegment(),
 		new CostSegment(),
@@ -35,6 +37,7 @@ export function createDefaultSegments(): ISegment[] {
 	];
 }
 
+export { AgentSegment } from "./agent.segment";
 export { ClaudeSegment } from "./claude.segment";
 export { ContextSegment } from "./context.segment";
 export { CostSegment } from "./cost.segment";

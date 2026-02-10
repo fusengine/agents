@@ -5,6 +5,9 @@
     "showDate": true,
     "showTime": true
   },
+  "agent": {
+    "enabled": true
+  },
   "claude": {
     "enabled": true,
     "showVersion": true
@@ -97,7 +100,9 @@
   "global": {
     "separator": "·",
     "showLabels": false,
-    "compactMode": false
+    "compactMode": false,
+    "twoLineMode": true,
+    "lineSplitPriority": 45
   },
   "colors": {
     "blue": "\u001b[0;34m",
@@ -113,6 +118,7 @@
     "reset": "\u001b[0m"
   },
   "icons": {
+    "agent": "◈",
     "claude": "◆",
     "directory": "⌂",
     "git": "⎇",

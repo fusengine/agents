@@ -7,16 +7,16 @@
 import type { StatuslineConfig } from "../config/schema";
 import {
 	buildClaudeSection,
-	buildModelSection,
 	buildContextSection,
 	buildCostSection,
+	buildDailySection,
+	buildDirectorySection,
+	buildExtrasSection,
 	buildFiveHourSection,
+	buildGlobalSection,
+	buildModelSection,
 	buildOAuthLimitsSection,
 	buildWeeklySection,
-	buildDirectorySection,
-	buildDailySection,
-	buildGlobalSection,
-	buildExtrasSection,
 } from "./menu-sections";
 
 /**

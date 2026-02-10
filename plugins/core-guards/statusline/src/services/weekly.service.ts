@@ -41,11 +41,7 @@ function cleanOldSessions(data: WeeklyData): WeeklyData {
 	return { sessions: data.sessions.filter((s) => s.timestamp > cutoff) };
 }
 
-export function trackWeeklyUsage(
-	sessionId: string,
-	tokens: number,
-	cost: number,
-): WeeklyUsage {
+export function trackWeeklyUsage(sessionId: string, tokens: number, cost: number): WeeklyUsage {
 	let data = loadWeeklyData();
 	data = cleanOldSessions(data);
 

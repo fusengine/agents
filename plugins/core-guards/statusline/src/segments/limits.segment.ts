@@ -50,7 +50,13 @@ export class LimitsSegment implements ISegment {
 			const pct = Math.round(formatted.fiveHour.percentage);
 			const seg = [`${colors.cyan("5h:")} ${progressiveColor(pct, `${pct}%`)}`];
 			if (barCfg.enabled) {
-				seg.push(generateProgressBar(pct, { style: barCfg.style, length: barCfg.length, useProgressiveColor: true }));
+				seg.push(
+					generateProgressBar(pct, {
+						style: barCfg.style,
+						length: barCfg.length,
+						useProgressiveColor: true,
+					}),
+				);
 			}
 			if (limitsConfig.showResetTime && formatted.fiveHour.resetsAt) {
 				seg.push(colors.gray(`(${formatResetTime(formatted.fiveHour.resetsAt)})`));
@@ -64,7 +70,13 @@ export class LimitsSegment implements ISegment {
 			const pct = Math.round(formatted.sevenDay.percentage);
 			const seg = [`${colors.blue("7d:")} ${progressiveColor(pct, `${pct}%`)}`];
 			if (barCfg.enabled) {
-				seg.push(generateProgressBar(pct, { style: barCfg.style, length: barCfg.length, useProgressiveColor: true }));
+				seg.push(
+					generateProgressBar(pct, {
+						style: barCfg.style,
+						length: barCfg.length,
+						useProgressiveColor: true,
+					}),
+				);
 			}
 			if (limitsConfig.showResetTime && formatted.sevenDay.resetsAt) {
 				seg.push(colors.gray(`(${formatResetTime(formatted.sevenDay.resetsAt, true)})`));
@@ -76,7 +88,13 @@ export class LimitsSegment implements ISegment {
 			const pct = Math.round(formatted.opus.percentage);
 			const seg = [`${colors.magenta("Opus:")} ${progressiveColor(pct, `${pct}%`)}`];
 			if (barCfg.enabled) {
-				seg.push(generateProgressBar(pct, { style: barCfg.style, length: barCfg.length, useProgressiveColor: true }));
+				seg.push(
+					generateProgressBar(pct, {
+						style: barCfg.style,
+						length: barCfg.length,
+						useProgressiveColor: true,
+					}),
+				);
 			}
 			parts.push(seg.join(" "));
 		}

@@ -26,9 +26,9 @@ export const colors = {
 	orange: ansi256(208),
 
 	// Bright/Bold versions
-	brightRed: ansi("1;91"),      // Bold + bright red
-	brightYellow: ansi("1;93"),   // Bold + bright yellow
-	brightGreen: ansi("1;92"),    // Bold + bright green
+	brightRed: ansi("1;91"), // Bold + bright red
+	brightYellow: ansi("1;93"), // Bold + bright yellow
+	brightGreen: ansi("1;92"), // Bold + bright green
 
 	// Styles
 	bold: ansi("1"),

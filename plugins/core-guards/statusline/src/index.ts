@@ -46,20 +46,12 @@ async function main(): Promise<void> {
 
 		// 5. Tracker l'usage hebdomadaire (si active)
 		const weeklyUsage = config.weekly.enabled
-			? trackWeeklyUsage(
-					input.session_id,
-					contextData.tokens,
-					input.cost.total_cost_usd,
-				)
+			? trackWeeklyUsage(input.session_id, contextData.tokens, input.cost.total_cost_usd)
 			: undefined;
 
 		// 6. Tracker les depenses quotidiennes (si active)
 		const dailySpend = config.dailySpend.enabled
-			? trackDailySpend(
-					input.session_id,
-					input.cost.total_cost_usd,
-					config.dailySpend.budget,
-				)
+			? trackDailySpend(input.session_id, input.cost.total_cost_usd, config.dailySpend.budget)
 			: undefined;
 
 		// 7. Recuperer les infos Git
@@ -87,13 +79,9 @@ async function main(): Promise<void> {
 		// 11. Afficher les warnings si necessaire
 		const pct = Math.round(fiveHourUsage.percentage);
 		if (pct >= 100) {
-			console.log(
-				`\n${colors.red(config.icons.warning)} LIMITE ATTEINTE: ${pct}% sur 5h`,
-			);
+			console.log(`\n${colors.red(config.icons.warning)} LIMITE ATTEINTE: ${pct}% sur 5h`);
 		} else if (pct >= 90) {
-			console.log(
-				`\n${colors.yellow(config.icons.warning)} Attention: ${pct}% de la limite 5h`,
-			);
+			console.log(`\n${colors.yellow(config.icons.warning)} Attention: ${pct}% de la limite 5h`);
 		}
 	} catch (error) {
 		console.error(`Error: ${error instanceof Error ? error.message : String(error)}`);

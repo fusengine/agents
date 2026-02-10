@@ -8,7 +8,7 @@
 import { OVERHEAD_ESTIMATION, TOKEN_LIMITS } from "../constants";
 import type { ContextResult, HookInput, TokenUsage } from "../interfaces";
 
-function calculateTotalTokens(usage: TokenUsage): number {
+function _calculateTotalTokens(usage: TokenUsage): number {
 	return (
 		usage.input_tokens +
 		(usage.cache_creation_input_tokens || 0) +
@@ -16,15 +16,14 @@ function calculateTotalTokens(usage: TokenUsage): number {
 	);
 }
 
-function calculateSystemOverhead(estimateOverhead: boolean, overheadTokens?: number): number {
+function _calculateSystemOverhead(estimateOverhead: boolean, overheadTokens?: number): number {
 	if (!estimateOverhead) return 0;
 
 	// Si un overhead custom est défini, l'utiliser
 	if (overheadTokens !== undefined) return overheadTokens;
 
 	// Sinon, calculer avec les constantes par défaut
-	const mcpTokens =
-		OVERHEAD_ESTIMATION.MCP_PER_SERVER * OVERHEAD_ESTIMATION.DEFAULT_MCP_SERVERS;
+	const mcpTokens = OVERHEAD_ESTIMATION.MCP_PER_SERVER * OVERHEAD_ESTIMATION.DEFAULT_MCP_SERVERS;
 
 	return (
 		OVERHEAD_ESTIMATION.SYSTEM_TOOLS +

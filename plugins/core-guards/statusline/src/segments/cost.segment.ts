@@ -17,7 +17,7 @@ export class CostSegment implements ISegment {
 	}
 
 	async render(context: SegmentContext, config: StatuslineConfig): Promise<string> {
-		const { icons, global, cost } = config;
+		const { global, cost } = config;
 		const totalCost = context.input.cost.total_cost_usd;
 		const costStr = formatCost(totalCost, cost.decimals);
 

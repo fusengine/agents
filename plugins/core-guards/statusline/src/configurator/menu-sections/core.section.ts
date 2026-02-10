@@ -5,8 +5,8 @@
  */
 
 import type { StatuslineConfig } from "../../config/schema";
-import type { MenuOption } from "../menu-options";
 import { chk, getStyleIcon } from "../menu-helpers";
+import type { MenuOption } from "../menu-options";
 
 /**
  * Build Claude section options

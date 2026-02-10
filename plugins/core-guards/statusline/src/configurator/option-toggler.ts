@@ -7,20 +7,17 @@
 import type { StatuslineConfig } from "../config/schema";
 import { OPTION_PATHS } from "./option-paths";
 import {
-	getNestedValue,
-	setNestedValue,
 	cycleProgressBarStyle,
 	cycleSeparator,
+	getNestedValue,
+	setNestedValue,
 } from "./option-utils";
 
 /**
  * Toggle a single option ON/OFF
  * Open for extension (add new paths), closed for modification
  */
-export function toggleOption(
-	config: StatuslineConfig,
-	optionKey: string,
-): StatuslineConfig {
+export function toggleOption(config: StatuslineConfig, optionKey: string): StatuslineConfig {
 	// Handle separator cycling
 	if (optionKey === "global.separator") {
 		const newSeparator = cycleSeparator(config.global.separator);

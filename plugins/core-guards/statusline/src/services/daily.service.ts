@@ -42,11 +42,7 @@ function saveDailyData(data: DailyData): void {
 	writeFileSync(DAILY_FILE, JSON.stringify(data, null, 2));
 }
 
-export function trackDailySpend(
-	sessionId: string,
-	cost: number,
-	budget?: number,
-): DailySpend {
+export function trackDailySpend(sessionId: string, cost: number, budget?: number): DailySpend {
 	const data = loadDailyData();
 
 	const idx = data.sessions.findIndex((s) => s.sessionId === sessionId);
