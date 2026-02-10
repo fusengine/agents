@@ -1,5 +1,42 @@
 # Release Notes
 
+## [1.36.22] - 09-02-2026
+
+### Added
+
+- **ai-pilot**: Add 4-level cache system (explore 24h, doc 7d, lessons 30d, tests 48h)
+- **ai-pilot**: Add cache-doc-from-transcript.sh with jq-first approach for SubagentStop
+- **ai-pilot**: Add cross-project global lessons promotion (promote-global-lessons.sh)
+- **ai-pilot**: Add cache analytics tracking (sessions.jsonl + summary.json)
+- **ai-pilot**: Add test-cache-inject.sh and cache-test-results.sh for sniper optimization
+- **ai-pilot**: Add sniper-check skill for isolated code validation
+- **docs**: Add cache-system.md reference documentation
+
+### Changed
+
+- **ai-pilot**: Update hooks.json with SubagentStart/SubagentStop sniper hooks and SessionEnd analytics
+- **ai-pilot**: Update agents (explore-codebase, research-expert, sniper) with cache instructions
+- **docs**: Update architecture.md, hooks.md, ai-pilot.md with cache system details
+
+## [1.36.21] - 09-02-2026
+
+### Changed
+
+- **hooks-loader**: Update hook-executor with agent type matching
+- **hooks-loader**: Update plugin-scanner with SubagentStart/SubagentStop support
+- **swift-apple-expert**: Update MCP server configuration
+- **marketplace**: Update marketplace.json manifest
+
+## [1.36.20] - 09-02-2026
+
+### Changed
+
+- **statusline**: Rewrite configurator with new menu sections and option toggler
+- **statusline**: Redesign config schemas (common, core-segments, design, usage-segments)
+- **statusline**: Add agent segment for team monitoring
+- **statusline**: Improve progress bar constants and color utilities
+- **statusline**: Update renderer and service layer
+
 ## [1.36.20] - 07-02-2026
 
 ### Fixed
