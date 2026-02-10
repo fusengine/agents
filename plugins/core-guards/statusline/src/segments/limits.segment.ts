@@ -9,25 +9,6 @@ import type { ISegment, SegmentContext } from "../interfaces";
 import { formatUsage, getUsageLimits } from "../services/oauth.service";
 import { colors, formatTimeLeft, generateProgressBar, progressiveColor } from "../utils";
 
-/**
- * Formate l'heure de reset en format local
- * @param date Date de reset
- * @param includeDate Inclure la date si différent d'aujourd'hui
- */
-function formatResetTime(date: Date | null, includeDate = false): string {
-	if (!date) return "";
-	const now = new Date();
-	const isToday = date.toDateString() === now.toDateString();
-	const hours = date.getHours();
-	const mins = date.getMinutes();
-	if (includeDate && !isToday) {
-		const day = String(date.getDate()).padStart(2, "0");
-		const month = String(date.getMonth() + 1).padStart(2, "0");
-		return `${day}.${month} - ${hours}h`;
-	}
-	return mins === 0 ? `${hours}h` : `${hours}h${String(mins).padStart(2, "0")}`;
-}
-
 export class LimitsSegment implements ISegment {
 	readonly name = "limits";
 	readonly priority = 55;
@@ -58,9 +39,7 @@ export class LimitsSegment implements ISegment {
 					}),
 				);
 			}
-			if (limitsConfig.showResetTime && formatted.fiveHour.resetsAt) {
-				seg.push(colors.gray(`(${formatResetTime(formatted.fiveHour.resetsAt)})`));
-			} else if (formatted.fiveHour.timeLeft > 0) {
+			if (formatted.fiveHour.timeLeft > 0) {
 				seg.push(colors.gray(`(${formatTimeLeft(formatted.fiveHour.timeLeft)})`));
 			}
 			parts.push(seg.join(" "));
@@ -78,8 +57,8 @@ export class LimitsSegment implements ISegment {
 					}),
 				);
 			}
-			if (limitsConfig.showResetTime && formatted.sevenDay.resetsAt) {
-				seg.push(colors.gray(`(${formatResetTime(formatted.sevenDay.resetsAt, true)})`));
+			if (formatted.sevenDay.timeLeft > 0) {
+				seg.push(colors.gray(`(${formatTimeLeft(formatted.sevenDay.timeLeft)})`));
 			}
 			parts.push(seg.join(" "));
 		}

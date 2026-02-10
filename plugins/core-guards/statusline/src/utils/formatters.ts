@@ -48,10 +48,13 @@ export function formatBasename(path: string): string {
 export function formatTimeLeft(ms: number): string {
 	if (ms <= 0) return "0m";
 
-	const hours = Math.floor(ms / TIME_INTERVALS.HOUR_MS);
+	const days = Math.floor(ms / (TIME_INTERVALS.HOUR_MS * 24));
+	const hours = Math.floor((ms % (TIME_INTERVALS.HOUR_MS * 24)) / TIME_INTERVALS.HOUR_MS);
 	const minutes = Math.floor((ms % TIME_INTERVALS.HOUR_MS) / TIME_INTERVALS.MINUTE_MS);
 
-	if (hours > 0 && minutes > 0) return `${hours}h${minutes}m`;
+	if (days > 0 && hours > 0) return `${days}d - ${hours}h`;
+	if (days > 0) return `${days}d`;
+	if (hours > 0 && minutes > 0) return `${hours}h - ${minutes}m`;
 	if (hours > 0) return `${hours}h`;
 	return `${minutes}m`;
 }
