@@ -1,5 +1,14 @@
 # Release Notes
 
+## [1.36.23] - 10-02-2026
+
+### Changed
+
+- **ai-pilot**: Migrate 18 hook scripts from bash to TypeScript/Bun with shared lib/
+- **ai-pilot**: Remove doc-cache-gate from hooks.json to prevent stale documentation
+- **installer**: Add ai-pilot/scripts bun install step in setup-runner
+- **installer**: Extract installPluginDeps() helper in fs-helpers.ts
+
 ## [1.36.22] - 09-02-2026
 
 ### Added
