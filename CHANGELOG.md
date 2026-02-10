@@ -1,5 +1,12 @@
 # Release Notes
 
+## [1.36.24] - 10-02-2026
+
+### Fixed
+
+- **statusline**: Show remaining time instead of reset date in limits segment (e.g. "1d - 5h" instead of "12.02 - 17h")
+- **statusline**: Add days support to formatTimeLeft with dash separator
+
 ## [1.36.23] - 10-02-2026
 
 ### Changed
