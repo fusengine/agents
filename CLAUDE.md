@@ -24,26 +24,38 @@ This applies to: ALL tasks (questions, features, fixes, refactoring, exploration
 
 **Only exception:** Git read-only (status, log, diff)
 
-## Project Detection → Domain Agent
-| Config Files | Agent |
-|--------------|-------|
+## Project Detection → Domain Agent (MANDATORY BEFORE ANY Task/TeamCreate)
+**STEP 0: Discover available agents THEN match to project.**
+
+**1. Scan available agents (Glob these paths):**
+- Marketplace: `~/.claude/plugins/marketplaces/fusengine-plugins/plugins/*/`
+- Custom agents: `~/.claude/agents/*.md`
+
+**2. Match project config files to a discovered agent:**
+
+| Project Indicator | Agent to use (if found in scan) |
+|-------------------|--------------------------------|
 | `next.config.*`, `app/layout.tsx` | `fuse-nextjs:nextjs-expert` |
 | `composer.json` + `artisan` | `fuse-laravel:laravel-expert` |
-| `package.json` + React | `fuse-react:react-expert` |
+| `package.json` + React (jsx/tsx) | `fuse-react:react-expert` |
 | `Package.swift`, `*.xcodeproj` | `fuse-swift-apple-expert:swift-expert` |
 | `tailwind.config.*` | `fuse-tailwindcss:tailwindcss-expert` |
-| `Cargo.toml` | `rust-expert` |
-| `go.mod` | `go-expert` |
-| No match | `general-purpose` |
+| Custom `~/.claude/agents/*.md` | Use matching custom agent |
+| **No match** | `general-purpose` |
+
+**FORBIDDEN:** Using `subagent_type: "general-purpose"` when a domain agent was found in scan.
+**FORBIDDEN:** Skipping agent discovery and defaulting to `general-purpose`.
 
 ## APEX Workflow (MANDATORY)
 **A**nalyze → **P**lan → **E**xecute → e**L**icit → e**X**amine
 
 ### A - Analyze (ALWAYS via TeamCreate)
-`TeamCreate` → spawn 3 teammates in parallel:
-- `explore-codebase` (architecture)
-- `research-expert` (docs)
-- `[detected-expert-agent]` (framework expertise)
+`TeamCreate` → spawn 3 teammates in parallel using Task tool:
+1. `subagent_type: "fuse-ai-pilot:explore-codebase"` (architecture)
+2. `subagent_type: "fuse-ai-pilot:research-expert"` (docs)
+3. `subagent_type: "[DETECTED from Step 0]"` (implementation) ← **NEVER `general-purpose` if a domain agent was detected**
+
+Example for Next.js project: `subagent_type: "fuse-nextjs:nextjs-expert"` NOT `general-purpose`
 
 ### P - Plan
 `TaskCreate` task breakdown with dependencies (`addBlockedBy`), estimate files <100 lines, identify modifications

@@ -20,6 +20,42 @@
             "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/inject-subagent-context.sh"
           }
         ]
+      },
+      {
+        "matcher": "explore-codebase",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/explore-cache-check.sh"
+          }
+        ]
+      },
+      {
+        "matcher": "research-expert",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/doc-cache-inject.sh"
+          }
+        ]
+      },
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/lessons-cache-inject.sh"
+          }
+        ]
+      },
+      {
+        "matcher": "sniper",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/test-cache-inject.sh"
+          }
+        ]
       }
     ],
     "PreToolUse": [
@@ -40,6 +76,64 @@
             "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/inject-apex-context.sh"
           }
         ]
+      },
+      {
+        "matcher": "mcp__.*context7__query-docs|mcp__.*exa__get_code_context|mcp__.*exa__web_search",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/doc-cache-gate.sh"
+          }
+        ]
+      }
+    ],
+    "SubagentStop": [
+      {
+        "matcher": "sniper",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/cache-sniper-lessons.sh"
+          }
+        ]
+      },
+      {
+        "matcher": "sniper",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/cache-test-results.sh"
+          }
+        ]
+      },
+      {
+        "matcher": "research-expert",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/cache-doc-from-transcript.sh"
+          }
+        ]
+      },
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/check-solid-from-transcript.sh"
+          }
+        ]
+      }
+    ],
+    "SessionEnd": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/cache-analytics-save.sh"
+          }
+        ]
       }
     ],
     "PostToolUse": [
@@ -58,6 +152,15 @@
           {
             "type": "command",
             "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/track-doc-consultation.sh"
+          }
+        ]
+      },
+      {
+        "matcher": "mcp__.*context7__query-docs|mcp__.*exa__get_code_context|mcp__.*exa__web_search",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/cache-doc-result.sh"
           }
         ]
       },

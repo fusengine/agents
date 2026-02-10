@@ -38,6 +38,14 @@ Obtain precise, up-to-date technical information by combining Context7 (official
 - **Exa Web**: Recent patterns, tutorials, deep research
 - **Sequential Thinking**: Multi-hypothesis analysis, thought revision
 
+## Doc Cache Protocol
+
+If `additionalContext` contains "CACHED DOCUMENTATION AVAILABLE":
+- **Use the cached summaries directly** - they contain key points from previous Context7 queries
+- Only query Context7/Exa for topics NOT covered in the cached summaries
+- For deeper details, Read the full cached docs from the provided paths
+- Prefix cached info with `[CACHED]` in your response
+
 ## Forbidden
 
 - ❌ Guess library IDs without `resolve-library-id`

@@ -1,7 +1,7 @@
 ---
 name: explore-codebase
 description: Comprehensive codebase discovery specialist. Rapidly explores structure, identifies patterns, maps dependencies, provides architectural insights.
-model: sonnet
+model: haiku
 color: yellow
 tools: Read, Glob, Grep, Bash
 skills: exploration
@@ -63,9 +63,21 @@ Elite reconnaissance agent for comprehensive codebase understanding through syst
 - [Insight]
 ```
 
+## Cache Protocol
+
+If `additionalContext` contains "CACHED ARCHITECTURE AVAILABLE":
+- **Return the cached report immediately** without exploring
+- Prefix with `[CACHED]` in your response
+
+If `additionalContext` contains "EXPLORATION CACHE INSTRUCTIONS":
+- Complete full exploration as normal
+- **As your LAST action**, save your report using the provided bash commands
+- Write the full markdown report to the snapshot path provided
+
 ## Forbidden
 
 - ❌ Assumptions without code evidence
 - ❌ Ignore configuration files
 - ❌ Skip dependency analysis
 - ❌ Miss entry points
+- ❌ Ignore cache instructions from additionalContext
