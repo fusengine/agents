@@ -17,7 +17,7 @@
 		},
 		"XcodeBuildMCP": {
 			"command": "npx",
-			"args": ["-y", "xcodebuildmcp@latest"],
+			"args": ["-y", "xcodebuildmcp@latest", "mcp"],
 			"type": "stdio"
 		},
 		"apple-docs": {

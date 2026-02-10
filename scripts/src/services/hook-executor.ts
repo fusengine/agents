@@ -54,20 +54,30 @@ export async function executeHooks(
 /** Merge JSON outputs (additionalContext and hookSpecificOutput) */
 function mergeJsonOutput(existing: string, newOutput: string): string {
   try {
-    const json = JSON.parse(newOutput);
+    const newJson = JSON.parse(newOutput);
 
-    // hookSpecificOutput takes priority (permission decisions)
-    if (json.hookSpecificOutput) {
-      return newOutput;
+    if (!existing) return newOutput;
+    const existingJson = JSON.parse(existing);
+
+    // Merge hookSpecificOutput.additionalContext across multiple hooks
+    if (newJson.hookSpecificOutput && existingJson.hookSpecificOutput) {
+      const existCtx = existingJson.hookSpecificOutput.additionalContext ?? "";
+      const newCtx = newJson.hookSpecificOutput.additionalContext ?? "";
+      if (newCtx) {
+        existingJson.hookSpecificOutput.additionalContext =
+          existCtx ? `${existCtx}\n\n${newCtx}` : newCtx;
+      }
+      return JSON.stringify(existingJson);
     }
 
-    // Merge additionalContext
-    if (!json.additionalContext) return existing;
-    if (!existing) return newOutput;
+    // First hookSpecificOutput wins structure, or plain additionalContext merge
+    if (newJson.hookSpecificOutput) return newOutput;
+    if (newJson.additionalContext && existingJson.additionalContext) {
+      existingJson.additionalContext += "\n\n" + newJson.additionalContext;
+      return JSON.stringify(existingJson);
+    }
 
-    const existingJson = JSON.parse(existing);
-    existingJson.additionalContext += "\n\n" + json.additionalContext;
-    return JSON.stringify(existingJson);
+    return newJson.hookSpecificOutput || newJson.additionalContext ? newOutput : existing;
   } catch {
     return existing;
   }

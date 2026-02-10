@@ -61,6 +61,7 @@
         "./skills/research",
         "./skills/exploration",
         "./skills/code-quality",
+        "./skills/sniper-check",
         "./skills/seo",
         "./skills/skill-creator",
         "./skills/agent-creator"

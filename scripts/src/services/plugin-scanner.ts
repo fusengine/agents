@@ -47,7 +47,8 @@ export function extractHooks(
   plugins: PluginInfo[],
   hookType: string,
   toolName: string,
-  notifType: string
+  notifType: string,
+  agentType: string = ""
 ): ExecutableHook[] {
   const hooks: ExecutableHook[] = [];
 
@@ -57,7 +58,7 @@ export function extractHooks(
     const entries: HookEntry[] = plugin.config.hooks?.[hookType] ?? [];
 
     for (const entry of entries) {
-      if (!matchesFilter(entry.matcher, hookType, toolName, notifType)) continue;
+      if (!matchesFilter(entry.matcher, hookType, toolName, notifType, agentType)) continue;
 
       for (const hook of entry.hooks) {
         const command = hook.command.replace(/\$\{CLAUDE_PLUGIN_ROOT\}/g, plugin.path);
@@ -78,11 +79,15 @@ function matchesFilter(
   matcher: string | undefined,
   hookType: string,
   toolName: string,
-  notifType: string
+  notifType: string,
+  agentType: string = ""
 ): boolean {
   if (!matcher) return true;
 
-  const testValue = hookType === "Notification" ? notifType : toolName;
+  const testValue =
+    hookType === "Notification" ? notifType
+    : hookType === "SubagentStart" || hookType === "SubagentStop" ? agentType
+    : toolName;
   try {
     return new RegExp(matcher).test(testValue);
   } catch {

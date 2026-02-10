@@ -41,6 +41,7 @@ export interface HookInput {
   tool_input?: Record<string, unknown>;
   type?: string;
   notification_type?: string;
+  agent_type?: string;
 }
 
 /** Types de hooks supportés */

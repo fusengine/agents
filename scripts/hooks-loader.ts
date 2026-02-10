@@ -32,12 +32,13 @@ async function main(): Promise<void> {
 
   const toolName = input.tool_name ?? "";
   const notifType = input.type ?? input.notification_type ?? "";
+  const agentType = input.agent_type ?? "";
 
   // Scan plugins
   const plugins = scanPlugins({ pluginsDir: PLUGINS_DIR });
 
   // Extract matching hooks
-  const hooks = extractHooks(plugins, hookType, toolName, notifType);
+  const hooks = extractHooks(plugins, hookType, toolName, notifType, agentType);
 
   // Execute hooks (pass rawInput or empty JSON)
   const result = await executeHooks(hooks, rawInput || "{}");

@@ -63,7 +63,7 @@
 		"XcodeBuildMCP": {
 			"_description": "Xcode build, test and simulator automation for iOS/macOS",
 			"command": "npx",
-			"args": ["-y", "xcodebuildmcp@latest"],
+			"args": ["-y", "xcodebuildmcp@latest", "mcp"],
 			"type": "stdio",
 			"requiresApiKey": false
 		},
