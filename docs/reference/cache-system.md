@@ -1,6 +1,6 @@
 # Cache System (fusengine-cache)
 
-3-level persistent cache system that eliminates redundant operations across sessions.
+4-level persistent cache system that eliminates redundant operations across sessions.
 
 ## Overview
 
@@ -8,7 +8,11 @@
 ~/.claude/fusengine-cache/
 ├── explore/{project-hash}/    # Architecture snapshots
 ├── doc/{project-hash}/        # Documentation cache
-└── lessons/{project-hash}/    # Sniper error patterns
+├── lessons/{project-hash}/    # Sniper error patterns
+│   └── _global/{stack}.json   # Cross-project promoted lessons
+├── tests/{project-hash}/      # Test results cache
+└── analytics/
+    └── sessions.jsonl         # Cache hit/miss tracking
 ```
 
 Each project gets a unique hash (first 16 chars of SHA-256 of the project path).
@@ -20,6 +24,7 @@ Each project gets a unique hash (first 16 chars of SHA-256 of the project path).
 | Explore | ~15K tokens/scan | ~2K injected | ~85% |
 | Documentation | ~10K tokens/query | ~1K summary | ~90% |
 | Lessons | Repeated errors | Pre-warned | ~50-70% |
+| Tests | Re-run all tests | Skip unchanged | ~60% |
 | **Compound** | - | - | **60-75%** |
 
 ## Level 1: Explore Cache
@@ -28,34 +33,33 @@ Each project gets a unique hash (first 16 chars of SHA-256 of the project path).
 
 | Property | Value |
 |----------|-------|
-| TTL | 4 hours |
+| TTL | 24 hours |
 | Location | `~/.claude/fusengine-cache/explore/{hash}/` |
-| Capture | SubagentStart (explore-cache-check.sh) |
+| Capture | SubagentStart (`explore-cache-check.ts`) |
 | Format | `metadata.json` + `snapshot.md` |
 
 **Flow**:
-1. `explore-codebase` starts → SubagentStart fires `explore-cache-check.sh`
-2. If cache hit (< 4h old) → inject snapshot via `additionalContext`, agent skips scan
+1. `explore-codebase` starts → SubagentStart fires `explore-cache-check.ts`
+2. If cache hit (< 24h old) → inject snapshot via `additionalContext`, agent skips scan
 3. If cache miss → agent runs normally, saves result for next time
 
 ## Level 2: Documentation Cache
 
-**Purpose**: Cache Context7/Exa documentation queries for `research-expert`.
+**Purpose**: Cache Context7/Exa documentation synthesis for `research-expert`.
 
 | Property | Value |
 |----------|-------|
 | TTL | 7 days |
 | Location | `~/.claude/fusengine-cache/doc/{hash}/` |
-| Capture | PostToolUse (`cache-doc-result.sh`) + SubagentStop (`cache-doc-from-transcript.sh`) |
-| Gate | PreToolUse (`doc-cache-gate.sh`) blocks duplicate queries |
-| Inject | SubagentStart (`doc-cache-inject.sh`) |
-| Format | `index.json` manifest + `docs/{doc-hash}.md` files |
+| Capture | SubagentStop (`cache-doc-from-transcript.ts`) |
+| Inject | SubagentStart (`doc-cache-inject.ts`) |
+| Format | `index.json` manifest + `docs/{doc-hash}.md` synthesis files |
 | Limits | Max 15 docs, max 20KB/doc |
 
 **Flow**:
-1. `research-expert` starts → `doc-cache-inject.sh` injects cached doc summaries
-2. Agent queries Context7 → `doc-cache-gate.sh` blocks if doc already cached
-3. New docs saved by `cache-doc-result.sh` (PostToolUse) and `cache-doc-from-transcript.sh` (SubagentStop)
+1. `research-expert` starts → `doc-cache-inject.ts` injects cached doc summaries (soft guidance)
+2. Agent queries Context7/Exa freely (no blocking gate)
+3. When agent completes → `cache-doc-from-transcript.ts` extracts full synthesis from transcript
 
 **index.json**:
 ```json
@@ -81,18 +85,20 @@ Each project gets a unique hash (first 16 chars of SHA-256 of the project path).
 |----------|-------|
 | TTL | 30 days |
 | Location | `~/.claude/fusengine-cache/lessons/{hash}/` |
-| Capture | SubagentStop (`cache-sniper-lessons.sh`) |
-| Inject | SubagentStart (`lessons-cache-inject.sh`) → ALL agents |
+| Capture | SubagentStop (`cache-sniper-lessons.ts`) |
+| Inject | SubagentStart (`lessons-cache-inject.ts`) → ALL agents |
+| Promotion | `promote-global-lessons.ts` → `_global/{stack}.json` (3+ occurrences) |
 | Format | Per-timestamp JSON files (`{timestamp}.json`) |
 | Limits | Auto-cleanup files > 30 days, top 10 injected |
 
 **Flow**:
-1. Sniper finishes → SubagentStop fires `cache-sniper-lessons.sh`
+1. Sniper finishes → SubagentStop fires `cache-sniper-lessons.ts`
 2. Script reads `agent_transcript_path` (JSONL)
 3. Extracts all Edit tool_use entries (file, old_string, new_string)
 4. Categorizes errors by code diff analysis (missing_directive, type_any, etc.)
 5. Saves as `{timestamp}.json` with one error per line
-6. Next agent start → `lessons-cache-inject.sh` aggregates all files, injects top 10
+6. Runs `promote-global-lessons.ts` in background (promotes errors seen 3+ times to `_global/`)
+7. Next agent start → `lessons-cache-inject.ts` aggregates local + global lessons, injects top 10
 
 **Lesson file format** (`2026-02-09T01-14-44.json`):
 ```json
@@ -118,9 +124,41 @@ Each project gets a unique hash (first 16 chars of SHA-256 of the project path).
 | `null_safety` | new_string contains `if.*null\|??` |
 | `code_fix` | Default fallback |
 
+## Level 4: Tests Cache
+
+**Purpose**: Cache test results from sniper validation runs.
+
+| Property | Value |
+|----------|-------|
+| TTL | 48 hours |
+| Location | `~/.claude/fusengine-cache/tests/{hash}/` |
+| Capture | SubagentStop (`cache-test-results.ts`) |
+| Inject | SubagentStart (`test-cache-inject.ts`) → sniper |
+| Format | `results.json` with file checksums |
+
+**Flow**:
+1. Sniper completes → `cache-test-results.ts` saves test results with file hashes
+2. Next sniper start → `test-cache-inject.ts` injects previous results
+3. Sniper can skip re-testing unchanged files
+
+## Analytics
+
+**Purpose**: Track cache hit/miss rates across sessions.
+
+| Property | Value |
+|----------|-------|
+| Location | `~/.claude/fusengine-cache/analytics/` |
+| Capture | SessionEnd (`cache-analytics-save.ts`) |
+| Format | `sessions.jsonl` (one event per line) |
+
+**Event format**:
+```json
+{"ts":"2026-02-10T15:42:36","session":"1770738156","type":"explore","action":"hit","project_hash":"caad47f308f6a24d"}
+```
+
 ## Injection Format
 
-When agents start, `lessons-cache-inject.sh` outputs:
+When agents start, `lessons-cache-inject.ts` outputs:
 
 ```
 ## KNOWN PROJECT ISSUES (from previous sniper validations)
@@ -135,16 +173,42 @@ INSTRUCTION: Check your code against these known issues BEFORE submitting.
 
 ## Scripts Reference
 
+All scripts are TypeScript (Bun runtime) with shared `lib/` modules.
+
 | Script | Hook Type | Trigger |
 |--------|-----------|---------|
-| `explore-cache-check.sh` | SubagentStart | explore-codebase agent |
-| `doc-cache-inject.sh` | SubagentStart | research-expert agent |
-| `doc-cache-gate.sh` | PreToolUse | Context7/Exa tool calls |
-| `cache-doc-result.sh` | PostToolUse | Context7/Exa tool results |
-| `cache-doc-from-transcript.sh` | SubagentStop | research-expert agent |
-| `lessons-cache-inject.sh` | SubagentStart | All agents |
-| `cache-sniper-lessons.sh` | SubagentStop | sniper agent |
-| `save-doc.sh` | PostToolUse | Documentation saves |
+| `explore-cache-check.ts` | SubagentStart | explore-codebase agent |
+| `doc-cache-inject.ts` | SubagentStart | research-expert agent |
+| `cache-doc-from-transcript.ts` | SubagentStop | research-expert agent |
+| `lessons-cache-inject.ts` | SubagentStart | All agents |
+| `cache-sniper-lessons.ts` | SubagentStop | sniper agent |
+| `promote-global-lessons.ts` | Background | After sniper lessons capture |
+| `test-cache-inject.ts` | SubagentStart | sniper agent |
+| `cache-test-results.ts` | SubagentStop | sniper agent |
+| `cache-analytics-save.ts` | SessionEnd | All sessions |
+
+## Shared Library (`lib/`)
+
+```
+plugins/ai-pilot/scripts/lib/
+├── core.ts                        # readStdin, outputHookResponse, env helpers
+├── json.ts                        # safeJsonParse
+├── analytics.ts                   # logCacheEvent
+├── cache/
+│   ├── project-detect.ts          # getProjectHash, computeProjectHash
+│   ├── lesson-helpers.ts          # categorizeError, formatLessonEntry
+│   ├── lesson-aggregator.ts       # dedupLessons, aggregateLocal, loadGlobal, merge
+│   └── source-collector.ts        # collectSources from transcript
+├── apex/
+│   ├── detection.ts               # detectApexTrigger
+│   ├── state.ts                   # readApexState, writeApexState
+│   ├── enforce-helpers.ts         # checkPhaseAllowed
+│   └── task-helpers.ts            # syncTaskState
+└── interfaces/
+    ├── hook.interface.ts           # HookInput, HookResponse types
+    ├── cache.interface.ts          # CacheIndex, LessonEntry types
+    └── apex.interface.ts           # ApexState, ApexPhase types
+```
 
 ## Troubleshooting
 
@@ -158,6 +222,9 @@ cat ~/.claude/fusengine-cache/lessons/*/$(ls -t ~/.claude/fusengine-cache/lesson
 
 # Check doc cache index
 cat ~/.claude/fusengine-cache/doc/*/index.json | jq .
+
+# View analytics
+cat ~/.claude/fusengine-cache/analytics/sessions.jsonl
 ```
 
 ### Clear cache
@@ -170,4 +237,7 @@ rm -rf ~/.claude/fusengine-cache/lessons/
 
 # Clear only doc cache
 rm -rf ~/.claude/fusengine-cache/doc/
+
+# Clear only tests cache
+rm -rf ~/.claude/fusengine-cache/tests/
 ```

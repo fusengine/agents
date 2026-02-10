@@ -53,7 +53,7 @@ bun --cwd $env:USERPROFILE\.claude\plugins\marketplaces\fusengine-plugins\plugin
 - **SOLID Enforcement** - Automatic file size limits, interface separation, quality gates
 - **12 Lifecycle Hooks** - All Claude Code hook types covered across 9 plugins
 - **Smart Commits** - Conventional commits with auto-detection
-- **[3-Level Cache System](docs/reference/cache-system.md)** - Explore, Documentation, and Lessons caches for 60-75% token savings
+- **[4-Level Cache System](docs/reference/cache-system.md)** - Explore, Documentation, Lessons, and Tests caches with analytics for 60-75% token savings
 
 ## Stats
 
@@ -64,7 +64,7 @@ bun --cwd $env:USERPROFILE\.claude\plugins\marketplaces\fusengine-plugins\plugin
 | Skills | 70 |
 | Commands | 24 |
 | Hook Types | 12 |
-| Cache Scripts | 8 |
+| Cache Scripts | 10 |
 
 ## Documentation
 
@@ -80,7 +80,7 @@ bun --cwd $env:USERPROFILE\.claude\plugins\marketplaces\fusengine-plugins\plugin
 ### Development
 | Plugin | Description |
 |--------|-------------|
-| fuse-ai-pilot | APEX workflow orchestrator, sniper validation, 3-level cache |
+| fuse-ai-pilot | APEX workflow orchestrator, sniper validation, 4-level cache |
 | fuse-nextjs | Next.js 16+ expert with App Router, Prisma 7 |
 | fuse-laravel | Laravel 12+ expert with Livewire, Eloquent |
 | fuse-react | React 19 expert with hooks, TanStack |

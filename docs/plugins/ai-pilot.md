@@ -37,7 +37,7 @@ APEX workflow orchestrator with sniper validation and research capabilities.
 
 ## Cache System (fusengine-cache)
 
-3-level persistent cache to reduce redundant operations and save tokens (60-75% savings).
+4-level persistent cache to reduce redundant operations and save tokens (60-75% savings).
 
 ```
 ~/.claude/fusengine-cache/
@@ -47,39 +47,46 @@ APEX workflow orchestrator with sniper validation and research capabilities.
 ├── doc/{project-hash}/        # Documentation cache
 │   ├── index.json
 │   └── docs/{doc-hash}.md
-└── lessons/{project-hash}/    # Sniper error patterns
-    └── {timestamp}.json       # Per-run lesson files
+├── lessons/{project-hash}/    # Sniper error patterns
+│   └── {timestamp}.json
+├── tests/{project-hash}/      # Test results cache
+│   └── results.json
+└── analytics/
+    └── sessions.jsonl         # Cache hit/miss tracking
 ```
 
 ### Cache Levels
 
 | Cache | Source | TTL | Injection | Savings |
 |-------|--------|-----|-----------|---------|
-| **Explore** | `explore-codebase` agent | 4h | SubagentStart → explore-codebase | ~85% |
-| **Documentation** | Context7/Exa queries | 7d | SubagentStart → research-expert | ~90% |
+| **Explore** | `explore-codebase` agent | 24h | SubagentStart → explore-codebase | ~85% |
+| **Documentation** | Context7/Exa synthesis | 7d | SubagentStart → research-expert | ~90% |
 | **Lessons** | Sniper Edit corrections | 30d | SubagentStart → all agents | ~50-70% |
+| **Tests** | Sniper test results | 48h | SubagentStart → sniper | ~60% |
 
-### Cache Scripts (17 scripts)
+### Cache Scripts (TypeScript/Bun)
+
+All scripts are in `scripts/` with shared `lib/` modules.
 
 | Script | Hook | Role |
 |--------|------|------|
-| `explore-cache-check.sh` | SubagentStart | Inject cached architecture for explore-codebase |
-| `doc-cache-inject.sh` | SubagentStart | Inject cached doc summaries for research-expert |
-| `doc-cache-gate.sh` | PreToolUse | Block Context7/Exa if doc already cached |
-| `cache-doc-result.sh` | PostToolUse | Save Context7/Exa results to doc cache |
-| `cache-doc-from-transcript.sh` | SubagentStop | Extract docs from research-expert transcript |
-| `lessons-cache-inject.sh` | SubagentStart | Inject known error patterns for all agents |
-| `cache-sniper-lessons.sh` | SubagentStop | Extract Edit corrections from sniper transcript |
-| `inject-subagent-context.sh` | SubagentStart | Inject general context to all subagents |
+| `explore-cache-check.ts` | SubagentStart | Inject cached architecture for explore-codebase |
+| `doc-cache-inject.ts` | SubagentStart | Inject cached doc summaries for research-expert |
+| `cache-doc-from-transcript.ts` | SubagentStop | Extract synthesis from research-expert transcript |
+| `lessons-cache-inject.ts` | SubagentStart | Inject known error patterns for all agents |
+| `cache-sniper-lessons.ts` | SubagentStop | Extract Edit corrections from sniper transcript |
+| `promote-global-lessons.ts` | Background | Promote lessons seen 3+ times to _global/ |
+| `test-cache-inject.ts` | SubagentStart | Inject previous test results for sniper |
+| `cache-test-results.ts` | SubagentStop | Save sniper test results with file hashes |
+| `cache-analytics-save.ts` | SessionEnd | Save cache hit/miss analytics |
+| `inject-subagent-context.ts` | SubagentStart | Inject general context to all subagents |
 | `inject-apex-context.sh` | PreToolUse | Inject APEX context for Task tool |
-| `enforce-apex-phases.sh` | PreToolUse | Enforce APEX phase ordering |
-| `detect-and-inject-apex.sh` | UserPromptSubmit | Auto-detect APEX triggers |
+| `enforce-apex-phases.ts` | PreToolUse | Enforce APEX phase ordering |
+| `detect-and-inject-apex.ts` | UserPromptSubmit | Auto-detect APEX triggers |
 | `check-solid-compliance.sh` | PostToolUse | SOLID validation on Write/Edit |
 | `check-solid-from-transcript.sh` | SubagentStop | SOLID check from agent transcript |
 | `track-doc-consultation.sh` | PostToolUse | Track documentation reads |
-| `sync-task-tracking.sh` | PostToolUse | Sync TaskCreate/TaskUpdate |
-| `save-doc.sh` | PostToolUse | Save documentation to cache |
-| `init-apex-tracking.sh` | - | Initialize APEX tracking state |
+| `sync-task-tracking.ts` | PostToolUse | Sync TaskCreate/TaskUpdate |
 
 ### Lessons Format (per-timestamp)
 
@@ -90,21 +97,21 @@ Each sniper run creates a `{timestamp}.json` with Edit-extracted corrections:
   "project": "/path/to/project",
   "timestamp": "2026-02-09T01:14:44",
   "errors": [
-    {"error_type":"missing_directive","pattern":"Component using hooks without 'use client'","fix":"Fix missing_directive in Dashboard.tsx","count":1,"files":["/path/Dashboard.tsx"],"code":{"line":["'use client'","","import React from 'react'"]}},
-    {"error_type":"missing_display_name","pattern":"Code correction in StatsView.tsx","fix":"Fix missing_display_name in StatsView.tsx","count":1,"files":["/path/StatsView.tsx"],"code":{"line":["StatsView.displayName = 'StatsView'"]}}
+    {"error_type":"missing_directive","pattern":"Component using hooks without 'use client'","fix":"Fix missing_directive in Dashboard.tsx","count":1,"files":["/path/Dashboard.tsx"],"code":{"line":["'use client'","","import React from 'react'"]}}
   ]
 }
 ```
 
-## Hooks (15 entries)
+## Hooks (14 entries)
 
 | Hook Type | Count | Scripts |
 |-----------|-------|---------|
 | UserPromptSubmit | 1 | detect-and-inject-apex |
-| SubagentStart | 4 | inject-subagent-context, explore-cache-check, doc-cache-inject, lessons-cache-inject |
-| PreToolUse | 3 | enforce-apex-phases, inject-apex-context, doc-cache-gate |
-| SubagentStop | 3 | cache-sniper-lessons, cache-doc-from-transcript, check-solid-from-transcript |
-| PostToolUse | 4 | check-solid-compliance, track-doc-consultation, cache-doc-result, sync-task-tracking |
+| SubagentStart | 5 | inject-subagent-context, explore-cache-check, doc-cache-inject, lessons-cache-inject, test-cache-inject |
+| PreToolUse | 2 | enforce-apex-phases, inject-apex-context |
+| SubagentStop | 4 | cache-sniper-lessons, cache-test-results, cache-doc-from-transcript, check-solid-from-transcript |
+| PostToolUse | 3 | check-solid-compliance, track-doc-consultation, sync-task-tracking |
+| SessionEnd | 1 | cache-analytics-save |
 
 ## MCP Servers
 
