@@ -4,31 +4,23 @@
  */
 import { existsSync } from "fs";
 import { join } from "path";
-import { $ } from "bun";
 import * as p from "@clack/prompts";
 import { scanPlugins } from "./plugin-scanner";
 import {
-  loadSettings,
-  saveSettings,
-  backupSettings,
-  configureHooks,
-  configureDefaults,
-  configureStatusLine,
-  enableAgentTeams,
-  isAgentTeamsEnabled,
+  loadSettings, saveSettings, backupSettings, configureHooks,
+  configureDefaults, configureStatusLine, enableAgentTeams, isAgentTeamsEnabled,
 } from "./settings-manager";
-import { copyExecutable, filesAreEqual, makeScriptsExecutable } from "../utils/fs-helpers";
+import { copyExecutable, filesAreEqual, makeScriptsExecutable, installPluginDeps } from "../utils/fs-helpers";
 import { configureApiKeys, configureShell, checkApiKeys } from "./env-manager";
 import { configureMcpServers } from "./mcp-setup";
 import type { SetupPaths } from "../interfaces/setup";
 
 /** Run the complete setup process */
 export async function runSetup(paths: SetupPaths, skipEnv: boolean): Promise<void> {
-  p.intro("🚀 Fusengine Plugins Setup");
+  p.intro("Fusengine Plugins Setup");
 
   const pluginsDir = join(paths.marketplace, "plugins");
   const loaderDest = join(paths.marketplace, "scripts/hooks-loader.ts");
-
   await copyExecutable(paths.loaderSrc, loaderDest);
 
   const s = p.spinner();
@@ -58,11 +50,19 @@ export async function runSetup(paths: SetupPaths, skipEnv: boolean): Promise<voi
     }
   }
 
+  s.start("Installing plugin dependencies...");
+  try {
+    await installPluginDeps(join(pluginsDir, "ai-pilot/scripts"));
+    s.stop("Plugin dependencies installed");
+  } catch {
+    s.stop("Plugin dependencies installation failed");
+  }
+
   const statuslineDir = join(pluginsDir, "core-guards/statusline");
   if (existsSync(statuslineDir)) {
     s.start("Installing statusline...");
     try {
-      await $`cd ${statuslineDir} && bun install --silent`.quiet();
+      await installPluginDeps(statuslineDir);
       settings = configureStatusLine(settings, statuslineDir);
       s.stop("Statusline configured");
     } catch {
@@ -94,5 +94,5 @@ export async function runSetup(paths: SetupPaths, skipEnv: boolean): Promise<voi
     await configureMcpServers();
   }
 
-  p.outro("✅ Setup complete! Restart Claude Code to apply.");
+  p.outro("Setup complete! Restart Claude Code to apply.");
 }

@@ -2,7 +2,7 @@
  * Helpers pour les opérations fichiers
  */
 import { existsSync, copyFileSync, mkdirSync } from "fs";
-import { dirname } from "path";
+import { dirname, join } from "path";
 import { $ } from "bun";
 
 /**
@@ -38,6 +38,15 @@ export async function makeScriptsExecutable(dir: string): Promise<number> {
     await $`chmod +x ${file}`.quiet();
   }
   return files.length;
+}
+
+/**
+ * Install bun dependencies in a plugin directory
+ */
+export async function installPluginDeps(dir: string): Promise<boolean> {
+  if (!existsSync(join(dir, "package.json"))) return false;
+  const result = await $`cd ${dir} && bun install --silent`.quiet().nothrow();
+  return result.exitCode === 0;
 }
 
 /**

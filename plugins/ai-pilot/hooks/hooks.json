@@ -6,7 +6,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/detect-and-inject-apex.sh"
+            "command": "bun ${CLAUDE_PLUGIN_ROOT}/scripts/detect-and-inject-apex.ts"
           }
         ]
       }
@@ -17,7 +17,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/inject-subagent-context.sh"
+            "command": "bun ${CLAUDE_PLUGIN_ROOT}/scripts/inject-subagent-context.ts"
           }
         ]
       },
@@ -26,7 +26,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/explore-cache-check.sh"
+            "command": "bun ${CLAUDE_PLUGIN_ROOT}/scripts/explore-cache-check.ts"
           }
         ]
       },
@@ -35,7 +35,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/doc-cache-inject.sh"
+            "command": "bun ${CLAUDE_PLUGIN_ROOT}/scripts/doc-cache-inject.ts"
           }
         ]
       },
@@ -44,7 +44,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/lessons-cache-inject.sh"
+            "command": "bun ${CLAUDE_PLUGIN_ROOT}/scripts/lessons-cache-inject.ts"
           }
         ]
       },
@@ -53,7 +53,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/test-cache-inject.sh"
+            "command": "bun ${CLAUDE_PLUGIN_ROOT}/scripts/test-cache-inject.ts"
           }
         ]
       }
@@ -64,7 +64,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/enforce-apex-phases.sh"
+            "command": "bun ${CLAUDE_PLUGIN_ROOT}/scripts/enforce-apex-phases.ts"
           }
         ]
       },
@@ -76,15 +76,6 @@
             "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/inject-apex-context.sh"
           }
         ]
-      },
-      {
-        "matcher": "mcp__.*context7__query-docs|mcp__.*exa__get_code_context|mcp__.*exa__web_search",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/doc-cache-gate.sh"
-          }
-        ]
       }
     ],
     "SubagentStop": [
@@ -93,7 +84,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/cache-sniper-lessons.sh"
+            "command": "bun ${CLAUDE_PLUGIN_ROOT}/scripts/cache-sniper-lessons.ts"
           }
         ]
       },
@@ -102,7 +93,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/cache-test-results.sh"
+            "command": "bun ${CLAUDE_PLUGIN_ROOT}/scripts/cache-test-results.ts"
           }
         ]
       },
@@ -111,7 +102,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/cache-doc-from-transcript.sh"
+            "command": "bun ${CLAUDE_PLUGIN_ROOT}/scripts/cache-doc-from-transcript.ts"
           }
         ]
       },
@@ -131,7 +122,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/cache-analytics-save.sh"
+            "command": "bun ${CLAUDE_PLUGIN_ROOT}/scripts/cache-analytics-save.ts"
           }
         ]
       }
@@ -156,20 +147,11 @@
         ]
       },
       {
-        "matcher": "mcp__.*context7__query-docs|mcp__.*exa__get_code_context|mcp__.*exa__web_search",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/cache-doc-result.sh"
-          }
-        ]
-      },
-      {
         "matcher": "TaskCreate|TaskUpdate",
         "hooks": [
           {
             "type": "command",
-            "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/sync-task-tracking.sh"
+            "command": "bun ${CLAUDE_PLUGIN_ROOT}/scripts/sync-task-tracking.ts"
           }
         ]
       }

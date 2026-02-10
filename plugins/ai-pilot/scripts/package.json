@@ -1,0 +1,8 @@
+{
+  "name": "ai-pilot-scripts",
+  "private": true,
+  "type": "module",
+  "devDependencies": {
+    "@types/bun": "^1.3.8"
+  }
+}
