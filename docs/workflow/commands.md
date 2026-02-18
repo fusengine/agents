@@ -51,7 +51,7 @@
 
 | Command | Plugin | Description |
 |---------|--------|-------------|
-| `/code-quality` | fuse-ai-pilot | Linters, SOLID validation |
+| `/code-quality` | fuse-ai-pilot | Linters, SOLID validation, DRY detection |
 | `/elicitation` | fuse-ai-pilot | Self-review techniques |
 
 ## Usage

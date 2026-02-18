@@ -51,6 +51,7 @@ bun --cwd $env:USERPROFILE\.claude\plugins\marketplaces\fusengine-plugins\plugin
 - **15 Expert Agents** - Next.js, Laravel, React, Swift, Tailwind, Design, and more
 - **70 Skills** - Framework-specific knowledge modules
 - **SOLID Enforcement** - Automatic file size limits, interface separation, quality gates
+- **DRY Detection** - Code duplication analysis via jscpd (150+ languages) with per-language thresholds
 - **12 Lifecycle Hooks** - All Claude Code hook types covered across 9 plugins
 - **Smart Commits** - Conventional commits with auto-detection
 - **[4-Level Cache System](docs/reference/cache-system.md)** - Explore, Documentation, Lessons, and Tests caches with analytics for 60-75% token savings
@@ -80,7 +81,7 @@ bun --cwd $env:USERPROFILE\.claude\plugins\marketplaces\fusengine-plugins\plugin
 ### Development
 | Plugin | Description |
 |--------|-------------|
-| fuse-ai-pilot | APEX workflow orchestrator, sniper validation, 4-level cache |
+| fuse-ai-pilot | APEX workflow orchestrator, 7-phase sniper validation, DRY detection, 4-level cache |
 | fuse-nextjs | Next.js 16+ expert with App Router, Prisma 7 |
 | fuse-laravel | Laravel 12+ expert with Livewire, Eloquent |
 | fuse-react | React 19 expert with hooks, TanStack |

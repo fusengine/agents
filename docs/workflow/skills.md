@@ -10,7 +10,7 @@
 | `apex-quick` | Quick flow, single expert |
 | `research` | Technical research methodology |
 | `exploration` | Codebase discovery techniques |
-| `code-quality` | Validation with linters |
+| `code-quality` | Validation with linters, DRY detection (jscpd) |
 | `elicitation` | Self-review techniques |
 | `skill-creator` | Create/restructure skills with SKILL.md + references/ |
 | `agent-creator` | Create expert agents with frontmatter, hooks, skills |

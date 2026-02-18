@@ -1,24 +1,26 @@
 ---
 name: code-quality
-description: Code quality validation with linters, SOLID principles, error detection, and architecture compliance across all languages.
+description: Code quality validation with linters, SOLID principles, DRY detection, error detection, and architecture compliance across all languages.
 argument-hint: "[file-or-directory]"
-user-invocable: false
+user-invocable: true
 ---
 
 # Code Quality Skill
 
-## 🚨 MANDATORY 6-PHASE WORKFLOW
+## 🚨 MANDATORY 7-PHASE WORKFLOW
 
 ```
 PHASE 1: Exploration (explore-codebase) → BLOCKER
 PHASE 2: Documentation (research-expert) → BLOCKER
 PHASE 3: Impact Analysis (Grep usages) → BLOCKER
+PHASE 3.5: DRY Detection (jscpd duplication) → NON-BLOCKING
 PHASE 4: Error Detection (linters)
-PHASE 5: Precision Correction (with docs + impact)
-PHASE 6: Verification (re-run linters, tests)
+PHASE 5: Precision Correction (with docs + impact + DRY)
+PHASE 6: Verification (re-run linters, tests, duplication)
 ```
 
 **CRITICAL**: Phases 1-3 are BLOCKERS. Never skip them.
+**DRY**: Phase 3.5 is non-blocking but findings inform Phase 5 corrections.
 
 ---
 
@@ -62,33 +64,29 @@ PHASE 6: Verification (re-run linters, tests)
 
 ## PHASE 3: Impact Analysis
 
-**For EACH element to modify**:
+**For EACH element to modify**: Grep usages → assess risk → document impact.
 
-### Step 1: Search Usages
-```bash
-# TypeScript/JavaScript
-grep -r "functionName" --include="*.{ts,tsx,js,jsx}"
-
-# Python
-grep -r "function_name" --include="*.py"
-
-# Go
-grep -r "FunctionName" --include="*.go"
-```
-
-### Step 2: Risk Assessment
 | Risk | Criteria | Action |
 |------|----------|--------|
 | 🟢 LOW | Internal, 0-1 usages | Proceed |
 | 🟡 MEDIUM | 2-5 usages, compatible | Proceed with care |
 | 🔴 HIGH | 5+ usages OR breaking | Flag to user FIRST |
 
-### Step 3: Document Impact
-```markdown
-| Element | Usages Found | Risk | Files Affected |
-|---------|--------------|------|----------------|
-| signIn() | 3 files | 🟡 | login.tsx, auth.ts, middleware.ts |
-```
+---
+
+## PHASE 3.5: Code Duplication Detection (DRY)
+
+**Tool**: `jscpd` — 150+ languages — `npx jscpd ./src --threshold 5 --reporters console,json`
+
+| Level | Threshold | Action |
+|-------|-----------|--------|
+| 🟢 Excellent | < 3% | No action needed |
+| 🟡 Good | 3-5% | Document, fix if time |
+| 🟠 Acceptable | 5-10% | Extract shared logic |
+| 🔴 Critical | > 10% | Mandatory refactoring |
+
+See [references/duplication-thresholds.md](references/duplication-thresholds.md) for per-language thresholds, config, and extraction patterns.
+See [references/linter-commands.md](references/linter-commands.md) for language-specific jscpd commands.
 
 ---
 
@@ -103,92 +101,20 @@ See [references/linter-commands.md](references/linter-commands.md) for language-
 |----------|------|----------|--------|
 | **Critical** | Security | SQL injection, XSS, CSRF, auth bypass | Fix IMMEDIATELY |
 | **High** | Logic | SOLID violations, memory leaks, race conditions | Fix same session |
+| **High** | DRY | Code duplication > 10%, copy-paste logic blocks | Mandatory refactoring |
+| **Medium** | DRY | Code duplication 5-10%, repeated patterns | Extract shared logic |
 | **Medium** | Performance | N+1 queries, deprecated APIs, inefficient algorithms | Fix if time |
 | **Low** | Style | Formatting, naming, missing docs | Fix if time |
 
 ---
 
 ## SOLID Validation
-
-### S - Single Responsibility
-- ✅ One file = one clear purpose
-- ❌ Component with API calls + validation + rendering
-
-**Detection**:
-```typescript
-// ❌ VIOLATION: Component does too much
-function UserDashboard() {
-  const [user, setUser] = useState()
-  const fetchUser = async () => { /* API call */ }
-  const validateForm = (data) => { /* validation */ }
-  const calculateMetrics = () => { /* business logic */ }
-  return <div>...</div>
-}
-
-// ✅ FIXED: Separated concerns
-// hooks/useUserDashboard.ts
-export function useUserDashboard() {
-  const fetchUser = async () => {}
-  const validateForm = (data) => {}
-  const calculateMetrics = () => {}
-  return { fetchUser, validateForm, calculateMetrics }
-}
-
-// components/UserDashboard.tsx
-function UserDashboard() {
-  const { fetchUser, calculateMetrics } = useUserDashboard()
-  return <div>...</div>
-}
-```
-
-### O - Open/Closed
-- ✅ Extensible via interfaces/abstractions
-- ❌ Modifying existing code for new features
-
-### L - Liskov Substitution
-- ✅ Subtypes work as drop-in replacements
-- ❌ Subclass throws where parent doesn't
-
-### I - Interface Segregation
-- ✅ Small, focused interfaces
-- ❌ One huge interface with 20 methods
-
-### D - Dependency Inversion
-- ✅ Depend on abstractions (interfaces)
-- ❌ Import concrete implementations directly
+See [references/solid-validation.md](references/solid-validation.md) for S-O-L-I-D detection patterns and fix examples.
 
 ---
 
 ## File Size Rules
-
-### Limits
-| Metric | Limit | Action |
-|--------|-------|--------|
-| **LoC** (code only) | < 100 | ✅ OK |
-| **LoC** >= 100, **Total** < 200 | | ✅ OK (well-documented) |
-| **Total** >= 200 | | ❌ SPLIT required |
-
-### Calculation
-```
-LoC = Total lines - Comment lines - Blank lines
-
-Comment patterns:
-- JS/TS: //, /* */, /** */
-- Python: #, """ """, ''' '''
-- Go: //, /* */
-- PHP: //, #, /* */
-- Rust: //, /* */, ///
-```
-
-### Split Strategy
-```
-component.tsx (150 lines) → SPLIT INTO:
-├── Component.tsx (40 lines) - orchestrator
-├── ComponentHeader.tsx (30 lines)
-├── ComponentContent.tsx (35 lines)
-├── useComponentLogic.ts (45 lines) - hook
-└── index.ts (5 lines) - barrel export
-```
+See [references/file-size-rules.md](references/file-size-rules.md) for LoC limits, calculation, and split strategies.
 
 ---
 
@@ -198,57 +124,7 @@ See [references/architecture-patterns.md](references/architecture-patterns.md) f
 ---
 
 ## Validation Report Format
-
-```markdown
-## 🎯 Sniper Validation Report
-
-### PHASE 1: Architecture (via explore-codebase)
-- **Language**: TypeScript
-- **Framework**: Next.js 16 (App Router)
-- **Architecture**: Clean Architecture
-- **State Management**: Zustand
-- **Interface Location**: src/interfaces/
-- **File Sizes**: ✅ All <100 LoC
-
-### PHASE 2: Documentation (via research-expert)
-- **Research Agent Used**: ✅ YES
-- **Libraries Researched**:
-  - TypeScript@5.3: Function overload syntax
-  - Next.js@16: Server Actions patterns
-  - Zustand@4: Store best practices
-
-### PHASE 3: Impact Analysis
-| Element | Usages | Risk | Action |
-|---------|--------|------|--------|
-| signIn() | 3 files | 🟡 MEDIUM | Fix with care |
-| useAuth | 5 files | 🔴 HIGH | Flag to user |
-| validateToken | 1 file | 🟢 LOW | Fix directly |
-
-### PHASE 4-5: Errors Fixed
-- **Critical**: 0
-- **High**: 2 (SOLID violations)
-- **Medium**: 5 (deprecated APIs)
-- **Low**: 3 (formatting)
-
-### Architectural Fixes
-- **Interfaces Moved**: 3 files (components → interfaces/)
-- **Logic Extracted**: 2 hooks created
-- **Stores Created**: 1 Zustand store
-- **Files Split**: 2 (>100 LoC → multiple files)
-
-### PHASE 6: Verification
-- ✅ Linters: 0 errors
-- ✅ TypeScript: tsc --noEmit passed
-- ✅ Tests: All passing
-- ✅ Architecture: SOLID compliant
-
-### SOLID Compliance
-- ✅ S: One purpose per file
-- ✅ O: Extensible via interfaces
-- ✅ L: Subtypes replaceable
-- ✅ I: Small interfaces
-- ✅ D: Depends on abstractions
-```
+See [references/validation-report.md](references/validation-report.md) for the complete sniper report template.
 
 ---
 
@@ -263,6 +139,7 @@ See [references/examples.md](references/examples.md) for detailed walkthrough.
 - ❌ Skip PHASE 1 (explore-codebase)
 - ❌ Skip PHASE 2 (research-expert)
 - ❌ Skip PHASE 3 (impact analysis)
+- ❌ Skip PHASE 3.5 (DRY detection)
 - ❌ Jump to corrections without completing Phases 1-3
 - ❌ Proceed when BLOCKER is active
 
@@ -270,6 +147,8 @@ See [references/examples.md](references/examples.md) for detailed walkthrough.
 - ❌ Leave ANY linter errors unfixed
 - ❌ Apply fixes that introduce new errors
 - ❌ Ignore SOLID violations
+- ❌ Ignore DRY violations > 5% duplication
+- ❌ Copy-paste code instead of extracting shared logic
 - ❌ Create tests if project has none
 
 ### Architecture Violations

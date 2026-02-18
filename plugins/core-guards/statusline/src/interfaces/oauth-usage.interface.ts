@@ -27,6 +27,16 @@ export interface UsageLimit {
 }
 
 /**
+ * Données extra usage (overage billing)
+ */
+export interface ExtraUsageLimits {
+	is_enabled: boolean;
+	monthly_limit: number;
+	used_credits: number;
+	utilization: number;
+}
+
+/**
  * Réponse de l'API OAuth /usage
  */
 export interface OAuthUsageResponse {
@@ -38,6 +48,8 @@ export interface OAuthUsageResponse {
 	seven_day_opus: UsageLimit;
 	/** Limite OAuth apps (nullable) */
 	seven_day_oauth_apps?: UsageLimit | null;
+	/** Extra usage / overage billing (nullable) */
+	extra_usage?: ExtraUsageLimits | null;
 }
 
 /**

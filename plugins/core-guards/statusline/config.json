@@ -90,6 +90,19 @@
     "showBudget": false,
     "warnThreshold": 80
   },
+  "extraUsage": {
+    "enabled": true,
+    "showPercentage": true,
+    "showSpending": true,
+    "showResetDate": true,
+    "progressBar": {
+      "enabled": true,
+      "style": "filled",
+      "length": 4,
+      "color": "progressive",
+      "useProgressiveColor": true
+    }
+  },
   "node": {
     "enabled": true
   },

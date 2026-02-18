@@ -6,7 +6,7 @@
 
 | Agent | Description |
 |-------|-------------|
-| `sniper` | Code validation, zero linter errors |
+| `sniper` | 7-phase code validation, DRY detection, zero linter errors |
 | `sniper-faster` | Quick validation, minimal output |
 | `explore-codebase` | Architecture discovery, patterns |
 | `research-expert` | Documentation with Context7/Exa |

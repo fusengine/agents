@@ -30,3 +30,5 @@ plugins/core-guards/statusline/bun.lock
 plugins/core-guards/statusline/dist
 archives
 scripts/.claude/*
+plugins/ai-pilot/scripts/node_modules
+plugins/ai-pilot/scripts/bun.lock

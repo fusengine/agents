@@ -1,7 +1,10 @@
 /**
  * Default Configuration - All default values explicitly set
+ *
+ * @description SRP: Segment defaults only, design defaults in design-defaults.ts
  */
 
+import { defaultDesignConfig } from "./design-defaults";
 import type { StatuslineConfig } from "./index";
 
 const defaultProgressBar = {
@@ -59,42 +62,14 @@ export const defaultConfig: StatuslineConfig = {
 		progressBar: defaultBrailleBar,
 	},
 	dailySpend: { enabled: true, showBudget: false, warnThreshold: 80 },
+	extraUsage: {
+		enabled: false,
+		showPercentage: true,
+		showSpending: true,
+		showResetDate: true,
+		progressBar: { ...defaultProgressBar, style: "filled" as const, length: 4 },
+	},
 	node: { enabled: true },
 	edits: { enabled: true, showLabel: false },
-	global: {
-		separator: "·",
-		showLabels: false,
-		compactMode: false,
-		twoLineMode: true,
-		lineSplitPriority: 45,
-	},
-	colors: {
-		blue: "\x1b[0;34m",
-		cyan: "\x1b[0;36m",
-		purple: "\x1b[38;5;135m",
-		yellow: "\x1b[0;33m",
-		green: "\x1b[0;32m",
-		red: "\x1b[0;31m",
-		orange: "\x1b[38;5;208m",
-		white: "\x1b[0;37m",
-		magenta: "\x1b[0;35m",
-		gray: "\x1b[38;5;240m",
-		reset: "\x1b[0m",
-	},
-	icons: {
-		agent: "◈",
-		claude: "◆",
-		directory: "⌂",
-		git: "⎇",
-		model: "⚙",
-		node: "⬢",
-		cost: "$",
-		edits: "±",
-		usage: "⏱",
-		time: "",
-		warning: "⚠",
-		check: "✓",
-		cross: "✗",
-		arrow: "❯",
-	},
+	...defaultDesignConfig,
 };

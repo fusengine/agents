@@ -55,3 +55,14 @@ export const EditsSegmentConfigSchema = z.object({
 	enabled: z.boolean().default(true),
 	showLabel: z.boolean().default(false),
 });
+
+// Extra Usage segment (overage billing from claude.ai API)
+export const ExtraUsageSegmentConfigSchema = z.object({
+	enabled: z.boolean().default(false),
+	showPercentage: z.boolean().default(true),
+	showSpending: z.boolean().default(true),
+	showResetDate: z.boolean().default(true),
+	progressBar: ProgressBarConfigSchema.default(
+		zd(ProgressBarConfigSchema, { style: "filled", length: 4 }),
+	),
+});

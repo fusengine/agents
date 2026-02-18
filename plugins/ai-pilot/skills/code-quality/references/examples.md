@@ -43,6 +43,23 @@ Risk Assessment:
 ⚠️ FLAG TO USER: useAuth needs refactoring (3 files affected)
 ```
 
+## PHASE 3.5: DRY Detection
+```
+> Run jscpd on auth module
+
+npx jscpd src/modules/auth/ --threshold 3 --reporters console,json
+
+Result:
+- Duplication: 4.2% (🟡 ACCEPTABLE for TypeScript threshold 3%)
+- Clones: 2
+  - signIn validation ↔ signUp validation (12 lines)
+  - token parsing in auth.ts ↔ middleware.ts (8 lines)
+
+Action:
+- 🟡 Document for Phase 5 extraction
+- Candidate: Extract shared validation → validators/auth.validator.ts
+```
+
 ## PHASE 4: Detection
 ```
 Errors found:
@@ -82,6 +99,7 @@ Fix 3: validateToken.ts:23
 ✅ npm test: All passing
 ✅ Architecture: Compliant
 ✅ File sizes: All <100 LoC
+✅ DRY: 1.8% duplication (down from 4.2%)
 
-🎯 MISSION COMPLETE: 3 errors fixed, 0 code broken
+🎯 MISSION COMPLETE: 3 errors fixed, 1 DRY extraction, 0 code broken
 ```

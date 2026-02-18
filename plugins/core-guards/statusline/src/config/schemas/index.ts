@@ -31,6 +31,7 @@ import { ColorPaletteSchema, GlobalConfigSchema, IconSetSchema } from "./design.
 import {
 	DailySpendSegmentConfigSchema,
 	EditsSegmentConfigSchema,
+	ExtraUsageSegmentConfigSchema,
 	FiveHourSegmentConfigSchema,
 	LimitsSegmentConfigSchema,
 	NodeSegmentConfigSchema,
@@ -55,6 +56,7 @@ export const StatuslineConfigSchema = z.object({
 	limits: LimitsSegmentConfigSchema.default(zd(LimitsSegmentConfigSchema)),
 	weekly: WeeklySegmentConfigSchema.default(zd(WeeklySegmentConfigSchema)),
 	dailySpend: DailySpendSegmentConfigSchema.default(zd(DailySpendSegmentConfigSchema)),
+	extraUsage: ExtraUsageSegmentConfigSchema.default(zd(ExtraUsageSegmentConfigSchema)),
 	node: NodeSegmentConfigSchema.default(zd(NodeSegmentConfigSchema)),
 	edits: EditsSegmentConfigSchema.default(zd(EditsSegmentConfigSchema)),
 

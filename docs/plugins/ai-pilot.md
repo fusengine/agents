@@ -6,7 +6,7 @@ APEX workflow orchestrator with sniper validation and research capabilities.
 
 | Agent | Description |
 |-------|-------------|
-| `sniper` | 6-phase validation, zero linter errors |
+| `sniper` | 7-phase validation (DRY detection), zero linter errors |
 | `sniper-faster` | Quick validation, minimal output |
 | `explore-codebase` | Architecture discovery |
 | `research-expert` | Documentation with Context7/Exa |
@@ -21,7 +21,7 @@ APEX workflow orchestrator with sniper validation and research capabilities.
 | `/apex-quick` | Skip Analyze, direct Execute |
 | `/research` | Technical research |
 | `/exploration` | Codebase discovery |
-| `/code-quality` | Linters, SOLID validation |
+| `/code-quality` | Linters, SOLID validation, DRY detection |
 | `/elicitation` | Self-review techniques |
 
 ## Skills
@@ -30,7 +30,7 @@ APEX workflow orchestrator with sniper validation and research capabilities.
 - `apex-quick` - Quick flow
 - `research` - Research methodology
 - `exploration` - Discovery techniques
-- `code-quality` - Validation
+- `code-quality` - Validation with DRY detection (jscpd)
 - `elicitation` - Self-review (75 techniques)
 - `skill-creator` - Create/restructure skills with SKILL.md + references/
 - `agent-creator` - Create expert agents with frontmatter, hooks, skills

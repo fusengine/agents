@@ -1,5 +1,32 @@
 # Linter Commands by Language
 
+## Code Duplication Detection (All Languages)
+```bash
+# Install
+npm install -g jscpd
+
+# Run (auto-detect all languages)
+npx jscpd ./src --threshold 5 --reporters console,json --output /tmp/jscpd/
+
+# Run specific language (see duplication-thresholds.md for per-language thresholds)
+npx jscpd ./src --format typescript --threshold 3
+npx jscpd ./src --format python --threshold 3
+npx jscpd ./src --format go --threshold 5
+npx jscpd ./src --format php --threshold 5
+npx jscpd ./src --format rust --threshold 3
+npx jscpd ./src --format java --threshold 10
+npx jscpd ./src --format ruby --threshold 5
+npx jscpd ./src --format swift --threshold 5
+npx jscpd ./src --format c,cpp --threshold 10
+
+# CI/CD (fail on threshold exceeded)
+npx jscpd . --threshold 5 --exitCode 1 --reporters console,json
+```
+
+See [duplication-thresholds.md](duplication-thresholds.md) for per-language thresholds and .jscpd.json config.
+
+---
+
 ## JavaScript/TypeScript
 ```bash
 # Install

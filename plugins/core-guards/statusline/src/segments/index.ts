@@ -12,6 +12,7 @@ import { CostSegment } from "./cost.segment";
 import { DailySpendSegment } from "./daily-spend.segment";
 import { DirectorySegment } from "./directory.segment";
 import { EditsSegment } from "./edits.segment";
+import { ExtraUsageSegment } from "./extra-usage.segment";
 import { FiveHourSegment } from "./five-hour.segment";
 import { LimitsSegment } from "./limits.segment";
 import { ModelSegment } from "./model.segment";
@@ -31,6 +32,7 @@ export function createDefaultSegments(): ISegment[] {
 		new FiveHourSegment(),
 		new LimitsSegment(),
 		new WeeklySegment(),
+		new ExtraUsageSegment(),
 		new DailySpendSegment(),
 		new NodeSegment(),
 		new EditsSegment(),
@@ -44,6 +46,7 @@ export { CostSegment } from "./cost.segment";
 export { DailySpendSegment } from "./daily-spend.segment";
 export { DirectorySegment } from "./directory.segment";
 export { EditsSegment } from "./edits.segment";
+export { ExtraUsageSegment } from "./extra-usage.segment";
 export { FiveHourSegment } from "./five-hour.segment";
 export { LimitsSegment } from "./limits.segment";
 export { ModelSegment } from "./model.segment";
