@@ -1,5 +1,11 @@
 # Release Notes
 
+## [1.36.30] - 18-02-2026
+
+### Changed
+
+- **docs**: Add React Effects Audit to README features list
+
 ## [1.36.29] - 18-02-2026
 
 ### Added
