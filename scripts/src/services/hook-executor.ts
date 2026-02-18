@@ -7,8 +7,9 @@ import type { ExecutableHook, HookResult } from "../interfaces/hooks";
 /** Execute a hook and return the result */
 export async function executeHook(hook: ExecutableHook, input: string): Promise<HookResult> {
   if (hook.isAsync) {
-    // Fire and forget for sounds
-    Bun.spawn(["bash", "-c", hook.command], { stdout: "ignore", stderr: "ignore" });
+    // Wait for sound to complete — parent must stay alive or process group gets killed
+    const proc = Bun.spawn(["bash", "-c", hook.command], { stdout: "ignore", stderr: "ignore" });
+    await proc.exited;
     return { success: true, exitCode: 0, stdout: "", stderr: "", blocked: false };
   }
 
