@@ -1,5 +1,26 @@
 # Release Notes
 
+## [1.36.25] - 18-02-2026
+
+### Added
+
+- **ai-pilot**: Add Phase 3.5 DRY detection via jscpd to sniper 7-phase workflow
+- **ai-pilot**: Add duplication-thresholds.md with per-language jscpd thresholds
+- **ai-pilot**: Add jscpd commands to linter-commands.md reference
+- **statusline**: Add ExtraUsage segment for overage billing (OAuth API)
+- **statusline**: Add ExtraUsageLimits interface and ExtraUsageSegmentConfigSchema
+
+### Changed
+
+- **ai-pilot**: Refactor code-quality SKILL.md into 4 reference files (solid-validation, file-size-rules, validation-report, duplication-thresholds)
+- **ai-pilot**: Make code-quality skill user-invocable
+- **statusline**: SRP split defaults.ts into defaults.ts + design-defaults.ts
+- **deps**: Bump @types/bun to ^1.3.9, @biomejs/biome to ^2.4.2, @clack/prompts to ^1.0.1
+
+### Removed
+
+- **statusline**: Remove stale .claude/apex/ task tracking files
+
 ## [1.36.24] - 10-02-2026
 
 ### Fixed
