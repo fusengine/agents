@@ -1,5 +1,17 @@
 # Release Notes
 
+## [1.36.27] - 18-02-2026
+
+### Added
+
+- **setup**: Interactive language selection prompt with 10 languages (default: English)
+- **setup**: New `setup-plugins.ts` service extracted from setup-runner (SOLID SRP)
+
+### Changed
+
+- **setup**: `configureDefaults` now accepts optional language parameter instead of hardcoded "french"
+- **tests**: Split settings-manager tests into load-save and configure suites
+
 ## [1.36.26] - 18-02-2026
 
 ### Added
