@@ -52,6 +52,7 @@ bun --cwd $env:USERPROFILE\.claude\plugins\marketplaces\fusengine-plugins\plugin
 - **71 Skills** - Framework-specific knowledge modules
 - **SOLID Enforcement** - Automatic file size limits, interface separation, quality gates
 - **DRY Detection** - Code duplication analysis via jscpd (150+ languages) with per-language thresholds
+- **React Effects Audit** - 9 useEffect anti-pattern detection rules for React/Next.js projects
 - **12 Lifecycle Hooks** - All Claude Code hook types covered across 9 plugins
 - **Smart Commits** - Conventional commits with auto-detection
 - **[4-Level Cache System](docs/reference/cache-system.md)** - Explore, Documentation, Lessons, and Tests caches with analytics for 60-75% token savings
