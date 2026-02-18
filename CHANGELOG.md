@@ -1,5 +1,11 @@
 # Release Notes
 
+## [1.36.28] - 18-02-2026
+
+### Fixed
+
+- **hooks**: Await async hook processes (afplay) to prevent premature termination on parent exit
+
 ## [1.36.27] - 18-02-2026
 
 ### Added
