@@ -1,5 +1,17 @@
 # Release Notes
 
+## [1.36.26] - 18-02-2026
+
+### Added
+
+- **ai-pilot**: New `react-effects-audit` skill — audit React useEffect anti-patterns (9 detection rules from "You Might Not Need an Effect")
+- **ai-pilot**: Cross-references with `solid-nextjs` and `solid-react` SOLID skills for architecture-level validation
+
+### Changed
+
+- **docs**: Update README.md, ai-pilot.md, and skills.md with new skill (71 skills total)
+- **marketplace**: Register react-effects-audit in fuse-ai-pilot plugin
+
 ## [1.36.25] - 18-02-2026
 
 ### Added
