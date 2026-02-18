@@ -49,9 +49,26 @@ export function configureHooks(settings: Settings, loaderPath: string): Settings
   return settings;
 }
 
+/** Supported languages for Claude Code responses */
+export const SUPPORTED_LANGUAGES = [
+  { value: "english", label: "English" },
+  { value: "french", label: "French" },
+  { value: "german", label: "German" },
+  { value: "spanish", label: "Spanish" },
+  { value: "italian", label: "Italian" },
+  { value: "portuguese", label: "Portuguese" },
+  { value: "dutch", label: "Dutch" },
+  { value: "japanese", label: "Japanese" },
+  { value: "chinese", label: "Chinese" },
+  { value: "korean", label: "Korean" },
+] as const;
+
+/** Default language when none selected */
+export const DEFAULT_LANGUAGE = "english";
+
 /** Configure default parameters */
-export function configureDefaults(settings: Settings): Settings {
-  settings.language = "french";
+export function configureDefaults(settings: Settings, language?: string): Settings {
+  settings.language = language ?? settings.language ?? DEFAULT_LANGUAGE;
   settings.attribution = { commit: "", pr: "" };
   return settings;
 }
