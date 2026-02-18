@@ -1,5 +1,13 @@
 # Release Notes
 
+## [1.36.29] - 18-02-2026
+
+### Added
+
+- **sniper**: Integrate `react-effects-audit` skill for automatic useEffect anti-pattern detection on React/Next.js projects
+- **sniper**: Add conditional Phase 3.6 to workflow for 9 useEffect anti-patterns
+- **sniper-faster**: Add React/Next.js conditional capabilities section
+
 ## [1.36.28] - 18-02-2026
 
 ### Fixed
