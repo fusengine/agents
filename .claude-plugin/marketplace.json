@@ -34,7 +34,8 @@
         "seo",
         "local-seo",
         "geo",
-        "google-business-profile"
+        "google-business-profile",
+        "react-effects-audit"
       ],
       "category": "development",
       "strict": true,
@@ -67,7 +68,8 @@
         "./skills/sniper-check",
         "./skills/seo",
         "./skills/skill-creator",
-        "./skills/agent-creator"
+        "./skills/agent-creator",
+        "./skills/react-effects-audit"
       ]
     },
     {

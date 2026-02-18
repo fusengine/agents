@@ -34,6 +34,7 @@ APEX workflow orchestrator with sniper validation and research capabilities.
 - `elicitation` - Self-review (75 techniques)
 - `skill-creator` - Create/restructure skills with SKILL.md + references/
 - `agent-creator` - Create expert agents with frontmatter, hooks, skills
+- `react-effects-audit` - Audit React useEffect anti-patterns (9 rules from "You Might Not Need an Effect")
 
 ## Cache System (fusengine-cache)
 

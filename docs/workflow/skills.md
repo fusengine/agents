@@ -1,8 +1,8 @@
 # Skills
 
-70 specialized skills across all plugins.
+71 specialized skills across all plugins.
 
-## fuse-ai-pilot (8 skills)
+## fuse-ai-pilot (9 skills)
 
 | Skill | Description |
 |-------|-------------|
@@ -14,6 +14,7 @@
 | `elicitation` | Self-review techniques |
 | `skill-creator` | Create/restructure skills with SKILL.md + references/ |
 | `agent-creator` | Create expert agents with frontmatter, hooks, skills |
+| `react-effects-audit` | Audit React useEffect anti-patterns (9 rules) |
 
 ## fuse-commit-pro (10 skills)
 
