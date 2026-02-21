@@ -1,5 +1,12 @@
 # Release Notes
 
+## [1.36.32] - 21-02-2026
+
+### Fixed
+- `shadcn-expert/rules/apex-workflow.md`: add frontmatter (description + next_step)
+- `shadcn-expert/rules/shadcn-rules.md`: add frontmatter (description + next_step)
+- `shadcn-expert/agents/shadcn-ui-expert.md`: replace unsupported color `violet` with `indigo`
+
 ## [1.36.31] - 21-02-2026
 
 ### Added
