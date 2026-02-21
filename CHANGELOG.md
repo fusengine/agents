@@ -1,5 +1,11 @@
 # Release Notes
 
+## [1.36.34] - 21-02-2026
+
+### Changed
+- `commit-pro/commands/commit.md`: CHANGELOG.md always committed last as separate commit, marketplace.json included if version bumped
+- `ai-pilot/commands/commit.md`: same rule added
+
 ## [1.36.33] - 21-02-2026
 
 ### Added
