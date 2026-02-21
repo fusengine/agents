@@ -76,6 +76,12 @@ DOC_TYPE=$(get_doc_type "$FILE_PATH")
 TIMESTAMP=$(date +%Y-%m-%dT%H:%M:%SZ)
 FILENAME=$(basename "$FILE_PATH")
 
+# Visual feedback for skill reads
+if [[ "$DOC_TYPE" == "Skill" ]]; then
+  SKILL_NAME=$(basename "$(dirname "$FILE_PATH")")
+  echo "skill loaded: $SKILL_NAME" >&2
+fi
+
 # Lock for concurrent writes
 LOCK_DIR="$DOC_DIR/.doc.lock"
 acquire_lock() {
