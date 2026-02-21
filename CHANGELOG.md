@@ -1,5 +1,10 @@
 # Release Notes
 
+## [1.36.33] - 21-02-2026
+
+### Added
+- `core-guards/auto-document-reads.sh`: visual feedback `skill loaded: {name}` on stderr for every SKILL.md read (all 100+ skills)
+
 ## [1.36.32] - 21-02-2026
 
 ### Fixed
