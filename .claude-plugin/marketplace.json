@@ -7,8 +7,22 @@
   },
   "metadata": {
     "description": "Professional Claude Code plugins with APEX workflow, SOLID principles, and expert development agents for Next.js, Laravel, Swift, Tailwind CSS, and more",
-    "version": "1.36.30"
+    "version": "1.36.31"
   },
+  "core": [
+    {
+      "name": "core-guards",
+      "source": "./plugins/core-guards",
+      "description": "Mandatory security and SOLID enforcement: git guards, install guards, file size limits, interface separation, session lifecycle hooks",
+      "required": true
+    },
+    {
+      "name": "claude-rules",
+      "source": "./plugins/claude-rules",
+      "description": "Mandatory APEX/SOLID/DRY rules injection: 8 rule files (00→07) injected at SessionStart and every UserPromptSubmit for persistent context",
+      "required": true
+    }
+  ],
   "plugins": [
     {
       "name": "fuse-ai-pilot",

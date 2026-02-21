@@ -1,5 +1,19 @@
 # Release Notes
 
+## [1.36.31] - 21-02-2026
+
+### Added
+- **claude-rules plugin**: 8 rules (00→07) covering APEX, SOLID, DRY, agent teams, frontend, state management
+- **Per-prompt injection**: SessionStart + UserPromptSubmit hooks for persistent context across compression
+- **Visual feedback**: `claude memory: CLAUDE.md loaded` + `fuse rules: N rules loaded` on each prompt
+- **State management rule**: Zustand stores for shared state, TanStack Query for server state (React/Next.js)
+
+### Changed
+- `install-hooks.ts`: CLAUDE.md source moved to `plugins/claude-rules/templates/CLAUDE.md.template`
+- `core-guards/read-claude-md.sh`: stderr feedback added on CLAUDE.md injection
+- SOLID skills enriched: laravel, nextjs, react, swift
+- `CLAUDE.md`: added DRY rule (rule #5) and claude-rules plugin reference
+
 ## [1.36.30] - 18-02-2026
 
 ### Changed
