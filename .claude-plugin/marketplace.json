@@ -7,7 +7,7 @@
   },
   "metadata": {
     "description": "Professional Claude Code plugins with APEX workflow, SOLID principles, and expert development agents for Next.js, Laravel, Swift, Tailwind CSS, and more",
-    "version": "1.36.29"
+    "version": "1.36.30"
   },
   "plugins": [
     {
@@ -445,6 +445,116 @@
         "./skills/guardrails",
         "./skills/prompt-library",
         "./skills/prompt-testing"
+      ]
+    },
+    {
+      "name": "fuse-shadcn-ui",
+      "source": "./plugins/shadcn-expert",
+      "description": "Expert shadcn/ui with Radix UI and Base UI detection, component patterns, registries, theming, and migration",
+      "version": "1.0.0",
+      "author": {
+        "name": "Fusengine",
+        "url": "https://github.com/fusengine"
+      },
+      "homepage": "https://github.com/fusengine/agents",
+      "repository": "https://github.com/fusengine/agents",
+      "license": "MIT",
+      "keywords": [
+        "shadcn-ui",
+        "radix-ui",
+        "base-ui",
+        "components",
+        "theming",
+        "migration",
+        "registries",
+        "detection"
+      ],
+      "category": "development",
+      "strict": true,
+      "commands": [],
+      "agents": [
+        "./agents/shadcn-ui-expert.md"
+      ],
+      "skills": [
+        "./skills/shadcn-detection",
+        "./skills/shadcn-components",
+        "./skills/shadcn-registries",
+        "./skills/shadcn-theming",
+        "./skills/shadcn-migration"
+      ]
+    },
+    {
+      "name": "fuse-security",
+      "source": "./plugins/security-expert",
+      "description": "Security vulnerability detection and remediation: OWASP Top 10 2025, SAST scanning, CVE research (NVD, OSV.dev), dependency audit, secrets detection, security headers, auth patterns audit",
+      "version": "1.0.0",
+      "author": {
+        "name": "Fusengine",
+        "url": "https://github.com/fusengine"
+      },
+      "homepage": "https://github.com/fusengine/agents",
+      "repository": "https://github.com/fusengine/agents",
+      "license": "MIT",
+      "keywords": [
+        "security",
+        "owasp",
+        "cve",
+        "sast",
+        "vulnerability",
+        "audit",
+        "secrets",
+        "dependency-audit",
+        "security-headers"
+      ],
+      "category": "security",
+      "strict": true,
+      "commands": [
+        "./commands/scan.md"
+      ],
+      "agents": [
+        "./agents/security-expert.md"
+      ],
+      "skills": [
+        "./skills/security-scan",
+        "./skills/cve-research",
+        "./skills/dependency-audit",
+        "./skills/security-headers",
+        "./skills/auth-audit"
+      ]
+    },
+    {
+      "name": "fuse-changelog",
+      "source": "./plugins/changelog-watcher",
+      "description": "Claude Code update watcher: changelog tracking, breaking changes detection, community pulse via Exa, plugin compatibility analysis",
+      "version": "1.0.0",
+      "author": {
+        "name": "Fusengine",
+        "url": "https://github.com/fusengine"
+      },
+      "homepage": "https://github.com/fusengine/agents",
+      "repository": "https://github.com/fusengine/agents",
+      "license": "MIT",
+      "keywords": [
+        "changelog",
+        "updates",
+        "breaking-changes",
+        "community",
+        "pulse",
+        "watcher",
+        "compatibility"
+      ],
+      "category": "productivity",
+      "strict": true,
+      "commands": [
+        "./commands/watch.md"
+      ],
+      "agents": [
+        "./agents/changelog-watcher.md"
+      ],
+      "skills": [
+        "./skills/changelog-scan",
+        "./skills/breaking-changes",
+        "./skills/community-pulse"
       ]
     }
   ]

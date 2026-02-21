@@ -6,10 +6,10 @@
 
 ## Workflow
 - [APEX Methodology](workflow/apex.md) - Analyze → Plan → Execute → eLicit → eXamine
-- [Agents](workflow/agents.md) - 15 specialized agents
+- [Agents](workflow/agents.md) - 18 specialized agents
 - [Agent Teams](workflow/agent-teams.md) - Delegation, parallel execution, coordination
-- [Skills](workflow/skills.md) - 70 framework skills
-- [Commands](workflow/commands.md) - 24 slash commands
+- [Skills](workflow/skills.md) - 100 framework skills
+- [Commands](workflow/commands.md) - 26 slash commands
 
 ## Plugins
 - [ai-pilot](plugins/ai-pilot.md) - APEX orchestrator, sniper, research
@@ -20,6 +20,9 @@
 - [swift](plugins/swift.md) - Swift/SwiftUI expert
 - [tailwindcss](plugins/tailwindcss.md) - Tailwind CSS v4.1
 - [design](plugins/design.md) - UI/UX with shadcn/ui
+- [shadcn](plugins/shadcn.md) - shadcn/ui expert with Radix/Base UI detection
+- [security](plugins/security.md) - Security audit, OWASP, CVE research
+- [changelog](plugins/changelog.md) - Claude Code update watcher, community pulse
 - [solid](plugins/solid.md) - SOLID principles
 - [prompt-engineer](plugins/prompt-engineer.md) - Prompt optimization
 

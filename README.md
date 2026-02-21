@@ -26,7 +26,7 @@ bun --cwd $env:USERPROFILE\.claude\plugins\marketplaces\fusengine-plugins\plugin
 /plugin marketplace add fusengine/agents
 
 # Install all plugins
-/plugin install fuse-ai-pilot fuse-commit-pro fuse-laravel fuse-nextjs fuse-react fuse-swift-apple-expert fuse-solid fuse-tailwindcss fuse-design fuse-prompt-engineer
+/plugin install fuse-ai-pilot fuse-commit-pro fuse-laravel fuse-nextjs fuse-react fuse-swift-apple-expert fuse-solid fuse-tailwindcss fuse-design fuse-prompt-engineer fuse-shadcn-ui fuse-security fuse-changelog
 
 # Setup (hooks + API keys + CLAUDE.md)
 ~/.claude/plugins/marketplaces/fusengine-plugins/setup.sh
@@ -38,7 +38,7 @@ bun --cwd $env:USERPROFILE\.claude\plugins\marketplaces\fusengine-plugins\plugin
 /plugin marketplace add fusengine/agents
 
 # Install all plugins
-/plugin install fuse-ai-pilot fuse-commit-pro fuse-laravel fuse-nextjs fuse-react fuse-swift-apple-expert fuse-solid fuse-tailwindcss fuse-design fuse-prompt-engineer
+/plugin install fuse-ai-pilot fuse-commit-pro fuse-laravel fuse-nextjs fuse-react fuse-swift-apple-expert fuse-solid fuse-tailwindcss fuse-design fuse-prompt-engineer fuse-shadcn-ui fuse-security fuse-changelog
 
 # Setup (hooks + API keys + CLAUDE.md)
 ~\.claude\plugins\marketplaces\fusengine-plugins\setup.ps1
@@ -48,10 +48,12 @@ bun --cwd $env:USERPROFILE\.claude\plugins\marketplaces\fusengine-plugins\plugin
 
 - **APEX Workflow** - Systematic Analyze → Plan → Execute → eLicit → eXamine methodology
 - **[Agent Teams](docs/workflow/agent-teams.md) (beta)** - Parallel delegation with file ownership, max 4 teammates, lead-as-coordinator
-- **15 Expert Agents** - Next.js, Laravel, React, Swift, Tailwind, Design, and more
-- **71 Skills** - Framework-specific knowledge modules
+- **Changelog Watcher** - Track Claude Code updates, detect breaking changes, community pulse via Exa
+- **18 Expert Agents** - Next.js, Laravel, React, Swift, Tailwind, Design, shadcn/ui, Security, Changelog, and more
+- **100 Skills** - Framework-specific knowledge modules
 - **SOLID Enforcement** - Automatic file size limits, interface separation, quality gates
 - **DRY Detection** - Code duplication analysis via jscpd (150+ languages) with per-language thresholds
+- **Security Audit** - OWASP Top 10 scanning, CVE research, dependency audit, secrets detection, auth patterns
 - **React Effects Audit** - 9 useEffect anti-pattern detection rules for React/Next.js projects
 - **12 Lifecycle Hooks** - All Claude Code hook types covered across 9 plugins
 - **Smart Commits** - Conventional commits with auto-detection
@@ -61,10 +63,10 @@ bun --cwd $env:USERPROFILE\.claude\plugins\marketplaces\fusengine-plugins\plugin
 
 | Category | Count |
 |----------|-------|
-| Plugins | 11 |
-| Agents | 15 |
-| Skills | 71 |
-| Commands | 24 |
+| Plugins | 13 |
+| Agents | 18 |
+| Skills | 100 |
+| Commands | 26 |
 | Hook Types | 12 |
 | Cache Scripts | 10 |
 
@@ -89,6 +91,17 @@ bun --cwd $env:USERPROFILE\.claude\plugins\marketplaces\fusengine-plugins\plugin
 | fuse-swift-apple-expert | Swift/SwiftUI for all Apple platforms |
 | fuse-tailwindcss | Tailwind CSS v4.1 expert |
 | fuse-design | UI/UX with shadcn/ui, 21st.dev |
+| fuse-shadcn-ui | shadcn/ui expert with Radix/Base UI detection |
+
+### Security
+| Plugin | Description |
+|--------|-------------|
+| fuse-security | OWASP Top 10, CVE research, dependency audit, secrets detection |
+
+### Monitoring
+| Plugin | Description |
+|--------|-------------|
+| fuse-changelog | Claude Code update watcher, breaking changes, community pulse |
 
 ### Productivity
 | Plugin | Description |

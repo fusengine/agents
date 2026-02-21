@@ -40,6 +40,7 @@ This applies to: ALL tasks (questions, features, fixes, refactoring, exploration
 | `package.json` + React (jsx/tsx) | `fuse-react:react-expert` |
 | `Package.swift`, `*.xcodeproj` | `fuse-swift-apple-expert:swift-expert` |
 | `tailwind.config.*` | `fuse-tailwindcss:tailwindcss-expert` |
+| `components.json`, `@radix-ui/*`, `@base-ui/react` | `fuse-shadcn-ui:shadcn-ui-expert` |
 | Custom `~/.claude/agents/*.md` | Use matching custom agent |
 | **No match** | `general-purpose` |
 

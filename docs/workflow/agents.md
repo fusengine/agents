@@ -1,6 +1,6 @@
 # Agents
 
-15 specialized agents across all plugins.
+18 specialized agents across all plugins.
 
 ## Core Agents (fuse-ai-pilot)
 
@@ -23,7 +23,15 @@
 | `swift-expert` | fuse-swift-apple-expert | Swift/SwiftUI, all Apple platforms |
 | `tailwindcss-expert` | fuse-tailwindcss | Tailwind CSS v4.1 |
 | `design-expert` | fuse-design | UI/UX, shadcn/ui, 21st.dev |
+| `shadcn-ui-expert` | fuse-shadcn-ui | shadcn/ui, Radix/Base UI detection |
 | `prompt-engineer` | fuse-prompt-engineer | Prompt creation & optimization |
+| `security-expert` | fuse-security | OWASP Top 10, CVE research, dependency audit |
+
+## Monitoring Agents
+
+| Agent | Plugin | Description |
+|-------|--------|-------------|
+| `changelog-watcher` | fuse-changelog | Claude Code update tracking, breaking changes, community pulse |
 
 ## Utility Agents
 
