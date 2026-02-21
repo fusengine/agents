@@ -112,3 +112,9 @@ After commit, update `CHANGELOG.md` with semantic versioning:
 ### Added/Changed/Fixed
 - Description of change
 ```
+
+**CHANGELOG commit order (MANDATORY):**
+- ALWAYS commit CHANGELOG.md as a **separate commit LAST**
+- NEVER include CHANGELOG.md in the main feature/fix commit
+- If `marketplace.json` is also modified (version bump) → **include it in the same last commit**
+- Format: `chore: bump marketplace and CHANGELOG to X.Y.Z`
