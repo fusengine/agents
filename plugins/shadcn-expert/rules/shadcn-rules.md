@@ -1,3 +1,8 @@
+---
+description: "shadcn/ui strict business rules - Detection mandatory before any component work. Never mix Radix UI and Base UI APIs in same file. Radix uses asChild + data-state, Base UI uses render prop + data-[open]. Always consult mcp__shadcn__* + Context7 before adding components. Never manually edit primitives. Keep components.json in sync."
+next_step: null
+---
+
 # shadcn/ui Business Rules (STRICT)
 
 ## Detection Rules

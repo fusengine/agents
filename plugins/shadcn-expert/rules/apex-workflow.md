@@ -1,3 +1,8 @@
+---
+description: "APEX workflow shadcn/ui expert - 8 phases mandatory: load skills, detect primitive (Radix UI vs Base UI), analyze components, plan tasks (<100 lines), consult MCP (shadcn + Context7), implement with correct API, self-review via elicitation, sniper validation. NEVER skip detection. NEVER mix Radix/Base UI."
+next_step: "shadcn-rules"
+---
+
 # APEX Workflow for shadcn/ui Expert
 
 ## Workflow Steps
