@@ -20,10 +20,14 @@ if [[ ! -f "$CLAUDE_MD" ]]; then
   exit 0
 fi
 
+LINES=$(wc -l < "$CLAUDE_MD" | tr -d ' ')
 log "Injecting CLAUDE.md into session context"
 
 # Read and escape content for JSON
 CONTENT=$(cat "$CLAUDE_MD" | jq -Rs .)
+
+# Visual feedback to user terminal
+echo "CLAUDE.md loaded (${LINES} lines)" >&2
 
 # Output JSON with additionalContext
 cat << EOF
@@ -35,5 +39,5 @@ cat << EOF
 }
 EOF
 
-log "CLAUDE.md injected successfully ($(wc -l < "$CLAUDE_MD") lines)"
+log "CLAUDE.md injected successfully ($LINES lines)"
 exit 0

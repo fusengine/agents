@@ -23,6 +23,7 @@ fi
 
 # Lire CLAUDE.md
 CLAUDE_CONTENT=$(cat "$CLAUDE_MD")
+echo "claude memory: CLAUDE.md loaded" >&2
 
 # Détecter si le prompt nécessite APEX (verbes d'action dev)
 APEX_INSTRUCTION=""

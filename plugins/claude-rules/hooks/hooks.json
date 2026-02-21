@@ -1,0 +1,33 @@
+{
+  "_description": "Claude Rules - Global rules injection for all sessions",
+  "_version": "1.0.0",
+
+  "hooks": {
+    "SessionStart": [
+      {
+        "_description": "Inject all rules into session context at startup",
+        "matcher": "",
+        "hooks": [
+          {
+            "_description": "Load and inject rules/*.md into additionalContext",
+            "type": "command",
+            "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/inject-rules.sh"
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "_description": "Re-inject rules at every user prompt for persistent context",
+        "matcher": "",
+        "hooks": [
+          {
+            "_description": "Reload rules/*.md into additionalContext on each prompt",
+            "type": "command",
+            "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/inject-rules.sh"
+          }
+        ]
+      }
+    ]
+  }
+}

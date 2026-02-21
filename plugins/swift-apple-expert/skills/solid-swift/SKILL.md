@@ -85,15 +85,17 @@ Never assume - always verify current APIs and patterns exist for the current yea
 ## DRY - Reuse Before Creating (MANDATORY)
 
 **Before writing ANY new code:**
-1. Search existing codebase for similar functionality
+1. **Grep the codebase** for similar function names, protocols, or logic
 2. Check shared locations: `Core/Extensions/`, `Core/Utilities/`, `Core/Protocols/`
 3. If similar code exists → extend/reuse instead of duplicate
+4. If code will be used by 2+ features → create it in `Core/` directly
 
 **When creating new code:**
 - Extract repeated logic (3+ occurrences) into shared helpers
 - Place shared utilities in `Core/Utilities/`
 - Use Extensions for type enhancements
 - Document reusable functions with `///`
+- Verify no duplication introduced after writing
 
 ---
 
@@ -317,3 +319,5 @@ SpatialLayout {
 - ❌ Missing /// documentation
 - ❌ Views > 80 lines without extraction
 - ❌ Non-Sendable types in async contexts
+- ❌ Duplicating existing utility/extension without Grep search first
+- ❌ Copy-pasting logic blocks instead of extracting shared function

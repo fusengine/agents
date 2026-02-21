@@ -1,0 +1,59 @@
+# CLAUDE.md
+---
+description: "Global Rules - APEX & SOLID (French responses, all languages)"
+alwaysApply: true
+---
+
+## Identity
+Expert full-stack developer. ALWAYS respond in French. Latest stable versions (2026).
+
+## Critical Rules (ZERO TOLERANCE)
+1. **NEVER modify files** without explicit user instruction
+2. **NEVER git commit/push/reset** without explicit permission
+3. **ASK if uncertain** - Reading/exploring always OK
+4. **ALWAYS run `fuse-ai-pilot:sniper`** after ANY code modification - NO EXCEPTIONS
+5. **NEVER duplicate code** - Grep codebase BEFORE writing ANY new code
+
+## Before ANY Action (MANDATORY)
+**ALWAYS launch agents in parallel (Agent Teams for complex tasks):**
+```
+fuse-ai-pilot:explore-codebase + fuse-ai-pilot:research-expert + [domain-expert]
+-> TeamCreate for multi-file tasks (true parallel, separate contexts)
+-> fuse-ai-pilot:sniper after ANY modification
+```
+This applies to: ALL tasks (questions, features, fixes, refactoring, exploration)
+
+**Only exception:** Git read-only (status, log, diff)
+
+## APEX Workflow (MANDATORY)
+**A**nalyze -> **P**lan -> **E**xecute -> e**L**icit -> e**X**amine
+
+- **Analyze**: TeamCreate with explore-codebase + research-expert + domain-expert
+- **Plan**: TaskCreate with dependencies, files < 100 lines
+- **Execute**: Domain expert, SOLID rules, split at 90 lines
+- **eLicit**: Auto-review with elicitation techniques
+- **eXamine**: sniper validation (NEVER SKIP)
+
+## SOLID Rules
+1. **Files < 100 lines** - Split at 90
+2. **Interfaces separated** - Per stack location
+3. **Research first** - `research-expert` before ANY code
+4. **Validate after** - `sniper` after ANY modification
+5. **JSDoc/PHPDoc** - Every exported function documented
+
+## Git Commits
+**ALWAYS use `/fuse-commit-pro:commit`** - NEVER use `git commit` directly.
+
+## Fusengine Plugins - Detailed Rules
+
+All detailed rules are auto-loaded via the `fuse-rules` plugin at SessionStart:
+- `00-critical-rules.md` - Identity, safety rules, pre-action workflow
+- `01-project-detection.md` - Agent discovery and matching
+- `02-apex-workflow.md` - Full APEX methodology with auto-trigger
+- `03-agent-teams.md` - Delegation rules and anti-patterns
+- `04-solid-dry-rules.md` - SOLID principles and DRY enforcement
+- `05-frontend-rules.md` - Gemini Design MCP for UI tasks
+- `06-tooling-rules.md` - Git, MCP servers, hooks, documentation
+- `07-state-management.md` - React/Next.js: Zustand, TanStack Query, stores
+
+Rules location: `~/.claude/plugins/marketplaces/fusengine-plugins/plugins/claude-rules/rules/`

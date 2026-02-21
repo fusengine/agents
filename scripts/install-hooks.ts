@@ -15,7 +15,7 @@ const PATHS = {
   settings: join(HOME, ".claude/settings.json"),
   marketplace: join(HOME, ".claude/plugins/marketplaces/fusengine-plugins"),
   loaderSrc: join(SCRIPT_DIR, "hooks-loader.ts"),
-  claudeMdSrc: join(PROJECT_ROOT, "CLAUDE.md"),
+  claudeMdSrc: join(PROJECT_ROOT, "plugins/claude-rules/templates/CLAUDE.md.template"),
   claudeMdDest: join(HOME, ".claude/CLAUDE.md"),
 };
 

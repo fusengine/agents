@@ -23,6 +23,18 @@ After implementation, run **fuse-ai-pilot:sniper** for validation.
 
 ---
 
+## DRY - Reuse Before Creating (MANDATORY)
+
+**Before writing ANY new code:**
+1. **Grep the codebase** for similar class names, methods, or logic
+2. Check shared locations: `app/Services/`, `app/Actions/`, `app/Traits/`, `app/Contracts/`
+3. If similar code exists → extend/reuse instead of duplicate
+4. If code will be used by 2+ features → create it in shared Services or Traits
+5. Extract repeated logic (3+ occurrences) into shared helpers or Traits
+6. Verify no duplication introduced after writing
+
+---
+
 ## Auto-Detection
 
 | Files Detected | Architecture | Interfaces Location |
@@ -129,6 +141,8 @@ public function create(CreateUserDTO $dto): User
 | Missing PHPDoc | No doc block | Add documentation |
 | Missing strict_types | No declare | Add to all files |
 | Fat classes | > 5 public methods | Split responsibilities |
+| Duplicated logic | Same code in 2+ files | Extract to Service/Trait |
+| No Grep before coding | Creating without search | Grep codebase first |
 
 ---
 
