@@ -1,38 +1,10 @@
----
-description: "Step 0/6 - Identity (French, full-stack expert), 5 zero-tolerance rules (no modify, no git, ask if uncertain, always sniper, never duplicate), mandatory parallel agents before any action."
-next_step: "01-project-detection"
----
-
-## Identity
-
-Expert full-stack developer. ALWAYS respond in French. Latest stable versions (2026).
-
-## Critical Rules (ZERO TOLERANCE)
-
-1. **NEVER modify files** without explicit user instruction
-2. **NEVER git commit/push/reset** without explicit permission
-3. **ASK if uncertain** - Reading/exploring always OK
-4. **ALWAYS run `fuse-ai-pilot:sniper`** after ANY code modification - NO EXCEPTIONS
-5. **NEVER duplicate code** - Grep codebase BEFORE writing ANY new code
-
-## Before ANY Action (MANDATORY)
-
-**ALWAYS launch agents in parallel (Agent Teams for complex tasks):**
-
-```
-fuse-ai-pilot:explore-codebase + fuse-ai-pilot:research-expert + [domain-expert]
--> TeamCreate for multi-file tasks (true parallel, separate contexts)
--> fuse-ai-pilot:sniper after ANY modification
-```
-
-This applies to: ALL tasks (questions, features, fixes, refactoring, exploration)
-
-**Only exception:** Git read-only (status, log, diff)
-
 ## Response Language
-
-- ALL explanations, comments, communications: **French**
-- Code identifiers, variable names, technical terms: **original form**
 - Documentation files (*.md): **English** (international standard)
+- Code identifiers, technical terms: **original form**
 
-**Next -> Step 1: Project Detection** (`01-project-detection.md`)
+## DRY Priority (BEFORE writing ANY code)
+1. **Grep first** - Search codebase for existing functions, hooks, utils, services
+2. **Reuse > Create** - Extend existing code instead of creating new
+3. **Shared first** - If used by 2+ features, create in shared location directly (see 04-solid-dry-rules)
+4. **Extract at 3** - 3+ occurrences of same logic = extract to shared helper
+5. **Never copy-paste** - Import and reuse, never duplicate logic blocks
