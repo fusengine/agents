@@ -1,5 +1,16 @@
 # Release Notes
 
+## [1.36.35] - 22-02-2026
+
+### Added
+- `hooks-loader.ts`: inject stderr from hooks as `systemMessage` for user-visible feedback (skill loaded, rules loaded)
+- `hook-executor.ts`: collect stderr from successful hooks and forward to loader
+
+### Changed
+- `claude-rules/hooks.json`: pass `${CLAUDE_PLUGIN_ROOT}` as argument to inject-rules.sh
+- `claude-rules/inject-rules.sh`: read plugin root from `$1` argument instead of env var
+- `claude-rules/rules/*`: compress 8 rules files -68% (14,760 → 5,170 chars), remove duplicates with CLAUDE.md, remove frontmatter
+
 ## [1.36.34] - 21-02-2026
 
 ### Changed
