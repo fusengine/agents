@@ -1,5 +1,10 @@
 # Release Notes
 
+## [1.36.36] - 22-02-2026
+
+### Changed
+- Disable plugin-scoped `.mcp.json` files (renamed to `mcp.json.bak`) to eliminate ~105 duplicate MCP tool entries and reduce context consumption by ~50%
+
 ## [1.36.35] - 22-02-2026
 
 ### Added
