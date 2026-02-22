@@ -43,13 +43,17 @@ export async function executeHooks(
   }
 
   let collectedOutput = "";
+  const collectedStderr: string[] = [];
   for (const result of results) {
     if (result.stdout.trim()) {
       collectedOutput = mergeJsonOutput(collectedOutput, result.stdout);
     }
+    if (result.stderr.trim()) {
+      collectedStderr.push(result.stderr);
+    }
   }
 
-  return { blocked: false, stderr: "", output: collectedOutput };
+  return { blocked: false, stderr: collectedStderr.join(""), output: collectedOutput };
 }
 
 /** Merge JSON outputs (additionalContext and hookSpecificOutput) */

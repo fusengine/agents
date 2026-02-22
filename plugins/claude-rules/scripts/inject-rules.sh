@@ -1,10 +1,11 @@
 #!/bin/bash
-# SessionStart: Inject all rules/*.md into session context
-# Uses CLAUDE_PLUGIN_ROOT to find rules relative to plugin install path
+# Inject all rules/*.md into session context
+# Receives plugin root as $1 (resolved by hooks-loader.ts)
 
 set -euo pipefail
 
-RULES_DIR="${CLAUDE_PLUGIN_ROOT}/rules"
+PLUGIN_ROOT="${1:?Missing plugin root argument}"
+RULES_DIR="${PLUGIN_ROOT}/rules"
 
 if [[ ! -d "$RULES_DIR" ]]; then
   exit 0

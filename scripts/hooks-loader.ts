@@ -49,9 +49,19 @@ async function main(): Promise<void> {
     process.exit(2);
   }
 
-  // Output collected JSON
-  if (result.output) {
+  // Inject stderr as systemMessage for user-visible feedback
+  if (result.output && result.stderr) {
+    try {
+      const json = JSON.parse(result.output);
+      json.systemMessage = "\n" + result.stderr;
+      console.log(JSON.stringify(json));
+    } catch {
+      console.log(result.output);
+    }
+  } else if (result.output) {
     console.log(result.output);
+  } else if (result.stderr) {
+    console.log(JSON.stringify({ systemMessage: "\n" + result.stderr }));
   }
 }
 
