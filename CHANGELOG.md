@@ -1,5 +1,12 @@
 # Release Notes
 
+## [1.36.38] - 23-02-2026
+
+### Changed
+- Port security guard hook from Node.js subprocess to native Python
+- Move `security_rules.py` to `_shared/scripts/` for cross-plugin reusability
+- Remove obsolete `validate-command.js` and `security-rules.js`
+
 ## [1.36.37] - 23-02-2026
 
 ### Added

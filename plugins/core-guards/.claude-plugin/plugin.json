@@ -1,6 +1,6 @@
 {
   "name": "core-guards",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Core security guards (git, install, security) and SOLID enforcement hooks for Claude Code",
   "author": {
     "name": "Fusengine",
