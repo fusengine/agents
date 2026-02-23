@@ -1,6 +1,6 @@
 {
   "name": "fuse-rules",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Global rules for all Claude Code sessions: APEX workflow, SOLID/DRY enforcement, project detection, agent delegation, frontend/git standards",
   "author": {
     "name": "Fusengine",
