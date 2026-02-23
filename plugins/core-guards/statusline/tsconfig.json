@@ -8,10 +8,9 @@
 		"skipLibCheck": true,
 		"forceConsistentCasingInFileNames": true,
 		"outDir": "./dist",
-		"rootDir": "./src",
 		"declaration": true,
-		"types": ["bun-types"]
+		"types": ["@types/bun"]
 	},
-	"include": ["src/**/*"],
+	"include": ["**/*"],
 	"exclude": ["node_modules", "dist"]
 }

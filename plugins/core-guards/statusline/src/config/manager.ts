@@ -6,14 +6,14 @@
  */
 
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
-import { homedir } from "node:os";
 import { dirname, join } from "node:path";
 import { defaultConfig, type StatuslineConfig, StatuslineConfigSchema } from "./schema";
 
-// Config du plugin (relatif au script installe)
-const PLUGIN_CONFIG = join(dirname(__dirname), "..", "config.json");
-// Config utilisateur pour overrides (optionnel)
-const USER_CONFIG = join(homedir(), ".claude", "scripts", "statusline", "config.json");
+const STATUSLINE_ROOT = join(dirname(__dirname), "..");
+/** Default config shipped with the plugin (read-only, git tracked). */
+const DEFAULT_CONFIG = join(STATUSLINE_ROOT, "config.json");
+/** User overrides saved by the configurator (gitignored). */
+const USER_CONFIG = join(STATUSLINE_ROOT, "user-config.json");
 
 /**
  * Interface pour le gestionnaire de configuration
@@ -31,7 +31,7 @@ export interface IConfigManager {
 export class ConfigManager implements IConfigManager {
 	/**
 	 * Charge la configuration depuis le fichier
-	 * Priorite: USER_CONFIG > PLUGIN_CONFIG > defaultConfig
+	 * Priorite: USER_CONFIG > DEFAULT_CONFIG > defaultConfig
 	 */
 	async load(): Promise<StatuslineConfig> {
 		try {
@@ -42,8 +42,8 @@ export class ConfigManager implements IConfigManager {
 			}
 
 			// 2. Config du plugin
-			if (existsSync(PLUGIN_CONFIG)) {
-				const content = readFileSync(PLUGIN_CONFIG, "utf-8");
+			if (existsSync(DEFAULT_CONFIG)) {
+				const content = readFileSync(DEFAULT_CONFIG, "utf-8");
 				return StatuslineConfigSchema.parse(JSON.parse(content));
 			}
 
