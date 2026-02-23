@@ -23,8 +23,8 @@ WARNINGS=""
 if grep -qE "<(button|a|input|img)" "$FILE_PATH" 2>/dev/null; then
   # Check for missing aria labels on icon buttons
   if grep -qE "<button[^>]*>" "$FILE_PATH" && ! grep -qE "aria-label|aria-labelledby" "$FILE_PATH"; then
-    ICON_BUTTONS=$(grep -c "<button[^>]*>[^<]*<.*Icon" "$FILE_PATH" 2>/dev/null || echo 0)
-    if [[ $ICON_BUTTONS -gt 0 ]]; then
+    ICON_BUTTONS=$(grep -c "<button[^>]*>[^<]*<.*Icon" "$FILE_PATH" 2>/dev/null || true)
+    if [[ ${ICON_BUTTONS:-0} -gt 0 ]]; then
       WARNINGS+="Accessibility: Icon buttons need aria-label. "
     fi
   fi

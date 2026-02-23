@@ -24,16 +24,16 @@ if [[ "$FILE_PATH" =~ \.css$ ]]; then
   fi
 
   # Check for @apply overuse
-  APPLY_COUNT=$(grep -c "@apply" "$FILE_PATH" 2>/dev/null || echo 0)
-  if [[ $APPLY_COUNT -gt 10 ]]; then
+  APPLY_COUNT=$(grep -c "@apply" "$FILE_PATH" 2>/dev/null || true)
+  if [[ ${APPLY_COUNT:-0} -gt 10 ]]; then
     WARNINGS+="Excessive @apply usage ($APPLY_COUNT) - prefer utility classes directly. "
   fi
 fi
 
 # Check TSX/JSX files for long class strings
 if [[ "$FILE_PATH" =~ \.(tsx|jsx)$ ]]; then
-  LONG_CLASSES=$(grep -c 'className="[^"]\{150,\}"' "$FILE_PATH" 2>/dev/null || echo 0)
-  if [[ $LONG_CLASSES -gt 0 ]]; then
+  LONG_CLASSES=$(grep -c 'className="[^"]\{150,\}"' "$FILE_PATH" 2>/dev/null || true)
+  if [[ ${LONG_CLASSES:-0} -gt 0 ]]; then
     WARNINGS+="Very long className ($LONG_CLASSES lines) - extract to @utility or use cn(). "
   fi
 fi

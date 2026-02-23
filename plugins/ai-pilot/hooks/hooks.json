@@ -73,7 +73,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/inject-apex-context.sh"
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/inject-apex-context.py"
           }
         ]
       }
@@ -111,7 +111,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/check-solid-from-transcript.sh"
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/check-solid-from-transcript.py"
           }
         ]
       }
@@ -133,7 +133,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/check-solid-compliance.sh"
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/check-solid-compliance.py"
           }
         ]
       },
@@ -142,7 +142,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/track-doc-consultation.sh"
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/track-doc-consultation.py"
           }
         ]
       },

@@ -99,8 +99,10 @@ acquire_lock || exit 0
 
 # Create file if not exists
 if [[ ! -f "$DOC_FILE" ]]; then
+  # ${FRAMEWORK^} n'est pas supporté en bash 3 (macOS) - utiliser awk
+  FRAMEWORK_CAP=$(echo "$FRAMEWORK" | awk '{print toupper(substr($0,1,1)) substr($0,2)}')
   cat > "$DOC_FILE" << EOF
-# Task ${CURRENT_TASK} - ${FRAMEWORK^} Documentation
+# Task ${CURRENT_TASK} - ${FRAMEWORK_CAP} Documentation
 ## Consulted: ${TIMESTAMP} | Source: skill:Read
 ## Key Info
 

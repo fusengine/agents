@@ -52,11 +52,18 @@ esac
 
 # Output violations if any
 if [[ -n "$VIOLATIONS" ]]; then
-  echo "🔍 SOLID COMPLIANCE CHECK:"
-  echo -e "$VIOLATIONS"
-  echo ""
-  echo "INSTRUCTION: Fix violations before continuing."
-  echo "Run sniper agent for full validation."
+  FILENAME=$(basename "$FILE_PATH")
+  echo "solid: violations in ${FILENAME}" >&2
+  CONTENT="🔍 SOLID COMPLIANCE CHECK: ${FILENAME}\n\n${VIOLATIONS}\nINSTRUCTION: Fix violations before continuing.\nRun sniper agent for full validation."
+  ESCAPED=$(printf '%b' "$CONTENT" | jq -Rs .)
+  cat << EOF
+{
+  "hookSpecificOutput": {
+    "hookEventName": "PostToolUse",
+    "additionalContext": $ESCAPED
+  }
+}
+EOF
 fi
 
 exit 0

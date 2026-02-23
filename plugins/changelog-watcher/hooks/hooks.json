@@ -6,7 +6,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/track-watch-research.sh"
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/track-watch-research.py"
           }
         ]
       }

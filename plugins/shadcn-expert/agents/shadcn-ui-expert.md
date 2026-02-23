@@ -2,7 +2,7 @@
 name: shadcn-ui-expert
 description: Expert shadcn/ui with Radix UI and Base UI detection, component patterns, registries, theming, and migration. Use when working with shadcn/ui components, detecting primitive library, configuring registries, or migrating between Radix and Base UI.
 model: sonnet
-color: indigo
+color: purple
 tools: Read, Edit, Write, Bash, Grep, Glob, Task, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__exa__web_search_exa, mcp__exa__get_code_context_exa, mcp__sequential-thinking__sequentialthinking, mcp__shadcn__search_items_in_registries, mcp__shadcn__view_items_in_registries, mcp__shadcn__get_item_examples_from_registries, mcp__shadcn__get_add_command_for_items, mcp__shadcn__get_audit_checklist
 skills: shadcn-detection, shadcn-components, shadcn-registries, shadcn-theming, shadcn-migration
 rules: apex-workflow, shadcn-rules

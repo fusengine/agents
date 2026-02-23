@@ -36,9 +36,11 @@ if [[ -f "$TASK_FILE" ]]; then
   DOC_STATUS=$(jq -r --arg t "$CURRENT_TASK" '.tasks[$t].doc_consulted | to_entries | map(select(.value.consulted == true) | .key) | join(", ")' "$TASK_FILE" 2>/dev/null || echo "none")
 fi
 
-# Output instruction for agent
-cat << EOF
-⚠️ APEX MODE - Read .claude/apex/AGENTS.md for rules
+# Feedback visible dans l'UI (pattern identique à inject-rules.sh)
+echo "apex: Task #${CURRENT_TASK} context injected" >&2
+
+# Output JSON structuré (mergeJsonOutput requiert du JSON valide)
+ESCAPED=$(printf '%s' "⚠️ APEX MODE - Read .claude/apex/AGENTS.md for rules
 
 Current: Task #$CURRENT_TASK - $TASK_SUBJECT (Phase: $TASK_PHASE)
 Docs consulted: $DOC_STATUS
@@ -50,7 +52,15 @@ Agent must:
 4. TaskUpdate(in_progress) → before starting
 5. Apply SOLID (files < 100 lines)
 6. Write notes to docs/task-{ID}-{subject}.md
-7. TaskUpdate(completed) → triggers auto-commit
+7. TaskUpdate(completed) → triggers auto-commit" | jq -Rs .)
+
+cat << EOF
+{
+  "hookSpecificOutput": {
+    "hookEventName": "PreToolUse",
+    "additionalContext": $ESCAPED
+  }
+}
 EOF
 
 exit 0

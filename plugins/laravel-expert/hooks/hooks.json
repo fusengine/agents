@@ -10,7 +10,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/check-laravel-skill.sh"
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/check-laravel-skill.py"
           }
         ]
       }
@@ -22,7 +22,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/validate-laravel-solid.sh"
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/validate-laravel-solid.py"
           }
         ]
       },
@@ -32,7 +32,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/track-skill-read.sh"
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/track-skill-read.py"
           }
         ]
       },
@@ -42,7 +42,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/track-mcp-research.sh"
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/track-mcp-research.py"
           }
         ]
       }

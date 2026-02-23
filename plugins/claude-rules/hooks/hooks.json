@@ -11,7 +11,7 @@
           {
             "_description": "Load and inject rules/*.md into additionalContext",
             "type": "command",
-            "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/inject-rules.sh ${CLAUDE_PLUGIN_ROOT}"
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/inject-rules.py ${CLAUDE_PLUGIN_ROOT}"
           }
         ]
       }
@@ -24,7 +24,7 @@
           {
             "_description": "Reload rules/*.md into additionalContext on each prompt",
             "type": "command",
-            "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/inject-rules.sh ${CLAUDE_PLUGIN_ROOT}"
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/inject-rules.py ${CLAUDE_PLUGIN_ROOT}"
           }
         ]
       }

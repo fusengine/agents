@@ -6,23 +6,28 @@
   "hooks": {
     "PreToolUse": [
       {
-        "_description": "Git & Install & Security guards for Bash commands",
+        "_description": "Git & Install & Security & Write guards for Bash commands",
         "matcher": "Bash",
         "hooks": [
           {
+            "_description": "Block Bash file writes (python -c, sed -i, redirects) — forces Edit/Write tools",
+            "type": "command",
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/pre-tool-use/bash-write-guard.py"
+          },
+          {
             "_description": "Block destructive git commands (push --force, reset --hard, etc.)",
             "type": "command",
-            "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/pre-tool-use/git-guard.sh"
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/pre-tool-use/git-guard.py"
           },
           {
             "_description": "Ask confirmation before installing packages (npm, pip, brew, etc.)",
             "type": "command",
-            "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/pre-tool-use/install-guard.sh"
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/pre-tool-use/install-guard.py"
           },
           {
             "_description": "Validate dangerous commands via security rules",
             "type": "command",
-            "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/pre-tool-use/security-guard.sh"
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/pre-tool-use/security-guard.py"
           }
         ]
       },
@@ -33,7 +38,7 @@
           {
             "_description": "Run ESLint, TypeScript, Prettier, Ruff before commit",
             "type": "command",
-            "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/pre-tool-use/pre-commit-guard.sh"
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/pre-tool-use/pre-commit-guard.py"
           }
         ]
       },
@@ -44,7 +49,7 @@
           {
             "_description": "Block interfaces/types in .tsx/.jsx/.vue files - must be in src/interfaces/",
             "type": "command",
-            "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/pre-tool-use/enforce-interfaces.sh"
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/pre-tool-use/enforce-interfaces.py"
           }
         ]
       },
@@ -55,7 +60,7 @@
           {
             "_description": "PreToolUse blocker for oversized files",
             "type": "command",
-            "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/pre-tool-use/enforce-file-size.sh"
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/pre-tool-use/enforce-file-size.py"
           }
         ]
       },
@@ -66,7 +71,7 @@
           {
             "_description": "Block code modifications if SOLID rules not read",
             "type": "command",
-            "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/pre-tool-use/require-solid-read.sh"
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/pre-tool-use/require-solid-read.py"
           }
         ]
       }
@@ -80,12 +85,12 @@
           {
             "_description": "Auto-document important file reads to task docs",
             "type": "command",
-            "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/post-tool-use/auto-document-reads.sh"
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/post-tool-use/auto-document-reads.py"
           },
           {
             "_description": "Record when SOLID principles are read for session verification",
             "type": "command",
-            "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/post-tool-use/track-solid-reads.sh"
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/post-tool-use/track-solid-reads.py"
           }
         ]
       },
@@ -96,17 +101,17 @@
           {
             "_description": "SOLID: Block files exceeding 100 lines - must split into modules",
             "type": "command",
-            "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/post-tool-use/enforce-file-size.sh"
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/post-tool-use/enforce-file-size.py"
           },
           {
             "_description": "Track cumulative code file changes per session for sniper trigger",
             "type": "command",
-            "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/post-tool-use/track-session-changes.sh"
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/post-tool-use/track-session-changes.py"
           },
           {
             "_description": "Post-edit TypeScript validation",
             "type": "command",
-            "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/post-tool-use/post-edit-typescript.sh"
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/post-tool-use/post-edit-typescript.py"
           }
         ]
       }
@@ -120,17 +125,17 @@
           {
             "_description": "Inject CLAUDE.md content into session context",
             "type": "command",
-            "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/session-start/inject-claude-md.sh"
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/session-start/inject-claude-md.py"
           },
           {
             "_description": "Load development context (git status, project type detection)",
             "type": "command",
-            "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/session-start/load-dev-context.sh"
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/session-start/load-dev-context.py"
           },
           {
             "_description": "Cleanup stale session state files from /tmp",
             "type": "command",
-            "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/session-start/cleanup-session-states.sh"
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/session-start/cleanup-session-states.py"
           }
         ]
       }
@@ -144,7 +149,7 @@
           {
             "_description": "Read CLAUDE.md + auto-detect if APEX workflow should be triggered",
             "type": "command",
-            "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/user-prompt/read-claude-md.sh"
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/user-prompt/read-claude-md.py"
           }
         ]
       }
@@ -158,7 +163,7 @@
           {
             "_description": "Track agent memory and completion for context persistence",
             "type": "command",
-            "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/subagent-stop/track-agent-memory.sh"
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/subagent-stop/track-agent-memory.py"
           }
         ]
       }
@@ -200,7 +205,7 @@
           {
             "_description": "Persist current task state and decisions to .claude/apex/",
             "type": "command",
-            "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/pre-compact/save-apex-state.sh"
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/pre-compact/save-apex-state.py"
           }
         ]
       }
@@ -214,7 +219,7 @@
           {
             "_description": "Remove temp files and save session statistics",
             "type": "command",
-            "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/session-end/cleanup-session.sh"
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/session-end/cleanup-session.py"
           }
         ]
       }
@@ -228,7 +233,7 @@
           {
             "_description": "Validate API keys and dependencies are configured",
             "type": "command",
-            "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/setup/validate-setup.sh"
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/setup/validate-setup.py"
           }
         ]
       }

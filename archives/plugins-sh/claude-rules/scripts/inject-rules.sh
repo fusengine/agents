@@ -24,7 +24,7 @@ done
 
 # Visual feedback to user terminal
 FILENAMES=$(cd "$RULES_DIR" && ls *.md 2>/dev/null | tr '\n' ', ' | sed 's/,$//')
-echo "fuse rules: $COUNT rules loaded" >&2
+echo "rules: $COUNT rules loaded" >&2
 
 # Escape for JSON and output
 ESCAPED=$(echo "$CONTENT" | jq -Rs .)
