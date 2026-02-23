@@ -1,5 +1,13 @@
 # Release Notes
 
+## [1.36.39] - 23-02-2026
+
+### Changed
+- Split `configure.ts` (186 lines) into `src/configure/` (3 SOLID modules)
+- Split `configure-web.ts` (768 lines) into `src/configure-web/` (7 SOLID modules)
+- Fix ConfigManager to save user overrides in plugin-local `user-config.json`
+- Add `user-config.json` to `.gitignore`
+
 ## [1.36.38] - 23-02-2026
 
 ### Changed
