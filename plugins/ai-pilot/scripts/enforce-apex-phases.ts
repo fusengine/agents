@@ -9,7 +9,8 @@ import {
   acquireLock, ensureStateDir, stateFilePath, loadState, saveState,
 } from "./lib/apex/state";
 import type { HookInput } from "./lib/interfaces/hook.interface";
-import { detectFramework, getSkillSource } from "./lib/apex/enforce-helpers";
+import { detectFramework, getSkillSource, getSkillDir, formatRoutedDeny } from "./lib/apex/enforce-helpers";
+import { routeReferences } from "./lib/apex/ref-router";
 
 /** Code file extensions that require doc consultation */
 const CODE_EXT = /\.(ts|tsx|js|jsx|py|php|swift|go|rs|rb|java|vue|svelte|css)$/;
@@ -76,11 +77,17 @@ async function main(): Promise<void> {
     await saveState(statePath, state);
 
     const src = getSkillSource(framework);
+    const skillDir = getSkillDir(framework);
+    const routed = await routeReferences(filePath, content, skillDir);
+    const denyReason = routed
+      ? formatRoutedDeny(framework, filePath, routed)
+      : `APEX: Read doc first (expires every 2min) for ${framework}! Source: ${src}`;
+
     outputHookResponse({
       hookSpecificOutput: {
         hookEventName: "PreToolUse",
         permissionDecision: "deny",
-        permissionDecisionReason: `APEX: Read doc first (expires every 2min) for ${framework}! Source: ${src}`,
+        permissionDecisionReason: denyReason,
       },
     });
   } finally {

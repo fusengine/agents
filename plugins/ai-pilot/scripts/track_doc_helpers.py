@@ -15,6 +15,10 @@ def detect_framework(query: str) -> str:
         (r"(laravel|Laravel|php|PHP)", "laravel"),
         (r"(swift|Swift|swiftui|SwiftUI)", "swift"),
         (r"(tailwind|Tailwind)", "tailwind"),
+        (r"(java|Java|spring|Spring)", "java"),
+        (r"\b(go|Go|golang)\b", "go"),
+        (r"(ruby|Ruby|rails|Rails)", "ruby"),
+        (r"(rust|Rust|cargo|Cargo)", "rust"),
     ]:
         if re.search(pattern, query):
             return fw
@@ -47,8 +51,6 @@ def extract_tool_info(data: dict) -> Optional[Tuple[str, str, str]]:
     if tool == "Read":
         fp = data.get("tool_input", {}).get("file_path", "")
         if not re.search(r"skills/.*\.md$", fp):
-            return None
-        if re.search(r"solid-[^/]+/", fp):
             return None
         return "skill", fp, tool
     return None

@@ -4,7 +4,7 @@ description: SOLID principles orchestrator for multi-language projects. Detects 
 model: sonnet
 color: green
 tools: Read, Glob, Grep, Bash, Task
-skills: solid-detection
+skills: solid-detection, solid-generic, solid-java, solid-go, solid-ruby, solid-rust
 ---
 
 # SOLID Orchestrator Agent
@@ -14,9 +14,11 @@ Orchestrates SOLID principles enforcement across all supported languages.
 ## Purpose
 
 Detect project type and apply appropriate SOLID rules:
-- **Next.js/TypeScript**: Interfaces in `modules/cores/interfaces/`
-- **Laravel/PHP**: Interfaces in `app/Contracts/`
-- **Swift**: Protocols in `Protocols/`
+- **Next.js/TypeScript**: Interfaces in `modules/[feature]/src/interfaces/`
+- **React/TypeScript**: Interfaces in `modules/[feature]/src/interfaces/`
+- **Generic TypeScript**: Interfaces in `modules/[feature]/src/interfaces/` (Modular MANDATORY)
+- **Laravel/PHP**: Interfaces in `FuseCore/[Module]/App/Contracts/` (FuseCore Modular MANDATORY)
+- **Swift**: Protocols in `Features/[Feature]/Protocols/` (Features Modular MANDATORY)
 - **Go**: Interfaces in `internal/interfaces/`
 - **Python**: ABC in `src/interfaces/`
 - **Rust**: Traits in `src/traits/`
@@ -30,14 +32,16 @@ Detect project type and apply appropriate SOLID rules:
 
 ## Detection Rules
 
-| File | Project Type | File Limit |
-|------|--------------|------------|
-| `package.json` + next | Next.js | 150 |
-| `composer.json` + laravel | Laravel | 100 |
-| `Package.swift` / `*.xcodeproj` | Swift | 150 |
-| `go.mod` | Go | 100 |
-| `Cargo.toml` | Rust | 100 |
-| `pyproject.toml` | Python | 100 |
+| File | Project Type | File Limit | SOLID Skill |
+|------|--------------|------------|-------------|
+| `package.json` + next | Next.js | 150 | solid-nextjs |
+| `package.json` + react (no next) | React | 100 | solid-react |
+| `package.json` (no react/next) | Generic TS | 100 | solid-generic |
+| `composer.json` + laravel | Laravel | 100 | solid-php |
+| `Package.swift` / `*.xcodeproj` | Swift | 150 | solid-swift |
+| `go.mod` | Go | 100 | - |
+| `Cargo.toml` | Rust | 100 | - |
+| `pyproject.toml` | Python | 100 | - |
 
 ## Capabilities
 

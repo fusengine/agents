@@ -31,6 +31,16 @@ def main():
         framework = 'php'
     elif 'solid-swift' in file_path:
         framework = 'swift'
+    elif 'solid-generic' in file_path:
+        framework = 'generic'
+    elif 'solid-java' in file_path:
+        framework = 'java'
+    elif 'solid-go' in file_path:
+        framework = 'go'
+    elif 'solid-ruby' in file_path:
+        framework = 'ruby'
+    elif 'solid-rust' in file_path:
+        framework = 'rust'
     if not framework:
         sys.exit(0)
 

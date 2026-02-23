@@ -36,6 +36,17 @@ def main():
         except OSError:
             pass
 
+    # Cleanup old ref-cache files (> 24h)
+    apex_dir = os.path.expanduser('~/.claude/logs/00-apex')
+    if os.path.isdir(apex_dir):
+        now_t = time.time()
+        for f in glob.glob(os.path.join(apex_dir, 'ref-cache-*.json')):
+            try:
+                if now_t - os.path.getmtime(f) > 86400:
+                    os.remove(f)
+            except OSError:
+                pass
+
     sys.exit(0)
 
 

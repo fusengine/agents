@@ -5,7 +5,7 @@ versions:
   laravel: "12.46"
   php: "8.5"
 user-invocable: true
-references: references/solid-principles.md, references/anti-patterns.md, references/decision-guide.md, references/php85-features.md, references/laravel12-structure.md, references/fusecore-structure.md, references/templates/code-templates.md, references/templates/controller-templates.md, references/templates/refactoring-guide.md
+references: references/solid-principles.md, references/single-responsibility.md, references/open-closed.md, references/liskov-substitution.md, references/interface-segregation.md, references/dependency-inversion.md, references/anti-patterns.md, references/decision-guide.md, references/php85-features.md, references/laravel12-structure.md, references/fusecore-structure.md, references/templates/code-templates.md, references/templates/controller-templates.md, references/templates/refactoring-guide.md
 related-skills: laravel-architecture, fusecore
 ---
 
@@ -27,7 +27,7 @@ After implementation, run **fuse-ai-pilot:sniper** for validation.
 
 **Before writing ANY new code:**
 1. **Grep the codebase** for similar class names, methods, or logic
-2. Check shared locations: `app/Services/`, `app/Actions/`, `app/Traits/`, `app/Contracts/`
+2. Check shared locations: `FuseCore/Core/App/Services/`, `FuseCore/Core/App/Traits/`, `FuseCore/[Module]/App/Contracts/`
 3. If similar code exists → extend/reuse instead of duplicate
 4. If code will be used by 2+ features → create it in shared Services or Traits
 5. Extract repeated logic (3+ occurrences) into shared helpers or Traits
@@ -35,30 +35,30 @@ After implementation, run **fuse-ai-pilot:sniper** for validation.
 
 ---
 
-## Auto-Detection
+## Auto-Detection (Modular MANDATORY)
 
 | Files Detected | Architecture | Interfaces Location |
 |----------------|--------------|---------------------|
-| `composer.json` + `artisan` | Laravel Standard | `app/Contracts/` |
-| `app/Modules/` directory | FuseCore Modular | `app/Modules/[Feature]/Contracts/` |
-| `routes/modules.php` | FuseCore Modular | `app/Modules/[Feature]/Contracts/` |
+| `FuseCore/` directory | FuseCore Modular | `FuseCore/[Module]/App/Contracts/` |
+| `module.json` in modules | FuseCore Modular | `FuseCore/[Module]/App/Contracts/` |
 
 **Verification**: `php artisan --version` → Laravel 12.x
+**Structure**: Always FuseCore modular. Shared in `FuseCore/Core/App/`.
 
 ---
 
-## Decision Tree: Where to Put Code?
+## Decision Tree: Where to Put Code? (FuseCore Modular)
 
 ```
 New code needed?
-├── HTTP validation → app/Http/Requests/
-├── Single action → app/Actions/
-├── Business logic → app/Services/ (or Modules/[X]/Services/)
-├── Data access → app/Repositories/
-├── Data transfer → app/DTOs/
-├── Interface → app/Contracts/
-├── Event → app/Events/
-└── Authorization → app/Policies/
+├── HTTP validation → FuseCore/[Module]/App/Http/Requests/
+├── Single action → FuseCore/[Module]/App/Actions/
+├── Business logic → FuseCore/[Module]/App/Services/
+├── Data access → FuseCore/[Module]/App/Repositories/
+├── Data transfer → FuseCore/[Module]/App/DTOs/
+├── Interface → FuseCore/[Module]/App/Contracts/
+├── Event → FuseCore/[Module]/App/Events/
+└── Authorization → FuseCore/[Module]/App/Policies/
 ```
 
 ---
@@ -85,11 +85,12 @@ New code needed?
 - Models < 80 lines (excluding relations)
 - Services < 100 lines
 
-### 2. Interfaces Separated
+### 2. Interfaces Separated (FuseCore Modular MANDATORY)
 ```
-app/Contracts/           # Interfaces ONLY
+FuseCore/[Module]/App/Contracts/   # Module interfaces ONLY
 ├── UserRepositoryInterface.php
 └── PaymentGatewayInterface.php
+FuseCore/Core/App/Contracts/       # Shared interfaces
 ```
 
 ### 3. PHPDoc Mandatory
@@ -112,7 +113,12 @@ public function create(CreateUserDTO $dto): User
 
 | Topic | Reference | When to consult |
 |-------|-----------|-----------------|
-| **SOLID** | [solid-principles.md](references/solid-principles.md) | S, O, L, I, D implementation |
+| **SOLID Overview** | [solid-principles.md](references/solid-principles.md) | Quick reference all principles |
+| **SRP** | [single-responsibility.md](references/single-responsibility.md) | File too long, fat controller/model |
+| **OCP** | [open-closed.md](references/open-closed.md) | Adding payment methods, channels |
+| **LSP** | [liskov-substitution.md](references/liskov-substitution.md) | Interface contracts, swapping providers |
+| **ISP** | [interface-segregation.md](references/interface-segregation.md) | Fat interfaces, unused methods |
+| **DIP** | [dependency-inversion.md](references/dependency-inversion.md) | Tight coupling, testing, mocking |
 | **Anti-Patterns** | [anti-patterns.md](references/anti-patterns.md) | Code smells detection |
 | **Decisions** | [decision-guide.md](references/decision-guide.md) | Pattern selection |
 | **PHP 8.5** | [php85-features.md](references/php85-features.md) | Modern PHP features |
@@ -135,9 +141,9 @@ public function create(CreateUserDTO $dto): User
 |--------------|-----------|-----|
 | Files > 100 lines | Line count | Split into smaller files |
 | Controllers > 50 lines | Line count | Extract to Service |
-| Interfaces in impl files | Location | Move to Contracts/ |
+| Interfaces in impl files | Location | Move to `FuseCore/[Module]/App/Contracts/` |
 | Business logic in Models | Code in model | Extract to Service |
-| Concrete dependencies | `new Class()` | Inject interface |
+| Concrete dependencies | `new Class()` | Inject via ModuleServiceProvider |
 | Missing PHPDoc | No doc block | Add documentation |
 | Missing strict_types | No declare | Add to all files |
 | Fat classes | > 5 public methods | Split responsibilities |
