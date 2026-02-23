@@ -1,9 +1,9 @@
 /**
- * Web configurator - Client-side preview rendering
+ * Web configurator - Client-side preview rendering (base segments)
  * @module configure-web/preview
  */
 
-/** Live preview function that renders the statusline as HTML. */
+/** Live preview - base segments (claude, directory, model, context, cost, fiveHour, weekly). */
 export const CLIENT_PREVIEW = `
     function renderPreview() {
       const parts = [];
@@ -38,7 +38,8 @@ export const CLIENT_PREVIEW = `
         parts.push(ctx);
       }
       if (config.cost.enabled) {
-        parts.push('<span class="c-yellow">$</span>' + (L ? ' Cost' : '') + ' $1.25');
+        const cL = config.cost.showLabel ?? L;
+        parts.push('<span class="c-yellow">$</span>' + (cL ? ' Cost' : '') + ' $1.25');
       }
       if (config.fiveHour.enabled) {
         let f = '<span class="c-cyan">' + (L ? '5-Hour' : '⏱ 5H') + ':</span> 65%';
@@ -61,15 +62,7 @@ export const CLIENT_PREVIEW = `
         }
         parts.push(w);
       }
-      if (config.dailySpend.enabled) {
-        parts.push('<span class="c-yellow">' + (L ? 'Daily' : 'Day') + ':</span> $2.40');
-      }
-      if (config.node.enabled) {
-        parts.push('<span class="c-green">⬢</span>' + (L ? ' Node' : '') + ' v24');
-      }
-      if (config.edits.enabled) {
-        parts.push('<span class="c-cyan">±</span>' + (L ? ' Edits' : '') + ' <span class="c-green">+42</span>/<span class="c-red">-8</span>');
-      }
+      renderUsageParts(parts, L);
       return parts.join(sep);
     }
 `;

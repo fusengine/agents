@@ -42,14 +42,19 @@ export async function startServer(): Promise<void> {
 				});
 			}
 
+			if (url.pathname === "/assets/logo") {
+				const logo = Bun.file(new URL("../assets/fusengine-logo.webp", import.meta.url).pathname);
+				return new Response(logo, { headers: { "Content-Type": "image/webp" } });
+			}
+
 			return new Response("Not Found", { status: 404 });
 		},
 	});
 
-	console.log("\n🎨 Configurateur Web ouvert!");
-	console.log(`\n   👉 http://localhost:${server.port}\n`);
-	console.log("   Clique sur les options pour les activer/désactiver");
-	console.log("   Ctrl+C pour fermer\n");
+	console.log("\nWeb Configurator opened!");
+	console.log(`\n   http://localhost:${server.port}\n`);
+	console.log("   Click options to toggle on/off");
+	console.log("   Ctrl+C to close\n");
 
 	const cmd = OPEN_COMMANDS[process.platform];
 	if (cmd) Bun.spawn([...cmd, `http://localhost:${server.port}`]);

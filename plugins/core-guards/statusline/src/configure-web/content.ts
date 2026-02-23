@@ -10,8 +10,7 @@ export const CLIENT_CONTENT = `
         const enabled = getValue(s.key + '.enabled');
         const isActive = currentSegment === s.key;
         return '<div class="nav-item ' + (isActive ? 'active' : '') + '" onclick="showSegment(\\'' + s.key + '\\')">'
-          + '<span class="icon">' + s.icon + '</span> ' + s.label
-          + '<span class="badge">' + (enabled ? 'ON' : 'OFF') + '</span></div>';
+          + s.label + '<span class="dot ' + (enabled ? 'on' : '') + '"></span></div>';
       }).join('');
       document.getElementById('nav-segments').innerHTML = navHtml;
     }
@@ -21,10 +20,10 @@ export const CLIENT_CONTENT = `
         const seg = SEGMENTS.find(s => s.key === currentSegment);
         if (seg) {
           const enabled = getValue(seg.key + '.enabled');
-          html += '<div class="section-title">' + seg.icon + ' ' + seg.label + '</div>';
+          html += '<div class="section-title">' + seg.label + '</div>';
           html += '<div class="toggle-grid">';
           html += '<div class="toggle-item ' + (enabled ? 'on' : '') + '" onclick="toggle(\\'' + seg.key + '.enabled\\')">'
-            + '<span class="text">Activer</span><span class="check">✓</span></div>';
+            + '<span class="text">Enable</span><span class="check">✓</span></div>';
           seg.options.forEach(o => {
             const on = getValue(o.key);
             html += '<div class="toggle-item ' + (on ? 'on' : '') + '" onclick="toggle(\\'' + o.key + '\\')">'
@@ -33,7 +32,7 @@ export const CLIENT_CONTENT = `
           html += '</div>';
           if (seg.hasSubscriptionPlan) {
             const currentPlan = config[seg.key]?.subscriptionPlan || 'pro';
-            html += '<div class="section-title">Plan d\\'abonnement</div><div class="style-grid">';
+            html += '<div class="section-title">Subscription Plan</div><div class="style-grid">';
             SUBSCRIPTION_PLANS.forEach(p => {
               html += '<button class="style-btn ' + (currentPlan === p.value ? 'active' : '')
                 + '" onclick="setSubscriptionPlan(\\'' + p.value + '\\')" title="' + p.limit + ' tokens/5h">'
@@ -44,13 +43,13 @@ export const CLIENT_CONTENT = `
           if (seg.hasProgressBar) {
             const currentStyle = config[seg.key]?.progressBar?.style || 'filled';
             const currentLength = config[seg.key]?.progressBar?.length || 6;
-            html += '<div class="section-title">Style Progress Bar</div><div class="style-grid">';
+            html += '<div class="section-title">Progress Bar Style</div><div class="style-grid">';
             BAR_STYLES.forEach(b => {
               html += '<button class="style-btn ' + (currentStyle === b.value ? 'active' : '')
                 + '" onclick="setSegmentStyle(\\'' + seg.key + '\\', \\'' + b.value + '\\')">' + b.display + '</button>';
             });
             html += '</div>';
-            html += '<div class="slider-row"><span class="slider-label">Longueur</span>'
+            html += '<div class="slider-row"><span class="slider-label">Length</span>'
               + '<input type="range" min="4" max="15" value="' + currentLength
               + '" oninput="setSegmentLength(\\'' + seg.key + '\\', this.value)">'
               + '<span class="slider-value" id="segmentBarLength">' + currentLength + '</span></div>';
@@ -71,16 +70,16 @@ export const CLIENT_CONTENT = `
         });
         html += '</div>';
         const barLen = config.context?.progressBar?.length || 10;
-        html += '<div class="slider-row"><span class="slider-label">Longueur</span>'
+        html += '<div class="slider-row"><span class="slider-label">Length</span>'
           + '<input type="range" min="5" max="20" value="' + barLen + '" oninput="setBarLength(this.value)">'
           + '<span class="slider-value" id="barLengthValue">' + barLen + '</span></div>';
-        html += '<div class="section-title">Séparateur</div><div class="style-grid">';
+        html += '<div class="section-title">Separator</div><div class="style-grid">';
         SEPARATORS.forEach(s => {
           html += '<button class="style-btn ' + (config.global?.separator === s.value ? 'active' : '')
             + '" onclick="setSep(\\'' + s.value + '\\')">' + s.display + '</button>';
         });
         html += '</div>';
-        html += '<div class="section-title">Chemin</div><div class="style-grid">';
+        html += '<div class="section-title">Path Style</div><div class="style-grid">';
         PATH_STYLES.forEach(p => {
           html += '<button class="style-btn ' + (config.directory?.pathStyle === p.value ? 'active' : '')
             + '" onclick="setPathStyle(\\'' + p.value + '\\')">' + p.display + '</button>';

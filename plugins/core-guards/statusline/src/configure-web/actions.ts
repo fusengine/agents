@@ -23,6 +23,8 @@ export const CLIENT_ACTIONS = `
       config.context.progressBar.style = style;
       config.fiveHour.progressBar.style = style;
       if (config.weekly?.progressBar) config.weekly.progressBar.style = style;
+      if (config.limits?.progressBar) config.limits.progressBar.style = style;
+      if (config.extraUsage?.progressBar) config.extraUsage.progressBar.style = style;
       render();
     }
     function setSep(sep) { config.global.separator = sep; render(); }
@@ -31,6 +33,8 @@ export const CLIENT_ACTIONS = `
       config.context.progressBar.length = length;
       config.fiveHour.progressBar.length = length;
       if (config.weekly?.progressBar) config.weekly.progressBar.length = length;
+      if (config.limits?.progressBar) config.limits.progressBar.length = length;
+      if (config.extraUsage?.progressBar) config.extraUsage.progressBar.length = length;
       document.getElementById('barLengthValue').textContent = length;
       render();
     }
