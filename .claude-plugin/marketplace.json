@@ -7,7 +7,7 @@
   },
   "metadata": {
     "description": "Professional Claude Code plugins with APEX workflow, SOLID principles, and expert development agents for Next.js, Laravel, Swift, Tailwind CSS, and more",
-    "version": "1.36.40"
+    "version": "1.37.0"
   },
   "core": [
     {
@@ -28,7 +28,7 @@
       "name": "fuse-ai-pilot",
       "source": "./plugins/ai-pilot",
       "description": "AI Pilot workflow: APEX methodology (auto-detects Laravel/Next.js/React/Swift), sniper (7-phase code quality + DRY detection), research-expert, explore-codebase, seo-expert (SEO/GEO/Local SEO 2026)",
-      "version": "1.1.1",
+      "version": "1.2.0",
       "author": {
         "name": "Fusengine",
         "url": "https://github.com/fusengine"
@@ -49,7 +49,8 @@
         "local-seo",
         "geo",
         "google-business-profile",
-        "react-effects-audit"
+        "react-effects-audit",
+        "ref-routing"
       ],
       "category": "development",
       "strict": true,
@@ -260,7 +261,7 @@
       "name": "fuse-solid",
       "source": "./plugins/solid",
       "description": "SOLID principles enforcement with automatic project detection and validation for all languages",
-      "version": "1.0.1",
+      "version": "1.0.2",
       "author": {
         "name": "Fusengine",
         "url": "https://github.com/fusengine"
@@ -282,7 +283,12 @@
         "./agents/solid-orchestrator.md"
       ],
       "skills": [
-        "./skills/solid-detection"
+        "./skills/solid-detection",
+        "./skills/solid-generic",
+        "./skills/solid-java",
+        "./skills/solid-go",
+        "./skills/solid-ruby",
+        "./skills/solid-rust"
       ]
     },
     {

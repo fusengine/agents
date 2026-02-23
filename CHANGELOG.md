@@ -1,5 +1,22 @@
 # Release Notes
 
+## [1.37.0] - 24-02-2026
+
+### Added
+- Metadata-aware reference routing for SOLID hooks (Gate 1 TS + Gate 2 Python)
+- `ref-router.ts` and `ref_router.py` with scoring algorithm (glob 10pts, path 5pts, keyword 1pt)
+- `ref-router.interface.ts` for routing types (RefMeta, ScoredRef, RouteResult)
+- Cache system with automatic invalidation (`ref-cache-*.json`)
+- New SOLID skills: solid-generic, solid-go, solid-java, solid-ruby, solid-rust
+- New SOLID references: solid-php (5 principles), solid-swift (8 references + 5 templates)
+- Frontmatter v2 fields (`applies-to`, `trigger-on-edit`, `level`) across 134 references
+
+### Changed
+- Hooks now return 2-4 specific references instead of generic "read SKILL.md"
+- `enforce-apex-phases.ts` integrates ref-router for targeted deny messages
+- `require-solid-read.py` integrates Python ref-router with fallback
+- `cleanup-session-states.py` cleans stale ref-cache files
+
 ## [1.36.40] - 23-02-2026
 
 ### Changed
