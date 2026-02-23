@@ -1,0 +1,13 @@
+{
+  "pythonVersion": "3.11",
+  "typeCheckingMode": "basic",
+  "extraPaths": [
+    "plugins/_shared/scripts",
+    "plugins/security-expert/scripts",
+    "plugins/shadcn-expert/scripts"
+  ],
+  "exclude": [
+    "archives",
+    "node_modules"
+  ]
+}

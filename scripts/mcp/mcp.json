@@ -78,7 +78,12 @@
 		"context7": {
 			"_description": "Up-to-date documentation lookup to reduce AI hallucinations",
 			"command": "npx",
-			"args": ["-y", "@upstash/context7-mcp", "--api-key", "${CONTEXT7_API_KEY}"],
+			"args": [
+				"-y",
+				"@upstash/context7-mcp",
+				"--api-key",
+				"${CONTEXT7_API_KEY}"
+			],
 			"type": "stdio",
 			"requiresApiKey": true,
 			"apiKeyEnv": "CONTEXT7_API_KEY",
