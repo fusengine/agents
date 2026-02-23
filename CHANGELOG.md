@@ -1,5 +1,14 @@
 # Release Notes
 
+## [1.36.40] - 23-02-2026
+
+### Changed
+- Redesign web configurator with professional dark theme and Satoshi font
+- Add Fusengine logo in sidebar via `/assets/logo` route
+- Remove all emojis from UI (icons, nav, console)
+- Wire per-segment `showLabel` toggle to live preview rendering
+- Extract `preview-usage.ts` for usage segment rendering (SOLID split)
+
 ## [1.36.39] - 23-02-2026
 
 ### Changed
