@@ -1,5 +1,18 @@
 # Release Notes
 
+## [1.36.37] - 23-02-2026
+
+### Added
+- 82 Python hook scripts replacing all Bash scripts for better cross-platform support and structured JSON output
+- `plugins/_shared/` module with common utilities (locking, tracking, framework detection, SOLID validation)
+- `pyrightconfig.json` for Python type checking
+
+### Changed
+- Archive 76 legacy `.sh` hook scripts to `archives/plugins-sh/`
+- Update 12 `hooks.json` files to reference `.py` scripts instead of `.sh`
+- Refactor TypeScript installer and services for Python hook execution support
+- Fix `shadcn-ui-expert` agent color from unsupported `indigo` to `purple`
+
 ## [1.36.36] - 22-02-2026
 
 ### Changed
@@ -39,7 +52,7 @@
 ### Added
 - **claude-rules plugin**: 8 rules (00→07) covering APEX, SOLID, DRY, agent teams, frontend, state management
 - **Per-prompt injection**: SessionStart + UserPromptSubmit hooks for persistent context across compression
-- **Visual feedback**: `claude memory: CLAUDE.md loaded` + `fuse rules: N rules loaded` on each prompt
+- **Visual feedback**: `claude memory: CLAUDE.md loaded` + `rules: N rules loaded` on each prompt
 - **State management rule**: Zustand stores for shared state, TanStack Query for server state (React/Next.js)
 
 ### Changed
