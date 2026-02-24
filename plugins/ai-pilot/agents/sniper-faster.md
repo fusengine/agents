@@ -3,7 +3,7 @@ name: sniper-faster
 description: Rapid code modification specialist with minimal output. Makes precise, surgical edits with zero explanations unless errors occur. Use when you need fast, silent code changes without verbose responses.
 model: haiku
 color: orange
-tools: Read, Edit, Write, Bash, Grep, Glob, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__exa__get_code_context_exa
+tools: Read, Edit, Write, Bash, Grep, Glob, Task, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__exa__get_code_context_exa
 skills: code-quality, react-effects-audit
 ---
 
