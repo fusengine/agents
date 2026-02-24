@@ -84,18 +84,18 @@ server/routes/user.ts → user
 
 ## Quick Reference
 
-| Type | When |
-|------|------|
-| `feat` | New functionality |
-| `fix` | Bug correction |
-| `docs` | Documentation only |
-| `style` | Formatting only |
-| `refactor` | Code restructure |
-| `perf` | Performance |
-| `test` | Tests only |
-| `build` | Build/deps |
-| `ci` | CI/CD config |
-| `chore` | Maintenance |
+| Type | When | Version Bump | Git Tag |
+|------|------|-------------|---------|
+| `feat` | New functionality | **MINOR** (1.X → 1.X+1) | `vX.Y.0` |
+| `fix` | Bug correction | PATCH | No |
+| `docs` | Documentation only | PATCH | No |
+| `style` | Formatting only | PATCH | No |
+| `refactor` | Code restructure | PATCH | No |
+| `perf` | Performance | PATCH | No |
+| `test` | Tests only | PATCH | No |
+| `build` | Build/deps | PATCH | No |
+| `ci` | CI/CD config | PATCH | No |
+| `chore` | Maintenance | PATCH | No |
 
 ## Examples
 

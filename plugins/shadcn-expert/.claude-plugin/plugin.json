@@ -1,6 +1,6 @@
 {
   "name": "fuse-shadcn-ui",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Expert shadcn/ui with Radix UI and Base UI detection, component patterns, registries, theming, and migration",
   "author": {
     "name": "Fusengine",

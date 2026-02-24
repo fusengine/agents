@@ -1,0 +1,41 @@
+{
+  "_description": "shadcn Expert - UI component validation hooks",
+  "_version": "1.0.0",
+
+  "hooks": {
+    "PreToolUse": [
+      {
+        "_description": "Block shadcn edits if skill not consulted",
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/check-skill-loaded.py"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "_description": "Track skill file reads",
+        "matcher": "Read",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/track-skill-read.py"
+          }
+        ]
+      },
+      {
+        "_description": "Track MCP research calls",
+        "matcher": "mcp__.*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/track-mcp-research.py"
+          }
+        ]
+      }
+    ]
+  }
+}
