@@ -1,5 +1,20 @@
 # Release Notes
 
+## [1.38.0] - 24-02-2026
+
+### Fixed
+- Add missing `Task` tool to sniper-faster agent (ai-pilot 1.2.1)
+
+### Changed
+- SOLID split: extract `actions-handler.types.ts`, `reset-handler.ts` from actions-handler (core-guards 1.1.1)
+- SOLID split: extract `preview-sections.ts`, `progress-bar.utils.ts` from preview-renderer
+- SOLID split: extract `oauth-formatter.ts` from oauth.service
+
+### Added
+- MINOR version bump and git tag rules for `feat` commits (commit-pro 1.2.2)
+- Version impact section in commit-detection SKILL
+- hooks.json for shadcn-expert plugin (shadcn-ui 1.0.2)
+
 ## [1.37.0] - 24-02-2026
 
 ### Added
