@@ -1,26 +1,18 @@
 /**
- * Actions Handler - Handles user actions (save/reset/cancel)
+ * Actions Handler - Handles user actions (save/cancel)
  *
  * Responsibility: Single Responsibility Principle (SRP)
- * - Only responsible for handling user action commands
+ * - Only responsible for handling save, cancel, and menu display
  */
 
 import * as p from "@clack/prompts";
 import type { ConfigManager } from "../config/manager";
 import type { StatuslineConfig } from "../config/schema";
+import type { ActionResult, ConfigAction } from "./actions-handler.types";
 
-/**
- * Action type returned by action menu
- */
-export type ConfigAction = "continue" | "save" | "reset" | "cancel";
-
-/**
- * Action result
- */
-export interface ActionResult {
-	shouldContinue: boolean;
-	config: StatuslineConfig;
-}
+// Re-export types and reset handler for backward compatibility
+export type { ActionResult, ConfigAction } from "./actions-handler.types";
+export { handleReset } from "./reset-handler";
 
 /**
  * Show action menu and get user's choice
@@ -29,26 +21,10 @@ export async function showActionMenu(): Promise<ConfigAction | symbol> {
 	return await p.select({
 		message: "Que souhaitez-vous faire ?",
 		options: [
-			{
-				value: "continue",
-				label: "✓ Voir la preview",
-				hint: "Afficher les changements",
-			},
-			{
-				value: "save",
-				label: "💾 Sauvegarder & Quitter",
-				hint: "Enregistrer la configuration",
-			},
-			{
-				value: "reset",
-				label: "🔄 Réinitialiser",
-				hint: "Retour aux valeurs par défaut",
-			},
-			{
-				value: "cancel",
-				label: "❌ Annuler",
-				hint: "Quitter sans sauvegarder",
-			},
+			{ value: "continue", label: "✓ Voir la preview", hint: "Afficher les changements" },
+			{ value: "save", label: "💾 Sauvegarder & Quitter", hint: "Enregistrer la configuration" },
+			{ value: "reset", label: "🔄 Réinitialiser", hint: "Retour aux valeurs par défaut" },
+			{ value: "cancel", label: "❌ Annuler", hint: "Quitter sans sauvegarder" },
 		],
 	});
 }
@@ -74,38 +50,6 @@ export async function handleSave(
 		);
 		return { shouldContinue: true, config };
 	}
-}
-
-/**
- * Handle reset action
- */
-export async function handleReset(
-	manager: ConfigManager,
-	currentConfig: StatuslineConfig,
-): Promise<ActionResult> {
-	const confirmReset = await p.confirm({
-		message: "Êtes-vous sûr de vouloir réinitialiser la configuration ?",
-		initialValue: false,
-	});
-
-	if (confirmReset && !p.isCancel(confirmReset)) {
-		const spinner = p.spinner();
-		spinner.start("Réinitialisation...");
-		try {
-			const resetConfig = await manager.reset();
-			spinner.stop("✓ Configuration réinitialisée");
-			p.log.success("Configuration restaurée aux valeurs par défaut");
-			return { shouldContinue: true, config: resetConfig };
-		} catch (error) {
-			spinner.stop("✗ Erreur");
-			p.log.error(
-				`Impossible de réinitialiser: ${error instanceof Error ? error.message : String(error)}`,
-			);
-			return { shouldContinue: true, config: currentConfig };
-		}
-	}
-
-	return { shouldContinue: true, config: currentConfig };
 }
 
 /**

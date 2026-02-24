@@ -1,7 +1,7 @@
 /**
- * OAuth Service - Récupération des limites d'usage via OAuth
+ * OAuth Service - Retrieves usage limits via OAuth
  *
- * @description SRP: Accès Keychain macOS et API OAuth uniquement
+ * @description SRP: Keychain access and OAuth API calls only
  */
 
 import {
@@ -12,18 +12,17 @@ import {
 	OAUTH_HEADERS,
 	RETRY_DELAY_MS,
 } from "../constants/oauth.constant";
-import type {
-	FormattedUsage,
-	OAuthCredentials,
-	OAuthUsageResponse,
-} from "../interfaces/oauth-usage.interface";
+import type { OAuthCredentials, OAuthUsageResponse } from "../interfaces/oauth-usage.interface";
+
+// Re-export formatUsage for backward compatibility
+export { formatUsage } from "./oauth-formatter";
 
 let cachedUsage: OAuthUsageResponse | null = null;
 let cacheTimestamp = 0;
 
 /**
- * Récupère les credentials OAuth depuis le Keychain macOS
- * @returns Credentials ou null si non trouvés
+ * Retrieves OAuth credentials from macOS Keychain
+ * @returns Credentials or null if not found
  */
 export async function getCredentialsFromKeychain(): Promise<OAuthCredentials | null> {
 	try {
@@ -41,9 +40,9 @@ export async function getCredentialsFromKeychain(): Promise<OAuthCredentials | n
 }
 
 /**
- * Appelle l'API OAuth avec retry
- * @param accessToken Token OAuth
- * @param retries Nombre de retries restants
+ * Calls OAuth API with retry logic
+ * @param accessToken - OAuth access token
+ * @param retries - Remaining retry attempts
  */
 async function fetchWithRetry(
 	accessToken: string,
@@ -72,8 +71,8 @@ async function fetchWithRetry(
 }
 
 /**
- * Récupère les limites d'usage avec cache
- * @returns Données d'usage ou null
+ * Retrieves usage limits with cache
+ * @returns Usage data or null
  */
 export async function getUsageLimits(): Promise<OAuthUsageResponse | null> {
 	const now = Date.now();
@@ -88,33 +87,4 @@ export async function getUsageLimits(): Promise<OAuthUsageResponse | null> {
 		cacheTimestamp = now;
 	}
 	return usage;
-}
-
-/**
- * Formate les données d'usage pour affichage
- * @param usage Données brutes
- */
-export function formatUsage(usage: OAuthUsageResponse): FormattedUsage {
-	const now = Date.now();
-	const parseReset = (iso: string | null): { date: Date | null; timeLeft: number } => {
-		if (!iso) return { date: null, timeLeft: 0 };
-		const date = new Date(iso);
-		return { date, timeLeft: Math.max(0, date.getTime() - now) };
-	};
-	const fiveHour = parseReset(usage.five_hour.resets_at);
-	const sevenDay = parseReset(usage.seven_day.resets_at);
-	const opus = parseReset(usage.seven_day_opus?.resets_at ?? null);
-	return {
-		fiveHour: {
-			percentage: usage.five_hour.utilization,
-			resetsAt: fiveHour.date,
-			timeLeft: fiveHour.timeLeft,
-		},
-		sevenDay: {
-			percentage: usage.seven_day.utilization,
-			resetsAt: sevenDay.date,
-			timeLeft: sevenDay.timeLeft,
-		},
-		opus: { percentage: usage.seven_day_opus?.utilization ?? 0, resetsAt: opus.date },
-	};
 }
