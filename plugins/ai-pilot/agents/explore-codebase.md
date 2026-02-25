@@ -76,8 +76,9 @@ If `additionalContext` contains "EXPLORATION CACHE INSTRUCTIONS":
 
 ## Forbidden
 
-- ❌ Assumptions without code evidence
-- ❌ Ignore configuration files
-- ❌ Skip dependency analysis
-- ❌ Miss entry points
-- ❌ Ignore cache instructions from additionalContext
+- NEVER write files (no bash redirects, no cat >, no tee, no Write tool)
+- NEVER create reports in /tmp/ or anywhere on disk
+- Return ALL findings as text in your response — the lead reads your output
+- Only exception: cache snapshot path explicitly provided in additionalContext
+- No assumptions without code evidence
+- No skipping config files, dependencies, or entry points
