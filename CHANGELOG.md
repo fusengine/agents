@@ -1,5 +1,11 @@
 # Release Notes
 
+## [1.38.3] - 25-02-2026
+
+### Fixed
+- Pre-commit guard now reports detailed linter errors in block reason (core-guards 1.1.4)
+- Remove prettier --write auto-fix from pre-commit guard, use report-only mode
+
 ## [1.38.2] - 25-02-2026
 
 ### Fixed
