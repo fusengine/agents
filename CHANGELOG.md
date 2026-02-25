@@ -1,5 +1,18 @@
 # Release Notes
 
+## [1.38.1] - 25-02-2026
+
+### Changed
+- Restrict sniper-faster to micro-fix only with complexity guard and FORBIDDEN behaviors (ai-pilot 1.2.2)
+- Enforce PATCH-only version bumps across all commit commands (commit-pro 1.2.3, ai-pilot 1.2.2)
+
+### Added
+- Safe write paths module for fusengine-cache auto-allow (core-guards 1.1.2)
+- `.ruff_cache/` to .gitignore
+
+### Fixed
+- bash-write-guard now auto-allows redirects and tee/dd to fusengine-cache paths
+
 ## [1.38.0] - 24-02-2026
 
 ### Fixed
