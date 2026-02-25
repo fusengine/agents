@@ -97,24 +97,20 @@ EOF
 
 If $ARGUMENTS provided, use as hint for the message.
 
-### Step 6: Update CHANGELOG.md (MANDATORY)
+### Step 6: Version Bump & CHANGELOG (MANDATORY)
 
-After commit, update `CHANGELOG.md` with semantic versioning:
+**Version Rules:** ALL types → PATCH only. MINOR/MAJOR = manual user decision.
 
-**Version Increment Rules:**
-- ALL commit types → **PATCH only**: 1.37.0 → 1.37.1
-- MINOR/MAJOR bumps are **manual decisions** by the user, never automatic
+**Plugin repo auto-detection** (if `.claude-plugin/marketplace.json` exists):
+1. Detect: `git diff --name-only HEAD~1 | grep '^plugins/' | cut -d/ -f2 | sort -u`
+2. Each modified plugin → bump PATCH in `plugins/{name}/.claude-plugin/plugin.json`
+3. Sync same version in `.claude-plugin/marketplace.json` plugins array
+4. Bump suite PATCH in `.claude-plugin/marketplace.json` → `metadata.version`
+5. Core plugins (`core[]` array): only bump plugin.json (no version in marketplace)
 
-**Format:**
-```markdown
-## [X.Y.Z] - DD-MM-YYYY
+**CHANGELOG:** `## [X.Y.Z] - DD-MM-YYYY` — include `(plugin-name X.Y.Z)` in descriptions
 
-### Added/Changed/Fixed
-- Description of change
-```
-
-**CHANGELOG commit order (MANDATORY):**
-- ALWAYS commit CHANGELOG.md as a **separate commit LAST**
-- NEVER include CHANGELOG.md in the main feature/fix commit
-- If `marketplace.json` is also modified (version bump) → **include it in the same last commit**
+**Commit order (MANDATORY):**
+- Separate LAST commit (never with code changes)
+- Include: CHANGELOG.md + marketplace.json + all bumped plugin.json
 - Format: `chore: bump marketplace and CHANGELOG to X.Y.Z`
