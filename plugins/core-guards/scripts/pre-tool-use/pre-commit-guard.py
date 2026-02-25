@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# pylint: disable=invalid-name
 """PreToolUse hook: Validate linters before git commit.
 
 Blocks commit and reports detailed linter errors so Claude can fix them.
@@ -10,8 +11,11 @@ import shutil
 import subprocess
 import sys
 
-TIMEOUT_SEC = 30
+sys.path.insert(0, os.path.join(
+    os.path.dirname(__file__), '..', '..', '..', '_shared', 'scripts'))
+from hook_output import emit_pre_tool  # pylint: disable=wrong-import-position,import-error
 
+TIMEOUT_SEC = 30
 ESLINT_CONFIGS = (
     '.eslintrc.json', '.eslintrc.js', 'eslint.config.js',
     'eslint.config.mjs', 'eslint.config.ts',
@@ -45,13 +49,10 @@ def collect_errors():
                 ['bunx', 'eslint', '.', '--max-warnings', '0'], 'ESLint')
             if not ok and msg:
                 errors.append(msg)
-
         if os.path.isfile('tsconfig.json'):
-            ok, msg = run_linter(
-                ['bunx', 'tsc', '--noEmit'], 'TypeScript')
+            ok, msg = run_linter(['bunx', 'tsc', '--noEmit'], 'TypeScript')
             if not ok and msg:
                 errors.append(msg)
-
         if any(os.path.isfile(c) for c in PRETTIER_CONFIGS):
             ok, msg = run_linter(
                 ['bunx', 'prettier', '--check', '.'], 'Prettier')
@@ -66,7 +67,6 @@ def collect_errors():
         ok, msg = run_linter(['ruff', 'check', '.'], 'Ruff')
         if not ok and msg:
             errors.append(msg)
-
     return errors
 
 
@@ -81,17 +81,13 @@ def main():
     if not cmd.startswith('git') or 'commit' not in cmd:
         sys.exit(0)
 
-    print('PRE-COMMIT GUARD ACTIVATED — Running linters...', file=sys.stderr)
-    sys.stderr.flush()
     errors = collect_errors()
-
     if errors:
         detail = '\n\n'.join(errors)
-        reason = f"COMMIT BLOCKED — Fix these errors then retry:\n\n{detail}"
-        print(json.dumps({"decision": "block", "reason": reason}))
+        emit_pre_tool('deny', f"COMMIT BLOCKED — Fix then retry:\n\n{detail}")
     else:
-        print(json.dumps({"decision": "allow", "reason": "All linters passed"}))
-
+        emit_pre_tool('allow', 'All linters passed',
+                       context='Pre-commit linter check: all passed')
     sys.exit(0)
 
 
