@@ -1,5 +1,14 @@
 # Release Notes
 
+## [1.38.2] - 25-02-2026
+
+### Fixed
+- Rewrite post-edit-typescript hook to report-only mode with stdin JSON API (core-guards 1.1.3)
+- Forbid file writes in explore-codebase agent to prevent /tmp/ report leaks (ai-pilot 1.2.3)
+
+### Added
+- Auto-detection of modified plugins for version bump in commit workflow (commit-pro 1.2.4)
+
 ## [1.38.1] - 25-02-2026
 
 ### Changed
