@@ -1,8 +1,14 @@
 #!/usr/bin/env python3
 """PreToolUse hook: Block Bash commands that write files (Edit/Write bypass)."""
 import json
+import os
 import re
 import sys
+
+# Add _shared/scripts to path for safe_paths module import
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                                '..', '..', '..', '_shared', 'scripts'))
+from safe_paths import is_safe_write_path, is_safe_command_target  # pylint: disable=wrong-import-position
 
 # Commands always safe (read-only, test, lint, build)
 SAFE_PREFIXES = [
@@ -24,7 +30,7 @@ DENY_PATTERNS = [
 ]
 
 # Smart detection: only ASK if inline script contains write operations
-NODE_WRITES = r'writeFile|appendFile|createWriteStream|fs\.(write|rename|unlink|mkdir|rmdir|copyFile)|execSync|spawnSync|child_process'
+NODE_WRITES = r'writeFile|appendFile|createWriteStream|fs\.(write|rename|unlink|mkdir|rmdir|copyFile)|execSync|spawnSync|child_process'  # pylint: disable=line-too-long
 RUBY_WRITES = r'File\.(write|open|delete|rename)|IO\.write|FileUtils|\bsystem\b|\bexec\b|`[^`]'
 
 # Always ask — these commands inherently write to files
@@ -62,30 +68,29 @@ def main():
     if not cmd:
         sys.exit(0)
 
-    # Allow safe read-only commands
     stripped = cmd.strip()
     if any(stripped.startswith(p) for p in SAFE_PREFIXES):
         sys.exit(0)
 
-    # Hard block bypass vectors
     for pattern, desc in DENY_PATTERNS:
         if re.search(pattern, cmd):
             output_decision('deny', f"{desc} — Use Edit/Write tools instead")
 
-    # Check file redirections
     if has_file_redirect(cmd):
+        if is_safe_write_path(cmd):
+            sys.exit(0)
         output_decision('ask', 'Shell redirect to file detected. Authorize?')
 
-    # Smart inline script detection (evaluate = pass, write = ask)
     if re.search(r'\bnode\s+-e\b', cmd) and re.search(NODE_WRITES, cmd):
         output_decision('ask', 'Node.js write operation detected. Authorize?')
 
     if re.search(r'\bruby\s+-e\b', cmd) and re.search(RUBY_WRITES, cmd):
         output_decision('ask', 'Ruby write operation detected. Authorize?')
 
-    # Always-ask patterns (inherently write to files)
     for pattern, desc in ASK_PATTERNS:
         if re.search(pattern, cmd):
+            if is_safe_command_target(cmd):
+                sys.exit(0)
             output_decision('ask', f"{desc} detected. Authorize?")
 
     sys.exit(0)
