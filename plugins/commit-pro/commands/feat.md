@@ -28,4 +28,4 @@ Create a quick feature commit.
 6. Ask confirmation before committing
 7. Execute and show result
 
-**Note**: `feat` commits trigger **MINOR** version bump (1.X.0 → 1.X+1.0) with git tag `vX.Y.0`
+**Note**: All commits trigger **PATCH** bump only (1.37.0 → 1.37.1). MINOR/MAJOR bumps are manual user decisions.

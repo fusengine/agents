@@ -102,12 +102,8 @@ If $ARGUMENTS provided, use as hint for the message.
 After commit, update `CHANGELOG.md` with semantic versioning:
 
 **Version Increment Rules:**
-- `feat` → **MINOR**: 1.37.0 → 1.38.0 (reset patch to 0)
-- ALL other types (`fix`, `chore`, `docs`, `style`, `refactor`, `test`, `ci`) → **PATCH**: 1.37.0 → 1.37.1
-
-**Git Tag Rules:**
-- After **MINOR** bump → create annotated tag: `git tag -a vX.Y.0 -m "Release vX.Y.0"`
-- PATCH bumps → NO tag
+- ALL commit types → **PATCH only**: 1.37.0 → 1.37.1
+- MINOR/MAJOR bumps are **manual decisions** by the user, never automatic
 
 **Format:**
 ```markdown
@@ -122,4 +118,3 @@ After commit, update `CHANGELOG.md` with semantic versioning:
 - NEVER include CHANGELOG.md in the main feature/fix commit
 - If `marketplace.json` is also modified (version bump) → **include it in the same last commit**
 - Format: `chore: bump marketplace and CHANGELOG to X.Y.Z`
-- If **MINOR** bump: AFTER the bump commit, run `git tag -a vX.Y.0 -m "Release vX.Y.0"`
