@@ -31,7 +31,7 @@ npm-debug.log*
 plugins/core-guards/statusline/node_modules
 plugins/core-guards/statusline/bun.lock
 plugins/core-guards/statusline/dist
-plugins/core-guards/statusline/user-config.json
+plugins/core-guards/statusline/user-config.json.bkp
 archives
 scripts/.claude/*
 plugins/ai-pilot/scripts/node_modules
