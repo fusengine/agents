@@ -81,7 +81,8 @@ def main():
     if not cmd.startswith('git') or 'commit' not in cmd:
         sys.exit(0)
 
-    print('PRE-COMMIT GUARD ACTIVATED', file=sys.stderr)
+    print('PRE-COMMIT GUARD ACTIVATED — Running linters...', file=sys.stderr)
+    sys.stderr.flush()
     errors = collect_errors()
 
     if errors:
@@ -89,7 +90,7 @@ def main():
         reason = f"COMMIT BLOCKED — Fix these errors then retry:\n\n{detail}"
         print(json.dumps({"decision": "block", "reason": reason}))
     else:
-        print('All linters passed', file=sys.stderr)
+        print(json.dumps({"decision": "allow", "reason": "All linters passed"}))
 
     sys.exit(0)
 
