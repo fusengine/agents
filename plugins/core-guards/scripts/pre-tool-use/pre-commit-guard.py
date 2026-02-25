@@ -1,91 +1,96 @@
 #!/usr/bin/env python3
-"""PreToolUse hook: Validate linters before git commit (standalone)."""
+"""PreToolUse hook: Validate linters before git commit.
+
+Blocks commit and reports detailed linter errors so Claude can fix them.
+Never auto-fixes files (no --fix, no --write).
+"""
 import json
 import os
 import shutil
 import subprocess
 import sys
 
+TIMEOUT_SEC = 30
 
-def run_eslint():
-    """Run ESLint if config exists."""
-    configs = ['.eslintrc.json', '.eslintrc.js', 'eslint.config.js']
-    if any(os.path.isfile(c) for c in configs) and shutil.which('bunx'):
-        r = subprocess.run(['bunx', 'eslint', '.', '--max-warnings', '0'],
-                           capture_output=True, text=True, check=False)
-        return r.returncode == 0
-    return True
+ESLINT_CONFIGS = (
+    '.eslintrc.json', '.eslintrc.js', 'eslint.config.js',
+    'eslint.config.mjs', 'eslint.config.ts',
+)
+PRETTIER_CONFIGS = ('.prettierrc', '.prettierrc.json', 'prettier.config.js')
 
 
-def run_typescript():
-    """Run TypeScript compiler check."""
-    if os.path.isfile('tsconfig.json') and shutil.which('bunx'):
-        r = subprocess.run(['bunx', 'tsc', '--noEmit'], capture_output=True, text=True, check=False)
-        return r.returncode == 0
-    return True
+def run_linter(cmd, label):
+    """Run a linter command and return (passed, formatted_output)."""
+    try:
+        result = subprocess.run(
+            cmd, capture_output=True, text=True,
+            timeout=TIMEOUT_SEC, check=False,
+        )
+        if result.returncode != 0:
+            output = result.stdout.strip() or result.stderr.strip()
+            return False, f"[{label}]\n{output}" if output else ''
+        return True, ''
+    except (subprocess.TimeoutExpired, OSError):
+        return True, ''
 
 
-def run_prettier():
-    """Run Prettier check and auto-fix."""
-    for cfg in ['.prettierrc', '.prettierrc.json']:
-        if os.path.isfile(cfg) and shutil.which('bunx'):
-            r = subprocess.run(['bunx', 'prettier', '--check', '.'],
-                               capture_output=True, text=True, check=False)
-            if r.returncode != 0:
-                subprocess.run(['bunx', 'prettier', '--write', '.'], stderr=subprocess.DEVNULL, check=False)
-            break
+def collect_errors():
+    """Run all applicable linters, return list of error strings."""
+    errors = []
+    has_bunx = shutil.which('bunx')
 
+    if os.path.isfile('package.json') and has_bunx:
+        if any(os.path.isfile(c) for c in ESLINT_CONFIGS):
+            ok, msg = run_linter(
+                ['bunx', 'eslint', '.', '--max-warnings', '0'], 'ESLint')
+            if not ok and msg:
+                errors.append(msg)
 
-def run_python_linters():
-    """Run Ruff if Python project."""
-    if (os.path.isfile('requirements.txt') or os.path.isfile('pyproject.toml')) and shutil.which('ruff'):
-        r = subprocess.run(['ruff', 'check', '.'], capture_output=True, text=True, check=False)
-        return r.returncode == 0
-    return True
+        if os.path.isfile('tsconfig.json'):
+            ok, msg = run_linter(
+                ['bunx', 'tsc', '--noEmit'], 'TypeScript')
+            if not ok and msg:
+                errors.append(msg)
 
+        if any(os.path.isfile(c) for c in PRETTIER_CONFIGS):
+            ok, msg = run_linter(
+                ['bunx', 'prettier', '--check', '.'], 'Prettier')
+            if not ok and msg:
+                errors.append(msg)
 
-def run_tests():
-    """Run project tests."""
-    if os.path.isfile('package.json'):
-        try:
-            with open('package.json', encoding='utf-8') as f:
-                if '"test"' in f.read() and shutil.which('bun'):
-                    r = subprocess.run(['bun', 'test'], capture_output=True, text=True, check=False)
-                    return r.returncode == 0
-        except OSError:
-            pass
-    return True
+    has_python = (
+        os.path.isfile('requirements.txt')
+        or os.path.isfile('pyproject.toml')
+    )
+    if has_python and shutil.which('ruff'):
+        ok, msg = run_linter(['ruff', 'check', '.'], 'Ruff')
+        if not ok and msg:
+            errors.append(msg)
+
+    return errors
 
 
 def main():
+    """Read stdin JSON, validate linters, block with details if errors."""
     try:
         data = json.load(sys.stdin)
     except (json.JSONDecodeError, EOFError):
         sys.exit(0)
+
     cmd = data.get('tool_input', {}).get('command', '')
     if not cmd.startswith('git') or 'commit' not in cmd:
         sys.exit(0)
+
     print('PRE-COMMIT GUARD ACTIVATED', file=sys.stderr)
-    errors = 0
-    print('Running linters...', file=sys.stderr)
-    if os.path.isfile('package.json'):
-        if not run_eslint():
-            errors += 1
-        if not run_typescript():
-            errors += 1
-        run_prettier()
-    if not run_python_linters():
-        errors += 1
-    if errors > 0:
-        print(f'COMMIT BLOCKED: {errors} linter(s) failed', file=sys.stderr)
-        print(json.dumps({"decision": "block", "reason": "Linter errors. Fix before committing."}))
-        sys.exit(0)
-    print('Running tests...', file=sys.stderr)
-    if not run_tests():
-        print('Tests failed (warning)', file=sys.stderr)
-    r = subprocess.run(['git', 'diff', '--cached', '--stat'], capture_output=True, text=True, check=False)
-    print(f'Changes:\n{r.stdout}', file=sys.stderr)
-    print(json.dumps({"decision": "block", "reason": "Pre-commit OK. Confirm to proceed."}))
+    errors = collect_errors()
+
+    if errors:
+        detail = '\n\n'.join(errors)
+        reason = f"COMMIT BLOCKED — Fix these errors then retry:\n\n{detail}"
+        print(json.dumps({"decision": "block", "reason": reason}))
+    else:
+        print('All linters passed', file=sys.stderr)
+
     sys.exit(0)
 
 
