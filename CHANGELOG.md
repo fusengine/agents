@@ -1,5 +1,13 @@
 # Release Notes
 
+## [1.38.4] - 25-02-2026
+
+### Fixed
+- Pre-commit guard outputs JSON allow decision so linter pass is visible (core-guards 1.1.5)
+
+### Changed
+- Add user-config.json.bkp to gitignore
+
 ## [1.38.3] - 25-02-2026
 
 ### Fixed
