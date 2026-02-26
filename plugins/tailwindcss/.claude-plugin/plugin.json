@@ -1,6 +1,6 @@
 {
   "name": "fuse-tailwindcss",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Expert Tailwind CSS v4.1 - CSS-first configuration, @theme, @utility, @variant, Oxide engine 5x faster, OKLCH colors, container queries, 15 specialized skills",
   "author": {
     "name": "Fusengine",

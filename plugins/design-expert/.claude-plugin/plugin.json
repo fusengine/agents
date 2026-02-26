@@ -1,6 +1,6 @@
 {
   "name": "fuse-design",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Expert UI/UX Design for React/Next.js with Tailwind CSS. Generate production-ready components using shadcn/ui, 21st.dev, and modern design patterns. Includes accessibility validation (WCAG 2.2), design systems, and micro-interactions.",
   "author": {
     "name": "Fusengine",

@@ -1,5 +1,10 @@
 # Release Notes
 
+## [1.38.5] - 26-02-2026
+
+### Changed
+- Migrate all agent hook commands from bash/sh to python (fuse-design 1.1.2, fuse-laravel 1.1.2, fuse-nextjs 1.1.2, fuse-react 1.0.2, fuse-shadcn-ui 1.0.3, fuse-swift-apple-expert 1.1.2, fuse-tailwindcss 1.0.2)
+
 ## [1.38.4] - 25-02-2026
 
 ### Fixed

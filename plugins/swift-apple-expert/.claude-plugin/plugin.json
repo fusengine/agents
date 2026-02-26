@@ -1,6 +1,6 @@
 {
   "name": "fuse-swift-apple-expert",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Expert Swift 6.2 + SwiftUI for iOS 26, macOS 26, iPadOS 26, watchOS 26, visionOS 26, tvOS 26 with Liquid Glass, @Observable, actors, SwiftData inheritance",
   "author": {
     "name": "Fusengine",
