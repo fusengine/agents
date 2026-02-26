@@ -11,24 +11,24 @@ hooks:
     - matcher: "Write|Edit"
       hooks:
         - type: command
-          command: "bash ${CLAUDE_PLUGIN_ROOT}/scripts/check-design-skill.sh"
+          command: "python ${CLAUDE_PLUGIN_ROOT}/scripts/check-design-skill.py"
     - matcher: "Write"
       hooks:
         - type: command
-          command: "bash ${CLAUDE_PLUGIN_ROOT}/scripts/check-shadcn-install.sh"
+          command: "python ${CLAUDE_PLUGIN_ROOT}/scripts/check-shadcn-install.py"
   PostToolUse:
     - matcher: "Read"
       hooks:
         - type: command
-          command: "bash ${CLAUDE_PLUGIN_ROOT}/scripts/track-skill-read.sh"
+          command: "python ${CLAUDE_PLUGIN_ROOT}/scripts/track-skill-read.py"
     - matcher: "mcp__context7__|mcp__exa__|mcp__magic__|mcp__shadcn__"
       hooks:
         - type: command
-          command: "bash ${CLAUDE_PLUGIN_ROOT}/scripts/track-mcp-research.sh"
+          command: "python ${CLAUDE_PLUGIN_ROOT}/scripts/track-mcp-research.py"
     - matcher: "Write|Edit"
       hooks:
         - type: command
-          command: "bash ${CLAUDE_PLUGIN_ROOT}/scripts/validate-design.sh"
+          command: "python ${CLAUDE_PLUGIN_ROOT}/scripts/validate-design.py"
 ---
 
 # Design Expert Agent

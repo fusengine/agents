@@ -10,18 +10,18 @@ hooks:
     - matcher: "Write|Edit"
       hooks:
         - type: command
-          command: "bash ${CLAUDE_PLUGIN_ROOT}/scripts/check-swift-skill.sh"
+          command: "python ${CLAUDE_PLUGIN_ROOT}/scripts/check-swift-skill.py"
         - type: command
-          command: "bash ${CLAUDE_PLUGIN_ROOT}/scripts/validate-swift-solid.sh"
+          command: "python ${CLAUDE_PLUGIN_ROOT}/scripts/validate-swift-solid.py"
   PostToolUse:
     - matcher: "Read"
       hooks:
         - type: command
-          command: "bash ${CLAUDE_PLUGIN_ROOT}/scripts/track-skill-read.sh"
+          command: "python ${CLAUDE_PLUGIN_ROOT}/scripts/track-skill-read.py"
     - matcher: "mcp__context7__|mcp__exa__|mcp__apple-docs__|mcp__XcodeBuildMCP__"
       hooks:
         - type: command
-          command: "bash ${CLAUDE_PLUGIN_ROOT}/scripts/track-mcp-research.sh"
+          command: "python ${CLAUDE_PLUGIN_ROOT}/scripts/track-mcp-research.py"
 ---
 
 # Swift Apple Expert Agent

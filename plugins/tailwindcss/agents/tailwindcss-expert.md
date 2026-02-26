@@ -10,20 +10,20 @@ hooks:
     - matcher: "Write|Edit"
       hooks:
         - type: command
-          command: "bash ${CLAUDE_PLUGIN_ROOT}/scripts/check-tailwind-skill.sh"
+          command: "python ${CLAUDE_PLUGIN_ROOT}/scripts/check-tailwind-skill.py"
   PostToolUse:
     - matcher: "Read"
       hooks:
         - type: command
-          command: "bash ${CLAUDE_PLUGIN_ROOT}/scripts/track-skill-read.sh"
+          command: "python ${CLAUDE_PLUGIN_ROOT}/scripts/track-skill-read.py"
     - matcher: "mcp__context7__|mcp__exa__"
       hooks:
         - type: command
-          command: "bash ${CLAUDE_PLUGIN_ROOT}/scripts/track-mcp-research.sh"
+          command: "python ${CLAUDE_PLUGIN_ROOT}/scripts/track-mcp-research.py"
     - matcher: "Write|Edit"
       hooks:
         - type: command
-          command: "bash ${CLAUDE_PLUGIN_ROOT}/scripts/validate-tailwind.sh"
+          command: "python ${CLAUDE_PLUGIN_ROOT}/scripts/validate-tailwind.py"
 ---
 
 # Tailwind CSS Expert v4.1

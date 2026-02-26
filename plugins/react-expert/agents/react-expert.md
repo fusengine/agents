@@ -10,22 +10,22 @@ hooks:
     - matcher: "Write|Edit"
       hooks:
         - type: command
-          command: "bash ${CLAUDE_PLUGIN_ROOT}/scripts/check-skill-loaded.sh"
+          command: "python ${CLAUDE_PLUGIN_ROOT}/scripts/check-skill-loaded.py"
         - type: command
-          command: "bash ${CLAUDE_PLUGIN_ROOT}/scripts/validate-react-solid.sh"
+          command: "python ${CLAUDE_PLUGIN_ROOT}/scripts/validate-react-solid.py"
     - matcher: "Write"
       hooks:
         - type: command
-          command: "bash ${CLAUDE_PLUGIN_ROOT}/scripts/check-shadcn-install.sh"
+          command: "python ${CLAUDE_PLUGIN_ROOT}/scripts/check-shadcn-install.py"
   PostToolUse:
     - matcher: "Read"
       hooks:
         - type: command
-          command: "bash ${CLAUDE_PLUGIN_ROOT}/scripts/track-skill-read.sh"
+          command: "python ${CLAUDE_PLUGIN_ROOT}/scripts/track-skill-read.py"
     - matcher: "mcp__context7__|mcp__exa__"
       hooks:
         - type: command
-          command: "bash ${CLAUDE_PLUGIN_ROOT}/scripts/track-mcp-research.sh"
+          command: "python ${CLAUDE_PLUGIN_ROOT}/scripts/track-mcp-research.py"
 ---
 
 # React Expert Agent

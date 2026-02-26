@@ -10,22 +10,22 @@ hooks:
     - matcher: "Write|Edit"
       hooks:
         - type: command
-          command: "bash ${CLAUDE_PLUGIN_ROOT}/scripts/check-nextjs-skill.sh"
+          command: "python ${CLAUDE_PLUGIN_ROOT}/scripts/check-nextjs-skill.py"
         - type: command
-          command: "bash ${CLAUDE_PLUGIN_ROOT}/scripts/validate-nextjs-solid.sh"
+          command: "python ${CLAUDE_PLUGIN_ROOT}/scripts/validate-nextjs-solid.py"
     - matcher: "Write"
       hooks:
         - type: command
-          command: "bash ${CLAUDE_PLUGIN_ROOT}/scripts/check-shadcn-install.sh"
+          command: "python ${CLAUDE_PLUGIN_ROOT}/scripts/check-shadcn-install.py"
   PostToolUse:
     - matcher: "Read"
       hooks:
         - type: command
-          command: "bash ${CLAUDE_PLUGIN_ROOT}/scripts/track-skill-read.sh"
+          command: "python ${CLAUDE_PLUGIN_ROOT}/scripts/track-skill-read.py"
     - matcher: "mcp__context7__|mcp__exa__"
       hooks:
         - type: command
-          command: "bash ${CLAUDE_PLUGIN_ROOT}/scripts/track-mcp-research.sh"
+          command: "python ${CLAUDE_PLUGIN_ROOT}/scripts/track-mcp-research.py"
 ---
 
 # Next.js Expert Agent
