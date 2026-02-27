@@ -1,5 +1,14 @@
 # Release Notes
 
+## [1.38.12] - 28-02-2026
+
+### Fixed
+- Multi-agent session isolation: migrate session (string) to sessions[] (array) to prevent overwrite (ai-pilot 1.2.7)
+- Source overwrite: skill reads no longer erase context7/exa source in state file (ai-pilot 1.2.7)
+- Framework detection alignment: .ts/.js files now detected as react, matching core-guards (ai-pilot 1.2.7)
+- Per-session online doc tracking: add doc_sessions[] so each agent must consult individually (ai-pilot 1.2.7)
+- isDocConsulted checks ALL frameworks instead of only the current one (ai-pilot 1.2.7)
+
 ## [1.38.11] - 27-02-2026
 
 ### Added
