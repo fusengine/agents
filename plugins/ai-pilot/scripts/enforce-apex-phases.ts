@@ -11,7 +11,7 @@ import {
 import type { HookInput } from "./lib/interfaces/hook.interface";
 import { detectFramework, getSkillSource, getSkillDir, formatRoutedDeny } from "./lib/apex/enforce-helpers";
 import { findProjectRoot } from "./lib/apex/fs-helpers";
-import { isDocConsulted, formatDocDeny } from "./lib/apex/doc-helpers";
+import { isDocConsulted, formatDocDeny, resolveSessions, type AuthEntry } from "./lib/apex/doc-helpers";
 import { routeReferences } from "./lib/apex/ref-router";
 
 /** Code file extensions that require doc consultation */
@@ -30,12 +30,11 @@ function deny(reason: string): void {
 
 /** Check if authorization is still valid (same session + < 2 min) */
 function isAuthorized(
-  storedSession: string | undefined,
-  docConsulted: string | undefined,
+  auth: (AuthEntry & { doc_consulted?: string }) | undefined,
   sessionId: string,
 ): boolean {
-  if (!docConsulted || storedSession !== sessionId) return false;
-  const readEpoch = new Date(docConsulted).getTime();
+  if (!auth?.doc_consulted || !resolveSessions(auth).includes(sessionId)) return false;
+  const readEpoch = new Date(auth.doc_consulted).getTime();
   if (Number.isNaN(readEpoch)) return false;
   return (Date.now() - readEpoch) < 120_000;
 }
@@ -69,13 +68,9 @@ async function main(): Promise<void> {
   try {
     const state = await loadState(statePath);
     const auth = state.authorizations[framework];
-    // Check 1: SOLID refs (2min TTL)
-    if (!isAuthorized(auth?.session, auth?.doc_consulted, sessionId)) {
-      state.target = {
-        project: projectRoot, framework,
-        set_by: "enforce-apex-phases.ts",
-        set_at: new Date().toISOString(),
-      };
+    // Check 1: SOLID refs (2min TTL, framework-specific)
+    if (!isAuthorized(auth, sessionId)) {
+      state.target = { project: projectRoot, framework, set_by: "enforce-apex-phases.ts", set_at: new Date().toISOString() };
       await saveState(statePath, state);
       const src = getSkillSource(framework);
       const skillDir = getSkillDir(framework);
@@ -86,8 +81,8 @@ async function main(): Promise<void> {
       deny(denyReason);
       return;
     }
-    // Check 2: Online doc (once per session)
-    if (!isDocConsulted(auth, sessionId)) {
+    // Check 2: Online doc (once per session, ANY framework counts)
+    if (!isDocConsulted(state.authorizations, sessionId)) {
       deny(formatDocDeny(framework));
       return;
     }
@@ -95,5 +90,4 @@ async function main(): Promise<void> {
     await unlock();
   }
 }
-
 await main();

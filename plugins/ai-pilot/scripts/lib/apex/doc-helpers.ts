@@ -3,17 +3,32 @@
  * Verifies Context7/Exa usage before allowing Write/Edit.
  */
 
+/** Authorization entry from APEX state (supports legacy session + new sessions[]) */
+export type AuthEntry = { source?: string; sessions?: string[]; session?: string; doc_sessions?: string[] };
+
+/**
+ * Resolve sessions array from auth entry, with legacy fallback.
+ * @param auth - Authorization entry (may have sessions[] or legacy session)
+ */
+export function resolveSessions(auth: AuthEntry | undefined): string[] {
+  if (!auth) return [];
+  return auth.sessions ?? (auth.session ? [auth.session] : []);
+}
+
 /**
  * Check if online documentation was consulted (Context7 or Exa) in this session.
- * @param auth - Authorization entry from APEX state
+ * Checks ALL frameworks — the goal is "did you consult any online doc?", not framework-specific.
+ * @param authorizations - All framework authorizations from APEX state
  * @param sessionId - Current session identifier
  */
 export function isDocConsulted(
-  auth: { source?: string; session?: string } | undefined,
+  authorizations: Record<string, AuthEntry> | undefined,
   sessionId: string,
 ): boolean {
-  if (!auth?.source || auth.session !== sessionId) return false;
-  return /context7|exa/.test(auth.source);
+  if (!authorizations) return false;
+  return Object.values(authorizations).some(
+    (auth) => auth.doc_sessions?.includes(sessionId) && /context7|exa/.test(auth.source ?? ""),
+  );
 }
 
 /**

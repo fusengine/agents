@@ -9,11 +9,12 @@ const PLUGINS_DIR = `${HOME}/.claude/plugins/marketplaces/fusengine-plugins/plug
 
 /**
  * Detect framework from file path extension and content patterns.
+ * Aligned with core-guards/require-solid-read.py detection.
  * @param filePath - Absolute path to the file being written/edited
  * @param content - File content or new_string being written
  */
 export function detectFramework(filePath: string, content: string): string {
-  if (/\.(tsx|jsx)$/.test(filePath) || /from ['"]react|useState|className=/.test(content)) {
+  if (/\.(tsx?|jsx?|vue|svelte)$/.test(filePath) || /from ['"]react|useState|className=/.test(content)) {
     if (/(page|layout|loading|error|route)\.(ts|tsx)$/.test(filePath) || /use client|use server/.test(content)) {
       return "nextjs";
     }
@@ -84,4 +85,3 @@ export function formatRoutedDeny(framework: string, filePath: string, result: Ro
   lines.push(`Full skill: ${result.skillPath}`);
   return lines.join("\n");
 }
-

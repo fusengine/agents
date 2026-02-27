@@ -5,15 +5,16 @@
  */
 import { mkdir, rmdir } from "node:fs/promises";
 import { readJsonFile, writeJsonFile } from "../core";
+import type { AuthEntry } from "./doc-helpers";
 
 const HOME = process.env.HOME ?? "";
 
 /** Default empty APEX state structure */
 const DEFAULT_STATE = {
   $schema: "apex-state-v1",
-  description: "APEX/SOLID state - session + 2min expiry",
+  description: "APEX/SOLID state - sessions[] + 2min expiry",
   target: {} as Record<string, string>,
-  authorizations: {} as Record<string, { session?: string; doc_consulted?: string; source?: string }>,
+  authorizations: {} as Record<string, AuthEntry & { doc_consulted?: string }>,
 };
 
 /** APEX state type */
