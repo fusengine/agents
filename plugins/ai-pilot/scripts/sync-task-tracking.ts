@@ -27,7 +27,10 @@ async function main(): Promise<void> {
 
   const projectRoot = process.env.CLAUDE_PROJECT_DIR ?? process.cwd();
   const taskFile = `${projectRoot}/.claude/apex/task.json`;
-  if (!existsSync(taskFile)) return;
+  if (!existsSync(taskFile)) {
+    outputHookResponse({ systemMessage: "task-sync: no apex/task.json", hookSpecificOutput: { hookEventName: "PostToolUse" } });
+    return;
+  }
 
   const lockDir = `${projectRoot}/.claude/apex/.task.lock`;
   const unlock = await acquireLock(lockDir, 10000);

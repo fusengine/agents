@@ -40,7 +40,10 @@ async function main(): Promise<void> {
   const projectRoot = process.env.CLAUDE_PROJECT_DIR ?? process.cwd();
   const apexDir = `${projectRoot}/.claude/apex`;
 
-  if (!existsSync(apexDir)) return;
+  if (!existsSync(apexDir)) {
+    outputHookResponse({ systemMessage: "apex-context: no .claude/apex/", hookSpecificOutput: { hookEventName: "SubagentStart" } });
+    return;
+  }
 
   const agentsContent = (await readTextFile(`${apexDir}/AGENTS.md`)).slice(0, 4000);
   const taskData = await readJsonFile<ApexTaskFile>(`${apexDir}/task.json`);

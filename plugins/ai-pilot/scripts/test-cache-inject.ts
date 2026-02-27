@@ -12,7 +12,10 @@ const TTL_SECONDS = 172_800; // 48 hours
 /** Main entry: compare file checksums with cache, inject changed file list. */
 async function main(): Promise<void> {
   const input = (await readStdin()) as HookInput;
-  if (!input.agent_type?.includes("sniper")) return;
+  if (!input.agent_type?.includes("sniper")) {
+    outputHookResponse({ systemMessage: "test-cache: not sniper", hookSpecificOutput: { hookEventName: "SubagentStart" } });
+    return;
+  }
 
   const projectPath = process.env.CLAUDE_PROJECT_DIR ?? process.cwd();
   const pHash = projectHash(projectPath);

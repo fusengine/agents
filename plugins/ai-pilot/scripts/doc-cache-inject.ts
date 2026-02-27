@@ -48,7 +48,10 @@ async function main(): Promise<void> {
   const docsDir = `${cacheDir}/docs`;
 
   const index = await readJsonFile<CacheIndex>(indexFile);
-  if (!index?.docs?.length) process.exit(0);
+  if (!index?.docs?.length) {
+    outputHookResponse({ systemMessage: "doc-cache: empty", hookSpecificOutput: { hookEventName: "SubagentStart" } });
+    process.exit(0);
+  }
 
   const { ctx, count, maxAge } = await buildDocsContext(index.docs, docsDir);
   if (count === 0) process.exit(0);

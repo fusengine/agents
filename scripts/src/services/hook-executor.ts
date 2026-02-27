@@ -3,6 +3,7 @@
  * Single Responsibility: Execute commands and collect results
  */
 import type { ExecutableHook, HookResult } from "../interfaces/hooks";
+import { mergeJsonOutput } from "./merge-utils";
 
 /** Execute a hook and return the result */
 export async function executeHook(
@@ -10,19 +11,12 @@ export async function executeHook(
 	input: string,
 ): Promise<HookResult> {
 	if (hook.isAsync) {
-		// Wait for sound to complete — parent must stay alive or process group gets killed
 		const proc = Bun.spawn(["bash", "-c", hook.command], {
 			stdout: "ignore",
 			stderr: "ignore",
 		});
 		await proc.exited;
-		return {
-			success: true,
-			exitCode: 0,
-			stdout: "",
-			stderr: "",
-			blocked: false,
-		};
+		return { success: true, exitCode: 0, stdout: "", stderr: "", blocked: false };
 	}
 
 	const proc = Bun.spawn(["bash", "-c", hook.command], {
@@ -35,13 +29,13 @@ export async function executeHook(
 	const stdout = await new Response(proc.stdout).text();
 	const stderr = await new Response(proc.stderr).text();
 
-	return {
-		success: exitCode === 0,
-		exitCode,
-		stdout,
-		stderr,
-		blocked: exitCode === 2,
-	};
+	return { success: exitCode === 0, exitCode, stdout, stderr, blocked: exitCode === 2 };
+}
+
+/** Extract short script name from command path */
+function hookLabel(hook: ExecutableHook): string {
+	const name = hook.command.split("/").pop()?.replace(/\.(py|ts|sh)$/, "") ?? "hook";
+	return `${hook.pluginName}:${name}`;
 }
 
 /** Execute a list of hooks in PARALLEL, check for blocks after execution */
@@ -64,13 +58,22 @@ export async function executeHooks(
 
 	let collectedOutput = "";
 	const collectedStderr: string[] = [];
-	for (const result of results) {
+	const silentHooks: string[] = [];
+
+	for (let i = 0; i < results.length; i++) {
+		const result = results[i];
 		if (result.stdout.trim()) {
 			collectedOutput = mergeJsonOutput(collectedOutput, result.stdout);
+		} else if (result.success) {
+			silentHooks.push(hookLabel(hooks[i]));
 		}
 		if (result.stderr.trim()) {
 			collectedStderr.push(result.stderr);
 		}
+	}
+
+	if (silentHooks.length > 0) {
+		collectedStderr.push(silentHooks.map((h) => `${h}: ok`).join(" | "));
 	}
 
 	return {
@@ -78,41 +81,4 @@ export async function executeHooks(
 		stderr: collectedStderr.join(""),
 		output: collectedOutput,
 	};
-}
-
-/** Merge JSON outputs (additionalContext and hookSpecificOutput) */
-function mergeJsonOutput(existing: string, newOutput: string): string {
-	try {
-		const newJson = JSON.parse(newOutput);
-
-		if (!existing) return newOutput;
-		const existingJson = JSON.parse(existing);
-
-		// Merge hookSpecificOutput.additionalContext across multiple hooks
-		if (newJson.hookSpecificOutput && existingJson.hookSpecificOutput) {
-			const existCtx = existingJson.hookSpecificOutput.additionalContext ?? "";
-			const newCtx = newJson.hookSpecificOutput.additionalContext ?? "";
-			if (newCtx) {
-				existingJson.hookSpecificOutput.additionalContext = existCtx
-					? `${existCtx}\n\n${newCtx}`
-					: newCtx;
-			}
-			return JSON.stringify(existingJson);
-		}
-
-		// First hookSpecificOutput wins structure, or plain additionalContext merge
-		if (newJson.hookSpecificOutput) return newOutput;
-		if (newJson.additionalContext && existingJson.additionalContext) {
-			existingJson.additionalContext += `
-
-${newJson.additionalContext}`;
-			return JSON.stringify(existingJson);
-		}
-
-		return newJson.hookSpecificOutput || newJson.additionalContext
-			? newOutput
-			: existing;
-	} catch {
-		return existing;
-	}
 }

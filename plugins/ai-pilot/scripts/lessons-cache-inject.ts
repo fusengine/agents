@@ -47,7 +47,10 @@ async function main(): Promise<void> {
   } catch { /* no local lessons */ }
 
   const globalLessons = await loadGlobalLessons(stack);
-  if (localLessons.length === 0 && globalLessons.length === 0) return;
+  if (localLessons.length === 0 && globalLessons.length === 0) {
+    outputHookResponse({ systemMessage: "lessons-cache: empty", hookSpecificOutput: { hookEventName: "SubagentStart" } });
+    return;
+  }
 
   const merged = mergeLessons(localLessons, globalLessons).slice(0, MAX_LESSONS);
   if (merged.length === 0) return;
