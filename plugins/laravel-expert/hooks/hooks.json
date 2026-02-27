@@ -13,11 +13,9 @@
             "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/check-laravel-skill.py"
           }
         ]
-      }
-    ],
-    "PostToolUse": [
+      },
       {
-        "_description": "Validate Laravel SOLID principles after Write/Edit",
+        "_description": "Validate Laravel SOLID principles before Write/Edit",
         "matcher": "Write|Edit",
         "hooks": [
           {
@@ -25,7 +23,9 @@
             "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/validate-laravel-solid.py"
           }
         ]
-      },
+      }
+    ],
+    "PostToolUse": [
       {
         "_description": "Track skill file reads",
         "matcher": "Read",

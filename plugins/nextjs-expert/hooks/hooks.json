@@ -13,11 +13,9 @@
             "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/check-nextjs-skill.py"
           }
         ]
-      }
-    ],
-    "PostToolUse": [
+      },
       {
-        "_description": "Validate Next.js SOLID principles after Write/Edit",
+        "_description": "Validate Next.js SOLID principles before Write/Edit",
         "matcher": "Write|Edit",
         "hooks": [
           {
@@ -25,7 +23,9 @@
             "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/validate-nextjs-solid.py"
           }
         ]
-      },
+      }
+    ],
+    "PostToolUse": [
       {
         "_description": "Track skill file reads",
         "matcher": "Read",

@@ -53,8 +53,14 @@ def main():
 
     if loc > limit:
         filename = os.path.basename(file_path)
-        print(f"SOLID: {filename} has {loc} lines (limit: {limit})")
-        print("   Consider splitting into smaller modules")
+        reason = (f"SOLID: {filename} has {loc} lines (limit: {limit})."
+                  " Consider splitting into smaller modules.")
+        print(json.dumps({
+            "hookSpecificOutput": {
+                "hookEventName": "PostToolUse",
+                "additionalContext": reason,
+            }
+        }))
 
     sys.exit(0)
 

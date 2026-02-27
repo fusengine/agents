@@ -13,11 +13,9 @@
             "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/check-swift-skill.py"
           }
         ]
-      }
-    ],
-    "PostToolUse": [
+      },
       {
-        "_description": "Validate Swift SOLID principles after Write/Edit",
+        "_description": "Validate Swift SOLID principles before Write/Edit",
         "matcher": "Write|Edit",
         "hooks": [
           {
@@ -25,7 +23,9 @@
             "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/validate-swift-solid.py"
           }
         ]
-      },
+      }
+    ],
+    "PostToolUse": [
       {
         "_description": "Track skill file reads",
         "matcher": "Read",

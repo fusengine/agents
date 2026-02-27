@@ -3,13 +3,20 @@
  * Single Responsibility: Merge multiple hook JSON outputs
  */
 
-/** Merge JSON outputs (additionalContext and hookSpecificOutput) */
+/** Merge JSON outputs (additionalContext, hookSpecificOutput, systemMessage) */
 export function mergeJsonOutput(existing: string, newOutput: string): string {
 	try {
 		const newJson = JSON.parse(newOutput);
 
 		if (!existing) return newOutput;
 		const existingJson = JSON.parse(existing);
+
+		// Merge systemMessage fields (concatenate with newline separator)
+		if (newJson.systemMessage && existingJson.systemMessage) {
+			existingJson.systemMessage += `\n${newJson.systemMessage}`;
+		} else if (newJson.systemMessage) {
+			existingJson.systemMessage = newJson.systemMessage;
+		}
 
 		// Merge hookSpecificOutput.additionalContext across multiple hooks
 		if (newJson.hookSpecificOutput && existingJson.hookSpecificOutput) {

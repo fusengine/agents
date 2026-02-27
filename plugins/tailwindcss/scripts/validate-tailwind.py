@@ -9,17 +9,26 @@ sys.path.insert(0, os.path.join(os.path.expanduser("~"),
     ".claude", "plugins", "marketplaces", "fusengine-plugins",
     "plugins", "_shared", "scripts"))
 from hook_output import post_pass
+from project_detect import is_tailwind_project
 
 
 def main():
     """Validate Tailwind best practices on written files."""
-    data = json.load(sys.stdin)
+    try:
+        data = json.load(sys.stdin)
+    except (json.JSONDecodeError, ValueError):
+        sys.exit(0)
+
     tool_name = data.get("tool_name", "")
     file_path = data.get("tool_input", {}).get("file_path", "")
 
     if tool_name not in ("Write", "Edit"):
         sys.exit(0)
+    if not re.search(r"\.(css|tsx|jsx)$", file_path):
+        sys.exit(0)
     if not os.path.isfile(file_path):
+        sys.exit(0)
+    if not is_tailwind_project(file_path):
         sys.exit(0)
 
     warnings = []
