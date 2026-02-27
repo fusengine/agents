@@ -2,7 +2,7 @@
 description: Chore commit. Use for maintenance, deps, dependencies, config, cleanup, housekeeping.
 argument-hint: [description] | (empty for auto-detection)
 allowed-tools: Bash(git status:*), Bash(git diff:*), Bash(git add:*), Bash(git commit:*), Bash(git log:*)
-disable-model-invocation: true
+disable-model-invocation: false
 ---
 
 # Chore Commit

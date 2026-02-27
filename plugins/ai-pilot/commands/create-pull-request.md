@@ -1,6 +1,6 @@
 ---
 description: Auto-generate Pull Request with comprehensive description, test plan, and changelog. Uses gh CLI for creation.
-disable-model-invocation: true
+disable-model-invocation: false
 ---
 
 # Create Pull Request

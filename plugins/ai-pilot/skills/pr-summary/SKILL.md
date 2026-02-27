@@ -4,7 +4,7 @@ description: Summarize current pull request with diff, comments, and changed fil
 argument-hint: "[pr-number]"
 context: fork
 agent: fuse-ai-pilot:explore-codebase
-disable-model-invocation: true
+disable-model-invocation: false
 user-invocable: true
 ---
 

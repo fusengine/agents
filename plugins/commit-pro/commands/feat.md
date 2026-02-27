@@ -2,7 +2,7 @@
 description: Quick feature commit. Use for new feature, add feature, implement, create new.
 argument-hint: [description] | (empty for auto-detection)
 allowed-tools: Bash(git status:*), Bash(git diff:*), Bash(git add:*), Bash(git commit:*), Bash(git log:*)
-disable-model-invocation: true
+disable-model-invocation: false
 ---
 
 # Quick Feature Commit

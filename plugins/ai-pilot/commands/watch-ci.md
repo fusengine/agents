@@ -1,6 +1,6 @@
 ---
 description: Monitor CI/CD pipeline and automatically fix failures. Watches GitHub Actions runs and applies fixes when tests fail.
-disable-model-invocation: true
+disable-model-invocation: false
 ---
 
 # Watch CI/CD

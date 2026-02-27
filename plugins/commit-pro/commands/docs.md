@@ -2,7 +2,7 @@
 description: Documentation commit. Use for update docs, documentation, readme, jsdoc, comments.
 argument-hint: [description] | (empty for auto-detection)
 allowed-tools: Bash(git status:*), Bash(git diff:*), Bash(git add:*), Bash(git commit:*), Bash(git log:*)
-disable-model-invocation: true
+disable-model-invocation: false
 ---
 
 # Documentation Commit

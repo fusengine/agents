@@ -1,6 +1,6 @@
 ---
 description: Smart conventional commits with auto-detection. Analyzes changes, detects type, commits with minimal interaction.
-disable-model-invocation: true
+disable-model-invocation: false
 ---
 
 # Smart Commit Workflow

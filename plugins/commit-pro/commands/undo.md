@@ -2,7 +2,7 @@
 description: Undo last commit safely. Use for undo commit, revert, uncommit, cancel commit.
 argument-hint: --soft | --mixed | (empty for soft reset)
 allowed-tools: Bash(git status:*), Bash(git log:*), Bash(git reset:*), Bash(git revert:*)
-disable-model-invocation: true
+disable-model-invocation: false
 ---
 
 # Undo Last Commit

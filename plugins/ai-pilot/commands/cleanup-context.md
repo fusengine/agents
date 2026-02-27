@@ -1,6 +1,6 @@
 ---
 description: Memory optimization - removes duplicates, consolidates knowledge, and cleans memory banks for better performance.
-disable-model-invocation: true
+disable-model-invocation: false
 ---
 
 # Cleanup Context
