@@ -1,5 +1,17 @@
 # Release Notes
 
+## [1.38.8] - 27-02-2026
+
+### Added
+- Brainstorming skill: design-first questioning before implementation (fuse-ai-pilot 1.2.5)
+- TDD skill: RED-GREEN-REFACTOR cycle enforced during Execute phase (fuse-ai-pilot 1.2.5)
+- Verification skill: functional resolution check between eLicit and eXamine (fuse-ai-pilot 1.2.5)
+- `disable-model-invocation: true` on 17 side-effect commands (fuse-commit-pro 1.2.5, fuse-security 1.0.2)
+
+### Changed
+- APEX workflow updated: Brainstorm → Analyze → Plan → Execute(TDD) → eLicit → Verify → eXamine
+- README updated with current stats (111 skills, 35 commands, 82 hooks, 17 plugins)
+
 ## [1.38.7] - 27-02-2026
 
 ### Changed
