@@ -115,3 +115,14 @@ If $ARGUMENTS provided, use as hint for the message.
 - Separate LAST commit (never with code changes)
 - Include: CHANGELOG.md + marketplace.json + all bumped plugin.json
 - Format: `chore: bump marketplace and CHANGELOG to X.Y.Z`
+
+### Step 7: Git Tag (MANDATORY for plugin repos)
+
+After the bump commit, create and push the version tag:
+
+```bash
+git tag vX.Y.Z
+git push origin vX.Y.Z
+```
+
+Only tag the bump commit, never tag code commits.
