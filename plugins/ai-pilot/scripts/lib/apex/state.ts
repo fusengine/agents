@@ -13,7 +13,7 @@ const DEFAULT_STATE = {
   $schema: "apex-state-v1",
   description: "APEX/SOLID state - session + 2min expiry",
   target: {} as Record<string, string>,
-  authorizations: {} as Record<string, { session?: string; doc_consulted?: string }>,
+  authorizations: {} as Record<string, { session?: string; doc_consulted?: string; source?: string }>,
 };
 
 /** APEX state type */

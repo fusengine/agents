@@ -10,13 +10,23 @@ import {
 } from "./lib/apex/state";
 import type { HookInput } from "./lib/interfaces/hook.interface";
 import { detectFramework, getSkillSource, getSkillDir, formatRoutedDeny } from "./lib/apex/enforce-helpers";
+import { findProjectRoot } from "./lib/apex/fs-helpers";
+import { isDocConsulted, formatDocDeny } from "./lib/apex/doc-helpers";
 import { routeReferences } from "./lib/apex/ref-router";
 
 /** Code file extensions that require doc consultation */
 const CODE_EXT = /\.(ts|tsx|js|jsx|py|php|swift|go|rs|rb|java|vue|svelte|css)$/;
-
 /** Directories to skip (dependencies, build output) */
 const SKIP_DIRS = /(node_modules|vendor|dist|build|\.next|DerivedData)/;
+/** Protected paths — deny Write/Edit completely */
+const PROTECTED_PATHS = /\.claude\/plugins\/(marketplaces|cache)/;
+
+/** Shorthand deny helper to reduce repetition */
+function deny(reason: string): void {
+  outputHookResponse({ hookSpecificOutput: {
+    hookEventName: "PreToolUse", permissionDecision: "deny", permissionDecisionReason: reason,
+  }});
+}
 
 /** Check if authorization is still valid (same session + < 2 min) */
 function isAuthorized(
@@ -30,18 +40,6 @@ function isAuthorized(
   return (Date.now() - readEpoch) < 120_000;
 }
 
-/** Find the project root by walking up from a directory */
-function findProjectRoot(dir: string): string {
-  const { existsSync } = require("node:fs");
-  const { dirname, resolve } = require("node:path");
-  let current = resolve(dir);
-  while (current !== "/") {
-    if (existsSync(`${current}/package.json`) || existsSync(`${current}/.git`)) return current;
-    current = dirname(current);
-  }
-  return process.cwd();
-}
-
 /** Main hook handler */
 async function main(): Promise<void> {
   const input = (await readStdin()) as HookInput;
@@ -50,6 +48,10 @@ async function main(): Promise<void> {
   const sessionId = input.session_id ?? "";
 
   if (toolName !== "Write" && toolName !== "Edit") return;
+  if (PROTECTED_PATHS.test(filePath)) {
+    deny("PROTECTED: Cannot modify ~/.claude/plugins/. Edit the source repo instead.");
+    return;
+  }
   if (!CODE_EXT.test(filePath)) return;
   if (SKIP_DIRS.test(filePath)) return;
 
@@ -67,29 +69,28 @@ async function main(): Promise<void> {
   try {
     const state = await loadState(statePath);
     const auth = state.authorizations[framework];
-    if (isAuthorized(auth?.session, auth?.doc_consulted, sessionId)) return;
-
-    state.target = {
-      project: projectRoot, framework,
-      set_by: "enforce-apex-phases.ts",
-      set_at: new Date().toISOString(),
-    };
-    await saveState(statePath, state);
-
-    const src = getSkillSource(framework);
-    const skillDir = getSkillDir(framework);
-    const routed = await routeReferences(filePath, content, skillDir);
-    const denyReason = routed
-      ? formatRoutedDeny(framework, filePath, routed)
-      : `APEX: Read doc first (expires every 2min) for ${framework}! Source: ${src}`;
-
-    outputHookResponse({
-      hookSpecificOutput: {
-        hookEventName: "PreToolUse",
-        permissionDecision: "deny",
-        permissionDecisionReason: denyReason,
-      },
-    });
+    // Check 1: SOLID refs (2min TTL)
+    if (!isAuthorized(auth?.session, auth?.doc_consulted, sessionId)) {
+      state.target = {
+        project: projectRoot, framework,
+        set_by: "enforce-apex-phases.ts",
+        set_at: new Date().toISOString(),
+      };
+      await saveState(statePath, state);
+      const src = getSkillSource(framework);
+      const skillDir = getSkillDir(framework);
+      const routed = await routeReferences(filePath, content, skillDir);
+      const denyReason = routed
+        ? formatRoutedDeny(framework, filePath, routed)
+        : `APEX: Read doc first (expires every 2min) for ${framework}! Source: ${src}`;
+      deny(denyReason);
+      return;
+    }
+    // Check 2: Online doc (once per session)
+    if (!isDocConsulted(auth, sessionId)) {
+      deny(formatDocDeny(framework));
+      return;
+    }
   } finally {
     await unlock();
   }

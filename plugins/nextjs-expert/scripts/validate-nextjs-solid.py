@@ -74,10 +74,12 @@ def main() -> None:
         )
 
     if re.search(r"/(app|components|modules)/", file_path):
-        if re.search(r"^(export )?(interface|type) [A-Z]", content, re.MULTILINE):
-            violations.append(
-                "Interface/type in component. Move to modules/cores/interfaces/ or src/types/."
-            )
+        # Allow interfaces in dedicated interfaces/ directories (SOLID: feature types belong there)
+        if not re.search(r"/interfaces/", file_path):
+            if re.search(r"^(export )?(interface|type) [A-Z]", content, re.MULTILINE):
+                violations.append(
+                    "Interface/type in component. Move to modules/cores/interfaces/ or src/types/."
+                )
 
     if re.search(r"(useState|useEffect|useRef|onClick|onChange)", content):
         first_lines = "\n".join(content.splitlines()[:5])

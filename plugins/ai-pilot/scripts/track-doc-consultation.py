@@ -53,6 +53,10 @@ def main() -> None:
         fw_auth["session"] = data.get("session_id", "")
         with open(state_file, "w", encoding="utf-8") as f:
             json.dump(state, f, indent=2, ensure_ascii=False)
+        print(json.dumps({
+            "systemMessage": f"doc consulted: {source}:{framework}",
+            "hookSpecificOutput": {"hookEventName": "PostToolUse"},
+        }))
     finally:
         try:
             os.rmdir(lock_dir)

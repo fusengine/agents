@@ -28,7 +28,7 @@ async function main(): Promise<void> {
   const projectRoot = process.env.CLAUDE_PROJECT_DIR ?? process.cwd();
   const taskFile = `${projectRoot}/.claude/apex/task.json`;
   if (!existsSync(taskFile)) {
-    outputHookResponse({ systemMessage: "task-sync: no apex/task.json", hookSpecificOutput: { hookEventName: "PostToolUse" } });
+    // No task.json — silent return (not every project uses APEX task tracking)
     return;
   }
 
