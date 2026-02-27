@@ -1,5 +1,10 @@
 # Release Notes
 
+## [1.38.10] - 27-02-2026
+
+### Fixed
+- fix(hooks): move SOLID validators to PreToolUse and fix PostToolUse errors (react 1.0.4, nextjs 1.1.4, laravel 1.1.4, swift 1.1.4, solid 1.0.3, tailwindcss 1.0.4)
+
 ## [1.38.9] - 27-02-2026
 
 ### Added
