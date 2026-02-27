@@ -1,5 +1,12 @@
 # Release Notes
 
+## [1.38.7] - 27-02-2026
+
+### Changed
+- Use allow_pass/post_pass shared helpers in 13 expert scripts for conformant hook output (fuse-design 1.1.3, fuse-laravel 1.1.3, fuse-nextjs 1.1.3, fuse-react 1.0.3, fuse-shadcn-ui 1.0.4, fuse-swift-apple-expert 1.1.3, fuse-tailwindcss 1.0.3)
+- Add allow_pass() and post_pass() to _shared/hook_output.py with permissionDecision conforming to Zod schema
+- Remove verbose hook labeling from executor, add early exit when no hooks match
+
 ## [1.38.6] - 27-02-2026
 
 ### Fixed

@@ -7,7 +7,7 @@
   },
   "metadata": {
     "description": "Professional Claude Code plugins with APEX workflow, SOLID principles, and expert development agents for Next.js, Laravel, Swift, Tailwind CSS, and more",
-    "version": "1.38.6"
+    "version": "1.38.7"
   },
   "core": [
     {
@@ -131,7 +131,7 @@
       "name": "fuse-laravel",
       "source": "./plugins/laravel-expert",
       "description": "Expert Laravel 12 + PHP 8.5 with SOLID principles, Eloquent, Livewire, and comprehensive documentation",
-      "version": "1.1.2",
+      "version": "1.1.3",
       "author": {
         "name": "Fusengine",
         "url": "https://github.com/fusengine"
@@ -176,7 +176,7 @@
       "name": "fuse-nextjs",
       "source": "./plugins/nextjs-expert",
       "description": "Expert Next.js 16 + React 19 with App Router, Server Components, Prisma 7, Better Auth, TanStack Form, Zustand, shadcn/ui",
-      "version": "1.1.2",
+      "version": "1.1.3",
       "author": {
         "name": "Fusengine",
         "url": "https://github.com/fusengine"
@@ -216,7 +216,7 @@
       "name": "fuse-swift-apple-expert",
       "source": "./plugins/swift-apple-expert",
       "description": "Expert Swift 6.2 + SwiftUI for iOS 26, macOS 26, iPadOS 26, watchOS 26, visionOS 26, tvOS 26 with Liquid Glass, @Observable, actors, SwiftData inheritance",
-      "version": "1.1.2",
+      "version": "1.1.3",
       "author": {
         "name": "Fusengine",
         "url": "https://github.com/fusengine"
@@ -295,7 +295,7 @@
       "name": "fuse-tailwindcss",
       "source": "./plugins/tailwindcss",
       "description": "Expert Tailwind CSS v4.1 with CSS-first config, @theme, @utility, @variant, Oxide engine, OKLCH colors, container queries",
-      "version": "1.0.2",
+      "version": "1.0.3",
       "author": {
         "name": "Fusengine",
         "url": "https://github.com/fusengine"
@@ -341,7 +341,7 @@
       "name": "fuse-react",
       "source": "./plugins/react-expert",
       "description": "Expert React 19 with hooks, TanStack Router, TanStack Form, Zustand, Testing Library, shadcn/ui, and SOLID principles",
-      "version": "1.0.2",
+      "version": "1.0.3",
       "author": {
         "name": "Fusengine",
         "url": "https://github.com/fusengine"
@@ -381,7 +381,7 @@
       "name": "fuse-design",
       "source": "./plugins/design-expert",
       "description": "Expert UI/UX design with Anti-AI Slop system, 4-Pillar Framework (Typography, Colors, Motion, Backgrounds), Theme Presets (Brutalist, Solarpunk, Editorial, Cyberpunk, Luxury), shadcn/ui, 21st.dev, WCAG 2.2",
-      "version": "1.1.2",
+      "version": "1.1.3",
       "author": {
         "name": "Fusengine",
         "url": "https://github.com/fusengine"
@@ -471,7 +471,7 @@
       "name": "fuse-shadcn-ui",
       "source": "./plugins/shadcn-expert",
       "description": "Expert shadcn/ui with Radix UI and Base UI detection, component patterns, registries, theming, and migration",
-      "version": "1.0.3",
+      "version": "1.0.4",
       "author": {
         "name": "Fusengine",
         "url": "https://github.com/fusengine"
