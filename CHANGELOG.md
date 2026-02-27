@@ -1,5 +1,12 @@
 # Release Notes
 
+## [1.38.6] - 27-02-2026
+
+### Fixed
+- Silent hooks now output systemMessage for user visibility (fuse-ai-pilot 1.2.4)
+- Hook executor labels silent successful hooks as "plugin:script: ok"
+- Extract mergeJsonOutput to merge-utils.ts for SOLID compliance
+
 ## [1.38.5] - 26-02-2026
 
 ### Changed

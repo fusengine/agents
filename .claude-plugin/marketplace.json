@@ -7,7 +7,7 @@
   },
   "metadata": {
     "description": "Professional Claude Code plugins with APEX workflow, SOLID principles, and expert development agents for Next.js, Laravel, Swift, Tailwind CSS, and more",
-    "version": "1.38.5"
+    "version": "1.38.6"
   },
   "core": [
     {
@@ -28,7 +28,7 @@
       "name": "fuse-ai-pilot",
       "source": "./plugins/ai-pilot",
       "description": "AI Pilot workflow: APEX methodology (auto-detects Laravel/Next.js/React/Swift), sniper (7-phase code quality + DRY detection), research-expert, explore-codebase, seo-expert (SEO/GEO/Local SEO 2026)",
-      "version": "1.2.3",
+      "version": "1.2.4",
       "author": {
         "name": "Fusengine",
         "url": "https://github.com/fusengine"
