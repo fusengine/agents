@@ -1,5 +1,11 @@
 # Release Notes
 
+## [1.38.9] - 27-02-2026
+
+### Added
+- Mandatory git tag step (Step 7) in commit skill after version bump (fuse-commit-pro 1.2.6)
+- Retroactive tags v1.38.1 through v1.38.8 created and pushed
+
 ## [1.38.8] - 27-02-2026
 
 ### Added
