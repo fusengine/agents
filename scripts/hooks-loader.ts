@@ -40,6 +40,9 @@ async function main(): Promise<void> {
 	// Extract matching hooks
 	const hooks = extractHooks(plugins, hookType, toolName, notifType, agentType);
 
+	// No matching hooks → exit early
+	if (hooks.length === 0) process.exit(0);
+
 	// Execute hooks (pass rawInput or empty JSON)
 	const result = await executeHooks(hooks, rawInput || "{}");
 

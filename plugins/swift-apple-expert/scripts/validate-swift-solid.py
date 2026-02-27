@@ -10,6 +10,7 @@ sys.path.insert(0, os.path.join(os.path.expanduser("~"),
     "plugins", "_shared", "scripts"))
 try:
     from validate_solid_common import count_code_lines, deny_solid_violation
+    from hook_output import allow_pass
 except ImportError:
     sys.exit(0)
 
@@ -60,7 +61,7 @@ def main():
     if violations:
         deny_solid_violation(file_path, violations)
 
-    sys.exit(0)
+    allow_pass("validate-swift-solid", "SOLID ok")
 
 
 if __name__ == "__main__":

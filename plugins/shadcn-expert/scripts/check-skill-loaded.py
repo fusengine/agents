@@ -10,6 +10,7 @@ sys.path.insert(0, os.path.join(os.path.expanduser("~"),
     "plugins", "_shared", "scripts"))
 try:
     from check_skill_common import find_project_root, skill_was_consulted, deny_block
+    from hook_output import allow_pass
 except ImportError:
     sys.exit(0)
 
@@ -33,7 +34,7 @@ def main():
     project_root = find_project_root(os.path.dirname(file_path), "package.json", ".git")
 
     if skill_was_consulted("shadcn", session_id, project_root):
-        sys.exit(0)
+        allow_pass("check-shadcn-skill")
 
     plugins_dir = os.path.join(os.path.expanduser("~"),
         ".claude", "plugins", "marketplaces", "fusengine-plugins", "plugins")

@@ -2,8 +2,14 @@
 """validate-react-solid.py - PostToolUse hook: SOLID validation for React."""
 
 import json
+import os
 import re
 import sys
+
+sys.path.insert(0, os.path.join(os.path.expanduser("~"),
+    ".claude", "plugins", "marketplaces", "fusengine-plugins",
+    "plugins", "_shared", "scripts"))
+from hook_output import allow_pass
 
 
 def count_code_lines(content: str) -> int:
@@ -80,7 +86,7 @@ def main() -> None:
 
     if violations:
         deny_solid_violation(file_path, violations)
-    sys.exit(0)
+    allow_pass("validate-react-solid", "SOLID ok")
 
 
 if __name__ == "__main__":

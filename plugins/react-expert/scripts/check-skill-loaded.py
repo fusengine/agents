@@ -6,6 +6,11 @@ import os
 import re
 import sys
 
+sys.path.insert(0, os.path.join(os.path.expanduser("~"),
+    ".claude", "plugins", "marketplaces", "fusengine-plugins",
+    "plugins", "_shared", "scripts"))
+from hook_output import allow_pass
+
 NEXTJS_PATTERN = r"(use client|use server|NextRequest|NextResponse|from ['\"]next)"
 REACT_PATTERN = r"(useState|useEffect|useContext|useReducer|from ['\"]react)"
 
@@ -74,7 +79,7 @@ def main() -> None:
     session_id = data.get("session_id") or f"fallback-{os.getpid()}"
     project_root = find_project_root(os.path.dirname(file_path))
     if skill_was_consulted("react", session_id, project_root):
-        sys.exit(0)
+        allow_pass("check-skill-loaded")
 
     plugins = os.path.expanduser("~/.claude/plugins/marketplaces/fusengine-plugins/plugins")
     deny_block(

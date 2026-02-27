@@ -6,6 +6,11 @@ import os
 import re
 import sys
 
+sys.path.insert(0, os.path.join(os.path.expanduser("~"),
+    ".claude", "plugins", "marketplaces", "fusengine-plugins",
+    "plugins", "_shared", "scripts"))
+from hook_output import allow_pass
+
 
 def find_project_root(start_dir: str) -> str:
     """Find project root by walking up to find package.json or .git."""
@@ -74,7 +79,7 @@ def main() -> None:
     project_root = find_project_root(os.path.dirname(file_path))
 
     if skill_was_consulted("design", session_id, project_root):
-        sys.exit(0)
+        allow_pass("check-design-skill")
 
     plugins = os.path.expanduser(
         "~/.claude/plugins/marketplaces/fusengine-plugins/plugins"

@@ -2,8 +2,14 @@
 """validate-design.py - PostToolUse hook: validate design best practices."""
 
 import json
+import os
 import re
 import sys
+
+sys.path.insert(0, os.path.join(os.path.expanduser("~"),
+    ".claude", "plugins", "marketplaces", "fusengine-plugins",
+    "plugins", "_shared", "scripts"))
+from hook_output import post_pass
 
 
 def check_accessibility(content: str) -> list[str]:
@@ -73,7 +79,7 @@ def main() -> None:
             }
         }))
 
-    sys.exit(0)
+    post_pass("validate-design", "design ok")
 
 
 if __name__ == "__main__":

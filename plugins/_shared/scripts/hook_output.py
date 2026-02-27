@@ -33,3 +33,22 @@ def emit_post_tool(context):
         "hookEventName": "PostToolUse",
         "additionalContext": context,
     }}))
+
+
+def allow_pass(script_name, detail="pass"):
+    """Output PreToolUse allow with systemMessage for user visibility."""
+    print(json.dumps({
+        "systemMessage": f"{script_name}: {detail}",
+        "hookSpecificOutput": {
+            "hookEventName": "PreToolUse",
+            "permissionDecision": "allow",
+        },
+    }))
+
+
+def post_pass(script_name, detail="ok"):
+    """Output PostToolUse success with systemMessage for user visibility."""
+    print(json.dumps({
+        "systemMessage": f"{script_name}: {detail}",
+        "hookSpecificOutput": {"hookEventName": "PostToolUse"},
+    }))
