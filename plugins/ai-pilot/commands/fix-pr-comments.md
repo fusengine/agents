@@ -1,5 +1,6 @@
 ---
 description: Systematically resolve Pull Request review comments using gh CLI to fetch comments and apply requested changes.
+disable-model-invocation: true
 ---
 
 # Fix PR Comments

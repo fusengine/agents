@@ -1,5 +1,6 @@
 ---
 description: Execute GitHub issues using full EPCT workflow (Explore-Plan-Code-Test). Converts issue requirements into completed PR.
+disable-model-invocation: true
 ---
 
 # Run GitHub Issue Tasks

@@ -46,29 +46,33 @@ bun --cwd $env:USERPROFILE\.claude\plugins\marketplaces\fusengine-plugins\plugin
 
 ## Features
 
-- **APEX Workflow** - Systematic Analyze → Plan → Execute → eLicit → eXamine methodology
+- **APEX Workflow** - Systematic Brainstorm → Analyze → Plan → Execute (TDD) → eLicit → Verify → eXamine methodology
 - **[Agent Teams](docs/workflow/agent-teams.md) (beta)** - Parallel delegation with file ownership, max 4 teammates, lead-as-coordinator
 - **Changelog Watcher** - Track Claude Code updates, detect breaking changes, community pulse via Exa
 - **18 Expert Agents** - Next.js, Laravel, React, Swift, Tailwind, Design, shadcn/ui, Security, Changelog, and more
-- **100 Skills** - Framework-specific knowledge modules
+- **111 Skills** - Framework-specific knowledge modules including brainstorming, TDD, and verification
+- **Brainstorming** - Design-first questioning before implementation (inspired by Superpowers)
+- **TDD Enforcement** - RED-GREEN-REFACTOR cycle integrated into Execute phase
+- **Verification** - Functional resolution check before sniper quality validation
 - **SOLID Enforcement** - Automatic file size limits, interface separation, quality gates
 - **DRY Detection** - Code duplication analysis via jscpd (150+ languages) with per-language thresholds
 - **Security Audit** - OWASP Top 10 scanning, CVE research, dependency audit, secrets detection, auth patterns
 - **React Effects Audit** - 9 useEffect anti-pattern detection rules for React/Next.js projects
 - **12 Lifecycle Hooks** - All Claude Code hook types covered across 9 plugins
-- **Smart Commits** - Conventional commits with auto-detection
+- **Smart Commits** - Conventional commits with auto-detection, `disable-model-invocation` on side-effect commands
 - **[4-Level Cache System](docs/reference/cache-system.md)** - Explore, Documentation, Lessons, and Tests caches with analytics for 60-75% token savings
 
 ## Stats
 
 | Category | Count |
 |----------|-------|
-| Plugins | 13 |
+| Plugins | 17 |
 | Agents | 18 |
-| Skills | 100 |
-| Commands | 26 |
+| Skills | 111 |
+| Commands | 35 |
 | Hook Types | 12 |
-| Cache Scripts | 10 |
+| Hooks Total | 82 |
+| MCP Servers | 10 |
 
 ## Documentation
 

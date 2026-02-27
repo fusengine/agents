@@ -1,6 +1,7 @@
 ---
 description: Launch a comprehensive security audit on the current project. Detects vulnerabilities, scans dependencies, checks OWASP Top 10, and generates a structured report.
 argument-hint: "[--full] [--deps-only] [--headers] [--auth] [path]"
+disable-model-invocation: true
 ---
 
 # Security Scan

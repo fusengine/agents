@@ -69,18 +69,28 @@ This creates:
 │                     APEX WORKFLOW                               │
 ├─────────────────────────────────────────────────────────────────┤
 │  00-init-branch     → Create feature branch                     │
+│  00.5-brainstorm    → Design-first questioning (B) ← NEW        │
 │  01-analyze-code    → Understand codebase (A)                   │
 │  02-features-plan   → Plan implementation (P)                   │
-│  03-execution       → Write code (E)                            │
-│  03.5-elicit        → Expert self-review (L) ← NEW              │
+│  03-execution       → Write code with TDD (E) ← UPDATED        │
+│  03.5-elicit        → Expert self-review (L)                    │
+│  03.7-verification  → Functional resolution check (V) ← NEW    │
 │  04-validation      → Verify quality (X)                        │
 │  05-review          → Self-review                               │
 │  06-fix-issue       → Handle issues                             │
-│  07-add-test        → Write tests                               │
+│  07-add-test        → Write tests (TDD cycle)                   │
 │  08-check-test      → Run tests                                 │
 │  09-create-pr       → Create Pull Request                       │
 └─────────────────────────────────────────────────────────────────┘
 ```
+
+### Skills Integration
+
+| Phase | Skill | Invocation |
+|-------|-------|------------|
+| 00.5 | `brainstorming` | Questions → alternatives → design doc → approval |
+| 03 | `tdd` | RED (test) → GREEN (code) → REFACTOR cycle |
+| 03.7 | `verification` | Re-read request → check criteria → confirm resolution |
 
 ---
 
@@ -108,13 +118,13 @@ This creates:
 
 ```text
 1. 00-init-branch     → git checkout -b feature/xxx
-2. 01-analyze-code    → explore-codebase + research-expert
-3. 02-features-plan   → TaskCreate task breakdown
-4. 03-execution       → Implement (files <100 lines)
-5. 03.5-elicit        → Expert self-review (75 techniques) ← NEW
-6. 04-validation      → sniper agent
-7. 07-add-test        → Write tests
-8. 08-check-test      → Run tests
+2. 00.5-brainstorm    → Ask questions, propose alternatives, get design approval
+3. 01-analyze-code    → explore-codebase + research-expert
+4. 02-features-plan   → TaskCreate task breakdown
+5. 03-execution       → TDD: write test FIRST, then implement (files <100 lines)
+6. 03.5-elicit        → Expert self-review (elicitation techniques)
+7. 03.7-verification  → Verify functional resolution against original request
+8. 04-validation      → sniper agent (code quality)
 9. 05-review          → Self-review
 10. 09-create-pr      → gh pr create
 ```
@@ -124,11 +134,12 @@ This creates:
 ```text
 1. 00-init-branch     → git checkout -b fix/xxx
 2. 01-analyze-code    → Understand bug context
-3. 07-add-test        → Write failing test FIRST
-4. 03-execution       → Fix the bug
-5. 08-check-test      → Verify test passes
-6. 04-validation      → sniper agent
-7. 09-create-pr       → gh pr create
+3. 07-add-test        → TDD: write failing test FIRST (RED)
+4. 03-execution       → Fix the bug (GREEN)
+5. 08-check-test      → Verify test passes + no regressions
+6. 03.7-verification  → Verify original bug is functionally resolved
+7. 04-validation      → sniper agent
+8. 09-create-pr       → gh pr create
 ```
 
 ### Hotfix Flow
@@ -136,9 +147,10 @@ This creates:
 ```text
 1. 00-init-branch     → git checkout -b hotfix/xxx
 2. 03-execution       → Minimal fix only
-3. 04-validation      → sniper agent
-4. 08-check-test      → Run tests
-5. 09-create-pr       → Urgent merge
+3. 03.7-verification  → Verify fix resolves the issue
+4. 04-validation      → sniper agent
+5. 08-check-test      → Run tests
+6. 09-create-pr       → Urgent merge
 ```
 
 ---
@@ -200,16 +212,35 @@ ALWAYS use TaskCreate:
 4. Map dependencies (addBlockedBy)
 ```
 
-### E - Execute
+### E - Execute (with TDD)
 
 ```text
-FOLLOW plan strictly:
+FOLLOW plan strictly with TDD cycle:
 
 1. Create interfaces FIRST
-2. Monitor file sizes
-3. Write JSDoc/comments
-4. Atomic commits
+2. Write failing test (RED) → verify it fails
+3. Write minimal code (GREEN) → verify it passes
+4. Refactor → keep tests green
+5. Monitor file sizes (<100 lines)
+6. Write JSDoc/comments
+7. Atomic commits per task
 ```
+
+See `tdd` skill for detailed RED-GREEN-REFACTOR rules.
+
+### V - Verify (Functional Resolution)
+
+```text
+BEFORE sniper, verify functional correctness:
+
+1. Re-read original request
+2. List all acceptance criteria
+3. Verify each with evidence
+4. Check for regressions
+5. Confirm: "Problem is RESOLVED"
+```
+
+See `verification` skill for detailed checklist.
 
 ### X - eXamine
 
@@ -333,6 +364,12 @@ refactor(api): extract fetch utilities
                       │
                       ▼
               ┌───────────────┐
+              │ 00.5-brain-   │ ← brainstorming skill (NEW)
+              │ storm         │   questions → design → approval
+              └───────┬───────┘
+                      │
+                      ▼
+              ┌───────────────┐
               │ 01-analyze    │ ← explore + research
               └───────┬───────┘
                       │
@@ -343,26 +380,22 @@ refactor(api): extract fetch utilities
                       │
                       ▼
               ┌───────────────┐
-              │ 03-execute    │ ← Write code
+              │ 03-execute    │ ← TDD: test first (RED→GREEN)
               └───────┬───────┘
                       │
                       ▼
               ┌───────────────┐
-              │ 04-validate   │ ← sniper
+              │ 03.5-elicit   │ ← expert self-review
               └───────┬───────┘
                       │
-              ┌───────┴───────┐
-              │               │
-              ▼               ▼
-        ┌──────────┐   ┌──────────┐
-        │ 06-fix   │   │ 07-test  │
-        └────┬─────┘   └────┬─────┘
-             │              │
-             └──────┬───────┘
-                    │
-                    ▼
+                      ▼
               ┌───────────────┐
-              │ 08-check-test │
+              │ 03.7-verify   │ ← verification skill (NEW)
+              └───────┬───────┘   functional resolution check
+                      │
+                      ▼
+              ┌───────────────┐
+              │ 04-validate   │ ← sniper (code quality)
               └───────┬───────┘
                       │
                       ▼

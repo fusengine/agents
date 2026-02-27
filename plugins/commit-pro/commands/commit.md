@@ -2,6 +2,7 @@
 description: Smart conventional commit with security validation and auto-detection. Use for git commit, commit changes, save work, stage and commit.
 argument-hint: [message] | [type scope message] | (empty for auto-detection)
 allowed-tools: Bash(git status:*), Bash(git diff:*), Bash(git add:*), Bash(git commit:*), Bash(git log:*)
+disable-model-invocation: true
 ---
 
 # Smart Conventional Commit
