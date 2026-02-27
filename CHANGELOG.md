@@ -1,5 +1,20 @@
 # Release Notes
 
+## [1.38.11] - 27-02-2026
+
+### Added
+- Online doc enforcement: block Write/Edit if Context7/Exa not consulted once per session (ai-pilot 1.2.6)
+- Marketplace protection: deny Write/Edit to ~/.claude/plugins/(marketplaces|cache) (ai-pilot 1.2.6)
+- Visual feedback: systemMessage on doc consultation tracking (ai-pilot 1.2.6)
+
+### Fixed
+- Silent return when no apex/task.json instead of spamming systemMessage (ai-pilot 1.2.6)
+- Exclude interfaces/ directories from false positive SOLID violations (nextjs 1.1.5)
+
+### Changed
+- Enable model invocation on all 18 commands/skills (ai-pilot 1.2.6, commit-pro 1.2.7, security 1.0.3)
+- Extract findProjectRoot to fs-helpers.ts, doc checks to doc-helpers.ts (ai-pilot 1.2.6)
+
 ## [1.38.10] - 27-02-2026
 
 ### Fixed

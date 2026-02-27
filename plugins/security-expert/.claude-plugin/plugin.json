@@ -1,6 +1,6 @@
 {
   "name": "fuse-security",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Security vulnerability detection and remediation: OWASP Top 10, SAST scanning, CVE research, dependency audit, secrets detection",
   "author": {
     "name": "Fusengine",
@@ -10,5 +10,13 @@
   "homepage": "https://github.com/fusengine/agents",
   "repository": "https://github.com/fusengine/agents",
   "license": "MIT",
-  "keywords": ["security", "owasp", "cve", "sast", "vulnerability", "audit", "secrets"]
+  "keywords": [
+    "security",
+    "owasp",
+    "cve",
+    "sast",
+    "vulnerability",
+    "audit",
+    "secrets"
+  ]
 }

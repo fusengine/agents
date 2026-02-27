@@ -1,6 +1,6 @@
 {
   "name": "fuse-commit-pro",
-  "version": "1.2.6",
+  "version": "1.2.7",
   "description": "Professional git commits with Conventional Commits, auto-detection, and security validation",
   "author": {
     "name": "Fusengine",
@@ -10,5 +10,11 @@
   "homepage": "https://github.com/fusengine/agents",
   "repository": "https://github.com/fusengine/agents",
   "license": "MIT",
-  "keywords": ["git", "commit", "conventional-commits", "security", "automation"]
+  "keywords": [
+    "git",
+    "commit",
+    "conventional-commits",
+    "security",
+    "automation"
+  ]
 }

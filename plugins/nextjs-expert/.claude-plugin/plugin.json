@@ -1,6 +1,6 @@
 {
   "name": "fuse-nextjs",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "description": "Expert Next.js 16 + React 19 with App Router, Server Components, Prisma 7, and Better Auth",
   "author": {
     "name": "Fusengine",
@@ -10,5 +10,12 @@
   "homepage": "https://github.com/fusengine/agents",
   "repository": "https://github.com/fusengine/agents",
   "license": "MIT",
-  "keywords": ["nextjs", "react", "prisma", "better-auth", "app-router", "server-components"]
+  "keywords": [
+    "nextjs",
+    "react",
+    "prisma",
+    "better-auth",
+    "app-router",
+    "server-components"
+  ]
 }

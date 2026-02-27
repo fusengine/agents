@@ -7,7 +7,7 @@
   },
   "metadata": {
     "description": "Professional Claude Code plugins with APEX workflow, SOLID principles, and expert development agents for Next.js, Laravel, Swift, Tailwind CSS, and more",
-    "version": "1.38.10"
+    "version": "1.38.11"
   },
   "core": [
     {
@@ -28,7 +28,7 @@
       "name": "fuse-ai-pilot",
       "source": "./plugins/ai-pilot",
       "description": "AI Pilot workflow: APEX methodology (auto-detects Laravel/Next.js/React/Swift), sniper (7-phase code quality + DRY detection), research-expert, explore-codebase, seo-expert (SEO/GEO/Local SEO 2026)",
-      "version": "1.2.5",
+      "version": "1.2.6",
       "author": {
         "name": "Fusengine",
         "url": "https://github.com/fusengine"
@@ -94,7 +94,7 @@
       "name": "fuse-commit-pro",
       "source": "./plugins/commit-pro",
       "description": "Professional git commits with Conventional Commits, auto-detection, and security validation",
-      "version": "1.2.6",
+      "version": "1.2.7",
       "author": {
         "name": "Fusengine",
         "url": "https://github.com/fusengine"
@@ -179,7 +179,7 @@
       "name": "fuse-nextjs",
       "source": "./plugins/nextjs-expert",
       "description": "Expert Next.js 16 + React 19 with App Router, Server Components, Prisma 7, Better Auth, TanStack Form, Zustand, shadcn/ui",
-      "version": "1.1.4",
+      "version": "1.1.5",
       "author": {
         "name": "Fusengine",
         "url": "https://github.com/fusengine"
@@ -510,7 +510,7 @@
       "name": "fuse-security",
       "source": "./plugins/security-expert",
       "description": "Security vulnerability detection and remediation: OWASP Top 10 2025, SAST scanning, CVE research (NVD, OSV.dev), dependency audit, secrets detection, security headers, auth patterns audit",
-      "version": "1.0.2",
+      "version": "1.0.3",
       "author": {
         "name": "Fusengine",
         "url": "https://github.com/fusengine"
