@@ -1,5 +1,17 @@
 # Release Notes
 
+## [1.38.13] - 01-03-2026
+
+### Added
+- Smart domain-skill enforcement: Phase 2 content-based detection with 90+ regex patterns (nextjs 1.1.6)
+- Shared shadcn_patterns.py covering all 52 shadcn/ui components with is_shadcn_project() gate
+- nextjs_skill_triggers.py: 7 domain skills (better-auth, prisma-7, tanstack-form, shadcn, zustand, i18n)
+
+### Changed
+- Tracking path migrated from /tmp/ to ~/.claude/fusengine-cache/skill-tracking/ across all plugins (nextjs 1.1.6, react 1.0.5, laravel 1.1.5, design 1.1.4)
+- check-nextjs-skill.py rewritten: Phase 1 (base) + Phase 2 (smart domain detection)
+- All check/track scripts now import TRACKING_DIR from shared tracking.py (DRY)
+
 ## [1.38.12] - 28-02-2026
 
 ### Fixed
