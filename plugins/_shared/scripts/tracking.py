@@ -7,7 +7,9 @@ Importable functions (no main).
 import os
 from datetime import datetime, timezone
 
-TRACKING_DIR = "/tmp/claude-skill-tracking"
+TRACKING_DIR = os.path.join(
+    os.path.expanduser("~"), ".claude", "fusengine-cache", "skill-tracking"
+)
 
 
 def _utc_now() -> str:

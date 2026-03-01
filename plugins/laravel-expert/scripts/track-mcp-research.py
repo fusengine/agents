@@ -28,8 +28,9 @@ def detect_framework(query: str) -> str:
 
 
 def track_mcp_research(source: str, tool: str, query: str, session_id: str) -> None:
-    """Write tracking entry to /tmp/claude-skill-tracking/."""
-    tracking_dir = "/tmp/claude-skill-tracking"
+    """Write tracking entry to TRACKING_DIR."""
+    from tracking import TRACKING_DIR
+    tracking_dir = TRACKING_DIR
     os.makedirs(tracking_dir, exist_ok=True)
     timestamp = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
     framework = detect_framework(query)

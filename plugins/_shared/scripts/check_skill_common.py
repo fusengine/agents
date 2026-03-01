@@ -23,7 +23,8 @@ def find_project_root(start_dir: str, *markers: str) -> str:
 def skill_was_consulted(framework: str, session_id: str,
                         project_root: str) -> bool:
     """Check if a skill was consulted (session tracking or APEX)."""
-    tracking = f"/tmp/claude-skill-tracking/{framework}-{session_id}"
+    from tracking import TRACKING_DIR
+    tracking = os.path.join(TRACKING_DIR, f"{framework}-{session_id}")
     if os.path.isfile(tracking):
         return True
     task_file = os.path.join(project_root, ".claude", "apex", "task.json")
