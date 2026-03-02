@@ -12,8 +12,13 @@ sys.path.insert(0, os.path.dirname(__file__))
 from track_doc_helpers import acquire_state_lock, detect_framework, extract_tool_info
 
 def _update_doc_sessions(fw_auth, sid, source, tool):
-    """Update doc_sessions and source for online doc consultation."""
-    fw_auth["source"] = f"{source}:{tool}"
+    """Update doc_sessions and sources for online doc consultation."""
+    sources = fw_auth.get("sources", [])
+    entry = f"{source}:{tool}"
+    if entry not in sources:
+        sources.append(entry)
+    fw_auth["sources"] = sources
+    fw_auth["source"] = entry  # Keep legacy compat
     doc_sessions = fw_auth.get("doc_sessions", [])
     if sid and sid not in doc_sessions:
         doc_sessions.append(sid)

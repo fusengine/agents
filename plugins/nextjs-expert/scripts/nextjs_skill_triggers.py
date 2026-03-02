@@ -5,9 +5,9 @@ Detects which skills are required based on code content patterns,
 and verifies if specific skills were consulted via tracking files.
 """
 
-import os
 import re
 
+from check_skill_common import specific_skill_consulted as _check
 from shadcn_patterns import SHADCN_PATTERNS
 
 # Domain-specific skill triggers: code patterns -> required skill
@@ -53,17 +53,8 @@ SKILL_TRIGGERS = {
 
 
 def specific_skill_consulted(skill_name: str, session_id: str) -> bool:
-    """Check if a specific skill was read by scanning tracking file contents."""
-    from tracking import TRACKING_DIR
-    tracking = os.path.join(TRACKING_DIR, f"nextjs-{session_id}")
-    if not os.path.isfile(tracking):
-        return False
-    try:
-        with open(tracking, encoding="utf-8") as f:
-            content = f.read()
-        return f"skills/{skill_name}/" in content
-    except OSError:
-        return False
+    """Check if a specific Next.js skill was read."""
+    return _check("nextjs", skill_name, session_id)
 
 
 def detect_required_skills(content: str) -> list:

@@ -7,6 +7,10 @@ import re
 import sys
 from datetime import datetime, timezone
 
+sys.path.insert(0, os.path.join(os.path.expanduser("~"),
+    ".claude", "plugins", "marketplaces", "fusengine-plugins",
+    "plugins", "_shared", "scripts"))
+
 
 _FRAMEWORK_MAP = [
     (["react"], "react"),

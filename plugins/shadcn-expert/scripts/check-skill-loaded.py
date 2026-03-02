@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
-"""PreToolUse hook - Block shadcn edits if skill not consulted."""
+"""check-skill-loaded.py - PreToolUse hook for shadcn skill enforcement.
+
+Phase 1: Base shadcn skill check (shadcn-detection or shadcn-components).
+Phase 2: Domain-specific skill check via shadcn_skill_triggers.
+"""
+
 import json
 import os
 import re
@@ -8,20 +13,26 @@ import sys
 sys.path.insert(0, os.path.join(os.path.expanduser("~"),
     ".claude", "plugins", "marketplaces", "fusengine-plugins",
     "plugins", "_shared", "scripts"))
-try:
-    from check_skill_common import find_project_root, skill_was_consulted, deny_block
-    from hook_output import allow_pass
-except ImportError:
-    sys.exit(0)
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from check_skill_common import (
+    deny_block, find_project_root, mcp_research_done, skill_was_consulted)
+from hook_output import allow_pass
+from shadcn_skill_triggers import detect_required_skills, specific_skill_consulted
+
+PLUGINS_DIR = os.path.expanduser(
+    "~/.claude/plugins/marketplaces/fusengine-plugins/plugins")
 
 
-def main():
-    """Check shadcn skill was consulted before UI component edits."""
-    data = json.load(sys.stdin)
-    tool_name = data.get("tool_name", "")
-    file_path = data.get("tool_input", {}).get("file_path", "")
+def main() -> None:
+    """Main entry point."""
+    try:
+        data = json.load(sys.stdin)
+    except (json.JSONDecodeError, ValueError):
+        sys.exit(0)
 
-    if tool_name not in ("Write", "Edit"):
+    tool_input = data.get("tool_input") or {}
+    file_path = tool_input.get("file_path", "")
+    if data.get("tool_name") not in ("Write", "Edit"):
         sys.exit(0)
     if not re.search(r"\.(tsx|jsx|css|scss|json)$", file_path):
         sys.exit(0)
@@ -30,21 +41,39 @@ def main():
     if not re.search(r"(components|ui|shadcn|components\.json)", file_path):
         sys.exit(0)
 
+    content = tool_input.get("content") or tool_input.get("new_string") or ""
     session_id = data.get("session_id") or f"fallback-{os.getpid()}"
-    project_root = find_project_root(os.path.dirname(file_path), "package.json", ".git")
+    project_root = find_project_root(
+        os.path.dirname(file_path), "package.json", ".git")
 
-    if skill_was_consulted("shadcn", session_id, project_root):
-        allow_pass("check-shadcn-skill")
+    # Phase 1: Base shadcn skill
+    if not skill_was_consulted("shadcn", session_id, project_root):
+        deny_block(
+            "BLOCKED: shadcn skill not consulted. READ ONE: "
+            f"1) {PLUGINS_DIR}/shadcn-expert/skills/shadcn-detection/SKILL.md"
+            f" | 2) {PLUGINS_DIR}/shadcn-expert/skills/shadcn-components/SKILL.md"
+            " | 3) Use mcp__shadcn__search_items_in_registries. After reading, retry.")
 
-    plugins_dir = os.path.join(os.path.expanduser("~"),
-        ".claude", "plugins", "marketplaces", "fusengine-plugins", "plugins")
-    msg = (
-        "BLOCKED: shadcn skill not consulted. READ ONE: "
-        f"1) {plugins_dir}/shadcn-expert/skills/shadcn-detection/SKILL.md | "
-        f"2) {plugins_dir}/shadcn-expert/skills/shadcn-components/SKILL.md | "
-        "3) Use mcp__shadcn__search_items_in_registries. After reading, retry."
-    )
-    deny_block(msg)
+    # Phase 2: Domain skills (component/UI/config files)
+    required = detect_required_skills(content)
+    missing = [s for s in required
+               if not specific_skill_consulted(s, session_id)]
+    if missing:
+        paths = " | ".join(
+            f"{PLUGINS_DIR}/shadcn-expert/skills/{s}/SKILL.md"
+            for s in missing)
+        deny_block(f"BLOCKED: Code uses {', '.join(missing)} but "
+                   f"skill(s) not consulted. READ: {paths}")
+
+    # Phase 3: MCP research (Context7 AND Exa must be consulted)
+    if not mcp_research_done(session_id):
+        deny_block(
+            "BLOCKED: No MCP research done. Use BOTH: "
+            "1) mcp__context7__query-docs AND "
+            "2) mcp__exa__web_search_exa before writing code.")
+
+    allow_pass("check-shadcn-skill",
+               f"pass (domain: {required or 'base'})")
 
 
 if __name__ == "__main__":

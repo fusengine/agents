@@ -42,6 +42,35 @@ def skill_was_consulted(framework: str, session_id: str,
     return False
 
 
+def specific_skill_consulted(framework: str, skill_name: str,
+                             session_id: str) -> bool:
+    """Check if a specific skill was read by scanning tracking file contents."""
+    from tracking import TRACKING_DIR
+    tracking = os.path.join(TRACKING_DIR, f"{framework}-{session_id}")
+    if not os.path.isfile(tracking):
+        return False
+    try:
+        with open(tracking, encoding="utf-8") as f:
+            content = f.read()
+        return f"skills/{skill_name}/" in content
+    except OSError:
+        return False
+
+
+def mcp_research_done(session_id: str) -> bool:
+    """Check if MCP research (Context7/Exa) was done in this session."""
+    from tracking import TRACKING_DIR
+    generic = os.path.join(TRACKING_DIR, f"generic-{session_id}")
+    if not os.path.isfile(generic):
+        return False
+    try:
+        with open(generic, encoding="utf-8") as f:
+            content = f.read()
+        return "context7:" in content and "exa:" in content
+    except OSError:
+        return False
+
+
 def deny_block(reason: str) -> None:
     """Output hookSpecificOutput deny block (PreToolUse) and exit."""
     print(json.dumps({

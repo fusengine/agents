@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
-"""check-skill-loaded.py - PreToolUse hook: block React edits if skill not consulted."""
+"""check-skill-loaded.py - PreToolUse hook for React skill enforcement.
+
+Phase 1: Base React skill check (solid-react or react-19).
+Phase 2: Domain-specific skill check via react_skill_triggers.
+"""
 
 import json
 import os
@@ -9,50 +13,17 @@ import sys
 sys.path.insert(0, os.path.join(os.path.expanduser("~"),
     ".claude", "plugins", "marketplaces", "fusengine-plugins",
     "plugins", "_shared", "scripts"))
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from check_skill_common import (
+    deny_block, find_project_root, mcp_research_done, skill_was_consulted)
 from hook_output import allow_pass
+from react_skill_triggers import detect_required_skills, specific_skill_consulted
+from shadcn_patterns import is_shadcn_project
 
 NEXTJS_PATTERN = r"(use client|use server|NextRequest|NextResponse|from ['\"]next)"
 REACT_PATTERN = r"(useState|useEffect|useContext|useReducer|from ['\"]react)"
-
-
-def find_project_root(start_dir: str) -> str:
-    """Find project root by walking up to find package.json or .git."""
-    d = start_dir
-    while d and d != "/":
-        for marker in ("package.json", ".git"):
-            if os.path.exists(os.path.join(d, marker)):
-                return d
-        d = os.path.dirname(d)
-    return os.getcwd()
-
-
-def skill_was_consulted(framework: str, session_id: str, project_root: str) -> bool:
-    """Check if skill was consulted via tracking file or APEX task.json."""
-    from tracking import TRACKING_DIR
-    tracking = os.path.join(TRACKING_DIR, f"{framework}-{session_id}")
-    if os.path.isfile(tracking):
-        return True
-    task_file = os.path.join(project_root, ".claude", "apex", "task.json")
-    if not os.path.isfile(task_file):
-        return False
-    try:
-        with open(task_file, encoding="utf-8") as f:
-            data = json.load(f)
-        tid = str(data.get("current_task", "1"))
-        doc = data.get("tasks", {}).get(tid, {}).get("doc_consulted", {}).get(framework, {})
-        return isinstance(doc, dict) and doc.get("consulted", False)
-    except (json.JSONDecodeError, OSError):
-        return False
-
-
-def deny_block(reason: str) -> None:
-    """Output deny decision and exit."""
-    print(json.dumps({"hookSpecificOutput": {
-        "hookEventName": "PreToolUse",
-        "permissionDecision": "deny",
-        "permissionDecisionReason": reason,
-    }}))
-    sys.exit(0)
+PLUGINS_DIR = os.path.expanduser(
+    "~/.claude/plugins/marketplaces/fusengine-plugins/plugins")
 
 
 def main() -> None:
@@ -74,21 +45,42 @@ def main() -> None:
     content = tool_input.get("content") or tool_input.get("new_string") or ""
     if re.search(NEXTJS_PATTERN, content):
         sys.exit(0)
-    if not re.search(REACT_PATTERN, content):
-        sys.exit(0)
 
     session_id = data.get("session_id") or f"fallback-{os.getpid()}"
-    project_root = find_project_root(os.path.dirname(file_path))
-    if skill_was_consulted("react", session_id, project_root):
-        allow_pass("check-skill-loaded")
+    project_root = find_project_root(
+        os.path.dirname(file_path), "package.json", ".git")
 
-    plugins = os.path.expanduser("~/.claude/plugins/marketplaces/fusengine-plugins/plugins")
-    deny_block(
-        "BLOCKED: React skill not consulted. READ ONE: "
-        f"1) {plugins}/react-expert/skills/solid-react/SKILL.md | "
-        f"2) {plugins}/react-expert/skills/react-19/SKILL.md | "
-        "3) Use mcp__context7__query-docs (topic: react). After reading, retry."
-    )
+    # Phase 1: Base React skill (only for files with React patterns)
+    if re.search(REACT_PATTERN, content):
+        if not skill_was_consulted("react", session_id, project_root):
+            deny_block(
+                "BLOCKED: React skill not consulted. READ ONE: "
+                f"1) {PLUGINS_DIR}/react-expert/skills/solid-react/SKILL.md"
+                f" | 2) {PLUGINS_DIR}/react-expert/skills/react-19/SKILL.md"
+                " | 3) Use mcp__context7__query-docs. After reading, retry.")
+
+    # Phase 2: Domain skills (ALL .ts/.tsx)
+    required = detect_required_skills(content)
+    if not is_shadcn_project(project_root):
+        required = [s for s in required if s != "react-shadcn"]
+    missing = [s for s in required
+               if not specific_skill_consulted(s, session_id)]
+    if missing:
+        paths = " | ".join(
+            f"{PLUGINS_DIR}/react-expert/skills/{s}/SKILL.md"
+            for s in missing)
+        deny_block(f"BLOCKED: Code uses {', '.join(missing)} but "
+                   f"skill(s) not consulted. READ: {paths}")
+
+    # Phase 3: MCP research (Context7 AND Exa must be consulted)
+    if not mcp_research_done(session_id):
+        deny_block(
+            "BLOCKED: No MCP research done. Use BOTH: "
+            "1) mcp__context7__query-docs AND "
+            "2) mcp__exa__web_search_exa before writing code.")
+
+    allow_pass("check-skill-loaded",
+               f"pass (domain: {required or 'base'})")
 
 
 if __name__ == "__main__":

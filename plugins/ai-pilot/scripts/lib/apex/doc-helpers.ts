@@ -4,7 +4,7 @@
  */
 
 /** Authorization entry from APEX state (supports legacy session + new sessions[]) */
-export type AuthEntry = { source?: string; sessions?: string[]; session?: string; doc_sessions?: string[] };
+export type AuthEntry = { source?: string; sources?: string[]; sessions?: string[]; session?: string; doc_sessions?: string[] };
 
 /**
  * Resolve sessions array from auth entry, with legacy fallback.
@@ -16,8 +16,8 @@ export function resolveSessions(auth: AuthEntry | undefined): string[] {
 }
 
 /**
- * Check if online documentation was consulted (Context7 or Exa) in this session.
- * Checks ALL frameworks — the goal is "did you consult any online doc?", not framework-specific.
+ * Check if online documentation was consulted (Context7 AND Exa) in this session.
+ * Both sources must be consulted — not just one.
  * @param authorizations - All framework authorizations from APEX state
  * @param sessionId - Current session identifier
  */
@@ -26,9 +26,12 @@ export function isDocConsulted(
   sessionId: string,
 ): boolean {
   if (!authorizations) return false;
-  return Object.values(authorizations).some(
-    (auth) => auth.doc_sessions?.includes(sessionId) && /context7|exa/.test(auth.source ?? ""),
-  );
+  const allSources = Object.values(authorizations)
+    .filter((a) => a.doc_sessions?.includes(sessionId))
+    .flatMap((a) => a.sources ?? [a.source ?? ""]);
+  const hasContext7 = allSources.some((s) => /context7/.test(s));
+  const hasExa = allSources.some((s) => /exa/.test(s));
+  return hasContext7 && hasExa;
 }
 
 /**
@@ -38,7 +41,7 @@ export function isDocConsulted(
 export function formatDocDeny(framework: string): string {
   return [
     `APEX: Online documentation not consulted for ${framework}!`,
-    "Consult doc first via Context7 (mcp__context7__query-docs) or Exa (mcp__exa__web_search_exa).",
-    "This check is once per session — after consulting, Write/Edit will be allowed.",
+    "Use BOTH: 1) mcp__context7__query-docs AND 2) mcp__exa__web_search_exa.",
+    "This check is once per session — after consulting both, Write/Edit will be allowed.",
   ].join("\n");
 }
