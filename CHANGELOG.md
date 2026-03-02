@@ -1,5 +1,10 @@
 # Release Notes
 
+## [1.38.16] - 03-03-2026
+
+### Changed
+- refactor(commit-pro): replace marketplace-bump with universal post-commit skill (fuse-commit-pro 1.2.8)
+
 ## [1.38.15] - 02-03-2026
 
 ### Fixed
