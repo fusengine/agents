@@ -1,5 +1,22 @@
 # Release Notes
 
+## [1.38.14] - 02-03-2026
+
+### Added
+- 3-phase skill enforcement across all 7 plugins: Phase 1 (base skill), Phase 2 (smart domain detection), Phase 3 (MCP research gate)
+- 7 trigger files with pattern-based code analysis: nextjs, react, laravel, design, shadcn, swift, tailwind
+- Shared mcp_research_done() in check_skill_common.py enforces Context7 AND Exa before Write/Edit
+- laravel_patterns.py: 13 pattern groups for Laravel domain detection
+
+### Changed
+- doc-helpers.ts: isDocConsulted now requires BOTH Context7 AND Exa (was OR) (ai-pilot 1.2.8)
+- track-doc-consultation.py: accumulate sources[] array instead of overwriting single source field (ai-pilot 1.2.8)
+- All 7 check scripts rewritten with Phase 2 + Phase 3 enforcement (nextjs 1.1.7, react 1.0.6, laravel 1.1.6, design 1.1.5, shadcn 1.0.5, swift 1.1.5, tailwind 1.0.5)
+- AuthEntry type extended with sources[] for multi-source tracking (ai-pilot 1.2.8)
+
+### Fixed
+- sources[] accumulation bug: Context7 then Exa no longer overwrites first source in APEX state (ai-pilot 1.2.8)
+
 ## [1.38.13] - 01-03-2026
 
 ### Added
