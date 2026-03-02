@@ -99,25 +99,9 @@ server/routes/user.ts → user
 
 > MINOR/MAJOR bumps are **manual user decisions**, never automatic.
 
-## Plugin Repo Version Detection
+## Post-Commit Actions
 
-When the repo contains `.claude-plugin/marketplace.json`, auto-detect and bump:
-
-```bash
-# 1. Find modified plugins from last commit
-git diff --name-only HEAD~1 | grep '^plugins/' | cut -d/ -f2 | sort -u
-
-# 2. For each plugin: bump PATCH in plugin.json
-# plugins/{name}/.claude-plugin/plugin.json → "version": "X.Y.(Z+1)"
-
-# 3. Sync in marketplace.json plugins[] array (same version)
-
-# 4. Bump suite PATCH in marketplace.json metadata.version
-
-# 5. Core plugins (core[] array): plugin.json only, no marketplace version
-```
-
-**Files to include in bump commit:** CHANGELOG.md + marketplace.json + all bumped plugin.json
+See the `post-commit` skill for universal CHANGELOG, version bump, and tag logic (works for all repos).
 
 ## Examples
 

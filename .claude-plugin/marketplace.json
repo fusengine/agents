@@ -127,7 +127,8 @@
         "./agents/commit-detector.md"
       ],
       "skills": [
-        "./skills/commit-detection"
+        "./skills/commit-detection",
+        "./skills/post-commit"
       ]
     },
     {

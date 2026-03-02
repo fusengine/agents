@@ -1,7 +1,7 @@
 ---
 description: Smart conventional commit with security validation and auto-detection. Use for git commit, commit changes, save work, stage and commit.
 argument-hint: [message] | [type scope message] | (empty for auto-detection)
-allowed-tools: Bash(git status:*), Bash(git diff:*), Bash(git add:*), Bash(git commit:*), Bash(git log:*)
+allowed-tools: Bash(git status:*), Bash(git diff:*), Bash(git add:*), Bash(git commit:*), Bash(git log:*), Bash(git tag:*), Bash(git push:*), Bash(git describe:*), Read, Edit
 disable-model-invocation: false
 ---
 
@@ -98,31 +98,8 @@ EOF
 
 If $ARGUMENTS provided, use as hint for the message.
 
-### Step 6: Version Bump & CHANGELOG (MANDATORY)
+### Step 6: Post-Commit (universal)
 
-**Version Rules:** ALL types → PATCH only. MINOR/MAJOR = manual user decision.
+After step 5 succeeds, execute the `post-commit` skill (CHANGELOG + version bump + git tag).
 
-**Plugin repo auto-detection** (if `.claude-plugin/marketplace.json` exists):
-1. Detect: `git diff --name-only HEAD~1 | grep '^plugins/' | cut -d/ -f2 | sort -u`
-2. Each modified plugin → bump PATCH in `plugins/{name}/.claude-plugin/plugin.json`
-3. Sync same version in `.claude-plugin/marketplace.json` plugins array
-4. Bump suite PATCH in `.claude-plugin/marketplace.json` → `metadata.version`
-5. Core plugins (`core[]` array): only bump plugin.json (no version in marketplace)
-
-**CHANGELOG:** `## [X.Y.Z] - DD-MM-YYYY` — include `(plugin-name X.Y.Z)` in descriptions
-
-**Commit order (MANDATORY):**
-- Separate LAST commit (never with code changes)
-- Include: CHANGELOG.md + marketplace.json + all bumped plugin.json
-- Format: `chore: bump marketplace and CHANGELOG to X.Y.Z`
-
-### Step 7: Git Tag (MANDATORY for plugin repos)
-
-After the bump commit, create and push the version tag:
-
-```bash
-git tag vX.Y.Z
-git push origin vX.Y.Z
-```
-
-Only tag the bump commit, never tag code commits.
+This runs for ALL repos — the skill auto-detects the repo type internally.
