@@ -1,5 +1,11 @@
 # Release Notes
 
+## [1.38.15] - 02-03-2026
+
+### Fixed
+- Migrate volatile /tmp paths to persistent ~/.claude/fusengine-cache/{locks,sessions} (core-guards 1.1.6)
+- Refactor cleanup-session-states.py into composable helpers for clarity and testability (core-guards 1.1.6)
+
 ## [1.38.14] - 02-03-2026
 
 ### Added
