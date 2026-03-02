@@ -6,9 +6,11 @@ import re
 import sys
 from datetime import datetime, timezone
 
-STATE_DIR = '/tmp/claude-code-sessions'
+STATE_DIR = os.path.join(os.path.expanduser('~'), '.claude', 'fusengine-cache', 'sessions')
 MEMORY_DIR = os.path.expanduser('~/.claude/memory/agents')
-SKIP_AGENTS = r'(sniper|sniper-faster|explore-codebase|research-expert|claude-code-guide|Explore|Plan)'
+SKIP_AGENTS = (
+    r'(sniper|sniper-faster|explore-codebase|research-expert|claude-code-guide|Explore|Plan)'
+)
 
 
 def main():

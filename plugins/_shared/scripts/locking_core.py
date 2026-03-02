@@ -7,7 +7,8 @@ Importable functions (no main).
 import os
 import time
 
-LOCKS_DIR = os.environ.get("LOCKS_DIR", "/tmp/claude-locks")
+LOCKS_DIR = os.environ.get("LOCKS_DIR", os.path.join(
+    os.path.expanduser("~"), ".claude", "fusengine-cache", "locks"))
 
 
 def acquire_lock(lock_name: str, timeout: int = 30) -> bool:

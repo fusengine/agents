@@ -8,7 +8,8 @@ import os
 import time
 from typing import Any, Callable
 
-LOCKS_DIR = os.environ.get("LOCKS_DIR", "/tmp/claude-locks")
+LOCKS_DIR = os.environ.get("LOCKS_DIR", os.path.join(
+    os.path.expanduser("~"), ".claude", "fusengine-cache", "locks"))
 
 
 def is_locked(lock_name: str) -> bool:
@@ -32,8 +33,7 @@ def wait_for_lock(lock_name: str, max_wait: int = 300) -> bool:
 def with_lock(lock_name: str, func: Callable[..., Any],
               *args: Any, **kwargs: Any) -> Any:
     """Execute a callable while holding a lock."""
-    # Import here to avoid circular dependency
-    from locking_core import acquire_lock, release_lock
+    from locking_core import acquire_lock, release_lock  # pylint: disable=import-outside-toplevel
 
     if not acquire_lock(lock_name):
         raise RuntimeError(f"Cannot acquire lock '{lock_name}'")

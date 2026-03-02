@@ -6,7 +6,7 @@ import re
 import sys
 from datetime import datetime, timezone
 
-STATE_DIR = '/tmp/claude-code-sessions'
+STATE_DIR = os.path.join(os.path.expanduser('~'), '.claude', 'fusengine-cache', 'sessions')
 LOG_DIR = os.path.expanduser('~/.claude/logs')
 LOG_FILE = os.path.join(LOG_DIR, 'hooks.log')
 CODE_EXT = r'\.(ts|tsx|js|jsx|py|go|rs|java|php|cpp|c|rb|swift|kt|vue|svelte)$'
@@ -68,7 +68,10 @@ def is_code_file(file_path):
 
 def main():
     """Standalone: print helper info when run directly."""
-    print('session-state-helpers: standalone Python helper (no-op when run directly)', file=sys.stderr)
+    print(
+        'session-state-helpers: standalone Python helper (no-op when run directly)',
+        file=sys.stderr,
+    )
     sys.exit(0)
 
 
