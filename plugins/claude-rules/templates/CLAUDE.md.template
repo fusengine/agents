@@ -25,10 +25,11 @@ This applies to: ALL tasks (questions, features, fixes, refactoring, exploration
 
 **Only exception:** Git read-only (status, log, diff)
 
-## APEX Workflow (MANDATORY — USE: create/refactor/multi-file | SKIP: questions/trivial/read-only)
+## APEX Workflow (MANDATORY — USE: create/refactor/multi-file/debug | SKIP: trivial/read-only/simple-git)
 Brainstorm -> **A**nalyze -> **P**lan -> **E**xecute -> e**L**icit -> Verify -> e**X**amine
 
 - **Brainstorm**: New features/major changes only — skip for trivial fixes
+- **Debug/Investigation**: "why", "not working", "bug", "crash", "doesn't load" → ALWAYS use Analyze (explore + research + domain-expert)
 - **Analyze**: TeamCreate with explore-codebase + research-expert + [domain-expert → see Project Detection]
 - **Plan**: TaskCreate with dependencies, files < 100 lines
 - **Execute**: Domain expert + TDD, SOLID rules, split at 90 lines
@@ -43,8 +44,10 @@ Brainstorm -> **A**nalyze -> **P**lan -> **E**xecute -> e**L**icit -> Verify -> 
 4. **Validate after** - `sniper` after ANY modification
 5. **JSDoc/PHPDoc** - Every exported function documented
 
-## Git Commits
+## Git Commits (ZERO TOLERANCE)
 **ALWAYS use `/fuse-commit-pro:commit`** - NEVER use `git commit` directly.
+`/fuse-commit-pro:commit` handles: security check, conventional message, version bump, CHANGELOG, git tag, push.
+**Using `git commit` directly = FORBIDDEN** — it skips bump, CHANGELOG, and tag.
 
 ## Fusengine Plugins - Detailed Rules
 
