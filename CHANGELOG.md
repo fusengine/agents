@@ -1,5 +1,10 @@
 # Release Notes
 
+## [1.38.18] - 04-03-2026
+
+### Fixed
+- fix(claude-rules): add debug/investigation to APEX trigger, enforce /commit skill with WHY explanation (claude-rules 1.0.3)
+
 ## [1.38.17] - 03-03-2026
 
 ### Changed
