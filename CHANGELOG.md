@@ -1,5 +1,12 @@
 # Release Notes
 
+## [1.38.17] - 03-03-2026
+
+### Changed
+- refactor(agents): trim 11 agent prompts to <100 lines, delegate to skills (ai-pilot 1.2.9, nextjs 1.1.8, react 1.0.7, laravel 1.1.7, swift 1.1.6, tailwind 1.0.6, prompt-engineer 1.1.1, design 1.1.6, shadcn 1.0.6, security 1.0.4, changelog 1.0.2, commit-pro 1.2.9, solid 1.0.4)
+- refactor(claude-rules): reinforce CLAUDE.md template + shadcn/Gemini UI workflow (claude-rules 1.0.2)
+- fix(solid): align solid-nextjs, solid-swift, solid-detection to 100-line limit
+
 ## [1.38.16] - 03-03-2026
 
 ### Changed

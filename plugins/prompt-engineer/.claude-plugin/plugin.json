@@ -1,0 +1,25 @@
+{
+  "name": "fuse-prompt-engineer",
+  "version": "1.1.1",
+  "description": "Expert Prompt Engineer with Context Engineering, Meta-Prompting, Chain-of-Thought, Few-Shot, Agent Design, 50+ Template Library, and A/B Testing",
+  "author": {
+    "name": "Fusengine",
+    "email": "hello@fusengine.ch",
+    "url": "https://github.com/fusengine"
+  },
+  "homepage": "https://github.com/fusengine/agents",
+  "repository": "https://github.com/fusengine/agents",
+  "license": "MIT",
+  "keywords": [
+    "prompt-engineering",
+    "context-engineering",
+    "meta-prompting",
+    "chain-of-thought",
+    "few-shot",
+    "agent-design",
+    "guardrails",
+    "prompt-library",
+    "ab-testing",
+    "llm"
+  ]
+}
