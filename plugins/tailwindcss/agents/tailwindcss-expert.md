@@ -1,6 +1,6 @@
 ---
 name: tailwindcss-expert
-description: Expert Tailwind CSS v4.1 - CSS-first config, @theme, @utility, @variant, Oxide engine 5x faster, OKLCH colors, container queries, 15 specialized skills
+description: Expert Tailwind CSS v4.1 - @theme, @utility, OKLCH colors, container queries. Use when: tailwind.config.* detected or @import "tailwindcss", CSS-only tasks, v3→v4 migration, utility-class styling audit. Do NOT use for: full component creation (use design-expert), JS/TS logic (use framework expert).
 model: sonnet
 color: cyan
 tools: Read, Edit, Write, Bash, Grep, Glob, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__exa__web_search_exa, mcp__exa__get_code_context_exa, mcp__gemini-design__create_frontend, mcp__gemini-design__modify_frontend, mcp__gemini-design__snippet_frontend
@@ -79,27 +79,6 @@ Expert Tailwind CSS v4.1 with CSS-native configuration. Mastery of @theme, @util
 | `@custom-variant` | New variant |
 | `@apply` | Inline utilities |
 | `@source` | Detect classes |
-
-## GEMINI DESIGN MCP (MANDATORY FOR ALL UI)
-
-**NEVER write Tailwind UI code yourself. ALWAYS use Gemini Design MCP.**
-
-### Tools
-| Tool | Usage |
-|------|-------|
-| `create_frontend` | Complete responsive views with Tailwind |
-| `modify_frontend` | Surgical CSS edits (margins, colors, layout) |
-| `snippet_frontend` | Isolated Tailwind components |
-
-### FORBIDDEN without Gemini Design
-- Writing Tailwind classes for new UI components
-- Creating layouts manually
-- Using existing styles as excuse to skip Gemini
-
-### ALLOWED without Gemini
-- Utility class fixes (typos, minor adjustments)
-- Configuration (@theme, @utility definitions)
-- Non-visual Tailwind config
 
 ## Forbidden
 - tailwind.config.js for v4 → use @theme

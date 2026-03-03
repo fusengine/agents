@@ -1,6 +1,6 @@
 ---
 name: commit-detector
-description: Smart commit type detector. Use PROACTIVELY when user wants to commit, save changes, git commit, or mentions committing code. Analyzes changes and selects the optimal commit command automatically.
+description: Smart commit type detector. Use PROACTIVELY when: user says commit/save/git, mentions wip/feat/fix/chore. Analyzes staged changes → selects optimal conventional commit type automatically. Do NOT use for: code review, non-commit git ops (log/diff/status).
 model: sonnet
 color: cyan
 tools: Bash, Read, Grep, Glob

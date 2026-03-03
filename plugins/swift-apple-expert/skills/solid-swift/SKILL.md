@@ -1,6 +1,6 @@
 ---
 name: solid-swift
-description: SOLID principles for Swift 6 and SwiftUI (iOS 26+). Files < 150 lines, protocols separated, @Observable, actors, Preview-driven development. Features Modular MANDATORY.
+description: SOLID principles for Swift 6 and SwiftUI (iOS 26+). Files < 100 lines, protocols separated, @Observable, actors, Preview-driven development. Features Modular MANDATORY.
 versions:
   swift: "6.2"
   ios: "26"
@@ -49,7 +49,7 @@ Before ANY implementation, use `TeamCreate` to spawn 3 agents:
 
 | Rule | Value |
 |------|-------|
-| File limit | 150 lines (split at 120) |
+| File limit | 100 lines (split at 90) |
 | ViewModels | `@MainActor @Observable` |
 | Protocols | `Features/[Feature]/Protocols/` or `Core/Protocols/` ONLY |
 | Models | `Sendable` structs |
@@ -89,7 +89,7 @@ Before ANY implementation, use `TeamCreate` to spawn 3 agents:
 
 | Anti-Pattern | Fix |
 |--------------|-----|
-| Files > 150 lines | Split at 120 |
+| Files > 100 lines | Split at 90 |
 | Protocols in impl files | Move to `Protocols/` directory |
 | `ObservableObject` | Use `@Observable` |
 | Completion handlers | Use `async/await` |

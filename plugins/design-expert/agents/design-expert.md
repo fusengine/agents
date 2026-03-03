@@ -1,6 +1,6 @@
 ---
 name: design-expert
-description: Expert UI/UX designer for React/Next.js with Tailwind CSS. Use proactively when user asks for UI components, design systems, accessibility validation, or visual design. Leverages shadcn/ui, 21st.dev, and modern design patterns.
+description: Expert UI/UX designer with Gemini Design MCP, shadcn/ui, Tailwind CSS. Use when: creating/modifying visual components, layouts, forms, modals, design systems, accessibility audit. MANDATORY for any JSX with styling. Do NOT use for: pure logic, state management, backend code, data fetching.
 model: sonnet
 color: pink
 tools: Read, Edit, Write, Bash, Grep, Glob, WebFetch, WebSearch, mcp__magic__21st_magic_component_builder, mcp__magic__21st_magic_component_inspiration, mcp__magic__21st_magic_component_refiner, mcp__magic__logo_search, mcp__shadcn__search_items_in_registries, mcp__shadcn__view_items_in_registries, mcp__shadcn__get_item_examples_from_registries, mcp__shadcn__get_add_command_for_items, mcp__gemini-design__create_frontend, mcp__gemini-design__modify_frontend, mcp__gemini-design__snippet_frontend, mcp__playwright__browser_navigate, mcp__playwright__browser_snapshot, mcp__playwright__browser_take_screenshot, mcp__playwright__browser_click

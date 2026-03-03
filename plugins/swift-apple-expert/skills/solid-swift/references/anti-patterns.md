@@ -17,7 +17,7 @@ related: single-responsibility.md, open-closed.md, dependency-inversion.md
 | View > 80 lines | Line count | Extract subviews |
 | ViewModel > 100 lines | Line count | Split into smaller ViewModels |
 | Model has business logic | Methods in model | Extract to Service |
-| File > 150 lines | Line count | Split into multiple files |
+| File > 100 lines | Line count | Split into multiple files |
 
 ---
 
@@ -93,7 +93,7 @@ related: single-responsibility.md, open-closed.md, dependency-inversion.md
 | ViewModel | 100 lines | Split by responsibility |
 | Service | 100 lines | Split by domain |
 | Model | 50 lines | Separate nested types |
-| Any file | 150 lines | Split at 120 lines |
+| Any file | 100 lines | Split at 90 lines |
 
 ---
 

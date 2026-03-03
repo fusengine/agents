@@ -1,6 +1,6 @@
 ---
 name: solid-nextjs
-description: This skill should be used when the user asks about "SOLID principles", "Next.js architecture", "modular structure", "code organization", "file size limits", "interface separation", or "JSDoc documentation". Enforces files < 150 lines with mandatory JSDoc and separated interfaces.
+description: This skill should be used when the user asks about "SOLID principles", "Next.js architecture", "modular structure", "code organization", "file size limits", "interface separation", or "JSDoc documentation". Enforces files < 100 lines with mandatory JSDoc and separated interfaces.
 version: 1.0.0
 user-invocable: true
 references: references/solid-principles.md, references/single-responsibility.md, references/open-closed.md, references/liskov-substitution.md, references/interface-segregation.md, references/dependency-inversion.md, references/architecture-patterns.md, references/templates/server-component.md, references/templates/client-component.md, references/templates/service.md, references/templates/hook.md, references/templates/interface.md, references/templates/store.md, references/templates/action.md, references/templates/api-route.md, references/templates/validator.md, references/templates/factory.md, references/templates/adapter.md, references/templates/error.md, references/templates/test.md, references/templates/middleware.md, references/templates/prisma.md, references/templates/i18n.md, references/templates/query.md
@@ -64,9 +64,9 @@ After implementation, run **fuse-ai-pilot:sniper** for validation.
 
 ## Absolute Rules (MANDATORY)
 
-### 1. Files < 150 lines
+### 1. Files < 100 lines
 
-- **Split at 90 lines** - Never exceed 150
+- **Split at 90 lines** - Never exceed 100
 - Page components < 50 lines (use composition)
 - Server Components < 80 lines
 - Client Components < 60 lines
@@ -179,7 +179,7 @@ Ready-to-copy code in `references/templates/`:
 
 - ❌ Coding without researching docs first (ALWAYS research)
 - ❌ Using outdated APIs without checking current year docs
-- ❌ Files > 150 lines
+- ❌ Files > 100 lines
 - ❌ Interfaces in component files
 - ❌ Business logic in `app/` pages
 - ❌ Direct DB calls in components

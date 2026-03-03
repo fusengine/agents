@@ -1,6 +1,11 @@
 ## Frontend Tasks
 
-**ALWAYS use `fuse-design:design-expert`** for UI tasks.
+### UI Workflow (MANDATORY)
+1. **Gemini Design MCP** designs the layout/pages using **shadcn/ui** components — they work together
+2. **shadcn/ui** (`fuse-shadcn-ui:shadcn-ui-expert`) for component registry, installation, and patterns (`nextjs-shadcn` / `react-shadcn`)
+3. **NEVER write JSX/Tailwind manually** — always go through Gemini + shadcn
+
+### Gemini Design Tools
 
 | Tool | Usage |
 |------|-------|
@@ -8,5 +13,5 @@
 | `modify_frontend` | Surgical redesign |
 | `snippet_frontend` | Isolated components |
 
-**FORBIDDEN without Gemini Design:** React/SwiftUI components with styling, CSS/Tailwind layouts, forms/modals/tables
-**ALLOWED without Gemini:** Text changes, JS/Swift logic, data wiring, state management
+**FORBIDDEN without shadcn or Gemini:** React/SwiftUI components with styling, CSS/Tailwind layouts, forms/modals/tables
+**ALLOWED without tools:** Text changes, JS/Swift logic, data wiring, state management

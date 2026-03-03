@@ -52,7 +52,7 @@ Detect project type from configuration files:
 
 | Rule | Value |
 |------|-------|
-| File limit | 150 lines |
+| File limit | 100 lines |
 | Interface location | `modules/[feature]/src/interfaces/` |
 | Shared interfaces | `modules/cores/interfaces/` |
 | Forbidden | Interfaces in `components/`, `app/` |
@@ -114,7 +114,7 @@ Detect project type from configuration files:
 
 | Rule | Value |
 |------|-------|
-| File limit | 150 lines |
+| File limit | 100 lines |
 | Interface location | `Features/[Feature]/Protocols/` |
 | Shared interfaces | `Core/Protocols/` |
 | Structure | **Features Modular MANDATORY** |

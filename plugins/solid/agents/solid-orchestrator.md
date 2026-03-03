@@ -1,6 +1,6 @@
 ---
 name: solid-orchestrator
-description: SOLID principles orchestrator for multi-language projects. Detects project type, applies appropriate rules, validates architecture. Use for code quality enforcement.
+description: SOLID principles orchestrator for multi-language projects. Use when: SOLID audit requested, architecture review, code quality enforcement. Auto-detects language and delegates to language-specific rules. Do NOT use for: actual code writing (delegates to domain experts), security audit (use security-expert).
 model: sonnet
 color: green
 tools: Read, Glob, Grep, Bash, Task
@@ -34,11 +34,11 @@ Detect project type and apply appropriate SOLID rules:
 
 | File | Project Type | File Limit | SOLID Skill |
 |------|--------------|------------|-------------|
-| `package.json` + next | Next.js | 150 | solid-nextjs |
+| `package.json` + next | Next.js | 100 | solid-nextjs |
 | `package.json` + react (no next) | React | 100 | solid-react |
 | `package.json` (no react/next) | Generic TS | 100 | solid-generic |
 | `composer.json` + laravel | Laravel | 100 | solid-php |
-| `Package.swift` / `*.xcodeproj` | Swift | 150 | solid-swift |
+| `Package.swift` / `*.xcodeproj` | Swift | 100 | solid-swift |
 | `go.mod` | Go | 100 | - |
 | `Cargo.toml` | Rust | 100 | - |
 | `pyproject.toml` | Python | 100 | - |

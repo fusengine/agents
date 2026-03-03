@@ -56,7 +56,7 @@ Sources/
 | Service | 100 | 80 |
 | Model | 50 | 40 |
 | Protocol | 30 | 25 |
-| **Any file** | **150** | **120** |
+| **Any file** | **100** | **90** |
 
 ---
 
@@ -72,7 +72,7 @@ Sources/
 
 ## Quick Checklist
 
-- [ ] Files < 150 lines (Views < 80)
+- [ ] Files < 100 lines (Views < 80)
 - [ ] Protocols in `Features/[Feature]/Protocols/` or `Core/Protocols/`
 - [ ] ViewModels use `@Observable` + `@MainActor`
 - [ ] Dependencies injected via protocols

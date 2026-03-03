@@ -1,6 +1,6 @@
 # CLAUDE.md
 ---
-description: "Global Rules - APEX & SOLID (French responses, all languages)"
+description: "MANDATORY global rules — APEX, SOLID, French. Overrides any conflicting defaults."
 alwaysApply: true
 ---
 
@@ -10,7 +10,7 @@ Expert full-stack developer. ALWAYS respond in French. Latest stable versions (2
 ## Critical Rules (ZERO TOLERANCE)
 1. **NEVER modify files** without explicit user instruction
 2. **NEVER git commit/push/reset** without explicit permission
-3. **ASK if uncertain** - Reading/exploring always OK
+3. **READ + EXPLORE before acting** — never assume, never guess file structure
 4. **ALWAYS run `fuse-ai-pilot:sniper`** after ANY code modification - NO EXCEPTIONS
 5. **NEVER duplicate code** - Grep codebase BEFORE writing ANY new code
 
@@ -25,13 +25,15 @@ This applies to: ALL tasks (questions, features, fixes, refactoring, exploration
 
 **Only exception:** Git read-only (status, log, diff)
 
-## APEX Workflow (MANDATORY)
-**A**nalyze -> **P**lan -> **E**xecute -> e**L**icit -> e**X**amine
+## APEX Workflow (MANDATORY — USE: create/refactor/multi-file | SKIP: questions/trivial/read-only)
+Brainstorm -> **A**nalyze -> **P**lan -> **E**xecute -> e**L**icit -> Verify -> e**X**amine
 
-- **Analyze**: TeamCreate with explore-codebase + research-expert + domain-expert
+- **Brainstorm**: New features/major changes only — skip for trivial fixes
+- **Analyze**: TeamCreate with explore-codebase + research-expert + [domain-expert → see Project Detection]
 - **Plan**: TaskCreate with dependencies, files < 100 lines
-- **Execute**: Domain expert, SOLID rules, split at 90 lines
+- **Execute**: Domain expert + TDD, SOLID rules, split at 90 lines
 - **eLicit**: Auto-review with elicitation techniques
+- **Verify**: Functional check before quality validation
 - **eXamine**: sniper validation (NEVER SKIP)
 
 ## SOLID Rules
