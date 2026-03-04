@@ -1,5 +1,10 @@
 # Release Notes
 
+## [1.38.19] - 04-03-2026
+
+### Added
+- feat(core-guards): add APEX workflow enforcement hooks and improve merge/oauth logic (core-guards 1.1.7)
+
 ## [1.38.18] - 04-03-2026
 
 ### Fixed
