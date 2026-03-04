@@ -18,6 +18,14 @@ export function mergeJsonOutput(existing: string, newOutput: string): string {
 			existingJson.systemMessage = newJson.systemMessage;
 		}
 
+		// If ANY hook denies, deny wins (permissionDecision: "deny" takes priority)
+		if (newJson.hookSpecificOutput?.permissionDecision === "deny") {
+			return newOutput;
+		}
+		if (existingJson.hookSpecificOutput?.permissionDecision === "deny") {
+			return existing;
+		}
+
 		// Merge hookSpecificOutput.additionalContext across multiple hooks
 		if (newJson.hookSpecificOutput && existingJson.hookSpecificOutput) {
 			const existCtx = existingJson.hookSpecificOutput.additionalContext ?? "";

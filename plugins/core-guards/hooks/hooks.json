@@ -74,10 +74,32 @@
             "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/pre-tool-use/require-solid-read.py"
           }
         ]
+      },
+      {
+        "_description": "APEX: Require Agent calls (explore/research/domain) before editing code",
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "_description": "Block code edits if no Agent tool called in session",
+            "type": "command",
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/pre-tool-use/require-apex-agents.py"
+          }
+        ]
       }
     ],
 
     "PostToolUse": [
+      {
+        "_description": "APEX: Track Agent tool calls for workflow enforcement",
+        "matcher": "Agent",
+        "hooks": [
+          {
+            "_description": "Record Agent calls to session state for APEX verification",
+            "type": "command",
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/post-tool-use/track-agent-calls.py"
+          }
+        ]
+      },
       {
         "_description": "Track file reads (documentation and SOLID references)",
         "matcher": "Read",

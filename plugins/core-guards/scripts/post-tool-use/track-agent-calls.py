@@ -1,0 +1,53 @@
+#!/usr/bin/env python3
+"""PostToolUse hook: Track Agent tool calls for APEX workflow enforcement."""
+import json
+import os
+import sys
+from datetime import datetime, timezone
+
+STATE_DIR = os.path.join(os.path.expanduser('~'), '.claude', 'fusengine-cache', 'sessions')
+
+
+def main():
+    try:
+        data = json.load(sys.stdin)
+    except (json.JSONDecodeError, EOFError):
+        sys.exit(0)
+
+    tool_name = data.get('tool_name', '')
+    if tool_name != 'Agent':
+        sys.exit(0)
+
+    sid = data.get('session_id', '') or 'unknown'
+    agent_type = data.get('tool_input', {}).get('subagent_type', '')
+    prompt = (data.get('tool_input', {}).get('prompt') or '')[:100]
+
+    os.makedirs(STATE_DIR, exist_ok=True)
+    sf = os.path.join(STATE_DIR, f'session-{sid}-agents.json')
+
+    state = {'agents': []}
+    if os.path.isfile(sf):
+        try:
+            with open(sf, encoding='utf-8') as f:
+                state = json.load(f)
+        except (json.JSONDecodeError, OSError):
+            pass
+
+    ts = datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
+    state['agents'].append({
+        'timestamp': ts,
+        'type': agent_type,
+        'prompt_preview': prompt,
+    })
+
+    try:
+        with open(sf, 'w', encoding='utf-8') as f:
+            json.dump(state, f, indent=2)
+    except OSError:
+        pass
+
+    sys.exit(0)
+
+
+if __name__ == '__main__':
+    main()
