@@ -1,5 +1,10 @@
 # Release Notes
 
+## [1.38.20] - 05-03-2026
+
+### Added
+- feat(core-guards): fix subagent infinite loop and add 2.1.69 hook support (core-guards 1.1.8)
+
 ## [1.38.19] - 04-03-2026
 
 ### Added
