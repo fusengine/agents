@@ -191,6 +191,48 @@
       }
     ],
 
+    "TeammateIdle": [
+      {
+        "_description": "Validate teammate output before idle",
+        "matcher": "",
+        "hooks": [
+          {
+            "_description": "Check if teammate modified code files and suggest sniper",
+            "type": "command",
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/teammate-idle/validate-teammate-output.py"
+          }
+        ]
+      }
+    ],
+
+    "TaskCompleted": [
+      {
+        "_description": "SOLID validation when task is marked completed",
+        "matcher": "",
+        "hooks": [
+          {
+            "_description": "Check modified files respect SOLID rules (< 100 lines)",
+            "type": "command",
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/task-completed/validate-task-solid.py"
+          }
+        ]
+      }
+    ],
+
+    "PostToolUseFailure": [
+      {
+        "_description": "Log tool failures for debugging",
+        "matcher": "",
+        "hooks": [
+          {
+            "_description": "Log failed tool executions to session log",
+            "type": "command",
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/post-tool-use/log-tool-failure.py"
+          }
+        ]
+      }
+    ],
+
     "Stop": [
       {
         "_description": "Sound notification when Claude finishes responding (not on user interrupt)",

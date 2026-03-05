@@ -16,9 +16,9 @@ function getClaudeVersion(): string {
 		const proc = Bun.spawnSync(["claude", "--version"]);
 		const raw = proc.stdout.toString().trim();
 		const match = raw.match(/^(\d+\.\d+\.\d+)/);
-		return match ? match[1] : "2.1.63";
+		return match ? match[1] : "2.1.69";
 	} catch {
-		return "2.1.63";
+		return "2.1.69";
 	}
 }
 

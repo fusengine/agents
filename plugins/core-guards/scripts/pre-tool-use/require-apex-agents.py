@@ -63,6 +63,10 @@ def main():
     except (json.JSONDecodeError, EOFError):
         sys.exit(0)
 
+    # Subagents exempt — APEX enforcement is the lead's responsibility
+    if data.get('agent_id'):
+        sys.exit(0)
+
     fp = data.get('tool_input', {}).get('file_path', '')
     sid = data.get('session_id', '') or 'unknown'
 

@@ -45,4 +45,21 @@ export interface HookInput {
 	agent?: {
 		name: string;
 	};
+	/** Unique subagent identifier (present in subagent context) */
+	agent_id?: string;
+	/** Agent type name e.g. "Explore", "security-reviewer" (present in subagent/--agent context) */
+	agent_type?: string;
+	/** Worktree info (present only during --worktree sessions) */
+	worktree?: {
+		/** Worktree name */
+		name: string;
+		/** Worktree absolute path */
+		path: string;
+		/** Worktree branch name */
+		branch?: string;
+		/** Original working directory before worktree switch */
+		original_cwd: string;
+		/** Original branch before worktree switch */
+		original_branch?: string;
+	};
 }

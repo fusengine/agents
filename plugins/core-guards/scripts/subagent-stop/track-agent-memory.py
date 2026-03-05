@@ -23,14 +23,15 @@ def main():
         print(json.dumps({"message": "Invalid input"}))
         sys.exit(0)
 
-    agent_type = data.get('subagent_type', data.get('agent_id', 'unknown'))
+    agent_id = data.get('agent_id', 'unknown')
+    agent_type = data.get('agent_type', data.get('subagent_type', 'unknown'))
     session_id = data.get('session_id', 'unknown')
     timestamp = datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
 
     memory_file = os.path.join(MEMORY_DIR, 'agent-history.jsonl')
     try:
         with open(memory_file, 'a', encoding='utf-8') as f:
-            f.write(json.dumps({"agentType": agent_type, "completedAt": timestamp}) + '\n')
+            f.write(json.dumps({"agentId": agent_id, "agentType": agent_type, "completedAt": timestamp}) + '\n')
     except OSError:
         pass
 

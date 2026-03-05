@@ -19,7 +19,8 @@ def main():
         sys.exit(0)
 
     sid = data.get('session_id', '') or 'unknown'
-    agent_type = data.get('tool_input', {}).get('subagent_type', '')
+    agent_type = data.get('agent_type', '') or data.get('tool_input', {}).get('subagent_type', '')
+    agent_id = data.get('agent_id', '')
     prompt = (data.get('tool_input', {}).get('prompt') or '')[:100]
 
     os.makedirs(STATE_DIR, exist_ok=True)
@@ -37,6 +38,7 @@ def main():
     state['agents'].append({
         'timestamp': ts,
         'type': agent_type,
+        'agent_id': agent_id,
         'prompt_preview': prompt,
     })
 

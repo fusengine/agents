@@ -8,7 +8,13 @@ import re
 # Cross-platform: expanduser resolves ~ on macOS/Linux/Windows
 SAFE_WRITE_PATHS = [
     os.path.normpath(os.path.expanduser('~/.claude/fusengine-cache')),
+    os.path.normpath(os.path.expanduser('~/.claude/logs')),
 ]
+
+
+def has_safe_write_target(cmd):
+    """Check if command string targets a safe write path."""
+    return any(safe in cmd for safe in SAFE_WRITE_PATHS)
 
 
 def resolve_path(path):
