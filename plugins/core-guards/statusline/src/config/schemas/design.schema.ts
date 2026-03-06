@@ -25,6 +25,7 @@ export type ColorPalette = z.infer<typeof ColorPaletteSchema>;
 // Icon set
 export const IconSetSchema = z.object({
 	agent: z.string().default("◈"),
+	worktree: z.string().default("\u{1F33F}"),
 	claude: z.string().default("◆"),
 	directory: z.string().default("⌂"),
 	git: z.string().default("⎇"),

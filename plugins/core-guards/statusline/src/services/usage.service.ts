@@ -7,8 +7,9 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { homedir } from "node:os";
 import { join } from "node:path";
-import { TIME_INTERVALS, TOKEN_LIMITS } from "../constants";
+import { TIME_INTERVALS } from "../constants";
 import type { FiveHourUsage, SubscriptionType } from "../interfaces";
+import { detectSubscription, getMaxTokens } from "./subscription.service";
 
 const DATA_DIR = join(homedir(), ".claude", "statusline-data");
 const USAGE_FILE = join(DATA_DIR, "usage.json");
@@ -48,36 +49,14 @@ function cleanOldSessions(data: UsageData): UsageData {
 	return { totalTokens, windowStart, sessions };
 }
 
-function detectSubscription(
-	modelId: string,
-	data: UsageData,
-	configPlan?: SubscriptionType,
-): SubscriptionType {
-	// 1. Si le plan est défini dans la config, l'utiliser en priorité
-	if (configPlan) return configPlan;
-
-	// 2. Si le modèle actuel est Opus, c'est forcément le plan max
-	if (modelId.includes("opus")) return "max";
-
-	// 3. Vérifier l'historique pour détecter si l'utilisateur a déjà utilisé Opus
-	const hasUsedOpus = data.sessions.some((s) => s.modelId?.includes("opus"));
-	if (hasUsedOpus) return "max";
-
-	// 4. Par défaut, plan pro
-	return "pro";
-}
-
-function getMaxTokens(subscription: SubscriptionType): number {
-	switch (subscription) {
-		case "free":
-			return TOKEN_LIMITS.FREE.MAX_PER_5_HOURS;
-		case "pro":
-			return TOKEN_LIMITS.PRO.MAX_PER_5_HOURS;
-		case "max":
-			return TOKEN_LIMITS.MAX.MAX_PER_5_HOURS;
-	}
-}
-
+/**
+ * Track token usage within a 5-hour sliding window
+ * @param sessionId - Unique session identifier
+ * @param tokens - Number of tokens used
+ * @param modelId - Model identifier for subscription detection
+ * @param configPlan - Optional plan override from config
+ * @returns Current 5-hour usage statistics
+ */
 export function trackFiveHourUsage(
 	sessionId: string,
 	tokens: number,
@@ -96,7 +75,7 @@ export function trackFiveHourUsage(
 	data.totalTokens = data.sessions.reduce((sum, s) => sum + s.tokens, 0);
 	saveUsageData(data);
 
-	const subscription = detectSubscription(modelId, data, configPlan);
+	const subscription = detectSubscription(modelId, data.sessions, configPlan);
 	const maxTokens = getMaxTokens(subscription);
 	const timeLeft = Math.max(0, data.windowStart + TIME_INTERVALS.FIVE_HOURS_MS - Date.now());
 

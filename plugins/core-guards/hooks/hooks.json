@@ -244,6 +244,18 @@
             "command": "afplay ${CLAUDE_PLUGIN_ROOT}/song/finish.mp3"
           }
         ]
+      },
+      {
+        "_description": "Verify APEX workflow completion before stopping",
+        "matcher": "",
+        "hooks": [
+          {
+            "_description": "Verify APEX workflow completion before stopping",
+            "type": "prompt",
+            "prompt": "Check if the assistant followed the APEX workflow. Look for: 1) Was an explore/research agent launched before coding? 2) Were files kept under 100 lines? 3) Was sniper validation run after modifications? If any step was missed AND code was modified, respond with {\"ok\": false, \"reason\": \"Missing step: [describe what was missed]\"}. If no code was modified or all steps were followed, respond with {\"ok\": true}. Context: $ARGUMENTS",
+            "timeout": 15
+          }
+        ]
       }
     ],
 
@@ -289,15 +301,14 @@
       }
     ],
 
-    "Setup": [
+    "InstructionsLoaded": [
       {
-        "_description": "First-run validation on plugin installation",
-        "matcher": "",
+        "_description": "Validate APEX rules are loaded at startup",
         "hooks": [
           {
-            "_description": "Validate API keys and dependencies are configured",
+            "_description": "Log which CLAUDE.md/rules files are loaded, verify APEX rules presence",
             "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/setup/validate-setup.py"
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/instructions-loaded/validate-rules-loaded.py"
           }
         ]
       }

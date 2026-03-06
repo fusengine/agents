@@ -27,10 +27,10 @@ export const OAUTH_HEADERS = {
 	"anthropic-beta": "oauth-2025-04-20",
 	Accept: "application/json",
 	"User-Agent": `claude-code/${getClaudeVersion()}`,
-};
+} as const;
 
-/** TTL du cache en millisecondes (60 secondes) */
-export const CACHE_TTL_MS = 60_000;
+/** TTL du cache en millisecondes (5 minutes) */
+export const CACHE_TTL_MS = 300_000;
 
 /** Nombre maximum de retries en cas d'erreur */
 export const MAX_RETRIES = 2;

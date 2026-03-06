@@ -1,6 +1,11 @@
 /**
- * Interfaces pour le système de hooks
+ * Hook Interfaces - Type definitions for the hook system
+ *
+ * @description SRP: Hook interfaces only (types in hook-types.ts)
  */
+
+export type { HookType } from "./hook-types";
+export { HOOK_TYPES } from "./hook-types";
 
 /** Configuration d'un hook individuel */
 export interface HookCommand {
@@ -43,36 +48,6 @@ export interface HookInput {
 	notification_type?: string;
 	agent_type?: string;
 }
-
-/** Types de hooks supportés */
-export type HookType =
-	| "UserPromptSubmit"
-	| "PreToolUse"
-	| "PostToolUse"
-	| "PermissionRequest"
-	| "SubagentStart"
-	| "SubagentStop"
-	| "SessionStart"
-	| "Stop"
-	| "Notification"
-	| "PreCompact"
-	| "SessionEnd"
-	| "Setup";
-
-export const HOOK_TYPES: HookType[] = [
-	"UserPromptSubmit",
-	"PreToolUse",
-	"PostToolUse",
-	"PermissionRequest",
-	"SubagentStart",
-	"SubagentStop",
-	"SessionStart",
-	"Stop",
-	"Notification",
-	"PreCompact",
-	"SessionEnd",
-	"Setup",
-];
 
 /** Configuration du scanner de plugins */
 export interface ScannerConfig {

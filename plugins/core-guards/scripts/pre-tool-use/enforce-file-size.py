@@ -29,6 +29,10 @@ def main():
         data = json.load(sys.stdin)
     except (json.JSONDecodeError, EOFError):
         sys.exit(0)
+    # Skip file size enforcement for read-only agents (Explore, Plan)
+    agent_type = data.get("agent_type", "")
+    if agent_type in ("Explore", "Plan"):
+        sys.exit(0)
     tool = data.get('tool_name', '')
     fp = data.get('tool_input', {}).get('file_path', '')
     content = data.get('tool_input', {}).get('new_string', '') or data.get('tool_input', {}).get('content', '')

@@ -58,3 +58,8 @@ export const TimeSegmentConfigSchema = z.object({
 export const AgentSegmentConfigSchema = z.object({
 	enabled: z.boolean().default(true),
 });
+
+// Worktree segment
+export const WorktreeSegmentConfigSchema = z.object({
+	enabled: z.boolean().default(true),
+});

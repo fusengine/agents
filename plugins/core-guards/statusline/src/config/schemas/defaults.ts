@@ -19,6 +19,7 @@ const defaultBrailleBar = { ...defaultProgressBar, style: "braille" as const, le
 export const defaultConfig: StatuslineConfig = {
 	version: "1.0.0",
 	agent: { enabled: true },
+	worktree: { enabled: true },
 	claude: { enabled: true, showVersion: true },
 	directory: {
 		enabled: true,

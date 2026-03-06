@@ -4,5 +4,6 @@
 
 export { getContextFromInput } from "./context.service";
 export { trackDailySpend } from "./daily.service";
+export { detectSubscription, getMaxTokens } from "./subscription.service";
 export { trackFiveHourUsage } from "./usage.service";
 export { trackWeeklyUsage } from "./weekly.service";

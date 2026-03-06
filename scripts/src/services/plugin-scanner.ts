@@ -1,6 +1,6 @@
 /**
  * Plugin scanning service
- * Single Responsibility: Scan and load plugin configurations
+ * @description SRP: Scan and load plugin configurations
  */
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
@@ -14,32 +14,22 @@ import type {
 /** Scan plugins and return their configurations */
 export function scanPlugins(config: ScannerConfig): PluginInfo[] {
 	const { pluginsDir } = config;
-	const plugins: PluginInfo[] = [];
+	if (!existsSync(pluginsDir)) return [];
 
-	if (!existsSync(pluginsDir)) return plugins;
-
-	for (const name of readdirSync(pluginsDir)) {
-		const pluginPath = join(pluginsDir, name);
-		const hooksFile = join(pluginPath, "hooks/hooks.json");
-
-		const info: PluginInfo = {
-			name,
-			path: pluginPath,
-			hasHooks: existsSync(hooksFile),
-		};
-
-		if (info.hasHooks) {
+	return readdirSync(pluginsDir).map((name) => {
+		const path = join(pluginsDir, name);
+		const hooksFile = join(path, "hooks/hooks.json");
+		const hasHooks = existsSync(hooksFile);
+		let config: PluginInfo["config"];
+		if (hasHooks) {
 			try {
-				info.config = JSON.parse(readFileSync(hooksFile, "utf8"));
+				config = JSON.parse(readFileSync(hooksFile, "utf8"));
 			} catch {
-				// Ignore parsing errors
+				/* ignore parse errors */
 			}
 		}
-
-		plugins.push(info);
-	}
-
-	return plugins;
+		return { name, path, hasHooks, config };
+	});
 }
 
 /** Extract executable hooks for a given type */
@@ -48,31 +38,21 @@ export function extractHooks(
 	hookType: string,
 	toolName: string,
 	notifType: string,
-	agentType: string = "",
+	agentType = "",
 ): ExecutableHook[] {
 	const hooks: ExecutableHook[] = [];
 
 	for (const plugin of plugins) {
 		if (!plugin.config) continue;
-
 		const entries: HookEntry[] = plugin.config.hooks?.[hookType] ?? [];
 
 		for (const entry of entries) {
-			if (
-				!matchesFilter(entry.matcher, hookType, toolName, notifType, agentType)
-			)
-				continue;
+			if (!matchesFilter(entry.matcher, hookType, toolName, notifType, agentType)) continue;
 
 			for (const hook of entry.hooks) {
-				const command = hook.command.replace(
-					/\$\{CLAUDE_PLUGIN_ROOT\}/g,
-					plugin.path,
-				);
-				hooks.push({
-					command,
-					isAsync: command.startsWith("afplay"),
-					pluginName: plugin.name,
-				});
+				if (hook.type && hook.type !== "command") continue;
+				const command = hook.command.replace(/\$\{CLAUDE_PLUGIN_ROOT\}/g, plugin.path);
+				hooks.push({ command, isAsync: command.startsWith("afplay"), pluginName: plugin.name });
 			}
 		}
 	}
@@ -80,13 +60,13 @@ export function extractHooks(
 	return hooks;
 }
 
-/** Check if a matcher matches */
+/** Check if a matcher matches the current context */
 function matchesFilter(
 	matcher: string | undefined,
 	hookType: string,
 	toolName: string,
 	notifType: string,
-	agentType: string = "",
+	agentType = "",
 ): boolean {
 	if (!matcher) return true;
 

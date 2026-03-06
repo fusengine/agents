@@ -54,8 +54,9 @@ async function fetchWithRetry(
 			headers: { ...OAUTH_HEADERS, Authorization: `Bearer ${accessToken}` },
 		});
 		if (!response.ok) {
-			if (response.status === 401 && retries > 0) {
-				await Bun.sleep(RETRY_DELAY_MS);
+			if ((response.status === 401 || response.status === 429) && retries > 0) {
+				const delay = response.status === 429 ? RETRY_DELAY_MS * 2 : RETRY_DELAY_MS;
+				await Bun.sleep(delay);
 				return fetchWithRetry(accessToken, retries - 1);
 			}
 			return null;
@@ -86,5 +87,5 @@ export async function getUsageLimits(): Promise<OAuthUsageResponse | null> {
 		cachedUsage = usage;
 		cacheTimestamp = now;
 	}
-	return usage;
+	return usage ?? cachedUsage;
 }

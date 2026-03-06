@@ -26,6 +26,7 @@ import {
 	DirectorySegmentConfigSchema,
 	ModelSegmentConfigSchema,
 	TimeSegmentConfigSchema,
+	WorktreeSegmentConfigSchema,
 } from "./core-segments.schema";
 import { ColorPaletteSchema, GlobalConfigSchema, IconSetSchema } from "./design.schema";
 import {
@@ -44,6 +45,7 @@ export const StatuslineConfigSchema = z.object({
 
 	// Core Segments
 	agent: AgentSegmentConfigSchema.default(zd(AgentSegmentConfigSchema)),
+	worktree: WorktreeSegmentConfigSchema.default(zd(WorktreeSegmentConfigSchema)),
 	claude: ClaudeSegmentConfigSchema.default(zd(ClaudeSegmentConfigSchema)),
 	directory: DirectorySegmentConfigSchema.default(zd(DirectorySegmentConfigSchema)),
 	model: ModelSegmentConfigSchema.default(zd(ModelSegmentConfigSchema)),

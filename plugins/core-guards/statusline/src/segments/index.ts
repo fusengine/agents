@@ -19,12 +19,14 @@ import { ModelSegment } from "./model.segment";
 import { NodeSegment } from "./node.segment";
 import { TimeSegment } from "./time.segment";
 import { WeeklySegment } from "./weekly.segment";
+import { WorktreeSegment } from "./worktree.segment";
 
 export function createDefaultSegments(): ISegment[] {
 	return [
 		new TimeSegment(),
 		new ClaudeSegment(),
 		new DirectorySegment(),
+		new WorktreeSegment(),
 		new AgentSegment(),
 		new ModelSegment(),
 		new ContextSegment(),
@@ -53,3 +55,4 @@ export { ModelSegment } from "./model.segment";
 export { NodeSegment } from "./node.segment";
 export { TimeSegment } from "./time.segment";
 export { WeeklySegment } from "./weekly.segment";
+export { WorktreeSegment } from "./worktree.segment";
