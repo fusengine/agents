@@ -1,5 +1,11 @@
 # Release Notes
 
+## [1.38.21] - 06-03-2026
+
+### Added
+- feat(core-guards): add v2.1.69 hook support, worktree segment, and SOLID split (core-guards 1.1.9)
+- feat(commit-pro): document includeGitInstructions setting (fuse-commit-pro 1.2.10)
+
 ## [1.38.20] - 05-03-2026
 
 ### Added
