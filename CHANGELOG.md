@@ -1,5 +1,10 @@
 # Release Notes
 
+## [1.38.22] - 07-03-2026
+
+### Changed
+- refactor(scripts): improve MCP default selections and split installer for SOLID
+
 ## [1.38.21] - 06-03-2026
 
 ### Added
