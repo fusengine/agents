@@ -21,7 +21,8 @@
 			"command": "npx",
 			"args": ["-y", "@modelcontextprotocol/server-filesystem", "${HOME}"],
 			"type": "stdio",
-			"requiresApiKey": false
+			"requiresApiKey": false,
+			"default": false
 		},
 		"playwright": {
 			"_description": "Browser automation via accessibility tree (official Microsoft)",
@@ -42,6 +43,7 @@
 			"args": ["-y", "@modelcontextprotocol/server-postgres"],
 			"type": "stdio",
 			"requiresApiKey": false,
+			"default": false,
 			"env": {
 				"DATABASE_URL": "${DATABASE_URL}"
 			}
@@ -85,12 +87,14 @@
 				"${CONTEXT7_API_KEY}"
 			],
 			"type": "stdio",
+			"default": true,
 			"requiresApiKey": true,
 			"apiKeyEnv": "CONTEXT7_API_KEY",
 			"apiKeyUrl": "https://context7.com"
 		},
 		"exa": {
 			"_description": "AI-powered web search, code context and deep research",
+			"default": true,
 			"type": "http",
 			"url": "https://mcp.exa.ai/mcp?tools=web_search_exa,get_code_context_exa,crawling_exa,company_research_exa,linkedin_search_exa,deep_researcher_start,deep_researcher_check&exaApiKey=${EXA_API_KEY}",
 			"headers": {},
@@ -106,6 +110,7 @@
 				"MAGIC_API_KEY": "${MAGIC_API_KEY}"
 			},
 			"type": "stdio",
+			"default": true,
 			"requiresApiKey": true,
 			"apiKeyEnv": "MAGIC_API_KEY",
 			"apiKeyUrl": "https://21st.dev"
@@ -118,6 +123,7 @@
 				"API_KEY": "${GEMINI_DESIGN_API_KEY}"
 			},
 			"type": "stdio",
+			"default": true,
 			"requiresApiKey": true,
 			"apiKeyEnv": "GEMINI_DESIGN_API_KEY",
 			"apiKeyUrl": "https://gemini-design-mcp.com"

@@ -14,6 +14,7 @@ export interface McpServerConfig {
 	requiresApiKey: boolean;
 	apiKeyEnv?: string;
 	apiKeyUrl?: string;
+	default?: boolean;
 }
 
 /** MCP catalog from mcp.json */
