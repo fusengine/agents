@@ -1,5 +1,10 @@
 # Release Notes
 
+## [1.38.23] - 07-03-2026
+
+### Changed
+- refactor(scripts): prompt API keys only for selected MCP servers
+
 ## [1.38.22] - 07-03-2026
 
 ### Changed
