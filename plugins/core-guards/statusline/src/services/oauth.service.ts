@@ -4,6 +4,9 @@
  * @description SRP: Cache management and Keychain access only
  */
 
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { homedir } from "node:os";
+import { join } from "node:path";
 import { CACHE_TTL_MS, ERROR_CACHE_TTL_MS, KEYCHAIN_SERVICE } from "../constants/oauth.constant";
 import type { OAuthCredentials, OAuthUsageResponse } from "../interfaces/oauth-usage.interface";
 import { loadErrorState, saveErrorState } from "./error-state";
@@ -13,8 +16,35 @@ export { getErrorCooldownLeft, getLastFailReason } from "./error-state";
 export type { OAuthFailReason } from "./oauth-fetch";
 export { formatUsage } from "./oauth-formatter";
 
-let cachedUsage: OAuthUsageResponse | null = null;
-let cacheTimestamp = 0;
+const USAGE_FILE = join(homedir(), ".claude", "statusline-data", "usage-cache.json");
+
+interface PersistedCache {
+	data: OAuthUsageResponse;
+	timestamp: number;
+}
+
+/** @returns Cached usage from disk or null */
+function loadUsageCache(): PersistedCache | null {
+	try {
+		if (!existsSync(USAGE_FILE)) return null;
+		return JSON.parse(readFileSync(USAGE_FILE, "utf-8")) as PersistedCache;
+	} catch {
+		return null;
+	}
+}
+
+/** Persists usage data to disk */
+function saveUsageCache(data: OAuthUsageResponse, timestamp: number): void {
+	try {
+		const dir = join(homedir(), ".claude", "statusline-data");
+		if (!existsSync(dir)) mkdirSync(dir, { recursive: true });
+		writeFileSync(USAGE_FILE, JSON.stringify({ data, timestamp }));
+	} catch { /* silent — cache is best-effort */ }
+}
+
+const disk = loadUsageCache();
+let cachedUsage: OAuthUsageResponse | null = disk?.data ?? null;
+let cacheTimestamp = disk?.timestamp ?? 0;
 
 /**
  * Retrieves OAuth credentials from macOS Keychain
@@ -61,6 +91,7 @@ export async function getUsageLimits(): Promise<OAuthUsageResponse | null> {
 	if (usage) {
 		cachedUsage = usage;
 		cacheTimestamp = now;
+		saveUsageCache(usage, now);
 		saveErrorState(0, null);
 	} else {
 		saveErrorState(now, getFetchReason());

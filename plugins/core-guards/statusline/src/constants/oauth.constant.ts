@@ -29,8 +29,8 @@ export const OAUTH_HEADERS = {
 	"User-Agent": `claude-code/${getClaudeVersion()}`,
 } as const;
 
-/** TTL du cache succes en millisecondes (30 minutes) */
-export const CACHE_TTL_MS = 1_800_000;
+/** TTL du cache succes en millisecondes (2 minutes) */
+export const CACHE_TTL_MS = 120_000;
 
-/** TTL du cache erreur en millisecondes (30 minutes) */
-export const ERROR_CACHE_TTL_MS = 1_800_000;
+/** TTL du cache erreur en millisecondes (2 minutes) */
+export const ERROR_CACHE_TTL_MS = 120_000;
