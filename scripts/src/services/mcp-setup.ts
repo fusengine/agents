@@ -9,6 +9,7 @@ import {
 	installMcpServers,
 	loadMcpCatalog,
 } from "./mcp-installer";
+import { promptMissingKeys } from "./mcp-key-prompt";
 
 /** Interactive MCP server configuration */
 export async function configureMcpServers(): Promise<void> {
@@ -41,6 +42,8 @@ export async function configureMcpServers(): Promise<void> {
 		p.log.info("No MCP servers selected");
 		return;
 	}
+
+	await promptMissingKeys(selected as string[], catalog);
 
 	const s = p.spinner();
 	s.start(`Installing ${selected.length} MCP servers...`);

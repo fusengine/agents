@@ -3,10 +3,13 @@
  * Single Responsibility: Build selection options for installer UI
  */
 import type { McpCatalog, McpSelectOption } from "../interfaces/mcp";
+import { loadEnvFile } from "./env-file";
 
-/** Check if API key is available in environment */
+/** Check if API key is available in environment or .env file */
 export function hasApiKey(envVar: string): boolean {
-	return !!process.env[envVar];
+	if (process.env[envVar]) return true;
+	const envFile = loadEnvFile();
+	return !!envFile[envVar];
 }
 
 /** Build selection options grouped by API key requirement */

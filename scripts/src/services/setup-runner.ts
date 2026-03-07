@@ -6,7 +6,7 @@ import { join } from "node:path";
 import * as p from "@clack/prompts";
 import type { SetupPaths } from "../interfaces/setup";
 import { copyExecutable } from "../utils/fs-helpers";
-import { checkApiKeys, configureApiKeys, configureShell } from "./env-manager";
+import { configureShell } from "./env-manager";
 import { configureMcpServers } from "./mcp-setup";
 import {
 	backupSettings,
@@ -82,13 +82,6 @@ export async function runSetup(
 	await saveSettings(paths.settings, settings);
 
 	if (!skipEnv) {
-		const { missing } = checkApiKeys();
-		if (missing.length > 0) {
-			p.log.warn(`${missing.length} API keys missing`);
-			await configureApiKeys();
-		} else {
-			p.log.success("All API keys configured");
-		}
 		await configureShell();
 		await configureMcpServers();
 	}
