@@ -1,5 +1,10 @@
 # Release Notes
 
+## [1.38.25] - 07-03-2026
+
+### Added
+- feat(design-expert): v2.1.0 add ux-copy skill and framework handoff specs (fuse-design 2.1.0)
+
 ## [1.38.24] - 07-03-2026
 
 ### Changed
