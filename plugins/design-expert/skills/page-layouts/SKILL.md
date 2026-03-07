@@ -7,7 +7,7 @@ versions:
   shadcn-ui: "2.x"
 user-invocable: true
 allowed-tools: Read, Write, Edit, Glob, Grep, Task, mcp__gemini-design__create_frontend, mcp__gemini-design__modify_frontend
-references: references/page-architecture.md, references/pages/dashboard.md, references/pages/auth-login.md, references/pages/auth-register.md, references/pages/settings.md, references/pages/onboarding.md, references/pages/error-pages.md, references/pages/profile.md, references/navigation/sidebar.md, references/navigation/navbar.md, references/navigation/footer.md, references/navigation/mobile-nav.md, references/patterns/data-table.md, references/patterns/command-palette.md, references/patterns/modal-dialog.md, references/patterns/toast-notifications.md, references/patterns/empty-state.md
+references: references/page-architecture.md, references/pages/dashboard.md, references/pages/auth-login.md, references/pages/auth-register.md, references/pages/settings.md, references/pages/onboarding.md, references/pages/error-pages.md, references/pages/profile.md, references/navigation/sidebar.md, references/navigation/navbar.md, references/navigation/footer.md, references/navigation/mobile-nav.md, references/patterns/data-table.md, references/patterns/command-palette.md, references/patterns/modal-dialog.md, references/patterns/toast-notifications.md, references/patterns/empty-state.md, references/handoff-swift.md, references/handoff-livewire.md
 related-skills: identity-system, generating-components, motion-system
 ---
 

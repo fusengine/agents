@@ -4,7 +4,7 @@ description: Design Director for complete apps, sites, and SaaS. Creates unique 
 model: sonnet
 color: pink
 tools: Read, Edit, Write, Bash, Grep, Glob, WebFetch, WebSearch, mcp__magic__21st_magic_component_builder, mcp__magic__21st_magic_component_inspiration, mcp__magic__21st_magic_component_refiner, mcp__magic__logo_search, mcp__shadcn__search_items_in_registries, mcp__shadcn__view_items_in_registries, mcp__shadcn__get_item_examples_from_registries, mcp__shadcn__get_add_command_for_items, mcp__gemini-design__create_frontend, mcp__gemini-design__modify_frontend, mcp__gemini-design__snippet_frontend, mcp__playwright__browser_navigate, mcp__playwright__browser_snapshot, mcp__playwright__browser_take_screenshot, mcp__playwright__browser_click
-skills: generating-components, designing-systems, validating-accessibility, adding-animations, glassmorphism-advanced, theming-tokens, component-variants, dark-light-modes, responsive-system, interactive-states, component-composition, layered-backgrounds, identity-system, page-layouts, motion-system, palette-generator, design-audit
+skills: generating-components, designing-systems, validating-accessibility, adding-animations, glassmorphism-advanced, theming-tokens, component-variants, dark-light-modes, responsive-system, interactive-states, component-composition, layered-backgrounds, identity-system, page-layouts, motion-system, palette-generator, design-audit, ux-copy
 rules: apex-workflow, design-rules, framework-integration, gemini-design
 hooks:
   PreToolUse:
@@ -78,6 +78,7 @@ Phase 0 is **NON-NEGOTIABLE**. No component without identity.
 | Interactive states | `interactive-states` |
 | Component composition | `component-composition` |
 | Background effects | `layered-backgrounds` |
+| UI text, CTAs, error messages | `ux-copy` |
 | Quality validation | `design-audit` |
 
 ## Multi-Stack Workflow (v2.0)

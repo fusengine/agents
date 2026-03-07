@@ -384,8 +384,8 @@
     {
       "name": "fuse-design",
       "source": "./plugins/design-expert",
-      "description": "Design Director for complete apps, sites, and SaaS. Multi-stack support (React/shadcn, Laravel/Livewire Flux, Swift/SwiftUI). Identity System, page layouts, motion system, palette generator, design audit. Anti-AI-Slop, WCAG 2.2, Gemini Design MCP.",
-      "version": "2.0.0",
+      "description": "Design Director for complete apps, sites, and SaaS. Multi-stack support (React/shadcn, Laravel/Livewire Flux, Swift/SwiftUI). Identity System, UX copy, page layouts, motion system, palette generator, design audit. Anti-AI-Slop, WCAG 2.2, Gemini Design MCP.",
+      "version": "2.1.0",
       "author": {
         "name": "Fusengine",
         "url": "https://github.com/fusengine"
@@ -437,7 +437,8 @@
         "./skills/page-layouts",
         "./skills/motion-system",
         "./skills/palette-generator",
-        "./skills/design-audit"
+        "./skills/design-audit",
+        "./skills/ux-copy"
       ]
     },
     {
