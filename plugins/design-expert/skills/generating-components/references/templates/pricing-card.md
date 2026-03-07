@@ -1,96 +1,63 @@
 ---
 name: pricing-card
-description: Pricing card with features list and popular badge
-when-to-use: Creating individual pricing plan cards for subscription tiers
+description: Single pricing tier card with features list and popular badge
+when-to-use: Individual pricing plan cards within a pricing section
 keywords: pricing, card, features, popular, subscription
 priority: high
-related: pricing-cards.md, cards-guide.md
+related: pricing-cards.md
 ---
 
-# Pricing Card Template
+# Pricing Card Spec
 
-## Dependencies
+## Layout
 
-```bash
-bun add framer-motion lucide-react
-```
+| Zone | Content | Responsive |
+|------|---------|------------|
+| Badge (conditional) | "Most Popular" pill, absolute -top-3 | Centered above card |
+| Header | Plan name + short description | Left or center aligned |
+| Price | Large number + /month or /year suffix | Prominent display |
+| Features | Checkmark list of included features | Full width |
+| Footer | Full-width CTA button | Sticky bottom of card |
 
-## Component
+## Components (shadcn/ui)
 
-```tsx
-import { motion } from "framer-motion";
-import { Button } from "@/components/ui/button";
-import { Check } from "lucide-react";
-import { cn } from "@/lib/utils";
+- Button: default variant for popular, outline for others
+- Badge: "Most Popular" indicator (+38% selection rate)
+- Card: rounded-2xl container with border
 
-interface PricingCardProps {
-  name: string;
-  price: number;
-  description: string;
-  features: string[];
-  popular?: boolean;
-}
+## Design Tokens
 
-export function PricingCard({
-  name,
-  price,
-  description,
-  features,
-  popular = false
-}: PricingCardProps) {
-  return (
-    <motion.div
-      className={cn(
-        "relative rounded-2xl border p-8",
-        popular && "border-primary shadow-lg"
-      )}
-      whileHover={{ y: -4 }}
-      transition={{ type: "spring", stiffness: 300 }}
-    >
-      {popular && (
-        <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-primary px-4 py-1 text-xs font-medium text-primary-foreground">
-          Most Popular
-        </span>
-      )}
+| Token | Value | Notes |
+|-------|-------|-------|
+| card-radius | rounded-2xl | Consistent with design system |
+| popular-border | border-primary | Highlight popular tier |
+| popular-shadow | shadow-lg shadow-primary/20 | Depth for popular |
+| price-size | text-4xl font-bold | Price prominence |
+| check-color | text-primary | Feature checkmarks |
 
-      <div className="text-center">
-        <h3 className="text-lg font-semibold">{name}</h3>
-        <p className="mt-2 text-sm text-muted-foreground">{description}</p>
+## Animation (Framer Motion)
 
-        <div className="mt-6">
-          <span className="text-4xl font-bold">${price}</span>
-          <span className="text-muted-foreground">/month</span>
-        </div>
-      </div>
+| Element | Animation | Duration |
+|---------|-----------|----------|
+| Card | whileHover: y -4 | spring stiffness 300 |
+| Badge | Scale entrance | 0.3s |
 
-      <ul className="mt-8 space-y-3">
-        {features.map((feature) => (
-          <li key={feature} className="flex items-center gap-3">
-            <Check className="h-4 w-4 text-primary flex-shrink-0" />
-            <span className="text-sm">{feature}</span>
-          </li>
-        ))}
-      </ul>
+## Gemini Design Prompt
 
-      <Button
-        className="mt-8 w-full"
-        variant={popular ? "default" : "outline"}
-      >
-        Get Started
-      </Button>
-    </motion.div>
-  );
-}
-```
+> "Create a single pricing card with plan name, description, large price display, checkmark features list, and full-width CTA button. Popular variant gets border-primary, shadow-lg, and 'Most Popular' badge. Use design-system.md tokens. OKLCH colors, no Inter/Roboto. Spring hover animation."
 
-## Usage
+## Multi-Stack Adaptation
 
-```tsx
-<PricingCard
-  name="Pro"
-  price={29}
-  description="For growing teams"
-  features={["Unlimited projects", "Priority support", "Custom domains"]}
-  popular
-/>
-```
+| Stack | Implementation |
+|-------|---------------|
+| React + shadcn | Gemini Design MCP with Card, Button, Badge |
+| Laravel Blade | Visual spec -> Livewire Flux card component |
+| Swift/SwiftUI | Visual spec -> VStack with GroupBox style |
+
+## Validation Checklist
+
+- [ ] Popular badge uses absolute positioning, not inline
+- [ ] Price is visually dominant (text-4xl font-bold)
+- [ ] CTA variant differs between popular and standard
+- [ ] Hover lift animation, not scale-only
+- [ ] OKLCH colors, no hard-coded hex values

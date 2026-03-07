@@ -692,6 +692,68 @@ function useDensity(userActivity: 'browsing' | 'focused' | 'scanning') {
 
 ---
 
+## PART 8: Loading Patterns (2026)
+
+### Skeleton Screens (PREFERRED)
+
+Perceived 9-12% faster load time (Nielsen Norman Group).
+
+```tsx
+// CORRECT - Skeleton that matches content shape
+<div className="space-y-4">
+  <Skeleton className="h-8 w-3/4" />           {/* Title */}
+  <Skeleton className="h-4 w-full" />           {/* Description line 1 */}
+  <Skeleton className="h-4 w-2/3" />            {/* Description line 2 */}
+  <div className="flex gap-4 mt-6">
+    <Skeleton className="h-32 w-32 rounded-xl" /> {/* Image */}
+    <div className="flex-1 space-y-2">
+      <Skeleton className="h-4 w-full" />
+      <Skeleton className="h-4 w-4/5" />
+    </div>
+  </div>
+</div>
+
+// Shimmer animation (CSS)
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.skeleton {
+  background: linear-gradient(90deg, var(--muted) 25%, var(--muted-foreground)/10 50%, var(--muted) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+```
+
+### Progressive Loading
+
+```
+PRIORITY ORDER:
+1. Above-the-fold content → immediate
+2. Interactive elements → after hydration
+3. Below-fold images → lazy (IntersectionObserver)
+4. Analytics/tracking → idle callback
+```
+
+### Optimistic Updates
+
+```tsx
+// Show result instantly, revert on error
+const optimisticUpdate = (newItem) => {
+  setItems(prev => [...prev, { ...newItem, pending: true }]);
+  try {
+    await api.create(newItem);
+    // Confirm: remove pending flag
+  } catch {
+    // Revert: remove optimistic item
+    setItems(prev => prev.filter(i => i.id !== newItem.id));
+    toast.error("Failed to save");
+  }
+};
+```
+
+---
+
 ## CHECKLIST: Visual Design
 
 ### Typography

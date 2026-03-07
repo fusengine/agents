@@ -1,7 +1,7 @@
 {
   "name": "fuse-design",
-  "version": "1.1.6",
-  "description": "Expert UI/UX Design for React/Next.js with Tailwind CSS. Generate production-ready components using shadcn/ui, 21st.dev, and modern design patterns. Includes accessibility validation (WCAG 2.2), design systems, and micro-interactions.",
+  "version": "2.0.0",
+  "description": "Design Director for complete apps, sites, and SaaS. Multi-stack support (React/shadcn, Laravel/Livewire Flux, Swift/SwiftUI). Identity System, page layouts, motion system, palette generator, design audit. Anti-AI-Slop, WCAG 2.2, Gemini Design MCP.",
   "author": {
     "name": "Fusengine",
     "email": "hello@fusengine.ch",
@@ -13,16 +13,20 @@
   "keywords": [
     "design",
     "ui-ux",
+    "design-director",
+    "identity-system",
+    "multi-stack",
     "react",
     "nextjs",
+    "laravel",
+    "swift",
     "tailwind",
     "shadcn",
-    "21st-dev",
     "accessibility",
     "wcag",
-    "design-systems",
-    "components",
-    "animations",
-    "framer-motion"
+    "framer-motion",
+    "oklch",
+    "page-layouts",
+    "design-audit"
   ]
 }

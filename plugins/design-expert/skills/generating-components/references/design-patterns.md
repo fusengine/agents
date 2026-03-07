@@ -325,3 +325,53 @@ const statusShadows = {
   </p>
 </div>
 ```
+
+## SaaS Patterns (Research-Backed)
+
+### Dashboard Layout
+```
+F-PATTERN LAYOUT (eye-tracking research):
+- North Star metric: TOP-LEFT (first fixation point)
+- Secondary KPIs: horizontal row below
+- Charts/trends: main body area
+- Actions/filters: top-right
+```
+
+### Pricing Page
+```
+3-TIER RULE (conversion research):
+- 3 tiers optimal (Paradox of Choice — Schwartz)
+- "Most Popular" badge → +38% selection rate
+- Annual billing as DEFAULT (higher LTV)
+- Feature comparison table below cards
+- FAQ section at bottom (objection handling)
+```
+
+### Onboarding Flow
+```
+PROGRESSIVE ONBOARDING:
+- 3-7 steps optimal (Miller's Law)
+- Progress bar → +20-30% completion (NNG)
+- Delay signup wall (value-first)
+- Celebrate completion (confetti, checkmark)
+- Skip option always visible
+```
+
+### Command Palette
+```
+CMD+K PATTERN:
+- Fuzzy search across all actions
+- Grouped sections (Navigation, Actions, Settings)
+- Recent/frequent items first
+- Keyboard shortcuts displayed inline
+- Max 7-10 visible results (scroll for more)
+```
+
+### Settings Page
+```
+SETTINGS ORGANIZATION:
+- Grouped by category (Account, Notifications, Billing)
+- Sidebar navigation (desktop) / accordion (mobile)
+- Auto-save with toast confirmation
+- Destructive actions at bottom with confirmation
+```

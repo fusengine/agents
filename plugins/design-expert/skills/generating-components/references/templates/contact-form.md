@@ -1,103 +1,67 @@
 ---
 name: contact-form
-description: Contact form with validation and success state
-when-to-use: Creating contact pages with form validation and submission handling
-keywords: form, contact, validation, input, textarea
+description: Single-column contact form with inline validation and success state
+when-to-use: Contact pages, support forms, lead capture
+keywords: form, contact, validation, single-column, accessible
 priority: high
-related: forms-guide.md, contact-form.md
+related: faq-accordion.md
 ---
 
-# Contact Form Template
+# Contact Form Spec
 
-## Dependencies
+## Layout
 
-```bash
-bun add framer-motion lucide-react
-```
+| Zone | Content | Responsive |
+|------|---------|------------|
+| Row 1 | First name + Last name (ONLY 2-col exception) | Stack on mobile |
+| Row 2 | Email (full width) | Full width |
+| Row 3 | Subject or topic (full width) | Full width |
+| Row 4 | Message textarea (full width, 5 rows) | Full width |
+| Row 5 | Submit button (full width) | Full width |
+| Success | Checkmark icon + confirmation message | Centered |
 
-## Component
+**CRITICAL: Single column layout only. Never use grid-cols-2 for the form. Exception: first name + last name share one row. Research: single column = +25% completion rate (Baymard Institute).**
 
-```tsx
-"use client";
+## Components (shadcn/ui)
 
-import { useState } from "react";
-import { motion } from "framer-motion";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { Loader2, CheckCircle } from "lucide-react";
+- Input: text fields with Label
+- Textarea: message field, 5 rows minimum
+- Button: submit with loading state (Loader2 spinner)
+- Label: accessible labels for each field
 
-export function ContactForm() {
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
+## Design Tokens
 
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    setIsSubmitting(true);
-    // Submit logic here
-    await new Promise(r => setTimeout(r, 1000));
-    setIsSubmitting(false);
-    setIsSuccess(true);
-  }
+| Token | Value | Notes |
+|-------|-------|-------|
+| spacing | space-y-6 | Consistent vertical gap |
+| input-radius | rounded-lg | From design system |
+| success-color | green-600 | Confirmation state |
+| error-color | destructive | Inline validation |
 
-  if (isSuccess) {
-    return (
-      <motion.div
-        className="flex flex-col items-center justify-center py-12 text-center"
-        initial={{ opacity: 0, scale: 0.95 }}
-        animate={{ opacity: 1, scale: 1 }}
-      >
-        <div className="rounded-full bg-green-100 p-3 dark:bg-green-900/20">
-          <CheckCircle className="h-8 w-8 text-green-600" />
-        </div>
-        <h3 className="mt-4 font-semibold">Message sent!</h3>
-        <p className="mt-2 text-sm text-muted-foreground">
-          We'll get back to you within 24 hours.
-        </p>
-      </motion.div>
-    );
-  }
+## Animation (Framer Motion)
 
-  return (
-    <form onSubmit={handleSubmit} className="space-y-6">
-      <div className="grid gap-6 sm:grid-cols-2">
-        <div className="space-y-2">
-          <Label htmlFor="firstName">First name</Label>
-          <Input id="firstName" required />
-        </div>
-        <div className="space-y-2">
-          <Label htmlFor="lastName">Last name</Label>
-          <Input id="lastName" required />
-        </div>
-      </div>
+| Element | Animation | Duration |
+|---------|-----------|----------|
+| Success state | opacity 0->1, scale 0.95->1 | 0.3s |
+| Error messages | opacity 0->1, y -4->0 | 0.2s |
+| Submit button | Loading spinner on submit | Until response |
 
-      <div className="space-y-2">
-        <Label htmlFor="email">Email</Label>
-        <Input id="email" type="email" required />
-      </div>
+## Gemini Design Prompt
 
-      <div className="space-y-2">
-        <Label htmlFor="message">Message</Label>
-        <Textarea
-          id="message"
-          rows={5}
-          placeholder="How can we help you?"
-          required
-        />
-      </div>
+> "Create a single-column contact form with first+last name on one row (only exception to single-column), email field, message textarea, and full-width submit button with loading state. Include inline validation on blur and animated success state with checkmark. Use design-system.md tokens. OKLCH colors, no Inter/Roboto. Accessible labels and focus states."
 
-      <Button type="submit" className="w-full" disabled={isSubmitting}>
-        {isSubmitting ? (
-          <>
-            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-            Sending...
-          </>
-        ) : (
-          "Send Message"
-        )}
-      </Button>
-    </form>
-  );
-}
-```
+## Multi-Stack Adaptation
+
+| Stack | Implementation |
+|-------|---------------|
+| React + shadcn | Gemini Design MCP with Input, Textarea, Button, Label |
+| Laravel Blade | Visual spec -> Livewire Flux form with wire:submit |
+| Swift/SwiftUI | Visual spec -> Form with TextField and TextEditor |
+
+## Validation Checklist
+
+- [ ] SINGLE column layout (never grid-cols-2 except name row)
+- [ ] Inline validation on blur, not on submit only
+- [ ] Loading state with spinner on submit button
+- [ ] Animated success state after submission
+- [ ] Accessible: all inputs have associated Labels

@@ -1,5 +1,18 @@
 # Design Rules (STRICT - NO EXCEPTIONS)
 
+## IDENTITY SYSTEM - MANDATORY (v2.0)
+
+### BEFORE ANY COMPONENT
+1. Check for `design-system.md` in project root or docs/
+2. If missing → Run identity-system skill FIRST
+3. ALL components must reference design-system.md tokens
+4. NEVER use default shadcn palette without customization
+
+### Identity Overrides Font Rules
+If design-system.md specifies different fonts than Clash Display/Satoshi,
+USE the identity fonts. The font rules below are DEFAULTS for when
+no identity has been established.
+
 ## FONTS - MANDATORY
 
 ### NEVER USE (AI Slop)
@@ -136,7 +149,7 @@ import { motion } from "framer-motion";
 Height: 40-60px (never below 40px)
 Padding X: 16-32px (web), full-width (mobile)
 Font size: 16pt (never below 13pt, never above 20pt)
-Touch target: 44x44px minimum (a11y)
+Touch target: 44x44px minimum (Apple HIG + WCAG 2.5.5)
 ```
 
 ### States (ALL REQUIRED)
@@ -163,6 +176,7 @@ Touch target: 44x44px minimum (a11y)
 ### Layout Rules
 ```
 ALWAYS: Single column layout
+EXCEPTION: First name + Last name may share a row (only paired short fields)
 NEVER: Multi-column (disrupts vertical momentum)
 ```
 
@@ -171,7 +185,7 @@ NEVER: Multi-column (disrupts vertical momentum)
 Normal → Active (focus) → Completed (✓) → Error (red) → Disabled
 ```
 
-### Validation
+### Validation (Inline on blur +25% completion — Baymard)
 ```tsx
 /* Inline validation on blur (NOT on submit only) */
 /* Specific error messages (NOT "Invalid input") */
@@ -254,6 +268,28 @@ from-indigo-500 to-purple-500
 from-primary to-accent
 from-primary to-primary/60
 ```
+
+## MULTI-STACK RULES (v2.0)
+
+### Framework Detection
+| File | Stack | UI Approach |
+|------|-------|-------------|
+| `next.config.*` | Next.js | Gemini Design + shadcn |
+| `composer.json` + `artisan` | Laravel | Check for Inertia |
+| `Package.swift` | Swift | SwiftUI visual specs |
+
+### Laravel Stack Detection
+| Has Inertia? | Has React? | Approach |
+|---|---|---|
+| Yes | Yes | Gemini Design + shadcn (React frontend) |
+| No | No | Visual specs → Livewire Flux |
+
+## LOADING STATES - MANDATORY
+
+- ALWAYS: Skeleton screens (perceived 9-12% faster — NNG)
+- NEVER: Spinner only (no context)
+- Skeleton matches content layout shape
+- Use shimmer animation on skeleton placeholders
 
 ## VALIDATION CHECKLIST
 

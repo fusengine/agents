@@ -1,7 +1,7 @@
 {
   "_description": "Design Expert - UI/UX validation hooks",
-  "_version": "1.0.0",
-  
+  "_version": "2.0.0",
+
   "hooks": {
     "PreToolUse": [
       {
@@ -13,19 +13,19 @@
             "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/check-design-skill.py"
           }
         ]
-      }
-    ],
-    "PostToolUse": [
+      },
       {
-        "_description": "Validate design best practices after Write/Edit",
-        "matcher": "Write|Edit",
+        "_description": "Check shadcn installation before writing components",
+        "matcher": "Write",
         "hooks": [
           {
             "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/validate-design.py"
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/check-shadcn-install.py"
           }
         ]
-      },
+      }
+    ],
+    "PostToolUse": [
       {
         "_description": "Track skill file reads",
         "matcher": "Read",
@@ -38,11 +38,21 @@
       },
       {
         "_description": "Track MCP research calls",
-        "matcher": "mcp__.*",
+        "matcher": "mcp__context7__|mcp__exa__|mcp__magic__|mcp__shadcn__",
         "hooks": [
           {
             "type": "command",
             "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/track-mcp-research.py"
+          }
+        ]
+      },
+      {
+        "_description": "Validate design best practices after Write/Edit",
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/validate-design.py"
           }
         ]
       }

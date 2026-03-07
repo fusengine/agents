@@ -7,7 +7,7 @@ versions:
   shadcn-ui: "2.x"
 user-invocable: true
 allowed-tools: Read, Write, Edit, Glob, Grep, Task, mcp__gemini-design__create_frontend, mcp__gemini-design__snippet_frontend, mcp__gemini-design__modify_frontend, mcp__magic__21st_magic_component_builder, mcp__magic__21st_magic_component_inspiration, mcp__magic__21st_magic_component_refiner, mcp__shadcn__search_items_in_registries, mcp__shadcn__view_items_in_registries, mcp__shadcn__get_item_examples_from_registries, mcp__shadcn__get_add_command_for_items
-references: references/gemini-design-workflow.md, references/21st-dev.md, references/shadcn.md, references/buttons-guide.md, references/forms-guide.md, references/cards-guide.md, references/icons-guide.md, references/ui-visual-design.md, references/grids-layout.md, references/design-patterns.md, references/component-examples.md, references/templates/hero-section.md, references/templates/feature-grid.md, references/templates/pricing-card.md, references/templates/contact-form.md, references/templates/testimonial-card.md, references/templates/stats-section.md, references/templates/faq-accordion.md, references/templates/hero-glassmorphism.md, references/templates/pricing-cards.md
+references: references/gemini-design-workflow.md, references/21st-dev.md, references/shadcn.md, references/buttons-guide.md, references/forms-guide.md, references/cards-guide.md, references/icons-guide.md, references/ui-visual-design.md, references/grids-layout.md, references/design-patterns.md, references/component-examples.md, references/photos-images.md, references/templates/hero-section.md, references/templates/feature-grid.md, references/templates/pricing-card.md, references/templates/contact-form.md, references/templates/testimonial-card.md, references/templates/stats-section.md, references/templates/faq-accordion.md, references/templates/hero-glassmorphism.md, references/templates/pricing-cards.md
 related-skills: designing-systems, adding-animations, validating-accessibility
 ---
 
@@ -30,9 +30,11 @@ After implementation, run **fuse-ai-pilot:sniper** for validation.
 | Feature | Description |
 |---------|-------------|
 | **Gemini Design MCP** | AI-powered frontend generation (create, modify, snippet) |
+| **Structured Specs** | Layout + component + animation specs (NOT raw code templates) |
+| **Multi-Stack** | Adapts to React/Laravel/Swift via visual specs |
 | **21st.dev** | Component inspiration and builder |
 | **shadcn/ui** | Copy-paste component library |
-| **Anti-AI-Slop** | Mandatory rules against generic designs |
+| **Anti-AI-Slop** | Mandatory identity-driven design |
 
 ---
 
@@ -84,41 +86,25 @@ components/
 
 | Template | When to Use |
 |----------|-------------|
-| [hero-section.md](references/templates/hero-section.md) | Landing page hero |
-| [hero-glassmorphism.md](references/templates/hero-glassmorphism.md) | Glassmorphism hero |
-| [feature-grid.md](references/templates/feature-grid.md) | Features showcase |
-| [pricing-card.md](references/templates/pricing-card.md) | Pricing tiers |
-| [contact-form.md](references/templates/contact-form.md) | Contact forms |
-| [testimonial-card.md](references/templates/testimonial-card.md) | Reviews/testimonials |
-| [stats-section.md](references/templates/stats-section.md) | Stats with counters |
-| [faq-accordion.md](references/templates/faq-accordion.md) | FAQ sections |
+| [hero-section.md](references/templates/hero-section.md) | Hero section spec + Gemini prompt |
+| [hero-glassmorphism.md](references/templates/hero-glassmorphism.md) | Glassmorphism hero spec |
+| [feature-grid.md](references/templates/feature-grid.md) | Feature showcase spec + layout |
+| [pricing-card.md](references/templates/pricing-card.md) | Pricing tier spec + Gemini prompt |
+| [contact-form.md](references/templates/contact-form.md) | Contact form spec + validation |
+| [testimonial-card.md](references/templates/testimonial-card.md) | Testimonial/review spec |
+| [stats-section.md](references/templates/stats-section.md) | Stats section spec + counters |
+| [faq-accordion.md](references/templates/faq-accordion.md) | FAQ section spec |
+| [pricing-cards.md](references/templates/pricing-cards.md) | Pricing cards spec + Gemini prompt |
+
+### Full Pages & Identity
+For complete page designs (dashboard, auth, settings), see `page-layouts` skill.
+For visual identity (palette, typography, tokens), see `identity-system` skill.
 
 ---
 
 ## Quick Reference
 
-### Gemini Design Tools
-
-```typescript
-// Create full view from scratch
-mcp__gemini-design__create_frontend({
-  prompt: "Hero section with glassmorphism",
-  designSystem: "contents of design-system.md"
-})
-
-// Modify existing component
-mcp__gemini-design__modify_frontend({
-  existingCode: "<Button>...",
-  prompt: "Add hover animation"
-})
-
-// Generate snippet
-mcp__gemini-design__snippet_frontend({
-  prompt: "Loading spinner"
-})
-```
-
-→ See [gemini-design-workflow.md](references/gemini-design-workflow.md) for complete workflow
+→ See [gemini-design-workflow.md](references/gemini-design-workflow.md) for Gemini Design tool usage.
 
 ### Anti-AI-Slop Table
 
@@ -152,36 +138,4 @@ mcp__gemini-design__snippet_frontend({
 
 ---
 
-## Framework Delegation (AFTER Gemini)
-
-**After generating UI, ALWAYS delegate to framework expert for SOLID validation.**
-
-### Detection → Expert
-
-| Project Files | Delegate To |
-|---------------|-------------|
-| `next.config.*` | `fuse-nextjs:nextjs-expert` |
-| `package.json` + React | `fuse-react:react-expert` |
-| `composer.json` | `fuse-laravel:laravel-expert` |
-
-### Why Delegate?
-
-design-expert handles:
-- ✅ Beautiful UI (Anti-AI-Slop)
-- ✅ Animations (Framer Motion)
-- ✅ Accessibility (WCAG 2.2)
-
-Framework expert handles:
-- ✅ SOLID compliance (files < 100 lines)
-- ✅ Framework patterns (App Router, Server Components)
-- ✅ Integration (Better Auth, Prisma, TanStack)
-
-### Delegation Workflow
-
-```
-1. Generate component with Gemini Design
-2. Detect framework from project files
-3. Launch Task with framework expert
-4. Expert validates SOLID + patterns
-5. sniper runs final validation
-```
+→ For multi-stack delegation rules, see `rules/framework-integration.md`.
