@@ -1,5 +1,10 @@
 # Release Notes
 
+## [1.38.27] - 07-03-2026
+
+### Added
+- feat(statusline): add background daemon for independent OAuth refresh (core-guards 1.1.12)
+
 ## [1.38.26] - 07-03-2026
 
 ### Fixed
