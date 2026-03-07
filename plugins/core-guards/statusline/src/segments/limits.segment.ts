@@ -6,7 +6,12 @@
 
 import type { StatuslineConfig } from "../config/schema";
 import type { ISegment, SegmentContext } from "../interfaces";
-import { formatUsage, getUsageLimits } from "../services/oauth.service";
+import {
+	formatUsage,
+	getErrorCooldownLeft,
+	getLastFailReason,
+	getUsageLimits,
+} from "../services/oauth.service";
 import { colors, formatTimeLeft, generateProgressBar, progressiveColor } from "../utils";
 
 export class LimitsSegment implements ISegment {
@@ -19,7 +24,19 @@ export class LimitsSegment implements ISegment {
 
 	async render(_context: SegmentContext, config: StatuslineConfig): Promise<string> {
 		const usage = await getUsageLimits();
-		if (!usage) return colors.gray("OAuth: N/A");
+		if (!usage) {
+			const reason = getLastFailReason();
+			if (reason === "rate_limited" || reason === "api_unreachable") {
+				const cooldown = getErrorCooldownLeft();
+				const time = cooldown > 0 ? ` (retry ${formatTimeLeft(cooldown)})` : "";
+				return colors.gray(
+					`Limits: ${reason === "rate_limited" ? "rate limited" : "API unreachable"}${time}`,
+				);
+			}
+			if (reason === "token_expired") return colors.gray("Limits: token expired");
+			if (reason === "no_credentials") return colors.gray("Limits: no credentials");
+			return colors.gray("Limits: unavailable");
+		}
 
 		const formatted = formatUsage(usage);
 		const limitsConfig = config.limits ?? { show5h: true, show7d: true, showOpus: false };

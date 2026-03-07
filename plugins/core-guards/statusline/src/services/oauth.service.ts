@@ -1,20 +1,16 @@
 /**
- * OAuth Service - Retrieves usage limits via OAuth
+ * OAuth Service - Cache orchestration and credential access
  *
- * @description SRP: Keychain access and OAuth API calls only
+ * @description SRP: Cache management and Keychain access only
  */
 
-import {
-	CACHE_TTL_MS,
-	KEYCHAIN_SERVICE,
-	MAX_RETRIES,
-	OAUTH_API_URL,
-	OAUTH_HEADERS,
-	RETRY_DELAY_MS,
-} from "../constants/oauth.constant";
+import { CACHE_TTL_MS, ERROR_CACHE_TTL_MS, KEYCHAIN_SERVICE } from "../constants/oauth.constant";
 import type { OAuthCredentials, OAuthUsageResponse } from "../interfaces/oauth-usage.interface";
+import { loadErrorState, saveErrorState } from "./error-state";
+import { fetchUsage, getLastFailReason as getFetchReason } from "./oauth-fetch";
 
-// Re-export formatUsage for backward compatibility
+export { getErrorCooldownLeft, getLastFailReason } from "./error-state";
+export type { OAuthFailReason } from "./oauth-fetch";
 export { formatUsage } from "./oauth-formatter";
 
 let cachedUsage: OAuthUsageResponse | null = null;
@@ -40,39 +36,7 @@ export async function getCredentialsFromKeychain(): Promise<OAuthCredentials | n
 }
 
 /**
- * Calls OAuth API with retry logic
- * @param accessToken - OAuth access token
- * @param retries - Remaining retry attempts
- */
-async function fetchWithRetry(
-	accessToken: string,
-	retries = MAX_RETRIES,
-): Promise<OAuthUsageResponse | null> {
-	try {
-		const response = await fetch(OAUTH_API_URL, {
-			method: "GET",
-			headers: { ...OAUTH_HEADERS, Authorization: `Bearer ${accessToken}` },
-		});
-		if (!response.ok) {
-			if ((response.status === 401 || response.status === 429) && retries > 0) {
-				const delay = response.status === 429 ? RETRY_DELAY_MS * 2 : RETRY_DELAY_MS;
-				await Bun.sleep(delay);
-				return fetchWithRetry(accessToken, retries - 1);
-			}
-			return null;
-		}
-		return (await response.json()) as OAuthUsageResponse;
-	} catch {
-		if (retries > 0) {
-			await Bun.sleep(RETRY_DELAY_MS);
-			return fetchWithRetry(accessToken, retries - 1);
-		}
-		return null;
-	}
-}
-
-/**
- * Retrieves usage limits with cache
+ * Retrieves usage limits with success cache and error cooldown
  * @returns Usage data or null
  */
 export async function getUsageLimits(): Promise<OAuthUsageResponse | null> {
@@ -80,12 +44,26 @@ export async function getUsageLimits(): Promise<OAuthUsageResponse | null> {
 	if (cachedUsage && now - cacheTimestamp < CACHE_TTL_MS) {
 		return cachedUsage;
 	}
+	const { errorTimestamp } = loadErrorState();
+	if (errorTimestamp && now - errorTimestamp < ERROR_CACHE_TTL_MS) {
+		return cachedUsage;
+	}
 	const credentials = await getCredentialsFromKeychain();
-	if (!credentials?.claudeAiOauth?.accessToken) return null;
-	const usage = await fetchWithRetry(credentials.claudeAiOauth.accessToken);
+	if (!credentials?.claudeAiOauth?.accessToken) {
+		saveErrorState(now, "no_credentials");
+		return cachedUsage;
+	}
+	if (credentials.claudeAiOauth.expiresAt && now >= credentials.claudeAiOauth.expiresAt) {
+		saveErrorState(now, "token_expired");
+		return cachedUsage;
+	}
+	const usage = await fetchUsage(credentials.claudeAiOauth.accessToken);
 	if (usage) {
 		cachedUsage = usage;
 		cacheTimestamp = now;
+		saveErrorState(0, null);
+	} else {
+		saveErrorState(now, getFetchReason());
 	}
 	return usage ?? cachedUsage;
 }
