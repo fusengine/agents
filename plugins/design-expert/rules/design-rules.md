@@ -269,6 +269,42 @@ from-primary to-accent
 from-primary to-primary/60
 ```
 
+## DUAL-MODE ENFORCEMENT (v2.1) - ZERO TOLERANCE
+
+### NEVER ASSUME
+- NEVER assume dark-first or light-first — BOTH modes must work
+- NEVER design for one mode only — user controls the toggle
+- NEVER skip visual verification of either mode
+
+### BOTH MODES MANDATORY
+Every component, every page, every section MUST:
+1. Use CSS variables that have BOTH `:root` AND `.dark` values
+2. Be visually verified in light AND dark via Playwright
+3. Have adequate contrast (4.5:1) in BOTH modes
+
+### GLASSMORPHISM IN LIGHT MODE
+Glass effects need different opacities per mode:
+```css
+/* Light: higher opacity, subtle blur */
+bg-white/60 backdrop-blur-xl border-black/5
+
+/* Dark: lower opacity, stronger blur */
+dark:bg-white/[0.03] dark:backdrop-blur-xl dark:border-white/[0.06]
+```
+
+### GRADIENT ORBS IN LIGHT MODE
+Orbs need higher opacity on light backgrounds:
+```tsx
+/* Light: 10-15% opacity */
+className="bg-primary/12 dark:bg-primary/15"
+```
+
+### FONT VERIFICATION (BLOCKING)
+After ANY UI generation:
+1. Grep project CSS for font imports — Clash Display/Satoshi or identity fonts
+2. If Roboto, Inter, Arial, Open Sans found in layout/CSS → BLOCK and fix
+3. Verify `@import url()` or `next/font` loads the correct fonts
+
 ## MULTI-STACK RULES (v2.0)
 
 ### Framework Detection
@@ -294,14 +330,17 @@ from-primary to-primary/60
 ## VALIDATION CHECKLIST
 
 Before ANY UI code:
-- [ ] Font imports present (Clash/Satoshi)
-- [ ] CSS variables defined in :root
-- [ ] No hard-coded colors
+- [ ] Font imports present (identity fonts or Clash/Satoshi)
+- [ ] NO forbidden fonts (Roboto, Inter, Arial, Open Sans)
+- [ ] CSS variables defined in BOTH :root AND .dark
+- [ ] No hard-coded hex/rgb colors in components
 - [ ] Framer Motion imported
-- [ ] Glassmorphism or depth effects
+- [ ] Glassmorphism or depth effects (adapted per mode)
 - [ ] Chart colors use CSS variables
 - [ ] Button states (hover, pressed, disabled)
 - [ ] Form single-column layout
 - [ ] Icons same stroke width
 - [ ] 60-30-10 color ratio
 - [ ] Touch targets 44x44px minimum
+- [ ] Playwright screenshot in LIGHT mode
+- [ ] Playwright screenshot in DARK mode

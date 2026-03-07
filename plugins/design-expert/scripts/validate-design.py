@@ -11,37 +11,8 @@ sys.path.insert(0, os.path.join(os.path.expanduser("~"),
     "plugins", "_shared", "scripts"))
 from hook_output import post_pass
 
-
-def check_accessibility(content: str) -> list[str]:
-    """Check for accessibility issues in component content."""
-    warnings = []
-    if not re.search(r"<(button|a|input|img)", content):
-        return warnings
-    if re.search(r"<button[^>]*>", content):
-        if not re.search(r"aria-label|aria-labelledby", content):
-            icon_count = len(re.findall(r"<button[^>]*>[^<]*<.*Icon", content))
-            if icon_count > 0:
-                warnings.append("Accessibility: Icon buttons need aria-label.")
-    if re.search(r'<img[^>]*src=', content):
-        for match in re.finditer(r"<img[^>]*?>", content):
-            if "alt=" not in match.group():
-                warnings.append("Accessibility: Images need alt attribute.")
-                break
-    return warnings
-
-
-def check_design_patterns(content: str) -> list[str]:
-    """Check for design anti-patterns."""
-    warnings = []
-    if re.search(r"border-l-[0-9]+ border-l-(blue|green|red|purple)", content):
-        warnings.append("Design: Avoid colored left borders - use shadow or gradient.")
-    if re.search(r"from-purple|to-purple|via-purple|from-pink.*to-purple", content):
-        warnings.append("Design: Avoid purple/pink gradients (AI slop) - use brand colors.")
-    if re.search(r">[^\x00-\x7F]+<", content):
-        emoji_pattern = r">[🎯🚀💡🔥⚡️✨🎨📊💼🏆]<"
-        if re.search(emoji_pattern, content):
-            warnings.append("Design: Avoid emojis as icons - use Lucide React.")
-    return warnings
+sys.path.insert(0, os.path.dirname(__file__))
+from design_checks import run_all_checks
 
 
 def main() -> None:
@@ -56,10 +27,9 @@ def main() -> None:
 
     if tool_name not in ("Write", "Edit"):
         sys.exit(0)
-    if not re.search(r"\.(tsx|jsx)$", file_path):
+    if not re.search(r"\.(tsx|jsx|css)$", file_path):
         sys.exit(0)
 
-    import os
     if not os.path.isfile(file_path):
         sys.exit(0)
 
@@ -69,7 +39,7 @@ def main() -> None:
     except OSError:
         sys.exit(0)
 
-    warnings = check_accessibility(content) + check_design_patterns(content)
+    warnings = run_all_checks(content)
 
     if warnings:
         print(json.dumps({

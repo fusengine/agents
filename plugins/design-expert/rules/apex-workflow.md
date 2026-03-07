@@ -34,12 +34,27 @@ Read skills/adding-animations/SKILL.md       → Framer Motion
 4. Design tokens: colors, typography, spacing
 ```
 
-## Step 08: Preview with Playwright
+## Step 08: Preview BOTH Modes with Playwright (MANDATORY)
 
-After generating UI, verify visually:
+After generating UI, verify BOTH light and dark modes:
 
+### Light Mode
 ```
-1. mcp__playwright__browser_navigate → http://localhost:3000
-2. mcp__playwright__browser_snapshot → capture current state
-3. mcp__playwright__browser_take_screenshot → save for PR
+1. mcp__playwright__browser_navigate → localhost URL
+2. mcp__playwright__browser_evaluate → document.documentElement.classList.remove('dark')
+3. mcp__playwright__browser_take_screenshot → screenshot-light.png
 ```
+
+### Dark Mode
+```
+4. mcp__playwright__browser_evaluate → document.documentElement.classList.add('dark')
+5. mcp__playwright__browser_take_screenshot → screenshot-dark.png
+```
+
+### Verify
+- [ ] Colors match design-system.md in BOTH modes
+- [ ] Text contrast readable in BOTH modes (4.5:1)
+- [ ] Glass effects visible in BOTH modes
+- [ ] Gradient orbs visible in BOTH modes
+- [ ] No white-on-white (light) or invisible elements (dark)
+- [ ] Fonts loaded correctly (NOT system fallback)
