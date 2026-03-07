@@ -1,5 +1,13 @@
 # Release Notes
 
+## [1.38.26] - 07-03-2026
+
+### Fixed
+- fix(statusline): reduce OAuth cache TTL to 2min with disk persistence (core-guards 1.1.11)
+
+### Added
+- feat(design-expert): add dual-mode enforcement and font/color validation hooks (fuse-design 2.1.1)
+
 ## [1.38.25] - 07-03-2026
 
 ### Added
