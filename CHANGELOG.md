@@ -1,5 +1,13 @@
 # Release Notes
 
+## [1.38.24] - 07-03-2026
+
+### Changed
+- refactor(statusline): split OAuth into error-state and fetch modules with 30min cooldown (core-guards 1.1.10)
+
+### Added
+- feat(design-expert): v2.0.0 Design Director with multi-stack and identity system (fuse-design 2.0.0)
+
 ## [1.38.23] - 07-03-2026
 
 ### Changed
