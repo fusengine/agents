@@ -1,16 +1,14 @@
 /**
- * OAuth Service - Cache orchestration and credential access
+ * OAuth Service - Read-only cache reader + daemon launcher
  *
- * @description SRP: Cache management and Keychain access only
+ * @description SRP: Reads usage-cache.json written by daemon. Never fetches API directly.
  */
 
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { homedir } from "node:os";
 import { join } from "node:path";
-import { CACHE_TTL_MS, ERROR_CACHE_TTL_MS, KEYCHAIN_SERVICE } from "../constants/oauth.constant";
-import type { OAuthCredentials, OAuthUsageResponse } from "../interfaces/oauth-usage.interface";
-import { loadErrorState, saveErrorState } from "./error-state";
-import { fetchUsage, getLastFailReason as getFetchReason } from "./oauth-fetch";
+import type { OAuthUsageResponse } from "../interfaces/oauth-usage.interface";
+import { ensureDaemon } from "./daemon-manager";
 
 export { getErrorCooldownLeft, getLastFailReason } from "./error-state";
 export type { OAuthFailReason } from "./oauth-fetch";
@@ -33,68 +31,20 @@ function loadUsageCache(): PersistedCache | null {
 	}
 }
 
-/** Persists usage data to disk */
-function saveUsageCache(data: OAuthUsageResponse, timestamp: number): void {
-	try {
-		const dir = join(homedir(), ".claude", "statusline-data");
-		if (!existsSync(dir)) mkdirSync(dir, { recursive: true });
-		writeFileSync(USAGE_FILE, JSON.stringify({ data, timestamp }));
-	} catch { /* silent — cache is best-effort */ }
-}
-
 const disk = loadUsageCache();
 let cachedUsage: OAuthUsageResponse | null = disk?.data ?? null;
 let cacheTimestamp = disk?.timestamp ?? 0;
 
 /**
- * Retrieves OAuth credentials from macOS Keychain
- * @returns Credentials or null if not found
- */
-export async function getCredentialsFromKeychain(): Promise<OAuthCredentials | null> {
-	try {
-		const proc = Bun.spawn(["security", "find-generic-password", "-s", KEYCHAIN_SERVICE, "-w"], {
-			stdout: "pipe",
-			stderr: "pipe",
-		});
-		const output = await new Response(proc.stdout).text();
-		const trimmed = output.trim();
-		if (!trimmed) return null;
-		return JSON.parse(trimmed) as OAuthCredentials;
-	} catch {
-		return null;
-	}
-}
-
-/**
- * Retrieves usage limits with success cache and error cooldown
- * @returns Usage data or null
+ * Returns usage limits from disk cache. Daemon refreshes in background.
+ * @returns Usage data or null if no cache exists yet
  */
 export async function getUsageLimits(): Promise<OAuthUsageResponse | null> {
-	const now = Date.now();
-	if (cachedUsage && now - cacheTimestamp < CACHE_TTL_MS) {
-		return cachedUsage;
+	ensureDaemon();
+	const fresh = loadUsageCache();
+	if (fresh && fresh.timestamp > cacheTimestamp) {
+		cachedUsage = fresh.data;
+		cacheTimestamp = fresh.timestamp;
 	}
-	const { errorTimestamp } = loadErrorState();
-	if (errorTimestamp && now - errorTimestamp < ERROR_CACHE_TTL_MS) {
-		return cachedUsage;
-	}
-	const credentials = await getCredentialsFromKeychain();
-	if (!credentials?.claudeAiOauth?.accessToken) {
-		saveErrorState(now, "no_credentials");
-		return cachedUsage;
-	}
-	if (credentials.claudeAiOauth.expiresAt && now >= credentials.claudeAiOauth.expiresAt) {
-		saveErrorState(now, "token_expired");
-		return cachedUsage;
-	}
-	const usage = await fetchUsage(credentials.claudeAiOauth.accessToken);
-	if (usage) {
-		cachedUsage = usage;
-		cacheTimestamp = now;
-		saveUsageCache(usage, now);
-		saveErrorState(0, null);
-	} else {
-		saveErrorState(now, getFetchReason());
-	}
-	return usage ?? cachedUsage;
+	return cachedUsage;
 }
