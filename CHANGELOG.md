@@ -1,5 +1,16 @@
 # Release Notes
 
+## [1.38.29] - 14-03-2026
+
+### Added
+- feat(hooks): add modularize skill, FuseCore validation, and enhanced hook scripts (ai-pilot 1.2.10, laravel-expert 1.1.8, nextjs-expert 1.1.9)
+  - Add `modularize` skill with FuseCore and Next.js/React module references
+  - Add `validate-fusecore.py` for Laravel modular architecture enforcement
+  - Add `validate-nextjs-modular.py` for Next.js modules/ enforcement
+  - Add `detect-bash-write.py` for APEX bypass detection
+  - Add `modular_detection.py` shared module for FuseCore project detection
+  - Enhanced skill checks with FuseCore and domain-specific skill enforcement
+
 ## [1.38.28] - 14-03-2026
 
 ### Fixed
