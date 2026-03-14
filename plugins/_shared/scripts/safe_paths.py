@@ -11,10 +11,16 @@ SAFE_WRITE_PATHS = [
     os.path.normpath(os.path.expanduser('~/.claude/logs')),
 ]
 
+_SAFE_RAW = [
+    '~/.claude/fusengine-cache',
+    '~/.claude/logs',
+]
+
 
 def has_safe_write_target(cmd):
-    """Check if command string targets a safe write path."""
-    return any(safe in cmd for safe in SAFE_WRITE_PATHS)
+    """Check if command string targets a safe write path (expanded or raw ~)."""
+    return (any(safe in cmd for safe in SAFE_WRITE_PATHS) or
+            any(raw in cmd for raw in _SAFE_RAW))
 
 
 def resolve_path(path):

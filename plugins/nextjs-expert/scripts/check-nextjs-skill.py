@@ -18,6 +18,7 @@ from check_skill_common import (
 from hook_output import allow_pass
 from nextjs_skill_triggers import detect_required_skills, specific_skill_consulted
 from shadcn_patterns import is_shadcn_project
+from modular_detection import is_nextjs_modular
 
 NEXTJS_RE = r"(use client|use server|NextRequest|NextResponse)"
 IMPORT_RE = r"(from ['\"]next|getServerSideProps|getStaticProps)"
@@ -61,6 +62,14 @@ def main() -> None:
             f"1) {_P}/nextjs-expert/skills/solid-nextjs/SKILL.md"
             f" | 2) {_P}/nextjs-expert/skills/nextjs-16/SKILL.md"
             " | 3) Use mcp__context7__query-docs. After reading, retry.")
+
+    # Phase 1.5: Modular architecture skill enforcement
+    if is_nextjs_modular(root):
+        if not specific_skill_consulted("solid-nextjs", sid):
+            deny_block(
+                "BLOCKED: Modular Next.js (modules/ exists). READ: "
+                f"{_P}/nextjs-expert/skills/solid-nextjs/SKILL.md "
+                "BEFORE writing code. Modular architecture REQUIRED.")
 
     # Phase 2: Domain skills (skip shadcn if no components.json)
     required = detect_required_skills(content)

@@ -58,20 +58,23 @@ def main() -> None:
         fw_auth = auth.setdefault(framework, {})
         sid = data.get("session_id", "")
         fw_auth["doc_consulted"] = ts
-        # Only update source + doc_sessions for online doc (context7/exa)
+        # Cross-update target framework (set by enforce-apex-phases on deny)
+        target_fw = state.get("target", {}).get("framework", "")
+        t_auth = auth.setdefault(target_fw, {}) if target_fw and target_fw != framework else None
+        if t_auth is not None:
+            t_auth["doc_consulted"] = ts
+        # Update source + doc_sessions for online doc (context7/exa)
         if source != "skill":
             _update_doc_sessions(fw_auth, sid, source, tool)
-            # Also update target framework if different (query may not mention it)
-            target_fw = state.get("target", {}).get("framework", "")
-            if target_fw and target_fw != framework:
-                t_auth = auth.setdefault(target_fw, {})
+            if t_auth is not None:
                 _update_doc_sessions(t_auth, sid, source, tool)
-        # Migrate old session (string) -> sessions (array) with dedup
-        old = fw_auth.pop("session", None)
-        sessions = fw_auth.get("sessions", [old] if old else [])
-        if sid and sid not in sessions:
-            sessions.append(sid)
-        fw_auth["sessions"] = sessions
+        # Migrate old session -> sessions[] with dedup (both fw + target)
+        for entry in [fw_auth] + ([t_auth] if t_auth else []):
+            old = entry.pop("session", None)
+            sessions = entry.get("sessions", [old] if old else [])
+            if sid and sid not in sessions:
+                sessions.append(sid)
+            entry["sessions"] = sessions
         with open(state_file, "w", encoding="utf-8") as f:
             json.dump(state, f, indent=2, ensure_ascii=False)
         print(json.dumps({

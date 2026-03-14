@@ -72,7 +72,8 @@ def main() -> None:
     if re.search(r"^interface ", content, re.MULTILINE):
         if "/Contracts/" not in file_path:
             violations.append(
-                "Interface defined outside app/Contracts/. Move to app/Contracts/ directory."
+                "Interface defined outside Contracts/. "
+                "Move to app/Contracts/ or FuseCore/{Module}/App/Contracts/."
             )
 
     if "/Controllers/" in file_path and line_count > 80:

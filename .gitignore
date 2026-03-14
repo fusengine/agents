@@ -41,3 +41,6 @@ plugins/ai-pilot/scripts/bun.lock
 Neuronal-Project/
 plugins/memory-neural/
 docs/plugins/memory.md
+
+# APEX tracking (auto-generated)
+.claude/apex/

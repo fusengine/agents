@@ -89,3 +89,11 @@ I18N_PATTERNS = [
 
 # Vite patterns
 VITE_PATTERNS = [r"(@vite|@viteReactRefresh|Vite::)\b"]
+
+# FuseCore modular patterns
+FUSECORE_PATTERNS = [
+    r"FuseCore\\\\[A-Za-z]+\\\\App\\\\",
+    r"use HasModule\b",
+    r"ModuleServiceProvider\b",
+    r"ModuleInterface\b",
+]

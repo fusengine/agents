@@ -18,6 +18,7 @@ from check_skill_common import (
     deny_block, find_project_root, mcp_research_done, skill_was_consulted)
 from hook_output import allow_pass
 from laravel_skill_triggers import detect_required_skills, specific_skill_consulted
+from modular_detection import is_fusecore_project
 
 PLUGINS_DIR = os.path.expanduser(
     "~/.claude/plugins/marketplaces/fusengine-plugins/plugins")
@@ -51,6 +52,14 @@ def main() -> None:
             f"1) {PLUGINS_DIR}/laravel-expert/skills/solid-php/SKILL.md"
             f" | 2) {PLUGINS_DIR}/laravel-expert/skills/laravel-eloquent/SKILL.md"
             " | 3) Use mcp__context7__query-docs. After reading, retry.")
+
+    # Phase 1.5: FuseCore module skill enforcement
+    if is_fusecore_project(project_root):
+        if not specific_skill_consulted("fusecore", session_id):
+            deny_block(
+                "BLOCKED: FuseCore project detected. READ: "
+                f"{PLUGINS_DIR}/laravel-expert/skills/fusecore/SKILL.md "
+                "BEFORE writing code in FuseCore modules.")
 
     # Phase 2: Domain skills (all .php files)
     required = detect_required_skills(content)
