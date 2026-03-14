@@ -23,6 +23,26 @@
             "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/validate-laravel-solid.py"
           }
         ]
+      },
+      {
+        "_description": "Enforce FuseCore modular architecture",
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/validate-fusecore.py"
+          }
+        ]
+      },
+      {
+        "_description": "DRY duplication scanner",
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/detect-duplication.py"
+          }
+        ]
       }
     ],
     "PostToolUse": [

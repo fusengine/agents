@@ -19,7 +19,7 @@ const CODE_EXT = /\.(ts|tsx|js|jsx|py|php|swift|go|rs|rb|java|vue|svelte|css)$/;
 /** Directories to skip (dependencies, build output) */
 const SKIP_DIRS = /(node_modules|vendor|dist|build|\.next|DerivedData)/;
 /** Protected paths — deny Write/Edit completely */
-const PROTECTED_PATHS = /\.claude\/plugins\/(marketplaces|cache)/;
+const PROTECTED_PATHS = /\.claude\/(plugins\/(marketplaces|cache)|logs\/00-apex|fusengine-cache\/skill-tracking)/;
 
 /** Shorthand deny helper to reduce repetition */
 function deny(reason: string): void {
@@ -48,7 +48,7 @@ async function main(): Promise<void> {
 
   if (toolName !== "Write" && toolName !== "Edit") return;
   if (PROTECTED_PATHS.test(filePath)) {
-    deny("PROTECTED: Cannot modify ~/.claude/plugins/. Edit the source repo instead.");
+    deny("[APEX Hook Guard] Write blocked — this path is managed automatically by APEX hooks. Manual edits are forbidden and would corrupt tracked state.");
     return;
   }
   if (!CODE_EXT.test(filePath)) return;
@@ -56,6 +56,8 @@ async function main(): Promise<void> {
 
   const content = String((input.tool_input as Record<string, string>)?.content
     ?? (input.tool_input as Record<string, string>)?.new_string ?? "");
+  // Trivial edits (Edit < 5 lines) skip APEX enforcement
+  if (toolName === "Edit" && content.split("\n").length < 5) return;
   const projectRoot = findProjectRoot(filePath.replace(/\/[^/]+$/, ""));
   const framework = detectFramework(filePath, content);
 

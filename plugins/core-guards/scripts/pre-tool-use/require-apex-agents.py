@@ -5,26 +5,16 @@ import os
 import re
 import sys
 import time
-from datetime import datetime, timezone
+from datetime import datetime
 
 STATE_DIR = os.path.join(os.path.expanduser('~'), '.claude', 'fusengine-cache', 'sessions')
 AGENT_TTL_SECONDS = 120
 CODE_EXT = r'\.(ts|tsx|js|jsx|py|go|rs|java|php|cpp|c|rb|swift|kt|dart|vue|svelte)$'
 REQUIRED_AGENTS = ['explore-codebase', 'research-expert']
 EXEMPT_PATTERNS = [
-    r'\.claude-plugin/',
-    r'CHANGELOG\.md$',
-    r'marketplace\.json$',
+    r'\.claude-plugin/', r'CHANGELOG\.md$', r'marketplace\.json$',
     r'/\.claude/(apex|memory|logs|fusengine-cache)/',
 ]
-
-
-def is_exempt(fp):
-    """Check if file is exempt from APEX enforcement."""
-    for pattern in EXEMPT_PATTERNS:
-        if re.search(pattern, fp):
-            return True
-    return False
 
 
 def check_required_agents(sid):
@@ -53,38 +43,39 @@ def check_required_agents(sid):
                     found.add(req)
         missing = [r for r in REQUIRED_AGENTS if r not in found]
         return len(missing) == 0, missing
-    except (json.JSONDecodeError, OSError, ValueError, AttributeError, TypeError, OverflowError):
+    except (json.JSONDecodeError, OSError, ValueError, AttributeError,
+            TypeError, OverflowError):
         return False, REQUIRED_AGENTS[:]
 
 
 def main():
+    """Entry point."""
     try:
         data = json.load(sys.stdin)
     except (json.JSONDecodeError, EOFError):
         sys.exit(0)
-
     # Subagents exempt — APEX enforcement is the lead's responsibility
     if data.get('agent_id'):
         sys.exit(0)
-
-    fp = data.get('tool_input', {}).get('file_path', '')
+    tool_input = data.get('tool_input', {})
+    fp = tool_input.get('file_path', '')
     sid = data.get('session_id', '') or 'unknown'
-
     if not fp or not re.search(CODE_EXT, fp):
         sys.exit(0)
-    if is_exempt(fp):
+    if any(re.search(p, fp) for p in EXEMPT_PATTERNS):
+        sys.exit(0)
+    # Trivial edits (Edit < 5 lines) skip APEX enforcement
+    if data.get('tool_name') == 'Edit' and tool_input.get('new_string', '').count('\n') < 5:
         sys.exit(0)
 
     satisfied, missing = check_required_agents(sid)
     if satisfied:
         sys.exit(0)
-
     missing_str = ' + '.join(missing)
     reason = (
         f"BLOCKED: APEX workflow required (2min TTL). "
         f"Missing agents: {missing_str}. "
-        f"Launch BOTH explore-codebase AND research-expert BEFORE editing code."
-    )
+        f"Launch BOTH explore-codebase AND research-expert BEFORE editing code.")
     print(json.dumps({"hookSpecificOutput": {
         "hookEventName": "PreToolUse",
         "permissionDecision": "deny",

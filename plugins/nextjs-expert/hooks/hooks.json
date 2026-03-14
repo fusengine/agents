@@ -23,6 +23,26 @@
             "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/validate-nextjs-solid.py"
           }
         ]
+      },
+      {
+        "_description": "Enforce modular architecture (modules/)",
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/validate-nextjs-modular.py"
+          }
+        ]
+      },
+      {
+        "_description": "DRY duplication scanner",
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/detect-duplication.py"
+          }
+        ]
       }
     ],
     "PostToolUse": [

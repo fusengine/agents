@@ -10,6 +10,8 @@ sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)),
                                 '..', '..', '..', '_shared', 'scripts'))
 from safe_paths import is_safe_write_path, is_safe_command_target, has_safe_write_target  # pylint: disable=wrong-import-position
 
+CODE_EXT = re.compile(r'\.(ts|tsx|js|jsx|py|php|swift|go|rs|rb|java|vue|svelte|css)\b')
+
 SAFE_PREFIXES = [
     'ls', 'pwd', 'which', 'cat ', 'head ', 'tail ', 'wc ', 'file ', 'stat ', 'tree', 'du ', 'df ',
     'find ', 'grep ', 'rg ', 'git ', 'cd ', 'source ', 'export ', 'unset ', 'env ', 'printenv',
@@ -23,6 +25,7 @@ DENY_PATTERNS = [
     (r'\bsed\b[^|]*\s-i', 'sed in-place edit'),
     (r'\bperl\b[^|]*\s-[pi]i?\b', 'perl in-place edit'),
     (r'\bawk\b[^|]*-i\s*inplace', 'awk in-place edit'),
+    (r'\bpatch\b', 'patch file modification'),
 ]
 
 NODE_WRITES = r'writeFile|appendFile|createWriteStream|fs\.(write|rename|unlink|mkdir|rmdir|copyFile)|execSync|spawnSync|child_process'  # pylint: disable=line-too-long
@@ -59,7 +62,7 @@ def main():
     if not cmd:
         sys.exit(0)
     stripped = cmd.strip()
-    if any(stripped.startswith(p) for p in SAFE_PREFIXES):
+    if any(stripped.startswith(p) for p in SAFE_PREFIXES) and not has_file_redirect(stripped):
         sys.exit(0)
     for pattern, desc in DENY_PATTERNS:
         if re.search(pattern, cmd):
@@ -67,6 +70,8 @@ def main():
     if has_file_redirect(cmd):
         if is_safe_write_path(cmd):
             sys.exit(0)
+        if CODE_EXT.search(cmd):
+            output_decision('deny', 'Bash redirect to code file — Use Write/Edit tools (enforces APEX + SOLID specs)')
         output_decision('ask', 'Shell redirect to file detected. Authorize?')
     if re.search(r'\bnode\s+-e\b', cmd) and re.search(NODE_WRITES, cmd):
         if has_safe_write_target(cmd):
