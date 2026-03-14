@@ -1,5 +1,18 @@
 # Release Notes
 
+## [1.38.28] - 14-03-2026
+
+### Fixed
+- fix(hooks): fix DRY duplication scanner false positives and add trivial edit skip (ai-pilot 1.2.10, core-guards 1.1.13, laravel-expert 1.1.8, nextjs-expert 1.1.9)
+  - Fix grep `--include` flags placed after `--` (treated as filenames, not options)
+  - Search declarations only (`function`/`class`/`const`), not bare name matches
+  - Add missing `--exclude-dir` for `.git`, `dist`, `build`, `coverage`, `.turbo`
+  - Raise name length threshold from 3 to 6 to reduce noise
+  - Extract constants to `_duplication_patterns.py` (SOLID SRP)
+  - Add local wrappers for `detect-duplication` in laravel/nextjs plugins
+  - Skip APEX enforcement for trivial edits (Edit < 5 lines)
+  - Block `patch` command in bash-write-guard to prevent hook bypass
+
 ## [1.38.27] - 07-03-2026
 
 ### Added
