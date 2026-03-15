@@ -1,5 +1,16 @@
 # Release Notes
 
+## [1.38.32] - 15-03-2026
+
+### Fixed
+- fix(hooks): close session state tampering bypass and reinforce rules (ai-pilot 1.2.12, core-guards 1.1.16, claude-rules 1.0.4)
+  - Block `fusengine-cache/sessions` access in bash-write-guard.py DENY_PATTERNS — prevents hook state tampering
+  - Skip brainstorming check for subagents in require-apex-agents.py (lead decision only)
+  - Add `fuse-ai-pilot:brainstorming` agent definition with 6-step design-first workflow
+  - Register brainstorming agent in marketplace.json
+  - Add anti-patterns to 03-agent-teams.md (parallel vs TeamCreate, file conflicts, lead roles)
+  - Reinforce CLAUDE.md template: ALL 3 mandatory agents in ONE message, HOW to delegate, dev workflow
+
 ## [1.38.31] - 15-03-2026
 
 ### Added
