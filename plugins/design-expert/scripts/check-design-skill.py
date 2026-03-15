@@ -38,10 +38,19 @@ def main() -> None:
         sys.exit(0)
     if re.search(r"/(node_modules|dist|build)/", file_path):
         sys.exit(0)
-    if not re.search(r"(components|ui|styles)", file_path):
-        sys.exit(0)
+    UI_PATH_PATTERNS = (
+        r"(components|ui|styles|page|layout|content|view|feature"
+        r"|section|hero|footer|header|sidebar|nav|modal|dialog)"
+    )
+    path_match = re.search(UI_PATH_PATTERNS, file_path)
 
     content = tool_input.get("content") or tool_input.get("new_string") or ""
+    has_jsx_tailwind = bool(re.search(
+        r'className\s*=.*(?:flex|grid|p-|m-|bg-|text-|rounded'
+        r'|shadow|border|gap-|w-|h-)', content))
+
+    if not path_match and not has_jsx_tailwind:
+        sys.exit(0)
     session_id = data.get("session_id") or f"fallback-{os.getpid()}"
     project_root = find_project_root(
         os.path.dirname(file_path), "package.json", ".git")

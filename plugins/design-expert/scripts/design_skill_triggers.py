@@ -12,9 +12,10 @@ from check_skill_common import specific_skill_consulted as _check
 # Domain-specific skill triggers: code patterns -> required skill
 SKILL_TRIGGERS = {
     "generating-components": [
-        r"create_frontend|modify_frontend|snippet_frontend",
-        r"mcp__gemini-design|mcp__magic__21st",
-        r"mcp__shadcn__search_items",
+        r'className\s*=\s*["\{]',
+        r'<(div|section|main|header|footer|nav|aside)\s',
+        r'(flex|grid|gap-|p-|m-|bg-|text-|rounded|shadow|border)',
+        r'(Button|Card|Dialog|Sheet|Input|Select|Table)\b',
     ],
     "designing-systems": [
         r"--(\w+-)+color:|:root\s*\{|@theme\b",

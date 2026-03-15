@@ -34,12 +34,18 @@ def main():
         except (json.JSONDecodeError, OSError):
             pass
 
+    # Extract quality metrics from tool response
+    tool_response = data.get('tool_response', '')
+    response_length = len(str(tool_response)) if tool_response else 0
+
     ts = datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
     state['agents'].append({
         'timestamp': ts,
         'type': agent_type,
         'agent_id': agent_id,
         'prompt_preview': prompt,
+        'response_length': response_length,
+        'quality': 'sufficient' if response_length > 200 else 'insufficient',
     })
 
     try:

@@ -4,48 +4,18 @@ import json
 import os
 import re
 import sys
-import time
-from datetime import datetime
 
-STATE_DIR = os.path.join(os.path.expanduser('~'), '.claude', 'fusengine-cache', 'sessions')
-AGENT_TTL_SECONDS = 120
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from apex_agent_helpers import (  # pylint: disable=wrong-import-position
+    check_required_agents,
+    increment_trivial_edit_counter,
+)
+
 CODE_EXT = r'\.(ts|tsx|js|jsx|py|go|rs|java|php|cpp|c|rb|swift|kt|dart|vue|svelte)$'
-REQUIRED_AGENTS = ['explore-codebase', 'research-expert']
 EXEMPT_PATTERNS = [
     r'\.claude-plugin/', r'CHANGELOG\.md$', r'marketplace\.json$',
     r'/\.claude/(apex|memory|logs|fusengine-cache)/',
 ]
-
-
-def check_required_agents(sid):
-    """Check if BOTH explore-codebase AND research-expert were called within TTL."""
-    sf = os.path.join(STATE_DIR, f'session-{sid}-agents.json')
-    if not os.path.isfile(sf):
-        return False, REQUIRED_AGENTS[:]
-    try:
-        with open(sf, encoding='utf-8') as f:
-            state = json.load(f)
-        agents = state.get('agents', [])
-        if not agents:
-            return False, REQUIRED_AGENTS[:]
-        now = time.time()
-        found = set()
-        for entry in reversed(agents):
-            if not isinstance(entry, dict):
-                continue
-            ts = entry.get('timestamp', '')
-            dt = datetime.fromisoformat(ts.replace('Z', '+00:00'))
-            if (now - dt.timestamp()) > AGENT_TTL_SECONDS:
-                break
-            agent_type = entry.get('type', '')
-            for req in REQUIRED_AGENTS:
-                if req in agent_type:
-                    found.add(req)
-        missing = [r for r in REQUIRED_AGENTS if r not in found]
-        return len(missing) == 0, missing
-    except (json.JSONDecodeError, OSError, ValueError, AttributeError,
-            TypeError, OverflowError):
-        return False, REQUIRED_AGENTS[:]
 
 
 def main():
@@ -54,19 +24,23 @@ def main():
         data = json.load(sys.stdin)
     except (json.JSONDecodeError, EOFError):
         sys.exit(0)
-    # Subagents exempt — APEX enforcement is the lead's responsibility
-    if data.get('agent_id'):
-        sys.exit(0)
     tool_input = data.get('tool_input', {})
     fp = tool_input.get('file_path', '')
     sid = data.get('session_id', '') or 'unknown'
+    # Subagents: same TTL 2min check as lead — no exceptions
+    # If lead's APEX agents expired, subagent is blocked too
     if not fp or not re.search(CODE_EXT, fp):
         sys.exit(0)
     if any(re.search(p, fp) for p in EXEMPT_PATTERNS):
         sys.exit(0)
-    # Trivial edits (Edit < 5 lines) skip APEX enforcement
-    if data.get('tool_name') == 'Edit' and tool_input.get('new_string', '').count('\n') < 5:
-        sys.exit(0)
+    # Trivial edits: replace_all is NEVER trivial
+    if tool_input.get('replace_all'):
+        pass  # Fall through to APEX check
+    elif data.get('tool_name') == 'Edit' and tool_input.get('new_string', '').count('\n') < 5:
+        count = increment_trivial_edit_counter(sid)
+        if count < 5:
+            sys.exit(0)
+        # 5+ trivial edits in 2 min -> require full APEX
 
     satisfied, missing = check_required_agents(sid)
     if satisfied:

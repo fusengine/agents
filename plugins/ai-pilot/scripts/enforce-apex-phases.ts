@@ -13,12 +13,10 @@ import { detectFramework, getSkillSource, getSkillDir, formatRoutedDeny } from "
 import { findProjectRoot } from "./lib/apex/fs-helpers";
 import { isDocConsulted, formatDocDeny, resolveSessions, type AuthEntry } from "./lib/apex/doc-helpers";
 import { routeReferences } from "./lib/apex/ref-router";
+import { incrementTrivialEditCounter } from "./lib/apex/trivial-edit-counter";
 
-/** Code file extensions that require doc consultation */
-const CODE_EXT = /\.(ts|tsx|js|jsx|py|php|swift|go|rs|rb|java|vue|svelte|css)$/;
-/** Directories to skip (dependencies, build output) */
-const SKIP_DIRS = /(node_modules|vendor|dist|build|\.next|DerivedData)/;
-/** Protected paths — deny Write/Edit completely */
+const CODE_EXT = /\.(ts|tsx|js|jsx|py|php|swift|go|rs|rb|java|vue|svelte|css)$/; // requires doc
+const SKIP_DIRS = /(node_modules|vendor|dist|build|\.next|DerivedData)/; // skip deps/build
 const PROTECTED_PATHS = /\.claude\/(plugins\/(marketplaces|cache)|logs\/00-apex|fusengine-cache\/skill-tracking)/;
 
 /** Shorthand deny helper to reduce repetition */
@@ -56,8 +54,14 @@ async function main(): Promise<void> {
 
   const content = String((input.tool_input as Record<string, string>)?.content
     ?? (input.tool_input as Record<string, string>)?.new_string ?? "");
-  // Trivial edits (Edit < 5 lines) skip APEX enforcement
-  if (toolName === "Edit" && content.split("\n").length < 5) return;
+  // Trivial edits: replace_all is NEVER trivial
+  const replaceAll = (input.tool_input as Record<string, unknown>)?.replace_all;
+  if (replaceAll) { /* fall through to APEX check */ }
+  else if (toolName === "Edit" && content.split("\n").length < 5) {
+    const count = await incrementTrivialEditCounter(sessionId);
+    if (count < 5) return;
+    // 5+ trivial edits in 2 min → require full APEX
+  }
   const projectRoot = findProjectRoot(filePath.replace(/\/[^/]+$/, ""));
   const framework = detectFramework(filePath, content);
 
