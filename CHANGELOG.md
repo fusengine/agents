@@ -1,5 +1,19 @@
 # Release Notes
 
+## [1.38.30] - 15-03-2026
+
+### Fixed
+- fix(hooks): close 7 APEX bypass vectors and add Gemini MCP enforcement (ai-pilot 1.2.11, core-guards 1.1.14, design-expert 2.1.2)
+  - Fix subagent exemption: TTL 2min applies to all agents, no exceptions
+  - Add cumulative trivial edit counter (5 edits/2min threshold)
+  - Block `replace_all` edits from trivial exemption
+  - Add agent quality check (response > 200 chars required)
+  - Expand design check path regex and add content-based JSX/Tailwind detection
+  - Fix design triggers to detect real UI patterns instead of MCP tool strings
+  - Create `enforce-gemini-mcp.py`: block Tailwind code without Gemini Design MCP call (via transcript_path)
+  - Extract `apex_agent_helpers.py` and `trivial-edit-counter.ts` for SOLID compliance
+  - Fix `\x08` backspace corruption in design_skill_triggers.py regex
+
 ## [1.38.29] - 14-03-2026
 
 ### Added
