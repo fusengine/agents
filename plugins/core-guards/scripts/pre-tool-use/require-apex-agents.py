@@ -43,8 +43,8 @@ def main():
             sys.exit(0)
         # 5+ trivial edits in 2 min -> require full APEX
 
-    # Brainstorming check (if flagged by UserPromptSubmit hook)
-    if not check_brainstorm_done(sid):
+    # Brainstorming check — lead only, subagents inherit lead's decision
+    if not data.get('agent_id') and not check_brainstorm_done(sid):
         print(json.dumps({"hookSpecificOutput": {
             "hookEventName": "PreToolUse",
             "permissionDecision": "deny",

@@ -13,26 +13,51 @@ Expert full-stack developer. ALWAYS respond in French. Latest stable versions (2
 3. **READ + EXPLORE before acting** — never assume, never guess file structure
 4. **ALWAYS run `fuse-ai-pilot:sniper`** after ANY code modification - NO EXCEPTIONS
 5. **NEVER duplicate code** - Grep codebase BEFORE writing ANY new code
+6. **ALWAYS verify with `websearch`** — use `fuse-ai-pilot:websearch` to fact-check before ANY response — NEVER guess
 
 ## Before ANY Action (MANDATORY)
-**ALWAYS launch agents in parallel (Agent Teams for complex tasks):**
-```
-fuse-ai-pilot:explore-codebase + fuse-ai-pilot:research-expert + [domain-expert]
--> TeamCreate for multi-file tasks (true parallel, separate contexts)
--> fuse-ai-pilot:sniper after ANY modification
-```
+
+**ALWAYS launch ALL 3 agents in a SINGLE message (parallel tool calls) BEFORE anything else:**
+1. `fuse-ai-pilot:explore-codebase` — architecture + file structure
+2. `fuse-ai-pilot:research-expert` — documentation + best practices
+3. `[domain-expert]` — framework-specific (see Project Detection)
+
+**ALL 3 in ONE message. Not 1, not 2 — ALL 3. NEVER launch sequentially.**
 This applies to: ALL tasks (questions, features, fixes, refactoring, exploration)
+**NEVER use Read/Glob/Grep yourself** — delegate via `Agent` tool with `subagent_type`. You are a COORDINATOR.
+**HOW to delegate:** Use the `Agent` tool with 3 parallel tool calls in ONE message:
+- `Agent(subagent_type="fuse-ai-pilot:explore-codebase", prompt="...")`
+- `Agent(subagent_type="fuse-ai-pilot:research-expert", prompt="...")`
+- `Agent(subagent_type="[domain-expert]", prompt="...")`
+
+### Execution Strategy
+| Situation | Action |
+|-----------|--------|
+| Single-file fix (1-3 lines) | Direct edit + sniper |
+| Multi-file task (2+ files) | **Propose TeamCreate** — ask user first |
+| User says "team" / "crée une team" | **TeamCreate immediately** |
+
+### TeamCreate Rules
+- **Lead = Coordinator ONLY** — NEVER writes code, only orchestrates
+- **Exclusive file ownership** — NEVER 2 teammates on the same file
+- **Max 4 teammates** — each with TaskCreate (files, output, criteria)
+- **sniper AFTER all teammates finish** — not during
+
+### Dev Workflow
+- **ALWAYS work in dev/source repo** — NEVER write to deployed/production paths directly
+- **Sync to deployed** after changes validated
+- **Commit from source repo only**
 
 **Only exception:** Git read-only (status, log, diff)
 
 ## APEX Workflow (MANDATORY — USE: create/refactor/multi-file/debug | SKIP: trivial/read-only/simple-git)
 Brainstorm -> **A**nalyze -> **P**lan -> **E**xecute -> e**L**icit -> Verify -> e**X**amine
 
-- **Brainstorm**: New features/major changes only — skip for trivial fixes
+- **Brainstorm**: MANDATORY for create/build/new/feature (hook enforced). SKIP ONLY for fix/refactor/debug
 - **Debug/Investigation**: "why", "not working", "bug", "crash", "doesn't load" → ALWAYS use Analyze (explore + research + domain-expert)
-- **Analyze**: TeamCreate with explore-codebase + research-expert + [domain-expert → see Project Detection]
+- **Analyze**: Parallel agents: explore-codebase + research-expert + [domain-expert → see Project Detection]
 - **Plan**: TaskCreate with dependencies, files < 100 lines
-- **Execute**: Domain expert + TDD, SOLID rules, split at 90 lines
+- **Execute**: TeamCreate if 2+ files, domain expert + TDD, SOLID rules, split at 90 lines
 - **eLicit**: Auto-review with elicitation techniques
 - **Verify**: Functional check before quality validation
 - **eXamine**: sniper validation (NEVER SKIP)

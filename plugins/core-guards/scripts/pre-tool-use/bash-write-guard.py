@@ -26,6 +26,7 @@ DENY_PATTERNS = [
     (r'\bperl\b[^|]*\s-[pi]i?\b', 'perl in-place edit'),
     (r'\bawk\b[^|]*-i\s*inplace', 'awk in-place edit'),
     (r'\bpatch\b', 'patch file modification'),
+    (r'fusengine-cache/sessions', 'Session state tampering — hook bypass prevention'),
 ]
 
 NODE_WRITES = r'writeFile|appendFile|createWriteStream|fs\.(write|rename|unlink|mkdir|rmdir|copyFile)|execSync|spawnSync|child_process'  # pylint: disable=line-too-long

@@ -73,7 +73,8 @@
         "./agents/explore-codebase.md",
         "./agents/research-expert.md",
         "./agents/websearch.md",
-        "./agents/seo-expert.md"
+        "./agents/seo-expert.md",
+        "./agents/brainstorming.md"
       ],
       "skills": [
         "./skills/apex",
