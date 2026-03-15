@@ -1,5 +1,14 @@
 # Release Notes
 
+## [1.38.31] - 15-03-2026
+
+### Added
+- feat(hooks): add brainstorming enforcement for creation tasks (core-guards 1.1.15)
+  - Add `detect-creation-intent.py` UserPromptSubmit hook for creation keyword detection
+  - Add `check_brainstorm_done()` in apex_agent_helpers.py with TTL 2min + quality check
+  - Block code edits if brainstorming not done when creation intent detected
+  - Keywords: create, implement, add, build, new, feature, component, generate, make, develop, scaffold
+
 ## [1.38.30] - 15-03-2026
 
 ### Fixed
