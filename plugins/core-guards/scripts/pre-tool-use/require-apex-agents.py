@@ -7,6 +7,7 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from apex_agent_helpers import (  # pylint: disable=wrong-import-position
+    check_brainstorm_done,
     check_required_agents,
     increment_trivial_edit_counter,
 )
@@ -41,6 +42,17 @@ def main():
         if count < 5:
             sys.exit(0)
         # 5+ trivial edits in 2 min -> require full APEX
+
+    # Brainstorming check (if flagged by UserPromptSubmit hook)
+    if not check_brainstorm_done(sid):
+        print(json.dumps({"hookSpecificOutput": {
+            "hookEventName": "PreToolUse",
+            "permissionDecision": "deny",
+            "permissionDecisionReason": (
+                "BLOCKED: Brainstorming required for new feature/creation task. "
+                "Launch brainstorming agent BEFORE writing code."),
+        }}))
+        return
 
     satisfied, missing = check_required_agents(sid)
     if satisfied:

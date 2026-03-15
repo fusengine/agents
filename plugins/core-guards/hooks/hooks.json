@@ -185,6 +185,17 @@
             "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/user-prompt/read-claude-md.py"
           }
         ]
+      },
+      {
+        "_description": "BRAINSTORM: Detect creation intent and flag brainstorming required",
+        "matcher": "",
+        "hooks": [
+          {
+            "_description": "Detect create/build/new keywords and set brainstorming_required flag",
+            "type": "command",
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/user-prompt/detect-creation-intent.py"
+          }
+        ]
       }
     ],
 

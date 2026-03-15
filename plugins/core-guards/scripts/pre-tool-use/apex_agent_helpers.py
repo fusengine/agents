@@ -56,6 +56,29 @@ def _scan_agents(state):
     return len(missing) == 0, missing
 
 
+def check_brainstorm_done(sid):
+    """Check if brainstorming agent was called with sufficient quality."""
+    state, _ = _load_agent_state(sid)
+    if not state:
+        return True  # No state file = flag never written = not required
+    if not state.get('brainstorming_required'):
+        return True  # Not required, skip check
+    now = time.time()
+    for entry in reversed(state.get('agents', [])):
+        if not isinstance(entry, dict):
+            continue
+        ts = entry.get('timestamp', '')
+        try:
+            dt = datetime.fromisoformat(ts.replace('Z', '+00:00'))
+            if (now - dt.timestamp()) > AGENT_TTL_SECONDS:
+                break
+        except (ValueError, AttributeError, TypeError, OverflowError):
+            continue
+        if 'brainstorming' in entry.get('type', ''):
+            return entry.get('quality', '') == 'sufficient'
+    return False
+
+
 def increment_trivial_edit_counter(sid):
     """Increment trivial edit counter, return count of edits in last 2 min."""
     state, sf = _load_agent_state(sid)
