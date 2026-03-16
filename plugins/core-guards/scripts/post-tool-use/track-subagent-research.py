@@ -24,6 +24,8 @@ RESEARCH_TOOLS = {
     'mcp__exa__web_search_exa',
     'mcp__exa__get_code_context_exa',
     'mcp__exa__deep_researcher_start',
+    'WebSearch',
+    'WebFetch',
 }
 
 # Tools that count as explore-codebase equivalent

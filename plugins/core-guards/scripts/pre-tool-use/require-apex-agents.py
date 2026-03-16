@@ -59,10 +59,22 @@ def main():
     if satisfied:
         sys.exit(0)
     missing_str = ' + '.join(missing)
-    reason = (
-        f"BLOCKED: APEX workflow required (2min TTL). "
-        f"Missing agents: {missing_str}. "
-        f"Launch BOTH explore-codebase AND research-expert BEFORE editing code.")
+    if data.get('agent_id'):
+        hints = []
+        for m in missing:
+            if 'explore' in m:
+                hints.append('Glob/Grep (codebase exploration)')
+            if 'research' in m:
+                hints.append('Context7/Exa/WebSearch (research)')
+        reason = (
+            f"BLOCKED: APEX workflow required (2min TTL). "
+            f"Missing: {missing_str}. "
+            f"Use {' and '.join(hints)} BEFORE editing code.")
+    else:
+        reason = (
+            f"BLOCKED: APEX workflow required (2min TTL). "
+            f"Missing agents: {missing_str}. "
+            f"Launch BOTH explore-codebase AND research-expert BEFORE editing code.")
     print(json.dumps({"hookSpecificOutput": {
         "hookEventName": "PreToolUse",
         "permissionDecision": "deny",
