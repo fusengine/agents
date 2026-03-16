@@ -31,7 +31,7 @@ def check_required_agents(sid):
 
 
 def _scan_agents(state):
-    """Scan agent entries within TTL window (2min). No exceptions."""
+    """Scan agent/MCP entries within TTL (2min). Matches lead + subagent via substring."""
     agents = state.get('agents', [])
     if not agents:
         return False, REQUIRED_AGENTS[:]

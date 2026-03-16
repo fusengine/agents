@@ -29,7 +29,8 @@ def main():
     fp = tool_input.get('file_path', '')
     sid = data.get('session_id', '') or 'unknown'
     # Subagents: same TTL 2min check as lead — no exceptions
-    # If lead's APEX agents expired, subagent is blocked too
+    # Lead satisfies via Agent tool; subagents via direct MCP/Glob/Grep calls
+    # Both paths tracked in session-{SID}-agents.json by track-subagent-research.py
     if not fp or not re.search(CODE_EXT, fp):
         sys.exit(0)
     if any(re.search(p, fp) for p in EXEMPT_PATTERNS):
