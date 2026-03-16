@@ -1,5 +1,10 @@
 # Release Notes
 
+## [1.38.33] - 16-03-2026
+
+### Added
+- feat(hooks): track sub-agent MCP/exploration calls for APEX compliance (core-guards 1.1.17)
+
 ## [1.38.32] - 15-03-2026
 
 ### Fixed
