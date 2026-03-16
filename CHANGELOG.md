@@ -1,5 +1,10 @@
 # Release Notes
 
+## [1.38.34] - 16-03-2026
+
+### Fixed
+- fix(hooks): add WebSearch/WebFetch tracking and adaptive error messages for sub-agents (core-guards 1.1.18)
+
 ## [1.38.33] - 16-03-2026
 
 ### Added
