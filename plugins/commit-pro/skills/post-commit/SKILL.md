@@ -95,6 +95,10 @@ Increment PATCH: `X.Y.Z` → `X.Y.(Z+1)`.
 
 Write the new suite version back to `marketplace.json` → `metadata.version`.
 
+If `README.md` contains a shields.io version badge, update it to match the new version:
+
+Replace `version-vOLD_VERSION-` with `version-vNEW_VERSION-` in the badge URL.
+
 ### Step M4: Update CHANGELOG
 
 Add a new entry at the top of `CHANGELOG.md` (after the `# Changelog` heading):
@@ -114,7 +118,7 @@ Include `(plugin-name X.Y.Z)` in each line for bumped plugins.
 Stage all modified files:
 
 ```bash
-git add CHANGELOG.md .claude-plugin/marketplace.json plugins/*/.claude-plugin/plugin.json
+git add CHANGELOG.md README.md .claude-plugin/marketplace.json plugins/*/.claude-plugin/plugin.json
 ```
 
 Commit with HEREDOC format:
