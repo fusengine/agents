@@ -1,10 +1,20 @@
 #!/usr/bin/env python3
-"""PostToolUse hook: Track SOLID principle reads in JSON log."""
+"""PostToolUse hook: Track SOLID principle reads in session state."""
 import json
 import os
 import re
 import sys
 from datetime import datetime, timezone
+
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from _shared.state_manager import load_session_state, save_session_state
+
+FRAMEWORK_MAP = {
+    'solid-nextjs': 'nextjs', 'solid-react': 'react',
+    'solid-php': 'php', 'solid-swift': 'swift',
+    'solid-generic': 'generic', 'solid-java': 'java',
+    'solid-go': 'go', 'solid-ruby': 'ruby', 'solid-rust': 'rust',
+}
 
 
 def main():
@@ -15,7 +25,7 @@ def main():
 
     tool_name = data.get('tool_name', '')
     file_path = data.get('tool_input', {}).get('file_path', '')
-    session_id = data.get('session_id', '')
+    session_id = data.get('session_id', '') or 'unknown'
 
     if tool_name != 'Read' or not file_path:
         sys.exit(0)
@@ -23,63 +33,24 @@ def main():
         sys.exit(0)
 
     framework = ''
-    if 'solid-nextjs' in file_path:
-        framework = 'nextjs'
-    elif 'solid-react' in file_path:
-        framework = 'react'
-    elif 'solid-php' in file_path:
-        framework = 'php'
-    elif 'solid-swift' in file_path:
-        framework = 'swift'
-    elif 'solid-generic' in file_path:
-        framework = 'generic'
-    elif 'solid-java' in file_path:
-        framework = 'java'
-    elif 'solid-go' in file_path:
-        framework = 'go'
-    elif 'solid-ruby' in file_path:
-        framework = 'ruby'
-    elif 'solid-rust' in file_path:
-        framework = 'rust'
+    for key, val in FRAMEWORK_MAP.items():
+        if key in file_path:
+            framework = val
+            break
     if not framework:
         sys.exit(0)
 
-    log_dir = os.path.expanduser('~/.claude/logs/00-apex')
-    os.makedirs(log_dir, exist_ok=True)
-    log_file = os.path.join(log_dir, 'solid-reads.json')
-    timestamp = datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
+    state = load_session_state(session_id)
+    solid_reads = state.setdefault('solid_reads', [])
 
-    state_file = os.path.join(log_dir, f'{datetime.now().strftime("%Y-%m-%d")}-state.json')
-    project = 'unknown'
-    if os.path.isfile(state_file):
-        try:
-            with open(state_file, encoding='utf-8') as f:
-                project = json.load(f).get('target', {}).get('project', 'unknown')
-        except (json.JSONDecodeError, OSError):
-            pass
-
-    reads_data = {'reads': []}
-    if os.path.isfile(log_file):
-        try:
-            with open(log_file, encoding='utf-8') as f:
-                reads_data = json.load(f)
-        except (json.JSONDecodeError, OSError):
-            pass
-
-    reads_data['reads'].append({
-        'timestamp': timestamp,
+    solid_reads.append({
+        'timestamp': datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ'),
         'framework': framework,
         'session': session_id,
-        'project': project,
         'file': file_path,
     })
 
-    try:
-        with open(log_file, 'w', encoding='utf-8') as f:
-            json.dump(reads_data, f, indent=2)
-    except OSError:
-        pass
-
+    save_session_state(session_id, state)
     sys.exit(0)
 
 

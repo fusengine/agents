@@ -1,30 +1,20 @@
 """Helpers for require-apex-agents.py — session-wide checks and trivial edit counter."""
-import json
 import os
+import sys
 import time
 from datetime import datetime
 
-STATE_DIR = os.path.join(os.path.expanduser('~'), '.claude', 'fusengine-cache', 'sessions')
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from _shared.state_manager import load_session_state, save_session_state
+
 AGENT_TTL_SECONDS = 120
 REQUIRED_AGENTS = ['explore-codebase', 'research-expert']
 TRIVIAL_EDIT_WINDOW = 120  # 2 minutes
 
 
-def _load_agent_state(sid):
-    """Load agent state file for a session, return (state, path)."""
-    sf = os.path.join(STATE_DIR, f'session-{sid}-agents.json')
-    if not os.path.isfile(sf):
-        return None, sf
-    try:
-        with open(sf, encoding='utf-8') as f:
-            return json.load(f), sf
-    except (json.JSONDecodeError, OSError):
-        return None, sf
-
-
 def check_required_agents(sid):
     """Check if BOTH required agents were called within TTL (2min)."""
-    state, _ = _load_agent_state(sid)
+    state = load_session_state(sid)
     if not state:
         return False, REQUIRED_AGENTS[:]
     return _scan_agents(state)
@@ -58,11 +48,9 @@ def _scan_agents(state):
 
 def check_brainstorm_done(sid):
     """Check if brainstorming agent was called with sufficient quality."""
-    state, _ = _load_agent_state(sid)
-    if not state:
-        return True  # No state file = flag never written = not required
-    if not state.get('brainstorming_required'):
-        return True  # Not required, skip check
+    state = load_session_state(sid)
+    if not state or not state.get('brainstorming_required'):
+        return True
     now = time.time()
     for entry in reversed(state.get('agents', [])):
         if not isinstance(entry, dict):
@@ -81,19 +69,12 @@ def check_brainstorm_done(sid):
 
 def increment_trivial_edit_counter(sid):
     """Increment trivial edit counter, return count of edits in last 2 min."""
-    state, sf = _load_agent_state(sid)
-    if state is None:
-        state = {}
+    state = load_session_state(sid)
     now = time.time()
     edits = state.get('trivial_edits', [])
     cutoff = now - TRIVIAL_EDIT_WINDOW
     edits = [ts for ts in edits if ts > cutoff]
     edits.append(now)
     state['trivial_edits'] = edits
-    try:
-        os.makedirs(os.path.dirname(sf), exist_ok=True)
-        with open(sf, 'w', encoding='utf-8') as f:
-            json.dump(state, f, indent=2)
-    except OSError:
-        pass
+    save_session_state(sid, state)
     return len(edits)

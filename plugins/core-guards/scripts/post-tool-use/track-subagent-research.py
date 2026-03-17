@@ -13,9 +13,8 @@ import os
 import sys
 from datetime import datetime, timezone
 
-STATE_DIR = os.path.join(
-    os.path.expanduser('~'), '.claude', 'fusengine-cache', 'sessions'
-)
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from _shared.state_manager import load_session_state, save_session_state
 
 # MCP tools that count as research-expert equivalent
 RESEARCH_TOOLS = {
@@ -52,21 +51,13 @@ def main():
         sys.exit(0)
 
     sid = data.get('session_id', '') or 'unknown'
-    os.makedirs(STATE_DIR, exist_ok=True)
-    sf = os.path.join(STATE_DIR, f'session-{sid}-agents.json')
-
-    state = {'agents': []}
-    if os.path.isfile(sf):
-        try:
-            with open(sf, encoding='utf-8') as f:
-                state = json.load(f)
-        except (json.JSONDecodeError, OSError):
-            pass
+    state = load_session_state(sid)
+    agents = state.setdefault('agents', [])
 
     tool_response = data.get('tool_response', '')
     response_length = len(str(tool_response)) if tool_response else 0
 
-    state['agents'].append({
+    agents.append({
         'timestamp': datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ'),
         'type': phase,
         'agent_id': data.get('agent_id', ''),
@@ -75,12 +66,7 @@ def main():
         'quality': 'sufficient' if response_length > 50 else 'insufficient',
     })
 
-    try:
-        with open(sf, 'w', encoding='utf-8') as f:
-            json.dump(state, f, indent=2)
-    except OSError:
-        pass
-
+    save_session_state(sid, state)
     sys.exit(0)
 
 

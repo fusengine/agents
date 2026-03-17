@@ -45,7 +45,9 @@ def main():
         # 5+ trivial edits in 2 min -> require full APEX
 
     # Brainstorming check — lead only, subagents inherit lead's decision
-    if not data.get('agent_id') and not check_brainstorm_done(sid):
+    # Edit targets existing files only — skip brainstorm (only Write can create new files)
+    is_edit = data.get('tool_name') == 'Edit'
+    if not is_edit and not data.get('agent_id') and not check_brainstorm_done(sid):
         print(json.dumps({"hookSpecificOutput": {
             "hookEventName": "PreToolUse",
             "permissionDecision": "deny",
