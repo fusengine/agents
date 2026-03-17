@@ -1,118 +1,91 @@
 # Fusengine Claude Code Plugins
 
-Professional Claude Code plugins with APEX workflow, SOLID principles, and expert agents.
+![version](https://img.shields.io/badge/version-v1.38.36-blue?style=flat-square) ![plugins](https://img.shields.io/badge/plugins-18-brightgreen?style=flat-square) ![agents](https://img.shields.io/badge/agents-19-blueviolet?style=flat-square) ![skills](https://img.shields.io/badge/skills-125-orange?style=flat-square) ![License: MIT](https://img.shields.io/badge/License-MIT-yellow?style=flat-square) ![platform](https://img.shields.io/badge/platform-macOS%20%7C%20Linux-lightgrey?style=flat-square) ![Windows](https://img.shields.io/badge/Windows-soon-orange?style=flat-square)
+
+> Professional Claude Code plugins with APEX workflow, SOLID principles, and expert development agents.
 
 ![Statusline](docs/img/statusline.png)
 
 ## Quick Install
 
-### Statusline Configuration (Optional)
-
-**macOS / Linux:**
-```bash
-bun --cwd ~/.claude/plugins/marketplaces/fusengine-plugins/plugins/core-guards/statusline run config       # Web
-bun --cwd ~/.claude/plugins/marketplaces/fusengine-plugins/plugins/core-guards/statusline run config:term  # Terminal
-```
-
-**Windows (PowerShell):**
-```powershell
-bun --cwd $env:USERPROFILE\.claude\plugins\marketplaces\fusengine-plugins\plugins\core-guards\statusline run config       # Web
-bun --cwd $env:USERPROFILE\.claude\plugins\marketplaces\fusengine-plugins\plugins\core-guards\statusline run config:term  # Terminal
-```
-
-### macOS / Linux
 ```bash
 # Add marketplace
 /plugin marketplace add fusengine/agents
 
 # Install all plugins
-/plugin install fuse-ai-pilot fuse-commit-pro fuse-laravel fuse-nextjs fuse-react fuse-swift-apple-expert fuse-solid fuse-tailwindcss fuse-design fuse-prompt-engineer fuse-shadcn-ui fuse-security fuse-changelog
+/plugin install fuse-ai-pilot fuse-commit-pro fuse-laravel fuse-nextjs fuse-react fuse-astro fuse-swift-apple-expert fuse-solid fuse-tailwindcss fuse-design fuse-prompt-engineer fuse-shadcn-ui fuse-security fuse-changelog
 
-# Setup (hooks + API keys + CLAUDE.md)
-~/.claude/plugins/marketplaces/fusengine-plugins/setup.sh
+# Setup (hooks + API keys + MCP servers)
+~/.claude/plugins/marketplaces/fusengine-plugins/setup.sh        # macOS / Linux
+~\.claude\plugins\marketplaces\fusengine-plugins\setup.ps1       # Windows
 ```
 
-### Windows (PowerShell)
-```powershell
-# Add marketplace
-/plugin marketplace add fusengine/agents
-
-# Install all plugins
-/plugin install fuse-ai-pilot fuse-commit-pro fuse-laravel fuse-nextjs fuse-react fuse-swift-apple-expert fuse-solid fuse-tailwindcss fuse-design fuse-prompt-engineer fuse-shadcn-ui fuse-security fuse-changelog
-
-# Setup (hooks + API keys + CLAUDE.md)
-~\.claude\plugins\marketplaces\fusengine-plugins\setup.ps1
+**Statusline (optional):**
+```bash
+bun --cwd ~/.claude/plugins/marketplaces/fusengine-plugins/plugins/core-guards/statusline run config
 ```
+
+## Plugins
+
+### Development
+
+| Plugin | Description | Skills |
+|--------|-------------|--------|
+| [fuse-ai-pilot](docs/plugins/ai-pilot.md) | APEX workflow, sniper validation, DRY detection, cache system | 12 |
+| [fuse-nextjs](docs/plugins/nextjs.md) | Next.js 16+ with App Router, Prisma 7, Better Auth | 8 |
+| [fuse-laravel](docs/plugins/laravel.md) | Laravel 12+ with Eloquent, Livewire, Blade | 15 |
+| [fuse-react](docs/plugins/react.md) | React 19 with TanStack Router, Zustand | 8 |
+| [fuse-astro](docs/plugins/astro.md) | Astro 6 with Islands, Content Layer, Starlight | 14 |
+| [fuse-swift-apple-expert](docs/plugins/swift.md) | Swift 6.2 + SwiftUI for all Apple platforms | 11 |
+| [fuse-tailwindcss](docs/plugins/tailwindcss.md) | Tailwind CSS v4.1 with @theme, @utility | 14 |
+| [fuse-design](docs/plugins/design.md) | UI/UX Director with shadcn/ui, Gemini Design | 17 |
+| [fuse-shadcn-ui](docs/plugins/shadcn.md) | shadcn/ui with Radix/Base UI detection | 5 |
+
+### Security & Quality
+
+| Plugin | Description | Skills |
+|--------|-------------|--------|
+| [fuse-security](docs/plugins/security.md) | OWASP Top 10, CVE research, dependency audit | 5 |
+| [fuse-solid](docs/plugins/solid.md) | SOLID principles enforcement (multi-language) | 6 |
+
+### Productivity
+
+| Plugin | Description | Skills |
+|--------|-------------|--------|
+| [fuse-commit-pro](docs/plugins/commit-pro.md) | Smart conventional commits with security check | 2 |
+| [fuse-prompt-engineer](docs/plugins/prompt-engineer.md) | Prompt creation, optimization, agent design | 6 |
+| [fuse-changelog](docs/plugins/changelog.md) | Claude Code update watcher, breaking changes | 3 |
+
+### Core (auto-installed)
+
+| Plugin | Description |
+|--------|-------------|
+| core-guards | Security guards, SOLID enforcement, session hooks |
+| claude-rules | APEX/SOLID/DRY rules injection at every prompt |
 
 ## Features
 
-- **APEX Workflow** - Systematic Brainstorm → Analyze → Plan → Execute (TDD) → eLicit → Verify → eXamine methodology
-- **[Agent Teams](docs/workflow/agent-teams.md) (beta)** - Parallel delegation with file ownership, max 4 teammates, lead-as-coordinator
-- **Changelog Watcher** - Track Claude Code updates, detect breaking changes, community pulse via Exa
-- **18 Expert Agents** - Next.js, Laravel, React, Swift, Tailwind, Design, shadcn/ui, Security, Changelog, and more
-- **111 Skills** - Framework-specific knowledge modules including brainstorming, TDD, and verification
-- **Brainstorming** - Design-first questioning before implementation (inspired by Superpowers)
-- **TDD Enforcement** - RED-GREEN-REFACTOR cycle integrated into Execute phase
-- **Verification** - Functional resolution check before sniper quality validation
-- **SOLID Enforcement** - Automatic file size limits, interface separation, quality gates
-- **DRY Detection** - Code duplication analysis via jscpd (150+ languages) with per-language thresholds
-- **Security Audit** - OWASP Top 10 scanning, CVE research, dependency audit, secrets detection, auth patterns
-- **React Effects Audit** - 9 useEffect anti-pattern detection rules for React/Next.js projects
-- **12 Lifecycle Hooks** - All Claude Code hook types covered across 9 plugins
-- **Smart Commits** - Conventional commits with auto-detection, `disable-model-invocation` on side-effect commands
-- **[4-Level Cache System](docs/reference/cache-system.md)** - Explore, Documentation, Lessons, and Tests caches with analytics for 60-75% token savings
-
-## Stats
-
-| Category | Count |
-|----------|-------|
-| Plugins | 17 |
-| Agents | 18 |
-| Skills | 111 |
-| Commands | 35 |
-| Hook Types | 12 |
-| Hooks Total | 82 |
-| MCP Servers | 10 |
+| Feature | Description |
+|---------|-------------|
+| **APEX Workflow** | Brainstorm → Analyze → Plan → Execute (TDD) → eLicit → Verify → eXamine |
+| **[Agent Teams](docs/workflow/agent-teams.md)** | Parallel delegation with file ownership, max 4 teammates |
+| **19 Expert Agents** | Framework-specific agents with MCP tool access |
+| **125 Skills** | Knowledge modules with references and templates |
+| **SOLID Enforcement** | Auto file size limits, interface separation, quality gates |
+| **DRY Detection** | Code duplication analysis via jscpd (150+ languages) |
+| **Smart Commits** | Conventional commits with auto-detection and security validation |
+| **[4-Level Cache](docs/reference/cache-system.md)** | 60-75% token savings across sessions |
+| **28 MCP Servers** | Context7, Exa, Gemini Design, shadcn, Astro docs, and more |
+| **82 Hooks** | 12 lifecycle hook types across all plugins |
 
 ## Documentation
 
-| Section | Description |
-|---------|-------------|
+| Section | Content |
+|---------|---------|
 | [Getting Started](docs/getting-started/) | Installation, configuration, first steps |
 | [Workflow](docs/workflow/) | APEX methodology, agents, skills, commands |
-| [Plugins](docs/plugins/) | Detailed documentation per plugin |
+| [Plugins](docs/plugins/) | Per-plugin documentation and skills |
 | [Reference](docs/reference/) | Architecture, hooks, MCP servers, cache system |
-
-## Plugins Overview
-
-### Development
-| Plugin | Description |
-|--------|-------------|
-| fuse-ai-pilot | APEX workflow orchestrator, 7-phase sniper validation, DRY detection, React Effects audit, 4-level cache |
-| fuse-nextjs | Next.js 16+ expert with App Router, Prisma 7 |
-| fuse-laravel | Laravel 12+ expert with Livewire, Eloquent |
-| fuse-react | React 19 expert with hooks, TanStack |
-| fuse-swift-apple-expert | Swift/SwiftUI for all Apple platforms |
-| fuse-tailwindcss | Tailwind CSS v4.1 expert |
-| fuse-design | UI/UX with shadcn/ui, 21st.dev |
-| fuse-shadcn-ui | shadcn/ui expert with Radix/Base UI detection |
-
-### Security
-| Plugin | Description |
-|--------|-------------|
-| fuse-security | OWASP Top 10, CVE research, dependency audit, secrets detection |
-
-### Monitoring
-| Plugin | Description |
-|--------|-------------|
-| fuse-changelog | Claude Code update watcher, breaking changes, community pulse |
-
-### Productivity
-| Plugin | Description |
-|--------|-------------|
-| fuse-commit-pro | Smart conventional commits |
-| fuse-solid | SOLID principles enforcement |
-| fuse-prompt-engineer | AI prompt creation & optimization |
 
 ## License
 

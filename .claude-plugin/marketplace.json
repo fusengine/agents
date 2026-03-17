@@ -560,6 +560,60 @@
       ]
     },
     {
+      "name": "fuse-astro",
+      "source": "./plugins/astro-expert",
+      "description": "Expert Astro 6 with Islands Architecture, Content Layer API, Server Actions, Server Islands, UI framework integrations (React/Vue/Svelte/Solid), SEO, Starlight docs, i18n, and deployment",
+      "version": "1.0.0",
+      "author": {
+        "name": "Fusengine",
+        "url": "https://github.com/fusengine"
+      },
+      "homepage": "https://github.com/fusengine/agents",
+      "repository": "https://github.com/fusengine/agents",
+      "license": "MIT",
+      "keywords": [
+        "astro",
+        "astro-6",
+        "islands-architecture",
+        "content-layer",
+        "server-islands",
+        "server-actions",
+        "react",
+        "vue",
+        "svelte",
+        "solid-js",
+        "mdx",
+        "starlight",
+        "i18n",
+        "seo",
+        "deployment",
+        "cloudflare",
+        "vercel"
+      ],
+      "category": "development",
+      "strict": true,
+      "commands": [],
+      "agents": [
+        "./agents/astro-expert.md"
+      ],
+      "skills": [
+        "./skills/astro-6",
+        "./skills/astro-content",
+        "./skills/astro-actions",
+        "./skills/astro-islands",
+        "./skills/astro-integrations",
+        "./skills/astro-seo",
+        "./skills/astro-assets",
+        "./skills/astro-db",
+        "./skills/astro-deployment",
+        "./skills/astro-starlight",
+        "./skills/astro-styling",
+        "./skills/astro-security",
+        "./skills/astro-i18n",
+        "./skills/solid-astro"
+      ]
+    },
+    {
       "name": "fuse-changelog",
       "source": "./plugins/changelog-watcher",
       "description": "Claude Code update watcher: changelog tracking, breaking changes detection, community pulse via Exa, plugin compatibility analysis",
