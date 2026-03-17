@@ -1,5 +1,10 @@
 # Release Notes
 
+## [1.38.39] - 17-03-2026
+
+### Documentation
+- docs: rewrite README with clear explanations and auto-sync version badge (commit-pro 1.2.11)
+
 ## [1.38.38] - 17-03-2026
 
 ### Fixed

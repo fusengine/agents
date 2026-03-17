@@ -1,6 +1,6 @@
 # Fusengine Claude Code Plugins
 
-![version](https://img.shields.io/badge/version-v1.38.38-blue?style=flat-square) ![plugins](https://img.shields.io/badge/plugins-18-brightgreen?style=flat-square) ![agents](https://img.shields.io/badge/agents-19-blueviolet?style=flat-square) ![skills](https://img.shields.io/badge/skills-125-orange?style=flat-square) ![License: MIT](https://img.shields.io/badge/License-MIT-yellow?style=flat-square) ![platform](https://img.shields.io/badge/platform-macOS%20%7C%20Linux-lightgrey?style=flat-square) ![Windows](https://img.shields.io/badge/Windows-soon-orange?style=flat-square)
+![version](https://img.shields.io/badge/version-v1.38.39-blue?style=flat-square) ![plugins](https://img.shields.io/badge/plugins-18-brightgreen?style=flat-square) ![agents](https://img.shields.io/badge/agents-19-blueviolet?style=flat-square) ![skills](https://img.shields.io/badge/skills-125-orange?style=flat-square) ![License: MIT](https://img.shields.io/badge/License-MIT-yellow?style=flat-square) ![platform](https://img.shields.io/badge/platform-macOS%20%7C%20Linux-lightgrey?style=flat-square) ![Windows](https://img.shields.io/badge/Windows-soon-orange?style=flat-square)
 
 > A plugin ecosystem that turns Claude Code into a supervised, multi-agent development environment. Expert agents write code, hooks enforce quality in real-time, and skills inject framework-specific knowledge — so Claude never guesses, never duplicates, and always follows your architecture.
 
