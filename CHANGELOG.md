@@ -1,5 +1,10 @@
 # Release Notes
 
+## [1.38.35] - 17-03-2026
+
+### Changed
+- refactor(hooks): extract shared state_manager and unify session state I/O (core-guards 1.1.19)
+
 ## [1.38.34] - 16-03-2026
 
 ### Fixed
