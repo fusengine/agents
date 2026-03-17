@@ -1,6 +1,6 @@
 # MCP Servers
 
-27 Model Context Protocol servers available for global installation.
+28 Model Context Protocol servers available for global installation.
 
 ## Installation
 
@@ -26,6 +26,7 @@ Servers with `[✓]` have API keys configured. Servers with `[⚠ key missing]` 
 | git | Read, search and manipulate local Git repositories |
 | fetch | Web content fetching and conversion for LLMs |
 | time | Time and timezone conversion capabilities |
+| astro-docs | Search official Astro framework documentation |
 | playwright | Browser automation, E2E testing and screenshots |
 | puppeteer | Headless Chrome automation and web scraping |
 | postgres | PostgreSQL database operations and queries |

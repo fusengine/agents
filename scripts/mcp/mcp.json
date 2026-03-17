@@ -76,6 +76,12 @@
 			"type": "stdio",
 			"requiresApiKey": false
 		},
+		"astro-docs": {
+			"_description": "Search official Astro framework documentation",
+			"type": "http",
+			"url": "https://mcp.docs.astro.build/mcp",
+			"requiresApiKey": false
+		},
 
 		"context7": {
 			"_description": "Up-to-date documentation lookup to reduce AI hallucinations",
