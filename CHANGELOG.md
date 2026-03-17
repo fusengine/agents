@@ -1,5 +1,10 @@
 # Release Notes
 
+## [1.38.37] - 17-03-2026
+
+### Added
+- feat(astro): add fuse-astro expert plugin with 14 skills (astro-expert 1.0.0)
+
 ## [1.38.36] - 17-03-2026
 
 ### Added
