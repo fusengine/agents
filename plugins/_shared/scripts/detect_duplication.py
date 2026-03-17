@@ -8,13 +8,11 @@ BLOCKS write if duplicates found — forces reuse over rewrite.
 import json
 import os
 import re
-import subprocess
 import sys
 
 from check_skill_common import deny_block
 from _duplication_patterns import (
-    _KEYWORDS, _TS_PAT, _PHP_PAT, _TS_EXTENSIONS,
-    _GREP_EXCLUDE_DIRS, _TS_DECL, _PHP_DECL,
+    _KEYWORDS, _TS_PAT, _PHP_PAT, _TS_EXTENSIONS, _grep_dupes, _get_module,
 )
 
 
@@ -29,27 +27,6 @@ def _extract_names(content: str, ext: str) -> set:
             if n not in _KEYWORDS and len(n) > 6:
                 names.add(n)
     return names
-
-
-def _grep_dupes(names: set, cwd: str, ext: str, exclude: str) -> list:
-    """Grep codebase for DECLARATIONS of names, ignoring imports/usage."""
-    if not names:
-        return []
-    inc = (["--include=*.ts", "--include=*.tsx", "--include=*.js", "--include=*.jsx"]
-           if ext in _TS_EXTENSIONS else ["--include=*.php"])
-    joined = "|".join(re.escape(n) for n in names)
-    decl = _TS_DECL if ext in _TS_EXTENSIONS else _PHP_DECL
-    pat = decl + r"(" + joined + r")\b"
-    try:
-        r = subprocess.run(
-            ["grep", "-rEl", *_GREP_EXCLUDE_DIRS, *inc, "--", pat, cwd],
-            capture_output=True, text=True, timeout=1.5,
-            check=False)
-    except (subprocess.TimeoutExpired, FileNotFoundError):
-        return []
-    ex = os.path.abspath(exclude)
-    return [f for f in r.stdout.splitlines()
-            if f.strip() and os.path.abspath(f.strip()) != ex]
 
 
 def main() -> None:
@@ -76,9 +53,20 @@ def main() -> None:
         files = ", ".join(dupes[:3])
         if len(dupes) > 3:
             files += f" (+{len(dupes) - 3} more)"
-        deny_block(
-            f"DRY BLOCKED: [{preview}] already exist in: {files}. "
-            f"Import and reuse existing code instead of rewriting.")
+        target_mod = _get_module(fp)
+        cross = [d for d in dupes if target_mod and _get_module(d)
+                 and _get_module(d) != target_mod]
+        if cross and len(cross) == len(dupes):
+            deny_block(
+                f"DRY BLOCKED: [{preview}] already exist in: {files}. "
+                f"Cross-module duplication detected. Find the shared "
+                f"directory (modules/cores/ or equivalent) in this "
+                f"project and extract the common code there, then "
+                f"import from both modules.")
+        else:
+            deny_block(
+                f"DRY BLOCKED: [{preview}] already exist in: {files}. "
+                f"Import and reuse existing code instead of rewriting.")
 
 
 if __name__ == "__main__":

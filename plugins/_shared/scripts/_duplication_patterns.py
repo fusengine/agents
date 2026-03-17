@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
-"""_duplication_patterns.py - Constants and regex patterns for DRY detection."""
+"""_duplication_patterns.py - Constants, regex patterns and grep logic for DRY detection."""
+
+import os
+import re
+import subprocess
+import sys
 
 _KEYWORDS = frozenset([
     "if", "for", "while", "switch", "catch", "return", "async",
@@ -28,3 +33,46 @@ _GREP_EXCLUDE_DIRS = [
 
 _TS_DECL = r"(function|const|let|class|interface)\s+"
 _PHP_DECL = r"(function|class|interface|trait)\s+"
+
+
+def _get_module(filepath: str) -> str:
+    """Extract module name from path (modules/X/... -> X, else '')."""
+    parts = os.path.normpath(filepath).split(os.sep)
+    for i, part in enumerate(parts):
+        if part == "modules" and i + 1 < len(parts):
+            return parts[i + 1]
+    return ""
+
+
+def _grep_dupes(names: set, cwd: str, ext: str, exclude: str) -> list:
+    """Grep codebase for DECLARATIONS, respecting module boundaries.
+
+    Same-module matches block; cross-module matches emit a hint only.
+    """
+    if not names:
+        return []
+    inc = (["--include=*.ts", "--include=*.tsx", "--include=*.js", "--include=*.jsx"]
+           if ext in _TS_EXTENSIONS else ["--include=*.php"])
+    decl = _TS_DECL if ext in _TS_EXTENSIONS else _PHP_DECL
+    pat = decl + r"(" + "|".join(re.escape(n) for n in names) + r")\b"
+    try:
+        result = subprocess.run(
+            ["grep", "-rEl", *_GREP_EXCLUDE_DIRS, *inc, "--", pat, cwd],
+            capture_output=True, text=True, timeout=1.5, check=False)
+    except (subprocess.TimeoutExpired, FileNotFoundError):
+        return []
+    ex = os.path.abspath(exclude)
+    target_mod = _get_module(exclude)
+    matches, cross_mod = [], []
+    for f in result.stdout.splitlines():
+        f = f.strip()
+        if not f or os.path.abspath(f) == ex:
+            continue
+        dupe_mod = _get_module(f)
+        if target_mod and dupe_mod and dupe_mod != target_mod:
+            cross_mod.append(f)
+            continue
+        matches.append(f)
+    if cross_mod:
+        matches.extend(cross_mod)
+    return matches
