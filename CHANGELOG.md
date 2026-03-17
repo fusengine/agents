@@ -1,5 +1,10 @@
 # Release Notes
 
+## [1.38.36] - 17-03-2026
+
+### Added
+- feat(mcp): add astro-docs server to MCP catalog
+
 ## [1.38.35] - 17-03-2026
 
 ### Changed
