@@ -1,5 +1,10 @@
 # Release Notes
 
+## [1.38.38] - 17-03-2026
+
+### Fixed
+- fix(hooks): add module boundary awareness to DRY duplication detector
+
 ## [1.38.37] - 17-03-2026
 
 ### Added
