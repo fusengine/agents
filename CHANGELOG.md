@@ -1,5 +1,15 @@
 # Release Notes
 
+## [1.38.40] - 18-03-2026
+
+### Added
+- feat(design-expert): add Astro 6 multi-stack support with handoff guide, framework detection, islands component mapping (design-expert 2.1.3)
+- feat(design-expert): add mandatory Playwright inspiration browsing with fullPage screenshots and 3 visual directions proposal (design-expert 2.1.3)
+- feat(design-expert): add design inspiration catalog — webestica, Godly, Awwwards, Landbook (design-expert 2.1.3)
+- feat(design-expert): add redesign detection with trigger keywords and behavior matrix (design-expert 2.1.3)
+- feat(design-expert): add button contrast rule, forbid border-top separators, anti-AI-slop XML template (design-expert 2.1.3)
+- feat(design-expert): add design-system templates — creative, devtool, ecommerce, fintech (design-expert 2.1.3)
+
 ## [1.38.39] - 17-03-2026
 
 ### Documentation
