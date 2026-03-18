@@ -66,7 +66,10 @@ def main() -> None:
     except OSError:
         sys.exit(0)
     current_agent_id = data.get("agent_id") or ""
-    if current_agent_id and design_agent_id and current_agent_id != design_agent_id:
+    # No agent_id = team lead or main session → skip check
+    if not current_agent_id:
+        sys.exit(0)
+    if design_agent_id and current_agent_id != design_agent_id:
         sys.exit(0)  # Not the design agent → skip check
 
     if data.get("tool_name", "") != "mcp__playwright__browser_navigate":

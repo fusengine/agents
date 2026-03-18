@@ -1,5 +1,10 @@
 # Release Notes
 
+## [1.38.44] - 18-03-2026
+
+### Added
+- feat(design-expert): enforce per-agent Playwright tracking, Gemini-before-Write gate, .html hook coverage (design-expert 2.1.7)
+
 ## [1.38.43] - 18-03-2026
 
 ### Added
