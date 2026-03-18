@@ -1,5 +1,10 @@
 # Release Notes
 
+## [1.38.43] - 18-03-2026
+
+### Added
+- feat(design-expert): add SubagentStart/Stop flag for agent detection — hooks now only enforce Playwright browsing when design-expert is active (design-expert 2.1.6)
+
 ## [1.38.42] - 18-03-2026
 
 ### Added
