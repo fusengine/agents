@@ -15,7 +15,7 @@ import { isDocConsulted, formatDocDeny, resolveSessions, type AuthEntry } from "
 import { routeReferences } from "./lib/apex/ref-router";
 import { incrementTrivialEditCounter } from "./lib/apex/trivial-edit-counter";
 
-const CODE_EXT = /\.(ts|tsx|js|jsx|py|php|swift|go|rs|rb|java|vue|svelte|css)$/; // requires doc
+const CODE_EXT = /\.(ts|tsx|js|jsx|py|php|swift|go|rs|rb|java|vue|svelte|astro|css)$/; // requires doc
 const SKIP_DIRS = /(node_modules|vendor|dist|build|\.next|DerivedData)/; // skip deps/build
 const PROTECTED_PATHS = /\.claude\/(plugins\/(marketplaces|cache)|logs\/00-apex|fusengine-cache\/skill-tracking)/;
 

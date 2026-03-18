@@ -13,7 +13,7 @@ export function parseFrontmatter(content: string): Record<string, string> {
   const m = content.match(/^---\r?\n([\s\S]*?)\r?\n---/);
   if (!m) return {};
   const result: Record<string, string> = {};
-  for (const line of m[1].split("\n")) {
+  for (const line of m[1]!.split("\n")) {
     const idx = line.indexOf(":");
     if (idx > 0) result[line.slice(0, idx).trim()] = line.slice(idx + 1).trim().replace(/^["']|["']$/g, "");
   }
