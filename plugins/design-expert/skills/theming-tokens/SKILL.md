@@ -5,6 +5,7 @@ versions:
   tailwindcss: "4.1"
 user-invocable: true
 allowed-tools: Read, Write, Edit, Glob, Grep
+references: references/complex-themes.md, references/multi-brand.md
 related-skills: designing-systems, dark-light-modes
 ---
 

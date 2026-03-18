@@ -44,3 +44,4 @@ docs/plugins/memory.md
 
 # APEX tracking (auto-generated)
 .claude/apex/
+plugins/design-expert/scripts/.ruff_cache

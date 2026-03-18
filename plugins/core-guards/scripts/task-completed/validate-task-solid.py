@@ -6,7 +6,7 @@ import sys
 
 STATE_DIR = os.path.join(os.path.expanduser('~'), '.claude', 'fusengine-cache', 'sessions')
 MAX_LINES = 100
-CODE_EXTENSIONS = {'.ts', '.tsx', '.js', '.jsx', '.py', '.php', '.swift', '.go', '.rs'}
+CODE_EXTENSIONS = {'.ts', '.tsx', '.js', '.jsx', '.py', '.php', '.swift', '.go', '.rs', '.astro'}
 
 
 def main():

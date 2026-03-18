@@ -7,59 +7,74 @@ priority: medium
 related: contact-form.md
 ---
 
-# FAQ Accordion Spec
+# FAQ Accordion Template
 
-## Layout
+## MCP Call
 
-| Zone | Content | Responsive |
-|------|---------|------------|
-| Header | Section title + subtitle (optional) | Centered |
-| Accordion | Collapsible items with chevron indicator | Full width, max-w-3xl centered |
-| Each item | Question (trigger) + Answer (content) | Full width |
+```
+Tool: mcp__gemini-design__create_frontend
+Parameters:
+  request: |
+    <component>FAQ accordion — shadcn Accordion, single open, Schema.org FAQPage</component>
+    <aesthetics>Editorial list — accordion items feel like a high-quality editorial list. Question is the entry point, answer is the payoff. No decorative cards, no colored backgrounds per item. Chevron is the only interactive affordance. Max-w-3xl centered for comfortable reading line length</aesthetics>
+    <typography>
+      - Section title: var(--font-display), clamp(1.75rem, 4vw, 2.5rem), font-weight 700
+      - Question trigger: var(--font-body), 1rem, font-weight 500, color oklch(var(--foreground)), text-left
+      - Answer content: var(--font-body), 0.9375rem, line-height 1.7, color oklch(var(--muted-foreground))
+      - Item number (optional): var(--font-mono), 0.75rem, color oklch(var(--muted-foreground) / 0.5)
+    </typography>
+    <color_system>
+      - Section bg: oklch(var(--background))
+      - Item border: oklch(var(--border))
+      - Question hover bg: oklch(var(--muted) / 0.5)
+      - Chevron: oklch(var(--muted-foreground)), rotates to oklch(var(--foreground)) when open
+      - Answer bg: transparent (no colored answer backgrounds)
+    </color_system>
+    <spacing>Section max-w-3xl mx-auto py-20. AccordionItem py-1. AccordionTrigger py-4 px-0. AccordionContent pb-4 pt-0. Gap between section title and accordion: mt-12</spacing>
+    <states>
+      - Default: all items collapsed, chevron pointing down
+      - Open item: chevron rotated 180deg, content height auto, smooth spring
+      - Item hover (collapsed): bg-muted/50 on trigger
+      - Item focus-visible: outline ring-2 ring-ring/20 (keyboard nav)
+      - Active/open trigger: font-weight 600, chevron color oklch(var(--foreground))
+      - Max open: type="single" — only 1 item open at a time
+    </states>
+    <animations>Built-in shadcn Accordion spring animation for height. Chevron: data-[state=open]:rotate-180, transition-transform 0.2s. Section entrance: opacity 0→1, y 20→0, 0.4s on scroll. Do NOT add custom height animation (conflicts with shadcn)</animations>
+    <forbidden>
+      - No custom accordion implementation — use shadcn Accordion
+      - No type="multiple" (users get lost with multiple open items)
+      - No colorful question backgrounds
+      - No accordion without Schema.org FAQPage JSON-LD
+      - No more than 10 items
+      - No answers hidden in nested accordions
+      - No Inter/Roboto/Arial
+      - No hard-coded hex
+    </forbidden>
+  techStack: "React + Tailwind CSS + shadcn/ui + Framer Motion"
+  context: "<inject full design-system.md content here>"
+```
 
-**Research: 7-10 items maximum. Most-asked questions first. Include Schema.org FAQPage structured data for SEO (+20% SERP visibility).**
+## Schema.org Requirement
 
-## Components (shadcn/ui)
+Every FAQ section MUST include this JSON-LD block:
 
-- Accordion: type="single" collapsible
-- AccordionItem: container per Q&A pair
-- AccordionTrigger: question with chevron rotation
-- AccordionContent: answer with muted foreground
-
-## Design Tokens
-
-| Token | Value | Notes |
-|-------|-------|-------|
-| max-width | max-w-3xl mx-auto | Readable line length |
-| trigger-font | font-medium text-left | Question styling |
-| content-color | text-muted-foreground | Answer contrast |
-| border | Default accordion borders | Separator between items |
-| chevron | Rotate 180deg on open | Built into shadcn |
-
-## Animation (Framer Motion)
-
-| Element | Animation | Duration |
-|---------|-----------|----------|
-| Section | opacity 0->1 on scroll | 0.4s |
-| Accordion open | Height auto with spring | Built-in shadcn |
-| Chevron | Rotate 0->180deg | 0.2s |
-
-## Gemini Design Prompt
-
-> "Create a FAQ section with centered heading and shadcn Accordion (type='single', collapsible). Max 7-10 items with chevron indicator. Questions left-aligned, answers in muted foreground. Max-w-3xl centered layout. Include Schema.org FAQPage JSON-LD script tag. Use design-system.md tokens. OKLCH colors, no Inter/Roboto."
-
-## Multi-Stack Adaptation
-
-| Stack | Implementation |
-|-------|---------------|
-| React + shadcn | Gemini Design MCP with shadcn Accordion |
-| Laravel Blade | Visual spec -> Livewire Flux accordion |
-| Swift/SwiftUI | Visual spec -> DisclosureGroup with animation |
+```html
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    { "@type": "Question", "name": "Q1", "acceptedAnswer": { "@type": "Answer", "text": "A1" }}
+  ]
+}
+</script>
+```
 
 ## Validation Checklist
 
 - [ ] Uses shadcn Accordion, not custom implementation
 - [ ] type="single" collapsible (one open at a time)
 - [ ] Chevron rotates on open/close
-- [ ] Max 7-10 items, most asked first
-- [ ] Schema.org FAQPage structured data included
+- [ ] Max 7-10 items, high-traffic questions first
+- [ ] Schema.org FAQPage JSON-LD included
+- [ ] All states: default, open, hover, focus-visible

@@ -5,7 +5,7 @@ import os
 import re
 import sys
 
-CODE_EXT = r'\.(ts|tsx|js|jsx|py|go|rs|java|php|cpp|c|rb|swift|kt|dart|vue|svelte)$'
+CODE_EXT = r'\.(ts|tsx|js|jsx|py|go|rs|java|php|cpp|c|rb|swift|kt|dart|vue|svelte|astro)$'
 SOLID_MAP = {
     'ts': 'react', 'tsx': 'react', 'js': 'react', 'jsx': 'react',
     'php': 'laravel-expert/skills/solid-php/',

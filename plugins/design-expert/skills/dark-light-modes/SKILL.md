@@ -5,6 +5,7 @@ versions:
   next-themes: "0.4"
 user-invocable: true
 allowed-tools: Read, Write, Edit, Glob, Grep
+references: references/edge-cases.md, references/image-handling.md, references/color-mapping.md
 related-skills: theming-tokens, designing-systems
 ---
 

@@ -7,7 +7,7 @@ from ref_router import route_references
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from _shared.state_manager import load_session_state, save_session_state
 
-CODE_EXT = r'\.(ts|tsx|js|jsx|py|go|rs|java|php|cpp|c|rb|swift|kt|dart|vue|svelte)$'
+CODE_EXT = r'\.(ts|tsx|js|jsx|py|go|rs|java|php|cpp|c|rb|swift|kt|dart|vue|svelte|astro)$'
 FW_MAP = {'ts': None, 'tsx': None, 'js': None, 'jsx': None, 'vue': None, 'svelte': None,
           'php': 'php', 'swift': 'swift', 'java': 'java', 'go': 'go', 'rb': 'ruby', 'rs': 'rust'}
 SKILL_MAP = {'react': 'react-expert/skills/solid-react', 'nextjs': 'nextjs-expert/skills/solid-nextjs',

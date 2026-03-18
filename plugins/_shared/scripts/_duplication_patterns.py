@@ -4,7 +4,6 @@
 import os
 import re
 import subprocess
-import sys
 
 _KEYWORDS = frozenset([
     "if", "for", "while", "switch", "catch", "return", "async",
@@ -22,7 +21,7 @@ _PHP_PAT = [
     r"(?:class|interface|trait)\s+(\w+)\b",
 ]
 
-_TS_EXTENSIONS = frozenset([".ts", ".tsx", ".js", ".jsx"])
+_TS_EXTENSIONS = frozenset([".ts", ".tsx", ".js", ".jsx", ".astro"])
 
 _GREP_EXCLUDE_DIRS = [
     "--exclude-dir=vendor", "--exclude-dir=node_modules",

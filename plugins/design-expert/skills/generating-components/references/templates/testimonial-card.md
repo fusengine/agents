@@ -7,58 +7,67 @@ priority: medium
 related: stats-section.md, hero-section.md
 ---
 
-# Testimonial Card Spec
+# Testimonial Card Template
 
-## Layout
+## MCP Call
 
-| Zone | Content | Responsive |
-|------|---------|------------|
-| Top | Star rating (1-5 filled stars) | Left aligned |
-| Middle | Blockquote with quotation marks | Full width |
-| Bottom | Avatar (40x40) + Name + Role + Company | Flex row, gap-3 |
+```
+Tool: mcp__gemini-design__create_frontend
+Parameters:
+  request: |
+    <component>Testimonial card — quote + author + star rating, social proof grid</component>
+    <aesthetics>Trust-first — card feels like a physical quote card, generous internal padding, star rating is prominent. Quotation mark as decorative element (large, positioned top-left of quote). No gradient backgrounds on individual cards</aesthetics>
+    <typography>
+      - Quote text: var(--font-body), 0.9375rem, line-height 1.7, color oklch(var(--muted-foreground)), font-style italic
+      - Author name: var(--font-body), 0.9375rem, font-weight 600, color oklch(var(--foreground))
+      - Role + company: var(--font-body), 0.8125rem, color oklch(var(--muted-foreground))
+      - Decorative quote mark: var(--font-display), 5rem, leading-none, color oklch(var(--primary) / 0.15)
+    </typography>
+    <color_system>
+      - Card bg: oklch(var(--card))
+      - Card border: oklch(var(--border))
+      - Star active: fill oklch(0.8 0.18 85), text oklch(0.8 0.18 85) (yellow OKLCH)
+      - Star inactive: oklch(var(--muted-foreground) / 0.3)
+      - Card hover shadow: shadow-lg shadow-black/5
+      - Avatar border: ring-2 ring-background (white ring for separation)
+    </color_system>
+    <spacing>Card padding p-6. Stars mb-4. Quote mb-6. Author row gap-3. Avatar w-10 h-10 (40px). Section grid: grid-cols-1 md:grid-cols-2 lg:grid-cols-3, gap-6</spacing>
+    <states>
+      - Default: card with border, full content visible
+      - Hover: translateY -2px, shadow increase (shadow-lg), 0.2s spring
+      - Avatar image load error: fallback to initials in colored bg (oklch from name hash)
+      - Rating partial (4/5): 4 filled stars, 1 empty — never show 0/5
+      - Card in carousel: pagination dots visible, swipe gesture on mobile
+      - Featured testimonial (optional): larger card spanning full width, larger quote font
+    </states>
+    <animations>Framer Motion whileInView: staggerChildren 0.07s, once true. Each card: opacity 0→1, y 20→0, 0.4s easeOut. Stars: sequential fill with stagger 0.05s on view. Hover: whileHover spring stiffness 400 damping 25</animations>
+    <forbidden>
+      - No illustration avatars — use real photo placeholders or initials fallback
+      - No generic quotes like "Great product!" (placeholder text must be specific)
+      - No star ratings below 4/5 (never show negative social proof)
+      - No card without company name (B2B credibility)
+      - No centered quote text (left-align for readability)
+      - No Inter/Roboto/Arial
+      - No hard-coded hex
+    </forbidden>
+  techStack: "React + Tailwind CSS + shadcn/ui + Framer Motion"
+  context: "<inject full design-system.md content here>"
+```
 
-**Research: Real photos outperform illustrations. Specific quotes with metrics outperform generic praise. Include company name for B2B credibility.**
+## Card Structure
 
-## Components (shadcn/ui)
-
-- Card: rounded-2xl with border and padding
-- Avatar: 40x40 rounded-full image
-- Star icons: filled for active, muted for inactive
-
-## Design Tokens
-
-| Token | Value | Notes |
-|-------|-------|-------|
-| card-radius | rounded-2xl | Consistent corners |
-| star-active | fill-yellow-400 text-yellow-400 | Filled star |
-| star-inactive | text-muted-foreground | Empty star |
-| quote-color | text-muted-foreground | Quote text |
-| avatar-size | 40x40px | Author photo |
-
-## Animation (Framer Motion)
-
-| Element | Animation | Duration |
-|---------|-----------|----------|
-| Card | opacity 0->1, y 20->0 | 0.4s on scroll |
-| Stars | Sequential fill on view | 0.1s stagger |
-| Hover | whileHover: y -2 | 0.2s |
-
-## Gemini Design Prompt
-
-> "Create a testimonial card with 5-star rating row, blockquote with quotation styling, and author section with avatar (40x40), name, role, and company. Use design-system.md tokens. OKLCH colors, no Inter/Roboto. Subtle hover lift. Real photo placeholder for avatar, not illustration."
-
-## Multi-Stack Adaptation
-
-| Stack | Implementation |
-|-------|---------------|
-| React + shadcn | Gemini Design MCP with Card, Avatar |
-| Laravel Blade | Visual spec -> Livewire Flux card |
-| Swift/SwiftUI | Visual spec -> VStack with Image + Text |
+| Zone | Content | Notes |
+|------|---------|-------|
+| Top-left | Decorative quote mark | Purely visual, aria-hidden |
+| Top-right | Star rating row | 5 stars, filled/empty |
+| Middle | Blockquote (italic) | Use `<blockquote>` semantics |
+| Bottom | Avatar + name + role + company | Flex row, gap-3 |
 
 ## Validation Checklist
 
-- [ ] Star rating with filled/unfilled distinction
-- [ ] Blockquote semantics (not just styled div)
-- [ ] Avatar uses real photo placeholder, not icon
-- [ ] Author info includes name + role + company
-- [ ] OKLCH colors, no hard-coded hex, no Inter/Roboto
+- [ ] Blockquote uses semantic `<blockquote>` element
+- [ ] Avatar fallback to initials if image fails
+- [ ] Company name always present
+- [ ] Stars: filled/empty distinction, never 0/5
+- [ ] Stagger entrance on scroll intersection
+- [ ] OKLCH CSS variables only, no hard-coded hex

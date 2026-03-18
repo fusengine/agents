@@ -11,7 +11,7 @@ import sys
 
 
 CODE_EXTENSIONS = re.compile(
-    r"\.(ts|tsx|js|jsx|py|php|swift|go|rs|rb|java)$"
+    r"\.(ts|tsx|js|jsx|py|php|swift|go|rs|rb|java|astro)$"
 )
 INTERFACE_PATTERN = re.compile(r"^(export )?(interface|type) [A-Z]", re.M)
 

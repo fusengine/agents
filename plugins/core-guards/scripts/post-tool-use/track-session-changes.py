@@ -11,7 +11,7 @@ from _shared.state_manager import load_session_state, save_session_state
 
 LOG_DIR = os.path.expanduser('~/.claude/logs')
 LOG_FILE = os.path.join(LOG_DIR, 'hooks.log')
-CODE_EXT = r'\.(ts|tsx|js|jsx|py|go|rs|java|php|cpp|c|rb|swift|kt|vue|svelte)$'
+CODE_EXT = r'\.(ts|tsx|js|jsx|py|go|rs|java|php|cpp|c|rb|swift|kt|vue|svelte|astro)$'
 
 
 def log_hook(msg):

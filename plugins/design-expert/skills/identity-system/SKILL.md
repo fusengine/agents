@@ -7,7 +7,7 @@ versions:
   shadcn-ui: "2.x"
 user-invocable: true
 allowed-tools: Read, Write, Edit, Glob, Grep, Task
-references: references/identity-brief.md, references/sector-palettes.md, references/typography-pairs.md, references/spacing-density.md, references/motion-personality.md, references/templates/design-system-template.md
+references: references/identity-brief.md, references/sector-palettes.md, references/typography-pairs.md, references/spacing-density.md, references/motion-personality.md, references/visual-technique-matrix.md, references/templates/design-system-template.md, references/templates/design-system-fintech.md, references/templates/design-system-ecommerce.md, references/templates/design-system-devtool.md, references/templates/design-system-creative.md
 related-skills: designing-systems, theming-tokens, palette-generator
 ---
 
@@ -58,12 +58,17 @@ After implementation, run **fuse-ai-pilot:sniper** for validation.
 | **Typography** | [typography-pairs.md](references/typography-pairs.md) | Selecting font pairs |
 | **Spacing** | [spacing-density.md](references/spacing-density.md) | Layout density profile |
 | **Motion** | [motion-personality.md](references/motion-personality.md) | Animation personality |
+| **Visual Techniques** | [visual-technique-matrix.md](references/visual-technique-matrix.md) | Glassmorphism, gradients, shadows — what is allowed per personality/density |
 
 ### Templates
 
 | Template | When to Use |
 |----------|-------------|
-| [design-system-template.md](references/templates/design-system-template.md) | Generate design-system.md for project root |
+| [design-system-template.md](references/templates/design-system-template.md) | Blank template — generate design-system.md for project root |
+| [design-system-fintech.md](references/templates/design-system-fintech.md) | Trust/B2B — blue-green palette, Cabinet Grotesk + Geist |
+| [design-system-ecommerce.md](references/templates/design-system-ecommerce.md) | Conversion — warm vibrant palette, Syne + General Sans |
+| [design-system-devtool.md](references/templates/design-system-devtool.md) | Technical dark-first — monochrome, JetBrains Mono + Geist |
+| [design-system-creative.md](references/templates/design-system-creative.md) | Luxury/editorial — bold palette, Fraunces + Literata |
 
 ---
 

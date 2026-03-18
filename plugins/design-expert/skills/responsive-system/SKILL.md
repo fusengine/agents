@@ -5,6 +5,7 @@ versions:
   tailwindcss: "4.1"
 user-invocable: true
 allowed-tools: Read, Write, Edit, Glob, Grep
+references: references/breakpoint-patterns.md, references/container-queries.md, references/fluid-typography.md, references/templates/responsive-dashboard.md, references/templates/responsive-mobile-nav.md
 related-skills: designing-systems, generating-components
 ---
 

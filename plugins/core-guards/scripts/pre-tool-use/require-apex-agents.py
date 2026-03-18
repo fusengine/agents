@@ -12,7 +12,7 @@ from apex_agent_helpers import (  # pylint: disable=wrong-import-position
     increment_trivial_edit_counter,
 )
 
-CODE_EXT = r'\.(ts|tsx|js|jsx|py|go|rs|java|php|cpp|c|rb|swift|kt|dart|vue|svelte)$'
+CODE_EXT = r'\.(ts|tsx|js|jsx|py|go|rs|java|php|cpp|c|rb|swift|kt|dart|vue|svelte|astro)$'
 EXEMPT_PATTERNS = [
     r'\.claude-plugin/', r'CHANGELOG\.md$', r'marketplace\.json$',
     r'/\.claude/(apex|memory|logs|fusengine-cache)/',

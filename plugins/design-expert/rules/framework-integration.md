@@ -7,6 +7,7 @@ After generating UI with Gemini Design, ALWAYS delegate to framework expert.
 | Project Files | Framework | UI Approach | Delegate To | Skills to Validate |
 |---------------|-----------|-------------|-------------|-------------------|
 | `next.config.*`, `app/layout.tsx` | Next.js | Gemini Design + shadcn | `fuse-nextjs:nextjs-expert` | solid-nextjs, nextjs-16 |
+| `astro.config.*`, `src/pages/*.astro` | Astro | Gemini Design + shadcn (React islands) | `fuse-astro:astro-expert` | solid-astro |
 | `package.json` + React (no Next) | React SPA | Gemini Design + shadcn | `fuse-react:react-expert` | solid-react, react-19 |
 | `composer.json` + `artisan` + Inertia + React | Laravel+Inertia | Gemini Design + shadcn | `fuse-laravel:laravel-expert` | solid-php |
 | `composer.json` + `artisan` (no Inertia) | Laravel Blade | Visual specs → Livewire Flux | `fuse-laravel:laravel-expert` | solid-php |
@@ -40,16 +41,7 @@ Prompt: "Validate this generated component for:
 
 ## Non-React Stacks: Visual Spec Workflow
 
-When project is NOT React-based, design-expert produces:
-1. `design-system.md` (identity tokens)
-2. Visual specs (layout, components, animations)
-3. Delegates IMPLEMENTATION to domain expert
-
-The domain expert receives:
-- Layout structure (zones, grid, responsive)
-- Component mapping (which UI lib components to use)
-- Animation specs (what to animate, durations)
-- Design tokens (colors, fonts, spacing)
+For non-React projects, design-expert produces `design-system.md` + visual specs (layout, components, animations, tokens) then delegates implementation to domain expert.
 
 ## Laravel Blade → Livewire Flux Components
 
@@ -76,6 +68,17 @@ The domain expert receives:
 | Form | `Form` with `Section` |
 | List/Table | `List` / `Table` |
 | Tabs | `TabView` |
+
+## Web → Astro Islands Mapping
+
+| Component | Implementation | Directive |
+|---|---|---|
+| Button (static), Card, Badge | `.astro` import | None |
+| Button (onClick), Dialog, Select, Toast | React `.tsx` | `client:load` |
+| Accordion, Tabs, Form (TanStack) | React `.tsx` | `client:visible` |
+
+> Wrap interdependent components in one `.tsx` — React Context is isolated per island.
+> Astro delegation: `fuse-astro:astro-expert` — validate solid-astro, directives, View Transitions.
 
 ## Responsibility Split
 

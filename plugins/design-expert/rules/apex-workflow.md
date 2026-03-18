@@ -7,6 +7,7 @@
 | **A** | 00-load-skills | Read required skills FIRST |
 | **A** | 01-analyze-design | `explore-codebase` → design tokens + PROJECT STRUCTURE |
 | **A** | 02-search-inspiration | 21st.dev + shadcn search |
+| **A** | 02b-browse-inspiration | Playwright → browse 2-3 inspiration sites (see references/design-inspiration.md) |
 | **P** | 03-plan-component | TaskCreate + file planning (<100 lines) |
 | **E** | 04-code-component | Write React/Next.js component via Gemini |
 | **E** | 05-add-motion | Framer Motion patterns |
@@ -15,6 +16,8 @@
 | **E** | 08-preview-browser | Playwright screenshot to verify result |
 | **X** | 09-sniper-check | **MANDATORY: Launch `sniper` agent** |
 | **X** | 10-create-pr | PR with screenshots |
+
+> **Step 02b is MANDATORY for any page or section creation.** Browse 1-3 sites matching the project sector to extract visual patterns BEFORE generating. New project → 3 sites. Existing project + new page → 2 sites. Component addition → 1 site or 21st.dev. SKIP only for text/logic changes. See references/design-inspiration.md for URLs.
 
 ## Step 00: Load Skills (BEFORE any code)
 

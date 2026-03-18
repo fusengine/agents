@@ -24,6 +24,29 @@ After audit, generate a report with findings and recommendations.
 
 ---
 
+## Audit Modes
+
+| Mode | When | Purpose |
+|------|------|---------|
+| **Preventive** | BEFORE generation | Block slop before it's created |
+| **Reactive** | AFTER generation | Catch issues in existing components |
+
+---
+
+## Preventive Audit (BEFORE Generation)
+
+Run this checklist BEFORE any Gemini call — not just after:
+
+1. **Identity check** — design-system.md exists with OKLCH tokens
+2. **Typography check** — no Inter / Roboto / Arial in font stack
+3. **Technique check** — visual-technique-matrix.md consulted for personality × density
+4. **Prompt check** — XML blocks present: `<aesthetics>`, `<typography>`, `<color_system>`, `<spacing>`, `<states>`, `<forbidden>`
+5. **States check** — all states planned: default, hover, focus, loading, error, empty
+
+If any check fails → fix before generating. A prevented slop costs 0 retries.
+
+---
+
 ## Overview
 
 | Feature | Description |

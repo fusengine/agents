@@ -1,8 +1,8 @@
 ---
 name: sector-palettes
-description: OKLCH color palettes by industry, inspired by verified brand colors
+description: Concrete OKLCH color values per sector — copy-paste ready CSS variables for light and dark mode
 when-to-use: Choosing brand colors based on sector and personality
-keywords: oklch, palette, sector, fintech, health, ecommerce, colors, brand
+keywords: oklch, palette, sector, fintech, health, ecommerce, colors, brand, CSS
 priority: high
 related: identity-brief.md, typography-pairs.md
 ---
@@ -11,140 +11,310 @@ related: identity-brief.md, typography-pairs.md
 
 ## How to Use
 
-1. Identify project sector from identity brief
-2. Pick the matching palette as starting point
-3. Customize hue/chroma to differentiate from competitors
-4. Fill both Light and Dark columns in design-system.md
+1. Identify sector from the identity brief
+2. Copy the CSS variables block for your sector
+3. Adjust hue ±15° to differentiate from competitors
+4. Dark mode: keep hue, increase L +15–20%, reduce C slightly
 
-**Dark mode rule:** Keep hue constant, increase lightness +15-20%, adjust chroma slightly.
+**OKLCH format:** `oklch(L% C H)` — L=lightness, C=chroma, H=hue angle
 
 ---
 
 ## Fintech / Banking
 
-Inspired by: Stripe, Wise, Mercury
+Inspired by: Stripe, Wise, Mercury — trust, precision, institutional
 
-| Token | Light | Dark | Usage |
-|-------|-------|------|-------|
-| primary | oklch(50% 0.16 255) | oklch(65% 0.16 255) | Trust blue — actions |
-| accent | oklch(72% 0.14 145) | oklch(62% 0.14 145) | Success green |
-| surface | oklch(98% 0.005 250) | oklch(15% 0.015 250) | Page background |
-| card | oklch(100% 0 0) | oklch(20% 0.01 250) | Card background |
-| muted | oklch(95% 0.008 250) | oklch(25% 0.01 250) | Secondary bg |
-| foreground | oklch(18% 0.02 250) | oklch(95% 0.005 250) | Text |
-| border | oklch(90% 0.008 250) | oklch(30% 0.01 250) | Borders |
+```css
+/* Light mode */
+:root {
+  --primary:            oklch(48% 0.16 255);
+  --primary-foreground: oklch(98% 0.004 255);
+  --secondary:          oklch(68% 0.13 158);
+  --secondary-foreground: oklch(15% 0.01 158);
+  --accent:             oklch(55% 0.10 220);
+  --accent-foreground:  oklch(98% 0.004 220);
+  --background:         oklch(98% 0.005 250);
+  --foreground:         oklch(16% 0.018 250);
+  --card:               oklch(100% 0 0);
+  --card-foreground:    oklch(16% 0.018 250);
+  --muted:              oklch(95% 0.007 250);
+  --muted-foreground:   oklch(52% 0.02 250);
+  --border:             oklch(89% 0.007 250);
+  --input:              oklch(89% 0.007 250);
+  --ring:               oklch(48% 0.16 255);
+}
 
-Chroma range: 0.06–0.16 (conservative, trust-oriented)
+/* Dark mode */
+.dark {
+  --primary:            oklch(63% 0.16 255);
+  --background:         oklch(13% 0.012 250);
+  --foreground:         oklch(94% 0.005 250);
+  --card:               oklch(19% 0.01 250);
+  --muted:              oklch(24% 0.01 250);
+  --border:             oklch(29% 0.01 250);
+}
+```
+
+Chroma guide: 0.06–0.16 (conservative, trust-oriented)
+
+---
 
 ## Health / Wellness
 
-Inspired by: Calm, Headspace, Oscar Health
+Inspired by: Calm, Headspace, Oscar Health — soothing, approachable
 
-| Token | Light | Dark | Usage |
-|-------|-------|------|-------|
-| primary | oklch(55% 0.12 200) | oklch(70% 0.12 200) | Calming teal |
-| accent | oklch(68% 0.14 40) | oklch(58% 0.14 40) | Warm coral |
-| surface | oklch(98% 0.005 200) | oklch(15% 0.01 200) | Page background |
-| card | oklch(100% 0 0) | oklch(20% 0.01 200) | Card background |
-| muted | oklch(95% 0.008 200) | oklch(25% 0.01 200) | Secondary bg |
-| foreground | oklch(20% 0.02 200) | oklch(95% 0.005 200) | Text |
-| border | oklch(90% 0.008 200) | oklch(30% 0.01 200) | Borders |
+```css
+/* Light mode */
+:root {
+  --primary:            oklch(54% 0.12 198);
+  --primary-foreground: oklch(98% 0.004 198);
+  --secondary:          oklch(67% 0.14 38);
+  --secondary-foreground: oklch(15% 0.01 38);
+  --accent:             oklch(72% 0.10 155);
+  --accent-foreground:  oklch(15% 0.01 155);
+  --background:         oklch(98% 0.005 195);
+  --foreground:         oklch(19% 0.018 195);
+  --card:               oklch(100% 0 0);
+  --card-foreground:    oklch(19% 0.018 195);
+  --muted:              oklch(95% 0.007 195);
+  --muted-foreground:   oklch(53% 0.018 195);
+  --border:             oklch(90% 0.007 195);
+  --input:              oklch(90% 0.007 195);
+  --ring:               oklch(54% 0.12 198);
+}
 
-Chroma range: 0.09–0.15 (soothing, never aggressive)
+/* Dark mode */
+.dark {
+  --primary:            oklch(69% 0.12 198);
+  --background:         oklch(14% 0.01 200);
+  --foreground:         oklch(95% 0.005 200);
+  --card:               oklch(20% 0.009 200);
+  --muted:              oklch(25% 0.009 200);
+  --border:             oklch(30% 0.009 200);
+}
+```
+
+Chroma guide: 0.09–0.15 (soothing, never aggressive)
+
+---
 
 ## E-commerce
 
-Inspired by: Shopify, Amazon, Etsy — **NO PURPLE (anti-AI-slop)**
+Inspired by: Shopify, Etsy, Amazon — warm, conversion-focused
 
-| Token | Light | Dark | Usage |
-|-------|-------|------|-------|
-| primary | oklch(55% 0.14 145) | oklch(70% 0.14 145) | Brand green |
-| accent | oklch(70% 0.16 55) | oklch(60% 0.16 55) | CTA orange |
-| surface | oklch(98% 0.004 80) | oklch(15% 0.01 250) | Warm white bg |
-| card | oklch(100% 0 0) | oklch(20% 0.008 250) | Card background |
-| muted | oklch(95% 0.006 80) | oklch(25% 0.01 250) | Secondary bg |
-| foreground | oklch(18% 0.01 250) | oklch(95% 0.005 250) | Text |
-| border | oklch(90% 0.006 80) | oklch(30% 0.01 250) | Borders |
+```css
+/* Light mode */
+:root {
+  --primary:            oklch(52% 0.15 145);
+  --primary-foreground: oklch(98% 0.003 145);
+  --secondary:          oklch(68% 0.17 52);
+  --secondary-foreground: oklch(15% 0.01 52);
+  --accent:             oklch(72% 0.14 80);
+  --accent-foreground:  oklch(15% 0.01 80);
+  --background:         oklch(98% 0.004 75);
+  --foreground:         oklch(17% 0.012 250);
+  --card:               oklch(100% 0 0);
+  --card-foreground:    oklch(17% 0.012 250);
+  --muted:              oklch(95% 0.006 75);
+  --muted-foreground:   oklch(54% 0.018 250);
+  --border:             oklch(90% 0.005 75);
+  --input:              oklch(90% 0.005 75);
+  --ring:               oklch(52% 0.15 145);
+}
 
-Chroma range: 0.07–0.16 (warm, conversion-focused CTAs)
+/* Dark mode */
+.dark {
+  --primary:            oklch(67% 0.15 145);
+  --background:         oklch(14% 0.01 250);
+  --foreground:         oklch(95% 0.005 250);
+  --card:               oklch(20% 0.008 250);
+  --muted:              oklch(25% 0.01 250);
+  --border:             oklch(30% 0.01 250);
+}
+```
+
+Chroma guide: 0.07–0.17 (warm, CTA-focused)
+
+---
 
 ## Dev Tools
 
-Inspired by: Linear, Vercel, Supabase, Raycast
+Inspired by: Linear, Vercel, Supabase — dark-first, minimal, precise
 
-| Token | Light | Dark | Usage |
-|-------|-------|------|-------|
-| primary | oklch(52% 0.15 270) | oklch(67% 0.15 270) | Linear-style blue |
-| accent | oklch(70% 0.14 165) | oklch(60% 0.14 165) | Success green |
-| surface | oklch(98% 0.005 260) | oklch(12% 0.008 260) | Background |
-| card | oklch(100% 0 0) | oklch(18% 0.01 260) | Card background |
-| muted | oklch(95% 0.008 260) | oklch(22% 0.01 260) | Secondary bg |
-| foreground | oklch(15% 0.01 260) | oklch(95% 0.005 260) | Text |
-| border | oklch(90% 0.008 260) | oklch(28% 0.01 260) | Borders |
+```css
+/* Light mode */
+:root {
+  --primary:            oklch(50% 0.15 268);
+  --primary-foreground: oklch(98% 0.003 268);
+  --secondary:          oklch(68% 0.13 165);
+  --secondary-foreground: oklch(15% 0.01 165);
+  --accent:             oklch(65% 0.12 45);
+  --accent-foreground:  oklch(15% 0.01 45);
+  --background:         oklch(97% 0.005 260);
+  --foreground:         oklch(14% 0.01 260);
+  --card:               oklch(100% 0 0);
+  --card-foreground:    oklch(14% 0.01 260);
+  --muted:              oklch(94% 0.007 260);
+  --muted-foreground:   oklch(50% 0.018 260);
+  --border:             oklch(88% 0.007 260);
+  --input:              oklch(88% 0.007 260);
+  --ring:               oklch(50% 0.15 268);
+}
 
-Chroma range: 0.00–0.16 (dark-first, minimal, precise)
+/* Dark mode — primary surface */
+.dark {
+  --primary:            oklch(65% 0.15 268);
+  --background:         oklch(11% 0.008 260);
+  --foreground:         oklch(94% 0.005 260);
+  --card:               oklch(16% 0.01 260);
+  --muted:              oklch(21% 0.009 260);
+  --border:             oklch(27% 0.009 260);
+}
+```
+
+Chroma guide: 0.00–0.16 (dark-first, minimal)
+
+---
 
 ## Creative / Agency
 
-Inspired by: Figma, Dribbble, Framer
+Inspired by: Figma, Framer, Dribbble — expressive, bold
 
-| Token | Light | Dark | Usage |
-|-------|-------|------|-------|
-| primary | oklch(55% 0.20 295) | oklch(70% 0.20 295) | Expressive violet |
-| accent | oklch(60% 0.18 30) | oklch(50% 0.18 30) | Bold red-orange |
-| surface | oklch(98% 0.005 280) | oklch(14% 0.01 280) | Tinted white bg |
-| card | oklch(100% 0 0) | oklch(20% 0.01 280) | Card background |
-| muted | oklch(95% 0.008 280) | oklch(25% 0.01 280) | Secondary bg |
-| foreground | oklch(15% 0.01 0) | oklch(95% 0.005 0) | Text |
-| border | oklch(90% 0.008 280) | oklch(30% 0.01 280) | Borders |
+```css
+/* Light mode */
+:root {
+  --primary:            oklch(38% 0.19 292);
+  --primary-foreground: oklch(97% 0.004 292);
+  --secondary:          oklch(56% 0.17 28);
+  --secondary-foreground: oklch(97% 0.004 28);
+  --accent:             oklch(82% 0.11 85);
+  --accent-foreground:  oklch(15% 0.01 85);
+  --background:         oklch(97% 0.004 280);
+  --foreground:         oklch(13% 0.01 280);
+  --card:               oklch(99% 0 0);
+  --card-foreground:    oklch(13% 0.01 280);
+  --muted:              oklch(94% 0.006 280);
+  --muted-foreground:   oklch(50% 0.018 280);
+  --border:             oklch(87% 0.007 280);
+  --input:              oklch(87% 0.007 280);
+  --ring:               oklch(38% 0.19 292);
+}
 
-Chroma range: 0.15–0.22 (highest saturation sector — intentionally bold)
+/* Dark mode */
+.dark {
+  --primary:            oklch(68% 0.20 292);
+  --background:         oklch(12% 0.01 280);
+  --foreground:         oklch(95% 0.004 280);
+  --card:               oklch(18% 0.009 280);
+  --muted:              oklch(23% 0.009 280);
+  --border:             oklch(28% 0.009 280);
+}
+```
+
+Chroma guide: 0.15–0.22 (highest saturation — intentionally bold)
+
+---
 
 ## Enterprise SaaS
 
-Inspired by: Notion, Salesforce, HubSpot
+Inspired by: Notion, Salesforce, HubSpot — structured, neutral
 
-| Token | Light | Dark | Usage |
-|-------|-------|------|-------|
-| primary | oklch(50% 0.14 250) | oklch(65% 0.14 250) | Professional blue |
-| accent | oklch(65% 0.13 165) | oklch(55% 0.13 165) | Status green |
-| surface | oklch(97% 0.005 250) | oklch(15% 0.01 250) | Cool gray bg |
-| card | oklch(100% 0 0) | oklch(20% 0.01 250) | Card background |
-| muted | oklch(95% 0.008 250) | oklch(25% 0.008 250) | Secondary bg |
-| foreground | oklch(18% 0.02 250) | oklch(95% 0.005 250) | Text |
-| border | oklch(90% 0.008 250) | oklch(30% 0.01 250) | Borders |
+```css
+/* Light mode */
+:root {
+  --primary:            oklch(49% 0.14 250);
+  --primary-foreground: oklch(98% 0.004 250);
+  --secondary:          oklch(64% 0.13 165);
+  --secondary-foreground: oklch(15% 0.01 165);
+  --accent:             oklch(60% 0.11 220);
+  --accent-foreground:  oklch(98% 0.004 220);
+  --background:         oklch(97% 0.005 250);
+  --foreground:         oklch(17% 0.018 250);
+  --card:               oklch(100% 0 0);
+  --card-foreground:    oklch(17% 0.018 250);
+  --muted:              oklch(95% 0.007 250);
+  --muted-foreground:   oklch(53% 0.02 250);
+  --border:             oklch(90% 0.008 250);
+  --input:              oklch(90% 0.008 250);
+  --ring:               oklch(49% 0.14 250);
+}
 
-Chroma range: 0.04–0.15 (conservative, institutional)
+/* Dark mode */
+.dark {
+  --primary:            oklch(64% 0.14 250);
+  --background:         oklch(15% 0.01 250);
+  --foreground:         oklch(95% 0.005 250);
+  --card:               oklch(20% 0.01 250);
+  --muted:              oklch(25% 0.008 250);
+  --border:             oklch(30% 0.01 250);
+}
+```
+
+Chroma guide: 0.04–0.15 (conservative, institutional)
+
+---
 
 ## Education
 
-Inspired by: Duolingo, Khan Academy, Coursera
+Inspired by: Duolingo, Khan Academy, Coursera — vivid, motivating
 
-| Token | Light | Dark | Usage |
-|-------|-------|------|-------|
-| primary | oklch(60% 0.17 140) | oklch(72% 0.17 140) | Motivating green |
-| accent | oklch(65% 0.15 235) | oklch(55% 0.15 235) | Knowledge blue |
-| surface | oklch(98% 0.004 0) | oklch(15% 0.01 260) | Clean white bg |
-| card | oklch(100% 0 0) | oklch(20% 0.008 260) | Card background |
-| muted | oklch(95% 0.006 0) | oklch(25% 0.01 260) | Secondary bg |
-| foreground | oklch(18% 0.01 0) | oklch(95% 0.005 0) | Text |
-| border | oklch(90% 0.006 0) | oklch(30% 0.01 260) | Borders |
+```css
+/* Light mode */
+:root {
+  --primary:            oklch(59% 0.17 138);
+  --primary-foreground: oklch(15% 0.01 138);
+  --secondary:          oklch(64% 0.15 233);
+  --secondary-foreground: oklch(98% 0.004 233);
+  --accent:             oklch(72% 0.16 55);
+  --accent-foreground:  oklch(15% 0.01 55);
+  --background:         oklch(98% 0.004 0);
+  --foreground:         oklch(17% 0.01 0);
+  --card:               oklch(100% 0 0);
+  --card-foreground:    oklch(17% 0.01 0);
+  --muted:              oklch(95% 0.006 0);
+  --muted-foreground:   oklch(53% 0.015 0);
+  --border:             oklch(90% 0.006 0);
+  --input:              oklch(90% 0.006 0);
+  --ring:               oklch(59% 0.17 138);
+}
 
-Chroma range: 0.13–0.18 (vivid, gamified, engaging)
+/* Dark mode */
+.dark {
+  --primary:            oklch(72% 0.17 138);
+  --background:         oklch(15% 0.01 260);
+  --foreground:         oklch(95% 0.005 0);
+  --card:               oklch(20% 0.008 260);
+  --muted:              oklch(25% 0.01 260);
+  --border:             oklch(30% 0.01 260);
+}
+```
+
+Chroma guide: 0.13–0.18 (vivid, gamified, engaging)
 
 ---
 
-## Semantic Colors (Universal — all sectors)
+## Semantic Colors (Universal)
 
-| Token | Light | Dark | Usage |
-|-------|-------|------|-------|
-| success | oklch(60% 0.15 145) | oklch(72% 0.15 145) | Positive |
-| warning | oklch(75% 0.14 80) | oklch(65% 0.14 80) | Caution |
-| error | oklch(55% 0.18 25) | oklch(67% 0.18 25) | Destructive |
-| info | oklch(58% 0.13 240) | oklch(70% 0.13 240) | Informational |
+```css
+:root {
+  --success:         oklch(58% 0.16 145);
+  --success-fg:      oklch(15% 0.01 145);
+  --warning:         oklch(72% 0.15 78);
+  --warning-fg:      oklch(15% 0.01 78);
+  --error:           oklch(53% 0.20 25);
+  --error-fg:        oklch(98% 0.004 25);
+  --info:            oklch(56% 0.14 240);
+  --info-fg:         oklch(98% 0.004 240);
+}
+```
 
 ---
 
-**Chroma quick guide:** 0.00–0.08 minimal | 0.09–0.15 professional | 0.16–0.20 vibrant | 0.21–0.25 bold/creative only
+**Chroma quick guide:**
+- 0.00–0.08: minimal / achromatic
+- 0.09–0.15: professional / balanced
+- 0.16–0.20: vibrant / consumer
+- 0.21–0.25: bold / creative only
 
 -> See [identity-brief.md](identity-brief.md) for sector selection
+-> See [visual-technique-matrix.md](visual-technique-matrix.md) for allowed visual effects per sector

@@ -165,6 +165,15 @@ Touch target: 44x44px minimum (Apple HIG + WCAG 2.5.5)
 </motion.button>
 ```
 
+### Contrast (ZERO TOLERANCE)
+```
+Dark bg (primary, accent)  → ALWAYS white/light text (text-primary-foreground)
+Light bg (white, surface)  → ALWAYS dark text (text-foreground)
+NEVER: dark text on dark button, light text on light button
+Minimum: 4.5:1 contrast ratio (WCAG AA)
+Verify: Playwright screenshot after generation — check BOTH modes
+```
+
 ### Corner Radius (CONSISTENT)
 ```css
 /* Pick ONE and use everywhere */
@@ -319,6 +328,28 @@ After ANY UI generation:
 |---|---|---|
 | Yes | Yes | Gemini Design + shadcn (React frontend) |
 | No | No | Visual specs → Livewire Flux |
+
+## REDESIGN DETECTION (v2.1)
+
+### Trigger Keywords → Behavior
+
+| User Says | Mode | Behavior |
+|---|---|---|
+| "refonte", "repenser", "redesign", "nouveau look", "from scratch", "rethink", OR **no design-system.md exists** | **Full Redesign** | Browse 3 sites via Playwright + generate NEW identity-system + replace ALL components |
+| "crée une page", "nouvelle page", "new page", "ajouter une section" | **New Page/Section** | Browse 2 sites via Playwright + respect existing identity-system |
+| "ameliorer", "ajuster", "modifier", "tweaker", "update" | **Iteration** | Browse 1 site via Playwright + keep existing identity-system, modify targeted components |
+| "ajouter un bouton", "petit composant", "minor" | **Minor Addition** | 21st.dev search sufficient (no Playwright browsing) |
+
+### Playwright Browsing Rules (ALL modes except Minor)
+- MANDATORY: Browse real sites via Playwright BEFORE generating (see ../skills/generating-components/references/design-inspiration.md)
+- Analyze screenshots: colors, typography, spacing rhythm, section structure, animations
+- Feed insights into Gemini XML `<style_reference>` block
+- NEVER copy verbatim — extract principles, not pixels
+
+### Full Redesign Rules
+- Generate fresh design-system.md (do NOT patch existing)
+- Replace components holistically — NOT piecemeal tweaks
+- Use `create_frontend` (full view) — NOT `modify_frontend` (surgical)
 
 ## LOADING STATES - MANDATORY
 

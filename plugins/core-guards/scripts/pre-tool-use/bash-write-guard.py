@@ -10,7 +10,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)),
                                 '..', '..', '..', '_shared', 'scripts'))
 from safe_paths import is_safe_write_path, is_safe_command_target, has_safe_write_target  # pylint: disable=wrong-import-position
 
-CODE_EXT = re.compile(r'\.(ts|tsx|js|jsx|py|php|swift|go|rs|rb|java|vue|svelte|css)\b')
+CODE_EXT = re.compile(r'\.(ts|tsx|js|jsx|py|php|swift|go|rs|rb|java|vue|svelte|astro|css)\b')
 
 SAFE_PREFIXES = [
     'ls', 'pwd', 'which', 'cat ', 'head ', 'tail ', 'wc ', 'file ', 'stat ', 'tree', 'du ', 'df ',

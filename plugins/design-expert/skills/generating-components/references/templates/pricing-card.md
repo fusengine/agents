@@ -1,63 +1,80 @@
 ---
 name: pricing-card
 description: Single pricing tier card with features list and popular badge
-when-to-use: Individual pricing plan cards within a pricing section
+when-to-use: Individual pricing plan cards — use pricing-cards.md for the full 3-tier section
 keywords: pricing, card, features, popular, subscription
 priority: high
 related: pricing-cards.md
 ---
 
-# Pricing Card Spec
+# Pricing Card Template (Single Tier)
 
-## Layout
+## MCP Call
 
-| Zone | Content | Responsive |
-|------|---------|------------|
-| Badge (conditional) | "Most Popular" pill, absolute -top-3 | Centered above card |
-| Header | Plan name + short description | Left or center aligned |
-| Price | Large number + /month or /year suffix | Prominent display |
-| Features | Checkmark list of included features | Full width |
-| Footer | Full-width CTA button | Sticky bottom of card |
+```
+Tool: mcp__gemini-design__create_frontend
+Parameters:
+  request: |
+    <component>Single pricing card — isolated tier, popular or standard variant</component>
+    <aesthetics>Conversion card — price is the visual anchor. Card has two visual modes: standard (glass/outlined) and popular (solid primary fill). Popular badge is absolute-positioned above the card top edge, never inline. CTA spans full card width at the bottom</aesthetics>
+    <typography>
+      - Plan name: var(--font-display), 1.25rem, font-weight 700
+      - Plan description: var(--font-body), 0.875rem, color oklch(var(--muted-foreground))
+      - Price: var(--font-display), 3.5rem, font-weight 800
+      - Price suffix (/mo, /yr): var(--font-body), 1rem, font-weight 400, color muted-foreground, aligned bottom
+      - Feature item: var(--font-body), 0.875rem, line-height 1.5
+      - Popular badge: var(--font-mono), 0.7rem, uppercase, tracking-widest
+    </typography>
+    <color_system>
+      Standard card:
+      - bg: oklch(var(--card)), border: oklch(var(--border))
+      - checkmark: oklch(var(--primary))
+      - CTA: outline variant, border oklch(var(--primary)), text oklch(var(--primary))
 
-## Components (shadcn/ui)
+      Popular card:
+      - bg: oklch(var(--primary)), border: none
+      - text: oklch(var(--primary-foreground))
+      - shadow: shadow-2xl shadow-primary/30
+      - checkmark: oklch(var(--primary-foreground))
+      - CTA: bg oklch(var(--primary-foreground)), text oklch(var(--primary))
 
-- Button: default variant for popular, outline for others
-- Badge: "Most Popular" indicator (+38% selection rate)
-- Card: rounded-2xl container with border
+      Badge: bg oklch(var(--accent)), text oklch(var(--accent-foreground))
+    </color_system>
+    <spacing>Card padding p-8. Features space-y-3. Price block: mt-6 mb-8. CTA: mt-auto (flex column, card is flex flex-col). Badge: absolute -top-3.5 left-1/2 -translate-x-1/2</spacing>
+    <states>
+      - Default: card at rest, full content visible
+      - Hover: translateY -4px, standard — shadow-lg shadow-primary/10; popular — shadow-2xl shadow-primary/40
+      - CTA hover: standard — bg-primary/10; popular — bg-primary-foreground/90
+      - CTA active: scale 0.98
+      - CTA loading: Loader2 spinner, disabled, no layout shift
+      - CTA disabled: opacity-60, cursor-not-allowed
+      - Feature not included: line-through + opacity-40 on text, X icon instead of check
+    </states>
+    <animations>Framer Motion: whileHover y -4, spring stiffness 300 damping 20. Badge: initial scale 0.8 opacity 0, animate scale 1 opacity 1, 0.3s spring. CTA loading: rotate spinner 360deg, 1s linear infinite</animations>
+    <forbidden>
+      - No inline "Most Popular" badge (must be absolute, above card edge)
+      - No equal CTA styling between standard and popular
+      - No price without suffix (/mo or /yr)
+      - No feature list longer than 7 items
+      - No Inter/Roboto/Arial
+      - No hard-coded hex
+    </forbidden>
+  techStack: "React + Tailwind CSS + shadcn/ui + Framer Motion"
+  context: "<inject full design-system.md content here>"
+```
 
-## Design Tokens
+## Card Variants
 
-| Token | Value | Notes |
-|-------|-------|-------|
-| card-radius | rounded-2xl | Consistent with design system |
-| popular-border | border-primary | Highlight popular tier |
-| popular-shadow | shadow-lg shadow-primary/20 | Depth for popular |
-| price-size | text-4xl font-bold | Price prominence |
-| check-color | text-primary | Feature checkmarks |
-
-## Animation (Framer Motion)
-
-| Element | Animation | Duration |
-|---------|-----------|----------|
-| Card | whileHover: y -4 | spring stiffness 300 |
-| Badge | Scale entrance | 0.3s |
-
-## Gemini Design Prompt
-
-> "Create a single pricing card with plan name, description, large price display, checkmark features list, and full-width CTA button. Popular variant gets border-primary, shadow-lg, and 'Most Popular' badge. Use design-system.md tokens. OKLCH colors, no Inter/Roboto. Spring hover animation."
-
-## Multi-Stack Adaptation
-
-| Stack | Implementation |
-|-------|---------------|
-| React + shadcn | Gemini Design MCP with Card, Button, Badge |
-| Laravel Blade | Visual spec -> Livewire Flux card component |
-| Swift/SwiftUI | Visual spec -> VStack with GroupBox style |
+| Variant | bg | CTA | Shadow |
+|---------|----|-----|--------|
+| Standard | oklch(var(--card)) | Outline | shadow-sm |
+| Popular | oklch(var(--primary)) | Inverted filled | shadow-2xl |
 
 ## Validation Checklist
 
-- [ ] Popular badge uses absolute positioning, not inline
-- [ ] Price is visually dominant (text-4xl font-bold)
-- [ ] CTA variant differs between popular and standard
-- [ ] Hover lift animation, not scale-only
-- [ ] OKLCH colors, no hard-coded hex values
+- [ ] Badge: absolute -top-3.5, centered, never inline
+- [ ] Price visually dominant (3.5rem+ font size)
+- [ ] CTA variant differs: standard outline vs popular filled-inverted
+- [ ] All CTA states: default, hover, active, loading, disabled
+- [ ] Feature "not included" styling distinct from included
+- [ ] OKLCH CSS variables only, no hard-coded hex

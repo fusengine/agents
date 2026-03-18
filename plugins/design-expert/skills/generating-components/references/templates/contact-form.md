@@ -7,61 +7,73 @@ priority: high
 related: faq-accordion.md
 ---
 
-# Contact Form Spec
+# Contact Form Template
 
-## Layout
+## MCP Call
 
-| Zone | Content | Responsive |
-|------|---------|------------|
-| Row 1 | First name + Last name (ONLY 2-col exception) | Stack on mobile |
-| Row 2 | Email (full width) | Full width |
-| Row 3 | Subject or topic (full width) | Full width |
-| Row 4 | Message textarea (full width, 5 rows) | Full width |
-| Row 5 | Submit button (full width) | Full width |
-| Success | Checkmark icon + confirmation message | Centered |
+```
+Tool: mcp__gemini-design__create_frontend
+Parameters:
+  request: |
+    <component>Contact form — single-column, inline validation, animated success state</component>
+    <aesthetics>Functional precision — form is the hero of this page, no decorative chrome. Generous spacing between fields, clear visual separation between label + input + error. Success state feels rewarding, not clinical</aesthetics>
+    <typography>
+      - Section title: var(--font-display), 2rem, font-weight 700
+      - Labels: var(--font-body), 0.875rem, font-weight 500, color oklch(var(--foreground))
+      - Input text: var(--font-body), 1rem, color oklch(var(--foreground))
+      - Placeholder: color oklch(var(--muted-foreground))
+      - Error messages: var(--font-body), 0.8125rem, color oklch(var(--destructive))
+      - Success message: var(--font-display), 1.25rem, font-weight 600
+    </typography>
+    <color_system>
+      - Input default border: oklch(var(--border))
+      - Input focus border: oklch(var(--ring)), outline ring-2 ring-ring/20
+      - Input error border: oklch(var(--destructive))
+      - Submit bg: oklch(var(--primary))
+      - Submit text: oklch(var(--primary-foreground))
+      - Submit hover: oklch(var(--primary) / 0.9)
+      - Success icon: oklch(var(--primary)) or green-600
+    </color_system>
+    <spacing>Fields space-y-6. Label to input gap: mb-2. Error message: mt-1.5. Submit button: mt-8, h-12, w-full. Form max-w-lg mx-auto. Section py-20</spacing>
+    <states>
+      - Default: all fields empty, submit enabled
+      - Field focus: border-ring, ring visible
+      - Field valid (blur): no indicator — do NOT add green checkmarks
+      - Field error (blur): border-destructive, error message visible below with opacity/y animation
+      - Submit loading: spinner replaces submit text, button disabled, opacity-80
+      - Submit error (API fail): inline banner above submit "Something went wrong, try again"
+      - Success: form fades out, success card fades in with checkmark + confirmation text
+      - Success card: not a toast — replaces entire form area
+    </states>
+    <animations>Framer Motion: error messages opacity 0→1, y -4→0, 0.2s. Success card: opacity 0→1, scale 0.96→1, 0.3s easeOut. Form exit on success: opacity 1→0, 0.2s. Spinner: rotate 0→360, 1s linear infinite</animations>
+    <forbidden>
+      - No grid-cols-2 layout except first name + last name sharing one row
+      - No validation on every keystroke (use onBlur only)
+      - No green checkmarks on valid fields
+      - No toast for success — replace the form, do not overlay
+      - No floating labels (label disappears, accessibility nightmare)
+      - No Inter/Roboto/Arial
+      - No hard-coded hex
+    </forbidden>
+  techStack: "React + Tailwind CSS + shadcn/ui + Framer Motion"
+  context: "<inject full design-system.md content here>"
+```
 
-**CRITICAL: Single column layout only. Never use grid-cols-2 for the form. Exception: first name + last name share one row. Research: single column = +25% completion rate (Baymard Institute).**
+## Field Order
 
-## Components (shadcn/ui)
-
-- Input: text fields with Label
-- Textarea: message field, 5 rows minimum
-- Button: submit with loading state (Loader2 spinner)
-- Label: accessible labels for each field
-
-## Design Tokens
-
-| Token | Value | Notes |
-|-------|-------|-------|
-| spacing | space-y-6 | Consistent vertical gap |
-| input-radius | rounded-lg | From design system |
-| success-color | green-600 | Confirmation state |
-| error-color | destructive | Inline validation |
-
-## Animation (Framer Motion)
-
-| Element | Animation | Duration |
-|---------|-----------|----------|
-| Success state | opacity 0->1, scale 0.95->1 | 0.3s |
-| Error messages | opacity 0->1, y -4->0 | 0.2s |
-| Submit button | Loading spinner on submit | Until response |
-
-## Gemini Design Prompt
-
-> "Create a single-column contact form with first+last name on one row (only exception to single-column), email field, message textarea, and full-width submit button with loading state. Include inline validation on blur and animated success state with checkmark. Use design-system.md tokens. OKLCH colors, no Inter/Roboto. Accessible labels and focus states."
-
-## Multi-Stack Adaptation
-
-| Stack | Implementation |
-|-------|---------------|
-| React + shadcn | Gemini Design MCP with Input, Textarea, Button, Label |
-| Laravel Blade | Visual spec -> Livewire Flux form with wire:submit |
-| Swift/SwiftUI | Visual spec -> Form with TextField and TextEditor |
+| Row | Field | Width |
+|-----|-------|-------|
+| 1 | First name + Last name | 2-col (only exception) |
+| 2 | Email | Full |
+| 3 | Subject | Full |
+| 4 | Message textarea (5 rows min) | Full |
+| 5 | Submit button | Full |
 
 ## Validation Checklist
 
-- [ ] SINGLE column layout (never grid-cols-2 except name row)
-- [ ] Inline validation on blur, not on submit only
-- [ ] Loading state with spinner on submit button
-- [ ] Animated success state after submission
-- [ ] Accessible: all inputs have associated Labels
+- [ ] Single column (exception: name row)
+- [ ] onBlur validation only, NOT onKeyUp
+- [ ] Loading spinner on submit, button disabled
+- [ ] Success state replaces form (no toast)
+- [ ] All states handled: default, focus, error, loading, API fail, success
+- [ ] All inputs have associated `<Label>` (accessibility)

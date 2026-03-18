@@ -8,7 +8,7 @@ import sys
 
 
 CODE_EXT = re.compile(
-    r"\.(ts|tsx|js|jsx|py|php|swift|go|rs|rb|java|vue|svelte|css)\b"
+    r"\.(ts|tsx|js|jsx|py|php|swift|go|rs|rb|java|vue|svelte|astro|css)\b"
 )
 
 WRITE_PATTERNS = [

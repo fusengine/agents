@@ -5,7 +5,7 @@ versions:
   design-expert: "2.0"
 user-invocable: true
 allowed-tools: Read, Write, Edit, Glob, Grep
-references: references/microcopy-patterns.md, references/voice-tone-sectors.md, references/empty-states-copy.md, references/templates/copy-guide-template.md
+references: references/microcopy-patterns.md, references/voice-tone-sectors.md, references/empty-states-copy.md, references/copy-fintech.md, references/copy-ecommerce.md, references/copy-saas.md, references/templates/copy-guide-template.md, references/templates/cta-patterns.md, references/templates/error-messages.md, references/templates/onboarding-copy.md
 related-skills: identity-system, page-layouts, generating-components
 ---
 

@@ -5,7 +5,7 @@ import os
 import re
 import sys
 
-CODE_EXTENSIONS = r'\.(ts|tsx|js|jsx|py|go|rs|java|php|cpp|c|rb|swift|kt|dart|vue|svelte)$'
+CODE_EXTENSIONS = r'\.(ts|tsx|js|jsx|py|go|rs|java|php|cpp|c|rb|swift|kt|dart|vue|svelte|astro)$'
 
 SOLID_REF_MAP = {
     'ts': 'react', 'tsx': 'react', 'js': 'react', 'jsx': 'react',

@@ -9,7 +9,7 @@ from datetime import datetime, timezone
 STATE_DIR = os.path.join(os.path.expanduser('~'), '.claude', 'fusengine-cache', 'sessions')
 LOG_DIR = os.path.expanduser('~/.claude/logs')
 LOG_FILE = os.path.join(LOG_DIR, 'hooks.log')
-CODE_EXT = r'\.(ts|tsx|js|jsx|py|go|rs|java|php|cpp|c|rb|swift|kt|vue|svelte)$'
+CODE_EXT = r'\.(ts|tsx|js|jsx|py|go|rs|java|php|cpp|c|rb|swift|kt|vue|svelte|astro)$'
 
 
 def init_dirs():
