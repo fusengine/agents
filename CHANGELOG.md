@@ -1,5 +1,14 @@
 # Release Notes
 
+## [1.38.41] - 18-03-2026
+
+### Added
+- feat(design-expert): add Playwright enforcement hook — blocks Write/Edit/Gemini without 4 screenshots (design-expert 2.1.4)
+- feat(design-expert): add pick-1 inspiration workflow — browse 4 sites, choose best match, reproduce quality (design-expert 2.1.4)
+- feat(design-expert): add Phase 6 Visual Auto-Review — screenshot own result vs inspiration (design-expert 2.1.4)
+- feat(design-expert): add 75+ verified URLs catalog (Framer/Webflow) with scroll+wait workflow (design-expert 2.1.4)
+- feat(design-expert): add anti-emoji, button contrast, testimonial quality rules (design-expert 2.1.4)
+
 ## [1.38.40] - 18-03-2026
 
 ### Added
