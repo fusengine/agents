@@ -32,10 +32,10 @@ def main() -> None:
     os.makedirs(FLAG_DIR, exist_ok=True)
 
     if event == "SubagentStart":
-        # Write session_id to flag file so PreToolUse can match
-        session_id = data.get("session_id", "")
+        # Write agent_id to flag file so PreToolUse can match per-agent
+        agent_id = data.get("agent_id", "")
         with open(FLAG_FILE, "w") as f:
-            f.write(session_id)
+            f.write(agent_id)
     elif event == "SubagentStop":
         # Remove flag file
         try:

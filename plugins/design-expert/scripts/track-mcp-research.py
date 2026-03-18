@@ -61,10 +61,18 @@ def main() -> None:
 
     tool_input = data.get("tool_input") or {}
     query = tool_input.get("query") or tool_input.get("topic") or ""
+
+    # Special handling for Playwright tools (no query/topic field)
+    if "playwright" in tool_name and not query:
+        query = tool_input.get("url") or tool_name
+        if "screenshot" in tool_name:
+            query = f"playwright_screenshot {tool_input.get('fullPage', False)}"
+
     if not query:
         sys.exit(0)
 
     session_id = data.get("session_id") or f"fallback-{os.getpid()}"
+    agent_id = data.get("agent_id") or ""
     source = "mcp"
     if "context7" in tool_name:
         source = "context7"
@@ -72,6 +80,16 @@ def main() -> None:
         source = "exa"
 
     track_mcp_research(source, tool_name, query, session_id)
+
+    # Per-agent tracking for design hooks
+    if agent_id and ("playwright" in tool_name or "gemini-design" in tool_name):
+        from tracking import TRACKING_DIR
+        os.makedirs(TRACKING_DIR, exist_ok=True)
+        ts = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+        agent_file = os.path.join(TRACKING_DIR, f"agent-{agent_id}")
+        with open(agent_file, "a", encoding="utf-8") as f:
+            f.write(f"{ts} {source}:{tool_name} {query}\n")
+
     sys.exit(0)
 
 

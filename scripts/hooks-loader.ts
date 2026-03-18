@@ -34,6 +34,15 @@ async function main(): Promise<void> {
 	const notifType = input.type ?? input.notification_type ?? "";
 	const agentType = input.agent_type ?? "";
 
+	// DEBUG: Log SubagentStart payload
+	if (hookType === "SubagentStart" || hookType === "SubagentStop") {
+		const { mkdirSync, appendFileSync } = await import("node:fs");
+		const debugDir = join(process.env.HOME ?? "", ".claude/fusengine-cache");
+		mkdirSync(debugDir, { recursive: true });
+		appendFileSync(join(debugDir, "subagent-debug.log"),
+			`${new Date().toISOString()} ${hookType} agent_type="${agentType}" raw=${JSON.stringify(input)}\n`);
+	}
+
 	// Scan plugins
 	const plugins = scanPlugins({ pluginsDir: PLUGINS_DIR });
 

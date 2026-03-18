@@ -10,15 +10,18 @@ sys.path.insert(0, os.path.join(os.path.expanduser("~"),
     "plugins", "_shared", "scripts"))
 from hook_output import allow_pass, emit_pre_tool
 
-TRACKING_DIR = os.path.join(
-    os.path.expanduser("~"), ".claude", "fusengine-cache", "skill-tracking")
+_HOME = os.path.expanduser("~")
+_CACHE = os.path.join(_HOME, ".claude", "fusengine-cache")
+TRACKING_DIR = os.path.join(_CACHE, "skill-tracking")
+FLAG_FILE = os.path.join(_CACHE, "design-agent-active")
 KNOWN_DOMAINS = (
     "framer.website", "webflow.io", "awwwards.com", "godly.website",
     "lapa.ninja", "onepagelove.com", "saasframe.io", "bestwebsite.gallery",
     "landingfolio.com", "localhost",
 )
-PLUGINS_DIR = os.path.expanduser(
-    "~/.claude/plugins/marketplaces/fusengine-plugins/plugins")
+PLUGINS_DIR = os.path.join(_HOME, ".claude", "plugins", "marketplaces",
+    "fusengine-plugins", "plugins")
+REF = f"{PLUGINS_DIR}/design-expert/skills/generating-components/references"
 
 
 def inspiration_was_read(session_id: str) -> bool:
@@ -28,11 +31,9 @@ def inspiration_was_read(session_id: str) -> bool:
     for fname in os.listdir(TRACKING_DIR):
         if session_id not in fname:
             continue
-        path = os.path.join(TRACKING_DIR, fname)
         try:
-            with open(path, encoding="utf-8") as f:
-                content = f.read()
-                if "design-inspiration" in content:
+            with open(os.path.join(TRACKING_DIR, fname), encoding="utf-8") as f:
+                if "design-inspiration" in f.read():
                     return True
         except OSError:
             continue
@@ -56,38 +57,37 @@ def main() -> None:
     except (json.JSONDecodeError, ValueError):
         sys.exit(0)
 
-    # Only enforce for design-expert agent
-    flag_file = os.path.join(
-        os.path.expanduser("~"), ".claude", "fusengine-cache", "design-agent-active")
-    if not os.path.isfile(flag_file):
-        sys.exit(0)  # Not design-expert -> skip check
+    # Only enforce for the active design-expert agent
+    if not os.path.isfile(FLAG_FILE):
+        sys.exit(0)
+    try:
+        with open(FLAG_FILE) as f:
+            design_agent_id = f.read().strip()
+    except OSError:
+        sys.exit(0)
+    current_agent_id = data.get("agent_id") or ""
+    if current_agent_id and design_agent_id and current_agent_id != design_agent_id:
+        sys.exit(0)  # Not the design agent → skip check
 
-    tool_name = data.get("tool_name", "")
-    if tool_name != "mcp__playwright__browser_navigate":
+    if data.get("tool_name", "") != "mcp__playwright__browser_navigate":
         sys.exit(0)
 
     session_id = data.get("session_id") or f"fallback-{os.getpid()}"
-
     if not inspiration_was_read(session_id):
         deny_block(
-            "BLOCKED: You MUST read your inspiration catalog BEFORE browsing. "
-            "Read BOTH files NOW: "
-            f"1) {PLUGINS_DIR}/design-expert/skills/generating-components/"
-            "references/design-inspiration.md "
-            f"2) {PLUGINS_DIR}/design-expert/skills/generating-components/"
-            "references/design-inspiration-urls.md "
+            "BLOCKED: Read your inspiration catalog BEFORE browsing. "
+            f"Read BOTH: 1) {REF}/design-inspiration.md "
+            f"2) {REF}/design-inspiration-urls.md "
             "Then choose 4 URLs from the catalog and browse them.")
 
-    # Check if URL is from catalog
     tool_input = data.get("tool_input") or {}
     url = tool_input.get("url", "")
-    is_catalog_url = any(domain in url for domain in KNOWN_DOMAINS)
+    is_catalog = any(domain in url for domain in KNOWN_DOMAINS)
 
-    if not is_catalog_url and url:
+    if not is_catalog and url:
         emit_pre_tool("allow",
-            f"URL '{url}' not in design-inspiration catalog. "
-            "Prefer catalog URLs (Framer/Webflow) for verified, high-quality results.",
-            context=f"Non-catalog URL detected: {url}")
+            f"URL '{url}' not in catalog. Prefer catalog URLs for quality.",
+            context=f"Non-catalog URL: {url}")
     else:
         allow_pass("check-inspiration-read", f"pass (catalog URL: {url})")
 

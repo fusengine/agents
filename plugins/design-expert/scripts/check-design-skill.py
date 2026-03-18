@@ -34,7 +34,7 @@ def main() -> None:
     file_path = tool_input.get("file_path", "")
     if data.get("tool_name") not in ("Write", "Edit"):
         sys.exit(0)
-    if not re.search(r"\.(tsx|jsx|css|scss)$", file_path):
+    if not re.search(r"\.(tsx|jsx|css|scss|html)$", file_path):
         sys.exit(0)
     if re.search(r"/(node_modules|dist|build)/", file_path):
         sys.exit(0)

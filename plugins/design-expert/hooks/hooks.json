@@ -1,6 +1,6 @@
 {
   "_description": "Design Expert - UI/UX validation hooks",
-  "_version": "2.0.0",
+  "_version": "3.0.0",
 
   "hooks": {
     "PreToolUse": [
@@ -23,6 +23,36 @@
             "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/check-shadcn-install.py"
           }
         ]
+      },
+      {
+        "_description": "Block Write/Edit/Gemini without 4 Playwright screenshots",
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/check-playwright-browsing.py"
+          }
+        ]
+      },
+      {
+        "_description": "Block Playwright browsing before reading design-inspiration.md",
+        "matcher": "mcp__playwright__browser_navigate",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/check-inspiration-read.py"
+          }
+        ]
+      },
+      {
+        "_description": "Block Gemini without 4 Playwright screenshots",
+        "matcher": "mcp__gemini-design__",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/check-playwright-browsing.py"
+          }
+        ]
       }
     ],
     "PostToolUse": [
@@ -37,8 +67,8 @@
         ]
       },
       {
-        "_description": "Track MCP research calls",
-        "matcher": "mcp__context7__|mcp__exa__|mcp__magic__|mcp__shadcn__",
+        "_description": "Track MCP research + Playwright calls",
+        "matcher": "mcp__context7__|mcp__exa__|mcp__magic__|mcp__shadcn__|mcp__playwright__|mcp__gemini-design__",
         "hooks": [
           {
             "type": "command",
@@ -53,6 +83,30 @@
           {
             "type": "command",
             "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/validate-design.py"
+          }
+        ]
+      }
+    ],
+    "SubagentStart": [
+      {
+        "_description": "Set flag when design-expert agent starts",
+        "matcher": "design",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/design-agent-flag.py"
+          }
+        ]
+      }
+    ],
+    "SubagentStop": [
+      {
+        "_description": "Clear flag when design-expert agent stops",
+        "matcher": "design",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/design-agent-flag.py"
           }
         ]
       }
