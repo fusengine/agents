@@ -20,6 +20,10 @@ hooks:
       hooks:
         - type: command
           command: "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/check-playwright-browsing.py"
+    - matcher: "mcp__playwright__browser_navigate"
+      hooks:
+        - type: command
+          command: "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/check-inspiration-read.py"
     - matcher: "mcp__gemini-design__"
       hooks:
         - type: command
