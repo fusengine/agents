@@ -314,14 +314,23 @@ After ANY UI generation:
 2. If Roboto, Inter, Arial, Open Sans found in layout/CSS → BLOCK and fix
 3. Verify `@import url()` or `next/font` loads the correct fonts
 
-## MULTI-STACK RULES (v2.0)
+## MULTI-STACK RULES (v2.1)
 
 ### Framework Detection
 | File | Stack | UI Approach |
 |------|-------|-------------|
+| No framework files | **HTML/CSS pur** | **Gemini Design `create_frontend`** — NEVER write HTML manually |
 | `next.config.*` | Next.js | Gemini Design + shadcn |
 | `composer.json` + `artisan` | Laravel | Check for Inertia |
 | `Package.swift` | Swift | SwiftUI visual specs |
+
+### HTML/CSS Pur (MANDATORY)
+When generating a standalone HTML page:
+1. Create design-system.md with OKLCH tokens
+2. Build Gemini XML blocks with all 7 fields
+3. Call `mcp__gemini-design__create_frontend` with full page description
+4. The output IS the HTML file — do NOT rewrite it manually
+5. Use `mcp__gemini-design__modify_frontend` for corrections
 
 ### Laravel Stack Detection
 | Has Inertia? | Has React? | Approach |

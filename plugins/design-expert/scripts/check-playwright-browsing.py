@@ -83,7 +83,14 @@ def main() -> None:
     session_id = data.get("session_id") or f"fallback-{os.getpid()}"
     screenshots = count_agent_screenshots(agent_id) if agent_id else count_screenshots(session_id)
     if screenshots >= MIN_SCREENSHOTS:
-        if tool_name in ("Write", "Edit"):
+        if tool_name.startswith("mcp__gemini-design__"):
+            # Gemini calls require design-system.md — check cwd and common locations
+            cwd = os.getcwd()
+            has_ds = (os.path.isfile(os.path.join(cwd, "design-system.md"))
+                      or _find_design_system(os.path.join(cwd, "index.html")))
+            if not has_ds:
+                deny_block(DENY_DS)
+        elif tool_name in ("Write", "Edit"):
             from screenshot_counts import count_agent_gemini_calls
             gemini_calls = count_agent_gemini_calls(agent_id) if agent_id else 0
             if gemini_calls == 0:

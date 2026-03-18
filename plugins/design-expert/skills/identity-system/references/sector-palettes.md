@@ -316,5 +316,30 @@ Chroma guide: 0.13–0.18 (vivid, gamified, engaging)
 - 0.16–0.20: vibrant / consumer
 - 0.21–0.25: bold / creative only
 
+---
+
+## Sector Mapping Table (for unlisted industries)
+
+If your project's sector is not listed above, use this table to find the closest palette:
+
+| Project Sector | Use Palette | Typography Pair | Why |
+|---|---|---|---|
+| Auto-ecole / Driving school | **Education** | Pair 16 (Nunito + DM Sans) | Learning-focused, friendly, approachable |
+| Immobilier / Real estate | **Enterprise SaaS** | Pair 3 (Plus Jakarta Sans + Source Sans 3) | Professional, trust-oriented |
+| Restauration / Food service | **E-commerce** | Pair 6 (Bricolage Grotesque + DM Sans) | Warm, conversion-focused, friendly |
+| Juridique / Legal | **Fintech** | Pair 2 (Neue Haas Grotesk + DM Sans) | Institutional, rigorous, trust |
+| Sport / Fitness | **Health / Wellness** | Pair 14 (Outfit + DM Sans) | Energetic but approachable |
+| Tourisme / Travel | **E-commerce** | Pair 5 (Clash Display + Satoshi) | Aspirational, visual, premium |
+| Comptabilite / Accounting | **Fintech** | Pair 1 (Cabinet Grotesk + Geist) | Precise, trustworthy, numbers |
+| Association / Non-profit | **Health / Wellness** | Pair 15 (Nunito + Plus Jakarta Sans) | Warm, human, inclusive |
+| Logistique / Logistics | **Dev Tools** | Pair 9 (Space Grotesk + Space Mono) | Technical, operational, data-heavy |
+| Architecture / Design | **Creative / Agency** | Pair 11 (Familjen Grotesk + Literata) | Editorial, visual, warm |
+| Media / Podcast | **Media / Publishing** | Pair 18 (Playfair Display + Source Serif 4) | Editorial authority |
+| Gaming / eSport | **Creative / Agency** | Pair 10 (Switzer + General Sans) | Bold, expressive, high-energy |
+
+**Rule:** Adjust the palette hue ±15° to differentiate from the base sector. For example, auto-ecole can shift Education green toward teal (hue +20°) for a road/safety feel.
+
+---
+
 -> See [identity-brief.md](identity-brief.md) for sector selection
 -> See [visual-technique-matrix.md](visual-technique-matrix.md) for allowed visual effects per sector
