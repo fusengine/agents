@@ -1,5 +1,10 @@
 # Release Notes
 
+## [1.38.42] - 18-03-2026
+
+### Added
+- feat(design-expert): add check-inspiration-read hook — blocks Playwright browsing until catalog is read (design-expert 2.1.5)
+
 ## [1.38.41] - 18-03-2026
 
 ### Added
