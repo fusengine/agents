@@ -10,19 +10,17 @@ sys.path.insert(0, os.path.join(os.path.expanduser("~"),
     "plugins", "_shared", "scripts"))
 from hook_output import allow_pass
 
-TRACKING_DIR = os.path.join(
-    os.path.expanduser("~"), ".claude", "fusengine-cache", "skill-tracking")
+CACHE_DIR = os.path.join(os.path.expanduser("~"), ".claude", "fusengine-cache")
+TRACKING_DIR = os.path.join(CACHE_DIR, "skill-tracking")
+FLAG_FILE = os.path.join(CACHE_DIR, "design-agent-active")
 MIN_SCREENSHOTS = 4
 REF_PATH = "skills/generating-components/references/design-inspiration.md"
 EXEMPT_DIRS = ("node_modules/", "dist/", "build/", ".claude/")
 DENY_MSG = (
     "BLOCKED: Only {count}/{min} Playwright screenshots taken. "
-    "You MUST browse 4 inspiration sites BEFORE writing any code. "
-    "Follow your Design Pipeline Phase 1: read {ref}, then use "
-    "mcp__playwright__browser_navigate + mcp__playwright__browser_wait_for"
-    " + mcp__playwright__browser_take_screenshot with fullPage:true "
-    "on 4 different sites from 2 platforms."
-)
+    "Browse 4 inspiration sites BEFORE writing code. Read {ref}, then use "
+    "browser_navigate + browser_wait_for + browser_take_screenshot "
+    "with fullPage:true on 4 sites from 2 platforms.")
 
 
 def count_screenshots(session_id: str) -> int:
@@ -56,9 +54,7 @@ def deny_block(reason: str) -> None:
 
 def _is_exempt(file_path: str) -> bool:
     """Return True if the file is exempt from screenshot checks."""
-    if file_path.endswith(".md"):
-        return True
-    return any(d in file_path for d in EXEMPT_DIRS)
+    return file_path.endswith(".md") or any(d in file_path for d in EXEMPT_DIRS)
 
 
 def main() -> None:
@@ -66,6 +62,10 @@ def main() -> None:
     try:
         data = json.load(sys.stdin)
     except (json.JSONDecodeError, ValueError):
+        sys.exit(0)
+
+    # Only enforce for design-expert agent
+    if not os.path.isfile(FLAG_FILE):
         sys.exit(0)
 
     tool_name = data.get("tool_name", "")

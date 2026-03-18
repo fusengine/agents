@@ -56,6 +56,12 @@ def main() -> None:
     except (json.JSONDecodeError, ValueError):
         sys.exit(0)
 
+    # Only enforce for design-expert agent
+    flag_file = os.path.join(
+        os.path.expanduser("~"), ".claude", "fusengine-cache", "design-agent-active")
+    if not os.path.isfile(flag_file):
+        sys.exit(0)  # Not design-expert -> skip check
+
     tool_name = data.get("tool_name", "")
     if tool_name != "mcp__playwright__browser_navigate":
         sys.exit(0)
