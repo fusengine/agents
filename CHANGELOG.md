@@ -1,5 +1,10 @@
 # Release Notes
 
+## [1.38.46] - 18-03-2026
+
+### Fixed
+- fix(ai-pilot): add .astro to CODE_EXT and fix TS2532 in ref-router (ai-pilot 1.2.14)
+
 ## [1.38.45] - 18-03-2026
 
 ### Added
