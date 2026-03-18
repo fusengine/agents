@@ -1,5 +1,10 @@
 # Release Notes
 
+## [1.38.45] - 18-03-2026
+
+### Added
+- feat(design-expert): apply agent self-corrections A-F — pipeline gates, HTML/CSS pur rules, sector mapping, anti-manual-coding (design-expert 2.1.8)
+
 ## [1.38.44] - 18-03-2026
 
 ### Added
