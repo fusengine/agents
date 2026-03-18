@@ -16,12 +16,20 @@ hooks:
       hooks:
         - type: command
           command: "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/check-shadcn-install.py"
+    - matcher: "Write|Edit"
+      hooks:
+        - type: command
+          command: "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/check-playwright-browsing.py"
+    - matcher: "mcp__gemini-design__"
+      hooks:
+        - type: command
+          command: "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/check-playwright-browsing.py"
   PostToolUse:
     - matcher: "Read"
       hooks:
         - type: command
           command: "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/track-skill-read.py"
-    - matcher: "mcp__context7__|mcp__exa__|mcp__magic__|mcp__shadcn__"
+    - matcher: "mcp__context7__|mcp__exa__|mcp__magic__|mcp__shadcn__|mcp__playwright__"
       hooks:
         - type: command
           command: "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/track-mcp-research.py"
@@ -70,21 +78,32 @@ Missing block → do NOT call Gemini → fill it first.
 | Phase | Action | Skill |
 |-------|--------|-------|
 | 0 | **Identity** — design-system.md BEFORE any component | `identity-system` |
-| 1 | **Visual Research** — Browse real sites via Playwright (MANDATORY) | `generating-components` |
+| 1 | **Visual Research** — Browse 4 sites, pick best one, reproduce its quality | `generating-components` |
 | 2 | **Architecture** — layout, navigation, responsive | `page-layouts` |
 | 3 | **Components** — Gemini with XML blocks + `<style_reference>` from Phase 1 | `generating-components` |
 | 4 | **Motion** — consistent animations | `motion-system` |
 | 5 | **Audit** — consistency, a11y, contrast, anti-slop | `design-audit` |
+| 6 | **Visual Auto-Review** — screenshot own result, compare with inspiration, fix gaps | `design-audit` |
 
 ### Phase 1 — Visual Research (NEVER SKIP)
-1. Browse **3 different sites** matching project sector via Playwright
-2. Screenshot each with `fullPage: true` → capture the ENTIRE page, not just the viewport
-3. Propose **3 distinct visual directions** to user before coding:
-   - Direction A: inspired by site 1 (describe aesthetic + key choices)
-   - Direction B: inspired by site 2 (describe aesthetic + key choices)
-   - Direction C: hybrid or original (describe aesthetic + key choices)
-4. User picks → feed chosen direction into Gemini XML `<style_reference>` block
-→ See `skills/generating-components/references/design-inspiration.md` for URLs
+1. Browse **4 sites** from 2+ platforms via Playwright (scroll → wait 5s → fullPage screenshot)
+2. **PICK THE BEST ONE** — choose 1 site that best matches the project's sector and desired aesthetic
+3. Write in design-system.md: "Inspired by: {url} — reproducing: {what specifically}"
+4. Your goal: reproduce the SAME level of quality, spacing, typography, and polish as that 1 site
+5. See `skills/generating-components/references/design-inspiration.md` for URLs
+
+### Phase 6 — Visual Auto-Review (MANDATORY after first generation)
+1. Start a local server: `python3 -m http.server 8899` in project directory
+2. Screenshot own result: `mcp__playwright__browser_navigate` → `http://localhost:8899` then fullPage screenshot
+3. Compare with the chosen inspiration screenshot: identify gaps in:
+   - Color fidelity vs synthesis plan
+   - Typography weight/size vs inspiration
+   - Section spacing rhythm
+   - Visual polish (shadows, gradients, effects)
+   - Professional finish (does it look like a real site or AI-generated?)
+4. If gaps found → `modify_frontend` to fix, then re-screenshot
+5. Max 2 review cycles (avoid infinite loop)
+6. Kill the local server when done
 
 ## Multi-Stack
 
@@ -97,14 +116,11 @@ Missing block → do NOT call Gemini → fill it first.
 
 ## FORBIDDEN (ZERO TOLERANCE — violation = restart)
 
-- `border-top`, `border-left`, `border-bottom` as section separators or card hover effects — use spacing, gradient orbs, color transitions, or shadow elevation instead
-- `border-top` on card hover states — use `transform: translateY(-4px)` + `box-shadow` instead
-- Dark text on dark background, light text on light background (contrast < 4.5:1)
-- Writing UI code manually — use Gemini Design
-- Calling Gemini without XML blocks
-- Default shadcn theme without identity-system
-- Creating `*Redesigned.tsx`, `*New.tsx` — edit existing files
+- `border-top/left/bottom` as separators or hover effects — use spacing, orbs, shadows, elevation
+- Dark-on-dark / light-on-light text (contrast < 4.5:1)
+- Writing UI manually — use Gemini Design; calling Gemini without XML blocks
+- Default shadcn without identity-system; creating `*Redesigned.tsx` / `*New.tsx`
 - Skipping Phase 1 Visual Research
-- Inter, Roboto, Arial, Open Sans fonts
-- Purple-to-pink gradients
-- Flat backgrounds without depth (glassmorphism, orbs, gradients)
+- Inter, Roboto, Arial, Open Sans; purple-to-pink gradients; flat backgrounds without depth
+- Emojis in UI — use SVG/Lucide icons instead
+- Generic testimonials — require: real name, role+company, 2-3 sentence quote, avatar

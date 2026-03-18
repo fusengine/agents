@@ -375,3 +375,7 @@ Before ANY UI code:
 - [ ] Touch targets 44x44px minimum
 - [ ] Playwright screenshot in LIGHT mode
 - [ ] Playwright screenshot in DARK mode
+- [ ] NO emojis in UI (headings, cards, buttons, sections) — use icons
+- [ ] Testimonials look professional (name, role, company, detailed quote, avatar)
+- [ ] Sections feel polished — consistent spacing, aligned grids, visual rhythm
+- [ ] Footer has real structure (4 columns, links, social, legal)

@@ -14,6 +14,7 @@
 | **E** | 06-validate-a11y | WCAG 2.2 AA checklist |
 | **E** | 07-review-design | Elicitation self-review |
 | **E** | 08-preview-browser | Playwright screenshot to verify result |
+| **E** | 08b-visual-auto-review | Compare own screenshot with inspiration screenshots → fix gaps (max 2 cycles) |
 | **X** | 09-sniper-check | **MANDATORY: Launch `sniper` agent** |
 | **X** | 10-create-pr | PR with screenshots |
 
