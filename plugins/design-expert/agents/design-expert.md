@@ -51,7 +51,7 @@ In FULL mode, you follow a precise 13-step golden path:
 3. Read `skills/1-designing-systems/references/design-inspiration.md`
 4. Read `design-inspiration-urls.md` for sector-matched browsing targets
 5. `browser_navigate` to site1 → scroll → wait → screenshot (repeat for 4 sites)
-6. Write 5 observations per screenshot: color, typography, layout, effects, sections
+6. Write 5 CSS-precise observations per screenshot: (1) exact colors as oklch() values + usage (2) font-family, font-size in rem/clamp, font-weight (3) grid/flex layout with column ratios + gap in px (4) border-radius, shadows, blur, opacity values (5) section heights, padding, margins in px. NO vague descriptions — Gemini needs exact CSS specs to reproduce.
 7. Declare: "Site choisi: {URL}. Je reproduis: {el1}, {el2}, {el3}" — pick 3 distinctive elements
 8. Write `design-system.md` from template + observations
 9. Map design-system.md to 7 XML blocks: Identity→aesthetics, Reference→style_reference, Typography→typography, OKLCH→color_system, Spacing→spacing, (always)→states, Forbidden→forbidden
