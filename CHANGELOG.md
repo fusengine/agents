@@ -1,5 +1,10 @@
 # Release Notes
 
+## [1.38.51] - 19-03-2026
+
+### Fixed
+- fix(design-expert): use Optional[dict] for Python 3.9 compatibility in pipeline_checks.py (design-expert 2.1.13)
+
 ## [1.38.50] - 19-03-2026
 
 ### Changed
