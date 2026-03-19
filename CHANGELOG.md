@@ -1,5 +1,10 @@
 # Release Notes
 
+## [1.38.47] - 19-03-2026
+
+### Added
+- feat(design-expert): enforce inspiration analysis, HTML-only output, and design-system validation (design-expert 2.1.9)
+
 ## [1.38.46] - 18-03-2026
 
 ### Fixed
