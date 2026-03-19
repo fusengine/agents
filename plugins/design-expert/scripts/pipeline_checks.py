@@ -1,5 +1,6 @@
 """pipeline_checks.py - Phase gate checks for design-expert pipeline."""
 
+from typing import Optional
 import json
 import os
 import sys
@@ -15,7 +16,7 @@ def deny(reason: str) -> None:
     sys.exit(0)
 
 
-def load_state(agent_id: str) -> dict | None:
+def load_state(agent_id: str) -> Optional[dict]:
     """Load state file for agent_id, return None if missing."""
     path = os.path.join(CACHE_DIR, f".design-state-{agent_id}.json")
     if not os.path.isfile(path):
