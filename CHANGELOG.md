@@ -1,5 +1,10 @@
 # Release Notes
 
+## [1.38.52] - 19-03-2026
+
+### Added
+- feat(design-expert): add automatic state tracking to pipeline hooks and exempt HTML from Tailwind checks (design-expert 2.1.14, tailwindcss 1.0.7)
+
 ## [1.38.51] - 19-03-2026
 
 ### Fixed
