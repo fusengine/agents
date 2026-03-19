@@ -54,34 +54,40 @@ Step 9: Repeat steps 1-8 for 3 more sites (4 total)
 Step 10: Feed ALL insights into Gemini XML <style_reference> block
 ```
 
-## Chosen Reference (MANDATORY — write in design-system.md BEFORE coding)
+## Mandatory Visual Analysis Template
 
-After browsing 4 sites, write this in design-system.md:
-
+After each screenshot, document exactly:
 ```
-## Design Reference
-
-Inspired by: {chosen site URL}
-Why chosen: {what makes it the best match for this project}
-
-Reproducing from this site:
-- Color approach: {describe their palette}
-- Typography: {their font choices and sizing}
-- Layout rhythm: {their section spacing and grid}
-- Visual effects: {their shadows, gradients, glass, animations}
-- Section structure: {their page flow}
-
-Adapting for this project:
-- Brand name and content: {project-specific}
-- Color accent: {project-specific accent color}
+### Screenshot Analysis — {URL}
+1. **Palette**: dominant={color}, accent={color}, background={tone}
+2. **Typography**: {serif/sans-serif}, weight={light/regular/bold}, hierarchy={strong/subtle}
+3. **Layout**: density={compact/spacious/airy}, grid={columns/full-width/centered}
+4. **Effects**: {glassmorphism/shadows/gradients/flat/layered}
+5. **Sections**: {hero → features → testimonials → CTA → footer}
 ```
 
-This feeds into the Gemini XML `<style_reference>` block.
-NEVER call Gemini without choosing a reference site first.
+## FORBIDDEN Navigation Targets
+
+NEVER navigate to these — they are catalogues, not inspiration:
+- `framer.com/templates`, `webflow.com/templates`, `themeforest.net`
+- Any URL with `/templates`, `/marketplace`, `/themes` in the path
+
+**Why:** These pages list product grids — no real design to extract.
+
+## Reference Selection Format
+
+After browsing 4 sites, write in `design-system.md` BEFORE coding:
+```
+## Chosen Reference
+- URL: {url}
+- Why: {1 sentence}
+- Reproducing: {3 specific visual elements}
+- Adapting: {what changes for this project}
+```
+This feeds into the Gemini XML `<style_reference>` block. NEVER call Gemini without this.
 
 ## Awwwards Deep Browsing
 
-Awwwards individual sites at `https://awwwards.com/sites/{name}` link to real production URLs.
 1. Navigate to `awwwards.com/websites/` filtered by sector
 2. Screenshot the gallery → identify interesting sites
 3. Navigate to `awwwards.com/sites/{name}` → find the "Visit Website" link
@@ -89,8 +95,5 @@ Awwwards individual sites at `https://awwwards.com/sites/{name}` link to real pr
 
 ## What NOT to Do
 
-- NEVER use fewer than 4 sources — 3 is not enough
-- NEVER reuse the same sites as last time — VARY
-- NEVER give up after 1-2 failures — try 6 URLs before falling back
-- NEVER skip analysis — screenshots without analysis = wasted tokens
-- ALWAYS use `fullPage: true` — viewport-only misses 80% of the design
+- NEVER fewer than 4 sources | NEVER reuse same sites | NEVER give up before 6 tries
+- NEVER skip analysis | ALWAYS `fullPage: true`

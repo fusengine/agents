@@ -21,8 +21,8 @@ MIN_LINES_FOR_EDIT = 2
 
 BLOCK_MSG = (
     "BLOCKED: UI code with Tailwind detected but Gemini Design MCP not used.\n"
-    "Use mcp__gemini-design__create_frontend or "
-    "mcp__gemini-design__modify_frontend BEFORE writing UI code manually.\n"
+    "Use mcp__gemini-design__create_frontend, modify_frontend, or "
+    "snippet_frontend BEFORE writing UI code manually.\n"
     "NEVER write Tailwind classes by hand — always use Gemini Design MCP first."
 )
 

@@ -14,19 +14,12 @@ FLAG_FILE = os.path.join(CACHE_DIR, "design-agent-active")
 MIN_SCREENSHOTS = 4
 REF_PATH = "skills/generating-components/references/design-inspiration.md"
 EXEMPT_DIRS = ("node_modules/", "dist/", "build/", ".claude/")
-DENY_MSG = (
-    "BLOCKED: Only {count}/{min} Playwright screenshots taken. Browse 4 inspiration "
-    "sites BEFORE writing code. Read {ref}, then use browser_navigate + "
-    "browser_wait_for + browser_take_screenshot with fullPage:true on 4 sites from 2 platforms.")
-DENY_DS = (
-    "BLOCKED: design-system.md not found. You MUST create design-system.md FIRST using "
-    "the identity templates from skills/identity-system/references/templates/. Pick the "
-    "template matching your project sector (creative, devtool, ecommerce, fintech) and "
-    "fill it with OKLCH tokens, typography pairs, and your chosen reference site.")
-DENY_GEMINI = (
-    "BLOCKED: 4 screenshots done but Gemini Design NOT called. You MUST use "
-    "mcp__gemini-design__create_frontend with your design-system.md tokens and "
-    "<style_reference> BEFORE writing files. NEVER write HTML/CSS manually.")
+DENY_MSG = ("BLOCKED: Only {count}/{min} Playwright screenshots. Browse 4 sites BEFORE writing. "
+    "Read {ref}, use browser_navigate + browser_take_screenshot fullPage:true on 4 sites.")
+DENY_DS = ("BLOCKED: design-system.md not found. Create it FIRST using identity templates "
+    "from skills/identity-system/references/templates/ (creative/devtool/ecommerce/fintech).")
+DENY_GEMINI = ("BLOCKED: 4 screenshots done but Gemini Design NOT called. Use "
+    "mcp__gemini-design__create_frontend/modify_frontend/snippet_frontend BEFORE writing.")
 
 def deny_block(reason: str) -> None:
     """Emit deny block and exit."""
@@ -64,7 +57,6 @@ def main() -> None:
     except OSError:
         sys.exit(0)
     current_agent_id = data.get("agent_id") or ""
-    # No agent_id = team lead or main session → skip check
     if not current_agent_id:
         sys.exit(0)
     if design_agent_id and current_agent_id != design_agent_id:
@@ -84,7 +76,6 @@ def main() -> None:
     screenshots = count_agent_screenshots(agent_id) if agent_id else count_screenshots(session_id)
     if screenshots >= MIN_SCREENSHOTS:
         if tool_name.startswith("mcp__gemini-design__"):
-            # Gemini calls require design-system.md — check cwd and common locations
             cwd = os.getcwd()
             has_ds = (os.path.isfile(os.path.join(cwd, "design-system.md"))
                       or _find_design_system(os.path.join(cwd, "index.html")))

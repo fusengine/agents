@@ -5,6 +5,16 @@
   "hooks": {
     "PreToolUse": [
       {
+        "_description": "Design-expert can only write HTML/CSS/MD/JSON files",
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/enforce-html-css-only.py"
+          }
+        ]
+      },
+      {
         "_description": "Block UI edits if design skill not consulted",
         "matcher": "Write|Edit",
         "hooks": [
@@ -51,6 +61,16 @@
           {
             "type": "command",
             "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/check-playwright-browsing.py"
+          }
+        ]
+      },
+      {
+        "_description": "Block create_frontend if design-system.md is generic or missing",
+        "matcher": "mcp__gemini-design__create_frontend",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/validate-design-system.py"
           }
         ]
       }
