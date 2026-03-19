@@ -33,7 +33,7 @@ Read: `skills/identity-system/SKILL.md` + all 4 sector templates (creative/devto
 **CANNOT SKIP. CANNOT CODE FIRST. Hooks block until 4 fullPage screenshots taken.**
 
 1. Read `skills/generating-components/references/design-inspiration.md` + `design-inspiration-urls.md`
-2. Choose 4 URLs — **at least 2 platforms** — **VARY every session** — **ONLY live final sites**
+2. Choose 4 URLs **from the matching sector row** in the Sector → Sources table — **at least 2 platforms** — **VARY every session** — Healthcare project = Healthcare URLs ONLY
 3. **FORBIDDEN to navigate:** framer.com/templates, webflow.com/templates, themeforest.net
 4. For each URL: navigate → scroll to bottom (smooth) → wait 5s → scroll top → wait 2s → `browser_take_screenshot` fullPage
 5. **After EACH screenshot, write 5 numbered observations:** (1) dominant color + accent (2) typography style/weight/hierarchy (3) layout density/grid/whitespace (4) visual effects (glass/shadows/gradients) (5) section structure (hero→features→CTA→footer)
