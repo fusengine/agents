@@ -1,5 +1,10 @@
 # Release Notes
 
+## [1.38.54] - 19-03-2026
+
+### Fixed
+- fix(design-expert): require CSS-precise observations in Phase 1 and rewrite SKILL.md for browsing workflow (design-expert 2.1.16)
+
 ## [1.38.53] - 19-03-2026
 
 ### Fixed
