@@ -1,5 +1,10 @@
 # Release Notes
 
+## [1.38.49] - 19-03-2026
+
+### Fixed
+- fix(design-expert): correct Gemini MCP tool signatures and enforce sector-matching URLs (design-expert 2.1.11)
+
 ## [1.38.48] - 19-03-2026
 
 ### Fixed

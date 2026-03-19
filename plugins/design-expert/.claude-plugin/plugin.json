@@ -1,6 +1,6 @@
 {
   "name": "fuse-design",
-  "version": "2.1.10",
+  "version": "2.1.11",
   "description": "Design Director for complete apps, sites, and SaaS. Multi-stack support (React/shadcn, Laravel/Livewire Flux, Swift/SwiftUI). Identity System, page layouts, motion system, palette generator, design audit. Anti-AI-Slop, WCAG 2.2, Gemini Design MCP.",
   "author": {
     "name": "Fusengine",
