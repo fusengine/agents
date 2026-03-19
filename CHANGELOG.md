@@ -1,5 +1,10 @@
 # Release Notes
 
+## [1.38.55] - 19-03-2026
+
+### Added
+- feat(design-expert): add 10 premium design patterns, guard-state, anti-flat enforcement, Gemini-first checks (design-expert 2.1.17, tailwindcss 1.0.8)
+
 ## [1.38.54] - 19-03-2026
 
 ### Fixed
