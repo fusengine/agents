@@ -87,6 +87,16 @@
         ]
       },
       {
+        "_description": "Update state after each Playwright screenshot",
+        "matcher": "mcp__playwright__browser_take_screenshot",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/track-screenshot.py"
+          }
+        ]
+      },
+      {
         "_description": "Track MCP research + Playwright calls",
         "matcher": "mcp__context7__|mcp__exa__|mcp__magic__|mcp__shadcn__|mcp__playwright__|mcp__gemini-design__",
         "hooks": [

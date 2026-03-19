@@ -68,7 +68,11 @@ def main() -> None:
                 deny_block(DENY_DS)
         elif tool_name in ("Write", "Edit"):
             from screenshot_counts import count_agent_gemini_calls
-            if (count_agent_gemini_calls(agent_id) if agent_id else 0) == 0:
+            gemini_count = count_agent_gemini_calls(agent_id) if agent_id else 0
+            state = load_state(agent_id) if agent_id else None
+            if state:
+                gemini_count = max(gemini_count, state.get("gemini_calls", 0))
+            if gemini_count == 0:
                 deny_block(DENY_GEMINI)
             if not find_design_system((data.get("tool_input") or {}).get("file_path", "")):
                 deny_block(DENY_DS)

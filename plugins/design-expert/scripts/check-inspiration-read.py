@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""check-inspiration-read.py - Block Playwright browsing if design-inspiration.md not read."""
+"""check-inspiration-read.py - Block Playwright if identity or inspiration not read."""
 
 import json
 import os
@@ -8,7 +8,7 @@ import sys
 sys.path.insert(0, os.path.join(os.path.expanduser("~"),
     ".claude", "plugins", "marketplaces", "fusengine-plugins",
     "plugins", "_shared", "scripts"))
-from hook_output import allow_pass, emit_pre_tool
+from hook_output import allow_pass
 
 _HOME = os.path.expanduser("~")
 _CACHE = os.path.join(_HOME, ".claude", "fusengine-cache")
@@ -19,13 +19,10 @@ KNOWN_DOMAINS = (
     "lapa.ninja", "onepagelove.com", "saasframe.io", "bestwebsite.gallery",
     "landingfolio.com",
 )
-PLUGINS_DIR = os.path.join(_HOME, ".claude", "plugins", "marketplaces",
-    "fusengine-plugins", "plugins")
-REF = f"{PLUGINS_DIR}/design-expert/skills/3-generating-components/references"
+SKILLS = f"{_HOME}/.claude/plugins/marketplaces/fusengine-plugins/plugins/design-expert/skills"
 
 
-def inspiration_was_read(session_id: str) -> bool:
-    """Check if design-inspiration was read in session."""
+def _tracking_has(session_id: str, keyword: str) -> bool:
     if not os.path.isdir(TRACKING_DIR):
         return False
     for fname in os.listdir(TRACKING_DIR):
@@ -33,66 +30,50 @@ def inspiration_was_read(session_id: str) -> bool:
             continue
         try:
             with open(os.path.join(TRACKING_DIR, fname), encoding="utf-8") as f:
-                if "design-inspiration" in f.read():
+                if keyword in f.read():
                     return True
         except OSError:
             continue
     return False
 
 
-def deny_block(reason: str) -> None:
-    """Emit deny decision and exit."""
-    print(json.dumps({"hookSpecificOutput": {
-        "hookEventName": "PreToolUse",
-        "permissionDecision": "deny",
-        "permissionDecisionReason": reason,
-    }}))
+def _deny(reason: str) -> None:
+    print(json.dumps({"hookSpecificOutput": {"hookEventName": "PreToolUse",
+        "permissionDecision": "deny", "permissionDecisionReason": reason}}))
     sys.exit(0)
 
 
 def main() -> None:
-    """Main entry point."""
     try:
         data = json.load(sys.stdin)
     except (json.JSONDecodeError, ValueError):
         sys.exit(0)
-
-    # Only enforce for the active design-expert agent
     if not os.path.isfile(FLAG_FILE):
         sys.exit(0)
     try:
-        with open(FLAG_FILE) as f:
-            design_agent_id = f.read().strip()
+        with open(FLAG_FILE, encoding="utf-8") as f:
+            design_id = f.read().strip()
     except OSError:
         sys.exit(0)
-    current_agent_id = data.get("agent_id") or ""
-    # No agent_id = team lead or main session → skip check
-    if not current_agent_id:
+    agent_id = data.get("agent_id") or ""
+    if not agent_id or (design_id and agent_id != design_id):
         sys.exit(0)
-    if design_agent_id and current_agent_id != design_agent_id:
-        sys.exit(0)  # Not the design agent → skip check
-
-    if data.get("tool_name", "") != "mcp__playwright__browser_navigate":
+    if data.get("tool_name") != "mcp__playwright__browser_navigate":
         sys.exit(0)
 
-    session_id = data.get("session_id") or f"fallback-{os.getpid()}"
-    if not inspiration_was_read(session_id):
-        deny_block(
-            "BLOCKED: Read your inspiration catalog BEFORE browsing. "
-            f"Read BOTH: 1) {REF}/design-inspiration.md "
-            f"2) {REF}/design-inspiration-urls.md "
-            "Then choose 4 URLs from the catalog and browse them.")
+    sid = data.get("session_id") or f"fallback-{os.getpid()}"
 
-    tool_input = data.get("tool_input") or {}
-    url = tool_input.get("url", "")
-    is_catalog = any(domain in url for domain in KNOWN_DOMAINS)
+    if not _tracking_has(sid, "identity-system"):
+        _deny(f"BLOCKED: Phase 0 not done. READ: {SKILLS}/0-identity-system/SKILL.md first.")
 
-    if not is_catalog and url:
-        emit_pre_tool("allow",
-            f"URL '{url}' not in catalog. Prefer catalog URLs for quality.",
-            context=f"Non-catalog URL: {url}")
-    else:
-        allow_pass("check-inspiration-read", f"pass (catalog URL: {url})")
+    if not _tracking_has(sid, "design-inspiration"):
+        _deny(f"BLOCKED: Read inspiration catalog first. READ: {SKILLS}/1-designing-systems/references/design-inspiration.md + design-inspiration-urls.md")
+
+    url = (data.get("tool_input") or {}).get("url", "")
+    if url and not any(d in url for d in KNOWN_DOMAINS):
+        _deny(f"BLOCKED: '{url}' not in catalog. Use URLs from design-inspiration-urls.md. Domains: {', '.join(KNOWN_DOMAINS)}")
+
+    allow_pass("check-inspiration-read", f"pass ({url})")
 
 
 if __name__ == "__main__":
