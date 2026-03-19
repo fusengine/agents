@@ -7,7 +7,7 @@
   },
   "metadata": {
     "description": "Professional Claude Code plugins with APEX workflow, SOLID principles, and expert development agents for Next.js, Laravel, Swift, Tailwind CSS, and more",
-    "version": "1.38.49"
+    "version": "1.38.50"
   },
   "core": [
     {
@@ -385,8 +385,8 @@
     {
       "name": "fuse-design",
       "source": "./plugins/design-expert",
-      "description": "UI Designer. Generates HTML/CSS via Gemini Design MCP. Identity System, UX copy, page layouts, motion system, palette generator, design audit. Anti-AI-Slop, WCAG 2.2. Framework integration delegated to domain experts.",
-      "version": "2.1.11",
+      "description": "UI Designer. Generates HTML/CSS via Gemini Design MCP. 7-phase pipeline with state tracking. Identity System, UX copy, page layouts, motion system, design audit. Anti-AI-Slop, WCAG 2.2.",
+      "version": "2.1.12",
       "author": {
         "name": "Fusengine",
         "url": "https://github.com/fusengine"
@@ -416,30 +416,22 @@
       "category": "development",
       "strict": true,
       "commands": [
-        "./commands/design.md"
+        "./commands/design.md",
+        "./commands/design-page.md",
+        "./commands/design-component.md",
+        "./commands/design-audit.md"
       ],
       "agents": [
         "./agents/design-expert.md"
       ],
       "skills": [
-        "./skills/generating-components",
-        "./skills/designing-systems",
-        "./skills/validating-accessibility",
-        "./skills/adding-animations",
-        "./skills/glassmorphism-advanced",
-        "./skills/theming-tokens",
-        "./skills/component-variants",
-        "./skills/dark-light-modes",
-        "./skills/responsive-system",
-        "./skills/interactive-states",
-        "./skills/component-composition",
-        "./skills/layered-backgrounds",
-        "./skills/identity-system",
-        "./skills/page-layouts",
-        "./skills/motion-system",
-        "./skills/palette-generator",
-        "./skills/design-audit",
-        "./skills/ux-copy"
+        "./skills/0-identity-system",
+        "./skills/1-designing-systems",
+        "./skills/2-ux-copy",
+        "./skills/3-generating-components",
+        "./skills/4-adding-animations",
+        "./skills/5-design-audit",
+        "./skills/6-handoff-review"
       ]
     },
     {

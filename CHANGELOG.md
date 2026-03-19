@@ -1,5 +1,10 @@
 # Release Notes
 
+## [1.38.50] - 19-03-2026
+
+### Changed
+- refactor(design-expert): complete plugin overhaul — pipeline enforcement, skills reorganization, commands (design-expert 2.1.12)
+
 ## [1.38.49] - 19-03-2026
 
 ### Fixed
