@@ -4,6 +4,7 @@
 import json
 import os
 import sys
+from datetime import datetime, timezone
 
 _SHARED = os.path.join(os.path.expanduser("~"), ".claude", "plugins",
     "marketplaces", "fusengine-plugins", "plugins", "_shared", "scripts")
@@ -12,7 +13,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from hook_output import allow_pass
 from pipeline_checks import (
     check_design_system_write, check_gemini_create,
-    check_playwright_navigate, load_state,
+    check_playwright_navigate, load_state, save_state,
 )
 
 CACHE_DIR = os.path.join(os.path.expanduser("~"), ".claude", "fusengine-cache")
@@ -35,8 +36,28 @@ def main() -> None:
 
     state = load_state(agent_id)
     if not state:
-        allow_pass("pipeline-gate", "no state file, skipping")
-        return
+        # Auto-create state file if missing (e.g. teammate context)
+        cwd = os.getcwd()
+        ds_exists = any(
+            os.path.isfile(os.path.join(cwd, f))
+            for f in ["design-system.md", "../design-system.md"]
+        )
+        state = {
+            "agent_id": agent_id,
+            "mode": "page" if ds_exists else "full",
+            "current_phase": 0,
+            "phases_completed": [],
+            "templates_read": False,
+            "inspiration_read": False,
+            "screenshots_count": 0,
+            "design_system_exists": ds_exists,
+            "design_system_valid": False,
+            "gemini_calls": 0,
+            "auto_review_done": False,
+            "created_at": datetime.now(timezone.utc).isoformat(),
+            "updated_at": datetime.now(timezone.utc).isoformat()
+        }
+        save_state(state)
 
     tool = data.get("tool_name", "")
     fp = (data.get("tool_input") or {}).get("file_path", "")

@@ -23,12 +23,14 @@ DENY_GEMINI = ("BLOCKED: 4 screenshots done but Gemini Design NOT called. Use "
 
 
 def _update_state(agent_id: str, screenshots: int) -> None:
-    """Sync screenshots_count into state file."""
+    """Sync screenshots_count into state file and advance phase if sufficient."""
     if not agent_id:
         return
     state = load_state(agent_id)
     if state:
         state["screenshots_count"] = screenshots
+        if screenshots >= MIN_SCREENSHOTS:
+            state["current_phase"] = max(state.get("current_phase", 0), 2)
         save_state(state)
 
 
@@ -41,7 +43,7 @@ def main() -> None:
     if not os.path.isfile(FLAG_FILE):
         sys.exit(0)
     try:
-        with open(FLAG_FILE) as f:
+        with open(FLAG_FILE, encoding="utf-8") as f:
             design_agent_id = f.read().strip()
     except OSError:
         sys.exit(0)

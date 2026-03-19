@@ -40,6 +40,11 @@ def main() -> None:
     if re.search(r"/(node_modules|dist|build)/", file_path):
         sys.exit(0)
 
+    # Vanilla HTML/CSS files: skip Tailwind skill checks
+    # Design-expert generates HTML/CSS without Tailwind
+    if re.search(r'\.(html|css)$', file_path):
+        sys.exit(0)
+
     content = tool_input.get("content") or tool_input.get("new_string") or ""
     if not re.search(TW_PATTERN, content):
         sys.exit(0)

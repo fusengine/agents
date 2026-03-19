@@ -9,7 +9,7 @@ sys.path.insert(0, _SHARED)
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from hook_output import allow_pass
 from pipeline_checks import load_state, save_state
-
+_FLAG_FILE = os.path.join(os.path.expanduser("~"), ".claude", "fusengine-cache", "design-agent-active")
 FORBIDDEN_FONTS = ("Inter", "Roboto", "Arial", "Open Sans")
 OKLCH_RE = re.compile(r"oklch\(\s*[\d.]+%?\s+0\.0*[1-9]")
 URL_RE = re.compile(r"https?://")
@@ -21,7 +21,7 @@ DENY_NOT_FOUND = (
 
 
 def _find_design_system() -> Optional[str]:
-    """Walk up to 5 parents from cwd looking for design-system.md."""
+    """Walk up to 6 parents from cwd looking for design-system.md."""
     check_dir = os.getcwd()
     for _ in range(6):
         candidate = os.path.join(check_dir, "design-system.md")
@@ -63,7 +63,6 @@ def main() -> None:
         sys.exit(0)
     if data.get("tool_name") != "mcp__gemini-design__create_frontend":
         sys.exit(0)
-
     ds_path = _find_design_system()
     if not ds_path:
         _deny(DENY_NOT_FOUND)
@@ -72,23 +71,26 @@ def main() -> None:
             content = f.read()
     except OSError:
         sys.exit(0)
-
     missing = _validate_content(content)
     if missing:
-        _deny(
-            f"BLOCKED: design-system.md too generic. Missing: {', '.join(missing)}. "
+        _deny(f"BLOCKED: design-system.md too generic. Missing: {', '.join(missing)}. "
             "RECOVERY: 1) Fix incomplete sections 2) Add ## Design Reference with URL "
             "3) Ensure oklch() chroma > 0.05 4) Replace forbidden fonts "
             "5) Retry mcp__gemini-design__create_frontend")
-
     agent_id = data.get("agent_id") or ""
+    if not agent_id and os.path.isfile(_FLAG_FILE):
+        try:
+            with open(_FLAG_FILE, encoding="utf-8") as f:
+                agent_id = f.read().strip()
+        except OSError:
+            pass
     if agent_id:
         state = load_state(agent_id)
         if state:
-            state["design_system_valid"] = True
             state["design_system_exists"] = True
+            state["design_system_valid"] = True
+            state["current_phase"] = max(state.get("current_phase", 0), 3)
             save_state(state)
-
     allow_pass("validate-design-system", "design-system.md ok")
 
 

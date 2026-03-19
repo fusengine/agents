@@ -10,8 +10,12 @@ from datetime import datetime, timezone
 sys.path.insert(0, os.path.join(os.path.expanduser("~"),
     ".claude", "plugins", "marketplaces", "fusengine-plugins",
     "plugins", "_shared", "scripts"))
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from pipeline_checks import load_state, save_state
 
 FRAMEWORK = "design"
+_CACHE_DIR = os.path.join(os.path.expanduser("~"), ".claude", "fusengine-cache")
+FLAG_FILE = os.path.join(_CACHE_DIR, "design-agent-active")
 
 
 def track_skill_read(framework: str, skill: str, topic: str, session_id: str) -> None:
@@ -44,6 +48,25 @@ def main() -> None:
 
     session_id = data.get("session_id") or f"fallback-{os.getpid()}"
     track_skill_read(FRAMEWORK, "skill:Read", file_path, session_id)
+
+    # Update state if a design agent is active
+    if not os.path.isfile(FLAG_FILE):
+        sys.exit(0)
+    try:
+        with open(FLAG_FILE, encoding="utf-8") as f:
+            agent_id = f.read().strip()
+    except OSError:
+        sys.exit(0)
+    if not agent_id:
+        sys.exit(0)
+    state = load_state(agent_id)
+    if not state:
+        sys.exit(0)
+    if "identity-system" in file_path or "0-identity-system" in file_path:
+        state["templates_read"] = True
+    if "design-inspiration" in file_path:
+        state["inspiration_read"] = True
+    save_state(state)
     sys.exit(0)
 
 
