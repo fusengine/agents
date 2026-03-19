@@ -36,6 +36,10 @@ def main() -> None:
         sys.exit(0)
     if not re.search(r"\.(tsx|jsx|css|scss|html)$", file_path):
         sys.exit(0)
+    # design-expert writes vanilla HTML/CSS — skip domain skill checks
+    if re.search(r"\.(html|css)$", file_path):
+        allow_pass("check-design-skill", "skip (html/css vanilla)")
+        sys.exit(0)
     if re.search(r"/(node_modules|dist|build)/", file_path):
         sys.exit(0)
     UI_PATH_PATTERNS = (
@@ -59,8 +63,8 @@ def main() -> None:
     if not skill_was_consulted("design", session_id, project_root):
         deny_block(
             "BLOCKED: Design skill not consulted. READ ONE: "
-            f"1) {PLUGINS_DIR}/design-expert/skills/generating-components/SKILL.md"
-            f" | 2) {PLUGINS_DIR}/design-expert/skills/designing-systems/SKILL.md"
+            f"1) {PLUGINS_DIR}/design-expert/skills/3-generating-components/SKILL.md"
+            f" | 2) {PLUGINS_DIR}/design-expert/skills/1-designing-systems/SKILL.md"
             " | 3) Use mcp__context7__query-docs. After reading, retry.")
 
     # Phase 2: Domain skills (component/UI/style files)

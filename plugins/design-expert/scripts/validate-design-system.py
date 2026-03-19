@@ -6,22 +6,18 @@ from typing import Optional
 _SHARED = os.path.join(os.path.expanduser("~"), ".claude", "plugins",
     "marketplaces", "fusengine-plugins", "plugins", "_shared", "scripts")
 sys.path.insert(0, _SHARED)
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from hook_output import allow_pass
+from pipeline_checks import load_state, save_state
 
 FORBIDDEN_FONTS = ("Inter", "Roboto", "Arial", "Open Sans")
 OKLCH_RE = re.compile(r"oklch\(\s*[\d.]+%?\s+0\.0*[1-9]")
 URL_RE = re.compile(r"https?://")
 DENY_NOT_FOUND = (
-    "BLOCKED: design-system.md not found in project tree. "
-    "Create it first using identity templates in "
-    "skills/identity-system/references/templates/."
-)
-DENY_GENERIC = (
-    "BLOCKED: design-system.md is too generic. Required: "
-    "## Design Reference section, a reference URL (https://...), "
-    "at least one oklch() color with non-zero chroma, "
-    "and no generic fonts (Inter/Roboto/Arial/Open Sans)."
-)
+    "BLOCKED: design-system.md not found. RECOVERY: 1) Read identity templates "
+    "2) Read design-inspiration.md 3) Browse 4 sites via Playwright "
+    "4) Write design-system.md with ## Design Reference, OKLCH, typography, URL "
+    "5) Retry mcp__gemini-design__create_frontend")
 
 
 def _find_design_system() -> Optional[str]:
@@ -39,9 +35,24 @@ def _find_design_system() -> Optional[str]:
 
 
 def _deny(reason: str) -> None:
+    """Emit deny block and exit."""
     print(json.dumps({"hookSpecificOutput": {"hookEventName": "PreToolUse",
         "permissionDecision": "deny", "permissionDecisionReason": reason}}))
     sys.exit(0)
+
+
+def _validate_content(content: str) -> list[str]:
+    """Return list of missing requirements in design-system.md."""
+    missing = []
+    if "## Design Reference" not in content:
+        missing.append("## Design Reference section")
+    if not URL_RE.search(content):
+        missing.append("reference URL (https://...)")
+    if not OKLCH_RE.search(content):
+        missing.append("oklch() color with chroma > 0")
+    if any(font in content for font in FORBIDDEN_FONTS):
+        missing.append("forbidden font found (Inter/Roboto/Arial/Open Sans)")
+    return missing
 
 
 def main() -> None:
@@ -50,27 +61,33 @@ def main() -> None:
         data = json.load(sys.stdin)
     except (json.JSONDecodeError, ValueError):
         sys.exit(0)
-
     if data.get("tool_name") != "mcp__gemini-design__create_frontend":
         sys.exit(0)
 
     ds_path = _find_design_system()
     if not ds_path:
         _deny(DENY_NOT_FOUND)
-
     try:
         with open(ds_path, encoding="utf-8") as f:
             content = f.read()
     except OSError:
         sys.exit(0)
 
-    has_ref_section = "## Design Reference" in content
-    has_url = bool(URL_RE.search(content))
-    has_oklch = bool(OKLCH_RE.search(content))
-    has_forbidden = any(font in content for font in FORBIDDEN_FONTS)
+    missing = _validate_content(content)
+    if missing:
+        _deny(
+            f"BLOCKED: design-system.md too generic. Missing: {', '.join(missing)}. "
+            "RECOVERY: 1) Fix incomplete sections 2) Add ## Design Reference with URL "
+            "3) Ensure oklch() chroma > 0.05 4) Replace forbidden fonts "
+            "5) Retry mcp__gemini-design__create_frontend")
 
-    if not has_ref_section or not has_url or not has_oklch or has_forbidden:
-        _deny(DENY_GENERIC)
+    agent_id = data.get("agent_id") or ""
+    if agent_id:
+        state = load_state(agent_id)
+        if state:
+            state["design_system_valid"] = True
+            state["design_system_exists"] = True
+            save_state(state)
 
     allow_pass("validate-design-system", "design-system.md ok")
 

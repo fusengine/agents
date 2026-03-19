@@ -17,11 +17,11 @@ FLAG_FILE = os.path.join(_CACHE, "design-agent-active")
 KNOWN_DOMAINS = (
     "framer.website", "webflow.io", "awwwards.com", "godly.website",
     "lapa.ninja", "onepagelove.com", "saasframe.io", "bestwebsite.gallery",
-    "landingfolio.com", "localhost",
+    "landingfolio.com",
 )
 PLUGINS_DIR = os.path.join(_HOME, ".claude", "plugins", "marketplaces",
     "fusengine-plugins", "plugins")
-REF = f"{PLUGINS_DIR}/design-expert/skills/generating-components/references"
+REF = f"{PLUGINS_DIR}/design-expert/skills/3-generating-components/references"
 
 
 def inspiration_was_read(session_id: str) -> bool:

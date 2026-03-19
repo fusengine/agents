@@ -10,16 +10,16 @@
 | `modify_frontend` | Surgical redesign (margins, colors, layout) |
 | `snippet_frontend` | Isolated components to insert in existing files |
 
-## Workflow (New Project)
+## Workflow (design-system.md)
+
+> See `agents/design-expert.md` Phase 2 for the full mapping table (design-system.md → Gemini XML).
 
 ```
 1. Check if design-system.md exists at project root
 
 2. IF NOT EXISTS:
-   a. Ask user for scale: refined | balanced | zoomed
-   b. Generate 5 vibes (call create_frontend 5 times)
-   c. User picks a vibe
-   d. Save chosen code to design-system.md
+   Run identity-system skill first (Phase 0→1→2 from agent pipeline).
+   NEVER call create_frontend without design-system.md.
 
 3. IF EXISTS:
    Pass ENTIRE content in designSystem parameter
@@ -48,9 +48,13 @@
 
 ## Verify Result with Playwright
 
-After generating, always preview:
+> See `agents/design-expert.md` Phase 6 for full light+dark validation procedure.
+
+After generating, always preview in BOTH light and dark mode (ZERO TOLERANCE):
 
 ```
 mcp__playwright__browser_navigate("http://localhost:3000/page")
-mcp__playwright__browser_take_screenshot()
+mcp__playwright__browser_take_screenshot()  # light mode
+# Toggle dark mode (via class or media query override)
+mcp__playwright__browser_take_screenshot()  # dark mode
 ```

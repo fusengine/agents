@@ -25,22 +25,12 @@
         ]
       },
       {
-        "_description": "Check shadcn installation before writing components",
-        "matcher": "Write",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/check-shadcn-install.py"
-          }
-        ]
-      },
-      {
-        "_description": "Block Write/Edit/Gemini without 4 Playwright screenshots",
+        "_description": "Pipeline gate: enforce phase ordering for Write/Edit",
         "matcher": "Write|Edit",
         "hooks": [
           {
             "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/check-playwright-browsing.py"
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/pipeline-gate.py"
           }
         ]
       },
@@ -65,12 +55,12 @@
         ]
       },
       {
-        "_description": "Block Gemini without 4 Playwright screenshots",
+        "_description": "Pipeline gate: enforce phase ordering for Gemini",
         "matcher": "mcp__gemini-design__",
         "hooks": [
           {
             "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/check-playwright-browsing.py"
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/pipeline-gate.py"
           }
         ]
       },
@@ -127,6 +117,16 @@
             "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/design-agent-flag.py"
           }
         ]
+      },
+      {
+        "_description": "Initialize design state tracking file",
+        "matcher": "design",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/design-state-init.py"
+          }
+        ]
       }
     ],
     "SubagentStop": [
@@ -137,6 +137,16 @@
           {
             "type": "command",
             "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/design-agent-flag.py"
+          }
+        ]
+      },
+      {
+        "_description": "Archive state file and clean old ones",
+        "matcher": "design",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/design-state-cleanup.py"
           }
         ]
       }

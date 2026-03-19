@@ -1,87 +1,44 @@
 ---
 name: design
-description: Expert UI/UX design workflow following APEX methodology. Creates components using shadcn/ui, 21st.dev, with WCAG 2.2 accessibility and Framer Motion animations.
+description: "Full design pipeline: Identity → Research → System → Generate → Motion → Audit → Review. Generates production-ready HTML/CSS via Gemini Design MCP with OKLCH tokens, approved typography, and Playwright-driven inspiration."
 ---
 
-# /design Command
+# /design — Full Design Pipeline (Phases 0→6)
 
-Create production-ready UI components following APEX methodology.
+Generate a complete design from scratch. Use when no design-system.md exists or for a full redesign.
 
-## APEX WORKFLOW
-
-**design-expert = Visual Architect → Delegates implementation**
-
-| Phase | Step | Reference |
-|-------|------|-----------|
-| **A** | 00-init-branch | Create design/ branch |
-| **A** | 01-analyze-design | `explore-codebase` → design tokens |
-| **A** | 02-search-inspiration | 21st.dev + shadcn search |
-| **P** | 03-plan-component | TaskCreate + file planning |
-| **E** | 04-code-component | **DELEGATE to `react-expert` / `nextjs-expert`** |
-| **E** | 05-add-motion | Framer Motion patterns |
-| **E** | 06-validate-a11y | WCAG 2.2 AA checklist |
-| **E** | 07-review-design | Elicitation self-review |
-| **X** | 08-sniper-check | `sniper` validation |
-| **X** | 09-create-pr | PR with screenshots |
-
-## Quick Start
+## Usage
 
 ```
-/design hero section with gradient background
-/design pricing cards dark mode
-/design contact form accessible
-/design dashboard sidebar navigation
+/design hero section for fintech startup
+/design landing page for physiotherapy clinic
+/design pricing page with dark mode
 ```
 
-## Phase A: ANALYZE (Critical)
+## Workflow
 
-```
-1. Task: explore-codebase
-   "Analyze UI: colors, typography, spacing, animations"
+1. **Read .design-state.json** to check current phase. If absent, pipeline starts at Phase 0.
 
-2. Search inspiration:
-   - mcp__magic__21st_magic_component_inspiration
-   - mcp__shadcn__search_items_in_registries
-```
+2. **Phase 0 — IDENTITY**: Read skills/0-identity-system/SKILL.md. Pick sector template (creative/fintech/ecommerce/devtool). Generate OKLCH palette with chroma > 0.05. Pick approved typography pair (never Inter/Roboto/Arial). Define spacing base unit + motion profile.
 
-## Phase E: EXECUTE (Delegation)
+3. **Phase 1 — RESEARCH**: Read skills/1-designing-systems/references/design-inspiration.md + design-inspiration-urls.md. Browse 4 sites via Playwright:
+   - For each site: browser_navigate → browser_evaluate(scrollTo bottom) → wait 5s → scrollTo top → wait 2s → browser_take_screenshot(fullPage: true)
+   - Write 5 observations per screenshot: (1) dominant+accent color (2) typography hierarchy (3) layout density (4) visual effects (5) section structure
+   - After 4 sites: declare "Site choisi: {URL}. Je reproduis: {el1}, {el2}, {el3}" — pick 3 visually distinctive elements
 
-**Skills to use:**
-- `generating-components` → design specs
-- `designing-systems` → design tokens
-- `adding-animations` → Framer Motion specs
-- `validating-accessibility` → WCAG 2.2
+4. **Phase 2 — SYSTEM**: Create design-system.md at project root from sector template. Fill: Identity table, OKLCH tokens (hue ±15°), typography pair, spacing, motion profile. Add ## Design Reference section with URL + why + 3 elements.
 
-**Delegate implementation to:** `react-expert` / `nextjs-expert`
+5. **Phase 3 — GENERATE**: Map design-system.md to 7 Gemini XML blocks:
+   - Identity → `<aesthetics>`, Reference → `<style_reference>`, Typography → `<typography>`
+   - OKLCH → `<color_system>`, Spacing → `<spacing>`, (always) → `<states>`, Forbidden → `<forbidden>`
+   - Call mcp__gemini-design__create_frontend with ALL 7 blocks
 
-## Phase X: EXAMINE
+6. **Phase 4 — MOTION**: Call mcp__gemini-design__modify_frontend to add Framer Motion scroll reveals (IntersectionObserver), hover scale/opacity transitions, focus ring states, loading skeletons.
 
-```
-Task: sniper
-"Validate design changes: TypeScript, ESLint, file sizes"
-```
+7. **Phase 5 — AUDIT**: Verify contrast >= 4.5:1 text / 3:1 UI in both modes. Check no forbidden fonts. Confirm all colors are OKLCH from design-system.md. Validate all states (hover/focus/disabled/loading). Run anti-AI-slop checklist.
 
-## Anti-AI Slop
+8. **Phase 6 — REVIEW**: python3 -m http.server 8899 → screenshot light (fullPage) → toggle .dark → screenshot dark. Compare 3 declared elements [expected vs present]. Fix gaps with modify_frontend (max 2 cycles). Report to team-lead.
 
-| FORBIDDEN | USE INSTEAD |
-|-----------|-------------|
-| Inter, Roboto | Clash Display, Satoshi |
-| Purple gradients | CSS variables |
-| Border-left indicators | Icon + bg-*/10 |
-| No animations | Framer Motion |
+## FORBIDDEN
 
-## Output Guarantees
-
-- WCAG 2.2 Level AA
-- Dark mode ready
-- Mobile-first responsive
-- Framer Motion animations
-- Files < 100 lines
-- Matches existing design
-
-## References
-
-- **APEX Design**: `references/design/` (10 files)
-- **Typography**: `references/typography.md`
-- **Colors**: `references/color-system.md`
-- **Motion**: `references/motion-patterns.md`
+Skipping phases · Manual HTML/CSS · Gemini without 7 XML blocks · Inter/Roboto/Arial · No light+dark · Hex/RGB colors · Purple gradients · Emojis
