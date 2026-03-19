@@ -55,6 +55,16 @@
         ]
       },
       {
+        "_description": "Block screenshot without scrolling first (lazy loading)",
+        "matcher": "mcp__playwright__browser_take_screenshot",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/require-scroll-before-screenshot.py"
+          }
+        ]
+      },
+      {
         "_description": "Block Gemini without 4 Playwright screenshots",
         "matcher": "mcp__gemini-design__",
         "hooks": [
