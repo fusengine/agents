@@ -7,7 +7,7 @@
   },
   "metadata": {
     "description": "Professional Claude Code plugins with APEX workflow, SOLID principles, and expert development agents for Next.js, Laravel, Swift, Tailwind CSS, and more",
-    "version": "1.38.47"
+    "version": "1.38.48"
   },
   "core": [
     {
@@ -386,7 +386,7 @@
       "name": "fuse-design",
       "source": "./plugins/design-expert",
       "description": "UI Designer. Generates HTML/CSS via Gemini Design MCP. Identity System, UX copy, page layouts, motion system, palette generator, design audit. Anti-AI-Slop, WCAG 2.2. Framework integration delegated to domain experts.",
-      "version": "2.1.9",
+      "version": "2.1.10",
       "author": {
         "name": "Fusengine",
         "url": "https://github.com/fusengine"

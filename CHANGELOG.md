@@ -1,5 +1,10 @@
 # Release Notes
 
+## [1.38.48] - 19-03-2026
+
+### Fixed
+- fix(design-expert): add missing Playwright tools and require scroll before screenshot (design-expert 2.1.10)
+
 ## [1.38.47] - 19-03-2026
 
 ### Added
