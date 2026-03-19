@@ -54,17 +54,18 @@ Step 9: Repeat steps 1-8 for 3 more sites (4 total)
 Step 10: Feed ALL insights into Gemini XML <style_reference> block
 ```
 
-## Mandatory Visual Analysis Template
+## Mandatory CSS-Precise Analysis (NOT vague descriptions)
 
-After each screenshot, document exactly:
+After each screenshot, extract EXACT CSS specs:
 ```
 ### Screenshot Analysis — {URL}
-1. **Palette**: dominant={color}, accent={color}, background={tone}
-2. **Typography**: {serif/sans-serif}, weight={light/regular/bold}, hierarchy={strong/subtle}
-3. **Layout**: density={compact/spacious/airy}, grid={columns/full-width/centered}
-4. **Effects**: {glassmorphism/shadows/gradients/flat/layered}
-5. **Sections**: {hero → features → testimonials → CTA → footer}
+1. **Colors**: primary=oklch(X% X X), accent=oklch(...), bg=oklch(...), text=oklch(...)
+2. **Typography**: font-family exact name, H1 clamp(Xrem,Xvw,Xrem) weight X, body Xrem weight X
+3. **Layout**: grid Xfr/Xfr or flex, gap Xpx, section padding Xpx Xpx, max-width Xpx
+4. **Depth**: box-shadow values (X layers), border-radius Xpx, backdrop-blur Xpx, opacity X
+5. **Visual rhythm**: hero Xvh, alternating section bg (white/tinted), diagonal clip-path X%, marquee/ticker
 ```
+FLAT DESIGNS ARE FORBIDDEN. If you only see flat sections with no shadows, no layers, no effects — the site is a bad reference. Pick a different one with visual depth.
 
 ## FORBIDDEN Navigation Targets
 

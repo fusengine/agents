@@ -36,9 +36,9 @@ def main() -> None:
         sys.exit(0)
     if not re.search(r"\.(tsx|jsx|css|scss|html)$", file_path):
         sys.exit(0)
-    # design-expert writes vanilla HTML/CSS — skip domain skill checks
+    # design-expert writes vanilla HTML/CSS — skip Tailwind skill checks
+    # but do NOT skip entirely: other hooks (Gemini check) still need to run
     if re.search(r"\.(html|css)$", file_path):
-        allow_pass("check-design-skill", "skip (html/css vanilla)")
         sys.exit(0)
     if re.search(r"/(node_modules|dist|build)/", file_path):
         sys.exit(0)

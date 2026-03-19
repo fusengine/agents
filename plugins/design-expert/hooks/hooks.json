@@ -5,6 +5,16 @@
   "hooks": {
     "PreToolUse": [
       {
+        "_description": "Block agent from modifying pipeline state files",
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/guard-state-files.py"
+          }
+        ]
+      },
+      {
         "_description": "Design-expert can only write HTML/CSS/MD/JSON files",
         "matcher": "Write|Edit",
         "hooks": [

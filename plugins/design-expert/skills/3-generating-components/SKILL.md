@@ -11,18 +11,19 @@ After Phases 0-2 are complete. design-system.md, tokens, and copy-guide.md must 
 
 ### Input (from Phases 0-2)
 - `design-system.md` with OKLCH palette, typography, motion personality.
-- CSS tokens from Phase 1 (colors.css, typography.css, spacing.css).
+- CSS-precise observations from Phase 1 Playwright browsing (oklch values, clamp sizes, grid ratios).
 - `copy-guide.md` from Phase 2 (voice, CTAs, microcopy).
 
 ### Steps
 1. **Pre-generation checklist** — Verify: design-system.md exists, OKLCH tokens defined, typography pair set, motion profile set, visual-technique-matrix consulted.
-2. **Browse inspiration** — `mcp__playwright__browser_navigate` + `mcp__playwright__browser_take_screenshot` on sector-matching sites (see `references/design-inspiration.md` and `references/design-inspiration-urls.md`). New project: 4 sites. New page: 2 sites. New component: 1 site.
+2. **Browse inspiration** — `mcp__playwright__browser_navigate` + `mcp__playwright__browser_take_screenshot` on sector-matching sites (see `../1-designing-systems/references/design-inspiration.md` and `../1-designing-systems/references/design-inspiration-urls.md`). New project: 4 sites. New page: 2 sites. New component: 1 site.
 3. **Search 21st.dev** — `mcp__magic__21st_magic_component_inspiration` for component patterns.
-4. **Prepare 7 XML blocks** for Gemini: `<aesthetics>`, `<typography>`, `<color_system>`, `<spacing>`, `<layout>`, `<states>`, `<forbidden>`.
-5. **Generate** — `mcp__gemini-design__create_frontend` with design-system.md tokens + screenshot insights.
-6. **Add variants** per `references/component-variants-ref.md` — size, state, color variants.
-7. **Compose layouts** using `references/layouts/` (pages, navigation, patterns) and `references/component-composition-ref.md`.
-8. **Iterate** — `mcp__gemini-design__modify_frontend` per `references/gemini-feedback-loop.md`.
+4. **Read premium patterns** — Read `references/premium-patterns/PATTERNS.md`, pick 2-3 patterns matching your sector, then read their `description.md`. Copy the "Gemini Context Prompt" section from each.
+5. **Prepare 7 XML blocks** for Gemini: `<aesthetics>`, `<typography>`, `<color_system>`, `<spacing>`, `<layout>`, `<states>`, `<forbidden>`.
+6. **Generate** — `mcp__gemini-design__create_frontend` with design-system.md tokens + premium pattern context prompts combined. In the `context` parameter, ALWAYS include the copied Gemini Context Prompts + "Visual depth required: hero >= 75vh, 3-level shadows, alternating section backgrounds, glassmorphism nav, typography contrast 3:1 H1 vs body. NO flat design."
+7. **Add variants** per `references/component-variants-ref.md` — size, state, color variants.
+8. **Compose layouts** using `references/layouts/` (pages, navigation, patterns) and `references/component-composition-ref.md`.
+9. **Iterate** — `mcp__gemini-design__modify_frontend` per `references/gemini-feedback-loop.md`.
 
 ### Output
 - HTML/CSS components generated via Gemini, matching design-system.md identity.
@@ -38,8 +39,9 @@ After Phases 0-2 are complete. design-system.md, tokens, and copy-guide.md must 
 | `references/gemini-design-workflow.md` | Gemini MCP workflow |
 | `references/gemini-tool-signatures.md` | Gemini tool API signatures |
 | `references/gemini-feedback-loop.md` | Iterative refinement process |
-| `references/design-inspiration.md` | Browsing methodology |
-| `references/design-inspiration-urls.md` | Sector-specific URLs |
+| `references/premium-patterns/PATTERNS.md` | **10 premium design patterns with CSS specs + Gemini prompts** |
+| `../1-designing-systems/references/design-inspiration.md` | Browsing methodology (Phase 1) |
+| `../1-designing-systems/references/design-inspiration-urls.md` | Sector-specific URLs (Phase 1) |
 | `references/component-variants-ref.md` | Variant patterns |
 | `references/component-composition-ref.md` | Composition patterns |
 | `references/layouts/` | Page layouts, navigation, patterns |

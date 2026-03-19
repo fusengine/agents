@@ -22,7 +22,8 @@ related: gemini-design-workflow.md, 21st-dev.md, shadcn.md
 | **UI Design** | [ui-visual-design.md](ui-visual-design.md) | 2026 trends, animations |
 | **Grids** | [grids-layout.md](grids-layout.md) | Layout system |
 | **Patterns** | [design-patterns.md](design-patterns.md) | Common patterns |
-| **Inspiration** | [design-inspiration.md](design-inspiration.md) | Playwright browsing workflow |
+| **Inspiration** | [design-inspiration.md](../../1-designing-systems/references/design-inspiration.md) | Playwright browsing workflow (Phase 1) |
+| **Premium Patterns** | [PATTERNS.md](premium-patterns/PATTERNS.md) | 10 premium design patterns with CSS specs |
 
 ## Templates
 

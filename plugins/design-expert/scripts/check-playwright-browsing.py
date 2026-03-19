@@ -18,8 +18,10 @@ DENY_MSG = ("BLOCKED: Only {count}/{min} Playwright screenshots. Browse 4 sites 
     "Read design-inspiration.md, use browser_navigate + browser_take_screenshot on 4 sites.")
 DENY_DS = ("BLOCKED: design-system.md not found. Create it FIRST using identity templates "
     "from skills/0-identity-system/references/templates/.")
-DENY_GEMINI = ("BLOCKED: 4 screenshots done but Gemini Design NOT called. Use "
-    "mcp__gemini-design__create_frontend/modify_frontend/snippet_frontend BEFORE writing.")
+DENY_GEMINI = ("BLOCKED: You MUST call Gemini Design MCP before writing HTML/CSS. "
+    "NEVER write HTML/CSS manually — use mcp__gemini-design__create_frontend. "
+    "Trying to bypass this will be blocked every time. "
+    "RECOVERY: 1) Call create_frontend with 7 XML blocks 2) Use the returned HTML 3) Then Write.")
 
 
 def _update_state(agent_id: str, screenshots: int) -> None:

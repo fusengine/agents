@@ -15,10 +15,11 @@ After Phase 3 components are generated. Before design audit.
 
 ### Steps
 1. **Read motion personality** from `design-system.md` — determines timing, easing, and intensity.
-2. **Apply entrance animations** per `references/entrance-patterns.md` — fade, slide, stagger for lists/grids.
-3. **Add interactive states** per `references/interactive-states-ref.md` — hover, focus, active, disabled, loading for every interactive element.
-4. **Add micro-interactions** from `references/micro-interactions.md` — button press, toggle, form validation feedback.
-5. **Apply visual effects** — glassmorphism (`references/glassmorphism-advanced-ref.md`), layered backgrounds (`references/layered-backgrounds-ref.md`), only if allowed by visual-technique-matrix.
+2. **Entrance animations** — EVERY section must animate on scroll (IntersectionObserver). Stagger children by 80-120ms. Use fadeUp (translateY 30px→0) + fadeIn (opacity 0→1). Cards stagger in grid order.
+3. **Hover depth** — buttons: translateY(-3px) + shadow-lg + brightness(1.05). Cards: translateY(-8px) + shadow-xl + scale(1.01). Links: color transition 150ms.
+4. **Focus/disabled** — :focus-visible with 2px outline + 4px offset. :disabled with opacity 0.4 + cursor not-allowed. MANDATORY on all interactive elements.
+5. **Visual layers** — glassmorphism on nav (backdrop-blur 12px + bg oklch/0.85). Hero gradient overlay (oklch dark/0.6→transparent). Section separators (clip-path polygon or SVG wave). Background gradient orbs (radial-gradient oklch with blur).
+6. **Micro-interactions** — button press scale(0.97), toggle slide 200ms, form input focus border-color transition, loading skeleton pulse animation.
 6. **Add page transitions** from `references/page-transitions.md` — route-level animations.
 7. **Implement** — Use `mcp__gemini-design__modify_frontend` to inject Framer Motion code into existing components.
 8. **Validate accessibility** — `prefers-reduced-motion` support required. Timing limits: hover <100ms, modal <300ms, page <400ms (see `references/motion-principles.md`).
