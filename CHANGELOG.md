@@ -1,5 +1,10 @@
 # Release Notes
 
+## [1.38.53] - 19-03-2026
+
+### Fixed
+- fix(design-expert): enforce Phase 0 gate, move inspiration to Phase 1, auto-advance state on design-system.md write (design-expert 2.1.15)
+
 ## [1.38.52] - 19-03-2026
 
 ### Added
