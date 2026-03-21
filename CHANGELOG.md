@@ -1,5 +1,11 @@
 # Release Notes
 
+## [1.38.64] - 21-03-2026
+
+### Documentation
+
+- docs: update README with intelligent cartography description and version badge
+
 ## [1.38.63] - 21-03-2026
 
 ### Added
