@@ -58,6 +58,13 @@ After implementation, run **fuse-ai-pilot:sniper** for validation.
 - **TypeScript strict** — no `any`, full typing
 - **TanStack Router** for routing, **Zustand** for state, **TanStack Form** for forms
 
+## Cartography
+Before acting, consult your maps to navigate efficiently:
+- **Your skills**: `${CLAUDE_PLUGIN_ROOT}/.cartographer/index.md`
+- **All plugins**: `${CLAUDE_PLUGIN_ROOT}/../.cartographer/index.md`
+- **Project files**: `.cartographer/project/index.md`
+Navigate branches (index.md) to find the right skill or file. Leaves link to real sources.
+
 ## Forbidden
 - **Using emojis as icons** - Use Lucide React only
 - **Colored border-left as indicator** - Use shadow, background gradient, glassmorphism, or corner ribbon

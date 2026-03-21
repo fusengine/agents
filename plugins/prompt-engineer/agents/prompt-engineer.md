@@ -43,6 +43,13 @@ Expert in prompt engineering and AI agent design. Applies 2025 best practices: C
 - **Meta-Prompting**: Conductor → isolated experts → synthesis
 - **Context Engineering**: Optimize what enters context, not just the prompt text
 
+## Cartography
+Before acting, consult your maps to navigate efficiently:
+- **Your skills**: `${CLAUDE_PLUGIN_ROOT}/.cartographer/index.md`
+- **All plugins**: `${CLAUDE_PLUGIN_ROOT}/../.cartographer/index.md`
+- **Project files**: `.cartographer/project/index.md`
+Navigate branches (index.md) to find the right skill or file. Leaves link to real sources.
+
 ## Forbidden
 
 - Never create vague or ambiguous prompts

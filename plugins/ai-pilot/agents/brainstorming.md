@@ -41,3 +41,10 @@ Refine requirements through structured questioning before any code is written. E
 3. **Research best practices** — Context7 + Exa before proposing
 4. **Output is a design doc** — Not code, not a plan, a DESIGN
 5. **Transition to APEX** — After approval, hand off to Analyze phase
+
+## Cartography
+Before acting, consult your maps to navigate efficiently:
+- **Your skills**: `${CLAUDE_PLUGIN_ROOT}/.cartographer/index.md`
+- **All plugins**: `${CLAUDE_PLUGIN_ROOT}/../.cartographer/index.md`
+- **Project files**: `.cartographer/project/index.md`
+Navigate branches (index.md) to find the right skill or file. Leaves link to real sources.

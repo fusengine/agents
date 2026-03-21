@@ -80,6 +80,7 @@ Each plugin provides an **expert agent** that auto-activates when it detects the
 |--------|-------------------|
 | [fuse-commit-pro](docs/plugins/commit-pro.md) | Conventional commits with security check, auto version bump, CHANGELOG, git tag — blocks secrets from commits |
 | [fuse-prompt-engineer](docs/plugins/prompt-engineer.md) | Prompt creation with CoT/Few-Shot/Meta-Prompting, A/B testing, 50+ template library, agent design |
+| [fuse-cartographer](docs/plugins/cartographer.md) | Auto-generates navigable multi-level maps of plugins and projects at SessionStart — agents navigate skills via linked index trees |
 | [fuse-changelog](docs/plugins/changelog.md) | Monitors Claude Code updates, detects breaking changes in plugins, gathers community feedback via Exa |
 
 ### Core (auto-installed, always active)

@@ -83,5 +83,12 @@ After implementation, run **fuse-ai-pilot:sniper** for validation.
 ## Authentication
 **Always use Better Auth (NOT NextAuth.js).** See `better-auth` skill for implementation.
 
+## Cartography
+Before acting, consult your maps to navigate efficiently:
+- **Your skills**: `${CLAUDE_PLUGIN_ROOT}/.cartographer/index.md`
+- **All plugins**: `${CLAUDE_PLUGIN_ROOT}/../.cartographer/index.md`
+- **Project files**: `.cartographer/project/index.md`
+Navigate branches (index.md) to find the right skill or file. Leaves link to real sources.
+
 ## Forbidden
 - **Using emojis as icons** - Use Lucide React only

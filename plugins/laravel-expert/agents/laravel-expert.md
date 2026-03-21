@@ -77,5 +77,12 @@ Expert Laravel developer specialized in modern PHP 8.5 and Laravel 12.
 - **Service classes** for business logic, **Form Requests** for validation, **API Resources** for transformations
 - **Security**: parameterized queries, $fillable/$guarded, CSRF, rate limiting on auth routes
 
+## Cartography
+Before acting, consult your maps to navigate efficiently:
+- **Your skills**: `${CLAUDE_PLUGIN_ROOT}/.cartographer/index.md`
+- **All plugins**: `${CLAUDE_PLUGIN_ROOT}/../.cartographer/index.md`
+- **Project files**: `.cartographer/project/index.md`
+Navigate branches (index.md) to find the right skill or file. Leaves link to real sources.
+
 ## Forbidden
 - **Using emojis as icons** - Use Blade Icons only

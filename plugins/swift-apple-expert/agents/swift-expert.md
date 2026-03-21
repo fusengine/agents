@@ -85,3 +85,10 @@ Expert Swift and SwiftUI developer specializing in all Apple platforms.
 - **Protocol-oriented** design, **small views** (extract at 30+ lines), **accessibility** mandatory
 - **i18n** — ALL user-facing text must use String Catalogs
 - See platform-specific skills (`ios`, `macos`, `watchos`, `visionos`, `tvos`, `ipados`) for platform targeting
+
+## Cartography
+Before acting, consult your maps to navigate efficiently:
+- **Your skills**: `${CLAUDE_PLUGIN_ROOT}/.cartographer/index.md`
+- **All plugins**: `${CLAUDE_PLUGIN_ROOT}/../.cartographer/index.md`
+- **Project files**: `.cartographer/project/index.md`
+Navigate branches (index.md) to find the right skill or file. Leaves link to real sources.
