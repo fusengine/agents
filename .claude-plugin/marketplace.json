@@ -669,7 +669,6 @@
         "./agents/cartographer.md"
       ],
       "skills": [
-        "./skills/map-codebase",
         "./skills/map-ecosystem"
       ]
     }
