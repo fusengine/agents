@@ -13,6 +13,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from lib.detect_plugins import find_marketplace_plugins, read_plugin_meta
+from lib.merge_index import merge_lines
 from lib.scan_plugins import scan_plugin
 from lib.write_plugin_map import write_plugin_map
 
@@ -65,8 +66,10 @@ def main() -> None:
             plugin_path, ".cartographer", version, items, plugin_path,
         )
 
-    (output_dir / "index.md").write_text(
-        "\n".join(index_lines) + "\n",
+    index_path = output_dir / "index.md"
+    merged = merge_lines(index_lines, index_path)
+    index_path.write_text(
+        "\n".join(merged) + "\n",
         encoding="utf-8",
     )
 

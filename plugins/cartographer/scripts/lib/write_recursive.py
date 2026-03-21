@@ -10,6 +10,7 @@ from pathlib import Path
 from typing import Optional
 
 from .describe import count_files, get_file_desc
+from .merge_index import merge_lines
 
 
 def _list_children(
@@ -59,7 +60,9 @@ def write_tree(
         suffix = f" — {desc}" if desc else ""
         lines.append(f"{conn} [{f.name}]({f}){suffix}")
 
-    (output / "index.md").write_text(
-        "\n".join(lines) + "\n",
+    index_path = output / "index.md"
+    merged = merge_lines(lines, index_path)
+    index_path.write_text(
+        "\n".join(merged) + "\n",
         encoding="utf-8",
     )
