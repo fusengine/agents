@@ -1,8 +1,8 @@
 # Fusengine Claude Code Plugins
 
-![version](https://img.shields.io/badge/version-v1.38.60-blue?style=flat-square) ![plugins](https://img.shields.io/badge/plugins-18-brightgreen?style=flat-square) ![agents](https://img.shields.io/badge/agents-19-blueviolet?style=flat-square) ![skills](https://img.shields.io/badge/skills-125-orange?style=flat-square) ![License: MIT](https://img.shields.io/badge/License-MIT-yellow?style=flat-square) ![platform](https://img.shields.io/badge/platform-macOS%20%7C%20Linux-lightgrey?style=flat-square) ![Windows](https://img.shields.io/badge/Windows-soon-orange?style=flat-square)
+![version](https://img.shields.io/badge/version-v1.38.63-blue?style=flat-square) ![plugins](https://img.shields.io/badge/plugins-18-brightgreen?style=flat-square) ![agents](https://img.shields.io/badge/agents-19-blueviolet?style=flat-square) ![skills](https://img.shields.io/badge/skills-125-orange?style=flat-square) ![License: MIT](https://img.shields.io/badge/License-MIT-yellow?style=flat-square) ![platform](https://img.shields.io/badge/platform-macOS%20%7C%20Linux-lightgrey?style=flat-square) ![Windows](https://img.shields.io/badge/Windows-soon-orange?style=flat-square)
 
-> A plugin ecosystem that turns Claude Code into a supervised, multi-agent development environment. Expert agents write code, hooks enforce quality in real-time, and skills inject framework-specific knowledge — so Claude never guesses, never duplicates, and always follows your architecture.
+> A plugin ecosystem that turns Claude Code into a supervised, multi-agent development environment. Expert agents write code, hooks enforce quality in real-time, skills inject framework-specific knowledge, and **intelligent cartography auto-maps plugins and projects** — so Claude never guesses, never duplicates, and always follows your architecture.
 
 ![Statusline](docs/img/statusline.png)
 
@@ -80,7 +80,7 @@ Each plugin provides an **expert agent** that auto-activates when it detects the
 |--------|-------------------|
 | [fuse-commit-pro](docs/plugins/commit-pro.md) | Conventional commits with security check, auto version bump, CHANGELOG, git tag — blocks secrets from commits |
 | [fuse-prompt-engineer](docs/plugins/prompt-engineer.md) | Prompt creation with CoT/Few-Shot/Meta-Prompting, A/B testing, 50+ template library, agent design |
-| [fuse-cartographer](docs/plugins/cartographer.md) | Auto-generates navigable multi-level maps of plugins and projects at SessionStart — agents navigate skills via linked index trees |
+| [fuse-cartographer](docs/plugins/cartographer.md) | Intelligent cartography: auto-generates navigable maps of plugins and projects at SessionStart with merge-preserving enrichment — agents navigate via linked index trees, `/map --enrich` completes descriptions from source frontmatter |
 | [fuse-changelog](docs/plugins/changelog.md) | Monitors Claude Code updates, detects breaking changes in plugins, gathers community feedback via Exa |
 
 ### Core (auto-installed, always active)
