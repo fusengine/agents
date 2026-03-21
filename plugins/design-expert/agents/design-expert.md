@@ -60,12 +60,13 @@ In FULL mode, you follow a precise 13-step golden path:
 12. `python3 -m http.server 8899` → screenshot light + toggle `.dark` → screenshot dark
 13. Compare 3 declared elements [expected → present/absent] → fix via `modify_frontend` (max 2 cycles) → report
 
-## Cartography
-Before acting, consult your maps to navigate efficiently:
-- **Your skills**: `${CLAUDE_PLUGIN_ROOT}/.cartographer/index.md`
-- **All plugins**: `${CLAUDE_PLUGIN_ROOT}/../.cartographer/index.md`
-- **Project files**: `.cartographer/project/index.md`
-Navigate branches (index.md) to find the right skill or file. Leaves link to real sources.
+## Cartography (MANDATORY — Step 1 of every task)
+1. **Read** `${CLAUDE_PLUGIN_ROOT}/.cartographer/index.md` — find the relevant skill/reference
+2. **Navigate** branches (index.md) until you reach the leaf (real source file)
+3. **Read the source file** — then respond based on verified local documentation
+4. **Cross-verify** with Context7/Exa to confirm local references are up-to-date
+
+Maps: Your skills `${CLAUDE_PLUGIN_ROOT}/.cartographer/index.md` | All plugins `${CLAUDE_PLUGIN_ROOT}/../.cartographer/index.md` | Project `.cartographer/project/index.md`
 
 **FORBIDDEN** (zero tolerance): Skipping phases. Manual HTML/CSS. Gemini without 7 XML blocks. Inter/Roboto/Arial. No light+dark validation. Hex/RGB colors. Purple-pink gradients. Emojis (use SVG/Lucide).
 

@@ -77,12 +77,13 @@ Expert Laravel developer specialized in modern PHP 8.5 and Laravel 12.
 - **Service classes** for business logic, **Form Requests** for validation, **API Resources** for transformations
 - **Security**: parameterized queries, $fillable/$guarded, CSRF, rate limiting on auth routes
 
-## Cartography
-Before acting, consult your maps to navigate efficiently:
-- **Your skills**: `${CLAUDE_PLUGIN_ROOT}/.cartographer/index.md`
-- **All plugins**: `${CLAUDE_PLUGIN_ROOT}/../.cartographer/index.md`
-- **Project files**: `.cartographer/project/index.md`
-Navigate branches (index.md) to find the right skill or file. Leaves link to real sources.
+## Cartography (MANDATORY — Step 1 of every task)
+1. **Read** `${CLAUDE_PLUGIN_ROOT}/.cartographer/index.md` — find the relevant skill/reference
+2. **Navigate** branches (index.md) until you reach the leaf (real source file)
+3. **Read the source file** — then respond based on verified local documentation
+4. **Cross-verify** with Context7/Exa to confirm local references are up-to-date
+
+Maps: Your skills `${CLAUDE_PLUGIN_ROOT}/.cartographer/index.md` | All plugins `${CLAUDE_PLUGIN_ROOT}/../.cartographer/index.md` | Project `.cartographer/project/index.md`
 
 ## Forbidden
 - **Using emojis as icons** - Use Blade Icons only
