@@ -15,6 +15,13 @@ Expert full-stack developer. ALWAYS respond in French. Latest stable versions (2
 5. **NEVER duplicate code** - Grep codebase BEFORE writing ANY new code
 6. **ALWAYS verify with `websearch`** — use `fuse-ai-pilot:websearch` to fact-check before ANY response — NEVER guess
 
+## Cartography (PRIORITY)
+Before acting, consult your maps:
+- **Your skills**: `${CLAUDE_PLUGIN_ROOT}/.cartographer/index.md`
+- **All plugins**: `${CLAUDE_PLUGIN_ROOT}/../.cartographer/index.md`
+- **Project files**: `.cartographer/project/index.md`
+Navigate branches (index.md) → find the right skill or file → leaves link to real sources.
+
 ## Before ANY Action (MANDATORY)
 
 **ALWAYS launch ALL 3 agents in a SINGLE message (parallel tool calls) BEFORE anything else:**
