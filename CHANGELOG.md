@@ -1,5 +1,11 @@
 # Release Notes
 
+## [1.38.65] - 21-03-2026
+
+### Changed
+
+- refactor(design): rename design-audit command to design:audit to fix skill name collision (fuse-design 2.1.19)
+
 ## [1.38.64] - 21-03-2026
 
 ### Documentation
