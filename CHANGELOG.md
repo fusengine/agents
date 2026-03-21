@@ -1,5 +1,11 @@
 # Release Notes
 
+## [1.38.56] - 21-03-2026
+
+### Added
+
+- feat(cartographer 1.0.0): add ecosystem and project cartography plugin
+
 ## [1.38.55] - 19-03-2026
 
 ### Added
