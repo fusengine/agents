@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from pathlib import Path
+from typing import Optional
 
 from .parse_frontmatter import parse_field
 
@@ -19,7 +20,7 @@ def get_file_desc(filepath: Path) -> str:
     return ""
 
 
-def count_files(directory: Path, exclude: set | None = None) -> int:
+def count_files(directory: Path, exclude: Optional[set] = None) -> int:
     """Count non-hidden files recursively in a directory."""
     skip = exclude or set()
     count = 0

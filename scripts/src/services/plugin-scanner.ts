@@ -51,7 +51,9 @@ export function extractHooks(
 
 			for (const hook of entry.hooks) {
 				if (hook.type && hook.type !== "command") continue;
-				const command = hook.command.replace(/\$\{CLAUDE_PLUGIN_ROOT\}/g, plugin.path);
+				const command = hook.command
+				.replace(/\$\{CLAUDE_PLUGIN_ROOT\}/g, plugin.path)
+				.replace(/\$\{CLAUDE_PROJECT_DIR\}/g, process.cwd());
 				hooks.push({ command, isAsync: command.startsWith("afplay"), pluginName: plugin.name });
 			}
 		}

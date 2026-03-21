@@ -3,7 +3,7 @@
 
 Level 1: index.md — compact plugin list with links
 Level 2: {plugin}/index.md — plugin detail with links to skills/agents
-Level 3: {plugin}/skills/{name}.md — individual item detail
+Level 3+: recursive branches down to leaves (real source files)
 """
 
 import json
@@ -12,25 +12,30 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+from lib.detect_plugins import find_marketplace_plugins, read_plugin_meta
 from lib.scan_plugins import scan_plugin
 from lib.write_plugin_map import write_plugin_map
 
 
 def main() -> None:
     """Orchestrate multi-level map generation."""
-    script_dir = Path(__file__).resolve().parent
+    arg1 = sys.argv[1] if len(sys.argv) > 1 else ""
+    arg2 = sys.argv[2] if len(sys.argv) > 2 else ""  # noqa: PLR2004
+
     plugins_dir = (
-        Path(sys.argv[1]) if len(sys.argv) > 1 else script_dir.parent.parent
+        find_marketplace_plugins() if arg1 == "auto"
+        else Path(arg1) if arg1
+        else Path(__file__).resolve().parent.parent.parent
     )
     output_dir = (
-        Path(sys.argv[2]) if len(sys.argv) > 2  # noqa: PLR2004
+        plugins_dir.parent / ".cartographer" if arg2 == "auto"
+        else Path(arg2) if arg2
         else Path(".cartographer")
     )
 
     plugins_dir = plugins_dir.resolve()
     if not plugins_dir.is_dir():
-        sys.stderr.write(f"Error: plugins dir not found: {plugins_dir}\n")
-        sys.exit(1)
+        return
 
     output_dir.mkdir(parents=True, exist_ok=True)
 
@@ -46,7 +51,7 @@ def main() -> None:
     ]
 
     for plugin_path in plugin_dirs:
-        version, pkg_name = _read_plugin_meta(plugin_path)
+        version, pkg_name = read_plugin_meta(plugin_path)
         display = pkg_name or plugin_path.name
         items = scan_plugin(str(plugin_path))
         agents = [n for t, n, _ in items if t == "agent"]
@@ -56,7 +61,6 @@ def main() -> None:
             f"- [{display}](./{display}/index.md){ver} → {agents_str}",
         )
         write_plugin_map(output_dir, display, version, items, plugin_path)
-        # Also write cartography inside the plugin itself
         write_plugin_map(
             plugin_path, ".cartographer", version, items, plugin_path,
         )
@@ -65,22 +69,24 @@ def main() -> None:
         "\n".join(index_lines) + "\n",
         encoding="utf-8",
     )
-    sys.stdout.write(
-        f"Map generated: {output_dir}/ ({len(plugin_dirs)} plugins)\n",
+
+    count = len(plugin_dirs)
+    print(f"cart plugins: {count} loaded", file=sys.stderr)
+
+    context = (
+        f"Project map: .cartographer/project/index.md — navigate project files. "
+        f"Plugin skills map: {output_dir}/index.md — navigate agent skills. "
+        f"Branches link to deeper index.md, leaves link to real files."
     )
-
-
-def _read_plugin_meta(plugin_path: Path) -> tuple[str, str]:
-    """Read version and name from .claude-plugin/plugin.json."""
-    pj = plugin_path / ".claude-plugin" / "plugin.json"
-    if not pj.is_file():
-        return "", ""
-    try:
-        meta = json.loads(pj.read_text(encoding="utf-8"))
-        return meta.get("version", ""), meta.get("name", "")
-    except (json.JSONDecodeError, KeyError, OSError):
-        return "", ""
+    print(json.dumps({"hookSpecificOutput": {
+        "hookEventName": "SessionStart",
+        "additionalContext": context,
+    }}))
+    sys.exit(0)
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except Exception:
+        pass

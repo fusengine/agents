@@ -9,22 +9,8 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+from lib.project_indicators import EXCLUDE_DIRS, PROJECT_INDICATORS
 from lib.write_recursive import write_tree
-
-_EXCLUDE = {
-    "node_modules", ".git", ".next", ".nuxt", "dist", "build",
-    ".output", "vendor", "__pycache__", ".venv", "venv",
-    ".cartographer", ".claude", ".ruff_cache", ".DS_Store",
-    "coverage", ".turbo", ".vercel", ".netlify",
-    "Pods", "DerivedData", ".build", ".swiftpm",
-}
-
-_PROJECT_INDICATORS = {
-    "package.json", "composer.json", "Cargo.toml", "go.mod",
-    "pyproject.toml", "Gemfile", "Package.swift", "pubspec.yaml",
-    "pom.xml", "build.gradle", "Makefile", "CMakeLists.txt",
-    ".git",
-}
 
 
 def _is_project(path: Path) -> bool:
@@ -33,7 +19,7 @@ def _is_project(path: Path) -> bool:
     resolved = path.resolve()
     if resolved == home or resolved == Path("/"):
         return False
-    return any((resolved / f).exists() for f in _PROJECT_INDICATORS)
+    return any((resolved / f).exists() for f in PROJECT_INDICATORS)
 
 
 def main() -> None:
@@ -46,14 +32,18 @@ def main() -> None:
 
     project_dir = project_dir.resolve()
     if not project_dir.is_dir():
-        sys.exit(1)
+        return
 
     if not _is_project(project_dir):
-        sys.exit(0)
+        return
 
-    write_tree(project_dir, output_dir, exclude=_EXCLUDE)
-    sys.stdout.write(f"Project map: {output_dir}/index.md\n")
+    write_tree(project_dir, output_dir, exclude=EXCLUDE_DIRS)
+    entries = sum(1 for _ in output_dir.rglob("index.md"))
+    print(f"cart project: {entries} entries loaded", file=sys.stderr)
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except Exception:
+        pass
