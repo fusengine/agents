@@ -1,5 +1,11 @@
 # Release Notes
 
+## [1.38.58] - 21-03-2026
+
+### Maintenance
+
+- chore(deps): update statusline and scripts dependencies
+
 ## [1.38.57] - 21-03-2026
 
 ### Added
