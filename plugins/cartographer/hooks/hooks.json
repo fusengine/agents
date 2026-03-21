@@ -1,0 +1,31 @@
+{
+  "_description": "Cartographer - Auto-generate ecosystem map at session start",
+  "_version": "1.0.0",
+
+  "hooks": {
+    "SessionStart": [
+      {
+        "_description": "Generate ecosystem map from all installed plugins",
+        "matcher": "",
+        "hooks": [
+          {
+            "_description": "Run generate_map.py (plugins) + generate_project_map.py (project)",
+            "type": "command",
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/generate_map.py ${CLAUDE_PLUGIN_ROOT}/.. ${CLAUDE_PLUGIN_ROOT}/../.cartographer 2>/dev/null || true; python3 ${CLAUDE_PLUGIN_ROOT}/scripts/generate_project_map.py ${CLAUDE_PROJECT_DIR} ${CLAUDE_PROJECT_DIR}/.cartographer/project 2>/dev/null || true"
+          }
+        ]
+      },
+      {
+        "_description": "Inject generated ecosystem map as context for agents",
+        "matcher": "",
+        "hooks": [
+          {
+            "_description": "Load ecosystem map into additionalContext",
+            "type": "prompt",
+            "prompt": "Project map: .cartographer/project/index.md — navigate project files. Plugin skills map: ${CLAUDE_PLUGIN_ROOT}/../.cartographer/index.md — navigate agent skills. Per-agent map: ${CLAUDE_PLUGIN_ROOT}/.cartographer/index.md. Branches link to deeper index.md, leaves link to real files."
+          }
+        ]
+      }
+    ]
+  }
+}

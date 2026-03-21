@@ -21,6 +21,9 @@ npm-debug.log*
 # Linter caches
 .ruff_cache/
 
+# Cartographer (auto-generated at SessionStart)
+.cartographer/
+
 # Environment secrets
 .env
 .env.*

@@ -639,6 +639,39 @@
         "./skills/breaking-changes",
         "./skills/community-pulse"
       ]
+    },
+    {
+      "name": "fuse-cartographer",
+      "source": "./plugins/cartographer",
+      "description": "Codebase and ecosystem mapping: project structure, dependency graphs, agent ecosystems, file-level analysis, impact analysis with multi-level .cartographer/ maps",
+      "version": "1.0.0",
+      "author": {
+        "name": "Fusengine",
+        "url": "https://github.com/fusengine"
+      },
+      "homepage": "https://github.com/fusengine/agents",
+      "repository": "https://github.com/fusengine/agents",
+      "license": "MIT",
+      "keywords": [
+        "cartographer",
+        "codebase-mapping",
+        "ecosystem",
+        "dependency-graph",
+        "architecture",
+        "impact-analysis"
+      ],
+      "category": "development",
+      "strict": true,
+      "commands": [
+        "./commands/map.md"
+      ],
+      "agents": [
+        "./agents/cartographer.md"
+      ],
+      "skills": [
+        "./skills/map-codebase",
+        "./skills/map-ecosystem"
+      ]
     }
   ]
 }
