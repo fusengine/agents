@@ -1,5 +1,11 @@
 # Release Notes
 
+## [1.38.60] - 21-03-2026
+
+### Fixed
+
+- fix(cartographer): remove non-existent map-codebase skill from marketplace
+
 ## [1.38.59] - 21-03-2026
 
 ### Changed
