@@ -1,66 +1,49 @@
 ---
 name: map-ecosystem
-description: "Generate indented markdown map of the plugin ecosystem. Use when navigating skills, finding agents, or locating commands."
-argument-hint: "[plugins_dir] [output_dir]"
+description: "Enrich auto-generated .cartographer/ maps with full descriptions from source files."
 context: fork
-user-invocable: false
+user-invocable: true
 ---
 
-# Map Ecosystem
+# Map Ecosystem — Enrich Descriptions
 
-Generate an indented markdown tree of all plugins, agents, skills, commands, and hooks.
+Enrich the auto-generated `.cartographer/` index.md files with complete descriptions extracted from source file frontmatter.
 
 ## When to Use
 
-- Agent needs to find the right skill or command
-- Navigating the plugin ecosystem
-- Understanding which agent handles what
-- Lost or unsure about available capabilities
+- After SessionStart has generated the cartography structure
+- When descriptions appear truncated in index.md files
+- When a new plugin/skill was added and needs full descriptions
 
 ## When NOT to Use
 
 - Code generation or debugging
-- Research or documentation lookup
-- Direct file editing
+- Direct file editing outside .cartographer/
 
 ## Steps
 
-1. Run the generator script:
-   ```bash
-   python3 ${CLAUDE_PLUGIN_ROOT}/scripts/generate_map.py [plugins_dir] [output_dir]
-   ```
-2. Read the generated `.cartographer/ecosystem-map.md`
-3. Use the map to locate the target skill/agent/command
+1. **Read** the ecosystem index: `${CLAUDE_PLUGIN_ROOT}/../.cartographer/index.md`
+2. **For each plugin** listed, read its `.cartographer/index.md`
+3. **For each linked file** (agents/*.md, skills/*/SKILL.md):
+   - Read the source file
+   - Extract the full `description` from YAML frontmatter
+   - Replace the truncated description in the index.md line
+4. **Write** the updated index.md with complete descriptions
 
-## Output Format
+## Example
 
-Indented tree with Unicode connectors:
-
+Before (auto-generated, truncated at 60 chars):
 ```
-fuse-ai-pilot/ (v1.2.14)
-├── agents/
-│   ├── sniper — 7-phase code quality validation
-│   ├── explore-codebase — Architecture discovery
-│   └── research-expert — Documentation and best practices
-├── skills/
-│   ├── apex/ — APEX methodology
-│   ├── tdd/ — RED-GREEN-REFACTOR cycle
-│   └── verification/ — Functional check
-├── commands/
-│   ├── /apex — Full APEX flow
-│   └── /commit — Smart conventional commit
-└── hooks: SessionStart, PreToolUse, PostToolUse
+├── [laravel-eloquent](./skills/laravel-eloquent/index.md) — Complete Eloquent ORM - models, relatio
 ```
 
-## Parameters
+After (enriched by agent):
+```
+├── [laravel-eloquent](./skills/laravel-eloquent/index.md) — Complete Eloquent ORM - models, relationships, queries, casts, observers, factories. Use when working with database models.
+```
 
-| Param | Default | Description |
-|-------|---------|-------------|
-| plugins_dir | Auto-detect via CLAUDE_PLUGIN_ROOT | Path to plugins directory |
-| output_dir | .cartographer/ | Where to write the map |
+## Forbidden
 
-## Forbidden Behaviors
-
-- Do not modify any plugin files
-- Do not assume plugin structure without scanning
-- Do not generate partial maps without error reporting
+- Do not modify source files (only .cartographer/*.md)
+- Do not delete or restructure the tree
+- Do not assume — always read actual frontmatter
