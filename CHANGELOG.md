@@ -1,5 +1,11 @@
 # Release Notes
 
+## [1.38.61] - 21-03-2026
+
+### Fixed
+
+- fix(cartographer 1.0.1): resolve hook error and add hookSpecificOutput injection
+
 ## [1.38.60] - 21-03-2026
 
 ### Fixed
