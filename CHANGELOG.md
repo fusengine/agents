@@ -1,5 +1,11 @@
 # Release Notes
 
+## [1.38.63] - 21-03-2026
+
+### Added
+
+- feat(cartographer 1.0.3): add intelligent merge to preserve enriched descriptions
+
 ## [1.38.62] - 21-03-2026
 
 ### Changed
