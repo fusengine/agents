@@ -1,5 +1,11 @@
 # Release Notes
 
+## [1.38.59] - 21-03-2026
+
+### Changed
+
+- refactor(agents): enforce cartography as mandatory step 1 with cross-verification
+
 ## [1.38.58] - 21-03-2026
 
 ### Maintenance
