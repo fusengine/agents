@@ -1,6 +1,6 @@
 {
   "name": "fuse-astro",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Expert Astro 6 with Islands Architecture, Content Layer, Actions, View Transitions, and multi-framework integration",
   "author": {
     "name": "Fusengine",

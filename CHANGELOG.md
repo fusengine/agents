@@ -1,5 +1,12 @@
 # Release Notes
 
+## [1.38.57] - 21-03-2026
+
+### Added
+
+- feat(agents): add cartography navigation to all 21 agents
+- feat(claude-rules): add cartography section to CLAUDE.md template
+
 ## [1.38.56] - 21-03-2026
 
 ### Added
