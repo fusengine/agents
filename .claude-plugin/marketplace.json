@@ -419,7 +419,7 @@
         "./commands/design.md",
         "./commands/design-page.md",
         "./commands/design-component.md",
-        "./commands/design-audit.md"
+        "./commands/audit-design.md"
       ],
       "agents": [
         "./agents/design-expert.md"

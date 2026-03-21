@@ -1,5 +1,5 @@
 ---
-name: design-audit
+name: design:audit
 description: "Audit existing HTML/CSS design quality. Checks WCAG contrast, font compliance, OKLCH tokens, state coverage, anti-AI-slop. No generation — validation only."
 ---
 
