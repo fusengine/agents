@@ -1,5 +1,11 @@
 # Release Notes
 
+## [1.38.62] - 21-03-2026
+
+### Changed
+
+- refactor(cartographer 1.0.2): update agent as cartography expert with enrichment workflow
+
 ## [1.38.61] - 21-03-2026
 
 ### Fixed
