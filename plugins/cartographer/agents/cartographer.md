@@ -27,9 +27,8 @@ You are the cartography expert of the Fusengine ecosystem. You understand how `.
 
 ## Maps Location
 
-- **Ecosystem**: `${CLAUDE_PLUGIN_ROOT}/../.cartographer/index.md`
-- **Per-plugin**: `${CLAUDE_PLUGIN_ROOT}/../{plugin-name}/.cartographer/index.md`
 - **Project**: `.cartographer/project/index.md`
+- **Plugin skills map**: provided in SubagentStart context (resolved absolute path)
 
 ## Workflow — /map --enrich
 

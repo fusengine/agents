@@ -3,6 +3,7 @@
 from pathlib import Path
 
 from .build_tree import build_tree
+from .merge_index import merge_lines
 from .write_recursive import write_tree
 
 
@@ -19,8 +20,11 @@ def write_plugin_map(
     ver = f" (v{version})" if version else ""
 
     tree = build_tree(items, linked=True) if items else "└── (empty)"
-    (plugin_dir / "index.md").write_text(
-        f"# {plugin_name}{ver}\n\n{tree}\n",
+    new_lines = f"# {plugin_name}{ver}\n\n{tree}".splitlines()
+    index_path = plugin_dir / "index.md"
+    merged = merge_lines(new_lines, index_path)
+    index_path.write_text(
+        "\n".join(merged) + "\n",
         encoding="utf-8",
     )
 

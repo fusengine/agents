@@ -1,9 +1,10 @@
 /**
  * inject-subagent-context.ts - SubagentStart hook.
- * Injects APEX rules into sub-agent prompt via additionalContext.
+ * Injects APEX rules and cartographer paths into sub-agent prompt via additionalContext.
  * Reads .claude/apex/ structure and provides task context to sub-agents.
  */
 import { existsSync } from "node:fs";
+import { resolve } from "node:path";
 import { readStdin, readTextFile, readJsonFile, outputHookResponse } from "./lib/core";
 import type { HookInput } from "./lib/interfaces/hook.interface";
 import type { ApexTaskFile } from "./lib/interfaces/apex.interface";
@@ -30,6 +31,21 @@ function getPendingTasks(tasks: Record<string, { status: string; subject: string
     .filter(([, t]) => t.status === "pending")
     .map(([id, t]) => `#${id}: ${t.subject}`);
   return pending.length > 0 ? pending.join(", ") : "none";
+}
+
+/**
+ * Build cartographer context with resolved paths for sub-agents.
+ * @returns Cartographer navigation block or empty string if unavailable
+ */
+function buildCartographerContext(): string {
+  const pluginRoot = process.env.CLAUDE_PLUGIN_ROOT;
+  if (!pluginRoot) return "";
+  const pluginsMap = resolve(pluginRoot, "..", ".cartographer", "index.md");
+  if (!existsSync(pluginsMap)) return "";
+  return `\n### 7. Cartographer Maps
+Navigate branches (index.md) → leaves link to real files:
+- Plugin skills: ${pluginsMap}
+- Project files: .cartographer/project/index.md`;
 }
 
 /** Main hook handler */
@@ -72,7 +88,7 @@ ${agentsContent}
 - Use Context7/Exa for docs | Write notes to .claude/apex/docs/
 
 ### 6. When Done
-- TaskUpdate(taskId, status: completed) triggers auto-commit`;
+- TaskUpdate(taskId, status: completed) triggers auto-commit${buildCartographerContext()}`;
 
   outputHookResponse({
     hookSpecificOutput: { hookEventName: "SubagentStart", additionalContext: context },

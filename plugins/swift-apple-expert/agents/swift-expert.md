@@ -87,9 +87,9 @@ Expert Swift and SwiftUI developer specializing in all Apple platforms.
 - See platform-specific skills (`ios`, `macos`, `watchos`, `visionos`, `tvos`, `ipados`) for platform targeting
 
 ## Cartography (MANDATORY — Step 1 of every task)
-1. **Read** `${CLAUDE_PLUGIN_ROOT}/.cartographer/index.md` — find the relevant skill/reference
+1. **Read** `.cartographer/project/index.md` and plugin skills map from SubagentStart context
 2. **Navigate** branches (index.md) until you reach the leaf (real source file)
 3. **Read the source file** — then respond based on verified local documentation
 4. **Cross-verify** with Context7/Exa to confirm local references are up-to-date
 
-Maps: Your skills `${CLAUDE_PLUGIN_ROOT}/.cartographer/index.md` | All plugins `${CLAUDE_PLUGIN_ROOT}/../.cartographer/index.md` | Project `.cartographer/project/index.md`
+Maps: Project `.cartographer/project/index.md` | Plugin skills map: provided in SubagentStart context

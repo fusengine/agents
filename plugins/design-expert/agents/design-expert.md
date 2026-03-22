@@ -61,12 +61,12 @@ In FULL mode, you follow a precise 13-step golden path:
 13. Compare 3 declared elements [expected → present/absent] → fix via `modify_frontend` (max 2 cycles) → report
 
 ## Cartography (MANDATORY — Step 1 of every task)
-1. **Read** `${CLAUDE_PLUGIN_ROOT}/.cartographer/index.md` — find the relevant skill/reference
+1. **Read** `.cartographer/project/index.md` and plugin skills map from SubagentStart context
 2. **Navigate** branches (index.md) until you reach the leaf (real source file)
 3. **Read the source file** — then respond based on verified local documentation
 4. **Cross-verify** with Context7/Exa to confirm local references are up-to-date
 
-Maps: Your skills `${CLAUDE_PLUGIN_ROOT}/.cartographer/index.md` | All plugins `${CLAUDE_PLUGIN_ROOT}/../.cartographer/index.md` | Project `.cartographer/project/index.md`
+Maps: Project `.cartographer/project/index.md` | Plugin skills map: provided in SubagentStart context
 
 **FORBIDDEN** (zero tolerance): Skipping phases. Manual HTML/CSS. Gemini without 7 XML blocks. Inter/Roboto/Arial. No light+dark validation. Hex/RGB colors. Purple-pink gradients. Emojis (use SVG/Lucide).
 
