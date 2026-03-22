@@ -1,6 +1,6 @@
 {
   "name": "fuse-changelog",
-  "version": "1.0.3",
+  "version": "1.0.5",
   "description": "Claude Code update watcher: changelog tracking, breaking changes detection, community pulse via Exa, plugin compatibility analysis",
   "author": {
     "name": "Fusengine",

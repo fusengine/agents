@@ -1,6 +1,6 @@
 {
   "name": "fuse-prompt-engineer",
-  "version": "1.1.2",
+  "version": "1.1.4",
   "description": "Expert Prompt Engineer with Context Engineering, Meta-Prompting, Chain-of-Thought, Few-Shot, Agent Design, 50+ Template Library, and A/B Testing",
   "author": {
     "name": "Fusengine",
