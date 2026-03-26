@@ -1,6 +1,6 @@
 {
-  "_description": "Cartographer - Auto-generate ecosystem map at session start",
-  "_version": "1.0.0",
+  "_description": "Cartographer - Auto-generate ecosystem map + track enrichments",
+  "_version": "1.1.0",
 
   "hooks": {
     "SessionStart": [
@@ -12,6 +12,19 @@
             "_description": "Run generate_map.py (plugins) + generate_project_map.py (project)",
             "type": "command",
             "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/generate_map.py ${CLAUDE_PLUGIN_ROOT}/.. ${CLAUDE_PLUGIN_ROOT}/../.cartographer || true; python3 ${CLAUDE_PLUGIN_ROOT}/scripts/generate_project_map.py || true"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "_description": "Track enriched descriptions in .enriched.json sidecar",
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "_description": "Save descriptions from edited index.md to .enriched.json",
+            "type": "command",
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/track-enrichment.py || true"
           }
         ]
       }

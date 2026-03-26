@@ -5,6 +5,7 @@ Scans the project directory, excludes common junk,
 writes a navigable tree to .cartographer/project/
 """
 
+import os
 import sys
 from pathlib import Path
 
@@ -24,7 +25,10 @@ def _is_project(path: Path) -> bool:
 
 def main() -> None:
     """Generate project tree map only if real project detected."""
-    project_dir = Path(sys.argv[1]) if len(sys.argv) > 1 else Path.cwd()
+    project_dir = (
+        Path(sys.argv[1]) if len(sys.argv) > 1
+        else Path(os.environ.get("CLAUDE_PROJECT_DIR") or os.getcwd())
+    )
     output_dir = (
         Path(sys.argv[2]) if len(sys.argv) > 2  # noqa: PLR2004
         else project_dir / ".cartographer" / "project"
