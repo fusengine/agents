@@ -1,5 +1,10 @@
 # Release Notes
 
+## [1.38.67] - 26-03-2026
+
+- Fixed (cartographer): add sidecar enrichment tracking and CLAUDE_PROJECT_DIR support
+- Added (11 plugins): 7 new skills and 6 references across 10 plugins
+
 ## [1.38.66] - 22-03-2026
 
 - Fixed (cartographer 1.0.4, ai-pilot 1.2.17, + 13 plugins): resolve path injection and merge protection for enriched maps
