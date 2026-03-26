@@ -1,8 +1,8 @@
 ---
 name: installation
-description: Set up shadcn/ui with React 16 and Tailwind CSS v4
-when-to-use: Starting a new shadcn/ui project, integrating with React 16
-keywords: setup, initialization, tailwind, cli, bunx
+description: Set up shadcn/ui with React 19 and Tailwind CSS v4 (Vite)
+when-to-use: Starting a new shadcn/ui project, integrating with React 19 and Vite
+keywords: setup, initialization, tailwind, cli, bunx, vite
 priority: high
 requires: null
 related: configuration.md
@@ -13,15 +13,15 @@ related: configuration.md
 ## Prerequisites
 
 - **Node.js**: 18.17+ or 20+
-- **React**: 16.0.0+
 - **React**: 19.0+
 - **Tailwind CSS**: 4.0+ (no config file needed)
 
 ## Step 1: Create React Project
 
 ```bash
-bunx create-next-app@latest my-app --typescript --tailwind --app
+bun create vite@latest my-app --template react-ts
 cd my-app
+bun install
 ```
 
 ## Step 2: Install shadcn/ui CLI
@@ -52,7 +52,7 @@ Expected structure:
 {
   "$schema": "https://ui.shadcn.com/schema.json",
   "style": "new-york",
-  "rsc: false,
+  "rsc": false,
   "tsx": true,
   "aliasPrefix": "@",
   "aliases": {
@@ -75,7 +75,7 @@ This installs:
 
 ## Step 5: Verify Installation
 
-Create test file `app/test.tsx`:
+Create test file `src/test.tsx`:
 
 ```typescript
 import { Button } from '@/modules/cores/shadcn/components/ui/button'
@@ -91,7 +91,7 @@ Run dev server:
 bun dev
 ```
 
-Visit `http://localhost:3000/test` and verify Button renders.
+Visit `http://localhost:5173/` and verify Button renders.
 
 ## Post-Installation Setup
 
@@ -167,7 +167,7 @@ Ensure `tsconfig.json` has:
 
 ### Tailwind not applying?
 
-Check `app/globals.css`:
+Check `src/index.css`:
 
 ```css
 @import "tailwindcss";

@@ -4,7 +4,7 @@ description: App build, code signing, TestFlight, and App Store distribution for
 versions:
   xcode: 26
 user-invocable: false
-references: references/code-signing.md, references/testflight.md, references/app-store.md, references/app-icons.md
+references: references/code-signing.md, references/testflight.md, references/app-store.md, references/app-icons.md, references/storekit2.md
 related-skills: swift-core, ios, macos, mcp-tools
 ---
 
@@ -54,6 +54,7 @@ After implementation, run **fuse-ai-pilot:sniper** for validation.
 | Beta testing | [testflight.md](references/testflight.md) |
 | App Store submission | [app-store.md](references/app-store.md) |
 | Icons, assets | [app-icons.md](references/app-icons.md) |
+| In-app purchases, subscriptions | [storekit2.md](references/storekit2.md) |
 
 ---
 

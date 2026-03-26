@@ -4,7 +4,7 @@ description: Expert Astro Islands Architecture — client:load, client:idle, cli
 versions:
   astro: 6
 user-invocable: true
-references: references/overview.md, references/client-directives.md, references/server-islands.md, references/transitions.md, references/prop-serialization.md, references/templates/interactive-island.md, references/templates/server-island.md
+references: references/overview.md, references/client-directives.md, references/server-islands.md, references/transitions.md, references/view-transitions.md, references/prop-serialization.md, references/templates/interactive-island.md, references/templates/server-island.md
 related-skills: astro-6, astro-integrations, astro-actions
 ---
 
@@ -74,6 +74,7 @@ After implementation, run **fuse-ai-pilot:sniper** for validation.
 | Client directive details | [client-directives.md](references/client-directives.md) |
 | server:defer patterns | [server-islands.md](references/server-islands.md) |
 | transition:persist | [transitions.md](references/transitions.md) |
+| View Transitions (complete) | [view-transitions.md](references/view-transitions.md) |
 | Prop serialization rules | [prop-serialization.md](references/prop-serialization.md) |
 | Interactive component | [templates/interactive-island.md](references/templates/interactive-island.md) |
 | Server island with fallback | [templates/server-island.md](references/templates/server-island.md) |

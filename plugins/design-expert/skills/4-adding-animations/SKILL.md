@@ -47,3 +47,4 @@ After Phase 3 components are generated. Before design audit.
 | `references/patterns-buttons.md` | Button animation patterns |
 | `references/patterns-navigation.md` | Navigation animations |
 | `references/patterns-microinteractions.md` | Detail micro-interactions |
+| `references/reduced-motion.md` | prefers-reduced-motion a11y patterns |

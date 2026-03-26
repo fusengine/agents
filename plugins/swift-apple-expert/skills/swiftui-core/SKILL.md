@@ -5,7 +5,7 @@ versions:
   swiftui: 6
   ios: 26
 user-invocable: false
-references: references/views-modifiers.md, references/navigation.md, references/data-swiftdata.md, references/state-management.md, references/liquid-glass.md
+references: references/views-modifiers.md, references/navigation.md, references/data-swiftdata.md, references/state-management.md, references/liquid-glass.md, references/app-intents.md
 related-skills: swift-core, solid-swift, ios, macos, ipados, watchos, visionos, tvos
 ---
 
@@ -71,6 +71,7 @@ Modern persistence with @Model. Replaces Core Data for most use cases.
 | SwiftData, @Query, CloudKit | [data-swiftdata.md](references/data-swiftdata.md) |
 | @State, @Observable, Environment | [state-management.md](references/state-management.md) |
 | Liquid Glass all platforms | [liquid-glass.md](references/liquid-glass.md) |
+| Siri, Shortcuts, App Intents | [app-intents.md](references/app-intents.md) |
 
 ---
 

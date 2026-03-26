@@ -70,14 +70,19 @@ Shadcn components use CSS custom properties (variables) defined in your styleshe
 ### React Configuration
 
 ```typescript
-// next.config.ts
-import type { NextConfig } from 'next'
+// vite.config.ts
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+import path from 'path'
 
-const nextConfig: NextConfig = {
-  // other config...
-}
-
-export default nextConfig
+export default defineConfig({
+  plugins: [react()],
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, './src'),
+    },
+  },
+})
 ```
 
 ### Tailwind Configuration
