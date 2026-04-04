@@ -16,6 +16,6 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"@clack/prompts": "^1.1.0"
+		"@clack/prompts": "^1.2.0"
 	}
 }

@@ -49,3 +49,4 @@ docs/plugins/memory.md
 .claude/apex/
 plugins/design-expert/scripts/.ruff_cache
 test-design
+.audit
