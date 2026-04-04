@@ -1,5 +1,9 @@
 # Release Notes
 
+## [1.38.70] - 05-04-2026
+
+- Maintenance (ai-pilot 1.2.20, core-guards 1.1.23): bump typescript, biome, and clack-prompts versions
+
 ## [1.38.69] - 04-04-2026
 
 - Fixed (core-guards 1.1.22, nextjs-expert 1.1.14): reduce false positives in guards and calibrate thresholds
