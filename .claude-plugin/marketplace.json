@@ -7,7 +7,7 @@
   },
   "metadata": {
     "description": "Professional Claude Code plugins with APEX workflow, SOLID principles, and expert development agents for Next.js, Laravel, Swift, Tailwind CSS, and more",
-    "version": "1.38.67"
+    "version": "1.38.68"
   },
   "core": [
     {
@@ -28,7 +28,7 @@
       "name": "fuse-ai-pilot",
       "source": "./plugins/ai-pilot",
       "description": "AI Pilot workflow: APEX methodology (auto-detects Laravel/Next.js/React/Swift), sniper (7-phase code quality + DRY detection), research-expert, explore-codebase, seo-expert (SEO/GEO/Local SEO 2026)",
-      "version": "1.2.18",
+      "version": "1.2.19",
       "author": {
         "name": "Fusengine",
         "url": "https://github.com/fusengine"
@@ -516,7 +516,7 @@
       "name": "fuse-security",
       "source": "./plugins/security-expert",
       "description": "Security vulnerability detection and remediation: OWASP Top 10 2025, SAST scanning, CVE research (NVD, OSV.dev), dependency audit, secrets detection, security headers, auth patterns audit",
-      "version": "1.0.8",
+      "version": "1.0.9",
       "author": {
         "name": "Fusengine",
         "url": "https://github.com/fusengine"
@@ -609,7 +609,7 @@
       "name": "fuse-changelog",
       "source": "./plugins/changelog-watcher",
       "description": "Claude Code update watcher: changelog tracking, breaking changes detection, community pulse via Exa, plugin compatibility analysis",
-      "version": "1.0.5",
+      "version": "1.0.6",
       "author": {
         "name": "Fusengine",
         "url": "https://github.com/fusengine"

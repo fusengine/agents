@@ -1,5 +1,9 @@
 # Release Notes
 
+## [1.38.68] - 04-04-2026
+
+- Fixed (ai-pilot 1.2.19, security-expert 1.0.9, changelog-watcher 1.0.6): migrate deprecated API patterns to Claude Code 2.1.92 format
+
 ## [1.38.67] - 26-03-2026
 
 - Fixed (cartographer): add sidecar enrichment tracking and CLAUDE_PROJECT_DIR support

@@ -1,6 +1,6 @@
 {
   "name": "fuse-security",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "Security vulnerability detection and remediation: OWASP Top 10, SAST scanning, CVE research, dependency audit, secrets detection",
   "author": {
     "name": "Fusengine",
