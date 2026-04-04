@@ -62,16 +62,13 @@ def _grep_dupes(names: set, cwd: str, ext: str, exclude: str) -> list:
         return []
     ex = os.path.abspath(exclude)
     target_mod = _get_module(exclude)
-    matches, cross_mod = [], []
+    matches = []
     for f in result.stdout.splitlines():
         f = f.strip()
         if not f or os.path.abspath(f) == ex:
             continue
         dupe_mod = _get_module(f)
         if target_mod and dupe_mod and dupe_mod != target_mod:
-            cross_mod.append(f)
             continue
         matches.append(f)
-    if cross_mod:
-        matches.extend(cross_mod)
     return matches

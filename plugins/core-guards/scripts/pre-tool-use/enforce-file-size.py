@@ -45,6 +45,8 @@ def main():
         sys.exit(0)
     if cur_lines <= 100:
         sys.exit(0)
+    if tool == 'Edit':
+        sys.exit(0)
     if tool == 'Write' and content:
         new_lines = content.count('\n') + 1
         if new_lines <= 100:

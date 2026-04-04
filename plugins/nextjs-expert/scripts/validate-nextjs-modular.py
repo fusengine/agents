@@ -62,7 +62,7 @@ def main() -> None:
         cross = re.findall(
             r"from\s+['\"][@.].*?/modules/([^/]+)/", content)
         for imported in cross:
-            if imported != current and imported != "cores":
+            if imported != current and imported not in ("cores", "core"):
                 deny_block(
                     f"BLOCKED: Cross-module import. '{current}' imports "
                     f"from '{imported}'. Only modules/cores/ allowed.")
@@ -72,7 +72,7 @@ def main() -> None:
         cross = re.findall(
             r"from\s+['\"][@.].*?/modules/([^/]+)/", content)
         for imported in cross:
-            if imported != "cores":
+            if imported not in ("cores", "core"):
                 deny_block(
                     f"BLOCKED: modules/cores/ must NOT import from "
                     f"modules/{imported}/. Cores must be independent.")

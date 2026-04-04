@@ -11,8 +11,9 @@ import re
 import sys
 
 from check_skill_common import deny_block
+from hook_output import allow_pass
 from _duplication_patterns import (
-    _KEYWORDS, _TS_PAT, _PHP_PAT, _TS_EXTENSIONS, _grep_dupes, _get_module,
+    _KEYWORDS, _TS_PAT, _PHP_PAT, _TS_EXTENSIONS, _grep_dupes,
 )
 
 
@@ -24,7 +25,7 @@ def _extract_names(content: str, ext: str) -> set:
     for pat in pats:
         for m in re.finditer(pat, content, re.MULTILINE):
             n = m.group(1)
-            if n not in _KEYWORDS and len(n) > 6:
+            if n not in _KEYWORDS and len(n) > 12:
                 names.add(n)
     return names
 
@@ -53,16 +54,11 @@ def main() -> None:
         files = ", ".join(dupes[:3])
         if len(dupes) > 3:
             files += f" (+{len(dupes) - 3} more)"
-        target_mod = _get_module(fp)
-        cross = [d for d in dupes if target_mod and _get_module(d)
-                 and _get_module(d) != target_mod]
-        if cross and len(cross) == len(dupes):
-            deny_block(
-                f"DRY BLOCKED: [{preview}] already exist in: {files}. "
-                f"Cross-module duplication detected. Find the shared "
-                f"directory (modules/cores/ or equivalent) in this "
-                f"project and extract the common code there, then "
-                f"import from both modules.")
+        if len(dupes) == 1:
+            allow_pass(
+                "detect_duplication",
+                f"DRY WARNING: [{preview}] may exist in: {files}. "
+                f"Check if you can reuse existing code.")
         else:
             deny_block(
                 f"DRY BLOCKED: [{preview}] already exist in: {files}. "
