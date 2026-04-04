@@ -28,7 +28,7 @@ PHASE 6: Verification (re-run linters, tests, duplication)
 
 **Launch explore-codebase agent FIRST**:
 ```
-> Use Task tool with subagent_type="explore-codebase"
+> Agent(subagent_type="fuse-ai-pilot:explore-codebase", prompt="...")
 ```
 
 **Gather**:
@@ -47,9 +47,7 @@ PHASE 6: Verification (re-run linters, tests, duplication)
 
 **Launch research-expert agent**:
 ```
-> Use Task tool with subagent_type="research-expert"
-> Request: Verify [library/framework] documentation for [error type]
-> Request: Find [language] best practices for [specific issue]
+> Agent(subagent_type="fuse-ai-pilot:research-expert", prompt="Verify [library/framework] documentation for [error type]. Find [language] best practices for [specific issue].")
 ```
 
 **Request for each error**:

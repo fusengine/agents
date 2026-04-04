@@ -2,6 +2,7 @@
 """PreToolUse hook - Verifies security skill was read before code modifications."""
 import json
 import os
+import re
 import sys
 from datetime import date
 
@@ -15,7 +16,6 @@ def main():
     if tool_name not in ("Write", "Edit"):
         sys.exit(0)
 
-    import re
     if not re.search(r"\.(ts|tsx|js|jsx|py|php|swift|go|rs|rb|java)$", file_path):
         sys.exit(0)
 
@@ -32,8 +32,15 @@ def main():
         except (json.JSONDecodeError, OSError):
             pass
 
-    print("SECURITY: Read security skill references before modifying code.")
-    print("Use: Read skills/security-scan/references/scan-patterns.md")
+    advisory = (
+        "SECURITY: Read security skill references before modifying code."
+        " Use: Read skills/security-scan/references/scan-patterns.md"
+    )
+    print(json.dumps({"hookSpecificOutput": {
+        "hookEventName": "PreToolUse",
+        "permissionDecision": "allow",
+        "additionalContext": advisory,
+    }}))
     sys.exit(0)
 
 
