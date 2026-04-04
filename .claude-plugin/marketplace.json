@@ -7,7 +7,7 @@
   },
   "metadata": {
     "description": "Professional Claude Code plugins with APEX workflow, SOLID principles, and expert development agents for Next.js, Laravel, Swift, Tailwind CSS, and more",
-    "version": "1.38.68"
+    "version": "1.38.69"
   },
   "core": [
     {
@@ -181,7 +181,7 @@
       "name": "fuse-nextjs",
       "source": "./plugins/nextjs-expert",
       "description": "Expert Next.js 16 + React 19 with App Router, Server Components, Prisma 7, Better Auth, TanStack Form, Zustand, shadcn/ui",
-      "version": "1.1.13",
+      "version": "1.1.14",
       "author": {
         "name": "Fusengine",
         "url": "https://github.com/fusengine"

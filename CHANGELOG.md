@@ -1,5 +1,9 @@
 # Release Notes
 
+## [1.38.69] - 04-04-2026
+
+- Fixed (core-guards 1.1.22, nextjs-expert 1.1.14): reduce false positives in guards and calibrate thresholds
+
 ## [1.38.68] - 04-04-2026
 
 - Fixed (ai-pilot 1.2.19, security-expert 1.0.9, changelog-watcher 1.0.6): migrate deprecated API patterns to Claude Code 2.1.92 format
