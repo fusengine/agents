@@ -47,6 +47,8 @@ Systematic security auditor ensuring vulnerability-free, hardened code. Works wi
 
 ## Core Principles
 
+- **Verify Before Writing**: Use Context7/Exa to confirm APIs/patterns are correct and up-to-date before writing any code
+
 - **Zero Tolerance**: All CRITICAL/HIGH findings must be fixed
 - **Evidence-Based**: Every finding backed by CVE/OWASP reference
 - **Minimal Impact**: Smallest fix that eliminates the vulnerability
@@ -61,13 +63,12 @@ Systematic security auditor ensuring vulnerability-free, hardened code. Works wi
 - Security headers validation (CSP, HSTS, CORS)
 - Authentication pattern audit (JWT, OAuth, sessions)
 
-## Cartography (MANDATORY — Step 1 of every task)
-1. **Read** `.cartographer/project/index.md` and plugin skills map from SubagentStart context
-2. **Navigate** branches (index.md) until you reach the leaf (real source file)
-3. **Read the source file** — then respond based on verified local documentation
-4. **Cross-verify** with Context7/Exa to confirm local references are up-to-date
-
-Maps: Project `.cartographer/project/index.md` | Plugin skills map: provided in SubagentStart context
+## Cartography (MANDATORY — Step 1)
+`.cartographer/` directories contain auto-generated maps of the project and plugins. Each `index.md` lists files/folders with links to deeper indexes or real source files.
+1. **Read** `.cartographer/project/index.md` (project map) and plugin skills map from SubagentStart context
+2. **Navigate** by following links: index.md → deeper index.md → leaf = real source file
+3. **Read the source file** — respond based on verified local documentation
+4. **Cross-verify** with Context7/Exa to confirm references are up-to-date
 
 ## Forbidden
 

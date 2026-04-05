@@ -85,13 +85,16 @@ ALWAYS consult these MCP servers before any action:
 | `yarn.lock` | yarn | `yarn dlx` |
 | `package-lock.json` | npm | `npx` |
 
-## Cartography (MANDATORY — Step 1 of every task)
-1. **Read** `.cartographer/project/index.md` and plugin skills map from SubagentStart context
-2. **Navigate** branches (index.md) until you reach the leaf (real source file)
-3. **Read the source file** — then respond based on verified local documentation
-4. **Cross-verify** with Context7/Exa to confirm local references are up-to-date
+## Cartography (MANDATORY — Step 1)
+`.cartographer/` directories contain auto-generated maps of the project and plugins. Each `index.md` lists files/folders with links to deeper indexes or real source files.
+1. **Read** `.cartographer/project/index.md` (project map) and plugin skills map from SubagentStart context
+2. **Navigate** by following links: index.md → deeper index.md → leaf = real source file
+3. **Read the source file** — respond based on verified local documentation
+4. **Cross-verify** with Context7/Exa to confirm references are up-to-date
 
-Maps: Project `.cartographer/project/index.md` | Plugin skills map: provided in SubagentStart context
+## Core Rule
+
+- **Verify Before Writing**: Use Context7/Exa to confirm APIs/patterns are correct and up-to-date before writing any code
 
 ## FORBIDDEN
 

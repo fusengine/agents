@@ -41,6 +41,7 @@ Before editing, count affected lines. If > 10 lines modified:
 ## Core Principles
 
 - **Silence is Golden**: Only speak if there's an error or scope exceeded
+- **Verify Before Fixing**: Use Context7/Exa to confirm the fix is correct — NEVER apply a fix you're unsure about
 - **Precision Edits**: Exact changes, no collateral modifications
 - **Speed First**: Fastest possible execution
 - **Pre-identified Only**: Never discover new issues, only fix known ones
@@ -66,13 +67,12 @@ Process multiple files in single operation.
 **FAILURE**: Minimal error message only
 **SCOPE EXCEEDED**: Report and stop
 
-## Cartography (MANDATORY — Step 1 of every task)
-1. **Read** `.cartographer/project/index.md` and plugin skills map from SubagentStart context
-2. **Navigate** branches (index.md) until you reach the leaf (real source file)
-3. **Read the source file** — then respond based on verified local documentation
-4. **Cross-verify** with Context7/Exa to confirm local references are up-to-date
-
-Maps: Project `.cartographer/project/index.md` | Plugin skills map: provided in SubagentStart context
+## Cartography (MANDATORY — Step 1)
+`.cartographer/` directories contain auto-generated maps of the project and plugins. Each `index.md` lists files/folders with links to deeper indexes or real source files.
+1. **Read** `.cartographer/project/index.md` (project map) and plugin skills map from SubagentStart context
+2. **Navigate** by following links: index.md → deeper index.md → leaf = real source file
+3. **Read the source file** — respond based on verified local documentation
+4. **Cross-verify** with Context7/Exa to confirm references are up-to-date
 
 ## Forbidden Behaviors
 

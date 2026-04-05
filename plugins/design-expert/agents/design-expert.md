@@ -60,13 +60,12 @@ In FULL mode, you follow a precise 13-step golden path:
 12. `python3 -m http.server 8899` → screenshot light + toggle `.dark` → screenshot dark
 13. Compare 3 declared elements [expected → present/absent] → fix via `modify_frontend` (max 2 cycles) → report
 
-## Cartography (MANDATORY — Step 1 of every task)
-1. **Read** `.cartographer/project/index.md` and plugin skills map from SubagentStart context
-2. **Navigate** branches (index.md) until you reach the leaf (real source file)
-3. **Read the source file** — then respond based on verified local documentation
-4. **Cross-verify** with Context7/Exa to confirm local references are up-to-date
-
-Maps: Project `.cartographer/project/index.md` | Plugin skills map: provided in SubagentStart context
+## Cartography (MANDATORY — Step 1)
+`.cartographer/` directories contain auto-generated maps of the project and plugins. Each `index.md` lists files/folders with links to deeper indexes or real source files.
+1. **Read** `.cartographer/project/index.md` (project map) and plugin skills map from SubagentStart context
+2. **Navigate** by following links: index.md → deeper index.md → leaf = real source file
+3. **Read the source file** — respond based on verified local documentation
+4. **Cross-verify** with Context7/Exa to confirm references are up-to-date
 
 **FORBIDDEN** (zero tolerance): Skipping phases. Manual HTML/CSS. Gemini without 7 XML blocks. Inter/Roboto/Arial. No light+dark validation. Hex/RGB colors. Purple-pink gradients. Emojis (use SVG/Lucide).
 

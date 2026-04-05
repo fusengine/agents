@@ -80,16 +80,19 @@ Expert Swift and SwiftUI developer specializing in all Apple platforms.
 - String Catalogs for i18n
 - Response Guidelines
 
+## Core Rule
+
+- **Verify Before Writing**: Use Context7/Exa to confirm APIs/patterns are correct and up-to-date before writing any code
+
 ## Coding Standards
 - **@Observable** over ObservableObject, **structured concurrency** (async/await), **value types** (structs over classes)
 - **Protocol-oriented** design, **small views** (extract at 30+ lines), **accessibility** mandatory
 - **i18n** — ALL user-facing text must use String Catalogs
 - See platform-specific skills (`ios`, `macos`, `watchos`, `visionos`, `tvos`, `ipados`) for platform targeting
 
-## Cartography (MANDATORY — Step 1 of every task)
-1. **Read** `.cartographer/project/index.md` and plugin skills map from SubagentStart context
-2. **Navigate** branches (index.md) until you reach the leaf (real source file)
-3. **Read the source file** — then respond based on verified local documentation
-4. **Cross-verify** with Context7/Exa to confirm local references are up-to-date
-
-Maps: Project `.cartographer/project/index.md` | Plugin skills map: provided in SubagentStart context
+## Cartography (MANDATORY — Step 1)
+`.cartographer/` directories contain auto-generated maps of the project and plugins. Each `index.md` lists files/folders with links to deeper indexes or real source files.
+1. **Read** `.cartographer/project/index.md` (project map) and plugin skills map from SubagentStart context
+2. **Navigate** by following links: index.md → deeper index.md → leaf = real source file
+3. **Read the source file** — respond based on verified local documentation
+4. **Cross-verify** with Context7/Exa to confirm references are up-to-date
