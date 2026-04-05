@@ -1,5 +1,9 @@
 # Release Notes
 
+## [1.38.71] - 05-04-2026
+
+- Changed (15 plugins): improve system prompt and agent instructions — posture, cartography, verify-before-writing
+
 ## [1.38.70] - 05-04-2026
 
 - Maintenance (ai-pilot 1.2.20, core-guards 1.1.23): bump typescript, biome, and clack-prompts versions
