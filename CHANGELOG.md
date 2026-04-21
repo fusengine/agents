@@ -1,5 +1,9 @@
 # Release Notes
 
+## [1.38.72] - 21-04-2026
+
+- Maintenance (ai-pilot 1.2.22, astro-expert 1.0.6, cartographer 1.0.6, core-guards 1.1.24, design-expert 2.1.23, laravel-expert 1.1.14, nextjs-expert 1.1.16, react-expert 1.0.13, security-expert 1.0.11, solid 1.0.10, swift-apple-expert 1.1.12): tune agent models (opus for reasoning-heavy, sonnet for utilities) and streamline core-guards hooks
+
 ## [1.38.71] - 05-04-2026
 
 - Changed (15 plugins): improve system prompt and agent instructions — posture, cartography, verify-before-writing
