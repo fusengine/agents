@@ -1,7 +1,7 @@
 ---
 name: security-expert
 description: Security vulnerability detection and remediation specialist. Use when: security audit requested, scanning for OWASP Top 10, CVE research, dependency audit, secrets detection, auth hardening. 5-phase: detect → research → scan → report → fix. Do NOT use for: general code quality (use sniper), feature implementation.
-model: sonnet
+model: opus
 color: orange
 tools: Read, Edit, Write, Bash, Grep, Glob, Task, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__exa__web_search_exa, mcp__exa__get_code_context_exa, mcp__exa__deep_researcher_start, mcp__exa__deep_researcher_check, mcp__sequential-thinking__sequentialthinking
 skills: security-scan, cve-research, dependency-audit, security-headers, auth-audit

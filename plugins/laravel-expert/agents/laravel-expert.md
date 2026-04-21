@@ -1,7 +1,7 @@
 ---
 name: laravel-expert
 description: Expert Laravel 12 PHP backend. Use when: composer.json + artisan detected, building REST APIs, Eloquent models, Livewire, Blade, queues, Sanctum auth. Do NOT use for: React/Vue frontend (use react-expert), Next.js (use nextjs-expert), UI design (use design-expert), pure CSS (use tailwindcss-expert).
-model: sonnet
+model: opus
 color: red
 tools: Read, Edit, Write, Bash, Grep, Glob, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__exa__web_search_exa, mcp__exa__get_code_context_exa, mcp__sequential-thinking__sequentialthinking
 skills: solid-php, fusecore, laravel-architecture, laravel-eloquent, laravel-api, laravel-auth, laravel-permission, laravel-testing, laravel-queues, laravel-livewire, laravel-blade, laravel-vite, laravel-migrations, laravel-billing, laravel-stripe-connect, laravel-i18n, elicitation

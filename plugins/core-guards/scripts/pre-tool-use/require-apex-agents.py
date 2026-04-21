@@ -9,7 +9,6 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from apex_agent_helpers import (  # pylint: disable=wrong-import-position
     check_brainstorm_done,
     check_required_agents,
-    increment_trivial_edit_counter,
 )
 
 CODE_EXT = r'\.(ts|tsx|js|jsx|py|go|rs|java|php|cpp|c|rb|swift|kt|dart|vue|svelte|astro)$'
@@ -35,15 +34,6 @@ def main():
         sys.exit(0)
     if any(re.search(p, fp) for p in EXEMPT_PATTERNS):
         sys.exit(0)
-    # Trivial edits: replace_all is NEVER trivial
-    if tool_input.get('replace_all'):
-        pass  # Fall through to APEX check
-    elif data.get('tool_name') == 'Edit' and tool_input.get('new_string', '').count('\n') < 5:
-        count = increment_trivial_edit_counter(sid)
-        if count < 5:
-            sys.exit(0)
-        # 5+ trivial edits in 2 min -> require full APEX
-
     # Brainstorming check — lead only, subagents inherit lead's decision
     # Edit targets existing files only — skip brainstorm (only Write can create new files)
     is_edit = data.get('tool_name') == 'Edit'

@@ -1,7 +1,7 @@
 ---
 name: nextjs-expert
 description: Expert Next.js 16+ App Router, RSC, Server Actions, Prisma 7, Better Auth, shadcn/ui. Use when: next.config.* detected, app/ directory structure, building SSR pages, API routes, full-stack Next.js. Do NOT use for: pure React/Vite (no next.config), Laravel/PHP, UI-only tasks (use design-expert), read-only questions.
-model: sonnet
+model: opus
 color: magenta
 tools: Read, Edit, Write, Bash, Grep, Glob, Task, WebFetch, WebSearch, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__exa__get_code_context_exa, mcp__sequential-thinking__sequentialthinking, mcp__shadcn__search_items_in_registries, mcp__shadcn__view_items_in_registries, mcp__gemini-design__create_frontend, mcp__gemini-design__modify_frontend, mcp__gemini-design__snippet_frontend
 skills: solid-nextjs, nextjs-16, prisma-7, better-auth, nextjs-tanstack-form, nextjs-zustand, nextjs-shadcn, nextjs-i18n, elicitation

@@ -1,7 +1,7 @@
 ---
 name: brainstorming
 description: Creative design agent for APEX workflow. Use when: new features, component creation, major changes, adding functionality. Triggers BEFORE Analyze phase. Structured questioning to refine requirements, propose alternatives, get design approval. Do NOT use for: bug fixes, trivial changes, refactoring, read-only tasks.
-model: sonnet
+model: opus
 color: cyan
 tools: Read, Glob, Grep, Bash, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__exa__web_search_exa, mcp__sequential-thinking__sequentialthinking
 skills: brainstorming, research, exploration

@@ -1,7 +1,7 @@
 ---
 name: sniper-faster
 description: "Micro-fix applicator for ALREADY IDENTIFIED errors (linter output, sniper report, user-specified). ONLY for 1-10 line corrections. NEVER use for new features, refactoring, analysis, or any task requiring understanding. Use sniper (full 7-phase) for validation."
-model: haiku
+model: sonnet
 color: orange
 tools: Read, Edit, Write, Bash, Grep, Glob, Task, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__exa__get_code_context_exa
 skills: code-quality, react-effects-audit

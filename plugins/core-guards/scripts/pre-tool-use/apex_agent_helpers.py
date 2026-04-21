@@ -9,7 +9,6 @@ from _shared.state_manager import load_session_state, save_session_state
 
 AGENT_TTL_SECONDS = 120
 REQUIRED_AGENTS = ['explore-codebase', 'research-expert']
-TRIVIAL_EDIT_WINDOW = 120  # 2 minutes
 
 
 def check_required_agents(sid):
@@ -67,14 +66,3 @@ def check_brainstorm_done(sid):
     return False
 
 
-def increment_trivial_edit_counter(sid):
-    """Increment trivial edit counter, return count of edits in last 2 min."""
-    state = load_session_state(sid)
-    now = time.time()
-    edits = state.get('trivial_edits', [])
-    cutoff = now - TRIVIAL_EDIT_WINDOW
-    edits = [ts for ts in edits if ts > cutoff]
-    edits.append(now)
-    state['trivial_edits'] = edits
-    save_session_state(sid, state)
-    return len(edits)

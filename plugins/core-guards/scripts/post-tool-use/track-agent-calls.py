@@ -41,7 +41,7 @@ def main():
         'agent_id': agent_id,
         'prompt_preview': prompt,
         'response_length': response_length,
-        'quality': 'sufficient' if response_length > 300 else 'insufficient',
+        'quality': 'sufficient' if response_length > 500 else 'insufficient',
     })
 
     save_session_state(sid, state)

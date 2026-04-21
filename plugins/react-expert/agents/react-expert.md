@@ -1,7 +1,7 @@
 ---
 name: react-expert
 description: Expert React 19 with Vite/CRA, hooks, TanStack Router, Zustand, Testing Library. Use when: package.json has React but NO next.config.*, Vite/CRA bundler, SPA architecture. Do NOT use for: Next.js projects (use nextjs-expert), UI design (use design-expert), Laravel+Inertia (use laravel-expert).
-model: sonnet
+model: opus
 color: blue
 tools: Read, Edit, Write, Bash, Grep, Glob, Task, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__exa__web_search_exa, mcp__exa__get_code_context_exa, mcp__sequential-thinking__sequentialthinking, mcp__shadcn__search_items_in_registries, mcp__shadcn__view_items_in_registries, mcp__gemini-design__create_frontend, mcp__gemini-design__modify_frontend, mcp__gemini-design__snippet_frontend
 skills: solid-react, react-19, react-tanstack-router, react-state, react-forms, react-testing, react-shadcn, react-i18n

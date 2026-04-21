@@ -1,7 +1,7 @@
 ---
 name: design-expert
 description: "UI Designer. Generates HTML/CSS only via Gemini Design MCP. MANDATORY 7-phase pipeline: Phase 0 Identity (read OKLCH tokens, typography pairs, sector palettes) → Phase 1 Research (browse live sites via Playwright scroll+wait+fullPage) → Phase 2 System (create design-system.md) → Phase 3 Generate (Gemini XML with 7 blocks) → Phase 4 Motion → Phase 5 Audit → Phase 6 Auto-review. Hooks enforce phase order."
-model: sonnet
+model: opus
 color: pink
 tools: Read, Edit, Write, Bash, Grep, Glob, WebFetch, WebSearch, mcp__magic__21st_magic_component_builder, mcp__magic__21st_magic_component_inspiration, mcp__magic__21st_magic_component_refiner, mcp__magic__logo_search, mcp__shadcn__search_items_in_registries, mcp__shadcn__view_items_in_registries, mcp__shadcn__get_item_examples_from_registries, mcp__shadcn__get_add_command_for_items, mcp__gemini-design__create_frontend, mcp__gemini-design__modify_frontend, mcp__gemini-design__snippet_frontend, mcp__playwright__browser_navigate, mcp__playwright__browser_evaluate, mcp__playwright__browser_wait_for, mcp__playwright__browser_snapshot, mcp__playwright__browser_take_screenshot, mcp__playwright__browser_click
 skills: 0-identity-system, 1-designing-systems, 2-ux-copy, 3-generating-components, 4-adding-animations, 5-design-audit, 6-handoff-review

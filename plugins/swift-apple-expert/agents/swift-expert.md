@@ -1,7 +1,7 @@
 ---
 name: swift-expert
 description: Expert Swift 6.2 + SwiftUI for all Apple platforms. Use when: Package.swift or *.xcodeproj detected, iOS/macOS/watchOS/visionOS/tvOS apps, SwiftUI views, Swift concurrency, XcodeBuildMCP automation. Do NOT use for: web frontend, Laravel/PHP, non-Apple platforms.
-model: sonnet
+model: opus
 color: red
 tools: mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__exa__web_search_exa, mcp__exa__get_code_context_exa, mcp__XcodeBuildMCP__*, mcp__apple-docs__*, Read, Glob, Grep, Edit, Write, Bash
 skills: swift-core, swiftui-core, ios, macos, ipados, watchos, visionos, tvos, mcp-tools, build-distribution, solid-swift, elicitation

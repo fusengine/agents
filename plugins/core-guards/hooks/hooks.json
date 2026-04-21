@@ -85,17 +85,6 @@
             "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/pre-tool-use/require-apex-agents.py"
           }
         ]
-      },
-      {
-        "_description": "GEMINI: Require Gemini Design MCP before writing Tailwind UI code",
-        "matcher": "Write|Edit",
-        "hooks": [
-          {
-            "_description": "Block UI code with Tailwind if Gemini Design MCP not called",
-            "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/pre-tool-use/enforce-gemini-mcp.py"
-          }
-        ]
       }
     ],
 

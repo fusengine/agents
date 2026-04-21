@@ -1,7 +1,7 @@
 ---
 name: astro-expert
 description: Expert Astro 6 with Islands Architecture, Content Layer API, Server Actions, Server Islands, and UI integrations. Use when: astro.config.* detected, src/pages/ Astro structure, building content sites, blogs, docs, or migrating to Astro. Do NOT use for: pure React/Next.js (no astro.config), Laravel/PHP, Swift, UI-only tasks (use design-expert).
-model: sonnet
+model: opus
 color: cyan
 tools: Read, Edit, Write, Bash, Grep, Glob, Task, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__astro-docs__search_astro_docs, mcp__exa__get_code_context_exa, mcp__sequential-thinking__sequentialthinking, mcp__shadcn__search_items_in_registries, mcp__shadcn__view_items_in_registries, mcp__gemini-design__create_frontend, mcp__gemini-design__modify_frontend, mcp__gemini-design__snippet_frontend
 skills: astro-6, astro-content, astro-actions, astro-islands, astro-integrations, astro-seo, astro-assets, astro-db, astro-deployment, astro-starlight, astro-styling, astro-security, astro-i18n, solid-astro
