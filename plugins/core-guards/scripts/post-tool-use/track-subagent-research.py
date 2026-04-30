@@ -10,6 +10,7 @@ Type names use 'subagent-' prefix but contain the required substrings
 """
 import json
 import os
+import shlex
 import sys
 from datetime import datetime, timezone
 
@@ -30,6 +31,24 @@ RESEARCH_TOOLS = {
 # Tools that count as explore-codebase equivalent
 EXPLORE_TOOLS = {'Glob', 'Grep'}
 
+# Bash command names that count as exploration (first non-assignment token).
+# Subagents lacking native Glob/Grep rely on Bash for codebase scanning.
+EXPLORE_BASH_CMDS = {'grep', 'rg', 'find', 'ls', 'fd', 'ast-grep', 'tree', 'cat', 'head', 'tail'}
+
+
+def _bash_executable(cmd: str) -> str:
+    """Return first non-assignment token of a shell command, or '' on failure."""
+    if not cmd:
+        return ''
+    try:
+        tokens = shlex.split(cmd, posix=True)
+    except ValueError:
+        return ''
+    for token in tokens:
+        if '=' not in token.split('/')[-1]:
+            return os.path.basename(token)
+    return ''
+
 
 def main():
     """Entry point."""
@@ -47,6 +66,12 @@ def main():
         phase = 'subagent-research-expert'
     elif tool_name in EXPLORE_TOOLS:
         phase = 'subagent-explore-codebase'
+    elif tool_name == 'Bash':
+        cmd = (data.get('tool_input') or {}).get('command', '').strip()
+        if _bash_executable(cmd) in EXPLORE_BASH_CMDS:
+            phase = 'subagent-explore-codebase'
+        else:
+            sys.exit(0)
     else:
         sys.exit(0)
 

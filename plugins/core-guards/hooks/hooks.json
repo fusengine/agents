@@ -102,7 +102,7 @@
       },
       {
         "_description": "APEX: Track sub-agent MCP/exploration calls for APEX compliance",
-        "matcher": "Glob|Grep|WebSearch|WebFetch|mcp__context7__query-docs|mcp__context7__resolve-library-id|mcp__exa__web_search_exa|mcp__exa__get_code_context_exa|mcp__exa__deep_researcher_start",
+        "matcher": "Bash|Glob|Grep|WebSearch|WebFetch|mcp__context7__query-docs|mcp__context7__resolve-library-id|mcp__exa__web_search_exa|mcp__exa__get_code_context_exa|mcp__exa__deep_researcher_start",
         "hooks": [
           {
             "_description": "Record MCP/exploration calls from sub-agents as APEX phases",
