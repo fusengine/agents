@@ -102,12 +102,23 @@
       },
       {
         "_description": "APEX: Track sub-agent MCP/exploration calls for APEX compliance",
-        "matcher": "Bash|Glob|Grep|WebSearch|WebFetch|mcp__context7__query-docs|mcp__context7__resolve-library-id|mcp__exa__web_search_exa|mcp__exa__get_code_context_exa|mcp__exa__deep_researcher_start",
+        "matcher": "Bash|Glob|Grep|Read|WebSearch|WebFetch|mcp__context7__query-docs|mcp__context7__resolve-library-id|mcp__exa__web_search_exa|mcp__exa__get_code_context_exa|mcp__exa__deep_researcher_start",
         "hooks": [
           {
             "_description": "Record MCP/exploration calls from sub-agents as APEX phases",
             "type": "command",
             "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/post-tool-use/track-subagent-research.py"
+          }
+        ]
+      },
+      {
+        "_description": "Cache MCP results (Context7/Exa) to context/mcp/ for reuse across sub-agents",
+        "matcher": "mcp__context7__query-docs|mcp__exa__web_search_exa|mcp__exa__get_code_context_exa",
+        "hooks": [
+          {
+            "_description": "Persist compacted MCP responses to disk cache",
+            "type": "command",
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/post-tool-use/cache-mcp-result.py"
           }
         ]
       },
@@ -194,6 +205,20 @@
             "_description": "Detect create/build/new keywords and set brainstorming_required flag",
             "type": "command",
             "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/user-prompt/detect-creation-intent.py"
+          }
+        ]
+      }
+    ],
+
+    "SubagentStart": [
+      {
+        "_description": "Inject cached MCP context (Context7/Exa) into sub-agent prompt",
+        "matcher": "",
+        "hooks": [
+          {
+            "_description": "Read context/mcp/ cache and surface relevant entries to sub-agent",
+            "type": "command",
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/subagent-start/inject-context-cache.py"
           }
         ]
       }

@@ -1,12 +1,8 @@
 #!/usr/bin/env python3
 """PostToolUse: Track sub-agent MCP/exploration calls for APEX compliance.
 
-When a sub-agent uses MCP tools (Context7, Exa) or exploration tools (Glob, Grep),
-these are recorded as APEX phase completions — equivalent to the lead calling
-Agent(explore-codebase) or Agent(research-expert).
-
-Type names use 'subagent-' prefix but contain the required substrings
-('explore-codebase', 'research-expert') so _scan_agents() matches them.
+Records APEX phase completions when sub-agents use MCP tools, native exploration
+tools, exploration via Bash, or read cached MCP results from context/mcp/.
 """
 import json
 import os
@@ -16,24 +12,12 @@ from datetime import datetime, timezone
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from _shared.state_manager import load_session_state, save_session_state
-
-# MCP tools that count as research-expert equivalent
-RESEARCH_TOOLS = {
-    'mcp__context7__query-docs',
-    'mcp__context7__resolve-library-id',
-    'mcp__exa__web_search_exa',
-    'mcp__exa__get_code_context_exa',
-    'mcp__exa__deep_researcher_start',
-    'WebSearch',
-    'WebFetch',
-}
-
-# Tools that count as explore-codebase equivalent
-EXPLORE_TOOLS = {'Glob', 'Grep'}
-
-# Bash command names that count as exploration (first non-assignment token).
-# Subagents lacking native Glob/Grep rely on Bash for codebase scanning.
-EXPLORE_BASH_CMDS = {'grep', 'rg', 'find', 'ls', 'fd', 'ast-grep', 'tree', 'cat', 'head', 'tail'}
+from _shared.apex_constants import (
+    CACHE_READ_RE,
+    EXPLORE_BASH_CMDS,
+    EXPLORE_TOOLS,
+    RESEARCH_TOOLS,
+)
 
 
 def _bash_executable(cmd: str) -> str:
@@ -50,6 +34,24 @@ def _bash_executable(cmd: str) -> str:
     return ''
 
 
+def _classify(tool_name: str, tool_input: dict):
+    """Map (tool_name, tool_input) to (phase, cache_hit) or None to skip."""
+    if tool_name in RESEARCH_TOOLS:
+        return 'subagent-research-expert', False
+    if tool_name in EXPLORE_TOOLS:
+        return 'subagent-explore-codebase', False
+    if tool_name == 'Read':
+        path = tool_input.get('file_path', '')
+        if path and CACHE_READ_RE.search(path):
+            return 'subagent-research-expert', True
+        return None
+    if tool_name == 'Bash':
+        cmd = tool_input.get('command', '').strip()
+        if _bash_executable(cmd) in EXPLORE_BASH_CMDS:
+            return 'subagent-explore-codebase', False
+    return None
+
+
 def main():
     """Entry point."""
     try:
@@ -57,40 +59,29 @@ def main():
     except (json.JSONDecodeError, EOFError):
         sys.exit(0)
 
-    # Only track in sub-agent context (agent_id present)
     if not data.get('agent_id'):
         sys.exit(0)
 
-    tool_name = data.get('tool_name', '')
-    if tool_name in RESEARCH_TOOLS:
-        phase = 'subagent-research-expert'
-    elif tool_name in EXPLORE_TOOLS:
-        phase = 'subagent-explore-codebase'
-    elif tool_name == 'Bash':
-        cmd = (data.get('tool_input') or {}).get('command', '').strip()
-        if _bash_executable(cmd) in EXPLORE_BASH_CMDS:
-            phase = 'subagent-explore-codebase'
-        else:
-            sys.exit(0)
-    else:
+    classified = _classify(data.get('tool_name', ''), data.get('tool_input') or {})
+    if classified is None:
         sys.exit(0)
+    phase, cache_hit = classified
 
     sid = data.get('session_id', '') or 'unknown'
     state = load_session_state(sid)
     agents = state.setdefault('agents', [])
-
     tool_response = data.get('tool_response', '')
     response_length = len(str(tool_response)) if tool_response else 0
+    quality = 'sufficient' if (cache_hit or response_length > 50) else 'insufficient'
 
     agents.append({
         'timestamp': datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ'),
         'type': phase,
         'agent_id': data.get('agent_id', ''),
-        'tool_name': tool_name,
+        'tool_name': data.get('tool_name', ''),
         'response_length': response_length,
-        'quality': 'sufficient' if response_length > 50 else 'insufficient',
+        'quality': quality,
     })
-
     save_session_state(sid, state)
     sys.exit(0)
 
