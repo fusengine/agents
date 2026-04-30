@@ -1,5 +1,10 @@
 # Release Notes
 
+## [1.38.74] - 30-04-2026
+
+- Added (core-guards 1.1.26, ai-pilot 1.2.23): MCP response cache system — per-session cache of mcp__context7/exa results, SubagentStart inject, APEX research-expert phase satisfied by cache reads
+- Added (1.38.74): Claude Code performance tuning prompt in setup.sh — interactive multiselect exposing settings.env perf flags (FORK_SUBAGENT, ATTRIBUTION_HEADER, DISABLE_NONESSENTIAL_TRAFFIC, DISABLE_AUTOUPDATER) with idempotent marker
+
 ## [1.38.73] - 30-04-2026
 
 - Fixed (core-guards 1.1.25): track Bash exploration commands (grep/find/ls/...) in subagent APEX phase via shlex-parsed whitelist; subagents lacking native Glob/Grep are no longer falsely blocked by require-apex-agents
