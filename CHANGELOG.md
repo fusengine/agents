@@ -1,5 +1,10 @@
 # Release Notes
 
+## [1.38.73] - 30-04-2026
+
+- Fixed (core-guards 1.1.25): track Bash exploration commands (grep/find/ls/...) in subagent APEX phase via shlex-parsed whitelist; subagents lacking native Glob/Grep are no longer falsely blocked by require-apex-agents
+- Maintenance (core-guards 1.1.25): bump @clack/prompts, zod, @biomejs/biome, @types/bun in statusline and hooks-loader
+
 ## [1.38.72] - 21-04-2026
 
 - Maintenance (ai-pilot 1.2.22, astro-expert 1.0.6, cartographer 1.0.6, core-guards 1.1.24, design-expert 2.1.23, laravel-expert 1.1.14, nextjs-expert 1.1.16, react-expert 1.0.13, security-expert 1.0.11, solid 1.0.10, swift-apple-expert 1.1.12): tune agent models (opus for reasoning-heavy, sonnet for utilities) and streamline core-guards hooks
