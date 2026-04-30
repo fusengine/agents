@@ -8,6 +8,7 @@ import type { SetupPaths } from "../interfaces/setup";
 import { copyExecutable } from "../utils/fs-helpers";
 import { configureShell } from "./env-manager";
 import { configureMcpServers } from "./mcp-setup";
+import { promptPerfEnv } from "./perf-env";
 import {
 	backupSettings,
 	configureDefaults,
@@ -78,6 +79,8 @@ export async function runSetup(
 	} else {
 		p.log.info("Agent Teams already enabled");
 	}
+
+	settings = await promptPerfEnv(settings);
 
 	await saveSettings(paths.settings, settings);
 
