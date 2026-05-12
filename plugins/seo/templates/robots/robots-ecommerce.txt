@@ -1,0 +1,29 @@
+# robots.txt for e-commerce sites
+User-agent: *
+Allow: /
+
+# Block search and faceted noise (index bloat prevention)
+Disallow: /search
+Disallow: /*?q=
+Disallow: /*?sort=
+Disallow: /*?filter=
+Disallow: /cart/
+Disallow: /checkout/
+Disallow: /account/
+Disallow: /admin/
+
+# Allow critical bots full access
+User-agent: Googlebot
+Allow: /
+Allow: /*?utm_*
+
+# AI crawlers (GEO)
+User-agent: GPTBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+Sitemap: https://example.com/sitemap.xml
+Sitemap: https://example.com/sitemap-image.xml
+Sitemap: https://example.com/sitemap-product.xml

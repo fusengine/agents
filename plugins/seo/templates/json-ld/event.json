@@ -1,0 +1,39 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Event",
+  "name": "<Event Name>",
+  "startDate": "2026-06-15T19:00:00+02:00",
+  "endDate": "2026-06-15T22:00:00+02:00",
+  "eventAttendanceMode": "https://schema.org/MixedEventAttendanceMode",
+  "eventStatus": "https://schema.org/EventScheduled",
+  "location": {
+    "@type": "Place",
+    "name": "<Venue Name>",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Rue de Lausanne 1",
+      "addressLocality": "Genève",
+      "postalCode": "1201",
+      "addressCountry": "CH"
+    }
+  },
+  "image": ["https://example.com/event.jpg"],
+  "description": "<Event description 150-300 chars>",
+  "offers": {
+    "@type": "Offer",
+    "url": "https://example.com/events/<slug>",
+    "price": "25.00",
+    "priceCurrency": "CHF",
+    "availability": "https://schema.org/InStock",
+    "validFrom": "2026-05-01T10:00:00+02:00"
+  },
+  "performer": {
+    "@type": "PerformingGroup",
+    "name": "<Performer Name>"
+  },
+  "organizer": {
+    "@type": "Organization",
+    "name": "<Organizer Name>",
+    "url": "https://example.com"
+  }
+}

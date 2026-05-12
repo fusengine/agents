@@ -1,0 +1,46 @@
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "@id": "https://example.com/#business",
+  "name": "<Business Name>",
+  "image": "https://example.com/storefront.jpg",
+  "url": "https://example.com",
+  "telephone": "+41-22-555-0100",
+  "priceRange": "$$",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Rue du Commerce 12",
+    "addressLocality": "Genève",
+    "postalCode": "1204",
+    "addressCountry": "CH"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 46.2044,
+    "longitude": 6.1432
+  },
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      "opens": "09:00",
+      "closes": "18:00"
+    },
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": "Saturday",
+      "opens": "10:00",
+      "closes": "16:00"
+    }
+  ],
+  "sameAs": [
+    "https://www.facebook.com/<page>",
+    "https://www.instagram.com/<handle>",
+    "https://maps.google.com/?cid=<gbp-cid>"
+  ],
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.7",
+    "reviewCount": "89"
+  }
+}

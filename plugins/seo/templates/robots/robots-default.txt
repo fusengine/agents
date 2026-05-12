@@ -1,0 +1,10 @@
+# robots.txt — default permissive
+User-agent: *
+Allow: /
+
+# Common internal paths to block
+Disallow: /admin/
+Disallow: /private/
+Disallow: /*?utm_
+
+Sitemap: https://example.com/sitemap.xml

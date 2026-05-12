@@ -1,0 +1,31 @@
+# robots.txt for publishers / news sites
+User-agent: *
+Allow: /
+
+# Block internal/staging
+Disallow: /admin/
+Disallow: /preview/
+Disallow: /staging/
+Disallow: /*?session=
+
+# Allow Googlebot-News explicitly
+User-agent: Googlebot-News
+Allow: /
+Allow: /news/
+
+# AI crawlers (publishers often restrict — adjust per editorial policy)
+User-agent: GPTBot
+Disallow: /paywall/
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+Sitemap: https://example.com/sitemap.xml
+Sitemap: https://example.com/sitemap-news.xml
+Sitemap: https://example.com/sitemap-image.xml

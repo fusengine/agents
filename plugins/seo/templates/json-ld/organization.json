@@ -1,0 +1,33 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "@id": "https://example.com/#org",
+  "name": "<Organization Name>",
+  "url": "https://example.com",
+  "logo": {
+    "@type": "ImageObject",
+    "url": "https://example.com/logo.png",
+    "width": 600,
+    "height": 60
+  },
+  "description": "<Organization description 150-300 chars>",
+  "foundingDate": "2020-01-01",
+  "founder": {
+    "@type": "Person",
+    "name": "<Founder Name>"
+  },
+  "contactPoint": [
+    {
+      "@type": "ContactPoint",
+      "contactType": "customer support",
+      "telephone": "+41-22-555-0100",
+      "email": "support@example.com",
+      "availableLanguage": ["English", "French", "German"]
+    }
+  ],
+  "sameAs": [
+    "https://www.linkedin.com/company/<slug>",
+    "https://twitter.com/<handle>",
+    "https://github.com/<org>"
+  ]
+}

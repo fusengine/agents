@@ -1,0 +1,43 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Recipe",
+  "name": "<Recipe Name>",
+  "image": ["https://example.com/recipe-16x9.jpg"],
+  "author": {
+    "@type": "Person",
+    "name": "<Chef Name>"
+  },
+  "datePublished": "2026-05-01",
+  "description": "<Recipe description 150-300 chars>",
+  "prepTime": "PT15M",
+  "cookTime": "PT30M",
+  "totalTime": "PT45M",
+  "recipeYield": "4 servings",
+  "recipeCategory": "Main Course",
+  "recipeCuisine": "French",
+  "nutrition": {
+    "@type": "NutritionInformation",
+    "calories": "420 calories"
+  },
+  "recipeIngredient": [
+    "<ingredient 1 with quantity>",
+    "<ingredient 2 with quantity>"
+  ],
+  "recipeInstructions": [
+    {
+      "@type": "HowToStep",
+      "name": "Step 1",
+      "text": "<instruction>"
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Step 2",
+      "text": "<instruction>"
+    }
+  ],
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.8",
+    "reviewCount": "210"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "name": "fuse-seo",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "SEO/GEO 2026 plugin for Claude Code — local-first, framework-aware",
+  "scripts": {
+    "parse-meta": "bun scripts/parse-meta.ts",
+    "validate-schema": "bun scripts/validate-schema.ts",
+    "check-cwv": "bun scripts/check-cwv.ts",
+    "parse-sitemap": "bun scripts/parse-sitemap.ts",
+    "parse-robots": "bun scripts/parse-robots.ts",
+    "parse-hreflang": "bun scripts/parse-hreflang.ts",
+    "diff-seo": "bun scripts/diff-seo.ts",
+    "geo-score": "bun scripts/geo-score.ts"
+  },
+  "dependencies": {
+    "cheerio": "^1.2.0",
+    "fast-xml-parser": "^4.5.0",
+    "lighthouse": "^12.3.0",
+    "chrome-launcher": "^1.1.2"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.3.0",
+    "typescript": "^5.7.0"
+  }
+}

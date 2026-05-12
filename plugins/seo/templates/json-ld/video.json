@@ -1,0 +1,44 @@
+{
+  "@context": "https://schema.org",
+  "@type": "VideoObject",
+  "name": "<Video Title>",
+  "description": "<Video description 200-500 chars>",
+  "thumbnailUrl": [
+    "https://example.com/thumb-16x9.jpg",
+    "https://example.com/thumb-4x3.jpg",
+    "https://example.com/thumb-1x1.jpg"
+  ],
+  "uploadDate": "2026-05-01T08:00:00+00:00",
+  "duration": "PT2M30S",
+  "contentUrl": "https://example.com/videos/<slug>.mp4",
+  "embedUrl": "https://example.com/embed/<id>",
+  "publisher": {
+    "@type": "Organization",
+    "name": "<Publisher>",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://example.com/logo.png"
+    }
+  },
+  "hasPart": [
+    {
+      "@type": "Clip",
+      "name": "Introduction",
+      "startOffset": 0,
+      "endOffset": 30,
+      "url": "https://example.com/videos/<slug>#t=0"
+    },
+    {
+      "@type": "Clip",
+      "name": "Main content",
+      "startOffset": 30,
+      "endOffset": 120,
+      "url": "https://example.com/videos/<slug>#t=30"
+    }
+  ],
+  "potentialAction": {
+    "@type": "SeekToAction",
+    "target": "https://example.com/videos/<slug>?t={seek_to_second_number}",
+    "startOffset-input": "required name=seek_to_second_number"
+  }
+}

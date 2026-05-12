@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
+  <url>
+    <loc>https://example.com/videos/page-with-video</loc>
+    <video:video>
+      <video:thumbnail_loc>https://example.com/videos/thumb.jpg</video:thumbnail_loc>
+      <video:title>Video title (max 100 chars)</video:title>
+      <video:description>Description (max 2048 chars)</video:description>
+      <video:content_loc>https://example.com/videos/video.mp4</video:content_loc>
+      <video:player_loc>https://example.com/embed/abc123</video:player_loc>
+      <video:duration>150</video:duration>
+      <video:publication_date>2026-05-01T08:00:00+00:00</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+      <video:requires_subscription>no</video:requires_subscription>
+      <video:live>no</video:live>
+    </video:video>
+  </url>
+</urlset>

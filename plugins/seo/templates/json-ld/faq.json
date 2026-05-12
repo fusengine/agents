@@ -1,0 +1,23 @@
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "_note": "FAQPage restricted to government/health sites since Aug 2023 — use sparingly for other industries",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "<Question 1>",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "<Answer 1: 40-60 words, direct, factual>"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "<Question 2>",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "<Answer 2>"
+      }
+    }
+  ]
+}

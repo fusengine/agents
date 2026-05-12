@@ -1,0 +1,29 @@
+# robots.txt for SaaS sites
+User-agent: *
+Allow: /
+
+# Block private/internal paths
+Disallow: /admin/
+Disallow: /api/
+Disallow: /account/
+Disallow: /billing/
+Disallow: /*?token=
+Disallow: /*?invite=
+
+# Allow AI crawlers explicitly (GEO 2026)
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+Sitemap: https://example.com/sitemap.xml

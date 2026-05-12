@@ -27,7 +27,7 @@
     {
       "name": "fuse-ai-pilot",
       "source": "./plugins/ai-pilot",
-      "description": "AI Pilot workflow: APEX methodology (auto-detects Laravel/Next.js/React/Swift), sniper (7-phase code quality + DRY detection), research-expert, explore-codebase, seo-expert (SEO/GEO/Local SEO 2026)",
+      "description": "AI Pilot workflow: APEX methodology (auto-detects Laravel/Next.js/React/Swift), sniper (7-phase code quality + DRY detection), research-expert, explore-codebase",
       "version": "1.2.23",
       "author": {
         "name": "Fusengine",
@@ -45,10 +45,6 @@
         "jscpd",
         "duplication",
         "research",
-        "seo",
-        "local-seo",
-        "geo",
-        "google-business-profile",
         "react-effects-audit",
         "ref-routing"
       ],
@@ -73,7 +69,6 @@
         "./agents/explore-codebase.md",
         "./agents/research-expert.md",
         "./agents/websearch.md",
-        "./agents/seo-expert.md",
         "./agents/brainstorming.md"
       ],
       "skills": [
@@ -82,7 +77,6 @@
         "./skills/exploration",
         "./skills/code-quality",
         "./skills/sniper-check",
-        "./skills/seo",
         "./skills/skill-creator",
         "./skills/agent-creator",
         "./skills/react-effects-audit",
@@ -90,6 +84,69 @@
         "./skills/tdd",
         "./skills/verification"
       ]
+    },
+    {
+      "name": "fuse-seo",
+      "source": "./plugins/seo",
+      "description": "SEO/GEO 2026 plugin: technical SEO, schema markup, E-E-A-T, AI Overviews/ChatGPT/Perplexity optimization, local SEO, sitemaps, hreflang, internal linking, semantic clustering, search experience. Local-first, zero third-party APIs.",
+      "version": "1.0.0",
+      "author": {
+        "name": "Fusengine",
+        "url": "https://github.com/fusengine"
+      },
+      "homepage": "https://github.com/fusengine/agents",
+      "repository": "https://github.com/fusengine/agents",
+      "license": "MIT",
+      "keywords": [
+        "seo",
+        "geo",
+        "ai-overviews",
+        "schema-org",
+        "e-e-a-t",
+        "core-web-vitals",
+        "local-seo",
+        "hreflang",
+        "sitemap",
+        "internal-linking",
+        "semantic-clustering",
+        "sxo"
+      ],
+      "category": "development",
+      "strict": true,
+      "agents": [
+        "./agents/seo-expert.md",
+        "./agents/seo-technical.md",
+        "./agents/seo-schema.md",
+        "./agents/seo-content.md",
+        "./agents/seo-geo.md",
+        "./agents/seo-local.md",
+        "./agents/seo-sitemap.md",
+        "./agents/seo-images.md",
+        "./agents/seo-cluster.md"
+      ],
+      "skills": [
+        "./skills/seo",
+        "./skills/seo-audit",
+        "./skills/seo-page",
+        "./skills/seo-technical",
+        "./skills/seo-schema",
+        "./skills/seo-content",
+        "./skills/seo-images",
+        "./skills/seo-sitemap",
+        "./skills/seo-hreflang",
+        "./skills/seo-internal-linking",
+        "./skills/seo-cluster",
+        "./skills/seo-content-brief",
+        "./skills/seo-plan",
+        "./skills/seo-sxo",
+        "./skills/seo-featured-snippets",
+        "./skills/seo-local",
+        "./skills/seo-geo",
+        "./skills/seo-ecommerce",
+        "./skills/seo-video",
+        "./skills/seo-redirects"
+      ],
+      "hooks": "./hooks/hooks.json"
     },
     {
       "name": "fuse-commit-pro",
