@@ -1,5 +1,9 @@
 # Release Notes
 
+## [1.38.78] - 12-05-2026
+
+- Fixed (seo 1.0.2): bump `fast-xml-parser` from `^4.5.0` to `^5.7.0` to resolve Dependabot CVE alert #1 (XMLBuilder XML Comment and CDATA Injection via Unescaped Delimiters). v5 is backward-compatible with our XMLParser + isArray callback usage — no code changes required.
+
 ## [1.38.77] - 12-05-2026
 
 - Added (laravel 1.2.0): full Laravel 13.0 (March 17 2026) coverage — PHP 8.3+ required. 5 new skills: `laravel-attributes` (transversal #[Table] #[Fillable] #[Hidden] #[Tries] #[Backoff] #[Signature] #[Middleware] #[Authorize] #[Seed] etc.), `laravel-ai-sdk` (first-party AI: agents, tools, embeddings, streaming, 15+ providers), `laravel-jsonapi` (JSON:API Resources with sparse fieldsets, relationships), `laravel-vector-search` (pgvector native + HNSW index), `laravel-upgrade-v13` (centralized L12→L13 migration guide with composer commands, breaking changes, attributes migration, Laravel Boost MCP, checklist, and bash automation script)
