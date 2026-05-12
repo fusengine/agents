@@ -18,7 +18,7 @@ This guide walks through creating a complete FuseCore module from scratch.
 | Requirement | Check |
 |-------------|-------|
 | FuseCore installed | `/FuseCore/Core/` exists |
-| Laravel 12 | `php artisan --version` |
+| Laravel 13 | `php artisan --version` |
 | Composer autoload | `FuseCore\\` registered |
 
 ## Step-by-Step Guide

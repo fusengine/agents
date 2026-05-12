@@ -2,9 +2,9 @@
 name: laravel-stripe-connect
 description: Build marketplaces and platforms with Stripe Connect. Use when implementing multi-vendor payments, seller onboarding, commissions, payouts, or split payments.
 versions:
-  laravel: "12.x"
+  laravel: "13.0"
   stripe-php: "16.x"
-  php: "8.4"
+  php: "8.3"
 user-invocable: true
 references: references/overview.md, references/account-types.md, references/payment-flows.md, references/onboarding.md, references/fees-commissions.md, references/payouts.md, references/refunds-disputes.md, references/compliance.md, references/templates/Seller.php.md, references/templates/SellerOnboardingController.php.md, references/templates/MarketplacePaymentController.php.md, references/templates/PayoutController.php.md, references/templates/ConnectWebhookHandler.php.md, references/templates/ConnectRoutes.php.md
 related-skills: laravel-billing, laravel-api, laravel-auth
@@ -224,3 +224,13 @@ $needsInfo = !empty($account->requirements->currently_due);
 - Hardcode Stripe account IDs
 - Forget to handle dispute notifications
 - Process refunds without checking seller balance
+
+---
+
+## Laravel 13 Notes
+
+Stripe Connect (`stripe/stripe-php` 16.x) est **compatible Laravel 13**. Adaptations :
+
+- Webhook Connect : exclure `connect/webhook` de `PreventRequestForgery` (voir [[laravel-auth]])
+- `account.updated` handler : utiliser `Context::add('stripe_account', $accountId)` pour propager dans la queue
+- PHP 8.3 : `final readonly class` pour `Seller` DTO et `PayoutResult`

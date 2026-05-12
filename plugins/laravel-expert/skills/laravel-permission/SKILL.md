@@ -2,9 +2,9 @@
 name: laravel-permission
 description: Spatie Laravel Permission - roles, permissions, middleware, Blade directives, teams, wildcards, super-admin, API, testing. Use when implementing RBAC, role-based access control, or user authorization.
 versions:
-  laravel: "12.46"
+  laravel: "13.0"
   spatie-permission: "6.24"
-  php: "8.5"
+  php: "8.3"
 user-invocable: false
 references: references/spatie-permission.md, references/middleware.md, references/blade-directives.md, references/teams.md, references/wildcard-permissions.md, references/super-admin.md, references/cache.md, references/direct-permissions.md, references/artisan-commands.md, references/custom-models.md, references/events.md, references/query-scopes.md, references/policies.md, references/api-usage.md, references/testing.md, references/performance.md
 related-skills: laravel-auth, laravel-api, laravel-testing
@@ -238,3 +238,35 @@ beforeEach(fn () => app(PermissionRegistrar::class)->forgetCachedPermissions());
 | API / Sanctum | ✅ | api-usage.md |
 | Testing | ✅ | testing.md |
 | Performance | ✅ | performance.md |
+
+---
+
+## Laravel 13 Notes
+
+Spatie Permission 6.24 est **compatible Laravel 13**. Intégrations L13 :
+
+- **Cache prefix hyphens** : `spatie.permission.cache` devient `spatie-permission-cache` ; configurer `permission.cache.key` si rétro-compat requise
+- **Attributes Controllers** : combiner `#[Authorize]` (policy) et `#[Middleware('role:admin')]` (RBAC) — voir [[laravel-blade]]
+- **PHP 8.3** : `final readonly class` pour Role/Permission DTOs custom
+
+```php
+#[Middleware(['auth', 'role:admin|editor'])]
+#[Authorize('update', Post::class)]
+public function update(UpdatePostRequest $request, Post $post) { /* ... */ }
+```
+
+## Best Practices
+
+### DO
+- Définir une seule source de vérité : Policy OU Permission (pas les deux pour la même action)
+- Utiliser `permission:create-post` (verb-noun) pour clarté
+- Activer `teams` uniquement si réel multi-tenant
+- Cacher les permissions par utilisateur (`Cache::remember('user.permissions.'.$id, ...)`)
+- Super admin via `Gate::before()` (jamais via permission wildcard `*`)
+
+### DON'T
+- Stocker permissions en session (utiliser le cache Spatie)
+- Mixer `hasRole()` et `hasPermissionTo()` sans cohérence d'architecture
+- Hardcoder noms de rôles dans le code (utiliser enum `RoleEnum`)
+- Oublier de purger le cache après `assignRole()` en seeder
+- Donner `*` à un super admin (préférer `Gate::before()` ciblé)

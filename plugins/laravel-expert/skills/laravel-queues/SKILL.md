@@ -1,24 +1,24 @@
 ---
 name: laravel-queues
-description: Implement background jobs with queues, workers, batches, chains, middleware, and failure handling. Use when processing async tasks or handling long-running operations.
+description: Laravel 13 background jobs - PHP Attributes (#[Queue], #[Connection], #[Tries], #[Backoff]), workers, batches, chains, middleware, Queue::route() centralised routing. Use for async tasks.
 versions:
-  laravel: "12.46"
+  laravel: "13.0"
   horizon: "5.43"
-  php: "8.5"
+  php: "8.3"
 user-invocable: false
-references: references/jobs.md, references/dispatching.md, references/workers.md, references/batching.md, references/chaining.md, references/middleware.md, references/failed-jobs.md, references/horizon.md, references/testing.md, references/troubleshooting.md, references/templates/QueueableJob.php.md, references/templates/BatchJob.php.md, references/templates/ChainedJobs.php.md, references/templates/JobMiddleware.php.md, references/templates/JobTest.php.md
-related-skills: laravel-architecture, laravel-eloquent
+references: references/legacy-properties.md, references/jobs.md, references/dispatching.md, references/workers.md, references/batching.md, references/chaining.md, references/middleware.md, references/failed-jobs.md, references/horizon.md, references/testing.md, references/troubleshooting.md, references/templates/QueueableJob.php.md, references/templates/BatchJob.php.md, references/templates/ChainedJobs.php.md, references/templates/JobMiddleware.php.md, references/templates/JobTest.php.md
+related-skills: laravel-attributes, laravel-architecture, laravel-eloquent
 ---
 
-# Laravel Queues
+# Laravel Queues (L13 — Attributes-first)
 
 ## Agent Workflow (MANDATORY)
 
 Before ANY implementation, use `TeamCreate` to spawn 3 agents:
 
-1. **fuse-ai-pilot:explore-codebase** - Analyze existing job patterns
-2. **fuse-ai-pilot:research-expert** - Verify Queue docs via Context7
-3. **mcp__context7__query-docs** - Check job and worker patterns
+1. **fuse-ai-pilot:explore-codebase** - Audit job classes, connections, queue routes
+2. **fuse-ai-pilot:research-expert** - Verify L13 Queue + Queue::route() via Context7
+3. **mcp__context7__query-docs** - Check queue attribute patterns
 
 After implementation, run **fuse-ai-pilot:sniper** for validation.
 
@@ -26,51 +26,42 @@ After implementation, run **fuse-ai-pilot:sniper** for validation.
 
 ## Overview
 
-| Component | Purpose |
-|-----------|---------|
-| **Jobs** | Background tasks with retries, timeouts |
-| **Workers** | Process jobs from queues |
-| **Batches** | Group jobs with progress tracking |
-| **Chains** | Sequential job execution |
-| **Middleware** | Rate limiting, deduplication |
-| **Horizon** | Redis queue monitoring dashboard |
+Laravel 13 introduces **PHP Attributes** on Queueables (Jobs, Listeners, Notifications, Mailables, Broadcast Events) as the primary configuration mechanism. Centralised routing is configured via `Queue::route()` in `AppServiceProvider::boot()`.
 
----
+| Attribute (L13 MAIN) | Legacy property |
+|----------------------|-----------------|
+| `#[Connection('redis')]` · `#[Queue('podcasts')]` | `public $connection` · `public $queue` |
+| `#[Tries(5)]` · `#[Timeout(120)]` · `#[MaxExceptions(3)]` | `public int $tries / $timeout / $maxExceptions` |
+| `#[Backoff([10, 30, 60])]` · `#[FailOnTimeout]` | `public $backoff` · `public bool $failOnTimeout` |
+| `#[UniqueFor(3600)]` · `#[AfterCommit]` · `#[DeleteWhenMissingModels]` | `public $uniqueFor / $afterCommit / $deleteWhenMissingModels` |
 
-## Decision Guide: Queue Driver
-
-```
-Which driver?
-├── Development → sync (instant execution)
-├── Small app → database (simple, no Redis)
-├── Production → redis (fast, Horizon support)
-├── AWS → sqs (managed, scalable)
-└── High volume → redis + Horizon (monitoring)
-```
-
----
-
-## Decision Guide: Job Design
-
-```
-Job type?
-├── Simple async → Standard Job
-├── Group processing → Batch (progress, cancel)
-├── Sequential steps → Chain (A → B → C)
-├── Rate limited → Middleware + RateLimiter
-├── Unique execution → UniqueJob / WithoutOverlapping
-└── Long running → Timeout + Retry settings
-```
+> Applies to **Jobs, Listeners, Notifications, Mailables, and Broadcast Events**.
 
 ---
 
 ## Critical Rules
 
-1. **Use ShouldQueue** for async processing
-2. **Set tries and backoff** for resilience
-3. **Implement failed()** method for error handling
-4. **Use database transactions** carefully with jobs
-5. **Monitor with Horizon** in production
+1. **Declare queue metadata with Attributes** - `#[Queue]`, `#[Tries]`, `#[Backoff]`
+2. **Centralise routing with `Queue::route()`** in `AppServiceProvider::boot()`
+3. **Implement `failed(Throwable $e)`** for every production job
+4. **Use `#[AfterCommit]`** when dispatching inside DB transactions
+5. **Monitor Redis queues with Horizon** in production
+
+---
+
+## Architecture
+
+```
+app/
+├── Jobs/
+│   └── ProcessPodcast.php       # #[Connection, Queue, Tries, Backoff]
+├── Providers/
+│   └── AppServiceProvider.php   # Queue::route('podcasts', 'redis')
+└── Listeners/
+    └── SendShipmentNotification.php  # #[Queue('mail')]
+```
+
+→ See [templates/QueueableJob.php.md](references/templates/QueueableJob.php.md)
 
 ---
 
@@ -78,86 +69,79 @@ Job type?
 
 ### Concepts
 
-| Topic | Reference | When to Consult |
-|-------|-----------|-----------------|
-| **Jobs** | [jobs.md](references/jobs.md) | Creating job classes |
-| **Dispatching** | [dispatching.md](references/dispatching.md) | Sending jobs to queues |
-| **Workers** | [workers.md](references/workers.md) | Running queue workers |
-| **Batching** | [batching.md](references/batching.md) | Grouping jobs |
-| **Chaining** | [chaining.md](references/chaining.md) | Sequential jobs |
-| **Middleware** | [middleware.md](references/middleware.md) | Rate limiting, dedup |
-| **Failed Jobs** | [failed-jobs.md](references/failed-jobs.md) | Error handling |
-| **Horizon** | [horizon.md](references/horizon.md) | Monitoring dashboard |
-| **Testing** | [testing.md](references/testing.md) | Job testing |
-| **Troubleshooting** | [troubleshooting.md](references/troubleshooting.md) | Common issues |
+- **Migration L12→L13:** [legacy-properties.md](references/legacy-properties.md)
+- **Jobs lifecycle:** [jobs.md](references/jobs.md) · [dispatching.md](references/dispatching.md) · [workers.md](references/workers.md)
+- **Composition:** [batching.md](references/batching.md) · [chaining.md](references/chaining.md) · [middleware.md](references/middleware.md)
+- **Reliability:** [failed-jobs.md](references/failed-jobs.md) · [horizon.md](references/horizon.md) · [testing.md](references/testing.md) · [troubleshooting.md](references/troubleshooting.md)
 
 ### Templates
 
 | Template | When to Use |
 |----------|-------------|
-| [QueueableJob.php.md](references/templates/QueueableJob.php.md) | Standard job with retries |
+| [QueueableJob.php.md](references/templates/QueueableJob.php.md) | Attribute-based job |
 | [BatchJob.php.md](references/templates/BatchJob.php.md) | Batchable job |
-| [ChainedJobs.php.md](references/templates/ChainedJobs.php.md) | Job chain implementation |
+| [ChainedJobs.php.md](references/templates/ChainedJobs.php.md) | Job chain |
 | [JobMiddleware.php.md](references/templates/JobMiddleware.php.md) | Custom middleware |
-| [JobTest.php.md](references/templates/JobTest.php.md) | Testing jobs |
+| [JobTest.php.md](references/templates/JobTest.php.md) | Job test |
 
 ---
 
 ## Quick Reference
 
-### Basic Job
+### Attribute-based Job (L13 MAIN)
 
 ```php
-final class ProcessOrder implements ShouldQueue
+use Illuminate\Queue\Attributes\{Connection, Queue, Tries, Timeout, Backoff, MaxExceptions, FailOnTimeout, UniqueFor};
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Foundation\Queue\Queueable;
+
+#[Connection('redis')]
+#[Queue('podcasts')]
+#[Tries(5)]
+#[Timeout(120)]
+#[Backoff([10, 30, 60])]
+#[MaxExceptions(3)]
+#[FailOnTimeout]
+#[UniqueFor(3600)]
+final class ProcessPodcast implements ShouldQueue
 {
     use Queueable;
 
-    public int $tries = 3;
-    public int $backoff = 60;
-    public int $timeout = 120;
+    public function __construct(public readonly Podcast $podcast) {}
 
-    public function __construct(
-        public readonly Order $order,
-    ) {}
+    public function handle(PodcastService $service): void { $service->process($this->podcast); }
 
-    public function handle(OrderService $service): void
-    {
-        $service->process($this->order);
-    }
-
-    public function failed(\Throwable $e): void
-    {
-        Log::error('Order failed', ['id' => $this->order->id]);
-    }
+    public function failed(\Throwable $e): void { Log::error('Podcast failed', ['id' => $this->podcast->id, 'e' => $e]); }
 }
 ```
 
-### Dispatch
+### Queue Routing (centralised)
 
 ```php
-// Immediate
-ProcessOrder::dispatch($order);
+// app/Providers/AppServiceProvider.php
+use Illuminate\Support\Facades\Queue;
 
-// Delayed
-ProcessOrder::dispatch($order)->delay(now()->addMinutes(5));
-
-// On specific queue
-ProcessOrder::dispatch($order)->onQueue('orders');
+public function boot(): void
+{
+    Queue::route('podcasts', connection: 'redis', queue: 'media');
+    Queue::route('mail',     connection: 'redis', queue: 'transactional');
+}
 ```
+
+→ Legacy `public int $tries = 5` style — see [legacy-properties.md](references/legacy-properties.md)
 
 ---
 
 ## Best Practices
 
 ### DO
-- Use `final` for job classes
-- Implement `failed()` method
-- Set appropriate `timeout` values
-- Use `Unique` for one-at-a-time jobs
-- Monitor with Horizon in production
+- Use **Attributes** on Jobs, Listeners, Notifications, Mailables, Broadcast Events
+- Centralise routing via `Queue::route()` in `AppServiceProvider::boot()`
+- Use `#[AfterCommit]` when dispatching inside a transaction
+- `final` job classes, implement `failed()`, monitor Redis with Horizon
 
 ### DON'T
-- Dispatch inside database transactions (use `afterCommit`)
-- Store large objects in job properties
-- Forget to handle failures
-- Use sync driver in production
+- Mix `#[Tries]` and `public int $tries` (single source of truth)
+- Dispatch in a transaction without `#[AfterCommit]`
+- Store large objects/closures in job constructor properties
+- Use `sync` driver in production

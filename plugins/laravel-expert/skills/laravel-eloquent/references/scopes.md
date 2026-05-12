@@ -14,7 +14,7 @@ What type of scope?
 ├── Always applied → Global Scope
 ├── Called explicitly → Local Scope
 ├── Accepts parameters → Dynamic Scope
-└── Laravel 12 → Use #[Scope] attribute
+└── Laravel 13 → Use #[Scope] attribute
 ```
 
 ## Scope Types
@@ -25,7 +25,7 @@ What type of scope?
 | **Local** | When called | `User::active()` |
 | **Dynamic** | With parameters | `User::ofType('admin')` |
 
-## Local Scopes (Laravel 12)
+## Local Scopes (Laravel 13)
 
 | Syntax | Method |
 |--------|--------|

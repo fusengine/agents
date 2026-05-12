@@ -11,7 +11,7 @@ related: module-structure.md, module-discovery.md
 
 ## Overview
 
-FuseCore is a **Modular Monolith** architecture pattern for Laravel 12. It combines the simplicity of a monolith with the organization of microservices.
+FuseCore is a **Modular Monolith** architecture pattern for Laravel 13. It combines the simplicity of a monolith with the organization of microservices.
 
 ## Architecture Pattern
 

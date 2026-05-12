@@ -61,7 +61,7 @@ Schema::rename('users_new', 'users');
 
 ---
 
-## Laravel 12 Safe Index
+## Laravel 13 Safe Index
 
 ```php
 Schema::whenTableDoesntHaveIndex('posts', 'slug', fn($t) => $t->index('slug'));

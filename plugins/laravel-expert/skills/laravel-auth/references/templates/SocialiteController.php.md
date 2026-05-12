@@ -1,6 +1,6 @@
 ---
 name: SocialiteController.php
-description: Laravel Socialite OAuth controller from official Laravel 12 docs
+description: Laravel Socialite OAuth controller from official Laravel 13 docs
 keywords: socialite, oauth, social login, github, google
 source: https://laravel.com/docs/12.x/socialite
 ---

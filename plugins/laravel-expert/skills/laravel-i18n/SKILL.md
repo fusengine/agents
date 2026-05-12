@@ -2,8 +2,8 @@
 name: laravel-i18n
 description: Laravel localization - __(), trans_choice(), lang files, JSON translations, pluralization, middleware, formatting. Use when implementing translations.
 versions:
-  laravel: "12.x"
-  php: "8.4"
+  laravel: "13.0"
+  php: "8.3"
 user-invocable: true
 references: references/localization.md, references/pluralization.md, references/blade-translations.md, references/middleware.md, references/formatting.md, references/packages.md, references/best-practices.md, references/templates/SetLocaleMiddleware.php.md, references/templates/lang-files.md, references/templates/LocaleServiceProvider.php.md, references/templates/LocaleRoutes.php.md
 related-skills: laravel-blade, laravel-api
@@ -116,3 +116,22 @@ App::currentLocale();  // 'fr'
 - Hardcode text in views
 - Accept any locale without validation
 - Create DB-based translations (use files)
+
+---
+
+## Laravel 13 Notes
+
+L'API de localisation (`__()`, `trans_choice()`, `App::setLocale()`) reste **inchangée en Laravel 13**. Points spécifiques :
+
+- `Context::add('locale', $locale)` propage la locale dans les jobs queue (résout le bug L12 où la locale était perdue dans les ShouldQueue)
+- `serializable_classes` : whitelister vos `Locale` enums si utilisés en queue
+- Middleware `SetLocale` : compatible avec le nouveau `validateOrigin()` de [[laravel-auth]]
+
+```php
+// app/Jobs/SendNotification.php
+public function handle(): void
+{
+    App::setLocale(Context::get('locale', 'en'));
+    Notification::send($this->user, new OrderShipped());
+}
+```

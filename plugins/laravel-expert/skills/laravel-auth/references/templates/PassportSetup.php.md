@@ -1,6 +1,6 @@
 ---
 name: PassportSetup.php
-description: Laravel Passport OAuth2 configuration from official Laravel 12 docs
+description: Laravel Passport OAuth2 configuration from official Laravel 13 docs
 keywords: passport, oauth2, tokens, authorization, client
 source: https://laravel.com/docs/12.x/passport
 ---

@@ -100,7 +100,7 @@ class Example
 
 $example = resolve(Example::class);
 // Laravel 11.x: $date is Carbon instance
-// Laravel 12.x: $date is null (respects default)
+// Laravel 13.x: $date is null (respects default)
 ```
 
 ### Image Validation with SVG

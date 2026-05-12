@@ -1,9 +1,9 @@
 ---
 name: fusecore
-description: FuseCore Modular Architecture - Laravel 12 modular monolith with auto-discovery, React integration, and SOLID principles. Use when creating modules, understanding FuseCore structure, or implementing features in FuseCore projects.
+description: FuseCore Modular Architecture - Laravel 13 modular monolith with auto-discovery, React 19 integration, and SOLID principles. Use when creating modules, understanding FuseCore structure, or implementing features in FuseCore projects.
 versions:
-  laravel: "12.46"
-  php: "8.5"
+  laravel: "13.0"
+  php: "8.3"
   react: "19"
   typescript: "5.8"
 user-invocable: true
@@ -18,7 +18,7 @@ related-skills: solid-php, laravel-permission, laravel-api
 Before ANY implementation in FuseCore project, use `TeamCreate` to spawn 3 agents:
 
 1. **fuse-ai-pilot:explore-codebase** - Analyze existing modules in `/FuseCore/`
-2. **fuse-ai-pilot:research-expert** - Verify Laravel 12 patterns via Context7
+2. **fuse-ai-pilot:research-expert** - Verify Laravel 13 patterns via Context7
 3. **fuse-laravel:laravel-expert** - Apply Laravel best practices
 
 After implementation, run **fuse-ai-pilot:sniper** for validation.
@@ -27,7 +27,7 @@ After implementation, run **fuse-ai-pilot:sniper** for validation.
 
 ## Overview
 
-FuseCore is a **Modular Monolith** architecture for Laravel 12 with React 19 integration.
+FuseCore is a **Modular Monolith** architecture for Laravel 13 with React 19 integration.
 
 | Component | Purpose |
 |-----------|---------|
@@ -230,3 +230,54 @@ Route::middleware(['api', 'auth:sanctum'])->group(function () {
 | Model | Singular | `Post` |
 | Migration | `create_{table}_table` | `create_posts_table` |
 | Routes file | `api.php` | Always `api.php` |
+
+---
+
+## Laravel 13 Notes
+
+### Stack FuseCore L13
+- **Laravel 13.0** + **PHP 8.3** minimum
+- **React 19** + **TypeScript 5.8** (côté frontend module)
+- **Inertia 2** pour le bridge React ↔ modules
+
+### Module ServiceProvider et L13
+`new Model()` dans `register()` est désormais interdit (LogicException). Toute instanciation Eloquent doit migrer dans `boot()`.
+
+```php
+public function register(): void
+{
+    $this->app->bind(PostRepositoryContract::class, EloquentPostRepository::class);
+    // NE PAS faire : $defaults = new Post(); ← LogicException en L13
+}
+
+public function boot(): void
+{
+    Post::observe(PostObserver::class);
+}
+```
+
+### Cache prefixes par module
+L13 utilise hyphens par défaut. Pour FuseCore, configurer le préfixe par module via `module.json` reste compatible :
+
+```json
+{
+  "name": "BlogPost",
+  "cache_prefix": "blogpost-"
+}
+```
+
+## Best Practices
+
+### DO
+- Créer un module = un dossier `FuseCore/<Module>/` complet (Contracts/, Services/, Http/, Models/)
+- Déclarer toutes les dépendances inter-modules via Contracts (jamais classes concrètes)
+- Utiliser `final readonly class` pour DTOs de module (PHP 8.3+)
+- Migrer toute logique Model du `register()` vers `boot()`
+- Préférer Inertia 2 + React 19 pour les modules avec UI
+
+### DON'T
+- Importer une classe d'un autre module sans passer par son Contract
+- Mettre la logique métier dans Controllers (extraire en Service du module)
+- Instancier un modèle Eloquent dans `register()` (LogicException L13)
+- Dépasser 100 lignes par fichier (splitter en sous-modules ou Services)
+- Partager des migrations entre modules (chaque module possède ses tables)

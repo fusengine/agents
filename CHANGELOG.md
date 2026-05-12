@@ -1,5 +1,11 @@
 # Release Notes
 
+## [1.38.77] - 12-05-2026
+
+- Added (laravel 1.2.0): full Laravel 13.0 (March 17 2026) coverage — PHP 8.3+ required. 5 new skills: `laravel-attributes` (transversal #[Table] #[Fillable] #[Hidden] #[Tries] #[Backoff] #[Signature] #[Middleware] #[Authorize] #[Seed] etc.), `laravel-ai-sdk` (first-party AI: agents, tools, embeddings, streaming, 15+ providers), `laravel-jsonapi` (JSON:API Resources with sparse fieldsets, relationships), `laravel-vector-search` (pgvector native + HNSW index), `laravel-upgrade-v13` (centralized L12→L13 migration guide with composer commands, breaking changes, attributes migration, Laravel Boost MCP, checklist, and bash automation script)
+- Changed (laravel 1.2.0): `laravel-eloquent` refactor — PHP Attributes MAIN (#[Table], #[Fillable], #[Hidden], #[Casts]) with legacy properties guide for L12→L13 migration. `laravel-queues` refactor — #[Tries] #[Backoff] #[Timeout] #[UniqueFor] attributes + `Queue::route()` centralized routing in AppServiceProvider
+- Changed (laravel 1.2.0): 16 existing skills bumped to Laravel 13.0 / PHP 8.3 with L13 sections — `laravel-auth` (PreventRequestForgery), `laravel-testing` (PHPUnit 12 + Pest 4 + #[Seed]), `laravel-api` (JSON:API ref), `laravel-architecture` (Symfony 7.4/8.0 + Cache::touch + migration 12→13 guide), `laravel-scout` (vector-search ref), `laravel-migrations` (Schema::ensureVectorExtensionExists), `solid-php` (PHP 8.3 features), `fusecore` (L13 + React 19 + Inertia 2), `laravel-livewire` (Livewire 4), `laravel-billing` (Cashier 16), `laravel-vite` (es2023 + Inertia 2). Best Practices DO/DON'T added to fusecore, laravel-api, laravel-architecture, laravel-permission
+
 ## [1.38.76] - 12-05-2026
 
 - Added (commit-pro 1.2.16): GitHub Flow enforcement in `/fuse-commit-pro:commit` — Step 0 blocks direct commits on main/master/develop/production, proposes auto-named feature branch from commit type/scope; Step 7 pushes branch with upstream and proposes `gh pr create` with structured PR template (Summary, Test plan, Breaking changes)

@@ -1,6 +1,6 @@
 ---
 name: Envoy.blade.php
-description: Complete Envoy deployment script from official Laravel 12 docs
+description: Complete Envoy deployment script from official Laravel 13 docs
 keywords: envoy, deployment, ssh, tasks, stories
 source: https://laravel.com/docs/12.x/envoy
 ---
