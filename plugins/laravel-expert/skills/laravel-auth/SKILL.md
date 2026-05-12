@@ -1,10 +1,10 @@
 ---
 name: laravel-auth
-description: Use when implementing user authentication, API tokens, social login, or authorization. Covers Sanctum, Passport, Socialite, Fortify, policies, and gates for Laravel 12.
+description: Use when implementing user authentication, API tokens, social login, or authorization. Covers Sanctum, Passport, Socialite, Fortify, policies, and gates for Laravel 13.
 versions:
-  laravel: "12.x"
+  laravel: "13.0"
   sanctum: "4.0"
-  php: "8.4"
+  php: "8.3"
 user-invocable: true
 references: references/authentication.md, references/authorization.md, references/sanctum.md, references/passport.md, references/fortify.md, references/socialite.md, references/starter-kits.md, references/verification.md, references/passwords.md, references/session.md, references/csrf.md, references/encryption.md, references/hashing.md, references/templates/LoginController.php.md, references/templates/GatesAndPolicies.php.md, references/templates/PostPolicy.php.md, references/templates/sanctum-setup.md, references/templates/PassportSetup.php.md, references/templates/FortifySetup.php.md, references/templates/SocialiteController.php.md, references/templates/PasswordResetController.php.md
 related-skills: laravel-api, laravel-permission, fusecore
@@ -17,7 +17,7 @@ related-skills: laravel-api, laravel-permission, fusecore
 Before ANY implementation, use `TeamCreate` to spawn 3 agents:
 
 1. **fuse-ai-pilot:explore-codebase** - Check existing auth setup, guards, policies
-2. **fuse-ai-pilot:research-expert** - Verify latest Laravel 12 auth docs via Context7
+2. **fuse-ai-pilot:research-expert** - Verify latest Laravel 13 auth docs via Context7
 3. **mcp__context7__query-docs** - Query specific patterns (Sanctum, Passport, etc.)
 
 After implementation, run **fuse-ai-pilot:sniper** for validation.
@@ -230,3 +230,21 @@ Third-party apps need access? → Passport (OAuth2)
 - Forget to prune expired tokens
 - Ignore HTTPS in production
 - Put authorization logic in controllers
+
+---
+
+## Laravel 13 Notes
+
+### PreventRequestForgery (ex-VerifyCsrfToken)
+Laravel 13 renomme `VerifyCsrfToken` en `PreventRequestForgery`. Le middleware utilise une vérification **origin-aware** (vérifie `Origin`/`Referer` en plus du token CSRF) pour bloquer les attaques CSRF cross-origin sur les routes stateful.
+
+```php
+// bootstrap/app.php
+->withMiddleware(function (Middleware $middleware) {
+    $middleware->validateOrigin(except: ['stripe/*', 'webhook/*']);
+})
+```
+
+- Migrer toute référence `VerifyCsrfToken::class` → `PreventRequestForgery::class`
+- Property `$except` reste compatible mais préférer `validateOrigin(except: [...])`
+- Les APIs stateless (Sanctum tokens) ne sont pas affectées

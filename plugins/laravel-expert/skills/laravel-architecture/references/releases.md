@@ -43,11 +43,11 @@ Laravel follows semantic versioning with annual major releases. Choose versions 
 | **12** | 8.2 - 8.4 | Feb 2025 | Aug 2026 | Feb 2027 |
 | **13** | 8.3 - 8.4 | Q1 2026 | Q3 2027 | Q1 2028 |
 
-**Recommendation**: Use Laravel 12 for new projects (current stable).
+**Recommendation**: Use Laravel 13 for new projects (current stable).
 
 ---
 
-## Laravel 12 Highlights
+## Laravel 13 Highlights
 
 | Feature | Description |
 |---------|-------------|

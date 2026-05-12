@@ -1,7 +1,7 @@
 {
   "name": "fuse-laravel",
-  "version": "1.1.14",
-  "description": "Expert Laravel 12 + PHP 8.5 with SOLID principles, Eloquent, Livewire, and comprehensive documentation",
+  "version": "1.2.0",
+  "description": "Expert Laravel 13 + PHP 8.3+ with SOLID principles, first-class PHP Attributes, Laravel AI SDK, JSON:API Resources, native vector search (pgvector), Eloquent, Livewire, queues with routing, and comprehensive documentation",
   "author": {
     "name": "Fusengine",
     "email": "hello@fusengine.ch",

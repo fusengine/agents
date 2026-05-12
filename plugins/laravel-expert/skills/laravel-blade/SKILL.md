@@ -2,8 +2,8 @@
 name: laravel-blade
 description: Create Blade templates with components, slots, layouts, and directives. Use when building views, reusable components, or templating.
 versions:
-  laravel: "12.x"
-  php: "8.4"
+  laravel: "13.0"
+  php: "8.3"
 user-invocable: true
 references: references/components.md, references/slots-attributes.md, references/layouts.md, references/directives.md, references/security.md, references/vite.md, references/advanced-directives.md, references/custom-directives.md, references/advanced-components.md, references/forms-validation.md, references/fragments.md, references/templates/ClassComponent.php.md, references/templates/AnonymousComponent.blade.md, references/templates/LayoutComponent.blade.md, references/templates/FormComponent.blade.md, references/templates/CardWithSlots.blade.md, references/templates/DynamicComponent.blade.md, references/templates/AdvancedDirectives.blade.md, references/templates/CustomDirectives.php.md, references/templates/AdvancedComponents.blade.md, references/templates/Fragments.blade.md
 related-skills: laravel-livewire, laravel-i18n, fusecore
@@ -199,3 +199,28 @@ class Alert extends Component
 - Put business logic in Blade templates
 - Create deeply nested component hierarchies
 - Hardcode classes (allow overrides)
+
+---
+
+## Laravel 13 Notes
+
+### Attributes Controllers `#[Middleware]` et `#[Authorize]`
+Laravel 13 supporte les attributs PHP sur les classes ET méthodes de controllers pour déclarer middleware et autorisations (remplace `__construct` middleware boilerplate).
+
+```php
+use Illuminate\Routing\Attributes\Middleware;
+use Illuminate\Routing\Attributes\Authorize;
+
+#[Middleware(['auth', 'verified'])]
+final class PostController extends Controller
+{
+    #[Authorize('viewAny', Post::class)]
+    public function index() { return view('posts.index'); }
+
+    #[Middleware('throttle:60,1')]
+    #[Authorize('create', Post::class)]
+    public function store(StorePostRequest $request) { /* ... */ }
+}
+```
+
+Le middleware passé via attribut s'applique avant les middlewares groupes/routes. `#[Authorize]` jette `AuthorizationException` (403) si la policy refuse.

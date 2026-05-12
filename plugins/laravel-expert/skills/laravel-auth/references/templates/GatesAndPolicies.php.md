@@ -1,6 +1,6 @@
 ---
 name: GatesAndPolicies.php
-description: Authorization gates and policies from official Laravel 12 docs
+description: Authorization gates and policies from official Laravel 13 docs
 keywords: gates, policies, authorization, can, cannot
 source: https://laravel.com/docs/12.x/authorization
 ---

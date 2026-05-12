@@ -1,6 +1,6 @@
 ---
 name: single-responsibility
-description: SRP Guide - When and how to split files, line limits for Laravel 12
+description: SRP Guide - When and how to split files, line limits for Laravel 13
 when-to-use: file too long, controller doing too much, fat models, refactoring
 keywords: single responsibility, SRP, splitting, lines, controller, service
 priority: high

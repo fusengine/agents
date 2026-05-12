@@ -51,7 +51,7 @@ $table->fullText(['title', 'body']);   // Full-text
 
 ---
 
-## Laravel 12 Conditional
+## Laravel 13 Conditional
 
 ```php
 // Create if doesn't exist
@@ -103,7 +103,7 @@ $table->index(['user_id', 'status', 'created_at']);
 ### DO
 - Index all foreign keys
 - Name indexes explicitly
-- Use `whenTableHasIndex()` (Laravel 12)
+- Use `whenTableHasIndex()` (Laravel 13)
 
 ### DON'T
 - Over-index (slows writes)

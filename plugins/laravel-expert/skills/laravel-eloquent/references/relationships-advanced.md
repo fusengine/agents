@@ -52,9 +52,9 @@ hasManyThrough(
 )
 ```
 
-## Laravel 12 Fluent Syntax
+## Laravel 13 Fluent Syntax
 
-| Traditional | Fluent (Laravel 12) |
+| Traditional | Fluent (Laravel 13) |
 |-------------|---------------------|
 | `hasManyThrough(Deployment::class, Environment::class)` | `$this->through('environments')->has('deployments')` |
 | Custom keys | `$this->throughEnvironments()->hasDeployments()` |

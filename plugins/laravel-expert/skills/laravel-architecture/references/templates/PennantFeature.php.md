@@ -1,6 +1,6 @@
 ---
 name: PennantFeature.php
-description: Laravel Pennant feature flags from official Laravel 12 docs
+description: Laravel Pennant feature flags from official Laravel 13 docs
 keywords: pennant, feature flags, feature toggles, ab testing
 source: https://laravel.com/docs/12.x/pennant
 ---

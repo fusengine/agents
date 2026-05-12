@@ -2,8 +2,8 @@
 name: laravel-architecture
 description: Design Laravel app architecture with services, repositories, actions, and clean code patterns. Use when structuring projects, creating services, implementing DI, or organizing code layers.
 versions:
-  laravel: "12.46"
-  php: "8.5"
+  laravel: "13.0"
+  php: "8.3"
 user-invocable: true
 references: references/container.md, references/providers.md, references/facades.md, references/contracts.md, references/structure.md, references/lifecycle.md, references/configuration.md, references/installation.md, references/upgrade.md, references/releases.md, references/sail.md, references/valet.md, references/homestead.md, references/octane.md, references/artisan.md, references/helpers.md, references/filesystem.md, references/processes.md, references/context.md, references/pennant.md, references/mcp.md, references/concurrency.md, references/deployment.md, references/envoy.md, references/logging.md, references/errors.md, references/packages.md
 related-skills: solid-php, laravel-api, laravel-eloquent
@@ -215,3 +215,71 @@ php artisan make:command ProcessOrders
 $debug = env('APP_DEBUG', false);
 $config = config('app.name');
 ```
+
+---
+
+## Laravel 13 Notes
+
+### Stack mis à jour
+- **Symfony 7.4 et 8.0** supportés en parallèle (HttpFoundation, Console, Mailer)
+- **PHP 8.3 minimum** (8.2 retiré)
+- **pda/pheanstalk 8.0+** requis si driver Beanstalk
+
+### Cache::touch() API
+Nouvelle méthode pour rafraîchir le TTL sans recalculer la valeur.
+
+```php
+Cache::touch('user:123', now()->addHour());
+Cache::touch(['user:123', 'user:456'], 3600);
+```
+
+### Queue::route() pour routing dynamique
+Voir [[laravel-queues]] pour le routing déclaratif par job (connexion/queue cible via configuration plutôt que sur chaque job).
+
+### `new Model()` dans boot() → LogicException
+Laravel 13 jette une `LogicException` si vous instanciez un modèle Eloquent dans `register()` d'un ServiceProvider (container pas prêt). Utiliser `boot()` ou un listener.
+
+## Migration Laravel 13 → 13
+
+| Sujet | Avant (12) | Après (13) |
+|-------|-----------|------------|
+| PHP minimum | 8.2 | **8.3** |
+| PHPUnit | 11 | **12** |
+| Pest | 3 | **4** |
+| CSRF | `VerifyCsrfToken` | **`PreventRequestForgery`** (origin-aware) |
+| Cache prefix | underscore | **hyphens par défaut** (configurer `CACHE_PREFIX`, `REDIS_PREFIX`, `SESSION_COOKIE` pour rétro-compat) |
+| Beanstalk | pheanstalk 7.x | **pheanstalk 8.0+** |
+| Symfony | 7.x | **7.4 / 8.0** |
+| Model boot | toléré | **`new Model()` → LogicException** |
+| Config | — | nouveau `serializable_classes` (allowlist hardening) |
+
+```env
+# Rétro-compat cache prefixes pour upgrade depuis L12
+CACHE_PREFIX=laravel_cache_
+REDIS_PREFIX=laravel_database_
+SESSION_COOKIE=laravel_session
+```
+
+```php
+// config/app.php — durcissement deserialize
+'serializable_classes' => [
+    App\DTO\PaymentDto::class,
+    App\DTO\OrderDto::class,
+],
+```
+
+## Best Practices
+
+### DO
+- Utiliser `final readonly class` pour DTOs et Value Objects (PHP 8.3+)
+- Injecter via constructor promotion + `interface` (DI inversion)
+- Logger via `Context::add()` pour propager metadata entre jobs/requêtes
+- Configurer `serializable_classes` en production
+- Préférer `app(Contract::class)` sur `App::make()` (typage strict)
+
+### DON'T
+- Instancier des modèles dans `register()` (→ LogicException L13)
+- Hardcoder des chemins absolus (utiliser `base_path()`, `storage_path()`)
+- Mélanger Repository et Service (un par responsabilité)
+- Bypasser le container avec `new ConcreteClass()`
+- Ignorer le bump du préfixe cache lors d'un upgrade depuis L12

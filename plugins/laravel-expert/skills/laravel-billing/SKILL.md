@@ -2,10 +2,10 @@
 name: laravel-billing
 description: Integrate Stripe and Paddle payments with Laravel Cashier. Use when implementing subscriptions, invoices, payment methods, webhooks, or billing portals.
 versions:
-  laravel: "12.x"
+  laravel: "13.0"
   cashier-stripe: "16.x"
   cashier-paddle: "2.x"
-  php: "8.4"
+  php: "8.3"
 user-invocable: true
 references: references/stripe.md, references/paddle.md, references/subscriptions.md, references/webhooks.md, references/invoices.md, references/payment-methods.md, references/testing.md, references/checkout.md, references/metered-billing.md, references/team-billing.md, references/dunning.md, references/feature-flags.md, references/templates/UserBillable.php.md, references/templates/SubscriptionController.php.md, references/templates/WebhookController.php.md, references/templates/CheckoutController.php.md, references/templates/InvoiceController.php.md, references/templates/BillingRoutes.php.md, references/templates/SubscriptionTest.php.md, references/templates/MeteredBillingController.php.md, references/templates/TeamBillable.php.md, references/templates/DunningService.php.md, references/templates/FeatureFlags.php.md
 related-skills: laravel-auth, laravel-api, fusecore
@@ -291,3 +291,22 @@ $url = $user->billingPortalUrl(route('dashboard'));
 - Ignore failed payment webhooks
 - Forget to handle 3D Secure
 - Hardcode prices (use env or config)
+
+---
+
+## Laravel 13 Notes
+
+Cashier Stripe 16.x et Cashier Paddle 2.x sont **compatibles Laravel 13**. Points d'attention :
+
+- Webhooks : la nouvelle protection CSRF [[laravel-auth]] `PreventRequestForgery` doit exclure les routes webhook (`stripe/webhook`, `paddle/webhook`) via `validateOrigin(except: [...])`
+- `serializable_classes` : whitelister les DTOs Cashier si vous serialize des subscriptions (queue)
+- PHP 8.3 minimum : Cashier 16.x supporte 8.3+ uniquement
+
+```php
+// bootstrap/app.php
+->withMiddleware(function (Middleware $middleware) {
+    $middleware->validateOrigin(except: [
+        'stripe/*', 'paddle/*',
+    ]);
+})
+```

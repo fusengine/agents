@@ -1,6 +1,6 @@
 ---
 name: McpServer.php
-description: Laravel MCP Server, Tools, Resources, Prompts from official Laravel 12 docs
+description: Laravel MCP Server, Tools, Resources, Prompts from official Laravel 13 docs
 keywords: mcp, model context protocol, ai, tools, resources
 source: https://laravel.com/docs/12.x/mcp
 ---

@@ -148,7 +148,7 @@ class User extends Model
         return $this->hasOneThrough(Country::class, Address::class);
     }
 
-    // Laravel 12 fluent syntax
+    // Laravel 13 fluent syntax
     public function deployments(): HasManyThrough
     {
         return $this->through('projects')->has('deployments');

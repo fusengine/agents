@@ -1,6 +1,6 @@
 ---
 name: FortifySetup.php
-description: Laravel Fortify configuration from official Laravel 12 docs
+description: Laravel Fortify configuration from official Laravel 13 docs
 keywords: fortify, authentication, 2fa, registration, password
 source: https://laravel.com/docs/12.x/fortify
 ---

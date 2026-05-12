@@ -1,15 +1,15 @@
 ---
 name: solid-php
-description: SOLID principles for Laravel 12 and PHP 8.5. Files < 100 lines, interfaces separated, PHPDoc mandatory. Auto-detects Laravel and FuseCore architecture.
+description: SOLID principles for Laravel 13 and PHP 8.3+. Files < 100 lines, interfaces separated, PHPDoc mandatory. Auto-detects Laravel and FuseCore architecture.
 versions:
-  laravel: "12.46"
-  php: "8.5"
+  laravel: "13.0"
+  php: "8.3"
 user-invocable: true
 references: references/solid-principles.md, references/single-responsibility.md, references/open-closed.md, references/liskov-substitution.md, references/interface-segregation.md, references/dependency-inversion.md, references/anti-patterns.md, references/decision-guide.md, references/php85-features.md, references/laravel12-structure.md, references/fusecore-structure.md, references/templates/code-templates.md, references/templates/controller-templates.md, references/templates/refactoring-guide.md
 related-skills: laravel-architecture, fusecore
 ---
 
-# SOLID PHP - Laravel 12 + PHP 8.5
+# SOLID PHP - Laravel 13 + PHP 8.3
 
 ## Agent Workflow (MANDATORY)
 
@@ -42,7 +42,7 @@ After implementation, run **fuse-ai-pilot:sniper** for validation.
 | `FuseCore/` directory | FuseCore Modular | `FuseCore/[Module]/App/Contracts/` |
 | `module.json` in modules | FuseCore Modular | `FuseCore/[Module]/App/Contracts/` |
 
-**Verification**: `php artisan --version` → Laravel 12.x
+**Verification**: `php artisan --version` → Laravel 13.x
 **Structure**: Always FuseCore modular. Shared in `FuseCore/Core/App/`.
 
 ---
@@ -162,3 +162,41 @@ public function create(CreateUserDTO $dto): User
 | Use `declare(strict_types=1)` | Skip type declarations |
 | Split at 90 lines | Wait until 100 lines |
 | Use DTOs for data transfer | Use arrays |
+
+---
+
+## Laravel 13 Notes
+
+### PHP 8.3 minimum
+Laravel 13 exige PHP 8.3 (était 8.2 sur L12). Fonctionnalités SOLID-friendly :
+
+- **`readonly` classes** : `final readonly class UserDto` (immutabilité totale)
+- **Typed class constants** : `const int MAX_RETRIES = 3;`
+- **`#[\Override]` attribute** : déclare explicitement une override de méthode parente (catch typos)
+- **`json_validate()`** natif (plus rapide que `json_decode` + try/catch)
+- **Dynamic class constant fetch** : `$class::{$name}`
+
+```php
+use Override;
+
+final readonly class PaymentService implements PaymentContract
+{
+    public const int DEFAULT_TIMEOUT = 30;
+
+    public function __construct(
+        private StripeClient $stripe,
+        private LoggerInterface $logger,
+    ) {}
+
+    #[Override]
+    public function process(PaymentDto $payment): PaymentResult
+    {
+        // ...
+    }
+}
+```
+
+### Règles SOLID renforcées L13
+- Préférer `final readonly class` pour tous les DTO/Value Objects
+- Utiliser `#[\Override]` sur toute méthode héritée (CI catch)
+- Typer les constantes (`const string ROLE = 'admin';`)

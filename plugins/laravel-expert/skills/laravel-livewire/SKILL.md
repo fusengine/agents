@@ -1,10 +1,10 @@
 ---
 name: laravel-livewire
-description: Livewire 3 reactive components - wire:model, actions, events, Volt, Folio. Use when building reactive UI without JavaScript.
+description: Livewire 4 reactive components on Laravel 13 - wire:model, actions, events, Volt, Folio. Use when building reactive UI without JavaScript.
 versions:
-  laravel: "12.x"
-  livewire: "3.x"
-  php: "8.4"
+  laravel: "13.0"
+  livewire: "4.x"
+  php: "8.3"
 user-invocable: true
 references: references/components.md, references/wire-directives.md, references/lifecycle.md, references/forms-validation.md, references/events.md, references/alpine-integration.md, references/file-uploads.md, references/nesting.md, references/loading-states.md, references/navigation.md, references/testing.md, references/security.md, references/volt.md, references/folio.md, references/precognition.md, references/reverb.md, references/templates/BasicComponent.php.md, references/templates/FormComponent.php.md, references/templates/VoltComponent.blade.md, references/templates/DataTableComponent.php.md, references/templates/FileUploadComponent.php.md, references/templates/NestedComponents.php.md, references/templates/ComponentTest.php.md
 related-skills: laravel-blade, laravel-testing, laravel-api
@@ -176,3 +176,21 @@ $increment = fn() => $this->count++;
 - Forget authorization in actions
 - Skip wire:key in loops
 - Store sensitive data in public properties
+
+---
+
+## Laravel 13 Notes
+
+### Livewire 4 sur Laravel 13
+Livewire 4 est la version compatible Laravel 13. Changements clés :
+
+- **PHP 8.3 minimum** (était 8.2 sur Livewire 3)
+- `wire:model.live` rate-limited par défaut (300ms debounce implicite)
+- `#[Locked]`, `#[Computed]`, `#[On]` toujours supportés
+- Volt et Folio : versions majeures alignées (Volt 2, Folio 2)
+- **PreventRequestForgery** : routes `/livewire/update` gérées automatiquement, pas de config requise
+
+### Migration depuis Livewire 3
+- `wire:poll.5s` → toujours valide
+- `$this->dispatch('event')` → toujours valide
+- Form Objects (`#[\Livewire\Attributes\Validate]`) → API stable

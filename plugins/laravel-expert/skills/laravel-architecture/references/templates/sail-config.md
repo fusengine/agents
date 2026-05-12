@@ -1,6 +1,6 @@
 ---
 name: sail-config
-description: Laravel Sail configuration and commands from official Laravel 12 docs
+description: Laravel Sail configuration and commands from official Laravel 13 docs
 keywords: sail, docker, xdebug, commands
 source: https://laravel.com/docs/12.x/sail
 ---

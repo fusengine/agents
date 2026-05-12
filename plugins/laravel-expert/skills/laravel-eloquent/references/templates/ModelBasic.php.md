@@ -229,7 +229,7 @@ class Post extends Model
     }
 
     /**
-     * Scope: Published posts (Laravel 12 attribute syntax)
+     * Scope: Published posts (Laravel 13 attribute syntax)
      */
     #[Scope]
     protected function published(Builder $query): void

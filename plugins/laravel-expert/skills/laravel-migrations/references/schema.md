@@ -105,7 +105,7 @@ Schema operation?
 
 ---
 
-## Laravel 12 Features
+## Laravel 13 Features
 
 ### Conditional Index Operations
 

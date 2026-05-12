@@ -180,7 +180,7 @@ return new class extends Migration
 };
 ```
 
-## Laravel 12 Conditional Index
+## Laravel 13 Conditional Index
 
 ```php
 return new class extends Migration

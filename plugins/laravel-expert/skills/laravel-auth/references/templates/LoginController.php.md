@@ -1,6 +1,6 @@
 ---
 name: LoginController.php
-description: Authentication controller patterns from official Laravel 12 docs
+description: Authentication controller patterns from official Laravel 13 docs
 keywords: login, logout, authentication, controller, session
 source: https://laravel.com/docs/12.x/authentication
 ---

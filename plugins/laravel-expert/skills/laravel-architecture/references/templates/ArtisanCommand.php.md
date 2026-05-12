@@ -1,6 +1,6 @@
 ---
 name: ArtisanCommand.php
-description: Complete Artisan command examples from official Laravel 12 docs
+description: Complete Artisan command examples from official Laravel 13 docs
 keywords: artisan, commands, console, cli
 source: https://laravel.com/docs/12.x/artisan
 ---

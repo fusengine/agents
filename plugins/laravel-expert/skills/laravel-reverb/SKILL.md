@@ -2,9 +2,9 @@
 name: laravel-reverb
 description: Implement real-time WebSocket communication with Laravel Reverb. Use when adding live updates, chat, notifications, or presence features.
 versions:
-  laravel: "12.46"
+  laravel: "13.0"
   reverb: "1.4"
-  php: "8.5"
+  php: "8.3"
 user-invocable: false
 references: references/channels.md, references/client.md
 related-skills: laravel-architecture, laravel-queues
@@ -94,3 +94,13 @@ REVERB_PORT=8080
 - Broadcast sensitive data on public channels
 - Forget to configure CORS for cross-origin clients
 - Expose Reverb directly without a reverse proxy
+
+---
+
+## Laravel 13 Notes
+
+Reverb 1.4 est **compatible Laravel 13** sans changement. À noter :
+
+- La queue `broadcast` profite du nouveau `Queue::route()` (voir [[laravel-queues]])
+- `Context::add()` propagé automatiquement dans les broadcast events
+- PHP 8.3 minimum pour le serveur Reverb embarqué

@@ -1,10 +1,11 @@
 ---
 name: laravel-testing
-description: Write tests with Pest 3/PHPUnit, feature tests, unit tests, mocking, fakes, and factories. Use when testing controllers, services, models, or implementing TDD.
+description: Write tests with Pest 4/PHPUnit 12, feature tests, unit tests, mocking, fakes, and factories. Use when testing controllers, services, models, or implementing TDD on Laravel 13.
 versions:
-  laravel: "12.46"
-  pest: "3.0"
-  php: "8.5"
+  laravel: "13.0"
+  pest: "4.0"
+  phpunit: "12.0"
+  php: "8.3"
 user-invocable: false
 references: references/pest-basics.md, references/pest-datasets.md, references/pest-arch.md, references/http-requests.md, references/http-json.md, references/http-auth.md, references/http-assertions.md, references/database-basics.md, references/database-factories.md, references/database-assertions.md, references/mocking-services.md, references/mocking-fakes.md, references/mocking-http.md, references/console-tests.md, references/troubleshooting.md, references/templates/FeatureTest.php.md, references/templates/UnitTest.php.md, references/templates/ArchTest.php.md, references/templates/ApiTest.php.md, references/templates/PestConfig.php.md
 related-skills: laravel-architecture, laravel-eloquent
@@ -193,3 +194,32 @@ php artisan test
 - Call real external APIs
 - Use production database
 - Skip edge cases
+
+---
+
+## Laravel 13 Notes
+
+### PHPUnit 12 + Pest 4
+Laravel 13 exige **PHPUnit 12** et supporte **Pest 4**. Les attributs PHP remplacent les annotations docblock.
+
+```php
+use PHPUnit\Framework\Attributes\Test;
+use Illuminate\Foundation\Testing\Attributes\Seed;
+use Illuminate\Foundation\Testing\Attributes\Seeder;
+
+#[Seed]                          // exécute DatabaseSeeder
+#[Seeder(UserSeeder::class)]     // exécute un seeder ciblé
+final class UserTest extends TestCase
+{
+    #[Test]
+    public function it_creates_user(): void { /* ... */ }
+}
+```
+
+### Str cache reset
+Laravel 13 réinitialise automatiquement les caches `Str` (random, slug) entre tests pour éviter le state leak. Aucun setup manuel requis.
+
+### Migration depuis Pest 3
+- `pest --init` regénère `Pest.php` avec la nouvelle API
+- Datasets supportent désormais les générateurs natifs PHP
+- `expect()->toBeInstanceOf()` → typage strict requis

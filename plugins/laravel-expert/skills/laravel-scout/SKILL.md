@@ -2,9 +2,9 @@
 name: laravel-scout
 description: Implement full-text search with Laravel Scout. Use when adding search to Eloquent models with Meilisearch, Algolia, or database driver.
 versions:
-  laravel: "12.46"
+  laravel: "13.0"
   scout: "10.12"
-  php: "8.5"
+  php: "8.3"
 user-invocable: false
 references: references/searchable.md, references/drivers.md
 related-skills: laravel-architecture, laravel-eloquent
@@ -95,3 +95,16 @@ $results = Article::search('laravel tutorial')->paginate(15);
 - Index sensitive data (passwords, tokens)
 - Forget to import existing records after setup
 - Use collection driver in production
+
+---
+
+## Laravel 13 Notes
+
+### Vector search natif pgvector
+Pour la recherche sémantique (embeddings) sur PostgreSQL, Laravel 13 expose `Schema::ensureVectorExtensionExists()` et `whereVectorSimilarTo()` via la skill dédiée [[laravel-vector-search]]. Scout reste pertinent pour le full-text (Meilisearch/Algolia) ; pour la similarité vectorielle, utiliser pgvector directement sans driver Scout.
+
+```php
+// Hybride : Scout pour full-text, pgvector pour similarité
+$keyword = Post::search($query)->get();
+$semantic = Post::whereVectorSimilarTo('embedding', $embedding, limit: 10)->get();
+```

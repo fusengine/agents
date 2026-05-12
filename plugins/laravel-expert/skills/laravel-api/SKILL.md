@@ -2,8 +2,8 @@
 name: laravel-api
 description: Build RESTful APIs with Laravel using API Resources, Sanctum authentication, rate limiting, and versioning. Use when creating API endpoints, transforming responses, or handling API authentication.
 versions:
-  laravel: "12.46"
-  php: "8.5"
+  laravel: "13.0"
+  php: "8.3"
 user-invocable: true
 references: references/routing.md, references/controllers.md, references/middleware.md, references/requests.md, references/responses.md, references/validation.md, references/pagination.md, references/http-client.md, references/rate-limiting.md, references/redirects.md, references/urls.md, references/strings.md
 related-skills: laravel-auth, laravel-eloquent, laravel-testing
@@ -172,3 +172,39 @@ return PostResource::collection(Post::paginate(15));
 | HTTP Client | ✅ | http-client.md |
 | Signed URLs | ✅ | urls.md |
 | JSON Responses | ✅ | responses.md |
+
+---
+
+## Laravel 13 Notes
+
+### Attributes pour API Resources
+Laravel 13 introduit `#[Collects]` et `#[PreserveKeys]` pour configurer les ResourceCollections via attributs PHP.
+
+```php
+use Illuminate\Http\Resources\Json\ResourceCollection;
+use Illuminate\Http\Resources\Attributes\Collects;
+use Illuminate\Http\Resources\Attributes\PreserveKeys;
+
+#[Collects(PostResource::class)]
+#[PreserveKeys]
+final class PostCollection extends ResourceCollection {}
+```
+
+### JSON:API compliance
+Pour les APIs JSON:API (sparse fieldsets, inclusion, links), voir [[laravel-jsonapi]] qui couvre `?include=`, `?fields[type]=`, et la pagination conforme spec.
+
+## Best Practices
+
+### DO
+- Utiliser API Resources (`JsonResource`) pour toute réponse JSON publique
+- Versionner via URL (`/api/v1`) plutôt que via header (lisible, cacheable)
+- Rate-limiter par utilisateur ET par IP (`throttle:60,1` + custom limiter)
+- Documenter via OpenAPI/Scribe avant de coder l'endpoint
+- Préférer `cursor()` pagination pour grandes listes (stable, performant)
+
+### DON'T
+- Retourner directement un Model Eloquent (fuite de colonnes sensibles)
+- Mélanger statuts HTTP (toujours 422 pour validation, 401 vs 403)
+- Skip Form Request validation (jamais valider en controller)
+- Exposer les IDs auto-increment publiquement (préférer UUID/ULID)
+- Oublier `PreventRequestForgery` exemption pour les webhooks externes

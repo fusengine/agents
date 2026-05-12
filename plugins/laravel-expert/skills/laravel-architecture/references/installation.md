@@ -15,7 +15,7 @@ Laravel provides multiple ways to create new applications, from the Laravel inst
 
 ## Requirements
 
-Laravel 12 requires PHP 8.2+ with these extensions: Ctype, cURL, DOM, Fileinfo, Filter, Hash, Mbstring, OpenSSL, PCRE, PDO, Session, Tokenizer, XML. You'll also need Composer for dependency management.
+Laravel 13 requires PHP 8.2+ with these extensions: Ctype, cURL, DOM, Fileinfo, Filter, Hash, Mbstring, OpenSSL, PCRE, PDO, Session, Tokenizer, XML. You'll also need Composer for dependency management.
 
 ## Installation Methods
 

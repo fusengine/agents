@@ -1,13 +1,13 @@
 # Laravel Expert Plugin
 
-Expert Laravel 12 development plugin for Claude Code with comprehensive documentation and best practices.
+Expert Laravel 13 development plugin for Claude Code with comprehensive documentation and best practices.
 
 ## Features
 
-- **10 specialized skills** covering all Laravel domains
-- **95 documentation files** from official Laravel 12 docs
-- **Code patterns** following Laravel best practices
-- **PHP 8.3+** with strict types
+- **22 specialized skills** covering all Laravel 13 domains (Attributes, AI SDK, JSON:API, vector search, Eloquent, queues, auth, billing, etc.)
+- **Documentation** based on official Laravel 13.x docs
+- **PHP Attributes-first** patterns with legacy property migration guides
+- **PHP 8.3+** with strict types, typed constants, `#[\Override]`
 
 ## Skills
 

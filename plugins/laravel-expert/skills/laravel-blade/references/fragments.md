@@ -5,7 +5,7 @@ when-to-use: Building SPA-like interactions without full page reloads
 keywords: fragment, htmx, turbo, partial, ajax, spa
 ---
 
-# Fragments (Laravel 12+)
+# Fragments (Laravel 13+)
 
 ## Decision Tree
 

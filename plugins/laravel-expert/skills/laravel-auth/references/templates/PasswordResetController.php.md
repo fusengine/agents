@@ -1,6 +1,6 @@
 ---
 name: PasswordResetController.php
-description: Complete password reset flow with email tokens from Laravel 12 docs
+description: Complete password reset flow with email tokens from Laravel 13 docs
 keywords: password, reset, forgot, token, email, notification
 source: https://laravel.com/docs/12.x/passwords
 ---

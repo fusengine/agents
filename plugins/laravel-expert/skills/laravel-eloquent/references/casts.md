@@ -39,7 +39,7 @@ What type to cast?
 | `string` | string |
 | `timestamp` | int |
 
-## Laravel 12 Cast Classes
+## Laravel 13 Cast Classes
 
 | Class | Purpose |
 |-------|---------|

@@ -1,9 +1,9 @@
 ---
 name: laravel-migrations
-description: Laravel 12 database migrations - Schema Builder, columns, indexes, foreign keys, seeders. Use when designing database schema or managing migrations.
+description: Laravel 13 database migrations - Schema Builder, columns, indexes, foreign keys, seeders, pgvector. Use when designing database schema or managing migrations.
 versions:
-  laravel: "12.x"
-  php: "8.4"
+  laravel: "13.0"
+  php: "8.3"
 user-invocable: true
 references: references/schema.md, references/columns.md, references/indexes.md, references/foreign-keys.md, references/commands.md, references/seeding.md, references/testing.md, references/production.md, references/troubleshooting.md, references/templates/CreateTableMigration.php.md, references/templates/ModifyTableMigration.php.md, references/templates/PivotTableMigration.php.md, references/templates/Seeder.php.md, references/templates/MigrationTest.php.md
 related-skills: laravel-eloquent, laravel-testing, laravel-architecture
@@ -16,7 +16,7 @@ related-skills: laravel-eloquent, laravel-testing, laravel-architecture
 Before ANY implementation, use `TeamCreate` to spawn 3 agents:
 
 1. **fuse-ai-pilot:explore-codebase** - Check existing migrations
-2. **fuse-ai-pilot:research-expert** - Verify Laravel 12 patterns via Context7
+2. **fuse-ai-pilot:research-expert** - Verify Laravel 13 patterns via Context7
 3. **mcp__context7__query-docs** - Check specific Schema Builder features
 
 After implementation, run **fuse-ai-pilot:sniper** for validation.
@@ -167,3 +167,32 @@ php artisan migrate:fresh --seed
 - Forget down() method
 - Use raw SQL without Schema Builder
 - Skip indexes on foreign keys
+
+---
+
+## Laravel 13 Notes
+
+### Schema::ensureVectorExtensionExists() (pgvector)
+Laravel 13 expose une helper pour activer l'extension `pgvector` sur PostgreSQL depuis une migration. Utile pour embeddings et recherche sémantique.
+
+```php
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration {
+    public function up(): void
+    {
+        Schema::ensureVectorExtensionExists();
+
+        Schema::create('documents', function (Blueprint $table) {
+            $table->id();
+            $table->text('content');
+            $table->vector('embedding', dimensions: 1536); // OpenAI ada-002
+            $table->timestamps();
+
+            $table->index('embedding', 'documents_embedding_idx', 'hnsw');
+        });
+    }
+};
+```
+
+Voir [[laravel-vector-search]] pour les requêtes `whereVectorSimilarTo()`.

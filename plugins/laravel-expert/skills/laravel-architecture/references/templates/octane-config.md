@@ -1,6 +1,6 @@
 ---
 name: octane-config
-description: Laravel Octane configuration from official Laravel 12 docs
+description: Laravel Octane configuration from official Laravel 13 docs
 keywords: octane, swoole, frankenphp, roadrunner, performance
 source: https://laravel.com/docs/12.x/octane
 ---

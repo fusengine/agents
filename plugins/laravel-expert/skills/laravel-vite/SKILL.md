@@ -2,9 +2,9 @@
 name: laravel-vite
 description: Complete Vite bundling for Laravel - assets, HMR, SSR, frameworks, optimization. Use when configuring frontend build pipeline.
 versions:
-  laravel: "12.x"
+  laravel: "13.0"
   vite: "6.x"
-  php: "8.4"
+  php: "8.3"
 user-invocable: true
 references: references/setup.md, references/entry-points.md, references/preprocessors.md, references/assets.md, references/environment.md, references/dev-server.md, references/build-optimization.md, references/ssr.md, references/inertia.md, references/frameworks.md, references/security.md, references/deployment.md, references/templates/ViteConfig.js.md, references/templates/ViteConfigAdvanced.js.md, references/templates/InertiaSetup.md, references/templates/SSRSetup.md
 related-skills: laravel-blade, laravel-livewire, fusecore
@@ -159,3 +159,14 @@ export default defineConfig({
 - Use absolute paths for assets
 - Skip source maps in staging
 - Ignore chunk size warnings
+
+---
+
+## Laravel 13 Notes
+
+`laravel/vite-plugin` reste compatible **Laravel 13 + Vite 6**. Adaptations :
+
+- Le helper `@vite()` Blade fonctionne sans changement
+- Pour Inertia 2 + React 19 : utiliser le preset `@vitejs/plugin-react` v4+
+- HMR via WebSocket : Reverb 1.4 et Vite peuvent cohabiter sur des ports distincts en dev
+- Build production : ajouter `build.target: 'es2023'` pour profiter de PHP 8.3 côté serveur

@@ -7,7 +7,7 @@
   },
   "metadata": {
     "description": "Professional Claude Code plugins with APEX workflow, SOLID principles, and expert development agents for Next.js, Laravel, Swift, Tailwind CSS, and more",
-    "version": "1.38.76"
+    "version": "1.38.77"
   },
   "core": [
     {
@@ -192,8 +192,8 @@
     {
       "name": "fuse-laravel",
       "source": "./plugins/laravel-expert",
-      "description": "Expert Laravel 12 + PHP 8.5 with SOLID principles, Eloquent, Livewire, and comprehensive documentation",
-      "version": "1.1.14",
+      "description": "Expert Laravel 13 + PHP 8.3+ with SOLID principles, first-class PHP Attributes, Laravel AI SDK, JSON:API Resources, native vector search (pgvector), Eloquent, Livewire, queues with routing, and comprehensive documentation",
+      "version": "1.2.0",
       "author": {
         "name": "Fusengine",
         "url": "https://github.com/fusengine"
@@ -203,11 +203,18 @@
       "license": "MIT",
       "keywords": [
         "laravel",
+        "laravel-13",
         "php",
+        "php-8.3",
         "eloquent",
         "livewire",
         "blade",
-        "solid"
+        "solid",
+        "attributes",
+        "ai-sdk",
+        "jsonapi",
+        "vector-search",
+        "pgvector"
       ],
       "category": "development",
       "strict": true,
@@ -231,6 +238,13 @@
         "./skills/laravel-stripe-connect",
         "./skills/laravel-i18n",
         "./skills/laravel-permission",
+        "./skills/laravel-reverb",
+        "./skills/laravel-scout",
+        "./skills/laravel-attributes",
+        "./skills/laravel-ai-sdk",
+        "./skills/laravel-jsonapi",
+        "./skills/laravel-vector-search",
+        "./skills/laravel-upgrade-v13",
         "./skills/solid-php"
       ]
     },
