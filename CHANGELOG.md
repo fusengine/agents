@@ -1,5 +1,10 @@
 # Release Notes
 
+## [1.38.75] - 12-05-2026
+
+- Added (seo 1.0.1): new dedicated fuse-seo plugin extracted from ai-pilot — GEO-first architecture, 9 agents (seo-expert lead + 8 parallel sub-agents), 20 skills (1 user-invocable orchestrator + 19 sub-skills), 8 Bun/TS scripts (parse-meta, validate-schema, check-cwv, parse-sitemap, parse-robots, parse-hreflang, diff-seo, geo-score), PostToolUse hook validate-seo.ts with opt-in .fuse-seo marker, 26 templates (JSON-LD, meta, sitemap, robots). Local-first: zero Google APIs, zero Python, cheerio + Lighthouse Node API.
+- Changed (ai-pilot 1.2.24): removed seo-expert agent and seo skill (migrated to fuse-seo plugin)
+
 ## [1.38.74] - 30-04-2026
 
 - Added (core-guards 1.1.26, ai-pilot 1.2.23): MCP response cache system — per-session cache of mcp__context7/exa results, SubagentStart inject, APEX research-expert phase satisfied by cache reads
