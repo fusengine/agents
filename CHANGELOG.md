@@ -1,5 +1,11 @@
 # Release Notes
 
+## [1.38.76] - 12-05-2026
+
+- Added (commit-pro 1.2.16): GitHub Flow enforcement in `/fuse-commit-pro:commit` — Step 0 blocks direct commits on main/master/develop/production, proposes auto-named feature branch from commit type/scope; Step 7 pushes branch with upstream and proposes `gh pr create` with structured PR template (Summary, Test plan, Breaking changes)
+- Added (commit-pro 1.2.16): new skill `git-flow` documenting branch naming (feat/fix/chore/docs/refactor/perf/test/ci/build/style), merge strategy (squash via gh), branch lifecycle, protected branches, solo dev mode
+- Changed (claude-rules 1.0.7): CLAUDE.md template + 06-tooling-rules.md updated with GitHub Flow zero-tolerance rules — protected branches list, feature branch naming convention, full commit-pro workflow steps
+
 ## [1.38.75] - 12-05-2026
 
 - Added (seo 1.0.1): new dedicated fuse-seo plugin extracted from ai-pilot — GEO-first architecture, 9 agents (seo-expert lead + 8 parallel sub-agents), 20 skills (1 user-invocable orchestrator + 19 sub-skills), 8 Bun/TS scripts (parse-meta, validate-schema, check-cwv, parse-sitemap, parse-robots, parse-hreflang, diff-seo, geo-score), PostToolUse hook validate-seo.ts with opt-in .fuse-seo marker, 26 templates (JSON-LD, meta, sitemap, robots). Local-first: zero Google APIs, zero Python, cheerio + Lighthouse Node API.

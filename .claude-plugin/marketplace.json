@@ -7,7 +7,7 @@
   },
   "metadata": {
     "description": "Professional Claude Code plugins with APEX workflow, SOLID principles, and expert development agents for Next.js, Laravel, Swift, Tailwind CSS, and more",
-    "version": "1.38.75"
+    "version": "1.38.76"
   },
   "core": [
     {
@@ -151,8 +151,8 @@
     {
       "name": "fuse-commit-pro",
       "source": "./plugins/commit-pro",
-      "description": "Professional git commits with Conventional Commits, auto-detection, and security validation",
-      "version": "1.2.15",
+      "description": "Professional git commits with Conventional Commits, GitHub Flow branch enforcement, auto PR creation, security validation, and auto-detection",
+      "version": "1.2.16",
       "author": {
         "name": "Fusengine",
         "url": "https://github.com/fusengine"
