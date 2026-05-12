@@ -78,8 +78,18 @@ Brainstorm -> **A**nalyze -> **P**lan -> **E**xecute -> e**L**icit -> Verify -> 
 
 ## Git Commits (ZERO TOLERANCE)
 **ALWAYS use `/fuse-commit-pro:commit`** - NEVER use `git commit` directly.
-`/fuse-commit-pro:commit` handles: security check, conventional message, version bump, CHANGELOG, git tag, push.
-**Using `git commit` directly = FORBIDDEN** — it skips bump, CHANGELOG, and tag.
+`/fuse-commit-pro:commit` handles: branch check (GitHub Flow), security check, conventional message, version bump, CHANGELOG, git tag, push, PR creation.
+**Using `git commit` directly = FORBIDDEN** — it skips bump, CHANGELOG, tag, and branch enforcement.
+
+## GitHub Flow (ZERO TOLERANCE on main/master)
+**NEVER commit directly on `main`, `master`, `develop`, `production`.**
+1. Before any feature/fix → `git checkout -b <type>/<scope>` (e.g. `feat/seo`, `fix/sniper-loop`)
+2. Commit on the feature branch via `/fuse-commit-pro:commit`
+3. Push with `-u origin <branch>` (handled by commit-pro Step 7)
+4. Open PR via `gh pr create` (proposed automatically by commit-pro Step 7)
+5. Merge via `gh pr merge --squash --delete-branch`
+6. Branch naming: `feat/`, `fix/`, `chore/`, `docs/`, `refactor/`, `perf/`, `test/`, `ci/`, `build/`, `style/`
+7. Branches courtes (< 3 days). Skill reference: `fuse-commit-pro:git-flow`.
 
 ## Fusengine Plugins - Detailed Rules
 
