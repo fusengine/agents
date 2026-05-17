@@ -6,6 +6,39 @@
   "hooks": {
     "PreToolUse": [
       {
+        "_description": "WebFetch cache lookup - reuse cached fetch results (TTL 24h)",
+        "matcher": "WebFetch",
+        "hooks": [
+          {
+            "_description": "Check cache before WebFetch — deny + return cached if fresh",
+            "type": "command",
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/pre-tool-use/webfetch-cache-lookup.py"
+          }
+        ]
+      },
+      {
+        "_description": "MCP cache lookup - reuse cached Context7/Exa results before re-querying",
+        "matcher": "mcp__context7__query-docs|mcp__exa__web_search_exa|mcp__exa__get_code_context_exa",
+        "hooks": [
+          {
+            "_description": "Check context/mcp/ cache and short-circuit if query already answered",
+            "type": "command",
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/pre-tool-use/mcp-cache-lookup.py"
+          }
+        ]
+      },
+      {
+        "_description": "MCP verbosity limiter - cap numResults/tokens on Context7/Exa calls",
+        "matcher": "mcp__context7__query-docs|mcp__exa__web_search_exa|mcp__exa__get_code_context_exa",
+        "hooks": [
+          {
+            "_description": "Reduce MCP payload size (numResults, tokens) to control context growth",
+            "type": "command",
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/pre-tool-use/limit-mcp-verbosity.py"
+          }
+        ]
+      },
+      {
         "_description": "Git & Install & Security & Write guards for Bash commands",
         "matcher": "Bash",
         "hooks": [
@@ -158,6 +191,17 @@
             "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/post-tool-use/post-edit-typescript.py"
           }
         ]
+      },
+      {
+        "_description": "WebFetch cache store - persist fetch results for reuse",
+        "matcher": "WebFetch",
+        "hooks": [
+          {
+            "_description": "Store WebFetch result to cache after successful fetch",
+            "type": "command",
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/post-tool-use/webfetch-cache-store.py"
+          }
+        ]
       }
     ],
 
@@ -180,6 +224,11 @@
             "_description": "Cleanup stale session state files from /tmp",
             "type": "command",
             "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/session-start/cleanup-session-states.py"
+          },
+          {
+            "_description": "Cleanup stale MCP (48h) + WebFetch (24h) cache entries",
+            "type": "command",
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/session-start/cleanup-old-caches.py"
           }
         ]
       }

@@ -87,7 +87,7 @@ Each plugin provides an **expert agent** that auto-activates when it detects the
 
 | Plugin | What it guards |
 |--------|----------------|
-| core-guards | Blocks `git push --force`, `rm -rf`, `npm install` without lock, enforces SOLID file limits, tracks session state, DRY duplication blocking |
+| core-guards | Blocks `git push --force`, `rm -rf`, `npm install` without lock, enforces SOLID file limits, tracks session state, DRY duplication blocking — also bundles token-optimization hooks (MCP verbosity caps, MCP + WebFetch disk cache, SessionStart cleanup) |
 | claude-rules | Injects APEX/SOLID/DRY rules into every prompt so Claude never forgets the methodology |
 
 ## Key Features
@@ -100,6 +100,7 @@ Each plugin provides an **expert agent** that auto-activates when it detects the
 | **SOLID Hooks** | Denies file save if >100 lines or missing SOLID reference read |
 | **Sniper Validation** | 7-phase post-edit check: explore → research → grep → lint → fix → zero errors |
 | **[4-Level Cache](docs/reference/cache-system.md)** | Caches exploration, docs, lessons, tests — 60-75% token savings |
+| **Token-efficient by default** | Caps MCP verbosity (Context7/Exa `numResults≤3`, `tokens≤2000`), disk cache for MCP results + WebFetch with TTL (48h / 24h) and ripgrep lookup, auto-cleanup at SessionStart — typically saves ~150-200 KB per research-heavy session |
 | **28 MCP Servers** | Context7, Exa, Astro docs, Gemini Design, shadcn, Playwright, and more |
 | **Smart Commits** | Security scan before commit, auto version bump, CHANGELOG, shields.io badge sync |
 

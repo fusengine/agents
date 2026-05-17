@@ -28,6 +28,41 @@ related: templates/migration-guide.md
 | `PreCompact` | core-guards |
 | `InstructionsLoaded` | core-guards |
 | `Notification` | core-guards |
+| `Setup` | (available, `--init-only`) |
+| `UserPromptExpansion` | (available, pre slash-command expansion) |
+| `PostToolBatch` | (available, post parallel batch) |
+| `ConfigChange` | (available, on settings change) |
+| `WorktreeCreate` | (available) |
+| `WorktreeRemove` | (available) |
+
+## Hook Handler Types
+
+| `type` | Purpose | Notes |
+|--------|---------|-------|
+| `command` | Shell command (default) | Supports `args: string[]` exec form (v2.1.139), `async`, `timeout`, `asyncRewake`, `statusMessage`, `once: true` |
+| `http` | Webhook backend | POSTs hook JSON to a URL, response parsed as hook output |
+| `mcp_tool` | Invoke an MCP tool as a hook | Tool result becomes the hook response |
+| `prompt` | LLM-based hook (prompt template) | Default timeout 30s, max 60s |
+| `agent` | LLM-based hook (full agent) | Default timeout 30s, max 60s |
+
+### Command hook fields (v2.1.139+)
+
+```json
+{
+  "type": "command",
+  "command": "script.sh",
+  "args": ["--flag", "value"],
+  "async": true,
+  "asyncRewake": true,
+  "timeout": 10000,
+  "statusMessage": "Running checks…",
+  "once": true
+}
+```
+
+- `args`: exec form, avoids shell parsing (safer than embedding in `command`).
+- `async` + `asyncRewake`: non-blocking hook, wakes Claude when complete.
+- `once: true`: skill/agent hooks fire only once per session.
 
 ## Hook Response Formats
 
@@ -50,9 +85,21 @@ related: templates/migration-guide.md
 ```json
 {
   "decision": "block",
-  "reason": "Reason shown to Claude"
+  "reason": "Reason shown to Claude",
+  "continueOnBlock": false
 }
 ```
+
+`continueOnBlock` (PostToolUse, v2.1.139): when `true`, Claude continues after a
+`block` decision instead of aborting the turn.
+
+### Universal optional fields (any hook)
+
+| Field | Since | Purpose |
+|-------|-------|---------|
+| `additionalContext` | — | Extra context appended to Claude's view |
+| `terminalSequence` | v2.1.141 | OSC escape sequence emitted to terminal (desktop notifications, title updates) |
+| `continueOnBlock` | v2.1.139 | PostToolUse only — keep going after block |
 
 ### Stop (prompt/agent type)
 
@@ -81,7 +128,7 @@ Or exit code 2 with stderr message.
   "hooks": {
     "<HookType>": [
       {
-        "matcher": "<regex>",
+        "matcher": "<matcher>",
         "if": "<ToolName>(<pattern>)",
         "hooks": [{ "type": "command", "command": "<cmd>" }]
       }
@@ -89,6 +136,37 @@ Or exit code 2 with stderr message.
   }
 }
 ```
+
+### Matcher semantics (clarified v2.1.142)
+
+Our prior baseline labelled `matcher` as "regex" — the actual resolution rules are:
+
+| Matcher value | Behavior |
+|---------------|----------|
+| `"*"`, `""`, or omitted | Match all tool/event names |
+| String of `[a-zA-Z0-9_|]` only | Exact match, or `|`-separated list of exact names |
+| Anything containing other characters | JS regex (compiled with `new RegExp`) |
+
+This means `"Bash|Write"` is an exact OR (not a regex), while `"Bash.*"` triggers regex mode.
+
+## PermissionRequest Response
+
+```json
+{
+  "decision": {
+    "behavior": "allow",
+    "updatedInput": {}
+  },
+  "skipAskingForever": false,
+  "reason": "Why this decision"
+}
+```
+
+| Field | Values / Notes |
+|-------|----------------|
+| `decision.behavior` | `"allow"` or `"deny"` |
+| `decision.updatedInput` | Optional — modifies the tool input before execution |
+| `skipAskingForever` | When `true`, persists the decision and never re-prompts |
 
 ## Agent Frontmatter Fields
 
@@ -151,8 +229,14 @@ Optional: when-to-use, keywords, priority, related
 | `FileChanged` | v2.1.83 | File modification detected |
 | `TaskCreated` | v2.1.84 | Background task created |
 | `PermissionDenied` | v2.1.89 | User denied a permission prompt |
+| `Setup` | v2.1.95 | One-time init (`--init-only`) |
+| `UserPromptExpansion` | v2.1.108 | Before slash-command expansion |
+| `PostToolBatch` | v2.1.119 | After a parallel tool batch completes |
+| `ConfigChange` | v2.1.127 | Settings file changed |
+| `WorktreeCreate` | v2.1.133 | New worktree created |
+| `WorktreeRemove` | v2.1.133 | Worktree removed |
 
 ## Last Updated
 
-Date: 2026-04-04
-Claude Code Version: 2.1.92
+Date: 2026-05-16
+Claude Code Version: 2.1.142
