@@ -1,6 +1,6 @@
 # Fusengine Claude Code Plugins
 
-![version](https://img.shields.io/badge/version-v1.38.78-blue?style=flat-square) ![plugins](https://img.shields.io/badge/plugins-19-brightgreen?style=flat-square) ![agents](https://img.shields.io/badge/agents-27-blueviolet?style=flat-square) ![skills](https://img.shields.io/badge/skills-150-orange?style=flat-square) ![License: MIT](https://img.shields.io/badge/License-MIT-yellow?style=flat-square) ![platform](https://img.shields.io/badge/platform-macOS%20%7C%20Linux-lightgrey?style=flat-square) ![Windows](https://img.shields.io/badge/Windows-soon-orange?style=flat-square)
+![version](https://img.shields.io/badge/version-v1.38.79-blue?style=flat-square) ![plugins](https://img.shields.io/badge/plugins-19-brightgreen?style=flat-square) ![agents](https://img.shields.io/badge/agents-27-blueviolet?style=flat-square) ![skills](https://img.shields.io/badge/skills-150-orange?style=flat-square) ![License: MIT](https://img.shields.io/badge/License-MIT-yellow?style=flat-square) ![platform](https://img.shields.io/badge/platform-macOS%20%7C%20Linux-lightgrey?style=flat-square) ![Windows](https://img.shields.io/badge/Windows-soon-orange?style=flat-square)
 
 > A plugin ecosystem that turns Claude Code into a supervised, multi-agent development environment. Expert agents write code, hooks enforce quality in real-time, skills inject framework-specific knowledge, and **intelligent cartography auto-maps plugins and projects** — so Claude never guesses, never duplicates, and always follows your architecture.
 
@@ -87,7 +87,7 @@ Each plugin provides an **expert agent** that auto-activates when it detects the
 
 | Plugin | What it guards |
 |--------|----------------|
-| core-guards | Blocks `git push --force`, `rm -rf`, `npm install` without lock, enforces SOLID file limits, tracks session state, DRY duplication blocking |
+| core-guards | Blocks `git push --force`, `rm -rf`, `npm install` without lock, enforces SOLID file limits, tracks session state, DRY duplication blocking — also bundles token-optimization hooks (MCP verbosity caps, MCP + WebFetch disk cache, SessionStart cleanup) |
 | claude-rules | Injects APEX/SOLID/DRY rules into every prompt so Claude never forgets the methodology |
 
 ## Key Features
@@ -100,6 +100,7 @@ Each plugin provides an **expert agent** that auto-activates when it detects the
 | **SOLID Hooks** | Denies file save if >100 lines or missing SOLID reference read |
 | **Sniper Validation** | 7-phase post-edit check: explore → research → grep → lint → fix → zero errors |
 | **[4-Level Cache](docs/reference/cache-system.md)** | Caches exploration, docs, lessons, tests — 60-75% token savings |
+| **Token-efficient by default** | Caps MCP verbosity (Context7/Exa `numResults≤3`, `tokens≤2000`), disk cache for MCP results + WebFetch with TTL (48h / 24h) and ripgrep lookup, auto-cleanup at SessionStart — typically saves ~150-200 KB per research-heavy session |
 | **28 MCP Servers** | Context7, Exa, Astro docs, Gemini Design, shadcn, Playwright, and more |
 | **Smart Commits** | Security scan before commit, auto version bump, CHANGELOG, shields.io badge sync |
 

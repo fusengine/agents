@@ -1,5 +1,14 @@
 # Release Notes
 
+## [1.38.79] - 17-05-2026
+
+- Added (core-guards 1.1.27): 3 PreToolUse cache hooks — `limit-mcp-verbosity.py` (cap numResults<=3 Exa, tokens<=2000 Context7/Exa), `mcp-cache-lookup.py` (ripgrep lookup ~/.claude/fusengine-cache/sessions/ with TTL 48h, deny+content on fresh hit), `webfetch-cache-lookup.py` (hash-based lookup ~/.claude/fusengine-cache/webfetch/ with TTL 24h)
+- Added (core-guards 1.1.27): PostToolUse `webfetch-cache-store.py` — persist WebFetch results with atomic overwrite (stale refresh-safe via os.replace)
+- Added (core-guards 1.1.27): startup hook `cleanup-old-caches.py` — whitelisted purge (sessions/ + doc/ + explore/ @48h, webfetch/ @24h); preserves skill-tracking/, lessons/, analytics/, tests/, root files
+- Fixed (core-guards 1.1.27): `cache-mcp-result.py` stale lockout bug — removed `if os.path.isfile: sys.exit(0)` guard preventing TTL refresh (same pattern as webfetch-cache-store fix)
+- Added (ai-pilot 1.2.25): new skill `think-in-code` — teach experts to write Bash one-liners instead of N sequential Reads for codebase audits, multi-grep, dep listing, log scan, LoC counts
+- Documentation (changelog 1.0.8): `api-surface.md` baseline bumped v2.1.92 → v2.1.142 with new hook events (Setup, UserPromptExpansion, PostToolBatch, ConfigChange, WorktreeCreate/Remove), handler types (http, mcp_tool, prompt, agent), command fields (args, async, asyncRewake, once), and JSON fields (terminalSequence, continueOnBlock)
+
 ## [1.38.78] - 12-05-2026
 
 - Fixed (seo 1.0.2): bump `fast-xml-parser` from `^4.5.0` to `^5.7.0` to resolve Dependabot CVE alert #1 (XMLBuilder XML Comment and CDATA Injection via Unescaped Delimiters). v5 is backward-compatible with our XMLParser + isArray callback usage — no code changes required.

@@ -14,12 +14,22 @@ Security guards and SOLID enforcement hooks for Claude Code.
 | **pre-commit-guard** | Runs linters (ESLint, TypeScript, Prettier, Ruff) before git commit |
 | **enforce-interfaces** | Blocks interfaces/types in component files - must be in `src/interfaces/` |
 
+**Cache hooks** (context reduction):
+
+| Hook | Description |
+|------|-------------|
+| **limit-mcp-verbosity** | Caps MCP payload size: `numResults ≤ 3` (Exa), `tokens ≤ 2000` (Context7) |
+| **mcp-cache-lookup** | ripgrep lookup in `~/.claude/fusengine-cache/sessions/`, TTL 48h. On hit: deny + inject cached content |
+| **webfetch-cache-lookup** | Hash-based lookup in `~/.claude/fusengine-cache/webfetch/`, TTL 24h |
+
 ### PostToolUse Guards
 
 | Guard | Description |
 |-------|-------------|
 | **enforce-file-size** | Blocks files > 100 lines - must split into modules |
 | **track-session-changes** | Tracks cumulative code changes for sniper trigger |
+| **webfetch-cache-store** | Persists WebFetch results (atomic_write, overwrite on store) |
+| **cache-mcp-result** | Persists MCP results to session cache (overwrite atomic — refreshes mtime to avoid stale lockout) |
 
 ### SessionStart
 
@@ -28,6 +38,7 @@ Security guards and SOLID enforcement hooks for Claude Code.
 | **inject-claude-md** | Injects CLAUDE.md content into session context |
 | **load-dev-context** | Loads git status, detects project type |
 | **cleanup-session-states** | Cleans up stale session state files from /tmp |
+| **cleanup-old-caches** | Prunes `~/.claude/fusengine-cache/` whitelist (sessions/webfetch/doc/explore), TTLs 48h/24h |
 
 ### UserPromptSubmit
 

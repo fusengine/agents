@@ -65,8 +65,8 @@ def main() -> None:
     file_path = os.path.join(ctx_root, "mcp", f"{_short_name(tool_name)}-{qhash}.md")
     index_path = os.path.join(ctx_root, "index.json")
 
-    if os.path.isfile(file_path):
-        sys.exit(0)
+    # Always overwrite: atomic_write (os.replace) refreshes mtime so stale
+    # entries (>TTL_SECONDS) get renewed on the next MCP call. See mcp-cache-lookup.
     index = load_index(index_path)
     if _is_duplicate(index, tool_name, query):
         sys.exit(0)
