@@ -7,4 +7,23 @@ Disallow: /admin/
 Disallow: /private/
 Disallow: /*?utm_
 
+# Allow AI crawlers explicitly (GEO 2026)
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
 Sitemap: https://example.com/sitemap.xml

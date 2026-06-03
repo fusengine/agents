@@ -7,7 +7,7 @@
   },
   "metadata": {
     "description": "Professional Claude Code plugins with APEX workflow, SOLID principles, and expert development agents for Next.js, Laravel, Swift, Tailwind CSS, and more",
-    "version": "1.38.79"
+    "version": "1.38.80"
   },
   "core": [
     {
@@ -89,7 +89,7 @@
       "name": "fuse-seo",
       "source": "./plugins/seo",
       "description": "SEO/GEO 2026 plugin: technical SEO, schema markup, E-E-A-T, AI Overviews/ChatGPT/Perplexity optimization, local SEO, sitemaps, hreflang, internal linking, semantic clustering, search experience. Local-first, zero third-party APIs.",
-      "version": "1.0.2",
+      "version": "1.0.3",
       "author": {
         "name": "Fusengine",
         "url": "https://github.com/fusengine"
@@ -457,7 +457,7 @@
       "name": "fuse-design",
       "source": "./plugins/design-expert",
       "description": "UI Designer. Generates HTML/CSS via Gemini Design MCP. 7-phase pipeline with state tracking. Identity System, UX copy, page layouts, motion system, design audit. Anti-AI-Slop, WCAG 2.2.",
-      "version": "2.1.23",
+      "version": "2.1.24",
       "author": {
         "name": "Fusengine",
         "url": "https://github.com/fusengine"

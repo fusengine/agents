@@ -1,5 +1,14 @@
 # Release Notes
 
+## [1.38.80] - 03-06-2026
+
+- Changed (design-expert 2.1.24): migrate browser automation from the playwright MCP to **fuse-browser** (`@fusengine/browser-mcp`) — `colorScheme` light/dark screenshots (handles `.dark` class + `prefers-color-scheme` in one call), `browser_scroll`, responsive `viewports`; `hooks.json` matchers + 8 hook scripts updated (screenshot detection keys on `browser_screenshot`, `check_playwright_navigate` renamed `check_browser_navigate`); skills/rules/commands rewritten for `browser_open` + `browser_scroll` + `browser_screenshot`
+- Changed (design-expert 2.1.24): rename `playwright_helpers.py` to `browser_helpers.py` and `check-playwright-browsing.py` to `check-browser-browsing.py`
+- Changed (seo 1.0.3): `seo-expert`, `seo-cluster`, `seo-geo` agents now use fuse-browser (stealth SERP scraping where vanilla playwright gets blocked by Google)
+- Added (seo 1.0.3): new skill `seo-entity` (entity-seo, knowledge-graph) + `scripts/analyze-keywords.ts`; SEO skill updates (content, content-brief, local, sxo, internal-linking, geo) + robots template
+- Changed (installer): `scripts/mcp/mcp.json` swaps the playwright MCP for fuse-browser and adds the **serper** MCP (`SERPER_API_KEY`); `docs/reference/mcp-servers.md` + `.env.example` updated
+- Chore (core-guards 1.1.28): bump statusline deps (`@clack/prompts` ^1.5.0, `zod` ^4.4.3, `@biomejs/biome` ^2.4.16, `@types/bun` ^1.3.14) and hooks-loader deps; tighten `.gitignore` (`.claude/`)
+
 ## [1.38.79] - 17-05-2026
 
 - Added (core-guards 1.1.27): 3 PreToolUse cache hooks — `limit-mcp-verbosity.py` (cap numResults<=3 Exa, tokens<=2000 Context7/Exa), `mcp-cache-lookup.py` (ripgrep lookup ~/.claude/fusengine-cache/sessions/ with TTL 48h, deny+content on fresh hit), `webfetch-cache-lookup.py` (hash-based lookup ~/.claude/fusengine-cache/webfetch/ with TTL 24h)

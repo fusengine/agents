@@ -4,14 +4,14 @@ description: Use when running SEO, GEO, schema, Core Web Vitals, sitemap, hrefla
 argument-hint: "[command] [url-or-path]"
 user-invocable: true
 references: 01-seo-foundations, 02-onpage-seo, 03-schema-org, 04-geo-2026, 05-technical-seo, 06-content-strategy, 08-measurement, 09-checklists, 10-local-seo
-related-skills: seo-audit, seo-page, seo-technical, seo-schema, seo-content, seo-geo, seo-local, seo-sitemap, seo-hreflang, seo-cluster
+related-skills: seo-audit, seo-page, seo-technical, seo-schema, seo-content, seo-geo, seo-local, seo-sitemap, seo-hreflang, seo-cluster, seo-entity
 ---
 
 # SEO/GEO Orchestrator
 
 **Invocation:** `/seo $1 $2` where `$1` is the command and `$2` is the URL or local path.
 
-Comprehensive SEO + GEO 2026 analysis across all industries (SaaS, local services, e-commerce, publishers, agencies). Orchestrates 19 sub-skills and 8 parallel sub-agents. Local-first, zero third-party APIs.
+Comprehensive SEO + GEO 2026 analysis across all industries (SaaS, local services, e-commerce, publishers, agencies). Orchestrates 20 sub-skills and 8 parallel sub-agents. Local-first, zero third-party APIs.
 
 ## Quick Reference
 
@@ -33,6 +33,7 @@ Comprehensive SEO + GEO 2026 analysis across all industries (SaaS, local service
 | `/seo snippets <url>` | Position 0 + AI Overviews input | seo-featured-snippets |
 | `/seo local <url>` | Local SEO (GBP, NAP, citations, map pack) | seo-local |
 | `/seo geo <url>` | AI Overviews/ChatGPT/Perplexity/Claude readiness | seo-geo |
+| `/seo entity <url>` | Entity/semantic SEO, knowledge graph, salience | seo-entity |
 | `/seo ecommerce <url>` | Product schema, faceted nav, marketplace | seo-ecommerce |
 | `/seo video <url>` | VideoObject, YouTube, transcripts | seo-video |
 | `/seo redirects <url>` | 301/302, migration, chains | seo-redirects |
@@ -47,6 +48,7 @@ When user invokes `/seo audit <url>`:
    - `seo-schema` (JSON-LD detect/validate)
    - `seo-content` (E-E-A-T, anti-cannibalization)
    - `seo-geo` (AI Overviews readiness)
+   - `seo-entity` (knowledge graph, salience, sameAs/knowsAbout)
    - `seo-images` (alt, formats, optim)
    - `seo-sitemap` (sitemap.xml + robots.txt)
 3. **If local business detected** → also spawn `seo-local`
@@ -94,6 +96,7 @@ references/
 | `parse-hreflang.ts` | Validate hreflang tags |
 | `diff-seo.ts` | SEO drift via `git diff` |
 | `geo-score.ts` | LLM-readiness scoring (0-100) |
+| `analyze-keywords.ts` | Content intelligence: density, n-grams, 0-100 stuffing score, local distribution (local-first) |
 
 ## Differentiation
 

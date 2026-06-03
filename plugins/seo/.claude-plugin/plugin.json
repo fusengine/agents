@@ -1,6 +1,6 @@
 {
   "name": "fuse-seo",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "SEO/GEO 2026 plugin for Claude Code. Local-first, framework-aware, zero third-party APIs. Covers technical SEO, schema markup, E-E-A-T, AI Overviews optimization, local SEO, sitemaps, hreflang, internal linking, content briefs, semantic clustering, and search experience optimization.",
   "author": {
     "name": "Fusengine",
@@ -22,7 +22,9 @@
     "internal-linking",
     "semantic-clustering",
     "sxo",
-    "featured-snippets"
+    "featured-snippets",
+    "entity-seo",
+    "knowledge-graph"
   ],
   "category": "development",
   "strict": true
