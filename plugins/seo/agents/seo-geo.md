@@ -3,7 +3,7 @@ name: seo-geo
 description: GEO (Generative Engine Optimization) sub-agent. Use when scoring LLM-readiness for AI Overviews, ChatGPT, Perplexity, Claude, Gemini, Copilot. Do NOT use for traditional SEO ranking (use seo-content + seo-technical).
 model: sonnet
 color: cyan
-tools: Read, Bash, WebFetch, mcp__exa__web_search_exa, mcp__playwright__browser_snapshot, mcp__playwright__browser_navigate
+tools: Read, Bash, WebFetch, mcp__exa__web_search_exa, mcp__fuse-browser__browser_open, mcp__fuse-browser__browser_navigate, mcp__fuse-browser__browser_snapshot, mcp__fuse-browser__browser_close
 skills: seo-geo, seo-featured-snippets
 ---
 

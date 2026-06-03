@@ -45,8 +45,8 @@
         ]
       },
       {
-        "_description": "Block Playwright browsing before reading design-inspiration.md",
-        "matcher": "mcp__playwright__browser_navigate",
+        "_description": "Block fuse-browser browsing before reading design-inspiration.md",
+        "matcher": "mcp__fuse-browser__browser_navigate",
         "hooks": [
           {
             "type": "command",
@@ -56,7 +56,7 @@
       },
       {
         "_description": "Block screenshot without scrolling first (lazy loading)",
-        "matcher": "mcp__playwright__browser_take_screenshot",
+        "matcher": "mcp__fuse-browser__browser_screenshot",
         "hooks": [
           {
             "type": "command",
@@ -97,8 +97,8 @@
         ]
       },
       {
-        "_description": "Update state after each Playwright screenshot",
-        "matcher": "mcp__playwright__browser_take_screenshot",
+        "_description": "Update state after each fuse-browser screenshot",
+        "matcher": "mcp__fuse-browser__browser_screenshot",
         "hooks": [
           {
             "type": "command",
@@ -107,8 +107,8 @@
         ]
       },
       {
-        "_description": "Track MCP research + Playwright calls",
-        "matcher": "mcp__context7__|mcp__exa__|mcp__magic__|mcp__shadcn__|mcp__playwright__|mcp__gemini-design__",
+        "_description": "Track MCP research + fuse-browser calls",
+        "matcher": "mcp__context7__|mcp__exa__|mcp__magic__|mcp__shadcn__|mcp__fuse-browser__|mcp__gemini-design__",
         "hooks": [
           {
             "type": "command",

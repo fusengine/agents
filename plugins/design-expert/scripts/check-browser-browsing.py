@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Block Write/Edit and Gemini MCP calls if < 4 Playwright screenshots taken."""
+"""Block Write/Edit and Gemini MCP calls if < 4 fuse-browser screenshots taken."""
 import json, os, sys
 
 _SHARED = os.path.join(os.path.expanduser("~"), ".claude", "plugins",
@@ -9,13 +9,13 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from hook_output import allow_pass
 from screenshot_counts import count_agent_screenshots, count_screenshots
 from pipeline_checks import load_state, save_state
-from playwright_helpers import deny_block, is_exempt, find_design_system
+from browser_helpers import deny_block, is_exempt, find_design_system
 
 CACHE_DIR = os.path.join(os.path.expanduser("~"), ".claude", "fusengine-cache")
 FLAG_FILE = os.path.join(CACHE_DIR, "design-agent-active")
 MIN_SCREENSHOTS = 4
-DENY_MSG = ("BLOCKED: Only {count}/{min} Playwright screenshots. Browse 4 sites BEFORE writing. "
-    "Read design-inspiration.md, use browser_navigate + browser_take_screenshot on 4 sites.")
+DENY_MSG = ("BLOCKED: Only {count}/{min} fuse-browser screenshots. Browse 4 sites BEFORE writing. "
+    "Read design-inspiration.md, use browser_open + browser_navigate + browser_screenshot on 4 sites.")
 DENY_DS = ("BLOCKED: design-system.md not found. Create it FIRST using identity templates "
     "from skills/0-identity-system/references/templates/.")
 DENY_GEMINI = ("BLOCKED: You MUST call Gemini Design MCP before writing HTML/CSS. "
@@ -78,7 +78,7 @@ def main() -> None:
                 deny_block(DENY_GEMINI)
             if not find_design_system((data.get("tool_input") or {}).get("file_path", "")):
                 deny_block(DENY_DS)
-        allow_pass("check-playwright-browsing", f"pass ({screenshots} screenshots)")
+        allow_pass("check-browser-browsing", f"pass ({screenshots} screenshots)")
         return
     deny_block(DENY_MSG.format(count=screenshots, min=MIN_SCREENSHOTS))
 

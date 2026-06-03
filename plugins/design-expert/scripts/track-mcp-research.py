@@ -62,11 +62,11 @@ def main() -> None:
     tool_input = data.get("tool_input") or {}
     query = tool_input.get("query") or tool_input.get("topic") or ""
 
-    # Special handling for Playwright tools (no query/topic field)
-    if "playwright" in tool_name and not query:
+    # Special handling for fuse-browser tools (no query/topic field)
+    if "fuse-browser" in tool_name and not query:
         query = tool_input.get("url") or tool_name
         if "screenshot" in tool_name:
-            query = f"playwright_screenshot {tool_input.get('fullPage', False)}"
+            query = f"browser_screenshot {tool_input.get('fullPage', False)}"
 
     if not query:
         sys.exit(0)
@@ -82,7 +82,7 @@ def main() -> None:
     track_mcp_research(source, tool_name, query, session_id)
 
     # Per-agent tracking for design hooks
-    if agent_id and ("playwright" in tool_name or "gemini-design" in tool_name):
+    if agent_id and ("fuse-browser" in tool_name or "gemini-design" in tool_name):
         from tracking import TRACKING_DIR
         os.makedirs(TRACKING_DIR, exist_ok=True)
         ts = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")

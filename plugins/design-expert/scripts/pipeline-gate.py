@@ -13,7 +13,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from hook_output import allow_pass
 from pipeline_checks import (
     check_design_system_write, check_gemini_create,
-    check_playwright_navigate, load_state, save_state,
+    check_browser_navigate, load_state, save_state,
 )
 
 CACHE_DIR = os.path.join(os.path.expanduser("~"), ".claude", "fusengine-cache")
@@ -66,8 +66,8 @@ def main() -> None:
         check_design_system_write(state)
     elif tool == "mcp__gemini-design__create_frontend":
         check_gemini_create(state)
-    elif tool == "mcp__playwright__browser_navigate":
-        check_playwright_navigate(state)
+    elif tool == "mcp__fuse-browser__browser_navigate":
+        check_browser_navigate(state)
 
     allow_pass("pipeline-gate", f"phase {state.get('current_phase', 0)} ok")
 

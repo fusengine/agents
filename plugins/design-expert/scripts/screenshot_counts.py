@@ -1,4 +1,4 @@
-"""screenshot_counts.py - Count Playwright screenshots by session or agent."""
+"""screenshot_counts.py - Count fuse-browser screenshots by session or agent."""
 
 import os
 
@@ -7,7 +7,7 @@ TRACKING_DIR = os.path.join(CACHE_DIR, "skill-tracking")
 
 
 def count_screenshots(session_id: str) -> int:
-    """Count Playwright screenshot entries in session tracking files."""
+    """Count fuse-browser screenshot entries in session tracking files."""
     if not os.path.isdir(TRACKING_DIR):
         return 0
     count = 0
@@ -18,7 +18,7 @@ def count_screenshots(session_id: str) -> int:
         try:
             with open(path, encoding="utf-8") as f:
                 for line in f:
-                    if "playwright" in line and "screenshot" in line:
+                    if "browser_screenshot" in line:
                         count += 1
         except OSError:
             continue
@@ -26,7 +26,7 @@ def count_screenshots(session_id: str) -> int:
 
 
 def count_agent_screenshots(agent_id: str) -> int:
-    """Count Playwright screenshots for a specific agent."""
+    """Count fuse-browser screenshots for a specific agent."""
     if not agent_id or not os.path.isdir(TRACKING_DIR):
         return 0
     agent_file = os.path.join(TRACKING_DIR, f"agent-{agent_id}")
@@ -36,7 +36,7 @@ def count_agent_screenshots(agent_id: str) -> int:
     try:
         with open(agent_file, encoding="utf-8") as f:
             for line in f:
-                if "playwright" in line and "screenshot" in line:
+                if "browser_screenshot" in line:
                     count += 1
     except OSError:
         pass

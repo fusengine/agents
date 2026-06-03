@@ -1,4 +1,4 @@
-"""playwright_helpers.py - Shared helpers for Playwright browsing checks."""
+"""browser_helpers.py - Shared helpers for fuse-browser browsing checks."""
 
 import json
 import os

@@ -1,6 +1,6 @@
 ---
 name: design
-description: "Full design pipeline: Identity → Research → System → Generate → Motion → Audit → Review. Generates production-ready HTML/CSS via Gemini Design MCP with OKLCH tokens, approved typography, and Playwright-driven inspiration."
+description: "Full design pipeline: Identity → Research → System → Generate → Motion → Audit → Review. Generates production-ready HTML/CSS via Gemini Design MCP with OKLCH tokens, approved typography, and fuse-browser-driven inspiration."
 ---
 
 # /design — Full Design Pipeline (Phases 0→6)
@@ -21,8 +21,8 @@ Generate a complete design from scratch. Use when no design-system.md exists or 
 
 2. **Phase 0 — IDENTITY**: Read skills/0-identity-system/SKILL.md. Pick sector template (creative/fintech/ecommerce/devtool). Generate OKLCH palette with chroma > 0.05. Pick approved typography pair (never Inter/Roboto/Arial). Define spacing base unit + motion profile.
 
-3. **Phase 1 — RESEARCH**: Read skills/1-designing-systems/references/design-inspiration.md + design-inspiration-urls.md. Browse 4 sites via Playwright:
-   - For each site: browser_navigate → browser_evaluate(scrollTo bottom) → wait 5s → scrollTo top → wait 2s → browser_take_screenshot(fullPage: true)
+3. **Phase 1 — RESEARCH**: Read skills/1-designing-systems/references/design-inspiration.md + design-inspiration-urls.md. Browse 4 sites via fuse-browser:
+   - Once: browser_open → sessionId. For each site: browser_navigate → browser_scroll(to:"end") → wait 5s → browser_scroll(deltaY:-100000) → wait 2s → browser_screenshot(fullPage: true)
    - Write 5 observations per screenshot: (1) dominant+accent color (2) typography hierarchy (3) layout density (4) visual effects (5) section structure
    - After 4 sites: declare "Site choisi: {URL}. Je reproduis: {el1}, {el2}, {el3}" — pick 3 visually distinctive elements
 

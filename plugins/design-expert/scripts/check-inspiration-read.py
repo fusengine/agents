@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""check-inspiration-read.py - Block Playwright if identity or inspiration not read."""
+"""check-inspiration-read.py - Block fuse-browser if identity or inspiration not read."""
 
 import json
 import os
@@ -58,7 +58,7 @@ def main() -> None:
     agent_id = data.get("agent_id") or ""
     if not agent_id or (design_id and agent_id != design_id):
         sys.exit(0)
-    if data.get("tool_name") != "mcp__playwright__browser_navigate":
+    if data.get("tool_name") != "mcp__fuse-browser__browser_navigate":
         sys.exit(0)
 
     sid = data.get("session_id") or f"fallback-{os.getpid()}"

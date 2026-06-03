@@ -1,6 +1,6 @@
 ---
 name: designing-systems
-description: "Phase 1: Browse 4 catalog sites via Playwright, write CSS-precise observations (oklch values, font-size clamp, grid ratios, border-radius, shadows), declare reference site + 3 elements. Feed specs to Gemini context."
+description: "Phase 1: Browse 4 catalog sites via fuse-browser, write CSS-precise observations (oklch values, font-size clamp, grid ratios, border-radius, shadows), declare reference site + 3 elements. Feed specs to Gemini context."
 phase: 1
 ---
 
@@ -16,11 +16,12 @@ After Phase 0 identity templates are read. Before writing design-system.md.
 ### Steps
 1. **Read inspiration catalog** — `references/design-inspiration.md` + `references/design-inspiration-urls.md`
 2. **Pick 4 URLs** from catalog matching the project sector (MUST be from KNOWN_DOMAINS)
-3. **Browse each site** via Playwright:
+3. **Browse each site** via fuse-browser (open one session, reuse for all 4):
+   - `browser_open` → sessionId (once)
    - `browser_navigate` → URL
-   - `browser_evaluate` → `window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'})`
-   - Wait 5s → scroll back to top → wait 2s
-   - `browser_take_screenshot` fullPage: true
+   - `browser_scroll` → `to: "end"` (loads lazy content)
+   - Wait 5s → `browser_scroll` `deltaY: -100000` (back to top) → wait 2s
+   - `browser_screenshot` fullPage: true
 4. **Write 5 CSS-precise observations** per screenshot (NOT vague descriptions):
    - (1) Colors: exact oklch() values for primary, accent, background, text
    - (2) Typography: font-family name, font-size as clamp(min, preferred, max), font-weight

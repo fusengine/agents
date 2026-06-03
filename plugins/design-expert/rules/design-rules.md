@@ -1,6 +1,6 @@
 # Design Rules (STRICT — NO EXCEPTIONS)
 
-> Forbidden fonts/colors, visual effects, dual-mode, Playwright browsing
+> Forbidden fonts/colors, visual effects, dual-mode, fuse-browser browsing
 > defined in `agents/design-expert.md`. This file = **component patterns only**.
 
 ## IDENTITY SYSTEM — PREREQUISITE
@@ -138,7 +138,7 @@ Before ANY UI code:
 - [ ] Icons same stroke width
 - [ ] 60-30-10 color ratio
 - [ ] Touch targets 44x44px minimum
-- [ ] Playwright screenshot LIGHT + DARK modes
+- [ ] fuse-browser screenshot LIGHT + DARK modes (colorScheme)
 - [ ] NO emojis in UI — use icons
 - [ ] Professional testimonials (name, role, company, quote, avatar)
 - [ ] Consistent spacing, aligned grids, visual rhythm

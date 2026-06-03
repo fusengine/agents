@@ -52,8 +52,8 @@ def check_design_system_write(state: dict) -> None:
     if count < needed:
         deny(
             f"BLOCKED: {count}/{needed} screenshots for mode '{mode}'. "
-            f"RECOVERY: 1) Take {needed - count} more Playwright screenshots "
-            "2) Use browser_navigate + browser_take_screenshot fullPage:true "
+            f"RECOVERY: 1) Take {needed - count} more fuse-browser screenshots "
+            "2) Use browser_open + browser_navigate + browser_screenshot fullPage:true "
             "3) Then write design-system.md")
 
 
@@ -73,14 +73,14 @@ def check_gemini_create(state: dict) -> None:
             "2) Then retry mcp__gemini-design__create_frontend")
 
 
-def check_playwright_navigate(state: dict) -> None:
-    """Gate: Playwright navigate requires phase >= 1 and inspiration read."""
+def check_browser_navigate(state: dict) -> None:
+    """Gate: fuse-browser navigate requires phase >= 1 and inspiration read."""
     if state.get("current_phase", 0) < 1:
         deny(
             "BLOCKED: Cannot browse before phase 1. "
             "RECOVERY: 1) Read identity templates "
             "2) Read design-inspiration.md first "
-            "3) Then use mcp__playwright__browser_navigate")
+            "3) Then use mcp__fuse-browser__browser_navigate")
     if not state.get("inspiration_read", False):
         deny(
             "BLOCKED: design-inspiration.md not read yet. "

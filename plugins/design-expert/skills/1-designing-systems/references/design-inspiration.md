@@ -1,6 +1,6 @@
 ---
 name: design-inspiration
-description: 75+ verified URLs (Framer/Webflow/Awwwards) by sector. Playwright workflow (scroll+wait+fullPage). Browse 4 sites, PICK 1 best match, reproduce its quality. MANDATORY before any code generation.
+description: 75+ verified URLs (Framer/Webflow/Awwwards) by sector. fuse-browser workflow (open+scroll+wait+fullPage). Browse 4 sites, PICK 1 best match, reproduce its quality. MANDATORY before any code generation.
 related: 21st-dev.md, gemini-feedback-loop.md, design-inspiration-urls.md
 ---
 
@@ -12,7 +12,7 @@ related: 21st-dev.md, gemini-feedback-loop.md, design-inspiration-urls.md
 4. **Persist** — if a URL fails, try the next one. Get **4 successful fullPage screenshots** minimum
 4. **Never give up** — try at least 6 URLs before falling back to a different platform
 
-## Platforms (all public, no auth, Playwright-ready)
+## Platforms (all public, no auth, fuse-browser-ready)
 
 | Platform | URL Pattern | Best For |
 |---|---|---|
@@ -38,19 +38,18 @@ related: 21st-dev.md, gemini-feedback-loop.md, design-inspiration-urls.md
 
 → Full URL list: see `design-inspiration-urls.md`
 
-## Playwright Workflow
+## fuse-browser Workflow
 
 ```
-Step 1: mcp__playwright__browser_navigate → target URL
-Step 2: Scroll to bottom — mcp__playwright__browser_evaluate:
-        window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'})
-Step 3: mcp__playwright__browser_wait_for → wait 5 seconds (lazy elements load)
-Step 4: Scroll back to top — mcp__playwright__browser_evaluate:
-        window.scrollTo({top: 0, behavior: 'smooth'})
-Step 5: mcp__playwright__browser_wait_for → wait 2 seconds
-Step 6: mcp__playwright__browser_take_screenshot with fullPage: true
+Step 0: mcp__fuse-browser__browser_open → sessionId (once, reuse for all sites)
+Step 1: mcp__fuse-browser__browser_navigate → target URL (pass sessionId)
+Step 2: Scroll to bottom — mcp__fuse-browser__browser_scroll with to: "end" (loads lazy content)
+Step 3: mcp__fuse-browser__browser_wait_for → wait 5 seconds (lazy elements load)
+Step 4: Scroll back to top — mcp__fuse-browser__browser_scroll with deltaY: -100000
+Step 5: mcp__fuse-browser__browser_wait_for → wait 2 seconds
+Step 6: mcp__fuse-browser__browser_screenshot with fullPage: true
 Step 8: Analyze — extract: palette, typography, section flow, spacing, visual techniques, separators
-Step 9: Repeat steps 1-8 for 3 more sites (4 total)
+Step 9: Repeat steps 1-8 for 3 more sites (4 total, same session)
 Step 10: Feed ALL insights into Gemini XML <style_reference> block
 ```
 
