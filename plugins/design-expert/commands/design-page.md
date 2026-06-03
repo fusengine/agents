@@ -24,7 +24,7 @@ Add a new page to a project that already has a design-system.md.
 
 1. **Read design-system.md** completely. Extract tokens, typography, reference site.
 
-2. **Phase 1 — RESEARCH**: Browse 2 sites matching the page type via Playwright. Same process as /design: navigate → scroll → wait → screenshot → 5 observations per site. Declare reference + 3 elements to reproduce.
+2. **Phase 1 — RESEARCH**: Browse 2 sites matching the page type via fuse-browser. Same process as /design: open → navigate → browser_scroll → wait → browser_screenshot → 5 observations per site. Declare reference + 3 elements to reproduce.
 
 3. **Phase 3 — GENERATE**: Map existing design-system.md to 7 Gemini XML blocks:
    - Identity → `<aesthetics>`, Reference → `<style_reference>`, Typography → `<typography>`

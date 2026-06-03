@@ -24,16 +24,10 @@
 			"requiresApiKey": false,
 			"default": false
 		},
-		"playwright": {
-			"_description": "Browser automation via accessibility tree (official Microsoft)",
+		"fuse-browser": {
+			"_description": "Stealth browser automation: snapshots, multi-step plans, themed (light/dark) screenshots",
 			"command": "npx",
-			"args": [
-				"@playwright/mcp@latest",
-				"--output-dir",
-				"${HOME}/.claude/logs/playwright",
-				"--save-session",
-				"--save-trace"
-			],
+			"args": ["-y", "@fusengine/browser-mcp"],
 			"type": "stdio",
 			"requiresApiKey": false
 		},
@@ -193,6 +187,18 @@
 			"requiresApiKey": true,
 			"apiKeyEnv": "BRAVE_API_KEY",
 			"apiKeyUrl": "https://brave.com/search/api"
+		},
+		"serper": {
+			"_description": "Google search (SERP) and webpage scraping via Serper API",
+			"command": "npx",
+			"args": ["-y", "serper-search-scrape-mcp-server"],
+			"env": {
+				"SERPER_API_KEY": "${SERPER_API_KEY}"
+			},
+			"type": "stdio",
+			"requiresApiKey": true,
+			"apiKeyEnv": "SERPER_API_KEY",
+			"apiKeyUrl": "https://serper.dev/api-key"
 		},
 		"stripe": {
 			"_description": "Stripe payments, invoices, customers and subscriptions",

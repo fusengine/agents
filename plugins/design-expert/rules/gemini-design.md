@@ -46,15 +46,15 @@
           monthly/yearly toggle, responsive grid"
 ```
 
-## Verify Result with Playwright
+## Verify Result with fuse-browser
 
 > See `agents/design-expert.md` Phase 6 for full light+dark validation procedure.
 
 After generating, always preview in BOTH light and dark mode (ZERO TOLERANCE):
 
 ```
-mcp__playwright__browser_navigate("http://localhost:3000/page")
-mcp__playwright__browser_take_screenshot()  # light mode
-# Toggle dark mode (via class or media query override)
-mcp__playwright__browser_take_screenshot()  # dark mode
+sid = mcp__fuse-browser__browser_open()          # once
+mcp__fuse-browser__browser_navigate(sid, "http://localhost:3000/page")
+mcp__fuse-browser__browser_screenshot(sid, colorScheme="light")  # light mode
+mcp__fuse-browser__browser_screenshot(sid, colorScheme="dark")   # dark — handles .dark class + media query
 ```

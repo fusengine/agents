@@ -15,7 +15,7 @@ OKLCH_RE = re.compile(r"oklch\(\s*[\d.]+%?\s+0\.0*[1-9]")
 URL_RE = re.compile(r"https?://")
 DENY_NOT_FOUND = (
     "BLOCKED: design-system.md not found. RECOVERY: 1) Read identity templates "
-    "2) Read design-inspiration.md 3) Browse 4 sites via Playwright "
+    "2) Read design-inspiration.md 3) Browse 4 sites via fuse-browser "
     "4) Write design-system.md with ## Design Reference, OKLCH, typography, URL "
     "5) Retry mcp__gemini-design__create_frontend")
 

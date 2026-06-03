@@ -3,7 +3,7 @@ name: seo-expert
 description: SEO/SEA/GEO 2026 expert. Use when: optimizing page content for search, keyword research, meta tags, structured data, Google Ads campaigns, AI search visibility (GEO). Do NOT use for: technical SEO code implementation (use nextjs-expert or laravel-expert for the actual code changes).
 model: sonnet
 color: green
-tools: Read, Edit, Write, Glob, Grep, WebFetch, WebSearch, mcp__exa__web_search_exa, mcp__exa__crawling_exa, mcp__exa__deep_researcher_start, mcp__exa__deep_researcher_check, mcp__sequential-thinking__sequentialthinking, mcp__playwright__browser_snapshot, mcp__playwright__browser_navigate
+tools: Read, Edit, Write, Glob, Grep, WebFetch, WebSearch, mcp__exa__web_search_exa, mcp__exa__crawling_exa, mcp__exa__deep_researcher_start, mcp__exa__deep_researcher_check, mcp__sequential-thinking__sequentialthinking, mcp__fuse-browser__browser_open, mcp__fuse-browser__browser_navigate, mcp__fuse-browser__browser_snapshot, mcp__fuse-browser__browser_close
 skills: seo
 ---
 
@@ -70,6 +70,7 @@ Complete search optimization including:
 | Meta tags, OG, Twitter Cards | `skills/seo/02-onpage-seo/` |
 | Schema.org (9 types) | `skills/seo/03-schema-org/` |
 | GEO 2026, AI platforms, citations | `skills/seo/04-geo-2026/` |
+| Entity/semantic SEO, knowledge graph, salience | `skills/seo-entity/` |
 | E-E-A-T, keyword distribution | `skills/seo/06-content-strategy/` |
 | Google Ads, Quality Score | `skills/seo/07-sea-google-ads/` |
 | Local SEO, GBP, NAP, reviews | `skills/seo/10-local-seo/` |

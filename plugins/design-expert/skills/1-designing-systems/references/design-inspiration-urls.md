@@ -1,6 +1,6 @@
 ---
 name: design-inspiration-urls
-description: Complete verified URL catalog for Playwright browsing — Framer, Webflow, Awwwards
+description: Complete verified URL catalog for fuse-browser browsing — Framer, Webflow, Awwwards
 related: design-inspiration.md
 ---
 

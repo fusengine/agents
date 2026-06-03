@@ -27,7 +27,7 @@ Servers with `[✓]` have API keys configured. Servers with `[⚠ key missing]` 
 | fetch | Web content fetching and conversion for LLMs |
 | time | Time and timezone conversion capabilities |
 | astro-docs | Search official Astro framework documentation |
-| playwright | Browser automation, E2E testing and screenshots |
+| fuse-browser | Stealth browser automation, snapshots and light/dark screenshots |
 | puppeteer | Headless Chrome automation and web scraping |
 | postgres | PostgreSQL database operations and queries |
 | sqlite | SQLite database for local data persistence |
@@ -47,6 +47,7 @@ Servers with `[✓]` have API keys configured. Servers with `[⚠ key missing]` 
 | apple-docs | Apple developer documentation and WWDC | - |
 | github | GitHub repository operations | `GITHUB_TOKEN` |
 | brave-search | Privacy-focused web search engine | `BRAVE_API_KEY` |
+| serper | Google search (SERP) and webpage scraping | `SERPER_API_KEY` |
 | supabase | Supabase backend-as-a-service | `SUPABASE_ACCESS_TOKEN` |
 | notion | Notion workspace and page management | `NOTION_TOKEN` |
 | slack | Slack workspace messaging | `SLACK_TOKEN` |

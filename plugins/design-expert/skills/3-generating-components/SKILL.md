@@ -11,12 +11,12 @@ After Phases 0-2 are complete. design-system.md, tokens, and copy-guide.md must 
 
 ### Input (from Phases 0-2)
 - `design-system.md` with OKLCH palette, typography, motion personality.
-- CSS-precise observations from Phase 1 Playwright browsing (oklch values, clamp sizes, grid ratios).
+- CSS-precise observations from Phase 1 fuse-browser browsing (oklch values, clamp sizes, grid ratios).
 - `copy-guide.md` from Phase 2 (voice, CTAs, microcopy).
 
 ### Steps
 1. **Pre-generation checklist** — Verify: design-system.md exists, OKLCH tokens defined, typography pair set, motion profile set, visual-technique-matrix consulted.
-2. **Browse inspiration** — `mcp__playwright__browser_navigate` + `mcp__playwright__browser_take_screenshot` on sector-matching sites (see `../1-designing-systems/references/design-inspiration.md` and `../1-designing-systems/references/design-inspiration-urls.md`). New project: 4 sites. New page: 2 sites. New component: 1 site.
+2. **Browse inspiration** — `mcp__fuse-browser__browser_open` then `mcp__fuse-browser__browser_navigate` + `mcp__fuse-browser__browser_screenshot` on sector-matching sites (see `../1-designing-systems/references/design-inspiration.md` and `../1-designing-systems/references/design-inspiration-urls.md`). New project: 4 sites. New page: 2 sites. New component: 1 site.
 3. **Search 21st.dev** — `mcp__magic__21st_magic_component_inspiration` for component patterns.
 4. **Read premium patterns** — Read `references/premium-patterns/PATTERNS.md`, pick 2-3 patterns matching your sector, then read their `description.md`. Copy the "Gemini Context Prompt" section from each.
 5. **Prepare 7 XML blocks** for Gemini: `<aesthetics>`, `<typography>`, `<color_system>`, `<spacing>`, `<layout>`, `<states>`, `<forbidden>`.

@@ -10,13 +10,12 @@ TRACKING_DIR = os.path.join(CACHE_DIR, "skill-tracking")
 
 DENY_MSG = (
     "BLOCKED: You must scroll the page before taking a screenshot. "
-    "Use mcp__playwright__browser_evaluate with "
-    "window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'}) "
-    "then wait 5s, scroll back to top, wait 2s, THEN take fullPage screenshot.")
+    "Use mcp__fuse-browser__browser_scroll (to:'end') to load lazy content, "
+    "wait 5s, scroll back to top, wait 2s, THEN take a fullPage browser_screenshot.")
 
 
 def _scroll_done_since_last_nav(agent_id: str) -> bool:
-    """Check agent tracking file for browser_evaluate after last browser_navigate."""
+    """Check agent tracking file for browser_scroll after last browser_navigate."""
     agent_file = os.path.join(TRACKING_DIR, f"agent-{agent_id}")
     if not os.path.isfile(agent_file):
         return False
@@ -32,7 +31,7 @@ def _scroll_done_since_last_nav(agent_id: str) -> bool:
     if last_nav_idx == -1:
         return False
     for line in lines[last_nav_idx + 1:]:
-        if "browser_evaluate" in line or "browser_run_code" in line:
+        if "browser_scroll" in line:
             return True
     return False
 
