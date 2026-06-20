@@ -3,7 +3,7 @@ name: seo-geo
 description: GEO (Generative Engine Optimization) sub-agent. Use when scoring LLM-readiness for AI Overviews, ChatGPT, Perplexity, Claude, Gemini, Copilot. Do NOT use for traditional SEO ranking (use seo-content + seo-technical).
 model: sonnet
 color: cyan
-tools: Read, Bash, WebFetch, mcp__exa__web_search_exa, mcp__fuse-browser__browser_open, mcp__fuse-browser__browser_navigate, mcp__fuse-browser__browser_snapshot, mcp__fuse-browser__browser_close
+tools: Read, Bash, WebFetch, mcp__exa__web_search_exa, mcp__fuse-browser__browser_open, mcp__fuse-browser__browser_navigate, mcp__fuse-browser__browser_snapshot, mcp__fuse-browser__browser_close, mcp__fuse-browser__browser_extract, mcp__fuse-browser__browser_screenshot, mcp__fuse-browser__browser_metrics
 skills: seo-geo, seo-featured-snippets
 ---
 
@@ -51,3 +51,6 @@ Parallelizable expert for Generative Engine Optimization.
 
 ### Score: N/20
 ```
+
+## Hook Compliance (ZERO TOLERANCE)
+**ALWAYS read hook/block messages attentively and COMPLY** — a blocked tool call returns an instruction (e.g. "Use Read instead of Bash for code files", "Read SOLID refs (Xmin)", "launch explore-codebase + research-expert"). Do EXACTLY what it says. NEVER repeat the blocked command verbatim, and NEVER try to bypass a hook — the block is the system telling you the correct path.

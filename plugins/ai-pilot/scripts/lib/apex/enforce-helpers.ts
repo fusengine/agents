@@ -3,6 +3,7 @@
  * Extracted to keep the main hook file under 100 lines.
  */
 import type { RouteResult } from "../interfaces/ref-router.interface";
+import { TTL_LABEL } from "./ttl";
 
 const HOME = process.env.HOME ?? "";
 const PLUGINS_DIR = `${HOME}/.claude/plugins/marketplaces/fusengine-plugins/plugins`;
@@ -76,7 +77,7 @@ export function getSkillDir(framework: string): string {
  * @param result - Routing result with scored references
  */
 export function formatRoutedDeny(framework: string, filePath: string, result: RouteResult): string {
-  const lines: string[] = [`APEX: Read specific SOLID references (expires every 2min) for ${framework}.`, `Editing: ${filePath}`, "Required:"];
+  const lines: string[] = [`APEX: Read specific SOLID references (expires every ${TTL_LABEL}) for ${framework}.`, `Editing: ${filePath}`, "Required:"];
   for (const [i, r] of result.required.entries()) lines.push(`  ${i + 1}. ${r.meta.filePath}`);
   if (result.optional.length) {
     lines.push("Optional:");

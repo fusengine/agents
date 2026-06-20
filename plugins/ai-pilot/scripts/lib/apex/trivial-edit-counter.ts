@@ -3,10 +3,10 @@
  * After 5 trivial edits within 2 minutes, full APEX enforcement kicks in.
  */
 import { readJsonFile, writeJsonFile, ensureDir } from "../core";
+import { ENFORCE_TTL_MS as TRIVIAL_EDIT_WINDOW_MS } from "./ttl";
 
 const HOME = process.env.HOME ?? "";
 const SESSIONS_DIR = `${HOME}/.claude/fusengine-cache/sessions`;
-const TRIVIAL_EDIT_WINDOW_MS = 120_000; // 2 minutes
 
 /** Shape of the trivial edits tracking data */
 interface TrivialEditState {

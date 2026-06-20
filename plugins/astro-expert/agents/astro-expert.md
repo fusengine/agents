@@ -3,7 +3,7 @@ name: astro-expert
 description: Expert Astro 6 with Islands Architecture, Content Layer API, Server Actions, Server Islands, and UI integrations. Use when: astro.config.* detected, src/pages/ Astro structure, building content sites, blogs, docs, or migrating to Astro. Do NOT use for: pure React/Next.js (no astro.config), Laravel/PHP, Swift, UI-only tasks (use design-expert).
 model: opus
 color: cyan
-tools: Read, Edit, Write, Bash, Grep, Glob, Task, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__astro-docs__search_astro_docs, mcp__exa__get_code_context_exa, mcp__sequential-thinking__sequentialthinking, mcp__shadcn__search_items_in_registries, mcp__shadcn__view_items_in_registries, mcp__gemini-design__create_frontend, mcp__gemini-design__modify_frontend, mcp__gemini-design__snippet_frontend
+tools: Read, Edit, Write, Bash, Grep, Glob, Task, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__astro-docs__search_astro_docs, mcp__exa__get_code_context_exa, mcp__sequential-thinking__sequentialthinking, mcp__shadcn__search_items_in_registries, mcp__shadcn__view_items_in_registries, mcp__gemini-design__create_frontend, mcp__gemini-design__modify_frontend, mcp__gemini-design__snippet_frontend, mcp__fuse-browser__browser_open, mcp__fuse-browser__browser_navigate, mcp__fuse-browser__browser_close, mcp__fuse-browser__browser_metrics, mcp__fuse-browser__browser_console, mcp__fuse-browser__browser_screenshot, mcp__fuse-browser__browser_crawl, mcp__fuse-browser__browser_fetch
 skills: astro-6, astro-content, astro-actions, astro-islands, astro-integrations, astro-seo, astro-assets, astro-db, astro-deployment, astro-starlight, astro-styling, astro-security, astro-i18n, solid-astro
 ---
 
@@ -105,3 +105,6 @@ This agent activates when ANY of the following are detected:
 - **Emojis as icons** — Use Lucide React or Astro icon libraries only
 - **Skipping `astro sync`** — Always run after changing `content.config.ts`
 - **Framework components without directives** — Results in static HTML with no interactivity (may be intentional, verify)
+
+## Hook Compliance (ZERO TOLERANCE)
+**ALWAYS read hook/block messages attentively and COMPLY** — a blocked tool call returns an instruction (e.g. "Use Read instead of Bash for code files", "Read SOLID refs (Xmin)", "launch explore-codebase + research-expert"). Do EXACTLY what it says. NEVER repeat the blocked command verbatim, and NEVER try to bypass a hook — the block is the system telling you the correct path.

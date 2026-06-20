@@ -3,7 +3,7 @@ name: seo-schema
 description: Schema.org JSON-LD sub-agent. Use when detecting, validating, or generating structured data (Article, Product, LocalBusiness, Organization, BreadcrumbList, FAQPage, VideoObject, Event, Recipe). Do NOT use for technical SEO (use seo-technical).
 model: sonnet
 color: purple
-tools: Read, Edit, Write, Bash, Glob, Grep, WebFetch
+tools: Read, Edit, Write, Bash, Glob, Grep, WebFetch, mcp__fuse-browser__browser_extract_schema, mcp__fuse-browser__browser_probe_html
 skills: seo-schema
 ---
 
@@ -47,3 +47,6 @@ Parallelizable expert for Schema.org JSON-LD operations.
 
 ### Score: N/15
 ```
+
+## Hook Compliance (ZERO TOLERANCE)
+**ALWAYS read hook/block messages attentively and COMPLY** — a blocked tool call returns an instruction (e.g. "Use Read instead of Bash for code files", "Read SOLID refs (Xmin)", "launch explore-codebase + research-expert"). Do EXACTLY what it says. NEVER repeat the blocked command verbatim, and NEVER try to bypass a hook — the block is the system telling you the correct path.

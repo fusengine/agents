@@ -10,6 +10,7 @@ import {
 	installPluginDeps,
 	makeScriptsExecutable,
 } from "../utils/fs-helpers";
+import { findPluginDepDirs } from "../utils/dep-scanner";
 import { scanPlugins } from "./plugin-scanner";
 import type { Settings } from "./settings-manager";
 import { configureStatusLine } from "./settings-manager";
@@ -42,16 +43,20 @@ export async function installClaudeMd(
 	}
 }
 
-/** Install plugin dependencies */
+/** Install dependencies for every plugin dir holding a package.json */
 export async function installDeps(pluginsDir: string): Promise<void> {
 	const s = p.spinner();
 	s.start("Installing plugin dependencies...");
-	try {
-		await installPluginDeps(join(pluginsDir, "ai-pilot/scripts"));
-		s.stop("Plugin dependencies installed");
-	} catch {
-		s.stop("Plugin dependencies installation failed");
+	const dirs = findPluginDepDirs(pluginsDir);
+	let ok = 0;
+	for (const dir of dirs) {
+		try {
+			if (await installPluginDeps(dir)) ok++;
+		} catch {
+			p.log.warn(`Dependency install failed: ${dir}`);
+		}
 	}
+	s.stop(`${ok}/${dirs.length} plugin dep dirs installed`);
 }
 
 /** Setup statusline if available */

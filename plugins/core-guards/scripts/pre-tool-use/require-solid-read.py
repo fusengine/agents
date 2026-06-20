@@ -6,7 +6,11 @@ sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'
 from ref_router import route_references
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from _shared.state_manager import load_session_state, save_session_state
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from apex_agent_helpers import _enforce_ttl_seconds  # shared TTL parse (DRY)
 
+SOLID_TTL_SECONDS = _enforce_ttl_seconds()
+SOLID_TTL_LABEL = f"{SOLID_TTL_SECONDS // 60}min" if SOLID_TTL_SECONDS % 60 == 0 else f"{SOLID_TTL_SECONDS}s"
 CODE_EXT = r'\.(ts|tsx|js|jsx|py|go|rs|java|php|cpp|c|rb|swift|kt|dart|vue|svelte|astro)$'
 FW_MAP = {'ts': None, 'tsx': None, 'js': None, 'jsx': None, 'vue': None, 'svelte': None,
           'php': 'php', 'swift': 'swift', 'java': 'java', 'go': 'go', 'rb': 'ruby', 'rs': 'rust'}
@@ -43,7 +47,7 @@ def _check_solid_read(sid, fw):
             continue
         try:
             t = datetime.strptime(r.get('timestamp', ''), '%Y-%m-%dT%H:%M:%SZ')
-            return (time.time() - t.replace(tzinfo=timezone.utc).timestamp()) < 120
+            return (time.time() - t.replace(tzinfo=timezone.utc).timestamp()) < SOLID_TTL_SECONDS
         except ValueError:
             return False
     return False
@@ -51,8 +55,8 @@ def _check_solid_read(sid, fw):
 def _build_reason(fp, fw, skill, routed):
     """Build deny reason with routed references."""
     if not routed:
-        return f"BLOCKED: Read SOLID first (2min): {P}/{skill}/SKILL.md"
-    ln = [f"BLOCKED: Read SOLID refs (2min) for {fw}.", f"Editing: {fp}", "Required:"]
+        return f"BLOCKED: Read SOLID first ({SOLID_TTL_LABEL}): {P}/{skill}/SKILL.md"
+    ln = [f"BLOCKED: Read SOLID refs ({SOLID_TTL_LABEL}) for {fw}.", f"Editing: {fp}", "Required:"]
     for i, r in enumerate(routed['required'], 1):
         ln.append(f"  {i}. {r['meta']['filePath']}")
     if routed.get('optional'):

@@ -3,7 +3,7 @@ name: shadcn-ui-expert
 description: Expert shadcn/ui with Radix UI and Base UI primitives. Use when: components.json detected, @radix-ui/* or @base-ui/* in deps, configuring shadcn registry, theming/tokens, Radix→Base UI migration. Do NOT use for: full page layout (use design-expert), non-shadcn styling (use tailwindcss-expert).
 model: sonnet
 color: purple
-tools: Read, Edit, Write, Bash, Grep, Glob, Task, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__exa__web_search_exa, mcp__exa__get_code_context_exa, mcp__sequential-thinking__sequentialthinking, mcp__shadcn__search_items_in_registries, mcp__shadcn__view_items_in_registries, mcp__shadcn__get_item_examples_from_registries, mcp__shadcn__get_add_command_for_items, mcp__shadcn__get_audit_checklist
+tools: Read, Edit, Write, Bash, Grep, Glob, Task, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__exa__web_search_exa, mcp__exa__get_code_context_exa, mcp__sequential-thinking__sequentialthinking, mcp__shadcn__search_items_in_registries, mcp__shadcn__view_items_in_registries, mcp__shadcn__get_item_examples_from_registries, mcp__shadcn__get_add_command_for_items, mcp__shadcn__get_audit_checklist, mcp__fuse-browser__browser_open, mcp__fuse-browser__browser_navigate, mcp__fuse-browser__browser_close, mcp__fuse-browser__browser_visual_diff, mcp__fuse-browser__browser_screenshot, mcp__fuse-browser__browser_console
 skills: shadcn-detection, shadcn-components, shadcn-registries, shadcn-theming, shadcn-migration
 rules: apex-workflow, shadcn-rules
 hooks:
@@ -106,3 +106,6 @@ ALWAYS consult these MCP servers before any action:
 ---
 
 **Remember**: Detect → Consult MCP → Apply patterns → Validate
+
+## Hook Compliance (ZERO TOLERANCE)
+**ALWAYS read hook/block messages attentively and COMPLY** — a blocked tool call returns an instruction (e.g. "Use Read instead of Bash for code files", "Read SOLID refs (Xmin)", "launch explore-codebase + research-expert"). Do EXACTLY what it says. NEVER repeat the blocked command verbatim, and NEVER try to bypass a hook — the block is the system telling you the correct path.

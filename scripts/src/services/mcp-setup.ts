@@ -11,8 +11,11 @@ import {
 } from "./mcp-installer";
 import { promptMissingKeys } from "./mcp-key-prompt";
 
-/** Interactive MCP server configuration */
-export async function configureMcpServers(): Promise<void> {
+/**
+ * Interactive MCP server configuration.
+ * @returns the list of selected MCP server ids (empty if cancelled/skipped).
+ */
+export async function configureMcpServers(): Promise<string[]> {
 	const installMcp = await p.confirm({
 		message: "Install MCP servers to global scope?",
 		initialValue: true,
@@ -20,7 +23,7 @@ export async function configureMcpServers(): Promise<void> {
 
 	if (p.isCancel(installMcp) || !installMcp) {
 		p.log.info("Skipping MCP server installation");
-		return;
+		return [];
 	}
 
 	const catalog = await loadMcpCatalog();
@@ -40,7 +43,7 @@ export async function configureMcpServers(): Promise<void> {
 
 	if (p.isCancel(selected) || selected.length === 0) {
 		p.log.info("No MCP servers selected");
-		return;
+		return [];
 	}
 
 	await promptMissingKeys(selected as string[], catalog);
@@ -63,4 +66,6 @@ export async function configureMcpServers(): Promise<void> {
 	if (success.length > 0) {
 		p.log.success(`Installed: ${success.join(", ")}`);
 	}
+
+	return selected as string[];
 }

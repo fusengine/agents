@@ -1,0 +1,19 @@
+{
+  "name": "fuse-lessons",
+  "version": "1.0.0",
+  "description": "Project memory: writes compact 'never reproduce' lessons to MEMORY/LESSON.md on finish, force-reads them at session/subagent start.",
+  "author": {
+    "name": "Fusengine",
+    "url": "https://github.com/fusengine"
+  },
+  "homepage": "https://github.com/fusengine/agents",
+  "license": "MIT",
+  "keywords": [
+    "memory",
+    "lessons",
+    "hooks",
+    "postmortem"
+  ],
+  "category": "development",
+  "strict": true
+}

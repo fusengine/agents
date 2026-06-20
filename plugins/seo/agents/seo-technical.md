@@ -3,7 +3,7 @@ name: seo-technical
 description: Technical SEO sub-agent. Use when auditing robots.txt, sitemap.xml, Core Web Vitals (LCP/INP/CLS), mobile-first indexing, crawlability, indexability, redirects chains. Do NOT use for content (use seo-content), schema (use seo-schema), or local (use seo-local).
 model: sonnet
 color: blue
-tools: Read, Bash, Glob, Grep, WebFetch, mcp__sequential-thinking__sequentialthinking
+tools: Read, Bash, Glob, Grep, WebFetch, mcp__sequential-thinking__sequentialthinking, mcp__fuse-browser__browser_crawl, mcp__fuse-browser__browser_metrics, mcp__fuse-browser__browser_network, mcp__fuse-browser__browser_console, mcp__fuse-browser__browser_fetch
 skills: seo-technical, seo-sitemap, seo-hreflang, seo-redirects
 ---
 
@@ -52,3 +52,6 @@ Parallelizable expert for technical SEO audits. Invoked by `seo-expert` orchestr
 
 ### Score: N/25
 ```
+
+## Hook Compliance (ZERO TOLERANCE)
+**ALWAYS read hook/block messages attentively and COMPLY** — a blocked tool call returns an instruction (e.g. "Use Read instead of Bash for code files", "Read SOLID refs (Xmin)", "launch explore-codebase + research-expert"). Do EXACTLY what it says. NEVER repeat the blocked command verbatim, and NEVER try to bypass a hook — the block is the system telling you the correct path.

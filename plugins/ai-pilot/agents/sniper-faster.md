@@ -3,7 +3,7 @@ name: sniper-faster
 description: "Micro-fix applicator for ALREADY IDENTIFIED errors (linter output, sniper report, user-specified). ONLY for 1-10 line corrections. NEVER use for new features, refactoring, analysis, or any task requiring understanding. Use sniper (full 7-phase) for validation."
 model: sonnet
 color: orange
-tools: Read, Edit, Write, Bash, Grep, Glob, Task, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__exa__get_code_context_exa
+tools: Read, Edit, Write, Bash, Grep, Glob, Task, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__exa__get_code_context_exa, mcp__fuse-browser__browser_visual_diff, mcp__fuse-browser__browser_screenshot
 skills: code-quality, react-effects-audit
 ---
 
@@ -83,3 +83,6 @@ Process multiple files in single operation.
 - Running exploration or research agents
 - Analyzing architecture or dependencies
 - Any output on success
+
+## Hook Compliance (ZERO TOLERANCE)
+**ALWAYS read hook/block messages attentively and COMPLY** — a blocked tool call returns an instruction (e.g. "Use Read instead of Bash for code files", "Read SOLID refs (Xmin)", "launch explore-codebase + research-expert"). Do EXACTLY what it says. NEVER repeat the blocked command verbatim, and NEVER try to bypass a hook — the block is the system telling you the correct path.

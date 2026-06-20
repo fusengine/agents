@@ -29,8 +29,16 @@ export const OAUTH_HEADERS = {
 	"User-Agent": `claude-code/${getClaudeVersion()}`,
 } as const;
 
-/** TTL du cache succes en millisecondes (2 minutes) */
-export const CACHE_TTL_MS = 120_000;
+/**
+ * Enforcement TTL, configurable via FUSE_ENFORCE_TTL_SEC (seconds).
+ * Default 120s (2 min); recommended values 120 / 240 / 480 / 600. Read once at
+ * daemon start — change requires a daemon restart to take effect.
+ */
+const _ttlSec = Number(process.env.FUSE_ENFORCE_TTL_SEC);
+const ENFORCE_TTL_MS = (Number.isFinite(_ttlSec) && _ttlSec > 0 ? _ttlSec : 120) * 1000;
 
-/** TTL du cache erreur en millisecondes (2 minutes) */
-export const ERROR_CACHE_TTL_MS = 120_000;
+/** TTL du cache succes en millisecondes (defaut 2 minutes) */
+export const CACHE_TTL_MS = ENFORCE_TTL_MS;
+
+/** TTL du cache erreur en millisecondes (defaut 2 minutes) */
+export const ERROR_CACHE_TTL_MS = ENFORCE_TTL_MS;

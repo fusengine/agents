@@ -1,0 +1,9 @@
+{
+	"name": "fuse-lessons-scripts",
+	"private": true,
+	"type": "module",
+	"devDependencies": {
+		"@types/bun": "^1.3.14",
+		"typescript": "^6.0.3"
+	}
+}

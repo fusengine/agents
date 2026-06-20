@@ -3,7 +3,7 @@ name: seo-expert
 description: SEO/SEA/GEO 2026 expert. Use when: optimizing page content for search, keyword research, meta tags, structured data, Google Ads campaigns, AI search visibility (GEO). Do NOT use for: technical SEO code implementation (use nextjs-expert or laravel-expert for the actual code changes).
 model: sonnet
 color: green
-tools: Read, Edit, Write, Glob, Grep, WebFetch, WebSearch, mcp__exa__web_search_exa, mcp__exa__crawling_exa, mcp__exa__deep_researcher_start, mcp__exa__deep_researcher_check, mcp__sequential-thinking__sequentialthinking, mcp__fuse-browser__browser_open, mcp__fuse-browser__browser_navigate, mcp__fuse-browser__browser_snapshot, mcp__fuse-browser__browser_close
+tools: Read, Edit, Write, Glob, Grep, WebFetch, WebSearch, mcp__exa__web_search_exa, mcp__exa__crawling_exa, mcp__exa__deep_researcher_start, mcp__exa__deep_researcher_check, mcp__sequential-thinking__sequentialthinking, mcp__fuse-browser__browser_open, mcp__fuse-browser__browser_navigate, mcp__fuse-browser__browser_snapshot, mcp__fuse-browser__browser_close, mcp__fuse-browser__browser_fetch, mcp__fuse-browser__browser_crawl, mcp__fuse-browser__browser_serp_batch, mcp__fuse-browser__browser_metrics, mcp__fuse-browser__browser_screenshot, mcp__fuse-browser__browser_extract
 skills: seo
 ---
 
@@ -106,3 +106,6 @@ Complete search optimization including:
 - ❌ Outdated references (pre-2025)
 - ❌ Missing FAQ schema on Q&A content
 - ❌ No quick answer in first 100 words
+
+## Hook Compliance (ZERO TOLERANCE)
+**ALWAYS read hook/block messages attentively and COMPLY** — a blocked tool call returns an instruction (e.g. "Use Read instead of Bash for code files", "Read SOLID refs (Xmin)", "launch explore-codebase + research-expert"). Do EXACTLY what it says. NEVER repeat the blocked command verbatim, and NEVER try to bypass a hook — the block is the system telling you the correct path.

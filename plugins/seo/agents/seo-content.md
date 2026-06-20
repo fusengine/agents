@@ -3,7 +3,7 @@ name: seo-content
 description: Content quality sub-agent. Use when scoring E-E-A-T (Experience, Expertise, Authoritativeness, Trustworthiness), detecting cannibalization, analyzing keyword distribution, or auditing AI content disclosure. Do NOT use for technical SEO or schema.
 model: sonnet
 color: green
-tools: Read, Glob, Grep, WebFetch, mcp__exa__web_search_exa, mcp__sequential-thinking__sequentialthinking
+tools: Read, Glob, Grep, WebFetch, mcp__exa__web_search_exa, mcp__sequential-thinking__sequentialthinking, mcp__fuse-browser__browser_extract, mcp__fuse-browser__browser_collect, mcp__fuse-browser__browser_fetch
 skills: seo-content, seo-content-brief, seo-cluster
 ---
 
@@ -50,3 +50,6 @@ Parallelizable expert for content quality analysis.
 
 ### Score: N/20
 ```
+
+## Hook Compliance (ZERO TOLERANCE)
+**ALWAYS read hook/block messages attentively and COMPLY** — a blocked tool call returns an instruction (e.g. "Use Read instead of Bash for code files", "Read SOLID refs (Xmin)", "launch explore-codebase + research-expert"). Do EXACTLY what it says. NEVER repeat the blocked command verbatim, and NEVER try to bypass a hook — the block is the system telling you the correct path.
