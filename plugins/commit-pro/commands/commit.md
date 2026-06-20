@@ -1,7 +1,7 @@
 ---
 description: Smart conventional commit with security validation, branch flow enforcement, and auto-detection. Use for git commit, commit changes, save work, stage and commit.
 argument-hint: [message] | [type scope message] | (empty for auto-detection)
-allowed-tools: Bash(git status:*), Bash(git diff:*), Bash(git add:*), Bash(git commit:*), Bash(git log:*), Bash(git tag:*), Bash(git push:*), Bash(git describe:*), Bash(git branch:*), Bash(git checkout:*), Bash(git rev-parse:*), Bash(gh pr create:*), Bash(gh pr view:*), Read, Edit
+allowed-tools: Bash(git status:*), Bash(git diff:*), Bash(git add:*), Bash(git commit:*), Bash(git log:*), Bash(git tag:*), Bash(git push:*), Bash(git pull:*), Bash(git describe:*), Bash(git branch:*), Bash(git checkout:*), Bash(git rev-parse:*), Bash(git remote:*), Bash(git merge-base:*), Bash(gh pr create:*), Bash(gh pr view:*), Bash(gh pr merge:*), Bash(gh pr checks:*), Bash(gh pr edit:*), Read, Edit
 disable-model-invocation: false
 ---
 
@@ -146,60 +146,57 @@ After step 5 succeeds, execute the `post-commit` skill (CHANGELOG + version bump
 
 This runs for ALL repos — the skill auto-detects the repo type internally.
 
-### Step 7: Push Branch + Pull Request (GitHub Flow)
+### Step 7: Auto-Release (push + PR + CI watch + merge) — automatic when a remote exists
 
-After post-commit completes, if current branch is a feature branch (not main/master):
+After post-commit completes, if current branch is a feature branch (not main/master) **and a remote is configured** (`git remote -v` non-empty), run the FULL release automatically — **no Y/N prompts**:
 
-1. **Detect remote** via `git remote -v`. If no remote → STOP, output info: "No remote configured, skip push."
-2. **Push branch with upstream**:
+1. **Push branch + tag** (the `vX.Y.Z` tag created by post-commit):
    ```bash
    git push -u origin <current-branch>
+   git push origin <tag>
    ```
-3. **Check if PR already exists**:
+2. **Create the PR if absent** (else reuse the existing one):
    ```bash
-   gh pr view --json url 2>/dev/null
-   ```
-   - If exists → output URL, STOP.
-   - If not → propose creating one.
-
-4. **Propose PR creation**:
-
-   ```text
-   🔀 Pull Request
-   ───────────────────────────────
-   Branch: <feature-branch>
-   Base: main
-   ───────────────────────────────
-
-   Create PR via gh? [Y/N]
-   ```
-
-5. **If accepted**, generate PR with this template:
-
-   ```bash
-   gh pr create --title "<commit subject>" --body "$(cat <<'EOF'
+   gh pr view --json url -q .url 2>/dev/null || gh pr create --base main --title "<commit subject>" --body "$(cat <<'EOF'
    ## Summary
-   - <bullet 1 from commit body>
-   - <bullet 2>
+   - <bullets from commit body>
 
    ## Changes
-   <list of major changes>
+   <major changes>
 
    ## Test plan
-   - [ ] Manual test on X
-   - [ ] CI passes
-   - [ ] Sniper validation clean
+   - [x] / [ ] as applicable
 
    ## Breaking changes
    None / <description>
    EOF
    )"
    ```
+3. **Surveillance + merge auto** — preserve the tag with a **MERGE COMMIT** (never `--squash`/`--rebase`, or the tag dangles off `main`):
+   - Prefer GitHub native auto-merge (merges once required checks pass):
+     ```bash
+     gh pr merge <pr> --auto --merge --delete-branch
+     ```
+   - If auto-merge is not enabled on the repo, watch checks then merge:
+     ```bash
+     gh pr checks <pr> --watch && gh pr merge <pr> --merge --delete-branch
+     ```
+   - If the repo has **no CI checks**, merge immediately:
+     ```bash
+     gh pr merge <pr> --merge --delete-branch
+     ```
+4. **Sync local main + verify the tag is reachable**:
+   ```bash
+   git checkout main && git pull --ff-only
+   git merge-base --is-ancestor <tag> main && echo "tag on main ✅"
+   ```
+5. Output PR URL + merge status + tag verification.
 
-6. **Output PR URL** and STOP. **Never auto-merge** — leave to user/CI.
+**Why `--merge` not `--squash`**: the post-commit tag points at the bump commit on the feature branch; a squash/rebase rewrites SHAs and orphans the tag. A merge commit keeps the tagged commit in `main`'s history.
 
-**Skip Step 7 if**:
-- No remote configured
-- User passes `--no-pr` in `$ARGUMENTS`
-- Branch already merged
-- Repo has no `gh` CLI installed (graceful degradation, output manual command)
+**Leave the PR OPEN (push + PR only, do NOT merge) if**:
+- User passes `--no-merge` in `$ARGUMENTS`
+- CI checks **FAIL** → report the failing check, leave PR open for the user
+- Branch protection rejects the merge → report, leave open
+
+**Skip Step 7 entirely if**: no remote configured, `--no-pr` in `$ARGUMENTS`, branch already merged, or no `gh` CLI (graceful degradation — output the manual commands).

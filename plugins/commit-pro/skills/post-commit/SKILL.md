@@ -87,17 +87,41 @@ Then determine plugin type from `marketplace.json`:
 - **In `plugins[]` array** → Also update matching `version` field in `marketplace.json`
 - **In `core[]` array** → Only bump `plugin.json` (core entries have no version field)
 
-### Step M3: Bump Suite Version
+### Step M3: Bump Suite Version + Recompute README Badges
 
-Read `metadata.version` from `.claude-plugin/marketplace.json`.
+Read `metadata.version` from `.claude-plugin/marketplace.json`, increment PATCH (`X.Y.Z` → `X.Y.(Z+1)`), write it back to `metadata.version`.
 
-Increment PATCH: `X.Y.Z` → `X.Y.(Z+1)`.
+Then **recompute EVERY shields.io badge in `README.md` from the filesystem** — never hand-maintain counts (they drift):
 
-Write the new suite version back to `marketplace.json` → `metadata.version`.
+```bash
+PLUGINS=$(grep -cE '"source": "\./plugins/' .claude-plugin/marketplace.json)
+AGENTS=$(ls plugins/*/agents/*.md 2>/dev/null | wc -l | tr -d ' ')
+SKILLS=$(ls -d plugins/*/skills/*/ 2>/dev/null | wc -l | tr -d ' ')
+```
 
-If `README.md` contains a shields.io version badge, update it to match the new version:
+Update each badge token in `README.md` so it matches reality (replace the token, not the whole line):
 
-Replace `version-vOLD_VERSION-` with `version-vNEW_VERSION-` in the badge URL.
+- `version-v<any>-` → `version-v<newSuite>-`
+- `plugins-<any>-` → `plugins-$PLUGINS-`
+- `agents-<any>-` → `agents-$AGENTS-`
+- `skills-<any>-` → `skills-$SKILLS-`
+
+```bash
+sed -i '' -E "s/version-v[0-9.]+-/version-v${NEW}-/; s/plugins-[0-9]+-/plugins-${PLUGINS}-/; s/agents-[0-9]+-/agents-${AGENTS}-/; s/skills-[0-9]+-/skills-${SKILLS}-/" README.md
+```
+
+### Step M3.5: Documentation Parity
+
+For any plugin **added** in this commit, create its docs page and link it. Doc filenames are abbreviated (e.g. dir `nextjs-expert` → `docs/plugins/nextjs.md`), so match the existing naming in `docs/plugins/`, not the raw dir.
+
+```bash
+git diff --name-only HEAD~1 HEAD | grep -oE '^plugins/[^/]+' | sort -u   # plugins touched this commit
+```
+
+For each NEW plugin lacking a page:
+
+1. Create `docs/plugins/<name>.md` mirroring a sibling page (title, How It Works, Configuration, Commands, Scripts tables).
+2. Add a row to the matching README plugin table **and** append the plugin to the `/plugin install …` command list.
 
 ### Step M4: Update CHANGELOG
 
@@ -118,7 +142,7 @@ Include `(plugin-name X.Y.Z)` in each line for bumped plugins.
 Stage all modified files:
 
 ```bash
-git add CHANGELOG.md README.md .claude-plugin/marketplace.json plugins/*/.claude-plugin/plugin.json
+git add CHANGELOG.md README.md .claude-plugin/marketplace.json plugins/*/.claude-plugin/plugin.json docs/
 ```
 
 Commit with HEREDOC format:
