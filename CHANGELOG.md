@@ -1,5 +1,15 @@
 # Release Notes
 
+## [1.38.81] - 20-06-2026
+
+- Added (fuse-lessons 1.0.0): new plugin — project `MEMORY/LESSON.md` "never reproduce" lessons, hook-driven (inject on session/subagent start, write-reminder only after real code edits, multi-project via `.git` root, auto `MEMORY/.gitignore`, timestamped entries, configurable throttle)
+- Added (all expert plugins): wire **fuse-browser** MCP tools into 23 domain agents (research/SERP/screenshot/network/console per agent role)
+- Added (claude-rules 1.0.8, all agents): hook-compliance rule #8 — read and obey block messages, never repeat verbatim, never bypass — across 29 agents + `CLAUDE.md` template
+- Changed (core-guards 1.1.29): configurable enforcement TTL via `FUSE_ENFORCE_TTL_SEC` with dynamic minute labels (shared `ttl` module; replaces hardcoded 2min)
+- Changed (installer): fuse-browser chromium provisioning + interactive TTL prompt; generalized plugin dependency auto-discovery (scan all `package.json`, drop hardcoded ai-pilot path)
+- Fixed (fuse-seo 1.0.4): remove invalid `"hooks"` string from `marketplace.json` entry that crashed the plugin-system hook reduce; nest seo hooks under `"hooks"`
+- Documentation: add `docs/plugins/lessons.md`; refresh README badges (version 1.38.81, agents 29, skills 158) and plugin list
+
 ## [1.38.80] - 03-06-2026
 
 - Changed (design-expert 2.1.24): migrate browser automation from the playwright MCP to **fuse-browser** (`@fusengine/browser-mcp`) — `colorScheme` light/dark screenshots (handles `.dark` class + `prefers-color-scheme` in one call), `browser_scroll`, responsive `viewports`; `hooks.json` matchers + 8 hook scripts updated (screenshot detection keys on `browser_screenshot`, `check_playwright_navigate` renamed `check_browser_navigate`); skills/rules/commands rewritten for `browser_open` + `browser_scroll` + `browser_screenshot`
