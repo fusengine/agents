@@ -6,6 +6,8 @@ import { join } from "node:path";
 import * as p from "@clack/prompts";
 import type { SetupPaths } from "../interfaces/setup";
 import { copyExecutable } from "../utils/fs-helpers";
+import { installBrowserBinary } from "./browser-binary";
+import { promptEnforceTtl } from "./enforce-ttl";
 import { configureShell } from "./env-manager";
 import { configureMcpServers } from "./mcp-setup";
 import { promptPerfEnv } from "./perf-env";
@@ -82,12 +84,16 @@ export async function runSetup(
 
 	settings = await promptPerfEnv(settings);
 
-	await saveSettings(paths.settings, settings);
-
 	if (!skipEnv) {
 		await configureShell();
-		await configureMcpServers();
+		const selectedMcp = await configureMcpServers();
+		if (selectedMcp.includes("fuse-browser")) {
+			await installBrowserBinary();
+			settings = await promptEnforceTtl(settings);
+		}
 	}
+
+	await saveSettings(paths.settings, settings);
 
 	p.outro("Setup complete! Restart Claude Code to apply.");
 }

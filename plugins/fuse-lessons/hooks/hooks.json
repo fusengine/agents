@@ -1,0 +1,46 @@
+{
+  "_description": "fuse-lessons 4 events: SessionStart/SubagentStart inject MEMORY/LESSON.md, Stop reminds (5min throttle) to write a compact lesson, PostToolUse (Write|Edit|MultiEdit) marks the write to reset the throttle.",
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bun ${CLAUDE_PLUGIN_ROOT}/scripts/handlers/inject-memory.ts"
+          }
+        ]
+      }
+    ],
+    "SubagentStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bun ${CLAUDE_PLUGIN_ROOT}/scripts/handlers/inject-memory.ts"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bun ${CLAUDE_PLUGIN_ROOT}/scripts/handlers/remind-write.ts"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bun ${CLAUDE_PLUGIN_ROOT}/scripts/handlers/mark-write.ts"
+          }
+        ]
+      }
+    ]
+  }
+}

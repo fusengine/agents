@@ -47,6 +47,13 @@ docs/plugins/memory.md
 
 # APEX tracking (auto-generated)
 .claude/apex/
+
+# impeccable plugin cache (auto-generated wherever files are edited)
+.impeccable/
+
+# fuse-lessons memory — dev/test artifacts in this plugin source repo (not committed here;
+# in projects that USE the plugin, LESSON.md is committed and only state.json is ignored).
+MEMORY/
 plugins/design-expert/scripts/.ruff_cache
 test-design
 .audit

@@ -145,8 +145,7 @@
         "./skills/seo-ecommerce",
         "./skills/seo-video",
         "./skills/seo-redirects"
-      ],
-      "hooks": "./hooks/hooks.json"
+      ]
     },
     {
       "name": "fuse-commit-pro",
@@ -741,6 +740,30 @@
       ],
       "skills": [
         "./skills/map-ecosystem"
+      ]
+    },
+    {
+      "name": "fuse-lessons",
+      "source": "./plugins/fuse-lessons",
+      "description": "Project memory: writes compact 'never reproduce' lessons to MEMORY.md on finish, force-reads them at session/subagent start.",
+      "version": "1.0.0",
+      "author": {
+        "name": "Fusengine",
+        "url": "https://github.com/fusengine"
+      },
+      "homepage": "https://github.com/fusengine/agents",
+      "repository": "https://github.com/fusengine/agents",
+      "license": "MIT",
+      "keywords": [
+        "memory",
+        "lessons",
+        "hooks",
+        "postmortem"
+      ],
+      "category": "development",
+      "strict": true,
+      "commands": [
+        "./commands/lessons.md"
       ]
     }
   ]

@@ -3,7 +3,7 @@ name: swift-expert
 description: Expert Swift 6.2 + SwiftUI for all Apple platforms. Use when: Package.swift or *.xcodeproj detected, iOS/macOS/watchOS/visionOS/tvOS apps, SwiftUI views, Swift concurrency, XcodeBuildMCP automation. Do NOT use for: web frontend, Laravel/PHP, non-Apple platforms.
 model: opus
 color: red
-tools: mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__exa__web_search_exa, mcp__exa__get_code_context_exa, mcp__XcodeBuildMCP__*, mcp__apple-docs__*, Read, Glob, Grep, Edit, Write, Bash
+tools: mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__exa__web_search_exa, mcp__exa__get_code_context_exa, mcp__XcodeBuildMCP__*, mcp__apple-docs__*, Read, Glob, Grep, Edit, Write, Bash, mcp__fuse-browser__browser_navigate, mcp__fuse-browser__browser_console, mcp__fuse-browser__browser_inspect, mcp__fuse-browser__browser_snapshot, mcp__fuse-browser__browser_fetch
 skills: swift-core, swiftui-core, ios, macos, ipados, watchos, visionos, tvos, mcp-tools, build-distribution, solid-swift, elicitation
 hooks:
   PreToolUse:
@@ -96,3 +96,6 @@ Expert Swift and SwiftUI developer specializing in all Apple platforms.
 2. **Navigate** by following links: index.md → deeper index.md → leaf = real source file
 3. **Read the source file** — respond based on verified local documentation
 4. **Cross-verify** with Context7/Exa to confirm references are up-to-date
+
+## Hook Compliance (ZERO TOLERANCE)
+**ALWAYS read hook/block messages attentively and COMPLY** — a blocked tool call returns an instruction (e.g. "Use Read instead of Bash for code files", "Read SOLID refs (Xmin)", "launch explore-codebase + research-expert"). Do EXACTLY what it says. NEVER repeat the blocked command verbatim, and NEVER try to bypass a hook — the block is the system telling you the correct path.

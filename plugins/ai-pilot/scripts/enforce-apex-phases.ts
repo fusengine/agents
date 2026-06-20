@@ -14,6 +14,7 @@ import { findProjectRoot } from "./lib/apex/fs-helpers";
 import { isDocConsulted, formatDocDeny, resolveSessions, type AuthEntry } from "./lib/apex/doc-helpers";
 import { routeReferences } from "./lib/apex/ref-router";
 import { incrementTrivialEditCounter } from "./lib/apex/trivial-edit-counter";
+import { ENFORCE_TTL_MS, TTL_LABEL } from "./lib/apex/ttl";
 
 const CODE_EXT = /\.(ts|tsx|js|jsx|py|php|swift|go|rs|rb|java|vue|svelte|astro|css)$/; // requires doc
 const SKIP_DIRS = /(node_modules|vendor|dist|build|\.next|DerivedData)/; // skip deps/build
@@ -34,7 +35,7 @@ function isAuthorized(
   if (!auth?.doc_consulted || !resolveSessions(auth).includes(sessionId)) return false;
   const readEpoch = new Date(auth.doc_consulted).getTime();
   if (Number.isNaN(readEpoch)) return false;
-  return (Date.now() - readEpoch) < 120_000;
+  return (Date.now() - readEpoch) < ENFORCE_TTL_MS;
 }
 
 /** Main hook handler */
@@ -83,7 +84,7 @@ async function main(): Promise<void> {
       const routed = await routeReferences(filePath, content, skillDir);
       const denyReason = routed
         ? formatRoutedDeny(framework, filePath, routed)
-        : `APEX: Read doc first (expires every 2min) for ${framework}! Source: ${src}`;
+        : `APEX: Read doc first (expires every ${TTL_LABEL}) for ${framework}! Source: ${src}`;
       deny(denyReason);
       return;
     }

@@ -97,3 +97,6 @@ If `additionalContext` contains "EXPLORATION CACHE INSTRUCTIONS":
 - Only exception: cache snapshot path explicitly provided in additionalContext
 - No assumptions without code evidence
 - No skipping config files, dependencies, or entry points
+
+## Hook Compliance (ZERO TOLERANCE)
+**ALWAYS read hook/block messages attentively and COMPLY** — a blocked tool call returns an instruction (e.g. "Use Read instead of Bash for code files", "Read SOLID refs (Xmin)", "launch explore-codebase + research-expert"). Do EXACTLY what it says. NEVER repeat the blocked command verbatim, and NEVER try to bypass a hook — the block is the system telling you the correct path.

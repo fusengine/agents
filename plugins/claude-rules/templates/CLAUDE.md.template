@@ -13,6 +13,7 @@ User = expert engineer who knows the system better than you — no hand-holding,
 5. **NEVER duplicate code** - Grep codebase BEFORE writing ANY new code
 6. **ALWAYS verify with `websearch`** — use `fuse-ai-pilot:websearch` to fact-check before ANY response — NEVER guess
 7. **NEVER propose the same fix twice** — if an approach fails, launch `research-expert` + `websearch` to find a real solution before retrying. NEVER loop.
+8. **ALWAYS read hook/block messages attentively and COMPLY** — a blocked tool call returns an instruction (e.g. "Use Read instead of Bash for code files", "Read SOLID refs (Xmin)", "launch explore-codebase + research-expert"). Do EXACTLY what it says. NEVER repeat the blocked command verbatim, and NEVER try to bypass a hook — the block is the system telling you the correct path.
 
 ## Cartography (MANDATORY — Step 1 of every task)
 1. **Read** `.cartographer/project/index.md` and plugin skills map from SubagentStart context
@@ -76,6 +77,12 @@ Brainstorm -> **A**nalyze -> **P**lan -> **E**xecute -> e**L**icit -> Verify -> 
 4. **Validate after** - `sniper` after ANY modification
 5. **JSDoc/PHPDoc** - Every exported function documented
 
+## Browser & Web (fuse-browser MCP)
+- **Fast-path FIRST** — `browser_fetch` / `fetch_batch` / `crawl` / `serp_batch` (NO browser launch, ~10× faster) to read, bulk-fetch, crawl, or scrape Google SERP. Open a live session only for interaction, JS render, or pixels.
+- **One session, always `browser_close`d** — `browser_open` once, reuse the `sessionId`; never leak sessions.
+- **Batch, don't loop** — `serp_batch` (N queries), `fetch_batch` / `shots_batch` (N URLs), `screenshot { viewports, colorScheme }` (responsive + dark in one call).
+- **Deterministic extraction** — `extract_schema` + `containerSelector` over manual snapshot parsing. Full guide: `06-tooling-rules.md`.
+
 ## Git Commits (ZERO TOLERANCE)
 **ALWAYS use `/fuse-commit-pro:commit`** - NEVER use `git commit` directly.
 `/fuse-commit-pro:commit` handles: branch check (GitHub Flow), security check, conventional message, version bump, CHANGELOG, git tag, push, PR creation.
@@ -100,7 +107,7 @@ All detailed rules are auto-loaded via the `fuse-rules` plugin at SessionStart:
 - `03-agent-teams.md` - Delegation rules and anti-patterns
 - `04-solid-dry-rules.md` - SOLID principles and DRY enforcement
 - `05-frontend-rules.md` - Gemini Design MCP for UI tasks
-- `06-tooling-rules.md` - Git, MCP servers, hooks, documentation
+- `06-tooling-rules.md` - Git, MCP servers (incl. fuse-browser efficient usage), hooks, documentation
 - `07-state-management.md` - React/Next.js: Zustand, TanStack Query, stores
 
 Rules location: `~/.claude/plugins/marketplaces/fusengine-plugins/plugins/claude-rules/rules/`

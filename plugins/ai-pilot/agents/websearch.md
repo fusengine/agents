@@ -3,7 +3,7 @@ name: websearch
 description: Quick web research via Exa only. Use when: current events, real-time info, quick factual lookup where speed > depth. FASTER than research-expert (single tool, no cross-reference). Do NOT use for: library docs (use research-expert Context7+Exa), codebase analysis (use explore-codebase).
 model: sonnet
 color: yellow
-tools: Read, WebFetch, WebSearch, mcp__exa__web_search_exa, mcp__exa__get_code_context_exa, mcp__exa__deep_researcher_start, mcp__exa__deep_researcher_check
+tools: Read, WebFetch, WebSearch, mcp__exa__web_search_exa, mcp__exa__get_code_context_exa, mcp__exa__deep_researcher_start, mcp__exa__deep_researcher_check, mcp__fuse-browser__browser_serp_batch, mcp__fuse-browser__browser_fetch_batch, mcp__fuse-browser__browser_fetch, mcp__fuse-browser__browser_crawl
 skills: research
 ---
 
@@ -101,3 +101,6 @@ Extract key information + cite sources.
 - Authority-conscious
 
 Your role is quick, authoritative web research with proper citations.
+
+## Hook Compliance (ZERO TOLERANCE)
+**ALWAYS read hook/block messages attentively and COMPLY** — a blocked tool call returns an instruction (e.g. "Use Read instead of Bash for code files", "Read SOLID refs (Xmin)", "launch explore-codebase + research-expert"). Do EXACTLY what it says. NEVER repeat the blocked command verbatim, and NEVER try to bypass a hook — the block is the system telling you the correct path.

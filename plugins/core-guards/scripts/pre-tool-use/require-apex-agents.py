@@ -7,6 +7,7 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from apex_agent_helpers import (  # pylint: disable=wrong-import-position
+    AGENT_TTL_LABEL,
     check_brainstorm_done,
     check_required_agents,
 )
@@ -59,12 +60,12 @@ def main():
             if 'research' in m:
                 hints.append('Context7/Exa/WebSearch (research)')
         reason = (
-            f"BLOCKED: APEX workflow required (2min TTL). "
+            f"BLOCKED: APEX workflow required ({AGENT_TTL_LABEL} TTL). "
             f"Missing: {missing_str}. "
             f"Use {' and '.join(hints)} BEFORE editing code.")
     else:
         reason = (
-            f"BLOCKED: APEX workflow required (2min TTL). "
+            f"BLOCKED: APEX workflow required ({AGENT_TTL_LABEL} TTL). "
             f"Missing agents: {missing_str}. "
             f"Launch BOTH explore-codebase AND research-expert BEFORE editing code.")
     print(json.dumps({"hookSpecificOutput": {

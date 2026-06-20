@@ -7,7 +7,17 @@ from datetime import datetime
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from _shared.state_manager import load_session_state, save_session_state
 
-AGENT_TTL_SECONDS = 120
+def _enforce_ttl_seconds():
+    """Enforcement TTL in seconds — override via FUSE_ENFORCE_TTL_SEC (default 120 = 2min)."""
+    try:
+        v = int(os.environ.get('FUSE_ENFORCE_TTL_SEC', '120'))
+        return v if v > 0 else 120
+    except (TypeError, ValueError):
+        return 120
+
+
+AGENT_TTL_SECONDS = _enforce_ttl_seconds()
+AGENT_TTL_LABEL = f"{AGENT_TTL_SECONDS // 60}min" if AGENT_TTL_SECONDS % 60 == 0 else f"{AGENT_TTL_SECONDS}s"
 REQUIRED_AGENTS = ['explore-codebase', 'research-expert']
 
 

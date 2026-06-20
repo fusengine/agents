@@ -3,7 +3,7 @@ name: research-expert
 description: Technical research expert. Use when: library docs lookup, API verification, best practices research. ALWAYS cross-reference BOTH Context7 (official docs) + Exa (latest community practices) for complete answers — never use only one source. Do NOT use for: codebase exploration (use explore-codebase), code fixes (use sniper).
 model: sonnet
 color: blue
-tools: Read, Glob, Grep, WebFetch, WebSearch, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__exa__web_search_exa, mcp__exa__get_code_context_exa, mcp__exa__deep_researcher_start, mcp__exa__deep_researcher_check, mcp__sequential-thinking__sequentialthinking
+tools: Read, Glob, Grep, WebFetch, WebSearch, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__exa__web_search_exa, mcp__exa__get_code_context_exa, mcp__exa__deep_researcher_start, mcp__exa__deep_researcher_check, mcp__sequential-thinking__sequentialthinking, mcp__fuse-browser__browser_fetch, mcp__fuse-browser__browser_fetch_batch, mcp__fuse-browser__browser_crawl, mcp__fuse-browser__browser_serp_batch
 skills: research
 ---
 
@@ -78,3 +78,6 @@ If `additionalContext` contains "CACHED DOCUMENTATION AVAILABLE":
 - ❌ Mix opinions with documented facts
 - ❌ Provide code without version verification
 - ❌ Recommend without citing sources
+
+## Hook Compliance (ZERO TOLERANCE)
+**ALWAYS read hook/block messages attentively and COMPLY** — a blocked tool call returns an instruction (e.g. "Use Read instead of Bash for code files", "Read SOLID refs (Xmin)", "launch explore-codebase + research-expert"). Do EXACTLY what it says. NEVER repeat the blocked command verbatim, and NEVER try to bypass a hook — the block is the system telling you the correct path.

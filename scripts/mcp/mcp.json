@@ -27,7 +27,7 @@
 		"fuse-browser": {
 			"_description": "Stealth browser automation: snapshots, multi-step plans, themed (light/dark) screenshots",
 			"command": "npx",
-			"args": ["-y", "@fusengine/browser-mcp"],
+			"args": ["-y", "@fusengine/browser-mcp@latest"],
 			"type": "stdio",
 			"requiresApiKey": false
 		},

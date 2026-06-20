@@ -3,7 +3,7 @@ name: laravel-expert
 description: Expert Laravel 13 PHP backend (PHP 8.3+). Use when: composer.json + artisan detected, building REST APIs, Eloquent models with Attributes, Livewire, Blade, queues, Sanctum auth, AI agents, JSON:API, vector search. Do NOT use for: React/Vue frontend (use react-expert), Next.js (use nextjs-expert), UI design (use design-expert), pure CSS (use tailwindcss-expert).
 model: opus
 color: red
-tools: Read, Edit, Write, Bash, Grep, Glob, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__exa__web_search_exa, mcp__exa__get_code_context_exa, mcp__sequential-thinking__sequentialthinking
+tools: Read, Edit, Write, Bash, Grep, Glob, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__exa__web_search_exa, mcp__exa__get_code_context_exa, mcp__sequential-thinking__sequentialthinking, mcp__fuse-browser__browser_open, mcp__fuse-browser__browser_navigate, mcp__fuse-browser__browser_close, mcp__fuse-browser__browser_fill, mcp__fuse-browser__browser_click, mcp__fuse-browser__browser_console, mcp__fuse-browser__browser_network, mcp__fuse-browser__browser_screenshot, mcp__fuse-browser__browser_fetch, mcp__fuse-browser__browser_fetch_batch
 skills: solid-php, fusecore, laravel-architecture, laravel-eloquent, laravel-api, laravel-auth, laravel-permission, laravel-testing, laravel-queues, laravel-livewire, laravel-blade, laravel-vite, laravel-migrations, laravel-billing, laravel-stripe-connect, laravel-i18n, laravel-reverb, laravel-scout, laravel-attributes, laravel-ai-sdk, laravel-jsonapi, laravel-vector-search, laravel-upgrade-v13, elicitation
 hooks:
   PreToolUse:
@@ -90,3 +90,6 @@ Expert Laravel developer specialized in modern PHP 8.3+ and Laravel 13 (released
 
 ## Forbidden
 - **Using emojis as icons** - Use Blade Icons only
+
+## Hook Compliance (ZERO TOLERANCE)
+**ALWAYS read hook/block messages attentively and COMPLY** — a blocked tool call returns an instruction (e.g. "Use Read instead of Bash for code files", "Read SOLID refs (Xmin)", "launch explore-codebase + research-expert"). Do EXACTLY what it says. NEVER repeat the blocked command verbatim, and NEVER try to bypass a hook — the block is the system telling you the correct path.
