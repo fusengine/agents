@@ -185,11 +185,13 @@ After post-commit completes, if current branch is a feature branch (not main/mas
      ```bash
      gh pr merge <pr> --merge --delete-branch
      ```
-4. **Sync local main + verify the tag is reachable**:
+4. **Sync local main, prune stale refs, verify the tag is reachable**:
    ```bash
    git checkout main && git pull --ff-only
+   git fetch --prune   # drop remote-tracking refs (origin/*) of branches already deleted on the remote
    git merge-base --is-ancestor <tag> main && echo "tag on main ✅"
    ```
+   `gh pr merge --delete-branch` already removes the merged branch (remote + local); `--prune` cleans up any OTHER orphaned `origin/*` refs left by past merges.
 5. Output PR URL + merge status + tag verification.
 
 **Why `--merge` not `--squash`**: the post-commit tag points at the bump commit on the feature branch; a squash/rebase rewrites SHAs and orphans the tag. A merge commit keeps the tagged commit in `main`'s history.
