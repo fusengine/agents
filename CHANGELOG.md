@@ -1,5 +1,10 @@
 # Release Notes
 
+## [1.38.82] - 20-06-2026
+
+- Added (fuse-commit-pro 1.2.18): autonomous release flow — when a remote exists, `/commit` Step 7 now pushes branch + tag, creates/reuses the PR, watches CI (`gh pr checks --watch` / native `--auto`), and merges automatically with a **merge commit** (keeps the post-commit tag reachable on `main`); leaves the PR open on check failure, branch-protection rejection, or `--no-merge`
+- Changed (fuse-commit-pro 1.2.18): post-commit now recomputes ALL README shields.io badges from the filesystem (version + plugins + agents + skills) instead of only the version badge, and enforces `docs/plugins/` parity for newly added plugins (page + README table row + install-list entry)
+
 ## [1.38.81] - 20-06-2026
 
 - Added (fuse-lessons 1.0.0): new plugin — project `MEMORY/LESSON.md` "never reproduce" lessons, hook-driven (inject on session/subagent start, write-reminder only after real code edits, multi-project via `.git` root, auto `MEMORY/.gitignore`, timestamped entries, configurable throttle)
