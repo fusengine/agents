@@ -1,5 +1,9 @@
 # Release Notes
 
+## [1.38.83] - 21-06-2026
+
+- Changed (fuse-commit-pro 1.2.19): the auto-release Step 7 now runs `git fetch --prune` after merging, so orphaned `origin/*` tracking refs left by previously deleted branches are cleaned up automatically — not just the merged PR's own branch
+
 ## [1.38.82] - 20-06-2026
 
 - Added (fuse-commit-pro 1.2.18): autonomous release flow — when a remote exists, `/commit` Step 7 now pushes branch + tag, creates/reuses the PR, watches CI (`gh pr checks --watch` / native `--auto`), and merges automatically with a **merge commit** (keeps the post-commit tag reachable on `main`); leaves the PR open on check failure, branch-protection rejection, or `--no-merge`
