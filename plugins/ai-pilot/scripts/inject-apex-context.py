@@ -9,6 +9,9 @@ import json
 import os
 import sys
 
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "lib"))
+from solid_limits import max_lines  # noqa: E402
+
 
 def load_task_state(task_file: str) -> tuple[str, str, str, str]:
     """Read current task state from task.json.
@@ -42,7 +45,7 @@ def build_context(task_id: str, subject: str, phase: str, docs: str) -> str:
         f"2. Read their notes in docs/ (task-{{ID}}-{{subject}}.md)\n"
         f"3. TaskList → see pending tasks\n"
         f"4. TaskUpdate(in_progress) → before starting\n"
-        f"5. Apply SOLID (files < 100 lines)\n"
+        f"5. Apply SOLID (files < {max_lines()} lines)\n"
         f"6. Write notes to docs/task-{{ID}}-{{subject}}.md\n"
         f"7. TaskUpdate(completed) → triggers auto-commit"
     )

@@ -1,9 +1,12 @@
 #!/usr/bin/env python3
-"""PostToolUse hook: Warn when files exceed 100 lines (SOLID enforcement)."""
+"""PostToolUse hook: Warn when files exceed the SOLID limit (FUSE_SOLID_MAX_LINES, default 100)."""
 import json
 import os
 import re
 import sys
+
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'lib'))
+from solid_limits import max_lines, split_target  # noqa: E402
 
 CODE_EXTENSIONS = r'\.(ts|tsx|js|jsx|py|go|rs|java|php|cpp|c|rb|swift|kt|dart|vue|svelte|astro)$'
 
@@ -47,14 +50,14 @@ def main():
     except OSError:
         sys.exit(0)
 
-    if lines > 100:
+    if lines > max_lines():
         filename = os.path.basename(file_path)
         solid_ref = get_solid_reference(file_path)
         plugins = '~/.claude/plugins/marketplaces/fusengine-plugins/plugins'
         reason = (
-            f"SOLID VIOLATION: '{filename}' has {lines} lines (max: 100). "
+            f"SOLID VIOLATION: '{filename}' has {lines} lines (max: {max_lines()}). "
             f"ACTION REQUIRED: 1) Read SOLID principles: {plugins}/{solid_ref} "
-            f"2) Split this file into smaller modules (<90 lines each) "
+            f"2) Split this file into smaller modules (<{split_target()} lines each) "
             f"3) Follow Single Responsibility Principle."
         )
         print(json.dumps({

@@ -4,9 +4,13 @@ import json
 import os
 import sys
 
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'lib'))
+from solid_limits import max_lines  # noqa: E402
+
 STATE_DIR = os.path.join(os.path.expanduser('~'), '.claude', 'fusengine-cache', 'sessions')
-MAX_LINES = 100
-CODE_EXTENSIONS = {'.ts', '.tsx', '.js', '.jsx', '.py', '.php', '.swift', '.go', '.rs', '.astro'}
+MAX_LINES = max_lines()  # FUSE_SOLID_MAX_LINES (default 100)
+CODE_EXTENSIONS = {'.ts', '.tsx', '.js', '.jsx', '.py', '.go', '.rs', '.java', '.php',
+                   '.cpp', '.c', '.rb', '.swift', '.kt', '.dart', '.vue', '.svelte', '.astro'}
 
 
 def main():

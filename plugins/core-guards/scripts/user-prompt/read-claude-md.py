@@ -8,6 +8,9 @@ import subprocess
 import sys
 from datetime import datetime
 
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "lib"))
+from solid_limits import max_lines  # noqa: E402
+
 LOG_DIR = os.path.expanduser("~/.claude/logs")
 LOG_FILE = os.path.join(LOG_DIR, "hooks.log")
 
@@ -56,7 +59,7 @@ def build_apex_instruction(project_type):
         f"1. **ANALYZE** (3 AGENTS IN PARALLEL):\n"
         f"   - explore-codebase + research-expert + general-purpose\n"
         f"   - Project type: {project_type}\n\n"
-        f"2. **PLAN**: TaskCreate (<100 lines per file)\n\n"
+        f"2. **PLAN**: TaskCreate (<{max_lines()} lines per file)\n\n"
         f"3. **EXECUTE**: {project_type}-expert, SOLID principles\n\n"
         f"4. **EXAMINE**: Run sniper agent after ANY modification"
     )

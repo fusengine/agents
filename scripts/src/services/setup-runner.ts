@@ -8,6 +8,7 @@ import type { SetupPaths } from "../interfaces/setup";
 import { copyExecutable } from "../utils/fs-helpers";
 import { installBrowserBinary } from "./browser-binary";
 import { promptEnforceTtl } from "./enforce-ttl";
+import { promptSolidMaxLines } from "./solid-lines";
 import { configureShell } from "./env-manager";
 import { configureMcpServers } from "./mcp-setup";
 import { promptPerfEnv } from "./perf-env";
@@ -83,9 +84,9 @@ export async function runSetup(
 	}
 
 	settings = await promptPerfEnv(settings);
-
 	if (!skipEnv) {
 		await configureShell();
+		settings = await promptSolidMaxLines(settings);
 		const selectedMcp = await configureMcpServers();
 		if (selectedMcp.includes("fuse-browser")) {
 			await installBrowserBinary();

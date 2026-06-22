@@ -6,6 +6,7 @@
 import { mkdir } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import { writeJsonFile, writeTextFile, readTextFile } from "./lib/core";
+import { SOLID_MAX_LINES, SOLID_SPLIT_TARGET } from "./lib/apex/solid-limits";
 
 const PROJECT_ROOT = process.cwd();
 const APEX_DIR = `${PROJECT_ROOT}/.claude/apex`;
@@ -54,7 +55,7 @@ const AGENTS_MD = `# APEX Agent Rules
 - Skills: \`plugins/[expert]/skills/[skill]/SKILL.md\`
 
 ## SOLID Rules (ALL Agents)
-- Files < 100 lines (split at 90)
+- Files < ${SOLID_MAX_LINES} lines (split at ${SOLID_SPLIT_TARGET})
 - Interfaces in \`src/interfaces/\` or \`Contracts/\`
 - Single Responsibility: one purpose per file
 - Each agent has specific SOLID rules - READ YOUR AGENT CONFIG
