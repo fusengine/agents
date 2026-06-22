@@ -8,6 +8,7 @@ import { resolve } from "node:path";
 import { readStdin, readTextFile, readJsonFile, outputHookResponse } from "./lib/core";
 import type { HookInput } from "./lib/interfaces/hook.interface";
 import type { ApexTaskFile } from "./lib/interfaces/apex.interface";
+import { SOLID_MAX_LINES } from "./lib/apex/solid-limits";
 
 /**
  * Extract last 3 completed task subjects from task.json.
@@ -82,7 +83,7 @@ ${agentsContent}
 - Use TaskUpdate(taskId, status: in_progress) before starting
 
 ### 4. SOLID Rules
-- Files < 100 lines | Interfaces in src/interfaces/ | JSDoc/PHPDoc required
+- Files < ${SOLID_MAX_LINES} lines | Interfaces in src/interfaces/ | JSDoc/PHPDoc required
 
 ### 5. Research Before Code
 - Use Context7/Exa for docs | Write notes to .claude/apex/docs/

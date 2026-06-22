@@ -1,5 +1,11 @@
 # Release Notes
 
+## [1.38.84] - 22-06-2026
+
+- Added (core-guards 1.1.30, fuse-ai-pilot 1.2.27): configurable SOLID file-line limit via `FUSE_SOLID_MAX_LINES` (default 100). Shared modules (`solid_limits.py` ×2, `solid-limits.ts`) with robust parse (empty/NaN/float/zero/negative → 100); every enforcement hook (pre/post file-size, task validation, ai-pilot SOLID checkers) and all injected APEX guidance text now read the env, including block/warn messages
+- Changed (core-guards 1.1.30): align the code-extension list in `validate-task-solid.py` (+ the two ai-pilot checkers) to the canonical 18 — adds java, cpp, c, rb, kt, dart, vue, svelte
+- Added (installer): interactive `FUSE_SOLID_MAX_LINES` prompt (`solid-lines` service) + `.env.example` documentation (100 strict | 150 Swift-style)
+
 ## [1.38.83] - 21-06-2026
 
 - Changed (fuse-commit-pro 1.2.19): the auto-release Step 7 now runs `git fetch --prune` after merging, so orphaned `origin/*` tracking refs left by previously deleted branches are cleaned up automatically — not just the merged PR's own branch

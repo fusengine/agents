@@ -1,9 +1,12 @@
 #!/usr/bin/env python3
-"""PreToolUse hook: Block edits to files > 100 lines (SOLID enforcement)."""
+"""PreToolUse hook: Block edits to files over the SOLID limit (FUSE_SOLID_MAX_LINES, default 100)."""
 import json
 import os
 import re
 import sys
+
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'lib'))
+from solid_limits import max_lines, split_target  # noqa: E402
 
 CODE_EXT = r'\.(ts|tsx|js|jsx|py|go|rs|java|php|cpp|c|rb|swift|kt|dart|vue|svelte|astro)$'
 SOLID_MAP = {
@@ -43,21 +46,23 @@ def main():
             cur_lines = sum(1 for _ in f)
     except OSError:
         sys.exit(0)
-    if cur_lines <= 100:
+    limit = max_lines()
+    if cur_lines <= limit:
         sys.exit(0)
     if tool == 'Edit':
         sys.exit(0)
     if tool == 'Write' and content:
         new_lines = content.count('\n') + 1
-        if new_lines <= 100:
+        if new_lines <= limit:
             sys.exit(0)
     fname = os.path.basename(fp)
     ref = get_solid_ref(fp)
+    split = split_target()
     plugins = '~/.claude/plugins/marketplaces/fusengine-plugins/plugins'
-    reason = (f"BLOCKED: '{fname}' has {cur_lines} lines (max: 100). TO SPLIT: "
+    reason = (f"BLOCKED: '{fname}' has {cur_lines} lines (max: {limit}). TO SPLIT: "
               f"1) Read SOLID rules: {plugins}/{ref} "
-              f"2) Create new module files (<90 lines each) "
-              f"3) Use Write to replace '{fname}' with <100 lines version.")
+              f"2) Create new module files (<{split} lines each) "
+              f"3) Use Write to replace '{fname}' with <{limit} lines version.")
     print(json.dumps({"hookSpecificOutput": {"hookEventName": "PreToolUse",
         "permissionDecision": "deny", "permissionDecisionReason": reason}}))
     sys.exit(0)

@@ -9,6 +9,9 @@ import os
 import re
 import sys
 
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "lib"))
+from solid_limits import max_lines, split_target  # noqa: E402
+
 
 CODE_EXTENSIONS = re.compile(
     r"\.(ts|tsx|js|jsx|py|php|swift|go|rs|rb|java|astro)$"
@@ -51,10 +54,10 @@ def main() -> None:
     violations = []
     lc = _count_code_lines(fp)
 
-    if lc > 100:
-        violations.append(f"FILE SIZE: {lc} lines (max: 100)")
-    elif lc > 90:
-        violations.append(f"FILE SIZE WARNING: {lc} lines (split at 90)")
+    if lc > max_lines():
+        violations.append(f"FILE SIZE: {lc} lines (max: {max_lines()})")
+    elif lc > split_target():
+        violations.append(f"FILE SIZE WARNING: {lc} lines (split at {split_target()})")
 
     if re.search(r"(components|pages|views)/", fp):
         try:

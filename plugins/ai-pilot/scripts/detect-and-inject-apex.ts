@@ -7,6 +7,7 @@ import { existsSync } from "node:fs";
 import { readStdin } from "./lib/core";
 import { DEV_KEYWORDS, isApexCommand, detectProjectType, getExpertAgent } from "./lib/apex/detection";
 import type { HookInput } from "./lib/interfaces/hook.interface";
+import { SOLID_MAX_LINES, SOLID_SPLIT_TARGET } from "./lib/apex/solid-limits";
 
 /** Initialize APEX tracking by spawning init-apex-tracking.ts */
 async function initTracking(): Promise<void> {
@@ -29,9 +30,9 @@ function buildInstruction(projectType: string, expertAgent: string): string {
    - Launch ${expertAgent} agent (framework expertise)
    - Project type detected: ${projectType}
 
-2. **PLAN**: Use TaskCreate to break down tasks (<100 lines per file)
+2. **PLAN**: Use TaskCreate to break down tasks (<${SOLID_MAX_LINES} lines per file)
 
-3. **EXECUTE**: Use ${expertAgent}, follow SOLID principles, split at 90 lines
+3. **EXECUTE**: Use ${expertAgent}, follow SOLID principles, split at ${SOLID_SPLIT_TARGET} lines
 
 4. **EXAMINE**: Run sniper agent after ANY modification
 

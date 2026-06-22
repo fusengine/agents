@@ -9,9 +9,11 @@ import os
 import re
 import sys
 
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "lib"))
+from solid_limits import max_lines  # noqa: E402
 
 CODE_EXTENSIONS = re.compile(
-    r"\.(ts|tsx|js|jsx|py|php|swift|go|rs|rb|java|astro)$"
+    r"\.(ts|tsx|js|jsx|py|go|rs|java|php|cpp|c|rb|swift|kt|dart|vue|svelte|astro)$"
 )
 INTERFACE_PATTERN = re.compile(r"^(export )?(interface|type) [A-Z]", re.M)
 
@@ -67,16 +69,14 @@ def main() -> None:
             continue
         lc = _count_code_lines(fp)
         name = os.path.basename(fp)
-        if lc > 100:
-            violations.append(f"SOLID: {name} = {lc} lines (max 100)")
+        if lc > max_lines():
+            violations.append(f"SOLID: {name} = {lc} lines (max {max_lines()})")
         for prefix in ["components/", "pages/", "views/", "app/"]:
             if prefix in fp:
                 try:
                     with open(fp, encoding="utf-8") as f:
                         if INTERFACE_PATTERN.search(f.read()):
-                            violations.append(
-                                f"SOLID: {name} has interfaces "
-                                "(move to interfaces/)")
+                            violations.append(f"SOLID: {name}: move interfaces to interfaces/")
                 except OSError:
                     pass
                 break
@@ -88,12 +88,8 @@ def main() -> None:
             + "\n".join(violations)
             + "\nRun sniper to fix these issues.")
 
-    print(json.dumps({
-        "hookSpecificOutput": {
-            "hookEventName": "SubagentStop",
-            "additionalContext": warn,
-        }
-    }))
+    print(json.dumps({"hookSpecificOutput": {
+        "hookEventName": "SubagentStop", "additionalContext": warn}}))
 
 
 if __name__ == "__main__":
