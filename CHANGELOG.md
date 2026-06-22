@@ -1,5 +1,9 @@
 # Release Notes
 
+## [1.38.85] - 22-06-2026
+
+- Fixed (installer): the `FUSE_ENFORCE_TTL_SEC` prompt was nested inside the fuse-browser MCP block, so it only appeared when fuse-browser was selected. Moved next to the `FUSE_SOLID_MAX_LINES` prompt (after shell config) so both enforcement settings are offered on every install regardless of MCP choice
+
 ## [1.38.84] - 22-06-2026
 
 - Added (core-guards 1.1.30, fuse-ai-pilot 1.2.27): configurable SOLID file-line limit via `FUSE_SOLID_MAX_LINES` (default 100). Shared modules (`solid_limits.py` ×2, `solid-limits.ts`) with robust parse (empty/NaN/float/zero/negative → 100); every enforcement hook (pre/post file-size, task validation, ai-pilot SOLID checkers) and all injected APEX guidance text now read the env, including block/warn messages
