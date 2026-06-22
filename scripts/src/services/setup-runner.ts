@@ -87,10 +87,10 @@ export async function runSetup(
 	if (!skipEnv) {
 		await configureShell();
 		settings = await promptSolidMaxLines(settings);
+		settings = await promptEnforceTtl(settings);
 		const selectedMcp = await configureMcpServers();
 		if (selectedMcp.includes("fuse-browser")) {
 			await installBrowserBinary();
-			settings = await promptEnforceTtl(settings);
 		}
 	}
 
