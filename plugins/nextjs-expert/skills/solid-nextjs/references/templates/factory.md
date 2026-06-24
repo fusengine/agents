@@ -1,6 +1,6 @@
 ---
 name: factory-template
-applies-to: "**/*.tsx, **/*.ts"
+applies-to: "**/app/**/*.tsx, **/app/**/*.ts, **/pages/**/*.tsx, **/pages/**/*.ts"
 description: Factory pattern template for dependency injection
 ---
 

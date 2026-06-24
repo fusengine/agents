@@ -1,6 +1,6 @@
 ---
 name: query-template
-applies-to: "**/*.tsx, **/*.ts"
+applies-to: "**/app/**/*.tsx, **/app/**/*.ts, **/pages/**/*.tsx, **/pages/**/*.ts"
 description: Database query patterns with Prisma 7 - TypedSQL, relations, transactions
 when-to-use: complex queries, relations, transactions, typed SQL
 keywords: prisma, query, database, relations, transaction, TypedSQL

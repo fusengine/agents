@@ -1,6 +1,6 @@
 ---
 name: client-component-template
-applies-to: "**/*.tsx, **/*.ts"
+applies-to: "**/app/**/*.tsx, **/app/**/*.ts, **/pages/**/*.tsx, **/pages/**/*.ts"
 description: Client Component template with hooks, state, and event handlers
 ---
 

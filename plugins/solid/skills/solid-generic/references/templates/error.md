@@ -5,7 +5,7 @@ when-to-use: error handling, custom errors, error boundaries
 keywords: error, exception, handling, boundary, custom error
 priority: medium
 related: single-responsibility.md
-applies-to: "**/*error*.ts, **/*Error*.ts"
+applies-to: "**/*.ts, **/*.js"
 trigger-on-edit: "errors/"
 level: template
 ---

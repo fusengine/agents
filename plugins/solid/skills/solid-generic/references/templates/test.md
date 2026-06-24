@@ -5,7 +5,7 @@ when-to-use: writing tests, test structure, mocking patterns
 keywords: test, spec, mock, fixture, assertion, vitest
 priority: medium
 related: dependency-inversion.md
-applies-to: "**/*.test.ts, **/*.spec.ts"
+applies-to: "**/*.ts, **/*.js"
 trigger-on-edit: "__tests__/, tests/"
 level: template
 ---

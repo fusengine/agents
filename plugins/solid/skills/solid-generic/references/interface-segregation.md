@@ -5,7 +5,7 @@ when-to-use: interface too large, clients use only part of interface, refactorin
 keywords: interface segregation, ISP, focused, small, composition
 priority: high
 related: liskov-substitution.md, dependency-inversion.md, templates/interface.md
-applies-to: "**/*interface*.ts, **/*contract*.ts"
+applies-to: "**/*.ts, **/*.js"
 trigger-on-edit: "interfaces/, contracts/"
 level: principle
 ---

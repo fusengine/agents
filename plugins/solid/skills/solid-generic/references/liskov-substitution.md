@@ -5,7 +5,7 @@ when-to-use: implementing interfaces, swapping implementations, testing complian
 keywords: liskov, substitution, LSP, contract, interface, subtype
 priority: high
 related: interface-segregation.md, dependency-inversion.md, templates/interface.md
-applies-to: "**/*.ts, **/*.tsx"
+applies-to: "**/*.ts, **/*.js"
 trigger-on-edit: "interfaces/, services/"
 level: principle
 ---

@@ -1,6 +1,6 @@
 ---
 name: action-template
-applies-to: "**/*.tsx, **/*.ts"
+applies-to: "**/app/**/*.tsx, **/app/**/*.ts, **/pages/**/*.tsx, **/pages/**/*.ts"
 description: Server Action template with validation and revalidation
 ---
 

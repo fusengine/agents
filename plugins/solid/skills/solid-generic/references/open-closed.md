@@ -5,7 +5,7 @@ when-to-use: adding features, extending behavior, plugin systems, middleware
 keywords: open closed, OCP, extension, strategy, middleware, plugins
 priority: high
 related: single-responsibility.md, templates/factory.md, templates/service.md
-applies-to: "**/*.ts, **/*.tsx"
+applies-to: "**/*.ts, **/*.js"
 trigger-on-edit: "services/, factories/, strategies/"
 level: principle
 ---

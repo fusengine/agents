@@ -1,6 +1,6 @@
 ---
 name: architecture-patterns
-applies-to: "**/*.tsx, **/*.ts"
+applies-to: "**/app/**/*.tsx, **/app/**/*.ts, **/pages/**/*.tsx, **/pages/**/*.ts"
 description: Modular architecture guide for Next.js - Folder structure, imports, organization
 when-to-use: new project, code organization, module structure, imports
 keywords: architecture, modules, structure, folders, imports, cores, features

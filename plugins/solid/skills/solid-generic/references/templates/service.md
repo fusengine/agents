@@ -5,7 +5,7 @@ when-to-use: creating services, API clients, data access layers
 keywords: service, API, client, data access, dependency injection
 priority: medium
 related: single-responsibility.md, dependency-inversion.md
-applies-to: "**/*service*.ts, **/*Service*.ts"
+applies-to: "**/*.ts, **/*.js"
 trigger-on-edit: "services/"
 level: template
 ---

@@ -1,6 +1,6 @@
 ---
 name: test-template
-applies-to: "**/*.tsx, **/*.ts"
+applies-to: "**/app/**/*.tsx, **/app/**/*.ts, **/pages/**/*.tsx, **/pages/**/*.ts"
 description: Test templates for services, components, and hooks
 ---
 

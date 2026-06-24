@@ -5,7 +5,7 @@ when-to-use: creating modules, barrel exports, feature entry points
 keywords: module, barrel, exports, index, feature
 priority: medium
 related: single-responsibility.md, architecture-patterns.md
-applies-to: "**/*module*.ts, **/index.ts"
+applies-to: "**/*.ts, **/*.js"
 trigger-on-edit: "modules/"
 level: template
 ---

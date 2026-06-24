@@ -1,6 +1,6 @@
 ---
 name: middleware-template
-applies-to: "**/*.tsx, **/*.ts"
+applies-to: "**/app/**/*.tsx, **/app/**/*.ts, **/pages/**/*.tsx, **/pages/**/*.ts"
 description: Auth middleware and route wrapper templates
 ---
 

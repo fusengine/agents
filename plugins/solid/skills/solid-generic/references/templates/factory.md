@@ -5,7 +5,7 @@ when-to-use: creating factories, object creation patterns, dependency resolution
 keywords: factory, creation, builder, instantiation, pattern
 priority: medium
 related: dependency-inversion.md, open-closed.md
-applies-to: "**/*factory*.ts, **/*Factory*.ts"
+applies-to: "**/*.ts, **/*.js"
 trigger-on-edit: "factories/"
 level: template
 ---

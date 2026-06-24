@@ -1,6 +1,6 @@
 ---
 name: store-template
-applies-to: "**/*.tsx, **/*.ts"
+applies-to: "**/app/**/*.tsx, **/app/**/*.ts, **/pages/**/*.tsx, **/pages/**/*.ts"
 description: Zustand store template with persistence and typed actions
 when-to-use: global state, client state, persisted state
 keywords: zustand, store, state, persistence, create
