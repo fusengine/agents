@@ -1,5 +1,6 @@
 ---
 name: code-templates
+applies-to: "**/*.php"
 description: Complete Service, DTO, Repository, Interface templates
 keywords: service, dto, repository, interface, templates
 ---

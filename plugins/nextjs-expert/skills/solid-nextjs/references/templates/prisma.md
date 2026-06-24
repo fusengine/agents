@@ -1,5 +1,6 @@
 ---
 name: prisma-template
+applies-to: "**/*.tsx, **/*.ts"
 description: Prisma client singleton and repository pattern
 when-to-use: database setup, prisma singleton, repository pattern
 keywords: prisma, singleton, database, repository, CRUD

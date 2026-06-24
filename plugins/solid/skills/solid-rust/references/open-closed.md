@@ -1,5 +1,6 @@
 ---
 name: Open/Closed Principle (OCP)
+applies-to: "**/*.rs"
 description: OCP for Rust - Trait-based extensibility, adding implementations without modifying existing code
 when-to-use: Adding new behavior without editing core code, supporting multiple backends, plugin architecture
 keywords: [OCP, open/closed, traits, extensibility, impl, interface, abstraction]

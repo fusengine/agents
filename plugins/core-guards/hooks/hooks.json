@@ -1,71 +1,22 @@
 {
-  "_description": "Core Guards - Security and SOLID enforcement hooks",
-  "_version": "1.0.0",
+  "_description": "Core Guards - Security and SOLID enforcement hooks (enforcement delegated to @fusengine/harness)",
+  "_version": "2.0.0",
   "_author": "fusengine-plugins",
 
   "hooks": {
     "PreToolUse": [
       {
-        "_description": "WebFetch cache lookup - reuse cached fetch results (TTL 24h)",
-        "matcher": "WebFetch",
+        "_description": "Harness: guards (security/bash-write/git/install/interface-separation/protected-path), file-size, APEX gates (freshness/doc/solid/brainstorm), MCP+WebFetch cache & verbosity cap. Matcher restricted to the enforced tools — Read/Glob/Grep are NOT routed here (the APEX gate keys off filePath presence and would wrongly deny plain reads).",
+        "matcher": "Write|Edit|Bash|WebFetch|mcp__context7__query-docs|mcp__exa__web_search_exa|mcp__exa__get_code_context_exa",
         "hooks": [
           {
-            "_description": "Check cache before WebFetch — deny + return cached if fresh",
             "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/pre-tool-use/webfetch-cache-lookup.py"
+            "command": "bun ${CLAUDE_PLUGIN_ROOT}/node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code"
           }
         ]
       },
       {
-        "_description": "MCP cache lookup - reuse cached Context7/Exa results before re-querying",
-        "matcher": "mcp__context7__query-docs|mcp__exa__web_search_exa|mcp__exa__get_code_context_exa",
-        "hooks": [
-          {
-            "_description": "Check context/mcp/ cache and short-circuit if query already answered",
-            "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/pre-tool-use/mcp-cache-lookup.py"
-          }
-        ]
-      },
-      {
-        "_description": "MCP verbosity limiter - cap numResults/tokens on Context7/Exa calls",
-        "matcher": "mcp__context7__query-docs|mcp__exa__web_search_exa|mcp__exa__get_code_context_exa",
-        "hooks": [
-          {
-            "_description": "Reduce MCP payload size (numResults, tokens) to control context growth",
-            "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/pre-tool-use/limit-mcp-verbosity.py"
-          }
-        ]
-      },
-      {
-        "_description": "Git & Install & Security & Write guards for Bash commands",
-        "matcher": "Bash",
-        "hooks": [
-          {
-            "_description": "Block Bash file writes (python -c, sed -i, redirects) — forces Edit/Write tools",
-            "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/pre-tool-use/bash-write-guard.py"
-          },
-          {
-            "_description": "Block destructive git commands (push --force, reset --hard, etc.)",
-            "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/pre-tool-use/git-guard.py"
-          },
-          {
-            "_description": "Ask confirmation before installing packages (npm, pip, brew, etc.)",
-            "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/pre-tool-use/install-guard.py"
-          },
-          {
-            "_description": "Validate dangerous commands via security rules",
-            "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/pre-tool-use/security-guard.py"
-          }
-        ]
-      },
-      {
-        "_description": "Pre-commit validation (linters, tests) before git commit",
+        "_description": "Pre-commit validation (linters, tests) before git commit — kept (out of harness scope)",
         "matcher": "Bash",
         "hooks": [
           {
@@ -74,132 +25,33 @@
             "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/pre-tool-use/pre-commit-guard.py"
           }
         ]
-      },
-      {
-        "_description": "SOLID: Enforce interface separation in component files",
-        "matcher": "Write|Edit",
-        "hooks": [
-          {
-            "_description": "Block interfaces/types in .tsx/.jsx/.vue files - must be in src/interfaces/",
-            "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/pre-tool-use/enforce-interfaces.py"
-          }
-        ]
-      },
-      {
-        "_description": "SOLID: Block edits to files > 100 lines - must split first",
-        "matcher": "Write|Edit",
-        "hooks": [
-          {
-            "_description": "PreToolUse blocker for oversized files",
-            "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/pre-tool-use/enforce-file-size.py"
-          }
-        ]
-      },
-      {
-        "_description": "SOLID: Require reading SOLID principles before coding",
-        "matcher": "Write|Edit",
-        "hooks": [
-          {
-            "_description": "Block code modifications if SOLID rules not read",
-            "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/pre-tool-use/require-solid-read.py"
-          }
-        ]
-      },
-      {
-        "_description": "APEX: Require Agent calls (explore/research/domain) before editing code",
-        "matcher": "Write|Edit",
-        "hooks": [
-          {
-            "_description": "Block code edits if no Agent tool called in session",
-            "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/pre-tool-use/require-apex-agents.py"
-          }
-        ]
       }
     ],
 
     "PostToolUse": [
       {
-        "_description": "APEX: Track Agent tool calls for workflow enforcement",
-        "matcher": "Agent",
+        "_description": "Harness: record agent (quality) / doc / ref-read activity + MCP cache store + file-size warn — feeds the session track the APEX gates read",
+        "matcher": "",
         "hooks": [
           {
-            "_description": "Record Agent calls to session state for APEX verification",
             "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/post-tool-use/track-agent-calls.py"
+            "command": "bun ${CLAUDE_PLUGIN_ROOT}/node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code"
           }
         ]
       },
       {
-        "_description": "APEX: Track sub-agent MCP/exploration calls for APEX compliance",
-        "matcher": "Bash|Glob|Grep|Read|WebSearch|WebFetch|mcp__context7__query-docs|mcp__context7__resolve-library-id|mcp__exa__web_search_exa|mcp__exa__get_code_context_exa|mcp__exa__deep_researcher_start",
-        "hooks": [
-          {
-            "_description": "Record MCP/exploration calls from sub-agents as APEX phases",
-            "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/post-tool-use/track-subagent-research.py"
-          }
-        ]
-      },
-      {
-        "_description": "Cache MCP results (Context7/Exa) to context/mcp/ for reuse across sub-agents",
-        "matcher": "mcp__context7__query-docs|mcp__exa__web_search_exa|mcp__exa__get_code_context_exa",
-        "hooks": [
-          {
-            "_description": "Persist compacted MCP responses to disk cache",
-            "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/post-tool-use/cache-mcp-result.py"
-          }
-        ]
-      },
-      {
-        "_description": "Track file reads (documentation and SOLID references)",
-        "matcher": "Read",
-        "hooks": [
-          {
-            "_description": "Auto-document important file reads to task docs",
-            "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/post-tool-use/auto-document-reads.py"
-          },
-          {
-            "_description": "Record when SOLID principles are read for session verification",
-            "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/post-tool-use/track-solid-reads.py"
-          }
-        ]
-      },
-      {
-        "_description": "SOLID validation and session tracking after file modifications",
+        "_description": "SOLID/sniper tracking + TS lint after file modifications — kept (fusengine-specific)",
         "matcher": "Write|Edit",
         "hooks": [
-          {
-            "_description": "SOLID: Block files exceeding 100 lines - must split into modules",
-            "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/post-tool-use/enforce-file-size.py"
-          },
           {
             "_description": "Track cumulative code file changes per session for sniper trigger",
             "type": "command",
             "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/post-tool-use/track-session-changes.py"
           },
           {
-            "_description": "Post-edit TypeScript validation",
+            "_description": "Post-edit TypeScript validation (eslint/prettier report)",
             "type": "command",
             "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/post-tool-use/post-edit-typescript.py"
-          }
-        ]
-      },
-      {
-        "_description": "WebFetch cache store - persist fetch results for reuse",
-        "matcher": "WebFetch",
-        "hooks": [
-          {
-            "_description": "Store WebFetch result to cache after successful fetch",
-            "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/post-tool-use/webfetch-cache-store.py"
           }
         ]
       }
@@ -236,24 +88,22 @@
 
     "UserPromptSubmit": [
       {
-        "_description": "Process user prompt - detect APEX triggers and inject rules",
+        "_description": "Read CLAUDE.md + auto-detect APEX trigger, inject instruction — kept (fusengine identity/injection)",
         "matcher": "",
         "hooks": [
           {
-            "_description": "Read CLAUDE.md + auto-detect if APEX workflow should be triggered",
             "type": "command",
             "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/user-prompt/read-claude-md.py"
           }
         ]
       },
       {
-        "_description": "BRAINSTORM: Detect creation intent and flag brainstorming required",
+        "_description": "Harness: detect creation intent → set brainstorm-required flag",
         "matcher": "",
         "hooks": [
           {
-            "_description": "Detect create/build/new keywords and set brainstorming_required flag",
             "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/user-prompt/detect-creation-intent.py"
+            "command": "bun ${CLAUDE_PLUGIN_ROOT}/node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code"
           }
         ]
       }

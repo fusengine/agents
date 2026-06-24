@@ -1,5 +1,6 @@
 ---
 name: dependency-inversion
+applies-to: "**/*.go"
 description: Dependency Inversion Principle for Go - Constructor injection, wire at main, interfaces in ports directories
 when-to-use: circular dependencies, testing with mocks, managing service dependencies, composition root
 keywords: DIP, dependency inversion, constructor injection, wire, main, interfaces, composition root, decoupling

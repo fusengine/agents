@@ -1,5 +1,6 @@
 ---
 name: architecture-patterns
+applies-to: "**/*.rb"
 description: Modular Rails - app/modules/[feature]/ MANDATORY structure
 when-to-use: Project setup, file organization, layer responsibilities
 keywords: architecture, modular, app/modules, layers

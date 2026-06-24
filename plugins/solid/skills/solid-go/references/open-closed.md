@@ -1,5 +1,6 @@
 ---
 name: open-closed
+applies-to: "**/*.go"
 description: Open/Closed Principle for Go - Interface-based extensibility, adding providers without modification
 when-to-use: adding new payment methods, new storage backends, new notification channels, extending functionality
 keywords: OCP, open-closed, extensibility, interfaces, abstraction, plugins, providers

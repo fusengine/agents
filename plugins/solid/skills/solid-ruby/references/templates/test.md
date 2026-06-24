@@ -1,5 +1,6 @@
 ---
 name: test
+applies-to: "**/*.rb"
 description: RSpec tests with test doubles (mocks/stubs) and shared examples
 when-to-use: Writing unit and integration tests
 keywords: RSpec, testing, mocks, stubs, doubles, shared examples

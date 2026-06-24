@@ -1,5 +1,6 @@
 ---
 name: module
+applies-to: "**/*.rb"
 description: Feature module structure - copy-paste directory layout
 when-to-use: Setting up new feature module
 keywords: module, structure, organization

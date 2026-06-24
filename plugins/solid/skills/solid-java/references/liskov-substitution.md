@@ -1,5 +1,6 @@
 ---
 name: liskov-substitution
+applies-to: "**/*.java, **/*.kt"
 description: Liskov Substitution Principle for Java - Honor interface contracts
 when-to-use: inheritance issues, contract violations, interface implementations
 keywords: LSP, contract, substitutable, invariants, Java

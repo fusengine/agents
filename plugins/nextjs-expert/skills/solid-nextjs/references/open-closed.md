@@ -1,5 +1,6 @@
 ---
 name: open-closed
+applies-to: "**/*.tsx, **/*.ts"
 description: OCP Guide - Extensible code without modification via interfaces
 when-to-use: adding features, multi-providers, plugins, avoiding if/switch
 keywords: open closed, OCP, extension, plugin, provider, adapter, strategy

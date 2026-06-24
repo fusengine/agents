@@ -1,5 +1,6 @@
 ---
 name: module
+applies-to: "**/*.go"
 description: Complete module structure - Copy-paste ready Go modular architecture with all layers
 when-to-use: creating new feature module, setting up feature structure, modular layout template
 keywords: module, template, structure, handler, service, repository, ports, models

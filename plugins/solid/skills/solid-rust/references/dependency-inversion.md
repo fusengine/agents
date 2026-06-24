@@ -1,5 +1,6 @@
 ---
 name: Dependency Inversion Principle (DIP)
+applies-to: "**/*.rs"
 description: DIP for Rust - Generic bounds, trait objects, traits in src/modules/[feature]/traits.rs
 when-to-use: Decoupling high-level from low-level modules, enabling testability, supporting multiple implementations
 keywords: [DIP, dependency inversion, trait objects, generic bounds, abstraction, decoupling]

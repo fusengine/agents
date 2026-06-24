@@ -1,5 +1,6 @@
 ---
 name: fusecore-structure
+applies-to: "**/*.php"
 description: FuseCore modular architecture structure (Laravel + React)
 when-to-use: Working with FuseCore modules, module discovery, cross-module communication
 keywords: fusecore, modules, modular, react, frontend, backend

@@ -1,5 +1,6 @@
 ---
 name: open-closed
+applies-to: "**/*.rb"
 description: OCP for Ruby - Strategy pattern, module-based extensibility
 when-to-use: Adding behavior variants, multiple implementations, extensible systems
 keywords: OCP, open-closed, strategy, pattern, extensibility

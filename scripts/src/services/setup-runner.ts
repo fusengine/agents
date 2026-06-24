@@ -7,6 +7,7 @@ import * as p from "@clack/prompts";
 import type { SetupPaths } from "../interfaces/setup";
 import { copyExecutable } from "../utils/fs-helpers";
 import { installBrowserBinary } from "./browser-binary";
+import { setHarnessRefs } from "./harness-env";
 import { promptEnforceTtl } from "./enforce-ttl";
 import { promptSolidMaxLines } from "./solid-lines";
 import { configureShell } from "./env-manager";
@@ -69,6 +70,7 @@ export async function runSetup(
 	await installClaudeMd(paths.claudeMdSrc, paths.claudeMdDest);
 	await installDeps(pluginsDir);
 	settings = await setupStatusline(pluginsDir, settings);
+	settings = setHarnessRefs(settings, paths.marketplace);
 
 	if (!isAgentTeamsEnabled(settings)) {
 		const enable = await p.confirm({
@@ -79,9 +81,7 @@ export async function runSetup(
 			settings = enableAgentTeams(settings);
 			p.log.success("Agent Teams enabled");
 		}
-	} else {
-		p.log.info("Agent Teams already enabled");
-	}
+	} else p.log.info("Agent Teams already enabled");
 
 	settings = await promptPerfEnv(settings);
 	if (!skipEnv) {

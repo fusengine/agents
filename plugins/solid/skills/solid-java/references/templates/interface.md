@@ -1,5 +1,6 @@
 ---
 name: interface-template
+applies-to: "**/*.java, **/*.kt"
 description: Interface definition with Javadoc and contracts
 when-to-use: defining contracts, role-based interfaces
 keywords: interface, contract, Javadoc, dependency

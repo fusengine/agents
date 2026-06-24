@@ -1,5 +1,6 @@
 ---
 name: decision-guide
+applies-to: "**/*.php"
 description: Decision tables for pattern selection
 when-to-use: Choosing between Service, Action, Repository patterns
 keywords: patterns, service, action, repository, dto, decision-tree

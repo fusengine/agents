@@ -1,4 +1,5 @@
 {
+  "_description": "ai-pilot - APEX context injection + caching. Enforcement (bash-write, APEX gates, SOLID file-size, doc-consulted) is delegated to @fusengine/harness via core-guards — duplicate gates removed to avoid a double-gate with desynced state stores.",
   "hooks": {
     "UserPromptSubmit": [
       {
@@ -60,24 +61,7 @@
     ],
     "PreToolUse": [
       {
-        "matcher": "Bash",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/detect-bash-write.py"
-          }
-        ]
-      },
-      {
-        "matcher": "Write|Edit",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bun ${CLAUDE_PLUGIN_ROOT}/scripts/enforce-apex-phases.ts"
-          }
-        ]
-      },
-      {
+        "_description": "Inject APEX context into Task sub-agent prompts (not a guard — kept)",
         "matcher": "Task",
         "hooks": [
           {
@@ -116,6 +100,7 @@
         ]
       },
       {
+        "_description": "SOLID check from sub-agent transcript (complementary to harness — kept)",
         "matcher": "",
         "hooks": [
           {
@@ -137,24 +122,6 @@
       }
     ],
     "PostToolUse": [
-      {
-        "matcher": "Write|Edit",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/check-solid-compliance.py"
-          }
-        ]
-      },
-      {
-        "matcher": "mcp__.*context7|mcp__.*exa|Read",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/track-doc-consultation.py"
-          }
-        ]
-      },
       {
         "matcher": "TaskCreate|TaskUpdate",
         "hooks": [

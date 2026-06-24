@@ -1,5 +1,6 @@
 ---
 name: dependency-inversion
+applies-to: "**/*.java, **/*.kt"
 description: Dependency Inversion Principle for Java - Constructor injection, Spring DI
 when-to-use: tight coupling, service dependencies, testability
 keywords: DIP, dependency injection, Spring, constructor, interfaces

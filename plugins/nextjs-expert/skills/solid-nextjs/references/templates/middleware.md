@@ -1,5 +1,6 @@
 ---
 name: middleware-template
+applies-to: "**/*.tsx, **/*.ts"
 description: Auth middleware and route wrapper templates
 ---
 

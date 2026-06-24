@@ -1,5 +1,6 @@
 ---
 name: interface-segregation
+applies-to: "**/*.tsx, **/*.jsx"
 description: ISP Guide - Many focused interfaces beat one fat interface
 when-to-use: designing interfaces, refactoring large interfaces, component props
 keywords: interface segregation, ISP, small interfaces, focused, props

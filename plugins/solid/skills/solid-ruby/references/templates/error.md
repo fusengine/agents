@@ -1,5 +1,6 @@
 ---
 name: error
+applies-to: "**/*.rb"
 description: Custom exception hierarchy organized by layer
 when-to-use: Raising typed errors from services, repositories
 keywords: error, exception, hierarchy, StandardError

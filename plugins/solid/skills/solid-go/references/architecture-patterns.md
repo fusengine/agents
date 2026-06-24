@@ -1,5 +1,6 @@
 ---
 name: architecture-patterns
+applies-to: "**/*.go"
 description: Architecture patterns for Go - Modular MANDATORY, hexagonal ports/adapters, internal/modules structure, layer responsibilities
 when-to-use: project structure planning, organizing features, understanding module layout, hexagonal architecture
 keywords: architecture, modular, hexagonal, ports and adapters, clean architecture, internal/modules, layer responsibilities

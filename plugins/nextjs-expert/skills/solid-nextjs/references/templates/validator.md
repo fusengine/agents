@@ -1,5 +1,6 @@
 ---
 name: validator-template
+applies-to: "**/*.tsx, **/*.ts"
 description: Zod validation schema template with custom error messages
 ---
 

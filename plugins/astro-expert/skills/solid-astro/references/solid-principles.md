@@ -1,3 +1,8 @@
+---
+name: solid-principles
+applies-to: "**/*.astro"
+---
+
 # SOLID Principles for Astro
 
 ## S — Single Responsibility

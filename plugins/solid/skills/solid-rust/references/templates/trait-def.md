@@ -1,5 +1,6 @@
 ---
 name: Trait Definition Template
+applies-to: "**/*.rs"
 description: Trait definition with rustdoc, contract documentation, and async support
 when-to-use: Defining abstractions for repositories, services, or domain operations
 keywords: [trait, abstraction, rustdoc, async_trait, contract]

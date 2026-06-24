@@ -1,5 +1,6 @@
 ---
 name: Liskov Substitution Principle (LSP)
+applies-to: "**/*.rs"
 description: LSP for Rust - Trait contract consistency, contract tests to ensure substitutability
 when-to-use: Ensuring trait implementations are truly interchangeable, preventing subtle bugs with trait objects
 keywords: [LSP, Liskov substitution, trait contract, substitutability, contract tests, behavioral subtyping]

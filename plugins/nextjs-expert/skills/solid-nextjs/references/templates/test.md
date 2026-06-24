@@ -1,5 +1,6 @@
 ---
 name: test-template
+applies-to: "**/*.tsx, **/*.ts"
 description: Test templates for services, components, and hooks
 ---
 

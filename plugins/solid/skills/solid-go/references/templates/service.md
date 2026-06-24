@@ -1,5 +1,6 @@
 ---
 name: service
+applies-to: "**/*.go"
 description: Service template - Business logic service with interface dependencies, copy-paste ready
 when-to-use: creating business logic layer, implementing service with multiple dependencies, orchestration logic
 keywords: service, business logic, template, constructor injection, dependencies

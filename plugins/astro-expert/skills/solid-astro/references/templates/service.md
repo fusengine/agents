@@ -1,3 +1,8 @@
+---
+name: service
+applies-to: "**/*.astro"
+---
+
 # Template: Data Fetching Service
 
 SOLID-compliant service in src/lib/ with full JSDoc (< 80 lines).

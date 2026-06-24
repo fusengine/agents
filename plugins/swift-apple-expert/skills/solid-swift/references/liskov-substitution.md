@@ -1,5 +1,6 @@
 ---
 name: liskov-substitution
+applies-to: "**/*.swift"
 description: LSP Guide - Protocol contract consistency for Swift
 when-to-use: implementing protocols, swapping providers, testing compliance, mock behavior
 keywords: liskov, substitution, LSP, contract, protocol, Swift, testing

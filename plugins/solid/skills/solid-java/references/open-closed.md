@@ -1,5 +1,6 @@
 ---
 name: open-closed
+applies-to: "**/*.java, **/*.kt"
 description: Open/Closed Principle for Java - Extend via interfaces, not modification
 when-to-use: adding providers, payment gateways, new strategies
 keywords: OCP, Strategy pattern, interface-based, extensibility

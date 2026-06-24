@@ -1,5 +1,6 @@
 ---
 name: Architecture Patterns (Modular MANDATORY)
+applies-to: "**/*.rs"
 description: Modular MANDATORY architecture, src/modules/[feature]/ structure, mod.rs patterns for Rust projects
 when-to-use: Project structure, organizing code, defining boundaries between features, following Rust conventions
 keywords: [architecture, modules, mod.rs, modular, feature structure, src/modules, organization]

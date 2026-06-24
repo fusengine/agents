@@ -1,5 +1,5 @@
 {
-  "description": "APEX SOLID validation hooks - automatic code quality enforcement",
+  "description": "APEX SOLID hooks - project detection only. SOLID file-size + interface enforcement is delegated to @fusengine/harness via core-guards (duplicate validate-solid/check-file-size removed to avoid a double-gate).",
   "hooks": {
     "SessionStart": [
       {
@@ -8,26 +8,6 @@
           "type": "command",
           "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/detect-project.py",
           "timeout": 5
-        }]
-      }
-    ],
-    "PreToolUse": [
-      {
-        "matcher": "Write|Edit",
-        "hooks": [{
-          "type": "command",
-          "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/validate-solid.py",
-          "timeout": 10
-        }]
-      }
-    ],
-    "PostToolUse": [
-      {
-        "matcher": "Write|Edit",
-        "hooks": [{
-          "type": "command",
-          "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/check-file-size.py",
-          "timeout": 10
         }]
       }
     ]

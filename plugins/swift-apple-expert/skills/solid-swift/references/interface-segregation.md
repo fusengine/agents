@@ -1,5 +1,6 @@
 ---
 name: interface-segregation
+applies-to: "**/*.swift"
 description: ISP Guide - Small focused protocols for Swift
 when-to-use: fat protocols, unused methods, segregating contracts
 keywords: interface segregation, ISP, focused, protocol, small, Swift

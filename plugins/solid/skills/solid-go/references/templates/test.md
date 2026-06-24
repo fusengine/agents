@@ -1,5 +1,6 @@
 ---
 name: test
+applies-to: "**/*.go"
 description: Testing template - Table-driven tests, mocks, contract testing
 when-to-use: writing Go tests, mocking dependencies, table-driven test patterns, contract validation
 keywords: test, testing, table-driven tests, mocks, contract tests, fixtures

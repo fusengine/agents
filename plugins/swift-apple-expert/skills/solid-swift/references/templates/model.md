@@ -1,5 +1,6 @@
 ---
 name: model-template
+applies-to: "**/*.swift"
 description: Complete Model, DTO, and Error templates for Swift
 when-to-use: creating data models, DTOs, custom errors
 keywords: model, DTO, error, Sendable, Codable, template, Swift

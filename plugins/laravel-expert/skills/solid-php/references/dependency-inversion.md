@@ -1,5 +1,6 @@
 ---
 name: dependency-inversion
+applies-to: "**/*.php"
 description: DIP Guide - Depend on abstractions via interfaces and ServiceProvider for Laravel
 when-to-use: tight coupling, service architecture, testing, mocking, swapping providers
 keywords: dependency inversion, DIP, injection, abstraction, service provider, laravel

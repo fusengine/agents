@@ -1,5 +1,6 @@
 ---
 name: liskov-substitution
+applies-to: "**/*.go"
 description: Liskov Substitution Principle for Go - Implicit interface compliance, contract tests, behavioral compatibility
 when-to-use: validating interface implementations, ensuring contract compliance, testing implementations
 keywords: LSP, Liskov substitution, interface compliance, contract tests, behavioral compatibility, implicit interfaces

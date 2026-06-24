@@ -1,5 +1,6 @@
 ---
 name: model
+applies-to: "**/*.rb"
 description: Thin ActiveRecord model - associations, validations, scopes only
 when-to-use: Defining Rails models with SOLID compliance
 keywords: model, ActiveRecord, validations, associations

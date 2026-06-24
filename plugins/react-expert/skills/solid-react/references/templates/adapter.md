@@ -1,5 +1,6 @@
 ---
 name: adapter-template
+applies-to: "**/*.tsx, **/*.jsx"
 description: Adapter pattern templates for external integrations (< 40 lines)
 ---
 

@@ -1,5 +1,6 @@
 ---
 name: protocol-template
+applies-to: "**/*.swift"
 description: Complete Protocol templates for Swift services and repositories
 when-to-use: creating protocols, defining contracts, abstracting services
 keywords: protocol, contract, interface, template, Swift, Sendable

@@ -1,5 +1,6 @@
 ---
 name: single-responsibility
+applies-to: "**/*.tsx, **/*.jsx"
 description: SRP Guide - When and how to split files, line limits, modular paths for React
 when-to-use: file too long, component doing too much, refactoring, code organization
 keywords: single responsibility, SRP, splitting, lines, refactoring, modular

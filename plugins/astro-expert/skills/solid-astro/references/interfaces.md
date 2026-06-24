@@ -1,3 +1,8 @@
+---
+name: interfaces
+applies-to: "**/*.astro"
+---
+
 # TypeScript Interfaces in Astro
 
 ## Rule: All Types in src/interfaces/

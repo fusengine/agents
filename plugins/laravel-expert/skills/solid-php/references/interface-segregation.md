@@ -1,5 +1,6 @@
 ---
 name: interface-segregation
+applies-to: "**/*.php"
 description: ISP Guide - Small focused interfaces for Laravel
 when-to-use: fat interfaces, unused methods, segregating contracts
 keywords: interface segregation, ISP, focused, small, laravel, contracts

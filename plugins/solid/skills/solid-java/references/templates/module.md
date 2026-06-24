@@ -1,5 +1,6 @@
 ---
 name: module-structure
+applies-to: "**/*.java, **/*.kt"
 description: Complete module structure with directory layout and mod definition
 when-to-use: creating new feature module, module scaffolding
 keywords: module, structure, scaffold, layout, Java

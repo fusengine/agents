@@ -1,5 +1,6 @@
 ---
 name: single-responsibility
+applies-to: "**/*.go"
 description: Single Responsibility Principle for Go - Handler/Service/Repository separation with layer responsibilities and modular architecture
 when-to-use: fat structs, unclear responsibilities, services doing too much, handler logic mixing concerns
 keywords: SRP, single responsibility, handlers, services, repositories, separation of concerns, layers

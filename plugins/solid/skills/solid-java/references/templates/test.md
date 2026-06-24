@@ -1,5 +1,6 @@
 ---
 name: test-template
+applies-to: "**/*.java, **/*.kt"
 description: JUnit 5 and Mockito unit tests
 when-to-use: writing unit tests, test setup
 keywords: test, JUnit 5, Mockito, unit test

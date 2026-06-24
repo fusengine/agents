@@ -1,3 +1,8 @@
+---
+name: component
+applies-to: "**/*.astro"
+---
+
 # Template: Astro Component with Props + JSDoc
 
 Canonical SOLID-compliant Astro component (< 60 lines).

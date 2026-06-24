@@ -1,5 +1,6 @@
 ---
 name: interface-template
+applies-to: "**/*.tsx, **/*.ts"
 description: TypeScript interface templates for entities, DTOs, and contracts
 ---
 

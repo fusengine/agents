@@ -1,5 +1,6 @@
 ---
 name: service-template
+applies-to: "**/*.tsx, **/*.ts"
 description: Service class template with dependency injection and error handling
 ---
 

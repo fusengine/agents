@@ -1,5 +1,6 @@
 ---
 name: solid-principles
+applies-to: "**/*.go"
 description: Quick reference for all 5 SOLID principles applied to Go 1.23+
 when-to-use: overview of SOLID, quick reference, principle selection
 keywords: SOLID, overview, Go, principles, quick reference

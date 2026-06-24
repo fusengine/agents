@@ -1,5 +1,6 @@
 ---
 name: service
+applies-to: "**/*.rb"
 description: Business logic service (PORO) with dependency injection
 when-to-use: Extracting business logic from controllers
 keywords: service, PORO, business logic

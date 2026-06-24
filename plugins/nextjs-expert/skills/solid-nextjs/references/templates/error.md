@@ -1,5 +1,6 @@
 ---
 name: error-template
+applies-to: "**/*.tsx, **/*.ts"
 description: Custom error classes template for structured error handling
 ---
 

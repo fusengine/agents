@@ -1,5 +1,6 @@
 ---
 name: Complete Module Structure
+applies-to: "**/*.rs"
 description: Template for a complete Rust module with mod.rs, traits, handlers, services, and repository
 when-to-use: Creating new feature module, organizing code in src/modules/[feature]/
 keywords: [module, mod.rs, structure, feature, organization]

@@ -1,5 +1,6 @@
 ---
 name: server-component-template
+applies-to: "**/*.tsx, **/*.ts"
 description: Server Component template with data fetching, Suspense, and proper typing
 ---
 

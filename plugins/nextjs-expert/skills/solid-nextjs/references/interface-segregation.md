@@ -1,5 +1,6 @@
 ---
 name: interface-segregation
+applies-to: "**/*.tsx, **/*.ts"
 description: ISP Guide - Creating small focused interfaces in modules/[feature]/src/interfaces/
 when-to-use: interface too big, unused methods, splitting interfaces
 keywords: interface segregation, ISP, interface, splitting, role-based, focused

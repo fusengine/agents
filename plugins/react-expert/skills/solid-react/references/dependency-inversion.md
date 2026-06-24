@@ -1,5 +1,6 @@
 ---
 name: dependency-inversion
+applies-to: "**/*.tsx, **/*.jsx"
 description: DIP Guide - Depend on abstractions via interfaces in modules/[feature]/src/interfaces/
 when-to-use: tight coupling, service architecture, testing, mocking
 keywords: dependency inversion, DIP, injection, abstraction, decoupling, factory

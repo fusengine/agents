@@ -1,5 +1,6 @@
 ---
 name: interface-segregation
+applies-to: "**/*.go"
 description: Interface Segregation Principle for Go - Small focused interfaces (1-3 methods), Go idiom, accept interfaces return structs
 when-to-use: fat interfaces, unused methods, interface sprawl, extracting dependencies
 keywords: ISP, interface segregation, small interfaces, focused contracts, Go idiom, 1-3 methods

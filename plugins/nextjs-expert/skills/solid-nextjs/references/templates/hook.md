@@ -1,5 +1,6 @@
 ---
 name: hook-template
+applies-to: "**/*.tsx, **/*.ts"
 description: React hook template with state management and async operations
 ---
 

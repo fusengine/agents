@@ -1,5 +1,6 @@
 ---
 name: api-route-template
+applies-to: "**/*.tsx, **/*.ts"
 description: API Route Handler template with validation and auth middleware
 ---
 
