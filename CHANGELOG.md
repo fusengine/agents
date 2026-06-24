@@ -1,5 +1,12 @@
 # Release Notes
 
+## [1.38.86] - 24-06-2026
+
+- feat(core-guards 1.1.31): delegate enforcement to the published `@fusengine/harness` npm package (hooks call the harness binary); framework-aware SOLID routing via `applies-to` globs on the refs.
+- refactor(ai-pilot 1.2.28): remove the enforcement gates now handled by the harness (injection/cache kept); deleted the replaced Python scripts (dead code, verified by import-graph analysis, nothing live broken).
+- refactor(fuse-solid 1.0.12): delegate SOLID file-size/interface enforcement to the harness; project detection kept.
+- chore: installer sets `FUSE_HARNESS_REFS` (path-delimiter list of the spread `solid-*/references` dirs) + installs `@fusengine/harness` as a local dep.
+
 ## [1.38.85] - 22-06-2026
 
 - Fixed (installer): the `FUSE_ENFORCE_TTL_SEC` prompt was nested inside the fuse-browser MCP block, so it only appeared when fuse-browser was selected. Moved next to the `FUSE_SOLID_MAX_LINES` prompt (after shell config) so both enforcement settings are offered on every install regardless of MCP choice

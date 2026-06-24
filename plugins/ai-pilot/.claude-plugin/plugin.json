@@ -1,6 +1,6 @@
 {
   "name": "fuse-ai-pilot",
-  "version": "1.2.27",
+  "version": "1.2.28",
   "description": "AI Pilot workflow agents: sniper (code quality), research-expert, explore-codebase, websearch",
   "author": {
     "name": "Fusengine",
