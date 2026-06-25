@@ -1,172 +1,51 @@
 {
-  "_description": "Design Expert - UI/UX validation hooks",
-  "_version": "3.0.0",
-
+  "_description": "Design Expert — full enforcement (SOLID/skill/DRY + design pipeline state machine: html-css-only, phase ordering, screenshot/scroll, gemini gating, content checks) via @fusengine/harness",
+  "_version": "5.0.0",
   "hooks": {
     "PreToolUse": [
       {
-        "_description": "Block agent from modifying pipeline state files",
-        "matcher": "Write|Edit",
+        "_description": "Harness: SOLID + design pipeline gates (html-css-only, design-system phase gate, browser navigate/scroll, gemini create gate)",
+        "matcher": "Write|Edit|mcp__fuse-browser__browser_navigate|mcp__fuse-browser__browser_screenshot|mcp__gemini-design__create_frontend",
         "hooks": [
           {
             "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/guard-state-files.py"
-          }
-        ]
-      },
-      {
-        "_description": "Design-expert can only write HTML/CSS/MD/JSON files",
-        "matcher": "Write|Edit",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/enforce-html-css-only.py"
-          }
-        ]
-      },
-      {
-        "_description": "Block UI edits if design skill not consulted",
-        "matcher": "Write|Edit",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/check-design-skill.py"
-          }
-        ]
-      },
-      {
-        "_description": "Pipeline gate: enforce phase ordering for Write/Edit",
-        "matcher": "Write|Edit",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/pipeline-gate.py"
-          }
-        ]
-      },
-      {
-        "_description": "Block fuse-browser browsing before reading design-inspiration.md",
-        "matcher": "mcp__fuse-browser__browser_navigate",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/check-inspiration-read.py"
-          }
-        ]
-      },
-      {
-        "_description": "Block screenshot without scrolling first (lazy loading)",
-        "matcher": "mcp__fuse-browser__browser_screenshot",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/require-scroll-before-screenshot.py"
-          }
-        ]
-      },
-      {
-        "_description": "Pipeline gate: enforce phase ordering for Gemini",
-        "matcher": "mcp__gemini-design__",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/pipeline-gate.py"
-          }
-        ]
-      },
-      {
-        "_description": "Block create_frontend if design-system.md is generic or missing",
-        "matcher": "mcp__gemini-design__create_frontend",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/validate-design-system.py"
+            "command": "bun ${CLAUDE_PLUGIN_ROOT}/node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code"
           }
         ]
       }
     ],
     "PostToolUse": [
       {
-        "_description": "Track skill file reads",
-        "matcher": "Read",
+        "_description": "Harness: design pipeline transitions (screenshot/scroll/navigate/read → phase advance) + design content warnings + generic activity tracking",
+        "matcher": "",
         "hooks": [
           {
             "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/track-skill-read.py"
-          }
-        ]
-      },
-      {
-        "_description": "Update state after each fuse-browser screenshot",
-        "matcher": "mcp__fuse-browser__browser_screenshot",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/track-screenshot.py"
-          }
-        ]
-      },
-      {
-        "_description": "Track MCP research + fuse-browser calls",
-        "matcher": "mcp__context7__|mcp__exa__|mcp__magic__|mcp__shadcn__|mcp__fuse-browser__|mcp__gemini-design__",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/track-mcp-research.py"
-          }
-        ]
-      },
-      {
-        "_description": "Validate design best practices after Write/Edit",
-        "matcher": "Write|Edit",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/validate-design.py"
+            "command": "bun ${CLAUDE_PLUGIN_ROOT}/node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code"
           }
         ]
       }
     ],
     "SubagentStart": [
       {
-        "_description": "Set flag when design-expert agent starts",
-        "matcher": "design",
+        "_description": "Harness: init design pipeline state machine + raise the active-design flag",
+        "matcher": "",
         "hooks": [
           {
             "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/design-agent-flag.py"
-          }
-        ]
-      },
-      {
-        "_description": "Initialize design state tracking file",
-        "matcher": "design",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/design-state-init.py"
+            "command": "bun ${CLAUDE_PLUGIN_ROOT}/node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code"
           }
         ]
       }
     ],
     "SubagentStop": [
       {
-        "_description": "Clear flag when design-expert agent stops",
-        "matcher": "design",
+        "_description": "Harness: archive design state + clear the active-design flag",
+        "matcher": "",
         "hooks": [
           {
             "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/design-agent-flag.py"
-          }
-        ]
-      },
-      {
-        "_description": "Archive state file and clean old ones",
-        "matcher": "design",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/design-state-cleanup.py"
+            "command": "bun ${CLAUDE_PLUGIN_ROOT}/node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code"
           }
         ]
       }

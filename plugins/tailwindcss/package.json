@@ -1,0 +1,9 @@
+{
+  "name": "@fusengine/tailwindcss-expert",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Tailwind CSS Expert plugin — enforcement delegated to @fusengine/harness (installed locally via this dep).",
+  "dependencies": {
+    "@fusengine/harness": "latest"
+  }
+}

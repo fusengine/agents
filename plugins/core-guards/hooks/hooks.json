@@ -14,17 +14,6 @@
             "command": "bun ${CLAUDE_PLUGIN_ROOT}/node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code"
           }
         ]
-      },
-      {
-        "_description": "Pre-commit validation (linters, tests) before git commit — kept (out of harness scope)",
-        "matcher": "Bash",
-        "hooks": [
-          {
-            "_description": "Run ESLint, TypeScript, Prettier, Ruff before commit",
-            "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/pre-tool-use/pre-commit-guard.py"
-          }
-        ]
       }
     ],
 

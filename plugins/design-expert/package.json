@@ -1,0 +1,9 @@
+{
+  "name": "@fusengine/design-expert",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Design Expert plugin — SOLID enforcement delegated to @fusengine/harness; design-pipeline hooks kept local.",
+  "dependencies": {
+    "@fusengine/harness": "latest"
+  }
+}
