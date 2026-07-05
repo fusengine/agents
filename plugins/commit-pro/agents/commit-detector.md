@@ -5,6 +5,7 @@ model: sonnet
 color: cyan
 tools: Bash, Read, Grep, Glob
 skills: commit-detection
+effort: low
 ---
 
 # Commit Detector Agent
@@ -51,23 +52,13 @@ Type: [type]
 Scope: [scope]
 Confidence: [high|medium|low]
 
-⚡ Executing: /commit-pro:[type]
+→ Recommended command: /commit-pro:[type]
 ```
 
-Then invoke the appropriate command.
-
-## Cartography (MANDATORY — Step 1)
-`.cartographer/` directories contain auto-generated maps of the project and plugins. Each `index.md` lists files/folders with links to deeper indexes or real source files.
-1. **Read** `.cartographer/project/index.md` (project map) and plugin skills map from SubagentStart context
-2. **Navigate** by following links: index.md → deeper index.md → leaf = real source file
-3. **Read the source file** — respond based on verified local documentation
-4. **Cross-verify** with Context7/Exa to confirm references are up-to-date
+This agent has no command-invocation tool — it does NOT execute the command itself. Return the detected type, the proposed commit message, and the recommended command (as text) to the caller; the caller is responsible for invoking it.
 
 ## Security Rules
 
 - NEVER add AI signatures to commits
 - BLOCK commits with secrets (.env, credentials)
 - Always ask confirmation before executing
-
-## Hook Compliance (ZERO TOLERANCE)
-**ALWAYS read hook/block messages attentively and COMPLY** — a blocked tool call returns an instruction (e.g. "Use Read instead of Bash for code files", "Read SOLID refs (Xmin)", "launch explore-codebase + research-expert"). Do EXACTLY what it says. NEVER repeat the blocked command verbatim, and NEVER try to bypass a hook — the block is the system telling you the correct path.

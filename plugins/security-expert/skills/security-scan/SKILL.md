@@ -26,7 +26,7 @@ Orchestrates the full security scanning workflow across all supported languages.
 
 1. **Detect** language from project markers
 2. **Load** patterns from `references/scan-patterns.md`
-3. **Run** `scripts/security-scan.sh` for automated scanning
+3. **Run** `bun ${CLAUDE_PLUGIN_ROOT}/../node_modules/@fusengine/harness/dist/cli/bin.mjs scan <dir>` for automated scanning (OWASP patterns ported into the harness)
 4. **Map** findings to OWASP categories via `references/owasp-top10.md`
 5. **Generate** report using `references/templates/scan-report.md`
 
@@ -54,3 +54,5 @@ Agent(subagent_type="fuse-ai-pilot:sniper", prompt="Security fixes: [FILE:LINE] 
 - [OWASP Top 10 Mapping](references/owasp-top10.md)
 - [Scan Patterns by Language](references/scan-patterns.md)
 - [Report Template](references/templates/scan-report.md)
+- [GraphQL Security Patterns](references/graphql-security.md) — Load when the target exposes a GraphQL endpoint (introspection, depth/complexity limiting, batching, authorization checks).
+- [Scan Patterns - Python, Swift/iOS, Go, Rust](references/scan-patterns-extra.md) — Load when scanning Python, Swift/iOS, Go, or Rust source code (patterns not covered in `scan-patterns.md`).

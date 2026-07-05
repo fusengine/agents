@@ -1,6 +1,6 @@
 ---
 name: elicitation
-description: Auto-review skill for expert agents. After coding, expert applies elicitation techniques to self-correct before sniper validation. Inspired by BMAD-METHOD.
+description: Auto-review skill for expert agents. After coding, expert applies elicitation techniques to self-correct before sniper validation. Inspired by BMAD-METHOD. Use when: an expert agent needs to self-review and self-correct code after the Execute phase, before sniper validation.
 argument-hint: "[--auto] [--manual] [--skip]"
 color: purple
 user-invocable: false
@@ -125,6 +125,20 @@ A-nalyze → P-lan → E-xecute → [ELICIT] → X-amine
 - ❌ Self-correct without documenting changes
 - ❌ Report without listing applied techniques
 - ❌ Use techniques outside expertise domain
+
+---
+
+## Exit Criteria (Step 5: Report)
+
+**Score** = techniques applied / techniques selected, weighted by critical category (Security, Architecture).
+
+| Score | Status | Action |
+|-------|--------|--------|
+| ≥ 90% | 🟢 | Proceed to sniper |
+| 70-89% | 🟡 | Document gaps, then proceed |
+| < 70% | 🔴 | Iterate before sniper |
+
+**Self-correction failure**: If a self-correction breaks the code → revert that correction and keep the finding as a report item instead.
 
 ---
 

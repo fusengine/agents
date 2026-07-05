@@ -1,0 +1,9 @@
+{
+	"name": "@fusengine/plugins",
+	"version": "1.0.0",
+	"private": true,
+	"description": "Fusengine plugins suite — single shared install of @fusengine/harness. The installer scans this dir; every plugin hook invokes the binary via ${CLAUDE_PLUGIN_ROOT}/../node_modules/@fusengine/harness/dist/cli/bin.mjs.",
+	"dependencies": {
+		"@fusengine/harness": "^0.1.49"
+	}
+}

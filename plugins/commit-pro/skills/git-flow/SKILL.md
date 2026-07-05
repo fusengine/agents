@@ -2,7 +2,7 @@
 name: git-flow
 description: Use when committing, branching, opening PRs, or deciding merge strategy. Covers GitHub Flow (default), trunk-based, branch naming conventions, squash vs rebase, branch lifecycle, and protected branch enforcement.
 user-invocable: false
-related-skills: commit, post-commit, commit-detection
+related-skills: commit-optimization, post-commit, commit-detection
 ---
 
 # Git Flow Best Practices (2026)
@@ -71,6 +71,8 @@ Format: `<type>/<scope-or-summary>` (kebab-case).
 | **Merge commit** | Rare, only for "merge events" worth marking | Adds noise, avoid by default |
 
 **fuse-commit-pro recommendation**: squash merge via `gh pr merge --squash --delete-branch`.
+
+**Tagging with squash merge**: never tag before the merge — `gh pr merge --squash` creates a brand-new commit on `main`, so a pre-merge tag never lands there and dangles. Tag `vX.Y.Z` on `main` AFTER the squash merge completes, then push the tag (`fuse-commit-pro:commit` does this automatically in Step 8).
 
 ## After Merge
 

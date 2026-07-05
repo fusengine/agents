@@ -24,8 +24,22 @@ After Phase 4 animations are applied. Final quality validation.
 4. **Run anti-AI-slop audit** from `references/anti-ai-slop-audit.md` — detect generic purple gradients, Inter font, flat backgrounds, missing animations.
 5. **Validate WCAG** per `references/ux-wcag.md` — contrast 4.5:1 text / 3:1 UI, focus indicators, touch targets 44x44px minimum.
 6. **Apply UX heuristics** — Nielsen (`references/ux-nielsen.md`), UX laws (`references/ux-laws.md`), patterns (`references/ux-patterns.md`).
-7. **Generate audit report** — categorized findings (Critical / Major / Minor) with fix recommendations.
-8. **Apply fixes** — Correct all Critical and Major issues before proceeding.
+7. **Motion Audit** — if Phase 4 added any animation/transition/scroll-reveal/hover/gesture code, run `references/motion-audit.md`: measure every animation against the 10 non-negotiable standards, flag the escalation triggers on sight, and triage the fixes strictly through the remediation hierarchy (delete → reduce → fix easing → fix origin → make interruptible → move to GPU → asymmetric timing → polish → accessibility/cohesion).
+8. **Mechanical Pre-Flight** — run the executable checklist in `references/pre-flight-checklist.md`: greppable checks (zero em-dash, uppercase-tracking count ≤ ceil(sections/3), single theme lock, motion-claimed-motion-shown, ≤1 marquee, banned premium palette absent, hero ≤4 elements). Any fail blocks the audit-passed verdict.
+9. **Generate audit report** — categorized findings (Critical / Major / Minor) with fix recommendations.
+10. **Apply fixes** — Correct all Critical and Major issues before proceeding.
+11. **Re-audit loop** — Return to Step 2 and re-run the full audit on the fixed output. Max 2 fix cycles; if issues remain after cycle 2, STOP and report the remaining issues instead of looping.
+
+### Anti-AI-slop few-shot examples
+Use these as calibration for the subjective judgment call in Step 4:
+
+**REJECT**
+- A generic purple-to-blue gradient hero, set in Inter, with emoji used as bullet points — reads as templated AI output, not a designed identity.
+- Identical border-radius and box-shadow applied to every card on the page with no visual hierarchy between primary and secondary content.
+
+**ACCEPT**
+- A sector-derived OKLCH palette with chroma > 0.05, paired with an approved typography combination and one deliberate accent color used sparingly for emphasis.
+- An asymmetric grid with an intentional whitespace rhythm that guides the eye instead of evenly-spaced, interchangeable blocks.
 
 ### Output
 - Audit report with categorized findings and applied fixes.
@@ -40,6 +54,8 @@ After Phase 4 animations are applied. Final quality validation.
 | `references/audit-checklist.md` | Full audit procedure |
 | `references/consistency-checks.md` | Cross-component consistency |
 | `references/anti-ai-slop-audit.md` | Generic AI design detection |
+| `references/motion-audit.md` | 10 motion standards, escalation triggers, remediation hierarchy (adapted from Emil Kowalski's review-animations) |
+| `references/pre-flight-checklist.md` | Mechanical grep/count checks (adapted from taste-skill §14) |
 | `references/ux-wcag.md` | WCAG accessibility standards |
 | `references/ux-nielsen.md` | Nielsen usability heuristics |
 | `references/ux-laws.md` | UX laws (Fitts, Hick, Miller) |

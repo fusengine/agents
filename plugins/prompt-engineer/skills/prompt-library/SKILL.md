@@ -1,6 +1,6 @@
 ---
 name: prompt-library
-description: Library of 18+ ready-to-use prompt templates and executable agents
+description: Library of 18+ ready-to-use prompt templates and executable agents. Use when: looking for a ready-made agent or task template (code review, support, data analysis, translation, extraction, etc.) instead of writing one from scratch.
 allowed-tools: Read
 ---
 

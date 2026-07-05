@@ -1,6 +1,6 @@
 ---
 name: tailwindcss-backgrounds
-description: "Background utilities Tailwind CSS v4.1. Colors (bg-{color}, palette OKLCH P3), Gradients (bg-linear-*, bg-radial-*, bg-conic-* NEW), Images (bg-cover, bg-contain, bg-repeat), Blend modes."
+description: "Background utilities Tailwind CSS v4.1. Colors (bg-{color}, palette OKLCH P3), Gradients (bg-linear-*, bg-radial-*, bg-conic-* NEW), Images (bg-cover, bg-contain, bg-repeat), Blend modes. Use when: styling background colors, building linear/radial/conic gradients, setting background images/position/size, or combining backgrounds with blend modes."
 user-invocable: false
 ---
 
@@ -248,3 +248,9 @@ export default {
 3. **Layer gradients** using multiple background utilities for complex effects
 4. **Use opacity modifiers** (`/50`) instead of rgba for better tree-shaking
 5. **Prefer conic/radial gradients** over images when possible for smaller file sizes
+
+## Detailed References
+
+- [colors.md](references/colors.md) - Load when picking specific color families, shades, OKLCH values, or semantic/accessibility color pairing
+- [gradients.md](references/gradients.md) - Load when building linear/radial/conic gradients or working with color-stop positioning
+- [images.md](references/images.md) - Load when applying background images, sizing/positioning/repeat, or blend modes

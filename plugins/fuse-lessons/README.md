@@ -36,12 +36,14 @@ Keep each line short and actionable: the failure on the left of `→`, the fix o
 
 ## The 4 hooks
 
-| Event | Script | Behavior |
-|-------|--------|----------|
-| `SessionStart` | `scripts/handlers/inject-memory.ts` | Reads `MEMORY/LESSON.md` and injects the lessons into the main session context. |
-| `SubagentStart` | `scripts/handlers/inject-memory.ts` | Same injection for every spawned sub-agent, so delegated work inherits the lessons. |
-| `Stop` | `scripts/handlers/remind-write.ts` | Reminds you to capture a compact lesson before finishing — throttled to once per 5 min (see below). It injects the exact `YYYY-MM-DD HH:MM` timestamp to use. |
-| `PostToolUse` (`Write\|Edit\|MultiEdit`) | `scripts/handlers/mark-write.ts` | Detects a write to `MEMORY/LESSON.md` and resets the throttle in `MEMORY/state.json`. |
+All four events route to `@fusengine/harness` (`hook claude-code lessons`); the logic lives in the harness `lessons` scope.
+
+| Event | Behavior |
+|-------|----------|
+| `SessionStart` | Reads `MEMORY/LESSON.md` and injects the lessons into the main session context. |
+| `SubagentStart` | Same injection for every spawned sub-agent, so delegated work inherits the lessons. |
+| `Stop` | Reminds you to capture a compact lesson before finishing — throttled to once per 5 min (see below). It injects the exact `YYYY-MM-DD HH:MM` timestamp to use. |
+| `PostToolUse` (`Write\|Edit\|MultiEdit`) | Detects a write to `MEMORY/LESSON.md` and resets the throttle in `MEMORY/state.json`. |
 
 Hooks are declared in `hooks/hooks.json` and auto-load by convention.
 

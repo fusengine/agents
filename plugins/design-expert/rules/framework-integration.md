@@ -8,6 +8,7 @@ After generating UI with Gemini Design, ALWAYS delegate to framework expert.
 |---------------|-----------|-------------|-------------|-------------------|
 | `next.config.*`, `app/layout.tsx` | Next.js | Gemini Design + shadcn | `fuse-nextjs:nextjs-expert` | solid-nextjs, nextjs-16 |
 | `astro.config.*`, `src/pages/*.astro` | Astro | Gemini Design + shadcn (React islands) | `fuse-astro:astro-expert` | solid-astro |
+| `@tanstack/react-start` + `tanstackStart()` in vite.config.* | TanStack Start | Gemini Design + shadcn | `fuse-tanstack-start:tanstack-start-expert` | solid-tanstack-start, start-core |
 | `package.json` + React (no Next) | React SPA | Gemini Design + shadcn | `fuse-react:react-expert` | solid-react, react-19 |
 | `composer.json` + `artisan` + Inertia + React | Laravel+Inertia | Gemini Design + shadcn | `fuse-laravel:laravel-expert` | solid-php |
 | `composer.json` + `artisan` (no Inertia) | Laravel Blade | Visual specs → Livewire Flux | `fuse-laravel:laravel-expert` | solid-php |

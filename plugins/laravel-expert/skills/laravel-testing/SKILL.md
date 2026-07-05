@@ -200,15 +200,15 @@ php artisan test
 ## Laravel 13 Notes
 
 ### PHPUnit 12 + Pest 4
-Laravel 13 exige **PHPUnit 12** et supporte **Pest 4**. Les attributs PHP remplacent les annotations docblock.
+Laravel 13 requires **PHPUnit 12** and supports **Pest 4**. PHP attributes replace docblock annotations.
 
 ```php
 use PHPUnit\Framework\Attributes\Test;
 use Illuminate\Foundation\Testing\Attributes\Seed;
 use Illuminate\Foundation\Testing\Attributes\Seeder;
 
-#[Seed]                          // exécute DatabaseSeeder
-#[Seeder(UserSeeder::class)]     // exécute un seeder ciblé
+#[Seed]                          // runs DatabaseSeeder
+#[Seeder(UserSeeder::class)]     // runs a targeted seeder
 final class UserTest extends TestCase
 {
     #[Test]
@@ -217,9 +217,9 @@ final class UserTest extends TestCase
 ```
 
 ### Str cache reset
-Laravel 13 réinitialise automatiquement les caches `Str` (random, slug) entre tests pour éviter le state leak. Aucun setup manuel requis.
+Laravel 13 automatically resets `Str` caches (random, slug) between tests to avoid state leak. No manual setup required.
 
-### Migration depuis Pest 3
-- `pest --init` regénère `Pest.php` avec la nouvelle API
-- Datasets supportent désormais les générateurs natifs PHP
-- `expect()->toBeInstanceOf()` → typage strict requis
+### Migration from Pest 3
+- `pest --init` regenerates `Pest.php` with the new API
+- Datasets now support native PHP generators
+- `expect()->toBeInstanceOf()` → strict typing required

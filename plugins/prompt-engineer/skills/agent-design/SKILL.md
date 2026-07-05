@@ -1,6 +1,6 @@
 ---
 name: agent-design
-description: Design AI agents with recommended patterns and architectures
+description: Design AI agents with recommended patterns and architectures. Use when: choosing between workflow vs agent patterns, structuring orchestrator/subagent pipelines, or writing a Claude Code agent template.
 allowed-tools: Read, Write
 ---
 
@@ -8,10 +8,12 @@ allowed-tools: Read, Write
 
 Skill for designing high-performance AI agents following 2025 patterns.
 
-## Documentation
+## References
 
-- [patterns.md](docs/patterns.md) - Multi-agent architecture patterns
-- [workflows.md](docs/workflows.md) - Recommended workflows
+- [patterns.md](references/patterns.md) - Load when: choosing an agent architecture (Single Agent, Agent+Tools, Orchestrator, Pipeline, Network, Supervisor, Hierarchical, Meta-Prompting) or comparing their trade-offs
+- [workflows.md](references/workflows.md) - Load when: implementing APEX, TDD, Explore-Plan-Code, Code Review, or Debugging workflows for an agent
+- [templates.md](references/templates.md) - Load when: writing a full agent definition (production frontmatter + sections) or a Claude Code agent template
+- [anti-patterns.md](references/anti-patterns.md) - Load when: reviewing an agent design for common mistakes (omniscient agent, implicit instructions, missing error handling)
 
 ## Fundamental Distinction
 
@@ -24,9 +26,7 @@ Skill for designing high-performance AI agents following 2025 patterns.
 
 **Golden rule:** Start simple, add complexity if necessary.
 
-## Agent Architecture
-
-### Minimal Structure
+## Minimal Agent Structure
 
 ```yaml
 Agent:
@@ -37,79 +37,7 @@ Agent:
   workflow: How should I proceed?
 ```
 
-### Complete Structure (Production)
-
-```markdown
----
-name: my-agent
-description: Short description
-model: sonnet|opus
-tools: [list of tools]
-skills: [associated skills]
----
-
-# Identity
-[Who the agent is]
-
-# Capabilities
-[What it can do]
-
-# Workflow
-[Steps to follow]
-
-# Tools
-[How to use each tool]
-
-# Constraints
-[Limits and rules]
-
-# Examples
-[Use cases]
-
-# Forbidden
-[What it must NEVER do]
-```
-
-## Agent Patterns
-
-### 1. Single Agent (Simple)
-
-```
-User → Agent → Response
-```
-
-**Usage:** Simple tasks, rapid prototyping.
-
-### 2. Agent + Tools
-
-```
-User → Agent ↔ Tools → Response
-                ↑
-            Tool Results
-```
-
-**Usage:** Tasks requiring external access (API, files, DB).
-
-### 3. Orchestrator + Subagents
-
-```
-User → Orchestrator → Subagent 1 (specialized)
-                   → Subagent 2 (specialized)
-                   → Subagent 3 (specialized)
-                   ↓
-              Synthesis → Response
-```
-
-**Usage:** Complex tasks, separation of responsibilities.
-
-### 4. Sequential Pipeline
-
-```
-User → Agent 1 → Agent 2 → Agent 3 → Response
-       (Analyze)  (Plan)    (Execute)
-```
-
-**Usage:** Linear processes (e.g., Analyst → Architect → Developer).
+For the complete production structure and the Claude Code agent template, see [templates.md](references/templates.md).
 
 ## Fresh Eyes Principle
 
@@ -148,86 +76,7 @@ Orchestrator:
 - [ ] Security tests (jailbreak)?
 - [ ] Acceptable performance?
 
-## Claude Code Agent Template
-
-```markdown
----
-name: [kebab-case-name]
-description: [1-2 lines max]
-model: sonnet
-color: blue
-tools: Read, Edit, Write, Bash, Grep, Glob
-skills: [associated-skills]
----
-
-# [Agent Name]
-
-[Purpose description]
-
-## Core Principles
-
-1. **[Principle 1]**: [Short explanation]
-2. **[Principle 2]**: [Short explanation]
-
-## Workflow (MANDATORY)
-
-### Phase 1: [Name]
-```
-[Numbered actions]
-```
-
-### Phase 2: [Name]
-```
-[Numbered actions]
-```
-
-## Output Format
-
-[Response structure]
-
-## Forbidden
-
-- [Prohibition 1]
-- [Prohibition 2]
-```
-
-## Anti-Patterns to Avoid
-
-### ❌ Omniscient agent
-```
-You know everything and can do anything.
-```
-
-### ✅ Specialized agent
-```
-You are an expert in [specific domain].
-For topics outside your domain, redirect to the appropriate agent.
-```
-
-### ❌ Implicit instructions
-```
-Do what's logical.
-```
-
-### ✅ Explicit instructions
-```
-Step 1: Analyze the problem
-Step 2: Propose 3 solutions
-Step 3: Recommend the best with justification
-```
-
-### ❌ No error handling
-```
-Execute the task.
-```
-
-### ✅ Explicit error handling
-```
-IF the task fails:
-  1. Identify the cause
-  2. Propose an alternative
-  3. Ask for confirmation before retrying
-```
+For anti-patterns to avoid during design, see [anti-patterns.md](references/anti-patterns.md).
 
 ## Forbidden
 

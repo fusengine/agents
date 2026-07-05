@@ -9,6 +9,8 @@
 | **Gemini Design** | AI frontend | `design-expert` |
 | **fuse-browser** | Browser automation, scraping, SERP, visual diff, CWV | `seo`, `security-expert`, `design-expert`, frontend experts, `changelog-watcher`, ai-pilot `research-expert`/`websearch`/`sniper` |
 
+**Verification chain (any uncertain API/version — ZERO TOLERANCE):** ① Context7 (official docs) → ② Exa code context → ③ fuse-browser fast-path (`browser_fetch` on known doc URLs, `serp_batch` for discovery). One source is NEVER enough for an uncertain API.
+
 ## fuse-browser — Efficient Usage (ZERO TOLERANCE)
 
 1. **Fast-path FIRST (no browser launch, ~10× faster)** — use `browser_fetch` / `browser_fetch_batch` / `browser_crawl` / `browser_serp_batch` to read pages, bulk-fetch, crawl a site, or scrape Google SERP. Open a live session ONLY when you need interaction, JS rendering, or pixels.
@@ -19,8 +21,8 @@
 6. **Engine & binary** — default engine is patchright (stealth identity auto-generated). The Chromium binary is installed by `setup.sh`; set `channel:"chrome"` or `executablePath` only to reuse a system browser. Tune the enforcement TTL via `FUSE_ENFORCE_TTL_SEC` (default 120s).
 
 ## Skills Location
-`~/.claude/plugins/marketplaces/fusengine-plugins/plugins/{agent}/skills/`
-SOLID refs: `skills/solid-*/references/`
+Plugin skills paths are injected at SessionStart — use the paths from your context, never hardcode marketplace paths.
+SOLID refs: `skills/solid-*/references/` (inside each agent plugin)
 
 ## Documentation
 ALL docs in `docs/` folder - NEVER outside except root `README.md`
@@ -39,8 +41,9 @@ ALL docs in `docs/` folder - NEVER outside except root `README.md`
 1. Step 0: branch check — block if on protected, propose feature branch
 2. Step 1: security scan (secrets, .env)
 3. Steps 2-5: conventional commit with auto-detection
-4. Step 6: post-commit (CHANGELOG + version bump + tag)
-5. Step 7: push branch + propose `gh pr create`
+4. Step 6: post-commit (CHANGELOG + version bump — no tag)
+5. Step 7: push branch + PR + CI watch + squash merge
+6. Step 8: post-merge — tag `vX.Y.Z` on `main` + push tag (never pre-merge, squash would orphan it)
 
 **Merge strategy**: squash via `gh pr merge --squash --delete-branch`. Keep branches < 3 days.
 

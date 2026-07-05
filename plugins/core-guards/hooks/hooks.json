@@ -1,5 +1,5 @@
 {
-  "_description": "Core Guards - Security and SOLID enforcement hooks (enforcement delegated to @fusengine/harness)",
+  "_description": "Core Guards - Security and SOLID enforcement hooks (enforcement + lifecycle delegated to @fusengine/harness)",
   "_version": "2.0.0",
   "_author": "fusengine-plugins",
 
@@ -11,7 +11,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bun ${CLAUDE_PLUGIN_ROOT}/node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code"
+            "command": "bun ${CLAUDE_PLUGIN_ROOT}/../node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code"
           }
         ]
       }
@@ -19,28 +19,12 @@
 
     "PostToolUse": [
       {
-        "_description": "Harness: record agent (quality) / doc / ref-read activity + MCP cache store + file-size warn — feeds the session track the APEX gates read",
+        "_description": "Harness: record agent/doc/ref-read activity + MCP cache store + file-size warn, PLUS (Write/Edit) cumulative session-change tracking → sniper reminder + eslint/prettier report. One harness call (ports track-session-changes.py + post-edit-typescript.py).",
         "matcher": "",
         "hooks": [
           {
             "type": "command",
-            "command": "bun ${CLAUDE_PLUGIN_ROOT}/node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code"
-          }
-        ]
-      },
-      {
-        "_description": "SOLID/sniper tracking + TS lint after file modifications — kept (fusengine-specific)",
-        "matcher": "Write|Edit",
-        "hooks": [
-          {
-            "_description": "Track cumulative code file changes per session for sniper trigger",
-            "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/post-tool-use/track-session-changes.py"
-          },
-          {
-            "_description": "Post-edit TypeScript validation (eslint/prettier report)",
-            "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/post-tool-use/post-edit-typescript.py"
+            "command": "bun ${CLAUDE_PLUGIN_ROOT}/../node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code"
           }
         ]
       }
@@ -48,28 +32,12 @@
 
     "SessionStart": [
       {
-        "_description": "Session initialization - load context and cleanup stale states",
+        "_description": "Harness: inject ~/.claude/CLAUDE.md + dev context (git/project type) and run cache/state cleanups (ports the four session-start/*.py into one call)",
         "matcher": "",
         "hooks": [
           {
-            "_description": "Inject CLAUDE.md content into session context",
             "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/session-start/inject-claude-md.py"
-          },
-          {
-            "_description": "Load development context (git status, project type detection)",
-            "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/session-start/load-dev-context.py"
-          },
-          {
-            "_description": "Cleanup stale session state files from /tmp",
-            "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/session-start/cleanup-session-states.py"
-          },
-          {
-            "_description": "Cleanup stale MCP (48h) + WebFetch (24h) cache entries",
-            "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/session-start/cleanup-old-caches.py"
+            "command": "bun ${CLAUDE_PLUGIN_ROOT}/../node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code"
           }
         ]
       }
@@ -77,22 +45,12 @@
 
     "UserPromptSubmit": [
       {
-        "_description": "Read CLAUDE.md + auto-detect APEX trigger, inject instruction — kept (fusengine identity/injection)",
+        "_description": "Harness: read ~/.claude/CLAUDE.md (+ APEX preamble on dev verbs) injected as additionalContext AND detect creation intent → set brainstorm-required flag. One harness call does both.",
         "matcher": "",
         "hooks": [
           {
             "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/user-prompt/read-claude-md.py"
-          }
-        ]
-      },
-      {
-        "_description": "Harness: detect creation intent → set brainstorm-required flag",
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bun ${CLAUDE_PLUGIN_ROOT}/node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code"
+            "command": "bun ${CLAUDE_PLUGIN_ROOT}/../node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code"
           }
         ]
       }
@@ -100,13 +58,12 @@
 
     "SubagentStart": [
       {
-        "_description": "Inject cached MCP context (Context7/Exa) into sub-agent prompt",
+        "_description": "Harness: inject fresh MCP cache (Context7/Exa) entries into the sub-agent prompt (ports inject-context-cache.py)",
         "matcher": "",
         "hooks": [
           {
-            "_description": "Read context/mcp/ cache and surface relevant entries to sub-agent",
             "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/subagent-start/inject-context-cache.py"
+            "command": "bun ${CLAUDE_PLUGIN_ROOT}/../node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code"
           }
         ]
       }
@@ -114,13 +71,12 @@
 
     "SubagentStop": [
       {
-        "_description": "Track sub-agent completion and memory",
+        "_description": "Harness: track agent completion + memory and emit sniper reminder on code changes (ports track-agent-memory.py)",
         "matcher": "",
         "hooks": [
           {
-            "_description": "Track agent memory and completion for context persistence",
             "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/subagent-stop/track-agent-memory.py"
+            "command": "bun ${CLAUDE_PLUGIN_ROOT}/../node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code"
           }
         ]
       }
@@ -128,13 +84,12 @@
 
     "TeammateIdle": [
       {
-        "_description": "Validate teammate output before idle",
+        "_description": "Harness: suggest sniper validation when a teammate modified code before going idle (ports validate-teammate-output.py)",
         "matcher": "",
         "hooks": [
           {
-            "_description": "Check if teammate modified code files and suggest sniper",
             "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/teammate-idle/validate-teammate-output.py"
+            "command": "bun ${CLAUDE_PLUGIN_ROOT}/../node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code"
           }
         ]
       }
@@ -142,13 +97,12 @@
 
     "TaskCompleted": [
       {
-        "_description": "SOLID validation when task is marked completed",
+        "_description": "Harness: re-measure the task's modified code files and flag SOLID violations over the line ceiling (ports task-completed/validate-task-solid.py)",
         "matcher": "",
         "hooks": [
           {
-            "_description": "Check modified files respect SOLID rules (< 100 lines)",
             "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/task-completed/validate-task-solid.py"
+            "command": "bun ${CLAUDE_PLUGIN_ROOT}/../node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code"
           }
         ]
       }
@@ -156,13 +110,12 @@
 
     "PostToolUseFailure": [
       {
-        "_description": "Log tool failures for debugging",
+        "_description": "Harness: log tool failures to ~/.claude/logs/tool-failures.log (ports log-tool-failure.py)",
         "matcher": "",
         "hooks": [
           {
-            "_description": "Log failed tool executions to session log",
             "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/post-tool-use/log-tool-failure.py"
+            "command": "bun ${CLAUDE_PLUGIN_ROOT}/../node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code"
           }
         ]
       }
@@ -210,13 +163,12 @@
 
     "PreCompact": [
       {
-        "_description": "Save APEX state before context compression",
+        "_description": "Harness: back up .claude/apex/task.json before compaction, keep 5 newest (ports save-apex-state.py)",
         "matcher": "",
         "hooks": [
           {
-            "_description": "Persist current task state and decisions to .claude/apex/",
             "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/pre-compact/save-apex-state.py"
+            "command": "bun ${CLAUDE_PLUGIN_ROOT}/../node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code"
           }
         ]
       }
@@ -224,13 +176,12 @@
 
     "SessionEnd": [
       {
-        "_description": "Cleanup session and save stats",
+        "_description": "Harness: remove stale temp/legacy cache files on session end (ports cleanup-session.py)",
         "matcher": "",
         "hooks": [
           {
-            "_description": "Remove temp files and save session statistics",
             "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/session-end/cleanup-session.py"
+            "command": "bun ${CLAUDE_PLUGIN_ROOT}/../node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code"
           }
         ]
       }
@@ -238,12 +189,11 @@
 
     "InstructionsLoaded": [
       {
-        "_description": "Validate APEX rules are loaded at startup",
+        "_description": "Harness: log loaded instruction files for APEX debugging (ports validate-rules-loaded.py)",
         "hooks": [
           {
-            "_description": "Log which CLAUDE.md/rules files are loaded, verify APEX rules presence",
             "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/instructions-loaded/validate-rules-loaded.py"
+            "command": "bun ${CLAUDE_PLUGIN_ROOT}/../node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code"
           }
         ]
       }

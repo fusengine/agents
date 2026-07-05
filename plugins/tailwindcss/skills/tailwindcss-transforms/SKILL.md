@@ -1,6 +1,6 @@
 ---
 name: tailwindcss-transforms
-description: "Transform & Animation utilities Tailwind CSS v4.1. Transform (scale-*, rotate-*, translate-*, skew-*, transform-origin), Transition (transition-*, duration-*, ease-*, delay-*), Animation (animate-*, @keyframes)."
+description: "Transform & Animation utilities Tailwind CSS v4.1. Transform (scale-*, rotate-*, translate-*, skew-*, transform-origin), Transition (transition-*, duration-*, ease-*, delay-*), Animation (animate-*, @keyframes). Use when: scaling/rotating/translating/skewing an element, configuring transition duration/easing/delay, or applying built-in or custom @keyframes animations."
 user-invocable: false
 ---
 
@@ -326,3 +326,9 @@ Define custom animations with @keyframes.
 - [Tailwind CSS Animation Docs](https://tailwindcss.com/docs/animation)
 - [MDN CSS Transforms](https://developer.mozilla.org/en-US/docs/Web/CSS/transform)
 - [MDN CSS Animations](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Animations)
+
+## Detailed References
+
+- [transform.md](references/transform.md) - Load when needing the full class reference for scale/rotate/translate/skew/origin
+- [transition.md](references/transition.md) - Load when needing the full class reference for transition property/duration/easing/delay
+- [animation.md](references/animation.md) - Load when needing the full built-in animation class reference or custom @keyframes patterns

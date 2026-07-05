@@ -9,19 +9,19 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bun ${CLAUDE_PLUGIN_ROOT}/node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code"
+            "command": "bun ${CLAUDE_PLUGIN_ROOT}/../node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code"
           }
         ]
       }
     ],
     "PostToolUse": [
       {
-        "_description": "Harness: record doc/ref/agent activity feeding the APEX gates",
+        "_description": "Harness (scope tailwindcss): record doc/ref/agent activity feeding the APEX gates + Tailwind best-practice warnings on Write/Edit (deprecated @tailwind directives, excessive @apply, overlong className)",
         "matcher": "",
         "hooks": [
           {
             "type": "command",
-            "command": "bun ${CLAUDE_PLUGIN_ROOT}/node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code"
+            "command": "bun ${CLAUDE_PLUGIN_ROOT}/../node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code tailwindcss"
           }
         ]
       }

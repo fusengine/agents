@@ -1,6 +1,6 @@
 ---
 name: tailwindcss-interactivity
-description: "Interactivity utilities Tailwind CSS v4.1. Cursor (cursor-*), Scroll (scroll-smooth, scroll-snap-*, overscroll-*), User select (select-*), Pointer events (pointer-events-*), Touch action, Resize, Caret color, Accent color."
+description: "Interactivity utilities Tailwind CSS v4.1. Cursor (cursor-*), Scroll (scroll-smooth, scroll-snap-*, overscroll-*), User select (select-*), Pointer events (pointer-events-*), Touch action, Resize, Caret color, Accent color. Use when: controlling cursor appearance, scroll snap/smooth behavior, text selection, pointer-events, touch actions, resize handles, or caret/accent colors on form controls."
 user-invocable: false
 ---
 
@@ -67,6 +67,23 @@ Define accent color for form controls
 - Supports all Tailwind colors and opacity modifiers
 - Full dark mode support
 
+## Pseudo-class State Variants
+Style elements based on interaction state with `hover:`, `focus:`, `active:`, and `disabled:` prefixes.
+
+```html
+<button class="bg-blue-500 hover:bg-blue-600 active:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed" disabled>
+  Click me
+</button>
+
+<input class="border focus:border-blue-500 focus:ring-2 focus:ring-blue-200" />
+```
+
+- `hover:` - Applies on mouse hover
+- `focus:` - Applies when element has keyboard/pointer focus
+- `active:` - Applies during the click/tap
+- `disabled:` - Applies when the element has the `disabled` attribute
+- Chainable with responsive and dark-mode prefixes: `md:hover:bg-blue-700`, `dark:hover:bg-blue-400`
+
 ## Resources
 - [Official Tailwind CSS Docs](https://tailwindcss.com/)
 - [Cursor Documentation](https://tailwindcss.com/docs/cursor)
@@ -78,3 +95,9 @@ Define accent color for form controls
 - [Resize Documentation](https://tailwindcss.com/docs/resize)
 - [Caret Color Documentation](https://tailwindcss.com/docs/caret-color)
 - [Accent Color Documentation](https://tailwindcss.com/docs/accent-color)
+
+## Detailed References
+
+- [cursor.md](references/cursor.md) - Load when picking a specific cursor value (resize, zoom, grab, special cursors)
+- [scroll.md](references/scroll.md) - Load when configuring scroll-snap, smooth scrolling, or overscroll containment
+- [states.md](references/states.md) - Load when styling user-select, pointer-events, touch-action, resize, caret-color, or accent-color on form controls

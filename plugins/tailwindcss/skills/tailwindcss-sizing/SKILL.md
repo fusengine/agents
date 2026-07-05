@@ -1,6 +1,6 @@
 ---
 name: tailwindcss-sizing
-description: "Sizing utilities Tailwind CSS v4.1. Width (w-*, w-screen, w-full, w-auto), Height (h-*, h-screen, h-full, h-dvh NEW), Min/Max (min-w-*, max-w-*, min-h-*, max-h-*), Aspect ratio (aspect-video, aspect-square)."
+description: "Sizing utilities Tailwind CSS v4.1. Width (w-*, w-screen, w-full, w-auto), Height (h-*, h-screen, h-full, h-dvh NEW), Min/Max (min-w-*, max-w-*, min-h-*, max-h-*), Aspect ratio (aspect-video, aspect-square). Use when: setting element width/height, constraining min/max dimensions, using dynamic viewport height (h-dvh), or fixing an aspect ratio."
 user-invocable: false
 ---
 

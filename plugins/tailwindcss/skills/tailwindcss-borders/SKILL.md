@@ -1,6 +1,6 @@
 ---
 name: tailwindcss-borders
-description: "Border utilities Tailwind CSS v4.1. Border (border-width, border-color, border-style, border-radius, rounded-*), Outline (outline-*, outline-offset), Ring (ring-*, ring-offset), Divide (divide-*)."
+description: "Border utilities Tailwind CSS v4.1. Border (border-width, border-color, border-style, border-radius, rounded-*), Outline (outline-*, outline-offset), Ring (ring-*, ring-offset), Divide (divide-*). Use when: styling element borders, rounded corners, focus outlines/rings, or divide-* separators between children."
 user-invocable: false
 ---
 
@@ -33,3 +33,9 @@ Complete reference for border-related utilities in Tailwind CSS v4.1.
 - Enhanced outline customization with `outline-offset`
 - Improved border radius with corner-specific classes
 - Better type safety with CSS variables in arbitrary values
+
+## Detailed References
+
+- [border.md](references/border.md) - Load when styling border width/color/style, border-radius, or per-side border patterns
+- [outline.md](references/outline.md) - Load when configuring outline width/color/offset for focus and accessibility states
+- [ring.md](references/ring.md) - Load when building box-shadow-based rings or divide-* separators between children

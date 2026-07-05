@@ -6,6 +6,8 @@
 | laravel-expert | `solid-php/references/` | `app/Contracts/` |
 | swift-expert | `solid-swift/references/` | `Sources/Interfaces/` |
 | react-expert | `solid-react/references/` | `modules/[feature]/src/interfaces/` |
+| astro-expert | `solid-astro/references/` | `src/interfaces/` |
+| other languages | `solid` plugin: `solid-detection` → `solid-{python,go,java,rust,ruby,csharp,generic}/references/` | per stack convention |
 
 **Split:** `main.ts` + `validators.ts` + `types.ts` + `utils.ts` + `constants.ts`
 

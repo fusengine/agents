@@ -104,6 +104,22 @@ To create dark mode from light mode:
 --primary-foreground: oklch(15% 0.01 245);
 ```
 
+## Color Discipline
+
+Completes the "chroma > 0.05" rule; it does not replace it. *Adapted from
+Leonxlnx/taste-skill (anti purple/blue-default and one-accent rules across
+`image-to-code`, `imagegen-frontend-mobile`, and `brandkit`).*
+
+- **One accent, not a rainbow.** Use at most **one** accent hue. Keep its chroma
+  controlled (roughly saturation < 80%; high chroma only where the brand truly earns it).
+  A single accent can carry the whole system.
+- **No purple/blue AI-default.** The reflexive violet→blue startup gradient reads as
+  machine-generated. Do not use it as a default; choose it only when the brand genuinely
+  calls for that hue. Pick an accent from the sector palette, not from habit.
+- **Accent consistency.** The chosen accent is the *same* value everywhere it appears
+  (buttons, links, highlights, focus) and in every section. Audit for drift: one accent,
+  one value, applied identically across the page.
+
 ## P3 Gamut
 
 OKLCH naturally supports the wider P3 color gamut. High chroma values (C > 0.2) may exceed sRGB but display beautifully on P3 screens. Use `@supports (color: oklch(0% 0 0))` for progressive enhancement.

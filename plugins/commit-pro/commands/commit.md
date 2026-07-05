@@ -142,7 +142,7 @@ If $ARGUMENTS provided, use as hint for the message.
 
 ### Step 6: Post-Commit (universal)
 
-After step 5 succeeds, execute the `post-commit` skill (CHANGELOG + version bump + git tag).
+After step 5 succeeds, execute the `post-commit` skill (CHANGELOG + version bump only — **no tag here**, see Step 8 for why).
 
 This runs for ALL repos — the skill auto-detects the repo type internally.
 
@@ -150,10 +150,9 @@ This runs for ALL repos — the skill auto-detects the repo type internally.
 
 After post-commit completes, if current branch is a feature branch (not main/master) **and a remote is configured** (`git remote -v` non-empty), run the FULL release automatically — **no Y/N prompts**:
 
-1. **Push branch + tag** (the `vX.Y.Z` tag created by post-commit):
+1. **Push branch**:
    ```bash
    git push -u origin <current-branch>
-   git push origin <tag>
    ```
 2. **Create the PR if absent** (else reuse the existing one):
    ```bash
@@ -172,33 +171,42 @@ After post-commit completes, if current branch is a feature branch (not main/mas
    EOF
    )"
    ```
-3. **Surveillance + merge auto** — preserve the tag with a **MERGE COMMIT** (never `--squash`/`--rebase`, or the tag dangles off `main`):
+3. **Surveillance + merge auto** — squash merge (default GitHub Flow strategy, see `git-flow` skill):
    - Prefer GitHub native auto-merge (merges once required checks pass):
      ```bash
-     gh pr merge <pr> --auto --merge --delete-branch
+     gh pr merge <pr> --auto --squash --delete-branch
      ```
    - If auto-merge is not enabled on the repo, watch checks then merge:
      ```bash
-     gh pr checks <pr> --watch && gh pr merge <pr> --merge --delete-branch
+     gh pr checks <pr> --watch && gh pr merge <pr> --squash --delete-branch
      ```
    - If the repo has **no CI checks**, merge immediately:
      ```bash
-     gh pr merge <pr> --merge --delete-branch
+     gh pr merge <pr> --squash --delete-branch
      ```
-4. **Sync local main, prune stale refs, verify the tag is reachable**:
-   ```bash
-   git checkout main && git pull --ff-only
-   git fetch --prune   # drop remote-tracking refs (origin/*) of branches already deleted on the remote
-   git merge-base --is-ancestor <tag> main && echo "tag on main ✅"
-   ```
-   `gh pr merge --delete-branch` already removes the merged branch (remote + local); `--prune` cleans up any OTHER orphaned `origin/*` refs left by past merges.
-5. Output PR URL + merge status + tag verification.
+4. Output PR URL + merge status. On successful merge, proceed to **Step 8** to create the release tag on `main`.
 
-**Why `--merge` not `--squash`**: the post-commit tag points at the bump commit on the feature branch; a squash/rebase rewrites SHAs and orphans the tag. A merge commit keeps the tagged commit in `main`'s history.
-
-**Leave the PR OPEN (push + PR only, do NOT merge) if**:
+**Leave the PR OPEN (push + PR only, do NOT merge, skip Step 8) if**:
 - User passes `--no-merge` in `$ARGUMENTS`
 - CI checks **FAIL** → report the failing check, leave PR open for the user
 - Branch protection rejects the merge → report, leave open
 
-**Skip Step 7 entirely if**: no remote configured, `--no-pr` in `$ARGUMENTS`, branch already merged, or no `gh` CLI (graceful degradation — output the manual commands).
+**Skip Step 7 entirely (and Step 8) if**: no remote configured, `--no-pr` in `$ARGUMENTS`, branch already merged, or no `gh` CLI (graceful degradation — output the manual commands).
+
+### Step 8: Post-Merge Tag (main only, after a successful squash merge)
+
+Only runs once Step 7 actually merged the PR.
+
+```bash
+git checkout main && git pull --ff-only
+git fetch --prune   # drop remote-tracking refs (origin/*) of branches already deleted on the remote
+git tag vX.Y.Z
+git push origin vX.Y.Z
+git merge-base --is-ancestor vX.Y.Z main && echo "tag on main ✅"
+```
+
+`vX.Y.Z` is the version bumped by `post-commit` in Step 6.
+
+**Why the tag moves here, post-merge**: `gh pr merge --squash` creates a brand-new commit on `main` — none of the feature-branch commits (including the bump commit tagged in the old Step 6) ever land there. A tag created before the merge points at a commit that gets discarded by the squash, producing an orphaned tag off `main`. Tagging `main`'s actual squash-merge commit after the merge keeps the tag meaningful and verifiable via `git merge-base --is-ancestor`.
+
+Output tag verification alongside the PR URL + merge status from Step 7.

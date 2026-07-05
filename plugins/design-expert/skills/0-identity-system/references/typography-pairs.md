@@ -30,6 +30,30 @@ Font pairs must be:
 
 ---
 
+## Serif Discipline & Emphasis
+
+Completes (does not replace) the pairs above. *Adapted from Leonxlnx/taste-skill
+(minimalist-skill serif guidance); the consecutive-project note is a Fusengine
+recommendation.*
+
+- **Serif is very discouraged as a default.** Reach for a serif display only when the
+  brief is genuinely editorial or luxury (see the *Luxury / Editorial* and *Media /
+  Publishing* pairs). For everything else, default to a grotesk/sans display.
+- **LLM-favorite display serifs are a deliberate choice, never the default reach.**
+  Fonts like Fraunces and Instrument Serif read as "AI editorial" when used reflexively.
+  They remain valid for a real editorial/luxury brief (e.g. pair 12 Fraunces + Literata) —
+  pick them on purpose, not by habit.
+- **Avoid reusing the same display serif on consecutive projects** (light recommendation):
+  rotate within the approved editorial/luxury serifs so successive identities don't
+  converge on one signature face.
+- **Italic descendant clearance.** When a serif runs in italic, descenders (`y g j p q`)
+  cut into the next line. Keep `line-height ≥ 1.1` on italic headings and reserve a small
+  bottom gutter (`pb-1` / `mb-1`) so descenders never clip.
+- **Emphasis stays in one family.** Emphasize with the bold or italic of the *same* face —
+  never swap serif↔sans mid-headline.
+
+---
+
 ## Fintech / Banking
 
 | # | Display | Body | Why It Works | Personality |

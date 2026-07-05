@@ -1,9 +1,0 @@
-{
-  "name": "@fusengine/shadcn-expert",
-  "version": "2.0.0",
-  "private": true,
-  "description": "shadcn/ui Expert plugin — enforcement delegated to @fusengine/harness (installed locally via this dep).",
-  "dependencies": {
-    "@fusengine/harness": "latest"
-  }
-}

@@ -1,13 +1,33 @@
 {
-  "description": "APEX SOLID hooks - project detection only. SOLID file-size + interface enforcement is delegated to @fusengine/harness via core-guards (duplicate validate-solid/check-file-size removed to avoid a double-gate).",
+  "description": "APEX SOLID hooks - delegated to @fusengine/harness (scope 'solid'). SessionStart: project detection (SOLID_* exports via CLAUDE_ENV_FILE). PreToolUse: Go/Python interface-location deny (validate-solid, keyed on SOLID_PROJECT_TYPE — not covered by core-guards). PostToolUse: adaptive SOLID_FILE_LIMIT warn (check-file-size — per-project limit, unlike core-guards' fixed ceiling).",
   "hooks": {
     "SessionStart": [
       {
-        "matcher": "*",
+        "matcher": "",
         "hooks": [{
           "type": "command",
-          "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/detect-project.py",
+          "command": "bun ${CLAUDE_PLUGIN_ROOT}/../node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code solid",
           "timeout": 5
+        }]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [{
+          "type": "command",
+          "command": "bun ${CLAUDE_PLUGIN_ROOT}/../node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code solid",
+          "timeout": 10
+        }]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [{
+          "type": "command",
+          "command": "bun ${CLAUDE_PLUGIN_ROOT}/../node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code solid",
+          "timeout": 10
         }]
       }
     ]

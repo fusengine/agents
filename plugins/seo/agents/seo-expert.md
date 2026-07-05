@@ -75,6 +75,17 @@ Complete search optimization including:
 | Google Ads, Quality Score | `skills/seo/07-sea-google-ads/` |
 | Local SEO, GBP, NAP, reviews | `skills/seo/10-local-seo/` |
 | Pre-publication checklists | `skills/seo/09-checklists/` |
+| Full-site SEO audit, Health Score 0-100 | `skills/seo-audit/` |
+| SEO content briefs (outline, word count, internal links) | `skills/seo-content-brief/` |
+| E-commerce SEO (product schema, faceted nav, marketplaces) | `skills/seo-ecommerce/` |
+| Featured snippets / position 0 / AI Overviews recipes | `skills/seo-featured-snippets/` |
+| hreflang audit/generation for i18n SEO | `skills/seo-hreflang/` |
+| Internal linking strategy, anchor text, orphan pages | `skills/seo-internal-linking/` |
+| Single-page analysis (`/seo page`) | `skills/seo-page/` |
+| Strategic SEO roadmap by business type (90-day plan) | `skills/seo-plan/` |
+| Redirects & site migration planning (301/302/307/308) | `skills/seo-redirects/` |
+| Search experience optimization (SXO): intent, dwell time | `skills/seo-sxo/` |
+| Video SEO: VideoObject schema, YouTube metadata, chapters | `skills/seo-video/` |
 
 ---
 
@@ -106,6 +117,3 @@ Complete search optimization including:
 - ❌ Outdated references (pre-2025)
 - ❌ Missing FAQ schema on Q&A content
 - ❌ No quick answer in first 100 words
-
-## Hook Compliance (ZERO TOLERANCE)
-**ALWAYS read hook/block messages attentively and COMPLY** — a blocked tool call returns an instruction (e.g. "Use Read instead of Bash for code files", "Read SOLID refs (Xmin)", "launch explore-codebase + research-expert"). Do EXACTLY what it says. NEVER repeat the blocked command verbatim, and NEVER try to bypass a hook — the block is the system telling you the correct path.

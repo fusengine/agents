@@ -8,6 +8,8 @@ import type { SetupPaths } from "../interfaces/setup";
 import { copyExecutable } from "../utils/fs-helpers";
 import { installBrowserBinary } from "./browser-binary";
 import { setHarnessRefs } from "./harness-env";
+import { promptHarnessGates } from "./harness-gates";
+import { promptHarnessTuning } from "./harness-tuning";
 import { promptEnforceTtl } from "./enforce-ttl";
 import { promptSolidMaxLines } from "./solid-lines";
 import { configureShell } from "./env-manager";
@@ -24,12 +26,7 @@ import {
 	SUPPORTED_LANGUAGES,
 	saveSettings,
 } from "./settings-manager";
-import {
-	installClaudeMd,
-	installDeps,
-	scanAndPrepare,
-	setupStatusline,
-} from "./setup-plugins";
+import { installClaudeMd, installDeps, scanAndPrepare, setupStatusline } from "./setup-plugins";
 
 /** Prompt user for response language */
 async function promptLanguage(): Promise<string> {
@@ -88,6 +85,8 @@ export async function runSetup(
 		await configureShell();
 		settings = await promptSolidMaxLines(settings);
 		settings = await promptEnforceTtl(settings);
+		settings = await promptHarnessGates(settings);
+		settings = await promptHarnessTuning(settings);
 		const selectedMcp = await configureMcpServers();
 		if (selectedMcp.includes("fuse-browser")) {
 			await installBrowserBinary();

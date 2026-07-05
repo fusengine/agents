@@ -3,7 +3,7 @@ name: seo
 description: Use when running SEO, GEO, schema, Core Web Vitals, sitemap, hreflang, E-E-A-T, AI Overviews, technical SEO, or structured data tasks. Covers full-site audits, single-page analysis, schema markup, content quality, AI search optimization, local SEO, sitemap/robots, internal linking, semantic clustering, and search experience.
 argument-hint: "[command] [url-or-path]"
 user-invocable: true
-references: 01-seo-foundations, 02-onpage-seo, 03-schema-org, 04-geo-2026, 05-technical-seo, 06-content-strategy, 08-measurement, 09-checklists, 10-local-seo
+references: 01-seo-foundations, 02-onpage-seo, 03-schema-org, 04-geo-2026, 05-technical-seo, 06-content-strategy, 07-sea-google-ads, 08-measurement, 09-checklists, 10-local-seo
 related-skills: seo-audit, seo-page, seo-technical, seo-schema, seo-content, seo-geo, seo-local, seo-sitemap, seo-hreflang, seo-cluster, seo-entity
 ---
 
@@ -129,7 +129,7 @@ When user invokes `/seo` for the first time on a project:
 
 1. Check if `.fuse-seo` marker exists at project root (or any parent up to repo root)
 2. If **absent**, ask the user **before any other work**:
-   > "Activate the fuse-seo hook on this project? It will validate meta/schema/OG on every Write/Edit of HTML-like files (`.html`, `.astro`, `.tsx`, `.vue`, `.blade.php`) via `hooks/validate-seo.ts`."
+   > "Activate the fuse-seo hook on this project? It will validate meta/schema/OG on every Write/Edit of HTML-like files (`.html`, `.astro`, `.tsx`, `.vue`, `.blade.php`) via the `@fusengine/harness` `seo` scope."
 3. If user confirms → create empty file `.fuse-seo` at project root via `touch .fuse-seo` (or Write tool with empty content)
 4. If user declines → proceed without creating the marker (hook stays dormant on this project)
 5. **Do not ask again** in the same session — the marker presence is the persistent answer

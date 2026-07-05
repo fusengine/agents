@@ -22,14 +22,22 @@ After Phase 5 audit passes. Last step of the design pipeline.
    - Component spacing and alignment.
    - Animation and hover state consistency.
 4. **Cross-viewport check** — Screenshot at mobile, tablet, and desktop widths using `mcp__fuse-browser__browser_screenshot` with `viewports: ["mobile", "tablet", "desktop"]` (one call, responsive set).
-5. **Fix gaps** — If comparison reveals issues, use `mcp__gemini-design__modify_frontend` to fix. Maximum 2 fix cycles.
-6. **Generate report** with:
+5. **Motion verdict** — for any animation/transition/hover/gesture seen in the shots, produce the Block/Approve verdict per `references/motion-verdict.md`: a Before/After/Why findings table, a tiered-impact summary, and an explicit final decision. Use the Phase 4 animation glossary (`4-adding-animations/references/`) as the shared vocabulary for comments — reference it, do not restate it.
+6. **Fix gaps** — If comparison or the motion verdict reveals issues (a **Block**), use `mcp__gemini-design__modify_frontend` to fix. Maximum 2 fix cycles.
+7. **Generate report** with:
    - Side-by-side light/dark screenshots.
    - List of verified components with status (pass/fail).
+   - The motion verdict table and final Block/Approve decision.
    - Any remaining Minor issues from Phase 5 audit.
    - Summary of fixes applied during this phase.
 
 ### Output
 - Final report with light/dark screenshots at 3 viewports.
+- Motion verdict delivered with an explicit Block/Approve decision.
 - All components verified visually. Gaps fixed (max 2 cycles).
 - Design pipeline complete — HTML/CSS delivered.
+
+### References
+| File | Purpose |
+|------|---------|
+| `references/motion-verdict.md` | Block/Approve verdict format: Before/After/Why table + tiered impact (adapted from Emil Kowalski's review-animations) |

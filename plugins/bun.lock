@@ -1,0 +1,15 @@
+{
+  "lockfileVersion": 1,
+  "configVersion": 1,
+  "workspaces": {
+    "": {
+      "name": "@fusengine/plugins",
+      "dependencies": {
+        "@fusengine/harness": "^0.1.49",
+      },
+    },
+  },
+  "packages": {
+    "@fusengine/harness": ["@fusengine/harness@0.1.49", "", { "peerDependencies": { "@vercel/detect-agent": "*" }, "optionalPeers": ["@vercel/detect-agent"], "bin": { "harness": "dist/cli/bin.mjs" } }, "sha512-ZZONRcyIt+4QUuSqyv7+cpTHK+myWG/OB4lIKaj3/vQD71Eqx/PKYHvwRSoKJqfhGF0nhOh9WemMiC59uVrM4w=="],
+  }
+}

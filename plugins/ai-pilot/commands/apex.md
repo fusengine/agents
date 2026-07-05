@@ -7,7 +7,7 @@ argument-hint: "[--auto] [--skip-elicit] <task description>"
 
 Execute the comprehensive APEX methodology for professional-grade development.
 
-**Complete documentation**: `~/.claude/docs/core/apex.md`
+**Complete documentation**: `skills/apex-methodology/SKILL.md`
 
 ---
 
@@ -200,4 +200,4 @@ Comprehensive validation:
 
 ---
 
-**See full documentation**: `~/.claude/docs/core/apex.md`
+**See full documentation**: `skills/apex-methodology/SKILL.md`

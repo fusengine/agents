@@ -1,0 +1,14 @@
+{
+  "name": "fuse-go",
+  "version": "1.0.0",
+  "description": "Expert Go 1.26+ — idioms, concurrency, backend services, cargo-grade tooling (golangci-lint v2, govulncheck), with SOLID principles",
+  "author": {
+    "name": "Fusengine",
+    "email": "hello@fusengine.ch",
+    "url": "https://github.com/fusengine"
+  },
+  "homepage": "https://github.com/fusengine/agents",
+  "repository": "https://github.com/fusengine/agents",
+  "license": "MIT",
+  "keywords": ["go", "golang", "go-1-26", "concurrency", "goroutines", "backend", "golangci-lint", "govulncheck", "modules", "solid"]
+}

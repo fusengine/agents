@@ -18,11 +18,11 @@ Brainstorm → Analyze → Plan → Execute (TDD) → eLicit → Verify → eXam
 | **Plan** | TaskCreate | Always (files < 100 lines) |
 | **Execute** | Domain expert + `tdd` | Write test FIRST (RED), then code (GREEN), then refactor |
 | **eLicit** | Elicitation techniques | Expert self-review |
-| **Verify** | `verification` | Check functional resolution before quality check |
+| **Verify** | `verification` | Run the actual build/tests — a Verify without execution is a guess |
 | **eXamine** | sniper | Code quality validation (ZERO errors) |
 
-## sniper 6 Phases
-explore-codebase -> research-expert -> grep usages -> run linters -> apply fixes -> **ZERO errors**
+## sniper 7 Phases (aligned with `ai-pilot/agents/sniper.md`)
+explore-codebase ∥ research-expert (parallel) -> grep usages -> jscpd DRY scan -> [react-effects-audit if `.tsx`/`.jsx`] -> run linters -> apply fixes -> re-run ALL checks = **ZERO errors**
 
 ## eLicit Modes
 - `--auto`: Auto-detect code type -> select elicitation techniques

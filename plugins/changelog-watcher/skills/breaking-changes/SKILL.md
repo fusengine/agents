@@ -1,6 +1,6 @@
 ---
 name: breaking-changes
-description: Detect breaking changes in Claude Code updates by comparing current API surface against changelog. Maps impacts to specific plugin files.
+description: Detect breaking changes in Claude Code updates by comparing current API surface against changelog. Maps impacts to specific plugin files. Use when: checking whether a Claude Code update breaks our plugin ecosystem (hooks, agent frontmatter, manifest schema, or skill format).
 argument-hint: "[version]"
 user-invocable: true
 ---

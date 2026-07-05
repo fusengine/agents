@@ -1,35 +1,33 @@
 ---
 name: tailwindcss-utilities
-description: Complete reference for Tailwind CSS utility classes
+description: "Complete reference for Tailwind CSS utility classes, indexing the categorical skills (layout, spacing, typography, backgrounds, effects, borders, transforms). Use when: you need a single entry point to locate which categorical tailwindcss-* skill covers a given utility class. Router/index only: identifies WHICH category skill to load. Do NOT use for: actual utility class content (load the category skill it points to)."
 user-invocable: false
 ---
 
 # Tailwind CSS Utilities Reference
 
 ## Layout
-- [flex.md](../docs/flex.md), [grid-column.md](../docs/grid-column.md)
-- [position.md](../docs/position.md), [display.md](../docs/display.md)
+- Flexbox, Grid, Position, Display -> [tailwindcss-layout](../tailwindcss-layout/SKILL.md)
 
 ## Spacing
-- [padding.md](../docs/padding.md), [margin.md](../docs/margin.md)
-- [width.md](../docs/width.md), [height.md](../docs/height.md)
+- Padding -> [tailwindcss-spacing](../tailwindcss-spacing/SKILL.md#padding-classes)
+- Margin -> [tailwindcss-spacing](../tailwindcss-spacing/SKILL.md#margin-classes)
+- Width -> [tailwindcss-sizing](../tailwindcss-sizing/SKILL.md#width-utilities)
+- Height -> [tailwindcss-sizing](../tailwindcss-sizing/SKILL.md#height-utilities)
 
 ## Typography
-- [font-size.md](../docs/font-size.md), [font-weight.md](../docs/font-weight.md)
-- [text-align.md](../docs/text-align.md), [line-height.md](../docs/line-height.md)
+- Font size, font weight, text align, line height -> [tailwindcss-typography](../tailwindcss-typography/SKILL.md)
 
 ## Colors & Effects
-- [colors.md](../docs/colors.md), [background-color.md](../docs/background-color.md)
-- [box-shadow.md](../docs/box-shadow.md), [opacity.md](../docs/opacity.md)
+- Color palette, background color -> [tailwindcss-backgrounds](../tailwindcss-backgrounds/SKILL.md#background-colors)
+- Box shadow -> [tailwindcss-effects](../tailwindcss-effects/SKILL.md#box-shadow)
+- Opacity -> [tailwindcss-effects](../tailwindcss-effects/SKILL.md#opacity)
 
 ## Borders
-- [border-width.md](../docs/border-width.md), [border-radius.md](../docs/border-radius.md)
-- [outline.md](../docs/outline-width.md)
+- Border width, border radius, outline -> [tailwindcss-borders](../tailwindcss-borders/SKILL.md)
 
 ## Transforms
-- [transform.md](../docs/transform.md), [translate.md](../docs/translate.md)
-- [rotate.md](../docs/rotate.md), [scale.md](../docs/scale.md)
+- Transform, translate, rotate, scale -> [tailwindcss-transforms](../tailwindcss-transforms/SKILL.md#transform-utilities)
 
 ## Transitions
-- [transition-property.md](../docs/transition-property.md)
-- [animation.md](../docs/animation.md)
+- Transition property, animation -> [tailwindcss-transforms](../tailwindcss-transforms/SKILL.md#transition-utilities)

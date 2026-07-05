@@ -71,10 +71,11 @@ create_frontend({
 <aesthetics>[specific visual style — NOT "clean and modern"]</aesthetics>
 <typography>[font family, sizes, weights from design-system.md]</typography>
 <color_system>[OKLCH values from design-system.md tokens]</color_system>
-<spacing>[grid, padding, margin values]</spacing>
+<spacing>[grid, padding, margin values — hero top padding ≤ pt-24]</spacing>
+<layout>[hard constraints from layout-discipline.md: hero headline ≤2 lines, subtext ≤20 words AND ≤4 lines, max 4 hero-stack elements; eyebrows ≤ ceil(sections/3); max 2 consecutive image+text sections; bento cells = content items exactly; each layout family once per page]</layout>
 <states>[ALL: default, hover, loading, empty, error, disabled]</states>
 <animations>[Framer Motion: stagger, spring, duration]</animations>
-<forbidden>[patterns to avoid for this component type]</forbidden>
+<forbidden>[per-component patterns to avoid + always-on hard bans from layout-discipline.md: em-dash (—/–) anywhere; trust strip / pricing teaser / feature bullets inside the hero; filler bento cells; wrapping CTA labels; raw <ul> for >5 items; bordered row-list spec sheets; quotes over 3 lines]</forbidden>
 ```
 
 ---

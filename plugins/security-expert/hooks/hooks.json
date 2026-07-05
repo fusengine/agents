@@ -1,32 +1,27 @@
 {
+  "_description": "Security Expert - skill-read advisory + research tracking (delegated to @fusengine/harness)",
+
   "hooks": {
     "PreToolUse": [
       {
+        "_description": "Harness: advisory (allow + additionalContext, NON-blocking) to read security skill before code edits when unread (ports check-security-skill.py)",
         "matcher": "Write|Edit",
         "hooks": [
           {
             "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/check-security-skill.py"
+            "command": "bun ${CLAUDE_PLUGIN_ROOT}/../node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code security"
           }
         ]
       }
     ],
     "PostToolUse": [
       {
-        "matcher": "Read",
+        "_description": "Harness: track security-skill Reads + Context7/Exa research into ~/.claude/logs/00-security state (ports track-skill-read.py + track-mcp-research.py)",
+        "matcher": "Read|mcp__.*context7|mcp__.*exa",
         "hooks": [
           {
             "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/track-skill-read.py"
-          }
-        ]
-      },
-      {
-        "matcher": "mcp__.*context7|mcp__.*exa",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/track-mcp-research.py"
+            "command": "bun ${CLAUDE_PLUGIN_ROOT}/../node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code security"
           }
         ]
       }

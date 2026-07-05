@@ -453,6 +453,212 @@
       ]
     },
     {
+      "name": "fuse-tanstack-start",
+      "source": "./plugins/tanstack-start-expert",
+      "description": "Expert TanStack Start full-stack React framework: server functions, selective SSR, execution model, middleware, server routes, file-based routing with data loaders, authentication, and deployment, with SOLID principles",
+      "version": "1.0.0",
+      "author": {
+        "name": "Fusengine",
+        "url": "https://github.com/fusengine"
+      },
+      "homepage": "https://github.com/fusengine/agents",
+      "repository": "https://github.com/fusengine/agents",
+      "license": "MIT",
+      "keywords": [
+        "tanstack-start",
+        "tanstack",
+        "react",
+        "full-stack",
+        "ssr",
+        "server-functions",
+        "middleware",
+        "server-routes",
+        "routing",
+        "vite",
+        "solid"
+      ],
+      "category": "development",
+      "strict": true,
+      "commands": [],
+      "agents": [
+        "./agents/tanstack-start-expert.md"
+      ],
+      "skills": [
+        "./skills/solid-tanstack-start",
+        "./skills/start-core",
+        "./skills/start-execution-model",
+        "./skills/start-server-functions",
+        "./skills/start-middleware",
+        "./skills/start-server-routes",
+        "./skills/start-routing-data",
+        "./skills/start-auth",
+        "./skills/start-deployment"
+      ]
+    },
+    {
+      "name": "fuse-typescript",
+      "source": "./plugins/typescript-expert",
+      "description": "Expert TypeScript 6.0 for pure TS projects — CLI tools, libraries, scripts, and backends on Node 24 LTS or Bun 1.3, with SOLID principles",
+      "version": "1.0.0",
+      "author": {
+        "name": "Fusengine",
+        "url": "https://github.com/fusengine"
+      },
+      "homepage": "https://github.com/fusengine/agents",
+      "repository": "https://github.com/fusengine/agents",
+      "license": "MIT",
+      "keywords": [
+        "typescript",
+        "typescript-6",
+        "node",
+        "node-24-lts",
+        "bun",
+        "biome",
+        "jsr",
+        "cli",
+        "library",
+        "backend",
+        "tsconfig",
+        "solid"
+      ],
+      "category": "development",
+      "strict": true,
+      "commands": [],
+      "agents": [
+        "./agents/typescript-expert.md"
+      ],
+      "skills": [
+        "./skills/ts-config",
+        "./skills/ts-language-patterns",
+        "./skills/ts-runtime-node",
+        "./skills/ts-runtime-bun",
+        "./skills/ts-lint-format",
+        "./skills/ts-testing",
+        "./skills/ts-packaging"
+      ]
+    },
+    {
+      "name": "fuse-php",
+      "source": "./plugins/php-expert",
+      "description": "Expert modern PHP 8.5/8.4 for non-Laravel projects — libraries, standalone Symfony components, Slim, API-first apps, and CLI tools, with PER Coding Style 3.0, PHPStan, and SOLID principles",
+      "version": "1.0.0",
+      "author": {
+        "name": "Fusengine",
+        "url": "https://github.com/fusengine"
+      },
+      "homepage": "https://github.com/fusengine/agents",
+      "repository": "https://github.com/fusengine/agents",
+      "license": "MIT",
+      "keywords": [
+        "php",
+        "php-8.5",
+        "php-8.4",
+        "psr",
+        "phpstan",
+        "pest",
+        "symfony-components",
+        "slim",
+        "library",
+        "cli",
+        "composer",
+        "per-coding-style",
+        "solid"
+      ],
+      "category": "development",
+      "strict": true,
+      "commands": [],
+      "agents": [
+        "./agents/php-expert.md"
+      ],
+      "skills": [
+        "./skills/php-language-modern",
+        "./skills/php-standards",
+        "./skills/php-quality-tooling",
+        "./skills/php-testing",
+        "./skills/php-http-psr",
+        "./skills/php-ecosystem-reference"
+      ]
+    },
+    {
+      "name": "fuse-rust",
+      "source": "./plugins/rust-expert",
+      "description": "Expert Rust 1.96+ (2024 edition) — ownership, error handling, async/tokio, axum backends, cargo tooling, with SOLID principles",
+      "version": "1.0.0",
+      "author": {
+        "name": "Fusengine",
+        "url": "https://github.com/fusengine"
+      },
+      "homepage": "https://github.com/fusengine/agents",
+      "repository": "https://github.com/fusengine/agents",
+      "license": "MIT",
+      "keywords": [
+        "rust",
+        "rust-1-96",
+        "edition-2024",
+        "tokio",
+        "axum",
+        "cargo",
+        "async",
+        "ownership",
+        "backend",
+        "solid"
+      ],
+      "category": "development",
+      "strict": true,
+      "commands": [],
+      "agents": [
+        "./agents/rust-expert.md"
+      ],
+      "skills": [
+        "./skills/rust-core-language",
+        "./skills/rust-error-handling",
+        "./skills/rust-async-concurrency",
+        "./skills/rust-web-backend",
+        "./skills/rust-testing-quality",
+        "./skills/rust-tooling-cicd",
+        "./skills/rust-ecosystem-crates"
+      ]
+    },
+    {
+      "name": "fuse-go",
+      "source": "./plugins/go-expert",
+      "description": "Expert Go 1.26+ — idioms, concurrency, backend services, cargo-grade tooling (golangci-lint v2, govulncheck), with SOLID principles",
+      "version": "1.0.0",
+      "author": {
+        "name": "Fusengine",
+        "url": "https://github.com/fusengine"
+      },
+      "homepage": "https://github.com/fusengine/agents",
+      "repository": "https://github.com/fusengine/agents",
+      "license": "MIT",
+      "keywords": [
+        "go",
+        "golang",
+        "go-1-26",
+        "concurrency",
+        "goroutines",
+        "sqlc",
+        "backend",
+        "golangci-lint",
+        "govulncheck",
+        "modules",
+        "solid"
+      ],
+      "category": "development",
+      "strict": true,
+      "commands": [],
+      "agents": [
+        "./agents/go-expert.md"
+      ],
+      "skills": [
+        "./skills/go-core-idioms",
+        "./skills/go-concurrency",
+        "./skills/go-architecture",
+        "./skills/go-testing-quality",
+        "./skills/go-tooling-security"
+      ]
+    },
+    {
       "name": "fuse-design",
       "source": "./plugins/design-expert",
       "description": "UI Designer. Generates HTML/CSS via Gemini Design MCP. 7-phase pipeline with state tracking. Identity System, UX copy, page layouts, motion system, design audit. Anti-AI-Slop, WCAG 2.2.",
