@@ -1,5 +1,17 @@
 # Release Notes
 
+## [1.38.87] - 05-07-2026
+
+- Added (fuse-tanstack-start 1.0.0): new plugin — full-stack TanStack Start expert (server functions, selective SSR, execution model, middleware, server routes, file-based routing with data loaders, auth, Nitro deployment)
+- Added (fuse-typescript 1.0.0): new plugin — pure TypeScript expert for CLI tools, libraries, and backends (TS 6.0 on Node 24 LTS or Bun 1.3, strict typing, ESM-first packaging)
+- Added (fuse-php 1.0.0): new plugin — modern framework-agnostic PHP expert (PHP 8.5, PER Coding Style 3.0, PHPStan, PSR interop, Slim / standalone Symfony components)
+- Added (fuse-rust 1.0.0): new plugin — safe idiomatic Rust expert (Rust 1.96+, 2024 edition, ownership-first, tokio / axum backends, clippy-clean)
+- Added (fuse-go 1.0.0): new plugin — idiomatic Go expert (Go 1.26+, concurrency, backend services, golangci-lint v2, govulncheck)
+- Changed (claude-rules 1.0.9): reinforced verification chain and Code Error Prevention guidance
+- Changed (all expert plugins): skills ecosystem hardening — anti-collision naming, progressive disclosure, orphaned references wired back in (plugins bumped)
+- Changed (fuse-design 2.1.26): taste/motion pipeline refinements
+- Maintenance: legacy per-plugin scripts removed, superseded by `@fusengine/harness`
+
 ## [1.38.86] - 24-06-2026
 
 - feat(core-guards 1.1.31): delegate enforcement to the published `@fusengine/harness` npm package (hooks call the harness binary); framework-aware SOLID routing via `applies-to` globs on the refs.

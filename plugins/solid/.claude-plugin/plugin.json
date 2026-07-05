@@ -1,6 +1,6 @@
 {
   "name": "fuse-solid",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "description": "SOLID principles enforcement with automatic project detection and validation for all languages",
   "author": {
     "name": "Fusengine",
