@@ -1,6 +1,6 @@
 ---
 name: react-effects-audit
-description: Audit React components for unnecessary useEffect patterns. Detects 9 anti-patterns from "You Might Not Need an Effect" and proposes fixes with severity levels. Use when: auditing React or Next.js components for unnecessary or unsafe useEffect usage.
+description: "Audit React components for unnecessary useEffect patterns. Detects 9 anti-patterns from \"You Might Not Need an Effect\" and proposes fixes with severity levels. Use when: auditing React or Next.js components for unnecessary or unsafe useEffect usage."
 argument-hint: "[file-or-directory]"
 user-invocable: true
 ---

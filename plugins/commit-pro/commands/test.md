@@ -1,6 +1,6 @@
 ---
 description: Test commit. Use for add tests, update tests, test coverage, unit test, spec.
-argument-hint: [description] | (empty for auto-detection)
+argument-hint: "[description] | (empty for auto-detection)"
 allowed-tools: Bash(git status:*), Bash(git diff:*), Bash(git add:*), Bash(git commit:*), Bash(git log:*), Bash(git tag:*), Bash(git push:*), Bash(git describe:*), Read, Edit
 disable-model-invocation: false
 ---

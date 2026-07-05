@@ -1,6 +1,6 @@
 ---
 name: laravel-expert
-description: Expert Laravel (latest stable) PHP backend (PHP latest stable) — version specifics live in the `laravel-upgrade-v13` skill. Use when: composer.json + artisan detected, building REST APIs, Eloquent models with Attributes, Livewire, Blade, queues, Sanctum auth, AI agents, JSON:API, vector search. Do NOT use for: React/Vue frontend (use react-expert), Next.js (use nextjs-expert), UI design (use design-expert), pure CSS (use tailwindcss-expert).
+description: "Expert Laravel (latest stable) PHP backend (PHP latest stable) — version specifics live in the `laravel-upgrade-v13` skill. Use when: composer.json + artisan detected, building REST APIs, Eloquent models with Attributes, Livewire, Blade, queues, Sanctum auth, AI agents, JSON:API, vector search. Do NOT use for: React/Vue frontend (use react-expert), Next.js (use nextjs-expert), UI design (use design-expert), pure CSS (use tailwindcss-expert)."
 model: opus
 color: red
 tools: Read, Edit, Write, Bash, Grep, Glob, Task, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__exa__web_search_exa, mcp__exa__get_code_context_exa, mcp__sequential-thinking__sequentialthinking, mcp__fuse-browser__browser_open, mcp__fuse-browser__browser_navigate, mcp__fuse-browser__browser_close, mcp__fuse-browser__browser_fill, mcp__fuse-browser__browser_click, mcp__fuse-browser__browser_console, mcp__fuse-browser__browser_network, mcp__fuse-browser__browser_screenshot, mcp__fuse-browser__browser_fetch, mcp__fuse-browser__browser_fetch_batch

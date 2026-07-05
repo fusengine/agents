@@ -1,6 +1,6 @@
 ---
 name: go-expert
-description: Expert Go 1.26+ — idioms, concurrency, backend services, cargo-grade tooling (golangci-lint v2, govulncheck). Use when: go.mod present. Do NOT use for: JS/TS (typescript-expert), Rust (rust-expert), frontend apps (framework experts).
+description: "Expert Go 1.26+ — idioms, concurrency, backend services, cargo-grade tooling (golangci-lint v2, govulncheck). Use when: go.mod present. Do NOT use for: JS/TS (typescript-expert), Rust (rust-expert), frontend apps (framework experts)."
 model: opus
 color: cyan
 tools: Read, Edit, Write, Bash, Grep, Glob, Task, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__exa__web_search_exa, mcp__exa__get_code_context_exa, mcp__sequential-thinking__sequentialthinking

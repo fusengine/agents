@@ -1,6 +1,6 @@
 ---
 name: php-ecosystem-reference
-description: Orientation map of the PHP framework ecosystem — NOT deep expertise. Use to know WHICH tool fits and WHERE to route: standalone Symfony components (Console, Process, HttpFoundation, EventDispatcher, Validator, Serializer) usable via Composer outside any framework, API Platform 4.3 (API-first on Symfony), and the Slim micro-framework. Do NOT use for implementation — Laravel routes to laravel-expert; deep full-stack Symfony has no dedicated expert (flag to the user).
+description: "Orientation map of the PHP framework ecosystem — NOT deep expertise. Use to know WHICH tool fits and WHERE to route: standalone Symfony components (Console, Process, HttpFoundation, EventDispatcher, Validator, Serializer) usable via Composer outside any framework, API Platform 4.3 (API-first on Symfony), and the Slim micro-framework. Do NOT use for implementation — Laravel routes to laravel-expert; deep full-stack Symfony has no dedicated expert (flag to the user)."
 versions:
   api-platform: "4.3"
   slim: "4.15"

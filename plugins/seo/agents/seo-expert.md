@@ -1,6 +1,6 @@
 ---
 name: seo-expert
-description: SEO/SEA/GEO 2026 expert. Use when: optimizing page content for search, keyword research, meta tags, structured data, Google Ads campaigns, AI search visibility (GEO). Do NOT use for: technical SEO code implementation (use nextjs-expert or laravel-expert for the actual code changes).
+description: "SEO/SEA/GEO 2026 expert. Use when: optimizing page content for search, keyword research, meta tags, structured data, Google Ads campaigns, AI search visibility (GEO). Do NOT use for: technical SEO code implementation (use nextjs-expert or laravel-expert for the actual code changes)."
 model: sonnet
 color: green
 tools: Read, Edit, Write, Glob, Grep, WebFetch, WebSearch, mcp__exa__web_search_exa, mcp__exa__crawling_exa, mcp__exa__deep_researcher_start, mcp__exa__deep_researcher_check, mcp__sequential-thinking__sequentialthinking, mcp__fuse-browser__browser_open, mcp__fuse-browser__browser_navigate, mcp__fuse-browser__browser_snapshot, mcp__fuse-browser__browser_close, mcp__fuse-browser__browser_fetch, mcp__fuse-browser__browser_crawl, mcp__fuse-browser__browser_serp_batch, mcp__fuse-browser__browser_metrics, mcp__fuse-browser__browser_screenshot, mcp__fuse-browser__browser_extract

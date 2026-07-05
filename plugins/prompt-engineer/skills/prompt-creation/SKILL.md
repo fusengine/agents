@@ -1,6 +1,6 @@
 ---
 name: prompt-creation
-description: Techniques and templates for creating optimal prompts following Anthropic conventions. Use when: writing a new system prompt from scratch, structuring it with Anthropic's 9-element format, or choosing emphasis levels and few-shot examples.
+description: "Techniques and templates for creating optimal prompts following Anthropic conventions. Use when: writing a new system prompt from scratch, structuring it with Anthropic's 9-element format, or choosing emphasis levels and few-shot examples."
 allowed-tools: Read, Write
 ---
 

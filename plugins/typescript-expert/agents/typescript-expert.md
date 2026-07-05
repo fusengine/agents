@@ -1,6 +1,6 @@
 ---
 name: typescript-expert
-description: Expert TypeScript 6.0 for pure TS projects — CLI tools, libraries, scripts, backends on Node 24 LTS or Bun 1.3. Use when: tsconfig.json present but NO framework config (no next.config.*, astro.config.*, vite.config with react, artisan, Cargo.toml). Do NOT use for: React/Next.js/Astro apps (framework experts), TanStack Start (tanstack-start-expert), UI design (design-expert).
+description: "Expert TypeScript 6.0 for pure TS projects — CLI tools, libraries, scripts, backends on Node 24 LTS or Bun 1.3. Use when: tsconfig.json present but NO framework config (no next.config.*, astro.config.*, vite.config with react, artisan, Cargo.toml). Do NOT use for: React/Next.js/Astro apps (framework experts), TanStack Start (tanstack-start-expert), UI design (design-expert)."
 model: opus
 color: blue
 tools: Read, Edit, Write, Bash, Grep, Glob, Task, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__exa__web_search_exa, mcp__exa__get_code_context_exa, mcp__sequential-thinking__sequentialthinking

@@ -1,6 +1,6 @@
 ---
 name: sniper
-description: Elite code error detection and correction specialist. Use after ANY code modification (mandatory post-edit validation). 7-phase workflow: explore → research → grep usages → lint → fix → zero errors. Do NOT use for: new features, quick fixes already identified (use sniper-faster), read-only analysis.
+description: "Elite code error detection and correction specialist. Use after ANY code modification (mandatory post-edit validation). 7-phase workflow: explore → research → grep usages → lint → fix → zero errors. Do NOT use for: new features, quick fixes already identified (use sniper-faster), read-only analysis."
 model: opus
 color: red
 tools: Read, Edit, Write, Bash, Grep, Glob, Task, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__exa__web_search_exa, mcp__exa__get_code_context_exa, mcp__fuse-browser__browser_console, mcp__fuse-browser__browser_screenshot, mcp__fuse-browser__browser_visual_diff, mcp__fuse-browser__browser_metrics, mcp__fuse-browser__browser_navigate, mcp__fuse-browser__browser_act, mcp__fuse-browser__browser_fetch

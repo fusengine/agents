@@ -1,6 +1,6 @@
 ---
 name: verification
-description: Use when marking a task as complete, finishing a feature, or claiming a bug is fixed. Ensures functional resolution is verified with evidence before closing. Do NOT use for: lint/type/code-quality validation (use code-quality / sniper AFTER functional verification passes).
+description: "Use when marking a task as complete, finishing a feature, or claiming a bug is fixed. Ensures functional resolution is verified with evidence before closing. Do NOT use for: lint/type/code-quality validation (use code-quality / sniper AFTER functional verification passes)."
 ---
 
 # Verification Before Completion

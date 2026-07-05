@@ -2,7 +2,7 @@
 name: third-party
 description: Third-party libraries integration with @next/third-parties
 when-to-use: Google Analytics, Google Maps, YouTube, analytics providers
-keywords: @next/third-parties, Google Analytics, GTM, Vercel Analytics
+keywords: "@next/third-parties, Google Analytics, GTM, Vercel Analytics"
 priority: low
 related: scripts.md, analytics.md
 ---

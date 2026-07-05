@@ -1,6 +1,6 @@
 ---
 name: solid-generic
-description: SOLID principles for generic TypeScript, Bun, and Node.js projects. Files < 100 lines, interfaces separated, JSDoc mandatory. Use when: building CLI tools, libraries, scripts, hooks, or non-framework TypeScript code.
+description: "SOLID principles for generic TypeScript, Bun, and Node.js projects. Files < 100 lines, interfaces separated, JSDoc mandatory. Use when: building CLI tools, libraries, scripts, hooks, or non-framework TypeScript code."
 version: 1.0.0
 user-invocable: true
 references: references/solid-principles.md, references/single-responsibility.md, references/open-closed.md, references/liskov-substitution.md, references/interface-segregation.md, references/dependency-inversion.md, references/architecture-patterns.md, references/templates/module.md, references/templates/service.md, references/templates/interface.md, references/templates/validator.md, references/templates/factory.md, references/templates/error.md, references/templates/test.md

@@ -1,6 +1,6 @@
 ---
 name: solid-csharp
-description: SOLID principles for C# 12/.NET 9. Files < 100 lines, interfaces separated, modular architecture. Contracts MANDATORY. Use when: writing or refactoring C#/.NET code, structuring Modules/[Feature]/ layers, or defining Contracts/ interfaces.
+description: "SOLID principles for C# 12/.NET 9. Files < 100 lines, interfaces separated, modular architecture. Contracts MANDATORY. Use when: writing or refactoring C#/.NET code, structuring Modules/[Feature]/ layers, or defining Contracts/ interfaces."
 versions:
   csharp: "12"
   dotnet: "9"

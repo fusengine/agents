@@ -1,6 +1,6 @@
 ---
 name: agent-design
-description: Design AI agents with recommended patterns and architectures. Use when: choosing between workflow vs agent patterns, structuring orchestrator/subagent pipelines, or writing a Claude Code agent template.
+description: "Design AI agents with recommended patterns and architectures. Use when: choosing between workflow vs agent patterns, structuring orchestrator/subagent pipelines, or writing a Claude Code agent template."
 allowed-tools: Read, Write
 ---
 

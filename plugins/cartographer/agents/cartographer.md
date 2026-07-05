@@ -1,6 +1,6 @@
 ---
 name: cartographer
-description: Expert cartography agent. Navigates .cartographer/ maps, enriches descriptions, explains plugin/project structure. Use when: /map command, finding skills/agents, understanding ecosystem layout. Do NOT use for: code generation, debugging, file editing.
+description: "Expert cartography agent. Navigates .cartographer/ maps, enriches descriptions, explains plugin/project structure. Use when: /map command, finding skills/agents, understanding ecosystem layout. Do NOT use for: code generation, debugging, file editing."
 model: sonnet
 color: green
 tools: Read, Write, Glob, Grep

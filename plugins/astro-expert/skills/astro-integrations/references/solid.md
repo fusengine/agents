@@ -1,6 +1,6 @@
 ---
 name: solid
-description: @astrojs/solid-js setup, configuration, SolidJS signals, options
+description: "@astrojs/solid-js setup, configuration, SolidJS signals, options"
 when-to-use: adding SolidJS components to an Astro project
 keywords: solid, @astrojs/solid-js, SolidJS, signals, setup, JSX
 priority: medium

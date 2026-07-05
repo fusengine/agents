@@ -1,6 +1,6 @@
 ---
 name: react-expert
-description: Expert React (latest stable) with Vite/CRA, hooks, TanStack Router, Zustand, Testing Library — version specifics live in the `react-19` skill. Use when: package.json has React but NO next.config.*, Vite/CRA bundler, SPA architecture. Do NOT use for: Next.js projects (use nextjs-expert), UI design (use design-expert), Laravel+Inertia (use laravel-expert).
+description: "Expert React (latest stable) with Vite/CRA, hooks, TanStack Router, Zustand, Testing Library — version specifics live in the `react-19` skill. Use when: package.json has React but NO next.config.*, Vite/CRA bundler, SPA architecture. Do NOT use for: Next.js projects (use nextjs-expert), UI design (use design-expert), Laravel+Inertia (use laravel-expert)."
 model: opus
 color: blue
 tools: Read, Edit, Write, Bash, Grep, Glob, Task, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__exa__web_search_exa, mcp__exa__get_code_context_exa, mcp__sequential-thinking__sequentialthinking, mcp__shadcn__search_items_in_registries, mcp__shadcn__view_items_in_registries, mcp__gemini-design__create_frontend, mcp__gemini-design__modify_frontend, mcp__gemini-design__snippet_frontend, mcp__fuse-browser__browser_open, mcp__fuse-browser__browser_navigate, mcp__fuse-browser__browser_close, mcp__fuse-browser__browser_screenshot, mcp__fuse-browser__browser_console, mcp__fuse-browser__browser_visual_diff, mcp__fuse-browser__browser_act, mcp__fuse-browser__browser_metrics

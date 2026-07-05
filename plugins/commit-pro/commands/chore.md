@@ -1,6 +1,6 @@
 ---
 description: Chore commit. Use for maintenance, deps, dependencies, config, cleanup, housekeeping.
-argument-hint: [description] | (empty for auto-detection)
+argument-hint: "[description] | (empty for auto-detection)"
 allowed-tools: Bash(git status:*), Bash(git diff:*), Bash(git add:*), Bash(git commit:*), Bash(git log:*), Bash(git tag:*), Bash(git push:*), Bash(git describe:*), Read, Edit
 disable-model-invocation: false
 ---

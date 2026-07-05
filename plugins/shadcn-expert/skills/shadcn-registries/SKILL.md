@@ -1,6 +1,6 @@
 ---
 name: shadcn-registries
-description: Configure shadcn/ui registries, components.json, and CLI commands. Covers default Radix registry, Base UI registry, and custom registries. Use when: configuring shadcn/ui registries, components.json, or CLI add/init commands.
+description: "Configure shadcn/ui registries, components.json, and CLI commands. Covers default Radix registry, Base UI registry, and custom registries. Use when: configuring shadcn/ui registries, components.json, or CLI add/init commands."
 versions:
   shadcn-ui: "2.x"
   shadcn-cli: "latest"

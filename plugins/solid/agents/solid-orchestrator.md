@@ -1,6 +1,6 @@
 ---
 name: solid-orchestrator
-description: SOLID principles orchestrator for multi-language projects. Use when: SOLID audit requested, architecture review, code quality enforcement. Auto-detects language and delegates to language-specific rules. Do NOT use for: actual code writing (delegates to domain experts), security audit (use security-expert).
+description: "SOLID principles orchestrator for multi-language projects. Use when: SOLID audit requested, architecture review, code quality enforcement. Auto-detects language and delegates to language-specific rules. Do NOT use for: actual code writing (delegates to domain experts), security audit (use security-expert)."
 model: opus
 color: green
 tools: Read, Glob, Grep, Bash, Task

@@ -1,6 +1,6 @@
 ---
 name: prompt-testing
-description: A/B testing and performance metrics for prompts. Use when: comparing two prompt variants, defining quality/efficiency/robustness metrics, or deciding whether to adopt a challenger prompt over a baseline.
+description: "A/B testing and performance metrics for prompts. Use when: comparing two prompt variants, defining quality/efficiency/robustness metrics, or deciding whether to adopt a challenger prompt over a baseline."
 allowed-tools: Read, Write, Bash
 ---
 

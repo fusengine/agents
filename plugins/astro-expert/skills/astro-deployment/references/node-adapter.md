@@ -1,6 +1,6 @@
 ---
 name: node-adapter
-description: @astrojs/node standalone adapter for Node.js server deployment or Express integration
+description: "@astrojs/node standalone adapter for Node.js server deployment or Express integration"
 when-to-use: Self-hosted Node.js server, VPS, Docker, or Express integration
 keywords: node, standalone, Express, Docker, self-hosted, middleware mode
 priority: medium

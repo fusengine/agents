@@ -1,6 +1,6 @@
 ---
 name: nextjs-stack
-description: Next.js 16+ complete stack with App Router, Prisma 7, Better Auth, shadcn/ui, TanStack Form, Zustand. Use as the master reference combining all framework skills. Do NOT use for: core framework API details — routing, caching, Server Components internals, proxy.ts (use nextjs-16 and its references).
+description: "Next.js 16+ complete stack with App Router, Prisma 7, Better Auth, shadcn/ui, TanStack Form, Zustand. Use as the master reference combining all framework skills. Do NOT use for: core framework API details — routing, caching, Server Components internals, proxy.ts (use nextjs-16 and its references)."
 versions:
   nextjs: 16
   react: 19

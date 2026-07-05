@@ -1,6 +1,6 @@
 ---
 name: modularize
-description: Use when converting existing code to modular architecture. Detects Laravel (FuseCore or standard) / Next.js / React and applies correct modular patterns. Triggers: "modularize", "convert to modules", "migrate to modular", "restructure modules".
+description: "Use when converting existing code to modular architecture. Detects Laravel (FuseCore or standard) / Next.js / React and applies correct modular patterns. Triggers: \"modularize\", \"convert to modules\", \"migrate to modular\", \"restructure modules\"."
 user-invocable: true
 references: references/laravel-fusecore.md, references/nextjs-react-modules.md
 related-skills: apex-methodology, exploration

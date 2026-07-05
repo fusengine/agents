@@ -1,6 +1,6 @@
 ---
 description: Refactor commit. Use for refactoring, restructure, reorganize, clean up code.
-argument-hint: [description] | (empty for auto-detection)
+argument-hint: "[description] | (empty for auto-detection)"
 allowed-tools: Bash(git status:*), Bash(git diff:*), Bash(git add:*), Bash(git commit:*), Bash(git log:*), Bash(git tag:*), Bash(git push:*), Bash(git describe:*), Read, Edit
 disable-model-invocation: false
 ---

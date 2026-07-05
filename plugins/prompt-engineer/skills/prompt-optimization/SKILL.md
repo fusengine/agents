@@ -1,6 +1,6 @@
 ---
 name: prompt-optimization
-description: Analyze and improve existing prompts for better performance. Use when: auditing an existing prompt for clarity, structure, or completeness issues, fixing vague instructions, or producing a before/after optimization report.
+description: "Analyze and improve existing prompts for better performance. Use when: auditing an existing prompt for clarity, structure, or completeness issues, fixing vague instructions, or producing a before/after optimization report."
 allowed-tools: Read, Write, Edit
 ---
 

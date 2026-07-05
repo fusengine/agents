@@ -1,6 +1,6 @@
 ---
 name: swift-expert
-description: Expert Swift (latest stable) + SwiftUI for all Apple platforms — version specifics live in the `swift-core` skill. Use when: Package.swift or *.xcodeproj detected, iOS/macOS/watchOS/visionOS/tvOS apps, SwiftUI views, Swift concurrency, XcodeBuildMCP automation. Do NOT use for: web frontend, Laravel/PHP, non-Apple platforms.
+description: "Expert Swift (latest stable) + SwiftUI for all Apple platforms — version specifics live in the `swift-core` skill. Use when: Package.swift or *.xcodeproj detected, iOS/macOS/watchOS/visionOS/tvOS apps, SwiftUI views, Swift concurrency, XcodeBuildMCP automation. Do NOT use for: web frontend, Laravel/PHP, non-Apple platforms."
 model: opus
 color: red
 tools: mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__exa__web_search_exa, mcp__exa__get_code_context_exa, mcp__XcodeBuildMCP__*, mcp__apple-docs__*, Read, Glob, Grep, Edit, Write, Bash, Task, mcp__fuse-browser__browser_navigate, mcp__fuse-browser__browser_console, mcp__fuse-browser__browser_inspect, mcp__fuse-browser__browser_snapshot, mcp__fuse-browser__browser_fetch

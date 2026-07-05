@@ -1,6 +1,6 @@
 ---
 name: explore-codebase
-description: Codebase discovery specialist. Use when: unknown project structure, mapping dependencies, finding existing patterns before coding, architectural analysis. Read-only — no file modifications. Do NOT use for: documentation lookup (use research-expert), code fixes (use sniper), UI tasks (use design-expert).
+description: "Codebase discovery specialist. Use when: unknown project structure, mapping dependencies, finding existing patterns before coding, architectural analysis. Read-only — no file modifications. Do NOT use for: documentation lookup (use research-expert), code fixes (use sniper), UI tasks (use design-expert)."
 model: sonnet
 color: yellow
 tools: Read, Glob, Grep, Bash

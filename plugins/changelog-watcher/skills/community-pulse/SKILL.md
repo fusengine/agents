@@ -1,6 +1,6 @@
 ---
 name: community-pulse
-description: Monitor community feedback on Claude Code via Exa search. Gathers sentiment, real-world usage patterns, bug reports, and feature requests from blogs, forums, and social media. Use when: gauging community sentiment, bug reports, or feature requests about Claude Code.
+description: "Monitor community feedback on Claude Code via Exa search. Gathers sentiment, real-world usage patterns, bug reports, and feature requests from blogs, forums, and social media. Use when: gauging community sentiment, bug reports, or feature requests about Claude Code."
 argument-hint: "[--deep] [topic]"
 user-invocable: true
 ---

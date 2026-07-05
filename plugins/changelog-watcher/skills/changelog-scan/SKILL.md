@@ -1,6 +1,6 @@
 ---
 name: changelog-scan
-description: Scan Claude Code changelog for new versions, features, and changes. Fetches official docs, parses release notes, and generates structured update report. Use when: checking for new Claude Code versions, features, or changes since the last known release.
+description: "Scan Claude Code changelog for new versions, features, and changes. Fetches official docs, parses release notes, and generates structured update report. Use when: checking for new Claude Code versions, features, or changes since the last known release."
 argument-hint: "[--since <version>]"
 user-invocable: true
 ---

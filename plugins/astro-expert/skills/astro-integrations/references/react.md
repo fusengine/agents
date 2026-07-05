@@ -1,6 +1,6 @@
 ---
 name: react
-description: @astrojs/react setup, configuration, React 19 compatibility, options
+description: "@astrojs/react setup, configuration, React 19 compatibility, options"
 when-to-use: adding React components to an Astro project
 keywords: react, @astrojs/react, setup, React 19, JSX, hooks
 priority: high

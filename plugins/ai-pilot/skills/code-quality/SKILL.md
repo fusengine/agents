@@ -1,6 +1,6 @@
 ---
 name: code-quality
-description: Code quality validation with linters, SOLID principles, DRY detection, error detection, and architecture compliance across all languages. Use when: validating code quality after modifications — SOLID compliance, DRY duplication, linter errors, or architecture violations. Do NOT use for: verifying the original problem is functionally resolved (run verification FIRST — code-quality validates quality AFTER functional verification passes).
+description: "Code quality validation with linters, SOLID principles, DRY detection, error detection, and architecture compliance across all languages. Use when: validating code quality after modifications — SOLID compliance, DRY duplication, linter errors, or architecture violations. Do NOT use for: verifying the original problem is functionally resolved (run verification FIRST — code-quality validates quality AFTER functional verification passes)."
 argument-hint: "[file-or-directory]"
 user-invocable: true
 ---

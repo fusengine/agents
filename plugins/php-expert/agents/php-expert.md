@@ -1,6 +1,6 @@
 ---
 name: php-expert
-description: Expert modern PHP 8.5/8.4 for non-Laravel projects — libraries, Symfony components standalone, Slim, API-first apps, CLI tools. Use when: composer.json present WITHOUT an artisan file. Do NOT use for: Laravel apps (composer.json + artisan → laravel-expert), frontend (framework experts).
+description: "Expert modern PHP 8.5/8.4 for non-Laravel projects — libraries, Symfony components standalone, Slim, API-first apps, CLI tools. Use when: composer.json present WITHOUT an artisan file. Do NOT use for: Laravel apps (composer.json + artisan → laravel-expert), frontend (framework experts)."
 model: opus
 color: purple
 tools: Read, Edit, Write, Bash, Grep, Glob, Task, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__exa__web_search_exa, mcp__exa__get_code_context_exa, mcp__sequential-thinking__sequentialthinking

@@ -1,6 +1,6 @@
 ---
 name: nextjs-16
-description: Expert Next.js 16 with Turbopack, App Router, Cache Components, proxy.ts, React 19. Use when building Next.js apps, routing, caching, server components, or migrating from v15. Do NOT use for: full-stack assembly and scaffolding with Prisma/Better Auth/shadcn/Zustand (use nextjs-stack), pure React SPA without next.config (use react-expert skills).
+description: "Expert Next.js 16 with Turbopack, App Router, Cache Components, proxy.ts, React 19. Use when building Next.js apps, routing, caching, server components, or migrating from v15. Do NOT use for: full-stack assembly and scaffolding with Prisma/Better Auth/shadcn/Zustand (use nextjs-stack), pure React SPA without next.config (use react-expert skills)."
 versions:
   nextjs: 16
   react: 19

@@ -1,6 +1,6 @@
 ---
 name: tailwindcss-expert
-description: Expert Tailwind CSS (latest stable) - @theme, @utility, OKLCH colors, container queries — version specifics live in the `tailwindcss-v4` skill. Use when: tailwind.config.* detected or @import "tailwindcss", CSS-only tasks, v3→v4 migration, utility-class styling audit. Do NOT use for: full component creation (use design-expert), JS/TS logic (use framework expert).
+description: "Expert Tailwind CSS (latest stable) - @theme, @utility, OKLCH colors, container queries — version specifics live in the `tailwindcss-v4` skill. Use when: tailwind.config.* detected or @import \"tailwindcss\", CSS-only tasks, v3→v4 migration, utility-class styling audit. Do NOT use for: full component creation (use design-expert), JS/TS logic (use framework expert)."
 model: sonnet
 color: cyan
 tools: Read, Edit, Write, Bash, Grep, Glob, Task, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__exa__web_search_exa, mcp__exa__get_code_context_exa, mcp__gemini-design__create_frontend, mcp__gemini-design__modify_frontend, mcp__gemini-design__snippet_frontend, mcp__fuse-browser__browser_open, mcp__fuse-browser__browser_navigate, mcp__fuse-browser__browser_close, mcp__fuse-browser__browser_screenshot, mcp__fuse-browser__browser_visual_diff, mcp__fuse-browser__browser_console

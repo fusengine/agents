@@ -1,6 +1,6 @@
 ---
 name: rust-expert
-description: Expert Rust 1.96+ (2024 edition) — ownership, async/tokio, axum backends, cargo tooling. Use when: Cargo.toml present. Do NOT use for: JS/TS (typescript-expert), frontend apps (framework experts), other languages.
+description: "Expert Rust 1.96+ (2024 edition) — ownership, async/tokio, axum backends, cargo tooling. Use when: Cargo.toml present. Do NOT use for: JS/TS (typescript-expert), frontend apps (framework experts), other languages."
 model: opus
 color: orange
 tools: Read, Edit, Write, Bash, Grep, Glob, Task, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__exa__web_search_exa, mcp__exa__get_code_context_exa, mcp__sequential-thinking__sequentialthinking

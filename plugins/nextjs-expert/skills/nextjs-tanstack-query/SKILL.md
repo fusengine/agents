@@ -1,6 +1,6 @@
 ---
 name: nextjs-tanstack-query
-description: TanStack Query v5 integration with Next.js 16. Server-side prefetching, hydration, useQuery, useMutation, cache management. Use when: implementing client-side data fetching with caching, server-side prefetching with hydration, or optimistic mutations in Next.js.
+description: "TanStack Query v5 integration with Next.js 16. Server-side prefetching, hydration, useQuery, useMutation, cache management. Use when: implementing client-side data fetching with caching, server-side prefetching with hydration, or optimistic mutations in Next.js."
 versions:
   tanstack-query: 5
   nextjs: 16
