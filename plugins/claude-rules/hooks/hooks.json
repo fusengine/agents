@@ -11,7 +11,7 @@
           {
             "_description": "Load and inject rules/*.md into additionalContext (harness reads CLAUDE_PLUGIN_ROOT)",
             "type": "command",
-            "command": "bun ${CLAUDE_PLUGIN_ROOT}/../node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code rules"
+            "command": "bun $HOME/.claude/plugins/marketplaces/fusengine-plugins/plugins/node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code rules"
           }
         ]
       }
@@ -24,7 +24,7 @@
           {
             "_description": "Load and inject rules/*.md into additionalContext (harness reads CLAUDE_PLUGIN_ROOT)",
             "type": "command",
-            "command": "bun ${CLAUDE_PLUGIN_ROOT}/../node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code rules"
+            "command": "bun $HOME/.claude/plugins/marketplaces/fusengine-plugins/plugins/node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code rules"
           }
         ]
       }
@@ -37,7 +37,7 @@
           {
             "_description": "Reload rules/*.md into additionalContext on each prompt (harness reads CLAUDE_PLUGIN_ROOT)",
             "type": "command",
-            "command": "bun ${CLAUDE_PLUGIN_ROOT}/../node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code rules"
+            "command": "bun $HOME/.claude/plugins/marketplaces/fusengine-plugins/plugins/node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code rules"
           }
         ]
       }

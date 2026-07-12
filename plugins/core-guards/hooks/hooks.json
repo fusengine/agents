@@ -11,7 +11,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bun ${CLAUDE_PLUGIN_ROOT}/../node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code"
+            "command": "bun $HOME/.claude/plugins/marketplaces/fusengine-plugins/plugins/node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code"
           }
         ]
       }
@@ -24,7 +24,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bun ${CLAUDE_PLUGIN_ROOT}/../node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code"
+            "command": "bun $HOME/.claude/plugins/marketplaces/fusengine-plugins/plugins/node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code"
           }
         ]
       }
@@ -37,7 +37,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bun ${CLAUDE_PLUGIN_ROOT}/../node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code"
+            "command": "bun $HOME/.claude/plugins/marketplaces/fusengine-plugins/plugins/node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code"
           }
         ]
       }
@@ -50,7 +50,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bun ${CLAUDE_PLUGIN_ROOT}/../node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code"
+            "command": "bun $HOME/.claude/plugins/marketplaces/fusengine-plugins/plugins/node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code"
           }
         ]
       }
@@ -63,7 +63,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bun ${CLAUDE_PLUGIN_ROOT}/../node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code"
+            "command": "bun $HOME/.claude/plugins/marketplaces/fusengine-plugins/plugins/node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code"
           }
         ]
       }
@@ -76,7 +76,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bun ${CLAUDE_PLUGIN_ROOT}/../node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code"
+            "command": "bun $HOME/.claude/plugins/marketplaces/fusengine-plugins/plugins/node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code"
           }
         ]
       }
@@ -89,7 +89,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bun ${CLAUDE_PLUGIN_ROOT}/../node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code"
+            "command": "bun $HOME/.claude/plugins/marketplaces/fusengine-plugins/plugins/node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code"
           }
         ]
       }
@@ -102,7 +102,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bun ${CLAUDE_PLUGIN_ROOT}/../node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code"
+            "command": "bun $HOME/.claude/plugins/marketplaces/fusengine-plugins/plugins/node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code"
           }
         ]
       }
@@ -115,7 +115,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bun ${CLAUDE_PLUGIN_ROOT}/../node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code"
+            "command": "bun $HOME/.claude/plugins/marketplaces/fusengine-plugins/plugins/node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code"
           }
         ]
       }
@@ -129,7 +129,7 @@
           {
             "_description": "Harness: play task completion sound (embedded assets/song/, exits before stdin read)",
             "type": "command",
-            "command": "bun ${CLAUDE_PLUGIN_ROOT}/../node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code core --sound stop"
+            "command": "bun $HOME/.claude/plugins/marketplaces/fusengine-plugins/plugins/node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code core --sound stop"
           }
         ]
       },
@@ -155,7 +155,7 @@
           {
             "_description": "Harness: play permission request sound (embedded assets/song/, exits before stdin read)",
             "type": "command",
-            "command": "bun ${CLAUDE_PLUGIN_ROOT}/../node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code core --sound permission"
+            "command": "bun $HOME/.claude/plugins/marketplaces/fusengine-plugins/plugins/node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code core --sound permission"
           }
         ]
       }
@@ -168,7 +168,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bun ${CLAUDE_PLUGIN_ROOT}/../node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code"
+            "command": "bun $HOME/.claude/plugins/marketplaces/fusengine-plugins/plugins/node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code"
           }
         ]
       }
@@ -181,7 +181,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bun ${CLAUDE_PLUGIN_ROOT}/../node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code"
+            "command": "bun $HOME/.claude/plugins/marketplaces/fusengine-plugins/plugins/node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code"
           }
         ]
       }
@@ -194,7 +194,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bun ${CLAUDE_PLUGIN_ROOT}/../node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code"
+            "command": "bun $HOME/.claude/plugins/marketplaces/fusengine-plugins/plugins/node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code"
           }
         ]
       }
@@ -206,7 +206,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bun ${CLAUDE_PLUGIN_ROOT}/../node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code"
+            "command": "bun $HOME/.claude/plugins/marketplaces/fusengine-plugins/plugins/node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code"
           }
         ]
       }
@@ -220,7 +220,7 @@
           {
             "_description": "Harness: play permission request sound (embedded assets/song/, exits before stdin read)",
             "type": "command",
-            "command": "bun ${CLAUDE_PLUGIN_ROOT}/../node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code core --sound permission"
+            "command": "bun $HOME/.claude/plugins/marketplaces/fusengine-plugins/plugins/node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code core --sound permission"
           }
         ]
       },
@@ -231,7 +231,7 @@
           {
             "_description": "Harness: play idle/waiting sound (embedded assets/song/, exits before stdin read)",
             "type": "command",
-            "command": "bun ${CLAUDE_PLUGIN_ROOT}/../node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code core --sound human"
+            "command": "bun $HOME/.claude/plugins/marketplaces/fusengine-plugins/plugins/node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code core --sound human"
           }
         ]
       },
@@ -242,7 +242,7 @@
           {
             "_description": "Harness: play elicitation dialog sound (embedded assets/song/, exits before stdin read)",
             "type": "command",
-            "command": "bun ${CLAUDE_PLUGIN_ROOT}/../node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code core --sound human"
+            "command": "bun $HOME/.claude/plugins/marketplaces/fusengine-plugins/plugins/node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code core --sound human"
           }
         ]
       }

@@ -8,6 +8,7 @@ import type { SetupPaths } from "../interfaces/setup";
 import { copyExecutable } from "../utils/fs-helpers";
 import { installBrowserBinary } from "./browser-binary";
 import { setHarnessRefs } from "./harness-env";
+import { resolveHomeInHooks } from "./harness-path-resolver";
 import { promptHarnessGates } from "./harness-gates";
 import { promptHarnessTuning } from "./harness-tuning";
 import { promptEnforceTtl } from "./enforce-ttl";
@@ -16,15 +17,8 @@ import { configureShell } from "./env-manager";
 import { configureMcpServers } from "./mcp-setup";
 import { promptPerfEnv } from "./perf-env";
 import {
-	backupSettings,
-	configureDefaults,
-	configureHooks,
-	DEFAULT_LANGUAGE,
-	enableAgentTeams,
-	isAgentTeamsEnabled,
-	loadSettings,
-	SUPPORTED_LANGUAGES,
-	saveSettings,
+	backupSettings, configureDefaults, configureHooks, DEFAULT_LANGUAGE, enableAgentTeams,
+	isAgentTeamsEnabled, loadSettings, SUPPORTED_LANGUAGES, saveSettings,
 } from "./settings-manager";
 import { installClaudeMd, installDeps, scanAndPrepare, setupStatusline } from "./setup-plugins";
 
@@ -66,6 +60,12 @@ export async function runSetup(
 
 	await installClaudeMd(paths.claudeMdSrc, paths.claudeMdDest);
 	await installDeps(pluginsDir);
+
+	const homeSpinner = p.spinner();
+	homeSpinner.start("Resolving $HOME in hook paths...");
+	const resolved = await resolveHomeInHooks(pluginsDir);
+	homeSpinner.stop(`${resolved} hooks.json paths resolved`);
+
 	settings = await setupStatusline(pluginsDir, settings);
 	settings = setHarnessRefs(settings, paths.marketplace);
 
