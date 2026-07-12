@@ -200,6 +200,8 @@ Comprehensive validation:
 | 3.5. eLICIT | Self-review findings + fixes | Applicable elicitation techniques run and findings addressed before eXamine |
 | 4. eXAMINE | Passing lint/tests/build + manual verification | Sniper reports zero linter errors; manual test plan executed and acceptance criteria confirmed |
 
+**Loop exit contract.** Every phase ends on one explicit issue, never silent drift: **Stop** (deliverable verified), **Retry** (new hypothesis — never the same fix twice), **Rollback** (a change broke something → return to the last green state before stacking another), **Ask** (ambiguous requirement whose readings diverge into hard-to-reverse actions → one targeted question), **Escalate** (blocked past the attempt cap → hand off with a root-cause note). The attempt cap is enforced in code by sniper's Fix Retry Loop (3 cycles), not by prose.
+
 ---
 
 **See full documentation**: `skills/apex-methodology/SKILL.md`

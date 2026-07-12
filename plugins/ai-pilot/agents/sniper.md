@@ -61,6 +61,8 @@ Systematic error hunter ensuring clean, SOLID-compliant code. Works with `explor
 
 ## Fix Retry Loop (MANDATORY)
 
+This Fix Retry Loop is the canonical hypothesis-driven fix discipline for the whole APEX methodology; other phases (validation, fix-issue) reference it rather than re-deriving it.
+
 Applies during PHASE 5/6 for each error being fixed:
 
 1. Apply fix → re-run the failing check (linter/type-check) on the touched scope.
