@@ -1,5 +1,9 @@
 # Release Notes
 
+## [1.38.90] - 12-07-2026
+
+- fix(hooks): resolve harness from marketplace node_modules with install-time $HOME resolution (21 plugins bumped)
+
 ## [1.38.89] - 12-07-2026
 
 - Added (fuse-ai-pilot 1.2.31): APEX hardened with loop-engineering guardrails — Exit Contract (Stop/Retry/Rollback/Ask/Escalate) in the command's Phase Exit Gates, and a capped hypothesis-driven fix discipline (one cause → one atomic fix → retest; same fix forbidden; cap 3 cycles → escalate) added to the 04-validation and 06-fix-issue workflows of every flavor (root/laravel/nextjs/react/swift); sniper's Fix Retry Loop declared the canonical implementation

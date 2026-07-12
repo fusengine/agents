@@ -1,6 +1,7 @@
 /**
  * Plugin setup steps service
- * Single Responsibility: Plugin scanning, deps, statusline, CLAUDE.md
+ * SRP: plugin scanning, dependency installation, statusline wiring and
+ * CLAUDE.md sync.
  */
 import { existsSync } from "node:fs";
 import { join } from "node:path";

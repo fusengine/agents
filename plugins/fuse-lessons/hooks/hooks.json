@@ -6,7 +6,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bun ${CLAUDE_PLUGIN_ROOT}/../node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code lessons || true"
+            "command": "bun $HOME/.claude/plugins/marketplaces/fusengine-plugins/plugins/node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code lessons || true"
           }
         ]
       }
@@ -16,7 +16,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bun ${CLAUDE_PLUGIN_ROOT}/../node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code lessons || true"
+            "command": "bun $HOME/.claude/plugins/marketplaces/fusengine-plugins/plugins/node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code lessons || true"
           }
         ]
       }
@@ -26,7 +26,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bun ${CLAUDE_PLUGIN_ROOT}/../node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code lessons || true"
+            "command": "bun $HOME/.claude/plugins/marketplaces/fusengine-plugins/plugins/node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code lessons || true"
           }
         ]
       }
@@ -37,7 +37,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bun ${CLAUDE_PLUGIN_ROOT}/../node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code lessons || true"
+            "command": "bun $HOME/.claude/plugins/marketplaces/fusengine-plugins/plugins/node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code lessons || true"
           }
         ]
       }

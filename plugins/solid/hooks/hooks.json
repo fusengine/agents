@@ -6,7 +6,7 @@
         "matcher": "",
         "hooks": [{
           "type": "command",
-          "command": "bun ${CLAUDE_PLUGIN_ROOT}/../node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code solid",
+          "command": "bun $HOME/.claude/plugins/marketplaces/fusengine-plugins/plugins/node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code solid",
           "timeout": 5
         }]
       }
@@ -16,7 +16,7 @@
         "matcher": "Write|Edit",
         "hooks": [{
           "type": "command",
-          "command": "bun ${CLAUDE_PLUGIN_ROOT}/../node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code solid",
+          "command": "bun $HOME/.claude/plugins/marketplaces/fusengine-plugins/plugins/node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code solid",
           "timeout": 10
         }]
       }
@@ -26,7 +26,7 @@
         "matcher": "Write|Edit",
         "hooks": [{
           "type": "command",
-          "command": "bun ${CLAUDE_PLUGIN_ROOT}/../node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code solid",
+          "command": "bun $HOME/.claude/plugins/marketplaces/fusengine-plugins/plugins/node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code solid",
           "timeout": 10
         }]
       }

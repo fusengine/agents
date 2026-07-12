@@ -2,35 +2,28 @@
  * Anti-regression gate for the "harness exclusif" migration.
  *
  * Every `type: "command"` hook in every `plugins/<name>/hooks/hooks.json`
- * MUST delegate to the @fusengine/harness binary. No plugin may reintroduce
- * a raw command (afplay, a local script, …) — this test is the permanent
- * lock. Native `type: "prompt"` hooks are allowed and left untouched.
+ * must delegate to @fusengine/harness, resolved from the marketplace's own
+ * shared install under plugins/marketplaces/fusengine-plugins/plugins/
+ * node_modules (installDeps' node_modules — reused as-is, no separate
+ * per-user $HOME/.claude/node_modules bootstrap anymore).
+ * Native `type: "prompt"` hooks are allowed and left untouched.
+ * Pure helpers live in ./hooks-harness-exclusive.helpers (kept separate to
+ * respect the 100-line SOLID limit on this file).
  */
 import { describe, expect, test } from "bun:test";
-import { existsSync, readdirSync, readFileSync } from "node:fs";
+import { readFileSync } from "node:fs";
 import { join } from "node:path";
+import {
+	discoverHooksFiles,
+	isHarnessCommand,
+	pluginNameOf,
+} from "./hooks-harness-exclusive.helpers";
+
+/** Absolute prefix every harness command must resolve through post-migration. */
+const MARKETPLACE_HARNESS_PATH =
+	"$HOME/.claude/plugins/marketplaces/fusengine-plugins/plugins/node_modules/@fusengine/harness";
 
 const PLUGINS_DIR = join(__dirname, "../../../plugins");
-const HARNESS_MARKER = "node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code";
-
-/** Dynamically lists every `plugins/<name>/hooks/hooks.json` — no hardcoded plugin names. */
-function discoverHooksFiles(pluginsDir: string): string[] {
-	return readdirSync(pluginsDir, { withFileTypes: true })
-		.filter((entry) => entry.isDirectory())
-		.map((entry) => join(pluginsDir, entry.name, "hooks", "hooks.json"))
-		.filter((path) => existsSync(path));
-}
-
-/** True when a command hook delegates to the harness binary (tolerates ` || true`, flags, scope). */
-function isHarnessCommand(command: string): boolean {
-	return command.startsWith("bun ") && command.includes(HARNESS_MARKER);
-}
-
-/** Plugin name extracted from a `.../plugins/<name>/hooks/hooks.json` path. */
-function pluginNameOf(filePath: string): string {
-	return filePath.split("/plugins/")[1]?.split("/")[0] ?? filePath;
-}
-
 const hooksFiles = discoverHooksFiles(PLUGINS_DIR);
 
 describe("hooks-harness-exclusive (anti-regression gate)", () => {
@@ -77,19 +70,23 @@ describe("hooks-harness-exclusive (anti-regression gate)", () => {
 							expect(hook.type).toBe("command");
 						});
 
-						test(`${label}: command delegates to @fusengine/harness`, () => {
+						test(`${label}: command delegates to harness on the marketplace shared path`, () => {
 							const command = String(hook.command);
-							if (!isHarnessCommand(command)) {
+							const harness = isHarnessCommand(command);
+
+							// No more per-user bootstrap: every command must resolve the
+							// harness binary straight from the marketplace's node_modules.
+							if (!harness) {
 								throw new Error(
-									`${pluginName} / ${label}: command is not harness-delegated: "${command}"`,
+									`${pluginName} / ${label}: command does not delegate to harness: "${command}"`,
 								);
 							}
-							if (!command.includes("${CLAUDE_PLUGIN_ROOT}")) {
+							if (!command.includes(MARKETPLACE_HARNESS_PATH)) {
 								throw new Error(
-									`${pluginName} / ${label}: harness command is missing \${CLAUDE_PLUGIN_ROOT}: "${command}"`,
+									`${pluginName} / ${label}: harness command not on marketplace shared path: "${command}"`,
 								);
 							}
-							expect(isHarnessCommand(command)).toBe(true);
+							expect(harness).toBe(true);
 						});
 					}
 				}

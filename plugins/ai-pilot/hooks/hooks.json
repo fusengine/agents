@@ -8,7 +8,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bun ${CLAUDE_PLUGIN_ROOT}/../node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code aipilot"
+            "command": "bun $HOME/.claude/plugins/marketplaces/fusengine-plugins/plugins/node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code aipilot"
           }
         ]
       }
@@ -20,7 +20,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bun ${CLAUDE_PLUGIN_ROOT}/../node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code"
+            "command": "bun $HOME/.claude/plugins/marketplaces/fusengine-plugins/plugins/node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code"
           }
         ]
       }
@@ -32,7 +32,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bun ${CLAUDE_PLUGIN_ROOT}/../node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code aipilot"
+            "command": "bun $HOME/.claude/plugins/marketplaces/fusengine-plugins/plugins/node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code aipilot"
           }
         ]
       }
@@ -43,7 +43,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bun ${CLAUDE_PLUGIN_ROOT}/../node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code aipilot"
+            "command": "bun $HOME/.claude/plugins/marketplaces/fusengine-plugins/plugins/node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code aipilot"
           }
         ]
       }
@@ -55,7 +55,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bun ${CLAUDE_PLUGIN_ROOT}/../node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code aipilot"
+            "command": "bun $HOME/.claude/plugins/marketplaces/fusengine-plugins/plugins/node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code aipilot"
           }
         ]
       }
