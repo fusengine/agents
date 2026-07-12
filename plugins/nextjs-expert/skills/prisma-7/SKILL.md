@@ -313,6 +313,21 @@ Exclude fields globally or per-query. Perfect for passwords and sensitive data.
 | From Sequelize | `migrate-from-sequelize.md` |
 | From Drizzle | `migrate-from-drizzle.md` |
 
+### TypeScript Interfaces (SOLID)
+
+`references/interfaces/` holds SOLID-compliant type definitions for Prisma 7 schema design, separated from implementation. Load when writing or reviewing typed schema code:
+
+| Need | Reference |
+|------|-----------|
+| Overview of all interface files | `interfaces/INDEX.md` |
+| Schema types: `GeneratorConfig`, `ModelDefinition`, `FieldAttribute`, `EnumDefinition` | `interfaces/schema.types.md` |
+| Data modeling types: normalization, cardinality | `interfaces/data-modeling.types.md` |
+| Enum types: value definitions, status/role patterns | `interfaces/enums.types.md` |
+| Field attribute types: identity, unique, default, mapping | `interfaces/field-attributes.types.md` |
+| Model attribute types: composite keys, composite indexes | `interfaces/model-attributes.types.md` |
+| Relation types: one-to-one, referential actions, cascade | `interfaces/relations.types.md` |
+| Migration types: workflow, deploy, seeding | `interfaces/migrations.types.md` |
+
 ---
 
 ## Best Practices

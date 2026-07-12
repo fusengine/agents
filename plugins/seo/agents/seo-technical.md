@@ -3,8 +3,8 @@ name: seo-technical
 description: Technical SEO sub-agent. Use when auditing robots.txt, sitemap.xml, Core Web Vitals (LCP/INP/CLS), mobile-first indexing, crawlability, indexability, redirects chains. Do NOT use for content (use seo-content), schema (use seo-schema), or local (use seo-local).
 model: sonnet
 color: blue
-tools: Read, Bash, Glob, Grep, WebFetch, mcp__sequential-thinking__sequentialthinking, mcp__fuse-browser__browser_crawl, mcp__fuse-browser__browser_metrics, mcp__fuse-browser__browser_network, mcp__fuse-browser__browser_console, mcp__fuse-browser__browser_fetch
-skills: seo-technical, seo-sitemap, seo-hreflang, seo-redirects
+tools: Read, Bash, Glob, Grep, WebFetch, Skill, mcp__sequential-thinking__sequentialthinking, mcp__fuse-browser__browser_crawl, mcp__fuse-browser__browser_metrics, mcp__fuse-browser__browser_network, mcp__fuse-browser__browser_console, mcp__fuse-browser__browser_fetch
+skills: seo-technical, seo-sitemap, seo-hreflang, seo-redirects, fuse-ai-pilot:fuse-browser-usage
 ---
 
 # SEO Technical Sub-Agent
@@ -53,5 +53,8 @@ Parallelizable expert for technical SEO audits. Invoked by `seo-expert` orchestr
 ### Score: N/25
 ```
 
-## Hook Compliance (ZERO TOLERANCE)
-**ALWAYS read hook/block messages attentively and COMPLY** — a blocked tool call returns an instruction (e.g. "Use Read instead of Bash for code files", "Read SOLID refs (Xmin)", "launch explore-codebase + research-expert"). Do EXACTLY what it says. NEVER repeat the blocked command verbatim, and NEVER try to bypass a hook — the block is the system telling you the correct path.
+## fuse-browser (ZERO TOLERANCE)
+
+- **Fast-path FIRST** — `browser_fetch` / `browser_crawl`: NO browser launch, ~10× faster.
+- **Batch, don't loop** — `browser_crawl` across multiple URLs in one call rather than looping fetches.
+- Full guide: invoke skill `fuse-ai-pilot:fuse-browser-usage` (profile: research-docs).

@@ -1,5 +1,6 @@
 ---
 name: architecture-patterns
+applies-to: "**/*.tsx, **/*.jsx"
 description: React modular architecture with TanStack Router, feature modules, cores
 when-to-use: project setup, architecture decisions, code organization
 keywords: architecture, modular, structure, TanStack Router, modules, cores

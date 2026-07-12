@@ -1,5 +1,6 @@
 ---
 name: refactoring-guide
+applies-to: "**/*.php"
 description: Step-by-step guide for refactoring legacy code to SOLID
 keywords: refactoring, migration, legacy, solid, extraction
 ---

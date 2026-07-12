@@ -1,6 +1,6 @@
 {
   "name": "fuse-changelog",
-  "version": "1.0.9",
+  "version": "1.0.11",
   "description": "Claude Code update watcher: changelog tracking, breaking changes detection, community pulse via Exa, plugin compatibility analysis",
   "author": {
     "name": "Fusengine",
@@ -10,5 +10,12 @@
   "homepage": "https://github.com/fusengine/agents",
   "repository": "https://github.com/fusengine/agents",
   "license": "MIT",
-  "keywords": ["changelog", "updates", "breaking-changes", "community", "pulse", "watcher"]
+  "keywords": [
+    "changelog",
+    "updates",
+    "breaking-changes",
+    "community",
+    "pulse",
+    "watcher"
+  ]
 }

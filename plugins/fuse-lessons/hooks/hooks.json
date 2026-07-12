@@ -1,12 +1,12 @@
 {
-  "_description": "fuse-lessons 4 events: SessionStart/SubagentStart inject MEMORY/LESSON.md, Stop reminds (5min throttle) to write a compact lesson, PostToolUse (Write|Edit|MultiEdit) marks the write to reset the throttle.",
+  "_description": "fuse-lessons 4 events (harness lessons scope): SessionStart/SubagentStart inject MEMORY/LESSON.md, Stop reminds (5min throttle) to write a compact lesson, PostToolUse (Write|Edit|MultiEdit) marks the write to reset the throttle.",
   "hooks": {
     "SessionStart": [
       {
         "hooks": [
           {
             "type": "command",
-            "command": "bun ${CLAUDE_PLUGIN_ROOT}/scripts/handlers/inject-memory.ts"
+            "command": "bun ${CLAUDE_PLUGIN_ROOT}/../node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code lessons || true"
           }
         ]
       }
@@ -16,7 +16,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bun ${CLAUDE_PLUGIN_ROOT}/scripts/handlers/inject-memory.ts"
+            "command": "bun ${CLAUDE_PLUGIN_ROOT}/../node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code lessons || true"
           }
         ]
       }
@@ -26,7 +26,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bun ${CLAUDE_PLUGIN_ROOT}/scripts/handlers/remind-write.ts"
+            "command": "bun ${CLAUDE_PLUGIN_ROOT}/../node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code lessons || true"
           }
         ]
       }
@@ -37,7 +37,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bun ${CLAUDE_PLUGIN_ROOT}/scripts/handlers/mark-write.ts"
+            "command": "bun ${CLAUDE_PLUGIN_ROOT}/../node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code lessons || true"
           }
         ]
       }

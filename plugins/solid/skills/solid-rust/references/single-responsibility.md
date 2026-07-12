@@ -1,5 +1,6 @@
 ---
 name: Single Responsibility Principle (SRP)
+applies-to: "**/*.rs"
 description: SRP for Rust - Handler/Service/Repository separation with layer responsibilities
 when-to-use: Designing modular features, splitting concerns across layers, avoiding fat structs
 keywords: [SRP, single responsibility, handler, service, repository, layers, separation of concerns]

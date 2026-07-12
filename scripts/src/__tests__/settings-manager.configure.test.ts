@@ -30,10 +30,10 @@ describe("settings-manager / configure", () => {
 			);
 		});
 
-		test("replaces existing hooks configuration", () => {
+		test("preserves user hook types not managed by fusengine", () => {
 			const settings = { hooks: { CustomHook: [{ old: "config" }] } };
-			const result = configureHooks(settings, "/loader.ts");
-			expect(result.hooks?.CustomHook).toBeUndefined();
+			const result = configureHooks(settings, "/x/hooks-loader.ts");
+			expect(result.hooks?.CustomHook).toEqual([{ old: "config" }]);
 			expect(result.hooks?.PreToolUse).toBeDefined();
 		});
 	});

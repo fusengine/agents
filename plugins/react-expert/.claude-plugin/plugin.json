@@ -1,6 +1,6 @@
 {
   "name": "fuse-react",
-  "version": "1.0.14",
+  "version": "1.0.16",
   "description": "Expert React 19 with hooks, TanStack Router, Zustand, React Hook Form, Testing Library, shadcn/ui, and SOLID principles",
   "author": {
     "name": "Fusengine",
@@ -10,5 +10,14 @@
   "homepage": "https://github.com/fusengine/agents",
   "repository": "https://github.com/fusengine/agents",
   "license": "MIT",
-  "keywords": ["react", "react-19", "hooks", "tanstack-router", "zustand", "shadcn", "testing-library", "solid"]
+  "keywords": [
+    "react",
+    "react-19",
+    "hooks",
+    "tanstack-router",
+    "zustand",
+    "shadcn",
+    "testing-library",
+    "solid"
+  ]
 }

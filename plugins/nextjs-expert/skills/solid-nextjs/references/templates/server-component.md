@@ -1,5 +1,6 @@
 ---
 name: server-component-template
+applies-to: "**/app/**/*.tsx, **/app/**/*.ts, **/pages/**/*.tsx, **/pages/**/*.ts"
 description: Server Component template with data fetching, Suspense, and proper typing
 ---
 

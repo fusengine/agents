@@ -1,5 +1,6 @@
 ---
 name: liskov-substitution
+applies-to: "**/*.tsx, **/*.jsx"
 description: LSP Guide - Contract compliance and behavioral subtyping
 when-to-use: creating interfaces, implementing contracts, testing substitutability
 keywords: liskov substitution, LSP, contracts, subtyping, implementations

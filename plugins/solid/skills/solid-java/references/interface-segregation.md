@@ -1,5 +1,6 @@
 ---
 name: interface-segregation
+applies-to: "**/*.java, **/*.kt"
 description: Interface Segregation Principle for Java - Small focused interfaces, role-based
 when-to-use: fat interfaces, dependency management, interface design
 keywords: ISP, interface design, role-based, composition, Java

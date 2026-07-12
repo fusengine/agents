@@ -1,5 +1,6 @@
 ---
 name: view-template
+applies-to: "**/*.swift"
 description: Complete SwiftUI View template with subviews and #Preview
 when-to-use: creating new views, splitting fat views
 keywords: view, SwiftUI, template, preview, subview

@@ -1,6 +1,6 @@
 ---
 name: verification
-description: Use when marking a task as complete, finishing a feature, or claiming a bug is fixed. Ensures functional resolution is verified with evidence before closing.
+description: "Use when marking a task as complete, finishing a feature, or claiming a bug is fixed. Ensures functional resolution is verified with evidence before closing. Do NOT use for: lint/type/code-quality validation (use code-quality / sniper AFTER functional verification passes)."
 ---
 
 # Verification Before Completion
@@ -45,8 +45,10 @@ Run the full test suite. Compare results before and after. No new failures, no n
 **Step 5: Check for side effects**
 Review every modified file. Confirm no accidental changes to unrelated code. Verify dependencies and configuration are unchanged unless required.
 
-**Step 6: Confirm functional resolution**
-State explicitly: "Original problem is FUNCTIONALLY resolved" with a summary of evidence, or list what remains unresolved.
+**Step 6: Confirm functional resolution -- write the artifact**
+Write `.claude/apex/docs/verify-{task-slug}.md` (template: `references/verify-template.md`): every verification step checked, one evidence item per criterion (command output, log excerpt, screenshot path, or diff). A context-only "it works" declaration does not survive a session boundary; the written artifact is the guardrail gates (sniper, later elicitation passes) actually check. Then state explicitly in your response: "Original problem is FUNCTIONALLY resolved" with a summary of evidence, or list what remains unresolved.
+
+`{task-slug}`: derive per `apex-methodology/references/init-tracking.md` (git branch slug or active `TaskCreate` id) -- same pattern used by the `elicitation` skill's artifact.
 
 ---
 
@@ -56,6 +58,7 @@ State explicitly: "Original problem is FUNCTIONALLY resolved" with a summary of 
 |----------|------|---------|
 | Checklist | `references/checklist.md` | Full verification checklist with all categories |
 | Common Misses | `references/common-misses.md` | Frequently forgotten verification items |
+| Artifact Template | `references/verify-template.md` | `verify-{task-slug}.md` template + task-slug derivation |
 
 ---
 
@@ -80,3 +83,4 @@ This ensures functional correctness is confirmed before code quality validation.
 | Full test suite, not just new tests | Catches regressions |
 | Review ALL modified files | Catches accidental side effects |
 | Both verification AND sniper must pass | Quality without correctness is useless |
+| Step 6 writes `verify-{task-slug}.md` to disk | In-context self-review without persisted state regresses across sessions |

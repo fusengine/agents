@@ -1,5 +1,6 @@
 ---
 name: laravel12-structure
+applies-to: "**/*.php"
 description: Laravel 13 standard directory structure with SOLID principles
 when-to-use: Standard Laravel projects without FuseCore modules
 keywords: laravel, structure, directory, app, contracts, services

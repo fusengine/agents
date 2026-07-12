@@ -1,8 +1,9 @@
 ---
 name: Unit and Integration Tests Template
+applies-to: "**/*.rs"
 description: Test templates covering unit tests, integration tests, mocks, and fixtures
 when-to-use: Writing comprehensive tests for services, repositories, and handlers
-keywords: [test, unit test, integration test, mock, fixture, #[tokio::test]]
+keywords: [test, unit test, integration test, mock, fixture, "#[tokio::test]"]
 ---
 
 # Unit and Integration Tests Template

@@ -1,5 +1,6 @@
 ---
 name: interface-template
+applies-to: "**/*.tsx, **/*.jsx"
 description: TypeScript interface templates for React
 ---
 

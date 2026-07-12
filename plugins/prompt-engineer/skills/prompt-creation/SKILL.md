@@ -1,6 +1,6 @@
 ---
 name: prompt-creation
-description: Techniques and templates for creating optimal prompts following Anthropic conventions
+description: "Techniques and templates for creating optimal prompts following Anthropic conventions. Use when: writing a new system prompt from scratch, structuring it with Anthropic's 9-element format, or choosing emphasis levels and few-shot examples."
 allowed-tools: Read, Write
 ---
 
@@ -12,6 +12,8 @@ Skill for creating high-performance prompts following 2025 best practices and An
 
 - [techniques.md](docs/techniques.md) - Structuring techniques (CoT, Few-shot, etc.)
 - [templates.md](docs/templates.md) - Reusable templates
+- [rag-patterns.md](references/rag-patterns.md) - Load when: designing a RAG/retrieval-augmented prompt (chunking strategy, context assembly, citation injection, hallucination prevention)
+- [multimodal-prompting.md](references/multimodal-prompting.md) - Load when: writing a prompt that combines images/screenshots/diagrams with text (vision+text, screenshot-to-code, diagram understanding)
 
 ## Anthropic Official Structure (9 Elements)
 

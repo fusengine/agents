@@ -1,5 +1,6 @@
 ---
 name: liskov-substitution
+applies-to: "**/*.rb"
 description: LSP for Ruby - Duck typing contracts, consistent implementations
 when-to-use: Validating implementations honor contracts, testing polymorphic behavior
 keywords: LSP, liskov substitution, duck typing, contracts, shared examples

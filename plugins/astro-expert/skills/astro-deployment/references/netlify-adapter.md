@@ -1,6 +1,6 @@
 ---
 name: netlify-adapter
-description: @astrojs/netlify adapter — Edge Functions, Netlify Forms, Image CDN
+description: "@astrojs/netlify adapter — Edge Functions, Netlify Forms, Image CDN"
 when-to-use: Deploying Astro to Netlify platform
 keywords: Netlify, Edge Functions, Deno, netlify.toml, forms
 priority: medium

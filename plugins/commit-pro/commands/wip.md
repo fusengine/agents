@@ -1,6 +1,6 @@
 ---
 description: Work in progress commit. Use for wip, save work, quick save, checkpoint.
-argument-hint: [description] | (empty for default message)
+argument-hint: "[description] | (empty for default message)"
 allowed-tools: Bash(git status:*), Bash(git add:*), Bash(git commit:*)
 disable-model-invocation: false
 ---

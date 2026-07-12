@@ -1,5 +1,6 @@
 ---
 name: php85-features
+applies-to: "**/*.php"
 description: PHP 8.5 features for Laravel development
 when-to-use: Using readonly classes, constructor promotion, pipe operator, strict types
 keywords: php85, readonly, constructor-promotion, pipe-operator, strict-types

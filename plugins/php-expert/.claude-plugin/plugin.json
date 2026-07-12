@@ -1,0 +1,26 @@
+{
+  "name": "fuse-php",
+  "version": "1.0.1",
+  "description": "Expert modern PHP 8.5/8.4 for non-Laravel projects — libraries, standalone Symfony components, Slim, API-first apps, and CLI tools, with PER Coding Style 3.0, PHPStan, and SOLID principles",
+  "author": {
+    "name": "Fusengine",
+    "email": "hello@fusengine.ch",
+    "url": "https://github.com/fusengine"
+  },
+  "homepage": "https://github.com/fusengine/agents",
+  "repository": "https://github.com/fusengine/agents",
+  "license": "MIT",
+  "keywords": [
+    "php",
+    "php-8.5",
+    "php-8.4",
+    "symfony-components",
+    "slim",
+    "library",
+    "cli",
+    "composer",
+    "per-coding-style",
+    "phpstan",
+    "solid"
+  ]
+}

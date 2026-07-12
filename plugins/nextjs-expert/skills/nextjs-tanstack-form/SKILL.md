@@ -118,6 +118,8 @@ Errors exist at field-level and form-level. Use `field.state.meta.errors` for fi
 | UI integration | [shadcn-integration.md](references/shadcn-integration.md) |
 | TypeScript | [typescript.md](references/typescript.md) |
 | Migration | [migration-rhf.md](references/migration-rhf.md) |
+| Client-side form component | [client-form.md](references/client-form.md) — load when wiring `useActionState` + `mergeForm` in a `'use client'` form component |
+| Server-side validation | [server-validation.md](references/server-validation.md) — load when writing `createServerValidate` + `ServerValidateError` in a Server Action |
 
 ---
 

@@ -1,5 +1,6 @@
 ---
 name: contract
+applies-to: "**/*.rb"
 description: Duck typing contract module defining expected interface
 when-to-use: Defining service interfaces, repository patterns
 keywords: contract, duck typing, interface, module

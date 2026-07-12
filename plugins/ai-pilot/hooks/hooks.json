@@ -1,126 +1,38 @@
 {
+  "_description": "ai-pilot - APEX context injection + caching, delegated to @fusengine/harness (scope 'aipilot'). Routing is by hook event + agent matcher; the harness dispatches internally. The UserPromptSubmit APEX injection is NOT duplicated here — core-guards already injects the APEX preamble + CLAUDE.md on UserPromptSubmit (the richer ai-pilot variant was merged into the harness's buildApexInstruction). Enforcement (bash-write, APEX gates, SOLID file-size, doc-consulted) is delegated to the harness via core-guards.",
   "hooks": {
-    "UserPromptSubmit": [
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bun ${CLAUDE_PLUGIN_ROOT}/scripts/detect-and-inject-apex.ts"
-          }
-        ]
-      }
-    ],
     "SubagentStart": [
       {
+        "_description": "Single matcher-'' entry: the harness dispatcher (dispatch-aipilot.ts onSubagentStart) already combines apex + lessons + the agent-type-specific cache (explore/doc/test) in ONE call, routing by agent_type internally. Extra per-agent entries here would match ALONGSIDE this one and inject the same context twice.",
         "matcher": "",
         "hooks": [
           {
             "type": "command",
-            "command": "bun ${CLAUDE_PLUGIN_ROOT}/scripts/inject-subagent-context.ts"
-          }
-        ]
-      },
-      {
-        "matcher": "explore-codebase",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bun ${CLAUDE_PLUGIN_ROOT}/scripts/explore-cache-check.ts"
-          }
-        ]
-      },
-      {
-        "matcher": "research-expert",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bun ${CLAUDE_PLUGIN_ROOT}/scripts/doc-cache-inject.ts"
-          }
-        ]
-      },
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bun ${CLAUDE_PLUGIN_ROOT}/scripts/lessons-cache-inject.ts"
-          }
-        ]
-      },
-      {
-        "matcher": "sniper",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bun ${CLAUDE_PLUGIN_ROOT}/scripts/test-cache-inject.ts"
+            "command": "bun ${CLAUDE_PLUGIN_ROOT}/../node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code aipilot"
           }
         ]
       }
     ],
     "PreToolUse": [
       {
-        "matcher": "Bash",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/detect-bash-write.py"
-          }
-        ]
-      },
-      {
-        "matcher": "Write|Edit",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bun ${CLAUDE_PLUGIN_ROOT}/scripts/enforce-apex-phases.ts"
-          }
-        ]
-      },
-      {
+        "_description": "Harness: inject APEX context into Task sub-agent prompts when .claude/apex/ exists. Resolves the harness binary from the root plugins/node_modules (single install).",
         "matcher": "Task",
         "hooks": [
           {
             "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/inject-apex-context.py"
+            "command": "bun ${CLAUDE_PLUGIN_ROOT}/../node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code"
           }
         ]
       }
     ],
     "SubagentStop": [
       {
-        "matcher": "sniper",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bun ${CLAUDE_PLUGIN_ROOT}/scripts/cache-sniper-lessons.ts"
-          }
-        ]
-      },
-      {
-        "matcher": "sniper",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bun ${CLAUDE_PLUGIN_ROOT}/scripts/cache-test-results.ts"
-          }
-        ]
-      },
-      {
-        "matcher": "research-expert",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bun ${CLAUDE_PLUGIN_ROOT}/scripts/cache-doc-from-transcript.ts"
-          }
-        ]
-      },
-      {
+        "_description": "Single matcher-'' entry (Python parity: check-solid-from-transcript ran with matcher '' for EVERY agent). The dispatcher (onSubagentStop) routes internally: research-expert -> doc cache, sniper -> lessons + test caches, then the universal SOLID transcript check for all agents. Per-agent entries here would both narrow the SOLID check AND double-fire the cache writers.",
         "matcher": "",
         "hooks": [
           {
             "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/check-solid-from-transcript.py"
+            "command": "bun ${CLAUDE_PLUGIN_ROOT}/../node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code aipilot"
           }
         ]
       }
@@ -131,36 +43,19 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bun ${CLAUDE_PLUGIN_ROOT}/scripts/cache-analytics-save.ts"
+            "command": "bun ${CLAUDE_PLUGIN_ROOT}/../node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code aipilot"
           }
         ]
       }
     ],
     "PostToolUse": [
       {
-        "matcher": "Write|Edit",
+        "_description": "Write|Edit reaches checkSolidCompliance (Python parity: check-solid-compliance.py matcher 'Write|Edit'); TaskCreate|TaskUpdate reaches syncTaskTracking. Same dispatcher (aipilotPostToolUse) routes by tool_name.",
+        "matcher": "TaskCreate|TaskUpdate|Write|Edit",
         "hooks": [
           {
             "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/check-solid-compliance.py"
-          }
-        ]
-      },
-      {
-        "matcher": "mcp__.*context7|mcp__.*exa|Read",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/track-doc-consultation.py"
-          }
-        ]
-      },
-      {
-        "matcher": "TaskCreate|TaskUpdate",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bun ${CLAUDE_PLUGIN_ROOT}/scripts/sync-task-tracking.ts"
+            "command": "bun ${CLAUDE_PLUGIN_ROOT}/../node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code aipilot"
           }
         ]
       }

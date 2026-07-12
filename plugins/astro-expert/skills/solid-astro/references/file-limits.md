@@ -1,3 +1,8 @@
+---
+name: file-limits
+applies-to: "**/*.astro"
+---
+
 # File Size Limits in Astro
 
 ## The Rule

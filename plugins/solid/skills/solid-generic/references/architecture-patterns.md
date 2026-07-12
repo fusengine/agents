@@ -5,7 +5,7 @@ when-to-use: project setup, architecture decisions, code organization
 keywords: architecture, modular, structure, TypeScript, Bun, Node, modules
 priority: high
 related: single-responsibility.md, templates/module.md, templates/service.md
-applies-to: "**/*.ts, **/modules/**"
+applies-to: "**/*.ts, **/*.js"
 trigger-on-edit: "modules/, src/"
 level: architecture
 ---

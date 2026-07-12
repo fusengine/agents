@@ -1,5 +1,6 @@
 ---
 name: service-template
+applies-to: "**/*.swift"
 description: Complete Service template with URLSession and protocol conformance
 when-to-use: creating services, API calls, business logic
 keywords: service, URLSession, API, template, Swift

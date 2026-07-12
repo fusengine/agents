@@ -1,5 +1,6 @@
 ---
 name: open-closed
+applies-to: "**/*.swift"
 description: OCP Guide - Protocol-based extensibility for Swift
 when-to-use: adding new providers, auth methods, payment gateways, notification channels
 keywords: open closed, OCP, protocol, extensibility, provider, Swift

@@ -1,5 +1,6 @@
 ---
 name: anti-patterns
+applies-to: "**/*.php"
 description: Common SOLID violations and how to fix them
 when-to-use: Detecting code smells, fat controllers, god classes, concrete coupling
 keywords: code-smells, violations, fat-controller, god-class, refactoring

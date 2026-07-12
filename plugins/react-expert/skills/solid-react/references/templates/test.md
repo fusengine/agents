@@ -1,5 +1,6 @@
 ---
 name: test-template
+applies-to: "**/*.tsx, **/*.jsx"
 description: Vitest + Testing Library test templates
 ---
 

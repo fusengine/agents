@@ -1,6 +1,6 @@
 ---
 name: changelog-scan
-description: Scan Claude Code changelog for new versions, features, and changes. Fetches official docs, parses release notes, and generates structured update report.
+description: "Scan Claude Code changelog for new versions, features, and changes. Fetches official docs, parses release notes, and generates structured update report. Use when: checking for new Claude Code versions, features, or changes since the last known release."
 argument-hint: "[--since <version>]"
 user-invocable: true
 ---
@@ -23,7 +23,9 @@ Fetches and analyzes the official Claude Code changelog to detect new versions a
 
 ## Workflow
 
-1. **Fetch** changelog via WebFetch or scripts/fetch-changelog.sh
+1. **Fetch** changelog via the harness CLI (ported from the old `fetch-changelog` into `@fusengine/harness`):
+   `bun ${CLAUDE_PLUGIN_ROOT}/../node_modules/@fusengine/harness/dist/cli/bin.mjs changelog`
+   It fetches `code.claude.com/docs/en/changelog.md`, parses versions (current MDX `<Update label="X.Y.Z">` format + legacy `## vX.Y.Z` fallback), writes state to `~/.claude/logs/00-changelog/<date>-state.json`, and prints JSON `{latest, new_since_last_check, recent_versions}`. WebFetch on the same URL is the manual fallback.
 2. **Parse** version numbers and release dates
 3. **Extract** changes per version (features, fixes, breaking)
 4. **Compare** with last known version from state file

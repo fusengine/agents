@@ -1,5 +1,5 @@
 {
-  "_description": "Claude Rules - Global rules injection for all sessions",
+  "_description": "Claude Rules - Global rules injection for all sessions (delegated to @fusengine/harness, scope 'rules'; reads ${CLAUDE_PLUGIN_ROOT}/rules/*.md)",
   "_version": "1.0.0",
 
   "hooks": {
@@ -9,9 +9,22 @@
         "matcher": "",
         "hooks": [
           {
-            "_description": "Load and inject rules/*.md into additionalContext",
+            "_description": "Load and inject rules/*.md into additionalContext (harness reads CLAUDE_PLUGIN_ROOT)",
             "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/inject-rules.py ${CLAUDE_PLUGIN_ROOT}"
+            "command": "bun ${CLAUDE_PLUGIN_ROOT}/../node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code rules"
+          }
+        ]
+      }
+    ],
+    "SubagentStart": [
+      {
+        "_description": "Inject all rules into each subagent's context at spawn (requires @fusengine/harness >= 0.1.63 which routes scope 'rules' on SubagentStart)",
+        "matcher": "",
+        "hooks": [
+          {
+            "_description": "Load and inject rules/*.md into additionalContext (harness reads CLAUDE_PLUGIN_ROOT)",
+            "type": "command",
+            "command": "bun ${CLAUDE_PLUGIN_ROOT}/../node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code rules"
           }
         ]
       }
@@ -22,9 +35,9 @@
         "matcher": "",
         "hooks": [
           {
-            "_description": "Reload rules/*.md into additionalContext on each prompt",
+            "_description": "Reload rules/*.md into additionalContext on each prompt (harness reads CLAUDE_PLUGIN_ROOT)",
             "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/inject-rules.py ${CLAUDE_PLUGIN_ROOT}"
+            "command": "bun ${CLAUDE_PLUGIN_ROOT}/../node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code rules"
           }
         ]
       }

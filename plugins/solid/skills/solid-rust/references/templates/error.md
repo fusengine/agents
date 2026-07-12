@@ -1,5 +1,6 @@
 ---
 name: Custom Error Type Template
+applies-to: "**/*.rs"
 description: Error types with thiserror, conversion implementations, and HTTP responses
 when-to-use: Defining custom error types for modules, error handling patterns
 keywords: [error, thiserror, Error trait, custom errors, error conversion]

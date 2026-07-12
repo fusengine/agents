@@ -5,7 +5,7 @@ when-to-use: creating interfaces, type contracts, API boundaries
 keywords: interface, contract, type, boundary, abstraction
 priority: medium
 related: interface-segregation.md, dependency-inversion.md
-applies-to: "**/*interface*.ts, **/*.interface.ts"
+applies-to: "**/*.ts, **/*.js"
 trigger-on-edit: "interfaces/"
 level: template
 ---

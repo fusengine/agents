@@ -1,68 +1,27 @@
 {
-  "_description": "Next.js Expert - Next.js 16 validation hooks",
-  "_version": "1.0.0",
-  
+  "_description": "Next.js Expert — SOLID/skill/DRY/modular/file-size enforcement via @fusengine/harness (framework-routed by applies-to)",
+  "_version": "2.0.0",
   "hooks": {
     "PreToolUse": [
       {
-        "_description": "Block Next.js edits if skill not consulted",
+        "_description": "Harness: framework-routed SOLID/skill/DRY/file-size/interface enforcement before Write/Edit",
         "matcher": "Write|Edit",
         "hooks": [
           {
             "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/check-nextjs-skill.py"
-          }
-        ]
-      },
-      {
-        "_description": "Validate Next.js SOLID principles before Write/Edit",
-        "matcher": "Write|Edit",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/validate-nextjs-solid.py"
-          }
-        ]
-      },
-      {
-        "_description": "Enforce modular architecture (modules/)",
-        "matcher": "Write|Edit",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/validate-nextjs-modular.py"
-          }
-        ]
-      },
-      {
-        "_description": "DRY duplication scanner",
-        "matcher": "Write|Edit",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/detect-duplication.py"
+            "command": "bun ${CLAUDE_PLUGIN_ROOT}/../node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code"
           }
         ]
       }
     ],
     "PostToolUse": [
       {
-        "_description": "Track skill file reads",
-        "matcher": "Read",
+        "_description": "Harness: record doc/ref/agent activity feeding the APEX gates",
+        "matcher": "",
         "hooks": [
           {
             "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/track-skill-read.py"
-          }
-        ]
-      },
-      {
-        "_description": "Track MCP research calls",
-        "matcher": "mcp__.*",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/track-mcp-research.py"
+            "command": "bun ${CLAUDE_PLUGIN_ROOT}/../node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code"
           }
         ]
       }

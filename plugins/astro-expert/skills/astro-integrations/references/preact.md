@@ -1,6 +1,6 @@
 ---
 name: preact
-description: @astrojs/preact setup — lightweight React alternative, signals, options
+description: "@astrojs/preact setup — lightweight React alternative, signals, options"
 when-to-use: adding Preact components (smaller bundle than React)
 keywords: preact, @astrojs/preact, signals, lightweight, setup
 priority: low

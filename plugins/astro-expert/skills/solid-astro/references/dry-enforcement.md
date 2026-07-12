@@ -1,3 +1,8 @@
+---
+name: dry-enforcement
+applies-to: "**/*.astro"
+---
+
 # DRY Enforcement in Astro
 
 ## Pre-Code Checklist (MANDATORY)

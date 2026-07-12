@@ -1,6 +1,6 @@
 # Fusengine Claude Code Plugins
 
-![version](https://img.shields.io/badge/version-v1.38.85-blue?style=flat-square) ![plugins](https://img.shields.io/badge/plugins-19-brightgreen?style=flat-square) ![agents](https://img.shields.io/badge/agents-29-blueviolet?style=flat-square) ![skills](https://img.shields.io/badge/skills-158-orange?style=flat-square) ![License: MIT](https://img.shields.io/badge/License-MIT-yellow?style=flat-square) ![platform](https://img.shields.io/badge/platform-macOS%20%7C%20Linux-lightgrey?style=flat-square) ![Windows](https://img.shields.io/badge/Windows-soon-orange?style=flat-square)
+![version](https://img.shields.io/badge/version-v1.38.88-blue?style=flat-square) ![plugins](https://img.shields.io/badge/plugins-24-brightgreen?style=flat-square) ![agents](https://img.shields.io/badge/agents-34-blueviolet?style=flat-square) ![skills](https://img.shields.io/badge/skills-195-orange?style=flat-square) ![License: MIT](https://img.shields.io/badge/License-MIT-yellow?style=flat-square) ![platform](https://img.shields.io/badge/platform-macOS%20%7C%20Linux-lightgrey?style=flat-square) ![Windows](https://img.shields.io/badge/Windows-soon-orange?style=flat-square)
 
 > A plugin ecosystem that turns Claude Code into a supervised, multi-agent development environment. Expert agents write code, hooks enforce quality in real-time, skills inject framework-specific knowledge, and **intelligent cartography auto-maps plugins and projects** — so Claude never guesses, never duplicates, and always follows your architecture.
 
@@ -25,7 +25,7 @@
 /plugin marketplace add fusengine/agents
 
 # Install all plugins
-/plugin install fuse-ai-pilot fuse-commit-pro fuse-laravel fuse-nextjs fuse-react fuse-astro fuse-swift-apple-expert fuse-solid fuse-tailwindcss fuse-design fuse-prompt-engineer fuse-shadcn-ui fuse-security fuse-changelog fuse-lessons
+/plugin install fuse-ai-pilot fuse-commit-pro fuse-laravel fuse-nextjs fuse-react fuse-astro fuse-swift-apple-expert fuse-solid fuse-tailwindcss fuse-design fuse-prompt-engineer fuse-shadcn-ui fuse-security fuse-changelog fuse-lessons fuse-tanstack-start fuse-typescript fuse-php fuse-rust fuse-go
 
 # Setup (hooks + API keys + MCP servers)
 ~/.claude/plugins/marketplaces/fusengine-plugins/setup.sh        # macOS / Linux
@@ -65,6 +65,11 @@ Each plugin provides an **expert agent** that auto-activates when it detects the
 | [fuse-tailwindcss](docs/plugins/tailwindcss.md) | `tailwind.config.*` | v4.1 CSS-first config, @theme, @utility, OKLCH colors |
 | [fuse-design](docs/plugins/design.md) | Any UI task | Gemini Design MCP + shadcn/ui + WCAG 2.2 accessibility |
 | [fuse-shadcn-ui](docs/plugins/shadcn.md) | `components.json` | Radix/Base UI detection, registry, theming, migration |
+| [fuse-tanstack-start](docs/plugins/tanstack-start.md) | `@tanstack/react-start` | Server functions, selective SSR, middleware, server routes, Nitro deploy |
+| [fuse-typescript](docs/plugins/typescript.md) | `tsconfig.json` (no framework) | Pure TS 6.0, Node 24 LTS / Bun 1.3, strict typing, ESM packaging |
+| [fuse-php](docs/plugins/php.md) | `composer.json` (no `artisan`) | PHP 8.5, PER-CS 3.0, PHPStan, PSR, Slim / Symfony components |
+| [fuse-rust](docs/plugins/rust.md) | `Cargo.toml` | Rust 1.96+, 2024 edition, ownership, tokio / axum, clippy-clean |
+| [fuse-go](docs/plugins/go.md) | `go.mod` | Go 1.26+, concurrency, backend services, golangci-lint v2 |
 
 ### Quality & Security — Automated Enforcement
 

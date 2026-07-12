@@ -1,5 +1,6 @@
 ---
 name: component-template
+applies-to: "**/*.tsx, **/*.jsx"
 description: React functional component template (< 50 lines)
 ---
 

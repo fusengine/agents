@@ -1,6 +1,6 @@
 ---
 name: security-headers
-description: Verify and configure HTTP security headers (CSP, HSTS, CORS, X-Frame-Options, etc). Checks current configuration and generates framework-specific fixes.
+description: "Verify and configure HTTP security headers (CSP, HSTS, CORS, X-Frame-Options, etc). Checks current configuration and generates framework-specific fixes. Use when: verifying or configuring HTTP security headers for a web application (Next.js, Laravel, Express, Django)."
 argument-hint: "[framework]"
 user-invocable: true
 ---

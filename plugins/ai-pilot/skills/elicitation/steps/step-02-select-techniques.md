@@ -32,6 +32,12 @@ next_step: steps/step-03-apply-review.md
 
 ## YOUR TASK:
 
+**Before selecting**: if `.claude/apex/elicit-profile.md` exists, apply its
+`Exclude` / `Always Apply` / `Add for Code Type` precedence (see
+`references/elicit-profile.md`) to whatever this step would otherwise select.
+Also apply `{prior_artifact}` from Step 0 if present: deselect `"pass"`
+techniques by default, prioritize `"fail"`/`"deferred"` ones.
+
 ### Mode: MANUAL
 
 #### 1. Present 5 Most Relevant Techniques
@@ -80,6 +86,7 @@ Parse user input:
 | Database | N+1 Detection, Migration Safety, Query Optimization |
 | UI Components | Accessibility Audit, Edge Cases, Error States |
 | Business Logic | SOLID Check, Edge Cases, Unit Test Coverage |
+| Config/Docs/Plugin | CQ-01, DOC-01, INT-01 + strictest-parser validation |
 | Mixed | Top technique from each detected category |
 
 #### 2. Silent Selection

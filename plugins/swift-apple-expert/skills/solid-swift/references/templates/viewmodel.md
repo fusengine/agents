@@ -1,5 +1,6 @@
 ---
 name: viewmodel-template
+applies-to: "**/*.swift"
 description: Complete @Observable ViewModel template with @MainActor
 when-to-use: creating ViewModels, state management, service injection
 keywords: viewmodel, observable, MainActor, template, Swift

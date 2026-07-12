@@ -1,5 +1,6 @@
 ---
 name: single-responsibility
+applies-to: "**/*.swift"
 description: SRP Guide - One responsibility per type for Swift and SwiftUI
 when-to-use: fat views, monolithic ViewModels, views doing API calls, splitting files
 keywords: single responsibility, SRP, view, viewmodel, service, split, Swift

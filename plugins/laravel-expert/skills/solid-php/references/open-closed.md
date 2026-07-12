@@ -1,5 +1,6 @@
 ---
 name: open-closed
+applies-to: "**/*.php"
 description: OCP Guide - Extend via interfaces and new implementations for Laravel
 when-to-use: adding payment methods, notification channels, export formats
 keywords: open closed, OCP, interface, implementation, strategy, laravel

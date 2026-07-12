@@ -1,11 +1,13 @@
 ---
 name: code-quality
-description: Code quality validation with linters, SOLID principles, DRY detection, error detection, and architecture compliance across all languages.
+description: "Code quality validation with linters, SOLID principles, DRY detection, error detection, and architecture compliance across all languages. Use when: validating code quality after modifications — SOLID compliance, DRY duplication, linter errors, or architecture violations. Do NOT use for: verifying the original problem is functionally resolved (run verification FIRST — code-quality validates quality AFTER functional verification passes)."
 argument-hint: "[file-or-directory]"
 user-invocable: true
 ---
 
 # Code Quality Skill
+
+Canonical workflow definition: `agents/sniper.md` (this skill and the sniper agent share the same 7-phase workflow — update both together).
 
 ## 🚨 MANDATORY 7-PHASE WORKFLOW
 

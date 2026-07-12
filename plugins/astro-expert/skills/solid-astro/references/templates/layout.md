@@ -1,3 +1,8 @@
+---
+name: layout
+applies-to: "**/*.astro"
+---
+
 # Template: Layout Component with Slots
 
 SOLID-compliant layout with named slots and JSDoc (< 80 lines).

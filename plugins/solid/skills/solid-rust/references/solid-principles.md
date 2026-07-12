@@ -1,5 +1,6 @@
 ---
 name: solid-principles
+applies-to: "**/*.rs"
 description: Quick reference for all 5 SOLID principles applied to Rust 2024+
 when-to-use: overview of SOLID, quick reference, principle selection
 keywords: SOLID, overview, Rust, principles, quick reference

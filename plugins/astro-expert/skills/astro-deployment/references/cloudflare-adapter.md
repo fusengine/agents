@@ -1,6 +1,6 @@
 ---
 name: cloudflare-adapter
-description: @astrojs/cloudflare v13+ adapter for Astro 6 — Workers, D1, KV, R2, wrangler config
+description: "@astrojs/cloudflare v13+ adapter for Astro 6 — Workers, D1, KV, R2, wrangler config"
 when-to-use: Deploying Astro to Cloudflare Workers with platform bindings
 keywords: Cloudflare, Workers, D1, KV, R2, wrangler, platformProxy, astrojs/cloudflare
 priority: high

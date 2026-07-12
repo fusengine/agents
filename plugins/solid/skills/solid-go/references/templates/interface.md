@@ -1,5 +1,6 @@
 ---
 name: interface
+applies-to: "**/*.go"
 description: Interface template - Port definition (Go interfaces), 1-3 methods, copy-paste ready
 when-to-use: defining port interfaces, creating contracts, interface design, segregated interfaces
 keywords: interface, ports, template, contract, 1-3 methods, Go idiom

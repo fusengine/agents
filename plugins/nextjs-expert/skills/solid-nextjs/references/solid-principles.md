@@ -1,5 +1,6 @@
 ---
 name: solid-principles
+applies-to: "**/app/**/*.tsx, **/app/**/*.ts, **/pages/**/*.tsx, **/pages/**/*.ts"
 description: Overview of 5 SOLID principles for Next.js modular architecture
 when-to-use: understanding SOLID, choosing which principle to apply, architecture overview
 keywords: SOLID, principles, architecture, design patterns, Next.js, modular

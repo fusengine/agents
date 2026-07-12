@@ -1,6 +1,6 @@
 ---
 description: Amend last commit safely. Use for amend, fix last commit, update commit, modify commit.
-argument-hint: [new-message] | (empty to keep same message)
+argument-hint: "[new-message] | (empty to keep same message)"
 allowed-tools: Bash(git status:*), Bash(git log:*), Bash(git add:*), Bash(git commit:*)
 disable-model-invocation: false
 ---

@@ -1,5 +1,6 @@
 ---
 name: adapter-template
+applies-to: "**/app/**/*.tsx, **/app/**/*.ts, **/pages/**/*.tsx, **/pages/**/*.ts"
 description: Adapter pattern template for external service integration
 ---
 

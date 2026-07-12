@@ -11,6 +11,8 @@ template: null
 
 # Server-Side Rendering
 
+> **Scope**: This file covers SSR from the **TanStack Router** perspective. For the full-stack **TanStack Start** framework (server functions, selective SSR, middleware, server routes, execution model, deployment), the dedicated `fuse-tanstack-start` plugin is the canonical reference — see its `start-core`, `start-server-functions`, `start-execution-model`, and `start-deployment` skills. Use this file for router-level SSR concepts only.
+
 > **Note**: SSR is optional for TanStack Router. For React SPAs, see [installation.md](installation.md).
 
 ## TanStack Start

@@ -56,4 +56,6 @@ docs/plugins/memory.md
 MEMORY/
 plugins/design-expert/scripts/.ruff_cache
 test-design
-.audit
+.audit/
+.harness/
+_archive

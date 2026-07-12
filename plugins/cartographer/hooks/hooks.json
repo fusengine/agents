@@ -1,30 +1,28 @@
 {
-  "_description": "Cartographer - Auto-generate ecosystem map + track enrichments",
-  "_version": "1.1.0",
+  "_description": "Cartographer - Auto-generate ecosystem + project map (harness carto scope) + track enrichments",
+  "_version": "1.2.0",
 
   "hooks": {
     "SessionStart": [
       {
-        "_description": "Generate ecosystem map from all installed plugins",
+        "_description": "Harness carto scope: project map (.cartographer/project) + plugin ecosystem map (.cartographer) + nav context. Ports generate_project_map.py + generate_map.py.",
         "matcher": "",
         "hooks": [
           {
-            "_description": "Run generate_map.py (plugins) + generate_project_map.py (project)",
             "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/generate_map.py ${CLAUDE_PLUGIN_ROOT}/.. ${CLAUDE_PLUGIN_ROOT}/../.cartographer || true; python3 ${CLAUDE_PLUGIN_ROOT}/scripts/generate_project_map.py || true"
+            "command": "bun ${CLAUDE_PLUGIN_ROOT}/../node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code carto || true"
           }
         ]
       }
     ],
     "PostToolUse": [
       {
-        "_description": "Track enriched descriptions in .enriched.json sidecar",
+        "_description": "Harness: save descriptions from an edited .cartographer index.md to .enriched.json (ports track-enrichment.py)",
         "matcher": "Edit|Write",
         "hooks": [
           {
-            "_description": "Save descriptions from edited index.md to .enriched.json",
             "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/track-enrichment.py || true"
+            "command": "bun ${CLAUDE_PLUGIN_ROOT}/../node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code carto || true"
           }
         ]
       }

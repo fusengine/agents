@@ -1,5 +1,6 @@
 ---
 name: service-template
+applies-to: "**/*.tsx, **/*.jsx"
 description: Service template with dependency injection (< 40 lines)
 ---
 

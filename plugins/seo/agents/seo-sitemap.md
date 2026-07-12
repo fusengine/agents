@@ -1,10 +1,10 @@
 ---
 name: seo-sitemap
 description: Sitemap & robots.txt sub-agent. Use when analyzing or generating sitemap.xml, sitemap-news.xml, sitemap-image.xml, sitemap-video.xml, or robots.txt. Do NOT use for redirect analysis (use seo-redirects).
-model: haiku
+model: sonnet
 color: gray
-tools: Read, Edit, Write, Bash, WebFetch, mcp__fuse-browser__browser_crawl, mcp__fuse-browser__browser_extract, mcp__fuse-browser__browser_fetch
-skills: seo-sitemap
+tools: Read, Edit, Write, Bash, WebFetch, Skill, mcp__fuse-browser__browser_crawl, mcp__fuse-browser__browser_extract, mcp__fuse-browser__browser_fetch
+skills: seo-sitemap, fuse-ai-pilot:fuse-browser-usage
 ---
 
 # SEO Sitemap Sub-Agent
@@ -45,5 +45,8 @@ Parallelizable expert for sitemap and robots.txt.
 - Missing URLs: N
 ```
 
-## Hook Compliance (ZERO TOLERANCE)
-**ALWAYS read hook/block messages attentively and COMPLY** — a blocked tool call returns an instruction (e.g. "Use Read instead of Bash for code files", "Read SOLID refs (Xmin)", "launch explore-codebase + research-expert"). Do EXACTLY what it says. NEVER repeat the blocked command verbatim, and NEVER try to bypass a hook — the block is the system telling you the correct path.
+## fuse-browser (ZERO TOLERANCE)
+
+- **Fast-path FIRST** — `browser_fetch` / `browser_crawl`: NO browser launch, ~10× faster.
+- **Deterministic extraction** — `browser_extract` over manual parsing.
+- Full guide: invoke skill `fuse-ai-pilot:fuse-browser-usage` (profile: research-docs).

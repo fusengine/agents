@@ -117,8 +117,8 @@ prompt-engineer/
 
 - [Prompting techniques](skills/prompt-creation/docs/techniques.md)
 - [Reusable templates](skills/prompt-creation/docs/templates.md)
-- [Multi-agent patterns](skills/agent-design/docs/patterns.md)
-- [Recommended workflows](skills/agent-design/docs/workflows.md)
+- [Multi-agent patterns](skills/agent-design/references/patterns.md)
+- [Recommended workflows](skills/agent-design/references/workflows.md)
 
 ## License
 

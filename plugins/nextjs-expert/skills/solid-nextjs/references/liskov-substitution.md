@@ -1,5 +1,6 @@
 ---
 name: liskov-substitution
+applies-to: "**/app/**/*.tsx, **/app/**/*.ts, **/pages/**/*.tsx, **/pages/**/*.ts"
 description: LSP Guide - Ensuring implementations respect interface contracts
 when-to-use: implementing interfaces, multiple providers, contract compliance
 keywords: Liskov, substitution, contract, interface, behavior, LSP

@@ -1,5 +1,6 @@
 ---
 name: error-template
+applies-to: "**/*.java, **/*.kt"
 description: Custom exception hierarchy
 when-to-use: error handling, custom exceptions
 keywords: exception, error, hierarchy

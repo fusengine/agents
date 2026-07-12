@@ -1,5 +1,6 @@
 ---
 name: anti-patterns
+applies-to: "**/*.swift"
 description: Common SOLID violations in Swift with quick fixes
 when-to-use: reviewing code quality, identifying anti-patterns, refactoring
 keywords: anti-patterns, violations, refactoring, SOLID, Swift

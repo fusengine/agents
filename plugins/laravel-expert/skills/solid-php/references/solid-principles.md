@@ -1,5 +1,6 @@
 ---
 name: solid-principles
+applies-to: "**/*.php"
 description: SOLID Principles implementation in Laravel 13 + PHP 8.5
 when-to-use: Understanding SRP, OCP, LSP, ISP, DIP in Laravel context
 keywords: solid, srp, ocp, lsp, isp, dip, principles, clean-code

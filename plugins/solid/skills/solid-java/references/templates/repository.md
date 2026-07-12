@@ -1,5 +1,6 @@
 ---
 name: repository-template
+applies-to: "**/*.java, **/*.kt"
 description: Data access repository layer with JPA
 when-to-use: implementing data access
 keywords: repository, JPA, data access, Spring Data

@@ -1,7 +1,7 @@
 ---
 description: Smart conventional commit with security validation, branch flow enforcement, and auto-detection. Use for git commit, commit changes, save work, stage and commit.
-argument-hint: [message] | [type scope message] | (empty for auto-detection)
-allowed-tools: Bash(git status:*), Bash(git diff:*), Bash(git add:*), Bash(git commit:*), Bash(git log:*), Bash(git tag:*), Bash(git push:*), Bash(git pull:*), Bash(git describe:*), Bash(git branch:*), Bash(git checkout:*), Bash(git rev-parse:*), Bash(git remote:*), Bash(git merge-base:*), Bash(gh pr create:*), Bash(gh pr view:*), Bash(gh pr merge:*), Bash(gh pr checks:*), Bash(gh pr edit:*), Read, Edit
+argument-hint: "[message] | [type scope message] | (empty for auto-detection)"
+allowed-tools: Bash(git status:*), Bash(git diff:*), Bash(git add:*), Bash(git commit:*), Bash(git log:*), Bash(git tag:*), Bash(git push:*), Bash(git pull:*), Bash(git describe:*), Bash(git branch:*), Bash(git checkout:*), Bash(git rev-parse:*), Bash(git remote:*), Bash(git merge-base:*), Bash(git fetch:*), Bash(gh pr create:*), Bash(gh pr view:*), Bash(gh pr merge:*), Bash(gh pr checks:*), Bash(gh pr edit:*), Bash(gh auth:*), Bash(command:*), Read, Edit
 disable-model-invocation: false
 ---
 
@@ -142,22 +142,59 @@ If $ARGUMENTS provided, use as hint for the message.
 
 ### Step 6: Post-Commit (universal)
 
-After step 5 succeeds, execute the `post-commit` skill (CHANGELOG + version bump + git tag).
+After step 5 succeeds, execute the `post-commit` skill (CHANGELOG + version bump only — **no tag here**, see Step 8 for why).
 
 This runs for ALL repos — the skill auto-detects the repo type internally.
 
-### Step 7: Auto-Release (push + PR + CI watch + merge) — automatic when a remote exists
+### Step 7: Auto-Release (push + PR + CI watch + merge)
 
-After post-commit completes, if current branch is a feature branch (not main/master) **and a remote is configured** (`git remote -v` non-empty), run the FULL release automatically — **no Y/N prompts**:
+After post-commit completes, if current branch is a feature branch (not main/master), run the **remote-flow decision tree** below — **no Y/N prompts** in FULL mode.
 
-1. **Push branch + tag** (the `vX.Y.Z` tag created by post-commit):
+#### Remote-flow decision tree (run first, every time)
+
+```
+git remote -v
+```
+
+- **Empty output → LOCAL mode.**
+  No remote at all. STOP after Step 6 — do not push, do not open a PR, do not merge.
+  In this mode, tag right away (see Step 8, LOCAL/DEGRADED branch): local `git tag` only, never pushed automatically.
+  Output explicitly:
+  ```text
+  📍 Pas de remote configuré — rituel distant sauté (push/PR/merge).
+  Commandes manuelles pour plus tard :
+    git remote add origin <url>
+    git push -u origin <current-branch>
+    gh pr create --base main --title "<subject>" --body-file - <<'EOF'
+    <body>
+    EOF
+    (après merge) git tag vX.Y.Z && git push origin vX.Y.Z
+  ```
+
+- **Non-empty output → a remote exists.** Check tooling next:
+  ```bash
+  command -v gh        # exit 0 = gh installed
+  gh auth status        # exit 0 = authenticated
+  ```
+  - **`gh` missing OR `gh auth status` fails → DEGRADED mode.**
+    Still push the branch (git itself doesn't need `gh`):
+    ```bash
+    git push -u origin <current-branch>
+    ```
+    Then STOP — skip PR creation/merge/watch entirely. Never fail silently: state exactly which check failed (`gh` not installed vs. not authenticated) and print the manual commands the user must run once `gh` is available (PR create with `--body-file -` on stdin, merge with `--merge`, then the Step 8 tag sequence). Tag locally per Step 8's LOCAL/DEGRADED branch.
+  - **`gh` present and authenticated → FULL mode.** Proceed with steps 1-4 below.
+
+  In both branches, the first push always uses `-u`: this transparently covers the case where the current branch has no upstream yet (first push sets it) and is a no-op if upstream already exists.
+
+#### FULL mode steps (remote + `gh` OK)
+
+1. **Push branch**:
    ```bash
    git push -u origin <current-branch>
-   git push origin <tag>
    ```
-2. **Create the PR if absent** (else reuse the existing one):
+2. **Create the PR if absent** (else reuse the existing one), body piped via `--body-file -` on stdin — never inline in `--body`, to avoid quoting/escaping issues, and no temp file to write or clean up:
    ```bash
-   gh pr view --json url -q .url 2>/dev/null || gh pr create --base main --title "<commit subject>" --body "$(cat <<'EOF'
+   gh pr view --json url -q .url 2>/dev/null || gh pr create --base main --title "<commit subject>" --body-file - <<'EOF'
    ## Summary
    - <bullets from commit body>
 
@@ -170,14 +207,13 @@ After post-commit completes, if current branch is a feature branch (not main/mas
    ## Breaking changes
    None / <description>
    EOF
-   )"
    ```
-3. **Surveillance + merge auto** — preserve the tag with a **MERGE COMMIT** (never `--squash`/`--rebase`, or the tag dangles off `main`):
+3. **Surveillance + merge auto** — real merge commit, **never squash** (squash rewrites the branch's commits into a brand-new one on `main`; a `--merge` commit keeps them intact, including the bump commit Step 8 tags):
    - Prefer GitHub native auto-merge (merges once required checks pass):
      ```bash
      gh pr merge <pr> --auto --merge --delete-branch
      ```
-   - If auto-merge is not enabled on the repo, watch checks then merge:
+   - If auto-merge is not enabled on the repo, watch checks then merge — **never pipe** `gh pr checks` (e.g. `| tail`): a pipe swallows the exit code and lets a merge proceed after failing CI. Chain with `&&` so the merge only runs if checks passed:
      ```bash
      gh pr checks <pr> --watch && gh pr merge <pr> --merge --delete-branch
      ```
@@ -185,20 +221,41 @@ After post-commit completes, if current branch is a feature branch (not main/mas
      ```bash
      gh pr merge <pr> --merge --delete-branch
      ```
-4. **Sync local main, prune stale refs, verify the tag is reachable**:
-   ```bash
-   git checkout main && git pull --ff-only
-   git fetch --prune   # drop remote-tracking refs (origin/*) of branches already deleted on the remote
-   git merge-base --is-ancestor <tag> main && echo "tag on main ✅"
-   ```
-   `gh pr merge --delete-branch` already removes the merged branch (remote + local); `--prune` cleans up any OTHER orphaned `origin/*` refs left by past merges.
-5. Output PR URL + merge status + tag verification.
+4. Output PR URL + merge status. On successful merge, proceed to **Step 8** to create/push the release tag on `main`.
 
-**Why `--merge` not `--squash`**: the post-commit tag points at the bump commit on the feature branch; a squash/rebase rewrites SHAs and orphans the tag. A merge commit keeps the tagged commit in `main`'s history.
-
-**Leave the PR OPEN (push + PR only, do NOT merge) if**:
+**Leave the PR OPEN (push + PR only, do NOT merge, skip Step 8's push) if**:
 - User passes `--no-merge` in `$ARGUMENTS`
 - CI checks **FAIL** → report the failing check, leave PR open for the user
 - Branch protection rejects the merge → report, leave open
 
-**Skip Step 7 entirely if**: no remote configured, `--no-pr` in `$ARGUMENTS`, branch already merged, or no `gh` CLI (graceful degradation — output the manual commands).
+**Skip PR/merge (stay in LOCAL/DEGRADED behavior) if**: `--no-pr` in `$ARGUMENTS`, or branch already merged.
+
+### Step 8: Release Tag — timing depends on the Step 7 mode
+
+`vX.Y.Z` is the version bumped by `post-commit` in Step 6.
+
+#### FULL mode (remote + `gh` OK) — tag only after a validated merge
+
+Only runs once Step 7 actually merged the PR (never before — a tag created before the merge is validated could end up on a commit that CI rejects or that never reaches `main`).
+
+```bash
+git checkout main && git pull --ff-only
+git fetch --prune   # drop remote-tracking refs (origin/*) of branches already deleted on the remote
+git tag vX.Y.Z
+git push origin vX.Y.Z
+git merge-base --is-ancestor vX.Y.Z main && echo "tag on main ✅"
+```
+
+**Why the tag waits for post-merge**: the merge strategy is `--merge` (real merge commit, never `--squash`), so the branch's commits — including the bump commit — do land on `main` intact once the merge succeeds. The risk this guards against isn't squash-orphaning, it's *sequencing*: a tag pushed before Step 7 confirms the merge could point at a commit that CI later fails, or that branch protection blocks from ever reaching `main`. Waiting for a validated merge, then verifying with `git merge-base --is-ancestor`, keeps the tag meaningful.
+
+#### LOCAL mode (no remote) / DEGRADED mode (no `gh`) — tag locally, never auto-push
+
+There is no PR/merge to wait for, so tag right after the Step 6 bump commit, on the current branch:
+
+```bash
+git tag vX.Y.Z
+```
+
+Do **not** run `git push origin vX.Y.Z` automatically — there is either no remote to push to, or no confirmed merge yet. Print the manual command for the user to run once the remote/`gh` prerequisite is met and the change has actually landed on `main`.
+
+Output tag verification (FULL mode) or the manual push reminder (LOCAL/DEGRADED mode) alongside the PR URL + merge status from Step 7.

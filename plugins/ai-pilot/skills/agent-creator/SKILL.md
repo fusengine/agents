@@ -12,11 +12,12 @@ related-skills: skill-creator, exploration
 
 ## Agent Workflow (MANDATORY)
 
-Before ANY agent creation, use `TeamCreate` to spawn 3 agents:
+Before ANY agent creation, delegate via `Task` — spawn 2 agents in parallel (single message, 2 Task calls). Generated agents only carry `Task` in their tools (no `TeamCreate`), so this same pattern is what they must use internally too:
 
 1. **fuse-ai-pilot:explore-codebase** - Check existing agents, analyze patterns
 2. **fuse-ai-pilot:research-expert** - Fetch latest agent conventions
-3. **mcp__context7__query-docs** - Get examples from existing agents
+
+`mcp__context7__query-docs` is a direct MCP call, not a spawned agent — invoke it directly (alongside the 2 Task calls) to get examples from existing agents.
 
 After creation, run **fuse-ai-pilot:sniper** for validation.
 
@@ -40,6 +41,7 @@ After creation, run **fuse-ai-pilot:sniper** for validation.
 4. **SOLID rules reference** - Link to solid-[stack] skill
 5. **Register in marketplace.json** - Or agent won't load
 6. **Hook scripts executable** - `chmod +x`
+7. **Output Format section mandatory** - Every generated agent must define a standard `## Output Format` section (status, files_changed, errors, sources) — an agent invoked by a lead must return structured data, not prose
 
 ---
 
@@ -124,6 +126,7 @@ sed -i '' "s/nextjs/newstack/g; s/Next\.js/NewStack/g" agents/new-expert.md
 - [ ] Mandatory Skills Usage table
 - [ ] SOLID Rules reference to solid-[stack]
 - [ ] Local Documentation paths valid
+- [ ] Output Format section present (status, files_changed, errors, sources)
 - [ ] Hook scripts executable
 - [ ] Registered in marketplace.json
 

@@ -1,5 +1,6 @@
 ---
 name: single-responsibility
+applies-to: "**/*.java, **/*.kt"
 description: Single Responsibility Principle for Java - One job per class
 when-to-use: fat classes, refactoring existing code, layer confusion
 keywords: SRP, responsibility, Java, Controller, Service, Repository

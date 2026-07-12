@@ -1,5 +1,6 @@
 ---
 name: concurrency-patterns
+applies-to: "**/*.swift"
 description: Swift 6 concurrency patterns - actors, @MainActor, Sendable, structured concurrency
 when-to-use: async operations, shared state, UI updates, parallel fetching
 keywords: concurrency, actor, MainActor, Sendable, async, await, Swift 6

@@ -1,6 +1,6 @@
 ---
 name: vue
-description: @astrojs/vue setup, configuration, Vue 3 Composition API, options
+description: "@astrojs/vue setup, configuration, Vue 3 Composition API, options"
 when-to-use: adding Vue 3 components to an Astro project
 keywords: vue, @astrojs/vue, Vue 3, Composition API, setup, SFC
 priority: medium

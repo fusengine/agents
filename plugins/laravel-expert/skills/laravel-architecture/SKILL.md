@@ -239,7 +239,7 @@ Voir [[laravel-queues]] pour le routing déclaratif par job (connexion/queue cib
 ### `new Model()` dans boot() → LogicException
 Laravel 13 jette une `LogicException` si vous instanciez un modèle Eloquent dans `register()` d'un ServiceProvider (container pas prêt). Utiliser `boot()` ou un listener.
 
-## Migration Laravel 13 → 13
+## Migration Laravel 12 → 13
 
 | Sujet | Avant (12) | Après (13) |
 |-------|-----------|------------|

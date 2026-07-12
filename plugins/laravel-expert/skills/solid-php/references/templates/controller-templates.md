@@ -1,5 +1,6 @@
 ---
 name: controller-templates
+applies-to: "**/*.php"
 description: Complete Controller, Action, FormRequest, Resource, Policy templates
 keywords: controller, action, formrequest, resource, policy, templates
 ---

@@ -1,121 +1,17 @@
 {
-  "_description": "Core Guards - Security and SOLID enforcement hooks",
-  "_version": "1.0.0",
+  "_description": "Core Guards - Security and SOLID enforcement hooks (enforcement + lifecycle delegated to @fusengine/harness)",
+  "_version": "2.0.0",
   "_author": "fusengine-plugins",
 
   "hooks": {
     "PreToolUse": [
       {
-        "_description": "WebFetch cache lookup - reuse cached fetch results (TTL 24h)",
-        "matcher": "WebFetch",
+        "_description": "Harness: guards (security/bash-write/git/install/interface-separation/protected-path), file-size, APEX gates (freshness/doc/solid/brainstorm), MCP+WebFetch cache & verbosity cap. Matcher restricted to the enforced tools — Read/Glob/Grep are NOT routed here (the APEX gate keys off filePath presence and would wrongly deny plain reads).",
+        "matcher": "Write|Edit|Bash|WebFetch|mcp__context7__query-docs|mcp__exa__web_search_exa|mcp__exa__get_code_context_exa",
         "hooks": [
           {
-            "_description": "Check cache before WebFetch — deny + return cached if fresh",
             "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/pre-tool-use/webfetch-cache-lookup.py"
-          }
-        ]
-      },
-      {
-        "_description": "MCP cache lookup - reuse cached Context7/Exa results before re-querying",
-        "matcher": "mcp__context7__query-docs|mcp__exa__web_search_exa|mcp__exa__get_code_context_exa",
-        "hooks": [
-          {
-            "_description": "Check context/mcp/ cache and short-circuit if query already answered",
-            "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/pre-tool-use/mcp-cache-lookup.py"
-          }
-        ]
-      },
-      {
-        "_description": "MCP verbosity limiter - cap numResults/tokens on Context7/Exa calls",
-        "matcher": "mcp__context7__query-docs|mcp__exa__web_search_exa|mcp__exa__get_code_context_exa",
-        "hooks": [
-          {
-            "_description": "Reduce MCP payload size (numResults, tokens) to control context growth",
-            "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/pre-tool-use/limit-mcp-verbosity.py"
-          }
-        ]
-      },
-      {
-        "_description": "Git & Install & Security & Write guards for Bash commands",
-        "matcher": "Bash",
-        "hooks": [
-          {
-            "_description": "Block Bash file writes (python -c, sed -i, redirects) — forces Edit/Write tools",
-            "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/pre-tool-use/bash-write-guard.py"
-          },
-          {
-            "_description": "Block destructive git commands (push --force, reset --hard, etc.)",
-            "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/pre-tool-use/git-guard.py"
-          },
-          {
-            "_description": "Ask confirmation before installing packages (npm, pip, brew, etc.)",
-            "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/pre-tool-use/install-guard.py"
-          },
-          {
-            "_description": "Validate dangerous commands via security rules",
-            "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/pre-tool-use/security-guard.py"
-          }
-        ]
-      },
-      {
-        "_description": "Pre-commit validation (linters, tests) before git commit",
-        "matcher": "Bash",
-        "hooks": [
-          {
-            "_description": "Run ESLint, TypeScript, Prettier, Ruff before commit",
-            "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/pre-tool-use/pre-commit-guard.py"
-          }
-        ]
-      },
-      {
-        "_description": "SOLID: Enforce interface separation in component files",
-        "matcher": "Write|Edit",
-        "hooks": [
-          {
-            "_description": "Block interfaces/types in .tsx/.jsx/.vue files - must be in src/interfaces/",
-            "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/pre-tool-use/enforce-interfaces.py"
-          }
-        ]
-      },
-      {
-        "_description": "SOLID: Block edits to files > 100 lines - must split first",
-        "matcher": "Write|Edit",
-        "hooks": [
-          {
-            "_description": "PreToolUse blocker for oversized files",
-            "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/pre-tool-use/enforce-file-size.py"
-          }
-        ]
-      },
-      {
-        "_description": "SOLID: Require reading SOLID principles before coding",
-        "matcher": "Write|Edit",
-        "hooks": [
-          {
-            "_description": "Block code modifications if SOLID rules not read",
-            "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/pre-tool-use/require-solid-read.py"
-          }
-        ]
-      },
-      {
-        "_description": "APEX: Require Agent calls (explore/research/domain) before editing code",
-        "matcher": "Write|Edit",
-        "hooks": [
-          {
-            "_description": "Block code edits if no Agent tool called in session",
-            "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/pre-tool-use/require-apex-agents.py"
+            "command": "bun ${CLAUDE_PLUGIN_ROOT}/../node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code"
           }
         ]
       }
@@ -123,83 +19,12 @@
 
     "PostToolUse": [
       {
-        "_description": "APEX: Track Agent tool calls for workflow enforcement",
-        "matcher": "Agent",
+        "_description": "Harness: record agent/doc/ref-read activity + MCP cache store + file-size warn, PLUS (Write/Edit) cumulative session-change tracking → sniper reminder + eslint/prettier report. One harness call (ports track-session-changes.py + post-edit-typescript.py).",
+        "matcher": "",
         "hooks": [
           {
-            "_description": "Record Agent calls to session state for APEX verification",
             "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/post-tool-use/track-agent-calls.py"
-          }
-        ]
-      },
-      {
-        "_description": "APEX: Track sub-agent MCP/exploration calls for APEX compliance",
-        "matcher": "Bash|Glob|Grep|Read|WebSearch|WebFetch|mcp__context7__query-docs|mcp__context7__resolve-library-id|mcp__exa__web_search_exa|mcp__exa__get_code_context_exa|mcp__exa__deep_researcher_start",
-        "hooks": [
-          {
-            "_description": "Record MCP/exploration calls from sub-agents as APEX phases",
-            "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/post-tool-use/track-subagent-research.py"
-          }
-        ]
-      },
-      {
-        "_description": "Cache MCP results (Context7/Exa) to context/mcp/ for reuse across sub-agents",
-        "matcher": "mcp__context7__query-docs|mcp__exa__web_search_exa|mcp__exa__get_code_context_exa",
-        "hooks": [
-          {
-            "_description": "Persist compacted MCP responses to disk cache",
-            "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/post-tool-use/cache-mcp-result.py"
-          }
-        ]
-      },
-      {
-        "_description": "Track file reads (documentation and SOLID references)",
-        "matcher": "Read",
-        "hooks": [
-          {
-            "_description": "Auto-document important file reads to task docs",
-            "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/post-tool-use/auto-document-reads.py"
-          },
-          {
-            "_description": "Record when SOLID principles are read for session verification",
-            "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/post-tool-use/track-solid-reads.py"
-          }
-        ]
-      },
-      {
-        "_description": "SOLID validation and session tracking after file modifications",
-        "matcher": "Write|Edit",
-        "hooks": [
-          {
-            "_description": "SOLID: Block files exceeding 100 lines - must split into modules",
-            "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/post-tool-use/enforce-file-size.py"
-          },
-          {
-            "_description": "Track cumulative code file changes per session for sniper trigger",
-            "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/post-tool-use/track-session-changes.py"
-          },
-          {
-            "_description": "Post-edit TypeScript validation",
-            "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/post-tool-use/post-edit-typescript.py"
-          }
-        ]
-      },
-      {
-        "_description": "WebFetch cache store - persist fetch results for reuse",
-        "matcher": "WebFetch",
-        "hooks": [
-          {
-            "_description": "Store WebFetch result to cache after successful fetch",
-            "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/post-tool-use/webfetch-cache-store.py"
+            "command": "bun ${CLAUDE_PLUGIN_ROOT}/../node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code"
           }
         ]
       }
@@ -207,28 +32,12 @@
 
     "SessionStart": [
       {
-        "_description": "Session initialization - load context and cleanup stale states",
+        "_description": "Harness: inject ~/.claude/CLAUDE.md + dev context (git/project type) and run cache/state cleanups (ports the four session-start/*.py into one call)",
         "matcher": "",
         "hooks": [
           {
-            "_description": "Inject CLAUDE.md content into session context",
             "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/session-start/inject-claude-md.py"
-          },
-          {
-            "_description": "Load development context (git status, project type detection)",
-            "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/session-start/load-dev-context.py"
-          },
-          {
-            "_description": "Cleanup stale session state files from /tmp",
-            "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/session-start/cleanup-session-states.py"
-          },
-          {
-            "_description": "Cleanup stale MCP (48h) + WebFetch (24h) cache entries",
-            "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/session-start/cleanup-old-caches.py"
+            "command": "bun ${CLAUDE_PLUGIN_ROOT}/../node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code"
           }
         ]
       }
@@ -236,24 +45,12 @@
 
     "UserPromptSubmit": [
       {
-        "_description": "Process user prompt - detect APEX triggers and inject rules",
+        "_description": "Harness: read ~/.claude/CLAUDE.md (+ APEX preamble on dev verbs) injected as additionalContext AND detect creation intent → set brainstorm-required flag. One harness call does both.",
         "matcher": "",
         "hooks": [
           {
-            "_description": "Read CLAUDE.md + auto-detect if APEX workflow should be triggered",
             "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/user-prompt/read-claude-md.py"
-          }
-        ]
-      },
-      {
-        "_description": "BRAINSTORM: Detect creation intent and flag brainstorming required",
-        "matcher": "",
-        "hooks": [
-          {
-            "_description": "Detect create/build/new keywords and set brainstorming_required flag",
-            "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/user-prompt/detect-creation-intent.py"
+            "command": "bun ${CLAUDE_PLUGIN_ROOT}/../node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code"
           }
         ]
       }
@@ -261,13 +58,12 @@
 
     "SubagentStart": [
       {
-        "_description": "Inject cached MCP context (Context7/Exa) into sub-agent prompt",
+        "_description": "Harness: inject fresh MCP cache (Context7/Exa) entries into the sub-agent prompt (ports inject-context-cache.py)",
         "matcher": "",
         "hooks": [
           {
-            "_description": "Read context/mcp/ cache and surface relevant entries to sub-agent",
             "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/subagent-start/inject-context-cache.py"
+            "command": "bun ${CLAUDE_PLUGIN_ROOT}/../node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code"
           }
         ]
       }
@@ -275,13 +71,12 @@
 
     "SubagentStop": [
       {
-        "_description": "Track sub-agent completion and memory",
+        "_description": "Harness: track agent completion + memory and emit sniper reminder on code changes (ports track-agent-memory.py)",
         "matcher": "",
         "hooks": [
           {
-            "_description": "Track agent memory and completion for context persistence",
             "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/subagent-stop/track-agent-memory.py"
+            "command": "bun ${CLAUDE_PLUGIN_ROOT}/../node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code"
           }
         ]
       }
@@ -289,13 +84,12 @@
 
     "TeammateIdle": [
       {
-        "_description": "Validate teammate output before idle",
+        "_description": "Harness: suggest sniper validation when a teammate modified code before going idle (ports validate-teammate-output.py)",
         "matcher": "",
         "hooks": [
           {
-            "_description": "Check if teammate modified code files and suggest sniper",
             "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/teammate-idle/validate-teammate-output.py"
+            "command": "bun ${CLAUDE_PLUGIN_ROOT}/../node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code"
           }
         ]
       }
@@ -303,13 +97,12 @@
 
     "TaskCompleted": [
       {
-        "_description": "SOLID validation when task is marked completed",
+        "_description": "Harness: re-measure the task's modified code files and flag SOLID violations over the line ceiling (ports task-completed/validate-task-solid.py)",
         "matcher": "",
         "hooks": [
           {
-            "_description": "Check modified files respect SOLID rules (< 100 lines)",
             "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/task-completed/validate-task-solid.py"
+            "command": "bun ${CLAUDE_PLUGIN_ROOT}/../node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code"
           }
         ]
       }
@@ -317,13 +110,12 @@
 
     "PostToolUseFailure": [
       {
-        "_description": "Log tool failures for debugging",
+        "_description": "Harness: log tool failures to ~/.claude/logs/tool-failures.log (ports log-tool-failure.py)",
         "matcher": "",
         "hooks": [
           {
-            "_description": "Log failed tool executions to session log",
             "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/post-tool-use/log-tool-failure.py"
+            "command": "bun ${CLAUDE_PLUGIN_ROOT}/../node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code"
           }
         ]
       }
@@ -331,24 +123,24 @@
 
     "Stop": [
       {
-        "_description": "Sound notification when Claude finishes responding (not on user interrupt)",
+        "_description": "Sound notification when Claude finishes responding (not on user interrupt), via harness --sound stop",
         "matcher": "",
         "hooks": [
           {
-            "_description": "Play task completion sound",
+            "_description": "Harness: play task completion sound (embedded assets/song/, exits before stdin read)",
             "type": "command",
-            "command": "afplay ${CLAUDE_PLUGIN_ROOT}/song/finish.mp3"
+            "command": "bun ${CLAUDE_PLUGIN_ROOT}/../node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code core --sound stop"
           }
         ]
       },
       {
-        "_description": "Verify APEX workflow completion before stopping",
+        "_description": "Verify APEX workflow completion before stopping. IMPORTANT: never convert this to a `hook claude-code core` command call without --sound — that path also triggers stopCore→notify(\"stop\"), which would double up with hook #1's --sound stop.",
         "matcher": "",
         "hooks": [
           {
             "_description": "Verify APEX workflow completion before stopping",
             "type": "prompt",
-            "prompt": "Check if the assistant followed the APEX workflow. Look for: 1) Was an explore/research agent launched before coding? 2) Were files kept under 100 lines? 3) Was sniper validation run after modifications? If any step was missed AND code was modified, respond with {\"ok\": false, \"reason\": \"Missing step: [describe what was missed]\"}. If no code was modified or all steps were followed, respond with {\"ok\": true}. Context: $ARGUMENTS",
+            "prompt": "Check if the assistant followed the APEX workflow. Look for: 1) Was an explore/research agent launched before coding? 2) Were files kept under 100 lines? 3) Was sniper validation run after modifications? 4) For code changes: was elicitation self-review (APEX 3.5) run and its findings addressed BEFORE sniper? 5) Was functional verification (APEX eXAMINE Phase 4, Manual Testing — the change actually works, acceptance criteria re-checked) completed before considering the task done? If any step was missed AND code was modified, respond with {\"ok\": false, \"reason\": \"Missing step: [describe what was missed]\"}. If no code was modified or all steps were followed, respond with {\"ok\": true}. Context: $ARGUMENTS",
             "timeout": 15
           }
         ]
@@ -357,13 +149,13 @@
 
     "PermissionRequest": [
       {
-        "_description": "Sound for ALL permission dialogs (system + hook-triggered)",
+        "_description": "Sound for ALL permission dialogs (system + hook-triggered), via harness --sound permission",
         "matcher": "",
         "hooks": [
           {
-            "_description": "Play permission request sound",
+            "_description": "Harness: play permission request sound (embedded assets/song/, exits before stdin read)",
             "type": "command",
-            "command": "afplay ${CLAUDE_PLUGIN_ROOT}/song/permission-need.mp3"
+            "command": "bun ${CLAUDE_PLUGIN_ROOT}/../node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code core --sound permission"
           }
         ]
       }
@@ -371,13 +163,25 @@
 
     "PreCompact": [
       {
-        "_description": "Save APEX state before context compression",
+        "_description": "Harness: back up .claude/apex/task.json before compaction, keep 5 newest (ports save-apex-state.py)",
         "matcher": "",
         "hooks": [
           {
-            "_description": "Persist current task state and decisions to .claude/apex/",
             "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/pre-compact/save-apex-state.py"
+            "command": "bun ${CLAUDE_PLUGIN_ROOT}/../node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code"
+          }
+        ]
+      }
+    ],
+
+    "PostCompact": [
+      {
+        "_description": "Harness: after compaction, re-inject the reconciliation snapshot + a reread-before-edit reminder (read-state may be reset). Core scope, deduped per session (ports lifecycle/post-compact.ts).",
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bun ${CLAUDE_PLUGIN_ROOT}/../node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code"
           }
         ]
       }
@@ -385,13 +189,12 @@
 
     "SessionEnd": [
       {
-        "_description": "Cleanup session and save stats",
+        "_description": "Harness: remove stale temp/legacy cache files on session end (ports cleanup-session.py)",
         "matcher": "",
         "hooks": [
           {
-            "_description": "Remove temp files and save session statistics",
             "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/session-end/cleanup-session.py"
+            "command": "bun ${CLAUDE_PLUGIN_ROOT}/../node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code"
           }
         ]
       }
@@ -399,12 +202,11 @@
 
     "InstructionsLoaded": [
       {
-        "_description": "Validate APEX rules are loaded at startup",
+        "_description": "Harness: log loaded instruction files for APEX debugging (ports validate-rules-loaded.py)",
         "hooks": [
           {
-            "_description": "Log which CLAUDE.md/rules files are loaded, verify APEX rules presence",
             "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/scripts/instructions-loaded/validate-rules-loaded.py"
+            "command": "bun ${CLAUDE_PLUGIN_ROOT}/../node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code"
           }
         ]
       }
@@ -412,35 +214,35 @@
 
     "Notification": [
       {
-        "_description": "Sound for permission requests (Bash, Write, Edit confirmations)",
+        "_description": "Sound for permission requests (Bash, Write, Edit confirmations), via harness --sound permission",
         "matcher": "permission_prompt",
         "hooks": [
           {
-            "_description": "Play permission request sound",
+            "_description": "Harness: play permission request sound (embedded assets/song/, exits before stdin read)",
             "type": "command",
-            "command": "afplay ${CLAUDE_PLUGIN_ROOT}/song/permission-need.mp3"
+            "command": "bun ${CLAUDE_PLUGIN_ROOT}/../node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code core --sound permission"
           }
         ]
       },
       {
-        "_description": "Sound when Claude waits for user input (60+ sec idle)",
+        "_description": "Sound when Claude waits for user input (60+ sec idle), via harness --sound human",
         "matcher": "idle_prompt",
         "hooks": [
           {
-            "_description": "Play idle/waiting sound",
+            "_description": "Harness: play idle/waiting sound (embedded assets/song/, exits before stdin read)",
             "type": "command",
-            "command": "afplay ${CLAUDE_PLUGIN_ROOT}/song/need-human.mp3"
+            "command": "bun ${CLAUDE_PLUGIN_ROOT}/../node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code core --sound human"
           }
         ]
       },
       {
-        "_description": "Sound for MCP tool elicitation dialogs",
+        "_description": "Sound for MCP tool elicitation dialogs, via harness --sound human",
         "matcher": "elicitation_dialog",
         "hooks": [
           {
-            "_description": "Play elicitation dialog sound",
+            "_description": "Harness: play elicitation dialog sound (embedded assets/song/, exits before stdin read)",
             "type": "command",
-            "command": "afplay ${CLAUDE_PLUGIN_ROOT}/song/need-human.mp3"
+            "command": "bun ${CLAUDE_PLUGIN_ROOT}/../node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code core --sound human"
           }
         ]
       }

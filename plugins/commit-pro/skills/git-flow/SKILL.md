@@ -2,7 +2,7 @@
 name: git-flow
 description: Use when committing, branching, opening PRs, or deciding merge strategy. Covers GitHub Flow (default), trunk-based, branch naming conventions, squash vs rebase, branch lifecycle, and protected branch enforcement.
 user-invocable: false
-related-skills: commit, post-commit, commit-detection
+related-skills: commit-optimization, post-commit, commit-detection
 ---
 
 # Git Flow Best Practices (2026)
@@ -57,7 +57,7 @@ Format: `<type>/<scope-or-summary>` (kebab-case).
 3. git push -u origin feat/<scope>    # push with upstream
 4. gh pr create                       # open PR
 5. (review + CI)
-6. gh pr merge --squash --delete-branch  # merge + cleanup
+6. gh pr merge --merge --delete-branch  # merge + cleanup
 ```
 
 **Keep branches short-lived** (< 3 days ideally). Long-lived branches accumulate conflicts and lose context.
@@ -66,11 +66,13 @@ Format: `<type>/<scope-or-summary>` (kebab-case).
 
 | Strategy | When | Result |
 |----------|------|--------|
-| **Squash merge** | Default for features | 1 commit per feature on main, clean history |
-| **Rebase merge** | Small atomic commits worth preserving | Linear history, individual commits kept |
-| **Merge commit** | Rare, only for "merge events" worth marking | Adds noise, avoid by default |
+| **Merge commit** | fuse-commit-pro default | Branch commits (incl. the bump commit) land on `main` intact, no rewrite |
+| **Rebase merge** | Small atomic commits worth preserving, no merge commit wanted | Linear history, individual commits kept |
+| **Squash merge** | *not used here*: the release tag points at the bump commit, squash would orphan it | 1 commit per feature, but incompatible with fuse-commit-pro's post-merge tagging |
 
-**fuse-commit-pro recommendation**: squash merge via `gh pr merge --squash --delete-branch`.
+**fuse-commit-pro recommendation**: real merge commit via `gh pr merge --merge --delete-branch` (see `commands/commit.md` Step 7).
+
+**Tagging timing**: never push the tag before the merge is validated — CI could still fail or branch protection could still block the merge, and a tag pushed early would point at a commit that never lands on `main`. Tag `vX.Y.Z` on `main` AFTER the merge completes, then push the tag (`fuse-commit-pro:commit` does this automatically in Step 8 — see also `commands/commit.md` Step 8 and `post-commit/references/tag-timing.md`).
 
 ## After Merge
 

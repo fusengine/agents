@@ -1,5 +1,6 @@
 ---
 name: Interface Segregation Principle (ISP)
+applies-to: "**/*.rs"
 description: ISP for Rust - Small focused traits, trait composition with `+` bounds to prevent fat traits
 when-to-use: Designing trait hierarchies, avoiding bloated interfaces, composing behaviors
 keywords: [ISP, interface segregation, focused traits, trait composition, trait bounds, small interfaces]

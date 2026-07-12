@@ -18,6 +18,7 @@ export type HookType =
 	| "Stop"
 	| "Notification"
 	| "PreCompact"
+	| "PostCompact"
 	| "SessionEnd"
 	| "InstructionsLoaded"
 	| "ConfigChange"
@@ -40,6 +41,7 @@ export const HOOK_TYPES: HookType[] = [
 	"Stop",
 	"Notification",
 	"PreCompact",
+	"PostCompact",
 	"SessionEnd",
 	"InstructionsLoaded",
 	"ConfigChange",

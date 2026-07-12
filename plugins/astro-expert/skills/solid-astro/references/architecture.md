@@ -1,3 +1,8 @@
+---
+name: architecture
+applies-to: "**/*.astro"
+---
+
 # Astro Project Architecture
 
 ## Standard SOLID Directory Structure

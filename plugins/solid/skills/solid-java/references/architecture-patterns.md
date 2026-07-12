@@ -1,5 +1,6 @@
 ---
 name: architecture-patterns
+applies-to: "**/*.java, **/*.kt"
 description: Modular architecture for Java projects - modules/[feature]/ structure, import rules
 when-to-use: project structure, module organization, layer separation
 keywords: architecture, modules, structure, layered, modular, imports

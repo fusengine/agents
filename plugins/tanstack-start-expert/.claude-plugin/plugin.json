@@ -1,0 +1,24 @@
+{
+  "name": "fuse-tanstack-start",
+  "version": "1.0.1",
+  "description": "Expert TanStack Start (React, RC) full-stack framework with file-based routing, createServerFn server functions, selective SSR, and Nitro deployment",
+  "author": {
+    "name": "Fusengine",
+    "email": "hello@fusengine.ch",
+    "url": "https://github.com/fusengine"
+  },
+  "homepage": "https://github.com/fusengine/agents",
+  "repository": "https://github.com/fusengine/agents",
+  "license": "MIT",
+  "keywords": [
+    "tanstack",
+    "tanstack-start",
+    "react",
+    "full-stack",
+    "ssr",
+    "server-functions",
+    "file-based-routing",
+    "nitro",
+    "solid"
+  ]
+}

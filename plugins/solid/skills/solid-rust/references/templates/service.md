@@ -1,5 +1,6 @@
 ---
 name: Business Logic Service Template
+applies-to: "**/*.rs"
 description: Service template with trait dependency, validation, and error handling
 when-to-use: Creating business logic layer for a feature, implementing domain rules
 keywords: [service, business logic, trait dependency, validation]

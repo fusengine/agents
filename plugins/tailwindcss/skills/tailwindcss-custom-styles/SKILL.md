@@ -1,6 +1,6 @@
 ---
 name: tailwindcss-custom-styles
-description: @utility, @variant, @apply, custom CSS
+description: "Custom CSS authoring in Tailwind CSS v4.1 via @utility, @variant, @custom-variant, @apply, and @layer directives. Use when: creating a new named utility class, writing conditional/dark-mode variants, defining a custom variant selector, or applying utility classes inside custom CSS rules."
 user-invocable: false
 ---
 

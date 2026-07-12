@@ -1,5 +1,6 @@
 ---
 name: single-responsibility
+applies-to: "**/*.rb"
 description: SRP for Ruby/Rails - Controller/Service/Query separation
 when-to-use: Fat classes, business logic in models, controllers doing too much
 keywords: SRP, single responsibility, service layer, query objects

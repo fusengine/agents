@@ -1,5 +1,6 @@
 ---
 name: dependency-inversion
+applies-to: "**/*.swift"
 description: DIP Guide - Depend on protocols via constructor injection for Swift
 when-to-use: tight coupling, service architecture, testing, mocking, swapping providers
 keywords: dependency inversion, DIP, injection, protocol, Swift, testing

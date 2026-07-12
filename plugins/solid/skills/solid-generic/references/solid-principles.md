@@ -5,7 +5,7 @@ when-to-use: architecture decisions, code review, refactoring
 keywords: SOLID, principles, overview, TypeScript, Bun, Node
 priority: high
 related: single-responsibility.md, open-closed.md, liskov-substitution.md, interface-segregation.md, dependency-inversion.md
-applies-to: "**/*.ts, **/*.tsx"
+applies-to: "**/*.ts, **/*.js"
 trigger-on-edit: "src/"
 level: principle
 ---

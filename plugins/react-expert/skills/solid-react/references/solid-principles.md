@@ -1,5 +1,6 @@
 ---
 name: solid-principles
+applies-to: "**/*.tsx, **/*.jsx"
 description: SOLID overview - Quick reference for all 5 principles with React application
 when-to-use: architecture decisions, code review, refactoring, learning SOLID
 keywords: SOLID, principles, overview, architecture, react patterns

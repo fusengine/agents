@@ -5,7 +5,7 @@ when-to-use: file too long, module doing too much, refactoring, code organizatio
 keywords: single responsibility, SRP, splitting, lines, refactoring, modular
 priority: high
 related: architecture-patterns.md, templates/service.md, templates/module.md
-applies-to: "**/*.ts, **/*.tsx, **/*.js"
+applies-to: "**/*.ts, **/*.js"
 trigger-on-edit: "src/, lib/, modules/"
 level: principle
 ---

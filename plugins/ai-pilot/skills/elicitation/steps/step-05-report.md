@@ -51,7 +51,42 @@ Sniper needs to know:
 - What was already verified (skip redundant checks)
 ```
 
-### 3. Generate Final Report
+### 3. Persist the Artifact
+
+Write `.claude/apex/docs/elicit-{task-slug}.json` -- see `SKILL.md`'s
+"Artifact Contract" section for `{task-slug}` derivation. This is what a
+later elicitation pass diffs against instead of restarting technique
+selection from scratch; the markdown report below is for the human handoff,
+this file is for the machine one.
+
+```json
+{
+  "task_slug": "{task-slug}",
+  "generated_at": "{ISO-8601 UTC}",
+  "mode": "manual|auto",
+  "expert_agent": "{expert_name}",
+  "techniques": [
+    {
+      "technique_id": "SEC-02",
+      "verdict": "pass|fail|deferred",
+      "correction_applied": true,
+      "evidence": "auth.ts:45 -- added isValidEmail() + null check"
+    }
+  ]
+}
+```
+
+Rules:
+- One entry per technique actually applied this pass (Step 3), not per
+  technique merely selected.
+- `verdict: "pass"` only if Step 3 found no finding, or Step 4 fixed every
+  finding for that technique. `"deferred"` for Low-severity items left for
+  sniper. `"fail"` if a Critical/High finding could not be corrected.
+- On a later pass for the same `{task-slug}`, load this file in Step 0: skip
+  re-applying any technique already `"pass"`, re-apply `"fail"`/`"deferred"`
+  ones first.
+
+### 4. Generate Final Report
 
 ---
 
@@ -141,6 +176,7 @@ Before marking elicitation complete:
 - [ ] Medium issues fixed or justified deferral
 - [ ] Low issues documented for sniper
 - [ ] Report generated
+- [ ] `elicit-{task-slug}.json` written to `.claude/apex/docs/`
 - [ ] Handoff context provided
 
 ---

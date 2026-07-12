@@ -1,5 +1,6 @@
 ---
 name: store-template
+applies-to: "**/*.tsx, **/*.jsx"
 description: Zustand store template with persistence (< 40 lines)
 ---
 

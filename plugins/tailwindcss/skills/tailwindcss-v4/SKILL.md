@@ -1,6 +1,6 @@
 ---
 name: tailwindcss-v4
-description: Tailwind CSS v4.1 core features, @theme, directives, migration guide
+description: "Tailwind CSS v4.1 core features: @theme namespaces, CSS-first configuration, custom directives (@utility, @variant, @custom-variant), v3-to-v4 breaking changes, and the upgrade tool. Use when: migrating a project from Tailwind v3 to v4, mapping @theme namespaces to generated utilities, or looking up renamed/removed v3 utilities. Do NOT use for: day-to-day CSS-first configuration reference — @theme/@utility/@variant details (use tailwindcss-core), utility class lookup (use the category skills)."
 user-invocable: false
 ---
 
@@ -8,11 +8,11 @@ user-invocable: false
 
 ## Documentation
 
-- [theme.md](../docs/theme.md) - CSS theme variables, design tokens, customization
-- [functions-and-directives.md](../docs/functions-and-directives.md) - @utility, @variant, @theme, @apply
-- [adding-custom-styles.md](../docs/adding-custom-styles.md) - Custom utilities and variants
-- [detecting-classes-in-source-files.md](../docs/detecting-classes-in-source-files.md) - Content detection
-- [upgrade-guide.md](../docs/upgrade-guide.md) - Migration from v3 to v4
+- CSS theme variables, design tokens, customization -> [tailwindcss-core](../tailwindcss-core/SKILL.md#2-theme)
+- Directives (@utility, @variant, @theme, @apply) -> [tailwindcss-core](../tailwindcss-core/SKILL.md)
+- Custom utilities and variants -> [tailwindcss-custom-styles](../tailwindcss-custom-styles/SKILL.md)
+- Content detection (@source scanning) -> [tailwindcss-core](../tailwindcss-core/SKILL.md#3-source)
+- Migration from v3 to v4 -> see "v3 → v4 Breaking Changes" section below
 
 ## Quick Reference - @theme Namespaces
 
@@ -27,54 +27,6 @@ user-invocable: false
 | `--breakpoint-*` | sm:*, md:*, lg:*, xl:* |
 | `--animate-*` | animate-spin, animate-bounce, etc. |
 | `--ease-*` | ease-in, ease-out, ease-in-out |
-
-## Configuration CSS-first
-
-### Before (v3)
-```javascript
-// tailwind.config.js
-module.exports = {
-  theme: {
-    extend: {
-      colors: { brand: '#3B82F6' }
-    }
-  }
-}
-```
-
-### After (v4)
-```css
-@import "tailwindcss";
-
-@theme {
-  --color-brand: #3B82F6;
-}
-```
-
-## Directives v4
-
-### @utility - Create a utility
-```css
-@utility tab-4 {
-  tab-size: 4;
-}
-/* Usage: class="tab-4" */
-```
-
-### @variant - Conditional style
-```css
-.card {
-  @variant dark {
-    background: #1a1a2e;
-  }
-}
-```
-
-### @custom-variant - New variant
-```css
-@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
-/* Usage: dark:bg-gray-900 */
-```
 
 ## v3 → v4 Breaking Changes
 
@@ -152,49 +104,8 @@ npx @tailwindcss/upgrade
 
 Requires Node.js 20+
 
-## Browser Support
+## Detailed References
 
-- Safari 16.4+
-- Chrome 111+
-- Firefox 128+
-
-## Installation
-
-```bash
-npm install -D tailwindcss @tailwindcss/postcss
-# or for Vite
-npm install -D @tailwindcss/vite
-# or for CLI
-npm install -D @tailwindcss/cli
-```
-
-## Core API Functions
-
-### --alpha()
-Adjust color opacity:
-```css
-color: --alpha(var(--color-lime-300) / 50%);
-```
-
-### --spacing()
-Generate spacing values:
-```css
-margin: --spacing(4);
-```
-
-### @apply
-Inline utility classes:
-```css
-.btn {
-  @apply px-4 py-2 rounded-lg font-bold;
-}
-```
-
-## Key Resources
-
-- Official Theme Variables Documentation
-- @theme Directive Syntax
-- Content Detection Configuration
-- Custom Variant Creation
-- Animation Keyframes Definition
-- CSS Variables Usage
+- [configuration.md](references/configuration.md) - Load when writing CSS-first `@theme` config or using `@utility`/`@variant`/`@custom-variant` directives
+- [api-functions.md](references/api-functions.md) - Load when using the `--alpha()`/`--spacing()` CSS functions or `@apply`
+- [installation-support.md](references/installation-support.md) - Load when installing Tailwind v4 (npm/Vite/CLI) or checking browser support

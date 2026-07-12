@@ -1,5 +1,6 @@
 ---
 name: factory-template
+applies-to: "**/*.tsx, **/*.jsx"
 description: Factory pattern templates for dependency injection (< 40 lines)
 ---
 

@@ -3,7 +3,7 @@ name: think-in-code
 description: Use ONE Bash script instead of N sequential Read calls when analyzing multiple files, auditing codebase, finding all matches, scanning dependencies, counting lines, or listing files matching a pattern. Replaces wasteful multi-Read loops with compact shell pipelines.
 argument-hint: "[pattern] [scope]"
 keywords:
-  - analyse multiple fichiers
+  - analyze multiple files
   - audit codebase
   - find all
   - scan dependencies

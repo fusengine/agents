@@ -1,5 +1,6 @@
 ---
 name: handler
+applies-to: "**/*.go"
 description: HTTP handler template - net/http or chi/echo, copy-paste ready, < 50 lines
 when-to-use: creating HTTP handlers, REST endpoints, request/response handling, HTTP I/O layer
 keywords: handler, HTTP, template, handler function, middleware, REST

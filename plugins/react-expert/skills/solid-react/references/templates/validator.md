@@ -1,5 +1,6 @@
 ---
 name: validator-template
+applies-to: "**/*.tsx, **/*.jsx"
 description: Zod validation schema templates (< 30 lines)
 ---
 

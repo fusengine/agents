@@ -1,5 +1,6 @@
 ---
 name: HTTP Handler Template
+applies-to: "**/*.rs"
 description: Axum HTTP handler template with validation, error handling, and response formatting
 when-to-use: Creating HTTP endpoints, structuring request/response handling
 keywords: [handler, HTTP, Axum, request, response, validation, status codes]

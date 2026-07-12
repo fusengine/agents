@@ -65,7 +65,7 @@ Use this as a copy-paste TODO in your branch description or PR.
 - [ ] Open PR with `gh pr create`
 - [ ] CI green (all checks)
 - [ ] Code review approved
-- [ ] Merge with `gh pr merge --squash --delete-branch`
+- [ ] Merge with `gh pr merge --merge --delete-branch`
 - [ ] Tag release: `git tag v<your-version>`
 - [ ] Deploy to staging — observe 24h
 - [ ] Deploy to production

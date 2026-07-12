@@ -1,5 +1,6 @@
 ---
 name: service-template
+applies-to: "**/*.java, **/*.kt"
 description: Business logic service with interface dependency injection
 when-to-use: implementing business logic, creating service layer
 keywords: service, business logic, dependency injection, Spring, Transactional

@@ -1,5 +1,6 @@
 ---
 name: dependency-inversion
+applies-to: "**/*.rb"
 description: DIP - Constructor injection, duck typing, contracts
 when-to-use: Tight coupling, hard to test, swappable implementations
 keywords: DIP, dependency inversion, injection, contracts

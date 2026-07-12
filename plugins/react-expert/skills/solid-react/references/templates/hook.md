@@ -1,5 +1,6 @@
 ---
 name: hook-template
+applies-to: "**/*.tsx, **/*.jsx"
 description: React hook template with TanStack Query (< 30 lines)
 ---
 

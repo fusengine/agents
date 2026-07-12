@@ -1,5 +1,35 @@
 # Release Notes
 
+## [1.38.88] - 12-07-2026
+
+- Added (core-guards 1.1.33): hook sounds now played by `@fusengine/harness --sound {stop,permission,human}` — the 5 native afplay hooks and local song/ mp3s are removed; harness bumped to ^0.1.72 (embedded sounds, real hookEventName per event, content-based framework detection)
+- Added (claude-rules 1.0.10): rules injected on SubagentStart (harness >= 0.1.63 routes the scope); Non-Negotiables header in CLAUDE.md.template; mandate-quality rules; merge/tag ritual aligned in 06-tooling-rules
+- Added (fuse-ai-pilot 1.2.30): new fuse-browser-usage skill (fast-path doctrine per agent profile) wired into agents; APEX hardened (eLicit/Verify artifacts, task.json phase tracking via jq, binary exit gates); all agents pinned to model sonnet
+- Added: permanent anti-regression gate `scripts/src/__tests__/hooks-harness-exclusive.test.ts` — every plugins/*/hooks/hooks.json command must invoke the harness binary
+- Changed (fuse-commit-pro 1.2.21): 4-case remote detection, merge-commit ritual (never squash), tag pushed after validated merge
+- Changed (fuse-design 2.1.27): skills restructured from numbered 0-6 pipeline to named design-* set (design-system, design-web, design-webapp, design-ios, design-android, design-motion, design-review, ux-copy, design-method); new design-mobile command
+- Changed (all expert plugins): fuse-browser doctrine blocks per profile, browser_* tools completed in frontmatter (plugins bumped)
+- Maintenance: hook-merge service + tests and settings-language service in scripts/
+
+## [1.38.87] - 05-07-2026
+
+- Added (fuse-tanstack-start 1.0.0): new plugin — full-stack TanStack Start expert (server functions, selective SSR, execution model, middleware, server routes, file-based routing with data loaders, auth, Nitro deployment)
+- Added (fuse-typescript 1.0.0): new plugin — pure TypeScript expert for CLI tools, libraries, and backends (TS 6.0 on Node 24 LTS or Bun 1.3, strict typing, ESM-first packaging)
+- Added (fuse-php 1.0.0): new plugin — modern framework-agnostic PHP expert (PHP 8.5, PER Coding Style 3.0, PHPStan, PSR interop, Slim / standalone Symfony components)
+- Added (fuse-rust 1.0.0): new plugin — safe idiomatic Rust expert (Rust 1.96+, 2024 edition, ownership-first, tokio / axum backends, clippy-clean)
+- Added (fuse-go 1.0.0): new plugin — idiomatic Go expert (Go 1.26+, concurrency, backend services, golangci-lint v2, govulncheck)
+- Changed (claude-rules 1.0.9): reinforced verification chain and Code Error Prevention guidance
+- Changed (all expert plugins): skills ecosystem hardening — anti-collision naming, progressive disclosure, orphaned references wired back in (plugins bumped)
+- Changed (fuse-design 2.1.26): taste/motion pipeline refinements
+- Maintenance: legacy per-plugin scripts removed, superseded by `@fusengine/harness`
+
+## [1.38.86] - 24-06-2026
+
+- feat(core-guards 1.1.31): delegate enforcement to the published `@fusengine/harness` npm package (hooks call the harness binary); framework-aware SOLID routing via `applies-to` globs on the refs.
+- refactor(ai-pilot 1.2.28): remove the enforcement gates now handled by the harness (injection/cache kept); deleted the replaced Python scripts (dead code, verified by import-graph analysis, nothing live broken).
+- refactor(fuse-solid 1.0.12): delegate SOLID file-size/interface enforcement to the harness; project detection kept.
+- chore: installer sets `FUSE_HARNESS_REFS` (path-delimiter list of the spread `solid-*/references` dirs) + installs `@fusengine/harness` as a local dep.
+
 ## [1.38.85] - 22-06-2026
 
 - Fixed (installer): the `FUSE_ENFORCE_TTL_SEC` prompt was nested inside the fuse-browser MCP block, so it only appeared when fuse-browser was selected. Moved next to the `FUSE_SOLID_MAX_LINES` prompt (after shell config) so both enforcement settings are offered on every install regardless of MCP choice

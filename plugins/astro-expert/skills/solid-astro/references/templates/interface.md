@@ -1,3 +1,8 @@
+---
+name: interface
+applies-to: "**/*.astro"
+---
+
 # Template: TypeScript Interface File
 
 SOLID-compliant interface file in src/interfaces/ (< 50 lines per file).

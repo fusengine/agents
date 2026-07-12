@@ -7,6 +7,9 @@ import * as p from "@clack/prompts";
 import type { SetupPaths } from "../interfaces/setup";
 import { copyExecutable } from "../utils/fs-helpers";
 import { installBrowserBinary } from "./browser-binary";
+import { setHarnessRefs } from "./harness-env";
+import { promptHarnessGates } from "./harness-gates";
+import { promptHarnessTuning } from "./harness-tuning";
 import { promptEnforceTtl } from "./enforce-ttl";
 import { promptSolidMaxLines } from "./solid-lines";
 import { configureShell } from "./env-manager";
@@ -23,12 +26,7 @@ import {
 	SUPPORTED_LANGUAGES,
 	saveSettings,
 } from "./settings-manager";
-import {
-	installClaudeMd,
-	installDeps,
-	scanAndPrepare,
-	setupStatusline,
-} from "./setup-plugins";
+import { installClaudeMd, installDeps, scanAndPrepare, setupStatusline } from "./setup-plugins";
 
 /** Prompt user for response language */
 async function promptLanguage(): Promise<string> {
@@ -69,6 +67,7 @@ export async function runSetup(
 	await installClaudeMd(paths.claudeMdSrc, paths.claudeMdDest);
 	await installDeps(pluginsDir);
 	settings = await setupStatusline(pluginsDir, settings);
+	settings = setHarnessRefs(settings, paths.marketplace);
 
 	if (!isAgentTeamsEnabled(settings)) {
 		const enable = await p.confirm({
@@ -79,15 +78,15 @@ export async function runSetup(
 			settings = enableAgentTeams(settings);
 			p.log.success("Agent Teams enabled");
 		}
-	} else {
-		p.log.info("Agent Teams already enabled");
-	}
+	} else p.log.info("Agent Teams already enabled");
 
 	settings = await promptPerfEnv(settings);
 	if (!skipEnv) {
 		await configureShell();
 		settings = await promptSolidMaxLines(settings);
 		settings = await promptEnforceTtl(settings);
+		settings = await promptHarnessGates(settings);
+		settings = await promptHarnessTuning(settings);
 		const selectedMcp = await configureMcpServers();
 		if (selectedMcp.includes("fuse-browser")) {
 			await installBrowserBinary();

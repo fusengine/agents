@@ -1,6 +1,6 @@
 ---
 name: map-ecosystem
-description: "Enrich auto-generated .cartographer/ maps with full descriptions from source files."
+description: "Enrich auto-generated .cartographer/ maps with full descriptions from source files. Use when: cartography index descriptions are truncated, a new plugin/skill was just added, or after SessionStart regenerates the map."
 context: fork
 user-invocable: true
 ---

@@ -1,6 +1,6 @@
 ---
 name: svelte
-description: @astrojs/svelte setup, configuration, Svelte 5 runes, options
+description: "@astrojs/svelte setup, configuration, Svelte 5 runes, options"
 when-to-use: adding Svelte components to an Astro project
 keywords: svelte, @astrojs/svelte, Svelte 5, runes, setup, SFC
 priority: medium

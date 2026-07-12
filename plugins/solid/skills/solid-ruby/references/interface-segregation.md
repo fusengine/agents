@@ -1,5 +1,6 @@
 ---
 name: interface-segregation
+applies-to: "**/*.rb"
 description: ISP - Small focused modules, avoid fat interfaces
 when-to-use: Fat modules, mixing concerns, unused methods
 keywords: ISP, interface segregation, concerns, composition

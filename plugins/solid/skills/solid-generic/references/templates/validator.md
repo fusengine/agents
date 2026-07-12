@@ -5,7 +5,7 @@ when-to-use: validation logic, schema validation, input validation
 keywords: validator, validation, schema, input, sanitize
 priority: medium
 related: single-responsibility.md, interface-segregation.md
-applies-to: "**/*validator*.ts, **/*schema*.ts"
+applies-to: "**/*.ts, **/*.js"
 trigger-on-edit: "validators/"
 level: template
 ---

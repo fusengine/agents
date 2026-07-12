@@ -1,5 +1,6 @@
 ---
 name: error
+applies-to: "**/*.go"
 description: Custom error types template - Sentinel errors, error types, error wrapping
 when-to-use: defining domain errors, error handling strategy, sentinel error patterns, error type assertions
 keywords: error, sentinel errors, error types, error wrapping, error handling, Go idiom

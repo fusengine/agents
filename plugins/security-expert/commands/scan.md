@@ -33,7 +33,7 @@ Query recent CVEs for the detected stack:
 ### Phase 3: SCAN
 Run vulnerability patterns and dependency audit:
 - Execute language-specific grep patterns (OWASP Top 10)
-- Run `security-scan.sh` for automated pattern matching
+- Run `bun ${CLAUDE_PLUGIN_ROOT}/../node_modules/@fusengine/harness/dist/cli/bin.mjs scan <dir>` for automated pattern matching
 - Execute dependency audit CLI (npm audit, composer audit, etc.)
 - Detect hardcoded secrets and credentials
 

@@ -1,5 +1,6 @@
 ---
 name: open-closed
+applies-to: "**/*.tsx, **/*.jsx"
 description: OCP Guide - Extend via composition and props, not modification
 when-to-use: adding features, extending components, plugin systems
 keywords: open closed, OCP, extension, composition, props, plugins

@@ -1,6 +1,6 @@
 ---
 name: vercel-adapter
-description: @astrojs/vercel adapter — Serverless, Edge runtime, Image CDN, skew protection
+description: "@astrojs/vercel adapter — Serverless, Edge runtime, Image CDN, skew protection"
 when-to-use: Deploying Astro to Vercel platform
 keywords: Vercel, Serverless, Edge Functions, Image CDN, skew protection, isr
 priority: high

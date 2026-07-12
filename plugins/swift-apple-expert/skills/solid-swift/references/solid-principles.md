@@ -1,5 +1,6 @@
 ---
 name: solid-principles
+applies-to: "**/*.swift"
 description: Quick reference for all 5 SOLID principles applied to Swift 6 and SwiftUI
 when-to-use: overview of SOLID, quick reference, principle selection
 keywords: SOLID, overview, Swift 6, SwiftUI, principles, quick reference

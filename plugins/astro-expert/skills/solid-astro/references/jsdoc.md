@@ -1,3 +1,8 @@
+---
+name: jsdoc
+applies-to: "**/*.astro"
+---
+
 # JSDoc Standards for Astro
 
 ## Rule: JSDoc on ALL Exported Functions

@@ -5,7 +5,7 @@ when-to-use: tight coupling, service architecture, testing, mocking
 keywords: dependency inversion, DIP, injection, abstraction, factory, decoupling
 priority: high
 related: open-closed.md, templates/factory.md, templates/service.md
-applies-to: "**/*service*.ts, **/*factory*.ts"
+applies-to: "**/*.ts, **/*.js"
 trigger-on-edit: "services/, factories/"
 level: principle
 ---

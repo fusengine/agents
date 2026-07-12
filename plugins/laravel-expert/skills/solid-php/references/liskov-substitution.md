@@ -1,5 +1,6 @@
 ---
 name: liskov-substitution
+applies-to: "**/*.php"
 description: LSP Guide - Interface contracts and behavioral consistency for Laravel
 when-to-use: implementing interfaces, swapping providers, testing compliance
 keywords: liskov, substitution, LSP, contract, interface, laravel

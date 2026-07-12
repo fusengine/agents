@@ -1,5 +1,6 @@
 ---
 name: error-template
+applies-to: "**/app/**/*.tsx, **/app/**/*.ts, **/pages/**/*.tsx, **/pages/**/*.ts"
 description: Custom error classes template for structured error handling
 ---
 

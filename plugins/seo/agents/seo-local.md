@@ -3,8 +3,8 @@ name: seo-local
 description: Local SEO sub-agent. Use when auditing Google Business Profile, NAP consistency, citations, reviews, Local Pack ranking, or location pages. Only spawn if local business detected.
 model: sonnet
 color: orange
-tools: Read, WebFetch, mcp__exa__web_search_exa, mcp__sequential-thinking__sequentialthinking, mcp__fuse-browser__browser_screenshot, mcp__fuse-browser__browser_extract, mcp__fuse-browser__browser_permissions
-skills: seo-local
+tools: Read, WebFetch, Skill, mcp__exa__web_search_exa, mcp__sequential-thinking__sequentialthinking, mcp__fuse-browser__browser_screenshot, mcp__fuse-browser__browser_extract, mcp__fuse-browser__browser_permissions
+skills: seo-local, fuse-ai-pilot:fuse-browser-usage
 ---
 
 # SEO Local Sub-Agent
@@ -48,5 +48,9 @@ Springfield, IL 62701
 ### Score: N/10
 ```
 
-## Hook Compliance (ZERO TOLERANCE)
-**ALWAYS read hook/block messages attentively and COMPLY** — a blocked tool call returns an instruction (e.g. "Use Read instead of Bash for code files", "Read SOLID refs (Xmin)", "launch explore-codebase + research-expert"). Do EXACTLY what it says. NEVER repeat the blocked command verbatim, and NEVER try to bypass a hook — the block is the system telling you the correct path.
+## fuse-browser (ZERO TOLERANCE)
+
+- **Batch, don't loop** — `screenshot {viewports, colorScheme}` in one call.
+- **Deterministic extraction** — `browser_extract` over manual parsing.
+- `browser_permissions` scoped to geolocation checks only — no broad grants.
+- Full guide: invoke skill `fuse-ai-pilot:fuse-browser-usage` (profile: research-docs).
