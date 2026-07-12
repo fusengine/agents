@@ -1,6 +1,6 @@
 {
   "name": "fuse-solid",
-  "version": "1.0.13",
+  "version": "1.0.14",
   "description": "SOLID principles enforcement with automatic project detection and validation for all languages",
   "author": {
     "name": "Fusengine",
@@ -10,5 +10,11 @@
   "homepage": "https://github.com/fusengine/agents",
   "repository": "https://github.com/fusengine/agents",
   "license": "MIT",
-  "keywords": ["solid", "architecture", "code-quality", "validation", "multi-language"]
+  "keywords": [
+    "solid",
+    "architecture",
+    "code-quality",
+    "validation",
+    "multi-language"
+  ]
 }

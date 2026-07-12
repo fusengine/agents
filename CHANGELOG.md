@@ -1,5 +1,16 @@
 # Release Notes
 
+## [1.38.88] - 12-07-2026
+
+- Added (core-guards 1.1.33): hook sounds now played by `@fusengine/harness --sound {stop,permission,human}` — the 5 native afplay hooks and local song/ mp3s are removed; harness bumped to ^0.1.72 (embedded sounds, real hookEventName per event, content-based framework detection)
+- Added (claude-rules 1.0.10): rules injected on SubagentStart (harness >= 0.1.63 routes the scope); Non-Negotiables header in CLAUDE.md.template; mandate-quality rules; merge/tag ritual aligned in 06-tooling-rules
+- Added (fuse-ai-pilot 1.2.30): new fuse-browser-usage skill (fast-path doctrine per agent profile) wired into agents; APEX hardened (eLicit/Verify artifacts, task.json phase tracking via jq, binary exit gates); all agents pinned to model sonnet
+- Added: permanent anti-regression gate `scripts/src/__tests__/hooks-harness-exclusive.test.ts` — every plugins/*/hooks/hooks.json command must invoke the harness binary
+- Changed (fuse-commit-pro 1.2.21): 4-case remote detection, merge-commit ritual (never squash), tag pushed after validated merge
+- Changed (fuse-design 2.1.27): skills restructured from numbered 0-6 pipeline to named design-* set (design-system, design-web, design-webapp, design-ios, design-android, design-motion, design-review, ux-copy, design-method); new design-mobile command
+- Changed (all expert plugins): fuse-browser doctrine blocks per profile, browser_* tools completed in frontmatter (plugins bumped)
+- Maintenance: hook-merge service + tests and settings-language service in scripts/
+
 ## [1.38.87] - 05-07-2026
 
 - Added (fuse-tanstack-start 1.0.0): new plugin — full-stack TanStack Start expert (server functions, selective SSR, execution model, middleware, server routes, file-based routing with data loaders, auth, Nitro deployment)
