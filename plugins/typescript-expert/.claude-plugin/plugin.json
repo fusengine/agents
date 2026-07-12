@@ -1,6 +1,6 @@
 {
   "name": "fuse-typescript",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Expert TypeScript 6.0 for pure TS projects — CLI tools, libraries, scripts, and backends on Node 24 LTS or Bun 1.3, with SOLID principles",
   "author": {
     "name": "Fusengine",
