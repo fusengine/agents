@@ -93,6 +93,10 @@ xcodebuild build -scheme MyApp \
 swiftlint --strict && swift-format lint --strict Sources/
 ```
 
+## Fix Discipline (Hypothesis-Driven)
+
+**Fix discipline (hypothesis-driven).** One candidate cause documented before any edit → one atomic change → retest immediately. If it still fails, the hypothesis was wrong: the same fix is FORBIDDEN — run a fresh research round (Context7/apple-docs → Exa) for a new hypothesis. Cap: 3 cycles per error; at the 3rd failure STOP and escalate (`status: fail` + root-cause: what was tried, sources, why each failed). Never stack two unverified corrections. Canonical implementation: sniper's Fix Retry Loop.
+
 ## Validation Checklist
 
 - [ ] SwiftLint: zero warnings

@@ -1,5 +1,10 @@
 # Release Notes
 
+## [1.38.89] - 12-07-2026
+
+- Added (fuse-ai-pilot 1.2.31): APEX hardened with loop-engineering guardrails — Exit Contract (Stop/Retry/Rollback/Ask/Escalate) in the command's Phase Exit Gates, and a capped hypothesis-driven fix discipline (one cause → one atomic fix → retest; same fix forbidden; cap 3 cycles → escalate) added to the 04-validation and 06-fix-issue workflows of every flavor (root/laravel/nextjs/react/swift); sniper's Fix Retry Loop declared the canonical implementation
+- Changed (claude-rules 1.0.11): CLAUDE.md.template Non-Negotiables gain EXIT CONTRACT and CLARIFY BEFORE IRREVERSIBLE; 08-subagent-conduct gains an Exit Contract section (every subagent loop ends on one explicit issue, never silent drift)
+
 ## [1.38.88] - 12-07-2026
 
 - Added (core-guards 1.1.33): hook sounds now played by `@fusengine/harness --sound {stop,permission,human}` — the 5 native afplay hooks and local song/ mp3s are removed; harness bumped to ^0.1.72 (embedded sounds, real hookEventName per event, content-based framework detection)

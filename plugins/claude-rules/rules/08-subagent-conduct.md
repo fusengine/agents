@@ -11,3 +11,11 @@
 ## Mandate Quality (ZERO TOLERANCE)
 Concision is for the USER. Mandates to agents are the opposite: complete and self-contained — context, exclusive file ownership, guardrails (re-verify on disk before editing, strict validation), and the expected report format. A vague brief produces a wrong deliverable.
 **Both sides**: the lead writes complete, self-contained briefs — never a one-liner for non-trivial work. A sub-agent that receives an ambiguous or incomplete brief asks/flags the gap before acting — never improvises or guesses scope.
+
+## Exit Contract (ZERO TOLERANCE)
+Every loop you run ends on ONE explicit issue, reported to the lead — never silent drift or an endless retry:
+- **Stop** — goal verified with evidence (not "I edited it").
+- **Retry** — a *different* hypothesis; the same fix twice is forbidden.
+- **Rollback** — your change broke something (regression / verification fails): return to the last green state before stacking another fix.
+- **Ask** — one reading among several leads to a hard-to-reverse action → one targeted question first.
+- **Escalate** — blocked past the attempt cap (3 cycles, cf. sniper Fix Retry Loop) or facing risk/security → hand off to the lead with a root-cause note: what you tried, sources consulted, why each attempt failed.

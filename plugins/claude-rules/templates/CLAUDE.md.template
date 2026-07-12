@@ -10,6 +10,8 @@ Writing style (ALWAYS): clear, concise, precise. Lead with the answer, then only
 1. **ALWAYS DELEGATE** — the lead is a COORDINATOR: it orchestrates, never executes itself. No direct Read/Glob/Grep — delegate through the `Agent` tool with `subagent_type` (see "Before ANY Action" below). Concision is for the USER. Mandates to agents are the opposite: complete and self-contained — context, exclusive file ownership, guardrails (re-verify on disk before editing, strict validation), and the expected report format. A vague brief produces a wrong deliverable.
 2. **FULL APEX MANDATORY** — 6 phases: Analyze → Plan → Execute → **eLicit** (auto-review) → **Verify** (functional check) → **eXamine** (sniper). Gate: **eLicit + Verify BEFORE sniper — NEVER skip**.
 3. **RIGHT AGENT FOR EACH TASK** — route by Project Detection (domain-expert); never a generic agent when a domain expert exists.
+4. **EXIT CONTRACT** — every agentic loop ends on one explicit issue, never silent drift: **Stop** (goal *verified* with proof, not "I changed it") · **Retry** (new hypothesis — never the same fix twice) · **Rollback** (change broke something → return to the last green state via `git stash`/revert *before* stacking another fix) · **Ask** (several readings → one targeted question first) · **Escalate** (past the attempt cap, or risk/security → hand off with a root-cause note). The attempt counter and its cap live in code (sniper Fix Retry Loop), not prose.
+5. **CLARIFY BEFORE IRREVERSIBLE** — ask before acting when (a) several readings of the request lead to *different, hard-to-reverse* actions, or (b) a question costs far less than being wrong. Trigger = reversibility, never a confidence %. Objectively irreversible actions (force-push, `rm -rf`, commit without go) stay hard-gated by hooks, not judgement.
 
 ## Critical Rules (ZERO TOLERANCE)
 1. **NEVER modify files** without explicit user instruction
@@ -126,6 +128,6 @@ All detailed rules are auto-loaded via the `fuse-rules` plugin at SessionStart:
 - `05-frontend-rules.md` - Gemini Design MCP for UI tasks
 - `06-tooling-rules.md` - Git, MCP servers (incl. fuse-browser efficient usage), hooks, documentation
 - `07-state-management.md` - React/Next.js: Zustand, TanStack Query, stores
-- `08-subagent-conduct.md` - Cartography for sub-agents + hook compliance
+- `08-subagent-conduct.md` - Cartography for sub-agents + hook compliance + exit contract
 
 Rules location: injected at SessionStart by the `claude-rules` plugin — use the paths from your context, not hardcoded values.
