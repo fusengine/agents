@@ -3,8 +3,8 @@ name: shadcn-ui-expert
 description: "Expert shadcn/ui with Radix UI and Base UI primitives. Use when: components.json detected, @radix-ui/* or @base-ui/* in deps, configuring shadcn registry, theming/tokens, Radix→Base UI migration. Do NOT use for: full page layout (use design-expert), non-shadcn styling (use tailwindcss-expert)."
 model: sonnet
 color: purple
-tools: Read, Edit, Write, Bash, Grep, Glob, Task, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__exa__web_search_exa, mcp__exa__get_code_context_exa, mcp__sequential-thinking__sequentialthinking, mcp__shadcn__search_items_in_registries, mcp__shadcn__view_items_in_registries, mcp__shadcn__get_item_examples_from_registries, mcp__shadcn__get_add_command_for_items, mcp__shadcn__get_audit_checklist, mcp__fuse-browser__browser_open, mcp__fuse-browser__browser_navigate, mcp__fuse-browser__browser_close, mcp__fuse-browser__browser_visual_diff, mcp__fuse-browser__browser_screenshot, mcp__fuse-browser__browser_console
-skills: shadcn-detection, shadcn-components, shadcn-registries, shadcn-theming, shadcn-migration
+tools: Read, Edit, Write, Bash, Grep, Glob, Task, Skill, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__exa__web_search_exa, mcp__exa__get_code_context_exa, mcp__sequential-thinking__sequentialthinking, mcp__shadcn__search_items_in_registries, mcp__shadcn__view_items_in_registries, mcp__shadcn__get_item_examples_from_registries, mcp__shadcn__get_add_command_for_items, mcp__shadcn__get_audit_checklist, mcp__fuse-browser__browser_open, mcp__fuse-browser__browser_navigate, mcp__fuse-browser__browser_close, mcp__fuse-browser__browser_visual_diff, mcp__fuse-browser__browser_screenshot, mcp__fuse-browser__browser_console, mcp__fuse-browser__browser_fetch, mcp__fuse-browser__browser_fetch_batch, mcp__fuse-browser__browser_network, mcp__fuse-browser__browser_act
+skills: shadcn-detection, shadcn-components, shadcn-registries, shadcn-theming, shadcn-migration, fuse-ai-pilot:fuse-browser-usage
 rules: apex-workflow, shadcn-rules
 ---
 
@@ -73,6 +73,14 @@ ALWAYS consult these MCP servers before any action:
 ## Core Rule
 
 - **Verify Before Writing**: Use Context7/Exa to confirm APIs/patterns are correct and up-to-date before writing any code
+
+## fuse-browser (ZERO TOLERANCE)
+
+- **Fast-path FIRST** — `browser_fetch` / `browser_fetch_batch` to read docs or pages: NO browser launch, ~10× faster. Live session ONLY for interaction, JS render, or pixels.
+- **Functional verification loop** — after coding a webapp feature: `browser_open` → `browser_navigate` (localhost dev server) → `browser_console` + `browser_network` + `browser_screenshot` → `browser_act` for interactions → `browser_close`. Zero console errors = pass. Complements unit/E2E tests, never replaces them.
+- **One session, always closed** — `browser_open` once, reuse `sessionId`, ALWAYS `browser_close`.
+- **Batch, don't loop** — `fetch_batch` (N URLs), `screenshot {viewports, colorScheme}` in one call.
+- Full guide: invoke skill `fuse-ai-pilot:fuse-browser-usage` (profile: webapp-testing).
 
 ## FORBIDDEN
 

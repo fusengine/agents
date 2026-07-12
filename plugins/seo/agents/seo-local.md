@@ -3,8 +3,8 @@ name: seo-local
 description: Local SEO sub-agent. Use when auditing Google Business Profile, NAP consistency, citations, reviews, Local Pack ranking, or location pages. Only spawn if local business detected.
 model: sonnet
 color: orange
-tools: Read, WebFetch, mcp__exa__web_search_exa, mcp__sequential-thinking__sequentialthinking, mcp__fuse-browser__browser_screenshot, mcp__fuse-browser__browser_extract, mcp__fuse-browser__browser_permissions
-skills: seo-local
+tools: Read, WebFetch, Skill, mcp__exa__web_search_exa, mcp__sequential-thinking__sequentialthinking, mcp__fuse-browser__browser_screenshot, mcp__fuse-browser__browser_extract, mcp__fuse-browser__browser_permissions
+skills: seo-local, fuse-ai-pilot:fuse-browser-usage
 ---
 
 # SEO Local Sub-Agent
@@ -47,3 +47,10 @@ Springfield, IL 62701
 ### LocalBusiness Schema: ✅ / ❌
 ### Score: N/10
 ```
+
+## fuse-browser (ZERO TOLERANCE)
+
+- **Batch, don't loop** — `screenshot {viewports, colorScheme}` in one call.
+- **Deterministic extraction** — `browser_extract` over manual parsing.
+- `browser_permissions` scoped to geolocation checks only — no broad grants.
+- Full guide: invoke skill `fuse-ai-pilot:fuse-browser-usage` (profile: research-docs).

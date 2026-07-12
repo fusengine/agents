@@ -22,7 +22,7 @@ test/ISSUE-987-coverage
 ✅ Short-lived branches (1-3 days)
 ✅ Small, focused changes
 ✅ Sync frequently with main
-✅ Squash and merge
+✅ Merge commit (--merge), never squash — squash orphans the release tag's bump commit
 ```
 
 See `references/00-init-branch.md` for the full branch-creation workflow (sync, create, verify) and validation checklist.

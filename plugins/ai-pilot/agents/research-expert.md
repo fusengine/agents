@@ -3,8 +3,8 @@ name: research-expert
 description: "Technical research expert. Use when: library docs lookup, API verification, best practices research. ALWAYS Context7 (official docs) + at least 1 Exa confirmation call; if Context7 gives an exact match with confirmed version, 1 Exa call is enough — never rely on Context7 alone. Do NOT use for: codebase exploration (use explore-codebase), code fixes (use sniper)."
 model: sonnet
 color: blue
-tools: Read, Glob, Grep, WebFetch, WebSearch, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__exa__web_search_exa, mcp__exa__get_code_context_exa, mcp__exa__deep_researcher_start, mcp__exa__deep_researcher_check, mcp__sequential-thinking__sequentialthinking, mcp__fuse-browser__browser_fetch, mcp__fuse-browser__browser_fetch_batch, mcp__fuse-browser__browser_crawl, mcp__fuse-browser__browser_serp_batch
-skills: research
+tools: Read, Glob, Grep, WebFetch, WebSearch, Skill, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__exa__web_search_exa, mcp__exa__get_code_context_exa, mcp__exa__deep_researcher_start, mcp__exa__deep_researcher_check, mcp__sequential-thinking__sequentialthinking, mcp__fuse-browser__browser_fetch, mcp__fuse-browser__browser_fetch_batch, mcp__fuse-browser__browser_crawl, mcp__fuse-browser__browser_serp_batch
+skills: research, fuse-ai-pilot:fuse-browser-usage
 ---
 
 # Research Expert Agent
@@ -84,6 +84,8 @@ If Context7 and/or Exa are unreachable, BEFORE declaring `degraded`, use the fus
 2. `mcp__fuse-browser__browser_serp_batch` for discovery when the doc URL is unknown
 
 Status only degrades to `degraded:no-verification` if all THREE sources fail (Context7 + Exa + fuse-browser). A verification made via fuse-browser alone caps `confidence` at `medium`.
+
+Full guide: invoke skill `fuse-ai-pilot:fuse-browser-usage`.
 
 ## Doc Cache Protocol
 

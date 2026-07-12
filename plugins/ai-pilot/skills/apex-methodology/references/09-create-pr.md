@@ -249,13 +249,13 @@ gh run view [run-id]
 ### Merge Strategies
 
 ```text
-Squash and merge (recommended):
-- Single commit in main
-- Clean history
-
-Merge commit:
+Merge commit (recommended):
 - Preserves all commits
-- Good for detailed history
+- Release tag stays attached to the bump commit
+
+Squash and merge:
+- Single commit in main
+- Never use on release branches — squash creates a new SHA and orphans any tag already pointing at the pre-squash bump commit
 
 Rebase and merge:
 - Linear history
@@ -279,14 +279,13 @@ Rebase and merge:
 ### Merge Command
 
 ```bash
-# Squash and merge
-gh pr merge --squash
+# Merge commit (recommended — preserves the release tag's bump commit)
+gh pr merge --merge
 
 # With delete branch
-gh pr merge --squash --delete-branch
+gh pr merge --merge --delete-branch
 
-# Merge commit
-gh pr merge --merge
+gh pr merge --squash   # never on release branches — orphans the tagged bump commit
 ```
 
 ---
@@ -328,6 +327,20 @@ git log --oneline -5
 □ CI passing
 □ Review requested
 □ Ready to merge
+```
+
+---
+
+## Update Task Phase
+
+At the **start** of this phase, record it (and mark the task `completed` once the PR is opened) in `.claude/apex/task.json`:
+
+```bash
+jq --arg p "create-pr" '.tasks[.current_task].phase = $p' .claude/apex/task.json \
+  > .claude/apex/task.json.tmp && mv .claude/apex/task.json.tmp .claude/apex/task.json
+# after the PR is created:
+jq '.tasks[.current_task].status = "completed"' .claude/apex/task.json \
+  > .claude/apex/task.json.tmp && mv .claude/apex/task.json.tmp .claude/apex/task.json
 ```
 
 ---

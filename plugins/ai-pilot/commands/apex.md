@@ -1,5 +1,5 @@
 ---
-description: APEX Methodology - The systematic Analyze-Plan-Execute-eLicit-eXamine approach for intelligent development. Eliminates hallucinations, errors, and bugs to produce clean, maintainable code.
+description: APEX Methodology - The systematic Analyze-Plan-Execute-eLicit-eXamine approach for intelligent development. Reduces hallucination and defect risk through mandatory parallel research, self-review, and validation gates.
 argument-hint: "[--auto] [--skip-elicit] <task description>"
 ---
 
@@ -170,9 +170,9 @@ Comprehensive validation:
 
 ## APEX Guarantees
 
-✅ **Zero Hallucination**: Complete exploration + research
-✅ **Zero Linter Errors**: Sniper with zero tolerance
-✅ **Zero Bugs**: Exhaustive tests + rigorous validation
+✅ **Grounded analysis**: mandatory explore-codebase + research-expert before code
+✅ **Zero Linter Errors**: sniper enforces this with zero tolerance
+✅ **Functional verification** (Phase 4, Manual Testing) + exhaustive validation before completion
 ✅ **Maintainable Code**: SOLID + established patterns
 ✅ **Self-Corrected**: Expert auto-review before validation (NEW)
 
@@ -190,13 +190,15 @@ Comprehensive validation:
 
 ---
 
-## Metrics
+## Phase Exit Gates
 
-- **Production Bugs**: -90%
-- **Debug Time**: -70%
-- **Development Speed**: +300% (parallel agents)
-- **Code Maintainability**: +200%
-- **Code Confidence**: 98%
+| Phase | Deliverable | Exit criterion |
+|-------|-------------|-----------------|
+| 1. ANALYZE | Exploration summary with affected components | explore-codebase (and research-expert where applicable) launched before any code is written |
+| 2. PLAN | Implementation plan with step-by-step approach | Plan documents steps, edge cases, and testing strategy before Execute starts |
+| 3. EXECUTE | Implementation + tests | Files respect the 100-line ceiling, types/interfaces separated, SOLID followed |
+| 3.5. eLICIT | Self-review findings + fixes | Applicable elicitation techniques run and findings addressed before eXamine |
+| 4. eXAMINE | Passing lint/tests/build + manual verification | Sniper reports zero linter errors; manual test plan executed and acceptance criteria confirmed |
 
 ---
 

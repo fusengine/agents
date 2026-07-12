@@ -1,11 +1,13 @@
 ---
 name: design-page
-description: "New page in existing project. Skips identity (design-system.md exists). Browses 2 sites for inspiration, then generates via Gemini with existing tokens."
+description: "New page or screen in an existing project. Skips design-system creation — reuses the existing design-system.md tokens."
 ---
 
-# /design:page — New Page (Phases 1→6)
+# /design:page — New Page (PAGE scope)
 
-Add a new page to a project that already has a design-system.md.
+Add a new page/screen to a project that already has a `design-system.md`.
+
+**Complete documentation**: `skills/design-method/SKILL.md` (routing table), `skills/design-web/SKILL.md` or `skills/design-webapp/SKILL.md` (generation).
 
 ## Usage
 
@@ -13,31 +15,18 @@ Add a new page to a project that already has a design-system.md.
 /design:page about page
 /design:page contact form with map
 /design:page team members grid
+/design:page settings screen for the dashboard
 ```
 
 ## Prerequisites
-
-- design-system.md must exist at project root
-- If missing, use /design instead (full pipeline)
+`design-system.md` must exist at project root. If missing, use `/design` instead (FULL scope).
 
 ## Workflow
 
-1. **Read design-system.md** completely. Extract tokens, typography, reference site.
+1. Read the existing `design-system.md` completely — tokens, typography, spacing, motion profile.
+2. Route per `design-method`: `skills/design-web/SKILL.md` (marketing page — browse 2 inspiration sites) or `skills/design-webapp/SKILL.md` (app screen — pick the matching page/interaction pattern, no browsing).
+3. Read `skills/design-motion/SKILL.md` — same gate as `/design`.
+4. Read `skills/design-review/SKILL.md` — same deterministic checks + bounded visual loop, plus a consistency check against the rest of the project's pages.
 
-2. **Phase 1 — RESEARCH**: Browse 2 sites matching the page type via fuse-browser. Same process as /design: open → navigate → browser_scroll → wait → browser_screenshot → 5 observations per site. Declare reference + 3 elements to reproduce.
-
-3. **Phase 3 — GENERATE**: Map existing design-system.md to 7 Gemini XML blocks:
-   - Identity → `<aesthetics>`, Reference → `<style_reference>`, Typography → `<typography>`
-   - OKLCH → `<color_system>`, Spacing → `<spacing>`, (always) → `<states>`, Forbidden → `<forbidden>`
-   - Call mcp__gemini-design__create_frontend with ALL 7 blocks
-   - Apply component variants (Glass/Outline/Flat)
-
-4. **Phase 4 — MOTION**: Add animations via mcp__gemini-design__modify_frontend. Match motion profile from design-system.md (scroll reveals, hover transitions, focus rings).
-
-5. **Phase 5 — AUDIT**: Same checks as /design. Verify contrast >= 4.5:1 text / 3:1 UI. Check font compliance. Confirm OKLCH token adherence. Validate consistency with existing pages.
-
-6. **Phase 6 — REVIEW**: python3 -m http.server 8899 → screenshot light (fullPage) → toggle .dark → screenshot dark. Compare 3 declared elements [expected vs present]. Fix gaps with modify_frontend (max 2 cycles). Report.
-
-## FORBIDDEN
-
-Same as /design. Additionally: creating a new design-system.md (use existing one).
+## Forbidden
+Creating a new `design-system.md` (must reuse the existing one). Everything forbidden in `/design` also applies here.

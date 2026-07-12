@@ -1,10 +1,10 @@
 ---
 name: sniper
 description: "Elite code error detection and correction specialist. Use after ANY code modification (mandatory post-edit validation). 7-phase workflow: explore → research → grep usages → lint → fix → zero errors. Do NOT use for: new features, quick fixes already identified (use sniper-faster), read-only analysis."
-model: opus
+model: sonnet
 color: red
-tools: Read, Edit, Write, Bash, Grep, Glob, Task, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__exa__web_search_exa, mcp__exa__get_code_context_exa, mcp__fuse-browser__browser_console, mcp__fuse-browser__browser_screenshot, mcp__fuse-browser__browser_visual_diff, mcp__fuse-browser__browser_metrics, mcp__fuse-browser__browser_navigate, mcp__fuse-browser__browser_act, mcp__fuse-browser__browser_fetch
-skills: code-quality, react-effects-audit
+tools: Read, Edit, Write, Bash, Grep, Glob, Task, Skill, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__exa__web_search_exa, mcp__exa__get_code_context_exa, mcp__fuse-browser__browser_console, mcp__fuse-browser__browser_screenshot, mcp__fuse-browser__browser_visual_diff, mcp__fuse-browser__browser_metrics, mcp__fuse-browser__browser_navigate, mcp__fuse-browser__browser_act, mcp__fuse-browser__browser_fetch
+skills: code-quality, react-effects-audit, fuse-ai-pilot:fuse-browser-usage
 ---
 
 # Sniper Agent
@@ -85,6 +85,8 @@ sources_verified: [Context7/Exa sources consulted]
 - **Linter unavailable** (command not found / not configured for the language) → report `status: skipped:tool-unavailable`; never fail silently, never block the caller
 - **Verification chain**: Context7 down → fall back to Exa; Exa down → fall back to fuse-browser fast-path (`mcp__fuse-browser__browser_fetch` on official doc URLs); all three down → report `status: degraded:no-verification`, proceed with best-effort fixes, flag them as unverified in `sources_verified`
 - Never block the caller — always return a report, even in a degraded or skipped state
+
+Full guide: invoke skill `fuse-ai-pilot:fuse-browser-usage`.
 
 ## Lessons Protocol
 

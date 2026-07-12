@@ -1,116 +1,70 @@
-# Design Expert Plugin
+# Design Expert Plugin (`fuse-design`)
 
-Expert UI/UX design for React/Next.js with Tailwind CSS, shadcn/ui and 21st.dev.
+UI/UX design director covering four targets: **marketing websites, web apps, iOS, and
+Android**. Generates production-ready HTML/CSS directly — Gemini Design MCP, Magic
+(21st.dev), and shadcn MCP are optional tools of convenience, never a requirement. Mobile
+targets never produce SwiftUI or Compose code: they produce tokens, an HTML
+device-framed mockup, and a handoff spec for `swift-expert` or an Android developer.
 
-**ZERO TOLERANCE for generic "AI slop" aesthetics.**
+**Zero tolerance for generic "AI slop" aesthetics** — see the anti-slop clusters in
+`skills/design-method/SKILL.md`.
 
-## Main Agent
+## Agent
 
-- **design-expert** - Design orchestrator with 4 skills and anti-AI slop system
+- **design-expert** (`agents/design-expert.md`) — the orchestrator. Reads
+  `design-method` first, always; routes to the target-specific skill from there.
 
-## 4-Pillar Framework
+## Method (read this first)
 
-### 1. Typography
+All design work starts in `skills/design-method/SKILL.md`:
 
-Fonts FORBIDDEN: Inter, Roboto, Arial, Open Sans, system fonts
+1. **Brief** — 4 questions (purpose, tone, constraints, differentiation) before any code.
+2. **Signature element** — name the one memorable thing this design will be remembered for.
+3. **Two-pass process** — a compact plan, then a critical re-read against the brief, before the first line of markup.
+4. **Anti-slop clusters** — three named default-AI-look clusters to avoid on sight.
+5. **Routing** — which skill to run next, based on target (web/webapp/iOS/Android) and scope (FULL/PAGE/COMPONENT/MOBILE).
 
-Fonts APPROVED: Clash Display, Playfair Display, JetBrains Mono, Bricolage Grotesque, Satoshi, Syne
+## Skills
 
-### 2. Colors
+| Skill | Covers |
+|---|---|
+| `design-method` | The core method above — read first |
+| `design-system` | OKLCH tokens, typography, spacing, motion profile, the canonical forbidden-fonts list, the mechanical contrast-check step |
+| `design-web` | Marketing sites/landing pages — inspiration browsing (FULL/PAGE scope only), component generation, premium layout patterns, hard layout-discipline rules |
+| `design-webapp` | Dashboards, auth, settings, onboarding, data tables, command palettes — density and state coverage over marketing polish |
+| `design-ios` | iOS mockup + handoff — Dynamic Type, semantic colors, device viewports, Liquid Glass, SwiftUI-ready spec |
+| `design-android` | Android mockup + handoff — Material 3 Expressive type/shape/color scales, window size classes, Compose-ready spec |
+| `design-motion` | Motion gated by the `MOTION_INTENSITY` dial — most animation ideas die at the gate; mandatory hover/focus/disabled states and `prefers-reduced-motion` regardless |
+| `ux-copy` | Voice/tone, CTAs, error messages, empty states, the copy self-audit (em-dash ban, production-tell catalogue) |
+| `design-review` | The final gate — deterministic checks (contrast, fonts, colors, em-dash) then a bounded screenshot loop (max 2 fix cycles) |
 
-- CSS Variables mandatory
-- NO purple gradients
-- Sharp accents, IDE-inspired themes
+## Commands
 
-### 3. Motion
-
-- Orchestrated page load (stagger)
-- Hover states on ALL interactive elements
-- NO random animations (bounce, pulse)
-
-### 4. Backgrounds
-
-- Layered gradients, glassmorphism, gradient orbs
-- NO solid white/gray (except brutalist)
-
-## Theme Presets
-
-- **Brutalist** - Monochrome, sharp edges, 900 weight
-- **Solarpunk** - Greens, golds, organic shapes
-- **Editorial** - Serif headlines, generous whitespace
-- **Cyberpunk** - Neon on dark, monospace, glitch
-- **Luxury** - Gold accents, serif, refined animations
-
-## Included Skills
-
-### Component Generation
-
-- **generating-components** - Creation via shadcn/ui and 21st.dev
-  - Step 0: READ typography.md + color-system.md (ANTI-AI SLOP)
-  - Step 1-2: Search 21st.dev + shadcn/ui
-  - Step 5: READ theme-presets.md - Choose theme
-  - Validation anti-AI slop checklist
-
-### Design System
-
-- **designing-systems** - Tokens, colors, typography
-  - OKLCH color space (P3 gamut)
-  - Modular scale typography (1.25)
-  - Spacing 4px grid
-
-### Accessibility
-
-- **validating-accessibility** - WCAG 2.2 Level AA
-  - Contrast 4.5:1 (text), 3:1 (UI)
-  - Keyboard navigation
-  - ARIA support
-  - Reduced motion
-
-### Animations
-
-- **adding-animations** - Framer Motion and CSS
-  - Micro-interactions (<100ms feedback)
-  - Variants and orchestration
-  - Exit animations
-
-## Anti-AI Slop References
-
-- `references/typography.md` - Fonts FORBIDDEN/APPROVED
-- `references/color-system.md` - CSS variables, palettes
-- `references/motion-patterns.md` - Animations, hover states
-- `references/theme-presets.md` - Brutalist, Solarpunk, Editorial, Cyberpunk, Luxury
-
-## Command
-
-```bash
-/design hero section brutalist
-/design pricing cards solarpunk
-/design contact form editorial
+```
+/design                  Full pipeline (web/webapp, no design-system.md yet)
+/design:page             New page/screen, reuses existing design-system.md
+/design:component        Single component, no browsing
+/design:mobile ios|android   Mockup + handoff spec, never app code
+/design:audit             Audit only, no generation
 ```
 
-## Technologies
+## Honesty Notes
 
-- React/Next.js
-- Tailwind CSS v4
-- shadcn/ui
-- 21st.dev
-- Framer Motion
-- OKLCH colors
+- **Hooks provide state tracking, not phase gating.** The installed `@fusengine/harness`
+  has no design-specific enforcement — it does not block phase skipping, force
+  light+dark validation, or gate Gemini usage. The pipeline discipline in
+  `design-method` is followed by convention and verified in `design-review`, not
+  enforced by a hook. See `hooks/hooks.json`.
+- **Gemini Design MCP, Magic, and shadcn MCP are optional.** Direct HTML/CSS generation
+  is the default and the fallback if any of them is unavailable.
+- **Every fact has one home.** Forbidden fonts and contrast thresholds live in
+  `design-system`; the screenshot/review procedure lives in `design-review`; iOS/Android
+  numeric facts live in `design-ios`/`design-android` with a verified/to-reconfirm status
+  next to each one. Nothing else in this plugin restates them.
 
-## Workflow
+## Rules (`rules/`)
 
-1. **Read** - Typography + Color references (ANTI-AI SLOP)
-2. **Discover** - Inspiration via 21st.dev and shadcn
-3. **Design** - Choose theme, declare fonts/colors
-4. **Build** - Component generation
-5. **Animate** - Micro-interactions (Framer Motion)
-6. **Validate** - Accessibility + Anti-AI slop checklist
-
-## Anti-AI Slop Checklist
-
-- [ ] Typography: Distinctive font (NOT Inter/Roboto)
-- [ ] Colors: CSS variables, NO purple gradients
-- [ ] Motion: Orchestrated OR intentional absence
-- [ ] Hover states: ALL interactive elements
-- [ ] Border-left: NO colored left borders
-- [ ] Accessibility: Semantic HTML + ARIA + WCAG AA
+Trimmed to what isn't already covered by a skill: reusable component-pattern snippets
+(`design-rules.md`), the stack-detection → framework-expert delegation table
+(`framework-integration.md`), and the optional Gemini Design MCP quick-reference
+(`gemini-design.md`).

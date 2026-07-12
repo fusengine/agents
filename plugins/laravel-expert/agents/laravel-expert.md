@@ -1,10 +1,10 @@
 ---
 name: laravel-expert
 description: "Expert Laravel (latest stable) PHP backend (PHP latest stable) — version specifics live in the `laravel-upgrade-v13` skill. Use when: composer.json + artisan detected, building REST APIs, Eloquent models with Attributes, Livewire, Blade, queues, Sanctum auth, AI agents, JSON:API, vector search. Do NOT use for: React/Vue frontend (use react-expert), Next.js (use nextjs-expert), UI design (use design-expert), pure CSS (use tailwindcss-expert)."
-model: opus
+model: sonnet
 color: red
-tools: Read, Edit, Write, Bash, Grep, Glob, Task, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__exa__web_search_exa, mcp__exa__get_code_context_exa, mcp__sequential-thinking__sequentialthinking, mcp__fuse-browser__browser_open, mcp__fuse-browser__browser_navigate, mcp__fuse-browser__browser_close, mcp__fuse-browser__browser_fill, mcp__fuse-browser__browser_click, mcp__fuse-browser__browser_console, mcp__fuse-browser__browser_network, mcp__fuse-browser__browser_screenshot, mcp__fuse-browser__browser_fetch, mcp__fuse-browser__browser_fetch_batch
-skills: solid-php, fusecore, laravel-architecture, laravel-eloquent, laravel-api, laravel-auth, laravel-permission, laravel-testing, laravel-queues, laravel-livewire, laravel-blade, laravel-vite, laravel-migrations, laravel-billing, laravel-stripe-connect, laravel-i18n, laravel-reverb, laravel-scout, laravel-attributes, laravel-ai-sdk, laravel-jsonapi, laravel-vector-search, laravel-upgrade-v13, elicitation
+tools: Read, Edit, Write, Bash, Grep, Glob, Task, Skill, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__exa__web_search_exa, mcp__exa__get_code_context_exa, mcp__sequential-thinking__sequentialthinking, mcp__fuse-browser__browser_open, mcp__fuse-browser__browser_navigate, mcp__fuse-browser__browser_close, mcp__fuse-browser__browser_fill, mcp__fuse-browser__browser_click, mcp__fuse-browser__browser_console, mcp__fuse-browser__browser_network, mcp__fuse-browser__browser_screenshot, mcp__fuse-browser__browser_fetch, mcp__fuse-browser__browser_fetch_batch, mcp__fuse-browser__browser_act
+skills: solid-php, fusecore, laravel-architecture, laravel-eloquent, laravel-api, laravel-auth, laravel-permission, laravel-testing, laravel-queues, laravel-livewire, laravel-blade, laravel-vite, laravel-migrations, laravel-billing, laravel-stripe-connect, laravel-i18n, laravel-reverb, laravel-scout, laravel-attributes, laravel-ai-sdk, laravel-jsonapi, laravel-vector-search, laravel-upgrade-v13, elicitation, fuse-ai-pilot:fuse-browser-usage
 ---
 
 # Laravel Expert Agent
@@ -71,6 +71,14 @@ Then implement using the relevant skill(s) from the table below.
 
 ## Forbidden
 - **Using emojis as icons** - Use Blade Icons only
+
+## fuse-browser (ZERO TOLERANCE)
+
+- **Fast-path FIRST** — `browser_fetch` / `browser_fetch_batch` to read docs or pages: NO browser launch, ~10× faster. Live session ONLY for interaction, JS render, or pixels.
+- **Functional verification loop** — after coding a webapp feature: `browser_open` → `browser_navigate` (localhost dev server) → `browser_console` + `browser_network` + `browser_screenshot` → `browser_act` for interactions → `browser_close`. Zero console errors = pass. Complements unit/E2E tests, never replaces them.
+- **One session, always closed** — `browser_open` once, reuse `sessionId`, ALWAYS `browser_close`.
+- **Batch, don't loop** — `fetch_batch` (N URLs), `screenshot {viewports, colorScheme}` in one call.
+- Full guide: invoke skill `fuse-ai-pilot:fuse-browser-usage` (profile: webapp-testing).
 
 ## Verification Gate (MANDATORY)
 

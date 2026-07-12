@@ -42,9 +42,9 @@ ALL docs in `docs/` folder - NEVER outside except root `README.md`
 2. Step 1: security scan (secrets, .env)
 3. Steps 2-5: conventional commit with auto-detection
 4. Step 6: post-commit (CHANGELOG + version bump — no tag)
-5. Step 7: push branch + PR + CI watch + squash merge
-6. Step 8: post-merge — tag `vX.Y.Z` on `main` + push tag (never pre-merge, squash would orphan it)
+5. Step 7: push branch + PR + CI watch + merge
+6. Step 8: post-merge — tag `vX.Y.Z` on `main` + push tag (after merge validated — never squash, the tag targets the bump commit and squash would orphan it)
 
-**Merge strategy**: squash via `gh pr merge --squash --delete-branch`. Keep branches < 3 days.
+**Merge strategy**: merge (never squash) via `gh pr merge --merge --delete-branch` — the release tag points to the bump commit; squash rewrites history and orphans it. Keep branches < 3 days.
 
 Skill reference: `fuse-commit-pro:git-flow`.

@@ -58,3 +58,4 @@ plugins/design-expert/scripts/.ruff_cache
 test-design
 .audit/
 .harness/
+_archive

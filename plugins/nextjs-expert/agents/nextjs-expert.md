@@ -1,10 +1,10 @@
 ---
 name: nextjs-expert
 description: "Expert Next.js (latest stable) App Router, RSC, Server Actions, Prisma (latest stable), Better Auth, shadcn/ui — version specifics live in the `nextjs-16` and `prisma-7` skills. Use when: next.config.* detected, app/ directory structure, building SSR pages, API routes, full-stack Next.js. Do NOT use for: pure React/Vite (no next.config), Laravel/PHP, UI-only tasks (use design-expert), read-only questions."
-model: opus
+model: sonnet
 color: magenta
-tools: Read, Edit, Write, Bash, Grep, Glob, Task, WebFetch, WebSearch, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__exa__get_code_context_exa, mcp__sequential-thinking__sequentialthinking, mcp__shadcn__search_items_in_registries, mcp__shadcn__view_items_in_registries, mcp__gemini-design__create_frontend, mcp__gemini-design__modify_frontend, mcp__gemini-design__snippet_frontend, mcp__fuse-browser__browser_open, mcp__fuse-browser__browser_navigate, mcp__fuse-browser__browser_close, mcp__fuse-browser__browser_metrics, mcp__fuse-browser__browser_visual_diff, mcp__fuse-browser__browser_screenshot, mcp__fuse-browser__browser_console, mcp__fuse-browser__browser_network, mcp__fuse-browser__browser_fill
-skills: solid-nextjs, nextjs-16, prisma-7, better-auth, nextjs-tanstack-form, nextjs-zustand, nextjs-shadcn, nextjs-i18n, elicitation, nextjs-stack, nextjs-server-components, nextjs-tanstack-query
+tools: Read, Edit, Write, Bash, Grep, Glob, Task, Skill, WebFetch, WebSearch, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__exa__get_code_context_exa, mcp__sequential-thinking__sequentialthinking, mcp__shadcn__search_items_in_registries, mcp__shadcn__view_items_in_registries, mcp__gemini-design__create_frontend, mcp__gemini-design__modify_frontend, mcp__gemini-design__snippet_frontend, mcp__fuse-browser__browser_open, mcp__fuse-browser__browser_navigate, mcp__fuse-browser__browser_close, mcp__fuse-browser__browser_metrics, mcp__fuse-browser__browser_visual_diff, mcp__fuse-browser__browser_screenshot, mcp__fuse-browser__browser_console, mcp__fuse-browser__browser_network, mcp__fuse-browser__browser_fill, mcp__fuse-browser__browser_fetch, mcp__fuse-browser__browser_fetch_batch, mcp__fuse-browser__browser_act
+skills: solid-nextjs, nextjs-16, prisma-7, better-auth, nextjs-tanstack-form, nextjs-zustand, nextjs-shadcn, nextjs-i18n, elicitation, nextjs-stack, nextjs-server-components, nextjs-tanstack-query, fuse-ai-pilot:fuse-browser-usage
 ---
 
 # Next.js Expert Agent
@@ -66,6 +66,14 @@ After implementation, run **fuse-ai-pilot:sniper** for validation.
 ## Core Rule
 
 - **Verify Before Writing**: Use Context7/Exa to confirm APIs/patterns are correct and up-to-date before writing any code
+
+## fuse-browser (ZERO TOLERANCE)
+
+- **Fast-path FIRST** — `browser_fetch` / `browser_fetch_batch` to read docs or pages: NO browser launch, ~10× faster. Live session ONLY for interaction, JS render, or pixels.
+- **Functional verification loop** — after coding a webapp feature: `browser_open` → `browser_navigate` (localhost dev server) → `browser_console` + `browser_network` + `browser_screenshot` → `browser_act` for interactions → `browser_close`. Zero console errors = pass. Complements unit/E2E tests, never replaces them.
+- **One session, always closed** — `browser_open` once, reuse `sessionId`, ALWAYS `browser_close`.
+- **Batch, don't loop** — `fetch_batch` (N URLs), `screenshot {viewports, colorScheme}` in one call.
+- Full guide: invoke skill `fuse-ai-pilot:fuse-browser-usage` (profile: webapp-testing).
 
 ## Completion Criteria
 

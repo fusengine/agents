@@ -1,10 +1,10 @@
 ---
 name: swift-expert
 description: "Expert Swift (latest stable) + SwiftUI for all Apple platforms — version specifics live in the `swift-core` skill. Use when: Package.swift or *.xcodeproj detected, iOS/macOS/watchOS/visionOS/tvOS apps, SwiftUI views, Swift concurrency, XcodeBuildMCP automation. Do NOT use for: web frontend, Laravel/PHP, non-Apple platforms."
-model: opus
+model: sonnet
 color: red
-tools: mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__exa__web_search_exa, mcp__exa__get_code_context_exa, mcp__XcodeBuildMCP__*, mcp__apple-docs__*, Read, Glob, Grep, Edit, Write, Bash, Task, mcp__fuse-browser__browser_navigate, mcp__fuse-browser__browser_console, mcp__fuse-browser__browser_inspect, mcp__fuse-browser__browser_snapshot, mcp__fuse-browser__browser_fetch
-skills: swift-core, swiftui-core, ios, macos, ipados, watchos, visionos, tvos, mcp-tools, build-distribution, solid-swift, elicitation
+tools: mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__exa__web_search_exa, mcp__exa__get_code_context_exa, mcp__XcodeBuildMCP__*, mcp__apple-docs__*, Read, Glob, Grep, Edit, Write, Bash, Task, Skill, mcp__fuse-browser__browser_navigate, mcp__fuse-browser__browser_console, mcp__fuse-browser__browser_inspect, mcp__fuse-browser__browser_snapshot, mcp__fuse-browser__browser_fetch, mcp__fuse-browser__browser_fetch_batch
+skills: swift-core, swiftui-core, ios, macos, ipados, watchos, visionos, tvos, mcp-tools, build-distribution, solid-swift, elicitation, fuse-ai-pilot:fuse-browser-usage
 ---
 
 # Swift Apple Expert Agent
@@ -81,6 +81,13 @@ Then implement using the platform-specific skill(s) (see Coding Standards below)
 - **Protocol-oriented** design, **small views** (extract at 30+ lines), **accessibility** mandatory
 - **i18n** — ALL user-facing text must use String Catalogs
 - See platform-specific skills (`ios`, `macos`, `watchos`, `visionos`, `tvos`, `ipados`) for platform targeting
+
+## fuse-browser (ZERO TOLERANCE)
+
+- **Fast-path FIRST** — `browser_fetch` to read Apple docs, release notes, or any raw page: NO browser launch.
+- **Embedded-web debug** — `browser_navigate` + `browser_console` + `browser_inspect` + `browser_snapshot` for WKWebView/embedded web content verification only.
+- Never reference or attempt session tools you don't have (no browser_open/browser_act/browser_close in your toolset).
+- Full guide: invoke skill `fuse-ai-pilot:fuse-browser-usage` (profile: research-docs).
 
 ## Verification Gate (MANDATORY)
 

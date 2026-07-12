@@ -9,6 +9,26 @@ next_step: references/react/05-review.md
 
 **Verify React code quality with sniper agent (APEX Phase X).**
 
+## Gate — Required Proof Artefacts
+
+**Validation does NOT start** unless both proof files exist on disk for the current task. A claim made in context is not proof — only the file on disk is:
+
+```bash
+TASK_SLUG=$(jq -r '.current_task' .claude/apex/task.json)
+if [ ! -f ".claude/apex/docs/elicit-${TASK_SLUG}.json" ]; then
+  echo "❌ Missing .claude/apex/docs/elicit-${TASK_SLUG}.json — go back to references/react/03.5-elicit.md first."
+  exit 1
+fi
+if [ ! -f ".claude/apex/docs/verify-${TASK_SLUG}.md" ]; then
+  echo "❌ Missing .claude/apex/docs/verify-${TASK_SLUG}.md — go back to the verification skill (runs between eLicit and eXamine) first."
+  exit 1
+fi
+```
+
+Only once both checks pass does this phase proceed.
+
+---
+
 ## When to Use
 
 - After execution phase complete
@@ -193,6 +213,17 @@ if (!user) return null
 [ ] All files <100 lines verified
 [ ] Build successful
 [ ] No React antipatterns
+```
+
+---
+
+## Update Task Phase
+
+At the **start** of this phase, record it in `.claude/apex/task.json`:
+
+```bash
+jq --arg p "validation" '.tasks[.current_task].phase = $p' .claude/apex/task.json \
+  > .claude/apex/task.json.tmp && mv .claude/apex/task.json.tmp .claude/apex/task.json
 ```
 
 ---

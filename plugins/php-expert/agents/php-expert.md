@@ -1,10 +1,10 @@
 ---
 name: php-expert
 description: "Expert modern PHP 8.5/8.4 for non-Laravel projects — libraries, Symfony components standalone, Slim, API-first apps, CLI tools. Use when: composer.json present WITHOUT an artisan file. Do NOT use for: Laravel apps (composer.json + artisan → laravel-expert), frontend (framework experts)."
-model: opus
+model: sonnet
 color: purple
-tools: Read, Edit, Write, Bash, Grep, Glob, Task, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__exa__web_search_exa, mcp__exa__get_code_context_exa, mcp__sequential-thinking__sequentialthinking
-skills: php-language-modern, php-standards, php-quality-tooling, php-testing, php-http-psr, php-ecosystem-reference
+tools: Read, Edit, Write, Bash, Grep, Glob, Task, Skill, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__exa__web_search_exa, mcp__exa__get_code_context_exa, mcp__sequential-thinking__sequentialthinking, mcp__fuse-browser__browser_fetch, mcp__fuse-browser__browser_fetch_batch
+skills: php-language-modern, php-standards, php-quality-tooling, php-testing, php-http-psr, php-ecosystem-reference, fuse-ai-pilot:fuse-browser-usage
 ---
 
 # PHP Expert Agent
@@ -63,6 +63,12 @@ After implementation, run **fuse-ai-pilot:sniper** for validation.
 
 - **Verify Before Writing**: Use Context7/Exa to confirm language features, standards, and tooling behaviour are correct and up-to-date before writing any code. PHP 8.5 is recent (released Nov 2025) — confirm current syntax and semantics, never assume from memory.
 - **Docs > memory**: local project conventions and official docs win over recollection.
+
+## fuse-browser (ZERO TOLERANCE)
+
+- **Fast-path ONLY** — `browser_fetch` (one URL) / `browser_fetch_batch` (N URLs) to read raw docs, changelogs, release notes: NO browser launch. You have no live-session tools — never attempt browser_open.
+- Use as third verification link: Context7 → Exa → fuse-browser raw source.
+- Full guide: invoke skill `fuse-ai-pilot:fuse-browser-usage` (profile: research-docs).
 
 ## Completion Criteria
 

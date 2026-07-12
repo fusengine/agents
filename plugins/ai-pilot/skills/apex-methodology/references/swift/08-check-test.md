@@ -79,3 +79,16 @@ xcodebuild test -scheme MyApp \
 - [ ] No flaky tests
 - [ ] No memory leaks
 - [ ] No data races
+
+## Update Task Phase
+
+At the **start** of this phase, record it in `.claude/apex/task.json`:
+
+```bash
+jq --arg p "check-test" '.tasks[.current_task].phase = $p' .claude/apex/task.json \
+  > .claude/apex/task.json.tmp && mv .claude/apex/task.json.tmp .claude/apex/task.json
+```
+
+## Next Phase
+
+→ Proceed to `09-create-pr.md`

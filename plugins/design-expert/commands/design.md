@@ -1,44 +1,32 @@
 ---
 name: design
-description: "Full design pipeline: Identity → Research → System → Generate → Motion → Audit → Review. Generates production-ready HTML/CSS via Gemini Design MCP with OKLCH tokens, approved typography, and fuse-browser-driven inspiration."
+description: "Full design pipeline for a web or web-app target: brief → tokens → generation → motion → review. Use /design:mobile for iOS/Android instead."
 ---
 
-# /design — Full Design Pipeline (Phases 0→6)
+# /design — Full Pipeline (FULL scope)
 
-Generate a complete design from scratch. Use when no design-system.md exists or for a full redesign.
+Generate a complete design from scratch — no `design-system.md` exists yet, or a full redesign was requested.
+
+**Complete documentation**: `skills/design-method/SKILL.md`
 
 ## Usage
 
 ```
 /design hero section for fintech startup
 /design landing page for physiotherapy clinic
-/design pricing page with dark mode
+/design dashboard for a project management SaaS
 ```
 
 ## Workflow
 
-1. **Read .design-state.json** to check current phase. If absent, pipeline starts at Phase 0.
+1. Read `skills/design-method/SKILL.md` — answer the 4-question brief, name the signature element, run the two-pass process.
+2. Read `skills/design-system/SKILL.md` — build `design-system.md` (OKLCH tokens, typography, spacing, motion profile) and run the Mechanical Contrast Check.
+3. Route per `design-method`'s table: `skills/design-web/SKILL.md` (marketing/landing) or `skills/design-webapp/SKILL.md` (dashboard/app). Browse 4 inspiration sites if web/marketing.
+4. Read `skills/design-motion/SKILL.md` — gate every animation candidate; mandatory states (hover/focus/disabled) regardless of gate outcome.
+5. Read `skills/design-review/SKILL.md` — deterministic checks, then the bounded screenshot loop (light+dark, max 2 fix cycles), report.
 
-2. **Phase 0 — IDENTITY**: Read skills/0-identity-system/SKILL.md. Pick sector template (creative/fintech/ecommerce/devtool). Generate OKLCH palette with chroma > 0.05. Pick approved typography pair (never Inter/Roboto/Arial). Define spacing base unit + motion profile.
+## Copy
+If the brief needs dedicated UX copy work, read `skills/ux-copy/SKILL.md` at any point in the pipeline above — it isn't tied to a fixed step.
 
-3. **Phase 1 — RESEARCH**: Read skills/1-designing-systems/references/design-inspiration.md + design-inspiration-urls.md. Browse 4 sites via fuse-browser:
-   - Once: browser_open → sessionId. For each site: browser_navigate → browser_scroll(to:"end") → wait 5s → browser_scroll(deltaY:-100000) → wait 2s → browser_screenshot(fullPage: true)
-   - Write 5 observations per screenshot: (1) dominant+accent color (2) typography hierarchy (3) layout density (4) visual effects (5) section structure
-   - After 4 sites: declare "Site choisi: {URL}. Je reproduis: {el1}, {el2}, {el3}" — pick 3 visually distinctive elements
-
-4. **Phase 2 — SYSTEM**: Create design-system.md at project root from sector template. Fill: Identity table, OKLCH tokens (hue ±15°), typography pair, spacing, motion profile. Add ## Design Reference section with URL + why + 3 elements.
-
-5. **Phase 3 — GENERATE**: Map design-system.md to 7 Gemini XML blocks:
-   - Identity → `<aesthetics>`, Reference → `<style_reference>`, Typography → `<typography>`
-   - OKLCH → `<color_system>`, Spacing → `<spacing>`, (always) → `<states>`, Forbidden → `<forbidden>`
-   - Call mcp__gemini-design__create_frontend with ALL 7 blocks
-
-6. **Phase 4 — MOTION**: Call mcp__gemini-design__modify_frontend to add Framer Motion scroll reveals (IntersectionObserver), hover scale/opacity transitions, focus ring states, loading skeletons.
-
-7. **Phase 5 — AUDIT**: Verify contrast >= 4.5:1 text / 3:1 UI in both modes. Check no forbidden fonts. Confirm all colors are OKLCH from design-system.md. Validate all states (hover/focus/disabled/loading). Run anti-AI-slop checklist.
-
-8. **Phase 6 — REVIEW**: python3 -m http.server 8899 → screenshot light (fullPage) → toggle .dark → screenshot dark. Compare 3 declared elements [expected vs present]. Fix gaps with modify_frontend (max 2 cycles). Report to team-lead.
-
-## FORBIDDEN
-
-Skipping phases · Manual HTML/CSS · Gemini without 7 XML blocks · Inter/Roboto/Arial · No light+dark · Hex/RGB colors · Purple gradients · Emojis
+## Forbidden
+Skipping the `design-method` brief. Restating fonts/contrast/screenshot procedure instead of pointing to their canonical skill. Reporting a review as passed when `design-review` wasn't actually run.

@@ -54,7 +54,19 @@ Gather from previous phase:
 - What framework/language was used
 ```
 
-### 3. Validate Context
+### 3. Load Prior Artifact (if present)
+
+```
+Derive {task-slug} (see SKILL.md's Artifact Contract).
+IF .claude/apex/docs/elicit-{task-slug}.json exists:
+  → Load it as {prior_artifact}
+  → In Step 2, techniques already "pass" in {prior_artifact} are
+    deselected by default; "fail"/"deferred" ones are re-selected first
+ELSE:
+  → {prior_artifact} = none, proceed as first pass
+```
+
+### 4. Validate Context
 
 ```
 Required for next steps:
@@ -63,7 +75,7 @@ Required for next steps:
 ✓ Expert agent known
 ```
 
-### 4. Handle Skip Mode
+### 5. Handle Skip Mode
 
 ```
 IF {elicit_mode} == "skip":

@@ -16,6 +16,19 @@
         ]
       }
     ],
+    "SubagentStart": [
+      {
+        "_description": "Inject all rules into each subagent's context at spawn (requires @fusengine/harness >= 0.1.63 which routes scope 'rules' on SubagentStart)",
+        "matcher": "",
+        "hooks": [
+          {
+            "_description": "Load and inject rules/*.md into additionalContext (harness reads CLAUDE_PLUGIN_ROOT)",
+            "type": "command",
+            "command": "bun ${CLAUDE_PLUGIN_ROOT}/../node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code rules"
+          }
+        ]
+      }
+    ],
     "UserPromptSubmit": [
       {
         "_description": "Re-inject rules at every user prompt for persistent context",

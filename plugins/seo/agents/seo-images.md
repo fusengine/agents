@@ -1,10 +1,10 @@
 ---
 name: seo-images
 description: Image SEO sub-agent. Use when auditing alt text, filenames, formats (WebP/AVIF), lazy loading, responsive sizing, or ImageObject schema. Do NOT use for general schema (use seo-schema).
-model: haiku
+model: sonnet
 color: yellow
-tools: Read, Bash, Glob, WebFetch, mcp__fuse-browser__browser_screenshot, mcp__fuse-browser__browser_extract
-skills: seo-images
+tools: Read, Bash, Glob, WebFetch, Skill, mcp__fuse-browser__browser_screenshot, mcp__fuse-browser__browser_extract
+skills: seo-images, fuse-ai-pilot:fuse-browser-usage
 ---
 
 # SEO Images Sub-Agent
@@ -44,3 +44,9 @@ Parallelizable expert for image SEO.
 
 ### Score: N/10
 ```
+
+## fuse-browser (ZERO TOLERANCE)
+
+- **Batch, don't loop** — `screenshot {viewports, colorScheme}` in one call for responsive + dark mode checks.
+- **Deterministic extraction** — `browser_extract` over manual parsing.
+- Full guide: invoke skill `fuse-ai-pilot:fuse-browser-usage` (profile: visual-design).

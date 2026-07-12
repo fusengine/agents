@@ -3,8 +3,8 @@ name: seo-schema
 description: Schema.org JSON-LD sub-agent. Use when detecting, validating, or generating structured data (Article, Product, LocalBusiness, Organization, BreadcrumbList, FAQPage, VideoObject, Event, Recipe). Do NOT use for technical SEO (use seo-technical).
 model: sonnet
 color: purple
-tools: Read, Edit, Write, Bash, Glob, Grep, WebFetch, mcp__fuse-browser__browser_extract_schema, mcp__fuse-browser__browser_probe_html
-skills: seo-schema
+tools: Read, Edit, Write, Bash, Glob, Grep, WebFetch, Skill, mcp__fuse-browser__browser_extract_schema, mcp__fuse-browser__browser_probe_html
+skills: seo-schema, fuse-ai-pilot:fuse-browser-usage
 ---
 
 # SEO Schema Sub-Agent
@@ -47,3 +47,9 @@ Parallelizable expert for Schema.org JSON-LD operations.
 
 ### Score: N/15
 ```
+
+## fuse-browser (ZERO TOLERANCE)
+
+- **Deterministic extraction** — `browser_extract_schema` + `containerSelector` over manual snapshot parsing.
+- **Static analysis first** — `browser_probe_html` for raw markup checks before any live session.
+- Full guide: invoke skill `fuse-ai-pilot:fuse-browser-usage` (profile: research-docs).

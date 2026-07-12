@@ -176,8 +176,8 @@ gh pr checks
 ## Merge
 
 ```bash
-# After approval
-gh pr merge --squash --delete-branch
+# After approval (merge commit — never squash, it orphans the release tag's bump commit)
+gh pr merge --merge --delete-branch
 ```
 
 ---
@@ -202,6 +202,20 @@ git branch -d feature/branch-name
 [ ] Screenshots for UI
 [ ] CI passing
 [ ] Review requested
+```
+
+---
+
+## Update Task Phase
+
+At the **start** of this phase, record it (and mark the task `completed` once the PR is opened) in `.claude/apex/task.json`:
+
+```bash
+jq --arg p "create-pr" '.tasks[.current_task].phase = $p' .claude/apex/task.json \
+  > .claude/apex/task.json.tmp && mv .claude/apex/task.json.tmp .claude/apex/task.json
+# after the PR is created:
+jq '.tasks[.current_task].status = "completed"' .claude/apex/task.json \
+  > .claude/apex/task.json.tmp && mv .claude/apex/task.json.tmp .claude/apex/task.json
 ```
 
 ---

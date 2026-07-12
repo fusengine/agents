@@ -5,6 +5,13 @@
 import { copyFileSync, existsSync, mkdirSync } from "node:fs";
 import { dirname } from "node:path";
 import { HOOK_TYPES } from "../interfaces/hooks";
+import { mergeHookType } from "./hook-merge";
+
+export {
+	SUPPORTED_LANGUAGES,
+	DEFAULT_LANGUAGE,
+	configureDefaults,
+} from "./settings-language";
 
 export interface Settings {
 	language?: string;
@@ -36,49 +43,27 @@ export function backupSettings(path: string): void {
 	copyFileSync(path, `${path}.backup.${timestamp}`);
 }
 
-/** Configure hooks in settings */
+/**
+ * Configure fusengine hooks in settings without clobbering user customisations.
+ * For each managed hook type the previous loader entry is replaced and any
+ * user-authored entry (foreign command, or a hook type absent from HOOK_TYPES)
+ * is preserved in place. Idempotent: re-running yields no duplicates.
+ *
+ * @param settings - Settings object to mutate.
+ * @param loaderPath - Absolute path to hooks-loader.ts.
+ * @returns The same settings object with hooks merged.
+ */
 export function configureHooks(
 	settings: Settings,
 	loaderPath: string,
 ): Settings {
-	settings.hooks = {};
+	const hooks = settings.hooks ?? {};
 
 	for (const hookType of HOOK_TYPES) {
-		settings.hooks[hookType] = [
-			{
-				matcher: "",
-				hooks: [{ type: "command", command: `bun ${loaderPath} ${hookType}` }],
-			},
-		];
+		hooks[hookType] = mergeHookType(hooks[hookType], loaderPath, hookType);
 	}
 
-	return settings;
-}
-
-/** Supported languages for Claude Code responses */
-export const SUPPORTED_LANGUAGES = [
-	{ value: "english", label: "English" },
-	{ value: "french", label: "French" },
-	{ value: "german", label: "German" },
-	{ value: "spanish", label: "Spanish" },
-	{ value: "italian", label: "Italian" },
-	{ value: "portuguese", label: "Portuguese" },
-	{ value: "dutch", label: "Dutch" },
-	{ value: "japanese", label: "Japanese" },
-	{ value: "chinese", label: "Chinese" },
-	{ value: "korean", label: "Korean" },
-] as const;
-
-/** Default language when none selected */
-export const DEFAULT_LANGUAGE = "english";
-
-/** Configure default parameters */
-export function configureDefaults(
-	settings: Settings,
-	language?: string,
-): Settings {
-	settings.language = language ?? settings.language ?? DEFAULT_LANGUAGE;
-	settings.attribution = { commit: "", pr: "" };
+	settings.hooks = hooks;
 	return settings;
 }
 

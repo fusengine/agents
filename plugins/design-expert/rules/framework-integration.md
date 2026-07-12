@@ -1,24 +1,27 @@
 # Framework Integration Rules (MANDATORY)
 
-After generating UI with Gemini Design, ALWAYS delegate to framework expert.
+After generating UI (direct HTML/CSS by default, or via the optional Gemini Design MCP
+path — see `skills/design-web/references/gemini/`), ALWAYS delegate to the matching
+framework expert for wiring into the codebase.
 
 ## Detection → Delegation
 
 | Project Files | Framework | UI Approach | Delegate To | Skills to Validate |
 |---------------|-----------|-------------|-------------|-------------------|
-| `next.config.*`, `app/layout.tsx` | Next.js | Gemini Design + shadcn | `fuse-nextjs:nextjs-expert` | solid-nextjs, nextjs-16 |
-| `astro.config.*`, `src/pages/*.astro` | Astro | Gemini Design + shadcn (React islands) | `fuse-astro:astro-expert` | solid-astro |
-| `@tanstack/react-start` + `tanstackStart()` in vite.config.* | TanStack Start | Gemini Design + shadcn | `fuse-tanstack-start:tanstack-start-expert` | solid-tanstack-start, start-core |
-| `package.json` + React (no Next) | React SPA | Gemini Design + shadcn | `fuse-react:react-expert` | solid-react, react-19 |
-| `composer.json` + `artisan` + Inertia + React | Laravel+Inertia | Gemini Design + shadcn | `fuse-laravel:laravel-expert` | solid-php |
+| `next.config.*`, `app/layout.tsx` | Next.js | Direct HTML/CSS + shadcn | `fuse-nextjs:nextjs-expert` | solid-nextjs, nextjs-16 |
+| `astro.config.*`, `src/pages/*.astro` | Astro | Direct HTML/CSS + shadcn (React islands) | `fuse-astro:astro-expert` | solid-astro |
+| `@tanstack/react-start` + `tanstackStart()` in vite.config.* | TanStack Start | Direct HTML/CSS + shadcn | `fuse-tanstack-start:tanstack-start-expert` | solid-tanstack-start, start-core |
+| `package.json` + React (no Next) | React SPA | Direct HTML/CSS + shadcn | `fuse-react:react-expert` | solid-react, react-19 |
+| `composer.json` + `artisan` + Inertia + React | Laravel+Inertia | Direct HTML/CSS + shadcn | `fuse-laravel:laravel-expert` | solid-php |
 | `composer.json` + `artisan` (no Inertia) | Laravel Blade | Visual specs → Livewire Flux | `fuse-laravel:laravel-expert` | solid-php |
-| `Package.swift`, `*.xcodeproj` | Swift/Apple | Visual specs → SwiftUI (Apple HIG) | `fuse-swift-apple-expert:swift-expert` | swift-apple |
+| `Package.swift`, `*.xcodeproj` | Swift/Apple | `design-ios` mockup + handoff spec → SwiftUI | `fuse-swift-apple-expert:swift-expert` | swift-apple |
+| Android project (Gradle/Compose) | Android | `design-android` mockup + handoff spec → Compose | (Android developer, no dedicated plugin agent yet) | — |
 | `tailwind.config.*` only | Tailwind only | CSS specs | `fuse-tailwindcss:tailwindcss-expert` | tailwindcss-v4 |
 
 ## Integration Workflow
 
 ```
-1. design-expert generates UI via Gemini Design
+1. design-expert generates UI (direct HTML/CSS by default)
    ↓
 2. Check project framework (next.config.*, package.json, etc.)
    ↓
@@ -85,7 +88,7 @@ For non-React projects, design-expert produces `design-system.md` + visual specs
 
 | Phase | design-expert | framework-expert |
 |-------|---------------|------------------|
-| UI Generation | ✅ Gemini Design | - |
+| UI Generation | ✅ Direct HTML/CSS (Gemini optional) | - |
 | Anti-AI-Slop | ✅ Rules applied | - |
 | Framer Motion | ✅ Animations | - |
 | SOLID compliance | - | ✅ File splitting |

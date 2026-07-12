@@ -76,7 +76,7 @@ jobs:
 ```bash
 gh pr diff 123                    # View diff
 gh pr checks 123                  # Check status
-gh pr merge 123 --squash --delete-branch  # Merge
+gh pr merge 123 --merge --delete-branch   # Merge commit — never squash, it orphans the release tag's bump commit
 ```
 
 ## Post-Merge
@@ -84,4 +84,16 @@ gh pr merge 123 --squash --delete-branch  # Merge
 ```bash
 git checkout develop && git pull
 git branch -d feature/PROFILE-123-user-profile
+```
+
+## Update Task Phase
+
+At the **start** of this phase, record it (and mark the task `completed` once the PR is opened) in `.claude/apex/task.json`:
+
+```bash
+jq --arg p "create-pr" '.tasks[.current_task].phase = $p' .claude/apex/task.json \
+  > .claude/apex/task.json.tmp && mv .claude/apex/task.json.tmp .claude/apex/task.json
+# after the PR is created:
+jq '.tasks[.current_task].status = "completed"' .claude/apex/task.json \
+  > .claude/apex/task.json.tmp && mv .claude/apex/task.json.tmp .claude/apex/task.json
 ```

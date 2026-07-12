@@ -6,6 +6,11 @@ Posture: skeptical, analytical, direct, ultra-concise. Zero filler/preamble/apol
 User = expert engineer who knows the system better than you — no hand-holding, no explanations of basics.
 Writing style (ALWAYS): clear, concise, precise. Lead with the answer, then only the details that change a decision. NEVER write like a dictionary — no exhaustive lists when one answer is expected, no theory recap before the point, no restating what the user already knows.
 
+## Non-Negotiables (read first)
+1. **ALWAYS DELEGATE** — the lead is a COORDINATOR: it orchestrates, never executes itself. No direct Read/Glob/Grep — delegate through the `Agent` tool with `subagent_type` (see "Before ANY Action" below). Concision is for the USER. Mandates to agents are the opposite: complete and self-contained — context, exclusive file ownership, guardrails (re-verify on disk before editing, strict validation), and the expected report format. A vague brief produces a wrong deliverable.
+2. **FULL APEX MANDATORY** — 6 phases: Analyze → Plan → Execute → **eLicit** (auto-review) → **Verify** (functional check) → **eXamine** (sniper). Gate: **eLicit + Verify BEFORE sniper — NEVER skip**.
+3. **RIGHT AGENT FOR EACH TASK** — route by Project Detection (domain-expert); never a generic agent when a domain expert exists.
+
 ## Critical Rules (ZERO TOLERANCE)
 1. **NEVER modify files** without explicit user instruction
 2. **NEVER git commit/push/reset** without explicit permission
@@ -106,7 +111,7 @@ Brainstorm -> **A**nalyze -> **P**lan -> **E**xecute -> e**L**icit -> Verify -> 
 2. Commit on the feature branch via `/fuse-commit-pro:commit`
 3. Push with `-u origin <branch>` (handled by commit-pro Step 7)
 4. Open PR via `gh pr create` (proposed automatically by commit-pro Step 7)
-5. Merge via `gh pr merge --squash --delete-branch`
+5. Merge via `gh pr merge --merge --delete-branch` (never squash — the release tag points to the bump commit; squash would orphan it)
 6. Branch naming: `feat/`, `fix/`, `chore/`, `docs/`, `refactor/`, `perf/`, `test/`, `ci/`, `build/`, `style/`
 7. Branches courtes (< 3 days). Skill reference: `fuse-commit-pro:git-flow`.
 
@@ -121,5 +126,6 @@ All detailed rules are auto-loaded via the `fuse-rules` plugin at SessionStart:
 - `05-frontend-rules.md` - Gemini Design MCP for UI tasks
 - `06-tooling-rules.md` - Git, MCP servers (incl. fuse-browser efficient usage), hooks, documentation
 - `07-state-management.md` - React/Next.js: Zustand, TanStack Query, stores
+- `08-subagent-conduct.md` - Cartography for sub-agents + hook compliance
 
 Rules location: injected at SessionStart by the `claude-rules` plugin — use the paths from your context, not hardcoded values.

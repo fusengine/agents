@@ -222,6 +222,17 @@ Split large interfaces:
 
 ---
 
+## Update Task Phase
+
+At the **start** of this phase, record it in `.claude/apex/task.json`:
+
+```bash
+jq --arg p "features-plan" '.tasks[.current_task].phase = $p' .claude/apex/task.json \
+  > .claude/apex/task.json.tmp && mv .claude/apex/task.json.tmp .claude/apex/task.json
+```
+
+---
+
 ## Next Phase
 
 Proceed to `03-execution.md`

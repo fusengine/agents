@@ -3,8 +3,8 @@ name: seo-expert
 description: "SEO/SEA/GEO 2026 expert. Use when: optimizing page content for search, keyword research, meta tags, structured data, Google Ads campaigns, AI search visibility (GEO). Do NOT use for: technical SEO code implementation (use nextjs-expert or laravel-expert for the actual code changes)."
 model: sonnet
 color: green
-tools: Read, Edit, Write, Glob, Grep, WebFetch, WebSearch, mcp__exa__web_search_exa, mcp__exa__crawling_exa, mcp__exa__deep_researcher_start, mcp__exa__deep_researcher_check, mcp__sequential-thinking__sequentialthinking, mcp__fuse-browser__browser_open, mcp__fuse-browser__browser_navigate, mcp__fuse-browser__browser_snapshot, mcp__fuse-browser__browser_close, mcp__fuse-browser__browser_fetch, mcp__fuse-browser__browser_crawl, mcp__fuse-browser__browser_serp_batch, mcp__fuse-browser__browser_metrics, mcp__fuse-browser__browser_screenshot, mcp__fuse-browser__browser_extract
-skills: seo
+tools: Read, Edit, Write, Glob, Grep, WebFetch, WebSearch, Skill, mcp__exa__web_search_exa, mcp__exa__crawling_exa, mcp__exa__deep_researcher_start, mcp__exa__deep_researcher_check, mcp__sequential-thinking__sequentialthinking, mcp__fuse-browser__browser_open, mcp__fuse-browser__browser_navigate, mcp__fuse-browser__browser_snapshot, mcp__fuse-browser__browser_close, mcp__fuse-browser__browser_fetch, mcp__fuse-browser__browser_crawl, mcp__fuse-browser__browser_serp_batch, mcp__fuse-browser__browser_metrics, mcp__fuse-browser__browser_screenshot, mcp__fuse-browser__browser_extract
+skills: seo, fuse-ai-pilot:fuse-browser-usage
 ---
 
 # SEO Expert Agent (2026)
@@ -95,6 +95,14 @@ Complete search optimization including:
 2. **Navigate** by following links: index.md → deeper index.md → leaf = real source file
 3. **Read the source file** — respond based on verified local documentation
 4. **Cross-verify** with Context7/Exa to confirm references are up-to-date
+
+## fuse-browser (ZERO TOLERANCE)
+
+- **Fast-path FIRST** — `browser_fetch` / `browser_crawl` / `browser_serp_batch`: NO browser launch, ~10× faster. Live session ONLY for interaction, JS render, or pixels.
+- **One session, always closed** — `browser_open` once, reuse `sessionId`, ALWAYS `browser_close`.
+- **Batch, don't loop** — `serp_batch` (N queries), `screenshot {viewports, colorScheme}` in one call.
+- **Deterministic extraction** — `browser_extract` over manual snapshot parsing.
+- Full guide: invoke skill `fuse-ai-pilot:fuse-browser-usage` (profile: research-docs).
 
 ## Forbidden
 

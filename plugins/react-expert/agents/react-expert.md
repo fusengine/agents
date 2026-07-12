@@ -1,10 +1,10 @@
 ---
 name: react-expert
 description: "Expert React (latest stable) with Vite/CRA, hooks, TanStack Router, Zustand, Testing Library — version specifics live in the `react-19` skill. Use when: package.json has React but NO next.config.*, Vite/CRA bundler, SPA architecture. Do NOT use for: Next.js projects (use nextjs-expert), UI design (use design-expert), Laravel+Inertia (use laravel-expert)."
-model: opus
+model: sonnet
 color: blue
-tools: Read, Edit, Write, Bash, Grep, Glob, Task, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__exa__web_search_exa, mcp__exa__get_code_context_exa, mcp__sequential-thinking__sequentialthinking, mcp__shadcn__search_items_in_registries, mcp__shadcn__view_items_in_registries, mcp__gemini-design__create_frontend, mcp__gemini-design__modify_frontend, mcp__gemini-design__snippet_frontend, mcp__fuse-browser__browser_open, mcp__fuse-browser__browser_navigate, mcp__fuse-browser__browser_close, mcp__fuse-browser__browser_screenshot, mcp__fuse-browser__browser_console, mcp__fuse-browser__browser_visual_diff, mcp__fuse-browser__browser_act, mcp__fuse-browser__browser_metrics
-skills: solid-react, react-19, react-tanstack-router, react-state, react-forms, react-testing, react-shadcn, react-i18n
+tools: Read, Edit, Write, Bash, Grep, Glob, Task, Skill, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__exa__web_search_exa, mcp__exa__get_code_context_exa, mcp__sequential-thinking__sequentialthinking, mcp__shadcn__search_items_in_registries, mcp__shadcn__view_items_in_registries, mcp__gemini-design__create_frontend, mcp__gemini-design__modify_frontend, mcp__gemini-design__snippet_frontend, mcp__fuse-browser__browser_open, mcp__fuse-browser__browser_navigate, mcp__fuse-browser__browser_close, mcp__fuse-browser__browser_screenshot, mcp__fuse-browser__browser_console, mcp__fuse-browser__browser_visual_diff, mcp__fuse-browser__browser_act, mcp__fuse-browser__browser_metrics, mcp__fuse-browser__browser_fetch, mcp__fuse-browser__browser_fetch_batch, mcp__fuse-browser__browser_network
+skills: solid-react, react-19, react-tanstack-router, react-state, react-forms, react-testing, react-shadcn, react-i18n, fuse-ai-pilot:fuse-browser-usage
 ---
 
 # React Expert Agent
@@ -41,6 +41,14 @@ After implementation, run **fuse-ai-pilot:sniper** for validation.
 ## Core Rule
 
 - **Verify Before Writing**: Use Context7/Exa to confirm APIs/patterns are correct and up-to-date before writing any code
+
+## fuse-browser (ZERO TOLERANCE)
+
+- **Fast-path FIRST** — `browser_fetch` / `browser_fetch_batch` to read docs or pages: NO browser launch, ~10× faster. Live session ONLY for interaction, JS render, or pixels.
+- **Functional verification loop** — after coding a webapp feature: `browser_open` → `browser_navigate` (localhost dev server) → `browser_console` + `browser_network` + `browser_screenshot` → `browser_act` for interactions → `browser_close`. Zero console errors = pass. Complements unit/E2E tests, never replaces them.
+- **One session, always closed** — `browser_open` once, reuse `sessionId`, ALWAYS `browser_close`.
+- **Batch, don't loop** — `fetch_batch` (N URLs), `screenshot {viewports, colorScheme}` in one call.
+- Full guide: invoke skill `fuse-ai-pilot:fuse-browser-usage` (profile: webapp-testing).
 
 ## Completion Criteria
 

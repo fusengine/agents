@@ -229,20 +229,19 @@ gh pr checks
 
 ## Merge Strategies
 
-### Squash and Merge (Recommended)
-
-```text
-- Combines all commits into one
-- Clean history on main
-- Good for feature branches
-```
-
-### Merge Commit
+### Merge Commit (Recommended)
 
 ```text
 - Preserves all commits
 - Creates merge commit
-- Shows complete history
+- Release tag stays attached to the bump commit
+```
+
+### Squash and Merge
+
+```text
+- Combines all commits into one
+- Never use on release branches — squash creates a new SHA and orphans any tag already pointing at the pre-squash bump commit
 ```
 
 ### Rebase and Merge
@@ -324,4 +323,18 @@ After Creating:
 - 0 files deleted
 
 ### Ready for Review
+```
+
+---
+
+## Update Task Phase
+
+At the **start** of this phase, record it (and mark the task `completed` once the PR is opened) in `.claude/apex/task.json`:
+
+```bash
+jq --arg p "create-pr" '.tasks[.current_task].phase = $p' .claude/apex/task.json \
+  > .claude/apex/task.json.tmp && mv .claude/apex/task.json.tmp .claude/apex/task.json
+# after the PR is created:
+jq '.tasks[.current_task].status = "completed"' .claude/apex/task.json \
+  > .claude/apex/task.json.tmp && mv .claude/apex/task.json.tmp .claude/apex/task.json
 ```

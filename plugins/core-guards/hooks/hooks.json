@@ -123,24 +123,24 @@
 
     "Stop": [
       {
-        "_description": "Sound notification when Claude finishes responding (not on user interrupt)",
+        "_description": "Sound notification when Claude finishes responding (not on user interrupt), via harness --sound stop",
         "matcher": "",
         "hooks": [
           {
-            "_description": "Play task completion sound",
+            "_description": "Harness: play task completion sound (embedded assets/song/, exits before stdin read)",
             "type": "command",
-            "command": "afplay ${CLAUDE_PLUGIN_ROOT}/song/finish.mp3"
+            "command": "bun ${CLAUDE_PLUGIN_ROOT}/../node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code core --sound stop"
           }
         ]
       },
       {
-        "_description": "Verify APEX workflow completion before stopping",
+        "_description": "Verify APEX workflow completion before stopping. IMPORTANT: never convert this to a `hook claude-code core` command call without --sound — that path also triggers stopCore→notify(\"stop\"), which would double up with hook #1's --sound stop.",
         "matcher": "",
         "hooks": [
           {
             "_description": "Verify APEX workflow completion before stopping",
             "type": "prompt",
-            "prompt": "Check if the assistant followed the APEX workflow. Look for: 1) Was an explore/research agent launched before coding? 2) Were files kept under 100 lines? 3) Was sniper validation run after modifications? If any step was missed AND code was modified, respond with {\"ok\": false, \"reason\": \"Missing step: [describe what was missed]\"}. If no code was modified or all steps were followed, respond with {\"ok\": true}. Context: $ARGUMENTS",
+            "prompt": "Check if the assistant followed the APEX workflow. Look for: 1) Was an explore/research agent launched before coding? 2) Were files kept under 100 lines? 3) Was sniper validation run after modifications? 4) For code changes: was elicitation self-review (APEX 3.5) run and its findings addressed BEFORE sniper? 5) Was functional verification (APEX eXAMINE Phase 4, Manual Testing — the change actually works, acceptance criteria re-checked) completed before considering the task done? If any step was missed AND code was modified, respond with {\"ok\": false, \"reason\": \"Missing step: [describe what was missed]\"}. If no code was modified or all steps were followed, respond with {\"ok\": true}. Context: $ARGUMENTS",
             "timeout": 15
           }
         ]
@@ -149,13 +149,13 @@
 
     "PermissionRequest": [
       {
-        "_description": "Sound for ALL permission dialogs (system + hook-triggered)",
+        "_description": "Sound for ALL permission dialogs (system + hook-triggered), via harness --sound permission",
         "matcher": "",
         "hooks": [
           {
-            "_description": "Play permission request sound",
+            "_description": "Harness: play permission request sound (embedded assets/song/, exits before stdin read)",
             "type": "command",
-            "command": "afplay ${CLAUDE_PLUGIN_ROOT}/song/permission-need.mp3"
+            "command": "bun ${CLAUDE_PLUGIN_ROOT}/../node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code core --sound permission"
           }
         ]
       }
@@ -164,6 +164,19 @@
     "PreCompact": [
       {
         "_description": "Harness: back up .claude/apex/task.json before compaction, keep 5 newest (ports save-apex-state.py)",
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bun ${CLAUDE_PLUGIN_ROOT}/../node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code"
+          }
+        ]
+      }
+    ],
+
+    "PostCompact": [
+      {
+        "_description": "Harness: after compaction, re-inject the reconciliation snapshot + a reread-before-edit reminder (read-state may be reset). Core scope, deduped per session (ports lifecycle/post-compact.ts).",
         "matcher": "",
         "hooks": [
           {
@@ -201,35 +214,35 @@
 
     "Notification": [
       {
-        "_description": "Sound for permission requests (Bash, Write, Edit confirmations)",
+        "_description": "Sound for permission requests (Bash, Write, Edit confirmations), via harness --sound permission",
         "matcher": "permission_prompt",
         "hooks": [
           {
-            "_description": "Play permission request sound",
+            "_description": "Harness: play permission request sound (embedded assets/song/, exits before stdin read)",
             "type": "command",
-            "command": "afplay ${CLAUDE_PLUGIN_ROOT}/song/permission-need.mp3"
+            "command": "bun ${CLAUDE_PLUGIN_ROOT}/../node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code core --sound permission"
           }
         ]
       },
       {
-        "_description": "Sound when Claude waits for user input (60+ sec idle)",
+        "_description": "Sound when Claude waits for user input (60+ sec idle), via harness --sound human",
         "matcher": "idle_prompt",
         "hooks": [
           {
-            "_description": "Play idle/waiting sound",
+            "_description": "Harness: play idle/waiting sound (embedded assets/song/, exits before stdin read)",
             "type": "command",
-            "command": "afplay ${CLAUDE_PLUGIN_ROOT}/song/need-human.mp3"
+            "command": "bun ${CLAUDE_PLUGIN_ROOT}/../node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code core --sound human"
           }
         ]
       },
       {
-        "_description": "Sound for MCP tool elicitation dialogs",
+        "_description": "Sound for MCP tool elicitation dialogs, via harness --sound human",
         "matcher": "elicitation_dialog",
         "hooks": [
           {
-            "_description": "Play elicitation dialog sound",
+            "_description": "Harness: play elicitation dialog sound (embedded assets/song/, exits before stdin read)",
             "type": "command",
-            "command": "afplay ${CLAUDE_PLUGIN_ROOT}/song/need-human.mp3"
+            "command": "bun ${CLAUDE_PLUGIN_ROOT}/../node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code core --sound human"
           }
         ]
       }

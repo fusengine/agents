@@ -7,6 +7,24 @@ next_step: references/swift/05-review.md
 
 # Swift Code Validation
 
+## Gate — Required Proof Artefacts
+
+**Validation does NOT start** unless both proof files exist on disk for the current task. A claim made in context is not proof — only the file on disk is:
+
+```bash
+TASK_SLUG=$(jq -r '.current_task' .claude/apex/task.json)
+if [ ! -f ".claude/apex/docs/elicit-${TASK_SLUG}.json" ]; then
+  echo "❌ Missing .claude/apex/docs/elicit-${TASK_SLUG}.json — go back to references/swift/03.5-elicit.md first."
+  exit 1
+fi
+if [ ! -f ".claude/apex/docs/verify-${TASK_SLUG}.md" ]; then
+  echo "❌ Missing .claude/apex/docs/verify-${TASK_SLUG}.md — go back to the verification skill (runs between eLicit and eXamine) first."
+  exit 1
+fi
+```
+
+Only once both checks pass does this phase proceed.
+
 ## SwiftLint Configuration (.swiftlint.yml)
 
 ```yaml
@@ -84,3 +102,16 @@ swiftlint --strict && swift-format lint --strict Sources/
 - [ ] No force unwraps
 - [ ] All strings localized
 - [ ] #Preview for all views
+
+## Update Task Phase
+
+At the **start** of this phase, record it in `.claude/apex/task.json`:
+
+```bash
+jq --arg p "validation" '.tasks[.current_task].phase = $p' .claude/apex/task.json \
+  > .claude/apex/task.json.tmp && mv .claude/apex/task.json.tmp .claude/apex/task.json
+```
+
+## Next Phase
+
+→ Proceed to `05-review.md`

@@ -51,7 +51,7 @@ For each file in {code_files}:
 | **Database** | query, model, migration, prisma, eloquent |
 | **UI Components** | component, render, JSX, template, view |
 | **Business Logic** | service, useCase, calculate, process |
-| **Config** | env, config, settings, constants |
+| **Config/Docs/Plugin** | env, config, settings, constants, `.md` agent/skill frontmatter, `hooks.json`, plugin manifests |
 | **Tests** | test, spec, describe, it, expect |
 
 ### 3. Identify Risk Areas
@@ -78,6 +78,7 @@ API Endpoints → Integration + Error Handling (13)
 Database → Data + Performance (12)
 UI Components → UX + Accessibility (12)
 Business Logic → Architecture + Testing (12)
+Config/Docs/Plugin → CQ-01, DOC-01, INT-01 + strictest-parser validation
 ```
 
 ---

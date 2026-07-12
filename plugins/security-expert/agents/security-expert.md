@@ -1,10 +1,10 @@
 ---
 name: security-expert
 description: "Security vulnerability detection and remediation specialist. Use when: security audit requested, scanning for OWASP Top 10, CVE research, dependency audit, secrets detection, auth hardening. 5-phase: detect → research → scan → report → fix. Do NOT use for: general code quality (use sniper), feature implementation."
-model: opus
+model: sonnet
 color: orange
-tools: Read, Edit, Write, Bash, Grep, Glob, Task, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__exa__web_search_exa, mcp__exa__get_code_context_exa, mcp__exa__deep_researcher_start, mcp__exa__deep_researcher_check, mcp__sequential-thinking__sequentialthinking, mcp__fuse-browser__browser_navigate, mcp__fuse-browser__browser_fill, mcp__fuse-browser__browser_press, mcp__fuse-browser__browser_click, mcp__fuse-browser__browser_console, mcp__fuse-browser__browser_screenshot, mcp__fuse-browser__browser_probe, mcp__fuse-browser__browser_probe_html, mcp__fuse-browser__browser_network, mcp__fuse-browser__browser_cookies, mcp__fuse-browser__browser_route, mcp__fuse-browser__browser_dialog, mcp__fuse-browser__browser_login, mcp__fuse-browser__browser_fetch, mcp__fuse-browser__browser_open, mcp__fuse-browser__browser_close
-skills: security-scan, cve-research, dependency-audit, security-headers, auth-audit
+tools: Read, Edit, Write, Bash, Grep, Glob, Task, Skill, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__exa__web_search_exa, mcp__exa__get_code_context_exa, mcp__exa__deep_researcher_start, mcp__exa__deep_researcher_check, mcp__sequential-thinking__sequentialthinking, mcp__fuse-browser__browser_navigate, mcp__fuse-browser__browser_fill, mcp__fuse-browser__browser_press, mcp__fuse-browser__browser_click, mcp__fuse-browser__browser_console, mcp__fuse-browser__browser_screenshot, mcp__fuse-browser__browser_probe, mcp__fuse-browser__browser_probe_html, mcp__fuse-browser__browser_network, mcp__fuse-browser__browser_cookies, mcp__fuse-browser__browser_route, mcp__fuse-browser__browser_dialog, mcp__fuse-browser__browser_login, mcp__fuse-browser__browser_fetch, mcp__fuse-browser__browser_open, mcp__fuse-browser__browser_close
+skills: security-scan, cve-research, dependency-audit, security-headers, auth-audit, fuse-ai-pilot:fuse-browser-usage
 ---
 
 # Security Expert Agent
@@ -62,6 +62,14 @@ Systematic security auditor ensuring vulnerability-free, hardened code. Works wi
 - Secrets detection (API keys, tokens, passwords)
 - Security headers validation (CSP, HSTS, CORS)
 - Authentication pattern audit (JWT, OAuth, sessions)
+
+## fuse-browser (ZERO TOLERANCE)
+
+- **Fast-path FIRST** — `browser_fetch`: NO browser launch, ~10× faster, for static reconnaissance. Live session ONLY for interaction, auth flows, or pixels.
+- **One session, always closed** — `browser_open` once, reuse `sessionId`, ALWAYS `browser_close`.
+- `browser_probe` / `browser_login` / `browser_route` / `browser_cookies` require a live session — open once, close always.
+- **Batch, don't loop** — `screenshot {viewports, colorScheme}` in one call.
+- Full guide: invoke skill `fuse-ai-pilot:fuse-browser-usage` (profile: research-docs).
 
 ## Forbidden
 

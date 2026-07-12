@@ -77,6 +77,7 @@ Skip elicitation → Go directly to sniper validation
 | Business Logic | SOLID Compliance, Unit Test Coverage, Edge Cases |
 | Refactoring | Breaking Changes, Regression Analysis, Backward Compat |
 | Performance Critical | Profiling, Memory Analysis, Complexity Check |
+| Config/Docs/Plugin files (`.md` agents/skills, `hooks.json`, frontmatter YAML) | CQ-01, DOC-01, INT-01 + validation by the **strictest parser in the consumption chain** (e.g. `js-yaml` strict for frontmatter, `json.tool` for JSON) -- never "looks well-formed" |
 
 ---
 
@@ -142,13 +143,21 @@ A-nalyze → P-lan → E-xecute → [ELICIT] → X-amine
 
 ---
 
+## Artifact Contract
+
+Step 5 persists `.claude/apex/docs/elicit-{task-slug}.json` so a later pass
+diffs against prior verdicts instead of restarting from scratch. Full
+contract, `{task-slug}` derivation, and JSON schema: `references/artifact-contract.md`.
+
+---
+
 ## Steps Reference
 
 | Step | File | Purpose |
 |------|------|---------|
-| 0 | `steps/step-00-init.md` | Load context, detect mode |
+| 0 | `steps/step-00-init.md` | Load context, detect mode, load prior artifact if present |
 | 1 | `steps/step-01-analyze-code.md` | Analyze written code |
 | 2 | `steps/step-02-select-techniques.md` | Select techniques |
 | 3 | `steps/step-03-apply-review.md` | Apply review |
 | 4 | `steps/step-04-self-correct.md` | Self-correct |
-| 5 | `steps/step-05-report.md` | Generate report |
+| 5 | `steps/step-05-report.md` | Generate report, persist `elicit-{task-slug}.json` |

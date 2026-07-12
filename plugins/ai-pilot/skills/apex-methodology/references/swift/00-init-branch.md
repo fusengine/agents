@@ -83,3 +83,19 @@ git tag -a 1.2.0 -m "Release 1.2.0"
 git push origin main --tags
 git checkout develop && git merge main
 ```
+
+## Update Task Phase
+
+At the **start** of this phase, record it (and the resolved task subject) in `.claude/apex/task.json`:
+
+```bash
+jq --arg p "init-branch" --arg s "$TASK_SUBJECT" \
+  '.tasks[.current_task].phase = $p | .tasks[.current_task].subject = $s' \
+  .claude/apex/task.json > .claude/apex/task.json.tmp && mv .claude/apex/task.json.tmp .claude/apex/task.json
+```
+
+Replace `$TASK_SUBJECT` with the real task description, quoted for the shell.
+
+## Next Phase
+
+→ Proceed to `01-analyze-code.md`

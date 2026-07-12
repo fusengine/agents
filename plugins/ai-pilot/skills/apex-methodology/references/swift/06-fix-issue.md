@@ -93,3 +93,16 @@ xcodebuild test -scheme MyApp
 swiftlint --strict
 git commit -m "fix(profile): handle nil user (#123)"
 ```
+
+## Update Task Phase
+
+At the **start** of this phase, record it in `.claude/apex/task.json`:
+
+```bash
+jq --arg p "fix-issue" '.tasks[.current_task].phase = $p' .claude/apex/task.json \
+  > .claude/apex/task.json.tmp && mv .claude/apex/task.json.tmp .claude/apex/task.json
+```
+
+## Next Phase
+
+→ Return to `04-validation.md` (verify fix), then `05-review.md` (re-review)

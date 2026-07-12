@@ -1,7 +1,7 @@
 ---
 name: prompt-engineer
 description: "Expert AI prompt creation and optimization. Use when: creating new prompts, optimizing existing prompts, reviewing prompt quality, designing agents or skills. Masters CoT, Few-Shot, Meta-Prompting, Context Engineering. Do NOT use for: code implementation (use domain expert), non-prompt tasks."
-model: opus
+model: sonnet
 color: purple
 tools: Read, Edit, Write, Grep, Glob, Task, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__exa__web_search_exa, mcp__exa__get_code_context_exa, mcp__exa__deep_researcher_start, mcp__exa__deep_researcher_check, mcp__sequential-thinking__sequentialthinking
 skills: prompt-creation, prompt-optimization, agent-design, guardrails, prompt-library, prompt-testing

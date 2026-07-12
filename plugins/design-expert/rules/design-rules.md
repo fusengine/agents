@@ -1,22 +1,16 @@
 # Design Rules (STRICT — NO EXCEPTIONS)
 
-> Forbidden fonts/colors, visual effects, dual-mode, fuse-browser browsing
-> defined in `agents/design-expert.md`. This file = **component patterns only**.
+> Forbidden fonts, contrast thresholds, and the screenshot/review procedure are defined
+> once in `skills/design-system/SKILL.md` and `skills/design-review/SKILL.md` — this file
+> does not restate them. This file = **reusable component-pattern snippets only**, for
+> stacks that render actual JSX/Tailwind (React/Next.js) on top of the generated HTML/CSS.
 
 ## IDENTITY SYSTEM — PREREQUISITE
 
-1. Check for `design-system.md` in project root or `docs/`
-2. If missing → run identity-system skill FIRST
-3. ALL components must reference design-system.md tokens
-4. NEVER use default shadcn palette without customization
-5. If design-system.md specifies fonts different from Clash Display/Satoshi → USE identity fonts
-
-## FONT VERIFICATION (BLOCKING)
-
-After ANY UI generation:
-1. Grep project CSS for font imports — Clash Display/Satoshi or identity fonts
-2. If Roboto, Inter, Arial, Open Sans found → BLOCK and fix
-3. Verify `@import url()` or `next/font` loads correct fonts
+1. Check for `design-system.md` in project root or `docs/`.
+2. If missing → run `skills/design-system/SKILL.md` first.
+3. ALL components reference `design-system.md` tokens — never a default shadcn palette
+   without customization.
 
 ## COMPONENT PATTERNS
 
@@ -43,7 +37,7 @@ Card limits: Title max 2 lines (`line-clamp-2`), Description max 3 lines, max 1 
 
 ### Charts (Recharts)
 ```tsx
-/* NEVER default colors or hex — ALWAYS CSS variables */
+/* NEVER default colors or hex — ALWAYS CSS variables mapped from design-system.md tokens */
 <Bar fill="var(--color-primary)" />
 <Cell fill={`var(--color-chart-${i + 1})`} />
 ```
@@ -64,8 +58,8 @@ Sizing: height 40-60px, padding-x 16-32px, font 16pt (13-20pt range), touch targ
 </motion.button>
 ```
 
-Contrast: dark bg → white text, light bg → dark text. Min 4.5:1 (WCAG AA).
-Corner radius: pick ONE (`8px` / `12px` / `9999px` pill) — use everywhere.
+Corner radius: pick ONE (`8px` / `12px` / `9999px` pill) — use everywhere. Contrast
+threshold: see `skills/design-system/references/contrast-ratios.md` (canonical).
 
 ## FORMS
 
@@ -75,8 +69,8 @@ Validation: inline on blur, specific messages (NOT "Invalid input").
 
 ## ICONS
 
-- Same stroke width, same corner style, same pack (Lucide/Heroicons/Tabler)
-- Sizes: `h-4 w-4` (16px dense) · `h-5 w-5` (20px buttons) · `h-6 w-6` (24px standard)
+- Same stroke width, same corner style, same pack (Lucide/Heroicons/Tabler).
+- Sizes: `h-4 w-4` (16px dense) · `h-5 w-5` (20px buttons) · `h-6 w-6` (24px standard).
 
 ## GRIDS
 
@@ -94,52 +88,34 @@ Background text: ALWAYS add overlay `bg-gradient-to-t from-black/60 to-transpare
 
 ## LOADING STATES
 
-- ALWAYS skeleton screens (9-12% faster perceived — NNG), NEVER spinner only
-- Skeleton matches content layout shape, shimmer animation on placeholders
-
-## MULTI-STACK RULES
-
-| File | Stack | UI Approach |
-|------|-------|-------------|
-| No framework files | HTML/CSS | Gemini `create_frontend` — NEVER write HTML manually |
-| `next.config.*` | Next.js | Gemini Design + shadcn |
-| `composer.json` + `artisan` | Laravel | Check Inertia → React or Livewire Flux |
-| `Package.swift` | Swift | SwiftUI visual specs |
-
-### HTML/CSS Standalone
-1. Create design-system.md with OKLCH tokens
-2. Build Gemini XML blocks (all 7 fields)
-3. `create_frontend` → output IS the file, do NOT rewrite
-4. `modify_frontend` for corrections
+- ALWAYS skeleton screens (9-12% faster perceived — NNG), NEVER spinner only.
+- Skeleton matches content layout shape, shimmer animation on placeholders.
 
 ## REDESIGN DETECTION
 
 | User Says | Mode | Behavior |
 |---|---|---|
-| "refonte", "redesign", "from scratch" | **Full Redesign** | New identity-system + replace ALL |
-| "crée une page", "nouvelle page" | **New Page** | Respect existing identity-system |
+| "refonte", "redesign", "from scratch" | **FULL** | New `design-system.md` + replace ALL |
+| "crée une page", "nouvelle page" | **PAGE** | Reuse existing `design-system.md` |
 | "ameliorer", "ajuster", "modifier" | **Iteration** | Keep identity, modify targeted |
-| "petit composant", "minor" | **Minor** | 21st.dev search sufficient |
+| "petit composant", "minor" | **COMPONENT** | No browsing, existing tokens only |
 
-> Site count per mode: see `agents/design-expert.md` Phase 1.
+> Scope-to-site-count mapping: see `skills/design-method/SKILL.md` routing table.
 
-## VALIDATION CHECKLIST
+## VALIDATION CHECKLIST (component-pattern specific)
 
-Before ANY UI code:
-- [ ] Font imports present (identity or Clash/Satoshi)
-- [ ] NO forbidden fonts (Roboto, Inter, Arial, Open Sans)
-- [ ] CSS variables in BOTH `:root` AND `.dark`
-- [ ] No hard-coded hex/rgb colors
-- [ ] Framer Motion imported
-- [ ] Glassmorphism/depth effects (adapted per mode)
-- [ ] Chart colors use CSS variables
-- [ ] Button states (hover, pressed, disabled)
+Before shipping a component built with this file's patterns:
+- [ ] CSS variables in BOTH `:root` AND `.dark` (values come from `design-system.md`)
+- [ ] Framer Motion imported where motion was gated "in" by `skills/design-motion/SKILL.md`
+- [ ] Chart colors use CSS variables, never hex
+- [ ] Button states (hover, pressed, disabled) all present
 - [ ] Form single-column layout
-- [ ] Icons same stroke width
-- [ ] 60-30-10 color ratio
+- [ ] Icons same stroke width, same pack
+- [ ] 60-30-10 color ratio respected
 - [ ] Touch targets 44x44px minimum
-- [ ] fuse-browser screenshot LIGHT + DARK modes (colorScheme)
 - [ ] NO emojis in UI — use icons
 - [ ] Professional testimonials (name, role, company, quote, avatar)
-- [ ] Consistent spacing, aligned grids, visual rhythm
 - [ ] Footer: 4 columns, links, social, legal
+
+> Fonts, contrast, OKLCH-only, and the light/dark screenshot pass are validated by
+> `skills/design-review/SKILL.md` — not duplicated in this checklist.

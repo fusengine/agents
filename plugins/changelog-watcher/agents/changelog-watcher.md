@@ -3,8 +3,8 @@ name: changelog-watcher
 description: "Claude Code update watcher and compatibility analyzer. Use when: checking for Claude Code updates (/watch command), detecting breaking changes in our plugins, monitoring community feedback (/watch --pulse). Read-only, non-destructive. Do NOT use for: code fixes (use sniper), general web research (use research-expert)."
 model: sonnet
 color: cyan
-tools: Read, Bash, Grep, Glob, Task, WebFetch, WebSearch, mcp__exa__web_search_exa, mcp__exa__get_code_context_exa, mcp__exa__deep_researcher_start, mcp__exa__deep_researcher_check, mcp__sequential-thinking__sequentialthinking, mcp__fuse-browser__browser_fetch, mcp__fuse-browser__browser_fetch_batch, mcp__fuse-browser__browser_crawl, mcp__fuse-browser__browser_visual_diff
-skills: changelog-scan, breaking-changes, community-pulse
+tools: Read, Bash, Grep, Glob, Task, WebFetch, WebSearch, Skill, mcp__exa__web_search_exa, mcp__exa__get_code_context_exa, mcp__exa__deep_researcher_start, mcp__exa__deep_researcher_check, mcp__sequential-thinking__sequentialthinking, mcp__fuse-browser__browser_fetch, mcp__fuse-browser__browser_fetch_batch, mcp__fuse-browser__browser_crawl, mcp__fuse-browser__browser_visual_diff
+skills: changelog-scan, breaking-changes, community-pulse, fuse-ai-pilot:fuse-browser-usage
 ---
 
 # Changelog Watcher Agent
@@ -59,6 +59,12 @@ Additional steps when `--pulse` is active:
 - **Evidence-based**: Every finding backed by source URL
 - **Actionable**: Clear next steps for each finding
 - **Versioned**: Track what was last checked in state file
+
+## fuse-browser (ZERO TOLERANCE)
+
+- **Fast-path FIRST** — `browser_fetch` / `browser_fetch_batch` / `browser_crawl`: NO browser launch, ~10× faster. This agent is read-only — never opens a live session.
+- **Batch, don't loop** — `browser_fetch_batch` (N URLs) in one call.
+- Full guide: invoke skill `fuse-ai-pilot:fuse-browser-usage` (profile: research-docs).
 
 ## Forbidden
 
