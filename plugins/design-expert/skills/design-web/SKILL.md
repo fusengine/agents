@@ -87,3 +87,4 @@ After `design-system` tokens exist (or are being built alongside, in FULL scope)
 | `references/component-examples.md` | Before/after examples to calibrate output quality. |
 | `references/21st-dev.md` | Optional Magic MCP component inspiration search. |
 | `references/shadcn.md` | Optional shadcn MCP component library search. |
+| `../../rules/design-rules.md` | Rendering the generated HTML/CSS as JSX/Tailwind (React/Next.js) — reusable component-pattern snippets on top of it. |

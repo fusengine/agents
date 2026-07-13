@@ -20,8 +20,7 @@ Answer these from the user's request; ask only what's missing:
 2. **Tone** — pick ONE extreme and execute it with precision. Not "clean and modern."
    Examples: brutally minimal, maximalist, retro-futurist, organic, luxury, editorial.
    A tone that could describe three different competitors is not a tone.
-3. **Constraints** — brand assets, existing design-system.md, platform (web/webapp/iOS/Android),
-   accessibility requirements, technical stack.
+3. **Constraints** — brand assets, existing design-system.md, platform (web/webapp/iOS/Android), accessibility requirements, technical stack. Also ask explicitly for **optional references** (1-3 URLs/screenshots loved or hated, brand assets) — user-supplied refs take priority; if none offered, the existing mandatory browse in `design-web/references/design-inspiration.md` takes over unchanged.
 4. **Differentiation** — what does this need to NOT look like (competitors, the previous
    version, generic AI output)?
 
@@ -40,8 +39,9 @@ typography pair, layout approach, the signature element. A paragraph, not a page
 
 **Pass 2 — Critical re-read.** Re-read the Pass 1 plan against the Step 1 brief and ask:
 "does this read as the generic default for this category, or does it commit to the tone
-I chose?" If it's generic, revise the plan — not the first line of CSS. Only after Pass 2
-passes do you write the first line of markup.
+I chose?" If it's generic, revise the plan — not the first line of CSS.
+
+Also run the **Subtraction Test**: mentally remove the Step 2 signature element. Still distinctive without it → it was decoration, not a signature; go back to Step 2. Only after both pass do you write the first line of markup.
 
 ## Anti-Slop: Name What You're Avoiding
 
@@ -51,9 +51,14 @@ reproduce them:
 1. **Cream #F4F1EA + a contrasted serif + terracotta accent** — the default "editorial SaaS" look.
 2. **Near-black background + one acid accent color** — the default "dark developer tool" look.
 3. **Broadsheet hairlines, zero border-radius, black/white only** — the default "premium minimal" look.
+4. **Glassmorphism + `rounded-2xl` used globally** — the default "2026 AI app" look, applied everywhere instead of gated (`design-motion` gates it deliberately).
+5. **Generic icon-bento** — every cell centered text over a round colored-icon badge, zero image/gradient/pattern variation between cells.
 
-Dominant, committed colors and sharp accents beat a timid, safe palette every time.
-Purple-on-white gradients are banned outright — they are the single most common tell.
+Dominant, committed colors and sharp accents beat a timid, safe palette every time. Purple-on-white gradients are banned outright — the single most common tell. Deterministic grep detections for all 5 clusters: `design-review/references/anti-ai-slop-audit.md`.
+
+## Macrostructure Variety (Process Constraint)
+
+`design-web/references/design-inspiration.md` already enforces "vary every time — NEVER reuse the same 4 sites" for inspiration sourcing; this is the same discipline one level up, applied to the chosen page skeleton. Centered hero + 3-column icon-card grid is **forbidden as a default** — pick a different one from `references/macrostructure-bank.md` before Pass 1 and name it in the plan; `design-web/references/layout-discipline.md` then enforces the numeric rules on top of whichever skeleton was chosen.
 
 ## Routing — Which Skill Next
 
@@ -84,14 +89,7 @@ Regardless of tone, target, or scope, every deliverable must have:
 
 ## Generation Approach
 
-Generate HTML/CSS directly — this is the default and primary path, following the same
-method as Anthropic's official `frontend-design` skill (commit to a point of view, avoid
-templated defaults, verify with tools not vibes). Gemini Design MCP, Magic (21st.dev),
-and shadcn MCP are optional tools of convenience for inspiration search or a fast first
-draft — never a requirement, and native direct generation is always the fallback if any
-of them are unavailable. Mobile targets (`design-ios`, `design-android`) never generate
-SwiftUI or Compose — they produce token specs, an HTML device-framed mockup, and a
-handoff spec for the platform developer.
+Generate HTML/CSS directly — this is the default and primary path, following the same method as Anthropic's official `frontend-design` skill (commit to a point of view, avoid templated defaults, verify with tools not vibes). Gemini Design MCP, Magic (21st.dev), and shadcn MCP are optional tools of convenience for inspiration search or a fast first draft — never a requirement, and native direct generation is always the fallback if any of them are unavailable. Mobile targets (`design-ios`, `design-android`) never generate SwiftUI or Compose — they produce token specs, an HTML device-framed mockup, and a handoff spec for the platform developer.
 
 ## Next
 Read the target skill from the routing table above. Token/contrast mechanics live in

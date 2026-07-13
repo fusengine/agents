@@ -28,9 +28,7 @@ The last step before reporting the deliverable done.
 4. **Em-dash ban** — grep for `—` and separator `–`; zero tolerance (shared gate with `ux-copy`).
 5. **Token adherence** — if `design-system.md` exists, verify CSS custom properties match
    defined tokens; flag orphaned/undefined variables.
-6. **Anti-AI-slop audit** — `references/anti-ai-slop-audit.md` against the 3 clusters
-   named in `design-method` (cream+serif+terracotta / near-black+acid-accent /
-   broadsheet-hairlines) plus generic purple gradients, missing depth.
+6. **Anti-AI-slop audit** — `references/anti-ai-slop-audit.md` against the 5 clusters named in `design-method` plus the deterministic grep blacklist (gradient hue, shadow alpha, corner-radius, macrostructure, eyebrow density).
 7. **Mechanical pre-flight** — `references/pre-flight-checklist.md`: uppercase-tracking
    eyebrow count ≤ `ceil(sections/3)`, single theme lock, motion-claimed-motion-shown,
    ≤ 1 marquee, hero ≤ 4 elements. Any fail blocks the verdict.
@@ -59,7 +57,8 @@ Any Critical/Major finding from Part 1 gets fixed before Part 2 runs.
    `references/motion-verdict.md`: Before/After/Why table, tiered impact, explicit
    Block/Approve decision. Use `design-motion/references/animation-glossary.md` for
    shared vocabulary — don't redefine terms here.
-7. **Fix gaps** — apply fixes for Block verdicts or absent elements. **Maximum 2 fix
+7. **Named eLicit technique** — cite at least one technique from `references/elicitation-visual.md` (Squint/Subtraction/Competitor Line-up/5-Second/Persona) against the captured screenshots.
+8. **Fix gaps** — apply fixes for Block verdicts or absent elements. **Maximum 2 fix
    cycles.** If issues remain after cycle 2, STOP — report the remaining issues instead
    of continuing to loop. A plateau (cycle 2 finds the same issue as cycle 1) also stops
    immediately, even if it's technically cycle 1 of 2.
@@ -83,6 +82,7 @@ Any Critical/Major finding from Part 1 gets fixed before Part 2 runs.
 | `references/audit-checklist.md` | Full deterministic audit procedure |
 | `references/pre-flight-checklist.md` | **Mechanical grep/count checks — the last filter** |
 | `references/anti-ai-slop-audit.md` | Generic AI design detection, with few-shot examples |
+| `references/elicitation-visual.md` | Named visual techniques (Squint/Subtraction/Competitor/5-Second/Persona) for the eLicit phase |
 | `references/consistency-checks.md` | Cross-component visual coherence |
 | `references/ux-wcag.md` | WCAG accessibility standards beyond contrast |
 | `references/ux-nielsen.md` | Nielsen usability heuristics |
