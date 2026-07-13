@@ -56,7 +56,7 @@ After `design-web` or `design-webapp` components exist. Before `design-review`.
 - `prefers-reduced-motion` fallback present wherever motion was added.
 
 ### Next → `design-review` (runs the full motion audit against
-`references/motion-audit.md` and the Block/Approve verdict against `motion-verdict.md`).
+`design-review/references/motion-audit.md` and the Block/Approve verdict against `design-review/references/motion-verdict.md`).
 
 ### References
 | File | Purpose |
