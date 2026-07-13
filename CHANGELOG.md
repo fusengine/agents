@@ -1,5 +1,9 @@
 # Release Notes
 
+## [1.38.95] - 13-07-2026
+
+- chore(deps): bump @fusengine/harness ^0.1.72→^0.1.73 (embarque le fix du deadlock browser du design-pipeline et l'hermeticité des tests file-size FUSE_SOLID_MAX_LINES). feat(ai-pilot): nouvelle commande /update-harness — bump la dépendance, réinstalle le node_modules partagé du marketplace, vérifie la version installée et sanity-check les markers du dist. feat(design): design-expert — fast-path fuse-browser (browser_fetch, browser_fetch_batch, browser_serp_batch) ajoutés aux tools, et modèle sonnet→opus (supériorité nette sur le design ouvert, validée par comparatif de 3 pages agence). Bumps fuse-ai-pilot 1.2.32→1.2.33, fuse-design 2.1.29→2.1.30.
+
 ## [1.38.94] - 13-07-2026
 
 - feat(design): harden the design-expert anti-slop gate — deterministic 8-entry blacklist grep-able on generated HTML/CSS, macrostructure-variety rule (aligned with design-inspiration's "vary every time"), anti-slop clusters evolved 3→5, and a named Subtraction Test. Add named visual elicitation techniques (Squint / Subtraction / Competitor Line-up / 5-Second Read / Persona Lens) wired into design-review for the eLicit phase. The brief now asks for optional user references (user refs first, existing design-inspiration browse as fallback). Hygiene: de-orphan design-rules.md, drop dead mcp.json.bak + .harness cache, fix unresolvable design-motion handoff refs. Bumps fuse-design 2.1.28→2.1.29.
