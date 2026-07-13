@@ -1,5 +1,9 @@
 # Release Notes
 
+## [1.38.91] - 13-07-2026
+
+- fix(hooks): execute hooks without bash (direct spawn) for Windows-without-Git-Bash compatibility
+
 ## [1.38.90] - 12-07-2026
 
 - fix(hooks): resolve harness from marketplace node_modules with install-time $HOME resolution (21 plugins bumped)
