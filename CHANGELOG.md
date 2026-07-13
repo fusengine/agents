@@ -1,5 +1,9 @@
 # Release Notes
 
+## [1.38.94] - 13-07-2026
+
+- feat(design): harden the design-expert anti-slop gate — deterministic 8-entry blacklist grep-able on generated HTML/CSS, macrostructure-variety rule (aligned with design-inspiration's "vary every time"), anti-slop clusters evolved 3→5, and a named Subtraction Test. Add named visual elicitation techniques (Squint / Subtraction / Competitor Line-up / 5-Second Read / Persona Lens) wired into design-review for the eLicit phase. The brief now asks for optional user references (user refs first, existing design-inspiration browse as fallback). Hygiene: de-orphan design-rules.md, drop dead mcp.json.bak + .harness cache, fix unresolvable design-motion handoff refs. Bumps fuse-design 2.1.28→2.1.29.
+
 ## [1.38.93] - 13-07-2026
 
 - fix(installer): route FUSE_* env vars to ~/.claude/.env instead of settings.json (the harness already loads .env; CLAUDE_CODE_* stay in settings.json), with an idempotent purge of residual FUSE_* keys from settings.json. Drop the PostCompact hook wiring that Claude Code rejected on every compaction — the reconciliation snapshot is still re-injected via SessionStart (source=compact). Remove the dev-only Neural Memory (Graphiti) install prompt. Adds sandbox E2E tests proving the generated settings.json/.env. tsc clean, 275 tests pass.
