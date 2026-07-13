@@ -11,6 +11,9 @@ import type {
 	ScannerConfig,
 } from "../interfaces/hooks";
 
+/** Absolute home dir, OS-aware — same fallback chain as harness-path-resolver.ts. */
+const HOME = process.env.HOME || process.env.USERPROFILE || "";
+
 /** Scan plugins and return their configurations */
 export function scanPlugins(config: ScannerConfig): PluginInfo[] {
 	const { pluginsDir } = config;
@@ -51,9 +54,16 @@ export function extractHooks(
 
 			for (const hook of entry.hooks) {
 				if (hook.type && hook.type !== "command") continue;
+				// $HOME/${HOME} runtime fallback: a marketplace re-checkout resets
+				// hooks.json to its git-tracked literal (resolveHomeInHooks only
+				// rewrites install-time), and hook-executor spawns argv directly
+				// with no shell to expand it — resolve here too, mirroring
+				// CLAUDE_PLUGIN_ROOT/CLAUDE_PROJECT_DIR above.
 				const command = hook.command
 				.replace(/\$\{CLAUDE_PLUGIN_ROOT\}/g, plugin.path)
-				.replace(/\$\{CLAUDE_PROJECT_DIR\}/g, process.cwd());
+				.replace(/\$\{CLAUDE_PROJECT_DIR\}/g, process.cwd())
+				.replace(/\$\{HOME\}/g, HOME)
+				.replace(/\$HOME/g, HOME);
 				hooks.push({ command, isAsync: command.startsWith("afplay"), pluginName: plugin.name });
 			}
 		}

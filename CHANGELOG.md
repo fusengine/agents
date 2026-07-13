@@ -1,5 +1,9 @@
 # Release Notes
 
+## [1.38.96] - 14-07-2026
+
+- feat(hooks): self-heal des node_modules effacés, piloté par le hooks-loader. Un update de plugin déclenche un `git clone` frais du clone marketplace qui n'emporte pas les `node_modules` gitignorés → harness + statusline cassés jusqu'à une réinstall manuelle. Le loader (versionné, restauré au re-checkout, exécuté à chaque hook) appelle désormais `ensureDeps()` en premier : il vérifie les marqueurs des 3 repos d'origine (`scripts/`, `plugins/` harness partagé, `core-guards/statusline`) et relance `bun install` in-place si absent, au 1er hook après un wipe. Chaîne built-ins-only (le réparateur ne dépend pas de ce qu'il répare) : verrou single-flight `O_EXCL` anti-course (fan-out ~11×) + anti-lock-périmé, `bun install` timeout SIGKILL, fail-open. `plugin-scanner` résout `${HOME}`/`$HOME` au runtime (le re-checkout remet le littéral, spawn direct sans shell) + fallback `HOME||USERPROFILE`. Point d'entrée standalone `scripts/ensure-harness-deps.ts`. Aucun câblage installeur (loader déjà enregistré). tsc 0, bun test 294 pass, sniper PASS.
+
 ## [1.38.95] - 13-07-2026
 
 - chore(deps): bump @fusengine/harness ^0.1.72→^0.1.73 (embarque le fix du deadlock browser du design-pipeline et l'hermeticité des tests file-size FUSE_SOLID_MAX_LINES). feat(ai-pilot): nouvelle commande /update-harness — bump la dépendance, réinstalle le node_modules partagé du marketplace, vérifie la version installée et sanity-check les markers du dist. feat(design): design-expert — fast-path fuse-browser (browser_fetch, browser_fetch_batch, browser_serp_batch) ajoutés aux tools, et modèle sonnet→opus (supériorité nette sur le design ouvert, validée par comparatif de 3 pages agence). Bumps fuse-ai-pilot 1.2.32→1.2.33, fuse-design 2.1.29→2.1.30.
