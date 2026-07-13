@@ -16,24 +16,12 @@ import { promptSolidMaxLines } from "./solid-lines";
 import { configureShell } from "./env-manager";
 import { configureMcpServers } from "./mcp-setup";
 import { promptPerfEnv } from "./perf-env";
+import { purgeFuseEnvVars } from "./settings-env-purge";
 import {
-	backupSettings, configureDefaults, configureHooks, DEFAULT_LANGUAGE, enableAgentTeams,
-	isAgentTeamsEnabled, loadSettings, SUPPORTED_LANGUAGES, saveSettings,
+	backupSettings, configureDefaults, configureHooks, enableAgentTeams,
+	isAgentTeamsEnabled, loadSettings, promptLanguage, saveSettings,
 } from "./settings-manager";
 import { installClaudeMd, installDeps, scanAndPrepare, setupStatusline } from "./setup-plugins";
-
-/** Prompt user for response language */
-async function promptLanguage(): Promise<string> {
-	const choice = await p.select({
-		message: "Select response language for Claude Code:",
-		options: SUPPORTED_LANGUAGES.map((lang) => ({
-			value: lang.value,
-			label: lang.label,
-		})),
-		initialValue: DEFAULT_LANGUAGE,
-	});
-	return p.isCancel(choice) ? DEFAULT_LANGUAGE : (choice as string);
-}
 
 /** Run the complete setup process */
 export async function runSetup(
@@ -54,6 +42,7 @@ export async function runSetup(
 	s.start("Configuring hooks loader...");
 	backupSettings(paths.settings);
 	let settings = await loadSettings(paths.settings);
+	settings = purgeFuseEnvVars(settings);
 	settings = configureDefaults(settings, selectedLanguage);
 	settings = configureHooks(settings, loaderDest);
 	s.stop("Hooks loader configured");

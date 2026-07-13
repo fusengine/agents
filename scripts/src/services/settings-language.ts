@@ -1,7 +1,9 @@
 /**
  * Settings language service
- * @description SRP: response-language options and the default-parameters writer.
+ * @description SRP: response-language options, the default-parameters writer,
+ * and the interactive language prompt.
  */
+import * as p from "@clack/prompts";
 import type { Settings } from "./settings-manager";
 
 /** Supported languages for Claude Code responses */
@@ -36,4 +38,17 @@ export function configureDefaults(
 	settings.language = language ?? settings.language ?? DEFAULT_LANGUAGE;
 	settings.attribution = { commit: "", pr: "" };
 	return settings;
+}
+
+/** Prompt user for response language */
+export async function promptLanguage(): Promise<string> {
+	const choice = await p.select({
+		message: "Select response language for Claude Code:",
+		options: SUPPORTED_LANGUAGES.map((lang) => ({
+			value: lang.value,
+			label: lang.label,
+		})),
+		initialValue: DEFAULT_LANGUAGE,
+	});
+	return p.isCancel(choice) ? DEFAULT_LANGUAGE : (choice as string);
 }

@@ -1,8 +1,9 @@
 /**
  * Enforcement TTL service
- * Single Responsibility: let the user set FUSE_ENFORCE_TTL_SEC in settings.env.
+ * Single Responsibility: let the user set FUSE_ENFORCE_TTL_SEC in ~/.claude/.env.
  */
 import * as p from "@clack/prompts";
+import { upsertEnvVar } from "./env-file";
 import type { Settings } from "./settings-manager";
 
 const TTL_KEY = "FUSE_ENFORCE_TTL_SEC";
@@ -14,8 +15,8 @@ const TTL_OPTIONS = [
 ] as const;
 
 /**
- * Prompt for the APEX/SOLID enforcement TTL and persist it to settings.env.
- * @param settings - current settings object (mutated + returned)
+ * Prompt for the APEX/SOLID enforcement TTL and persist it to ~/.claude/.env.
+ * @param settings - current settings object (returned unchanged, kept for chaining)
  */
 export async function promptEnforceTtl(settings: Settings): Promise<Settings> {
 	const choice = await p.select({
@@ -24,9 +25,7 @@ export async function promptEnforceTtl(settings: Settings): Promise<Settings> {
 		initialValue: "120",
 	});
 	if (p.isCancel(choice)) return settings;
-	const env = (settings.env as Record<string, string>) || {};
-	env[TTL_KEY] = choice as string;
-	settings.env = env;
+	upsertEnvVar(TTL_KEY, choice as string);
 	p.log.success(`Enforcement TTL set to ${Number(choice) / 60}min (${TTL_KEY}=${choice})`);
 	return settings;
 }
