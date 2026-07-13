@@ -5,17 +5,27 @@
  */
 import { join } from "node:path";
 import type { HookInput } from "./src/interfaces/hooks";
+import { getManagedDepsTargets } from "./src/services/deps-targets";
+import { ensureDeps } from "./src/services/ensure-deps";
 import { executeHooks } from "./src/services/hook-executor";
 import { extractHooks, scanPlugins } from "./src/services/plugin-scanner";
 
+const HOME = process.env.HOME || process.env.USERPROFILE || "";
 const PLUGINS_DIR = join(
-	process.env.HOME ?? "",
+	HOME,
 	".claude/plugins/marketplaces/fusengine-plugins/plugins",
 );
 
 async function main(): Promise<void> {
 	const hookType = process.argv[2];
 	if (!hookType) process.exit(0);
+
+	// Self-heal FIRST: a marketplace re-checkout wipes gitignored node_modules
+	// (scripts/, plugins/ shared harness, plugins/core-guards/statusline).
+	// Every import above is builtins/relative-source-only (verified: hook-executor
+	// and plugin-scanner pull zero third-party packages), so this is safe to run
+	// before any hook-scanning logic — no third-party import can crash first.
+	await ensureDeps(getManagedDepsTargets(import.meta.dir, PLUGINS_DIR));
 
 	// Read input (may be empty for SessionStart, Stop, etc.)
 	const rawInput = await Bun.stdin.text();
@@ -37,7 +47,7 @@ async function main(): Promise<void> {
 	// DEBUG: Log SubagentStart payload
 	if (hookType === "SubagentStart" || hookType === "SubagentStop") {
 		const { mkdirSync, appendFileSync } = await import("node:fs");
-		const debugDir = join(process.env.HOME ?? "", ".claude/fusengine-cache");
+		const debugDir = join(HOME, ".claude/fusengine-cache");
 		mkdirSync(debugDir, { recursive: true });
 		appendFileSync(join(debugDir, "subagent-debug.log"),
 			`${new Date().toISOString()} ${hookType} agent_type="${agentType}" raw=${JSON.stringify(input)}\n`);
