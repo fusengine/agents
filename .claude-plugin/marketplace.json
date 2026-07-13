@@ -7,7 +7,7 @@
   },
   "metadata": {
     "description": "Professional Claude Code plugins with APEX workflow, SOLID principles, and expert development agents for Next.js, Laravel, Swift, Tailwind CSS, and more",
-    "version": "1.38.91"
+    "version": "1.38.92"
   },
   "core": [
     {
@@ -49,41 +49,7 @@
         "ref-routing"
       ],
       "category": "development",
-      "strict": true,
-      "commands": [
-        "./commands/apex.md",
-        "./commands/epct.md",
-        "./commands/explain-architecture.md",
-        "./commands/deep-code-analysis.md",
-        "./commands/prisma-optimize.md",
-        "./commands/watch-ci.md",
-        "./commands/cleanup-context.md",
-        "./commands/fix-pr-comments.md",
-        "./commands/create-pull-request.md",
-        "./commands/commit.md",
-        "./commands/run-tasks.md"
-      ],
-      "agents": [
-        "./agents/sniper.md",
-        "./agents/sniper-faster.md",
-        "./agents/explore-codebase.md",
-        "./agents/research-expert.md",
-        "./agents/websearch.md",
-        "./agents/brainstorming.md"
-      ],
-      "skills": [
-        "./skills/apex",
-        "./skills/research",
-        "./skills/exploration",
-        "./skills/code-quality",
-        "./skills/sniper-check",
-        "./skills/skill-creator",
-        "./skills/agent-creator",
-        "./skills/react-effects-audit",
-        "./skills/brainstorming",
-        "./skills/tdd",
-        "./skills/verification"
-      ]
+      "strict": true
     },
     {
       "name": "fuse-seo",
@@ -112,40 +78,7 @@
         "sxo"
       ],
       "category": "development",
-      "strict": true,
-      "agents": [
-        "./agents/seo-expert.md",
-        "./agents/seo-technical.md",
-        "./agents/seo-schema.md",
-        "./agents/seo-content.md",
-        "./agents/seo-geo.md",
-        "./agents/seo-local.md",
-        "./agents/seo-sitemap.md",
-        "./agents/seo-images.md",
-        "./agents/seo-cluster.md"
-      ],
-      "skills": [
-        "./skills/seo",
-        "./skills/seo-audit",
-        "./skills/seo-page",
-        "./skills/seo-technical",
-        "./skills/seo-schema",
-        "./skills/seo-content",
-        "./skills/seo-images",
-        "./skills/seo-sitemap",
-        "./skills/seo-hreflang",
-        "./skills/seo-internal-linking",
-        "./skills/seo-cluster",
-        "./skills/seo-content-brief",
-        "./skills/seo-plan",
-        "./skills/seo-sxo",
-        "./skills/seo-featured-snippets",
-        "./skills/seo-local",
-        "./skills/seo-geo",
-        "./skills/seo-ecommerce",
-        "./skills/seo-video",
-        "./skills/seo-redirects"
-      ]
+      "strict": true
     },
     {
       "name": "fuse-commit-pro",
@@ -167,26 +100,7 @@
         "automation"
       ],
       "category": "productivity",
-      "strict": true,
-      "commands": [
-        "./commands/commit.md",
-        "./commands/wip.md",
-        "./commands/fix.md",
-        "./commands/feat.md",
-        "./commands/refactor.md",
-        "./commands/chore.md",
-        "./commands/docs.md",
-        "./commands/test.md",
-        "./commands/undo.md",
-        "./commands/amend.md"
-      ],
-      "agents": [
-        "./agents/commit-detector.md"
-      ],
-      "skills": [
-        "./skills/commit-detection",
-        "./skills/post-commit"
-      ]
+      "strict": true
     },
     {
       "name": "fuse-laravel",
@@ -216,36 +130,7 @@
         "pgvector"
       ],
       "category": "development",
-      "strict": true,
-      "commands": [],
-      "agents": [
-        "./agents/laravel-expert.md"
-      ],
-      "skills": [
-        "./skills/fusecore",
-        "./skills/laravel-architecture",
-        "./skills/laravel-eloquent",
-        "./skills/laravel-api",
-        "./skills/laravel-auth",
-        "./skills/laravel-testing",
-        "./skills/laravel-queues",
-        "./skills/laravel-livewire",
-        "./skills/laravel-blade",
-        "./skills/laravel-vite",
-        "./skills/laravel-migrations",
-        "./skills/laravel-billing",
-        "./skills/laravel-stripe-connect",
-        "./skills/laravel-i18n",
-        "./skills/laravel-permission",
-        "./skills/laravel-reverb",
-        "./skills/laravel-scout",
-        "./skills/laravel-attributes",
-        "./skills/laravel-ai-sdk",
-        "./skills/laravel-jsonapi",
-        "./skills/laravel-vector-search",
-        "./skills/laravel-upgrade-v13",
-        "./skills/solid-php"
-      ]
+      "strict": true
     },
     {
       "name": "fuse-nextjs",
@@ -271,21 +156,7 @@
         "server-components"
       ],
       "category": "development",
-      "strict": true,
-      "commands": [],
-      "agents": [
-        "./agents/nextjs-expert.md"
-      ],
-      "skills": [
-        "./skills/nextjs-16",
-        "./skills/prisma-7",
-        "./skills/better-auth",
-        "./skills/solid-nextjs",
-        "./skills/nextjs-tanstack-form",
-        "./skills/nextjs-zustand",
-        "./skills/nextjs-shadcn",
-        "./skills/nextjs-i18n"
-      ]
+      "strict": true
     },
     {
       "name": "fuse-swift-apple-expert",
@@ -313,24 +184,7 @@
         "liquid-glass"
       ],
       "category": "development",
-      "strict": true,
-      "commands": [],
-      "agents": [
-        "./agents/swift-expert.md"
-      ],
-      "skills": [
-        "./skills/swift-core",
-        "./skills/swiftui-core",
-        "./skills/ios",
-        "./skills/macos",
-        "./skills/ipados",
-        "./skills/watchos",
-        "./skills/visionos",
-        "./skills/tvos",
-        "./skills/mcp-tools",
-        "./skills/build-distribution",
-        "./skills/solid-swift"
-      ]
+      "strict": true
     },
     {
       "name": "fuse-solid",
@@ -352,19 +206,7 @@
         "multi-language"
       ],
       "category": "productivity",
-      "strict": true,
-      "commands": [],
-      "agents": [
-        "./agents/solid-orchestrator.md"
-      ],
-      "skills": [
-        "./skills/solid-detection",
-        "./skills/solid-generic",
-        "./skills/solid-java",
-        "./skills/solid-go",
-        "./skills/solid-ruby",
-        "./skills/solid-rust"
-      ]
+      "strict": true
     },
     {
       "name": "fuse-tailwindcss",
@@ -389,28 +231,7 @@
         "container-queries"
       ],
       "category": "development",
-      "strict": true,
-      "commands": [],
-      "agents": [
-        "./agents/tailwindcss-expert.md"
-      ],
-      "skills": [
-        "./skills/tailwindcss-v4",
-        "./skills/tailwindcss-core",
-        "./skills/tailwindcss-utilities",
-        "./skills/tailwindcss-utility-classes",
-        "./skills/tailwindcss-responsive",
-        "./skills/tailwindcss-custom-styles",
-        "./skills/tailwindcss-layout",
-        "./skills/tailwindcss-spacing",
-        "./skills/tailwindcss-sizing",
-        "./skills/tailwindcss-typography",
-        "./skills/tailwindcss-backgrounds",
-        "./skills/tailwindcss-borders",
-        "./skills/tailwindcss-effects",
-        "./skills/tailwindcss-transforms",
-        "./skills/tailwindcss-interactivity"
-      ]
+      "strict": true
     },
     {
       "name": "fuse-react",
@@ -436,21 +257,7 @@
         "solid"
       ],
       "category": "development",
-      "strict": true,
-      "commands": [],
-      "agents": [
-        "./agents/react-expert.md"
-      ],
-      "skills": [
-        "./skills/solid-react",
-        "./skills/react-19",
-        "./skills/react-tanstack-router",
-        "./skills/react-state",
-        "./skills/react-forms",
-        "./skills/react-testing",
-        "./skills/react-shadcn",
-        "./skills/react-i18n"
-      ]
+      "strict": true
     },
     {
       "name": "fuse-tanstack-start",
@@ -478,22 +285,7 @@
         "solid"
       ],
       "category": "development",
-      "strict": true,
-      "commands": [],
-      "agents": [
-        "./agents/tanstack-start-expert.md"
-      ],
-      "skills": [
-        "./skills/solid-tanstack-start",
-        "./skills/start-core",
-        "./skills/start-execution-model",
-        "./skills/start-server-functions",
-        "./skills/start-middleware",
-        "./skills/start-server-routes",
-        "./skills/start-routing-data",
-        "./skills/start-auth",
-        "./skills/start-deployment"
-      ]
+      "strict": true
     },
     {
       "name": "fuse-typescript",
@@ -522,20 +314,7 @@
         "solid"
       ],
       "category": "development",
-      "strict": true,
-      "commands": [],
-      "agents": [
-        "./agents/typescript-expert.md"
-      ],
-      "skills": [
-        "./skills/ts-config",
-        "./skills/ts-language-patterns",
-        "./skills/ts-runtime-node",
-        "./skills/ts-runtime-bun",
-        "./skills/ts-lint-format",
-        "./skills/ts-testing",
-        "./skills/ts-packaging"
-      ]
+      "strict": true
     },
     {
       "name": "fuse-php",
@@ -565,19 +344,7 @@
         "solid"
       ],
       "category": "development",
-      "strict": true,
-      "commands": [],
-      "agents": [
-        "./agents/php-expert.md"
-      ],
-      "skills": [
-        "./skills/php-language-modern",
-        "./skills/php-standards",
-        "./skills/php-quality-tooling",
-        "./skills/php-testing",
-        "./skills/php-http-psr",
-        "./skills/php-ecosystem-reference"
-      ]
+      "strict": true
     },
     {
       "name": "fuse-rust",
@@ -604,20 +371,7 @@
         "solid"
       ],
       "category": "development",
-      "strict": true,
-      "commands": [],
-      "agents": [
-        "./agents/rust-expert.md"
-      ],
-      "skills": [
-        "./skills/rust-core-language",
-        "./skills/rust-error-handling",
-        "./skills/rust-async-concurrency",
-        "./skills/rust-web-backend",
-        "./skills/rust-testing-quality",
-        "./skills/rust-tooling-cicd",
-        "./skills/rust-ecosystem-crates"
-      ]
+      "strict": true
     },
     {
       "name": "fuse-go",
@@ -645,18 +399,7 @@
         "solid"
       ],
       "category": "development",
-      "strict": true,
-      "commands": [],
-      "agents": [
-        "./agents/go-expert.md"
-      ],
-      "skills": [
-        "./skills/go-core-idioms",
-        "./skills/go-concurrency",
-        "./skills/go-architecture",
-        "./skills/go-testing-quality",
-        "./skills/go-tooling-security"
-      ]
+      "strict": true
     },
     {
       "name": "fuse-design",
@@ -690,25 +433,7 @@
         "design-audit"
       ],
       "category": "development",
-      "strict": true,
-      "commands": [
-        "./commands/design.md",
-        "./commands/design-page.md",
-        "./commands/design-component.md",
-        "./commands/audit-design.md"
-      ],
-      "agents": [
-        "./agents/design-expert.md"
-      ],
-      "skills": [
-        "./skills/0-identity-system",
-        "./skills/1-designing-systems",
-        "./skills/2-ux-copy",
-        "./skills/3-generating-components",
-        "./skills/4-adding-animations",
-        "./skills/5-design-audit",
-        "./skills/6-handoff-review"
-      ]
+      "strict": true
     },
     {
       "name": "fuse-prompt-engineer",
@@ -735,22 +460,7 @@
         "llm"
       ],
       "category": "productivity",
-      "strict": true,
-      "commands": [
-        "./commands/prompt.md",
-        "./commands/prompt-history.md"
-      ],
-      "agents": [
-        "./agents/prompt-engineer.md"
-      ],
-      "skills": [
-        "./skills/prompt-creation",
-        "./skills/prompt-optimization",
-        "./skills/agent-design",
-        "./skills/guardrails",
-        "./skills/prompt-library",
-        "./skills/prompt-testing"
-      ]
+      "strict": true
     },
     {
       "name": "fuse-shadcn-ui",
@@ -775,18 +485,7 @@
         "detection"
       ],
       "category": "development",
-      "strict": true,
-      "commands": [],
-      "agents": [
-        "./agents/shadcn-ui-expert.md"
-      ],
-      "skills": [
-        "./skills/shadcn-detection",
-        "./skills/shadcn-components",
-        "./skills/shadcn-registries",
-        "./skills/shadcn-theming",
-        "./skills/shadcn-migration"
-      ]
+      "strict": true
     },
     {
       "name": "fuse-security",
@@ -812,20 +511,7 @@
         "security-headers"
       ],
       "category": "security",
-      "strict": true,
-      "commands": [
-        "./commands/scan.md"
-      ],
-      "agents": [
-        "./agents/security-expert.md"
-      ],
-      "skills": [
-        "./skills/security-scan",
-        "./skills/cve-research",
-        "./skills/dependency-audit",
-        "./skills/security-headers",
-        "./skills/auth-audit"
-      ]
+      "strict": true
     },
     {
       "name": "fuse-astro",
@@ -859,27 +545,7 @@
         "vercel"
       ],
       "category": "development",
-      "strict": true,
-      "commands": [],
-      "agents": [
-        "./agents/astro-expert.md"
-      ],
-      "skills": [
-        "./skills/astro-6",
-        "./skills/astro-content",
-        "./skills/astro-actions",
-        "./skills/astro-islands",
-        "./skills/astro-integrations",
-        "./skills/astro-seo",
-        "./skills/astro-assets",
-        "./skills/astro-db",
-        "./skills/astro-deployment",
-        "./skills/astro-starlight",
-        "./skills/astro-styling",
-        "./skills/astro-security",
-        "./skills/astro-i18n",
-        "./skills/solid-astro"
-      ]
+      "strict": true
     },
     {
       "name": "fuse-changelog",
@@ -903,18 +569,7 @@
         "compatibility"
       ],
       "category": "productivity",
-      "strict": true,
-      "commands": [
-        "./commands/watch.md"
-      ],
-      "agents": [
-        "./agents/changelog-watcher.md"
-      ],
-      "skills": [
-        "./skills/changelog-scan",
-        "./skills/breaking-changes",
-        "./skills/community-pulse"
-      ]
+      "strict": true
     },
     {
       "name": "fuse-cartographer",
@@ -937,16 +592,7 @@
         "impact-analysis"
       ],
       "category": "development",
-      "strict": true,
-      "commands": [
-        "./commands/map.md"
-      ],
-      "agents": [
-        "./agents/cartographer.md"
-      ],
-      "skills": [
-        "./skills/map-ecosystem"
-      ]
+      "strict": true
     },
     {
       "name": "fuse-lessons",
@@ -967,10 +613,7 @@
         "postmortem"
       ],
       "category": "development",
-      "strict": true,
-      "commands": [
-        "./commands/lessons.md"
-      ]
+      "strict": true
     }
   ]
 }
