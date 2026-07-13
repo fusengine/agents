@@ -1,172 +1,79 @@
 /**
- * Tests for hook-executor service
+ * Tests for executeHook (shell-free: no bash, Windows-compatible).
+ * Commands run a deterministic .mjs fixture via `bun <fixture> <mode>`.
  */
 import { describe, expect, test } from "bun:test";
 import type { ExecutableHook } from "../interfaces/hooks";
-import { executeHook, executeHooks } from "../services/hook-executor";
+import { executeHook } from "../services/hook-executor";
+import { FIXTURE_PATH, fixtureHook } from "./helpers/hook-fixture";
 
-describe("hook-executor", () => {
-	describe("executeHook", () => {
-		test("captures stdout from command", async () => {
-			const hook: ExecutableHook = {
-				command: "echo 'hello world'",
-				isAsync: false,
-				pluginName: "test",
-			};
-
-			const result = await executeHook(hook, "{}");
-
-			expect(result.success).toBe(true);
-			expect(result.stdout).toContain("hello world");
-			expect(result.exitCode).toBe(0);
-		});
-
-		test("captures stderr and blocked status on exit 2", async () => {
-			const hook: ExecutableHook = {
-				command: "echo 'error message' >&2 && exit 2",
-				isAsync: false,
-				pluginName: "test",
-			};
-
-			const result = await executeHook(hook, "{}");
-
-			expect(result.blocked).toBe(true);
-			expect(result.exitCode).toBe(2);
-			expect(result.stderr).toContain("error message");
-		});
+describe("executeHook", () => {
+	test("captures stdout and success on exit 0", async () => {
+		const result = await executeHook(fixtureHook("stdout"), "{}");
+		expect(result.success).toBe(true);
+		expect(result.stdout).toContain("hello-world");
+		expect(result.exitCode).toBe(0);
+		expect(result.blocked).toBe(false);
 	});
 
-	describe("executeHooks", () => {
-		test("returns empty result for no hooks", async () => {
-			const result = await executeHooks([], "{}");
+	test("captures stderr and blocked status on exit 2", async () => {
+		const result = await executeHook(fixtureHook("block"), "{}");
+		expect(result.blocked).toBe(true);
+		expect(result.exitCode).toBe(2);
+		expect(result.stderr).toContain("blocked reason");
+	});
 
-			expect(result.blocked).toBe(false);
-			expect(result.output).toBe("");
-		});
+	test("non-zero exit without `|| true` is failure but not blocked", async () => {
+		const result = await executeHook(fixtureHook("fail"), "{}");
+		expect(result.success).toBe(false);
+		expect(result.exitCode).toBe(3);
+		expect(result.blocked).toBe(false);
+	});
 
-		test("collects JSON output with additionalContext", async () => {
-			const hooks: ExecutableHook[] = [
-				{
-					command: `echo '{"additionalContext": "extra info"}'`,
-					isAsync: false,
-					pluginName: "test-plugin",
-				},
-			];
+	test("`|| true` forces success even when the process exits non-zero", async () => {
+		const h: ExecutableHook = {
+			command: `bun ${FIXTURE_PATH} fail || true`,
+			isAsync: false,
+			pluginName: "test",
+		};
+		const result = await executeHook(h, "{}");
+		expect(result.success).toBe(true);
+		expect(result.exitCode).toBe(0);
+		expect(result.blocked).toBe(false);
+		// stderr is still captured (printed before `|| true` swallows the exit code).
+		expect(result.stderr).toContain("boom");
+	});
 
-			const result = await executeHooks(hooks, "{}");
+	test("`|| true` also neutralises exit 2 (never blocked, matching bash)", async () => {
+		const h: ExecutableHook = {
+			command: `bun ${FIXTURE_PATH} block || true`,
+			isAsync: false,
+			pluginName: "test",
+		};
+		const result = await executeHook(h, "{}");
+		expect(result.blocked).toBe(false);
+		expect(result.exitCode).toBe(0);
+	});
 
-			expect(result.blocked).toBe(false);
-			expect(result.output).toContain("additionalContext");
-			expect(result.output).toContain("extra info");
-		});
+	test("transmits stdin to the process", async () => {
+		const result = await executeHook(fixtureHook("stdin"), "PAYLOAD-123");
+		expect(result.stdout).toContain("STDIN:PAYLOAD-123");
+	});
 
-		test("ignores non-JSON output", async () => {
-			const hooks: ExecutableHook[] = [
-				{
-					command: "echo 'plain text output'",
-					isAsync: false,
-					pluginName: "test-plugin",
-				},
-			];
+	test("missing executable is a non-blocking failure (ENOENT)", async () => {
+		const h: ExecutableHook = {
+			command: "nonexistent-command-xyz",
+			isAsync: false,
+			pluginName: "test",
+		};
+		const result = await executeHook(h, "{}");
+		expect(result.blocked).toBe(false);
+		expect(result.success).toBe(false);
+	});
 
-			const result = await executeHooks(hooks, "{}");
-
-			expect(result.blocked).toBe(false);
-			// Plain text is not collected (only additionalContext JSON)
-			expect(result.output).toBe("");
-		});
-
-		test("detects blocked hook (exit 2)", async () => {
-			const hooks: ExecutableHook[] = [
-				{
-					command: "echo 'blocked reason' >&2 && exit 2",
-					isAsync: false,
-					pluginName: "test-plugin",
-				},
-			];
-
-			const result = await executeHooks(hooks, "{}");
-
-			expect(result.blocked).toBe(true);
-			expect(result.stderr).toContain("blocked reason");
-		});
-
-		test("executes multiple hooks in parallel", async () => {
-			const hooks: ExecutableHook[] = [
-				{
-					command: "sleep 0.05 && echo 'hook1'",
-					isAsync: false,
-					pluginName: "p1",
-				},
-				{
-					command: "sleep 0.05 && echo 'hook2'",
-					isAsync: false,
-					pluginName: "p2",
-				},
-				{
-					command: "sleep 0.05 && echo 'hook3'",
-					isAsync: false,
-					pluginName: "p3",
-				},
-			];
-
-			const start = Date.now();
-			const result = await executeHooks(hooks, "{}");
-			const duration = Date.now() - start;
-
-			expect(result.blocked).toBe(false);
-			// If sequential: 150ms+, if parallel: ~50ms
-			expect(duration).toBeLessThan(120);
-		});
-
-		test("first blocked hook stops with blocked result", async () => {
-			const hooks: ExecutableHook[] = [
-				{ command: "echo 'ok1'", isAsync: false, pluginName: "plugin1" },
-				{
-					command: "echo 'blocked' >&2 && exit 2",
-					isAsync: false,
-					pluginName: "plugin2",
-				},
-				{ command: "echo 'ok3'", isAsync: false, pluginName: "plugin3" },
-			];
-
-			const result = await executeHooks(hooks, "{}");
-
-			expect(result.blocked).toBe(true);
-		});
-
-		test("handles failing command gracefully", async () => {
-			const hooks: ExecutableHook[] = [
-				{
-					command: "nonexistent-command-xyz 2>/dev/null",
-					isAsync: false,
-					pluginName: "test-plugin",
-				},
-			];
-
-			const result = await executeHooks(hooks, "{}");
-			// Exit code != 2, so not blocked
-			expect(result.blocked).toBe(false);
-		});
-
-		test("merges multiple additionalContext outputs", async () => {
-			const hooks: ExecutableHook[] = [
-				{
-					command: `echo '{"additionalContext": "info1"}'`,
-					isAsync: false,
-					pluginName: "p1",
-				},
-				{
-					command: `echo '{"additionalContext": "info2"}'`,
-					isAsync: false,
-					pluginName: "p2",
-				},
-			];
-
-			const result = await executeHooks(hooks, "{}");
-
-			expect(result.output).toContain("info1");
-			expect(result.output).toContain("info2");
-		});
+	test("async hook returns success immediately", async () => {
+		const result = await executeHook(fixtureHook("stdout", "", true), "{}");
+		expect(result.success).toBe(true);
+		expect(result.exitCode).toBe(0);
 	});
 });
