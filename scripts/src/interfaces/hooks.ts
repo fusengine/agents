@@ -31,6 +31,14 @@ export interface ExecutableHook {
 	pluginName: string;
 }
 
+/** Résultat du parsing d'une command de hook en argv shell-free */
+export interface ParsedHookCommand {
+	/** Tokens word-split ; argv[0] est le nom littéral du programme (ex. "bun"). */
+	argv: string[];
+	/** True si la command finissait par `|| true` (bash avale tout exit≠0, y compris 2). */
+	ignoreExit: boolean;
+}
+
 /** Résultat d'exécution d'un hook */
 export interface HookResult {
 	success: boolean;
