@@ -1,5 +1,9 @@
 # Release Notes
 
+## [1.38.93] - 13-07-2026
+
+- fix(installer): route FUSE_* env vars to ~/.claude/.env instead of settings.json (the harness already loads .env; CLAUDE_CODE_* stay in settings.json), with an idempotent purge of residual FUSE_* keys from settings.json. Drop the PostCompact hook wiring that Claude Code rejected on every compaction — the reconciliation snapshot is still re-injected via SessionStart (source=compact). Remove the dev-only Neural Memory (Graphiti) install prompt. Adds sandbox E2E tests proving the generated settings.json/.env. tsc clean, 275 tests pass.
+
 ## [1.38.92] - 13-07-2026
 
 - fix(plugins): switch marketplace manifest to component auto-discovery — drop the explicit skills/commands/agents arrays from the 21 registered plugins so Claude Code auto-discovers components (skills/<name>/SKILL.md, commands/*.md, agents/*.md). Fixes 9 "path not found" load errors (fuse-ai-pilot: commit.md + skills/apex; fuse-design: the 0-6 numbered skills renamed to design-*) and recovers 26 previously under-declared components; zero regression on the 235 existing ones.
