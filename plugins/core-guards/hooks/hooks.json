@@ -174,19 +174,6 @@
       }
     ],
 
-    "PostCompact": [
-      {
-        "_description": "Harness: after compaction, re-inject the reconciliation snapshot + a reread-before-edit reminder (read-state may be reset). Core scope, deduped per session (ports lifecycle/post-compact.ts).",
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bun $HOME/.claude/plugins/marketplaces/fusengine-plugins/plugins/node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code"
-          }
-        ]
-      }
-    ],
-
     "SessionEnd": [
       {
         "_description": "Harness: remove stale temp/legacy cache files on session end (ports cleanup-session.py)",

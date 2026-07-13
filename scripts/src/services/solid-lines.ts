@@ -1,8 +1,9 @@
 /**
  * SOLID max-lines service
- * Single Responsibility: let the user set FUSE_SOLID_MAX_LINES in settings.env.
+ * Single Responsibility: let the user set FUSE_SOLID_MAX_LINES in ~/.claude/.env.
  */
 import * as p from "@clack/prompts";
+import { upsertEnvVar } from "./env-file";
 import type { Settings } from "./settings-manager";
 
 const KEY = "FUSE_SOLID_MAX_LINES";
@@ -15,8 +16,8 @@ const OPTIONS = [
 ] as const;
 
 /**
- * Prompt for the SOLID max lines/file limit and persist it to settings.env.
- * @param settings - current settings object (mutated + returned)
+ * Prompt for the SOLID max lines/file limit and persist it to ~/.claude/.env.
+ * @param settings - current settings object (returned unchanged, kept for chaining)
  */
 export async function promptSolidMaxLines(settings: Settings): Promise<Settings> {
 	const choice = await p.select({
@@ -24,9 +25,7 @@ export async function promptSolidMaxLines(settings: Settings): Promise<Settings>
 		options: OPTIONS.map((o) => ({ value: o.value, label: o.label })),
 	});
 	if (p.isCancel(choice)) return settings;
-	const env = (settings.env as Record<string, string>) || {};
-	env[KEY] = choice as string;
-	settings.env = env;
+	upsertEnvVar(KEY, choice as string);
 	p.log.success(`SOLID limit set to ${choice} lines (${KEY}=${choice})`);
 	return settings;
 }

@@ -38,3 +38,25 @@ export function saveEnvFile(env: Record<string, string>): void {
 
 	writeFileSync(ENV_FILE, `${lines.join("\n")}\n`);
 }
+
+/**
+ * Idempotently write/update a single variable in .env file.
+ * Replaces the existing value if the key is already present, else appends it.
+ * @param name - Variable name (e.g. "FUSE_HARNESS_REFS")
+ * @param value - Variable value to persist
+ */
+export function upsertEnvVar(name: string, value: string): void {
+	const env = loadEnvFile();
+	env[name] = value;
+	saveEnvFile(env);
+}
+
+/**
+ * Remove a single variable from .env file, if present.
+ * @param name - Variable name to remove (e.g. "FUSE_ENFORCE_GEMINI_MCP")
+ */
+export function removeEnvVar(name: string): void {
+	const env = loadEnvFile();
+	delete env[name];
+	saveEnvFile(env);
+}

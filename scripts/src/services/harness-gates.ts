@@ -1,10 +1,14 @@
 /**
  * Harness gates service
  * Single Responsibility: opt-in enforcement gates (Gemini MCP, RALPH, Gemini
- * design pipeline) in settings.env. Only persists "1" when a gate is enabled —
- * a disabled gate is removed, never written as "0", to keep settings.env clean.
+ * design pipeline). FUSE_-prefixed gates persist to ~/.claude/.env (the
+ * harness loads .env directly); RALPH_MODE (native, non-FUSE_) stays in
+ * settings.env. Only persists "1" when enabled — a disabled gate is removed,
+ * never written as "0", to keep both files clean.
  */
 import * as p from "@clack/prompts";
+import { loadEnvFile } from "./env-file";
+import { readRoutedVar, writeRoutedVar } from "./env-route";
 import type { Settings } from "./settings-manager";
 
 interface Gate {
@@ -28,15 +32,15 @@ const GATES: readonly Gate[] = [
 ];
 
 /**
- * Prompt for the opt-in harness gates and persist enabled ones to settings.env.
+ * Prompt for the opt-in harness gates and persist enabled ones.
  * An already-set var is surfaced with a keep/replace choice; a gate left off is
- * deleted rather than stored as "0".
+ * removed rather than stored as "0".
  * @param settings - current settings object (mutated + returned)
  */
 export async function promptHarnessGates(settings: Settings): Promise<Settings> {
-	const env = (settings.env as Record<string, string>) || {};
+	const envFile = loadEnvFile();
 	for (const gate of GATES) {
-		const current = env[gate.key];
+		const current = readRoutedVar(settings, envFile, gate.key);
 		if (current !== undefined) {
 			const keep = await p.confirm({
 				message: `${gate.key} is set to "${current}". Keep it?`,
@@ -47,9 +51,7 @@ export async function promptHarnessGates(settings: Settings): Promise<Settings> 
 		}
 		const enable = await p.confirm({ message: gate.message, initialValue: false });
 		if (p.isCancel(enable)) continue;
-		if (enable) env[gate.key] = "1";
-		else delete env[gate.key];
+		writeRoutedVar(settings, gate.key, enable ? "1" : undefined);
 	}
-	settings.env = env;
 	return settings;
 }

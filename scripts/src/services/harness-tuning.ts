@@ -1,10 +1,14 @@
 /**
  * Harness tuning service
- * Single Responsibility: opt-in advanced harness knobs (TTLs, caches, Graphiti
- * endpoint) in settings.env. Persists a value only when it differs from the sane
- * default, so an untouched tuning run leaves settings.env clean.
+ * Single Responsibility: opt-in advanced harness knobs (TTLs, caches).
+ * FUSE_-prefixed knobs persist to ~/.claude/.env (the harness loads .env
+ * directly); non-FUSE_ knobs (FUSENGINE_CACHE_TTL_MIN) stay in settings.env.
+ * Persists a value only when it differs from the sane default, so an
+ * untouched tuning run leaves both files clean.
  */
 import * as p from "@clack/prompts";
+import { loadEnvFile } from "./env-file";
+import { readRoutedVar, writeRoutedVar } from "./env-route";
 import type { Settings } from "./settings-manager";
 
 interface Field {
@@ -22,11 +26,6 @@ const TUNING: readonly Field[] = [
 	{ key: "FUSE_HARNESS_MARKETPLACES", label: "Harness marketplaces (comma-separated)", def: "fusengine-plugins", numeric: false },
 ];
 
-const NEURAL: readonly Field[] = [
-	{ key: "NEURAL_MEMORY_HOST", label: "Neural Memory (Graphiti) host", def: "localhost", numeric: false },
-	{ key: "GRAPHITI_PORT", label: "Graphiti port", def: "8000", numeric: true },
-];
-
 /** Reject anything that is not a whole number (empty allowed → falls back to default). */
 function numericValidator(v: string | undefined): string | undefined {
 	const s = (v ?? "").trim();
@@ -34,25 +33,27 @@ function numericValidator(v: string | undefined): string | undefined {
 }
 
 /** Prompt each field pre-filled with its current/default value; keep only non-default entries. */
-async function promptFields(env: Record<string, string>, fields: readonly Field[]): Promise<boolean> {
+async function promptFields(
+	settings: Settings,
+	envFile: Record<string, string>,
+	fields: readonly Field[],
+): Promise<boolean> {
 	for (const f of fields) {
 		const value = await p.text({
 			message: f.label,
-			initialValue: env[f.key] ?? f.def,
+			initialValue: readRoutedVar(settings, envFile, f.key) ?? f.def,
 			validate: f.numeric ? numericValidator : undefined,
 		});
 		if (p.isCancel(value)) return false;
 		const v = value.trim();
-		if (v && v !== f.def) env[f.key] = v;
-		else delete env[f.key];
+		writeRoutedVar(settings, f.key, v && v !== f.def ? v : undefined);
 	}
 	return true;
 }
 
 /**
- * Prompt for advanced harness tuning (TTLs, caches) and the optional Neural
- * Memory (Graphiti) endpoint. Both sections are opt-in and default to skipped;
- * only values differing from the defaults are written to settings.env.
+ * Prompt for advanced harness tuning (TTLs, caches). Opt-in and defaults to
+ * skipped; only values differing from the defaults are persisted.
  * @param settings - current settings object (mutated + returned)
  */
 export async function promptHarnessTuning(settings: Settings): Promise<Settings> {
@@ -62,16 +63,7 @@ export async function promptHarnessTuning(settings: Settings): Promise<Settings>
 	});
 	if (p.isCancel(wants) || !wants) return settings;
 
-	const env = (settings.env as Record<string, string>) || {};
-	if (!(await promptFields(env, TUNING))) return settings;
-	settings.env = env;
-
-	const neural = await p.confirm({
-		message: "Configure Neural Memory (Graphiti) endpoint?",
-		initialValue: false,
-	});
-	if (p.isCancel(neural) || !neural) return settings;
-	await promptFields(env, NEURAL);
-	settings.env = env;
+	const envFile = loadEnvFile();
+	await promptFields(settings, envFile, TUNING);
 	return settings;
 }

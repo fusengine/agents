@@ -11,6 +11,7 @@ export {
 	SUPPORTED_LANGUAGES,
 	DEFAULT_LANGUAGE,
 	configureDefaults,
+	promptLanguage,
 } from "./settings-language";
 
 export interface Settings {
