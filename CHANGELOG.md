@@ -1,5 +1,9 @@
 # Release Notes
 
+## [1.38.98] - 14-07-2026
+
+- docs(readme): GIF de démo scripté du cycle hook → agent → sniper, placé sous l'image de la statusline. Reconstitution fidèle du comportement réel (rendue avec VHS, pas un run LLM live) : détection projet → `nextjs-expert`, un hook DRY bloque un Write dupliqué de `slugify`, correction par `import`, puis sniper PASS (lint/types/dup 0) + statusline. Sources régénérables versionnées : `docs/demo/demo.sh` + `docs/demo/hook-sniper.tape` (`vhs docs/demo/hook-sniper.tape`). Aucun plugin touché — bump de suite uniquement.
+
 ## [1.38.97] - 14-07-2026
 
 - feat(apex): nouvel agent `challenger` — vérificateur ADVERSE des claims / causes racines / plans (distinct du sniper, qui reste sur le code). Comble le trou d'APEX : eLicit est une auto-review par l'agent lui-même (mêmes angles morts), et le sniper ne challenge que le code. Model opus, read-only, contexte frais (claim + preuves seulement), sources réelles (Context7/Exa/fuse-browser/code), borné 2 rounds → verdict CONFIRMED/REFUTED/UNCERTAIN, consultatif (pas de veto). Déclenchement SYSTÉMATIQUE par TYPE de claim (comme le sniper sur toute modif de code), en tâche APEX OU en conversation, avant que le lead ne rapporte une cause racine / un « done » / une action irréversible / un fix resservi. Câblage APEX (Step 4.5 eLicit + gate artefact `challenge-{slug}.md` + routage Verify), nouvelle Critical Rule 5 (template CLAUDE.md), roadmap Phase A/B. Bumps fuse-ai-pilot 1.2.33→1.2.34, fuse-rules 1.0.12→1.0.13.
