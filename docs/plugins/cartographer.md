@@ -30,7 +30,7 @@ The agent navigates from branch to branch, following links until it finds the ri
 
 ### Plugin Map (index.md)
 ```
-# Ecosystem Map (17 plugins)
+# Ecosystem Map (24 plugins)
 
 - [fuse-nextjs](./fuse-nextjs/index.md) (v1.1.9) → nextjs-expert
 - [fuse-laravel](./fuse-laravel/index.md) (v1.1.8) → laravel-expert
@@ -67,7 +67,7 @@ Project cartography only runs when a real project is detected (has `package.json
 
 ## Agent Integration
 
-All 21 agents have a `## Cartography` section instructing them to read their maps before acting:
+All 35 agents have a `## Cartography` section instructing them to read their maps before acting:
 - **Your skills**: `${CLAUDE_PLUGIN_ROOT}/.cartographer/index.md`
 - **All plugins**: `${CLAUDE_PLUGIN_ROOT}/../.cartographer/index.md`
 - **Project files**: `.cartographer/project/index.md`

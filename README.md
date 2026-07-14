@@ -1,6 +1,6 @@
 # Fusengine Claude Code Plugins
 
-![version](https://img.shields.io/badge/version-v1.38.98-blue?style=flat-square) ![plugins](https://img.shields.io/badge/plugins-24-brightgreen?style=flat-square) ![agents](https://img.shields.io/badge/agents-35-blueviolet?style=flat-square) ![skills](https://img.shields.io/badge/skills-196-orange?style=flat-square) ![License: MIT](https://img.shields.io/badge/License-MIT-yellow?style=flat-square) ![platform](https://img.shields.io/badge/platform-macOS%20%7C%20Linux-lightgrey?style=flat-square) ![Windows](https://img.shields.io/badge/Windows-soon-orange?style=flat-square)
+![version](https://img.shields.io/badge/version-v1.38.99-blue?style=flat-square) ![plugins](https://img.shields.io/badge/plugins-24-brightgreen?style=flat-square) ![agents](https://img.shields.io/badge/agents-35-blueviolet?style=flat-square) ![skills](https://img.shields.io/badge/skills-196-orange?style=flat-square) ![License: MIT](https://img.shields.io/badge/License-MIT-yellow?style=flat-square) ![platform](https://img.shields.io/badge/platform-macOS%20%7C%20Linux-lightgrey?style=flat-square) ![Windows](https://img.shields.io/badge/Windows-soon-orange?style=flat-square)
 
 > A plugin ecosystem that turns Claude Code into a supervised, multi-agent development environment. Expert agents write code, hooks enforce quality in real-time, skills inject framework-specific knowledge, and **intelligent cartography auto-maps plugins and projects** — so Claude never guesses, never duplicates, and always follows your architecture.
 
@@ -17,10 +17,10 @@
 **With Fusengine plugins:**
 
 - **Expert agents** detect your project type (Next.js, Laravel, React, Astro, Swift...) and load framework-specific documentation via MCP servers before writing a single line
-- **82 hooks** intercept every Write/Edit/Bash call in real-time to enforce file size limits (<100 lines), block code duplication (DRY), require SOLID references, and validate security
-- **125 skills** inject copy-paste-ready templates, architecture patterns, and best practices directly into agent context — no hallucination needed
+- **60+ hook checks** intercept Write/Edit/Bash **and** agent/session lifecycle events to enforce file-size limits (<100 lines), block code duplication (DRY), require SOLID reference reads, gate documentation lookup, and block destructive shell commands
+- **196 skills** inject copy-paste-ready templates, architecture patterns, and best practices directly into agent context — no hallucination needed
 - **APEX workflow** structures every task through Analyze → Plan → Execute (TDD) → Review → Validate — preventing the "just write code and hope" approach
-- **Sniper validation** runs a 7-phase quality check after every modification: explore → research → grep usages → lint → fix → zero errors
+- **Sniper agent** — a 7-phase post-edit quality check (explore → research → grep usages → lint → fix → zero errors) the APEX workflow invokes after every modification
 
 ## Quick Install
 
@@ -47,11 +47,11 @@ bun --cwd ~/.claude/plugins/marketplaces/fusengine-plugins/plugins/core-guards/s
 User prompt → Hook detects project type → Expert agent activated
             → Hook loads SOLID references → Agent reads docs via MCP
             → Hook blocks if DRY violation → Agent writes code
-            → Hook checks file size → Sniper validates quality
-            → Hook blocks secrets → Commit with version bump
+            → Hook checks file size → Agent runs Sniper validation
+            → Commit gate blocks on lint/type errors → Commit with version bump
 ```
 
-Every step is intercepted. Claude cannot skip research, cannot duplicate code, cannot exceed file size limits, and cannot commit without security validation.
+Every step is intercepted. Claude cannot skip research, cannot duplicate code, cannot exceed file size limits, and cannot commit with lint or type errors.
 
 ## Plugins
 
@@ -87,7 +87,7 @@ Each plugin provides an **expert agent** that auto-activates when it detects the
 
 | Plugin | What it automates |
 |--------|-------------------|
-| [fuse-commit-pro](docs/plugins/commit-pro.md) | Conventional commits with security check, auto version bump, CHANGELOG, git tag — blocks secrets from commits |
+| [fuse-commit-pro](docs/plugins/commit-pro.md) | Conventional commits with security check, auto version bump, CHANGELOG, git tag — with a pre-commit secret-pattern scan |
 | [fuse-prompt-engineer](docs/plugins/prompt-engineer.md) | Prompt creation with CoT/Few-Shot/Meta-Prompting, A/B testing, 50+ template library, agent design |
 | [fuse-cartographer](docs/plugins/cartographer.md) | Intelligent cartography: auto-generates navigable maps of plugins and projects at SessionStart with merge-preserving enrichment — agents navigate via linked index trees, `/map --enrich` completes descriptions from source frontmatter |
 | [fuse-changelog](docs/plugins/changelog.md) | Monitors Claude Code updates, detects breaking changes in plugins, gathers community feedback via Exa |
@@ -111,7 +111,7 @@ Each plugin provides an **expert agent** that auto-activates when it detects the
 | **Sniper Validation** | 7-phase post-edit check: explore → research → grep → lint → fix → zero errors |
 | **[4-Level Cache](docs/reference/cache-system.md)** | Caches exploration, docs, lessons, tests — 60-75% token savings |
 | **Token-efficient by default** | Caps MCP verbosity (Context7/Exa `numResults≤3`, `tokens≤2000`), disk cache for MCP results + WebFetch with TTL (48h / 24h) and ripgrep lookup, auto-cleanup at SessionStart — typically saves ~150-200 KB per research-heavy session |
-| **28 MCP Servers** | Context7, Exa, Astro docs, Gemini Design, shadcn, Playwright, and more |
+| **23 MCP Servers** | Context7, Exa, Astro docs, Gemini Design, shadcn, fuse-browser, and more |
 | **Smart Commits** | Security scan before commit, auto version bump, CHANGELOG, shields.io badge sync |
 
 ## Documentation

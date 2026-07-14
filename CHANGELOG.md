@@ -1,5 +1,9 @@
 # Release Notes
 
+## [1.38.99] - 14-07-2026
+
+- docs: correction des claims survendues et des compteurs périmés (README + docs/), après audit adverse (challenger, prouvé sur disque). Les secrets ne sont PAS bloqués par un hook (advisory seulement) → les lignes « blocks secrets » (pipeline + fuse-commit-pro) reformulées vers le vrai gate machine (lint/types au pre-commit) + un scan de patterns ; le sniper est un agent invoqué par la discipline APEX, pas un hook auto-lancé → reformulé. Compteurs corrigés contre le disque : 125→196 skills, 28→23 serveurs MCP (+ docs 27/28→23), titre hooks ai-pilot « 14 entries »→« 5 dispatchers → 16 checks », exemple cartographer 17→24 plugins / 21→35 agents, Playwright→fuse-browser. « 82 hooks » (invérifiable) → « 60+ hook checks ». Badges inchangés (déjà justes). Aucun plugin touché — bump de suite uniquement.
+
 ## [1.38.98] - 14-07-2026
 
 - docs(readme): GIF de démo scripté du cycle hook → agent → sniper, placé sous l'image de la statusline. Reconstitution fidèle du comportement réel (rendue avec VHS, pas un run LLM live) : détection projet → `nextjs-expert`, un hook DRY bloque un Write dupliqué de `slugify`, correction par `import`, puis sniper PASS (lint/types/dup 0) + statusline. Sources régénérables versionnées : `docs/demo/demo.sh` + `docs/demo/hook-sniper.tape` (`vhs docs/demo/hook-sniper.tape`). Aucun plugin touché — bump de suite uniquement.

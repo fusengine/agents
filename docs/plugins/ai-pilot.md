@@ -109,7 +109,7 @@ Each sniper run creates a `{timestamp}.json` with Edit-extracted corrections:
 }
 ```
 
-## Hooks (14 entries)
+## Hooks (5 dispatcher entries → 16 internal checks)
 
 | Hook Type | Count | Scripts |
 |-----------|-------|---------|

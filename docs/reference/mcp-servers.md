@@ -1,6 +1,6 @@
 # MCP Servers
 
-28 Model Context Protocol servers available for global installation.
+23 Model Context Protocol servers available for global installation.
 
 ## Installation
 
