@@ -23,9 +23,13 @@ if [ ! -f ".claude/apex/docs/verify-${TASK_SLUG}.md" ]; then
   echo "❌ Missing .claude/apex/docs/verify-${TASK_SLUG}.md — go back to the verification skill (runs between eLicit and eXamine) first."
   exit 1
 fi
+if [ ! -f ".claude/apex/docs/challenge-${TASK_SLUG}.md" ]; then
+  echo "❌ Missing .claude/apex/docs/challenge-${TASK_SLUG}.md — the challenger runs SYSTEMATICALLY at every eLicit round and every Verify gate (Step 4.5 of 03.5-elicit.md, Step 6 of the verification skill), no exceptions. Go run it first."
+  exit 1
+fi
 ```
 
-Only once both checks pass does this phase proceed.
+Only once all three checks pass does this phase proceed. `challenge-${TASK_SLUG}.md` holds the verdict (`CONFIRMED` / `REFUTED` / `UNCERTAIN`); a `REFUTED` verdict must be resolved or explicitly owner-accepted before this gate is considered passed — soft-gate on content, hard-gate on artefact presence (same pattern as `elicit-*.json` / `verify-*.md`).
 
 ---
 

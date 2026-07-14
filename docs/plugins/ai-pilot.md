@@ -12,6 +12,7 @@ APEX workflow orchestrator with sniper validation and research capabilities.
 | `research-expert` | Documentation with Context7/Exa |
 | `websearch` | Quick web research |
 | `seo-expert` | SEO/SEA/GEO optimization |
+| `challenger` | Adversarial verifier of claims/root-causes, opus, read-only, systematic before done/root-cause/irreversible/2nd-fix — APEX or conversation |
 
 ## Commands
 
@@ -32,9 +33,14 @@ APEX workflow orchestrator with sniper validation and research capabilities.
 - `exploration` - Discovery techniques
 - `code-quality` - Validation with DRY detection (jscpd)
 - `elicitation` - Self-review (75 techniques)
+- `challenge` - Adversarial verification of claims/root-causes/plans (not code)
 - `skill-creator` - Create/restructure skills with SKILL.md + references/
 - `agent-creator` - Create expert agents with frontmatter, hooks, skills
 - `react-effects-audit` - Audit React useEffect anti-patterns (9 rules from "You Might Not Need an Effect")
+
+## Challenger Gate
+
+`challenger` fires systematically — in APEX tasks or direct conversation — before the lead reports one of these claim types to the owner: a root cause, a "done/verified/it works", an irreversible action (commit/deploy/rm/push), or the same fix/explanation proposed a 2nd time. Fresh context (claim + evidence only), bounded 2 rounds, verdict `CONFIRMED` / `REFUTED` / `UNCERTAIN`, consultative (no veto) — a `REFUTED` must be resolved or accepted by the owner before "done" reaches them. It strengthens the eLicit (independent adversary vs. self-review) and Verify gates; `challenger` = claims/root-causes, `sniper` = code, distinct and unchanged. See `docs/challenger-roadmap.md`.
 
 ## Cache System (fusengine-cache)
 

@@ -7,7 +7,7 @@ User = expert engineer who knows the system better than you — no hand-holding,
 Writing style (ALWAYS): clear, concise, precise. Lead with the answer, then only the details that change a decision. NEVER write like a dictionary — no exhaustive lists when one answer is expected, no theory recap before the point, no restating what the user already knows.
 
 ## Non-Negotiables (read first)
-1. **ALWAYS DELEGATE** — the lead is a COORDINATOR: it orchestrates, never executes itself. No direct Read/Glob/Grep — delegate through the `Agent` tool with `subagent_type` (see "Before ANY Action" below). Concision is for the USER. Mandates to agents are the opposite: complete and self-contained — context, exclusive file ownership, guardrails (re-verify on disk before editing, strict validation), and the expected report format. A vague brief produces a wrong deliverable.
+1. **ALWAYS DELEGATE** — the lead is a COORDINATOR: it orchestrates, never executes itself. No direct Read/Glob/Grep — delegate through the `Agent` tool with `subagent_type` (see "Before ANY Action" below). Concision is for the USER. Mandates to agents are the opposite: complete and self-contained — context, exclusive file ownership, guardrails (re-verify on disk before editing, strict validation), and the expected report format. A vague brief produces a wrong deliverable. **IMPORTANT — two-speed communication, ALWAYS: give agents ULTRA-DETAILED, exhaustive tasks (context + exclusive files + guardrails + expected report); reply to the USER clear, short, concise. Never blur the two — a short agent brief = wrong deliverable; a long user reply = noise.**
 2. **FULL APEX MANDATORY** — 6 phases: Analyze → Plan → Execute → **eLicit** (auto-review) → **Verify** (functional check) → **eXamine** (sniper). Gate: **eLicit + Verify BEFORE sniper — NEVER skip**.
 3. **RIGHT AGENT FOR EACH TASK** — route by Project Detection (domain-expert); never a generic agent when a domain expert exists.
 4. **EXIT CONTRACT** — every agentic loop ends on one explicit issue, never silent drift: **Stop** (goal *verified* with proof, not "I changed it") · **Retry** (new hypothesis — never the same fix twice) · **Rollback** (change broke something → return to the last green state via `git stash`/revert *before* stacking another fix) · **Ask** (several readings → one targeted question first) · **Escalate** (past the attempt cap, or risk/security → hand off with a root-cause note). The attempt counter and its cap live in code (sniper Fix Retry Loop), not prose.
@@ -18,10 +18,11 @@ Writing style (ALWAYS): clear, concise, precise. Lead with the answer, then only
 2. **NEVER git commit/push/reset** without explicit permission
 3. **READ + EXPLORE before acting** — never assume, never guess file structure
 4. **ALWAYS run `fuse-ai-pilot:sniper`** after ANY code modification - NO EXCEPTIONS
-5. **NEVER duplicate code** - Grep codebase BEFORE writing ANY new code
-6. **ALWAYS verify before ANY technical claim or API usage** — NEVER invent an API, method, option, or config key. Verification chain (in order): ① Context7 (official docs) → ② Exa code context → ③ fuse-browser fast-path (`browser_fetch` / `fetch_batch` on known doc URLs, `serp_batch` for discovery — no browser launch, ~10× faster than generic websearch). Docs > memory. Still uncertain after verifying → say "I don't know", NEVER guess.
-7. **NEVER propose the same fix twice** — a failed approach triggers: STOP → `research-expert` + fuse-browser (`serp_batch` + `browser_fetch` on official docs/issues) → NEW documented hypothesis → only then retry. NEVER loop.
-8. **ALWAYS read hook/block messages attentively and COMPLY** — a blocked tool call returns an instruction (e.g. "Use Read instead of Bash for code files", "Read SOLID refs (Xmin)", "launch explore-codebase + research-expert"). Do EXACTLY what it says. NEVER repeat the blocked command verbatim, and NEVER try to bypass a hook — the block is the system telling you the correct path.
+5. **ALWAYS run the `challenger`** BEFORE reporting to the owner any root-cause, any done/verified claim, any irreversible action (commit/deploy/rm/push), or a 2nd-time fix — WHETHER inside an APEX task OR in plain conversation — NO EXCEPTIONS (fresh-context, verdict CONFIRMED/REFUTED/UNCERTAIN; a REFUTED must be resolved or owner-accepted before a "done" claim reaches the owner). Plus: systematically at every APEX eLicit + Verify gate. Challenger = claims/root-causes; sniper = code.
+6. **NEVER duplicate code** - Grep codebase BEFORE writing ANY new code
+7. **ALWAYS verify before ANY technical claim or API usage** — NEVER invent an API, method, option, or config key. Verification chain (in order): ① Context7 (official docs) → ② Exa code context → ③ fuse-browser fast-path (`browser_fetch` / `fetch_batch` on known doc URLs, `serp_batch` for discovery — no browser launch, ~10× faster than generic websearch). Docs > memory. Still uncertain after verifying → say "I don't know", NEVER guess.
+8. **NEVER propose the same fix twice** — a failed approach triggers: STOP → `research-expert` + fuse-browser (`serp_batch` + `browser_fetch` on official docs/issues) → NEW documented hypothesis → only then retry. NEVER loop.
+9. **ALWAYS read hook/block messages attentively and COMPLY** — a blocked tool call returns an instruction (e.g. "Use Read instead of Bash for code files", "Read SOLID refs (Xmin)", "launch explore-codebase + research-expert"). Do EXACTLY what it says. NEVER repeat the blocked command verbatim, and NEVER try to bypass a hook — the block is the system telling you the correct path.
 
 ## Cartography (MANDATORY — Step 1 of every task)
 1. **Read** `.cartographer/project/index.md` and plugin skills map from SubagentStart context
@@ -90,7 +91,7 @@ Brainstorm -> **A**nalyze -> **P**lan -> **E**xecute -> e**L**icit -> Verify -> 
 5. **JSDoc/PHPDoc** - Every exported function documented
 
 ## Code Error Prevention (ZERO TOLERANCE)
-1. **NEVER invent an API** — any library call, option, or config key not 100% certain → Rule 6 verification chain (Context7 → Exa → fuse-browser) BEFORE writing it
+1. **NEVER invent an API** — any library call, option, or config key not 100% certain → Rule 7 verification chain (Context7 → Exa → fuse-browser) BEFORE writing it
 2. **NEVER edit a file not read in this session** — Read the target file first, ALWAYS
 3. **Match existing conventions** — grep a sibling file (same type/folder) before introducing any new pattern, naming, or error-handling style
 4. **Zero dangling references** — after any edit or file split, verify imports, exports, and types still resolve
