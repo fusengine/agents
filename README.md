@@ -6,6 +6,10 @@
 
 ![Statusline](docs/img/statusline.png)
 
+![Demo: the hook → agent → sniper cycle](docs/img/demo.gif)
+
+> Scripted demo — a faithful reconstruction of the real hook → agent → sniper cycle. Regenerate with `vhs docs/demo/hook-sniper.tape`.
+
 ## What It Does
 
 **Without plugins:** Claude Code writes code based on its training data. It can hallucinate APIs, duplicate existing code, ignore your project structure, and produce inconsistent quality.
