@@ -43,7 +43,7 @@ This installs:
 - **API keys** (interactive prompts if missing)
 - **Shell config** (bash/zsh/fish/PowerShell)
 - **Statusline**
-- **MCP servers** (interactive selection of 27 servers)
+- **MCP servers** (interactive selection of 23 servers)
 
 ## 4. MCP Server Selection
 
@@ -66,7 +66,7 @@ During setup, you'll see an interactive MCP server selector:
 
 Use arrow keys to navigate, space to select, enter to confirm.
 
-See [MCP Servers Reference](../reference/mcp-servers.md) for full list of 27 available servers.
+See [MCP Servers Reference](../reference/mcp-servers.md) for full list of 23 available servers.
 
 ## 5. Restart Claude Code
 
