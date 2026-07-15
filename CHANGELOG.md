@@ -1,5 +1,9 @@
 # Release Notes
 
+## [1.39.4] - 16-07-2026
+
+- feat(brainstorm): strengthen the design brainstorming agent — frame the problem before ideating (5-whys / Double Diamond), diverge to 6-8 distinct approaches via a named technique (SCAMPER / reverse-brainstorming / analogies) before converging to 2-3, and present options neutrally (steelman + devil's-advocate) to avoid anchoring on the first idea. Comparison-table axes now derive from measurable success criteria instead of canned Complexity/Scalability rows; the handoff carries explore-codebase/research-expert findings into APEX Analyze instead of re-researching, and the design-doc template gains Success Metrics, Alternatives Considered, Risks, and Assumptions/Open Questions sections. (fuse-ai-pilot 1.2.38)
+
 ## [1.39.3] - 16-07-2026
 
 - fix(ci-gate): key the CI merge gate on whether the repo enforces *required* status checks, not merely on auto-merge availability. `gh pr merge --auto` only ever waits for required checks, so on a repo whose checks run but aren't required (this repo — CodeQL/Analyze) it merges immediately without gating; the commit-pro `git-flow` skill now branches into three cases (required-checks → `--auto`; checks-but-none-required → poll-until-registered then `--watch`; verified-zero-checks → immediate merge), sidestepping the check-registration race (cli/cli#7401) where `--watch` right after PR creation errors with "no checks reported". Aligned across the `git-flow` skill, the commit command Step 7, and the `fuse-ai-pilot:commit` agent; added a note that `--required` changes the zero-checks message and would break a literal grep. (fuse-commit-pro 1.2.23, fuse-ai-pilot 1.2.37)
