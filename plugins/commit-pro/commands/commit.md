@@ -208,19 +208,28 @@ git remote -v
    None / <description>
    EOF
    ```
-3. **Surveillance + merge auto** — real merge commit, **never squash** (squash rewrites the branch's commits into a brand-new one on `main`; a `--merge` commit keeps them intact, including the bump commit Step 8 tags):
-   - Prefer GitHub native auto-merge (merges once required checks pass):
-     ```bash
-     gh pr merge <pr> --auto --merge --delete-branch
-     ```
-   - If auto-merge is not enabled on the repo, watch checks then merge — **never pipe** `gh pr checks` (e.g. `| tail`): a pipe swallows the exit code and lets a merge proceed after failing CI. Chain with `&&` so the merge only runs if checks passed:
-     ```bash
-     gh pr checks <pr> --watch && gh pr merge <pr> --merge --delete-branch
-     ```
-   - If the repo has **no CI checks**, merge immediately:
-     ```bash
-     gh pr merge <pr> --merge --delete-branch
-     ```
+3. **Surveillance + merge auto** — real merge commit, **never squash** (squash rewrites the branch's commits into a brand-new one on `main`; a `--merge` commit keeps them intact, including the bump commit Step 8 tags). Full rationale: `git-flow` skill's "CI Gate Before Merge" section. Branch on **whether required status checks are configured** (`gh pr merge --auto` only ever waits for *required* checks — on a repo where checks run but aren't required, `--auto` merges immediately without waiting):
+   1. **Required checks configured** (verify: `gh pr checks <pr> --required` returns checks, not `no required checks reported`) → the only case `--auto` actually gates, no race:
+      ```bash
+      gh pr merge <pr> --auto --merge --delete-branch
+      ```
+   2. **Checks exist but none are required** → don't use `--auto` here (it wouldn't wait). Checks take a few seconds to register after `gh pr create`/a push — never `--watch` immediately ([cli/cli#7401](https://github.com/cli/cli/issues/7401)): poll until checks register (bounded, ~90s), THEN watch. **Never pipe** the final `--watch` call itself (e.g. `| tail`): a pipe swallows the exit code and lets a merge proceed after failing CI. Chain with `&&` so the merge only runs if checks passed:
+      ```bash
+      pr=<pr>
+      max_attempts=18   # 18 × 5s ≈ 90s
+      attempt=0
+      until gh pr checks "$pr" 2>&1 | grep -qv "no checks reported"; do
+        attempt=$((attempt + 1))
+        [ "$attempt" -ge "$max_attempts" ] && { echo "Timeout: no checks registered — verify before treating as zero-CI." >&2; break; }
+        sleep 5
+      done
+      gh pr checks "$pr" --watch && gh pr merge "$pr" --merge --delete-branch
+      ```
+   3. **Repo has no CI checks at all** (verified, not assumed), merge immediately:
+      ```bash
+      gh pr merge <pr> --merge --delete-branch
+      ```
+   A non-required check never blocks the merge — only *required* checks gate; mark CI checks required in branch protection so case 1 has teeth.
 4. Output PR URL + merge status. On successful merge, proceed to **Step 8** to create/push the release tag on `main`.
 
 **Leave the PR OPEN (push + PR only, do NOT merge, skip Step 8's push) if**:

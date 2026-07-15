@@ -76,20 +76,39 @@ Format: `<type>/<scope-or-summary>` (kebab-case).
 
 **Cardinal rule: never merge before CI checks are resolved; never assume "zero CI" without verifying.**
 
-Determine which of the three cases applies from what actually exists on the PR — never from assumption:
+**Known race condition** ([cli/cli#7401](https://github.com/cli/cli/issues/7401), confirmed by GitHub CLI maintainers): checks take a few seconds to register on a freshly-created PR. Calling `gh pr checks --watch` immediately after `gh pr create` can error out — exit code 1, `no checks reported on the '<branch>' branch` — even though checks are about to appear. The GitHub API gives no way to tell "genuinely zero checks" apart from "not registered yet," so the client must either sidestep the race (native auto-merge) or poll for registration before watching.
 
-- **Checks exist + native auto-merge available** → let GitHub merge once required checks pass:
-  ```bash
-  gh pr merge <pr> --auto --merge --delete-branch
-  ```
-- **Checks exist, no auto-merge** → watch checks, then merge — **never pipe** `gh pr checks` (e.g. `| tail`): a pipe swallows the exit code and lets a merge proceed after failing CI. Chain with `&&` so the merge only runs if checks passed:
-  ```bash
-  gh pr checks <pr> --watch && gh pr merge <pr> --merge --delete-branch
-  ```
-- **Repo has zero CI checks (verified, not assumed)** → immediate merge is allowed:
-  ```bash
-  gh pr merge <pr> --merge --delete-branch
-  ```
+Determine which of the three cases applies from what actually exists on the PR — never from assumption. The key branch point is **whether the repo enforces *required* status checks in branch protection**, not merely whether auto-merge is available: `gh pr merge --auto` only ever waits for *required* checks. On a repo where checks run but aren't marked required (e.g. this repo — CodeQL + Analyze execute but aren't required), `--auto` merges **immediately without waiting**, silently reproducing the exact race this section exists to close. Check first with `gh pr checks <pr> --required` (empty output / `no required checks reported on the '<branch>' branch` → no required checks configured) before picking a branch:
+
+1. **Repo has required status checks in branch protection** → the only case where `--auto` actually gates. GitHub waits server-side for the *required* checks to appear and pass — no race, regardless of their state at call time:
+   ```bash
+   gh pr merge <pr> --auto --merge --delete-branch
+   ```
+   Also requires "Allow auto-merge" enabled in repo Settings → General (otherwise `GraphQL: Auto merge is not allowed for this repository`).
+2. **Repo has checks but none are required** (this repo's current state — CodeQL/Analyze run but aren't required) — `--auto` would merge immediately without waiting, so don't use it here. Poll client-side until checks register, then watch: don't `--watch` right after `gh pr create`/a push. Poll `gh pr checks` until it stops reporting "no checks reported" (bounded retries), THEN watch. The poll's pipe to `grep` only detects check registration — it never gates the merge, which still runs un-piped via `&&`:
+   ```bash
+   pr=<pr>
+   max_attempts=18   # 18 × 5s ≈ 90s — raise if this repo's CI is known to queue slower
+   attempt=0
+   until gh pr checks "$pr" 2>&1 | grep -qv "no checks reported"; do
+     attempt=$((attempt + 1))
+     if [ "$attempt" -ge "$max_attempts" ]; then
+       echo "Timeout: no checks registered after $((max_attempts * 5))s — verify .github/workflows/ before treating this as zero-CI." >&2
+       break
+     fi
+     sleep 5
+   done
+   gh pr checks "$pr" --watch && gh pr merge "$pr" --merge --delete-branch
+   ```
+   **Never pipe** the final `gh pr checks <pr> --watch` call itself (e.g. `| tail`): a pipe swallows the exit code and lets a merge proceed after failing CI. Chain with `&&` so the merge only runs if checks passed.
+3. **Repo has zero CI checks (verified, not assumed — e.g. no `.github/workflows/*` and the poll above timed out)** → immediate merge is allowed:
+   ```bash
+   gh pr merge <pr> --merge --delete-branch
+   ```
+
+**A non-required check never blocks the merge** — only *required* checks actually gate. Mark CI checks as required in branch protection so case 1's `--auto` has teeth; without that, checks stay in case 2 forever.
+
+**Note on `--required`**: the poll loop in case 2 intentionally queries `gh pr checks` *without* `--required` — it only needs to know "has *any* check registered yet." If a future revision adds `--required` to that same loop, the zero-checks message becomes `no required checks reported on the '<branch>' branch`, which does **not** contain the substring `no checks reported` (the inserted word "required" breaks the contiguous match) — the grep would need to change to `checks reported on the` (matches both variants) or handle both strings explicitly.
 
 Merge is always `--merge` (real merge commit) — **never `--squash`**, it would orphan the release tag's target (see Tagging timing below).
 

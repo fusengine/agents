@@ -1,5 +1,9 @@
 # Release Notes
 
+## [1.39.3] - 16-07-2026
+
+- fix(ci-gate): key the CI merge gate on whether the repo enforces *required* status checks, not merely on auto-merge availability. `gh pr merge --auto` only ever waits for required checks, so on a repo whose checks run but aren't required (this repo — CodeQL/Analyze) it merges immediately without gating; the commit-pro `git-flow` skill now branches into three cases (required-checks → `--auto`; checks-but-none-required → poll-until-registered then `--watch`; verified-zero-checks → immediate merge), sidestepping the check-registration race (cli/cli#7401) where `--watch` right after PR creation errors with "no checks reported". Aligned across the `git-flow` skill, the commit command Step 7, and the `fuse-ai-pilot:commit` agent; added a note that `--required` changes the zero-checks message and would break a literal grep. (fuse-commit-pro 1.2.23, fuse-ai-pilot 1.2.37)
+
 ## [1.39.2] - 16-07-2026
 
 - feat(commit): add the `fuse-ai-pilot:commit` agent as the single owner of the commit/release flow — the lead delegates every commit to it and it runs the fuse-commit-pro flow end to end, closing the two steps that were historically hand-rolled away (post-commit M2 marketplace version mirror, and the Step 7 CI-wait before merge). commit-pro `git-flow` gains a "CI Gate Before Merge" section so the CI-wait procedure lives in a loadable skill; claude-rules routes commits to the agent in the CLAUDE.md template and rule 06. (fuse-ai-pilot 1.2.36, fuse-commit-pro 1.2.22, claude-rules 1.0.15)
