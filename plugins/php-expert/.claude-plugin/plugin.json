@@ -1,6 +1,6 @@
 {
   "name": "fuse-php",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Expert modern PHP 8.5/8.4 for non-Laravel projects — libraries, standalone Symfony components, Slim, API-first apps, and CLI tools, with PER Coding Style 3.0, PHPStan, and SOLID principles",
   "author": {
     "name": "Fusengine",
