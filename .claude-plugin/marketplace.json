@@ -7,7 +7,7 @@
   },
   "metadata": {
     "description": "Professional Claude Code plugins with APEX workflow, SOLID principles, and expert development agents for Next.js, Laravel, Swift, Tailwind CSS, and more",
-    "version": "1.39.0"
+    "version": "1.39.1"
   },
   "core": [
     {
@@ -28,7 +28,7 @@
       "name": "fuse-ai-pilot",
       "source": "./plugins/ai-pilot",
       "description": "AI Pilot workflow: APEX methodology (auto-detects Laravel/Next.js/React/Swift), sniper (7-phase code quality + DRY detection), research-expert, explore-codebase",
-      "version": "1.2.32",
+      "version": "1.2.35",
       "author": {
         "name": "Fusengine",
         "url": "https://github.com/fusengine"
@@ -291,7 +291,7 @@
       "name": "fuse-typescript",
       "source": "./plugins/typescript-expert",
       "description": "Expert TypeScript 6.0 for pure TS projects — CLI tools, libraries, scripts, and backends on Node 24 LTS or Bun 1.3, with SOLID principles",
-      "version": "1.0.2",
+      "version": "1.0.3",
       "author": {
         "name": "Fusengine",
         "url": "https://github.com/fusengine"
@@ -320,7 +320,7 @@
       "name": "fuse-php",
       "source": "./plugins/php-expert",
       "description": "Expert modern PHP 8.5/8.4 for non-Laravel projects — libraries, standalone Symfony components, Slim, API-first apps, and CLI tools, with PER Coding Style 3.0, PHPStan, and SOLID principles",
-      "version": "1.0.2",
+      "version": "1.0.3",
       "author": {
         "name": "Fusengine",
         "url": "https://github.com/fusengine"
@@ -350,7 +350,7 @@
       "name": "fuse-rust",
       "source": "./plugins/rust-expert",
       "description": "Expert Rust 1.96+ (2024 edition) — ownership, error handling, async/tokio, axum backends, cargo tooling, with SOLID principles",
-      "version": "1.0.2",
+      "version": "1.0.3",
       "author": {
         "name": "Fusengine",
         "url": "https://github.com/fusengine"
@@ -377,7 +377,7 @@
       "name": "fuse-go",
       "source": "./plugins/go-expert",
       "description": "Expert Go 1.26+ — idioms, concurrency, backend services, cargo-grade tooling (golangci-lint v2, govulncheck), with SOLID principles",
-      "version": "1.0.2",
+      "version": "1.0.3",
       "author": {
         "name": "Fusengine",
         "url": "https://github.com/fusengine"
@@ -405,7 +405,7 @@
       "name": "fuse-design",
       "source": "./plugins/design-expert",
       "description": "UI Designer. Generates HTML/CSS via Gemini Design MCP. 7-phase pipeline with state tracking. Identity System, UX copy, page layouts, motion system, design audit. Anti-AI-Slop, WCAG 2.2.",
-      "version": "2.1.28",
+      "version": "2.1.31",
       "author": {
         "name": "Fusengine",
         "url": "https://github.com/fusengine"
@@ -517,7 +517,7 @@
       "name": "fuse-astro",
       "source": "./plugins/astro-expert",
       "description": "Expert Astro 6 with Islands Architecture, Content Layer API, Server Actions, Server Islands, UI framework integrations (React/Vue/Svelte/Solid), SEO, Starlight docs, i18n, and deployment",
-      "version": "1.0.9",
+      "version": "1.0.10",
       "author": {
         "name": "Fusengine",
         "url": "https://github.com/fusengine"
@@ -598,7 +598,7 @@
       "name": "fuse-lessons",
       "source": "./plugins/fuse-lessons",
       "description": "Project memory: writes compact 'never reproduce' lessons to MEMORY.md on finish, force-reads them at session/subagent start.",
-      "version": "1.0.2",
+      "version": "1.0.3",
       "author": {
         "name": "Fusengine",
         "url": "https://github.com/fusengine"

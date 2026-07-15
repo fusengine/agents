@@ -1,5 +1,9 @@
 # Release Notes
 
+## [1.39.1] - 16-07-2026
+
+- fix(marketplace): sync per-plugin `version` fields in `marketplace.json` to each plugin's `plugin.json`. The 1.39.0 release bumped the `plugin.json` versions but skipped the post-commit M2 step that mirrors them into the marketplace manifest, leaving 8 entries stale (and exposing pre-existing drift). Synced fuse-ai-pilot 1.2.35, fuse-design 2.1.31, fuse-astro 1.0.10, fuse-lessons 1.0.3, fuse-typescript/php/rust/go 1.0.3; every `plugins[]` entry now satisfies `marketplace.version == plugin.json.version`. Manifest-only, no plugin content changed.
+
 ## [1.39.0] - 15-07-2026
 
 - feat(plugins): Astro 7 doc migration, design anti-slop enforcement, and a lean CLAUDE.md skill-router. design-expert gains deterministic anti-slop cluster detectors (#1/#2/#3), a Brief Lock gate, and fresh-context challenger review routing; the self-scored X/8 aggregate is removed and the arbitrary em-dash/chroma rules relaxed to match 2026 practice. astro-expert docs migrate to Astro 7 (ClientRouter replaces the removed ViewTransitions, Tailwind v4 CSS-first, Satteri markdown, stable Fonts API, strict Rust parsing, Starlight 0.41+, @astrojs/db deprecation), plus real prod-bug fixes and a browser-runtime verification gate; the `astro-6` skill is renamed `astro-7` (dir + 24 identifier refs). New `/lessons-compact` command for lossless lesson compaction. claude-rules: the CLAUDE.md template is refactored into a lean skill-router (-35%, lossless dedup vs auto-injected rules), rules 00-08 fixed (phantom `--no-sniper` flag removed, Gemini-mandatory inversion corrected, project-detection priority completed), the verification chain flipped to fuse-browser-first repo-wide, and the Response Language policy clarified. Counters unchanged (24 plugins / 35 agents / 196 skills).
