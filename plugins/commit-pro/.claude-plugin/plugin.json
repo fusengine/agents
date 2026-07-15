@@ -1,6 +1,6 @@
 {
   "name": "fuse-commit-pro",
-  "version": "1.2.22",
+  "version": "1.2.23",
   "description": "Professional git commits with Conventional Commits, GitHub Flow branch enforcement, auto PR creation, security validation, and auto-detection",
   "author": {
     "name": "Fusengine",
