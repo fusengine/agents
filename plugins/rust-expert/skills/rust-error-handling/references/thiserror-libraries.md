@@ -76,4 +76,4 @@ enum ErrorRepr {
 - thiserror is documented as the library-side companion to `anyhow` (application side).
 
 Verify the current API before relying on an attribute's exact behavior
-(Context7 → Exa → fuse-browser fast-path on `https://docs.rs/thiserror`).
+(fuse-browser fast-path on `https://docs.rs/thiserror` → Context7 → Exa).

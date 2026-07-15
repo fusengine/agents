@@ -1,6 +1,6 @@
 # fuse-astro
 
-Expert Astro 6 with Islands Architecture, Content Layer API, Server Actions, Server Islands, and multi-framework integration.
+Expert Astro 7 with Islands Architecture, Content Layer API, Server Actions, Server Islands, and multi-framework integration.
 
 ## Agents
 
@@ -12,7 +12,7 @@ Expert Astro 6 with Islands Architecture, Content Layer API, Server Actions, Ser
 
 | Skill | Description |
 |-------|-------------|
-| `astro-6` | Core framework, routing, View Transitions, middleware |
+| `astro-7` | Core framework, routing, View Transitions, middleware |
 | `astro-content` | Content Layer API, collections, loaders, MDX |
 | `astro-actions` | Server Actions, defineAction, forms |
 | `astro-islands` | Client/Server Islands, hydration directives |

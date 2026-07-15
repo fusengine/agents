@@ -2,55 +2,38 @@
 
 ## Overview
 
-Two setup approaches: official integration (simple) or manual PostCSS (full control).
+Tailwind CSS v4 uses a **CSS-first** setup: no `tailwind.config.js`, no `@tailwind` directives, theming lives in CSS via `@theme`. For the full v4 feature set (`@theme`, `@utility`, OKLCH colors, container queries, upgrade notes), see the `fuse-tailwindcss:tailwindcss-v4` skill — this page only covers the **Astro-specific wiring**.
 
-## Approach 1: Official Integration
+## Setup: `@tailwindcss/vite`
+
+Astro has no first-party `@astrojs/tailwind` integration for v4. Use the official Vite plugin directly.
 
 ```bash
-npx astro add tailwind
+npm install tailwindcss @tailwindcss/vite
 ```
-
-This adds `@astrojs/tailwind` and creates `tailwind.config.mjs` automatically.
 
 ```javascript
 // astro.config.mjs
 import { defineConfig } from 'astro/config';
-import tailwind from '@astrojs/tailwind';
+import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
-  integrations: [tailwind()]
+  vite: {
+    plugins: [tailwindcss()]
+  }
 });
-```
-
-## Approach 2: Manual PostCSS (Recommended for Control)
-
-```bash
-npm install -D tailwindcss postcss autoprefixer
-```
-
-```javascript
-// tailwind.config.ts
-import type { Config } from 'tailwindcss';
-
-export default {
-  content: ['./src/**/*.{astro,html,js,jsx,ts,tsx,vue,svelte}'],
-  theme: {
-    extend: {}
-  },
-  plugins: []
-} satisfies Config;
 ```
 
 ```css
 /* src/styles/global.css */
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 ```
 
-Import in layout:
+Import the stylesheet once, in your root layout:
+
 ```astro
 ---
+// src/layouts/Layout.astro
 import '../styles/global.css';
 ---
 ```
@@ -58,7 +41,7 @@ import '../styles/global.css';
 ## Usage in Astro Components
 
 ```astro
-<div class="flex items-center gap-4 p-6 rounded-lg bg-white shadow-md">
+<div class="flex items-center gap-4 p-6 rounded-lg bg-white shadow-md dark:bg-black/50">
   <h2 class="text-xl font-bold text-gray-900">Title</h2>
 </div>
 ```
@@ -78,10 +61,8 @@ import '../styles/global.css';
 </style>
 ```
 
-## When to Use
+## Astro-Specific Notes
 
-| Use | When |
-|-----|------|
-| Official integration | Simple projects, no custom PostCSS plugins |
-| Manual PostCSS | Need PostCSS plugins (purgecss, cssnano, etc.) |
-| Scoped `<style>` | Complex component-specific styles |
+- No `content` glob config needed — v4's automatic source detection scans the project via the Vite plugin, so `.astro` files are picked up without extra setup.
+- Browser targets follow v4 defaults (Safari 16.4+, Chrome 111+, Firefox 128+) — confirm this matches the project's supported browsers before adopting v4.
+- Project-wide design tokens (colors, spacing, fonts) go in `@theme` inside `global.css`, not in a JS config file — see `fuse-tailwindcss:tailwindcss-v4` for the syntax.

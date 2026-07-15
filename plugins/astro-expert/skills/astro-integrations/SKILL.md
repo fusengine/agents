@@ -2,10 +2,10 @@
 name: astro-integrations
 description: Expert Astro UI framework integrations — @astrojs/react, @astrojs/vue, @astrojs/svelte, @astrojs/solid-js, @astrojs/preact, @astrojs/alpinejs, @astrojs/lit, @qwikdev/astro, @analogjs/astro-angular. Setup, multi-framework config, usage patterns.
 versions:
-  astro: 6
+  astro: 7
 user-invocable: true
 references: references/overview.md, references/react.md, references/vue.md, references/svelte.md, references/solid.md, references/preact.md, references/others.md, references/multi-framework.md, references/templates/react-setup.md, references/templates/multi-framework.md
-related-skills: astro-6, astro-islands, astro-styling
+related-skills: astro-7, astro-islands, astro-styling
 ---
 
 # Astro Integrations Expert

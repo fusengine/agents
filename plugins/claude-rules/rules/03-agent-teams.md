@@ -11,6 +11,7 @@
 7. **Launch → Orchestrate → Monitor → VERIFY** - spawning teammates is step 1, not the job: after EACH teammate report, verify the deliverables ON DISK (grep/diff the expected changes) before considering the mandate done
 8. **Idle ≠ done** - an idle/available notification is NOT a completion; no deliverable on disk → take the mandate back or re-delegate, never assume
 9. **Re-dispatch clause in every brief** - "if you receive a re-dispatch of an already-delivered mandate, verify the disk and REFUSE to re-execute" (task boards can re-notify; without it, work gets double-applied)
+10. **sniper AFTER all teammates finish** - never during; run it once, after every teammate's deliverable is verified on disk
 
 ## Anti-Patterns (FORBIDDEN)
 - **Parallel Agent for multi-file edits** → USE TeamCreate (agents can't coordinate without SendMessage)

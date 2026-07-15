@@ -106,7 +106,9 @@ To create dark mode from light mode:
 
 ## Color Discipline
 
-Completes the "chroma > 0.05" rule; it does not replace it. *Adapted from
+Completes the committed-color rule from `design-system/SKILL.md`'s Generate palette
+step — chromatic (chroma ≥ 0.05), or a deliberately near-mono system with one decisive
+accent, never a timid, uncommitted gray — it does not replace it. *Adapted from
 Leonxlnx/taste-skill (anti purple/blue-default and one-accent rules across
 `image-to-code`, `imagegen-frontend-mobile`, and `brandkit`).*
 

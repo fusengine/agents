@@ -20,8 +20,8 @@ type and rich context. Getting this boundary right is the whole discipline.
 1. **fuse-ai-pilot:explore-codebase** — is this crate a library (published API, other
    code depends on it) or a binary/application? That answer picks the tool.
 2. **fuse-ai-pilot:research-expert** — confirm current `thiserror` / `anyhow` API
-   before writing derives (verification chain: Context7 → Exa → fuse-browser
-   fast-path on `docs.rs/thiserror` and `docs.rs/anyhow`).
+   before writing derives (verification chain: fuse-browser fast-path on
+   `docs.rs/thiserror` and `docs.rs/anyhow` → Context7 → Exa).
 3. After writing, run **fuse-ai-pilot:sniper** and `cargo clippy`.
 
 ## The rule

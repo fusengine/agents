@@ -19,5 +19,5 @@ Scan: plugin agents (paths injected at SessionStart — never hardcode marketpla
 | Custom `~/.claude/agents/*.md` | Use matching custom agent |
 | **No match** | `general-purpose` |
 
-Priority: Custom > Framework (Next.js > Astro > TanStack Start > React) > Language (TypeScript, PHP, Rust, Go) > UI library > `general-purpose`
+Priority: Custom > Framework (Next.js > Astro > Laravel > TanStack Start > React) > Language (TypeScript, PHP, Swift, Rust, Go) > UI library > `general-purpose`
 **FORBIDDEN:** `general-purpose` when domain agent exists.

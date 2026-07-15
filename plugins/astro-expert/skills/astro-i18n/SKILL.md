@@ -2,10 +2,10 @@
 name: astro-i18n
 description: Use when implementing internationalization in Astro, configuring i18n routing, setting up locale strategies, using getRelativeLocaleUrl/getAbsoluteLocaleUrl, handling Astro.currentLocale, or adding hreflang tags with sitemap.
 versions:
-  astro: "6"
+  astro: "7"
 user-invocable: true
 references: references/routing-config.md, references/strategies.md, references/helper-functions.md, references/content-translation.md, references/sitemap-hreflang.md, references/fallback.md, references/templates/i18n-config.md, references/templates/locale-page.md, references/templates/language-switcher.md
-related-skills: astro-6, astro-content, astro-seo, solid-astro
+related-skills: astro-7, astro-content, astro-seo, solid-astro
 ---
 
 # Astro i18n

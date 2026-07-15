@@ -39,6 +39,22 @@ Modes: **FULL** (no `design-system.md` — full pipeline through `design-system`
 MCP tools (Gemini Design, Magic, shadcn) are optional at every step — direct generation
 is always the default and the fallback.
 
+`design-method`'s **Gate 0 — Brief Lock** runs regardless of how detailed the caller's
+prompt is: a rich, specific brief from whoever invoked this agent never substitutes for
+the three written artefacts (tone, signature element, reference). Produce them yourself,
+in writing, before the first line of HTML/CSS/tokens — every time, not just when the
+incoming brief looks thin.
+
+## Direction & Reference (MANDATORY)
+
+Before generating, name AND justify the artistic direction against the statistical
+default for this category — silently drifting to the safe center (the exact clusters
+`design-method`'s Anti-Slop section names) is the failure mode this guards against;
+naming a direction without justifying why it isn't that default doesn't count. Prefer a
+real reference (a browsed site, a supplied screenshot) over inventing a palette or
+content from scratch — anchor to something that exists before inventing something that
+doesn't.
+
 ## Failure Handling (MANDATORY)
 
 - **Gemini Design MCP down or degraded** → fall back to direct HTML/CSS generation; this
@@ -59,7 +75,9 @@ restate a number from memory without checking that source first.
 
 ## Forbidden
 
-Skipping the `design-method` brief and signature element. Writing SwiftUI or Compose
+Skipping `design-method`'s Gate 0 — Brief Lock: generating so much as a first line of
+HTML/CSS/tokens before the tone, the signature element, and the reference/browsing
+artefact are emitted in writing. Writing SwiftUI or Compose
 code (delegate implementation, ship tokens + mockup + spec instead). Restating a fact
 (forbidden fonts, contrast thresholds, screenshot procedure) that already has a canonical
 home elsewhere in this plugin. Claiming a hook enforces something the installed harness
@@ -73,6 +91,15 @@ loop have run and passed (or the remaining gaps are explicitly reported).
 
 Browser efficiency rules: invoke skill `fuse-ai-pilot:fuse-browser-usage` (profile:
 visual-design). Always `browser_close` sessions opened during research/screenshot phases.
+
+Before `status: done` reaches the owner, the host's Critical Rule 5 ("design done ⇒
+challenger") routes this claim to the existing **`fuse-ai-pilot:challenger`** agent — do
+not rename or recreate a design-scoped one. The report must carry what challenger needs
+to run the visual-elicitation lenses blind: the light/dark PNGs already captured, plus
+the brief (tone, signature element, the 3 declared Gate 0 artefacts, the premium layout
+pattern, the anti-slop clusters checked) — never this agent's own reasoning about why the
+design works. Verdict is **consultative** (present/absent + prose), never a self-score
+like "7/8" — this agent does not grade its own output.
 
 ## Output Format
 

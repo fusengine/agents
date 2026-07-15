@@ -50,6 +50,6 @@ browser_serp_batch { queries: [
 
 ## Rules
 
-- If uncertain about an API/version, this is step ③ of the verification chain (Context7 → Exa → fuse-browser fast-path on known doc URLs). One source is never enough.
+- If uncertain about an API/version, this is step ① of the verification chain (fuse-browser fast-path on known doc URLs → Context7 → Exa). One source is never enough.
 - Deterministic data from repeated cards → jump to `browser_extract_schema` with `containerSelector` (see the tool's own args), not manual snapshot parsing.
 - No `browser_open` / `browser_navigate` / `browser_close` in this profile. If you typed one, you picked the wrong profile.

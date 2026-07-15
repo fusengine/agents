@@ -1,16 +1,16 @@
 ---
 name: astro-assets
-description: Image and asset optimization in Astro 6 — <Image />, <Picture />, getImage(), remote images, @astrojs/sharp, Fonts API, OG image generation with Satori, Cloudinary/Imgix. Use for any image optimization or asset handling task.
+description: Image and asset optimization in Astro 7 — <Image />, <Picture />, getImage(), remote images, @astrojs/sharp, Fonts API, OG image generation with Satori, Cloudinary/Imgix. Use for any image optimization or asset handling task.
 versions:
-  astro: "6"
+  astro: "7"
 user-invocable: true
 references: references/image-component.md, references/picture-responsive.md, references/remote-images.md, references/fonts-api.md, references/og-satori.md, references/cdn-integration.md, references/templates/image-setup.md, references/templates/og-image-route.md
-related-skills: astro-6, astro-seo, astro-deployment
+related-skills: astro-7, astro-seo, astro-deployment
 ---
 
 # Astro Assets
 
-Production-ready image optimization and asset management with `astro:assets` in Astro 6.
+Production-ready image optimization and asset management with `astro:assets` in Astro 7.
 
 ## Agent Workflow (MANDATORY)
 
@@ -41,7 +41,7 @@ After implementation, run **fuse-ai-pilot:sniper** for validation.
 |--------|---------|
 | `astro:assets` | `<Image />`, `<Picture />`, `getImage()` |
 | `@astrojs/sharp` | Default image processing service |
-| Fonts API (Astro 6) | Built-in `experimental.fonts` config |
+| Fonts API (stable, Astro 6.0+) | Built-in `fonts` config |
 
 ---
 
@@ -59,9 +59,9 @@ After implementation, run **fuse-ai-pilot:sniper** for validation.
 
 For server-side image generation (API routes, CSS background images). Returns `{ src, attributes }` object.
 
-### Fonts API (Astro 6)
+### Fonts API (stable, Astro 6.0+)
 
-Built-in font optimization via `experimental.fonts` in `astro.config.mjs`. Zero layout shift, automatic preloading, supports Google Fonts and local fonts.
+Built-in font optimization via the top-level `fonts` config in `astro.config.mjs` (stable since Astro 6.0 — no experimental flag). Zero layout shift, automatic preloading, supports Google Fonts and local fonts.
 
 ---
 

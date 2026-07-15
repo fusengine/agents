@@ -2,15 +2,15 @@
 name: astro-seo
 description: SEO for Astro sites — meta tags, Open Graph, Twitter Cards, JSON-LD structured data, sitemap, RSS, robots.txt, canonical URLs, hreflang, Core Web Vitals. Use when optimizing search engine visibility or social sharing.
 versions:
-  astro: "6"
+  astro: "7"
 user-invocable: true
 references: references/meta-tags.md, references/structured-data.md, references/sitemap-rss.md, references/canonical-hreflang.md, references/core-web-vitals.md, references/templates/seo-head.md, references/templates/json-ld.md
-related-skills: astro-6, astro-content, astro-assets, astro-i18n
+related-skills: astro-7, astro-content, astro-assets, astro-i18n
 ---
 
 # Astro SEO
 
-Complete SEO strategy for Astro 6 sites — zero JS by default makes Astro naturally SEO-friendly.
+Complete SEO strategy for Astro 7 sites — zero JS by default makes Astro naturally SEO-friendly.
 
 ## Agent Workflow (MANDATORY)
 
@@ -18,7 +18,7 @@ Before ANY implementation, use `TeamCreate` to spawn 3 agents:
 
 1. **fuse-ai-pilot:explore-codebase** - Analyze existing layouts, head components, and metadata
 2. **fuse-ai-pilot:research-expert** - Verify latest SEO best practices via Context7/Exa
-3. **mcp__context7__query-docs** - Check Astro 6 sitemap/RSS integration docs
+3. **mcp__context7__query-docs** - Check Astro 7 sitemap/RSS integration docs
 
 After implementation, run **fuse-ai-pilot:sniper** for validation.
 

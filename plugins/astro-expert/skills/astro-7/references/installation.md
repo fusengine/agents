@@ -18,8 +18,12 @@ priority: high
 
 | Requirement | Version |
 |-------------|---------|
-| Node.js | 22+ (LTS recommended) |
+| Node.js | 22.12+ (odd-numbered Node versions unsupported) |
 | TypeScript | 5.1+ |
+
+## TS7 / `tsgo` Warning
+
+Astro 7 build itself passes with the native TypeScript compiler (`tsgo`/TS7), but the typecheck tooling doesn't fully support it yet: `astro check` and lint can fail opaquely under `tsgo` (fixed in 7.0.8 to at least fail early instead of silently). Stay on the classic stable TypeScript compiler line until tooling support catches up.
 
 ## New Project
 

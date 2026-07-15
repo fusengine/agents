@@ -44,16 +44,20 @@ export default defineConfig({
 });
 ```
 
-## With Experimental Features
+## Stable Fonts + CSP (Astro 7)
+
+`fonts` and `csp` are stable top-level options — no `experimental` wrapper. The Rust compiler is now the only compiler and needs no flag.
 
 ```typescript
-import { defineConfig } from 'astro/config';
+import { defineConfig, fontProviders } from 'astro/config';
 
 export default defineConfig({
-  experimental: {
-    rustCompiler: true,
-    csp: true,
-    fonts: [],
-  },
+  csp: true,
+  fonts: [{
+    provider: fontProviders.google(),
+    name: 'Inter',
+    cssVariable: '--font-inter',
+  }],
+  compressHTML: 'jsx', // default in Astro 7
 });
 ```

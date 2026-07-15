@@ -2,15 +2,17 @@
 name: astro-db
 description: Astro DB — defineDb, defineTable, column types, CRUD with db.select/insert/update/delete, db/config.ts, db/seed.ts, Turso for production, type-safety, integration with Astro Actions. Use for any database operation in an Astro project.
 versions:
-  astro: "6"
+  astro: "7"
 user-invocable: true
 references: references/schema-definition.md, references/crud-operations.md, references/seed-data.md, references/turso-production.md, references/actions-integration.md, references/templates/db-config.md, references/templates/crud-example.md
-related-skills: astro-6, astro-actions, astro-deployment
+related-skills: astro-7, astro-actions, astro-deployment
 ---
 
 # Astro DB
 
 Type-safe SQL database built into Astro, powered by libSQL/Turso. Use for structured data without external backend services.
+
+> **⚠️ Deprecation notice**: `@astrojs/db` is **deprecated and no longer actively maintained** (still published on npm, currently v0.21.3 — it has not been removed from Astro 7). For new projects, prefer **Drizzle**, **Kysely**, or a direct **libSQL** client instead. Existing projects can keep using it, but should plan a migration.
 
 ## Agent Workflow (MANDATORY)
 
@@ -92,3 +94,4 @@ Combine with `astro:actions` for end-to-end type safety: Zod input validation �
 3. **`.returning()` after insert** - Get back inserted rows
 4. **Push before deploy** - Run `astro db push` in CI/CD
 5. **Turso free tier** - 500 databases, generous for production
+6. **New projects: consider Drizzle/Kysely/libSQL instead** - `@astrojs/db` is deprecated and unmaintained; still usable for existing projects, but not recommended as a starting point

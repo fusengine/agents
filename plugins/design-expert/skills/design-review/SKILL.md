@@ -16,7 +16,9 @@ The last step before reporting the deliverable done.
 ### Input
 - Complete components/mockup with animations (if any) and interactive states.
 - `design-system.md` as the audit baseline.
-- The 3 elements declared in `design-web`/`design-webapp` ("Je reproduis: {el1}, {el2}, {el3}").
+- The 3 elements declared in `design-web`/`design-webapp` ("Je reproduis: {el1}, {el2}, {el3}"),
+  plus the signature element (`design-method` Step 2) and any declared premium pattern(s) —
+  all subject to the same present/absent check in Part 2.
 
 ### Part 1 — Deterministic Checks (run first, mechanical, not vibes)
 
@@ -25,17 +27,40 @@ The last step before reporting the deliverable done.
 2. **Forbidden fonts** — grep for `font-family`; flag any font on the canonical banned
    list (see `design-system` — canonical, not restated here).
 3. **Color format** — grep for hex (`#fff`) / `rgb()` / `hsl()`; all colors must be `oklch()`.
-4. **Em-dash ban** — grep for `—` and separator `–`; zero tolerance (shared gate with `ux-copy`).
+4. **Em-dash discipline** — grep for `—`; en-dashes (`–`) for numeric ranges are fine.
+   Not a hard-fail on a single occurrence — flags when it reads as a repeated crutch/tic
+   (2+ occurrences) across the artifact (shared gate with `ux-copy`).
 5. **Token adherence** — if `design-system.md` exists, verify CSS custom properties match
    defined tokens; flag orphaned/undefined variables.
-6. **Anti-AI-slop audit** — `references/anti-ai-slop-audit.md` against the 5 clusters named in `design-method` plus the deterministic grep blacklist (gradient hue, shadow alpha, corner-radius, macrostructure, eyebrow density).
+6. **Anti-AI-slop audit** — `references/anti-ai-slop-audit.md`: deterministic co-occurrence
+   detectors for the 3 compound-signature clusters named in `design-method`
+   (cream/serif/terracotta, near-black/acid, broadsheet), plus the structural grep
+   blacklist (gradient hue, shadow alpha, corner-radius, macrostructure, eyebrow density,
+   steps pattern). Clusters 4-5 (glassmorphism-everywhere, generic icon-bento) are caught
+   indirectly by the corner-radius/macrostructure entries, not a dedicated co-occurrence
+   detector. A cluster co-occurrence match is a FLAG-with-justification, not a BLOCK — a
+   declared signature (`design-method` Step 2) overrides it.
 7. **Mechanical pre-flight** — `references/pre-flight-checklist.md`: uppercase-tracking
-   eyebrow count ≤ `ceil(sections/3)`, single theme lock, motion-claimed-motion-shown,
-   ≤ 1 marquee, hero ≤ 4 elements. Any fail blocks the verdict.
+   eyebrow count ≤ `ceil(sections/3)`, single theme lock, em-dash crutch check,
+   motion-claimed-motion-shown, ≤ 1 marquee, hero ≤ 4 elements, cluster #1 co-occurrence.
+   Any fail blocks the verdict, except the cluster #1 check (FLAG-with-justification, same
+   override rule as above).
 8. **WCAG beyond contrast** — `references/ux-wcag.md`: focus indicators present, touch
    targets ≥ 44×44px (web) / role-appropriate for mobile, keyboard navigation intact.
 9. **Consistency** — `references/consistency-checks.md`: cross-component border-radius,
    shadow, spacing rhythm.
+10. **Mobile nav functionality** — at the mobile breakpoint, the menu control must
+    actually toggle (`aria-expanded` flips, or the panel becomes visible) when triggered.
+    A burger icon wired to no handler is a blocking fail.
+11. **Doc↔code animation diff** — grep every animation promised in `design-system.md`
+    against the shipped CSS for a matching `@keyframes`/`transition` rule. A promise with
+    no matching implementation is a blocking fail.
+12. **Integrity** — no fabricated or unsourced numbers; no false urgency (a "live"
+    badge, a counter, or an "X spots left" line implying real-time state over static
+    data). Either is a blocking fail.
+13. **No-JS baseline** — content stays visible with JS disabled (inspect with
+    `scripting: none`, or the DOM stripped of `<script>`). A blank or broken page without
+    JS is a blocking fail.
 
 Any Critical/Major finding from Part 1 gets fixed before Part 2 runs.
 
@@ -47,9 +72,10 @@ Any Critical/Major finding from Part 1 gets fixed before Part 2 runs.
    dump) AND one `fullPage: true` capture, in **both** light and dark via the
    `colorScheme` parameter of `browser_screenshot` — never a manual `.dark` class toggle.
 3. **Cross-viewport**: one `browser_screenshot` call with `viewports: ["mobile", "tablet", "desktop"]`.
-4. **Compare the 3 declared elements** — binary verdict per element: `[present]` or
-   `[absent]`, against what was declared in the browsing step. No partial credit — if an
-   element doesn't match what was promised, it's absent.
+4. **Compare the declared elements** — the 3 declared elements, the signature element, and
+   any declared premium pattern(s): binary verdict per item, `[present]` or `[absent]`,
+   against what was declared upstream. No partial credit — if an item doesn't match what
+   was promised, it's absent.
 5. **Localized critique only** — findings must name the exact section/element and the
    exact issue ("the card padding in the pricing grid is 12px, tokens call for 24px"),
    never a general "improve the style" note.
@@ -62,6 +88,11 @@ Any Critical/Major finding from Part 1 gets fixed before Part 2 runs.
    cycles.** If issues remain after cycle 2, STOP — report the remaining issues instead
    of continuing to loop. A plateau (cycle 2 finds the same issue as cycle 1) also stops
    immediately, even if it's technically cycle 1 of 2.
+
+### Done-Claim Routing
+Any "deliverable done" claim coming out of this review is routed to the `challenger`
+agent (blind PNG + brief, named elicitation lenses) before it reaches the owner —
+consultative, never a self-score. This procedure never self-certifies its own verdict.
 
 ### Failure Handling
 - All server ports 8899-8905 busy → stop, report the deliverable unreviewed, and say so
@@ -94,5 +125,7 @@ Any Critical/Major finding from Part 1 gets fixed before Part 2 runs.
 ### Anti-AI-slop few-shot examples
 **REJECT** — a generic purple-to-blue gradient hero in a forbidden font with emoji
 bullets; identical border-radius/shadow on every card with no hierarchy.
-**ACCEPT** — a sector-derived OKLCH palette with chroma > 0.05, an approved typography
-pair, one deliberate accent used sparingly; an asymmetric grid with intentional whitespace.
+**ACCEPT** — a sector-derived OKLCH palette that's color-committed (chromatic, chroma ≥
+0.05, or an intentional near-mono base with one sharp accent — not a timid, uncommitted
+gray), an approved typography pair, one deliberate accent used sparingly; an asymmetric
+grid with intentional whitespace.

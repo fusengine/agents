@@ -55,6 +55,8 @@ The `Stop` reminder fires at most once every **5 minutes** by default. Override 
 
 Run `/lessons` to view the current `MEMORY/LESSON.md` and either **append** a new lesson or **refine / merge** existing ones so the list stays sharp. Commit `MEMORY/LESSON.md` alongside your changes so the lesson is shared.
 
+Run `/lessons-compact` when the file has grown large (duplicates, several lessons about the same root cause, stale entries superseded by a later one) — it deduplicates and merges without losing any unique signal, shows a full before/after preview, and asks for confirmation before overwriting the file. Idempotent: running it again on an already-compact file is a no-op.
+
 ## "Never reproduce"
 
 The whole point is a growing, committed list of failures the team has already paid for once. Read it at the start, add to it at the end — and stop reproducing solved mistakes.

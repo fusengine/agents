@@ -22,8 +22,10 @@ already defined.
    later step — set once, read everywhere else.
 2. **Match sector** in `references/sector-palettes.md` — pick the OKLCH palette base.
 3. **Generate palette** using `references/oklch-system.md` — primary, secondary, accent,
-   neutral + semantic colors. All colors `oklch()`, chroma > 0.05 — neutral-only palettes
-   are forbidden. Derive the dark-mode set with `references/color-mapping.md`, checking
+   neutral + semantic colors. All colors `oklch()`. Color must be **committed**: either
+   chromatic (chroma ≥ 0.05) or a deliberately near-mono system with one decisive accent —
+   the slop is a timid, uncommitted gray, not low chroma itself (Linear/Vercel/Stripe ship
+   premium near-mono palettes). Derive the dark-mode set with `references/color-mapping.md`, checking
    `references/edge-cases.md` and `references/image-handling.md` for what breaks on flip.
 4. **Choose typography pair** from `references/typography-pairs.md` — display + body
    fonts matching the tone from `design-method`. See Forbidden Fonts below.
@@ -38,8 +40,25 @@ already defined.
 
 ### Forbidden Fonts (canonical list — defined here only)
 
-`Inter`, `Roboto`, `Arial`, `Open Sans`, `Lato`, `Poppins`. Any other file in this plugin
-that mentions forbidden fonts must point here instead of restating its own list.
+**Hard-forbidden**: `Inter`, `Roboto`, `Arial`, `Open Sans`, `Lato`, `Poppins`. Any other
+file in this plugin that mentions forbidden fonts must point here instead of restating
+its own list.
+
+**Flag-when-undeclared**: `Fraunces`, `Instrument Serif`, `Playfair Display`. These
+serif-display fonts are legitimate *when declared as the deliberate signature element*
+(see `design-method` Step 2) — they are not banned outright. The tell isn't the font
+itself, it's the *reflexive, undeclared* combo: serif-display + italic accent + cream
+background, reached for on autopilot because it "looks premium." If one of these fonts
+shows up without an explicit signature-element rationale in `design-system.md`, flag it
+for review rather than auto-passing it.
+
+### Font Self-Hosting (canonical — defined here only)
+
+A named display/premium font MUST be self-hosted: `@font-face` with a `woff2` source,
+`font-display: swap`, and a `<link rel="preload">` for the file. If that pipeline isn't
+wired up, don't name the font — fall back to a system stack instead. Naming a font in
+`design-system.md` without ever loading it is aspirational typography that never ships;
+the presence of `@font-face` is the check that the intent is real.
 
 ### Mechanical Contrast Check (canonical — defined here only)
 

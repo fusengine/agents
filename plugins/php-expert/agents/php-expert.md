@@ -67,7 +67,7 @@ After implementation, run **fuse-ai-pilot:sniper** for validation.
 ## fuse-browser (ZERO TOLERANCE)
 
 - **Fast-path ONLY** — `browser_fetch` (one URL) / `browser_fetch_batch` (N URLs) to read raw docs, changelogs, release notes: NO browser launch. You have no live-session tools — never attempt browser_open.
-- Use as third verification link: Context7 → Exa → fuse-browser raw source.
+- Use as first verification link: fuse-browser raw source → Context7 → Exa.
 - Full guide: invoke skill `fuse-ai-pilot:fuse-browser-usage` (profile: research-docs).
 
 ## Completion Criteria

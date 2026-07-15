@@ -25,6 +25,7 @@ export default defineConfig({
   base: '/',
   output: 'static', // 'static' | 'server' | 'hybrid'
   trailingSlash: 'ignore', // 'always' | 'never' | 'ignore'
+  compressHTML: 'jsx', // default in Astro 7 — JSX-style whitespace stripping
 });
 ```
 
@@ -35,23 +36,19 @@ export default defineConfig({
 | `site` | string | Full URL of deployed site |
 | `base` | string | Base path (e.g. '/docs') |
 | `output` | string | Rendering mode |
+| `compressHTML` | `boolean \| 'jsx'` | HTML whitespace compression; defaults to `'jsx'` in Astro 7 |
 | `integrations` | array | Framework + feature integrations |
 | `adapter` | object | Server runtime adapter |
-| `vite` | object | Vite config passthrough |
+| `vite` | object | Vite config passthrough (Vite 8) |
 | `srcDir` | string | Source directory (default: `./src`) |
 | `publicDir` | string | Public assets (default: `./public`) |
 
-## Experimental Astro 6 Features
+## Removed Experimental Flags (Astro 7)
 
-```typescript
-export default defineConfig({
-  experimental: {
-    rustCompiler: true,     // Rust-based .astro compiler
-    routeCaching: true,     // Edge route caching
-    queuedRendering: true,  // Limit concurrent renders
-  },
-});
-```
+Astro 7 removed the following `experimental.*` flags — they no longer exist under `experimental` and will error if set there: `logger`, `queuedRendering`, `rustCompiler`, `advancedRouting`, `cache`, `routeRules`.
+
+- `rustCompiler` / `queuedRendering` / `logger` / `advancedRouting` — fully stabilized as default behavior, no replacement flag or key needed.
+- `cache` / `routeRules` — **not removed, stabilized**: `experimental.cache` and `experimental.routeRules` were replaced by top-level `cache` and `routeRules` config keys. Use `cache: {...}` / `routeRules: {...}` directly on `defineConfig`, not nested under `experimental`.
 
 ## Vite Passthrough
 

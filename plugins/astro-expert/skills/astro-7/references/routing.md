@@ -67,3 +67,7 @@ export function GET({ request }) {
   });
 }
 ```
+
+## `src/fetch.ts` (Advanced Routing)
+
+Reserved file, structured like `src/middleware.ts`, for advanced routing scenarios. Its resolution is controlled by the `fetchFile` config option, which can override the path or be set to `null` to disable it.

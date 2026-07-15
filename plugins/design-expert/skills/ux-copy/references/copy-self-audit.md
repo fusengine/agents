@@ -1,6 +1,6 @@
 ---
 name: copy-self-audit
-description: Pre-ship copy audit — em-dash ban, AI "production tell" catalogue, fake-precise-number flag, and final string review before handoff
+description: Pre-ship copy audit — em-dash crutch threshold, AI "production tell" catalogue, fake-precise-number flag, and final string review before handoff
 when-to-use: Before declaring any copy or page done — re-read every visible string against these gates
 keywords: copy-audit, em-dash, ai-tells, fake-numbers, pre-flight, self-review
 priority: critical
@@ -13,16 +13,14 @@ related: microcopy-patterns.md, voice-tone-sectors.md
 
 Run this pass on **every visible string** before handing copy off to component generation (`design-web`/`design-webapp`): headlines, subheads, eyebrows, button labels, body, captions, alt text, footer, error messages. A single failure below is a blocking pre-flight failure, not a warning.
 
-## 1. Em-dash ban (binary, blocking)
+## 1. Em-dash — avoid as a crutch, not a hard ban
 
-`—` (em-dash) and `–` (en-dash used as a separator) are **forbidden everywhere on the page** — headlines, eyebrows, labels, pills, button text, body, quotes, attribution, captions, alt text. No "sparingly", no "fine in body copy". The em-dash is the single most reliable machine-writing tell.
+`—` (em-dash) is a real risk of reading as a machine-writing tic, but a single occurrence anywhere on the page (headline, eyebrow, label, body, quote, caption, alt text) does not block on its own. Flag and rewrite it when it shows up as a **recurring crutch** — the same writer reaching for it repeatedly instead of a period, comma, colon, or parentheses — or whenever a plainer mark reads better.
 
-- Replace a pause em-dash with a period, a comma, a colon, or parentheses. Split into two sentences when in doubt.
-- Ranges use a plain hyphen: `2018-2026`, `€40-80k`.
-- Attribution uses a spaced hyphen (` - `) or a line break, never an em-dash.
-- The only dash characters allowed are the regular hyphen `-` and the math minus (`-5°C`).
-
-If any `—` or `–` survives to handoff, the copy fails and must be rewritten.
+- Prefer a period, a comma, a colon, or parentheses over a pause em-dash. Split into two sentences when in doubt.
+- En-dashes for ranges are fine: `2018-2026`, `€40-80k` (plain hyphen also acceptable).
+- Attribution uses a spaced hyphen (` - `) or a line break.
+- One-off em-dash use is not a failure; repeated use across a page's strings is.
 
 ## 2. AI "production tell" catalogue (banned unless the brief demands it)
 
