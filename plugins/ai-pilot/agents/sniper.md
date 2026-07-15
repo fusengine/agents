@@ -66,7 +66,7 @@ This Fix Retry Loop is the canonical hypothesis-driven fix discipline for the wh
 Applies during PHASE 5/6 for each error being fixed:
 
 1. Apply fix → re-run the failing check (linter/type-check) on the touched scope.
-2. Still failing → the SAME fix is FORBIDDEN (never replay a failed fix verbatim). Mandatory research round first, using the verification chain from Fallbacks (① Context7 → ② Exa → ③ fuse-browser `browser_fetch` on official docs/issues) to produce a NEW documented hypothesis, then apply the new fix.
+2. Still failing → the SAME fix is FORBIDDEN (never replay a failed fix verbatim). Mandatory research round first, using the verification chain from Fallbacks (① fuse-browser `browser_fetch` on official docs/issues → ② Context7 → ③ Exa) to produce a NEW documented hypothesis, then apply the new fix.
 3. Maximum 3 fix cycles per error. After the 3rd failed cycle → STOP on that error: report `status: fail` (see Output Format) with the error listed in `errors_remaining`, plus a root-cause analysis (what was tried, sources consulted, why each attempt failed, recommended next step — e.g. architectural decision needed, upstream bug, missing dependency).
 4. Never report `pass` with an in-scope error remaining; never exceed 3 cycles (infinite loops forbidden); never widen the scope to "work around" an error you can't fix.
 
@@ -85,7 +85,7 @@ sources_verified: [Context7/Exa sources consulted]
 ## Fallbacks (MANDATORY)
 
 - **Linter unavailable** (command not found / not configured for the language) → report `status: skipped:tool-unavailable`; never fail silently, never block the caller
-- **Verification chain**: Context7 down → fall back to Exa; Exa down → fall back to fuse-browser fast-path (`mcp__fuse-browser__browser_fetch` on official doc URLs); all three down → report `status: degraded:no-verification`, proceed with best-effort fixes, flag them as unverified in `sources_verified`
+- **Verification chain**: fuse-browser fast-path (`mcp__fuse-browser__browser_fetch` on official doc URLs) down → fall back to Context7; Context7 down → fall back to Exa; all three down → report `status: degraded:no-verification`, proceed with best-effort fixes, flag them as unverified in `sources_verified`
 - Never block the caller — always return a report, even in a degraded or skipped state
 
 Full guide: invoke skill `fuse-ai-pilot:fuse-browser-usage`.

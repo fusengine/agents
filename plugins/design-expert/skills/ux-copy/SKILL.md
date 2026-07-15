@@ -39,9 +39,10 @@ position: a copy-only request can invoke this skill directly.
 ### Copy Self-Audit — Pre-Flight Gates
 All four must pass; full catalogue in `references/copy-self-audit.md`:
 
-1. **Em-dash ban (binary).** Zero `—` and zero separator `–` anywhere — headlines,
-   labels, quotes, ranges, alt text. A single occurrence blocks. Only `-` and the math
-   minus are allowed.
+1. **Em-dash — avoid as a crutch, not a hard ban.** A single em-dash doesn't block;
+   flag it only when it shows up repeatedly (a recurring tic) or as a lazy substitute
+   for clearer punctuation (period, comma, colon, parentheses). En-dashes for ranges
+   (`2018-2026`, `€40-80k`) are fine.
 2. **No AI "production tells."** Reject unless the brief explicitly demands it: hero
    version labels (`v0.6`, `BETA`), numbered section eyebrows (`00 / INDEX`), scroll cues
    (`↓ scroll`), `Quietly trusted by`, fabricated live counters.
@@ -59,7 +60,7 @@ All four must pass; full catalogue in `references/copy-self-audit.md`:
 ### References
 | File | Purpose |
 |------|---------|
-| `references/copy-self-audit.md` | **Pre-ship gates: em-dash ban, production-tell catalogue, fake-number flag, final review** |
+| `references/copy-self-audit.md` | **Pre-ship gates: em-dash crutch threshold, production-tell catalogue, fake-number flag, final review** |
 | `references/voice-tone-sectors.md` | NNG voice profiles per sector |
 | `references/microcopy-patterns.md` | CTA, form, validation, toast patterns |
 | `references/empty-states-copy.md` | Empty-state copy formulas |

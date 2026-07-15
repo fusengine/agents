@@ -75,7 +75,7 @@ create_frontend({
 <layout>[hard constraints from layout-discipline.md: hero headline ≤2 lines, subtext ≤20 words AND ≤4 lines, max 4 hero-stack elements; eyebrows ≤ ceil(sections/3); max 2 consecutive image+text sections; bento cells = content items exactly; each layout family once per page]</layout>
 <states>[ALL: default, hover, loading, empty, error, disabled]</states>
 <animations>[Framer Motion: stagger, spring, duration]</animations>
-<forbidden>[per-component patterns to avoid + always-on hard bans from layout-discipline.md: em-dash (—/–) anywhere; trust strip / pricing teaser / feature bullets inside the hero; filler bento cells; wrapping CTA labels; raw <ul> for >5 items; bordered row-list spec sheets; quotes over 3 lines]</forbidden>
+<forbidden>[per-component patterns to avoid + always-on hard bans from layout-discipline.md: trust strip / pricing teaser / feature bullets inside the hero; filler bento cells; wrapping CTA labels; raw <ul> for >5 items; bordered row-list spec sheets; quotes over 3 lines]</forbidden>
 ```
 
 ---

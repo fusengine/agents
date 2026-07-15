@@ -2,11 +2,11 @@
 name: astro-starlight
 description: Astro Starlight documentation theme — setup, sidebar config, Pagefind search, dark/light mode, plugins (DocSearch, blog, openapi, typedoc, versions), multi-language, Content Layer API, llms.txt, customization. Use for building documentation sites.
 versions:
-  astro: "6"
-  starlight: "0.38+"
+  astro: "7"
+  starlight: "0.41+"
 user-invocable: true
 references: references/setup.md, references/sidebar-config.md, references/search.md, references/plugins.md, references/i18n-multilang.md, references/content-layer.md, references/customization.md, references/templates/starlight-config.md, references/templates/sidebar-example.md
-related-skills: astro-6, astro-content, astro-i18n, astro-seo
+related-skills: astro-7, astro-content, astro-i18n, astro-seo
 ---
 
 # Astro Starlight
@@ -44,7 +44,7 @@ After implementation, run **fuse-ai-pilot:sniper** for validation.
 | Dark/light mode | Automatic, CSS custom properties |
 | Sidebar config | Filesystem-based or manual groups |
 | Plugin ecosystem | DocSearch, blog, openapi, typedoc |
-| Content Layer API | Astro 6 content collections integration |
+| Content Layer API | Astro 7 content collections integration |
 | llms.txt support | `starlight-llms-txt` for AI discoverability |
 
 ---

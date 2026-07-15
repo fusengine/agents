@@ -2,54 +2,43 @@
 
 ## Installation
 
+Tailwind CSS v4 uses a CSS-first setup — no `tailwind.config.ts`, no `@tailwind` directives. Use the official Vite plugin (there is no `@astrojs/tailwind` integration for v4).
+
 ```bash
-npm install -D tailwindcss postcss autoprefixer
+npm install tailwindcss @tailwindcss/vite
 ```
 
-## tailwind.config.ts
+```javascript
+// astro.config.mjs
+import { defineConfig } from 'astro/config';
+import tailwindcss from '@tailwindcss/vite';
 
-```typescript
-import type { Config } from 'tailwindcss';
-
-export default {
-  content: [
-    './src/**/*.{astro,html,js,jsx,ts,tsx,vue,svelte,mdx}'
-  ],
-  theme: {
-    extend: {
-      fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
-        mono: ['Fira Code', 'monospace']
-      },
-      colors: {
-        primary: {
-          50: '#eef2ff',
-          500: '#6366f1',
-          600: '#4f46e5',
-          700: '#4338ca'
-        }
-      }
-    }
-  },
-  plugins: []
-} satisfies Config;
+export default defineConfig({
+  vite: {
+    plugins: [tailwindcss()]
+  }
+});
 ```
 
 ## src/styles/global.css
 
+Theming (colors, fonts, spacing) lives in CSS via `@theme` — no JS config file. See `fuse-tailwindcss:tailwindcss-v4` for the full `@theme`/`@utility` syntax.
+
 ```css
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
-@layer base {
-  :root {
-    --color-primary: theme('colors.primary.500');
-  }
+@theme {
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-mono: 'Fira Code', monospace;
 
-  body {
-    @apply font-sans text-gray-900 bg-white;
-  }
+  --color-primary-50: #eef2ff;
+  --color-primary-500: #6366f1;
+  --color-primary-600: #4f46e5;
+  --color-primary-700: #4338ca;
+}
+
+body {
+  @apply font-sans text-gray-900 bg-white;
 }
 
 @layer components {

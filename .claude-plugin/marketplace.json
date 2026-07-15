@@ -7,7 +7,7 @@
   },
   "metadata": {
     "description": "Professional Claude Code plugins with APEX workflow, SOLID principles, and expert development agents for Next.js, Laravel, Swift, Tailwind CSS, and more",
-    "version": "1.38.99"
+    "version": "1.39.0"
   },
   "core": [
     {
@@ -527,7 +527,7 @@
       "license": "MIT",
       "keywords": [
         "astro",
-        "astro-6",
+        "astro-7",
         "islands-architecture",
         "content-layer",
         "server-islands",

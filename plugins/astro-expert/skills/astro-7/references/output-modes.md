@@ -57,3 +57,7 @@ export const prerender = false;
 | Cloudflare | `@astrojs/cloudflare` |
 | Netlify | `@astrojs/netlify` |
 | Vercel | `@astrojs/vercel` |
+
+## `public/` Behavior
+
+Files in `public/` are copied verbatim into the output directory, regardless of output mode — no processing, optimization, or transformation.

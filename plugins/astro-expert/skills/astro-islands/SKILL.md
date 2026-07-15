@@ -2,10 +2,10 @@
 name: astro-islands
 description: Expert Astro Islands Architecture — client:load, client:idle, client:visible, client:media, client:only, server:defer (Server Islands), fallback slots, transition:persist, prop serialization. Use when adding interactivity to Astro pages or rendering dynamic server content.
 versions:
-  astro: 6
+  astro: 7
 user-invocable: true
 references: references/overview.md, references/client-directives.md, references/server-islands.md, references/transitions.md, references/view-transitions.md, references/prop-serialization.md, references/templates/interactive-island.md, references/templates/server-island.md
-related-skills: astro-6, astro-integrations, astro-actions
+related-skills: astro-7, astro-integrations, astro-actions
 ---
 
 # Astro Islands Expert

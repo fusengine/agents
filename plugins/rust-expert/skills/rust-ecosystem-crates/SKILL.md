@@ -1,6 +1,6 @@
 ---
 name: rust-ecosystem-crates
-description: Use when choosing crates for a Rust project — serialization, CLI, async runtime, web, database, HTTP client, error handling, observability. Provides a domain→crate decision map of the de-facto 2026 standards, with selection criteria. Do NOT use for API usage details of a chosen crate (load the matching domain skill, or verify via Context7 → Exa → fuse-browser fast-path on docs.rs/crates.io).
+description: Use when choosing crates for a Rust project — serialization, CLI, async runtime, web, database, HTTP client, error handling, observability. Provides a domain→crate decision map of the de-facto 2026 standards, with selection criteria. Do NOT use for API usage details of a chosen crate (load the matching domain skill, or verify via fuse-browser fast-path on docs.rs/crates.io → Context7 → Exa).
 versions:
   serde: "1"
   tokio: "1"

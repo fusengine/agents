@@ -31,7 +31,12 @@ After `design-web` or `design-webapp` components exist. Before `design-review`.
    claim to — this is checked in `design-review`'s motion audit.
 3. **For everything that survives the gate**, apply the matching pattern:
    - Entrance: `references/entrance-patterns.md` — IntersectionObserver reveals,
-     80-120ms stagger, fadeUp/fadeIn.
+     80-120ms stagger, fadeUp/fadeIn. **Safety**: content starts **visible**; `opacity: 0`
+     is applied by JS only after IntersectionObserver support is confirmed, or via
+     `animation-timeline: view()` — and every reveal ships a
+     `@media (scripting: none) { .reveal { opacity: 1 } }` fallback. Never ship the
+     "everything pinned to `opacity: 0`, revealed only by JS" pattern — a stalled script
+     must not blank the page.
    - Hover: `references/patterns-buttons.md`, `references/patterns-cards.md` — depth via
      translateY + shadow, never scale-only.
    - Micro-interactions: `references/micro-interactions.md` — button press, toggle,

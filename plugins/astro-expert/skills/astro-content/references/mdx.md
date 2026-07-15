@@ -14,6 +14,10 @@ priority: medium
 - Adding syntax highlighting with rehype-pretty-code
 - Processing Markdown with remark plugins
 
+## Default Markdown Renderer (Astro 7)
+
+Astro 7 switched the default Markdown renderer to **Sätteri** (PR #16966); `@astrojs/markdown-remark` is **no longer installed by default**. The classic `unified()`-based remark/rehype pipeline (shown below) remains available as an opt-in for projects that need custom remark/rehype plugins.
+
 ## Setup
 
 ```bash

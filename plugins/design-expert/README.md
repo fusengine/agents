@@ -35,7 +35,7 @@ All design work starts in `skills/design-method/SKILL.md`:
 | `design-ios` | iOS mockup + handoff — Dynamic Type, semantic colors, device viewports, Liquid Glass, SwiftUI-ready spec |
 | `design-android` | Android mockup + handoff — Material 3 Expressive type/shape/color scales, window size classes, Compose-ready spec |
 | `design-motion` | Motion gated by the `MOTION_INTENSITY` dial — most animation ideas die at the gate; mandatory hover/focus/disabled states and `prefers-reduced-motion` regardless |
-| `ux-copy` | Voice/tone, CTAs, error messages, empty states, the copy self-audit (em-dash ban, production-tell catalogue) |
+| `ux-copy` | Voice/tone, CTAs, error messages, empty states, the copy self-audit (em-dash crutch check, production-tell catalogue) |
 | `design-review` | The final gate — deterministic checks (contrast, fonts, colors, em-dash) then a bounded screenshot loop (max 2 fix cycles) |
 
 ## Commands

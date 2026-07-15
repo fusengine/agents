@@ -58,6 +58,40 @@ Renders on client only — skips server rendering. Must specify framework.
 <SignalCounter client:only="solid-js" />
 ```
 
+## Hydration Mismatch Warning
+
+An island that reads `window.location` (or any browser-only global) at mount time — instead of receiving that value as a **prop passed down from the server** — produces a hydration mismatch: the server-rendered markup won't match what the client computes on first paint, so the framework throws a hydration warning or re-renders incorrectly.
+
+```astro
+---
+// ❌ Bad — island re-derives the URL itself, mismatched between SSR and client
+---
+<CurrentPage client:load />
+```
+
+```astro
+---
+// ✅ Good — URL computed server-side, passed in as a prop
+---
+<CurrentPage client:load currentUrl={Astro.url.pathname} />
+```
+
+```tsx
+// CurrentPage.tsx
+// ❌ Bad
+export default function CurrentPage() {
+  const path = window.location.pathname; // undefined during SSR, mismatched on hydrate
+  return <p>{path}</p>;
+}
+
+// ✅ Good
+export default function CurrentPage({ currentUrl }: { currentUrl: string }) {
+  return <p>{currentUrl}</p>;
+}
+```
+
+Applies to any directive that hydrates over server-rendered markup (`client:load`, `client:idle`, `client:visible`, `client:media`). `client:only` skips SSR entirely, so it isn't exposed to this specific mismatch — but still prefer server-provided props over re-deriving browser state.
+
 ## Decision Matrix
 
 | Component | Directive |

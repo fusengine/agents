@@ -2,10 +2,10 @@
 name: astro-styling
 description: Use when styling Astro components with scoped CSS, CSS Modules, Tailwind CSS, UnoCSS, or Sass. Covers class:list directive, global styles, CSS custom properties, and Vite-powered preprocessors.
 versions:
-  astro: "6"
+  astro: "7"
 user-invocable: true
 references: references/scoped-css.md, references/css-modules.md, references/global-styles.md, references/tailwind.md, references/unocss.md, references/sass.md, references/css-variables.md, references/templates/scoped-component.md, references/templates/tailwind-setup.md, references/templates/unocss-setup.md
-related-skills: astro-6, astro-integrations, solid-astro
+related-skills: astro-7, astro-integrations, solid-astro
 ---
 
 # Astro Styling
@@ -16,7 +16,7 @@ Before ANY implementation, use `TeamCreate` to spawn 3 agents:
 
 1. **fuse-ai-pilot:explore-codebase** - Analyze existing styles, integrations, and patterns
 2. **fuse-ai-pilot:research-expert** - Verify latest Astro/Tailwind/UnoCSS docs via Context7/Exa
-3. **mcp__context7__query-docs** - Check integration compatibility with Astro 6
+3. **mcp__context7__query-docs** - Check integration compatibility with Astro 7
 
 After implementation, run **fuse-ai-pilot:sniper** for validation.
 

@@ -54,11 +54,29 @@ reproduce them:
 4. **Glassmorphism + `rounded-2xl` used globally** — the default "2026 AI app" look, applied everywhere instead of gated (`design-motion` gates it deliberately).
 5. **Generic icon-bento** — every cell centered text over a round colored-icon badge, zero image/gradient/pattern variation between cells.
 
-Dominant, committed colors and sharp accents beat a timid, safe palette every time. Purple-on-white gradients are banned outright — the single most common tell. Deterministic grep detections for all 5 clusters: `design-review/references/anti-ai-slop-audit.md`.
+Dominant, committed colors and sharp accents beat a timid, safe palette every time. Purple-on-white gradients are banned outright — the single most common tell. Deterministic grep detectors cover the 3 compound default-look clusters (#1 cream+serif+terracotta, #2 near-black+acid, #3 broadsheet) plus the structural blacklist; clusters 4-5 are covered indirectly: `design-review/references/anti-ai-slop-audit.md`.
 
 ## Macrostructure Variety (Process Constraint)
 
 `design-web/references/design-inspiration.md` already enforces "vary every time — NEVER reuse the same 4 sites" for inspiration sourcing; this is the same discipline one level up, applied to the chosen page skeleton. Centered hero + 3-column icon-card grid is **forbidden as a default** — pick a different one from `references/macrostructure-bank.md` before Pass 1 and name it in the plan; `design-web/references/layout-discipline.md` then enforces the numeric rules on top of whichever skeleton was chosen.
+
+## Gate 0 — Brief Lock
+
+Before routing to any target skill — before writing a single line of HTML/CSS/tokens —
+three artefacts from Steps 1-3 above must exist **in writing**, not just in your head:
+
+1. **Tone** committed to ONE extreme (Step 1, question 2) — not an adjective that could
+   also describe three competitors.
+2. **Signature element** named in one sentence (Step 2).
+3. **At least one concrete reference** (a URL, a screenshot) supplied or found — OR the
+   mandatory browse in `design-web/references/design-inspiration.md` actually executed,
+   not merely planned.
+
+This is a **present/absent check on three named artefacts** — structural, not a taste
+judgment. One missing ⇒ **generation is forbidden** until it exists. It's the same
+discipline as "separate creative thinking from implementation": the thinking has to be
+finished and written down before implementation starts, every time — regardless of how
+confident you feel about the brief.
 
 ## Routing — Which Skill Next
 

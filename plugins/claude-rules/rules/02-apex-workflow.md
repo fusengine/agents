@@ -2,8 +2,9 @@
 
 **USE APEX:** create, implement, add, build, refactor, migrate, new component, multi-file, architecture changes
 **SKIP APEX:** questions, trivial fix (1-3 lines), read-only, simple git
+**Debug/Investigation:** "why", "not working", "bug", "crash", "doesn't load" → ALWAYS use Analyze (explore-codebase + research-expert + domain-expert)
 
-**Shortcuts:** `--quick` (skip Brainstorm+Analyze) | `--skip-elicit` (skip eLicit) | `--no-sniper` (skip eXamine)
+**Shortcuts:** `/apex-quick` command (single-expert fast path — skips Brainstorm+Analyze+TeamCreate, linter-only verify) | `--skip-elicit` (skip eLicit, straight to eXamine) — eXamine/sniper itself is NEVER skippable (00-critical-rules)
 
 ## Full APEX Flow
 

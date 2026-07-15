@@ -1,9 +1,8 @@
 ---
 name: hero-glassmorphism
 description: Hero section with glassmorphism card overlay and 3-layer depth background
-when-to-use: Modern landing pages requiring visual depth with glass effect cards
+when-to-use: Only when the brief explicitly calls for a glass/depth aesthetic — one gated option among several hero treatments, never the default hero pattern
 keywords: hero, glassmorphism, gradient-orbs, backdrop-blur, depth
-priority: high
 related: hero-section.md
 ---
 
@@ -41,7 +40,6 @@ Generate directly as HTML/CSS from this brief (or via mcp__gemini-design__create
     </states>
     <animations>Framer Motion: container staggerChildren 0.12s. Badge: scale 0.8→1 + opacity 0→1, 0.4s spring. Headline/subtitle: y 32→0 + opacity 0→1, 0.5s. Orbs: autonomous motion.div with animate prop, NOT whileHover</animations>
     <forbidden>
-      - No solid-color background without orbs (defeats glassmorphism purpose)
       - No glass effect on text (only on card/surface elements)
       - No backdrop-blur without matching bg-white/X (invisible blur)
       - No more than 3 gradient orbs (visual noise)

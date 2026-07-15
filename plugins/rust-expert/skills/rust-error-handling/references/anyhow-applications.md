@@ -88,4 +88,4 @@ anyhow ships no derive macro. Define domain error types with `thiserror` (see
 via `?` because they implement `std::error::Error`. On Rust ≥ 1.65, anyhow captures a
 backtrace when the source does not provide one (enable with `RUST_BACKTRACE=1`).
 
-Verify the current API (Context7 → Exa → fuse-browser fast-path on `https://docs.rs/anyhow`).
+Verify the current API (fuse-browser fast-path on `https://docs.rs/anyhow` → Context7 → Exa).

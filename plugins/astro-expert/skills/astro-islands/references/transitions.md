@@ -2,7 +2,7 @@
 name: transitions
 description: View Transitions API — transition:persist, transition:name, page animations
 when-to-use: animated page transitions, persisting state between pages
-keywords: transitions, ViewTransitions, transition:persist, transition:name, animations
+keywords: transitions, ClientRouter, ViewTransitions (removed in Astro 6), transition:persist, transition:name, animations
 priority: medium
 ---
 
@@ -16,14 +16,16 @@ priority: medium
 
 ## Setup
 
+> **`<ViewTransitions />` was renamed `<ClientRouter />` in Astro 5.0, then removed entirely in Astro 6.0.** Import `ClientRouter` from `astro:transitions` — the old name breaks the build on Astro 6/7.
+
 ```astro
 ---
 // src/layouts/BaseLayout.astro
-import { ViewTransitions } from 'astro:transitions';
+import { ClientRouter } from 'astro:transitions';
 ---
 <html>
   <head>
-    <ViewTransitions />
+    <ClientRouter />
   </head>
   <body>
     <slot />
@@ -73,3 +75,17 @@ document.addEventListener('astro:page-load', () => {
   initAnalytics();
 });
 ```
+
+## Production Pitfalls
+
+### CSS dropped in dev on swap
+**Symptom:** styles disappear or flash unstyled after a client-side navigation in `astro dev`, while a production build looks fine.
+**Fix:** don't rely on styles injected only into the old page's `<head>`; prefer scoped component styles, and if a shared stylesheet must persist across navigations, load it via a `<link>` tag in the layout `<head>` — `ClientRouter`'s DOM diffing preserves matching persistent `<head>` elements across swaps.
+
+### Video frozen after swap outside Chromium
+**Symptom:** a `<video>` element keeps playing visually but is frozen/desynced after a page swap in Firefox or Safari.
+**Fix:** mark the player with `transition:persist` so the element itself survives the swap instead of being unmounted and remounted; without it, non-Chromium browsers can leave the old media element's decode pipeline in a stuck state.
+
+### `transition:persist` breaks i18n re-render
+**Symptom:** a persisted island keeps showing the previous locale's text after navigating to a different `/en/`, `/fr/` route.
+**Fix:** persisted components are NOT recreated, so props computed at first render (like translated strings) never update. Drop `transition:persist` on components whose content depends on locale, or re-derive locale-dependent state from the `astro:after-swap` event (read the new URL and re-render) instead of relying on initial props.

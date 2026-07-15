@@ -43,9 +43,9 @@ npx shadcn@latest add button
 
 All templates follow these rules:
 
-- [x] Framer Motion animations
-- [x] CSS variables for colors
+- [x] Motion gated by the motion profile in `design-system.md` — not Framer Motion by default; most animation ideas should die at the gate (see `design-motion`)
+- [x] CSS variables for colors (OKLCH tokens, no hard-coded hex)
 - [x] Lucide icons (not emoji)
-- [x] Rounded corners (rounded-2xl)
-- [x] Proper hover states
+- [x] Radius from the token scale (`--r`, `--r-lg`, `--r-pill`) — not a blanket `rounded-2xl`
+- [x] Proper hover/focus/disabled/loading states
 - [x] Accessibility (ARIA, keyboard)

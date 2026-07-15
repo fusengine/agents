@@ -4,7 +4,6 @@ description: Meta tags, Open Graph, Twitter Cards, and favicon configuration for
 when-to-use: Any page needing SEO metadata or social sharing previews
 keywords: meta, og:title, og:image, twitter:card, favicon, description
 priority: high
-requires: astro-6.md
 related: structured-data.md, canonical-hreflang.md
 ---
 
