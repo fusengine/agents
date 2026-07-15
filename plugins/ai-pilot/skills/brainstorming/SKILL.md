@@ -20,7 +20,7 @@ Before ANY brainstorming session, use `TeamCreate` to spawn agents:
 1. **fuse-ai-pilot:explore-codebase** - Understand project context, patterns, constraints
 2. **fuse-ai-pilot:research-expert** - Fetch best practices and documentation
 
-After design approval, transition to **APEX Analyze** phase.
+After design approval, transition to **APEX Analyze** phase, **passing along the explore-codebase and research-expert findings** in the handoff (not just the design doc). APEX Analyze re-runs those same agents by default — carrying forward what was already gathered here avoids re-doing the same research twice.
 
 ---
 
@@ -55,9 +55,9 @@ Categories: purpose, constraints, success criteria, users, integrations.
 
 > See [workflow.md](references/workflow.md) for question categories
 
-### Step 3: Propose 2-3 Approaches
+### Step 3: Diverge, Then Converge to 2-3 Approaches
 
-Present alternatives with trade-offs in table format:
+Generate ≥6-8 distinct approaches via a named technique (SCAMPER / reverse-brainstorming / analogies), judgment suspended — not 3 sizes of the same idea. Only then converge to 2-3 with trade-offs in table format:
 
 | Approach | Pros | Cons | Recommendation |
 |----------|------|------|----------------|
@@ -102,10 +102,10 @@ Hand off to APEX Analyze phase with the approved design as input.
 ```text
 1. Explore   → git log, codebase, docs (agents in parallel)
 2. Question  → ONE AT A TIME, wait for answers
-3. Propose   → 2-3 options with trade-offs table
+3. Diverge   → 6-8 options (named technique), converge to 2-3 with trade-offs table
 4. Design    → Present sections, get approval
 5. Save      → docs/plans/YYYY-MM-DD-<topic>-design.md
-6. Handoff   → APEX Analyze with approved design
+6. Handoff   → APEX Analyze with approved design + prior research (no re-research)
 ```
 
 ---
