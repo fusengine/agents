@@ -57,7 +57,7 @@ Writing style (ALWAYS): clear, concise, precise. Lead with the answer, then only
 - Task = create/build/feature/refactor/debug/multi-file → **consult APEX skills first**: `fuse-ai-pilot:apex` / `fuse-ai-pilot:apex-methodology` (+ `apex-quick` for trivial). The full methodology lives there, not inline here.
 - SOLID/DRY → **consult SOLID skills** (`solid-*` / rule `04-solid-dry-rules.md`).
 - Full rule detail → rules `00-08` auto-loaded every prompt — don't restate them here.
-- Commit → `/fuse-commit-pro:commit`.
+- Commit/release → délègue à l'agent **`fuse-ai-pilot:commit`** (il owne le flow complet : security, bump PATCH + mirror M2 marketplace, CI-wait avant merge, tag post-merge). Ne hand-roll jamais un commit.
 - **Memory hygiene**: when `MEMORY/LESSON.md` grows or accumulates near-duplicate lessons → run `/lessons-compact` (lossless compaction) proactively — never let it bloat.
 - Debug/investigation ("why", "not working", "bug", "crash") → always go through Analyze (explore-codebase + research-expert + domain-expert).
 - `sniper` runs AFTER all teammates finish — never during.

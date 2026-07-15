@@ -72,6 +72,27 @@ Format: `<type>/<scope-or-summary>` (kebab-case).
 
 **fuse-commit-pro recommendation**: real merge commit via `gh pr merge --merge --delete-branch` (see `commands/commit.md` Step 7).
 
+## CI Gate Before Merge
+
+**Cardinal rule: never merge before CI checks are resolved; never assume "zero CI" without verifying.**
+
+Determine which of the three cases applies from what actually exists on the PR — never from assumption:
+
+- **Checks exist + native auto-merge available** → let GitHub merge once required checks pass:
+  ```bash
+  gh pr merge <pr> --auto --merge --delete-branch
+  ```
+- **Checks exist, no auto-merge** → watch checks, then merge — **never pipe** `gh pr checks` (e.g. `| tail`): a pipe swallows the exit code and lets a merge proceed after failing CI. Chain with `&&` so the merge only runs if checks passed:
+  ```bash
+  gh pr checks <pr> --watch && gh pr merge <pr> --merge --delete-branch
+  ```
+- **Repo has zero CI checks (verified, not assumed)** → immediate merge is allowed:
+  ```bash
+  gh pr merge <pr> --merge --delete-branch
+  ```
+
+Merge is always `--merge` (real merge commit) — **never `--squash`**, it would orphan the release tag's target (see Tagging timing below).
+
 **Tagging timing**: never push the tag before the merge is validated — CI could still fail or branch protection could still block the merge, and a tag pushed early would point at a commit that never lands on `main`. Tag `vX.Y.Z` on `main` AFTER the merge completes, then push the tag (`fuse-commit-pro:commit` does this automatically in Step 8 — see also `commands/commit.md` Step 8 and `post-commit/references/tag-timing.md`).
 
 ## After Merge

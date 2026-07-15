@@ -1,5 +1,9 @@
 # Release Notes
 
+## [1.39.2] - 16-07-2026
+
+- feat(commit): add the `fuse-ai-pilot:commit` agent as the single owner of the commit/release flow — the lead delegates every commit to it and it runs the fuse-commit-pro flow end to end, closing the two steps that were historically hand-rolled away (post-commit M2 marketplace version mirror, and the Step 7 CI-wait before merge). commit-pro `git-flow` gains a "CI Gate Before Merge" section so the CI-wait procedure lives in a loadable skill; claude-rules routes commits to the agent in the CLAUDE.md template and rule 06. (fuse-ai-pilot 1.2.36, fuse-commit-pro 1.2.22, claude-rules 1.0.15)
+
 ## [1.39.1] - 16-07-2026
 
 - fix(marketplace): sync per-plugin `version` fields in `marketplace.json` to each plugin's `plugin.json`. The 1.39.0 release bumped the `plugin.json` versions but skipped the post-commit M2 step that mirrors them into the marketplace manifest, leaving 8 entries stale (and exposing pre-existing drift). Synced fuse-ai-pilot 1.2.35, fuse-design 2.1.31, fuse-astro 1.0.10, fuse-lessons 1.0.3, fuse-typescript/php/rust/go 1.0.3; every `plugins[]` entry now satisfies `marketplace.version == plugin.json.version`. Manifest-only, no plugin content changed.

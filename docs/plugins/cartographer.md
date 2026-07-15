@@ -67,7 +67,7 @@ Project cartography only runs when a real project is detected (has `package.json
 
 ## Agent Integration
 
-All 35 agents have a `## Cartography` section instructing them to read their maps before acting:
+All 36 agents have a `## Cartography` section instructing them to read their maps before acting:
 - **Your skills**: `${CLAUDE_PLUGIN_ROOT}/.cartographer/index.md`
 - **All plugins**: `${CLAUDE_PLUGIN_ROOT}/../.cartographer/index.md`
 - **Project files**: `.cartographer/project/index.md`
