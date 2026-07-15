@@ -34,9 +34,11 @@ Respect `--no-branch-check`, `--no-merge`, `--no-pr` if passed by the caller.
 - **Post-commit M2, always.** For every plugin touched under `plugins/{name}/`: bump `plugin.json` PATCH, AND if that plugin is listed in `marketplace.json`'s `plugins[]` array, mirror the same version into its `version` field there (`core[]` entries have no version field — bump `plugin.json` only). After M2: assert `marketplace.json` version == `plugin.json` version for every touched plugin. Never report the bump done without this check.
 - **Bump PATCH by default.** MINOR/MAJOR is an explicit owner decision — never infer it from the diff, always ask if warranted.
 - **Bump commit is SEPARATE** from the code commit — never combined, never amended into it.
-- **Never merge before CI resolves.** Determine checks from what actually exists on the PR, not from assumption:
-  - Checks exist → `gh pr checks <pr> --watch && gh pr merge <pr> --merge --delete-branch` (`&&`, never piped — a pipe swallows the exit code), or `gh pr merge <pr> --auto --merge --delete-branch` for native auto-merge.
-  - Repo genuinely has **zero** checks (verified, not assumed) → immediate `gh pr merge <pr> --merge --delete-branch` is allowed.
+- **Never merge before CI resolves.** Determine checks from what actually exists on the PR, not from assumption — full rationale + poll snippet: `git-flow` skill's "CI Gate Before Merge" section. Branch on **whether required status checks are configured**, not merely on auto-merge availability — `gh pr merge --auto` only ever waits for *required* checks; on a repo where checks run but aren't required, `--auto` merges immediately without waiting:
+  1. Required checks configured (verify: `gh pr checks <pr> --required`) → the only case `--auto` actually gates: `gh pr merge <pr> --auto --merge --delete-branch`.
+  2. Checks exist but none required → don't use `--auto` (it wouldn't wait). Checks take a few seconds to register after `gh pr create`; never `--watch` immediately (`no checks reported` error — [cli/cli#7401](https://github.com/cli/cli/issues/7401)) — poll until checks register (bounded, ~90s), THEN `gh pr checks <pr> --watch && gh pr merge <pr> --merge --delete-branch` (`&&`, never piped for the gate itself — a pipe swallows the exit code).
+  3. Repo genuinely has **zero** checks (verified, not assumed) → immediate `gh pr merge <pr> --merge --delete-branch` is allowed.
+  - A non-required check never blocks the merge — only *required* checks gate.
   - Merge is always `--merge` (real merge commit) — **never `--squash`**, it would orphan the tag target.
 - **Tag POST-merge only.** Never tag before Step 7 confirms the merge landed. After tagging: `git merge-base --is-ancestor vX.Y.Z main` must succeed before declaring the release done. LOCAL/DEGRADED mode (no remote, or no `gh`/not authenticated): tag locally right after the bump commit, never auto-push the tag — print the manual command instead.
 
