@@ -1,5 +1,9 @@
 # Release Notes
 
+## [1.39.5] - 16-07-2026
+
+- fix(hooks): inject `CLAUDE_PLUGIN_ROOT` into the top-level hooks-loader spawn — rules 00-08 (claude-rules plugin) were never injected because the aggregator spawned top-level hooks without `CLAUDE_PLUGIN_ROOT` in the child env, so any hook command relying on `${CLAUDE_PLUGIN_ROOT}` resolved to nothing. `plugin-scanner` now carries `pluginPath` on every `ExecutableHook`, and `hook-executor` sets it in the spawn env (fixtures and both hook-executor test suites updated). Bumps `@fusengine/harness` ^0.1.73→^0.1.74 (embarks the matching design-agent fix: `currentPhase === 1`). Aucun plugin individuel touché — bump de suite uniquement.
+
 ## [1.39.4] - 16-07-2026
 
 - feat(brainstorm): strengthen the design brainstorming agent — frame the problem before ideating (5-whys / Double Diamond), diverge to 6-8 distinct approaches via a named technique (SCAMPER / reverse-brainstorming / analogies) before converging to 2-3, and present options neutrally (steelman + devil's-advocate) to avoid anchoring on the first idea. Comparison-table axes now derive from measurable success criteria instead of canned Complexity/Scalability rows; the handoff carries explore-codebase/research-expert findings into APEX Analyze instead of re-researching, and the design-doc template gains Success Metrics, Alternatives Considered, Risks, and Assumptions/Open Questions sections. (fuse-ai-pilot 1.2.38)

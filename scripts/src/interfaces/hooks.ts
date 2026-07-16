@@ -29,6 +29,7 @@ export interface ExecutableHook {
 	command: string;
 	isAsync: boolean;
 	pluginName: string;
+	pluginPath: string;
 }
 
 /** Résultat du parsing d'une command de hook en argv shell-free */

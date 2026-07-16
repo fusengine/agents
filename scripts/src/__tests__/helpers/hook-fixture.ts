@@ -25,5 +25,6 @@ export function fixtureHook(
 		command: `bun ${FIXTURE_PATH} ${mode}${tail}`,
 		isAsync,
 		pluginName: "test",
+		pluginPath: "/test/plugins/test",
 	};
 }
