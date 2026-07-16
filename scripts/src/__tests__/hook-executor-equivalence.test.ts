@@ -40,7 +40,7 @@ describe.skipIf(!bash)("hook-executor equivalence (bash vs shell-free)", () => {
 			const input = c.input ?? "{}";
 			const old = await runViaBash(c.cmd, input);
 			const next = await executeHook(
-				{ command: c.cmd, isAsync: false, pluginName: "eq" },
+				{ command: c.cmd, isAsync: false, pluginName: "eq", pluginPath: "/test/plugins/eq" },
 				input,
 			);
 			expect(next.exitCode).toBe(old.exitCode);

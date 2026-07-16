@@ -64,7 +64,7 @@ export function extractHooks(
 				.replace(/\$\{CLAUDE_PROJECT_DIR\}/g, process.cwd())
 				.replace(/\$\{HOME\}/g, HOME)
 				.replace(/\$HOME/g, HOME);
-				hooks.push({ command, isAsync: command.startsWith("afplay"), pluginName: plugin.name });
+				hooks.push({ command, isAsync: command.startsWith("afplay"), pluginName: plugin.name, pluginPath: plugin.path });
 			}
 		}
 	}

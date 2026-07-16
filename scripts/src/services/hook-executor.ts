@@ -31,6 +31,7 @@ export async function executeHook(
 
 	try {
 		const proc = Bun.spawn(argv, {
+			env: { ...process.env, CLAUDE_PLUGIN_ROOT: hook.pluginPath },
 			stdin: new TextEncoder().encode(input),
 			stdout: "pipe",
 			stderr: "pipe",

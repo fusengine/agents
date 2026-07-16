@@ -35,6 +35,7 @@ describe("executeHook", () => {
 			command: `bun ${FIXTURE_PATH} fail || true`,
 			isAsync: false,
 			pluginName: "test",
+			pluginPath: "/test/plugins/test",
 		};
 		const result = await executeHook(h, "{}");
 		expect(result.success).toBe(true);
@@ -49,6 +50,7 @@ describe("executeHook", () => {
 			command: `bun ${FIXTURE_PATH} block || true`,
 			isAsync: false,
 			pluginName: "test",
+			pluginPath: "/test/plugins/test",
 		};
 		const result = await executeHook(h, "{}");
 		expect(result.blocked).toBe(false);
@@ -65,6 +67,7 @@ describe("executeHook", () => {
 			command: "nonexistent-command-xyz",
 			isAsync: false,
 			pluginName: "test",
+			pluginPath: "/test/plugins/test",
 		};
 		const result = await executeHook(h, "{}");
 		expect(result.blocked).toBe(false);
