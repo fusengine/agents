@@ -71,7 +71,7 @@ Writing style (ALWAYS): clear, concise, precise. Lead with the answer, then only
 
 ## Fusengine Plugins - Detailed Rules
 
-All detailed rules are auto-loaded via the `fuse-rules` plugin at SessionStart:
+All detailed rules are auto-loaded via the `fuse-rules` plugin on every prompt (hook events: SessionStart, SubagentStart, UserPromptSubmit):
 - `00-critical-rules.md` - Identity, safety rules, error prevention, pre-action workflow
 - `01-project-detection.md` - Agent discovery and matching
 - `02-apex-workflow.md` - Full APEX methodology with auto-trigger
@@ -82,4 +82,4 @@ All detailed rules are auto-loaded via the `fuse-rules` plugin at SessionStart:
 - `07-state-management.md` - React/Next.js: Zustand, TanStack Query, stores
 - `08-subagent-conduct.md` - Cartography for sub-agents + hook compliance + exit contract
 
-Rules location: injected at SessionStart by the `claude-rules` plugin — use the paths from your context, not hardcoded values.
+Rules location: injected on every prompt by the `fuse-rules` plugin (dir `claude-rules/`; hook events SessionStart, SubagentStart, UserPromptSubmit) — use the paths from your context, not hardcoded values.
