@@ -97,10 +97,32 @@ element (`design-method`) is a **FLAG-with-justification**, not a hard block —
 deliberate, declared signature is a valid override. Fast mechanical trigger; full
 compound detector at `design-review/references/anti-ai-slop-audit.md` entry 9.
 
+## 9. Ban bounce/elastic easing
+
+```bash
+grep -niE 'cubic-bezier\([^)]*1\.[1-9]|elastic|spring[^-]*bounc|bounceOut|bounceIn' "$FILE"   # must return nothing
+```
+Overshoot easing (`cubic-bezier` y-control-points >1, `elastic`, or a "bouncy spring") reads
+as a toy interaction, not a premium one. Hard grep — any match fails; use a standard ease
+(`ease-out`, `cubic-bezier(0.16, 1, 0.3, 1)`) from `design-motion/references/motion-tokens.md` instead.
+
+## 10. Layout-property animation is a WARNING, not a block
+
+```bash
+grep -noE '(transition|animation)[^;]*:(.*\b(width|height|top|left|margin|padding)\b)' "$FILE"
+```
+Animating `width`/`height`/`top`/`left`/`margin`/`padding` forces layout on every frame —
+janky on lower-end devices. **WARNING, not a hard block.** Whitelisted exceptions: the
+accordion pattern (`grid-template-rows: 0fr → 1fr`) and FLIP-technique reflows. Everything
+else should animate `transform`/`opacity` only — see
+`design-motion/references/motion-performance.md`.
+
 ---
 
-Any fail here blocks the "audit passed" verdict (`design-review` Part 1). Fix and re-run
-the failing command; do not proceed to the visual review (Part 2) with an open mechanical fail.
+Any fail here blocks the "audit passed" verdict (`design-review` Part 1), except check 10
+(layout-property animation), which is a WARNING — reported, not blocking. Fix and re-run
+the failing command; do not proceed to the visual review (Part 2) with an open mechanical
+fail (warnings excepted).
 
 ## Provenance
 
@@ -116,4 +138,7 @@ Each check was verified against the raw `taste-skill/SKILL.md`
   grep gate we defined on top of the repo's real `MOTION_INTENSITY` dial (§1) and its
   §14 "Motion motivated" check. The `> 4` threshold is ours. Check 8 (cluster #1
   co-occurrence) is also ours, mirroring `design-review/references/anti-ai-slop-audit.md`
-  entry 9.
+  entry 9. Checks 9-10 (bounce/elastic easing ban, layout-property animation warning) are
+  also ours — not in the source taste-skill — deterministic guardrails mirroring
+  `design-motion/references/motion-performance.md` (transform/opacity-only) and the
+  `animation-decision-framework.md` gate; canonical-once, not restated there.

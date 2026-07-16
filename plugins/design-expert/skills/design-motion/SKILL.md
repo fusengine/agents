@@ -28,7 +28,11 @@ After `design-web` or `design-webapp` components exist. Before `design-review`.
    `references/motion-tokens.md`. Below `MOTION_INTENSITY` 4: restraint — only what
    survived the gate, nothing decorative. At `MOTION_INTENSITY > 4`: the page must
    actually animate on scroll (see `references/gsap-scroll-skeletons.md`), not merely
-   claim to — this is checked in `design-review`'s motion audit.
+   claim to — this is checked in `design-review`'s motion audit. Bounce/elastic overshoot
+   easing and layout-property (`width`/`height`/`top`/`left`/`margin`/`padding`) animation
+   are gated deterministically downstream at `design-review/references/pre-flight-checklist.md`
+   checks 9-10 (ban / warning) — canonical there, not restated here; see
+   `references/motion-performance.md` for the transform/opacity-only rationale.
 3. **For everything that survives the gate**, apply the matching pattern:
    - Entrance: `references/entrance-patterns.md` — IntersectionObserver reveals,
      80-120ms stagger, fadeUp/fadeIn. **Safety**: content starts **visible**; `opacity: 0`

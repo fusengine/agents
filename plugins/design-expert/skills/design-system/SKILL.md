@@ -34,7 +34,7 @@ already defined.
    modern / playful / luxury. Consumed later by `design-motion`.
 7. **Check visual techniques** in `references/visual-technique-matrix.md` — what's allowed
    for this personality × density combination.
-8. **Run the Mechanical Contrast Check** (below) on every foreground/background pair.
+8. **Run the Mechanical Contrast Check and Mechanical Type-Scale Check** (below).
 9. **Generate `design-system.md`** at project root from `references/templates/` (fintech,
    ecommerce, devtool, creative, or blank).
 
@@ -44,13 +44,14 @@ already defined.
 file in this plugin that mentions forbidden fonts must point here instead of restating
 its own list.
 
-**Flag-when-undeclared**: `Fraunces`, `Instrument Serif`, `Playfair Display`. These
-serif-display fonts are legitimate *when declared as the deliberate signature element*
-(see `design-method` Step 2) — they are not banned outright. The tell isn't the font
-itself, it's the *reflexive, undeclared* combo: serif-display + italic accent + cream
-background, reached for on autopilot because it "looks premium." If one of these fonts
-shows up without an explicit signature-element rationale in `design-system.md`, flag it
-for review rather than auto-passing it.
+**Flag-when-undeclared**: `Fraunces`, `Instrument Serif`, `Playfair Display`, `Geist`,
+`Space Grotesk`. These fonts are legitimate *when declared as the deliberate signature
+element* (see `design-method` Step 2) — they are not banned outright. The tell isn't the
+font itself, it's the *reflexive, undeclared* combo: serif-display + italic accent + cream
+background for the first three; the "safe modern-technical" grotesk reached for on
+autopilot, with no stated rationale, for Geist/Space Grotesk. If one of these fonts shows
+up without an explicit signature-element rationale in `design-system.md`, flag it for
+review rather than auto-passing it.
 
 ### Font Self-Hosting (canonical — defined here only)
 
@@ -76,6 +77,13 @@ Run this against every text-on-background and UI-element-on-background pair in b
 light and dark mode before calling the system done. Thresholds: **4.5:1 text, 3:1 UI** —
 this is the only place that number is defined; every other file in this plugin that cites
 a contrast ratio points back here.
+
+### Mechanical Type-Scale Check (canonical — defined here only)
+
+- **Type-Scale Floor**: ≥ 1.2× between adjacent **title** steps only (display→h1→h2→h3) — mechanical check `step[n].fontSize / step[n-1].fontSize ≥ 1.2`; 1.25× is the preferred target, FAIL is <1.2. Body→caption tier is **exempt** (tighter ratios are legitimate there, see `references/fluid-typography.md`).
+- **Body-Size Floor**: the main paragraph token (`--text-base`/body) ≥ 16px in every breakpoint. Caption/small/label tokens (e.g. `--text-small` 14px) are **exempt**.
+
+Run both alongside the Mechanical Contrast Check above before calling the system done.
 
 ### Output
 - `design-system.md` at project root: OKLCH palette (light + dark), typography pair,
