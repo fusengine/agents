@@ -1,5 +1,9 @@
 # Release Notes
 
+## [1.39.6] - 16-07-2026
+
+- docs(claude-rules): fix rule-injection wording in the `CLAUDE.md.template` — rules are injected on every prompt (SessionStart, SubagentStart, UserPromptSubmit), not only at SessionStart as previously stated, and the injection source is named by its `fuse-rules` plugin.json name (dir `claude-rules/`). (claude-rules 1.0.16)
+
 ## [1.39.5] - 16-07-2026
 
 - fix(hooks): inject `CLAUDE_PLUGIN_ROOT` into the top-level hooks-loader spawn — rules 00-08 (claude-rules plugin) were never injected because the aggregator spawned top-level hooks without `CLAUDE_PLUGIN_ROOT` in the child env, so any hook command relying on `${CLAUDE_PLUGIN_ROOT}` resolved to nothing. `plugin-scanner` now carries `pluginPath` on every `ExecutableHook`, and `hook-executor` sets it in the spawn env (fixtures and both hook-executor test suites updated). Bumps `@fusengine/harness` ^0.1.73→^0.1.74 (embarks the matching design-agent fix: `currentPhase === 1`). Aucun plugin individuel touché — bump de suite uniquement.
