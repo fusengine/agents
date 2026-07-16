@@ -32,6 +32,10 @@ motion signature. If you can't name it in one sentence, the brief isn't sharp en
 go back to Step 1. Everything else in the design supports this element; nothing competes
 with it.
 
+**Signature Dominance** (register `brand` only — `product`/minimal are exempt, see Gate 0):
+the signature element must be the largest focal element by area OR by contrast — mechanical,
+checked against the rendered layout, not "it feels dominant."
+
 ## Step 3 — Two-Pass Process
 
 **Pass 1 — Compact plan.** Before writing markup, write a short plan: palette direction,
@@ -39,14 +43,17 @@ typography pair, layout approach, the signature element. A paragraph, not a page
 
 **Pass 2 — Critical re-read.** Re-read the Pass 1 plan against the Step 1 brief and ask:
 "does this read as the generic default for this category, or does it commit to the tone
-I chose?" If it's generic, revise the plan — not the first line of CSS.
+I chose?" If it's generic, revise using a named move, never a vague "make it better":
+**bolder** (commit harder to what's already there — don't add elements), **quieter**
+(dial back intensity), or **distill** (remove elements when it reads as overloaded).
+Revise the plan, not the first line of CSS.
 
 Also run the **Subtraction Test**: mentally remove the Step 2 signature element. Still distinctive without it → it was decoration, not a signature; go back to Step 2. Only after both pass do you write the first line of markup.
 
 ## Anti-Slop: Name What You're Avoiding
 
-Three clusters read as "AI-generated" by default. Naming them is the fastest way to not
-reproduce them:
+Three core clusters, plus two more, read as "AI-generated" by default. Naming them is the
+fastest way to not reproduce them:
 
 1. **Cream #F4F1EA + a contrasted serif + terracotta accent** — the default "editorial SaaS" look.
 2. **Near-black background + one acid accent color** — the default "dark developer tool" look.
@@ -63,8 +70,15 @@ Dominant, committed colors and sharp accents beat a timid, safe palette every ti
 ## Gate 0 — Brief Lock
 
 Before routing to any target skill — before writing a single line of HTML/CSS/tokens —
-three artefacts from Steps 1-3 above must exist **in writing**, not just in your head:
+four artefacts from Steps 1-3 above must exist **in writing**, not just in your head:
 
+0. **Register** — `brand` (one dominant, expressive message: marketing site, launch page,
+   identity) or `product` (dense, predictable, motion stays discreet: dashboard, SaaS tool,
+   utility screen). Pick one explicitly, don't default. This arbitrates the
+   **register-conditional floors**: Signature Dominance (Step 2) applies `brand` only;
+   Focal-Block Floor (`design-web/references/layout-discipline.md` rule 9) applies `brand`
+   only, exempt in `product`. **Mechanical floors** — Type-Scale (titles), Body-Size,
+   Measure — apply in both registers regardless of this pick.
 1. **Tone** committed to ONE extreme (Step 1, question 2) — not an adjective that could
    also describe three competitors.
 2. **Signature element** named in one sentence (Step 2).
@@ -72,7 +86,7 @@ three artefacts from Steps 1-3 above must exist **in writing**, not just in your
    mandatory browse in `design-web/references/design-inspiration.md` actually executed,
    not merely planned.
 
-This is a **present/absent check on three named artefacts** — structural, not a taste
+This is a **present/absent check on four named artefacts** — structural, not a taste
 judgment. One missing ⇒ **generation is forbidden** until it exists. It's the same
 discipline as "separate creative thinking from implementation": the thinking has to be
 finished and written down before implementation starts, every time — regardless of how

@@ -37,11 +37,14 @@ specific framework's source tree — the pipeline defaults to vanilla HTML/CSS +
 | 4 | Identical corner-radius everywhere | `grep -o "border-radius:[^;]*" *.css \| sort -u` returns exactly 1 value across all component types | One radius scale (e.g. sm/md/lg), applied by component role, not a single flat value |
 | 5 | Hero-centered + 3-icon-cards macrostructure | Structural: `grep -qE 'class="[^"]*text-center[^"]*"[^>]*>\s*<h1'` (centered `h1`) followed by a `grid`/`flex` container whose child count is `grep -ocE '<(div\|li)[^>]*class="[^"]*(card\|icon)[^"]*"'` == 3, each containing an `<svg`/icon-class element | Pick a non-default macrostructure per `design-method` "Macrostructure Variety" |
 | 6 | Eyebrow/badge above every `h2` | Count uppercase-tracking labels immediately preceding section headlines; compare to `design-review/references/pre-flight-checklist.md` cap | Drop the eyebrow on repeat sections; headline alone is enough |
-| 7 | Colored left-border cards | `grep -o "border-left:[^;]*" *.css` present on every card in a grid | Depth/hierarchy via elevation, size, or fill — not a uniform accent stripe |
+| 7 | Colored side-border / side-tab / side-stripe accent cards | `grep -oE "border-(left|right):[^;]*" *.css` present on every card in a grid, OR a `::before`/`::after` pseudo-element sized as a thin colored stripe/tab on the card edge | Depth/hierarchy via elevation, size, or fill — not a uniform accent stripe/tab |
 | 8 | "Steps 1-2-3" numbered list pattern | Structural: `STEPS=$(grep -ocE '<(div\|li)[^>]*>\s*<(span\|div)[^>]*>0?[1-3]</(span\|div)>' "$FILE")`; `[ "$STEPS" -ge 3 ]` AND all matched cards share one `class="..."` shell (`grep -oE 'class="[^"]*step[^"]*"' "$FILE" \| sort -u \| wc -l` == 1) | Asymmetric process treatment (timeline, connected path, varied card sizes) |
 | 9 | Cluster #1 signature co-occurrence (cream + serif + italic-accent + terracotta), undeclared | `CREAM=$(grep -qiE 'background(-color)?:\s*(oklch\([^)]*0\.9[0-8][^)]*(6[0-9]\|[7-8][0-9]\|9[0-9])\)\|#f4f1ea\|#f7f5f1)' "$FILE" && echo 1)`; `SERIF_ITALIC=$(grep -qiE 'font-family:[^;]*serif' "$FILE" && grep -qiE 'font-style:\s*italic' "$FILE" && echo 1)`; `TERRACOTTA=$(grep -qiE '#b6553a\|#bc7c3a\|oklch\([^)]*0\.1[0-9][^)]*(3[0-9]\|4[0-9])\)' "$FILE" && echo 1)`; sum ≥ 2/3 | If ≥2/3 present **and** not declared as the Step 2 signature element (`design-method`): **FLAG-with-justification**, not a BLOCK — a declared deliberate signature is a valid override |
 | 10 | Cluster #2 signature co-occurrence (near-black background + acid accent), undeclared | `NEARBLACK=$(grep -qiE 'background(-color)?:\s*(oklch\([^)]*0?\.[01][0-9]?%?\|#0[0-9a-f]{5}\|#1[0-4][0-9a-f]{4})' "$FILE" && echo 1)`; `ACID=$(grep -qiE 'oklch\([^)]*0\.[2-9][0-9][^)]*\)' "$FILE" && echo 1)`; sum ≥ 2/2 | Both present, undeclared as signature: **FLAG-with-justification**, not a BLOCK — same override rule as #9 |
 | 11 | Cluster #3 signature co-occurrence (broadsheet hairlines + zero-radius + mono), undeclared | `RADIUS0=$(grep -oE "border-radius:[^;]*" *.css \| sort -u \| grep -qE '^\s*border-radius:\s*0(px)?;?\s*$' && echo 1)`; `MONO=$(grep -qi 'font-family:[^;]*mono' "$FILE" && echo 1)`; `HAIRLINE=$(grep -qiE 'border(-top\|-bottom)?:\s*1px solid' "$FILE" && echo 1)`; sum ≥ 2/3 | If ≥2/3 present, undeclared as signature: **FLAG-with-justification**, not a BLOCK — same override rule as #9 |
+| 12 | Nested cards (card-in-card depth) | Structural: a `.card`/`[class*="card"]` element containing another `.card`/`[class*="card"]` descendant beyond 1 level — `grep -ozE '<[^>]*class="[^"]*card[^"]*"[^>]*>([^<]*<[^>]*>)*?[^<]*<[^>]*class="[^"]*card[^"]*"'` matching nested card markup, or a DOM check with ≥3 card-role ancestors | Cap nesting at 1 level; flatten with padding/dividers instead of a literal card-in-card |
+| 13 | Grid of visually identical cards | Every card in one grid shares identical size, media treatment, and layout — no featured/larger/varied cell — `grep -oE 'class="[^"]*card[^"]*"' *.html \| sort \| uniq -c` returns one repeated class shell with zero size/media variation across the grid | Vary at least one card per grid (featured/larger span, image vs. icon-only, or asymmetric layout) |
+| 14 | Icon-tile above heading, repeated (generic icon-bento) | A small square/rounded icon container immediately above a heading, repeated per card — `grep -ozE '<[^>]*class="[^"]*icon[^"]*"[^>]*>[^<]*(<[^>]*>[^<]*)*?</[a-z]+>\s*<h[2-4]'` (icon block directly followed by a heading). Same detector family as `design-method` Anti-Slop cluster #5 (generic icon-bento) — this entry is its deterministic grep companion, not a duplicate definition | Replace with image/gradient/pattern variation per `design-method` cluster #5 remediation |
 
 ## Prevention
 
@@ -61,7 +64,7 @@ scored low. There is no total to compute.
 
 - Entries 9-11 (cluster co-occurrence): a FAIL is a **FLAG-with-justification**, not a
   BLOCK — a deliberate signature declared per `design-method` Step 2 overrides it.
-- All other entries (1-8): a FAIL blocks the "audit passed" verdict until fixed.
+- All other entries (1-8, 12-14): a FAIL blocks the "audit passed" verdict until fixed.
 
 ## Audit Report Format
 
@@ -81,6 +84,9 @@ scored low. There is no total to compute.
 | 9 | Cluster #1 co-occurrence (cream/serif/terracotta), undeclared | PASS/FLAG | [findings] |
 | 10 | Cluster #2 co-occurrence (near-black/acid), undeclared | PASS/FLAG | [findings] |
 | 11 | Cluster #3 co-occurrence (broadsheet/zero-radius/mono), undeclared | PASS/FLAG | [findings] |
+| 12 | Nested cards (card-in-card depth) | PASS/FAIL | [findings] |
+| 13 | Grid of visually identical cards | PASS/FAIL | [findings] |
+| 14 | Icon-tile above heading, repeated | PASS/FAIL | [findings] |
 
 ### Recommendations
 1. [Highest priority fix]

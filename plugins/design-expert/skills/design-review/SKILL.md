@@ -16,9 +16,7 @@ The last step before reporting the deliverable done.
 ### Input
 - Complete components/mockup with animations (if any) and interactive states.
 - `design-system.md` as the audit baseline.
-- The 3 elements declared in `design-web`/`design-webapp` ("Je reproduis: {el1}, {el2}, {el3}"),
-  plus the signature element (`design-method` Step 2) and any declared premium pattern(s) —
-  all subject to the same present/absent check in Part 2.
+- The 3 elements declared in `design-web`/`design-webapp` ("Je reproduis: {el1}, {el2}, {el3}") and any declared premium pattern(s) — present/absent check in Part 2; the signature element (`design-method` Step 2) instead gets **Signature Dominance** in Part 2.
 
 ### Part 1 — Deterministic Checks (run first, mechanical, not vibes)
 
@@ -61,6 +59,8 @@ The last step before reporting the deliverable done.
 13. **No-JS baseline** — content stays visible with JS disabled (inspect with
     `scripting: none`, or the DOM stripped of `<script>`). A blank or broken page without
     JS is a blocking fail.
+14. **Type-Scale, Body-Size, Measure & Focal-Block floors** — verify against `design-system/SKILL.md` (Type-Scale Floor, Body-Size Floor — both registers) and `design-web/references/layout-discipline.md` (Measure Floor — both registers; Focal-Block Floor — register-aware, rule 9: `brand` only, `product` exempt) — canonical there, not restated here.
+15. **Dark-Elevation Direction** (deterministic, OKLCH `L`) — an `elevated`/`popular`/`featured` card must differ from its base sibling via a lighter `L` OR a border/accent, never identical; rule stated here, dark-surface `L`-scale mechanism at `design-system/references/edge-cases.md:31-42`.
 
 Any Critical/Major finding from Part 1 gets fixed before Part 2 runs.
 
@@ -72,10 +72,7 @@ Any Critical/Major finding from Part 1 gets fixed before Part 2 runs.
    dump) AND one `fullPage: true` capture, in **both** light and dark via the
    `colorScheme` parameter of `browser_screenshot` — never a manual `.dark` class toggle.
 3. **Cross-viewport**: one `browser_screenshot` call with `viewports: ["mobile", "tablet", "desktop"]`.
-4. **Compare the declared elements** — the 3 declared elements, the signature element, and
-   any declared premium pattern(s): binary verdict per item, `[present]` or `[absent]`,
-   against what was declared upstream. No partial credit — if an item doesn't match what
-   was promised, it's absent.
+4. **Compare the declared elements** — the 3 declared elements and any declared premium pattern(s): binary verdict per item, `[present]`/`[absent]`, no partial credit. The signature element instead gets **Signature Dominance** (mechanical focal weight — largest focal element by area OR contrast; brand register only) per `design-method/SKILL.md` Step 2 — canonical there, not restated here.
 5. **Localized critique only** — findings must name the exact section/element and the
    exact issue ("the card padding in the pricing grid is 12px, tokens call for 24px"),
    never a general "improve the style" note.
@@ -83,16 +80,9 @@ Any Critical/Major finding from Part 1 gets fixed before Part 2 runs.
    `references/motion-verdict.md`: Before/After/Why table, tiered impact, explicit
    Block/Approve decision. Use `design-motion/references/animation-glossary.md` for
    shared vocabulary — don't redefine terms here.
-7. **Named eLicit technique** — cite at least one technique from `references/elicitation-visual.md` (Squint/Subtraction/Competitor Line-up/5-Second/Persona) against the captured screenshots.
-8. **Fix gaps** — apply fixes for Block verdicts or absent elements. **Maximum 2 fix
-   cycles.** If issues remain after cycle 2, STOP — report the remaining issues instead
-   of continuing to loop. A plateau (cycle 2 finds the same issue as cycle 1) also stops
-   immediately, even if it's technically cycle 1 of 2.
-
-### Done-Claim Routing
-Any "deliverable done" claim coming out of this review is routed to the `challenger`
-agent (blind PNG + brief, named elicitation lenses) before it reaches the owner —
-consultative, never a self-score. This procedure never self-certifies its own verdict.
+7. **Named eLicit technique(s)** — cite at least **two** techniques from `references/elicitation-visual.md` (Squint/Subtraction/Competitor Line-up/5-Second/Persona) against the captured screenshots; real independence comes from the challenger gate (item 9 below), not from stacking lenses solo.
+8. **Fix gaps** — apply fixes for Block verdicts or absent elements. The loop exits PASS only once the register-applicable positive floors (Type-Scale/Measure — both registers; Focal-Block/Signature Dominance — `brand` only, `product` exempt per check 14) are **met**, not merely "0 flags". **Maximum 2 fix cycles** — issues (or an unmet floor) remaining after cycle 2 STOP the loop and get reported, not chased further. A plateau (cycle 2 repeats cycle 1's finding) also stops immediately, even at cycle 1 of 2.
+9. **Challenger gate (mandatory, in-loop — not a trailing consultation)** — before any "done" claim, the design-expert invokes `fuse-ai-pilot:challenger` (it holds the `Task` tool) to judge blind (PNG + brief, named elicitation lenses, fresh-context — never this procedure's own reasoning). A Block must be resolved or owner-accepted before "done" (consultative, not a veto — CLAUDE.md Rule 5). **Fallback**: only if `Task`/`Agent` is unavailable (agent at max nesting depth 5) → report "not judged"/escalate to owner, never a silent "done".
 
 ### Failure Handling
 - All server ports 8899-8905 busy → stop, report the deliverable unreviewed, and say so
@@ -103,8 +93,9 @@ consultative, never a self-score. This procedure never self-certifies its own ve
 ### Output
 - Deterministic check results (Part 1), all Critical/Major resolved.
 - Light/dark + 3-viewport screenshots (Part 2).
-- Binary verdict per declared element: `[present]` / `[absent]`.
+- Binary verdict per declared element/pattern; **Signature Dominance** verdict for the signature element.
 - Motion Block/Approve verdict if applicable.
+- Challenger verdict: resolved/owner-accepted, or **"not judged"** on tool-unavailable fallback.
 - Any remaining Minor issues after the 2-cycle cap, reported, not hidden.
 
 ### References

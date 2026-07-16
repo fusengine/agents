@@ -42,6 +42,7 @@ Alternating "left-image + right-text" then "left-text + right-image" is banal pa
 - **N content items = N cells, exactly.** 3 items → 3 cells; 5 items → 5 cells (2+3, hero+4, etc.).
 - Zero filler cells. An empty cell in the middle or end means the grid was planned wrong — re-shape it, never paste a blank tile.
 - Bento cells need visual variation: at least 2-3 cells carry a real image, brand-appropriate gradient, pattern, or tint — not white-on-white typography only.
+- **`no-empty-column`** (extends the N=N rule above beyond bento): in ANY multi-column section — grid, columns, flex row — every column carries content. An empty/blank column to "balance" a layout is the same planning error as a filler bento cell; re-shape the column count instead. Mechanical check: `count(populated columns) == count(grid columns)`.
 
 ## 5. Section-Layout-Repetition Ban
 
@@ -60,3 +61,12 @@ Alternating "left-image + right-text" then "left-text + right-image" is banal pa
 - **Lists > 5 items are never a raw `<ul>`.** Reach for a 2-column split, card grid, tabs/accordion, scroll-snap pills, carousel, or marquee.
 - **Spec sheets are never a bordered row-list** (`border-b` on every row). Use a 2-col spec-card grid, scroll-snap pills, grouped chunks (3 clusters, one soft divider each), or a featured-vs-rest disclosure.
 - Default section shape: headline (≤ 8 words) + sub-paragraph (≤ 25 words) + one asset OR one CTA. No data-dump sections on a marketing page.
+
+## 8. Measure Floor
+
+- **Line length 45–75ch** on any text block (paragraph, long copy, article body). Mechanical: set `max-width` in `ch` units (or an equivalent computed character count) inside that range — below 45ch reads choppy, above 75ch fatigues the eye.
+
+## 9. Focal-Block Floor
+
+- **≥ 1 dominant focal block per viewport** (register `brand` only — see `design-method/SKILL.md` Gate 0). Not "≥ 4 layout families" (that's variety, covered by rule 5) — this is hierarchy: within a single viewport, one block reads as visually dominant. Mechanical predicate: the largest block by rendered area OR by contrast (color/weight) against its neighbors is identifiable and not tied with 2+ other blocks of near-equal area/contrast.
+- **Register `product` exempt** (dashboards, panels of equal-weight density): a single dominant block is not required — at most a soft-flag, never a Block.

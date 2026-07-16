@@ -37,7 +37,9 @@ position: a copy-only request can invoke this skill directly.
 8. **Run the Copy Self-Audit** (below) — mandatory before any copy ships, not advice.
 
 ### Copy Self-Audit — Pre-Flight Gates
-All four must pass; full catalogue in `references/copy-self-audit.md`:
+All gates must pass — base catalogue in `references/copy-self-audit.md`, plus the
+mechanical (grep/count) tells added below. Self-audit stays mechanical only; subjective
+judgment calls are routed to the challenger, never self-scored (see below):
 
 1. **Em-dash — avoid as a crutch, not a hard ban.** A single em-dash doesn't block;
    flag it only when it shows up repeatedly (a recurring tic) or as a lazy substitute
@@ -48,8 +50,21 @@ All four must pass; full catalogue in `references/copy-self-audit.md`:
    (`↓ scroll`), `Quietly trusted by`, fabricated live counters.
 3. **Fake-precise-number flag.** Every `92%`, `4.1×`, `48k` must trace to real data or be
    labelled mock.
-4. **Final string review.** Re-read each visible string; flag anything grammatically
+4. **"Not X. Y." contrast fragments — count, don't feel.** Grep for the manufactured-
+   contrast pattern (a short negation clause immediately followed by a period-terminated
+   affirmation, e.g. "Not features. Focus."). 2+ occurrences on one page = blocking tic.
+5. **"theater" keyword.** Grep for the literal word `theater`/`théâtre` (case-insensitive)
+   in any visible string (e.g. "security theater", "performance theater") — a
+   near-universal AI copy tell. Any hit blocks.
+6. **All-caps body copy.** Grep for a run of ≥ 3 consecutive all-caps words outside a
+   recognized UI label (button, eyebrow, badge). All-caps body paragraphs/subheads block.
+7. **Final string review.** Re-read each visible string; flag anything grammatically
    broken, ambiguous, or AI-hallucination-sounding. One copy register per page.
+
+**Not self-audited — routed to challenger.** Aphoristic cadence (the "feel" of the copy:
+does it read punchy-staccato ad copy pretending to be product copy) is a subjective
+judgment call, not a grep/count. It goes to the challenger pass (fresh-context, per
+`design-review/SKILL.md`'s Part 2 Challenger gate, item 9) — never a self-audit item here.
 
 ### Output
 - `copy-guide.md`: voice profile, tone per context, CTA patterns, error templates, empty-state copy.
