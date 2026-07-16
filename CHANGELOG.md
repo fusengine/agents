@@ -1,5 +1,9 @@
 # Release Notes
 
+## [1.39.7] - 16-07-2026
+
+- feat(design): positive quality floors, in-loop challenger gate, Impeccable anti-slop + register — `design-expert` gains mechanical positive-quality floors, a mandatory in-loop challenger gate (agent equipped with `Task`, depth-5 fallback), anti-slop import checks against DOM/motion/copy shape, and brand/product register tracking across the design-method, design-system, design-review, design-motion, design-web, and ux-copy skills. (fuse-design 2.1.32)
+
 ## [1.39.6] - 16-07-2026
 
 - docs(claude-rules): fix rule-injection wording in the `CLAUDE.md.template` — rules are injected on every prompt (SessionStart, SubagentStart, UserPromptSubmit), not only at SessionStart as previously stated, and the injection source is named by its `fuse-rules` plugin.json name (dir `claude-rules/`). (claude-rules 1.0.16)
