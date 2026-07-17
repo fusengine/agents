@@ -4,10 +4,19 @@ description: "SaaS copy examples — feature descriptions, upgrade prompts, valu
 when-to-use: "Writing copy for a SaaS product (features, pricing, upgrade flows)."
 keywords: copy, saas, features, benefit
 priority: medium
-related: voice-tone-sectors.md, microcopy-patterns.md
+related: voice-tone-sectors.md, microcopy-patterns.md, ../../design-method/references/register/brand.md, ../../design-method/references/register/product.md, ../../design-method/references/register/copy.md
 ---
 
 # UX Copy — SaaS
+
+> **Register note — examples below are illustrative, not a copy-paste
+> source.** Before using any line here, subordinate it to the page's
+> register: derive the actual phrasing from the POV
+> (`design-method/references/register/brand.md` §1) or the Domain-Specificity
+> Floor (`register/product.md` §2), and check it against the ban-lists in
+> `register/copy.md` §1-2. A line lifted verbatim from here into two
+> different SaaS projects is exactly the Competitor Lift Test failure
+> (`brand.md` §3) — "good copy" isn't the bar, "this brand's copy" is.
 
 ## Feature Descriptions
 
