@@ -44,7 +44,7 @@ Writing style (ALWAYS): clear, concise, precise. Lead with the answer, then only
 |-----------|--------|
 | Single-file fix (1-3 lines) | Direct edit + sniper |
 | Multi-file task (2+ files) | **Propose TeamCreate** — ask user first |
-| User says "team" / "crée une team" | **TeamCreate immediately** |
+| User says "team" / "crée une team" | **TeamCreate immediately** — a team is **MINIMUM 4 agents in parallel**, NEVER 1 (1 agent = not a team) |
 
 ### Dev Workflow
 - **ALWAYS work in dev/source repo** — NEVER write to deployed/production paths directly
