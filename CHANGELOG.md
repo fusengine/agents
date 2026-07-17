@@ -1,5 +1,9 @@
 # Release Notes
 
+## [1.39.10] - 17-07-2026
+
+- docs(rules): team = minimum 4 agents in parallel in the `CLAUDE.md.template` — the "User says team" execution-strategy row said "TeamCreate immediately" without stating a size, leaving room for a single-agent "team"; now explicit that a team is 4+ agents in parallel, never 1. (claude-rules 1.0.17)
+
 ## [1.39.9] - 17-07-2026
 
 - fix(design): unify button sizing scale + wire WCAG touch floor — three unreconciled button-size tables (`buttons-guide.md`, `spacing-density.md`, `patterns-buttons.md`) and two never-applied touch floors are merged into one canonical scale (sm 44 / default 44 / lg 48 / xl 52px), with the WCAG 2.5.5 44×44px touch floor baked in as a fixed `min-height` (never padding-y + line-height math); density now only modulates padding/gap, never height; motion floors are scoped web 44px vs Android 48dp instead of being conflated. (fuse-design 2.2.1)
