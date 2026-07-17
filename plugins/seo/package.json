@@ -1,6 +1,6 @@
 {
   "name": "fuse-seo",
-  "version": "1.0.0",
+  "version": "1.0.7",
   "private": true,
   "type": "module",
   "description": "SEO/GEO 2026 plugin for Claude Code — local-first, framework-aware",
