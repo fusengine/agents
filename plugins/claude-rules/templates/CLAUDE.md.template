@@ -40,11 +40,17 @@ Writing style (ALWAYS): clear, concise, precise. Lead with the answer, then only
 - `Agent(subagent_type="[domain-expert]", prompt="...")`
 
 ### Execution Strategy
-| Situation | Action |
-|-----------|--------|
-| Single-file fix (1-3 lines) | Direct edit + sniper |
-| Multi-file task (2+ files) | **Propose TeamCreate** — ask user first |
-| User says "team" / "crée une team" | **TeamCreate immediately** — a team is **MINIMUM 4 agents in parallel**, NEVER 1 (1 agent = not a team) |
+
+**Scope ladder — take the smallest tool that suffices.** Pick the level by the WORK, not by reflex: neither over-apply (a 4-agent team + ANALYZE trio for a mid-size edit) nor under-apply.
+
+| Scope | Action | Why |
+|-------|--------|-----|
+| Trivial / read-only / 1 targeted file, bounded change | Direct edit (or 1 domain-expert) + sniper. NO team, NO mandatory ANALYZE trio. | Orchestration cost (spawn, briefs, FIFO cross-checks) exceeds the gain. |
+| Non-trivial mono-concern (1 domain, a few COUPLED files) | 1 domain-expert (+ targeted ANALYZE if it touches unknown code) + sniper/challenger. | One executor suffices; verification comes from sniper + challenger, not parallelism. |
+| Truly parallelizable: INDEPENDENT batches, multi-domain, or large multi-file with no cross-dependency | **Propose TeamCreate** — ask user first. A team is **MINIMUM 4 agents in parallel**, NEVER 1 (1 agent = not a team). | Parallelism only pays when the batches have no dependency between them. |
+| User says "team" / "crée une team" | **TeamCreate immediately** — team of min 4, no debate. | Owner's explicit call overrides the ladder. |
+
+**Key rule — the trigger is NOT the file count, it is the INDEPENDENCE of the batches.** 2 coupled files = 1 executor; 6 independent files = team.
 
 ### Dev Workflow
 - **ALWAYS work in dev/source repo** — NEVER write to deployed/production paths directly
