@@ -1,5 +1,9 @@
 # Release Notes
 
+## [1.39.11] - 17-07-2026
+
+- docs(rules): add scope ladder (decision criterion: batch independence, not file count) to `03-agent-teams.md` and the `CLAUDE.md.template` — replaces the rough single-file/multi-file table with trivial/mono-concern/parallelizable tiers, each carrying its action and its WHY, so team-vs-direct decisions neither over-apply (4-agent team for a mid-size coupled edit) nor under-apply (single executor for truly independent batches); trigger is explicitly the INDEPENDENCE of the batches, not the file count. (claude-rules 1.0.18)
+
 ## [1.39.10] - 17-07-2026
 
 - docs(rules): team = minimum 4 agents in parallel in the `CLAUDE.md.template` — the "User says team" execution-strategy row said "TeamCreate immediately" without stating a size, leaving room for a single-agent "team"; now explicit that a team is 4+ agents in parallel, never 1. (claude-rules 1.0.17)
