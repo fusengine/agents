@@ -1,5 +1,9 @@
 # Release Notes
 
+## [1.39.9] - 17-07-2026
+
+- fix(design): unify button sizing scale + wire WCAG touch floor — three unreconciled button-size tables (`buttons-guide.md`, `spacing-density.md`, `patterns-buttons.md`) and two never-applied touch floors are merged into one canonical scale (sm 44 / default 44 / lg 48 / xl 52px), with the WCAG 2.5.5 44×44px touch floor baked in as a fixed `min-height` (never padding-y + line-height math); density now only modulates padding/gap, never height; motion floors are scoped web 44px vs Android 48dp instead of being conflated. (fuse-design 2.2.1)
+
 ## [1.39.8] - 17-07-2026
 
 - feat(design): ground-up rebuild of design-expert — all 9 skills rewritten on sourced best-practices (impeccable `.claude/` anatomy, taste-skill, HIG/Material/UX guidelines) into a thin-router + register + moves model; inspiration engine corrected to extract-never-reproduce; new anti-convergence Exploration Gate for FULL+brand scope (Task-based, challenger-judged); restores the `design-system` SKILL.md phase-1 harness contract. (fuse-design 2.2.0)
