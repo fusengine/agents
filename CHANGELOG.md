@@ -1,5 +1,9 @@
 # Release Notes
 
+## [1.39.12] - 17-07-2026
+
+- chore(deps): bump `@fusengine/harness` `^0.1.74→^0.1.75` in the shared plugins install (`plugins/package.json` + `plugins/bun.lock`). Aucun plugin individuel touché — bump de suite uniquement.
+
 ## [1.39.11] - 17-07-2026
 
 - docs(rules): add scope ladder (decision criterion: batch independence, not file count) to `03-agent-teams.md` and the `CLAUDE.md.template` — replaces the rough single-file/multi-file table with trivial/mono-concern/parallelizable tiers, each carrying its action and its WHY, so team-vs-direct decisions neither over-apply (4-agent team for a mid-size coupled edit) nor under-apply (single executor for truly independent batches); trigger is explicitly the INDEPENDENCE of the batches, not the file count. (claude-rules 1.0.18)
