@@ -1,5 +1,9 @@
 # Release Notes
 
+## [1.39.13] - 17-07-2026
+
+- chore(deps): bump `@fusengine/harness` `^0.1.75→^0.1.76` in the shared plugins install (`plugins/package.json` + `plugins/bun.lock`) — fix message design gate. Aucun plugin individuel touché — bump de suite uniquement.
+
 ## [1.39.12] - 17-07-2026
 
 - chore(deps): bump `@fusengine/harness` `^0.1.74→^0.1.75` in the shared plugins install (`plugins/package.json` + `plugins/bun.lock`). Aucun plugin individuel touché — bump de suite uniquement.
