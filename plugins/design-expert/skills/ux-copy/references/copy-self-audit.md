@@ -48,7 +48,25 @@ Numbers such as `92%`, `4.1×`, `48k`, `5.8 mm`, `13.4 lb` must trace to one of:
 
 Also avoid fake-perfect numbers (`99.99%`, `50%`, `1234567`); real data is organic and messy (`47.2%`).
 
-## 4. Final string review before handoff
+## 4. "Not X. Y." contrast fragments — count, don't feel
+
+Grep for the manufactured-contrast pattern: a short negation clause immediately followed
+by a period-terminated affirmation (e.g. "Not features. Focus."). A single instance is
+fine; **2+ occurrences on one page is a blocking tic**.
+
+## 5. "theater" keyword
+
+Grep for the literal word `theater`/`théâtre` (case-insensitive) in any visible string
+(e.g. "security theater", "performance theater") — a near-universal AI copy tell. Any
+hit blocks.
+
+## 6. All-caps body copy
+
+Grep for a run of ≥ 3 consecutive all-caps words outside a recognized UI label (button,
+eyebrow, badge). All-caps body paragraphs/subheads block; all-caps is fine inside a
+label/button/eyebrow.
+
+## 7. Final string review before handoff
 
 Re-read each visible string and flag any that is:
 
@@ -57,3 +75,11 @@ Re-read each visible string and flag any that is:
 - **LLM-trying-to-sound-thoughtful** — passive-aggressive humility, mock-poetic micro-meta, fake-craftsman asides.
 
 Rewrite every flagged string. When unsure whether a line lands, replace it with a plain functional sentence. Boring correct copy beats clever wrong copy. Keep **one copy register per page** — do not mix technical mono, editorial prose, and marketing punch unless the brand voice explicitly calls for it.
+
+## Not self-audited — routed to challenger
+
+Aphoristic cadence (the "feel" of the copy: does it read punchy-staccato ad copy
+pretending to be product copy) is a subjective judgment call, not a grep/count. Self-audit
+above stays mechanical only — this one goes to the challenger pass instead (fresh-context,
+per `design-review/references/review-procedure.md`'s Part 2 Challenger gate, item 9) —
+never scored as a self-audit item.

@@ -188,3 +188,15 @@ Clash Display (headlines) + Satoshi (body)
 Playfair Display (headlines) + Bricolage Grotesque (body)
 Fraunces (display) + Space Grotesk (body)
 ```
+
+## Mechanical Type-Scale Check (canonical — defined here only)
+
+- **Type-Scale Floor**: ≥ 1.2× between adjacent **title** steps only (display→h1→h2→h3) —
+  mechanical check `step[n].fontSize / step[n-1].fontSize ≥ 1.2`; 1.25× is the preferred
+  target, FAIL is <1.2. Body→caption tier is **exempt** (tighter ratios are legitimate
+  there, see `fluid-typography.md`).
+- **Body-Size Floor**: the main paragraph token (`--text-base`/body) ≥ 16px in every
+  breakpoint. Caption/small/label tokens (e.g. `--text-small` 14px) are **exempt**.
+
+Run both alongside the Mechanical Contrast Check (`contrast-ratios.md`) before calling a
+design system done.

@@ -1,5 +1,9 @@
 # Release Notes
 
+## [1.39.8] - 17-07-2026
+
+- feat(design): ground-up rebuild of design-expert — all 9 skills rewritten on sourced best-practices (impeccable `.claude/` anatomy, taste-skill, HIG/Material/UX guidelines) into a thin-router + register + moves model; inspiration engine corrected to extract-never-reproduce; new anti-convergence Exploration Gate for FULL+brand scope (Task-based, challenger-judged); restores the `design-system` SKILL.md phase-1 harness contract. (fuse-design 2.2.0)
+
 ## [1.39.7] - 16-07-2026
 
 - feat(design): positive quality floors, in-loop challenger gate, Impeccable anti-slop + register — `design-expert` gains mechanical positive-quality floors, a mandatory in-loop challenger gate (agent equipped with `Task`, depth-5 fallback), anti-slop import checks against DOM/motion/copy shape, and brand/product register tracking across the design-method, design-system, design-review, design-motion, design-web, and ux-copy skills. (fuse-design 2.1.32)

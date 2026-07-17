@@ -97,6 +97,14 @@ className="focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
 
 ---
 
+## Mandatory States (canonical — defined here only, ungated)
+
+Regardless of `MOTION_INTENSITY` or the animation-decision gate, every interactive element
+MUST ship both of these — skipping them is a `design-review` failure, not a style choice:
+
+- `:focus-visible` — 2px outline, 4px offset.
+- `:disabled` — opacity 0.4, `cursor: not-allowed`.
+
 ## Validation Checklist
 
 ```
