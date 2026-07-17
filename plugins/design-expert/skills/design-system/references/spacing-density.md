@@ -25,7 +25,6 @@ Best for: dashboards, data tables, admin panels, dev tools
 | Section gap | 16px |
 | Page margin | 16px-24px |
 | Input height | 32px |
-| Button height | 32px / 36px |
 | Table row height | 36px |
 
 ### Standard
@@ -40,7 +39,6 @@ Best for: SaaS apps, e-commerce, general web apps
 | Section gap | 24px-32px |
 | Page margin | 24px-48px |
 | Input height | 40px |
-| Button height | 40px / 44px |
 | Table row height | 48px |
 
 ### Editorial
@@ -55,8 +53,9 @@ Best for: blogs, marketing sites, portfolios, creative agencies
 | Section gap | 48px-64px |
 | Page margin | 48px-96px |
 | Input height | 48px |
-| Button height | 48px / 52px |
 | Table row height | 56px |
+
+> **Hauteur des boutons** : voir [buttons-guide.md](../../design-web/references/buttons-guide.md) (échelle fixe 44-52px : sm 44 / default 44 / lg 48 / xl 52). La densité ne module QUE le padding horizontal et le gap, JAMAIS la hauteur du bouton.
 
 ---
 

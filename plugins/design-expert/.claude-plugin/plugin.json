@@ -1,6 +1,6 @@
 {
   "name": "fuse-design",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "description": "Design Director for websites, web apps, iOS, and Android. Generates HTML/CSS directly (Gemini Design MCP, Magic/21st.dev, and shadcn MCP are optional). iOS/Android produce tokens + a device-framed mockup + a handoff spec, never SwiftUI/Compose. Design method, design system tokens, motion, UX copy, and a deterministic design-review gate. Anti-AI-Slop, WCAG 2.2.",
   "author": {
     "name": "Fusengine",

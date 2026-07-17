@@ -12,10 +12,10 @@ related: patterns-cards.md, patterns-navigation.md, ../../design-web/references/
 ## Size Variants
 
 ```tsx
-// Sizes
-<Button size="sm">Small</Button>   // h-8 px-3 text-sm
-<Button size="default">Default</Button>  // h-10 px-4
-<Button size="lg">Large</Button>   // h-12 px-6 text-lg
+// Sizes — hauteur = valeur fixe, plancher tactile 44px (WCAG 2.5.5)
+<Button size="sm">Small</Button>   // h-11 px-3 text-sm   (44px)
+<Button size="default">Default</Button>  // h-11 px-4      (44px)
+<Button size="lg">Large</Button>   // h-12 px-6 text-lg   (48px)
 ```
 
 ---
@@ -117,4 +117,4 @@ related: patterns-cards.md, patterns-navigation.md, ../../design-web/references/
 - [ ] Loading states with spinners
 - [ ] Icon buttons accessible (sr-only)
 - [ ] Proper focus-visible styling
-- [ ] Touch targets >= 48x48dp
+- [ ] Touch targets : **web = 44×44px (WCAG 2.5.5)** ; **Android/Material = 48×48dp** (convention plateforme). Ne pas confondre les deux planchers.
