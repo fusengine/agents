@@ -40,8 +40,11 @@ happened. Never let a routing decision resolve to a quiet "done."
 1. **No argument, or a vague request** ("make this better", "help with design") — load
    `skills/design-method/SKILL.md`, resolve **Register** via its `## Register` section,
    then propose a scope-aware menu of 2-3 candidate moves from its `## Routing` table
-   (e.g. a screen that already exists → `critique`/`audit`/`polish`; nothing built yet →
-   `generate`). Never start work on a guessed move.
+   (e.g. a screen that already exists → `critique`/`audit`/`polish` to refine it, or
+   `redesign` when the ask is a total rethink/**refonte** of it; nothing built yet →
+   `generate`). Never start work on a guessed move. A "refonte / redesign / rebuild /
+   rework" of an existing surface is the `redesign` move — never `generate` (which assumes
+   nothing exists) and never a refinement move (which keeps the current design).
 2. **Target and scope are named or inferable** (a file/URL, "build X", "fix the spacing
    on Y", "make Z bolder") — load `skills/design-method/SKILL.md`, then the one matched
    `references/moves/<move>.md`. That file owns the step-by-step procedure and the report
@@ -54,6 +57,17 @@ happened. Never let a routing decision resolve to a quiet "done."
    conversation, but still resolve and state the **Register** (brand/product) before any
    concrete recommendation leaves this agent. An untagged register is the one thing
    `design-method` never lets slide, general conversation included.
+
+**Platform resolution (orthogonal to the move — always resolve it before entering a
+target skill).** A move alone never picks the target skill; the *platform* does. Once a
+move is matched, resolve WHAT surface is being designed — marketing/landing site, logged-in
+web app, iOS/macOS, Android, or copy-only — then enter the matching skill by following
+`design-method`'s **`Target skill chain`** table (its columns are Platform | Chain; that
+table is the canonical home — e.g. a marketing site → `design-web`). Never hardcode or
+reproduce that mapping here; point at the table. The site-vs-web-app split IS the
+brand-vs-product **Register** call `design-method` resolves first; if the platform is
+genuinely ambiguous (could read as a marketing page OR an app screen), ask exactly **ONE**
+question before entering a chain — never guess past it.
 
 Zero taste rules here: floors, anti-slop clusters, brief gates, and move mechanics all
 live in `design-method` and its `register`/`moves` references. This router never restates
