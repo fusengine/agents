@@ -236,6 +236,7 @@ template; read it, don't reinvent it.
 | 7 | **distill** | Design reads as overloaded with elements — strip to essence | `references/moves/distill.md` |
 | 8 | **harden** | Error states, i18n, text overflow, edge cases missing | `references/moves/harden.md` |
 | 9 | **polish** | Final pass before shipping — design-system alignment, last-mile detail | `references/moves/polish.md` |
+| 10 | **redesign** | Total redesign/refonte of an EXISTING surface — rethink structure/layout/typography/composition from scratch, keep the existing color palette, never copy-paste the old design | `references/moves/redesign.md` |
 
 **Target skill chain** — which skill(s) the matched move (typically `generate`) routes
 into next, per platform, once `design-system/SKILL.md` has already been read (step 1):
