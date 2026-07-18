@@ -1,5 +1,9 @@
 # Release Notes
 
+## [1.39.16] - 18-07-2026
+
+- feat(design-expert): add a `redesign` move that replays the `generate` pipeline against an existing surface (locked palette, do-not-reproduce reference, silhouette test vs the old version), and route site/webapp/iOS/Android platforms through `design-method`'s canonical target-skill table from the router's Routing Rules. (fuse-design 2.2.2)
+
 ## [1.39.15] - 18-07-2026
 
 - feat(fuse-lessons): add `UserPromptSubmit` to `hooks.json` — the lessons dispatch (`hook claude-code lessons`) now re-injects `MEMORY/LESSON.md` on every prompt, with a "lessons injected" notice, mirroring how rules/CLAUDE.md are re-applied instead of only at SessionStart/SubagentStart. (fuse-lessons 1.0.4)
