@@ -1,6 +1,16 @@
 {
-  "_description": "fuse-lessons 4 events (harness lessons scope): SessionStart/SubagentStart inject MEMORY/LESSON.md, Stop reminds (5min throttle) to write a compact lesson, PostToolUse (Write|Edit|MultiEdit) marks the write to reset the throttle.",
+  "_description": "fuse-lessons 5 events (harness lessons scope): SessionStart/SubagentStart/UserPromptSubmit inject MEMORY/LESSON.md (UserPromptSubmit re-injects on every prompt like rules/CLAUDE.md, with a 'lessons injected' notice), Stop reminds (5min throttle) to write a compact lesson, PostToolUse (Write|Edit|MultiEdit) marks the write to reset the throttle.",
   "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bun $HOME/.claude/plugins/marketplaces/fusengine-plugins/plugins/node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code lessons || true"
+          }
+        ]
+      }
+    ],
     "SessionStart": [
       {
         "hooks": [
