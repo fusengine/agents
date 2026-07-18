@@ -22,7 +22,7 @@ async function fetchXml(i: string): Promise<string> {
 function parseSitemap(xml: string): Report {
   const parser = new XMLParser({
     ignoreAttributes: false,
-    isArray: (_n, jpath) => ["urlset.url", "sitemapindex.sitemap"].includes(jpath),
+    isArray: (_n, jpath) => typeof jpath === "string" && ["urlset.url", "sitemapindex.sitemap"].includes(jpath),
   });
   const parsed = parser.parse(xml);
   const issues: string[] = [];

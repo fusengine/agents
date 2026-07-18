@@ -16,12 +16,12 @@
   },
   "dependencies": {
     "cheerio": "^1.2.0",
-    "fast-xml-parser": "^5.7.0",
-    "lighthouse": "^12.3.0",
-    "chrome-launcher": "^1.1.2"
+    "fast-xml-parser": "^5.10.1",
+    "lighthouse": "^13.4.0",
+    "chrome-launcher": "^1.2.1"
   },
   "devDependencies": {
-    "@types/bun": "^1.3.0",
-    "typescript": "^5.7.0"
+    "@types/bun": "^1.3.14",
+    "typescript": "^7.0.2"
   }
 }
