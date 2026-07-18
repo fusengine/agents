@@ -1,5 +1,10 @@
 # Release Notes
 
+## [1.39.15] - 18-07-2026
+
+- feat(fuse-lessons): add `UserPromptSubmit` to `hooks.json` — the lessons dispatch (`hook claude-code lessons`) now re-injects `MEMORY/LESSON.md` on every prompt, with a "lessons injected" notice, mirroring how rules/CLAUDE.md are re-applied instead of only at SessionStart/SubagentStart. (fuse-lessons 1.0.4)
+- chore(deps): bump `@fusengine/harness` `^0.1.76→^0.1.77` in the shared plugins install (`plugins/package.json` + `plugins/bun.lock`) — notices systemMessage, TeammateIdle/TaskCompleted "Invalid input" fix, PostToolUse event fix. Aucun plugin individuel touché — bump de suite uniquement.
+
 ## [1.39.14] - 18-07-2026
 
 - chore(deps): bump plugin deps to latest stable — TypeScript 7.0.2, lighthouse 13.4.0, fast-xml-parser 5.10.1, chrome-launcher 1.2.1, biome 2.5.4, @clack/prompts 1.7.0, terminal-kit 3.1.3; guards the `isArray` callback in `parse-sitemap.ts` against a non-string `jpath` now that fast-xml-parser 5.10.1 can pass one. (core-guards 1.1.35, fuse-seo 1.0.8)
