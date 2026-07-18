@@ -1,5 +1,10 @@
 # Release Notes
 
+## [1.39.14] - 18-07-2026
+
+- chore(deps): bump plugin deps to latest stable — TypeScript 7.0.2, lighthouse 13.4.0, fast-xml-parser 5.10.1, chrome-launcher 1.2.1, biome 2.5.4, @clack/prompts 1.7.0, terminal-kit 3.1.3; guards the `isArray` callback in `parse-sitemap.ts` against a non-string `jpath` now that fast-xml-parser 5.10.1 can pass one. (core-guards 1.1.35, fuse-seo 1.0.8)
+- docs(rules): add "THINK SEQUENTIALLY (MCP)" as Non-Negotiable point 6 in the `CLAUDE.md.template` — mandates `mcp__sequential-thinking__sequentialthinking` for any multi-step reasoning (planning, sequencing a team, root-cause debugging, irreversible decisions) before acting or briefing agents. (claude-rules 1.0.19)
+
 ## [1.39.13] - 17-07-2026
 
 - chore(deps): bump `@fusengine/harness` `^0.1.75→^0.1.76` in the shared plugins install (`plugins/package.json` + `plugins/bun.lock`) — fix message design gate. Aucun plugin individuel touché — bump de suite uniquement.

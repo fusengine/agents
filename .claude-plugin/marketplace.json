@@ -7,7 +7,7 @@
   },
   "metadata": {
     "description": "Professional Claude Code plugins with APEX workflow, SOLID principles, and expert development agents for Next.js, Laravel, Swift, Tailwind CSS, and more",
-    "version": "1.39.13"
+    "version": "1.39.14"
   },
   "core": [
     {
@@ -55,7 +55,7 @@
       "name": "fuse-seo",
       "source": "./plugins/seo",
       "description": "SEO/GEO 2026 plugin: technical SEO, schema markup, E-E-A-T, AI Overviews/ChatGPT/Perplexity optimization, local SEO, sitemaps, hreflang, internal linking, semantic clustering, search experience. Local-first, zero third-party APIs.",
-      "version": "1.0.7",
+      "version": "1.0.8",
       "author": {
         "name": "Fusengine",
         "url": "https://github.com/fusengine"
