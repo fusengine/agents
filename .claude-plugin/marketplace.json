@@ -7,7 +7,7 @@
   },
   "metadata": {
     "description": "Professional Claude Code plugins with APEX workflow, SOLID principles, and expert development agents for Next.js, Laravel, Swift, Tailwind CSS, and more",
-    "version": "1.39.14"
+    "version": "1.39.15"
   },
   "core": [
     {
@@ -598,7 +598,7 @@
       "name": "fuse-lessons",
       "source": "./plugins/fuse-lessons",
       "description": "Project memory: writes compact 'never reproduce' lessons to MEMORY.md on finish, force-reads them at session/subagent start.",
-      "version": "1.0.3",
+      "version": "1.0.4",
       "author": {
         "name": "Fusengine",
         "url": "https://github.com/fusengine"

@@ -5,12 +5,12 @@
     "": {
       "name": "@fusengine/plugins",
       "dependencies": {
-        "@fusengine/harness": "^0.1.76",
+        "@fusengine/harness": "^0.1.77",
       },
     },
   },
   "packages": {
-    "@fusengine/harness": ["@fusengine/harness@0.1.76", "", { "dependencies": { "figures": "^6.1.0" }, "peerDependencies": { "@vercel/detect-agent": "*" }, "optionalPeers": ["@vercel/detect-agent"], "bin": { "harness": "dist/cli/bin.mjs" } }, "sha512-dsJ48Rr3lhmFO5rFR8nwKiiHg5bDVO/ksYnWUFlTIQTv6/YOHHleZkLeHX1hPPhVAgiS7NhAF07C7Y8ewAA5Zg=="],
+    "@fusengine/harness": ["@fusengine/harness@0.1.77", "", { "dependencies": { "figures": "^6.1.0" }, "peerDependencies": { "@vercel/detect-agent": "*" }, "optionalPeers": ["@vercel/detect-agent"], "bin": { "harness": "dist/cli/bin.mjs" } }, "sha512-DDzHQx6/yLEjkn4+6DCPi5LoAXjDp0jp0xZBvKTq8YdwSBSQlsGwEUtRDVxwo2YDIYJFz883asW8VmHoxwMFNA=="],
 
     "figures": ["figures@6.1.0", "", { "dependencies": { "is-unicode-supported": "^2.0.0" } }, "sha512-d+l3qxjSesT4V7v2fh+QnmFnUWv9lSpjarhShNTgBOfA0ttejbQUAlHLitbjkoRiDulW0OPoQPYIGhIC8ohejg=="],
 
