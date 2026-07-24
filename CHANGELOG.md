@@ -1,5 +1,10 @@
 # Release Notes
 
+## [1.39.17] - 24-07-2026
+
+- fix(env-file): `saveEnvFile` now upserts into the existing `.env` lines instead of regenerating the file from a dict — preserves comments, blank lines, no-`export` keys, and empty values on save. `loadEnvFile` left byte-for-byte unchanged (zero read-path regression risk, mechanically guaranteed).
+- chore(deps): bump `@fusengine/harness` `^0.1.77→^0.1.83` in the shared plugins install (`plugins/package.json`), `lighthouse` `^13.4.0→^13.4.1` and `terminal-kit` `^3.1.3→^3.1.4` + `@biomejs/biome` `^2.5.4→^2.5.5`. Dependency-only bumps — no individual plugin version change (fuse-seo 1.0.8, core-guards 1.1.35 unchanged).
+
 ## [1.39.16] - 18-07-2026
 
 - feat(design-expert): add a `redesign` move that replays the `generate` pipeline against an existing surface (locked palette, do-not-reproduce reference, silhouette test vs the old version), and route site/webapp/iOS/Android platforms through `design-method`'s canonical target-skill table from the router's Routing Rules. (fuse-design 2.2.2)
