@@ -17,11 +17,11 @@
 		"blessed": "^0.1.81",
 		"enquirer": "^2.4.1",
 		"picocolors": "^1.1.1",
-		"terminal-kit": "^3.1.3",
+		"terminal-kit": "^3.1.4",
 		"zod": "^4.4.3"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "^2.5.4",
+		"@biomejs/biome": "^2.5.5",
 		"@types/bun": "^1.3.14",
 		"typescript": "^7.0.2",
 		"@types/terminal-kit": "^2.5.7"
