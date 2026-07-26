@@ -18,8 +18,8 @@ export class EditsSegment implements ISegment {
 
 	async render(context: SegmentContext, config: StatuslineConfig): Promise<string> {
 		const { icons, global, edits } = config;
-		const added = context.input.cost.total_lines_added;
-		const removed = context.input.cost.total_lines_removed;
+		const added = context.input.cost?.total_lines_added ?? 0;
+		const removed = context.input.cost?.total_lines_removed ?? 0;
 
 		let label = "";
 		if (global.showLabels || edits.showLabel) {

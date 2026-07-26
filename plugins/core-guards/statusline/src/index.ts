@@ -20,6 +20,10 @@ import {
 } from "./services";
 import { colors, getGitInfo } from "./utils";
 
+/** Valide un cout JSON non type-safe : nombre fini uniquement (rejette null/string/NaN). */
+function toFiniteCost(value: unknown): number | undefined {
+	return typeof value === "number" && Number.isFinite(value) ? value : undefined;
+}
 async function main(): Promise<void> {
 	try {
 		// 1. Lire l'input de Claude Code
@@ -44,15 +48,18 @@ async function main(): Promise<void> {
 			config.fiveHour.subscriptionPlan,
 		);
 
-		// 5. Tracker l'usage hebdomadaire (si active)
-		const weeklyUsage = config.weekly.enabled
-			? trackWeeklyUsage(input.session_id, contextData.tokens, input.cost.total_cost_usd)
-			: undefined;
+		// 5. Tracker weekly (cout invalide/absent -> jamais d'ecrasement silencieux du cumul)
+		const validCost = toFiniteCost(input.cost?.total_cost_usd);
+		const weeklyUsage =
+			config.weekly.enabled && validCost !== undefined
+				? trackWeeklyUsage(input.session_id, contextData.tokens, validCost)
+				: undefined;
 
-		// 6. Tracker les depenses quotidiennes (si active)
-		const dailySpend = config.dailySpend.enabled
-			? trackDailySpend(input.session_id, input.cost.total_cost_usd, config.dailySpend.budget)
-			: undefined;
+		// 6. Tracker daily (meme garde stricte)
+		const dailySpend =
+			config.dailySpend.enabled && validCost !== undefined
+				? trackDailySpend(input.session_id, validCost, config.dailySpend.budget)
+				: undefined;
 
 		// 7. Recuperer les infos Git
 		const git = await getGitInfo();

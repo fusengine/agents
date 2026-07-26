@@ -63,3 +63,11 @@ export const AgentSegmentConfigSchema = z.object({
 export const WorktreeSegmentConfigSchema = z.object({
 	enabled: z.boolean().default(true),
 });
+
+// Effort segment (effort.level, thinking.enabled, fast_mode)
+export const EffortSegmentConfigSchema = z.object({
+	enabled: z.boolean().default(true),
+	showLevel: z.boolean().default(true),
+	showThinking: z.boolean().default(true),
+	showFastMode: z.boolean().default(true),
+});

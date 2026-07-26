@@ -27,6 +27,12 @@
 		"showMaxTokens": true,
 		"showDecimals": true
 	},
+	"effort": {
+		"enabled": true,
+		"showLevel": true,
+		"showThinking": true,
+		"showFastMode": true
+	},
 	"context": {
 		"enabled": true,
 		"progressBar": {

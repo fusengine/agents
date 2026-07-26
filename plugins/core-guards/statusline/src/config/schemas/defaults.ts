@@ -31,6 +31,7 @@ export const defaultConfig: StatuslineConfig = {
 		pathStyle: "truncated",
 	},
 	model: { enabled: true, showTokens: true, showMaxTokens: true, showDecimals: true },
+	effort: { enabled: true, showLevel: true, showThinking: true, showFastMode: true },
 	context: {
 		enabled: true,
 		progressBar: defaultProgressBar,

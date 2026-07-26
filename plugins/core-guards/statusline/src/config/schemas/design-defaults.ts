@@ -33,6 +33,7 @@ export const defaultDesignConfig: DesignConfig = {
 	icons: {
 		agent: "◈",
 		worktree: "\u{1F33F}",
+		effort: "◐",
 		claude: "◆",
 		directory: "⌂",
 		git: "⎇",

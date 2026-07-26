@@ -26,7 +26,7 @@ export interface HookInput {
 	output_style: {
 		name: string;
 	};
-	cost: {
+	cost?: {
 		total_cost_usd: number;
 		total_duration_ms: number;
 		total_api_duration_ms: number;
@@ -37,7 +37,7 @@ export interface HookInput {
 		total_input_tokens: number;
 		total_output_tokens: number;
 		context_window_size: number;
-		used_percentage?: number;
+		used_percentage?: number | null;
 		remaining_percentage?: number;
 		current_usage: TokenUsage;
 	};
@@ -62,4 +62,15 @@ export interface HookInput {
 		/** Original branch before worktree switch */
 		original_branch?: string;
 	};
+	/** Active reasoning effort (absent if the model does not support the effort param) */
+	effort?: {
+		/** Effort level, e.g. "high" (open string, no fixed enum documented) */
+		level: string;
+	};
+	/** Extended thinking state */
+	thinking?: {
+		enabled: boolean;
+	};
+	/** Fast mode state */
+	fast_mode?: boolean;
 }

@@ -18,7 +18,11 @@ export class CostSegment implements ISegment {
 
 	async render(context: SegmentContext, config: StatuslineConfig): Promise<string> {
 		const { global, cost } = config;
-		const totalCost = context.input.cost.total_cost_usd;
+		// Le payload JSON (stdin) n'est pas type-safe : total_cost_usd peut etre
+		// null ou une chaine malgre le typage. `?? 0` seul ne rattrape pas une
+		// chaine et ferait crasher formatCost (`cost.toFixed is not a function`).
+		const rawCost = context.input.cost?.total_cost_usd;
+		const totalCost = typeof rawCost === "number" && Number.isFinite(rawCost) ? rawCost : 0;
 		const costStr = formatCost(totalCost, cost.decimals);
 
 		// Si label texte (cost:), afficher label + coût
