@@ -60,6 +60,13 @@ export function formatTimeLeft(ms: number): string {
 }
 
 export function formatTokens(tokens: number, showDecimals: boolean = false): string {
+	// Branche M : jamais d'arrondi a l'entier (1.5M ne doit jamais devenir "2M").
+	// showDecimals ne pilote pas cette branche : million entier -> pas de decimale,
+	// million fractionnaire -> 1 decimale significative (precision fidele et lisible).
+	if (tokens >= 1_000_000) {
+		const m = tokens / 1_000_000;
+		return Number.isInteger(m) ? `${m}M` : `${m.toFixed(1)}M`;
+	}
 	const k = tokens / 1000;
 	return showDecimals ? `${k.toFixed(1)}K` : `${Math.round(k)}K`;
 }

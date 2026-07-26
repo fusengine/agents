@@ -46,21 +46,20 @@ export function getContextFromInput(
 	}
 
 	const windowSize = contextWindow.context_window_size || TOKEN_LIMITS.CONTEXT_WINDOW;
-	// Espace utilisable = taille totale - buffer autocompact (16.5%)
-	const usableSpace = windowSize - OVERHEAD_ESTIMATION.AUTOCOMPACT_BUFFER;
 
-	// Utiliser used_percentage pré-calculé par Claude Code (le plus précis)
-	// Sinon fallback sur le calcul manuel
+	// Utiliser used_percentage pre-calcule par Claude Code (le plus precis)
+	// Peut etre null (debut de session, post-/compact) ou undefined (non fourni)
+	// Sinon fallback sur le calcul manuel, rapporte a la vraie fenetre de contexte
 	// @see https://code.claude.com/docs/en/statusline
-	if (contextWindow.used_percentage !== undefined) {
+	if (contextWindow.used_percentage !== undefined && contextWindow.used_percentage !== null) {
 		const tokens = Math.round((contextWindow.used_percentage / 100) * windowSize);
-		const percentage = Math.min((tokens / usableSpace) * 100, 100);
-		return { tokens, maxTokens: usableSpace, percentage };
+		const percentage = Math.min(contextWindow.used_percentage, 100);
+		return { tokens, maxTokens: windowSize, percentage };
 	}
 
-	// Fallback: calcul depuis totaux (moins précis car inclut tokens compactés)
+	// Fallback: calcul depuis totaux (moins precis car inclut tokens compactes)
 	const totalTokens = contextWindow.total_input_tokens + contextWindow.total_output_tokens;
-	const percentage = Math.min((totalTokens / usableSpace) * 100, 100);
+	const percentage = Math.min((totalTokens / windowSize) * 100, 100);
 
-	return { tokens: totalTokens, maxTokens: usableSpace, percentage };
+	return { tokens: totalTokens, maxTokens: windowSize, percentage };
 }

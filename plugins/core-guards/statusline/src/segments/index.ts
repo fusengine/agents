@@ -12,6 +12,7 @@ import { CostSegment } from "./cost.segment";
 import { DailySpendSegment } from "./daily-spend.segment";
 import { DirectorySegment } from "./directory.segment";
 import { EditsSegment } from "./edits.segment";
+import { EffortSegment } from "./effort.segment";
 import { ExtraUsageSegment } from "./extra-usage.segment";
 import { FiveHourSegment } from "./five-hour.segment";
 import { LimitsSegment } from "./limits.segment";
@@ -29,6 +30,7 @@ export function createDefaultSegments(): ISegment[] {
 		new WorktreeSegment(),
 		new AgentSegment(),
 		new ModelSegment(),
+		new EffortSegment(),
 		new ContextSegment(),
 		new CostSegment(),
 		new FiveHourSegment(),
@@ -48,6 +50,7 @@ export { CostSegment } from "./cost.segment";
 export { DailySpendSegment } from "./daily-spend.segment";
 export { DirectorySegment } from "./directory.segment";
 export { EditsSegment } from "./edits.segment";
+export { EffortSegment } from "./effort.segment";
 export { ExtraUsageSegment } from "./extra-usage.segment";
 export { FiveHourSegment } from "./five-hour.segment";
 export { LimitsSegment } from "./limits.segment";

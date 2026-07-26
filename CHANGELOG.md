@@ -1,5 +1,9 @@
 # Release Notes
 
+## [1.39.18] - 26-07-2026
+
+- fix(statusline): cost trackers (`trackWeeklyUsage`, `trackDailySpend`) now run only when `total_cost_usd` is a finite number — a payload without `cost` was silently overwriting the persisted spend cumulative with `0`/`null`; `maxTokens` now reflects the true context window instead of subtracting the autocompact buffer from the displayed denominator; the color alert stays calibrated on the absolute autocompact buffer (33K), correct at both 200K and 1M windows; `formatTokens` adds an unrounded `M` tier (`1M`, `1.5M`) above 1,000,000, `K` tier unchanged. Adds a new `effort` segment (`effort.level` / `thinking` / `fast_mode`), active by default. (core-guards 1.1.36)
+
 ## [1.39.17] - 24-07-2026
 
 - fix(env-file): `saveEnvFile` now upserts into the existing `.env` lines instead of regenerating the file from a dict — preserves comments, blank lines, no-`export` keys, and empty values on save. `loadEnvFile` left byte-for-byte unchanged (zero read-path regression risk, mechanically guaranteed).
