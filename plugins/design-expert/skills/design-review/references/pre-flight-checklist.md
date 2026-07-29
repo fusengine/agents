@@ -38,14 +38,52 @@ CAP=$(( (SECTIONS + 2) / 3 ))          # ceil(sections/3)
 Over-labeling every section with a small uppercase eyebrow is a template tell. Hero
 counts as 1.
 
-## 3. Zero theme-flip mid-scroll
+## 3. Zero theme-flip mid-scroll — a THEME lock, not a background lock
 
 ```bash
 # one theme (light | dark | auto) for the whole page — no section inverts mid-page
-grep -niE 'class="[^"]*\b(bg-(black|zinc-9|slate-9|neutral-9))' "$FILE"   # inspect: all sections share ONE base
+grep -niE 'class="[^"]*\b(bg-(black|zinc-9|slate-9|neutral-9))' "$FILE"       # Tailwind form
+grep -niE '(section|band|bande|bloc)[^{]*\{[^}]*background[^}]*(#(f|e)|255, *255, *255|white|oklch\(0?\.9)' "$FILE"   # hand-written CSS, light band on a dark page
 ```
-Exactly one page theme lock. A dark section dropped into an otherwise light page (or the
-reverse) is a fail. Inspect the hits — they must all belong to the same locked theme.
+Exactly one page theme lock. A dark section dropped into an otherwise light page, or a
+light one dropped into a dark page, is a fail. Inspect the hits — they must all belong to
+the same locked theme. `auto` (a page that flips *whole* via `prefers-color-scheme` or a
+`data-theme` attribute) is one theme, not two: `cursor-recode` and `reve-recode` both ship
+it and both pass.
+
+**Note the second grep.** The original check only matched Tailwind utility classes, so a
+hand-written stylesheet could invert a band and sail through. Neither pattern is
+exhaustive — read the hits, and read the page.
+
+### What this check does NOT forbid — arbitration with `premium-patterns/PATTERNS.md`
+
+This check and the flatness table in
+`../../design-web/references/premium-patterns/PATTERNS.md` used to contradict each other:
+that table offered "ONE inverted band" as a cure for a page where every section shares one
+background, while this check failed any section that inverted. This check won by default,
+because only it blocks mechanically. **Both were adjusted, on a count taken across the ten
+corpus pages:**
+
+- **Theme inversion at section level: 0 of 10.** No page in the corpus puts a light section
+  in a dark page or a dark section in a light one. `cursor` is the only light-based page
+  and its sole dark surfaces are a phone chassis drawn in CSS, plus its whole-page dark
+  theme. **This check is upheld, unchanged in substance.**
+- **A section whose background departs from the page base, inside the same theme: 5 of 10.**
+  `supercommon` gives its first band a metallic gradient rising to `#bfc6c1`; `fora` closes
+  on a `#000 → #1b2228` gradient under a 190px horizon image; `harness` runs
+  `#070707 → #050505` under two sections; `umbrel` dissolves one band into the next over
+  160px; `xai` draws an 80px grid under an elliptical mask. **None of these is a fail here,
+  and none ever was** — they change the surface, never the theme.
+
+So: **relief is not inversion.** A page needs relief (`PATTERNS.md` §*Flatness is banned*)
+and gets it from a tint, a gradient, a full-bleed image, a drawn pattern or a per-section
+padding rhythm — all inside the locked theme. The word "inverted" was removed from
+`PATTERNS.md` because the corpus does not do it.
+
+One detail worth copying from `supercommon`: the departure is **kept unique on purpose**.
+Three later bands carry a `.band--opaque` rule whose only job is to stop the metallic
+gradient bleeding under them. One section departs; the CSS is written to guarantee the
+others do not.
 
 ## 4. "Motion claimed, motion shown" (Fusengine design decision)
 

@@ -26,7 +26,7 @@ related: design-inspiration.md, refs-design/README.md, layout-discipline.md, gem
 | **Grids** | [grids-layout.md](grids-layout.md) | Layout system |
 | **Patterns** | [design-patterns.md](design-patterns.md) | Common patterns and anti-patterns |
 | **Layout Discipline** | [layout-discipline.md](layout-discipline.md) | Hard numeric caps (hero, eyebrow, zigzag, bento, CTA, measure, focal block) |
-| **Reference Corpus** | [refs-design/README.md](refs-design/README.md) | Eleven rebuilt pages + procedure index (technique → reference → section) — the mandatory first taste source |
+| **Reference Corpus** | `refs-design/{reference}-recode/index.html`, then [refs-design/README.md](refs-design/README.md) | Ten rebuilt pages — the mandatory first taste source. **Open the pages in a browser and scroll them BEFORE any markdown here** (`file://`, double-click, no build): they were accepted on the render, and measured values reproduce a procedure without ever choosing one. The README's procedure index (technique → reference → section) says where a procedure is written down, not what it looks like |
 | **Inspiration** | [design-inspiration.md](design-inspiration.md) | Taste-sourcing order: corpus first (procedures), then 1-2 sector sites for register only; canonical Lookalike Test |
 | **Inspiration URLs** | [design-inspiration-urls.md](design-inspiration-urls.md) | Where to look, in what order — corpus entry points and sector-browsing targets |
 | **Composition** | [component-composition-ref.md](component-composition-ref.md) | Slots, compound components, component APIs |
@@ -60,4 +60,4 @@ The page's structure is never picked from the files above. Both banks live in
 | Topic | Reference | When to Consult |
 |-------|-----------|-----------------|
 | **First screen** | [../../design-method/references/macrostructure-bank.md](../../design-method/references/macrostructure-bank.md) | Eight hero treatments + the forbidden centered default |
-| **Body order** | [../../design-method/references/body-sequence-bank.md](../../design-method/references/body-sequence-bank.md) | Eleven body sequences read off shipped code — the order of everything after the first screen |
+| **Body order** | [../../design-method/references/body-sequence-bank.md](../../design-method/references/body-sequence-bank.md) | Ten body sequences read off shipped code — the order of everything after the first screen |

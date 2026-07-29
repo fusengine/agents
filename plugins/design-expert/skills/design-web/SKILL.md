@@ -36,7 +36,7 @@ routes here for that one page (see `design-webapp`'s reciprocal note).
 
 1. **Structure comes from register + two structural picks, never from template
    reproduction.** `references/design-inspiration.md` sources taste in a fixed order: the
-   local corpus (`references/refs-design/`, eleven rebuilt pages whose `tokens-*.md` carry
+   local corpus (`references/refs-design/`, ten rebuilt pages whose `tokens-*.md` carry
    measured procedures) supplies palette, typography, depth and craft; 1-2 real production
    sites in the client's own sector supply **register only** — vocabulary, codes, level of
    formality. Section flow, spacing rhythm and layout are never copied from either. The
@@ -50,7 +50,7 @@ routes here for that one page (see `design-webapp`'s reciprocal note).
 
 2. **Pick a body sequence, and state what its principle becomes for this subject.** The
    body, not the hero, is the proven failure mode (`register/brand.md`). Choose one of the
-   eleven sequences read off shipped code in
+   ten sequences read off shipped code in
    `../design-method/references/body-sequence-bank.md` and name it in the plan in that
    file's own format: **"Body sequence: {name} — principle applied here: {one line}."**
    State the principle in the brief's own terms; a plan naming the sequence but not what
@@ -119,7 +119,11 @@ Je reproduis: {el1} [corpus: {reference}/{tokens section}], {el2} [corpus: {refe
 Exactly three elements, each nameable in the rendered page — the verdict is binary, so
 "a refined atmosphere" is not an element while "the two vertical rules crossing every
 section boundary" is. **Two come from the corpus**: a measured procedure, cited with the
-`tokens-*.md` section it was read from. **One comes from the sector**: a register signal
+`tokens-*.md` section it was read from — **and taken from a page you opened and scrolled**,
+not from a section index. The rendered pages come first, the markdown second
+(`references/refs-design/README.md` §*Look before you read*); a procedure cited from a file
+whose page was never rendered is a value with no referent, and `design-review` now asks for
+the list of pages opened alongside this line. **One comes from the sector**: a register signal
 (vocabulary, formality, what this vertical shows), never a craft borrowing — craft is the
 corpus's job. If the sector step produced nothing usable, write
 `[sector: none — register from brief]` and still declare three elements.
@@ -160,13 +164,13 @@ restated or renumbered here). A fail is structural, never cosmetic: send it back
 | `references/buttons-guide.md` | Button states, sizing, CTA discipline |
 | `references/premium-patterns/PATTERNS.md` | 10 premium patterns with CSS specs + AI prompts, sector-mapped |
 | `references/design-inspiration.md` | Taste sourcing order (corpus first, then sector for register) + canonical Lookalike Test |
-| `references/refs-design/README.md` | The local corpus — eleven rebuilt pages, procedure index (technique → reference → section) |
+| `references/refs-design/README.md` | The local corpus — ten rebuilt pages, procedure index (technique → reference → section) |
 | `references/component-composition-ref.md` | Component composition rules |
 | `references/grids-layout.md`, `forms-guide.md`, `icons-guide.md`, `photos-images.md` | Supporting component guides |
 | `references/reference-index.md` | Full index of this skill's references and templates |
 | `../design-method/references/register/brand.md` | POV lock, Body ≠ SaaS Furniture, Competitor Lift Test |
 | `../design-method/references/macrostructure-bank.md` | Eight hero treatments — first screen only (step 1) |
-| `../design-method/references/body-sequence-bank.md` | Eleven body sequences — the order of everything after the first screen (step 2) |
+| `../design-method/references/body-sequence-bank.md` | Ten body sequences — the order of everything after the first screen (step 2) |
 
 ### Shared with design-webapp (load from there, don't duplicate)
 | File | Purpose |

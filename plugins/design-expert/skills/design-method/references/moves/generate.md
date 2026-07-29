@@ -23,9 +23,9 @@ drawn, one kept, for a stated reason. Run it before the pipeline, not alongside 
 
 ### When to use
 
-- **FULL** — new project, no `design-system.md` yet. Step 2 reads the corpus, then **2
-  real sector sites** for register.
-- **PAGE** — `design-system.md` already exists. Step 2 reads the corpus, then **1** sector site
+- **FULL** — new project, no `design-system.md` yet. Step 2 **opens the corpus pages, then
+  reads** the corpus, then **2 real sector sites** for register.
+- **PAGE** — `design-system.md` already exists. Step 2 opens and reads the corpus, then **1** sector site
   (skip that site entirely when the register is already locked in writing). Step 3 (tokens)
   reads the existing `design-system.md` first, and falls back to
   `sector-palettes.md`/`typography-pairs.md` only for what that file does not already answer.
@@ -92,7 +92,7 @@ collided even when they cite different bank entries.
 
 ### 2. The fourth road — a sequence that is in no bank
 
-`../body-sequence-bank.md` holds eleven sequences read off shipped code. Eleven observations, not
+`../body-sequence-bank.md` holds ten sequences read off shipped code. Ten observations, not
 a list of legal moves. Any sketch may instead propose a sequence **derived from its subject** that
 matches none of them.
 
@@ -101,14 +101,18 @@ format: **forged name · section order · the principle that decides that order 
 the canonical skeleton · what subject it suits**. Anything less is an improvisation wearing a
 name, and the challenger should be able to tell.
 
-The precedent is entry 11, `Vitrine Descent` (`elysian`): it existed nowhere, it came out of the
-subject — a catalogue of discrete objects — and it produced the only page in the corpus outside
-the dominant register. It entered the bank *after* it worked, not before.
+The precedent is the bank itself: **every one of its ten entries was off-bank once.** None was
+picked from a list — each was forged by the page's own designers out of their subject and only
+catalogued afterwards, which is why the headings name a folder and not a pattern. Entry 7,
+`Void-Metered Stack` (`supercommon-recode`), is the plainest case: six consecutive sections
+share one `band` class and are told apart by nothing but their content, the void in front of
+each one is sized to what it announces, and testimonials, pricing table, FAQ, CTA band and nav
+are all simply absent. No canonical skeleton produces that; a focus timer does.
 
 Being off-bank earns neither credit nor penalty: the challenger is never told which sketches are
 off-bank, and judges all three on the same question. Three well-transposed bank sequences are a
 complete exploration; no run owes anyone a forged one. Forge a sequence when the subject carries
-an order the eleven do not — and then make it earn its place on the eleven's terms.
+an order the ten do not — and then make it earn its place on the ten's terms.
 
 ### 3. Judge comparatively — blind, fresh context
 
@@ -172,7 +176,7 @@ exploration ran when it didn't.
    `../../../design-web/references/design-inspiration.md`, in its fixed order:
 
    **2a. The corpus (mandatory, always).** Read `../../../design-web/references/refs-design/README.md`,
-   then **at least two `tokens-*.md` sections** relevant to what you are building. These are eleven
+   then **at least two `tokens-*.md` sections** relevant to what you are building. These are ten
    rebuilt pages whose procedures are documented with measured values — that is where palette,
    typography, depth and craft technique come from. Name in the plan which references and which
    sections you pulled from, and what each gave.
@@ -278,13 +282,14 @@ exploration ran when it didn't.
   | palette family → step 3 (if in play) | signature idea → step 7 (if in play)
 
 ### Step 2 — Taste sourced (2a corpus first — mandatory, then 2b sector register)
+- 2a pages OPENED and scrolled (min. 2, before any markdown): {refs-design/{folder}/index.html} + {refs-design/{folder}/index.html} — what each looked like, in one clause
 - 2a references read: {refs-design/{folder}} + {refs-design/{folder}} ← refs-design/README.md
 - 2a tokens-* sections cited (min. 2): {tokens-{name}.md #{section}} — gave: {procedure/measured value}
 - 2b sector sites (2 for FULL / 1 for PAGE / 0 if the register is already locked in writing): {URL} — screenshot: yes/no
 - Extracted (palette / typography / depth / craft ONLY — never structure, spacing, or section flow): {traits} from {source}
 
 ### Step 3 — Tokens sourced
-- Palette: {values} ← sector-palettes.md #{sector} | design-system.md (PAGE)
+- Palette: {values} ← sector-palettes.md #{sector} (only if the sector is one of the seven that file lists) | derived from the subject — say from what | design-system.md (PAGE)
 - Type pair: {display}/{body} ← typography-pairs.md #{pair}
 - Spacing/density: {profile} ← spacing-density.md #{profile}
 
@@ -294,6 +299,12 @@ exploration ran when it didn't.
 - Principle applied here: {one line, in THIS brief's terms — not the source's wording}
 - If off-bank: order / principle / what it drops from the canon / what subject it suits
 - Deliberate exception (centered hero / icon-card grid / untreated canon order)? yes/no + reason
+
+### Step 4 bis — What is on screen, counted (Gate 0 artefact 4)
+- Per section: {section} → {images / videos / mockups / drawn interfaces / charts / tables / full-bleed colour fields / display-scale type objects}
+- Total entries vs sections: {n} / {n}
+- Screen-holding floor (`design-method/SKILL.md`): DENSITY {n} · VARIANCE {n} · assets {yes/none} → clear | triggered
+- If triggered: which way out was taken — raise density | manufacture the matter | lower the variance — and what changed
 
 ### Step 5 — Components
 - Section {name}: {component pattern} ← cards-guide.md/buttons-guide.md/component-composition-ref.md/premium-patterns/{folder}/description.md

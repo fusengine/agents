@@ -59,7 +59,7 @@ table here. It adds exactly three binding deltas on top:
    into the judging. The challenger stays blind to all of this: it never sees the old sequence
    and never learns which sketch was re-fanned, so its verdict remains a comparison of three
    live directions, not a referendum on the old page. Where a subject's real order is in none
-   of the eleven, the off-bank road (generate's Exploration Gate §2) is open here exactly as
+   of the ten, the off-bank road (generate's Exploration Gate §2) is open here exactly as
    it is there — a redesign is often where the forged sequence comes from, since the old
    surface has already proved which bank-shaped answer the subject was given once.
 
