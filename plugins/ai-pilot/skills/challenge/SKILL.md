@@ -1,7 +1,13 @@
 ---
 name: challenge
-description: "Adversarial verification protocol for claims, plans, and root causes -- refute by default, fresh-context intake, sources-backed, bounded rounds. Runs SYSTEMATICALLY, by claim TYPE (not a stakes judgment), before reporting to the owner any of: a root-cause conclusion, a done/verified claim, an irreversible action (commit/deploy/rm/push), or a 2nd-time fix -- WHETHER inside an APEX task OR in plain conversation. Also runs systematically at every APEX eLicit round and every Verify gate, exactly like sniper runs systematically at eXamine, NO EXCEPTIONS. Do NOT use for: code correctness/lint/type validation (use code-quality/sniper)."
+description: "Use before a root-cause, done/verified claim, irreversible action, or 2nd-time fix reaches the owner (APEX or plain conversation); also fires at every eLicit/Verify gate. Not for code correctness (use sniper)."
 ---
+
+<objective>
+Challenge is the adversarial verification protocol behind the `challenger` agent: refute-by-default, fresh-context intake (claim + evidence only, never the author's reasoning), sources-backed (Context7 -> Exa -> fuse-browser -> code), bounded to 2 refutation rounds ending in a mandatory verdict (CONFIRMED / REFUTED / UNCERTAIN). It is consultative, not a veto -- it reports the strongest objection and leaves the decision to the lead/owner.
+
+It fires systematically by claim TYPE, not by a stakes judgment: before a root-cause conclusion, a done/verified claim, an irreversible action (commit/deploy/rm/push), or a 2nd-time fix reaches the owner, whether inside an APEX task or in plain conversation -- plus automatically at every APEX eLicit round and Verify gate. It does not cover code correctness, lint, or type validation -- that stays sniper's lane at eXamine.
+</objective>
 
 # Challenge Skill
 

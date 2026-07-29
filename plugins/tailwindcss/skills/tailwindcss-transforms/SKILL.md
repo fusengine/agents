@@ -1,8 +1,14 @@
 ---
 name: tailwindcss-transforms
-description: "Transform & Animation utilities Tailwind CSS v4.1. Transform (scale-*, rotate-*, translate-*, skew-*, transform-origin), Transition (transition-*, duration-*, ease-*, delay-*), Animation (animate-*, @keyframes). Use when: scaling/rotating/translating/skewing an element, configuring transition duration/easing/delay, or applying built-in or custom @keyframes animations."
+description: "Use when scaling/rotating/translating/skewing an element, configuring transition duration/easing/delay, or applying @keyframes animations."
 user-invocable: false
 ---
+
+<objective>
+Complete reference for Tailwind CSS v4.1 transform, transition, and animation utilities: transforms (`scale-*`, `rotate-*`, `translate-*`, `skew-*`, `origin-*`), transitions (`transition-*` property targeting, `duration-*`, `ease-*` timing functions, `delay-*`), and animations (built-in `animate-*` utilities plus custom `@keyframes`).
+
+Covers combining transforms/transitions/animations (hover-scale, spinners, staggered delays), performance guidance (prefer `transform`/`opacity`), and the mandatory `prefers-reduced-motion` accessibility fallback.
+</objective>
 
 # Tailwind CSS Transforms & Animations v4.1
 

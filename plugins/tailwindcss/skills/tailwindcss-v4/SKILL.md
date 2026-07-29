@@ -1,8 +1,14 @@
 ---
 name: tailwindcss-v4
-description: "Tailwind CSS v4.1 core features: @theme namespaces, CSS-first configuration, custom directives (@utility, @variant, @custom-variant), v3-to-v4 breaking changes, and the upgrade tool. Use when: migrating a project from Tailwind v3 to v4, mapping @theme namespaces to generated utilities, or looking up renamed/removed v3 utilities. Do NOT use for: day-to-day CSS-first configuration reference — @theme/@utility/@variant details (use tailwindcss-core), utility class lookup (use the category skills)."
+description: "Use when migrating a project from Tailwind v3 to v4, mapping @theme namespaces to generated utilities, or looking up renamed/removed v3 utilities."
 user-invocable: false
 ---
+
+<objective>
+Documents Tailwind CSS v4.1 core features relevant to a v3→v4 migration: the `@theme` namespace-to-generated-utility mapping (`--color-*`→`bg-*`/`text-*`, `--spacing-*`→`p-*`/`m-*`/`gap-*`, etc.), the v3→v4 breaking changes (removed `@tailwind` directives, renamed utilities like `shadow-sm`→`shadow-xs`, removed `bg-opacity-*`/`flex-shrink-*`, the `@utility` custom-utility syntax change, arbitrary-value variable syntax, important-modifier position), and the `@tailwindcss/upgrade` CLI tool.
+
+Not the day-to-day CSS-first configuration reference (`tailwindcss-core` owns `@theme`/`@utility`/`@variant` usage) and not a utility-class lookup (the category skills own that).
+</objective>
 
 # Tailwind CSS v4.1 Core
 

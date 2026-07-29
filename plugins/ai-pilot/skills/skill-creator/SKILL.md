@@ -1,12 +1,18 @@
 ---
 name: skill-creator
-description: Use when creating new skills, restructuring existing skills, or improving skill documentation. Generates SKILL.md + references/ structure with proper patterns.
+description: Use when creating new skills, restructuring existing skills, or improving skill documentation.
 versions:
   claude-plugins: "1.35"
 user-invocable: true
 references: references/workflow.md, references/architecture.md, references/content-rules.md, references/registration.md, references/adaptation.md, references/templates/SKILL-template.md, references/templates/reference-template.md, references/templates/template-template.md
 related-skills: research, exploration
 ---
+
+<objective>
+Skill Creator scaffolds a complete `SKILL.md` + `references/` structure following the project's skill conventions: conceptual references (WHY + WHEN, max 150 lines each) separated from copy-paste-ready templates. It covers four flows -- creating a brand-new skill, restructuring one that doesn't follow the pattern, improving a skill missing references or with outdated content, and adapting an existing skill to a different framework -- each ending with registration in the owning agent's frontmatter and marketplace.json, then a `fuse-ai-pilot:sniper` validation pass.
+
+It generates the skill's structural and documentation content only, not the skill's substantive technical guidance -- that must come from `research-expert` + `explore-codebase` findings gathered before writing.
+</objective>
 
 # Skill Creator
 

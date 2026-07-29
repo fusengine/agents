@@ -1,7 +1,11 @@
 ---
 name: commit-optimization
-description: Optimization guide for fuse-commit-pro commit workflow. Documents settings to reduce token usage.
+description: Use when configuring settings.json to reduce fuse-commit-pro's context token usage.
 ---
+
+<objective>
+Documents the `includeGitInstructions: false` settings.json option (and its `CLAUDE_CODE_DISABLE_GIT_INSTRUCTIONS=1` env var override, which takes precedence) that removes Claude Code's built-in commit/PR workflow instructions from the system prompt — saving 2-5% context tokens — since fuse-commit-pro supplies its own comprehensive git workflow that supersedes the defaults.
+</objective>
 
 # Commit Optimization
 

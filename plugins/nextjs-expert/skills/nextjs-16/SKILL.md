@@ -1,6 +1,6 @@
 ---
 name: nextjs-16
-description: "Expert Next.js 16 with Turbopack, App Router, Cache Components, proxy.ts, React 19. Use when building Next.js apps, routing, caching, server components, or migrating from v15. Do NOT use for: full-stack assembly and scaffolding with Prisma/Better Auth/shadcn/Zustand (use nextjs-stack), pure React SPA without next.config (use react-expert skills)."
+description: Use when building Next.js 16 apps — Turbopack, App Router, Cache Components, proxy.ts, v15 migration. Not for stack scaffolding (nextjs-stack) or React SPA (react-expert).
 versions:
   nextjs: 16
   react: 19
@@ -8,6 +8,12 @@ user-invocable: true
 references: references/installation.md, references/upgrade.md, references/project-structure.md, references/typescript.md, references/styling.md, references/app-router.md, references/routing-advanced.md, references/navigation.md, references/route-segment-config.md, references/pages-router.md, references/server-components.md, references/directives.md, references/react-19.md, references/rendering.md, references/streaming.md, references/runtime.md, references/data-fetching.md, references/forms.md, references/static-generation.md, references/cookies-headers.md, references/caching.md, references/cache-components.md, references/turbopack.md, references/react-compiler.md, references/dynamic-imports.md, references/loading-patterns.md, references/error-handling.md, references/proxy.md, references/middleware-migration.md, references/api-routes.md, references/security.md, references/metadata.md, references/metadata-files.md, references/images.md, references/fonts.md, references/scripts.md, references/third-party.md, references/analytics.md, references/instrumentation.md, references/devtools-mcp.md, references/environment.md, references/deployment.md, references/testing.md, references/config-advanced.md
 related-skills: nextjs-i18n, better-auth, tailwindcss-core, solid-nextjs, nextjs-stack, nextjs-server-components, nextjs-tanstack-query
 ---
+
+<objective>
+Covers Next.js 16 core framework mechanics: Turbopack (default bundler, Webpack fully removed), the App Router (nested layouts, parallel/intercepting routes, file conventions like page.tsx/layout.tsx/loading.tsx/error.tsx/not-found.tsx), Cache Components (`use cache`, `cacheTag()`, `cacheLife()`, `revalidateTag()`), `proxy.ts` (full Node.js runtime, replaces Edge middleware), and React 19 integration (View Transitions, new hooks).
+
+Documents the critical v15→v16 breaking changes: proxy.ts replacing middleware.ts, Turbopack-only builds, `use cache` replacing Partial Prerendering, required React 19, and async `params`/`searchParams`. This skill covers core framework APIs only — for assembling a full production stack (Prisma, Better Auth, shadcn/ui, Zustand together) use nextjs-stack instead; for a pure React SPA without `next.config.*` use the react-expert skills instead.
+</objective>
 
 # Next.js 16 Expert
 

@@ -1,6 +1,6 @@
 ---
 name: php-quality-tooling
-description: Use when setting up or tuning static analysis, automated refactoring, and code-style enforcement on a framework-agnostic PHP project. Covers PHPStan, Rector, PHP-CS-Fixer, composer scripts, and CI wiring. Do NOT use for Laravel projects (Pint + Larastan → laravel-expert), test frameworks (→ php-testing), or language syntax questions (→ php-language-modern).
+description: Use when setting up PHPStan, Rector, or PHP-CS-Fixer on a non-Laravel PHP project, incl. CI wiring. Do NOT use for Laravel (Pint/Larastan), tests, or syntax.
 versions:
   phpstan: "2.x"
   rector: "2.x"
@@ -9,6 +9,15 @@ user-invocable: true
 references: references/phpstan-levels.md, references/rector-upgrades.md, references/php-cs-fixer.md, references/templates/phpstan-neon.md, references/templates/rector-php.md, references/templates/php-cs-fixer-dist.md, references/templates/composer-ci.md
 related-skills: php-testing, php-language-modern
 ---
+
+<objective>
+Covers the three complementary quality tools for framework-agnostic PHP: PHPStan for static analysis (finds type bugs, never edits), Rector for automated upgrades and refactors (rewrites source), and PHP-CS-Fixer for coding-standard formatting (rewrites whitespace/style). They do not overlap — a full setup runs all three.
+
+Includes a decision guide for greenfield vs legacy codebases (PHPStan level + baseline strategy, Rector's withPhpSets()/withPhpLevel(), PHP-CS-Fixer rule sets), plus ready-to-copy templates for phpstan.neon, rector.php, .php-cs-fixer.dist.php, and a composer-scripts CI pipeline.
+
+Do NOT use this skill on Laravel projects — Laravel uses Pint (a thin wrapper over PHP-CS-Fixer) and Larastan instead, both owned by laravel-expert. Do NOT use it for test framework setup (php-testing) or language syntax questions (php-language-modern).
+</objective>
+
 
 # PHP Quality Tooling
 

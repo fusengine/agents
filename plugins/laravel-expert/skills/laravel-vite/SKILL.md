@@ -10,6 +10,16 @@ references: references/setup.md, references/entry-points.md, references/preproce
 related-skills: laravel-blade, laravel-livewire, fusecore
 ---
 
+<objective>
+Covers Vite as Laravel's frontend build tool: initial setup and the
+laravel-vite-plugin, multiple entry points, CSS preprocessors
+(Sass/Less/PostCSS), asset handling, VITE_-prefixed environment variables,
+the dev server and HMR (including Docker configuration), build optimization
+(chunking, minification), server-side rendering, Inertia integration, JS
+framework plugins (Vue/React/Svelte), CSP nonce security, and production
+deployment.
+</objective>
+
 # Laravel Vite
 
 ## Agent Workflow (MANDATORY)

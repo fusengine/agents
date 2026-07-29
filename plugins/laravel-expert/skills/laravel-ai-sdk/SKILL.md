@@ -1,6 +1,6 @@
 ---
 name: laravel-ai-sdk
-description: Use when integrating AI agents, tool calling, embeddings, structured output, or streaming in Laravel 13 via the `laravel/ai` package. Covers 14+ providers (OpenAI, Anthropic, Gemini, Azure, Groq, DeepSeek, Ollama, Mistral, xAI, Cohere, ElevenLabs, Jina, VoyageAI, OpenRouter).
+description: Use when integrating AI agents, tool calling, embeddings, structured output, or streaming in Laravel 13 via the `laravel/ai` package.
 versions:
   laravel: "13.0"
   php: "8.3"
@@ -9,6 +9,15 @@ user-invocable: true
 references: references/installation.md, references/agents.md, references/tools.md, references/embeddings.md, references/streaming.md, references/structured-output.md, references/templates/Agent.php.md, references/templates/Tool.php.md, references/templates/EmbeddingService.php.md, references/templates/StreamingController.php.md
 related-skills: laravel-attributes, laravel-vector-search
 ---
+
+<objective>
+Covers the `laravel/ai` package for Laravel 13: building class-based Agents
+(Agent contract + Promptable trait), tool calling (FileSearch + custom tools),
+generating and storing embeddings, structured output via JSON Schema, and
+streaming (SSE + Vercel AI SDK protocol). Supports 14+ providers through the
+unified `Lab` enum — OpenAI, Anthropic, Gemini, Azure, Groq, DeepSeek, Ollama,
+Mistral, xAI, Cohere, ElevenLabs, Jina, VoyageAI, OpenRouter.
+</objective>
 
 # Laravel AI SDK
 

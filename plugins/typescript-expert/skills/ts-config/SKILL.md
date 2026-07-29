@@ -1,6 +1,6 @@
 ---
 name: ts-config
-description: "Use when: creating or migrating a tsconfig.json, choosing module/moduleResolution, or fixing TS 6.0 deprecation errors. Covers the two official 2026 config tracks (Bun/bundler vs pure Node.js) and the TS 6.0 → 7.0 deprecation cleanup. Do NOT use for: TypeScript language syntax and idioms (use ts-language-patterns), framework configs shipping their own tsconfig base (Next.js/Astro/Vite plugin skills), or non-TS build tooling."
+description: "Use when creating or migrating a tsconfig.json, choosing module/moduleResolution, or fixing TS 6.0 deprecation errors. Not for language syntax (ts-language-patterns)."
 versions:
   typescript: "6.0"
   node: "24"
@@ -9,6 +9,21 @@ user-invocable: false
 references: references/bundler-track.md, references/node-track.md, references/deprecations-6.md, references/templates/tsconfig.bundler.md, references/templates/tsconfig.node.md
 related-skills: ts-language-patterns, solid-generic
 ---
+
+<objective>
+This skill covers the two supported TypeScript 6.0 config tracks for 2026 — bundler (Bun,
+Vite, esbuild, webpack: module Preserve + moduleResolution bundler) and Node (pure Node.js
+native type stripping: module nodenext + moduleResolution nodenext) — and how to pick
+between them by runtime.
+
+It also covers the TS 6.0 deprecation cleanup ahead of 7.0: dropping moduleResolution
+node/node10, setting verbatimModuleSyntax, strict + noUncheckedIndexedAccess, explicit
+types, and explicit rootDir now that 6.0 no longer infers it.
+
+Out of scope: TypeScript language syntax and idioms belong to ts-language-patterns;
+framework configs that ship their own tsconfig base (Next.js/Astro/Vite plugin skills) and
+non-TS build tooling are not covered.
+</objective>
 
 # TypeScript Config (TS 6.0)
 

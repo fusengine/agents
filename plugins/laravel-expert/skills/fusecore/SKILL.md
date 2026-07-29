@@ -1,6 +1,6 @@
 ---
 name: fusecore
-description: FuseCore Modular Architecture - Laravel 13 modular monolith with auto-discovery, React 19 integration, and SOLID principles. Use when creating modules, understanding FuseCore structure, or implementing features in FuseCore projects.
+description: Use when creating modules, understanding FuseCore structure, or implementing features in a FuseCore modular-monolith Laravel project.
 versions:
   laravel: "13.0"
   php: "8.3"
@@ -10,6 +10,16 @@ user-invocable: true
 references: references/architecture.md, references/module-structure.md, references/module-discovery.md, references/module-json.md, references/contracts.md, references/traits.md, references/service-provider.md, references/react-integration.md, references/routes.md, references/migrations.md, references/i18n.md, references/creating-module.md
 related-skills: solid-php, laravel-permission, laravel-api
 ---
+
+<objective>
+FuseCore is a modular-monolith architecture for Laravel 13 with React 19
+integration, built on auto-discovery (module.json), SOLID principles, and
+per-module isolation (models, migrations, routes, React resources, i18n).
+Covers creating new modules, understanding the FuseCore directory structure
+and module-discovery mechanism, and implementing features inside FuseCore
+projects — module contracts, traits (HasModule), service providers, and
+cross-module dependency declaration.
+</objective>
 
 # FuseCore Modular Architecture
 

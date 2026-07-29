@@ -1,9 +1,13 @@
 ---
 name: seo-ecommerce
-description: Use when optimizing e-commerce SEO. Covers product schema with AggregateRating, faceted navigation rules, category page intro, out-of-stock handling, internal search, marketplace SEO (Amazon, Etsy, eBay).
+description: Use when optimizing e-commerce SEO — product/category pages, faceted navigation, marketplace listings.
 user-invocable: false
 related-skills: seo, seo-schema, seo-content, seo-images
 ---
+
+<objective>
+Covers e-commerce-specific SEO: Product schema (offers/aggregateRating/review/brand) plus BreadcrumbList on product pages, category page structure (intro copy, H1, pagination canonicals), faceted-navigation indexing rules by filter-combo count, out-of-stock handling (keep the page, set availability, link to alternatives), internal search page blocking/optimization, and marketplace-specific tactics (Amazon A+ Content, Etsy tags, eBay item specifics). Schema templates live in `templates/json-ld/`.
+</objective>
 
 # E-commerce SEO
 

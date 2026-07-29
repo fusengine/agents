@@ -1,9 +1,15 @@
 ---
 name: solid-detection
-description: "Multi-language SOLID detection rules. Project type detection, interface locations, file size limits per language. Use when: determining which language-specific SOLID skill to load, detecting project type from config files, or resolving interface directory conventions per language."
+description: "Use when determining which language-specific SOLID skill to load, detecting project type from config files, or resolving interface directory conventions."
 argument-hint: "[file-or-directory] [--language]"
 user-invocable: false
 ---
+
+<objective>
+SOLID Detection identifies a project's language/framework from its config files (package.json + next/react, tsconfig.json/bun files, composer.json + laravel, Package.swift/*.xcodeproj, pom.xml/build.gradle, go.mod, Gemfile+Rakefile, Cargo.toml, pyproject.toml/requirements.txt) in a fixed priority order, then maps it to the matching SOLID skill and sets `SOLID_PROJECT_TYPE`, `SOLID_FILE_LIMIT`, `SOLID_INTERFACE_DIR`, and `SOLID_STRUCTURE` environment variables via `detect-project.sh`.
+
+An interface found in the wrong location is a hard BLOCK; exceeding the file-size limit or missing documentation is a WARNING only. See `language-rules.md` for the full per-language interface-location, forbidden-zone, and line-counting rules.
+</objective>
 
 # SOLID Detection Skill
 

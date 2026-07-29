@@ -1,6 +1,6 @@
 ---
 name: start-routing-data
-description: "Use when: loading data in TanStack Start routes with isomorphic loaders, wiring TanStack Query into a Start loader (ensureQueryData), running mutations via server functions, or tuning per-route SSR (ssr flag). Do NOT use for: generic TanStack Router/Query API — route trees, search params, useQuery/useMutation basics (use react-expert's react-tanstack-router)."
+description: Use when loading data in Start routes — isomorphic loaders, TanStack Query in a loader, mutations, or per-route SSR. Do NOT use for generic Router/Query API.
 versions:
   "@tanstack/react-start": "^1"
   "@tanstack/react-router": "^1"
@@ -9,6 +9,16 @@ user-invocable: false
 references: references/isomorphic-loaders.md, references/query-in-loader.md, references/selective-ssr.md, references/mutations.md, references/templates/query-loader-route.md, references/templates/selective-ssr-route.md
 related-skills: react-tanstack-router, nextjs-tanstack-query
 ---
+
+<objective>
+Covers what is specific to TanStack Start about data loading, on top of generic TanStack Router/Query (route trees, file-based routing, search-param validation, useQuery/useMutation mechanics, cache config — all covered instead by react-expert's react-tanstack-router): isomorphic loaders (server on first request, client on navigation), context.queryClient.ensureQueryData() inside a loader for SSR prefetch + hydration, the per-route ssr flag (true | false | 'data-only'), and mutations through server functions followed by router.invalidate().
+
+Critical rules: never touch window/localStorage at loader top level (loaders run on the server too) — gate with ssr: false/'data-only' or useEffect instead; share one queryOptions factory between ensureQueryData (loader) and useQuery (component) so cache keys match; prefetch through the router-context queryClient, never a new one; invalidate loaders/Query cache after every server-function write; and remember ssr only tightens down the route tree, a child can never loosen a parent's ssr: false back to true.
+
+Includes templates for a Query-prefetching route and a selective-SSR route.
+
+Do NOT use this skill for generic TanStack Router/Query API questions — route trees, search params, useQuery/useMutation basics belong to react-expert's react-tanstack-router skill.
+</objective>
 
 # TanStack Start — Routing Data
 

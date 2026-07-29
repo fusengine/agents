@@ -1,11 +1,21 @@
 ---
 name: design-review
-description: "The final quality gate before any design deliverable is reported done — two ISOLATED assessments (deterministic detection never in the same head as the subjective/visual read), P0-P3 findings with NO aggregate score ever, a bounded visual loop (max 2 fix cycles), and a mandatory in-loop challenger gate (fresh-context, blind PNG) before any 'done' claim."
+description: "Use when a design deliverable is about to be reported done — the final quality gate after design-motion or a mobile mockup."
 when-to-use: "After design-motion (or directly after the mockup for design-ios/design-android) — the last step before reporting a design deliverable done. Also the target of design-method's critique.md and audit.md moves."
-keywords: review, audit, critique, challenger, p0-p3, no-aggregate-score, wcag, anti-slop, contrast
+keywords: review, audit, critique, challenger, p0-p3, no-aggregate-score, wcag, anti-slop, contrast, lookalike-test, body-sequence, je-reproduis
 priority: critical
 related: design-method, design-motion, design-system, ux-copy
 ---
+
+<objective>
+The final quality gate before any design deliverable is reported done. Runs two assessments that must stay ISOLATED from each other — deterministic detection (grep/count/compute checks) is never performed in the same head as the subjective/visual read, because collapsing them into one pass is exactly how prior AI-slop clusters shipped through this audit undetected.
+
+Findings are tagged P0-P3 (Blocking / Major / Minor / Polish) and reported individually — there is NO aggregate score, health score, or letter grade, ever; an aggregated number invites self-grading theater.
+
+The visual review is a bounded loop, maximum 2 fix cycles: the loop exits PASS only once the register-applicable positive floors are actually met, and a plateau (cycle 2 repeating cycle 1's finding) stops immediately even at cycle 1 of 2.
+
+Before any "done" claim, a mandatory in-loop challenger gate judges the deliverable blind — fresh-context, off a rendered PNG only, never fed this procedure's own reasoning. A Block from the challenger must be resolved or owner-accepted before "done" is reported.
+</objective>
 
 ## Design Review — Final Quality Gate
 
@@ -19,9 +29,21 @@ skipped, never reported as passed if it wasn't actually run
 - The complete rendered artifact: components/mockup with animations (if any) and
   interactive states.
 - `design-system.md` as the audit baseline (tokens, forbidden fonts, contrast floors).
-- The 3 elements declared in `design-web`/`design-webapp` ("Je reproduis: {el1}, {el2},
-  {el3}") and any declared premium pattern(s); the signature element
-  (`design-method` Step 2) instead gets a **Signature Dominance** verdict.
+- The `Je reproduis` line written by `design-web`/`design-webapp` — three declared
+  elements, **two tagged `[corpus: {reference}/{tokens section}]`** (measured procedure,
+  the craft) and **one tagged `[sector: {url} — register]`** (register signal only;
+  `[sector: none — register from brief]` is valid, an empty slot is not). A missing or
+  untagged line is a blocking Part 1 finding — the binary verdict has no input without it.
+- Any declared premium pattern(s); the signature element (`design-method` Step 2) instead
+  gets a **Signature Dominance** verdict.
+- The plan's two structural picks — hero treatment
+  (`design-method/references/macrostructure-bank.md`) **and** body sequence
+  (`design-method/references/body-sequence-bank.md`). A plan naming neither is itself a
+  detector signal (anti-slop entry 15). `brand` register; a `product` deliverable carries
+  neither.
+- **The register** (`brand`/`product`, from `design-method` Gate 0) — an input, never
+  inferred mid-review: check 14's floors, Part 2 item 8's floors and the Lookalike Test
+  (item 8b) all branch on it.
 
 ### The two assessments — ISOLATED, never in the same head
 This is the structural rule the whole procedure hangs on: the mechanical read and the
@@ -45,9 +67,12 @@ cream/serif/terracotta cluster shipped through this audit once already (document
 
 ### Part 1 — Deterministic Checks (mechanical, run first)
 Full 15-item list is canonical in `references/review-procedure.md` Part 1 — contrast
-(4.5:1 text / 3:1 UI, light+dark), forbidden fonts, OKLCH-only color format, em-dash
+(4.5:1 text / 3:1 UI, light+dark), forbidden fonts, OKLCH-only color format **in the
+produced code** (corpus values arrive as hex/rgb — convert them, never drop them), em-dash
 crutch (2+ occurrences), token adherence, the anti-AI-slop audit
-(`references/anti-ai-slop-audit.md`, 14 detectors — clusters 9-11 are
+(`references/anti-ai-slop-audit.md`, 15 detectors — including entry 15, the generic **body**
+sequence: canonical order verbatim AND uniform vertical rhythm, a conjunction because the
+canon *treated* is legitimate; clusters 9-11 are
 FLAG-with-justification, not a block, if declared per `design-method` Step 2), the
 mechanical pre-flight (`references/pre-flight-checklist.md`), WCAG beyond contrast
 (`references/ux-wcag.md`), cross-component consistency (`references/consistency-checks.md`),
@@ -63,7 +88,15 @@ localized critique only (name the exact section/element, never "improve the styl
 motion verdict if any animation exists (`references/motion-verdict.md`, Before/After/Why
 table + tiered impact + explicit Block/Approve) → cite at least **two** named techniques
 from `references/elicitation-visual.md` (Squint / Subtraction / Competitor Line-up /
-5-Second / Persona) → fix gaps. Full step-by-step: `references/review-procedure.md` Part 2.
+5-Second / Persona) → fix gaps → **Lookalike Test, `brand` only / `product` exempt** (item
+8b — this procedure is the only executant of the test `design-web` declares; definition
+canonical in `design-web/references/design-inspiration.md`, never restated here; binary
+`[distinguishable]`/`[indistinguishable]`, and an `[indistinguishable]` sends the page back
+to the **body sequence** pick, never to a cosmetic tweak. On `product` it does not apply —
+an app screen is supposed to share a silhouette with other app screens, Jakob's Law — and
+the **Domain-Specificity Floor** (`design-method/references/register/product.md` §2) runs
+in its slot instead, per `design-webapp/SKILL.md`). Full step-by-step:
+`references/review-procedure.md` Part 2.
 
 **Bounded loop — maximum 2 fix cycles.** The loop exits PASS only once the
 register-applicable positive floors are actually **met** (not merely "0 flags"). Issues
@@ -108,7 +141,11 @@ Full mechanics: `references/review-procedure.md` item 9.
 ### Output
 - Part 1 deterministic results, all Critical/Major resolved.
 - Light/dark + 3-viewport screenshots (Part 2).
-- Binary verdict per declared element/pattern; Signature Dominance for the signature element.
+- Binary verdict per declared element/pattern, each cited with its `[corpus: …]`/`[sector: …]`
+  tag; Signature Dominance for the signature element.
+- Lookalike Test verdict (`brand`), with the hero treatment and body sequence named — or
+  `[n/a — product register; Domain-Specificity Floor run instead: {verdict}]`. Never blank,
+  never "passed" by default.
 - Motion Block/Approve verdict if applicable.
 - Findings list, P0-P3, no aggregate score.
 - Challenger verdict: resolved/owner-accepted, or "not judged" on tool-unavailable fallback.
@@ -121,7 +158,7 @@ the deliverable is not "done" — say so plainly, don't soften it into "mostly r
 | File | Purpose |
 |------|---------|
 | `references/review-procedure.md` | **Canonical full procedure — Part 1/Part 2/challenger gate, step-by-step** |
-| `references/anti-ai-slop-audit.md` | Deterministic AI-slop detection, 14 entries, PASS/FAIL per entry |
+| `references/anti-ai-slop-audit.md` | Deterministic AI-slop detection, 15 entries, PASS/FAIL per entry (15 = generic body sequence) |
 | `references/pre-flight-checklist.md` | **Mechanical grep/count checks — last filter before audit-clean** |
 | `references/elicitation-visual.md` | Named visual techniques (Squint/Subtraction/Competitor/5-Second/Persona) |
 | `references/audit-checklist.md` | Typography/color/spacing/motion/a11y checklist tables (ignore its Scoring section — superseded above) |

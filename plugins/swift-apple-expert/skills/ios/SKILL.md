@@ -1,6 +1,6 @@
 ---
 name: ios
-description: iOS platform-specific development with XcodeBuildMCP tools for simulator, device, UI automation, and debugging. Use when building iPhone apps, testing on simulator/device, or automating UI interactions.
+description: Use when building iPhone apps — simulator/device testing, UI automation, or debugging — with XcodeBuildMCP tools.
 versions:
   ios: 26
   xcode: 26
@@ -8,6 +8,14 @@ user-invocable: false
 references: references/simulator-tools.md, references/device-tools.md, references/ui-automation.md, references/debugging.md, references/uikit-integration.md
 related-skills: swift-core, swiftui-core, ipados, mcp-tools
 ---
+
+<objective>
+Covers iOS-specific development using XcodeBuildMCP automation tools: building and testing on the iOS Simulator, deploying to physical devices, scripted UI interactions (tap, swipe, screenshot, view-hierarchy snapshot), LLDB debugging, and integrating UIKit views inside SwiftUI.
+
+Lists the concrete MCP tools available for each phase — simulator tools (build_sim, boot_sim, launch_app_sim, test_sim), device tools (build_device, install_app_device, list_devices), and UI automation primitives.
+
+Best practices: build before every commit, iterate on the simulator first, always test on a real device before release, enable accessibility identifiers for UI automation, and validate against the oldest supported iOS version.
+</objective>
 
 # iOS Platform
 

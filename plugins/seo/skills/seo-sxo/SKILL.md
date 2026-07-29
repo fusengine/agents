@@ -1,9 +1,13 @@
 ---
 name: seo-sxo
-description: Use when optimizing search experience (SXO). Covers intent matching, user personas, user stories, page-type analysis, dwell time, scroll depth, pogo-sticking prevention.
+description: Use when optimizing search experience (SXO) — intent matching, personas, dwell time, pogo-sticking.
 user-invocable: false
 related-skills: seo, seo-content, seo-featured-snippets
 ---
+
+<objective>
+Covers Search Experience Optimization: the 5-layer intent-matching table (informational through post-conversion) with expected page type, key signals, and CTA per layer, the local-vs-global intent behavioral-signal comparison, the user-persona and user-story method, and SXO metrics (dwell time, scroll depth, pogo-sticking rate, CTA click-through, the CWV-to-conversion link). Includes conversion-lever tactics for local transactional pages (above-fold CTA, click-to-call, urgency, trust proof) and SXO anti-patterns (pop-ups, walls of text, buried answers, intent-mismatched selling).
+</objective>
 
 # Search Experience Optimization (SXO)
 

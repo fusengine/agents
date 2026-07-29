@@ -1,6 +1,6 @@
 ---
 name: ts-runtime-node
-description: Use when running TypeScript directly on Node.js without a build step — native type stripping, its limits, when to reach for tsx, ESM setup, watch mode, and node:test. Covers Node 24 LTS. Do NOT use for Bun runtime specifics (ts-runtime-bun) or tsconfig details (ts-config).
+description: Use when running TypeScript directly on Node.js without a build step — native type stripping, its limits, or when to reach for tsx. Not for Bun (ts-runtime-bun).
 versions:
   node: "24 LTS"
   typescript: "5.8+ (latest stable 6.0)"
@@ -8,6 +8,21 @@ versions:
 references: references/type-stripping.md, references/tsx-when-needed.md, references/node24-features.md, references/templates/node-esm-setup.md
 related-skills: ts-runtime-bun, ts-lint-format, solid-generic
 ---
+
+<objective>
+This skill covers running .ts/.mts/.cts files directly on Node 24 LTS via native type
+stripping: what erases cleanly versus what throws ERR_UNSUPPORTED_TYPESCRIPT_SYNTAX (enum,
+namespace with runtime code, parameter properties, import aliases), why tsconfig.json
+paths/downleveling are ignored at runtime, and mandatory explicit file extensions and import
+type usage.
+
+It also covers when native stripping is insufficient and a full loader (tsx) is needed —
+paths, decorators, enum, or .tsx — plus setting up an ESM-only Node project, --watch mode,
+and node:test, and migrating a script/CLI off ts-node.
+
+Out of scope: Bun runtime specifics belong to ts-runtime-bun; tsconfig configuration details
+belong to ts-config.
+</objective>
 
 # TypeScript on Node.js
 

@@ -12,6 +12,12 @@ references: references/installation.md, references/queries.md, references/user-e
 related-skills: react-19, solid-react, react-state, react-forms
 ---
 
+<objective>
+Tests React 19 components with Testing Library and Vitest: user-centric queries prioritized by accessibility (`getByRole` first, `getByTestId` last resort), `userEvent` for realistic interactions (never `fireEvent`), `findBy`/`waitFor` for async assertions (never `setTimeout`), and MSW for API mocking (never direct fetch mocking).
+
+Also covers testing React 19 features (`useActionState`, `use()`), custom hooks, Suspense boundaries, error boundaries, and accessibility audits with axe-core. Provides Vitest configuration and 9 ready-to-copy test templates. This is a testing-methodology skill layered on top of the React skills (react-19, react-state, react-forms) — it doesn't teach those APIs themselves, only how to test components that use them.
+</objective>
+
 # React Testing Library
 
 Test React components the way users interact with them.

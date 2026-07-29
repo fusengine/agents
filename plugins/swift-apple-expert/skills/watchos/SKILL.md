@@ -1,12 +1,20 @@
 ---
 name: watchos
-description: watchOS platform-specific development with complications, workouts, HealthKit, and Watch Connectivity. Use when building Apple Watch apps, health features, or iPhone-Watch communication.
+description: Use when building Apple Watch apps — complications, workouts, HealthKit, or iPhone-Watch connectivity.
 versions:
   watchos: 26
 user-invocable: false
 references: references/complications.md, references/workouts.md, references/watch-connectivity.md
 related-skills: swift-core, swiftui-core, ios, mcp-tools
 ---
+
+<objective>
+Covers watchOS-specific development for Apple Watch: watch-face complications for glanceable data, workout sessions and fitness tracking, HealthKit access to health metrics, and Watch Connectivity for iPhone-Watch sync.
+
+Includes design considerations specific to the platform — small display with large touch targets, glanceable information with minimal text, Digital Crown scrolling/input, Force Touch on older watches, swipe/tap gestures, and battery-conscious background work.
+
+Best practices: keep information glanceable, use large tap targets, minimize text input, drive watch-face updates through complications, use efficient background refresh, and always validate on real hardware since the simulator behaves differently.
+</objective>
 
 # watchOS Platform
 

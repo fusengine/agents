@@ -1,12 +1,18 @@
 ---
 name: astro-styling
-description: Use when styling Astro components with scoped CSS, CSS Modules, Tailwind CSS, UnoCSS, or Sass. Covers class:list directive, global styles, CSS custom properties, and Vite-powered preprocessors.
+description: Use when styling Astro components — scoped CSS, CSS Modules, Tailwind CSS, UnoCSS, Sass, the class:list directive, or global styles.
 versions:
   astro: "7"
 user-invocable: true
 references: references/scoped-css.md, references/css-modules.md, references/global-styles.md, references/tailwind.md, references/unocss.md, references/sass.md, references/css-variables.md, references/templates/scoped-component.md, references/templates/tailwind-setup.md, references/templates/unocss-setup.md
 related-skills: astro-7, astro-integrations, solid-astro
 ---
+
+<objective>
+Covers styling options for `.astro` components: default component-scoped `<style>`, `<style is:global>` for base styles/resets (reserved for layouts), CSS Modules (`.module.css`) for framework components (React, Vue), Tailwind CSS, UnoCSS, and Sass/SCSS via Vite preprocessors. Includes the `class:list` directive for conditional class application and CSS custom properties for design tokens/themes.
+
+This skill addresses `.astro`-file styling specifically (scoping semantics unique to Astro components), not the UI framework setup itself (astro-integrations) or SOLID file-organization rules for style files (solid-astro).
+</objective>
 
 # Astro Styling
 

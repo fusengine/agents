@@ -1,6 +1,6 @@
 ---
 name: start-auth
-description: "Use when: adding authentication/authorization to a TanStack Start app — protecting routes with beforeLoad + redirect, authorizing server functions, sessions/cookies (useSession, getRequest), CSRF, or wiring Auth.js. Do NOT use for: generic route guards unrelated to auth (react-tanstack-router) or non-Start Node auth."
+description: Use when adding auth to a TanStack Start app — route protection, server-function authorization, sessions, CSRF. Do NOT use for generic route guards.
 versions:
   "@tanstack/react-start": "^1"
   "@tanstack/react-router": "^1"
@@ -8,6 +8,16 @@ user-invocable: false
 references: references/data-boundary.md, references/route-protection.md, references/sessions-cookies.md, references/hardening.md, references/templates/authed-middleware.md, references/templates/session-and-csrf.md, references/templates/oauth-pkce.md
 related-skills: better-auth, auth-audit
 ---
+
+<objective>
+Covers authentication and authorization in TanStack Start: protecting routes with beforeLoad + redirect, authorizing server functions via middleware (the actual security boundary), session/cookie handling (useSession, getRequest, __Host- cookies), CSRF protection (createCsrfMiddleware + Origin checks), and wiring managed providers like Auth.js, Better Auth, Clerk, or WorkOS.
+
+The central gotcha this skill exists to prevent: beforeLoad + redirect() protects the UI only — server functions and server routes are independently reachable API endpoints, so authorization MUST be enforced inside the server-function handler or its middleware, never assumed from a route guard.
+
+Ships DIY server-primitive templates (portable, no vendor lock-in) for an _authed layout + authMiddleware, session/CSRF helpers, and OAuth authorization-code flow with PKCE. For a managed auth library, install it and follow its own current docs or the dedicated better-auth skill rather than assuming a Start adapter API.
+
+Do NOT use this skill for generic route guards unrelated to auth (react-tanstack-router) or non-Start Node auth setups.
+</objective>
 
 # TanStack Start — Authentication
 

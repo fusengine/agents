@@ -1,11 +1,19 @@
 ---
 name: ux-copy
-description: "Copy self-audit and ban-lists — filler verbs/hype adjectives, slop placeholder names, fake-precise numbers, Title Case headlines, humor in error copy ('Oops!'), em-dash crutch, one copy register per page."
+description: "Use when writing or reviewing any visible copy — headlines, buttons, body, errors, empty states — inside a design-method move or standalone."
 when-to-use: "Any time visible copy is written or reviewed — headlines, subheads, buttons, body, captions, errors, empty states — inside any design-method move, or standalone copy work."
 keywords: copy, microcopy, ban-list, register, tone, error-messages, self-audit
 priority: critical
 related: design-method, design-review, design-web, design-webapp
 ---
+
+<objective>
+A copy self-audit pass applied any time visible copy is written or reviewed — headlines, subheads, buttons, body, captions, errors, empty states — inside any `design-method` move or as standalone copy work.
+
+Runs 10 mechanical ban-lists: filler verbs/hype adjectives, slop placeholder names, fake-precise numbers, unjustified Title Case headlines, humor in error copy ("Oops!"), the AI production-tell catalogue, em-dash-as-crutch, "Not X. Y." manufactured contrast, the "theater" keyword, and all-caps body copy.
+
+Enforces one copy register per page (brand traces to the POV, product stays domain-specific). Judgment calls that aren't mechanically resolvable are quoted, located, and routed to `design-review`'s challenger gate — never self-scored.
+</objective>
 
 ## UX Copy — Self-Audit + Ban-Lists, One Register Per Page
 

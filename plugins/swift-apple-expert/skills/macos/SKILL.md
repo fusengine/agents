@@ -1,6 +1,6 @@
 ---
 name: macos
-description: macOS platform-specific development with menu bar apps, window management, AppKit integration, and notarization. Use when building Mac apps, creating menu bar extras, or distributing outside App Store.
+description: Use when building Mac apps — menu bar extras, window management, AppKit integration, or notarized distribution outside the App Store.
 versions:
   macos: 26
   xcode: 26
@@ -8,6 +8,14 @@ user-invocable: false
 references: references/app-structure.md, references/build-tools.md, references/appkit-integration.md, references/notarization.md
 related-skills: swift-core, swiftui-core, mcp-tools, build-distribution
 ---
+
+<objective>
+Covers macOS-specific development: menu bar apps via MenuBarExtra, multi-window application management, keyboard shortcuts and menus, AppKit integration (NSViewRepresentable) inside SwiftUI, and notarization for distribution outside the Mac App Store.
+
+Lists the XcodeBuildMCP tools for macOS builds (build_macos, build_run_macos, test_macos, launch_mac_app, stop_mac_app) and references for app structure (MenuBarExtra, Settings, Windows), build tooling, AppKit bridging, and code-signing/notarization.
+
+Best practices: support keyboard shortcuts for power users, use MenuBarExtra for utility apps, use WindowGroup/Window for multi-window apps and Settings for the preferences scene, notarize before distributing outside the App Store, and enable sandboxing for App Store submissions.
+</objective>
 
 # macOS Platform
 

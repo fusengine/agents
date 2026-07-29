@@ -1,6 +1,6 @@
 ---
 name: laravel-queues
-description: Laravel 13 background jobs - PHP Attributes (#[Queue], #[Connection], #[Tries], #[Backoff]), workers, batches, chains, middleware, Queue::route() centralised routing. Use for async tasks.
+description: Use when implementing Laravel 13 background jobs — queue attributes, workers, batching, chaining, middleware, or Queue::route() routing.
 versions:
   laravel: "13.0"
   horizon: "5.43"
@@ -9,6 +9,17 @@ user-invocable: false
 references: references/legacy-properties.md, references/jobs.md, references/dispatching.md, references/workers.md, references/batching.md, references/chaining.md, references/middleware.md, references/failed-jobs.md, references/horizon.md, references/testing.md, references/troubleshooting.md, references/templates/QueueableJob.php.md, references/templates/BatchJob.php.md, references/templates/ChainedJobs.php.md, references/templates/JobMiddleware.php.md, references/templates/JobTest.php.md
 related-skills: laravel-attributes, laravel-architecture, laravel-eloquent
 ---
+
+<objective>
+Covers Laravel 13 queues with PHP Attributes as the primary configuration
+mechanism on Jobs, Listeners, Notifications, Mailables, and Broadcast Events
+(#[Connection], #[Queue], #[Tries], #[Timeout], #[Backoff],
+#[MaxExceptions], #[FailOnTimeout], #[UniqueFor], #[AfterCommit]) alongside
+legacy property equivalents. Includes job lifecycle, dispatching, workers,
+batching, chaining, custom middleware, failed-job handling, Horizon
+monitoring, testing, troubleshooting, and centralised queue routing via
+Queue::route() in AppServiceProvider::boot().
+</objective>
 
 # Laravel Queues (L13 — Attributes-first)
 

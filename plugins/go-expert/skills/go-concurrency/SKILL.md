@@ -1,6 +1,6 @@
 ---
 name: go-concurrency
-description: "Use when: writing or reviewing Go concurrency — goroutines, channels, golang.org/x/sync/errgroup, context propagation and cancellation, sync.WaitGroup vs channels, the -race detector, or diagnosing goroutine leaks (incl. the 1.26 goroutineleak profile). Do NOT use for: sequential error handling / slog / generics / interface style (use go-core-idioms), non-Go languages, framework-specific code."
+description: Use when writing or reviewing Go concurrency — goroutines, channels, errgroup, context cancellation, or goroutine leaks. Not for sequential idioms (go-core-idioms).
 versions:
   go: "1.26"
   golang.org/x/sync: "latest"
@@ -8,6 +8,14 @@ user-invocable: false
 references: references/goroutines-channels.md, references/errgroup.md, references/context-propagation.md, references/goroutine-leaks.md, references/templates/errgroup-patterns.md, references/templates/worker-pool.md
 related-skills: go-core-idioms, solid-go
 ---
+
+<objective>
+Covers Go concurrency for Go 1.26: goroutines and channels, golang.org/x/sync/errgroup,
+context propagation and cancellation, sync.WaitGroup vs channels, the -race detector,
+and diagnosing goroutine leaks (including the 1.26 goroutineleak profile). Does not
+cover sequential error handling, slog, generics, or interface style (see
+go-core-idioms), non-Go languages, or framework-specific code.
+</objective>
 
 # Go Concurrency
 

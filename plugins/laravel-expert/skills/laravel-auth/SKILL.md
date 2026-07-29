@@ -1,6 +1,6 @@
 ---
 name: laravel-auth
-description: Use when implementing user authentication, API tokens, social login, or authorization. Covers Sanctum, Passport, Socialite, Fortify, policies, and gates for Laravel 13.
+description: Use when implementing user authentication, API tokens, social login, or authorization in Laravel 13.
 versions:
   laravel: "13.0"
   sanctum: "4.0"
@@ -9,6 +9,16 @@ user-invocable: true
 references: references/authentication.md, references/authorization.md, references/sanctum.md, references/passport.md, references/fortify.md, references/socialite.md, references/starter-kits.md, references/verification.md, references/passwords.md, references/session.md, references/csrf.md, references/encryption.md, references/hashing.md, references/templates/LoginController.php.md, references/templates/GatesAndPolicies.php.md, references/templates/PostPolicy.php.md, references/templates/sanctum-setup.md, references/templates/PassportSetup.php.md, references/templates/FortifySetup.php.md, references/templates/SocialiteController.php.md, references/templates/PasswordResetController.php.md
 related-skills: laravel-api, laravel-permission, fusecore
 ---
+
+<objective>
+Covers the Laravel 13 authentication and authorization ecosystem: Sanctum
+(API tokens, SPA auth), Passport (OAuth2 server), Fortify (headless
+custom-UI auth), Socialite (social login), starter kits, policies and gates,
+email verification, password reset, session management, CSRF /
+PreventRequestForgery, encryption, and hashing. Includes FuseCore modular-
+project integration patterns for auth (User module, cross-module
+authorization via policies).
+</objective>
 
 # Laravel Authentication & Authorization
 

@@ -1,12 +1,20 @@
 ---
 name: tvos
-description: tvOS platform-specific development with focus system, large screen UI, Siri Remote, and media playback. Use when building Apple TV apps, video streaming, or living room experiences.
+description: Use when building Apple TV apps — focus-based navigation, Siri Remote interactions, or media/video streaming UI.
 versions:
   tvos: 26
 user-invocable: false
 references: references/focus-system.md, references/media-playback.md, references/remote-control.md
 related-skills: swift-core, swiftui-core, mcp-tools
 ---
+
+<objective>
+Covers tvOS-specific development for the Apple TV living-room experience: the focus system for large-screen navigation, Liquid Glass styling on TV (tvOS 26), AVKit media playback, Siri Remote gesture handling, multi-user support, and game controller integration.
+
+Includes tvOS 26 code examples for Liquid Glass buttons/tab bars and focus-state-driven scale effects.
+
+Best practices: size UI elements to be readable from 10 feet, give clear visual focus feedback, keep navigation depth minimal, design remote-friendly gestures, optimize for media-first content, and support user switching.
+</objective>
 
 # tvOS Platform
 

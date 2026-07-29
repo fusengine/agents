@@ -1,6 +1,6 @@
 ---
 name: shadcn-registries
-description: "Configure shadcn/ui registries, components.json, and CLI commands. Covers default Radix registry, Base UI registry, and custom registries. Use when: configuring shadcn/ui registries, components.json, or CLI add/init commands."
+description: "Use when configuring shadcn/ui registries, components.json, or CLI add/init commands."
 versions:
   shadcn-ui: "2.x"
   shadcn-cli: "latest"
@@ -9,6 +9,12 @@ allowed-tools: Read, Write, Edit, Bash, Glob, Grep, mcp__shadcn__search_items_in
 references: references/registry-config.md, references/templates/registry-setup.md
 related-skills: shadcn-components, shadcn-detection
 ---
+
+<objective>
+Configures shadcn/ui registries, `components.json`, and CLI init/add commands — covering the default `@shadcn` (Radix UI) registry, the `@basecn` (Base UI) registry, and custom registries.
+
+Documents the `components.json` schema (style, Tailwind config paths, aliases) and enforces using the detected package manager's runner (`bunx`/`npx`/`pnpm dlx`/`yarn dlx`) plus the shadcn MCP for CLI commands, never a manual component copy.
+</objective>
 
 # shadcn Registries
 

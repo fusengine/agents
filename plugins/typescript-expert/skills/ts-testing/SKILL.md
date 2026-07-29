@@ -1,6 +1,6 @@
 ---
 name: ts-testing
-description: Use when writing or configuring TypeScript tests and choosing between bun test and Vitest. Covers runner selection, config, mocks, snapshots, and coverage. Do NOT use for framework-specific testing (React components → react-expert react-testing, Laravel → laravel-testing) or browser E2E suites.
+description: Use when writing or configuring TypeScript tests and choosing between bun test and Vitest. Not for framework-specific testing (React → react-testing).
 versions:
   bun: "1.3.14"
   vitest: "4.1.9"
@@ -8,6 +8,20 @@ user-invocable: true
 references: references/choosing-runner.md, references/bun-test.md, references/vitest.md, references/common-patterns.md, references/templates/bun-setup.md, references/templates/vitest-setup.md
 related-skills: solid-generic, ts-packaging
 ---
+
+<objective>
+This skill covers choosing between bun test (fastest cold start, zero-config TS/JSX,
+experimental coverage) and Vitest (V8/Istanbul coverage, multi-worker CI scaling, browser
+mode via Playwright) via a decision matrix by project shape, then configuring the chosen
+runner's shared Jest-like API — describe/it/expect, lifecycle hooks, mocks, and snapshots.
+
+It also covers coverage thresholds, deterministic test isolation, and the rule to never mix
+bun:test and vitest imports in one package, or run bun test when the configured runner is
+actually Vitest.
+
+Out of scope: framework-specific testing (React components → react-expert's react-testing,
+Laravel → laravel-testing) and browser E2E suites are not covered.
+</objective>
 
 # TypeScript Testing
 

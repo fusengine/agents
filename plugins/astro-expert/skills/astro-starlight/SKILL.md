@@ -1,6 +1,6 @@
 ---
 name: astro-starlight
-description: Astro Starlight documentation theme — setup, sidebar config, Pagefind search, dark/light mode, plugins (DocSearch, blog, openapi, typedoc, versions), multi-language, Content Layer API, llms.txt, customization. Use for building documentation sites.
+description: Use when building a documentation site with Astro Starlight — sidebar config, Pagefind search, plugins (blog/openapi/typedoc), i18n, llms.txt.
 versions:
   astro: "7"
   starlight: "0.41+"
@@ -8,6 +8,12 @@ user-invocable: true
 references: references/setup.md, references/sidebar-config.md, references/search.md, references/plugins.md, references/i18n-multilang.md, references/content-layer.md, references/customization.md, references/templates/starlight-config.md, references/templates/sidebar-example.md
 related-skills: astro-7, astro-content, astro-i18n, astro-seo
 ---
+
+<objective>
+Sets up and customizes Astro Starlight (0.41+), the documentation theme built on Astro 7: filesystem-based or manual sidebar configuration, built-in Pagefind full-text search (or DocSearch for high-traffic/large docs), automatic dark/light mode, and the plugin ecosystem — `starlight-blog`, `starlight-openapi`, `starlight-typedoc`, `starlight-versions`, `starlight-llms-txt` for AI discoverability.
+
+Also covers multi-language documentation with hreflang support and Content Layer API integration (`docsLoader`, schema) specific to Starlight's content model, plus CSS custom property theming. Does not cover generic Astro Content Layer usage outside Starlight (astro-content) or non-Starlight i18n routing (astro-i18n) — those are handled by their own skills.
+</objective>
 
 # Astro Starlight
 

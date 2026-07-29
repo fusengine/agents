@@ -1,10 +1,16 @@
 ---
 name: modularize
-description: "Use when converting existing code to modular architecture. Detects Laravel (FuseCore or standard) / Next.js / React and applies correct modular patterns. Triggers: \"modularize\", \"convert to modules\", \"migrate to modular\", \"restructure modules\"."
+description: "Use when converting existing code to modular architecture (Laravel, Next.js, React). Triggers: \"modularize\", \"convert to modules\", \"migrate to modular\", \"restructure modules\"."
 user-invocable: true
 references: references/laravel-fusecore.md, references/nextjs-react-modules.md
 related-skills: apex-methodology, exploration
 ---
+
+<objective>
+Modularize converts an existing, non-modular codebase to a modular architecture. It detects the framework (Laravel + FuseCore, standard Laravel, Next.js with modules/, or plain React) and delegates to the matching framework expert, but owns the process itself: explore the full structure, build and present a file-by-file migration map, wait for explicit user confirmation, execute the move step by step, and run `fuse-ai-pilot:sniper` after every file change.
+
+The core constraint it enforces is that shared logic always routes through a central core -- never module-to-module imports directly.
+</objective>
 
 ## Agent Workflow (MANDATORY)
 

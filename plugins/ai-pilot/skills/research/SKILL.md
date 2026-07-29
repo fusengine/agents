@@ -1,11 +1,17 @@
 ---
 name: research
-description: Technical research methodology using Context7, Exa, and Sequential Thinking for documentation, best practices, and complex investigations.
+description: Use when researching documentation, best practices, or complex technical investigations -- Context7 + Exa + Sequential Thinking methodology.
 argument-hint: "[topic] [--deep]"
 context: fork
 agent: fuse-ai-pilot:research-expert
 user-invocable: false
 ---
+
+<objective>
+Research is the technical-research methodology behind the `research-expert` agent, covering three workflows depending on the question: a standard query (Sequential Thinking decomposition -> Context7 resolve + docs -> Exa supplement -> synthesized answer with sources), a complex investigation (multi-hypothesis Sequential Thinking -> Exa deep researcher -> cross-check against Context7 -> comprehensive report), and a technology-trends scan (Exa web scan + code patterns + company research -> Sequential Thinking analysis -> recommendations).
+
+Source priority is always official docs (Context7) first, recent tutorials (Exa, <6 months) second, older content only with version verification. It runs in a forked context via the `research-expert` agent.
+</objective>
 
 **Session:** ${CLAUDE_SESSION_ID}
 

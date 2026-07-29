@@ -1,8 +1,14 @@
 ---
 name: prompt-library
-description: "Library of 18+ ready-to-use prompt templates and executable agents. Use when: looking for a ready-made agent or task template (code review, support, data analysis, translation, extraction, etc.) instead of writing one from scratch."
+description: "Use when looking for a ready-made agent or task template (code review, support, data analysis, translation, extraction) instead of writing one from scratch."
 allowed-tools: Read
 ---
+
+<objective>
+Prompt Library is a collection of 18+ professional, tested prompt templates organized in three categories: general-purpose agents (code reviewer, support assistant, data analyst, technical writer, security auditor, API designer), task agents (summarizer, translator, extractor, classifier, generator, validator), and specialized-domain agents (legal, medical, financial, marketing, HR, educational). Each follows the standard Claude Code frontmatter (name, description, model, color, tools, skills).
+
+It covers listing, searching, viewing, and using/customizing an existing template -- not designing a new agent architecture from scratch (see `agent-design` for that) or writing a prompt's internal structure (see `prompt-creation`).
+</objective>
 
 # Prompt Library
 

@@ -1,9 +1,13 @@
 ---
 name: seo-content
-description: Use when analyzing content quality. Covers E-E-A-T scoring (Experience, Expertise, Authoritativeness, Trustworthiness), anti-cannibalization, keyword distribution, AI content disclosure, search intent matching.
+description: Use when analyzing published content quality — E-E-A-T scoring, anti-cannibalization, keyword distribution, AI disclosure.
 user-invocable: false
 related-skills: seo, seo-content-brief, seo-cluster, seo-geo, seo-entity, seo-featured-snippets
 ---
+
+<objective>
+Scores existing content against the E-E-A-T pillars (Experience, Expertise, Authoritativeness, Trustworthiness), runs local keyword-density analysis (`scripts/analyze-keywords.ts`) for distribution and stuffing signals (multi-signal detection — never a fixed >3% density threshold), checks anti-cannibalization (one primary keyword and intent per URL), verifies meta title/H1/heading rules and local semantic distribution, applies 2026 citation-eligible copywriting checks (answer capsule opening every H2, one hyperlinked statistic every 150-200 words, named entities instead of pronouns), and flags AI-content-disclosure requirements. Covers quality of already-written content — for planning a brief before writing, use seo-content-brief; for entity/knowledge-graph optimization, use seo-entity.
+</objective>
 
 # Content Quality (E-E-A-T 2026)
 

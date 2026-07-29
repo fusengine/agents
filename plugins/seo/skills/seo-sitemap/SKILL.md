@@ -1,9 +1,13 @@
 ---
 name: seo-sitemap
-description: Use when analyzing or generating XML sitemaps. Covers sitemap.xml, sitemap-news.xml, sitemap-image.xml, sitemap-video.xml, robots.txt, URL coverage checks, sitemap index pattern.
+description: Use when analyzing or generating XML sitemaps and robots.txt. Not for redirect analysis (seo-redirects).
 user-invocable: false
 related-skills: seo, seo-technical, seo-redirects
 ---
+
+<objective>
+Fetches and validates `/sitemap.xml` (or sitemap index) via `scripts/parse-sitemap.ts`, cross-checks URL coverage against crawled pages to detect orphan URLs (in sitemap but not linked) and missing URLs (linked but not in sitemap), and covers the special sitemap types — sitemap-news.xml for publishers (last-48h articles only), sitemap-image.xml, sitemap-video.xml — plus best practices (50,000 URL / 50 MB cap per sitemap, real `<lastmod>` file dates, HTTPS absolute URLs, robots.txt sitemap reference). Templates in `templates/sitemap/` and `templates/robots/`.
+</objective>
 
 # Sitemap
 

@@ -10,6 +10,16 @@ references: references/searchable.md, references/drivers.md
 related-skills: laravel-architecture, laravel-eloquent
 ---
 
+<objective>
+Covers Laravel Scout full-text search: the Searchable trait on Eloquent
+models, driver selection (Meilisearch, Algolia, database, collection),
+automatic index sync on model changes, the fluent search builder with
+filters, toSearchableArray() field control, queued indexing, and bulk
+import/reindexing. For semantic/vector similarity search on PostgreSQL, see
+laravel-vector-search instead — Scout stays the tool for keyword/full-text
+search.
+</objective>
+
 # Laravel Scout
 
 ## Agent Workflow (MANDATORY)

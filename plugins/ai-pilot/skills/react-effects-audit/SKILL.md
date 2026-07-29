@@ -1,9 +1,15 @@
 ---
 name: react-effects-audit
-description: "Audit React components for unnecessary useEffect patterns. Detects 9 anti-patterns from \"You Might Not Need an Effect\" and proposes fixes with severity levels. Use when: auditing React or Next.js components for unnecessary or unsafe useEffect usage."
+description: "Use when auditing React or Next.js components for unnecessary or unsafe useEffect usage -- detects 9 anti-patterns from \"You Might Not Need an Effect\"."
 argument-hint: "[file-or-directory]"
 user-invocable: true
 ---
+
+<objective>
+React Effects Audit scans a target file or directory for the 9 `useEffect` anti-patterns described in React's official "You Might Not Need an Effect" guidance -- derived state, expensive calculations, state resets, event logic, parent notification, effect chains, missing fetch cleanup, manual store subscriptions, and app-init logic -- each flagged with a severity (CRITICAL/WARNING/INFO), its exact location, and a proposed fix.
+
+When the target is a Next.js or React project, it cross-references the matching SOLID skill (`solid-nextjs` or `solid-react`) to also catch architecture-level violations like data-fetching Effects that should be Server Components or TanStack Query instead. It never auto-fixes without showing the finding first.
+</objective>
 
 **Target:** $ARGUMENTS
 

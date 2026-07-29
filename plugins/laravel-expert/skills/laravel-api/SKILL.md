@@ -1,6 +1,6 @@
 ---
 name: laravel-api
-description: Build RESTful APIs with Laravel using API Resources, Sanctum authentication, rate limiting, and versioning. Use when creating API endpoints, transforming responses, or handling API authentication.
+description: Use when creating API endpoints, transforming responses with API Resources, or handling API authentication, rate limiting, or versioning.
 versions:
   laravel: "13.0"
   php: "8.3"
@@ -8,6 +8,14 @@ user-invocable: true
 references: references/routing.md, references/controllers.md, references/middleware.md, references/requests.md, references/responses.md, references/validation.md, references/pagination.md, references/http-client.md, references/rate-limiting.md, references/redirects.md, references/urls.md, references/strings.md
 related-skills: laravel-auth, laravel-eloquent, laravel-testing
 ---
+
+<objective>
+Covers building RESTful APIs with Laravel: API Resources for response
+transformation, Sanctum authentication, rate limiting, route versioning, Form
+Request validation, pagination (offset/cursor), and consuming external APIs
+via the HTTP client. For JSON:API-spec-compliant endpoints (sparse fieldsets,
+inclusion, links), see laravel-jsonapi instead.
+</objective>
 
 # Laravel API Development
 

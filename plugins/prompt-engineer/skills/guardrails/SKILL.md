@@ -1,8 +1,14 @@
 ---
 name: guardrails
-description: "Security techniques and quality control for prompts and agents. Use when: implementing input/output guardrails, writing ethical guardrail templates, or auditing an agent/prompt for missing security controls."
+description: "Use when implementing input/output guardrails, writing ethical guardrail templates, or auditing an agent/prompt for missing security controls."
 allowed-tools: Read
 ---
+
+<objective>
+Guardrails covers the 4-layer security architecture for an agent or prompt: input (harmlessness screening, jailbreak pattern matching, PII redaction), system (ethical guardrails in the system prompt, explicit capability limits, refusal instructions), output (format validation, hallucination detection, compliance checks), and monitoring (interaction logs, suspicious-pattern alerts, rate limiting).
+
+It includes a ready-to-use ethical-guardrails template and a security checklist covering both the agent level (guardrails per layer, least-privilege tools, logging) and the prompt level (explicit Forbidden section, capability limits, error-case handling, no hardcoded sensitive data).
+</objective>
 
 # Guardrails
 

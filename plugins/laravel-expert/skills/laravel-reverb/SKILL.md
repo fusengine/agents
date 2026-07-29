@@ -10,6 +10,16 @@ references: references/channels.md, references/client.md
 related-skills: laravel-architecture, laravel-queues
 ---
 
+<objective>
+Covers Laravel Reverb, the first-party WebSocket server, for real-time
+features: broadcasting events from server to client, public/private/presence
+channel types and authorization, the Echo client-side listener,
+ShouldBroadcast queued delivery, and production deployment behind a reverse
+proxy with SSL. Use for live notifications, chat/messaging, live dashboards,
+and collaborative-editing whisper events — not for background/async work
+(that's laravel-queues).
+</objective>
+
 # Laravel Reverb
 
 ## Agent Workflow (MANDATORY)

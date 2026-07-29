@@ -1,12 +1,18 @@
 ---
 name: astro-deployment
-description: Deploying Astro 7 apps — @astrojs/cloudflare (Workers, D1, KV, R2), @astrojs/vercel (Serverless/Edge, Image CDN), @astrojs/netlify (Edge Functions), @astrojs/node (standalone), ISR patterns, edge middleware, skew protection. Use for any deployment configuration.
+description: Use when deploying an Astro 7 app to Cloudflare, Vercel, Netlify, or Node.js — adapter setup, ISR patterns, edge middleware.
 versions:
   astro: "7"
 user-invocable: true
 references: references/cloudflare-adapter.md, references/vercel-adapter.md, references/netlify-adapter.md, references/node-adapter.md, references/isr-patterns.md, references/edge-middleware.md, references/templates/cloudflare-setup.md, references/templates/vercel-setup.md
 related-skills: astro-7, astro-db, astro-islands
 ---
+
+<objective>
+Configures Astro 7 deployment across the four major adapters: `@astrojs/cloudflare` (Workers runtime, D1/KV/R2 bindings, workerd local dev via `platformProxy`, v13+ required), `@astrojs/vercel` (Serverless/Edge, built-in Image CDN, skew protection), `@astrojs/netlify` (Deno-based Edge Functions), and `@astrojs/node` (standalone server).
+
+Also covers output-mode selection (`static`/`server`, per-page `prerender`), ISR patterns implemented via platform caching (Cloudflare KV or Vercel `stale-while-revalidate`, since Astro has no native ISR), and edge middleware for auth/redirects/A-B testing. Does not cover Astro DB setup itself (astro-db) or Islands hydration directives (astro-islands) beyond what's needed to pick a server adapter.
+</objective>
 
 # Astro Deployment
 

@@ -1,12 +1,18 @@
 ---
 name: astro-db
-description: Astro DB — defineDb, defineTable, column types, CRUD with db.select/insert/update/delete, db/config.ts, db/seed.ts, Turso for production, type-safety, integration with Astro Actions. Use for any database operation in an Astro project.
+description: Use when doing database operations in an Astro project via Astro DB (defineDb, defineTable, db/config.ts, Turso).
 versions:
   astro: "7"
 user-invocable: true
 references: references/schema-definition.md, references/crud-operations.md, references/seed-data.md, references/turso-production.md, references/actions-integration.md, references/templates/db-config.md, references/templates/crud-example.md
 related-skills: astro-7, astro-actions, astro-deployment
 ---
+
+<objective>
+Implements Astro DB (`@astrojs/db`): schema definition with `defineDb`/`defineTable` in `db/config.ts`, column types (`text`, `number`, `boolean`, `date`, `json`), type-safe CRUD via `db.select/insert/update/delete`, development seeding in `db/seed.ts`, and production deployment to Turso (libSQL) with `ASTRO_DB_REMOTE_URL`/`ASTRO_DB_APP_TOKEN` and `astro db push`.
+
+Also covers integration with Astro Actions for end-to-end type-safe form-to-database flows. `@astrojs/db` is deprecated and no longer actively maintained (still published, v0.21.3, not removed from Astro 7) — for new projects this skill recommends Drizzle, Kysely, or a direct libSQL client instead; existing projects can keep using it but should plan a migration.
+</objective>
 
 # Astro DB
 

@@ -117,12 +117,34 @@ accordion pattern (`grid-template-rows: 0fr → 1fr`) and FLIP-technique reflows
 else should animate `transform`/`opacity` only — see
 `design-motion/references/motion-performance.md`.
 
+## 11. Rendered-layout check — text overflow, overlap, CTA wrap, contrast
+
+Checks 1-10 are greps: they read the SOURCE. This one loads the page in a headless
+browser and measures the RENDERED result at six widths. It is the only check that can
+catch a wrapping CTA label, a label sitting on top of a button, or a contrast ratio
+computed on resolved colors (`oklch()`, `color-mix()`, alpha over an inherited background).
+
+```bash
+cd "$CLAUDE_PLUGIN_ROOT/scripts/layout-check"
+bun run layout-check.ts "$FILE" --out /tmp/layout-check.json    # exit 0 = clean, 1 = violations
+```
+
+Any entry in `violations` is a hard fail — the values are measured, not judged: fix and
+re-run. Entries in `warnings` are NOT failures: they are the cases the script cannot
+decide (contrast over a gradient/image, text hidden by a scroll reveal). Each warning
+must be resolved by eye on a screenshot, or by re-running with `--warmup`.
+
+This mechanizes `design-web/references/layout-discipline.md` §6 (CTA label on one line,
+button-text contrast), which had no mechanical counterpart here. Full option list and
+known limits: `scripts/layout-check/README.md`.
+
 ---
 
 Any fail here blocks the "audit passed" verdict (`design-review` Part 1), except check 10
 (layout-property animation), which is a WARNING — reported, not blocking. Fix and re-run
 the failing command; do not proceed to the visual review (Part 2) with an open mechanical
-fail (warnings excepted).
+fail (warnings excepted). Check 11 is not optional and not replaceable by looking at the
+page: its exit code is the gate.
 
 ## Provenance
 
@@ -141,4 +163,8 @@ Each check was verified against the raw `taste-skill/SKILL.md`
   entry 9. Checks 9-10 (bounce/elastic easing ban, layout-property animation warning) are
   also ours — not in the source taste-skill — deterministic guardrails mirroring
   `design-motion/references/motion-performance.md` (transform/opacity-only) and the
-  `animation-decision-framework.md` gate; canonical-once, not restated there.
+  `animation-decision-framework.md` gate; canonical-once, not restated there. Check 11
+  (rendered-layout script) is ours too: it mechanizes `layout-discipline.md` §6, already
+  written in this repo but never machine-verified. Its thresholds (1.6 × line-height,
+  10% intersection area, WCAG 4.5:1 / 3:1) and its false-positive filters were calibrated
+  against real pages, not chosen in the abstract — see `scripts/layout-check/README.md`.

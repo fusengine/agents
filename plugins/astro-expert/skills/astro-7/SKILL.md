@@ -1,6 +1,6 @@
 ---
 name: astro-7
-description: Expert Astro 7 framework (stable, 7.0.9) — routing, output modes, middleware, Vite Environment API, single Rust compiler, Content Security Policy, Live Collections, Fonts API. Use when building Astro sites, configuring output, or upgrading from Astro 5/6.
+description: Use when building Astro 7 sites, choosing an output mode (static/server/hybrid), configuring middleware, or upgrading from Astro 5/6.
 versions:
   astro: "7"
   node: "22.12+"
@@ -9,6 +9,12 @@ user-invocable: true
 references: references/installation.md, references/routing.md, references/output-modes.md, references/middleware.md, references/config.md, references/new-features.md, references/templates/basic-setup.md, references/templates/config-example.md
 related-skills: astro-content, astro-actions, astro-islands, astro-integrations, astro-deployment
 ---
+
+<objective>
+Configures and explains Astro 7 (stable, 7.0.9) core framework mechanics: file-based routing, the three output modes (static/server/hybrid) and per-route `prerender`, middleware for auth/redirects/headers, the Vite Environment API, the single Rust compiler (Go compiler removed, strict HTML parsing), stable Content Security Policy, Live Content Collections, and the built-in Fonts API.
+
+Covers initial project setup and migration from Astro 5/6, including breaking changes and Node 22.12+ requirements. Does not cover Content Layer API details (astro-content), Server Actions (astro-actions), Islands hydration directives (astro-islands), UI framework integrations (astro-integrations), or deployment adapters (astro-deployment) — those live in their own skills.
+</objective>
 
 # Astro 7 Expert
 

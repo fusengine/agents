@@ -1,9 +1,22 @@
 ---
 name: auth-audit
-description: "Audit authentication and authorization patterns. Checks JWT, sessions, OAuth2, PKCE implementations for security best practices and common vulnerabilities. Use when: auditing JWT, session, OAuth2/PKCE, password, or MFA implementations for security vulnerabilities."
+description: "Use when auditing JWT, session, OAuth2/PKCE, password, or MFA implementations for security vulnerabilities and best-practice deviations."
 argument-hint: "[--jwt] [--session] [--oauth]"
 user-invocable: true
 ---
+
+<objective>
+This skill audits authentication and authorization implementations end to end: JWT signing
+algorithm, expiration, refresh, and storage; session storage, expiry, regeneration, and
+fixation; OAuth2 PKCE, state parameter, and redirect validation; password hashing algorithm,
+strength rules, and reset flow; and MFA implementation, backup codes, and recovery.
+
+It runs a fixed workflow — detect the auth implementation, scan for known anti-patterns,
+verify cryptographic choices, check token/session lifecycle, and audit authorization logic
+(RBAC/ABAC) — checking for vulnerabilities such as JWT signed with `none`, undersized JWT
+secrets, missing/too-long token expiration, refresh tokens in localStorage, session fixation,
+missing CSRF protection, and OAuth flows missing PKCE or the `state` parameter.
+</objective>
 
 # Auth Audit Skill
 

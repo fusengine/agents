@@ -1,6 +1,6 @@
 ---
 name: think-in-code
-description: Use ONE Bash script instead of N sequential Read calls when analyzing multiple files, auditing codebase, finding all matches, scanning dependencies, counting lines, or listing files matching a pattern. Replaces wasteful multi-Read loops with compact shell pipelines.
+description: Use when analyzing multiple files, auditing a codebase, scanning dependencies, or counting lines -- one Bash pipeline beats N sequential Read calls.
 argument-hint: "[pattern] [scope]"
 keywords:
   - analyze multiple files
@@ -12,6 +12,12 @@ keywords:
   - bulk read
 user-invocable: false
 ---
+
+<objective>
+Think-in-Code replaces wasteful multi-Read loops with a single compact shell pipeline whenever the task is "for each file in a set, compute/extract X, then aggregate" -- file-size audits, multi-file symbol grep, dependency listing with versions, error-log scanning, lines-of-code-by-extension. Reserve `Read` for targeted inspection of one specific file already known to matter.
+
+The reduction is typically ~60x in tokens consumed versus reading each file individually and tallying manually.
+</objective>
 
 # Think-in-Code Skill
 

@@ -1,6 +1,6 @@
 ---
 name: ts-packaging
-description: Use when publishing a TypeScript library — exports map, JSR vs npm, dual ESM/CJS, type validation, provenance. Covers modern package.json, jsr.json, and release CI. Do NOT use for application deployment (not a library) or framework build pipelines (use the framework expert's skills).
+description: Use when publishing a TypeScript library — exports map, JSR vs npm, dual ESM/CJS, type validation, provenance. Not for application deployment.
 versions:
   node: "26"
   attw: "0.18.4"
@@ -8,6 +8,17 @@ user-invocable: true
 references: references/exports-map.md, references/jsr-publishing.md, references/npm-publishing.md, references/validation.md, references/templates/package-json-dual.md, references/templates/jsr-json.md, references/templates/publish-workflow.md
 related-skills: solid-generic, ts-testing
 ---
+
+<objective>
+This skill covers shipping a TypeScript library correctly: designing the exports map and its
+conditions ordering (types first, default last), choosing JSR (ESM-only, publishes TS source
+directly, fixes 'slow types') versus npm (built .js + .d.ts, optionally dual ESM/CJS for
+CommonJS consumers), validating resolved types with arethetypeswrong (attw) before every
+publish, and enabling provenance on public releases via CI with id-token: write.
+
+Out of scope: application deployment (not a library) and framework-owned build pipelines
+belong to the framework expert's own skills.
+</objective>
 
 # TypeScript Packaging
 

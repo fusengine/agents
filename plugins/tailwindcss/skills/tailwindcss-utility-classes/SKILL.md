@@ -1,8 +1,14 @@
 ---
 name: tailwindcss-utility-classes
-description: "Index of Tailwind CSS utility-class categories (layout, spacing, typography, colors, borders, effects, state variants). Use when: unsure which category skill covers a given utility class and need routing to the right one. Do NOT use for: concrete class lookup or worked examples — go directly to the category skill (tailwindcss-layout/spacing/typography/backgrounds/borders/effects/interactivity), this file only routes."
+description: "Use when unsure which category skill covers a given utility class and need routing to the right one. Do NOT use for concrete class lookup - go to the category skill."
 user-invocable: false
 ---
+
+<objective>
+A routing index over Tailwind CSS utility-class categories — layout, spacing, typography, colors, borders, effects, state variants — mapping each category to its dedicated `tailwindcss-*` skill (layout/spacing/typography/backgrounds/borders/effects/interactivity) and, where useful, a specific section within it.
+
+Routing only: contains no worked examples or concrete class lookups itself; load the linked category skill directly once the category is known.
+</objective>
 
 # Tailwind CSS Utility Classes — Index
 

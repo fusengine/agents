@@ -1,6 +1,6 @@
 ---
 name: laravel-billing
-description: Integrate Stripe and Paddle payments with Laravel Cashier. Use when implementing subscriptions, invoices, payment methods, webhooks, or billing portals.
+description: Use when implementing subscriptions, invoices, payment methods, webhooks, or billing portals with Laravel Cashier (Stripe or Paddle).
 versions:
   laravel: "13.0"
   cashier-stripe: "16.x"
@@ -10,6 +10,17 @@ user-invocable: true
 references: references/stripe.md, references/paddle.md, references/subscriptions.md, references/webhooks.md, references/invoices.md, references/payment-methods.md, references/testing.md, references/checkout.md, references/metered-billing.md, references/team-billing.md, references/dunning.md, references/feature-flags.md, references/templates/UserBillable.php.md, references/templates/SubscriptionController.php.md, references/templates/WebhookController.php.md, references/templates/CheckoutController.php.md, references/templates/InvoiceController.php.md, references/templates/BillingRoutes.php.md, references/templates/SubscriptionTest.php.md, references/templates/MeteredBillingController.php.md, references/templates/TeamBillable.php.md, references/templates/DunningService.php.md, references/templates/FeatureFlags.php.md
 related-skills: laravel-auth, laravel-api, fusecore
 ---
+
+<objective>
+Covers Laravel Cashier for Stripe and Paddle: choosing between the two
+(payment processor vs merchant-of-record, tax handling, fees), subscription
+lifecycle (create, swap, cancel, resume, trials, grace periods), webhooks and
+signature verification, invoices, payment methods, checkout/customer portal,
+metered/usage-based billing, team/per-seat billing, dunning (failed-payment
+recovery), and Pennant-based feature flags per plan. Includes FuseCore
+modular-project integration. For multi-vendor/marketplace split payments, see
+laravel-stripe-connect instead.
+</objective>
 
 # Laravel Billing (Cashier)
 

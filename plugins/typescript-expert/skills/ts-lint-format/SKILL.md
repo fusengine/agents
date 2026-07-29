@@ -1,6 +1,6 @@
 ---
 name: ts-lint-format
-description: Use when choosing and configuring a TypeScript linter/formatter — Biome 2.x (one binary, type-aware) vs ESLint 9 flat config + typescript-eslint (full typed linting). Includes the 2026 arbitrage and Oxlint note. Do NOT use for type checking itself (tsc, ts-config skill) or test-runner configuration (ts-testing).
+description: Use when choosing or configuring a TS linter/formatter — Biome 2.x vs ESLint 9 flat config + typescript-eslint typed linting. Not for type checking itself (ts-config).
 versions:
   biome: "2.x"
   eslint: "9 (flat config)"
@@ -9,6 +9,22 @@ versions:
 references: references/tool-choice.md, references/biome-setup.md, references/eslint-typed.md, references/templates/config-examples.md
 related-skills: ts-runtime-node, ts-runtime-bun, solid-generic
 ---
+
+<objective>
+This skill covers choosing and configuring a TypeScript linting/formatting stack: Biome 2.x
+as a single binary that formats and lints (biome.json, domains, type-aware rules covering
+~75% of typed-linting needs) versus ESLint 9 flat config (eslint.config.mjs) with
+typescript-eslint for full typed linting including cross-file narrowing and no-unsafe-*
+rules.
+
+It covers the 2026 arbitrage between the two — new projects default to Biome for a fast
+zero-config start, established/typed-heavy codebases lean ESLint + typescript-eslint — plus
+a note on Oxlint as a challenger, and the rule to never run Biome and Prettier on the same
+files.
+
+Out of scope: type checking itself (tsc --noEmit, tsconfig flags) belongs to ts-config;
+test-runner configuration belongs to ts-testing.
+</objective>
 
 # TypeScript Linting & Formatting
 

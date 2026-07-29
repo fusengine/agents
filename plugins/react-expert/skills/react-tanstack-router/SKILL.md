@@ -1,6 +1,6 @@
 ---
 name: react-tanstack-router
-description: TanStack Router - 100% type-safe routing, file-based routes, loaders, search params. Use when implementing routing in React apps (NOT Next.js).
+description: Use when implementing routing in a React app (NOT Next.js) with TanStack Router — file-based routes, loaders, search params.
 versions:
   tanstack-router: "1.x (latest)"
   react: 19
@@ -9,6 +9,12 @@ user-invocable: true
 references: references/installation.md, references/file-based-routing.md, references/route-params.md, references/search-params.md, references/loaders.md, references/navigation.md, references/route-context.md, references/nested-routes.md, references/error-handling.md, references/code-splitting.md, references/preloading.md, references/auth-guards.md, references/tanstack-query.md, references/ssr.md, references/typescript.md, references/devtools.md, references/hooks.md, references/components.md, references/templates/basic-setup.md, references/templates/feature-module.md, references/templates/auth-protected-routes.md, references/templates/search-filters.md, references/templates/dashboard-layout.md
 related-skills: react-forms, react-state, react-19, solid-react
 ---
+
+<objective>
+Implements TanStack Router for React SPAs (Vite/Webpack/Rspack, not Next.js): file-based routing with auto-generated type safety, dynamic route params (`$postId`), search-params validation with Zod/Valibot, loaders (`Route.useLoaderData()`) integrated with TanStack Query (`ensureQueryData`), nested layouts with `Outlet`, route context for dependency injection, protected routes via `beforeLoad` guards, and preloading on intent/render.
+
+Covers the full SOLID module structure (`modules/cores/lib/router/`, feature modules with `interfaces/`/`queries/`/`components/`), migration from React Router (`useParams()`→`Route.useParams()`, `loader`→`loader` option), and error boundaries/404 handling. Does not cover state management (react-state) or forms (react-forms) — those are separate skills; for Next.js routing use the App Router (nextjs-16), not this skill.
+</objective>
 
 # TanStack Router
 

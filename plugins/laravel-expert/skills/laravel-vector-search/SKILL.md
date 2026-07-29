@@ -1,6 +1,6 @@
 ---
 name: laravel-vector-search
-description: Use when implementing semantic / vector search in Laravel 13 with PostgreSQL + pgvector. Covers schema setup, embedding workflow, and the new query builder methods (`whereVectorSimilarTo`, `selectVectorDistance`, etc.).
+description: Use when implementing semantic/vector search in Laravel 13 with PostgreSQL + pgvector.
 versions:
   laravel: "13.0"
   php: "8.3"
@@ -10,6 +10,17 @@ user-invocable: true
 references: references/pgvector-setup.md, references/embeddings-workflow.md, references/queries.md, references/templates/Document-model.php.md, references/templates/VectorSearchService.php.md
 related-skills: laravel-ai-sdk, laravel-eloquent, laravel-migrations
 ---
+
+<objective>
+Covers Laravel 13 vector/semantic search on PostgreSQL with the pgvector
+extension: enabling the extension via Schema::ensureVectorExtensionExists(),
+the vector column type and HNSW/IVFFlat indexing, the embedding generation
+and persistence workflow, and the query builder's vector methods
+(whereVectorSimilarTo, selectVectorDistance, whereVectorDistanceLessThan,
+orderByVectorDistance). PostgreSQL-only — no MySQL/SQLite fallback. For
+full-text/keyword search, see laravel-scout instead (the two can be
+combined for hybrid search).
+</objective>
 
 # Laravel 13 Vector Search (pgvector)
 

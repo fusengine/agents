@@ -1,8 +1,14 @@
 ---
 name: prompt-optimization
-description: "Analyze and improve existing prompts for better performance. Use when: auditing an existing prompt for clarity, structure, or completeness issues, fixing vague instructions, or producing a before/after optimization report."
+description: "Use when auditing an existing prompt for clarity, structure, or completeness issues, fixing vague instructions, or producing a before/after optimization report."
 allowed-tools: Read, Write, Edit
 ---
+
+<objective>
+Prompt Optimization analyzes and improves an existing prompt through a 5-step workflow: analyze the current prompt, identify issues, apply corrections, validate the improvement, and document the changes. Its checklist covers four dimensions -- clarity (unambiguous instructions, precise vocabulary), structure (well-delimited sections, logical order), completeness (output format, error cases, examples), and guardrails (explicit limits, forbidden behaviors, security).
+
+It never changes the prompt's original meaning, adds unrequested features, removes existing guardrails, or lengthens the prompt without justification. See `common-problems.md` for before/after fix patterns and `improvement-techniques.md` for strengthening via CoT, few-shot, or guardrails.
+</objective>
 
 # Prompt Optimization
 

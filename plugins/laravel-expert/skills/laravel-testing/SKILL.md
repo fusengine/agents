@@ -1,6 +1,6 @@
 ---
 name: laravel-testing
-description: Write tests with Pest 4/PHPUnit 12, feature tests, unit tests, mocking, fakes, and factories. Use when testing controllers, services, models, or implementing TDD on Laravel 13.
+description: Use when testing controllers, services, or models, or implementing TDD on Laravel 13 with Pest 4 / PHPUnit 12.
 versions:
   laravel: "13.0"
   pest: "4.0"
@@ -10,6 +10,16 @@ user-invocable: false
 references: references/pest-basics.md, references/pest-datasets.md, references/pest-arch.md, references/http-requests.md, references/http-json.md, references/http-auth.md, references/http-assertions.md, references/database-basics.md, references/database-factories.md, references/database-assertions.md, references/mocking-services.md, references/mocking-fakes.md, references/mocking-http.md, references/console-tests.md, references/troubleshooting.md, references/templates/FeatureTest.php.md, references/templates/UnitTest.php.md, references/templates/ArchTest.php.md, references/templates/ApiTest.php.md, references/templates/PestConfig.php.md
 related-skills: laravel-architecture, laravel-eloquent
 ---
+
+<objective>
+Covers Laravel 13 testing with Pest 4 and PHPUnit 12: feature tests (HTTP,
+full stack), unit tests (isolated classes), and architecture tests; Pest
+syntax (it/test/describe), datasets; HTTP testing (requests, JSON
+assertions, auth/actingAs, status/redirect assertions); database testing
+(RefreshDatabase, factories, DB assertions); mocking (services, spies,
+Mail/Queue/Event fakes, Http::fake, time travel); console/Artisan command
+tests; and PHPUnit-attribute-based seeding (#[Seed], #[Seeder]).
+</objective>
 
 # Laravel Testing
 

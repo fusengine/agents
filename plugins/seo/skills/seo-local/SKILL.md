@@ -1,9 +1,13 @@
 ---
 name: seo-local
-description: Use when optimizing local SEO. Covers Google Business Profile, NAP consistency, citations, reviews acquisition, Local Pack ranking, location pages, LocalBusiness schema.
+description: Use when optimizing local SEO — Google Business Profile, NAP consistency, Local Pack ranking, location pages.
 user-invocable: false
 related-skills: seo, seo-schema, seo-content
 ---
+
+<objective>
+Covers local SEO end to end: Google Business Profile audit (categories, hours, photos, posts, services — treated as a 2026 entity anchor that AI engines cross-reference, ~42% of local AI citations originate from listings), character-for-character NAP consistency across the site/GBP/directories, review analysis (volume/recency/response rate/sentiment), Local Pack ranking mapping, location-page quality gates (warning at 30+ pages, hard stop at 50+, each page must be genuinely unique — not template fill-in), and the LocalBusiness JSON-LD template (specific `@type` subtype, `geo` coordinates, `areaServed` as GeoCircle, `sameAs`, `aggregateRating`).
+</objective>
 
 # Local SEO
 

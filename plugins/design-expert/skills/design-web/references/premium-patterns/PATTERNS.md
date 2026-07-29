@@ -1,57 +1,92 @@
 ---
 name: premium-patterns
-description: "10 visual-surface layout devices extracted from real Framer/Webflow award-winning sites — illustrative craft techniques, NOT a sector→pattern lookup and NOT a substitute for macrostructure or body substance. Each pattern includes CSS specs, screenshot reference, and a copy-pasteable AI generation prompt."
-when-to-use: "Generating a marketing/landing page (design-web full or page mode) and wanting a proven visual-surface technique to apply WITHIN an already-chosen macrostructure — never as the source of that macrostructure."
-keywords: patterns, premium, layout, generation, prompt, substance-floor
+description: "Ten section-level visual devices measured on shipped Framer/Webflow sites — one technique each, applied INSIDE one section. Not a page skeleton, not a sector lookup, and not a source of macrostructure or body order."
+when-to-use: "During component generation, once the hero treatment AND the body sequence are already picked — to give one already-planned section a measured craft treatment."
+keywords: patterns, section-device, craft, surface, substance-floor
 priority: high
-related: ../layout-discipline.md, ../ui-visual-design.md, ../../design-method/references/macrostructure-bank.md, ../../design-method/references/register/brand.md
+related: ../layout-discipline.md, ../ui-visual-design.md, ../../../design-method/references/macrostructure-bank.md, ../../../design-method/references/body-sequence-bank.md, ../../../design-method/references/register/brand.md
 ---
 
-## Premium Design Patterns — Surface Devices, Not Structure
+## Premium Patterns — Section Devices, Never Page Structure
 
-These are **visual-surface techniques** — a numbering treatment, a hover
-reveal, a grid layout for one section — decoration and craft applied INSIDE a
-section, after the page's macrostructure
-(`design-method/references/macrostructure-bank.md`) and register
-(`register/brand.md` / `register/product.md`) have already been decided.
-Read this during component generation, once the skeleton and POV are already
-locked — never as a way to choose either. Applying the "expected" pattern for
-a sector by default is convergence, not craft: it is the same failure mode as
-reproducing a browsed template's structure (`design-web/references/design-inspiration.md`),
-one level down, inside a single section instead of the whole page.
+**These files give section decoration. They never give a page structure.**
+Each of the ten carries exactly one technique living inside a single section:
+a numbering treatment, a hover reveal, a letter with a photo clipped into it,
+a tab crossfade. None of them describes a page, an order of sections, or a
+scroll.
+
+Structure comes from two other files, and only from them:
+
+- **First screen** — `../../../design-method/references/macrostructure-bank.md`,
+  eight hero treatments plus the forbidden centered-hero default.
+- **Body** — `../../../design-method/references/body-sequence-bank.md`, eleven
+  body sequences read off shipped code, each with the principle that decides
+  its order and what it drops from the canon. Its rule 2 is the one that
+  matters here: *the canon is not the enemy, uniform treatment of it is* —
+  `fora` sets vertical padding section by section
+  (160/180/180/160/180/180/180) rather than one value everywhere.
+
+A plan names one of each — `Macrostructure: {hero treatment} + {body sequence}`
+— before this file is opened. If you are reading here to decide what sections a
+page has, you are in the wrong file.
+
+> **Why the amputation.** Until 2026-07 each of these ten files carried a full
+> Nav → … → Footer walkthrough plus an "AI Generation Prompt" that prescribed
+> every one of those sections in order, with values. Fusing two of them built a
+> macrostructure by collage — the exact failure the rest of this skill bans, and
+> worse than a browsed template because the output was executable. The
+> walkthroughs and the page prompts are gone. What remains per file: the device,
+> its measured CSS, its conditions of use, and — where one exists — the shipped
+> feedback that qualifies it.
+
+### Source URLs are provenance, not a destination
+
+Each `description.md` frontmatter keeps its `source:` URL. It records where the
+device was measured, which is honest traceability. It is **not** an invitation
+to open the site and lift taste from it — `../design-inspiration.md` owns that
+ban and it is unchanged. Read the values here; do not go back to the source.
 
 ### How to use
-1. Confirm the macrostructure and register are already decided (Pass 1, `design-method/SKILL.md`) — this file supplies neither.
-2. Browse the "Illustrative Examples" table below for inspiration, not lookup — patterns are cross-sector techniques, not sector defaults.
-3. Read 2-3 matching `description.md` files (paths: `premium-patterns/{folder}/description.md`).
-4. Before using any prompt, run the section against the Body Substance Floor below — a pattern wrapped around generic copy still fails.
-5. Combine prompts from 2-3 patterns if it serves the POV — optional richness, never a checklist to fill mechanically.
-6. NEVER skip the Body Substance Floor — flat AND generic-but-decorated designs are both FORBIDDEN.
 
-### Pattern Index (technique catalogue — apply where the POV calls for it)
+1. Confirm the hero treatment and body sequence are already decided
+   (`../../../design-method/SKILL.md`, Pass 1). This file supplies neither.
+2. Identify the ONE already-planned section that needs a craft treatment.
+3. Read ONE `description.md`. Apply its device to that section only.
+4. Run the section against the Body Substance Floor below — a device wrapped
+   around generic copy is decorated slop, not solved slop.
+5. Numeric limits stay with `../layout-discipline.md` (hero caps, eyebrow cap,
+   zigzag cap, bento N=N, section-repetition ban, measure floor). Nothing here
+   overrides them; where a device could collide with one, its file says so.
 
-| # | Pattern | Historically seen in | Path | Key Feature |
-|---|---------|--------|------|-------------|
-| 01 | Numbered Services | Agency | `01-numbered-services/description.md` | [01] numbering + image reveal hover |
-| 02 | Alternating Sections | SaaS | `02-alternating-sections/description.md` | Dark/light section rhythm + BG patterns |
-| 03 | Hero Badge Inline | Agency | `03-hero-badge-inline/description.md` | Massive H1 + urgency badge + icon in text |
-| 04 | Bento Grid | SaaS B2B | `04-bento-grid/description.md` | Asymmetric grid, mixed content sizes |
-| 05 | Full-Bleed Hero | Luxury | `05-fullbleed-hero/description.md` | 90vh image cover + watermark logo |
-| 06 | Gradient Steps | Fintech | `06-gradient-steps/description.md` | Numbered "01" steps + gradient orb |
-| 07 | CTA Giant Typography | Agency | `07-cta-giant-typography/description.md` | 8rem+ text + images embedded in words |
-| 08 | Radical Alternation | Agency | `08-radical-alternation/description.md` | 100% black/white sections + script font |
-| 09 | Tabs Image Swap | Eco/B2B | `09-tabs-image-swap/description.md` | Tab navigation swaps image + description |
-| 10 | Accordion Carousel | B2B | `10-accordion-carousel/description.md` | Expandable services + horizontal case studies |
+**On combining.** Two devices on one page is a ceiling, not a target, and never
+a checklist. They must land on two non-adjacent sections of two different
+layout families (`../layout-discipline.md` §5). Do not combine prompts: one
+device per section, at most.
+
+### Pattern Index — the device each file carries
+
+| # | Path | Device (one per file) |
+|---|------|------------------------|
+| 01 | `01-numbered-services/description.md` | Bracketed `[01]` index rows + hover image reveal |
+| 02 | `02-alternating-sections/description.md` | Hard-cut background inversion at ONE boundary + sub-5% dot-grid watermark |
+| 03 | `03-hero-badge-inline/description.md` | Pill badge and icon set inline in the H1 text flow |
+| 04 | `04-bento-grid/description.md` | Asymmetric bento cell mix (2x2 / 2x1 / 1x1) |
+| 05 | `05-fullbleed-hero/description.md` | Oversized low-opacity wordmark watermark + hue-tinted image overlay |
+| 06 | `06-gradient-steps/description.md` | Oversized ghost numeral as card background texture |
+| 07 | `07-cta-giant-typography/description.md` | Photograph clipped inside 1-2 display letters (`background-clip: text`) |
+| 08 | `08-radical-alternation/description.md` | One serif-italic connector word inside a sans display heading — gated |
+| 09 | `09-tabs-image-swap/description.md` | Pill-in-pill tab bar crossfading a paired image + text |
+| 10 | `10-accordion-carousel/description.md` | Single-open accordion; horizontal snap carousel with peeking card |
 
 ### Illustrative Examples (NOT a sector lookup — cross-pollinate deliberately)
 
-The "Historically common" column shows what has been reached for by default
-in each sector — that is precisely the convergence risk, not a
-recommendation. Treat it as a first-draft reference at most; picking from
-the "Consider instead" column, or a pattern outside both, is often the
-better choice specifically because it isn't the sector default. State the
-choice against the POV, same discipline as `macrostructure-bank.md`'s
-"deliberate exception, not a default reached by omission":
+The "Historically common" column shows what has been reached for by default in
+each sector — that is precisely the convergence risk, not a recommendation.
+Treat it as a first-draft reference at most; picking from the "Consider instead"
+column, or a device outside both, is often the better choice specifically
+because it isn't the sector default. State the choice against the POV, same
+discipline as `macrostructure-bank.md`'s "deliberate exception, not a default
+reached by omission":
 
 | Sector | Historically common | Consider instead |
 |--------|---------------------|-------------------|
@@ -63,30 +98,42 @@ choice against the POV, same discipline as `macrostructure-bank.md`'s
 | Luxury | 05, 07, 08 | 09, 10 |
 | B2B | 01, 09, 10 | 04, 06 |
 
-### Body Substance Floor (surface ≠ substance)
+The `seen-in:` key in each file's frontmatter records the sector the device was
+measured in. Same status as `source:` — provenance, never a filter.
 
-A page that stacks 2-3 of these visual devices but says nothing
-product/brand-specific has decorated the slop, not solved it. Before shipping
-any pattern, the section using it must pass:
+### Body Substance Floor (surface is not substance)
 
-- **The Competitor Lift Test** (`design-method/references/register/brand.md`
-  §3) — could this section's copy and claim run unchanged on a competitor's
-  site wearing the same pattern? If yes, the pattern is polishing filler, not
-  substance.
-- **A real, sourced claim** — the pattern's headline/number/step must carry
-  an actual fact from the brief (a real metric, a real process step, a real
-  product name), never an invented placeholder dressed up in a nice grid.
-- **Domain-Specificity** (`design-method/references/register/product.md` §2,
-  when register is `product`) — same test, product-register phrasing: would
-  this surface look native dropped unedited into an unrelated product?
+A page that stacks two of these devices but says nothing product/brand-specific
+has decorated the slop, not solved it. Before shipping any device, the section
+using it must pass:
 
-A pattern with a beautiful hover reveal and a generic "Fast. Reliable.
-Scalable." headline underneath still fails.
+- **The Competitor Lift Test**
+  (`../../../design-method/references/register/brand.md` §3) — could this
+  section's copy and claim run unchanged on a competitor's site wearing the same
+  device? If yes, the device is polishing filler.
+- **A real, sourced claim** — the device's headline/number/step must carry an
+  actual fact from the brief (a real metric, a real process step, a real product
+  name), never an invented placeholder dressed up in a nice grid.
+- **Domain-Specificity**
+  (`../../../design-method/references/register/product.md` §2, when register is
+  `product`) — would this surface look native dropped unedited into an unrelated
+  product?
 
-### FORBIDDEN Flat Patterns
-- Same white background on all sections (use alternation)
-- H1 under 3rem (use clamp 4-10rem)
-- No shadows on cards (use 3-level shadow system)
-- Static service lists (use numbered, accordion, or tab patterns)
-- Generic CTA at bottom (use giant typography or full-bleed)
-- Any pattern combo applied to generic/unsourced copy (see Body Substance Floor)
+A beautiful hover reveal over a generic "Fast. Reliable. Scalable." headline
+still fails.
+
+### Flatness is banned — and so is one mandatory recipe for relief
+
+The list below names failures. It deliberately does **not** prescribe a single
+cure, because a cure applied everywhere becomes the next tell: strict
+light/dark alternation on every boundary is itself an AI signature (see 02), and
+a mandatory 3-level shadow on every card reads as a framework default.
+
+| Failure | Why it fails | Ways out (pick one, deliberately) |
+|---------|--------------|-----------------------------------|
+| Every section on the same background with no other relief device | The page reads as one undifferentiated column | ONE inverted band; a tinted section; a full-bleed image section; per-section vertical padding rhythm (`body-sequence-bank.md` rule 2); a rule or motif crossing section boundaries |
+| Display headline sized like body copy (register `brand`) | No focal block — `../layout-discipline.md` §9 fails | Scale the display type, or give the viewport its focal block another way (image, number, full-bleed panel). `../layout-discipline.md` §1 owns the hero numbers, not this file. Register `product` is exempt |
+| Cards with no border AND no tint AND no elevation AND no image | The card is invisible; the grid reads as loose text | Any ONE of border, tint, elevation, image. Not all four, and not a mandatory 3-level shadow scale |
+| A raw `<ul>` of more than 5 service items | Already a `../layout-discipline.md` §7 fail | Numbered rows (01), accordion (10), tabs (09), 2-col split, scroll-snap pills |
+| A closing CTA that restates the hero verbatim | The page ends with nothing new | Give the closing ask its own device (07, 05) or its own content — a form, a real availability, a named next step |
+| Any device applied to generic/unsourced copy | See Body Substance Floor | Fix the copy; the device is not the problem |

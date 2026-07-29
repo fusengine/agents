@@ -1,6 +1,6 @@
 ---
 name: laravel-stripe-connect
-description: Build marketplaces and platforms with Stripe Connect. Use when implementing multi-vendor payments, seller onboarding, commissions, payouts, or split payments.
+description: Use when implementing multi-vendor marketplace payments, seller onboarding, commissions, payouts, or split payments with Stripe Connect.
 versions:
   laravel: "13.0"
   stripe-php: "16.x"
@@ -9,6 +9,15 @@ user-invocable: true
 references: references/overview.md, references/account-types.md, references/payment-flows.md, references/onboarding.md, references/fees-commissions.md, references/payouts.md, references/refunds-disputes.md, references/compliance.md, references/templates/Seller.php.md, references/templates/SellerOnboardingController.php.md, references/templates/MarketplacePaymentController.php.md, references/templates/PayoutController.php.md, references/templates/ConnectWebhookHandler.php.md, references/templates/ConnectRoutes.php.md
 related-skills: laravel-billing, laravel-api, laravel-auth
 ---
+
+<objective>
+Covers Stripe Connect for marketplaces and platforms (Etsy/Uber/Kickstarter-
+style multi-party payments, as opposed to simple SaaS billing — see
+laravel-billing for that): account types (Standard/Express/Custom), seller
+KYC onboarding, payment flows (direct/destination charges, separate charges
++ transfers), platform commission/application fees, payouts, refunds and
+disputes/chargeback liability, and compliance requirements.
+</objective>
 
 # Laravel Stripe Connect
 

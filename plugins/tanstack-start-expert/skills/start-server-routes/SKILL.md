@@ -1,17 +1,22 @@
 ---
 name: start-server-routes
-description: >-
-  Use when building raw HTTP API endpoints in TanStack Start — the server
-  property on createFileRoute, method handlers (GET/POST/PUT/DELETE), the
-  handler context (request, params, context), createHandlers for per-handler
-  middleware, file-route conventions, dynamic/splat params, request body
-  parsing, and Response helpers. Do NOT use for: internal type-safe RPC from
-  your own app (use start-server-functions), reusable middleware chains (use
-  start-middleware), or UI route rendering.
+description: Use when building raw HTTP endpoints in TanStack Start with the server property — handlers, params, middleware. Do NOT use for internal RPC (start-server-functions).
 version: 1.0.0
 user-invocable: true
 references: references/defining.md, references/vs-server-functions.md, references/templates/rest-endpoint.md
 ---
+
+<objective>
+Covers server routes — raw HTTP endpoints defined alongside app routes in src/routes/ using the server property on createFileRoute (from @tanstack/react-router), returning standard Response objects. Targets @tanstack/react-start v1.166.2.
+
+Documents the handler context ({ request, params, context, pathname, next }), dynamic ($id) and splat ($) params from the file name, per-handler middleware via createHandlers versus route-wide server.middleware, and how the same file can serve as both a UI route (component) and an API route (server) at once.
+
+Critical rules: choose a server route over a server function when the endpoint must be callable from outside the app (webhooks, public REST, cross-origin) — see references/vs-server-functions.md for the decision; exactly one handler file may resolve to a given route path (routes/users.ts, routes/users/index.ts, and routes/users.index.ts all collide on /users); always await request.json()/.text()/.formData(); and handlers must return a Response (or Promise<Response>).
+
+Includes a full REST-resource template with params and middleware.
+
+Do NOT use this skill for internal type-safe RPC callable only from your own app (use start-server-functions), for reusable middleware chains (use start-middleware), or for UI route rendering.
+</objective>
 
 # TanStack Start Server Routes
 

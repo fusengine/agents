@@ -1,59 +1,110 @@
 ---
 name: Bento Grid
+device: Asymmetric bento cell mix (2x2 / 2x1 / 1x1) inside one section
 source: https://startify-template.webflow.io
-sector: SaaS
+seen-in: SaaS
 ---
 
-## Bento Grid
+## Bento Grid — one section, mixed cell sizes
 
-### What it is
-A SaaS startup page where the central "about" section uses an asymmetric bento grid mixing photos, stats, and text cards of varying sizes. Warm neutral palette (off-white, cream, warm gray) with dark accent cards. The page also features a hero with split layout, testimonial band, pricing cards, FAQ, and a dark CTA footer. The source site's section headings use a serif italic accent on one word — see caution below before reusing that.
+> `source:` is provenance — where the device was measured. Not a site to browse
+> for taste; `../../design-inspiration.md` owns that ban. Read the values here.
 
-### Caution — not a premium default
-This source combines two traits — a serif-italic accent on one headline word, and a low-chroma "cream" neutral (`oklch(0.95 0.015 80)`, chroma ~0.015, functionally near-grayscale) — that together are the #1 identified AI-slop tell cluster: a shipped design reached for exactly this combination as an unprompted, undeclared default and read as generic "AI premium," not a real brand signature. Both stay in this reference for documentation accuracy, but neither is a default to copy:
-- **Serif-italic-on-one-word**: only if the committed type pairing in `design-system.md` explicitly calls for a serif display face. Never introduce it as a headline-accent reflex.
-- **Cream/warm-neutral bg**: fine as one gated option among several card-bg variants for visual variety, not a mandatory "premium" cue.
+### The device
 
-### When to use
-- Startup "about us" or "why us" sections blending metrics, team, and features
-- Pages needing visual variety without separate horizontal sections
-- Dashboard-like mixed-content layouts (photos + stats + text)
+One section whose content sits in a 4-column grid with cells of deliberately
+different spans: a 2x2 carrying a photograph, 2x1 cells carrying a feature, 1x1
+cells carrying a single stat or headshot. The asymmetry is the device — it lets
+one section hold photos, numbers and short text at once without splitting into
+three stacked bands.
 
-### Full Visual Walkthrough (top to bottom)
-1. **Nav**: logo left, links center, two CTAs right (ghost + primary). `padding: 16px 48px; height: ~60px; bg: oklch(0.99 0 0); border-bottom: 1px solid oklch(0.93 0 0)`. Logo: 0.9375rem weight 700 `oklch(0.13 0 0)`. Links: 0.8125rem weight 450 `oklch(0.40 0 0)`. Primary CTA: `bg: oklch(0.13 0 0); color: oklch(0.97 0 0); padding: 10px 20px; radius: 8px`
-2. **Hero** (light `oklch(0.99 0 0)`): 2-col grid `3fr 2fr` gap 48px. Left: heading "Enabling Confident Systems for Driven Teams" at `clamp(2.5rem, 4.5vw, 3.75rem)` weight 700 tracking -0.03em `oklch(0.13 0 0)` line-height 1.1. One word in `serif italic weight 400` (reference only — gate before reusing, see Caution above). Subtitle 1.0625rem `oklch(0.42 0 0)` max-width 480px. CTA row: two buttons. Right: product screenshot mockup `radius: 12px; box-shadow: 0 8px 32px oklch(0 0 0 / 0.08)`. Padding: 100px 72px
-3. **Social proof band** (light): logo strip `display: flex; gap: 48px; justify-content: center; opacity: 0.4; filter: grayscale(1)`. Padding: 48px 0. Caption above: 0.75rem weight 500 `oklch(0.55 0 0)` uppercase tracking 0.12em
-4. **Bento section** (light): centered heading "Meet the People Behind the Innovation" `clamp(1.75rem, 3vw, 2.5rem)` weight 600 `oklch(0.13 0 0)`, serif italic on "People" (reference only — gate before reusing, see Caution above). Margin-bottom 48px. **Grid**: `display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: minmax(180px, auto); gap: 14px; max-width: 1200px; margin: 0 auto`. Card sizes: 2x2 (hero photo), 2x1 (feature), 1x1 (stat). **Card base**: `radius: 14px; padding: 28px; bg: oklch(0.97 0.005 80); border: 1px solid oklch(0.91 0.005 80); overflow: hidden; transition: transform 0.3s ease, box-shadow 0.3s ease`. **Hover**: `translateY(-3px); box-shadow: 0 6px 20px oklch(0 0 0 / 0.05)`. **Dark card**: `bg: oklch(0.14 0 0); color: oklch(0.96 0 0); border: none`. **Cream card**: `bg: oklch(0.95 0.015 80)`. **Stat number**: `clamp(2.5rem, 4.5vw, 3.75rem)` weight 700 tracking -0.03em `oklch(0.13 0 0)`. **Stat label**: 0.8125rem weight 400 `oklch(0.48 0 0)` margin-top 8px. **Card title**: `clamp(1.125rem, 1.4vw, 1.375rem)` weight 600 `oklch(0.13 0 0)`. **Card body**: 0.875rem `oklch(0.45 0 0)` line-height 1.6. **Photo card**: `padding: 0; img: 100% cover`. **Team headshots**: 56px radius 50% border `2px solid oklch(0.97 0 0)`. **Pill tag**: `padding: 4px 12px; radius: 999px; bg: oklch(0.92 0 0); 0.75rem weight 500 oklch(0.35 0 0)`
-5. **Features section** (light): "Your Startup's Dreams Work Starts Here" heading. Below: 3-col grid of icon+text cards. Each: icon container 48px `bg: oklch(0.95 0.01 80); radius: 12px`. Title 1rem weight 600. Desc 0.875rem `oklch(0.45 0 0)`. Padding 100px 72px
-6. **Testimonials** (light): large centered quote `clamp(1.25rem, 2vw, 1.75rem)` weight 400 italic `oklch(0.25 0 0)`. Below: avatar 48px + name 0.9375rem weight 600 + company 0.8125rem `oklch(0.50 0 0)`. Navigation dots below
-7. **Pricing** (light): "Flexible Plans for Every Stage of Growth" heading. 3 pricing cards: `padding: 36px; radius: 16px; bg: oklch(0.99 0 0); border: 1px solid oklch(0.90 0 0)`. Price: `clamp(2rem, 3vw, 2.5rem)` weight 700. Feature list: checkmark + text 0.875rem. CTA button full-width. Featured card: `border: 2px solid oklch(0.13 0 0)`, "Most Popular" badge `bg: oklch(0.13 0 0); color: oklch(0.97 0 0); radius: 999px; padding: 4px 14px; 0.75rem weight 500`
-8. **FAQ** (light): heading + accordion. Items: `border-bottom: 1px solid oklch(0.90 0 0); padding: 20px 0`. Question 1rem weight 600. Chevron right. Open: answer 0.875rem `oklch(0.42 0 0)`
-9. **CTA Footer** (dark `oklch(0.11 0 0)`): heading `clamp(2rem, 3.5vw, 3rem)` weight 700 `oklch(0.95 0 0)`. CTA button `oklch(0.97 0 0)` bg `oklch(0.11 0 0)` text. Below: 4-col link grid. Bottom: copyright + socials. Padding 80px 72px
+### Caution — the shipped lesson, and where else it applies
 
-### CSS Specifications Summary
-- **Light bg**: `oklch(0.99 0 0)` — **Dark bg** (footer + accent cards): `oklch(0.11-0.14 0 0)`
-- **Cream** (optional, gated variant, not a required default — see Caution above): `oklch(0.95 0.015 80)` — **Borders**: `oklch(0.90-0.91 0 0)` 1px
-- **Container**: `max-width: 1200px; margin: 0 auto`
-- **Grid gap**: 14px (bento), 32px (features), 16px (pricing)
-- **All cards**: radius 14-16px, padding 28-36px
-- **Shadows**: sm `0 2px 8px 3%`, md `0 6px 20px 5%`, lg `0 8px 32px 8%` — all `oklch(0 0 0 / N)`
-- **Responsive**: 768px: 2-col, 480px: 1-col, all spans reset to 1
+The measured source combines two traits — a serif-italic accent on one headline
+word, and a low-chroma "cream" neutral (`oklch(0.95 0.015 80)`, chroma ~0.015,
+functionally near-grayscale). A shipped design reached for exactly this
+combination as an unprompted, undeclared default and **read as generic "AI
+premium"**, not a real brand signature. Both stay documented here for accuracy;
+neither is a default to copy:
 
-### AI Generation Prompt
-SaaS startup page on oklch(0.99 0 0) background, max-width 1200px.
-Nav: 60px, border-bottom 1px oklch(0.93 0 0), logo left weight 700, dark CTA right.
-Hero: 2-col (3fr 2fr) — heading clamp(2.5rem, 4.5vw, 3.75rem) weight 700 tracking -0.03em (no forced serif-italic accent word by default — see Caution above; only add one if design-system.md's type pairing calls for it), subtitle 1.0625rem oklch(0.42 0 0). Right: product screenshot 12px radius box-shadow 0 8px 32px 8% black.
-Logo strip: grayscale, 40% opacity, centered.
-Bento grid: repeat(4, 1fr), 14px gap, auto-rows minmax(180px, auto). Card base: 14px radius, 28px padding, oklch(0.97 0.005 80) bg, 1px border oklch(0.91 0.005 80). Dark cards oklch(0.14 0 0). Cream oklch(0.95 0.015 80) is one optional bg variant among several, not a required default. Stats clamp(2.5rem, 4.5vw, 3.75rem) weight 700. Photo cards no padding object-fit cover. Hover translateY(-3px) shadow 0 6px 20px 5%. Mix 2x2, 2x1, 1x1 spans — asymmetry mandatory.
-Features: 3-col icon cards with 48px icon containers.
-Testimonial: italic quote centered, avatar + name.
-Pricing: 3 cards 16px radius, featured has 2px dark border + "Popular" pill.
-FAQ: accordion, 1px separators.
-Dark footer oklch(0.11 0 0): CTA + 4-col links.
+- **Serif-italic-on-one-word** — only if the committed type pairing in
+  `design-system.md` explicitly calls for a serif display face. Never as a
+  headline-accent reflex. The same gate applies to pattern 08, whose whole
+  device is that accent; it carries a pointer back here.
+- **Cream/warm-neutral background** — fine as one gated option among several
+  card-bg variants, not a mandatory "premium" cue.
 
-### Anti-patterns (what NOT to do)
-- Do not make all bento cards same size — asymmetry is the point
-- Do not exceed 4 columns on desktop
-- Do not use more than 3 card bg variants (light + cream + dark)
-- Do not add heavy shadows — max 20px blur, 5% opacity on hover
-- Do not put paragraphs in 1x1 cells — stats/icons/headshots only
+Generalised: any trait a generator reaches for *without being asked* is a tell
+by that fact alone, whatever it looks like. That is the test to run on every
+device in this folder, not only this one.
+
+### CSS (measured)
+
+```css
+.bento {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: minmax(180px, auto);
+  gap: 14px;
+}
+.bento__cell {
+  border-radius: 14px; padding: 28px;
+  background: oklch(0.97 0.005 80);
+  border: 1px solid oklch(0.91 0.005 80);
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.bento__cell:hover { transform: translateY(-3px);
+  box-shadow: 0 6px 20px oklch(0 0 0 / 0.05); }
+
+.bento__cell--dark  { background: oklch(0.14 0 0); color: oklch(0.96 0 0); border: none; }
+.bento__cell--cream { background: oklch(0.95 0.015 80); } /* gated — see Caution */
+.bento__cell--photo { padding: 0; }
+.bento__cell--photo img { width: 100%; height: 100%; object-fit: cover; }
+
+.stat__num   { font-size: clamp(2.5rem, 4.5vw, 3.75rem); font-weight: 700;
+               letter-spacing: -0.03em; }
+.stat__label { margin-top: 8px; font-size: 0.8125rem; color: oklch(0.48 0 0); }
+```
+
+Spans: `grid-column: span 2; grid-row: span 2` for the photo cell, `span 2` for
+features, default for stats. Responsive: 2 columns at 768px, 1 at 480px, all
+spans reset to 1.
+
+### Conditions of use
+
+- **N content items = N cells, exactly.** `../../layout-discipline.md` §4 owns
+  this and the no-empty-column rule; a filler tile means the grid was planned
+  wrong.
+- At least 2-3 cells carry a real image, tint, or pattern. An all-typography
+  bento is a table with rounded corners.
+- Never more than 4 columns on desktop.
+- 1x1 cells hold a stat, an icon, or a headshot — never a paragraph.
+- Maximum 3 card background variants. Beyond that the grid reads as a palette
+  test.
+- If the bento is the hero, that is a macrostructure choice (entry 5,
+  `../../../../design-method/references/macrostructure-bank.md`), decided before
+  this file is opened.
+
+### Anti-patterns
+
+- Do not make all cells the same size — the asymmetry is the device.
+- Do not exceed 4 columns on desktop.
+- Do not add heavy shadows; 20px blur at 5% on hover is the ceiling.
+- Do not introduce a serif-italic accent word with the cream background — see
+  the Caution.
+- Do not reuse the bento for a second section on the same page
+  (`../../layout-discipline.md` §5).
+
+### Optional section prompt (this section only)
+
+Build ONE section as a bento grid: `repeat(4, 1fr)`, `grid-auto-rows:
+minmax(180px, auto)`, `gap: 14px`. Cells: 14px radius, 28px padding, a light
+surface background with a 1px border one step darker. Mix spans — one 2x2 photo
+cell (`padding: 0`, `object-fit: cover`), 2x1 feature cells, 1x1 stat cells with
+the number at `clamp(2.5rem, 4.5vw, 3.75rem)` weight 700 tracking -0.03em and a
+0.8125rem muted label 8px below. One dark cell `oklch(0.14 0 0)` with light
+text. Hover: `translateY(-3px)` and `box-shadow: 0 6px 20px oklch(0 0 0 / 0.05)`.
+Emit exactly as many cells as there are real content items. No serif-italic
+accent word unless the design system already commits a serif display face.
+Nothing outside this section.

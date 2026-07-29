@@ -1,10 +1,18 @@
 ---
 name: mcp-tools
-description: MCP tools for Xcode automation and Apple documentation access. XcodeBuildMCP for builds, apple-docs for WWDC and API docs. Use when building projects, searching documentation, or accessing WWDC content.
+description: Use when needing Xcode build automation or Apple API/WWDC documentation lookup via XcodeBuildMCP or apple-docs MCP servers.
 user-invocable: false
 references: references/xcodebuild-mcp.md, references/apple-docs-mcp.md
 related-skills: swift-core, ios, macos
 ---
+
+<objective>
+Documents the two MCP servers that power the Swift/Apple workflow: XcodeBuildMCP for Xcode project automation and build validation (discover projects, build for macOS/iOS Simulator/device, list schemes, clean builds, scaffold new projects, and autonomous build-fix-rebuild loops), and Apple Docs MCP for official documentation with offline WWDC access (all frameworks, symbol details, WWDC sessions 2014-2025 with transcripts, sample code, API availability/deprecation).
+
+Defines the mandatory research-first priority order (Apple Docs MCP first, then Context7 for third-party libraries, then Exa web search) and the mandatory build-validation loop after every code change (build, read errors, fix, rebuild, only commit on zero errors).
+
+Includes installation snippets for both servers and a quick-reference table mapping tasks to the right tool.
+</objective>
 
 # MCP Tools for Swift Development
 

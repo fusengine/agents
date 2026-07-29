@@ -1,6 +1,6 @@
 ---
 name: fuse-browser-usage
-description: "Efficient fuse-browser usage: web fetch, crawl, SERP, browser session, screenshot, webapp testing, console errors. Read this BEFORE any mcp__fuse-browser__* tool call — it routes fetch/crawl/serp vs live session vs visual capture and enforces the 4 ZERO-TOLERANCE rules."
+description: "Use when about to call any mcp__fuse-browser__* tool. Routes fetch/crawl/SERP vs live browser session vs screenshot capture, and enforces the 4 ZERO-TOLERANCE rules -- read BEFORE the tool call."
 keywords:
   - web fetch
   - crawl
@@ -13,6 +13,12 @@ keywords:
   - core web vitals
 user-invocable: false
 ---
+
+<objective>
+This is the canonical doctrine for every `mcp__fuse-browser__*` call: 4 zero-tolerance rules (fast-path first with no browser launch for reading, one session always closed, batch over per-URL loops, deterministic schema-based extraction over manual snapshot parsing), then routing to one of three reference profiles depending on the goal -- research/docs (fetch, crawl, SERP, no pixels), webapp testing (console, network, live interactions), or visual/design (screenshots, responsive + dark mode, regression diffing).
+
+It covers only the raw browser tooling. The full design pipeline (identity -> generate -> audit) is NOT here -- that lives in `fuse-design:design-web` and the `fuse-design:design-review` gate.
+</objective>
 
 # fuse-browser — Efficient Usage
 

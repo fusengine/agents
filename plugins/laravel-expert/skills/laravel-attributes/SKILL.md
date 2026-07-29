@@ -1,6 +1,6 @@
 ---
 name: laravel-attributes
-description: Use when migrating Eloquent models, Jobs, Console commands, Controllers, API Resources, Validation, Factories or Seeders to native PHP 8.3 attributes introduced in Laravel 13. Covers all 7 categories of first-party attributes.
+description: Use when migrating Eloquent models, Jobs, Console commands, Controllers, API Resources, Validation, Factories or Seeders to Laravel 13 PHP attributes.
 versions:
   laravel: "13.0"
   php: "8.3"
@@ -8,6 +8,17 @@ user-invocable: true
 references: references/eloquent.md, references/queue.md, references/console.md, references/controllers.md, references/validation.md, references/api-resources.md, references/factories-seeders.md, references/templates/Model-with-attributes.php.md, references/templates/Job-with-attributes.php.md
 related-skills: laravel-eloquent, laravel-queues, laravel-api
 ---
+
+<objective>
+Covers all 7 categories of Laravel 13 first-party PHP 8.3 attributes that
+replace legacy class properties: Eloquent (#[Table], #[Fillable], #[Hidden],
+#[Guarded], #[Appends], #[Touches], #[Connection]), Queue/Job (#[Connection],
+#[Queue], #[Tries], #[Timeout], #[Backoff], #[MaxExceptions],
+#[FailOnTimeout], #[UniqueFor]), Console (#[Signature], #[Description]),
+Controllers (#[Middleware], #[Authorize]), Validation (#[RedirectTo],
+#[StopOnFirstFailure]), API Resources (#[Collects], #[PreserveKeys]), and
+Factories/Seeders (#[UseModel], #[Seed], #[Seeder]).
+</objective>
 
 # Laravel 13 PHP Attributes
 

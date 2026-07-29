@@ -1,6 +1,6 @@
 ---
 name: php-testing
-description: Use when writing or configuring tests on a framework-agnostic PHP project and choosing between PHPUnit and Pest. Covers PHPUnit 12 attributes, Pest 4, test doubles, fixtures, and coverage. Do NOT use for Laravel test helpers (RefreshDatabase, HTTP tests → laravel-expert laravel-testing) or quality tooling (PHPStan/Rector/Fixer → php-quality-tooling).
+description: Use when writing/configuring tests on a non-Laravel PHP project — PHPUnit vs Pest. Do NOT use for Laravel test helpers or quality tooling (php-quality-tooling).
 versions:
   phpunit: "12"
   pest: "4"
@@ -8,6 +8,15 @@ user-invocable: true
 references: references/choosing-framework.md, references/phpunit-12.md, references/pest-4.md, references/annotations-to-attributes.md, references/templates/phpunit-xml.md, references/templates/pest-setup.md, references/templates/test-doubles.md
 related-skills: php-quality-tooling, php-language-modern
 ---
+
+<objective>
+Covers testing a framework-agnostic PHP project with PHPUnit 12 (class-based, xUnit-style, attributes only — annotations like @test/@dataProvider were removed) or Pest 4 (closure-based, expressive, adds browser/architecture/mutation testing), both of which run on PHPUnit's engine and require PHP 8.3+.
+
+Includes a decision matrix for choosing between the two (team preference, not capability), plus templates for phpunit.xml, Pest.php setup, and test doubles (stubs, mocks, fixtures, coverage).
+
+Do NOT use this skill for Laravel test helpers such as RefreshDatabase or HTTP testing — those are covered by laravel-expert's laravel-testing skill. Do NOT use it for static analysis or formatting tooling — that is php-quality-tooling.
+</objective>
+
 
 # PHP Testing
 

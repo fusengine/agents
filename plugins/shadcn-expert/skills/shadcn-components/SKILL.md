@@ -1,6 +1,6 @@
 ---
 name: shadcn-components
-description: "Component patterns for shadcn/ui with both Radix UI and Base UI primitives. Covers API differences, mapping between primitives, and correct usage patterns. Use when: building or editing shadcn/ui components, mapping Radix vs Base UI APIs, or choosing composition patterns (asChild vs render)."
+description: "Use when building or editing shadcn/ui components, mapping Radix vs Base UI APIs, or choosing a composition pattern (asChild vs render)."
 versions:
   shadcn-ui: "2.x"
   radix-ui: "1.x"
@@ -10,6 +10,12 @@ allowed-tools: Read, Write, Edit, Glob, Grep, Task, mcp__shadcn__search_items_in
 references: references/radix-components.md, references/baseui-components.md, references/templates/dialog-example.md
 related-skills: shadcn-detection, shadcn-registries
 ---
+
+<objective>
+Documents component patterns for shadcn/ui with both Radix UI and Base UI primitives — API differences, 1:1 mapping between primitives (Dialog/Select/Tooltip/Accordion/Popover/Menu), and the two composition patterns (`asChild` for Radix, `render` for Base UI).
+
+Requires detecting the project's primitive first (`shadcn-detection`) and consulting the shadcn MCP for registry source instead of hand-writing component internals.
+</objective>
 
 # shadcn Components
 

@@ -1,6 +1,6 @@
 ---
 name: nextjs-tanstack-form
-description: TanStack Form v1 for Next.js 16 with Server Actions, Zod validation, and shadcn/ui integration. Use when building forms, validation, multi-step wizards, or dynamic field arrays.
+description: Use when building forms in Next.js 16 with TanStack Form v1 — Server Actions, Zod validation, multi-step wizards, field arrays.
 versions:
   tanstack-form: 1.0
   nextjs: 16
@@ -10,6 +10,12 @@ user-invocable: true
 references: references/installation.md, references/basic-usage.md, references/field-api.md, references/form-state.md, references/validation-zod.md, references/server-actions.md, references/array-fields.md, references/async-validation.md, references/shadcn-integration.md, references/typescript.md, references/multi-step-form.md, references/performance.md, references/testing.md, references/migration-rhf.md
 related-skills: nextjs-16, nextjs-shadcn, solid-nextjs
 ---
+
+<objective>
+Implements TanStack Form v1 in Next.js 16 with native Server Actions integration: shared `formOptions` (single source of truth for client and server), Zod schemas for both instant client feedback and `onServerValidate` database checks, `useActionState` for the React 19 form-submission hook, and `mergeForm` to combine server-returned errors with client state.
+
+Covers the Field API (state + handlers), validation timing (onChange/onBlur/onSubmit/onServer), dynamic field arrays and multi-step wizards, debounced async validation, and shadcn/ui field composition. Also documents SOLID file organization for forms (`form-options.ts`, `FormComponent.tsx`, `form.action.ts`) and a comparison against React Hook Form. This is the Next.js Server Actions variant of TanStack Form — for a plain React app without Next.js see the react-forms skill.
+</objective>
 
 # TanStack Form for Next.js 16
 

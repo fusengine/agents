@@ -1,11 +1,19 @@
 ---
 name: design-system
-description: "Token-strategy core — OKLCH color rules, neutral tinting, accent-commitment levels, type scale, 8pt spacing grid, touch targets, and the canonical output format of design-system.md (the file the harness gates on). This is routing step 1 of design-method/SKILL.md — read it before design-web/design-webapp/design-ios/design-android, before picking or auditing a single color/type/spacing value."
+description: "Use when starting any design task, before choosing or auditing a color/type/spacing token or writing design-system.md — routing step 1."
 when-to-use: "First read of every design task, unconditionally (design-method routing step 1) — before choosing or auditing any token, and before writing design-system.md."
 keywords: tokens, oklch, color, typography, spacing, design-system.md, contrast, fonts, density
 priority: critical
 related: design-method, design-web, design-webapp, contrast-ratios.md, sector-palettes.md, typography-pairs.md, forbidden-fonts.md, design-read-dials.md
 ---
+
+<objective>
+The token-strategy core: OKLCH-only color rules for new tokens, neutral tinting (chroma 0.005-0.015, never pure gray), the accent-commitment levels (restrained/committed/full palette/drenched), the typography scale (ratio, line-height, measure), the 8pt spacing grid, and platform touch-target minimums.
+
+Also defines the canonical output format of `design-system.md` — the file the harness gates on — including its 4 hard requirements (the `## Design Reference` heading, a real inspiration URL, at least one chroma-positive OKLCH token, and the hard-forbidden font exclusions).
+
+This is routing step 1 of `design-method/SKILL.md`: read it before `design-web`, `design-webapp`, `design-ios`, or `design-android`, and before picking or auditing a single color/type/spacing value.
+</objective>
 
 <!-- Grounding: grounding-corpus.md §B (thresholds), §H (kept anchors); harness-contract.md invariant #2 (design-system.md format) + #3 (this file's read-path triggers harness phase 1). -->
 

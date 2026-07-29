@@ -1,54 +1,93 @@
 ---
 name: Numbered Services
+device: Bracketed index rows with hover image reveal
 source: https://crevo-wbs.framer.website
-sector: Agency
+seen-in: Agency
 ---
 
-## Numbered Services
+## Numbered Services — indexed rows, image revealed on hover
 
-### What it is
-A full dark-mode agency page. The services section uses a vertically stacked list with bracketed zero-padded indices, titles, and descriptions. On hover each row reveals a photograph. The page also features a portfolio grid ("Selected Work"), a testimonials section, a team section, and a CTA footer.
+> `source:` is provenance — where the device was measured. Not a site to browse
+> for taste; `../../design-inspiration.md` owns that ban. Read the values here.
 
-### When to use
-- Agency/studio portfolio pages listing 4-6 services
-- Dark-mode sites with editorial, text-first layouts and progressive disclosure via hover
-- Creative studios targeting tech or design audiences
+### The device
 
-### Full Visual Walkthrough (top to bottom)
-1. **Nav** (sticky): logo "CREVO" left (stylized E = 3 bars), minimal links right, on `oklch(0.10 0 0)` bg. Height ~64px, `padding: 16px 48px`, `z-index: 50`, no border, no blur
-2. **Hero**: full-width dark image (mountain landscape), text overlay right-aligned. Tagline "Transforming ideas into visual masterpieces" in `oklch(0.95 0 0)` at `clamp(1rem, 1.3vw, 1.25rem)` weight 400. Logo "CREVO" large left at `clamp(4rem, 10vw, 8rem)` weight 700 tracking -0.04em
-3. **Stats + Intro** (dark): two-column grid `1fr 1fr` gap 48px. Left: two stat numbers "12" "25" at `clamp(4rem, 8vw, 7rem)` weight 300 `oklch(0.95 0 0)` tracking -0.04em line-height 0.9. Right: paragraph `oklch(0.50 0 0)` 0.9375rem/1.7 max-width 440px
-4. **Services list** (dark): vertical stack on `oklch(0.10 0 0)`. Each row: `display: flex; align-items: center; padding: 28px 0; gap: 32px; border-bottom: 1px solid oklch(0.22 0 0); cursor: pointer`. Index `[01]`: monospace 0.8125rem `oklch(0.42 0 0)` tracking 0.06em. Title: `clamp(1.25rem, 2vw, 1.75rem)` weight 500 `oklch(0.95 0 0)` tracking -0.01em. Desc: 0.875rem `oklch(0.42 0 0)` line-height 1.6 margin-left auto max-width 320px. **Hover**: bg transitions to `oklch(0.13 0 0)` 0.3s ease; image appears absolute right 40px, 260x180px, radius 6px, object-fit cover, `opacity: 0→1 transform: translateY(-50%) translateX(0→-20px)` transition 0.4s ease
-5. **Selected Work** (dark): heading "SELECTED WORK" at `clamp(2.5rem, 5vw, 4.5rem)` weight 700 `oklch(0.95 0 0)` tracking -0.03em. Below: 2-column grid gap 16px of portfolio images, radius 10px, aspect-ratio 4/3, object-fit cover, hover `scale(1.03)` transition 0.4s
-6. **Client's Word** (dark): testimonial card — large quote `clamp(1.25rem, 2vw, 1.75rem)` weight 400 `oklch(0.85 0 0)` italic, client name 0.875rem `oklch(0.50 0 0)`, round avatar 48px
-7. **Our Experts** (dark): heading + team grid `repeat(3, 1fr)` gap 16px. Each: photo radius 10px, name 1rem weight 500 `oklch(0.95 0 0)`, role 0.8125rem `oklch(0.42 0 0)`
-8. **CTA Footer** (dark): "LET'S WORK TOGETHER" at `clamp(2.5rem, 6vw, 5rem)` weight 700 `oklch(0.95 0 0)` tracking -0.03em. The "O" in "TOGETHER" replaced by a circular image (radius 50%, 60px). Below: social links row, copyright 0.75rem `oklch(0.35 0 0)`
+One section: a vertical stack of rows, each carrying a bracketed zero-padded
+index, a title, and a right-pushed description. The row is the whole card — no
+box, no shadow, only a hairline separator. Hovering a row tints it and fades a
+photograph in from the right edge. The images exist only on hover, so the
+section reads as a quiet text list until the reader engages with it.
 
-### CSS Specifications Summary
-- **All backgrounds**: `oklch(0.10 0 0)` uniform throughout
-- **Container**: `max-width: 1280px; margin: 0 auto; padding: 0 80px` (desktop), `0 20px` (mobile)
-- **Section spacing**: `padding-top: 100px; padding-bottom: 100px` per section
-- **Primary text**: `oklch(0.95 0 0)` — **Secondary text**: `oklch(0.42 0 0)` — **Muted text**: `oklch(0.50 0 0)`
-- **Borders**: `oklch(0.22 0 0)` 1px throughout
-- **All images**: `border-radius: 6px–10px; object-fit: cover`
-- **Transitions**: all 0.3s–0.4s ease
-- **Responsive**: single column below 768px, hover images disabled on touch, stats stack
+Progressive disclosure is the point: the index gives the list a spine, the
+reveal gives it depth without spending vertical space on a photo grid.
 
-### AI Generation Prompt
-Build a dark agency page on oklch(0.10 0 0) background, max-width 1280px centered.
-Nav: 64px height, logo left, links right, no bg blur, padding 16px 48px.
-Hero: full-width dark photo with right-aligned tagline at 1.25rem oklch(0.95 0 0), large logo left at clamp(4rem, 10vw, 8rem) weight 700.
-Stats section: 2-col grid — two numbers at clamp(4rem, 8vw, 7rem) weight 300, paragraph at 0.9375rem oklch(0.50 0 0).
-Services list: vertical rows with 1px border oklch(0.22 0 0), each row flex — [01] index monospace 0.8125rem oklch(0.42 0 0), title clamp(1.25rem, 2vw, 1.75rem) weight 500 oklch(0.95 0 0), description 0.875rem oklch(0.42 0 0) pushed right. Hover: 260x180px image fades in 0.4s right side, 6px radius.
-Selected Work: 2-col image grid, 10px radius, hover scale 1.03.
-Testimonial: italic quote 1.75rem, 48px round avatar.
-Team: 3-col grid, photos 10px radius, name+role below.
-CTA footer: "LET'S WORK TOGETHER" at clamp(2.5rem, 6vw, 5rem) weight 700, circular image in "O".
-All text oklch(0.95/0.42/0.50 0 0). No accent color — pure monochrome dark theme.
+### CSS (measured)
 
-### Anti-patterns (what NOT to do)
-- Do not show hover images by default — progressive reveal is the hook
-- Do not add color accents — this is a monochrome dark design
-- Do not use card layouts with shadows — flat, border-separated list only
-- Do not center-align the services — left-aligned with descriptions pushed right
-- Do not use a light section anywhere — entire page is dark
+```css
+.row {
+  display: flex; align-items: center; gap: 32px;
+  padding: 28px 0;
+  border-bottom: 1px solid oklch(0.22 0 0);
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+.row:hover { background: oklch(0.13 0 0); }
+
+.row__index { font-family: ui-monospace, monospace;
+  font-size: 0.8125rem; letter-spacing: 0.06em; color: oklch(0.42 0 0); }
+.row__title { font-size: clamp(1.25rem, 2vw, 1.75rem); font-weight: 500;
+  letter-spacing: -0.01em; color: oklch(0.95 0 0); }
+.row__desc  { margin-left: auto; max-width: 320px;
+  font-size: 0.875rem; line-height: 1.6; color: oklch(0.42 0 0); }
+
+.row__img {
+  position: absolute; right: 40px; top: 50%;
+  width: 260px; height: 180px; border-radius: 6px; object-fit: cover;
+  opacity: 0; transform: translateY(-50%) translateX(0);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  pointer-events: none;
+}
+.row:hover .row__img { opacity: 1; transform: translateY(-50%) translateX(-20px); }
+```
+
+Row container needs `position: relative`. The measured source ran this on a dark
+surface (`oklch(0.10 0 0)`, text `0.95` / `0.42`), which is why the hairline sits
+at `0.22`; on a light surface use the equivalent low-contrast separator instead
+of these literal values.
+
+### Conditions of use
+
+- 4 to 6 rows. Under 4 the index reads as decoration; over 6 the hover reveal
+  becomes a slot machine and an accordion (10) or tabs (09) serve better.
+- Requires one real photograph per row. No photograph, no device — do not ship
+  the reveal with a placeholder or a duplicate image.
+- Touch: disable the reveal below the hover breakpoint and let the rows stand as
+  a list. Do not substitute an always-visible thumbnail column — that is a
+  different, denser layout.
+- The index must number something the reader can count (services, steps, cases).
+  Numbering three unrelated value props is decoration.
+
+### Anti-patterns
+
+- Do not show the images by default — the reveal is the whole device.
+- Do not wrap the rows in cards with shadows; the hairline separator is the
+  separation.
+- Do not center the rows — left-aligned title with the description pushed right
+  is what creates the horizontal tension the reveal lands in.
+- Do not let the reveal image overlap the title at narrow widths; clip it or
+  drop it.
+- Do not pair this with another row-list disclosure elsewhere on the page —
+  `../../layout-discipline.md` §5, one layout family per page.
+
+### Optional section prompt (this section only)
+
+Build ONE services section: a vertical stack of 4-6 rows on the page's existing
+surface. Each row is `display:flex; align-items:center; gap:32px; padding:28px 0;
+border-bottom:1px solid` a hairline in the surface's own scale. Left: bracketed
+zero-padded index in monospace 0.8125rem, letter-spacing 0.06em, muted. Then the
+title at `clamp(1.25rem, 2vw, 1.75rem)` weight 500, tracking -0.01em. Then a
+0.875rem/1.6 muted description with `margin-left:auto; max-width:320px`. On row
+hover, tint the row background and fade in a 260x180px `object-fit:cover` image,
+6px radius, absolutely positioned at `right:40px; top:50%`, from
+`opacity:0 translateX(0)` to `opacity:1 translateX(-20px)` over 0.4s ease.
+Nothing else — no nav, no hero, no adjacent sections.

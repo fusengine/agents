@@ -1,9 +1,15 @@
 ---
 name: tdd
-description: Use when writing production code that needs tests - new features, bug fixes, refactoring. Enforces RED-GREEN-REFACTOR cycle before any implementation.
+description: Use when writing production code that needs tests -- new features, bug fixes, refactoring. Enforces RED-GREEN-REFACTOR before implementation.
 argument-hint: "[feature-or-file]"
 user-invocable: true
 ---
+
+<objective>
+TDD enforces the Iron Law -- no production code without a failing test first -- through a strict RED-GREEN-REFACTOR loop: detect the stack and test framework, write one failing test for the next behavior, verify it fails for the *expected* reason (not a syntax error or missing fixture), write the simplest code that passes it, verify the full suite is green, refactor while staying green, then repeat for the next behavior.
+
+It never skips a VERIFY step -- a test that passes on first run proves nothing and must be investigated, not accepted.
+</objective>
 
 # TDD Skill
 

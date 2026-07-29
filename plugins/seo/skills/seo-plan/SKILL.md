@@ -1,9 +1,13 @@
 ---
 name: seo-plan
-description: Use when building a strategic SEO roadmap by business type. Covers SaaS, local, e-commerce, publisher, agency playbooks and 90-day prioritized roadmaps.
+description: Use when building a strategic SEO roadmap by business type (SaaS, local, e-commerce, publisher, agency).
 user-invocable: false
 related-skills: seo, seo-audit, seo-local, seo-ecommerce
 ---
+
+<objective>
+Provides per-business-type SEO playbooks — SaaS (pillar pages, comparison pages, use-case pages, integration pages, help docs, free tools), local (GBP, NAP, location pages, local schema, reviews, local backlinks), e-commerce (category SEO, product/review schema, faceted nav, out-of-stock, internal search), publisher (NewsArticle schema, sitemap-news.xml, author pages, topic hubs, AMP, Google News), and agency (case studies, service pages, team pages, industry expertise pages, thought leadership) — plus a generic 90-day roadmap template (weeks 1-2 audit, 3-4 foundation content, 5-8 cluster content, 9-12 outreach/backlinks/monitoring).
+</objective>
 
 # SEO Strategic Planning
 

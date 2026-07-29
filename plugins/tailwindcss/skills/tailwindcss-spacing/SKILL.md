@@ -1,8 +1,14 @@
 ---
 name: tailwindcss-spacing
-description: "Spacing utilities Tailwind CSS v4.1. Margin (m-*, mx-*, my-*, mt-*, mr-*, mb-*, ml-*, -m-* negative, m-auto), Padding (p-*, px-*, py-*, pt-*, pr-*, pb-*, pl-*), Space between (space-x-*, space-y-*). Use when: setting margin or padding on any side, centering with m-auto, applying negative margins, or spacing flex/grid children with space-x-*/space-y-*."
+description: "Use when setting margin or padding on any side, centering with m-auto, applying negative margins, or spacing children with space-x-*/space-y-*."
 user-invocable: false
 ---
+
+<objective>
+Complete reference for Tailwind CSS v4.1 spacing utilities: margin (`m-*` and per-side variants, negative margins, `m-auto` centering), padding (`p-*` and per-side variants), and space-between (`space-x-*`/`space-y-*` for flex/grid children).
+
+Documents the configurable spacing scale (`--spacing` base unit, default 0.25rem) and common composition patterns (centered containers, padded cards, stacked children).
+</objective>
 
 # Tailwind CSS Spacing Utilities
 
