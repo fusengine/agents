@@ -1,0 +1,1313 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Référence de design — procédés relevés sur linear.app</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script src="motion.js" defer></script>
+</head>
+<body>
+<!-- Document d'ÉTUDE : relevé de mise en page de linear.app/homepage.
+     Titres, libellés, chiffres et dates sont repris VERBATIM de la source —
+     ce sont des éléments de mise en page : leur longueur exacte commande les
+     coupes de ligne, la hauteur des blocs et tout le rythme vertical.
+     Seule exception, signalée : les noms des trois personnes citées sont
+     remplacés par des noms de même longueur visuelle (§ tokens-linear.md). -->
+
+<!-- ============================================================
+     JEU DE SYMBOLES — la source procède ainsi (<use href="#Robot">,
+     <use href="#DesignTools">…) : les icônes des maquettes sont déclarées
+     une fois puis instanciées. Tracés repris littéralement de la source
+     quand ils y figuraient, redessinés sinon [arbitrage].
+     ============================================================ -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="i-recherche" viewBox="0 0 16 16"><path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" d="M7 2C9.76142 2 12 4.23858 12 7C12 8.11012 11.6375 9.13519 11.0254 9.96484L13.7803 12.7197L13.832 12.7764C14.0723 13.0709 14.0549 13.5057 13.7803 13.7803C13.5057 14.0549 13.0709 14.0723 12.7764 13.832L12.7197 13.7803L9.96484 11.0254C9.13519 11.6375 8.11012 12 7 12C4.23858 12 2 9.76142 2 7C2 4.23858 4.23858 2 7 2ZM7 3.5C5.067 3.5 3.5 5.067 3.5 7C3.5 8.933 5.067 10.5 7 10.5C8.933 10.5 10.5 8.933 10.5 7C10.5 5.067 8.933 3.5 7 3.5Z"/></symbol>
+  <symbol id="i-nouveau" viewBox="0 0 16 16"><path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" d="M7.25 1C7.66414 1 7.99988 1.33589 8 1.75C8 2.16421 7.66421 2.5 7.25 2.5H4.75C3.50745 2.5 2.50012 3.50744 2.5 4.75V11.25C2.5 12.4926 3.50736 13.5 4.75 13.5H11.25C12.4926 13.5 13.5 12.4926 13.5 11.25V8.75C13.5001 8.33589 13.8359 8 14.25 8C14.6641 8 14.9999 8.33589 15 8.75V11.25C15 13.3211 13.3211 15 11.25 15H4.75C2.67893 15 1 13.3211 1 11.25V4.75C1.00012 2.67905 2.67899 1 4.75 1H7.25Z"/><path fill="currentColor" d="M12.4 1.6a1.4 1.4 0 0 1 2 2L9.7 8.3a1 1 0 0 1-.45.26l-2 .55a.5.5 0 0 1-.61-.62l.55-2a1 1 0 0 1 .26-.44l4.95-4.95Z"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 16 16"><path fill="currentColor" d="M8.75 4C8.75 3.58579 8.41421 3.25 8 3.25C7.58579 3.25 7.25 3.58579 7.25 4V7.25H4C3.58579 7.25 3.25 7.58579 3.25 8C3.25 8.41421 3.58579 8.75 4 8.75H7.25V12C7.25 12.4142 7.58579 12.75 8 12.75C8.41421 12.75 8.75 12.4142 8.75 12V8.75H12C12.4142 8.75 12.75 8.41421 12.75 8C12.75 7.58579 12.4142 7.25 12 7.25H8.75V4Z"/></symbol>
+  <symbol id="i-points" viewBox="0 0 16 16"><path fill="currentColor" d="M3 6.5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm5 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm5 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z"/></symbol>
+  <symbol id="i-chevron" viewBox="0 0 16 16"><path fill="currentColor" d="M4.53 5.47a.75.75 0 0 0-1.06 1.06l4 4a.75.75 0 0 0 1.054.007l4-3.903a.75.75 0 0 0-1.048-1.073l-3.47 3.385L4.53 5.47Z"/></symbol>
+  <symbol id="i-personne" viewBox="0 0 16 16"><path fill="currentColor" d="M8 4a2 2 0 0 0-2 2v.5a2 2 0 0 0 4 0V6a2 2 0 0 0-2-2"/><path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14m-2.879-4.121-1.01 1.01a5.5 5.5 0 1 1 7.778 0l-1.01-1.01A3 3 0 0 0 8.757 10H7.243a3 3 0 0 0-2.122.879"/></symbol>
+  <symbol id="i-backlog" viewBox="0 0 14 14"><path fill="currentColor" d="M13.9408 7.91426L11.9576 7.65557C11.9855 7.4419 12 7.22314 12 7C12 6.77686 11.9855 6.5581 11.9576 6.34443L13.9408 6.08573C13.9799 6.38496 14 6.69013 14 7C14 7.30987 13.9799 7.61504 13.9408 7.91426ZM13.4688 4.32049C13.2328 3.7514 12.9239 3.22019 12.5538 2.73851L10.968 3.95716C11.2328 4.30185 11.4533 4.68119 11.6214 5.08659L13.4688 4.32049ZM11.2615 1.4462L10.0428 3.03204C9.69815 2.76716 9.31881 2.54673 8.91341 2.37862L9.67951 0.531163C10.2486 0.767153 10.7798 1.07605 11.2615 1.4462ZM7.91426 0.0591659L7.65557 2.04237C7.4419 2.01449 7.22314 2 7 2C6.77686 2 6.5581 2.01449 6.34443 2.04237L6.08574 0.059166C6.38496 0.0201343 6.69013 0 7 0C7.30987 0 7.61504 0.0201343 7.91426 0.0591659ZM4.32049 0.531164L5.08659 2.37862C4.68119 2.54673 4.30185 2.76716 3.95716 3.03204L2.73851 1.4462C3.22019 1.07605 3.7514 0.767153 4.32049 0.531164ZM1.4462 2.73851L3.03204 3.95716C2.76716 4.30185 2.54673 4.68119 2.37862 5.08659L0.531164 4.32049C0.767153 3.7514 1.07605 3.22019 1.4462 2.73851ZM0.0591659 6.08574C0.0201343 6.38496 0 6.69013 0 7C0 7.30987 0.0201343 7.61504 0.059166 7.91426L2.04237 7.65557C2.01449 7.4419 2 7.22314 2 7C2 6.77686 2.01449 6.5581 2.04237 6.34443L0.0591659 6.08574ZM0.531164 9.67951L2.37862 8.91341C2.54673 9.31881 2.76716 9.69815 3.03204 10.0428L1.4462 11.2615C1.07605 10.7798 0.767153 10.2486 0.531164 9.67951ZM2.73851 12.5538L3.95716 10.968C4.30185 11.2328 4.68119 11.4533 5.08659 11.6214L4.32049 13.4688C3.7514 13.2328 3.22019 12.9239 2.73851 12.5538ZM6.08574 13.9408L6.34443 11.9576C6.5581 11.9855 6.77686 12 7 12C7.22314 12 7.4419 11.9855 7.65557 11.9576L7.91427 13.9408C7.61504 13.9799 7.30987 14 7 14C6.69013 14 6.38496 13.9799 6.08574 13.9408ZM9.67951 13.4688L8.91341 11.6214C9.31881 11.4533 9.69815 11.2328 10.0428 10.968L11.2615 12.5538C10.7798 12.9239 10.2486 13.2328 9.67951 13.4688ZM12.5538 11.2615L10.968 10.0428C11.2328 9.69815 11.4533 9.31881 11.6214 8.91341L13.4688 9.67951C13.2328 10.2486 12.924 10.7798 12.5538 11.2615Z"/></symbol>
+  <symbol id="i-todo" viewBox="0 0 14 14"><rect x="1" y="1" width="12" height="12" rx="6" stroke="currentColor" stroke-width="1.5" fill="none"/></symbol>
+  <symbol id="i-encours" viewBox="0 0 14 14"><rect x="1" y="1" width="12" height="12" rx="6" stroke="currentColor" stroke-width="1.5" fill="none"/><path fill="currentColor" d="M7 3.5a3.5 3.5 0 0 1 0 7Z"/></symbol>
+  <symbol id="i-fait" viewBox="0 0 14 14"><circle cx="7" cy="7" r="6" fill="currentColor"/><path d="M4.4 7.1 6.2 8.9l3.4-3.6" stroke="#0f1011" stroke-width="1.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-etoile" viewBox="0 0 16 16"><path fill="currentColor" d="m8 1.8 1.86 3.77 4.16.6-3.01 2.94.71 4.14L8 11.3l-3.72 1.95.71-4.14L1.98 6.17l4.16-.6L8 1.8Z"/></symbol>
+  <symbol id="i-gauche" viewBox="0 0 16 16"><path fill="currentColor" d="M9.53 4.47a.75.75 0 0 1 0 1.06L7.06 8l2.47 2.47a.75.75 0 1 1-1.06 1.06l-3-3a.75.75 0 0 1 0-1.06l3-3a.75.75 0 0 1 1.06 0Z"/></symbol>
+  <symbol id="i-droite" viewBox="0 0 16 16"><path fill="currentColor" d="M6.47 4.47a.75.75 0 0 1 1.06 0l3 3a.75.75 0 0 1 0 1.06l-3 3a.75.75 0 0 1-1.06-1.06L8.94 8 6.47 5.53a.75.75 0 0 1 0-1.06Z"/></symbol>
+  <symbol id="i-copie" viewBox="0 0 16 16"><rect x="5.25" y="5.25" width="7.5" height="7.5" rx="1.75" stroke="currentColor" stroke-width="1.3" fill="none"/><path d="M10.5 3.75A1.75 1.75 0 0 0 8.75 2h-5A1.75 1.75 0 0 0 2 3.75v5c0 .97.78 1.75 1.75 1.75" stroke="currentColor" stroke-width="1.3" fill="none"/></symbol>
+  <symbol id="i-fichier" viewBox="0 0 16 16"><path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" d="M8.212.413a2.5 2.5 0 0 1 1.52.72l3.536 3.534A2.5 2.5 0 0 1 14 6.435V11.9l-.013.256a2.5 2.5 0 0 1-2.231 2.231l-.256.013h-7l-.256-.013a2.5 2.5 0 0 1-2.231-2.231L2 11.9v-9A2.5 2.5 0 0 1 4.244.413L4.5.4h3.465zM4.5 1.9a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h7a1 1 0 0 0 1-1V6.435q0-.017-.003-.035H8.75A1.75 1.75 0 0 1 7 4.65V1.9zm4 2.75c0 .138.112.25.25.25h2.629L8.672 2.193a1 1 0 0 0-.172-.137z"/></symbol>
+  <symbol id="i-jalon" viewBox="0 0 12 12"><path fill="currentColor" d="M6 .8 11.2 6 6 11.2.8 6 6 .8Z"/></symbol>
+  <symbol id="i-boite" viewBox="0 0 16 16"><rect x="2.5" y="3.5" width="11" height="9" rx="2" stroke="currentColor" stroke-width="1.3" fill="none"/><path d="M2.5 8.5H6l.9 1.5h2.2l.9-1.5h3.5" stroke="currentColor" stroke-width="1.3" fill="none" stroke-linejoin="round"/></symbol>
+  <symbol id="i-carre" viewBox="0 0 16 16"><rect x="3" y="3" width="10" height="10" rx="2.5" stroke="currentColor" stroke-width="1.4" fill="none"/></symbol>
+  <symbol id="i-doc" viewBox="0 0 16 16"><rect x="3.5" y="2.5" width="9" height="11" rx="1.5" stroke="currentColor" stroke-width="1.3" fill="none"/><path d="M6 6h4M6 8.5h4M6 11h2.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></symbol>
+  <symbol id="i-cible" viewBox="0 0 16 16"><circle cx="8" cy="8" r="5.5" stroke="currentColor" stroke-width="1.3" fill="none"/><circle cx="8" cy="8" r="2" fill="currentColor"/></symbol>
+  <symbol id="i-eclair" viewBox="0 0 16 16"><path fill="currentColor" d="M9.2 1.5 3.6 9h3.6l-.4 5.5L12.4 7H8.8l.4-5.5Z"/></symbol>
+  <symbol id="i-robot" viewBox="0 0 16 16"><rect x="3" y="5" width="10" height="8" rx="2.5" stroke="currentColor" stroke-width="1.3" fill="none"/><circle cx="6.2" cy="9" r="1" fill="currentColor"/><circle cx="9.8" cy="9" r="1" fill="currentColor"/><path d="M8 2.5V5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></symbol>
+  <symbol id="i-attache" viewBox="0 0 20 20"><path d="M13.5 8.5 9 13a2.5 2.5 0 0 1-3.5-3.5l5-5a4 4 0 0 1 5.7 5.7l-5.4 5.4" stroke="currentColor" stroke-width="1.4" fill="none" stroke-linecap="round"/></symbol>
+  <symbol id="i-emoji" viewBox="0 0 20 20"><circle cx="10" cy="10" r="7" stroke="currentColor" stroke-width="1.4" fill="none"/><circle cx="7.6" cy="8.4" r="1" fill="currentColor"/><circle cx="12.4" cy="8.4" r="1" fill="currentColor"/><path d="M7.2 12a3.4 3.4 0 0 0 5.6 0" stroke="currentColor" stroke-width="1.4" fill="none" stroke-linecap="round"/></symbol>
+  <symbol id="i-envoi" viewBox="0 0 16 16"><path fill="currentColor" d="M8 2.6 12.6 8H9.2v5.4H6.8V8H3.4L8 2.6Z"/></symbol>
+  <symbol id="i-lecture" viewBox="0 0 16 16"><path fill="currentColor" d="M5.5 3.4 12.3 8l-6.8 4.6V3.4Z"/></symbol>
+  <symbol id="i-slack" viewBox="0 0 16 16"><path fill="#E01E5A" d="M3.95 9.85a1.47 1.47 0 1 1-2.94 0 1.47 1.47 0 0 1 1.47-1.47h1.47v1.47Zm.74 0a1.47 1.47 0 0 1 2.94 0v3.68a1.47 1.47 0 0 1-2.94 0V9.85Z"/><path fill="#36C5F0" d="M6.16 3.94a1.47 1.47 0 1 1 1.47-1.47v1.47H6.16Zm0 .75a1.47 1.47 0 0 1 0 2.94H2.47a1.47 1.47 0 0 1 0-2.94h3.69Z"/><path fill="#2EB67D" d="M12.05 6.16a1.47 1.47 0 1 1 1.47 1.47h-1.47V6.16Zm-.74 0a1.47 1.47 0 0 1-2.94 0V2.47a1.47 1.47 0 1 1 2.94 0v3.69Z"/><path fill="#ECB22E" d="M9.84 12.05a1.47 1.47 0 1 1-1.47 1.47v-1.47h1.47Zm0-.74a1.47 1.47 0 0 1 0-2.94h3.69a1.47 1.47 0 0 1 0 2.94H9.84Z"/></symbol>
+</svg>
+
+<!-- ============================================================
+     EN-TÊTE — collant, fond translucide + backdrop-filter blur(20px)
+     ============================================================ -->
+<header class="entete">
+  <div class="entete__barre">
+    <a class="entete__marque" href="#"><span class="entete__pastille"></span>Linear</a>
+    <!-- Bloc de droite : nav + filet de 16px + actions. Le logo reste seul
+         à gauche, tout l'espace disponible les sépare. -->
+    <div class="entete__droite">
+      <nav class="entete__nav" aria-label="Principale">
+        <button class="entete__lien" type="button">Product
+          <svg class="entete__chevron" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3 4.5 6 7.5 9 4.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </button>
+        <button class="entete__lien" type="button">Resources
+          <svg class="entete__chevron" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3 4.5 6 7.5 9 4.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </button>
+        <a class="entete__lien" href="#customers">Customers</a>
+        <a class="entete__lien" href="#">Pricing</a>
+        <a class="entete__lien" href="#">Now</a>
+        <a class="entete__lien" href="#">Contact</a>
+      </nav>
+      <span class="entete__separateur" aria-hidden="true"></span>
+      <div class="entete__actions">
+        <a class="entete__lien cache-mobile" href="#">Log in</a>
+        <a class="btn btn--petit btn--inverse" href="#">Sign up</a>
+      </div>
+    </div>
+    <button class="entete__burger" type="button" data-menu-bascule
+            aria-label="Open menu" aria-expanded="false" aria-controls="menu-mobile">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+        <path d="M3 6h14M3 10h14M3 14h14" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+      </svg>
+    </button>
+  </div>
+</header>
+
+<!-- Menu mobile — animé en .18s `both` (relevé Header.css) -->
+<nav class="menu-mobile" id="menu-mobile" aria-label="Mobile menu">
+  <a href="#">Product</a><a href="#">Resources</a><a href="#customers">Customers</a>
+  <a href="#">Pricing</a><a href="#">Now</a><a href="#">Contact</a><a href="#">Docs</a>
+  <a href="#">Log in</a>
+</nav>
+
+<main>
+
+<!-- ============================================================
+     HÉROS — ordre relevé : titre, description, PUIS ligne d'annonce.
+     Aucun bouton d'appel à l'action : ils vivent dans l'en-tête collant
+     et dans l'avant-pied.
+     ============================================================ -->
+<section class="heros">
+  <div class="enveloppe">
+    <div class="heros__entete">
+      <h1 class="t-titre-9 heros__titre apparait">The product development system for teams and agents</h1>
+
+      <div class="heros__bas">
+        <p class="t-grand heros__description apparait" style="--rang:1">
+          Purpose-built for planning and building products. Designed for the AI era.
+        </p>
+      </div>
+
+      <a class="annonce apparait" href="#" style="--rang:2">
+        <span class="badge badge--marque">New</span>
+        <span class="annonce__texte">Coding Sessions</span>
+        <span class="annonce__points">&#8594;</span>
+        <span class="annonce__separateur"></span>
+        <span class="annonce__ligne"></span>
+      </a>
+    </div>
+  </div>
+
+  <!-- FENÊTRE D'APPLICATION — le héros n'a PAS le châssis à rayon 22px des
+       cinq sections : appareil distinct (NewHeroIllustration.css). Cadre de
+       1320×720 à min-width 1200px, barre latérale de 232px, fiche d'issue à
+       droite en 1fr + 320px, boîte de conversation de 400×488 ancrée en bas
+       à droite PAR-DESSUS le corps. Reconstruction DOM+CSS, comme la source :
+       aucune capture n'est servie. -->
+  <div class="heros__illustration">
+    <div class="cadre-enveloppe apparait" style="--rang:3">
+      <div class="cadre">
+        <div class="cadre__fond"></div>
+
+        <nav class="bl" aria-label="Workspace">
+          <div class="bl__tete">
+            <span class="bl__atelier">
+              <span class="bl__logo">
+                <svg width="13" height="13" viewBox="0 0 100 100" fill="currentColor" aria-hidden="true"><path d="M1.22541 61.5228c-.2225-.9485.90748-1.5459 1.59638-.857L39.3342 97.1782c.6889.6889.0915 1.8189-.857 1.5964C20.0515 94.4522 5.54779 79.9485 1.22541 61.5228ZM.00189135 46.8891c-.01764375.2833.08887215.5599.28957165.7606L52.3503 99.7085c.2007.2007.4773.3075.7606.2896 2.3692-.1476 4.6938-.46 6.9624-.9259.7645-.157 1.0301-1.0963.4782-1.6481L2.57595 39.4485c-.55186-.5519-1.49117-.2863-1.648174.4782-.465915 2.2686-.77832 4.5932-.92588465 6.9624ZM4.21093 29.7054c-.16649.3738-.08169.8106.20765 1.1l64.77602 64.776c.2894.2894.7262.3742 1.1.2077 1.7861-.7956 3.5171-1.6927 5.1855-2.684.5521-.328.6373-1.0867.1832-1.5407L8.43566 24.3367c-.45409-.4541-1.21271-.3689-1.54074.1832-.99132 1.6684-1.88843 3.3994-2.68399 5.1855ZM12.6587 18.074c-.3701-.3701-.393-.9637-.0443-1.3541C21.7795 6.45931 35.1114 0 49.9519 0 77.5927 0 100 22.4073 100 50.0481c0 14.8405-6.4593 28.1724-16.7199 37.3375-.3903.3487-.984.3258-1.3542-.0443L12.6587 18.074Z"/></svg>
+              </span>
+              Linear
+              <svg width="16" height="16" class="c-quaternaire" aria-hidden="true"><use href="#i-chevron"/></svg>
+            </span>
+            <span class="bl__espace">
+              <span class="bl__rond"><svg width="16" height="16" aria-hidden="true"><use href="#i-recherche"/></svg></span>
+              <span class="bl__rond bl__rond--borde"><svg width="15" height="15" aria-hidden="true"><use href="#i-nouveau"/></svg></span>
+            </span>
+          </div>
+
+          <div class="bl__ecart"></div>
+          <div class="bl__groupe">
+            <span class="bl__item"><svg width="16" height="16" aria-hidden="true"><use href="#i-boite"/></svg>Inbox</span>
+            <span class="bl__item"><svg width="16" height="16" aria-hidden="true"><use href="#i-carre"/></svg>My issues</span>
+            <span class="bl__item"><svg width="16" height="16" aria-hidden="true"><use href="#i-fichier"/></svg>Reviews</span>
+            <span class="bl__item"><svg width="16" height="16" aria-hidden="true"><use href="#i-eclair"/></svg>Pulse</span>
+          </div>
+
+          <div class="bl__ecart"></div>
+          <span class="bl__item bl__repliable">Workspace</span>
+          <div class="bl__groupe">
+            <span class="bl__item"><svg width="16" height="16" aria-hidden="true"><use href="#i-cible"/></svg>Initiatives</span>
+            <span class="bl__item"><svg width="16" height="16" aria-hidden="true"><use href="#i-doc"/></svg>Projects</span>
+            <span class="bl__item"><svg width="16" height="16" aria-hidden="true"><use href="#i-points"/></svg>More</span>
+          </div>
+
+          <div class="bl__ecart"></div>
+          <span class="bl__item bl__repliable">Favorites</span>
+          <div class="bl__groupe">
+            <span class="bl__item" data-actif>
+              <span class="bl__vignette" style="--teinte:#5eb0ff"><svg width="12" height="12" aria-hidden="true"><use href="#i-cible"/></svg></span>Faster app launch</span>
+            <span class="bl__item">
+              <span class="bl__vignette" style="--teinte:#f0bf00"><svg width="12" height="12" aria-hidden="true"><use href="#i-robot"/></svg></span>Agent tasks</span>
+            <span class="bl__item">
+              <span class="bl__vignette" style="--teinte:#eb5757"><svg width="12" height="12" aria-hidden="true"><use href="#i-carre"/></svg></span>UI Refresh</span>
+            <span class="bl__item">
+              <span class="bl__vignette" style="--teinte:#00b8cc"><svg width="12" height="12" aria-hidden="true"><use href="#i-eclair"/></svg></span>Agents Insights</span>
+          </div>
+        </nav>
+
+        <div class="vue" data-suivi-pointeur>
+          <div class="vue__halo"></div>
+          <div class="grain"></div>
+
+          <div class="app__corps">
+            <div class="fiche">
+              <header class="app__barre">
+                <div class="app__fil">
+                  <span class="mq-bouton"><svg width="14" height="14" aria-hidden="true"><use href="#i-etoile"/></svg></span>
+                  <span class="c-secondaire">Faster app launch</span>
+                </div>
+                <div class="app__outils">
+                  <span class="fiche__compteur zero-barre"><span class="c-tertiaire">02</span>/<span>145</span></span>
+                  <span class="app__bouton"><svg width="14" height="14" aria-hidden="true"><use href="#i-gauche"/></svg></span>
+                  <span class="app__bouton"><svg width="14" height="14" aria-hidden="true"><use href="#i-droite"/></svg></span>
+                </div>
+              </header>
+
+              <div class="fiche__corps">
+                <h3 class="fiche__titre">Faster app launch</h3>
+                <div style="height:28px"></div>
+                <p class="fiche__texte">Render UI before <code class="app__code">vehicle_state</code> sync when minimum required state is present, instead of blocking on full refresh during iOS startup.</p>
+                <div style="height:22px"></div>
+                <p class="fiche__rubrique">Activity</p>
+                <div style="height:10px"></div>
+                <div class="app__activite"><img class="mq-avatar" src="https://linear.app/cdn-cgi/imagedelivery/fO02fVwohEs9s9UHFwon6A/c2f6447a-d507-43c1-f3ab-3f2c6fbceb00/f=auto,dpr=2,fit=scale-down,metadata=none" alt="" width="16" height="16" loading="lazy" decoding="async"><span><span class="c-secondaire">Linear</span> created the issue via <span class="c-secondaire">Slack</span> on behalf of <span class="c-secondaire">karri</span></span><i class="app__filet-v"></i><span>2min ago</span></div>
+                <div class="app__activite"><span class="bl__vignette" style="--teinte:#5e6ad2;width:16px;height:16px"><svg width="10" height="10" aria-hidden="true"><use href="#i-robot"/></svg></span><span><span class="c-secondaire">Triage Intelligence</span> added the label <span class="c-secondaire">Performance</span> and <span class="c-secondaire">iOS</span></span><i class="app__filet-v"></i><span>2min ago</span></div>
+                <div style="height:20px"></div>
+                <div class="app__note">
+                  <div class="fiche__note-tete"><img class="mq-avatar" src="https://linear.app/cdn-cgi/imagedelivery/fO02fVwohEs9s9UHFwon6A/f28b59f4-538c-4517-cfd7-510913015200/f=auto,dpr=2,fit=scale-down,metadata=none" alt="" width="14" height="14" loading="lazy" decoding="async" style="width:14px;height:14px"><b>karri</b><i>· 4 min ago</i></div>
+                  <span>Right now we show a spinner forever, which makes it look like the car disappeared…</span>
+                  <div class="fiche__note-tete" style="margin-top:8px"><img class="mq-avatar" src="https://linear.app/cdn-cgi/imagedelivery/fO02fVwohEs9s9UHFwon6A/c2f6447a-d507-43c1-f3ab-3f2c6fbceb00/f=auto,dpr=2,fit=scale-down,metadata=none" alt="" width="14" height="14" loading="lazy" decoding="async" style="width:14px;height:14px"><b>jori</b><i>· just now</i></div>
+                  <span><span class="app__mention">@Linear</span> can you take a stab at this?</span>
+                </div>
+                <div style="height:20px"></div>
+                <div class="app__activite"><img class="mq-avatar" src="https://linear.app/cdn-cgi/imagedelivery/fO02fVwohEs9s9UHFwon6A/c2f6447a-d507-43c1-f3ab-3f2c6fbceb00/f=auto,dpr=2,fit=scale-down,metadata=none" alt="" width="16" height="16" loading="lazy" decoding="async"><span><span class="c-secondaire">Linear</span> moved from <span class="c-secondaire">Todo</span> to <span class="c-secondaire">In Progress</span></span><i class="app__filet-v"></i><span>just now</span></div>
+              </div>
+
+              <!-- [relevé] .w9ZFkq_chatBox — 400×488, ancrée à 12px du bas et
+                   de la droite, PAR-DESSUS le corps de la fiche. -->
+              <div class="causerie">
+                <header class="causerie__entete">
+                  <span class="causerie__marque">
+                    <img class="mq-avatar" src="https://linear.app/cdn-cgi/imagedelivery/fO02fVwohEs9s9UHFwon6A/c2f6447a-d507-43c1-f3ab-3f2c6fbceb00/f=auto,dpr=2,fit=scale-down,metadata=none" alt="" width="16" height="16" loading="lazy" decoding="async">
+                    <span class="c-primaire">Linear</span><span class="causerie__etiquette">Opus 5</span>
+                  </span>
+                  <span class="causerie__boutons">
+                    <span class="causerie__bouton"><svg width="16" height="16" aria-hidden="true"><use href="#i-copie"/></svg></span>
+                    <span class="causerie__bouton"><svg width="16" height="16" aria-hidden="true"><use href="#i-points"/></svg></span>
+                  </span>
+                </header>
+                <div class="causerie__contenu">
+                  <div class="causerie__ligne">
+                    <img class="mq-avatar" src="https://linear.app/cdn-cgi/imagedelivery/fO02fVwohEs9s9UHFwon6A/f28b59f4-538c-4517-cfd7-510913015200/f=auto,dpr=2,fit=scale-down,metadata=none" alt="" width="14" height="14" loading="lazy" decoding="async" style="width:14px;height:14px;margin-right:2px">
+                    <span>jori connected Linear to <span class="c-secondaire zero-barre">ENG-2703</span></span>
+                  </div>
+                  <div class="causerie__note">
+                    <span class="c-secondaire">Examining the startup path…</span>
+                  </div>
+                  <span class="causerie__pense">Thinking...</span>
+                </div>
+                <div class="causerie__saisie-boite">
+                  <div class="causerie__saisie">Tell Linear what to do next…</div>
+                  <div class="causerie__actions">
+                    <span class="causerie__action"><svg width="16" height="16" aria-hidden="true"><use href="#i-attache"/></svg></span>
+                    <span class="causerie__action"><svg width="16" height="16" aria-hidden="true"><use href="#i-emoji"/></svg></span>
+                    <span class="causerie__envoi"><svg width="12" height="12" aria-hidden="true"><use href="#i-envoi"/></svg></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <aside class="app__aside">
+              <div class="app__aside-entete">
+                <span class="zero-barre">ENG-2703</span>
+                <span style="display:flex;margin-left:auto">
+                  <span class="mq-bouton"><svg width="14" height="14" aria-hidden="true"><use href="#i-copie"/></svg></span>
+                  <span class="mq-bouton"><svg width="14" height="14" aria-hidden="true"><use href="#i-fichier"/></svg></span>
+                </span>
+              </div>
+              <div class="app__aside-contenu">
+                <div class="fiche__propriete"><svg width="14" height="14" style="color:var(--accent-jaune)" aria-hidden="true"><use href="#i-encours"/></svg>In Progress</div>
+                <div class="fiche__propriete"><svg width="14" height="14" class="c-tertiaire" aria-hidden="true"><use href="#i-eclair"/></svg>High</div>
+                <div style="height:12px"></div>
+                <div class="fiche__propriete"><img class="mq-avatar" src="https://linear.app/cdn-cgi/imagedelivery/fO02fVwohEs9s9UHFwon6A/f28b59f4-538c-4517-cfd7-510913015200/f=auto,dpr=2,fit=scale-down,metadata=none" alt="" width="16" height="16" loading="lazy" decoding="async">jori</div>
+                <div class="fiche__propriete fiche__propriete--sous"><img class="mq-avatar" src="https://linear.app/cdn-cgi/imagedelivery/fO02fVwohEs9s9UHFwon6A/c2f6447a-d507-43c1-f3ab-3f2c6fbceb00/f=auto,dpr=2,fit=scale-down,metadata=none" alt="" width="16" height="16" loading="lazy" decoding="async">Linear</div>
+                <div style="height:20px"></div>
+                <p class="fiche__groupe-titre">Labels</p>
+                <div style="display:flex;gap:8px;margin-left:-6px">
+                  <span class="fiche__label"><i class="mq-accent" style="--accent-point:var(--accent-vert)"></i>Performance</span>
+                  <span class="fiche__label"><i class="mq-accent" style="--accent-point:var(--accent-jaune)"></i>iOS</span>
+                </div>
+                <div style="height:12px"></div>
+                <p class="fiche__groupe-titre">Cycle</p>
+                <div class="fiche__propriete"><svg width="14" height="14" class="c-tertiaire" aria-hidden="true"><use href="#i-todo"/></svg>Cycle 144</div>
+                <div style="height:12px"></div>
+                <p class="fiche__groupe-titre">Project</p>
+                <div class="fiche__propriete"><svg width="14" height="14" class="c-tertiaire" aria-hidden="true"><use href="#i-cible"/></svg>Core Performance</div>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bandeau de logos : rangée fixe en desktop, marquee sous 640px -->
+  <div class="enveloppe">
+    <div class="bandeau-logos apparait">
+      <ul class="logos">
+        <li class="logos__item"><span class="logo-mot">Vercel</span></li>
+        <li class="logos__item"><span class="logo-mot">Cursor</span></li>
+        <li class="logos__item"><span class="logo-mot">OSCAR</span></li>
+        <li class="logos__item"><span class="logo-mot">OpenAI</span></li>
+        <li class="logos__item"><span class="logo-mot">coinbase</span></li>
+        <li class="logos__item logos__item--cache-laptop"><span class="logo-mot">Cash App</span></li>
+        <li class="logos__item logos__item--cache-laptop"><span class="logo-mot">BOOM</span></li>
+        <li class="logos__item"><span class="logo-mot">ramp</span></li>
+      </ul>
+      <div class="logos-marquee">
+        <div class="marquee">
+          <ul class="marquee__piste">
+            <li><span class="logo-mot">Vercel</span></li><li><span class="logo-mot">Cursor</span></li>
+            <li><span class="logo-mot">OSCAR</span></li><li><span class="logo-mot">OpenAI</span></li>
+            <li><span class="logo-mot">coinbase</span></li><li><span class="logo-mot">Cash App</span></li>
+            <li><span class="logo-mot">BOOM</span></li><li><span class="logo-mot">ramp</span></li>
+          </ul>
+          <ul class="marquee__piste" aria-hidden="true">
+            <li><span class="logo-mot">Vercel</span></li><li><span class="logo-mot">Cursor</span></li>
+            <li><span class="logo-mot">OSCAR</span></li><li><span class="logo-mot">OpenAI</span></li>
+            <li><span class="logo-mot">coinbase</span></li><li><span class="logo-mot">Cash App</span></li>
+            <li><span class="logo-mot">BOOM</span></li><li><span class="logo-mot">ramp</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     ÉNONCÉ + BÉNÉFICES — vient AVANT la première section numérotée.
+     Effet deux tons : première phrase en texte primaire, suite en
+     tertiaire, dans un SEUL paragraphe.
+     ============================================================ -->
+<section class="bloc-enonce">
+  <div class="enveloppe">
+    <p class="t-titre-5 enonce apparait">
+      <strong>A new species of product tool.</strong>
+      Purpose-built for modern teams with AI workflows at its core, Linear sets
+      a new standard for planning and building products.
+    </p>
+
+    <div class="benefices">
+      <article class="benefice apparait">
+        <span class="benefice__fig zero-barre">FIG 0.2</span>
+        <div class="benefice__illustration">
+          <div class="matrice-scene"><div class="matrice matrice--pong">
+            <i data-p="0"></i><i data-p="1"></i><i data-p="2"></i><i data-p="3"></i><i data-p="4"></i>
+            <i data-p="1"></i><i data-p="2"></i><i data-p="3"></i><i data-p="4"></i><i data-p="0"></i>
+            <i data-p="2"></i><i data-p="3"></i><i data-p="4"></i><i data-p="0"></i><i data-p="1"></i>
+            <i data-p="3"></i><i data-p="4"></i><i data-p="0"></i><i data-p="1"></i><i data-p="2"></i>
+            <i data-p="4"></i><i data-p="0"></i><i data-p="1"></i><i data-p="2"></i><i data-p="3"></i>
+          </div></div>
+        </div>
+        <h3 class="t-titre-1 benefice__titre">Purpose-built</h3>
+        <p class="t-mini c-tertiaire">Linear is shaped by the practices and principles of world-class product teams.</p>
+      </article>
+      <article class="benefice apparait" style="--rang:1">
+        <span class="benefice__fig zero-barre">FIG 0.3</span>
+        <div class="benefice__illustration">
+          <div class="matrice-scene"><div class="matrice matrice--upDown">
+            <i data-p="4"></i><i data-p="3"></i><i data-p="2"></i><i data-p="1"></i><i data-p="0"></i>
+            <i data-p="3"></i><i data-p="2"></i><i data-p="1"></i><i data-p="0"></i><i data-p="4"></i>
+            <i data-p="2"></i><i data-p="1"></i><i data-p="0"></i><i data-p="4"></i><i data-p="3"></i>
+            <i data-p="1"></i><i data-p="0"></i><i data-p="4"></i><i data-p="3"></i><i data-p="2"></i>
+            <i data-p="0"></i><i data-p="4"></i><i data-p="3"></i><i data-p="2"></i><i data-p="1"></i>
+          </div></div>
+        </div>
+        <h3 class="t-titre-1 benefice__titre">Powered by agents</h3>
+        <p class="t-mini c-tertiaire">Designed for workflows shared by humans and agents. From drafting PRDs to pushing PRs.</p>
+      </article>
+      <article class="benefice apparait" style="--rang:2">
+        <span class="benefice__fig zero-barre">FIG 0.4</span>
+        <div class="benefice__illustration">
+          <div class="matrice-scene"><div class="matrice matrice--agent">
+            <i data-p="0"></i><i data-p="0"></i><i data-p="1"></i><i data-p="1"></i><i data-p="2"></i>
+            <i data-p="0"></i><i data-p="1"></i><i data-p="1"></i><i data-p="2"></i><i data-p="2"></i>
+            <i data-p="1"></i><i data-p="1"></i><i data-p="2"></i><i data-p="2"></i><i data-p="3"></i>
+            <i data-p="1"></i><i data-p="2"></i><i data-p="2"></i><i data-p="3"></i><i data-p="3"></i>
+            <i data-p="2"></i><i data-p="2"></i><i data-p="3"></i><i data-p="3"></i><i data-p="4"></i>
+          </div></div>
+        </div>
+        <h3 class="t-titre-1 benefice__titre">Designed for speed</h3>
+        <p class="t-mini c-tertiaire">Reduces noise and restores momentum to help teams ship with high velocity and focus.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<div class="enveloppe"><div class="filet-double"></div></div>
+
+<!-- ============================================================
+     SECTION 1.0 — INTAKE
+     ============================================================ -->
+<section class="section">
+  <div class="enveloppe">
+    <div class="section__entete">
+      <div class="section__titre-conteneur">
+        <h2 class="t-titre-7 section__titre apparait">Make product operations self-driving</h2>
+      </div>
+      <div class="section__description-conteneur">
+        <p class="t-grand section__description apparait" style="--rang:1">
+          Turn conversations and customer feedback into actionable issues that
+          are routed, labeled, and prioritized for the right team.
+        </p>
+        <div class="section__action-conteneur apparait" style="--rang:2">
+          <!-- Numérotation « N.0 » au zéro barré — marqueur d'identité -->
+          <a class="section__action" href="#">
+            <span class="zero-barre section__numero">1.0</span>
+            <span class="section__nom">Intake</span>
+            <span class="section__fleche">&#8594;</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section__illustration-conteneur">
+    <div class="section__illustration">
+      <!-- TABLEAU KANBAN + FIL SLACK — la maquette de la section 1.0 est un
+           tableau à 4 colonnes de 300px, poussé de 385px vers la droite pour
+           dégager la place du fil de discussion, lequel est un FRÈRE du
+           châssis (jamais un enfant) : il déborde de 28px par le haut sans
+           être coupé par le masque. -->
+      <div class="chassis fondu-triple fondu-triple--intake intake apparait" data-suivi-pointeur>
+        <div class="chassis__panneau">
+          <div class="chassis__fond chassis__fond--gauche"></div>
+          <div class="grain"></div>
+          <div class="tableau">
+            <div class="tableau__colonne">
+              <div class="tableau__entete">
+                <svg width="14" height="14" class="c-tertiaire" aria-hidden="true"><use href="#i-backlog"/></svg>
+                <span class="tableau__nom">Backlog</span><span class="tableau__nombre zero-barre">8</span>
+                <span class="tableau__outils">
+                  <span class="tableau__bouton"><svg width="14" height="14" aria-hidden="true"><use href="#i-plus"/></svg></span>
+                  <span class="tableau__bouton"><svg width="14" height="14" aria-hidden="true"><use href="#i-points"/></svg></span>
+                </span>
+              </div>
+              <div class="tableau__pile">
+                <div class="tache"><div class="tache__tete"><span class="tache__ref zero-barre">ENG-2085</span><svg width="16" height="16" class="c-quaternaire" aria-hidden="true"><use href="#i-personne"/></svg></div><span class="tache__titre">Reduce UI flicker during autonomy…</span><div class="tache__bas"><span class="tache__priorite"><svg width="10" height="10" aria-hidden="true"><use href="#i-points"/></svg></span></div></div>
+                <div class="tache"><div class="tache__tete"><span class="tache__ref zero-barre">ENG-2094</span><svg width="16" height="16" class="c-quaternaire" aria-hidden="true"><use href="#i-personne"/></svg></div><span class="tache__titre">Add buffering for autonomy event streams</span><div class="tache__bas"><span class="tache__priorite"><svg width="10" height="10" aria-hidden="true"><use href="#i-points"/></svg></span></div></div>
+                <div class="tache"><div class="tache__tete"><span class="tache__ref zero-barre">ENG-2092</span><svg width="16" height="16" class="c-quaternaire" aria-hidden="true"><use href="#i-personne"/></svg></div><span class="tache__titre">Reduce startup delay caused by vehicle sync</span><div class="tache__bas"><span class="tache__priorite"><svg width="10" height="10" aria-hidden="true"><use href="#i-points"/></svg></span></div></div>
+                <div class="tache"><div class="tache__tete"><span class="tache__ref zero-barre">ENG-2200</span><svg width="16" height="16" class="c-quaternaire" aria-hidden="true"><use href="#i-personne"/></svg></div><span class="tache__titre">Fix delayed route updates during rerouting</span><div class="tache__bas"><span class="tache__priorite"><svg width="10" height="10" aria-hidden="true"><use href="#i-points"/></svg></span></div></div>
+              </div>
+            </div>
+
+            <div class="tableau__colonne">
+              <div class="tableau__entete">
+                <svg width="14" height="14" class="c-quaternaire" aria-hidden="true"><use href="#i-todo"/></svg>
+                <span class="tableau__nom">Todo</span><span class="tableau__nombre zero-barre">71</span>
+                <span class="tableau__outils">
+                  <span class="tableau__bouton"><svg width="14" height="14" aria-hidden="true"><use href="#i-plus"/></svg></span>
+                  <span class="tableau__bouton"><svg width="14" height="14" aria-hidden="true"><use href="#i-points"/></svg></span>
+                </span>
+              </div>
+              <div class="tableau__pile">
+                <div class="tache"><div class="tache__tete"><span class="tache__ref zero-barre">ENG-926</span><img class="mq-avatar" src="https://linear.app/cdn-cgi/imagedelivery/fO02fVwohEs9s9UHFwon6A/086b510a-f5da-414b-bc9d-228afb968600/f=auto,dpr=2,fit=scale-down,metadata=none" alt="" width="16" height="16" loading="lazy" decoding="async"></div><span class="tache__titre">Remove UI inconsistencies</span><div class="tache__bas"><span class="tache__priorite"><svg width="10" height="10" aria-hidden="true"><use href="#i-points"/></svg></span><span class="etiq"><i class="etiq__point" style="--couleur-etiq:#EB5757"></i>Bug</span><span class="etiq"><i class="etiq__point" style="--couleur-etiq:#8B5CF6"></i>Design</span></div></div>
+                <div class="tache"><div class="tache__tete"><span class="tache__ref zero-barre">ENG-2088</span><img class="mq-avatar" src="https://linear.app/cdn-cgi/imagedelivery/fO02fVwohEs9s9UHFwon6A/302b16a5-f9ca-42f2-dbae-3c76f19b2d00/f=auto,dpr=2,fit=scale-down,metadata=none" alt="" width="16" height="16" loading="lazy" decoding="async"></div><span class="tache__titre">TypeError: Cannot read properties</span><div class="tache__bas"><span class="tache__priorite"><svg width="10" height="10" aria-hidden="true"><use href="#i-points"/></svg></span><span class="etiq"><i class="etiq__point" style="--couleur-etiq:#EB5757"></i>Bug</span></div></div>
+                <div class="tache"><div class="tache__tete"><span class="tache__ref zero-barre">ENG-924</span><img class="mq-avatar" src="https://linear.app/cdn-cgi/imagedelivery/fO02fVwohEs9s9UHFwon6A/1eb8f8b2-3593-473f-ba8a-acac99aa0300/f=auto,dpr=2,fit=scale-down,metadata=none" alt="" width="16" height="16" loading="lazy" decoding="async"></div><span class="tache__titre">Upgrade to Claude Opus 4.8</span><div class="tache__bas"><span class="tache__priorite"><svg width="10" height="10" aria-hidden="true"><use href="#i-points"/></svg></span><span class="etiq"><i class="etiq__point" style="--couleur-etiq:#6366F1"></i>AI</span></div></div>
+                <div class="tache"><div class="tache__tete"><span class="tache__ref zero-barre">ENG-1882</span><svg width="16" height="16" class="c-quaternaire" aria-hidden="true"><use href="#i-personne"/></svg></div><span class="tache__titre">Optimize load times</span><div class="tache__bas"><span class="tache__priorite"><svg width="10" height="10" aria-hidden="true"><use href="#i-points"/></svg></span><span class="etiq"><i class="etiq__point" style="--couleur-etiq:#10B981"></i>Performance</span></div></div>
+              </div>
+            </div>
+
+            <div class="tableau__colonne">
+              <div class="tableau__entete">
+                <svg width="14" height="14" style="color:var(--accent-jaune)" aria-hidden="true"><use href="#i-encours"/></svg>
+                <span class="tableau__nom">In Progress</span><span class="tableau__nombre zero-barre">3</span>
+                <span class="tableau__outils">
+                  <span class="tableau__bouton"><svg width="14" height="14" aria-hidden="true"><use href="#i-plus"/></svg></span>
+                  <span class="tableau__bouton"><svg width="14" height="14" aria-hidden="true"><use href="#i-points"/></svg></span>
+                </span>
+              </div>
+              <div class="tableau__pile">
+                <div class="tache"><div class="tache__tete"><span class="tache__ref zero-barre">ENG-1487</span><img class="mq-avatar" src="https://linear.app/cdn-cgi/imagedelivery/fO02fVwohEs9s9UHFwon6A/6550520e-9e50-441d-b9e8-579be321f900/f=auto,dpr=2,fit=scale-down,metadata=none" alt="" width="16" height="16" loading="lazy" decoding="async"></div><span class="tache__titre">Remove contentData from GraphQL API</span><div class="tache__bas"><span class="tache__priorite"><svg width="10" height="10" aria-hidden="true"><use href="#i-points"/></svg></span><span class="etiq zero-barre">61039</span></div></div>
+                <div class="tache"><div class="tache__tete"><span class="tache__ref zero-barre">MKT-1028</span><img class="mq-avatar" src="https://linear.app/cdn-cgi/imagedelivery/fO02fVwohEs9s9UHFwon6A/4d3381aa-fb2f-4d3d-1a06-957fc616d400/f=auto,dpr=2,fit=scale-down,metadata=none" alt="" width="16" height="16" loading="lazy" decoding="async"></div><span class="tache__titre">Launch page assets</span><div class="tache__bas"><span class="tache__priorite"><svg width="10" height="10" aria-hidden="true"><use href="#i-points"/></svg></span><span class="etiq"><i class="etiq__point" style="--couleur-etiq:#8B5CF6"></i>Design</span></div></div>
+                <div class="tache"><div class="tache__tete"><span class="tache__ref zero-barre">ENG-2187</span><img class="mq-avatar" src="https://linear.app/cdn-cgi/imagedelivery/fO02fVwohEs9s9UHFwon6A/7ea107e7-c1a0-4c99-756d-5837fd91f200/f=auto,dpr=2,fit=scale-down,metadata=none" alt="" width="16" height="16" loading="lazy" decoding="async"></div><span class="tache__titre">Prevent duplicate ride requests on poor…</span><div class="tache__bas"><span class="tache__priorite"><svg width="10" height="10" aria-hidden="true"><use href="#i-points"/></svg></span><span class="etiq"><i class="etiq__point" style="--couleur-etiq:#EB5757"></i>Bug</span><span class="etiq zero-barre">62048</span></div></div>
+              </div>
+            </div>
+
+            <div class="tableau__colonne">
+              <div class="tableau__entete">
+                <svg width="14" height="14" style="color:var(--accent-indigo)" aria-hidden="true"><use href="#i-fait"/></svg>
+                <span class="tableau__nom">Done</span><span class="tableau__nombre zero-barre">53</span>
+                <span class="tableau__outils">
+                  <span class="tableau__bouton"><svg width="14" height="14" aria-hidden="true"><use href="#i-plus"/></svg></span>
+                  <span class="tableau__bouton"><svg width="14" height="14" aria-hidden="true"><use href="#i-points"/></svg></span>
+                </span>
+              </div>
+              <div class="tableau__pile">
+                <div class="tache"><div class="tache__tete"><span class="tache__ref zero-barre">ENG-2074</span><svg width="16" height="16" class="c-quaternaire" aria-hidden="true"><use href="#i-personne"/></svg></div><span class="tache__titre">Clean up deprecated APIs…</span><div class="tache__bas"><span class="tache__priorite"><svg width="10" height="10" aria-hidden="true"><use href="#i-points"/></svg></span><span class="etiq"><i class="etiq__point" style="--couleur-etiq:#00b8cc"></i>API</span><span class="etiq zero-barre">61002</span></div></div>
+                <div class="tache"><div class="tache__tete"><span class="tache__ref zero-barre">ENG-1912</span><svg width="16" height="16" class="c-quaternaire" aria-hidden="true"><use href="#i-personne"/></svg></div><span class="tache__titre">Reduce latency in autonomy st…</span><div class="tache__bas"><span class="tache__priorite"><svg width="10" height="10" aria-hidden="true"><use href="#i-points"/></svg></span><span class="etiq zero-barre">61005</span></div></div>
+                <div class="tache"><div class="tache__tete"><span class="tache__ref zero-barre">ENG-1951</span><svg width="16" height="16" class="c-quaternaire" aria-hidden="true"><use href="#i-personne"/></svg></div><span class="tache__titre">Reduce ETA fluctuations durin…</span><div class="tache__bas"><span class="tache__priorite"><svg width="10" height="10" aria-hidden="true"><use href="#i-points"/></svg></span><span class="etiq zero-barre">61202</span></div></div>
+                <div class="tache"><div class="tache__tete"><span class="tache__ref zero-barre">ENG-1960</span><svg width="16" height="16" class="c-quaternaire" aria-hidden="true"><use href="#i-personne"/></svg></div><span class="tache__titre">Improve fallback messaging</span><div class="tache__bas"><span class="tache__priorite"><svg width="10" height="10" aria-hidden="true"><use href="#i-points"/></svg></span><span class="etiq"><i class="etiq__point" style="--couleur-etiq:#8B5CF6"></i>UI</span><span class="etiq zero-barre">61149</span></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="chassis__halo"></div>
+        <div class="chassis__lisere"></div>
+      </div>
+
+      <!-- [relevé] .qM9FAa_slackBoxContainer — FRÈRE du châssis, ancré à
+           -28px du haut et décalé de -24px. Le fond est en deux couches :
+           un ::before assombri qui porte l'ombre, un ::after qui ne porte
+           que la bordure (sinon la bordure serait assombrie avec le fond). -->
+      <div class="boite boite--slack apparait" style="--rang:1">
+        <div class="boite__fond"></div>
+        <div class="boite__lisere"></div>
+        <div class="grain"></div>
+        <div class="boite__corps">
+          <header class="boite__entete">
+            <span style="display:flex;align-items:center;gap:8px">
+              <svg width="16" height="16" aria-hidden="true"><use href="#i-slack"/></svg>
+              <span class="t-mini c-tertiaire">Thread in <span class="c-secondaire">#feedback</span></span>
+            </span>
+            <span class="fil__icone"><svg width="16" height="16" aria-hidden="true"><use href="#i-points"/></svg></span>
+          </header>
+          <div class="fil">
+            <div class="fil__message">
+              <img class="fil__avatar" src="https://linear.app/cdn-cgi/imagedelivery/fO02fVwohEs9s9UHFwon6A/c8aeedda-7726-4a4f-226a-f573f85d8d00/f=auto,dpr=2,fit=scale-down,metadata=none" alt="didier" width="36" height="36" loading="lazy" decoding="async">
+              <div>
+                <div class="fil__tete"><span class="fil__nom">didier</span></div>
+                <p class="fil__texte">Has anyone been looking into the iOS startup performance issues?</p>
+              </div>
+            </div>
+            <div class="fil__message">
+              <img class="fil__avatar" src="https://linear.app/cdn-cgi/imagedelivery/fO02fVwohEs9s9UHFwon6A/580cd9c0-2770-4fe4-1ad2-95c76fc6f000/f=auto,dpr=2,fit=scale-down,metadata=none" alt="lena" width="36" height="36" loading="lazy" decoding="async">
+              <div>
+                <div class="fil__tete"><span class="fil__nom">lena</span></div>
+                <p class="fil__texte">Anyone else noticing the iOS app feels slow to open if you haven&#x27;t used it in a bit?</p>
+              </div>
+            </div>
+            <div class="fil__message">
+              <img class="fil__avatar" src="https://linear.app/cdn-cgi/imagedelivery/fO02fVwohEs9s9UHFwon6A/c8aeedda-7726-4a4f-226a-f573f85d8d00/f=auto,dpr=2,fit=scale-down,metadata=none" alt="didier" width="36" height="36" loading="lazy" decoding="async">
+              <div>
+                <div class="fil__tete"><span class="fil__nom">didier</span></div>
+                <p class="fil__texte">Yea, we&#x27;re still blocking initial render on a full vehicle_state sync every time…</p>
+              </div>
+            </div>
+            <div class="fil__message">
+              <img class="fil__avatar" src="https://linear.app/cdn-cgi/imagedelivery/fO02fVwohEs9s9UHFwon6A/22210a73-581d-42db-d42a-bf2907860300/f=auto,dpr=2,fit=scale-down,metadata=none" alt="andreas" width="36" height="36" loading="lazy" decoding="async">
+              <div>
+                <div class="fil__tete"><span class="fil__nom">andreas</span></div>
+                <p class="fil__texte">Feels like we could render sooner and load the rest in the background. Probably also worth tracking startup timing so we know how often this happens!</p>
+              </div>
+            </div>
+          </div>
+          <!-- [relevé] la zone de saisie contient une MENTION (fond #232534,
+               texte #6d78d5) suivie d'un curseur qui clignote en paliers. -->
+          <div class="fil__saisie">
+            <div class="fil__saisie-texte">
+              <span class="fil__mention">@Linear</span>create <span class="c-primaire">urgent issues</span> and assign to me<i class="fil__curseur"></i>
+            </div>
+            <div class="fil__barre">
+              <span class="fil__attache"><svg width="20" height="20" aria-hidden="true"><use href="#i-attache"/></svg></span>
+              <span class="fil__icone"><svg width="20" height="20" aria-hidden="true"><use href="#i-emoji"/></svg></span>
+              <i class="fil__separateur"></i>
+              <span class="fil__icone"><svg width="20" height="20" aria-hidden="true"><use href="#i-fichier"/></svg></span>
+              <span class="fil__envoi">
+                <span><svg width="14" height="14" aria-hidden="true"><use href="#i-envoi"/></svg></span>
+                <i class="fil__envoi-filet"></i>
+                <span><svg width="14" height="14" aria-hidden="true"><use href="#i-chevron"/></svg></span>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Second niveau du sommaire : 1.1 → 1.4, en réglure sur 2 colonnes -->
+  <div class="enveloppe enveloppe--pied">
+    <div class="section__pied">
+      <ul class="reglure section__pied-contenu apparait">
+        <li class="reglure__entree"><a class="reglure__lien" href="#"><span class="zero-barre reglure__numero">1.1</span><span class="reglure__nom">Linear Agent</span><span class="reglure__plus">+</span></a></li>
+        <li class="reglure__entree"><a class="reglure__lien" href="#"><span class="zero-barre reglure__numero">1.2</span><span class="reglure__nom">Triage</span><span class="reglure__plus">+</span></a></li>
+        <li class="reglure__entree"><a class="reglure__lien" href="#"><span class="zero-barre reglure__numero">1.3</span><span class="reglure__nom">Customer Requests</span><span class="reglure__plus">+</span></a></li>
+        <li class="reglure__entree"><a class="reglure__lien" href="#"><span class="zero-barre reglure__numero">1.4</span><span class="reglure__nom">Linear Asks</span><span class="reglure__plus">+</span></a></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<div class="enveloppe"><div class="filet-double"></div></div>
+
+<!-- ============================================================
+     SECTION 2.0 — PLAN
+     ============================================================ -->
+<section class="section">
+  <div class="enveloppe">
+    <div class="section__entete">
+      <div class="section__titre-conteneur">
+        <h2 class="t-titre-7 section__titre apparait">Define the product direction</h2>
+      </div>
+      <div class="section__description-conteneur">
+        <p class="t-grand section__description apparait" style="--rang:1">
+          Plan and navigate from idea to launch. Align your team with product
+          initiatives, strategic roadmaps, and clear, up-to-date PRDs.
+        </p>
+        <div class="section__action-conteneur apparait" style="--rang:2">
+          <a class="section__action" href="#">
+            <span class="zero-barre section__numero">2.0</span>
+            <span class="section__nom">Plan</span>
+            <span class="section__fleche">&#8594;</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section__illustration-conteneur">
+    <div class="section__illustration">
+      <!-- FRISE CHRONOLOGIQUE — la section 2.0 n'est PAS un tableau à
+           colonnes : c'est un diagramme de Gantt. Huit mois de 160px, une
+           réglure de semaines, des barres de projet posées en marges
+           littérales (578/43, 450/56, 828/56) et des jalons suspendus sous
+           les barres. Le panneau laisse volontairement DÉBORDER son contenu :
+           c'est le masque du châssis qui le coupe. -->
+      <div class="chassis fondu-triple fondu-triple--plan apparait" data-suivi-pointeur>
+        <div class="chassis__panneau frise-panneau">
+          <div class="chassis__fond"></div>
+          <div class="grain"></div>
+          <div class="frise">
+            <div class="frise__mois">
+              <div class="frise__mois-nom">FEB</div>
+              <div class="frise__traits"><i class="frise__trait"></i><i class="frise__trait"></i><i class="frise__trait"></i><i class="frise__trait"></i></div>
+              <div class="frise__mois-nom"><i class="frise__separateur"></i>MAR</div>
+              <div class="frise__traits"><i class="frise__trait"></i><i class="frise__trait"></i><i class="frise__trait"></i><i class="frise__trait"></i><i class="frise__trait"></i></div>
+              <div class="frise__mois-nom"><i class="frise__separateur"></i>APR</div>
+              <div class="frise__traits"><i class="frise__trait"></i><i class="frise__trait"></i><i class="frise__trait"></i><i class="frise__trait"></i></div>
+              <div class="frise__mois-nom"><i class="frise__separateur"></i>MAY</div>
+              <div class="frise__traits"><i class="frise__trait"></i><i class="frise__trait"></i><i class="frise__trait"></i><i class="frise__trait"></i></div>
+              <div class="frise__mois-nom"><i class="frise__separateur"></i>JUN</div>
+              <div class="frise__traits"><i class="frise__trait"></i><i class="frise__trait"></i><i class="frise__trait"></i><i class="frise__trait"></i><i class="frise__trait"></i></div>
+              <div class="frise__mois-nom"><i class="frise__separateur"></i>JUL</div>
+              <div class="frise__traits"><i class="frise__trait"></i><i class="frise__trait"></i><i class="frise__trait"></i><i class="frise__trait"></i></div>
+              <div class="frise__mois-nom"><i class="frise__separateur"></i>AUG</div>
+              <div class="frise__traits"><i class="frise__trait"></i><i class="frise__trait"></i><i class="frise__trait"></i><i class="frise__trait"></i><i class="frise__trait"></i></div>
+              <div class="frise__mois-nom"><i class="frise__separateur"></i>SEP</div>
+              <div class="frise__traits"><i class="frise__trait"></i><i class="frise__trait"></i><i class="frise__trait"></i><i class="frise__trait"></i></div>
+            </div>
+            <div class="frise__dates zero-barre">
+              <span class="frise__date">2</span><span class="frise__date">9</span><span class="frise__date">16</span><span class="frise__date">23</span>
+              <span class="frise__date">2</span><span class="frise__date">9</span><span class="frise__date">16</span><span class="frise__date">23</span><span class="frise__date">30</span>
+              <span class="frise__date">6</span><span class="frise__date">13</span><span class="frise__date">20</span><span class="frise__date">27</span>
+              <span class="frise__date">4</span><span class="frise__date">11</span><span class="frise__date">18</span><span class="frise__date">25</span>
+              <span class="frise__date">1</span><span class="frise__date">8</span><span class="frise__date">15</span><span class="frise__date">22</span><span class="frise__date">29</span>
+              <span class="frise__date">6</span><span class="frise__date">13</span><span class="frise__date">20</span><span class="frise__date">27</span>
+              <span class="frise__date">3</span><span class="frise__date">10</span><span class="frise__date">17</span><span class="frise__date">24</span><span class="frise__date">31</span>
+              <span class="frise__date">7</span><span class="frise__date">14</span><span class="frise__date">21</span><span class="frise__date">28</span>
+            </div>
+
+            <div class="frise__contenu">
+              <div class="projet projet--haut" style="--largeur:448px">
+                <div class="projet__titre">
+                  <svg width="14" height="14" style="color:var(--accent-jaune)" aria-hidden="true"><use href="#i-carre"/></svg>
+                  UI Refresh
+                </div>
+                <div class="barre" style="--couleur-barre:#993B3B">
+                  <div class="barre__plein" style="--plein:320px">
+                    <div class="barre__plein-int" style="padding-left:156px;padding-right:36px">
+                      <span class="barre__jalon"><svg width="12" height="12" style="color:#5eb0ff" aria-hidden="true"><use href="#i-jalon"/></svg><span class="barre__jalon-txt">Core screens</span></span>
+                      <span class="barre__jalon"><svg width="12" height="12" style="color:#5eb0ff" aria-hidden="true"><use href="#i-jalon"/></svg><span class="barre__jalon-txt">Polish</span></span>
+                    </div>
+                  </div>
+                  <div class="barre__pointille"></div>
+                </div>
+              </div>
+
+              <div class="projet projet--fares" style="--largeur:750px">
+                <div class="projet__titre">
+                  <svg width="14" height="14" style="color:#008D2C" aria-hidden="true"><use href="#i-cible"/></svg>
+                  Split fares
+                </div>
+                <div class="barre">
+                  <div class="barre__plein" style="--plein:519px">
+                    <div class="barre__plein-int" style="padding-left:156px;padding-right:36px">
+                      <span class="barre__jalon"><svg width="12" height="12" style="color:#5eb0ff" aria-hidden="true"><use href="#i-jalon"/></svg><span class="barre__jalon-txt">Internal</span></span>
+                      <span class="barre__jalon"><svg width="12" height="12" style="color:#5eb0ff" aria-hidden="true"><use href="#i-jalon"/></svg><span class="barre__jalon-txt">Public Beta</span></span>
+                    </div>
+                  </div>
+                  <div class="barre__pointille"></div>
+                </div>
+              </div>
+
+              <div class="projet projet--autonomy" style="--largeur:560px">
+                <div class="projet__titre">
+                  <svg width="14" height="14" style="color:var(--accent-bleu)" aria-hidden="true"><use href="#i-robot"/></svg>
+                  Autonomy status clarity
+                </div>
+                <div class="barre" style="--couleur-barre:#7a7fad">
+                  <div class="barre__plein" style="--plein:330px">
+                    <div class="barre__plein-int" style="padding-left:120px;padding-right:36px">
+                      <span class="barre__jalon"><svg width="12" height="12" style="color:#5eb0ff" aria-hidden="true"><use href="#i-jalon"/></svg><span class="barre__jalon-txt">Alpha</span></span>
+                      <span class="barre__jalon"><svg width="12" height="12" style="color:#5eb0ff" aria-hidden="true"><use href="#i-jalon"/></svg><span class="barre__jalon-txt">GA</span></span>
+                    </div>
+                  </div>
+                  <div class="barre__pointille"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="chassis__halo"></div>
+        <div class="chassis__lisere"></div>
+      </div>
+
+      <!-- [relevé] ._9Zs8oG_initiativesBox — 400px, ancrée à 88px du haut,
+           décalée de -24px : le MÊME appareil de boîte flottante que la
+           section 1.0. La page n'en a qu'un seul, réemployé trois fois. -->
+      <div class="boite boite--initiatives apparait" style="--rang:1">
+        <div class="boite__fond"></div>
+        <div class="boite__lisere"></div>
+        <div class="grain"></div>
+        <div class="boite__corps">
+          <header class="boite__entete boite__entete--60">
+            <span class="t-mini c-secondaire" style="font-weight:var(--graisse-moyenne)">Initiatives</span>
+          </header>
+          <div class="inits inits--premier">
+            <div class="inits__ligne">
+              <span class="inits__icone" style="--teinte:#2a2f45"><svg width="13" height="13" style="color:var(--accent-bleu)" aria-hidden="true"><use href="#i-cible"/></svg></span>
+              Core Product<span class="inits__compte zero-barre">99</span>
+            </div>
+            <div class="inits__ligne inits__ligne--sous">Infra stability<span class="inits__compte zero-barre">28</span></div>
+            <div class="inits__ligne inits__ligne--sous">Autonomous systems<span class="inits__compte zero-barre">16</span></div>
+            <div class="inits__ligne inits__ligne--sous">Mobile apps<span class="inits__compte zero-barre">8</span></div>
+          </div>
+          <div class="inits">
+            <div class="inits__ligne">
+              <span class="inits__icone" style="--teinte:#2c2a1c"><svg width="13" height="13" style="color:var(--accent-jaune)" aria-hidden="true"><use href="#i-eclair"/></svg></span>
+              APAC Expansion<span class="inits__compte zero-barre">21</span>
+            </div>
+            <div class="inits__ligne inits__ligne--sous">Japan Launch<span class="inits__compte zero-barre">12</span></div>
+            <div class="inits__ligne inits__ligne--sous">Customer-driven priorities<span class="inits__compte zero-barre">9</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="enveloppe enveloppe--pied">
+    <div class="section__pied">
+      <ul class="reglure section__pied-contenu apparait">
+        <li class="reglure__entree"><a class="reglure__lien" href="#"><span class="zero-barre reglure__numero">2.1</span><span class="reglure__nom">Projects</span><span class="reglure__plus">+</span></a></li>
+        <li class="reglure__entree"><a class="reglure__lien" href="#"><span class="zero-barre reglure__numero">2.2</span><span class="reglure__nom">Documents</span><span class="reglure__plus">+</span></a></li>
+        <li class="reglure__entree"><a class="reglure__lien" href="#"><span class="zero-barre reglure__numero">2.3</span><span class="reglure__nom">Initiatives</span><span class="reglure__plus">+</span></a></li>
+        <li class="reglure__entree"><a class="reglure__lien" href="#"><span class="zero-barre reglure__numero">2.4</span><span class="reglure__nom">Visual planning</span><span class="reglure__plus">+</span></a></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<div class="enveloppe"><div class="filet-double"></div></div>
+
+<!-- ============================================================
+     SECTION 3.0 — BUILD
+     ============================================================ -->
+<section class="section">
+  <div class="enveloppe">
+    <div class="section__entete">
+      <div class="section__titre-conteneur">
+        <h2 class="t-titre-7 section__titre apparait">Move work forward across teams and agents</h2>
+      </div>
+      <div class="section__description-conteneur">
+        <p class="t-grand section__description apparait" style="--rang:1">
+          Build and deploy AI agents that work alongside your team. Work on
+          complex tasks together or delegate entire issues end-to-end.
+        </p>
+        <div class="section__action-conteneur apparait" style="--rang:2">
+          <a class="section__action" href="#">
+            <span class="zero-barre section__numero">3.0</span>
+            <span class="section__nom">Build</span>
+            <span class="section__fleche">&#8594;</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section__illustration-conteneur">
+    <div class="section__illustration">
+      <!-- JOURNAL D'AGENT + PALETTE — la section 3.0 n'est pas une liste
+           d'issues : c'est une session d'agent en cours (journal ancré EN BAS,
+           les lignes anciennes sortent par le haut) surmontée d'une palette
+           de commande de 560px qui CHEVAUCHE le panneau, ancrée à 41px du
+           haut et 100px de la droite. -->
+      <div class="chassis apparait" data-suivi-pointeur>
+        <div class="chassis__panneau agents-panneau">
+          <div class="chassis__fond chassis__fond--gauche"></div>
+          <div class="grain"></div>
+          <header class="agents__entete">
+            <span class="agents__nom">
+              <img src="https://linear.app/cdn-cgi/imagedelivery/fO02fVwohEs9s9UHFwon6A/13a0909f-186f-4d83-3fd3-d04883ec2d00/f=auto,dpr=2,fit=scale-down,metadata=none" alt="Codex" width="20" height="20" loading="lazy" decoding="async">
+              Codex
+            </span>
+          </header>
+          <div class="journal">
+            <span>On it! I&#x27;ve received your request.</span>
+            <span class="journal__ligne">Kicked off a task in <span class="journal__mono">kinetic/kinetic-iOS environment.</span></span>
+            <span>Searching for root AGENTS file</span>
+            <span class="journal__mono">kinetic/kinetic-iOS$ /bin/bash -lc rg --files -g &#x27;AGENTS.md&#x27;<br>AGENTS.md</span>
+            <span class="journal__ligne">Locating initialization logic for <span class="journal__mono">vehicle_state</span></span>
+            <span class="journal__pense">Thought <span>for 5s</span></span>
+          </div>
+        </div>
+        <div class="chassis__halo"></div>
+        <div class="chassis__lisere"></div>
+      </div>
+
+      <div class="palette apparait" style="--rang:1" role="group" aria-label="Agents Command Menu">
+        <div class="palette__fond"></div>
+        <div class="palette__lisere"></div>
+        <div class="grain"></div>
+        <div class="palette__corps">
+          <div class="palette__saisie">Assign to&hellip;<i class="palette__caret"></i></div>
+          <div class="palette__liste">
+            <div class="palette__item" data-choisi>
+              <img src="https://linear.app/cdn-cgi/imagedelivery/fO02fVwohEs9s9UHFwon6A/13a0909f-186f-4d83-3fd3-d04883ec2d00/f=auto,dpr=2,fit=scale-down,metadata=none" alt="Codex" width="24" height="24" loading="lazy" decoding="async">
+              <span class="palette__titre">Codex</span><span class="palette__badge">Agent</span>
+            </div>
+            <div class="palette__item">
+              <img src="https://linear.app/cdn-cgi/imagedelivery/fO02fVwohEs9s9UHFwon6A/e408d7c9-e3a3-4802-e4d4-51ed197c3a00/f=auto,dpr=2,fit=scale-down,metadata=none" alt="Steven" width="24" height="24" loading="lazy" decoding="async">
+              <span class="palette__titre">Steven</span>
+            </div>
+            <div class="palette__item">
+              <img src="https://linear.app/cdn-cgi/imagedelivery/fO02fVwohEs9s9UHFwon6A/a482eab9-69d1-412f-f2ce-8f72444fcb00/f=auto,dpr=2,fit=scale-down,metadata=none" alt="Ema" width="24" height="24" loading="lazy" decoding="async">
+              <span class="palette__titre">Ema</span>
+            </div>
+            <div class="palette__item">
+              <img src="https://linear.app/cdn-cgi/imagedelivery/fO02fVwohEs9s9UHFwon6A/f9ed2721-1966-4abc-129b-93aaac1a6200/f=auto,dpr=2,fit=scale-down,metadata=none" alt="GitHub Copilot" width="24" height="24" loading="lazy" decoding="async">
+              <span class="palette__titre">GitHub Copilot</span><span class="palette__badge">Agent</span>
+            </div>
+            <div class="palette__item">
+              <img src="https://linear.app/cdn-cgi/imagedelivery/fO02fVwohEs9s9UHFwon6A/5a228df7-2423-4807-6105-cd32ddddde00/f=auto,dpr=2,fit=scale-down,metadata=none" alt="Cursor" width="24" height="24" loading="lazy" decoding="async">
+              <span class="palette__titre">Cursor</span><span class="palette__badge">Agent</span>
+            </div>
+            <div class="palette__item">
+              <img src="https://linear.app/cdn-cgi/imagedelivery/fO02fVwohEs9s9UHFwon6A/229693cb-2eda-40d1-ba64-ce6762435200/f=auto,dpr=2,fit=scale-down,metadata=none" alt="Meg" width="24" height="24" loading="lazy" decoding="async">
+              <span class="palette__titre">Meg</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cette section en compte CINQ : la réglure n'est pas régulière d'une
+       section à l'autre, c'est le contenu qui commande. -->
+  <div class="enveloppe enveloppe--pied">
+    <div class="section__pied">
+      <ul class="reglure section__pied-contenu apparait">
+        <li class="reglure__entree"><a class="reglure__lien" href="#"><span class="zero-barre reglure__numero">3.1</span><span class="reglure__nom">Issues</span><span class="reglure__plus">+</span></a></li>
+        <li class="reglure__entree"><a class="reglure__lien" href="#"><span class="zero-barre reglure__numero">3.2</span><span class="reglure__nom">Agents</span><span class="reglure__plus">+</span></a></li>
+        <li class="reglure__entree"><a class="reglure__lien" href="#"><span class="zero-barre reglure__numero">3.3</span><span class="reglure__nom">Linear MCP</span><span class="reglure__plus">+</span></a></li>
+        <li class="reglure__entree"><a class="reglure__lien" href="#"><span class="zero-barre reglure__numero">3.4</span><span class="reglure__nom">Git automations</span><span class="reglure__plus">+</span></a></li>
+        <li class="reglure__entree"><a class="reglure__lien" href="#"><span class="zero-barre reglure__numero">3.5</span><span class="reglure__nom">Cycles</span><span class="reglure__plus">+</span></a></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<div class="enveloppe"><div class="filet-double"></div></div>
+
+<!-- ============================================================
+     SECTION 4.0 — DIFFS (châssis à bordure pleine et débord -8px).
+     Seule section SANS sous-liens : le contenu commande.
+     ============================================================ -->
+<section class="section">
+  <div class="enveloppe">
+    <div class="section__entete">
+      <div class="section__titre-conteneur">
+        <h2 class="t-titre-7 section__titre apparait">Review PRs and agent output</h2>
+      </div>
+      <div class="section__description-conteneur">
+        <p class="t-grand section__description apparait" style="--rang:1">
+          Understand code changes at a glance with structural diffs for human
+          and agent output. Review, discuss, and merge &mdash; all within Linear.
+        </p>
+        <div class="section__action-conteneur apparait" style="--rang:2">
+          <a class="section__action" href="#">
+            <span class="zero-barre section__numero">4.0</span>
+            <span class="section__nom">Diffs</span>
+            <span class="section__fleche">&#8594;</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section__illustration-conteneur">
+    <div class="section__illustration">
+      <!-- DIFF STRUCTUREL — deux colonnes de code CÔTE À CÔTE (avant / après),
+           pas une liste de lignes +/-. Numérotation en decimal-leading-zero,
+           interligne de 24px, coloration syntaxique à huit rôles, et
+           surbrillance au CARACTÈRE sur les fragments modifiés. -->
+      <div class="chassis chassis--diffs diffs apparait" data-suivi-pointeur>
+        <div class="chassis__panneau">
+          <div class="grain"></div>
+          <header class="diffs__entete">
+            <svg width="16" height="16" class="c-quaternaire" aria-hidden="true"><use href="#i-fichier"/></svg>
+            <span class="diffs__chemin">
+              <span class="cache-mobile">kinetic-ios/src/screens/Home/HomeScreen.tsx</span>
+              <span class="montre-mobile">kinetic-ios/src/HomeScreen.tsx</span>
+            </span>
+            <span class="app__filtre" style="margin-left:auto;display:flex;align-items:center;gap:4px">Linear
+              <svg width="12" height="12" aria-hidden="true"><use href="#i-chevron"/></svg>
+            </span>
+          </header>
+
+          <div class="diffs__code">
+            <div class="diffs__colonne"><pre><code><span class="l"><span class="tk-k">import</span> <span class="tk-c">React</span> <span class="tk-k">from</span> <span class="tk-s">'react'</span></span><span class="l"><span class="tk-k">import</span> { <span class="tk-c">View</span>, <span class="tk-c">ActivityIndicator</span> } <span class="tk-k">from</span> <span class="tk-s">'react-native'</span></span><span class="l vieux"><span class="tk-k">import</span> { <span class="tk-c">useVehicleState</span> } <span class="tk-k">from</span> <span class="tk-s">'@hooks/useVehicleState'</span></span><span class="l"><span class="tk-k">import</span> { <span class="tk-c">Dashboard</span> } <span class="tk-k">from</span> <span class="tk-s">'@components/Dashboard'</span></span><span class="l"></span><span class="l"><span class="tk-k">export</span> <span class="tk-k">const</span> <span class="tk-e">HomeScreen</span> <span class="tk-p">=</span> () <span class="tk-p">=&gt;</span> {</span><span class="l vieux">  <span class="tk-k">const</span> { <span class="tk-v">vehicleState</span>, <span class="cr"><span class="tk-v">isFullySynced</span></span> } <span class="tk-p">=</span> <span class="tk-e">useVehicleState</span>()</span><span class="l"></span><span class="l vieux">  <span class="tk-k">if</span> (<span class="cr"><span class="tk-p">!</span><span class="tk-v">isFullySynced</span></span>) {</span><span class="l">    <span class="tk-k">return</span> &lt;<span class="tk-e">ActivityIndicator</span> <span class="tk-v">size</span><span class="tk-p">=</span><span class="tk-s">"large"</span> /&gt;</span><span class="l">  }</span><span class="l"></span><span class="l">  <span class="tk-k">return</span> (</span><span class="l">    &lt;<span class="tk-e">View</span>&gt;</span><span class="l">      &lt;<span class="tk-e">Dashboard</span> <span class="tk-v">state</span><span class="tk-p">=</span>{<span class="tk-v">vehicleState</span>} /&gt;</span><span class="l">    &lt;/<span class="tk-e">View</span>&gt;</span><span class="l">  )</span><span class="l">}</span></code></pre></div>
+
+            <div class="diffs__colonne"><pre><code><span class="l"><span class="tk-k">import</span> <span class="tk-c">React</span> <span class="tk-k">from</span> <span class="tk-s">'react'</span></span><span class="l"><span class="tk-k">import</span> { <span class="tk-c">View</span>, <span class="tk-c">ActivityIndicator</span> } <span class="tk-k">from</span> <span class="tk-s">'react-native'</span></span><span class="l neuf"><span class="tk-k">import</span> { <span class="tk-c">useVehicleState</span><span class="ca">, <span class="tk-c">SyncStatus</span></span> } <span class="tk-k">from</span> <span class="tk-s">'@hooks/useVehicleState'</span></span><span class="l"><span class="tk-k">import</span> { <span class="tk-c">Dashboard</span> } <span class="tk-k">from</span> <span class="tk-s">'@components/Dashboard'</span></span><span class="l"></span><span class="l"><span class="tk-k">export</span> <span class="tk-k">const</span> <span class="tk-e">HomeScreen</span> <span class="tk-p">=</span> () <span class="tk-p">=&gt;</span> {</span><span class="l neuf">  <span class="tk-k">const</span> { <span class="tk-v">vehicleState</span>, <span class="ca"><span class="tk-v">syncStatus</span></span> } <span class="tk-p">=</span> <span class="tk-e">useVehicleState</span>()</span><span class="l"></span><span class="l neuf">  <span class="tk-k">if</span> (<span class="ca"><span class="tk-v">syncStatus</span> <span class="tk-p">===</span> <span class="tk-c">SyncStatus</span>.<span class="tk-c">PENDING</span></span>) {</span><span class="l">    <span class="tk-k">return</span> &lt;<span class="tk-e">ActivityIndicator</span> <span class="tk-v">size</span><span class="tk-p">=</span><span class="tk-s">"large"</span> /&gt;</span><span class="l">  }</span><span class="l"></span><span class="l">  <span class="tk-k">return</span> (</span><span class="l">    &lt;<span class="tk-e">View</span>&gt;</span><span class="l neuf">      &lt;<span class="tk-e">Dashboard</span> <span class="tk-v">state</span><span class="tk-p">=</span>{<span class="tk-v">vehicleState</span>} <span class="ca"><span class="tk-v">syncStatus</span><span class="tk-p">=</span>{<span class="tk-v">syncStatus</span>}</span> /&gt;</span><span class="l">    &lt;/<span class="tk-e">View</span>&gt;</span><span class="l">  )</span><span class="l">}</span></code></pre></div>
+          </div>
+        </div>
+        <div class="chassis__halo"></div>
+        <div class="chassis__lisere"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="enveloppe"><div class="filet-double"></div></div>
+
+<!-- ============================================================
+     SECTION 5.0 — MONITOR
+     ============================================================ -->
+<section class="section">
+  <div class="enveloppe">
+    <div class="section__entete">
+      <div class="section__titre-conteneur">
+        <h2 class="t-titre-7 section__titre apparait">Understand progress at scale</h2>
+      </div>
+      <div class="section__description-conteneur">
+        <p class="t-grand section__description apparait" style="--rang:1">
+          Take the guesswork out of product development with project updates,
+          analytics, and dashboards that surface what needs your attention.
+        </p>
+        <div class="section__action-conteneur apparait" style="--rang:2">
+          <a class="section__action" href="#">
+            <span class="zero-barre section__numero">5.0</span>
+            <span class="section__nom">Monitor</span>
+            <span class="section__fleche">&#8594;</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section__illustration-conteneur">
+    <div class="section__illustration">
+      <!-- TABLEAUX DE BORD — deux cartes à rayon 20px côte à côte, pas un
+           graphe unique : « Issue count by created date » (réglure 18→0 en
+           pointillé, barres bicolores absolues) et « Cycle time by agent »
+           (nuage de points sur double grille). Le panneau Pulse flotte
+           par-dessus, à 56px du haut et 8px de la gauche. -->
+      <div class="chassis fondu-triple fondu-triple--monitor apparait" data-suivi-pointeur>
+        <div class="chassis__panneau bord">
+          <div class="chassis__fond"></div>
+          <div class="grain"></div>
+
+          <div class="bord__cellule">
+            <header class="bord__entete">Issue count by created date</header>
+            <div class="compte">
+              <!-- [relevé] la source ne rend que TROIS barres, en amas étroit
+                   contre le bord droit : 24/222, 65/228, 45/160 px. Ce n'est
+                   pas un histogramme complet, c'est un amas — et c'est ce
+                   décalage entre une réglure large et trois barres serrées
+                   qui fait la composition de la cellule. -->
+              <div class="compte__barres" data-graphe>
+                <div class="compte__barre"><i class="compte__haut" style="height:24px"></i><i class="compte__bas" style="height:222px"></i></div>
+                <div class="compte__barre"><i class="compte__haut" style="height:65px"></i><i class="compte__bas" style="height:228px"></i></div>
+                <div class="compte__barre"><i class="compte__haut" style="height:45px"></i><i class="compte__bas" style="height:160px"></i></div>
+              </div>
+              <div class="compte__reglure"><i class="compte__trait"></i><span class="compte__valeur zero-barre">18</span></div>
+              <div class="compte__reglure"><i class="compte__trait"></i><span class="compte__valeur zero-barre">16</span></div>
+              <div class="compte__reglure"><i class="compte__trait"></i><span class="compte__valeur zero-barre">14</span></div>
+              <div class="compte__reglure"><i class="compte__trait"></i><span class="compte__valeur zero-barre">12</span></div>
+              <div class="compte__reglure"><i class="compte__trait"></i><span class="compte__valeur zero-barre">10</span></div>
+              <div class="compte__reglure"><i class="compte__trait"></i><span class="compte__valeur zero-barre">8</span></div>
+              <div class="compte__reglure"><i class="compte__trait"></i><span class="compte__valeur zero-barre">6</span></div>
+              <div class="compte__reglure"><i class="compte__trait"></i><span class="compte__valeur zero-barre">4</span></div>
+              <div class="compte__reglure"><i class="compte__trait"></i><span class="compte__valeur zero-barre">2</span></div>
+              <div class="compte__reglure"><i class="compte__trait compte__trait--plein"></i><span class="compte__valeur zero-barre">0</span></div>
+            </div>
+            <div class="compte__axe">
+              <span>Feb 2025</span><span>May 2025</span><span>Aug 2025</span><span>Nov 2025</span>
+            </div>
+          </div>
+
+          <div class="bord__cellule">
+            <header class="bord__entete">Cycle time by agent</header>
+            <div class="nuage">
+              <div class="nuage__reglure" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+              <div class="nuage__verticales" aria-hidden="true"><i></i><i></i></div>
+              <i class="nuage__moyenne nuage__moyenne--orange"></i>
+              <i class="nuage__moyenne nuage__moyenne--violet"></i>
+              <div class="nuage__grille">
+                <div class="nuage__col">
+                  <div class="nuage__points">
+                    <i style="--x:22%;--y:34%;--pt:#fc7840"></i><i style="--x:38%;--y:52%;--pt:#fc7840"></i>
+                    <i style="--x:55%;--y:28%;--pt:#fc7840"></i><i style="--x:70%;--y:61%;--pt:#fc7840"></i>
+                    <i style="--x:44%;--y:73%;--pt:#fc7840"></i><i style="--x:63%;--y:44%;--pt:#fc7840"></i>
+                    <i style="--x:31%;--y:19%;--pt:#fc7840"></i><i style="--x:79%;--y:38%;--pt:#fc7840"></i>
+                  </div>
+                  <div class="nuage__nom">Cursor</div>
+                </div>
+                <div class="nuage__col">
+                  <div class="nuage__points">
+                    <i style="--x:26%;--y:58%;--pt:#7170ff"></i><i style="--x:41%;--y:71%;--pt:#7170ff"></i>
+                    <i style="--x:58%;--y:47%;--pt:#7170ff"></i><i style="--x:72%;--y:82%;--pt:#7170ff"></i>
+                    <i style="--x:35%;--y:36%;--pt:#7170ff"></i><i style="--x:66%;--y:63%;--pt:#7170ff"></i>
+                    <i style="--x:49%;--y:90%;--pt:#7170ff"></i>
+                  </div>
+                  <div class="nuage__nom">Codex</div>
+                </div>
+                <div class="nuage__col">
+                  <div class="nuage__points">
+                    <i style="--x:24%;--y:12%"></i><i style="--x:39%;--y:24%"></i>
+                    <i style="--x:52%;--y:9%"></i><i style="--x:68%;--y:31%"></i>
+                    <i style="--x:45%;--y:41%"></i><i style="--x:77%;--y:17%"></i>
+                    <i style="--x:33%;--y:6%"></i>
+                  </div>
+                  <div class="nuage__nom">No Agent</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="chassis__halo"></div>
+        <div class="chassis__lisere"></div>
+      </div>
+
+      <!-- [relevé] .LwA8Xa_pulse — 520px, ancrée à 56px/8px. Troisième et
+           dernière occurrence de la boîte flottante. -->
+      <div class="boite boite--pulse apparait" style="--rang:1">
+        <div class="boite__fond"></div>
+        <div class="boite__lisere"></div>
+        <div class="grain"></div>
+        <div class="boite__corps">
+          <header class="pulse__entete">
+            <span class="pulse__titre">Weekly Pulse for Jul 27</span>
+            <span class="pulse__lecture">
+              <span class="app__filtre" style="gap:6px;display:flex;align-items:center">
+                <svg width="12" height="12" aria-hidden="true"><use href="#i-lecture"/></svg>Listen
+              </span>
+              <span class="pulse__vitesse">1.0&times;</span>
+            </span>
+          </header>
+          <div class="pulse__rubrique">Projects<i class="pulse__filet"></i></div>
+          <div style="height:32px"></div>
+          <div class="pulse__projet">
+            <span class="pulse__nom">UI refresh</span>
+            <span class="pulse__etat pulse__etat--risque">
+              <svg width="14" height="14" aria-hidden="true"><use href="#i-carre"/></svg>At risk
+            </span>
+            <span class="pulse__auteur">By romain &middot; 1 day ago</span>
+          </div>
+          <div style="height:12px"></div>
+          <ul class="pulse__liste">
+            <li class="pulse__item">iOS implementation is mostly complete, but Android updates are still work in progress</li>
+            <li class="pulse__item">Risk of timeline slip if remaining design decisions aren&rsquo;t finalized soon</li>
+          </ul>
+          <div style="height:28px"></div>
+          <div class="pulse__projet">
+            <span class="pulse__nom">Tokyo launch</span>
+            <span class="pulse__etat pulse__etat--suivi">
+              <svg width="14" height="14" aria-hidden="true"><use href="#i-cible"/></svg>On track
+            </span>
+            <span class="pulse__auteur">By julian &middot; 3 hours ago</span>
+          </div>
+          <div style="height:12px"></div>
+          <ul class="pulse__liste">
+            <li class="pulse__item">Localization efforts have been completed</li>
+            <li class="pulse__item">Everything else on track for launch in early September</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="enveloppe enveloppe--pied">
+    <div class="section__pied">
+      <ul class="reglure section__pied-contenu apparait">
+        <li class="reglure__entree"><a class="reglure__lien" href="#"><span class="zero-barre reglure__numero">5.1</span><span class="reglure__nom">Pulse</span><span class="reglure__plus">+</span></a></li>
+        <li class="reglure__entree"><a class="reglure__lien" href="#"><span class="zero-barre reglure__numero">5.2</span><span class="reglure__nom">Insights</span><span class="reglure__plus">+</span></a></li>
+        <li class="reglure__entree"><a class="reglure__lien" href="#"><span class="zero-barre reglure__numero">5.3</span><span class="reglure__nom">Dashboards</span><span class="reglure__plus">+</span></a></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     CHANGELOG — frise chronologique : un filet horizontal traverse la
+     rangée, les pastilles opaques y percent un trou. La première entrée
+     est la seule colorée.
+     ============================================================ -->
+<section class="changelog">
+  <div class="enveloppe">
+    <div class="changelog__entete">
+      <h2 class="t-titre-5 apparait">Changelog</h2>
+    </div>
+    <div class="changelog__grille">
+      <div class="changelog__ligne" aria-hidden="true"></div>
+
+      <article class="changelog__item apparait">
+        <div class="changelog__pastille" data-premier="true" aria-hidden="true"></div>
+        <a class="changelog__lien" href="#">
+          <h3 class="t-titre-1 changelog__titre">Agent-assisted text editing</h3>
+          <p class="t-mini c-tertiaire">Documents and project descriptions are critical context for your teams and agents.</p>
+          <p class="t-micro c-quaternaire changelog__date zero-barre">Jul 22, 2026</p>
+        </a>
+      </article>
+
+      <article class="changelog__item apparait" style="--rang:1">
+        <div class="changelog__pastille" aria-hidden="true"></div>
+        <a class="changelog__lien" href="#">
+          <h3 class="t-titre-1 changelog__titre">Loops</h3>
+          <p class="t-mini c-tertiaire">Loops are a new way for Linear Agent to take on recurring work for your team.</p>
+          <p class="t-micro c-quaternaire changelog__date zero-barre">Jul 16, 2026</p>
+        </a>
+      </article>
+
+      <article class="changelog__item apparait" style="--rang:2">
+        <div class="changelog__pastille" aria-hidden="true"></div>
+        <a class="changelog__lien" href="#">
+          <h3 class="t-titre-1 changelog__titre">Initiative properties</h3>
+          <p class="t-mini c-tertiaire">Initiatives define your company&rsquo;s high-level goals and organize the projects that contribute to them.</p>
+          <p class="t-micro c-quaternaire changelog__date zero-barre">Jun 30, 2026</p>
+        </a>
+      </article>
+
+      <article class="changelog__item apparait" style="--rang:3">
+        <div class="changelog__pastille" aria-hidden="true"></div>
+        <a class="changelog__lien" href="#">
+          <h3 class="t-titre-1 changelog__titre">Agent assisted project updates</h3>
+          <p class="t-mini c-tertiaire">Project and initiative updates keep teams aligned, but writing them means pulling out recent changes.</p>
+          <p class="t-micro c-quaternaire changelog__date zero-barre">Jun 17, 2026</p>
+        </a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     CITATIONS CLIENTS — cartes aux COULEURS DE MARQUE voilées de blanc,
+     guillemets suspendus, filigrane débordant, cadre masqué en deux
+     directions.
+     Les noms des personnes citées sont remplacés par des noms de même
+     longueur visuelle : je ne prête pas un propos à quelqu'un de réel
+     sur une page d'étude. Citations, rôles et sociétés sont verbatim.
+     ============================================================ -->
+<section class="clients" id="customers">
+  <div class="enveloppe">
+    <!-- Desktop : 1 carte étirée + 1 carte de largeur fixe 432px -->
+    <div class="clients__cartes apparait">
+      <figure class="client-carte client-carte--principale client-carte--marque-a">
+        <blockquote class="client-carte__citation">You&rsquo;ll probably build a better product, just because of the craft that using Linear infuses on your brain.</blockquote>
+        <figcaption class="client-carte__pied">
+          <span class="client-carte__marque">OpenAI</span>
+          <span class="client-carte__auteur">Adrien Marchal<small>Staff Software Engineer, OpenAI</small></span>
+        </figcaption>
+        <span class="client-carte__filigrane" aria-hidden="true">O</span>
+      </figure>
+      <figure class="client-carte client-carte--secondaire client-carte--marque-b">
+        <blockquote class="client-carte__citation">Our speed is intense and Linear helps us be action biased.</blockquote>
+        <figcaption class="client-carte__pied">
+          <span class="client-carte__marque">Ramp</span>
+          <span class="client-carte__auteur">Ivan Kowalski<small>Head of Engineering, Ramp</small></span>
+        </figcaption>
+        <span class="client-carte__filigrane" aria-hidden="true">R</span>
+      </figure>
+    </div>
+
+    <!-- Sous 1024px : carrousel horizontal à accrochage -->
+    <div class="clients__carrousel apparait">
+      <figure class="client-carte client-carte--mobile client-carte--marque-a">
+        <blockquote class="client-carte__citation">You&rsquo;ll probably build a better product, just because of the craft that using Linear infuses on your brain.</blockquote>
+        <figcaption class="client-carte__pied">
+          <span class="client-carte__marque">OpenAI</span>
+          <span class="client-carte__auteur">Adrien Marchal<small>OpenAI</small></span>
+        </figcaption>
+        <span class="client-carte__filigrane" aria-hidden="true">O</span>
+      </figure>
+      <figure class="client-carte client-carte--mobile client-carte--marque-b">
+        <blockquote class="client-carte__citation">Our speed is intense and Linear helps us be action biased.</blockquote>
+        <figcaption class="client-carte__pied">
+          <span class="client-carte__marque">Ramp</span>
+          <span class="client-carte__auteur">Ivan Kowalski<small>Ramp</small></span>
+        </figcaption>
+        <span class="client-carte__filigrane" aria-hidden="true">R</span>
+      </figure>
+      <figure class="client-carte client-carte--mobile client-carte--marque-c">
+        <blockquote class="client-carte__citation">Linear is excellent, just excellent. It has the right opinions for fast moving teams.</blockquote>
+        <figcaption class="client-carte__pied">
+          <span class="client-carte__marque">Opendoor</span>
+          <span class="client-carte__auteur">Karim Nadeau<small>Opendoor</small></span>
+        </figcaption>
+        <span class="client-carte__filigrane" aria-hidden="true">O</span>
+      </figure>
+    </div>
+
+    <p class="t-corps clients__pied apparait">
+      Linear powers over <span class="zero-barre">37,000</span> product teams.
+      From ambitious startups to major enterprises.
+      <a class="clients__action" href="#">Customer stories &#8594;</a>
+    </p>
+  </div>
+</section>
+
+<!-- ============================================================
+     AVANT-PIED — marges 224 / 128 / 96px : le vide fait l'emphase
+     ============================================================ -->
+<section class="avant-pied">
+  <h2 class="t-titre-7 avant-pied__titre apparait">Built for the future. Available today.</h2>
+  <div class="avant-pied__actions fondu apparait" style="--rang:1">
+    <a class="btn btn--grand btn--inverse" href="#">Get started</a>
+    <a class="btn btn--grand btn--secondaire" href="#">Contact sales</a>
+  </div>
+</section>
+
+</main>
+
+<!-- ============================================================
+     PIED — grille 6 → 4 → 2 colonnes
+     ============================================================ -->
+<footer class="pied">
+  <div class="pied__enveloppe">
+    <div class="pied__inner">
+      <div class="pied__marque"><span class="entete__pastille"></span>Linear</div>
+
+      <div class="pied__colonne">
+        <p class="pied__titre">Product</p>
+        <ul class="pied__liste">
+          <li><a class="pied__lien" href="#">Intake</a></li>
+          <li><a class="pied__lien" href="#">Plan</a></li>
+          <li><a class="pied__lien" href="#">Build</a></li>
+          <li><a class="pied__lien" href="#">Diffs</a></li>
+          <li><a class="pied__lien" href="#">Monitor</a></li>
+          <li><a class="pied__lien" href="#">Pricing</a></li>
+          <li><a class="pied__lien" href="#">Security</a></li>
+        </ul>
+      </div>
+
+      <div class="pied__colonne">
+        <p class="pied__titre">Features</p>
+        <ul class="pied__liste">
+          <li><a class="pied__lien" href="#">Asks</a></li>
+          <li><a class="pied__lien" href="#">Agents</a></li>
+          <li><a class="pied__lien" href="#">Coding Sessions</a></li>
+          <li><a class="pied__lien" href="#">Customer Requests</a></li>
+          <li><a class="pied__lien" href="#">Insights</a></li>
+          <li><a class="pied__lien" href="#">Mobile</a></li>
+          <li><a class="pied__lien" href="#">Integrations</a></li>
+          <li><a class="pied__lien" href="#">Changelog</a></li>
+        </ul>
+      </div>
+
+      <div class="pied__colonne">
+        <p class="pied__titre">Company</p>
+        <ul class="pied__liste">
+          <li><a class="pied__lien" href="#">About</a></li>
+          <li><a class="pied__lien" href="#">Customers</a></li>
+          <li><a class="pied__lien" href="#">Careers</a></li>
+          <li><a class="pied__lien" href="#">Blog</a></li>
+          <li><a class="pied__lien" href="#">Method</a></li>
+          <li><a class="pied__lien" href="#">Quality</a></li>
+          <li><a class="pied__lien" href="#">Brand</a></li>
+        </ul>
+      </div>
+
+      <div class="pied__colonne">
+        <p class="pied__titre">Resources</p>
+        <ul class="pied__liste">
+          <li><a class="pied__lien" href="#">Switch</a></li>
+          <li><a class="pied__lien" href="#">Download</a></li>
+          <li><a class="pied__lien" href="#">Documentation</a></li>
+          <li><a class="pied__lien" href="#">Docs</a></li>
+          <li><a class="pied__lien" href="#">Developers</a></li>
+          <li><a class="pied__lien" href="#">Status</a></li>
+          <li><a class="pied__lien" href="#">Enterprise</a></li>
+          <li><a class="pied__lien" href="#">Startups</a></li>
+        </ul>
+      </div>
+
+      <div class="pied__colonne">
+        <p class="pied__titre">Connect</p>
+        <ul class="pied__liste">
+          <li><a class="pied__lien" href="#">Contact us</a></li>
+          <li><a class="pied__lien" href="#">Community</a></li>
+          <li><a class="pied__lien" href="#">GitHub</a></li>
+          <li><a class="pied__lien" href="#">YouTube</a></li>
+        </ul>
+      </div>
+
+      <!-- Rangée basse : décalée de 80px, hors alignement des colonnes -->
+      <div class="pied__colonne pied__legal">
+        <div class="pied__legal-liens">
+          <a href="#">Privacy</a><a href="#">Terms</a><a href="#">DPA</a><a href="#">AUP</a>
+        </div>
+      </div>
+      <div class="pied__colonne pied__statut">
+        <a class="pied__statut-lien" href="#"><i class="pied__statut-point"></i>All systems operational</a>
+      </div>
+      <div class="pied__theme">
+        <div class="bascule" role="group" aria-label="Theme">
+          <button class="bascule__item" type="button" data-theme-cible="light" aria-pressed="false" aria-label="Light">
+            <svg viewBox="0 0 14 14" fill="none" aria-hidden="true"><circle cx="7" cy="7" r="3" stroke="currentColor" stroke-width="1.2"/><path d="M7 1v1.5M7 11.5V13M13 7h-1.5M2.5 7H1M11.2 2.8l-1 1M3.8 10.2l-1 1M11.2 11.2l-1-1M3.8 3.8l-1-1" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+          </button>
+          <button class="bascule__item" type="button" data-theme-cible="dark" aria-pressed="true" aria-label="Dark">
+            <svg viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M12 8.5A5.5 5.5 0 0 1 5.5 2a5.5 5.5 0 1 0 6.5 6.5Z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Page-témoin propre — les 6 contrôles doivent rester muets</title>
+<style>
+  /* Contre-épreuve de `broken.html` : mêmes familles de composants, mêmes
+     couleurs en OKLCH, mais chaque valeur est conforme. Sans cette page, on ne
+     distingue pas un détecteur qui marche d'un détecteur qui hurle sur tout. */
+  :root {
+    --fond:   oklch(1 0 0);
+    --encre:  oklch(0.20 0.02 250);         /* ~16:1 sur blanc */
+    --doux:   oklch(0.45 0.02 250);         /* ~7:1 sur blanc */
+    --accent: oklch(0.38 0.09 250);         /* fond de CTA, texte blanc dessus */
+    --trait:  oklch(0.86 0.01 250);
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: system-ui, sans-serif; background: var(--fond); color: var(--encre); }
+  .enveloppe { max-width: 720px; margin: 0 auto; padding: 32px 20px; }
+  h1 { font-size: 30px; line-height: 38px; margin: 0 0 12px; }
+  h2 { font-size: 18px; line-height: 24px; margin: 0 0 8px; }
+  p  { font-size: 16px; line-height: 26px; margin: 0 0 20px; color: var(--doux); max-width: 62ch; }
+
+  /* Le pendant sain du défaut 1 : la boîte s'adapte au mot, rien ne déborde. */
+  .badge { display: inline-block; border: 1px solid var(--trait); border-radius: 4px;
+           padding: 4px 10px; font-size: 14px; color: var(--encre); }
+
+  /* Le pendant sain du défaut 2 : deux blocs empilés, aucune marge négative. */
+  .bloc { border: 1px solid var(--trait); border-radius: 8px; padding: 16px; margin-bottom: 16px; }
+  .bloc p { margin: 0; }
+
+  /* Le pendant sain du défaut 3 : libellé court, boîte assez large, nowrap. */
+  .cta { display: inline-block; padding: 12px 20px; border-radius: 6px; white-space: nowrap;
+         background: var(--accent); color: var(--fond); font-size: 16px; line-height: 20px;
+         text-decoration: none; }
+
+  /* Le pendant sain du défaut 5 : grille fluide, jamais plus large que le viewport. */
+  .grille { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
+  .carte { border: 1px solid var(--trait); border-radius: 8px; padding: 16px; }
+  .carte h2 { font-size: 17px; }
+  .carte p  { font-size: 15px; line-height: 24px; margin: 0; }
+</style>
+</head>
+<body>
+  <main class="enveloppe">
+    <h1>Page-témoin propre</h1>
+    <p>Aucun texte ne déborde, aucun élément n'en recouvre un autre, le libellé du bouton
+      tient sur une ligne, tous les contrastes dépassent leur seuil, le document ne défile
+      pas horizontalement et aucun contenu n'attend une révélation.</p>
+
+    <p><span class="badge">Anticonstitutionnellement</span></p>
+
+    <div class="bloc"><p>Bloc A — posé dans le flux, sans marge négative.</p></div>
+    <div class="bloc"><p>Bloc B — posé sous le bloc A, sans le recouvrir.</p></div>
+
+    <p><a class="cta" href="#">Nous écrire</a></p>
+
+    <div class="grille">
+      <div class="carte"><h2>Premier bloc</h2><p>Contenu court, lisible, sans débordement.</p></div>
+      <div class="carte"><h2>Deuxième bloc</h2><p>Contenu court, lisible, sans débordement.</p></div>
+      <div class="carte"><h2>Troisième bloc</h2><p>Contenu court, lisible, sans débordement.</p></div>
+    </div>
+  </main>
+</body>
+</html>

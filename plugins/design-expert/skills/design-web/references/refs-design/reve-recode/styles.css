@@ -1,0 +1,1755 @@
+/* =============================================================================
+   RÉFÉRENCE DE DESIGN — app.reve.com (page « Reve Image - Model »)
+
+   [relevé]    = lu textuellement dans le bloc <style> inline de la source.
+   [arbitrage] = choix de l'auteur de cette référence, absent de la source.
+
+   Source : ~/Downloads/design-refs/reve/app.reve.com/index.html (75 794 o).
+   Un seul bloc <style> inline, aucune feuille externe. 5 @layer.
+   0 @keyframes · 4 déclarations `transition` · 1 règle `:hover`.
+   Le reste du mouvement est en JS : voir motion.js et tokens-reve.md §1.
+
+   Ordre des zones = ordre de la source. Aucune zone n'est omise.
+   ========================================================================== */
+
+/* [relevé] Ordre de cascade déclaré en tête de source. `overrides` est déclarée
+   vide : les surcharges produit gagnent sans jamais monter en spécificité. */
+@layer reset, theme, component, utilities, overrides;
+
+/* =============================================================================
+   0. POLICES — les quatre @font-face de la source, servies en distant
+   [relevé] Familles, plages de graisse, `font-display` et `unicode-range` sont
+   repris à l'identique. Le préfixe relatif `assets/` de la page aspirée est
+   remplacé par le domaine d'origine ; aucun binaire n'est stocké ici.
+   Deux points qui comptent pour la fidélité :
+   · ReveDisplay est servie en DEUX fichiers, découpés par plage de graisse
+     (500-900 et 100-400) — pas une seule variable. Le navigateur ne charge que
+     celui dont il a besoin, et les titres (graisse 500) tirent le fichier
+     « medium » tandis que les sous-titres (400) tirent le « regular ».
+   · `unicode-range` identique pour les quatre : hors de cette plage, le
+     navigateur retombe sur la pile système sans télécharger la fonte.
+   ========================================================================== */
+@font-face {
+  font-family: ReveUI;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url(https://app.reve.com/assets/ReveUI.shifted-variable-DEpnxcwd.woff2) format("woff2");
+  unicode-range: U+??, U+131, U+152-153, U+2BB-2BC, U+2C6, U+2DA, U+2DC,
+    U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215,
+    U+F8FF, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: ReveDisplay;
+  font-weight: 500 900;
+  font-display: swap;
+  src: url(https://app.reve.com/assets/ReveDisplay-medium--sZBO_UH.woff2) format("woff2");
+  unicode-range: U+??, U+131, U+152-153, U+2BB-2BC, U+2C6, U+2DA, U+2DC,
+    U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215,
+    U+F8FF, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: ReveDisplay;
+  font-weight: 100 400;
+  font-display: swap;
+  src: url(https://app.reve.com/assets/ReveDisplay-regular-qfkMquGn.woff2) format("woff2");
+  unicode-range: U+??, U+131, U+152-153, U+2BB-2BC, U+2C6, U+2DA, U+2DC,
+    U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215,
+    U+F8FF, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: ReveSansMono;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url(https://app.reve.com/assets/ReveSansMono-variable-hzh9PIPz.woff2) format("woff2");
+  unicode-range: U+??, U+131, U+152-153, U+2BB-2BC, U+2C6, U+2DA, U+2DC,
+    U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215,
+    U+F8FF, U+FEFF, U+FFFD;
+}
+
+/* =============================================================================
+   1. JETONS
+   ========================================================================== */
+
+:root {
+  /* --- Rampe neutre [relevé] ------------------------------------------------
+     Paires light/dark textuelles. La rampe sombre est inversée en luminance
+     (neutre-900 est clair en sombre) : un seul jeu de rôles sert les 2 thèmes. */
+  --rampe-neutre-0:    light-dark(#fff,     #000);
+  --rampe-neutre-50:   light-dark(#fafafa,  #1a1a1a);
+  --rampe-neutre-100:  light-dark(#f0f0f0,  #2e2e2e);
+  --rampe-neutre-200:  light-dark(#e6e6e6,  #383838);
+  --rampe-neutre-300:  light-dark(#d6d6d6,  #474747);
+  --rampe-neutre-400:  light-dark(#a6a6a6,  #595959);
+  --rampe-neutre-500:  light-dark(#757575,  #707070);
+  --rampe-neutre-600:  light-dark(#575757,  #949494);
+  --rampe-neutre-700:  light-dark(#424242,  #bababa);
+  --rampe-neutre-800:  light-dark(#292929,  #d6d6d6);
+  --rampe-neutre-900:  light-dark(#1a1a1a,  #ebebeb);
+  --rampe-neutre-950:  light-dark(#141414,  #f2f2f2);
+  --rampe-neutre-1000: light-dark(#000,     #fff);
+
+  /* --- Rampe alpha [relevé] ------------------------------------------------
+     Rampe SÉPARÉE : le texte est du noir (ou du blanc) à opacité variable,
+     jamais un gris opaque — il tient donc sur n'importe quelle surface. */
+  --rampe-alpha-50:   light-dark(#0000000f, #ffffff1a);
+  --rampe-alpha-100:  light-dark(#0000001f, #ffffff29);
+  --rampe-alpha-200:  light-dark(#0000002b, #ffffff3d);
+  --rampe-alpha-300:  light-dark(#0003,     #ffffff3d);
+  --rampe-alpha-400:  light-dark(#00000040, #ffffff40);
+  --rampe-alpha-500:  light-dark(#0000004d, #ffffff4d);
+  --rampe-alpha-600:  light-dark(#0000004d, #ffffff4d);
+  --rampe-alpha-700:  light-dark(#00000059, #ffffff59);
+  --rampe-alpha-800:  light-dark(#0006,     #fff6);
+  --rampe-alpha-850:  light-dark(#0000008a, #ffffff8a);
+  --rampe-alpha-900:  light-dark(#0009,     #fff9);
+  --rampe-alpha-1000: light-dark(#000,      #fff);
+
+  /* --- Bleu (accent) [relevé] ---------------------------------------------- */
+  --bleu-50:  light-dark(#f0f6ff, #151c32);
+  --bleu-100: light-dark(#dcebfe, #1d2a58);
+  --bleu-200: light-dark(#bedbfe, #2744b4);
+  --bleu-300: light-dark(#91c3fd, #2751dd);
+  --bleu-400: light-dark(#61a6fa, #2d65f0);
+  --bleu-500: light-dark(#3c83f6, #2879fb);
+  --bleu-600: light-dark(#2463eb, #4c9dff);
+  --bleu-700: light-dark(#1d4fd7, #80bdff);
+  --bleu-800: light-dark(#1f40ad, #a8d1ff);
+  --bleu-900: light-dark(#1e3b8a, #d2e2f3);
+  --bleu-950: light-dark(#152047, #e6f6ff);
+
+  /* --- Alerte et validation [relevé] --------------------------------------- */
+  --danger-500: light-dark(#ef4343, #f4322f);
+  --danger-600: light-dark(#dc2828, #fe5d5d);
+  --alerte-500: light-dark(#f59e0b, #f29704);
+  --succes-500: light-dark(#22c55e, #26b559);
+
+  /* --- Rôles de texte [relevé] --------------------------------------------
+     Trois niveaux, jamais quatre. La hiérarchie secondaire passe par la
+     TAILLE, pas par un gris de plus. */
+  --texte-primaire:   var(--rampe-alpha-1000);
+  --texte-secondaire: var(--rampe-alpha-850);
+  --texte-tertiaire:  var(--rampe-alpha-800);
+
+  /* --- Rôles de surface [relevé] ------------------------------------------
+     Le fond de page N'EST PAS blanc : c'est neutre-50. Le blanc est réservé
+     aux panneaux posés dessus — le détachement vient de là, pas d'une ombre. */
+  --surface-page:       var(--rampe-neutre-50);
+  --surface-panneau:    light-dark(var(--rampe-neutre-0), var(--rampe-neutre-50));
+  --surface-panneau-2:  light-dark(var(--rampe-neutre-0), var(--rampe-neutre-100));
+  --surface-encart:     var(--rampe-neutre-100);  /* input-background */
+  --surface-toile:      light-dark(#f0f0f0, #000);/* color-canvas */
+  --bordure-panneau:    light-dark(#e6e6e6, #474747);
+  --bordure-champ:      light-dark(#e0e0e0, #2e2e2e);
+  --selection-primaire: var(--bleu-100);
+  --selection-secondaire: var(--bleu-50);
+  --couleur-editee:     var(--danger-600);
+  --voile-modal:        light-dark(#00000080, #000000b3);
+  /* [relevé] Deux couleurs FIXES, hors du système bi-thème : elles ne suivent
+     pas `light-dark()`. Employées telles quelles sur la carte de gabarit, ses
+     flèches et son calque mobile — qui restent donc blancs en thème sombre. */
+  --blanc-fixe: #fff;
+  --noir-fixe:  #000;
+  /* [relevé] Estompage latéral du plan de travail : le canevas se fond dans le
+     panneau sur ses 45 % de droite. Seul dégradé d'app de la feuille. */
+  --estompage-toile: linear-gradient(270deg,
+    var(--rampe-neutre-100) 0%, var(--rampe-neutre-100) 55%, #f0f0f000 100%);
+  --accent-primaire:   var(--bleu-800);                          /* [relevé] */
+  --accent-secondaire: light-dark(var(--bleu-200), var(--bleu-50)); /* [relevé] */
+  --fond-champ-survol: var(--rampe-neutre-200); /* [relevé] input-bg-hover */
+  --fond-champ-focus:  var(--rampe-neutre-100); /* [relevé] input-bg-focus */
+
+  /* --- Élévations [relevé] -------------------------------------------------
+     Chaque ombre système est en DEUX couches : une diffuse large + un liseré
+     1 px quasi opaque qui remplace la bordure. */
+  --ombre-controle:  0 2px 8px 0 #00000029, 0 0 1px 0 #00000024;
+  --ombre-panneau:   0 8px 24px 0 #0003, 0 1px 4px 0 #0000001f;
+  --ombre-haut:      0 0 16px light-dark(#71717a1f, #0000003d);
+  --ombre-carte:     0 2px 12px #0000000f;
+  --ombre-selection: 0 2px 8px color-mix(in srgb, var(--rampe-neutre-1000) 8%, transparent);
+
+  /* --- Typographie [relevé] ------------------------------------------------
+     Les vraies familles, avec leurs piles de repli exactes. Noter l'ordre
+     inhabituel de la pile texte : `Arial` AVANT `ui-sans-serif` — un repli
+     métriquement proche est préféré au sans-serif de l'OS. La pile display,
+     elle, retombe sur `system-ui`. L'emoji est toujours en dernier ressort de
+     chaque pile, jamais dans la famille principale. */
+  --police-mono:  "ReveSansMono", ui-monospace, monospace, var(--police-emoji);
+  --police-texte: "ReveUI", Arial, ui-sans-serif, sans-serif, var(--police-emoji);
+  --police-titre: "ReveDisplay", system-ui, var(--police-emoji);
+  --police-serif: ui-serif, serif, var(--police-emoji);
+  --police-emoji: "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+
+  --graisse-normale: 400; /* [relevé] */
+  --graisse-forte:   500; /* [relevé] « semibold » vaut 500, pas 600 */
+  --graisse-lourde:  700; /* [relevé] */
+
+  --interligne-serre:  1.2; /* [relevé] titres */
+  --interligne-dense:  1.4; /* [relevé] */
+  --interligne-texte:  1.5; /* [relevé] */
+  --interligne-aere:   2;   /* [relevé] */
+
+  /* [relevé] Approche POSITIVE et croissante avec la taille sur la display
+     (jusqu'à +.018em), quasi nulle sur le texte courant. L'inverse de la
+     convention : ici plus le titre est GROS, plus il est aéré. */
+  --approche-titre-4xl: .01em;
+  --approche-titre-3xl: .01em;
+  --approche-titre-2xl: .012em;
+  --approche-titre-xl:  .014em;
+  --approche-titre-l:   .016em;
+  --approche-titre-m:   .018em;
+  --approche-texte-2xl: 0em;
+  --approche-texte-l:   .002em;
+  --approche-texte-m:   .004em;
+  --approche-texte-s:   .006em;
+  --approche-texte-xs:  .008em;
+  --approche-serree:    -.015em; /* [relevé] letter-spacing-x-denser */
+  --approche-2x-serree: -.02em;  /* [relevé] letter-spacing-2x-denser */
+
+  --taille-xs:  .75rem;  /* [relevé] */
+  --taille-s:   .875rem; /* [relevé] */
+  --taille-m:   1rem;    /* [relevé] */
+  --taille-l:   1.125rem;/* [relevé] */
+  --taille-xl:  1.25rem; /* [relevé] */
+  --taille-2xl: 1.5rem;  /* [relevé] */
+  --taille-3xl: 2rem;    /* [relevé] */
+  --taille-4xl: 2.5rem;  /* [relevé] */
+
+  /* --- Rythme [relevé] -----------------------------------------------------
+     UNE seule primitive : 8 px. Tous les espacements, hauteurs de contrôle,
+     rayons, largeurs de panneau et tailles d'icône sont des calc() sur elle.
+     Aucun px littéral dans l'échelle : changer --rythme redimensionne
+     l'interface entière de façon cohérente. */
+  --rythme: 8px;
+  --espace-3xs: calc(.25 * var(--rythme)); /*  2px */
+  --espace-2xs: calc(.5  * var(--rythme)); /*  4px */
+  --espace-xs:  var(--rythme);             /*  8px */
+  --espace-s:   calc(1.5 * var(--rythme)); /* 12px */
+  --espace-m:   calc(2   * var(--rythme)); /* 16px */
+  --espace-l:   calc(2.5 * var(--rythme)); /* 20px */
+  --espace-xl:  calc(3   * var(--rythme)); /* 24px */
+  --espace-2xl: calc(4   * var(--rythme)); /* 32px */
+  --espace-3xl: calc(5   * var(--rythme)); /* 40px */
+  --espace-4xl: calc(6   * var(--rythme)); /* 48px */
+
+  --hauteur-bouton-s: calc(4 * var(--rythme)); /* [relevé] 32px */
+  --hauteur-bouton-m: calc(5 * var(--rythme)); /* [relevé] 40px */
+  --hauteur-bouton-l: calc(6 * var(--rythme)); /* [relevé] 48px */
+  --hauteur-champ-s: 32px; /* [relevé] */
+  --hauteur-champ-m: 36px; /* [relevé] */
+  --cible-tactile:   40px; /* [relevé] */
+
+  /* [relevé] `calc(1px * infinity)` pour la pilule : plus robuste que 9999px,
+     ne dégénère jamais sur un élément très haut. */
+  --rayon-m:     calc(.5 * var(--rythme)); /*  4px */
+  --rayon-l:     var(--rythme);            /*  8px */
+  --rayon-xl:    calc(2 * var(--rythme));  /* 16px */
+  --rayon-2xl:   calc(3 * var(--rythme));  /* 24px */
+  --rayon-plein: calc(1px * infinity);
+
+  --bordure-fine:    1px; /* [relevé] border-width-s */
+  --bordure-moyenne: 2px; /* [relevé] border-width-m */
+  --bordure-large:   3px; /* [relevé] border-width-w */
+
+  --icone-xs: .75rem;                     /* [relevé] */
+  --icone-s:  calc(2   * var(--rythme));  /* [relevé] 16px */
+  --icone-m:  calc(2.5 * var(--rythme));  /* [relevé] 20px */
+  --icone-l:  2rem;                       /* [relevé] */
+
+  /* [relevé] Un seul anneau de focus pour toute l'application, offset 0 :
+     l'anneau colle au bord. Aucune variante par composant. */
+  --anneau-focus: var(--bordure-moyenne) solid var(--bleu-600);
+  --anneau-focus-offset: 0;
+  --anneau-focus-champ: #0ea5e966; /* [relevé] input-focus-ring-color */
+
+  /* --- Empilement [relevé] -------------------------------------------------
+     Échelle discrète à 6 crans ; aucun z-index littéral ailleurs, sauf sur les
+     couches de l'en-tête (2 et 3) qui vivent sous cette échelle. */
+  --plan-tiroir:    700;
+  --plan-dialogue:  800;
+  --plan-menu:      900;
+  --plan-toast:     950;
+  --plan-infobulle: 1000;
+  --plan-voile:     1050;
+
+  /* --- Durées [relevé] -----------------------------------------------------
+     5 crans. La plus courante est 150 ms, la plus lente 500 ms. */
+  --duree-2xs: 50ms; /* transition-x-fast  */
+  --duree-xs:  .1s;  /* transition-fast    */
+  --duree-s:   .15s; /* transition-medium  */
+  --duree-m:   .2s;  /* transition-slow    */
+  --duree-l:   .5s;  /* transition-x-slow  */
+
+  /* --- Courbes [relevé] ----------------------------------------------------
+     7 courbes nommées. Le ressort est en `linear()` échantillonné sur 20
+     points — pas un cubic-bezier, donc capable de dépasser puis de revenir
+     plusieurs fois. Baseline widely available depuis décembre 2023. */
+  --courbe-doux:          cubic-bezier(.53, .2, .04, .96);   /* smoothstep */
+  --courbe-depassement:   cubic-bezier(.43, 1.91, .64, 1);   /* out-back */
+  --courbe-sortie-forte:  cubic-bezier(.165, .84, .44, 1);   /* ease-out-quart */
+  --courbe-entree-sortie: cubic-bezier(.86, 0, .07, 1);      /* ease-in-out-quint */
+  --courbe-sortie:        cubic-bezier(.25, .46, .45, .94);  /* ease-out-quad */
+  --courbe-symetrique:    cubic-bezier(.455, .03, .515, .955); /* ease-in-out-quad */
+  --courbe-ressort: linear(0, .005, .02 2%, .081 4.5%, .469 15.2%, .567, .65,
+    .722 24.4%, .784, .835 31.1%, .878 34.9%, .914 39.1%, .942 43.8%,
+    .964 49.1%, .979 55.4%, .989 62.4%, .995 71.1%, 1);
+
+  /* --- Gabarit [relevé] ----------------------------------------------------
+     La gouttière est une clamp() à pente 0,42 vw et ordonnée −398 px : plate à
+     32 px jusqu'à ~1024 px de large, puis ouverte jusqu'à 200 px. C'est ce qui
+     fait respirer la page sur grand écran, sans conteneur centré à largeur
+     fixe et sans jamais borner la largeur du texte. */
+  --rail: clamp(32px, calc(.42 * 100vw - 398px), 200px);
+  --largeur-embed-max:   1520px;
+  --hauteur-entete:      calc(7 * var(--rythme));  /* 56px */
+  --largeur-panneau-min: calc(45 * var(--rythme)); /* 360px */
+  --largeur-panneau-def: calc(60 * var(--rythme)); /* 480px */
+  --largeur-dialogue:    calc(98.25 * var(--rythme)); /* 786px */
+
+  /* --- Fonds d'outil graphique [relevé] ------------------------------------
+     Les deux seules marques d'un éditeur d'image dans la feuille. */
+  --damier-transparence: repeating-conic-gradient(
+    light-dark(#e5e5e5, #2a2a2a) 0% 25%,
+    light-dark(#f5f5f5, #1a1a1a) 0% 50%) 50% / 20px 20px;
+  --degrade-chargement: linear-gradient(90deg,
+    light-dark(#e6e6e6, #4a4a4a) 0%,
+    light-dark(#d9d9d9, #575757) 20%,
+    light-dark(#e6e6e6, #4a4a4a) 40%);
+  /* [relevé] Voile de survol des vignettes de galerie : sombre en haut ET en
+     bas, transparent au centre — les métadonnées se posent dessus. */
+  --voile-survol: linear-gradient(to bottom,
+    #000000b3 0%, #000000b3 6%, #0000 33%, #0000 66%,
+    #000000b3 94%, #000000b3 100%);
+  --couleur-surbrillance: #0bf;  /* [relevé] */
+  --couleur-attenuee:     #0006; /* [relevé] */
+}
+
+/* [relevé] Réduction de mouvement PAR LES JETONS : la source ne désactive
+   aucune transition au cas par cas, elle remet les 5 durées à 0s. Toute
+   transition qui consomme un jeton s'éteint donc, y compris écrite plus tard.
+   Dans cette référence, TOUTES les transitions passent par ces jetons. */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duree-2xs: 0s; --duree-xs: 0s; --duree-s: 0s;
+    --duree-m: 0s;   --duree-l: 0s;
+  }
+}
+
+/* [relevé] Propriétés typées : rendues animables et héritables. Sans
+   @property, une couleur passée en variable ne peut pas être interpolée. */
+@property --teinte-entete { syntax: "<color>"; inherits: true; initial-value: #0000; }
+@property --fond-case     { syntax: "<color>"; inherits: true; initial-value: currentColor; }
+@property --bord-case     { syntax: "<color>"; inherits: true; initial-value: currentColor; }
+@property --marque-case   { syntax: "<color>"; inherits: true; initial-value: currentColor; }
+@property --fond-signet   { syntax: "<color>"; inherits: true; initial-value: currentColor; }
+@property --hauteur-entete-anim { syntax: "<length>"; inherits: true; initial-value: 0; }
+
+/* =============================================================================
+   2. RESET
+   ========================================================================== */
+
+@layer reset {
+  /* [relevé] Le reset coupe le surlignage tactile et force
+     touch-action:manipulation partout : supprime le délai de 300 ms sans
+     dépendre d'une méta viewport supplémentaire. */
+  *, ::before, ::after {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    touch-action: manipulation;
+  }
+  /* [relevé] Le bouton hérite TOUT du texte environnant puis se redéclare :
+     un <button> se style comme un <span>, aucune remise à zéro par composant. */
+  button {
+    border: unset; color: inherit; font: inherit; letter-spacing: inherit;
+    margin: unset; padding: unset; text-align: inherit; text-indent: inherit;
+    text-rendering: inherit; text-shadow: inherit; text-transform: inherit;
+    word-spacing: inherit; touch-action: manipulation;
+    background-color: #0000;
+  }
+  button, label, select, summary,
+  [role="button"], [role="option"] { cursor: pointer; }
+  dialog {
+    background-color: unset; border: unset; color: inherit;
+    inset: unset; max-height: unset; max-width: unset;
+  }
+  h1, h2, h3, h4, h5, h6 { margin-block: 0; }
+  textarea { resize: vertical; resize: block; } /* [relevé] `block` moderne + repli */
+  figure { margin: 0; }
+  :where([hidden]:not([hidden="until-found"])) { display: none !important; }
+  body { margin: 0; }
+  nav ul { margin-block: 0; padding-inline-start: 0; list-style: none; }
+}
+
+/* =============================================================================
+   3. THÈME
+   ========================================================================== */
+
+@layer theme {
+  /* [relevé] Barre de défilement thématisée globalement : 4 px, sans piste,
+     pouce sur la rampe neutre. Déclarée deux fois dans la source (Firefox
+     standard puis WebKit) ; la seconde couleur l'emporte pour le pouce. */
+  * { scrollbar-color: var(--rampe-neutre-400) transparent; scrollbar-width: thin; }
+  ::-webkit-scrollbar { background: 0 0; width: 4px; height: 4px; }
+  ::-webkit-scrollbar-track { background-color: #0000; background: 0 0; }
+  ::-webkit-scrollbar-thumb {
+    background-color: var(--rampe-neutre-700);
+    border-radius: 4px;
+  }
+
+  a {
+    text-underline-offset: .2ex;
+    font-weight: var(--graisse-forte);
+    color: var(--rampe-alpha-1000);
+    text-decoration: none;
+  }
+  p, h1, h2, h3, h4, h5, h6 { overflow-wrap: break-word; }
+  h1, h2, h3, h4, h5, h6 { text-wrap: balance; }
+
+  /* [relevé] Échelle de titres attachée à la BALISE, avec une échappatoire
+     [data-textsize] : on garde le niveau sémantique correct sans en subir
+     l'apparence. Noter que h3/h4/h5 sortent du système de jetons (valeurs
+     littérales, graisse 600 sur h3) — c'est la source, pas une erreur. */
+  h1:not([data-textsize]), [data-textsize="1"] {
+    font-family: var(--police-titre); font-weight: var(--graisse-forte);
+    font-size: var(--taille-3xl); line-height: var(--interligne-serre);
+    letter-spacing: var(--approche-titre-3xl);
+  }
+  h2:not([data-textsize]), [data-textsize="2"] {
+    font-family: var(--police-titre); font-weight: var(--graisse-forte);
+    font-size: var(--taille-xl); line-height: var(--interligne-serre);
+    letter-spacing: var(--approche-titre-xl);
+  }
+  h3:not([data-textsize]), [data-textsize="3"] {
+    font-size: 1.125rem; font-style: normal; font-weight: 600; line-height: 1.33333;
+  }
+  h4:not([data-textsize]), [data-textsize="4"] {
+    font-size: 1rem; font-weight: 500; line-height: 1.5;
+  }
+  h5:not([data-textsize]), h6:not([data-textsize]), [data-textsize="5"] {
+    font-size: .875rem; font-weight: 400; line-height: 1.42857;
+  }
+
+  img, picture, svg, video { block-size: auto; max-inline-size: 100%; }
+
+  /* [relevé] Briques de liste de l'application. */
+  .article-info { display: flex; flex-direction: column; overflow: hidden; }
+  .article-nom  { text-overflow: ellipsis; white-space: nowrap; overflow: clip; }
+  .article-desc {
+    color: var(--texte-secondaire);
+    font-family: var(--police-texte); font-weight: var(--graisse-normale);
+    font-size: var(--taille-s); line-height: var(--interligne-texte);
+    letter-spacing: var(--approche-texte-s);
+    text-overflow: ellipsis; white-space: nowrap; overflow: clip;
+  }
+  .rangee {
+    display: flex; flex-direction: row; align-items: center;
+    gap: var(--rythme); overflow: hidden;
+  }
+  .remplit { flex: 1; }
+  .cale-absolue { position: absolute; inset: 0; }
+
+  /* [relevé] Étiquette d'état : gabarit FIXE 36×18, bordure et texte sur
+     neutre-500 — elle ne prend jamais la couleur d'accent, elle reste sourde
+     et ne concurrence pas le nom de l'élément. */
+  .etiquette {
+    box-sizing: border-box; display: flex; flex-shrink: 0;
+    align-items: center; justify-content: center;
+    width: 36px; height: 18px; padding: 1px;
+    border: var(--bordure-fine) solid var(--rampe-neutre-500);
+    border-radius: var(--rayon-m);
+    color: var(--rampe-neutre-500);
+    font-family: var(--police-texte); font-weight: var(--graisse-normale);
+    font-size: var(--taille-xs); line-height: var(--interligne-texte);
+    letter-spacing: var(--approche-texte-xs);
+    margin-left: calc(.5 * var(--rythme));
+  }
+
+  /* [relevé] `kbd:has(> kbd)` : seul le conteneur EXTERNE est mis en ligne,
+     chaque touche interne devient une pastille de 20 px minimum. Aucune
+     classe nécessaire — le balisage sémantique suffit. */
+  kbd:has(> kbd) { display: inline-flex; gap: var(--espace-2xs); }
+  kbd:has(> kbd) > kbd {
+    display: flex; align-items: center; justify-content: center;
+    height: calc(2.5 * var(--rythme)); min-width: calc(2.5 * var(--rythme));
+    border-radius: calc(.25 * var(--rythme));
+    background-color: var(--rampe-neutre-800);
+    color: var(--rampe-neutre-400);
+    font-family: var(--police-texte); font-weight: var(--graisse-forte);
+  }
+
+  html {
+    view-transition-name: root; tab-size: 4;
+    -webkit-text-size-adjust: 100%; text-size-adjust: 100%;
+  }
+  body {
+    display: flex; flex-flow: column; align-items: center;
+    min-block-size: 100dvh;
+    container-type: inline-size; /* [relevé] le body est le conteneur de requête */
+  }
+  body > main { flex-grow: 1; }
+  body > .pied { inline-size: 100%; }
+}
+
+/* =============================================================================
+   4. COMPOSANTS
+   ========================================================================== */
+
+@layer component {
+  /* [relevé] Titre de dialogue et message d'erreur : les deux seules règles de
+     composant applicatif présentes dans le bloc inline. */
+  .dialogue h2 {
+    font-family: var(--police-titre); font-weight: var(--graisse-forte);
+    font-size: var(--taille-l); line-height: var(--interligne-serre);
+    letter-spacing: var(--approche-titre-l);
+  }
+  .dialogue .message-erreur {
+    font-family: var(--police-texte); font-weight: var(--graisse-normale);
+    font-size: var(--taille-s); line-height: var(--interligne-texte);
+    letter-spacing: var(--approche-texte-s);
+    color: var(--danger-600);
+  }
+
+  /* [relevé] La règle de focus globale EXCLUT nommément les composants qui
+     gèrent leur propre anneau — dans la source : `rv-menu-item`,
+     `rv-menu-item-card`, `rv-button`, `rv-input`, `rv-slider`, `rv-textarea`.
+     Un seul sélecteur couvre tout le reste, sans !important ni surcharge.
+     [arbitrage] La liste est réécrite avec les éléments de CETTE page qui ont
+     bien leur propre anneau (le champ de gabarit, l'aire de saisie de l'invite
+     dont l'anneau est porté par le conteneur) : recopier les noms `rv-*`
+     donnerait une exclusion décorative qui n'exclut rien. */
+  :not(:is(.gabarits-champ, .invite-zone)):focus-visible {
+    outline: var(--anneau-focus);
+    outline-offset: var(--anneau-focus-offset);
+    border-color: #0000; /* [relevé] la bordure s'efface sous l'anneau */
+  }
+  /* [relevé] Toute cible de focus se recale à 8 % de la hauteur du viewport
+     pour ne pas se retrouver sous l'en-tête fixe. Remis à 0 plus bas par la
+     couche page — la source le fait aussi, dans cet ordre. */
+  :focus-visible, :target { scroll-margin-block: 8vh; }
+}
+
+/* =============================================================================
+   5. UTILITAIRES
+   [relevé] La source écrit ces largeurs en @container, pas en @media : elles
+   réagissent à la largeur du <body>, pas à celle de la fenêtre.
+   ========================================================================== */
+
+@layer utilities {
+  .mx-auto { margin-inline: auto; }
+  @container (width < 880px) { .conteneur-45 { width: min(720px, 100cqw - 2rem); } }
+  @container (width >= 880px) { .conteneur-45 { width: min(720px, 100cqw - 3rem); } }
+  .conteneur-90 { max-width: 1440px; }
+  .mt-9 { margin-block-start: 72px; }
+  .mb-4 { margin-block-end: 36px; }
+}
+
+/* =============================================================================
+   6. RACINE DE PAGE
+   ========================================================================== */
+
+:root {
+  /* [relevé] La page force le thème clair (`color-scheme: light !important`)
+     malgré une rampe bi-thème complète : les paires sombres restent dormantes
+     ici. Elles sont conservées car c'est le SYSTÈME qui est relevé. */
+  color-scheme: light;
+  background-color: var(--surface-page);
+  color: var(--texte-primaire);
+  font-family: var(--police-texte);
+  font-weight: var(--graisse-normale);
+  line-height: var(--interligne-texte);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizelegibility;
+  overscroll-behavior-x: none; /* [relevé] bloque le retour arrière par swipe */
+  view-transition-name: none;  /* [relevé] annule le nom posé sur html */
+}
+::view-transition { pointer-events: none; } /* [relevé] */
+
+html {
+  background: var(--surface-page);
+  scrollbar-gutter: stable;  /* [relevé] pas de saut de 15 px sous dialogue */
+  scroll-snap-type: none;    /* [relevé] */
+  position: relative;
+}
+/* [relevé] Écrase la valeur 8vh posée dans la couche `component` : sur cette
+   page, l'ancre se cale au ras du bord. */
+:focus-visible, :target { scroll-margin-block: 0; }
+
+/* [relevé] Escamoté aux lecteurs mais pas au clavier — dimensions exactes. */
+.invisible-lecteur {
+  clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+  width: 1px; height: 1px; margin: -1px; padding: 0;
+  position: absolute; overflow: hidden;
+}
+
+/* =============================================================================
+   7. EN-TÊTE ET VOILE PROGRESSIF
+   ========================================================================== */
+
+/* [relevé] `position: fixed`, z-index 3, décalé de l'encoche. Le composant
+   <rv-marketing-header> de la source est vide dans le HTML (rendu en JS) :
+   [arbitrage] son contenu — marque, navigation, actions — est reconstruit ici
+   avec les jetons relevés. La mécanique de position, d'empilement et
+   d'inversion de thème est, elle, relevée. */
+.entete {
+  position: fixed; inset-block-start: 0; inset-inline: 0;
+  z-index: 3;
+  margin-block-start: env(safe-area-inset-top, 0px);
+  color: var(--rampe-alpha-1000);
+  display: flex; align-items: center; gap: var(--espace-l);
+  height: var(--hauteur-entete);
+  padding-inline: var(--rail); /* [arbitrage] même gouttière que le corps */
+}
+/* [relevé] Les deux classes que le script pose sur un ancêtre pour inverser le
+   thème de l'en-tête selon la zone traversée par le défilement. Elles sont
+   pilotées par motion.js — c'est le procédé exact de la source. */
+.color-scheme-image .entete { color-scheme: dark; }
+.color-scheme-text  .entete { color-scheme: light; }
+
+.entete-marque {
+  font-family: var(--police-titre); font-weight: var(--graisse-forte);
+  font-size: var(--taille-l); letter-spacing: var(--approche-titre-l);
+  margin-inline-end: auto;
+}
+.entete-nav { display: flex; align-items: center; gap: var(--espace-l); }
+.entete-nav a {
+  font-family: var(--police-texte); font-weight: var(--graisse-normale);
+  font-size: var(--taille-s); color: var(--rampe-alpha-850);
+  transition: color var(--duree-s) var(--courbe-sortie); /* [arbitrage] */
+}
+.entete-nav a:hover { color: var(--rampe-alpha-1000); } /* [arbitrage] */
+/* [arbitrage] Bouton d'en-tête : reprend le gabarit relevé de `.intro-cta`
+   (40 px, rayon 999px, inversion texte/fond) en taille réduite. */
+.entete-cta {
+  height: var(--hauteur-bouton-s);
+  padding-inline: var(--espace-m);
+  border-radius: 999px;
+  background: var(--rampe-alpha-1000);
+  color: var(--rampe-neutre-0);
+  font-size: var(--taille-s); font-weight: var(--graisse-forte);
+  display: inline-flex; align-items: center; white-space: nowrap;
+  transition: opacity var(--duree-s) var(--courbe-sortie);
+}
+.entete-cta:hover { opacity: .82; }
+
+/* [relevé] Flou PROGRESSIF en 3 couches empilées : chacune floute plus fort et
+   se masque plus tôt que la précédente ; la somme croît vers le haut de
+   l'écran, ce qu'un backdrop-filter unique ne sait pas faire.
+   Le commentaire de la source explicite l'intention : le voile n'est JAMAIS
+   basculé, pour que ses couches de backdrop ne se re-rasterisent pas à chaque
+   image. Le fondu est porté par .voile-teinte, beaucoup moins coûteux. */
+.voile, .voile-teinte {
+  height: calc(140px + env(safe-area-inset-top, 0px));
+  pointer-events: none; z-index: 2;
+  position: fixed; inset: 0 0 auto;
+}
+.voile > i { position: absolute; inset: 0; }
+.voile > i:first-child {
+  -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px);
+  -webkit-mask-image: linear-gradient(#000 55%, #0000 82%);
+  mask-image: linear-gradient(#000 55%, #0000 82%);
+}
+.voile > i:nth-child(2) {
+  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+  -webkit-mask-image: linear-gradient(#000 32%, #0000 60%);
+  mask-image: linear-gradient(#000 32%, #0000 60%);
+}
+.voile > i:nth-child(3) {
+  -webkit-backdrop-filter: blur(18px); backdrop-filter: blur(18px);
+  -webkit-mask-image: linear-gradient(#000 12%, #0000 38%);
+  mask-image: linear-gradient(#000 12%, #0000 38%);
+}
+/* [relevé] Pseudo-élément de 120 px placé AU-DESSUS du viewport
+   (bottom: 100%) : il capture la zone hors écran, sinon le flou montre un
+   bord franc quand la page est en haut de course. */
+.voile::before, .voile-teinte::before {
+  content: ""; height: 120px;
+  position: absolute; bottom: 100%; left: 0; right: 0;
+}
+.voile::before {
+  -webkit-backdrop-filter: blur(18px); backdrop-filter: blur(18px);
+  color-scheme: dark;
+  background: rgb(from var(--rampe-neutre-0) r g b / .92);
+}
+.voile-teinte::before { background: var(--surface-page); }
+
+/* [relevé] Dégradé à 16 arrêts, positions calculées en fraction de --fin.
+   Seize arrêts au lieu de deux suppriment la bande de Mach d'un dégradé
+   linéaire simple. Fractions exactes de la source.
+   [arbitrage] `opacity` + `transition` : la source pilote ce fondu en JS
+   (wireHeaderVeil) ; motion.js fait de même, la transition est déclarée ici. */
+.voile-teinte {
+  --teinte: var(--rampe-neutre-1000);
+  --fin: calc(140px + env(safe-area-inset-top, 0px));
+  opacity: 0;
+  transition: opacity var(--duree-l) var(--courbe-sortie);
+  background: linear-gradient(to top,
+    rgb(from var(--teinte) r g b / 0)   calc(100% - var(--fin) * 1),
+    rgb(from var(--teinte) r g b / .02) calc(100% - var(--fin) * .953),
+    rgb(from var(--teinte) r g b / .04) calc(100% - var(--fin) * .911),
+    rgb(from var(--teinte) r g b / .07) calc(100% - var(--fin) * .872),
+    rgb(from var(--teinte) r g b / .1)  calc(100% - var(--fin) * .8344),
+    rgb(from var(--teinte) r g b / .14) calc(100% - var(--fin) * .7963),
+    rgb(from var(--teinte) r g b / .18) calc(100% - var(--fin) * .756),
+    rgb(from var(--teinte) r g b / .23) calc(100% - var(--fin) * .7117),
+    rgb(from var(--teinte) r g b / .29) calc(100% - var(--fin) * .6616),
+    rgb(from var(--teinte) r g b / .35) calc(100% - var(--fin) * .604),
+    rgb(from var(--teinte) r g b / .43) calc(100% - var(--fin) * .537),
+    rgb(from var(--teinte) r g b / .52) calc(100% - var(--fin) * .459),
+    rgb(from var(--teinte) r g b / .62) calc(100% - var(--fin) * .368),
+    rgb(from var(--teinte) r g b / .73) calc(100% - var(--fin) * .2624),
+    rgb(from var(--teinte) r g b / .86) calc(100% - var(--fin) * .1403),
+    var(--teinte) 100%);
+}
+/* [relevé] Sur les zones de TEXTE la teinte devient claire (neutre-50) ; sur
+   les zones d'IMAGE elle reste sur neutre-1000. Une seule variable change. */
+.color-scheme-text .voile-teinte { --teinte: var(--rampe-neutre-50); }
+.voile-teinte.est-visible { opacity: 1; } /* [arbitrage] classe posée en JS */
+
+@media (max-width: 750px) { /* [relevé] */
+  .voile, .voile-teinte { height: calc(128px + env(safe-area-inset-top, 0px)); }
+  .voile-teinte { --fin: calc(128px + env(safe-area-inset-top, 0px)); }
+  /* [arbitrage] Le composant <rv-marketing-header> de la source gère lui-même
+     son repli mobile, hors du CSS relevable. Ici la navigation se retire et
+     l'en-tête garde marque + action, seul contenu qui tienne à 390 px. */
+  .entete-nav { display: none; }
+}
+
+/* =============================================================================
+   8. HERO — bloc, scène collante, bande d'exemples
+   ========================================================================== */
+
+/* [relevé] Le bloc porte le fond et inverse le thème ; la scène est collante
+   à l'intérieur. Deux éléments distincts, pas un seul. */
+/* [relevé] Fond = `--rv-color-neutral-0` (la rampe, PAS le rôle « panneau ») :
+   sous `color-scheme: dark` il vaut donc #000, un vrai noir. Le rôle panneau,
+   lui, vaut neutre-50 en sombre — ce ne serait pas le même noir. */
+.hero-bloc {
+  background: var(--rampe-neutre-0);
+  color-scheme: dark;
+  width: 100%; position: relative;
+}
+.hero-scene {
+  background: var(--rampe-neutre-0);
+  color-scheme: dark;
+  --marge-bas-hero: 48px;
+  --rail-hero: clamp(24px, 3vw, 48px);
+  display: flex; flex-direction: column;
+  height: 100svh;             /* [relevé] svh, pas vh */
+  position: sticky; top: 0;   /* [relevé] la suite glisse par-dessus */
+  overflow: hidden;
+}
+.hero-texte {
+  text-align: center;
+  padding: clamp(96px, 12svh, 160px) var(--rail-hero) 56px;
+  display: flex; flex-direction: column; flex: none; align-items: center;
+}
+/* [relevé] Titre et sous-titre partagent famille, graisse ET taille (4xl).
+   La hiérarchie ne tient qu'à la COULEUR : primaire contre tertiaire. C'est la
+   signature typographique de la page. Noter la double `line-height` de la
+   source : le jeton, puis 1.2 littéral qui l'écrase. */
+.hero-titre, .hero-sous-titre {
+  font-family: var(--police-titre); font-weight: var(--graisse-forte);
+  font-size: var(--taille-4xl);
+  line-height: var(--interligne-serre); line-height: 1.2;
+  letter-spacing: var(--approche-titre-4xl);
+}
+.hero-titre { color: var(--texte-primaire); margin: 0; }
+.hero-sous-titre {
+  max-width: 34ch; text-wrap: balance;
+  color: var(--texte-tertiaire); margin: 4px 0 0;
+}
+.hero-actions { display: flex; gap: var(--espace-s); margin-top: 32px; }
+
+/* [relevé] Bande horizontale libre : pas de grille, pas de largeur de carte
+   fixe — chaque carte prend la hauteur disponible, sa largeur découle du ratio
+   de l'image. Barre masquée, défilement natif conservé (clavier, trackpad),
+   et `overscroll-behavior-x: contain` pour ne pas entraîner la page. */
+.hero-bande {
+  min-height: 0;
+  padding-inline: var(--rail-hero);
+  padding-block: 0 var(--marge-bas-hero);
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+  flex: auto; display: flex; align-items: center; gap: 12px;
+  overflow: auto hidden;
+}
+.hero-bande::-webkit-scrollbar { display: none; }
+/* [arbitrage] Affordance du glisser : la source dit « visitors can grab it »,
+   mais son CSS ne pose aucun curseur — sans ce signal, rien n'indique que la
+   bande se saisit. `grab` au repos, `grabbing` pendant le tir. */
+[data-marquee] { cursor: grab; }
+[data-marquee].est-saisie { cursor: grabbing; user-select: none; }
+[data-marquee].est-saisie img { pointer-events: none; } /* pas de drag natif d'image */
+.hero-carte {
+  flex: none; margin: 0; height: 100%;
+  display: grid; grid-template-rows: minmax(0, 1fr) auto; gap: 16px;
+}
+.hero-image {
+  object-fit: cover;
+  background: var(--surface-panneau-2);
+  border-radius: 2px;         /* [relevé] 2px, pas un rayon du système */
+  grid-row: 1;
+  width: auto; max-width: none; height: 100%; min-height: 0;
+}
+.hero-media {
+  border-radius: 2px; grid-row: 1;
+  height: 100%; min-height: 0; position: relative; overflow: hidden;
+}
+/* [relevé] La vidéo est empilée SOUS l'affiche à opacité 0 et remonte à 1 en
+   150 ms : assez court pour ne pas se lire comme une animation, assez long
+   pour masquer la première image décodée. Le débord de 102 % évite un liseré
+   d'un pixel au recadrage. Classe `.joue` posée par motion.js quand les images
+   sont réellement rendues — exactement comme la source. */
+.hero-video {
+  object-fit: cover; opacity: 0;
+  border-radius: 2px;
+  width: auto; min-width: 102%; height: auto; min-height: 102%;
+  transition: opacity var(--duree-s);
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+}
+.hero-media.joue .hero-video { opacity: 1; }
+
+/* [relevé] Reflet natif WebKit sous chaque carte, atténué par un dégradé qui
+   ne démarre qu'à 35 %. Non standard, mais sans élément supplémentaire ni coût
+   de mise en page — et il dégrade proprement (en rien) ailleurs. */
+.hero-image, .hero-media {
+  -webkit-box-reflect: below 10px linear-gradient(to bottom, transparent 35%, #0000004d);
+}
+.hero-media .hero-image { -webkit-box-reflect: unset; display: block; }
+
+.hero-legende {
+  font-family: var(--police-texte); font-weight: var(--graisse-normale);
+  font-size: var(--taille-m);
+  line-height: var(--interligne-texte); line-height: 1.3;
+  letter-spacing: var(--approche-texte-m);
+  color: var(--texte-secondaire);
+  text-align: center; grid-row: 2;
+}
+
+@media (max-width: 1024px) { /* [relevé] */
+  .hero-titre, .hero-sous-titre {
+    font-size: var(--taille-3xl);
+    letter-spacing: var(--approche-titre-3xl);
+  }
+  /* [relevé] La scène cesse d'être collante et reprend le flux : sticky +
+     100svh piège le doigt sur mobile. */
+  .hero-scene { height: auto; min-height: 100svh; position: static; }
+  .hero-bande { align-items: center; overflow-x: auto; scrollbar-width: none; }
+  .hero-image { width: auto; height: min(90.4159vw - 32.5497px, 66svh); }
+}
+
+/* =============================================================================
+   9. SECTIONS — ossature commune
+   ========================================================================== */
+
+.page-modele { width: 100%; } /* [relevé] indispensable : body centre ses enfants */
+.sections {
+  display: flex; flex-direction: column;
+  row-gap: 32px; min-inline-size: 0;
+}
+
+/* [relevé] Ossature de section : une GRILLE, pas un flex, avec `place-content:
+   safe center`. Le mot-clé `safe` fait céder l'alignement plutôt que couper le
+   contenu quand la place manque. 104svh — pas 100 : chaque section dépasse
+   volontairement d'une fraction d'écran, ce qui laisse toujours affleurer le
+   début de la suivante et signale qu'il y a quelque chose sous le pli. */
+.section {
+  text-align: center;
+  place-content: safe center;
+  min-height: 104svh;
+  display: grid;
+}
+.section p {
+  color: var(--texte-secondaire);
+  justify-self: center;
+  width: 400px; max-width: 90vw;
+}
+.section p strong {
+  color: var(--texte-primaire);
+  font-weight: var(--graisse-forte);
+}
+.section .icone { margin: 0 auto; }
+
+/* [relevé] Le groupe d'actions remonte de 28px − espace-l = 8 px : il vient
+   mordre l'interligne du sous-titre au lieu de s'en détacher. */
+:is(.hero-texte, .section-gauche, .section-droite,
+    .section-references, .section-gabarits) .intro-actions {
+  gap: var(--espace-s); flex-shrink: 0;
+  margin-block-start: calc(28px - var(--espace-l));
+  display: flex;
+}
+/* [relevé] Bouton pilule 40 px. Le primaire INVERSE texte et fond (fond =
+   couleur du texte, texte = couleur du panneau) : il suit donc le thème sans
+   second jeu de jetons. Le secondaire n'a pas de fond, juste une bordure en
+   color-mix à 28 % du texte — toujours accordée au thème courant. */
+:is(.hero-texte, .section-gauche, .section-droite,
+    .section-references, .section-gabarits) .intro-cta {
+  height: 40px;
+  padding-inline: var(--espace-l);
+  font-size: var(--taille-m);
+  white-space: nowrap;
+  border-radius: 999px;
+  align-items: center; text-decoration: none; display: inline-flex;
+  /* [arbitrage] Aucune transition dans la source : l'état vit dans le
+     composant <rv-button> chargé en JS, hors du bloc inline. */
+  transition: background-color var(--duree-s) var(--courbe-sortie),
+              border-color var(--duree-s) var(--courbe-sortie);
+}
+:is(.hero-texte, .section-gauche, .section-droite,
+    .section-references, .section-gabarits) .intro-cta--primaire {
+  background: var(--texte-primaire);
+  color: var(--rampe-neutre-0);
+}
+:is(.hero-texte, .section-gauche, .section-droite,
+    .section-references, .section-gabarits) .intro-cta--secondaire {
+  border: 1px solid color-mix(in srgb, var(--texte-primaire) 28%, transparent);
+  color: var(--texte-primaire);
+}
+/* [arbitrage] Survols reconstruits dans la rampe relevée. */
+.intro-cta--primaire:hover { background: var(--rampe-neutre-800); }
+.intro-cta--secondaire:hover {
+  background: var(--surface-encart);
+  border-color: color-mix(in srgb, var(--texte-primaire) 44%, transparent);
+}
+
+/* [relevé] Le fond du panneau n'est pas une couleur : c'est l'image elle-même,
+   floutée à 200 px, opacité .48, agrandie de 400 px et décalée de −200 px pour
+   qu'aucun bord du flou n'apparaisse. Chaque section prend donc la teinte de
+   son propre contenu, sans un seul jeton de couleur dédié. */
+.fond-flou {
+  object-fit: cover;
+  filter: blur(200px);
+  opacity: .48;
+  width: calc(100% + 400px); height: calc(100% + 400px);
+  position: absolute; top: -200px; left: -200px;
+}
+
+/* [relevé] Bascule embarqué / statique. L'éditeur live (`.embed-corps`) est la
+   présentation par défaut au-dessus de 1160 px ; en dessous — ou si son
+   amorçage échoue (`.embed-replie`) — la paire d'images statique prend le
+   relais. Les deux existent toujours dans le DOM. */
+.section .cadre-duo.embed-statique { display: none; }
+@media (max-width: 1160px) {
+  .section .embed-corps { display: none; }
+  .section .cadre-duo.embed-statique { display: flex; }
+}
+.section.embed-replie .embed-corps { display: none; }
+.section.embed-replie .cadre-duo.embed-statique { display: flex; }
+
+/* --- Cadre duo -------------------------------------------------------------
+   [relevé] --duo-inset est calculé à partir du remplissage ET de la hauteur du
+   panneau : le cadrage se resserre quand la fenêtre rapetisse, au lieu de
+   couper. `padding-inline: 0` annule le remplissage horizontal du raccourci
+   qui précède — c'est la piste qui le reprend. */
+.section .cadre-duo {
+  --duo-pad: 80px;
+  --panneau-h: calc(48svh + 2 * var(--duo-pad));
+  --duo-inset: max(16px, calc(1.1 * var(--duo-pad) - .05 * var(--panneau-h)));
+  box-sizing: border-box;
+  padding: var(--duo-pad); padding-inline: 0;
+  border-radius: 32px;
+  display: flex; position: relative; overflow: hidden;
+}
+/* [relevé] Défilement horizontal à accroche `proximity` (pas `mandatory`) : la
+   bande s'aligne si on s'arrête près d'un point, sans jamais forcer. Le
+   remplissage est compensé par une marge négative de même valeur pour que la
+   zone d'accroche déborde du cadre sans décaler la mise en page. */
+.section .cadre-duo .duo-piste {
+  align-items: center;
+  gap: calc(var(--duo-pad) / 2);
+  flex: 1; min-width: 0;
+  display: flex;
+  overflow-y: hidden; overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x proximity;
+  scroll-padding-inline: var(--duo-pad);
+  scrollbar-width: none;
+  padding-inline: var(--duo-pad);
+  padding-block: var(--duo-pad);
+  margin-block: calc(-1 * var(--duo-pad));
+}
+.section .cadre-duo .duo-piste::-webkit-scrollbar { display: none; }
+/* [relevé] L'ombre porte sur la FORME (drop-shadow), pas sur le rectangle :
+   l'image garde ses coins vifs et flotte quand même. */
+.section .cadre-duo :is(img, video):not(.fond-flou) {
+  height: calc(var(--panneau-h) - 2 * var(--duo-inset));
+  object-fit: cover;
+  width: auto; max-width: none;
+  filter: drop-shadow(0 14px 44px
+    color-mix(in srgb, var(--rampe-neutre-1000) 18%, transparent));
+  flex: none; position: relative;
+}
+.section .cadre-duo .duo-piste img:not(.fond-flou) { scroll-snap-align: start; }
+/* [relevé] Une image seule respire davantage : le retrait passe du duo-inset
+   au duo-pad complet. */
+.section .cadre-duo .duo-piste img:only-child {
+  height: calc(var(--panneau-h) - 2 * var(--duo-pad));
+}
+
+/* --- Arrangements gauche / droite ------------------------------------------
+   [relevé] Le panneau saigne hors de la gouttière par une marge négative égale
+   au rail : le texte reste aligné dessus, l'image touche le bord de l'écran. */
+.section-gauche, .section-droite {
+  min-height: 104svh;
+  padding-inline: var(--rail);
+  background: var(--surface-page);
+  color-scheme: light;
+  text-align: start;
+  align-items: center;
+  display: flex;
+  overflow: hidden;
+}
+:is(.section-gauche, .section-droite) .feature-agencement {
+  align-items: center;
+  gap: var(--espace-4xl);
+  width: 100%;
+  display: flex;
+}
+:is(.section-gauche, .section-droite) .feature-copie {
+  gap: var(--espace-l);
+  text-align: start;
+  flex-direction: column; flex: 0 auto;
+  max-width: 30rem;
+  display: flex;
+}
+/* [relevé] Encore le procédé du hero : titre et sous-titre au MÊME corps
+   (28 px littéral), séparés par la graisse (500 vs 400) et la couleur. */
+:is(.section-gauche, .section-droite) .feature-copie .intro-titre {
+  letter-spacing: var(--approche-titre-2xl);
+  font-size: 28px; line-height: 1.2;
+  font-family: var(--police-titre); font-weight: var(--graisse-forte);
+  text-wrap: balance;
+  color: var(--rampe-neutre-900);
+  margin: 0;
+}
+:is(.section-gauche, .section-droite) .feature-copie .intro-sous {
+  width: auto; max-width: 52ch;
+  font-family: var(--police-titre); font-weight: var(--graisse-normale);
+  text-wrap: pretty;
+  letter-spacing: var(--approche-titre-2xl);
+  color: var(--texte-tertiaire);
+  justify-self: start;
+  margin: 4px 0 0;
+  font-size: 28px; line-height: 1.2;
+}
+:is(.section-gauche, .section-droite) .cadre-duo {
+  min-width: 0;
+  block-size: var(--panneau-h);
+  flex: auto;
+}
+.section-gauche { padding-left: 0; }
+.section-gauche .cadre-duo { margin-inline-start: calc(-1 * var(--rail)); }
+.section-droite { padding-right: 0; }
+.section-droite .cadre-duo { margin-inline-end: calc(-1 * var(--rail)); }
+
+/* [relevé] Chaque côté récupère le rail dans SON remplissage de piste, et
+   utilise `safe flex-end` du côté qui saigne. */
+.section-droite .cadre-duo .duo-piste {
+  padding-inline: var(--duo-inset) calc(var(--rail) + var(--duo-pad));
+  scroll-padding-inline: var(--duo-inset) var(--duo-pad);
+  justify-content: flex-start;
+}
+.section-gauche .cadre-duo .duo-piste {
+  padding-inline: calc(var(--rail) + var(--duo-pad)) var(--duo-inset);
+  scroll-padding-inline: var(--duo-pad) var(--duo-inset);
+  justify-content: safe flex-end;
+}
+@media (min-width: 950px) { /* [relevé] */
+  .section-gauche .cadre-duo .duo-piste img:not(.fond-flou) { scroll-snap-align: end; }
+}
+
+/* [relevé] Au-dessus de 1161 px, une section qui porte un éditeur embarqué
+   change complètement d'agencement : la copie se DISSOUT (`display: contents`)
+   et ses deux blocs deviennent les extrémités d'une ligne d'en-tête posée
+   au-dessus de l'éditeur. */
+@media (min-width: 1161px) {
+  :is(.section-gauche, .section-droite):has(.embed-corps):not(.embed-replie) {
+    padding-inline: var(--rail);
+    --hauteur-cadre-embed: 66svh;
+    flex-direction: column; justify-content: center; gap: 48px;
+  }
+  :is(.section-gauche, .section-droite):has(.embed-corps):not(.embed-replie) .feature-agencement {
+    box-sizing: border-box;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: var(--espace-2xl);
+    inline-size: min(calc(100vw - 2 * var(--rail)), var(--largeur-embed-max));
+    flex-wrap: wrap;
+    margin-inline: auto;
+    display: flex;
+  }
+  :is(.section-gauche, .section-droite):has(.embed-corps):not(.embed-replie) .feature-copie {
+    display: contents;
+  }
+}
+
+/* [relevé] Très grands écrans : le panneau cesse de saigner et le contenu se
+   recentre sur sa largeur intrinsèque. */
+@media (min-width: 2100px) {
+  :is(.section-gauche, .section-droite):not(:has(.embed-corps)) {
+    padding-inline: var(--rail);
+  }
+  :is(.section-gauche, .section-droite):not(:has(.embed-corps)) .feature-agencement {
+    inline-size: fit-content; max-inline-size: 100%; margin-inline: auto;
+  }
+  :is(.section-gauche, .section-droite):not(:has(.embed-corps)) .cadre-duo {
+    flex: 0 auto; min-width: 0; margin-inline: 0;
+  }
+  :is(.section-gauche, .section-droite):not(:has(.embed-corps)) .cadre-duo .duo-piste {
+    padding-inline: var(--duo-inset);
+    scroll-padding-inline: var(--duo-inset);
+    justify-content: safe center;
+  }
+}
+
+/* [relevé] Sous 890 px : la copie remonte au-dessus du panneau (`order: -1`),
+   le panneau perd sa hauteur fixe et sa saignée. Les règles sont qualifiées
+   par la SECTION, sans quoi la marge négative — plus spécifique — survivrait
+   au point de rupture et sortirait le panneau de l'écran. */
+@media (max-width: 890px) {
+  :is(.section-gauche, .section-droite) { padding-inline: var(--rail); }
+  :is(.section-gauche, .section-droite) .feature-agencement {
+    flex-direction: column; align-items: stretch;
+  }
+  :is(.section-gauche, .section-droite) .feature-copie {
+    flex: none; order: -1; max-width: none;
+  }
+  :is(.section-gauche, .section-droite) .cadre-duo {
+    --duo-pad: clamp(24px, 5vw, 80px);
+    flex: none; block-size: auto; inline-size: auto; margin-inline: 0;
+  }
+  :is(.section-gauche, .section-droite) .cadre-duo .duo-piste {
+    padding-inline: var(--duo-pad); scroll-padding-inline: var(--duo-pad);
+  }
+  /* [relevé] Inversion d'ordre propre à la section « édition directe » : la
+     vue APRÈS passe en second alors qu'elle est première dans le balisage. */
+  [data-section="edition-directe"] .cadre-duo .duo-piste > img:first-child { order: 1; }
+  :is(.section-gauche, .section-droite) .cadre-duo .duo-piste img:not(.fond-flou) {
+    width: min(calc((100vw - 2 * var(--rail) - 40px) / 1.15), 76svh);
+    height: auto;
+  }
+}
+@media (max-width: 750px) { /* [relevé] */
+  .section .cadre-duo .duo-piste img:only-child {
+    width: min(100%, max(320px, 48svh)); height: auto;
+  }
+}
+@media (max-width: 1024px) { /* [relevé] tous les titres de section rétrécissent */
+  :is(.section-gauche, .section-droite, .section-references, .section-gabarits)
+  :is(.feature-copie, .references-copie, .produit-entete)
+  :is(.intro-titre, .produit-titre, .intro-sous, .produit-sous) {
+    letter-spacing: var(--approche-titre-2xl);
+    font-size: 24px;
+  }
+}
+
+/* =============================================================================
+   10. SECTION « RÉFÉRENCES » — grille de cartes sélectionnables
+   ========================================================================== */
+
+.section-references {
+  min-height: 104svh;
+  padding-left: 0; padding-right: var(--rail);
+  background: var(--surface-page);
+  color-scheme: light;
+  text-align: start;
+  align-items: center;
+  display: flex;
+  overflow: hidden;
+}
+.section-references .references-agencement {
+  align-items: center; gap: var(--espace-4xl);
+  width: 100%; display: flex;
+}
+/* [relevé] Base flexible calculée par SOUSTRACTION : « tout ce qui reste après
+   la colonne de texte de 30rem, le rail et la moitié de la gouttière ». Le
+   cadre ne se dimensionne pas en pourcentage mais par ce qui reste. */
+.section-references .references-cadre {
+  --duo-pad: 80px;
+  --panneau-h: calc(48svh + 2 * var(--duo-pad));
+  --ref-inset: max(16px, calc(1.1 * var(--duo-pad) - .05 * var(--panneau-h)));
+  flex: 0 1 calc(min(50vw, 100vw - 30rem - var(--rail) - (var(--espace-4xl) / 2))
+                 + var(--rail) - (var(--espace-4xl) / 2));
+  min-width: 0;
+  block-size: var(--panneau-h);
+  padding: var(--ref-inset);
+  padding-left: calc(var(--ref-inset) + var(--rail));
+  border-radius: 32px;
+  justify-content: flex-end; align-items: center;
+  margin-inline-start: calc(-1 * var(--rail));
+  display: flex; position: relative; overflow: hidden;
+}
+.section-references .references-image {
+  aspect-ratio: 4/3;
+  object-position: 50% 100%;   /* [relevé] cadrage bas */
+  block-size: min(calc(var(--panneau-h) - 2 * var(--ref-inset)), 36vw);
+  object-fit: cover;
+  inline-size: auto; max-width: none;
+  filter: drop-shadow(0 14px 44px
+    color-mix(in srgb, var(--rampe-neutre-1000) 18%, transparent));
+  flex: none; position: relative;
+}
+.section-references .references-copie {
+  gap: var(--espace-l);
+  flex-direction: column; flex: 0 0 30rem;
+  min-width: 0; display: flex;
+}
+.section-references .references-copie .intro-titre {
+  letter-spacing: var(--approche-titre-2xl);
+  font-size: 28px; line-height: 1.2;
+  font-family: var(--police-titre); font-weight: var(--graisse-forte);
+  text-wrap: balance; color: var(--rampe-neutre-900); margin: 0;
+}
+.section-references .references-copie .intro-sous {
+  width: auto; max-width: 52ch;
+  font-family: var(--police-titre); font-weight: var(--graisse-normale);
+  text-wrap: pretty; letter-spacing: var(--approche-titre-2xl);
+  color: var(--texte-tertiaire); margin: 4px 0 0;
+  font-size: 28px; line-height: 1.2;
+  justify-self: start;
+}
+/* [relevé] Quatre colonnes en `max-content` : la grille se serre sur le
+   contenu au lieu de répartir l'espace. */
+.section-references .references-vignettes {
+  gap: var(--espace-s);
+  grid-template-columns: repeat(4, minmax(0, max-content));
+  display: grid;
+}
+
+/* [relevé] Carte sélectionnable — le pattern d'UI applicative le plus net de
+   la page. L'état actif se signale par une SURFACE (passage au panneau blanc)
+   plus une ombre basse ; jamais par une bordure d'accent. Transition 150 ms
+   sur le fond ET l'ombre simultanément. */
+.section-references .reference-carte {
+  cursor: pointer;
+  text-align: start;
+  background: 0 0; border: 0;
+  border-radius: 16px;
+  flex-direction: column; flex: none;
+  gap: 8px; min-width: 0; padding: 8px;
+  transition: background .15s, box-shadow .15s;
+  display: flex;
+}
+.section-references .reference-carte .reference-carte-img {
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 8px;
+  width: 100%; max-width: 100px;
+  display: block;
+}
+.section-references .reference-carte .reference-carte-libelle {
+  flex-direction: column; gap: 0;
+  width: 100%; max-width: 100px;
+  padding-inline: 2px;
+  display: flex;
+}
+/* [relevé] 10pt — unité de point, inhabituelle en web, employée telle quelle. */
+.section-references .reference-carte .reference-carte-nom {
+  font-size: 10pt; font-weight: var(--graisse-normale);
+  color: var(--texte-primaire);
+}
+.section-references .reference-carte .reference-carte-meta {
+  font-size: 10pt; font-weight: var(--graisse-normale);
+  color: var(--texte-secondaire);
+}
+.section-references .reference-carte .reference-carte-nom,
+.section-references .reference-carte .reference-carte-meta {
+  white-space: nowrap; text-overflow: ellipsis; overflow: hidden;
+}
+.section-references .reference-carte.est-active {
+  background: var(--rampe-neutre-0);
+  box-shadow: 0 2px 8px color-mix(in srgb, var(--rampe-neutre-1000) 8%, transparent);
+}
+/* [arbitrage] Survol et focus : absents de la source. Demi-pas vers l'état
+   actif, sur la même propriété et la même durée que la mécanique relevée. */
+.section-references .reference-carte:not(.est-active):hover {
+  background: color-mix(in srgb, var(--rampe-neutre-0) 55%, transparent);
+}
+.section-references .reference-carte:focus-visible {
+  outline: var(--anneau-focus); outline-offset: var(--anneau-focus-offset);
+}
+/* [arbitrage] Fondu croisé de l'image principale : la source remplace le `src`
+   en JS, ce qui produit un clignotement au décodage. Deux couches empilées
+   permettent d'enchaîner proprement ; la durée (200 ms) et la propriété
+   (opacity) sont celles du système. */
+.references-pile { display: grid; place-items: center; }
+.references-pile > .references-image { grid-area: 1 / 1; }
+.references-pile > .references-image + .references-image {
+  opacity: 0; transition: opacity var(--duree-m);
+}
+.references-pile > .references-image + .references-image.est-visible { opacity: 1; }
+
+@media (max-width: 1000px) { /* [relevé] */
+  .section-references { padding-left: var(--rail); }
+  .section-references .references-cadre .fond-flou { display: none; } /* coût du flou */
+  .section-references .references-agencement {
+    flex-direction: column; align-items: stretch;
+  }
+  .section-references .references-cadre {
+    border-radius: 0;
+    flex: none; justify-content: center;
+    block-size: auto; inline-size: auto;
+    margin-inline-start: 0;
+    padding: 0; padding-inline: calc(clamp(24px, 5vw, 80px) + 8px);
+    overflow: visible;
+  }
+  /* [relevé] La colonne se DISSOUT : ses enfants remontent dans la grille
+     parente et se réordonnent librement (titre, actions, image, vignettes). */
+  .section-references .references-copie { display: contents; }
+  .section-references .intro-copie { text-align: center; order: -2; }
+  .section-references .intro-copie .intro-sous { margin-inline: auto; }
+  .section-references .intro-actions {
+    order: -1; justify-content: center;
+    margin-block-start: calc(28px - var(--espace-4xl));
+  }
+  .section-references .references-image {
+    aspect-ratio: 4/3; object-fit: cover; object-position: 50% 100%;
+    block-size: auto; inline-size: min(88%, 56.32svh);
+  }
+  .section-references .references-vignettes {
+    order: 1;
+    grid-template-columns: repeat(4, minmax(0, max-content));
+    justify-content: center;
+    max-width: min(98%, 62.72svh);
+    margin-inline: auto;
+  }
+  .section-references .reference-carte { min-width: 0; padding: 6px; }
+}
+
+/* =============================================================================
+   11. SECTION « GABARITS » — panneau d'édition simulé
+   ========================================================================== */
+
+.section-gabarits {
+  background: var(--surface-page);
+  color-scheme: light;
+  min-height: 104svh;
+  padding-block: calc(6 * var(--rythme));
+  text-align: center;
+  flex-direction: column; justify-content: center;
+  gap: 48px; display: flex;
+  --hauteur-cadre-embed: 55svh; /* [relevé] propre à cette section */
+}
+/* [relevé] L'en-tête est aligné sur la LARGEUR DU RENDU, pas sur le rail : sa
+   largeur reprend la hauteur du cadre (min avec la largeur utile). */
+.section-gabarits .produit-entete {
+  box-sizing: border-box;
+  inline-size: min(var(--hauteur-cadre-embed), calc(100vw - 2 * var(--rail)));
+  flex-direction: column; align-items: center; gap: 0;
+  margin-inline: auto; display: flex;
+}
+.section-gabarits .produit-titre {
+  letter-spacing: var(--approche-titre-2xl);
+  font-size: 28px; line-height: 1.2;
+  font-family: var(--police-titre); font-weight: var(--graisse-forte);
+  text-wrap: balance; color: var(--rampe-neutre-900); margin: 0;
+}
+.section-gabarits .produit-sous {
+  width: auto; max-width: 52ch;
+  font-family: var(--police-titre); font-weight: var(--graisse-normale);
+  text-wrap: pretty; letter-spacing: var(--approche-titre-2xl);
+  color: var(--texte-tertiaire); margin: 4px 0 0;
+  font-size: 28px; line-height: 1.2;
+}
+.section-gabarits .intro-actions { justify-content: center; margin-top: 28px; }
+.section-gabarits .gabarits-demo {
+  padding-inline: var(--rail);
+  text-align: start;
+  justify-content: center; align-items: flex-start;
+  display: flex; position: relative;
+}
+/* [relevé] Le panneau d'édition est posé en ABSOLU par-dessus la démo, dans un
+   calque qui ne capte pas le pointeur — seuls ses enfants le font. */
+.section-gabarits .gabarits-cote {
+  --largeur-carte: calc(260px * var(--echelle-carte, 1));
+  pointer-events: none;
+  position: absolute; inset: 0;
+}
+.section-gabarits .gabarits-cote > * { pointer-events: auto; }
+/* [relevé] Position horizontale à trois niveaux : 16 px du bord, mais jamais
+   plus à gauche que « largeur de carte + 16 px » hors champ, et sinon calée
+   sur 32 px depuis le bord réel de la fenêtre (50vw − 50%). */
+.section-gabarits .gabarits-carte {
+  left: min(16px, max(calc(-1 * var(--largeur-carte) - 16px),
+                      calc(32px - (50vw - 50%))));
+  position: absolute; top: 50%;
+  transform: translateY(calc(30px - 50%));
+  zoom: var(--echelle-carte, 1); /* [relevé] `zoom`, pas `scale` : la mise en
+                                    page interne se recalcule au lieu d'être
+                                    étirée — le texte reste net. */
+  background: #fff;
+  border: 1px solid #0000000a;   /* [relevé] 4 % de noir */
+  border-radius: 16px;
+  width: 260px; padding: 12px;
+  box-shadow: 0 2px 12px #0000000f;
+}
+.section-gabarits .gabarits-fleches {
+  left: min(16px, max(calc(-1 * var(--largeur-carte) - 16px),
+                      calc(32px - (50vw - 50%))));
+  top: calc(50% + (380px * var(--echelle-carte, 1)) / 2 + 30px + 16px);
+  position: absolute;
+  gap: 16px; margin-top: 16px; display: flex;
+}
+.section-gabarits .gabarits-libelle {
+  color: var(--texte-secondaire);
+  margin: 2px 0 8px 2px;
+  font-size: 13px; line-height: 1.3;
+  display: block;
+}
+/* [relevé] Champ SANS bordure : il se signale par son FOND (neutre-100) posé
+   sur le panneau blanc, rayon plein, 40 px. Au focus l'anneau est NEUTRE
+   (24 % du texte, offset 1 px) — pas l'accent bleu, réservé à la navigation. */
+.section-gabarits .gabarits-champ {
+  background: var(--surface-encart);
+  width: 100%; height: 40px;
+  color: var(--texte-primaire);
+  border: none; border-radius: 999px;
+  margin-bottom: 14px; padding: 0 16px;
+  font-family: inherit; font-size: 15px;
+}
+.section-gabarits .gabarits-champ:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--texte-primaire) 24%, transparent);
+  outline-offset: 1px;
+}
+.section-gabarits .gabarits-vignette {
+  aspect-ratio: 1;
+  background: var(--surface-encart);
+  border: 1px solid #0000000d;  /* [relevé] 5 % de noir */
+  border-radius: 10px;          /* [relevé] 10px, hors échelle */
+  position: relative; overflow: hidden;
+}
+.section-gabarits .gabarits-vignette img {
+  object-fit: cover; opacity: 0;
+  width: 100%; height: 100%;
+  transition: opacity .2s;
+  position: absolute; inset: 0;
+}
+.section-gabarits .gabarits-vignette img.est-active { opacity: 1; }
+/* [relevé] Bouton rond 44 px : la SEULE règle `:hover` écrite en clair dans
+   toute la feuille source. */
+.section-gabarits .gabarits-fleche {
+  border: 1px solid color-mix(in srgb, var(--texte-primaire) 28%, transparent);
+  width: 44px; height: 44px;
+  color: var(--texte-primaire);
+  cursor: pointer;
+  background: #fff;
+  border-radius: 999px;
+  place-items: center; padding: 0;
+  font-size: 18px; display: grid;
+  transition: background-color var(--duree-s) var(--courbe-sortie); /* [arbitrage] */
+}
+.section-gabarits .gabarits-fleche:hover { background: var(--surface-encart); }
+.section-gabarits .gabarits-fleche:focus-visible {
+  outline: var(--anneau-focus); outline-offset: var(--anneau-focus-offset);
+}
+/* [relevé] Le rendu est décalé vers la droite pour laisser sa place au
+   panneau, sans sortir de la colonne : min(6vw, 96px). */
+.section-gabarits .gabarits-rendu {
+  width: min(var(--hauteur-cadre-embed), 100%);
+  justify-items: start; min-width: 0;
+  display: grid; position: relative;
+  translate: min(6vw, 96px);
+}
+.section-gabarits .gabarits-rendu > img {
+  aspect-ratio: 1; object-fit: cover;
+  opacity: 0; border-radius: 2px;
+  grid-area: 1 / 1;
+  width: 100%; height: auto;
+  transition: opacity .2s;
+}
+.section-gabarits .gabarits-rendu > img.est-active { opacity: 1; }
+
+/* [relevé] Sous 1024 px, le panneau flottant devient une CARTE EN GRILLE
+   nommée posée sous le rendu : le libellé, le champ, les flèches et la
+   vignette se replacent par zones. `.gabarits-carte` se dissout entièrement. */
+@media (max-width: 1024px) {
+  .section-gabarits .gabarits-demo {
+    flex-direction: column; align-items: stretch;
+    padding-inline: calc(var(--rail) + clamp(24px, 5vw, 80px) + 8px);
+  }
+  .section-gabarits .gabarits-rendu {
+    width: min(98%, 62.72svh);
+    margin-inline: auto;
+    grid-template-columns: minmax(0, 100%);
+    translate: none;
+  }
+  .section-gabarits .produit-entete {
+    inline-size: min(64svh, calc(100vw - 2 * var(--rail)
+                 - 2 * clamp(24px, 5vw, 80px) - 16px));
+  }
+  .section-gabarits .gabarits-fleches { position: static; top: auto; }
+  .section-gabarits .gabarits-cote {
+    pointer-events: auto;
+    background: #fff;
+    border: 1px solid #0000000a;
+    border-radius: 16px;
+    grid-template:
+      "nomlibelle prodlibelle"
+      "champ      vignette"
+      "fleches    vignette" 1fr
+      / minmax(0, 1fr) auto;
+    justify-self: center;
+    align-items: start;
+    column-gap: 16px;
+    width: min(430px, 100vw - 32px);
+    margin-top: 16px; padding: 12px;
+    display: grid; position: static;
+    transform: none;
+    box-shadow: 0 2px 12px #0000000f;
+  }
+  .section-gabarits .gabarits-carte { display: contents; }
+  .section-gabarits .gabarits-libelle { font-size: 16px; }
+  .section-gabarits label.gabarits-libelle { grid-area: nomlibelle; }
+  .section-gabarits span.gabarits-libelle { grid-area: prodlibelle; }
+  .section-gabarits .gabarits-champ {
+    grid-area: champ; height: 48px; margin-bottom: 0; font-size: 17px;
+  }
+  .section-gabarits .gabarits-vignette {
+    grid-area: vignette; width: clamp(120px, 40vw, 168px);
+  }
+  .section-gabarits .gabarits-fleches {
+    grid-area: fleches; align-self: end; margin-top: 12px;
+  }
+}
+
+/* =============================================================================
+   12. ÉDITEUR EMBARQUÉ — emplacement signalé
+   [arbitrage] <rv-landing-explore-frame> est un composant chargé en JS qui
+   monte un éditeur d'image interactif (sélection d'objet, annotation, effet).
+   Il n'est PAS reproductible : ni son CSS ni son comportement ne figurent dans
+   la source aspirée. La source le remplace elle-même par la paire d'images
+   statique sous 1160 px ou si l'amorçage échoue — c'est ce repli qui est rendu
+   ici, et l'emplacement reste marqué pour que le lecteur sache ce qui manque.
+   ========================================================================== */
+.embed-corps {
+  display: grid; place-items: center;
+  inline-size: min(calc(100vw - 2 * var(--rail)), var(--largeur-embed-max));
+  block-size: var(--hauteur-cadre-embed, 66svh);
+  margin-inline: auto;
+  border-radius: 32px;              /* [relevé] rayon des cadres de section */
+  background: var(--surface-encart);
+  position: relative; overflow: hidden;
+}
+/* [relevé] L'affiche est celle que la source passe au composant par son
+   attribut `poster` — c'est l'image que l'éditeur montre avant amorçage. */
+.embed-affiche {
+  grid-area: 1 / 1;
+  block-size: 100%; inline-size: 100%;
+  object-fit: contain;
+  padding: var(--espace-l);
+}
+/* [arbitrage] Bandeau de signalement : marque l'emplacement du composant sans
+   masquer l'affiche. Reprend la recette de surface « carte posée ». */
+.embed-note {
+  grid-area: 1 / 1; align-self: end; justify-self: center;
+  margin-block-end: var(--espace-m);
+  padding: var(--espace-2xs) var(--espace-s);
+  background: var(--surface-panneau);
+  border: var(--bordure-fine) solid #0000000a;
+  border-radius: var(--rayon-plein);
+  box-shadow: var(--ombre-carte);
+  color: var(--texte-secondaire);
+  font-size: var(--taille-xs);
+  letter-spacing: var(--approche-texte-xs);
+  text-align: center;
+  max-inline-size: calc(100% - 2 * var(--espace-l));
+}
+.embed-note code {
+  font-family: var(--police-mono); font-size: var(--taille-xs);
+  color: var(--texte-primaire);
+}
+
+/* =============================================================================
+   13. ZONE FINALE — invite, galerie, pied
+   ========================================================================== */
+
+/* [relevé] `.section-text` est la seule zone de la page en mesure de lecture :
+   72 × le rythme = 576 px, texte à gauche, en police de TEXTE (pas display). */
+.section-texte {
+  max-inline-size: calc(72 * var(--rythme));
+  font-family: var(--police-texte); font-weight: var(--graisse-normale);
+  font-size: var(--taille-m); line-height: var(--interligne-texte);
+  letter-spacing: var(--approche-texte-m);
+  color: var(--texte-secondaire);
+  text-align: start;
+  box-sizing: border-box;
+  padding: var(--espace-4xl) var(--espace-2xl);
+  margin-inline: auto;
+}
+.section-texte p { width: 100%; }
+.section-lache p { text-align: center; width: 400px; max-width: 80vw; }
+
+/* [relevé] Le conteneur de pied réserve une hauteur d'écran entière et déclare
+   les hauteurs de vignette de galerie (repos / survol) comme variables. */
+.zone-pied {
+  --hauteur-image: 26svh;
+  --hauteur-image-survol: 30svh;
+  --hauteur-zone: 200svh;
+  flex-direction: column;
+  width: 100%; height: 100svh;
+  display: flex; position: relative;
+}
+.zone-pied .page {
+  height: calc(100svh - var(--hauteur-image) - 108px);
+  place-content: center;
+  margin-block-end: auto;
+  display: grid;
+}
+.zone-pied h2 {
+  font-family: var(--police-titre); font-weight: var(--graisse-forte);
+  font-size: var(--taille-3xl);
+  line-height: var(--interligne-serre); line-height: 1.4;
+  letter-spacing: var(--approche-titre-3xl);
+  text-align: center;
+  margin-block-end: calc(3 * var(--rythme));
+}
+/* [relevé] L'invite fait 58 × le rythme = 464 px, plafonnée à 75 % de la
+   largeur de fenêtre, et remonte au-dessus de la galerie (z-index 10). */
+.zone-pied .invite {
+  width: calc(58 * var(--rythme));
+  pointer-events: auto;
+  text-align: start;
+  z-index: 10;
+  justify-self: center;
+  max-width: 75vw;
+}
+.zone-pied .pied { width: 100%; }
+
+/* [arbitrage] L'invite, la galerie et le pied sont des composants
+   <rv-logged-out-composer>, <rv-horizontal-gallery> et <rv-footer> : vides
+   dans le HTML, rendus en JS, leur CSS vit en shadow DOM et n'est PAS dans le
+   bloc inline. Ce qui suit est une reconstruction avec les jetons relevés ;
+   seules les dimensions ci-dessus (58×rythme, 26svh, 30svh, z-index 10, 108px)
+   sont, elles, relevées. */
+.invite {
+  background: var(--surface-panneau);
+  border: var(--bordure-fine) solid var(--bordure-panneau);
+  border-radius: var(--rayon-2xl);
+  box-shadow: var(--ombre-controle);
+  padding: var(--espace-s);
+  display: flex; flex-direction: column; gap: var(--espace-s);
+  transition: box-shadow var(--duree-s) var(--courbe-sortie),
+              border-color var(--duree-s) var(--courbe-sortie);
+}
+.invite:focus-within {
+  border-color: color-mix(in srgb, var(--texte-primaire) 24%, transparent);
+  box-shadow: var(--ombre-panneau);
+}
+.invite-zone {
+  border: 0; background: 0 0; resize: none;
+  color: var(--texte-primaire);
+  font-family: inherit; font-size: var(--taille-m);
+  line-height: var(--interligne-texte);
+  padding: var(--espace-2xs) var(--espace-2xs) 0;
+  min-height: calc(5 * var(--rythme));
+}
+.invite-zone:focus-visible { outline: none; } /* l'anneau est porté par .invite */
+.invite-barre { display: flex; align-items: center; gap: var(--espace-2xs); }
+.invite-outil {
+  display: grid; place-items: center;
+  width: var(--cible-tactile); height: var(--cible-tactile);
+  border-radius: var(--rayon-plein);
+  color: var(--texte-secondaire);
+  font-size: var(--taille-l);
+  transition: background-color var(--duree-s) var(--courbe-sortie),
+              color var(--duree-s) var(--courbe-sortie);
+}
+.invite-outil:hover { background: var(--surface-encart); color: var(--texte-primaire); }
+.invite-envoi {
+  margin-inline-start: auto;
+  display: grid; place-items: center;
+  width: var(--cible-tactile); height: var(--cible-tactile);
+  border-radius: var(--rayon-plein);
+  background: var(--texte-primaire); color: var(--rampe-neutre-0);
+  transition: background-color var(--duree-s) var(--courbe-sortie);
+}
+.invite-envoi:hover { background: var(--rampe-neutre-800); }
+
+/* [arbitrage] Galerie horizontale : bande de vignettes qui dérive et grandit
+   au survol. Les deux hauteurs sont relevées (26svh → 30svh) ; la durée et la
+   courbe sont prises dans le système. Le voile de survol, lui, est relevé. */
+.galerie {
+  display: flex; align-items: flex-end; gap: var(--espace-xs);
+  height: var(--hauteur-image-survol);
+  padding-inline: var(--espace-xs);
+  overflow: auto hidden;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+}
+.galerie::-webkit-scrollbar { display: none; }
+.galerie-vignette {
+  flex: none; position: relative; margin: 0;
+  height: var(--hauteur-image);
+  border-radius: var(--rayon-m);
+  overflow: hidden;
+  transition: height var(--duree-m) var(--courbe-sortie);
+}
+.galerie-vignette:hover, .galerie-vignette:focus-within {
+  height: var(--hauteur-image-survol);
+}
+.galerie-vignette img { height: 100%; width: auto; object-fit: cover; display: block; }
+.galerie-vignette figcaption {
+  position: absolute; inset: auto 0 0;
+  padding: var(--espace-2xs) var(--espace-xs);
+  background: var(--voile-survol);       /* [relevé] */
+  color: var(--rampe-neutre-0);
+  font-size: var(--taille-xs);
+  letter-spacing: var(--approche-texte-xs);
+  opacity: 0;
+  transition: opacity var(--duree-s) var(--courbe-sortie);
+}
+.galerie-vignette:hover figcaption,
+.galerie-vignette:focus-within figcaption { opacity: 1; }
+
+/* [arbitrage] Pied reconstruit : la source ne fournit que `width: 100%`. */
+.pied {
+  inline-size: 100%;
+  padding: var(--espace-4xl) var(--rail) var(--espace-2xl);
+  background: var(--surface-page);
+  border-top: var(--bordure-fine) solid var(--bordure-panneau);
+  color: var(--texte-secondaire);
+  font-size: var(--taille-s);
+}
+.pied-colonnes, .pied-raccourcis { margin-block-end: var(--espace-2xl); }
+.pied-colonnes {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: var(--espace-2xl);
+}
+.pied-colonnes h3, .pied-raccourcis h3 {
+  font-size: var(--taille-s); font-weight: var(--graisse-forte);
+  color: var(--texte-primaire);
+  margin: 0 0 var(--espace-xs);
+}
+.pied-colonnes ul, .pied-raccourcis ul {
+  display: flex; flex-direction: column; gap: var(--espace-2xs);
+  margin-block: 0; padding-inline-start: 0; list-style: none; /* [relevé] cf. `nav ul` */
+}
+.pied a {
+  color: var(--texte-secondaire); font-weight: var(--graisse-normale);
+  transition: color var(--duree-s) var(--courbe-sortie);
+}
+.pied a:hover { color: var(--texte-primaire); }
+.pied-bas {
+  display: flex; flex-wrap: wrap; gap: var(--espace-m);
+  align-items: center; justify-content: space-between;
+  padding-block-start: var(--espace-m);
+  border-top: var(--bordure-fine) solid var(--bordure-panneau);
+  font-size: var(--taille-xs);
+}
+
+/* =============================================================================
+   14. RÉDUCTION DE MOUVEMENT — complément
+   [arbitrage] Ce qui ne passe pas par une durée doit être neutralisé
+   nommément : accroche de défilement, reflet WebKit, défilement fluide.
+   La dérive des bandes est arrêtée côté motion.js (même media query lue en JS).
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .section .cadre-duo .duo-piste,
+  .hero-bande, .galerie { scroll-snap-type: none; }
+  .hero-image, .hero-media { -webkit-box-reflect: unset; }
+  .galerie-vignette { transition: none; }
+}

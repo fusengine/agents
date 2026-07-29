@@ -1,0 +1,267 @@
+# Design reference corpus — eleven pages
+
+Eleven references, of two kinds.
+
+**Ten rebuilds** (`*-recode/`) — public pages rebuilt by hand from their live source,
+each reviewed and accepted by the owner. Every folder holds `index.html`, `styles.css`,
+one or more `motion*.js`, plus the two markdown files described below.
+
+**One original** (`elysian/`) — not a rebuild of anything: a fictional maison, built from
+four supplied plates, with its fonts and images in `assets/`. Its markers differ for that
+reason: `[mesuré]` and `[arbitrage]`, never `[relevé]` — there is no source to measure
+against.
+
+All eleven open by double-click, `file://`, no server, no build. They are **not**
+self-contained: ten of the eleven pull images, video and — for nine of them — their
+typefaces from the network. Read *Network dependency* below before relying on one offline.
+
+---
+
+## The one rule: borrow a technique, never a composition
+
+A technique is a mechanism: how a scrim is layered, how a marquee loops without a jump,
+how a card gets a hairline without a border. It transposes.
+
+A composition is *this* page for *this* brand: its section order, its proportions, its
+tone. It does not transpose.
+
+**The test.** Take the element you are about to reuse. Could it sit on a brand in an
+unrelated sector without changing a single pixel? Then you copied a composition — rework
+it. A technique survives the move because it carries a *function*, not a look.
+
+Concretely: umbrel's marquee mechanism on a driving school, yes. Umbrel's hero on a
+driving school, no.
+
+---
+
+## The other side of that rule: you may invent
+
+The rule above governs what you *take*. It says nothing about what you *make*, and it is
+not an obligation to take anything at all.
+
+**You may build a procedure that appears in no file here.** Not as a fallback for when the
+index comes up empty — as a first move, whenever the subject asks for something this folder
+does not contain. Nothing in this plugin requires a page to be assembled out of borrowed
+mechanisms.
+
+**The proof is in the corpus.** `elysian`'s four image transformations — slat shear, arch
+aperture, torn counter-pan, letterform plate (`elysian/tokens-elysian.md` §§ 3-6) — are in
+no reference. They were derived from what that page is about: four engraved plates and an
+auction house cataloguing objects that do not exist. The still life comes apart into seven
+sliding slats because a plate is a printed sheet, and a sheet can be cut. The keyhole
+widens into the full arch because the arch is the only opening in that architecture, so it
+becomes the only crop in the system. `elysian` is the one page here that owes nothing to
+the register of the other ten — and it got there by inventing, not by borrowing.
+
+**What it costs.** Exactly what a borrowed procedure costs, no more and no less.
+
+- **Derived from the subject, and you can say from what.** A mechanism you cannot trace
+  back to the thing being designed is decoration, whether you invented it or lifted it.
+  "It looked good" is not a derivation.
+- **Documented like everything else here**: the mechanism, the values you settled on, and
+  what breaks if someone transposes it. `elysian § 3.4` and `§ 17` are the model — the slat
+  shear's `--n` is a hand-maintained duplicate of the DOM child count with nothing checking
+  it, and the global `img { max-width: 100% }` reset silently defeats the whole procedure.
+  Both are written down. An invented procedure with no such note is unfinished, not
+  original.
+
+Inventing exempts you from nothing. It only means the index was never the boundary.
+
+---
+
+## Two registers, not one
+
+The ten rebuilds are all tech products, mostly dark and dense — umbrel, linear, cursor,
+harness, xai, mainframe, reve, endlesstools, supercommon, fora. Same industry, one
+visual register.
+
+**elysian is the other one**: neoclassical, inscriptional, riso-printed, deadpan. Same
+rigour, a register that owes nothing to the other ten. It is worth reading precisely for
+that — it shows the procedures below are not tied to a dark product page.
+
+They are all here as **inspiration**: for the quality of their execution and the
+mechanisms they use, not as a template to trace. Take the mechanism, bring your own
+register — it comes from the subject you are designing for, not from this folder.
+
+---
+
+## Two documents per folder
+
+Each of the eleven folders carries both, and they do not overlap.
+
+| File | Answers | Holds |
+|---|---|---|
+| `tokens-<name>.md` | **how** | the procedures, the measured values, the traps |
+| `design-system.md` | **what** and **why** | register, tone, signature element, the named macrostructure and its section sequence |
+
+Open `design-system.md` for the decision — what the page commits to and what it refuses;
+`tokens-*.md` to build the thing. The technique index below points into `tokens-*.md` only.
+
+**Structure never comes from this folder directly.** The eleven body sequences have been
+lifted out into `../../../design-method/references/body-sequence-bank.md`, and the eleven
+first-screen treatments into `../../../design-method/references/macrostructure-bank.md`.
+Pick from those two banks. A folder's `design-system.md` is here for a different use: it
+explains why *this* structure was right for *this* subject — a worked argument, not an
+option to select.
+
+---
+
+## Technique index
+
+| Technique | Source | Section |
+|---|---|---|
+| Two-track marquee, loop with no visible jump | umbrel | `## 0. The six techniques to remember` |
+| Radial gradient anchored at block top | umbrel | `## 4. Colors` |
+| Hairlines and shadows as separators | umbrel | `## 7. Hairlines and shadows` |
+| Nav scrim / pill that closes on scroll | fora | `## 5 quinquies. The nav bar's scrim` |
+| Inset-hairline card (two boxes, no border) | fora | `## 6. The two pieces worth reusing` |
+| Text that lights up on entry | fora | `## 5 bis. The text that lights up` |
+| `opacity:0` in a scraped export is NOT design | fora | `## 1. The trap in the source` |
+| Rotating tabs, media above the tab row | harness | `## 3. Reusable techniques` |
+| CSS-animated SVG scenes, no library | harness | `## 10. Offline autonomy` |
+| Tokens organised by role, not by value | harness | `## 4. Tokens, by role` |
+| Page skeleton before anything else | linear | `## 4 bis. Page structure` |
+| Masking and light techniques | linear | `## 6. Masking and light techniques` |
+| Button architecture | linear | `## 7. Buttons — architecture` |
+| Four structural techniques worth copying | cursor | `## 7. Four structural techniques` |
+| Techniques that get missed on a first pass | cursor | `## 3 bis. Four techniques measured late` |
+| Holding a page together **without images** | supercommon | `## 1. What holds this page together` |
+| Same, second treatment | xai | `## 7. How the page holds together without images` |
+| Bento mockups | xai | `## 3. The four bento mockups` |
+| Code block as a design object | xai | `## 4. The code block` |
+| Video as page material (eight of them) | endlesstools | `## 1. The main technique` |
+| Opening mosaic | endlesstools | `## 1 bis. The opening mosaic` |
+| Header veil | reve | `## 2. The header veil` |
+| Application UI patterns | reve | `## 4. Application UI patterns` |
+| Surface hierarchy | reve | `## 3. Surface hierarchy` |
+| Motion system as the page's backbone | mainframe | `## 1. The motion system` |
+| One rAF loop driving every pinned section | elysian | `## 1. The scroll engine` |
+| Image torn into sliding slats | elysian | `## 3. Transformation I — slat shear` |
+| Keyhole widening into a full arch | elysian | `## 4. Transformation II — arch aperture` |
+| Split image, halves panning apart | elysian | `## 5. Transformation III — torn counter-pan` |
+| Word filled with an image, then zoomed | elysian | `## 6. Transformation IV — letterform plate` |
+| One shape as the only crop in the system | elysian | `## 8. The arch as the only crop` |
+| Named menu, three entries, no burger | elysian | `## 9. The masthead` |
+| Reduced-motion built as a second layout | elysian | `## 11. prefers-reduced-motion handled as a second layout` |
+
+Section titles are cited by their opening words; several run longer in the file itself.
+Search on the number and the first few words, not on an exact string match.
+
+### Reading this index the other way
+
+The table is sorted by technique, so it answers *how do I build X*. It does not answer
+*what could carry this subject* — and that is the question that comes first.
+
+To get the second reading, invert the entry point. Before opening the index, name what the
+subject physically **is** and what it **does**: a printed sheet can be cut, torn,
+misregistered; a schedule advances; an archive stacks and is dated; a tool has a before and
+an after. Then scan the index for the **verb** rather than the technique name — what tears,
+slides, opens, loops, reveals, holds still. Either a listed mechanism already performs that
+motion and you have your starting point, or nothing does — which is an answer too, and the
+section *The other side of that rule* above says what to do with it.
+
+`elysian` is the worked example: its subject produced four procedures no row of this table
+could have supplied.
+
+---
+
+## Traps documented here, worth reading before you start
+
+- **`opacity:0` / `0.001` + `transform` in a scraped page is an animation's initial
+  state, not the design.** Reproduce it as a resting style and the element stays invisible
+  forever. → `fora § 1`, 243 occurrences in that one source.
+- **On a page that holds without images, the exact length of a title drives line breaks
+  and vertical rhythm.** A paraphrased title breaks the layout even when the measured type
+  is right. → `supercommon § 1`
+- **A scraped Next.js/RSC export is mostly script payload**, and can contain the whole
+  `<body>` twice. Byte counts measure nothing. → `cursor § 8`
+- **Where a source hides its real values** — inline, in a preset, in a variant.
+  → `endlesstools § 6 bis`
+- **What each reference deliberately does NOT reproduce**, and why. Every file has this
+  section; read it before assuming a gap is an oversight.
+
+---
+
+## Network dependency — what degrades offline
+
+The pages are frozen and measured. They are not autonomous. Counted over each folder's
+`index.html`, `styles.css` and `motion*.js`: distinct absolute URLs in `src` / `href` /
+`srcset` / `poster` and in CSS `url()`, XML namespaces excluded, a few `preconnect` hints
+included.
+
+| Folder | Remote URLs | Typefaces |
+|---|---|---|
+| reve | 104 | 4 woff2 from `app.reve.com` |
+| endlesstools | 78 | Inter, `rsms.me` |
+| harness | 63 | 5 woff2 from `cdn.prod.website-files.com` |
+| umbrel | 47 | Inter, Google Fonts |
+| fora | 35 | Inter, Google Fonts |
+| cursor | 28 | none — system stack |
+| mainframe | 23 | Inter, Google Fonts |
+| linear | 20 | Inter, Google Fonts |
+| xai | 19 | Geist, Google Fonts |
+| supercommon | 11 | Inter, Google Fonts |
+| **elysian** | **0** | self-hosted, `assets/fonts/` |
+
+**`elysian` is the only page that owes the network nothing.** Fonts and images ship in
+`assets/`; open it on a plane and it is the page the owner accepted.
+
+**Two pages take their typefaces from a third-party CDN.** `harness` pulls five woff2
+(Geist Light/Regular/Medium/SemiBold, CalSans-SemiBold) from `cdn.prod.website-files.com`;
+`reve` pulls four (ReveDisplay medium/regular, ReveSansMono, ReveUI) from `app.reve.com`.
+Both declare `font-display: swap`: offline — or the day either CDN purges — the browser
+paints the fallback stack and never swaps back. The typography, which is most of what you
+opened these two pages to look at, is what you lose first.
+
+Elsewhere the loss is milder: images resolve to their `alt` text, video to an empty box.
+**The values survive regardless** — every type scale, weight, tracking, colour and spacing
+figure is written out in `tokens-*.md` and `design-system.md`, text in the repo, no
+network. Offline you lose the render, not the reference.
+
+---
+
+## Six pages load Inter — do not carry that across
+
+`endlesstools` (via `rsms.me`), plus `fora`, `linear`, `mainframe`, `supercommon` and
+`umbrel` (via Google Fonts). Inter is on the plugin's banned list:
+`../../../design-system/references/forbidden-fonts.md`.
+
+Not a defect in the rebuilds: they are faithful reproductions of real pages, those pages
+use Inter, and substituting it would have made them worse references. It becomes a defect
+the moment someone transposes it unthinkingly. **The corpus documents what these pages do;
+it does not prescribe imitating them on this point.** Take the mechanism, not the typeface.
+
+---
+
+## Conventions inside `tokens-*.md`
+
+| Marker | Meaning |
+|---|---|
+| `[relevé]` | value read in the source or measured on the render |
+| `[arbitrage]` | judgment call by the rebuilder, justified on the line |
+| `[estimé]` | reconstructed value — the source does not carry it explicitly |
+
+These three markers stay in French on purpose: they appear identically in the comments of
+`styles.css`, `index.html` and `motion*.js`. Translating them in one place only would
+desynchronise the documentation from the code. Treat them as identifiers.
+
+Everything else in these files is English.
+
+---
+
+## What this corpus does not give you
+
+It does not give you **the idea, the subject, or the angle.** Nothing in these eleven
+folders tells you what a page should be about, what claim it should make, or what it should
+refuse to say. Those come from the brief and from the thing being designed — never from
+here, and never from an index row.
+
+It does not tell you **which register suits a given brand** either. That judgment — a
+driving school is not a developer tool, an artisan is not a SaaS — is upstream of
+everything here, and no amount of reading these eleven references will produce it.
+
+What it does give is a **level**: how well an idea has to be executed before it holds up.
+That is a floor to clear, not a set of solutions to choose from — and the difference
+matters, because a floor leaves the whole space above it open to you.
+
+Use them once the register is settled, to build well. Not to decide what to build.

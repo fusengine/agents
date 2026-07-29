@@ -1,0 +1,298 @@
+/* ELYSIAN — shell: print grain, spine rail, shared chamber frame, colophon */
+
+.grain {
+  position: fixed;
+  inset: -50%;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.24;
+  mix-blend-mode: soft-light;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");
+  will-change: transform;
+  animation: grain-drift 5.4s steps(6) infinite;
+}
+
+@keyframes grain-drift {
+  0% { transform: translate3d(0, 0, 0); }
+  20% { transform: translate3d(-3%, 2%, 0); }
+  40% { transform: translate3d(2%, -3%, 0); }
+  60% { transform: translate3d(-2%, -2%, 0); }
+  80% { transform: translate3d(3%, 1%, 0); }
+  100% { transform: translate3d(0, 0, 0); }
+}
+
+.vignette {
+  position: fixed;
+  inset: 0;
+  z-index: 55;
+  pointer-events: none;
+  background: radial-gradient(
+    120% 90% at 50% 45%,
+    transparent 40%,
+    color-mix(in oklab, var(--ink-abyss) 70%, transparent) 100%
+  );
+}
+
+
+
+/* mobile: a compact dot cluster instead of a menu */
+.pocket {
+  position: fixed;
+  z-index: 70;
+  left: 50%;
+  bottom: max(var(--s4), env(safe-area-inset-bottom));
+  transform: translateX(-50%);
+  display: flex;
+  gap: var(--s1);
+  padding: 6px 8px;
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--ink-abyss) 74%, transparent);
+  backdrop-filter: blur(12px);
+}
+
+@media (min-width: 1024px) {
+  .pocket { display: none; }
+}
+
+.pocket a {
+  display: grid;
+  place-items: center;
+  min-width: 34px;
+  min-height: 34px;
+  border-radius: 999px;
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  color: var(--bone-mute);
+  text-decoration: none;
+}
+
+.pocket a[aria-current="true"] {
+  color: var(--ink-abyss);
+  background: var(--marigold);
+}
+
+.progress {
+  position: fixed;
+  z-index: 71;
+  top: 0;
+  left: var(--rail);
+  right: 0;
+  height: 2px;
+  background: var(--marigold);
+  transform-origin: 0 50%;
+  transform: scaleX(var(--doc, 0));
+}
+
+/* ---------- shared chamber frame ---------- */
+
+main { position: relative; padding-left: var(--rail); }
+
+.chamber { position: relative; }
+
+.pin {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  overflow: hidden;
+  display: grid;
+}
+
+.plate-tag {
+  display: flex;
+  align-items: baseline;
+  gap: var(--s4);
+}
+
+.plate-tag__num {
+  font-family: var(--font-display);
+  font-size: var(--t-numeral);
+  line-height: 0.8;
+  color: var(--marigold);
+  font-variation-settings: "opsz" 96;
+}
+
+.plate-tag__name {
+  font-family: var(--font-display);
+  font-size: var(--t-h3);
+  line-height: 1.05;
+  max-width: 14ch;
+  text-wrap: balance;
+}
+
+.chamber__note {
+  font-size: var(--t-small);
+  color: var(--bone-mute);
+  max-width: 46ch;
+  text-wrap: pretty;
+}
+
+/* ---------- colophon ---------- */
+
+.colophon {
+  position: relative;
+  z-index: 2;
+  margin-left: var(--rail);
+  padding: var(--s9) var(--gutter) calc(var(--s9) + env(safe-area-inset-bottom));
+  background: var(--ink-abyss);
+  border-top: 1px solid var(--rule);
+}
+
+.colophon__grid {
+  display: grid;
+  gap: var(--s7);
+  grid-template-columns: 1fr;
+  max-width: 1320px;
+}
+
+@media (min-width: 860px) {
+  .colophon__grid { grid-template-columns: 1.4fr 1fr 1fr; }
+}
+
+.colophon h2 {
+  font-family: var(--font-display);
+  font-size: var(--t-h3);
+  line-height: 1.06;
+  letter-spacing: -0.015em;
+  max-width: 18ch;
+  text-wrap: balance;
+  margin: var(--s4) 0 var(--s5);
+}
+
+.colophon p {
+  font-size: var(--t-small);
+  color: var(--bone-mute);
+  max-width: 46ch;
+}
+
+.colophon ul {
+  list-style: none;
+  margin: var(--s4) 0 0;
+  padding: 0;
+  display: grid;
+  gap: var(--s3);
+  font-size: var(--t-small);
+  color: var(--bone-mute);
+}
+
+.colophon a {
+  color: var(--bone-dim);
+  text-decoration-color: var(--rule-strong);
+  text-underline-offset: 4px;
+  overflow-wrap: anywhere;
+}
+
+.colophon a:hover { color: var(--marigold); }
+
+.colophon__rule {
+  margin: var(--s8) 0 var(--s6);
+  height: 1px;
+  background: var(--rule);
+}
+
+.colophon__foot {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s5);
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+/* ---------- masthead ----------
+   A named menu, alongside the numbered spine. The rail says WHERE you are among the
+   four plates; the masthead says WHAT the parts of the catalogue are called. Three
+   entries only — Ledger, Plates, Seal — so it never needs a burger, at any width.
+   Wording follows the site's own vocabulary; "Home / About / Contact" would read as
+   a template dropped on a fiction. */
+
+.masthead {
+  position: fixed;
+  z-index: 69;                     /* under .progress (71) and the rail (70) */
+  top: 0;
+  left: var(--rail);               /* 68px beside the spine, 0 below 1024px */
+  right: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--s5);
+  padding: var(--s3) var(--gutter);
+  border-bottom: 1px solid var(--rule);
+  background: color-mix(in oklab, var(--ink-abyss) 62%, transparent);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.masthead__mark {
+  font-family: var(--font-display);
+  font-size: 0.94rem;
+  letter-spacing: 0.34em;          /* wide tracking: a spine title, not a logotype */
+  text-transform: uppercase;
+  color: var(--bone);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.masthead__nav {
+  display: flex;
+  gap: clamp(var(--s4), 3vw, var(--s7));
+  margin-inline: auto;             /* optical centring in the space left free */
+}
+
+.masthead__nav a {
+  position: relative;
+  padding: var(--s1) 2px;
+  font-family: var(--font-text);
+  font-size: var(--t-micro);
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--bone-mute);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color 0.28s var(--ease-out);
+}
+
+/* The rule under a link is drawn from the centre out — a stroke laid down, not a
+   block sliding in. Scale on a 1px line stays on the compositor, unlike width. */
+.masthead__nav a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -2px;
+  height: 1px;
+  background: var(--marigold);
+  transform: scaleX(0);
+  transform-origin: 50% 50%;
+  transition: transform 0.34s var(--ease-out);
+}
+
+.masthead__nav a:hover,
+.masthead__nav a:focus-visible,
+.masthead__nav a[aria-current="true"] { color: var(--marigold); }
+
+.masthead__nav a:hover::after,
+.masthead__nav a:focus-visible::after,
+.masthead__nav a[aria-current="true"]::after { transform: scaleX(1); }
+
+.masthead__nav a:focus-visible { outline: none; color: var(--bone); }
+.masthead__nav a:focus-visible::after { background: var(--bone); }
+
+.masthead__folio {
+  font-family: var(--font-text);
+  font-size: var(--t-micro);
+  letter-spacing: 0.28em;
+  color: var(--slate);
+  white-space: nowrap;
+}
+
+/* Below 640px the folio goes: three links plus a wordmark is all the width allows. */
+@media (max-width: 640px) {
+  .masthead { padding-inline: var(--s4); gap: var(--s4); }
+  .masthead__folio { display: none; }
+  .masthead__mark { letter-spacing: 0.2em; }
+  .masthead__nav { gap: var(--s4); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .masthead__nav a,
+  .masthead__nav a::after { transition-duration: 1ms; }
+}

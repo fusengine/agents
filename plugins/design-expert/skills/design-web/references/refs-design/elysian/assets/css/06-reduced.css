@@ -1,0 +1,19 @@
+/* ELYSIAN — reduced motion.
+   The static end-states live in 07-static.css under `html.no-motion`, which is
+   applied both when JS is unavailable and when the user asks for reduced motion.
+   This file only strips duration from everything that still animates. */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    animation-delay: 0ms !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  html { scroll-behavior: auto; }
+}

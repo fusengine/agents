@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Référence de design — procédés de transition</title>
+<!-- [relevé] la source charge Inter depuis rsms.me ; même famille, servie ici par Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="styles.css">
+<script src="motion.js" defer></script>
+</head>
+<body>
+
+<!-- Icônes définies une fois, référencées par <use>. -->
+<svg width="0" height="0" aria-hidden="true" style="position:absolute">
+  <symbol id="lire" viewBox="0 0 24 24" fill="currentColor"><path d="M5 5.723C5.00018 4.18763 6.659 3.22419 7.99219 3.98569L18.9766 10.263C20.3202 11.0308 20.3201 12.9679 18.9766 13.7357L7.99219 20.013C6.65891 20.7747 5 19.8113 5 18.2757V5.723Z"/></symbol>
+  <symbol id="puce" viewBox="0 0 24 24" fill="currentColor"><path d="m10 16.2-3.5-3.5-1.4 1.4L10 19 19 10l-1.4-1.4L10 16.2Z"/></symbol>
+</svg>
+
+<main class="page">
+
+  <!-- == HALO HAUT ==
+       [relevé] une image de 2000px centrée, coupée par un masque alpha vertical -->
+  <div class="halo halo--haut">
+    <div class="halo__masque">
+      <div class="halo__cadre">
+        <img class="halo__img" src="https://mainframe.app/landing-wallpaper.jpg" alt="" aria-hidden="true">
+      </div>
+    </div>
+  </div>
+
+  <div class="couche">
+
+    <!-- == ENTÊTE == -->
+    <header class="entete">
+      <div class="entete__rangee">
+        <a class="marque" href="#" aria-label="Retour à l'accueil">
+          <span class="marque__pastille"></span><span>Mainframe</span>
+        </a>
+        <!-- [relevé] la première entrée est une ICÔNE seule, pas un libellé -->
+        <nav class="entete__nav">
+          <a class="lien-nav" href="#" aria-label="Discord">
+            <svg class="picto" style="width:1.25rem;height:1.25rem" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3a9 9 0 0 0-9 9v6a3 3 0 0 0 3 3h2v-7H5v-2a7 7 0 1 1 14 0v2h-3v7h2a3 3 0 0 0 3-3v-6a9 9 0 0 0-9-9Z"/></svg>
+          </a>
+          <a class="lien-nav" href="#">Follow</a>
+          <a class="lien-nav" href="#">Log in</a>
+        </nav>
+      </div>
+    </header>
+
+    <!-- == ACCROCHE == -->
+    <section class="hero">
+      <div class="hero__bloc">
+        <div class="hero__titrage">
+          <!-- [relevé] le titre reste à 28px sur toutes les tailles d'écran -->
+          <h1 class="titre-page" data-reveler="montee">Watch your agents work.</h1>
+          <p class="sous-titre" data-reveler="montee" style="--pas:1">Mainframe turns agent work into videos your team can keep up with.</p>
+        </div>
+
+        <!-- [relevé] rangée de QUATRE pictogrammes de 24px en texte tertiaire -->
+        <div class="hero__pictos" data-reveler="montee" style="--pas:2">
+          <svg class="picto" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4 5h16a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Zm2 3v8l7-4-7-4Z"/></svg>
+          <svg class="picto" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm1 5v5.6l4 2.3-1 1.7-5-2.9V7h2Z"/></svg>
+          <svg class="picto" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 9 5v10l-9 5-9-5V7l9-5Zm0 2.3L5 8.2v7.6l7 3.9 7-3.9V8.2l-7-3.9Z"/></svg>
+          <svg class="picto" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3a4 4 0 1 1 0 8 4 4 0 0 1 0-8Zm0 10c4.4 0 8 2.5 8 5.5V21H4v-2.5C4 15.5 7.6 13 12 13Z"/></svg>
+        </div>
+
+        <div class="hero__actions" data-reveler="montee" style="--pas:3">
+          <!-- [relevé] le fond répond en 150ms, l'échelle en 200ms, le label passe à 70% -->
+          <button class="bouton-primaire" type="button">
+            <span class="bouton-primaire__texte">Get started</span>
+          </button>
+          <button class="bouton-fantome" type="button">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 3h11a2 2 0 0 1 2 2v11h-2V5H8V3Zm-3 4h11a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2Z"/></svg>
+            <span>Copy agent instructions</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- == CARROUSEL PLEINE LARGEUR ==
+           Trois couches superposées, trois cadences :
+             volet   → révélation opacité + flou 4px, 850 ms, courbe par défaut
+             teinte  → couleur dominante du volet, 1000 ms, courbe de révélation
+             lecture → opacité, 1000 ms, courbe de révélation
+           Les 5 teintes et leur appariement à chaque image sont relevés littéralement.
+           Le volet n'a PAS d'état actif/inactif : c'est une apparition, pas une sélection. -->
+      <div class="carrousel">
+        <div class="carrousel__piste" data-carrousel>
+          <div class="carrousel__case">
+            <div class="vignette" data-reveler="vignette">
+              <div class="vignette__teinte" style="background-color:hsl(0 0% 14%)"></div>
+              <img class="vignette__img" src="https://mainframe.app/_next/image?url=%2Flanding-carousel-design-thumb.jpg&w=1920&q=75" alt="" aria-hidden="true">
+              <button class="vignette__lecture" type="button" aria-label="Ouvrir le volet 1"><span class="pastille"><svg aria-hidden="true"><use href="#lire"/></svg></span></button>
+            </div>
+          </div>
+          <div class="carrousel__case">
+            <div class="vignette" data-reveler="vignette">
+              <div class="vignette__teinte" style="background-color:hsl(28 22% 48%)"></div>
+              <img class="vignette__img" src="https://mainframe.app/_next/image?url=%2Flanding-carousel-docs-thumb.jpg&w=1920&q=75" alt="" aria-hidden="true">
+              <button class="vignette__lecture" type="button" aria-label="Ouvrir le volet 2"><span class="pastille"><svg aria-hidden="true"><use href="#lire"/></svg></span></button>
+            </div>
+          </div>
+          <div class="carrousel__case">
+            <div class="vignette" data-reveler="vignette">
+              <div class="vignette__teinte" style="background-color:hsl(220 14% 30%)"></div>
+              <img class="vignette__img" src="https://mainframe.app/_next/image?url=%2Flanding-carousel-features-thumb.jpg&w=1920&q=75" alt="" aria-hidden="true">
+              <button class="vignette__lecture" type="button" aria-label="Ouvrir le volet 3"><span class="pastille"><svg aria-hidden="true"><use href="#lire"/></svg></span></button>
+            </div>
+          </div>
+          <div class="carrousel__case">
+            <div class="vignette" data-reveler="vignette">
+              <div class="vignette__teinte" style="background-color:hsl(240 60% 30%)"></div>
+              <img class="vignette__img" src="https://mainframe.app/_next/image?url=%2Flanding-carousel-marketing-thumb.jpg&w=1920&q=75" alt="" aria-hidden="true">
+              <button class="vignette__lecture" type="button" aria-label="Ouvrir le volet 4"><span class="pastille"><svg aria-hidden="true"><use href="#lire"/></svg></span></button>
+            </div>
+          </div>
+          <div class="carrousel__case">
+            <div class="vignette" data-reveler="vignette">
+              <div class="vignette__teinte" style="background-color:hsl(150 20% 28%)"></div>
+              <img class="vignette__img" src="https://mainframe.app/_next/image?url=%2Flanding-carousel-roadmap-thumb.jpg&w=1920&q=75" alt="" aria-hidden="true">
+              <button class="vignette__lecture" type="button" aria-label="Ouvrir le volet 5"><span class="pastille"><svg aria-hidden="true"><use href="#lire"/></svg></span></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- == SECTION DE CONTENU == -->
+    <section class="section">
+
+      <!-- Trio de cartes : une bordure, des séparateurs qui basculent d'axe -->
+      <div class="trio" data-reveler="montee">
+        <article class="carte-trio">
+          <svg class="picto" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4 4h16a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1Zm6 8h5v2h-5v-2Zm-4.4-3.4 3.2 2.3a1 1 0 0 1 0 1.6l-3.2 2.3-1.2-1.6L6.8 12 4.4 10.2l1.2-1.6Z"/></svg>
+          <div>
+            <h2 class="carte-titre">Made for agents</h2>
+            <p class="carte-texte">An MCP + skill that works with Claude Code, Cursor, Codex, OpenClaw, and more.</p>
+          </div>
+        </article>
+        <article class="carte-trio">
+          <svg class="picto" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M2 6h13a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2Zm19.6-.1c1-.8 2.4-.1 2.4 1.2v9.8c0 1.3-1.6 2-2.5 1.1l-2.8-2.5V8.4l2.9-2.5Z"/></svg>
+          <div>
+            <h2 class="carte-titre">Generate or upload</h2>
+            <p class="carte-texte">Your agent can ask Mainframe to make a video or upload one it recorded itself.</p>
+          </div>
+        </article>
+        <article class="carte-trio">
+          <svg class="picto" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9 13a8 8 0 0 1 8 6.2c.2 1-.6 1.8-1.6 1.8H2.8c-1 0-1.8-.8-1.6-1.8A8 8 0 0 1 9 13Zm8.4 0a4.9 4.9 0 0 1 4.9 3.9c.1.6-.4 1.1-1 1.1h-3a10 10 0 0 0-2.9-4.6 5 5 0 0 1 2-.4ZM17.4 6.4a2.8 2.8 0 1 1 0 5.6 2.8 2.8 0 0 1 0-5.6ZM9 2.5a4.5 4.5 0 1 1 0 9 4.5 4.5 0 0 1 0-9Z"/></svg>
+          <div>
+            <h2 class="carte-titre">Meant to be shared</h2>
+            <p class="carte-texte">Every video becomes a link your team can watch.</p>
+          </div>
+        </article>
+      </div>
+
+      <!-- == VITRINE ==
+           [relevé] deux arbres COMPLETS servis en parallèle, l'un masqué par média
+           query : la source ne réagence pas, elle duplique. -->
+      <section class="bloc-suivant">
+
+        <!-- Variante étroite : pile simple, sans sommaire -->
+        <div class="vitrine-mobile">
+          <article class="vitrine__article" data-reveler="media">
+            <div class="cadre-media cadre-media--plein"><img src="https://mainframe.app/landing-showcase-coding.webp" alt="Coding agents"></div>
+            <div><h2 class="carte-titre">Coding agents</h2><p class="carte-texte vitrine__legende">Watch a recap of what your agent did so the team starts the day knowing what shipped and what&#39;s blocked.</p></div>
+          </article>
+          <article class="vitrine__article" data-reveler="media">
+            <div class="cadre-media cadre-media--plein"><img src="https://mainframe.app/landing-showcase-pr.webp" alt="Pull requests"></div>
+            <div><h2 class="carte-titre">Pull requests</h2><p class="carte-texte vitrine__legende">Summarize every PR with the change, the architecture, and the parts that need pushback.</p></div>
+          </article>
+          <article class="vitrine__article" data-reveler="media">
+            <div class="cadre-media cadre-media--plein"><img src="https://mainframe.app/landing-showcase-docs.webp" alt="Documentation"></div>
+            <div><h2 class="carte-titre">Documentation</h2><p class="carte-texte vitrine__legende">Walk visitors through your docs so they leave with the answer they came for.</p></div>
+          </article>
+          <article class="vitrine__article" data-reveler="media">
+            <div class="cadre-media cadre-media--plein"><img src="https://mainframe.app/landing-showcase-design.webp" alt="Design"></div>
+            <div><h2 class="carte-titre">Design</h2><p class="carte-texte vitrine__legende">Review design options side by side and call out the tradeoffs so the team can pick a direction.</p></div>
+          </article>
+          <article class="vitrine__article" data-reveler="media">
+            <div class="cadre-media cadre-media--plein"><img src="https://mainframe.app/landing-showcase-marketing.webp" alt="Marketing"></div>
+            <div><h2 class="carte-titre">Marketing</h2><p class="carte-texte vitrine__legende">Recap the week&#39;s numbers to see what moved, what didn&#39;t, and what to improve on next.</p></div>
+          </article>
+        </div>
+
+        <!-- Variante large : sommaire collant en accordéon + pile d'images débordantes -->
+        <div class="vitrine-desktop">
+          <div class="vitrine__sommaire">
+            <div class="vitrine__liste" data-sommaire>
+              <div class="vitrine__entree est-active">
+                <button class="vitrine__onglet" type="button" data-cible="v1" aria-expanded="true">Coding agents</button>
+                <div class="vitrine__repli"><div><p class="carte-texte">Watch a recap of what your agent did so the team starts the day knowing what shipped and what&#39;s blocked.</p></div></div>
+              </div>
+              <div class="vitrine__entree">
+                <button class="vitrine__onglet" type="button" data-cible="v2" aria-expanded="false">Pull requests</button>
+                <div class="vitrine__repli"><div><p class="carte-texte">Summarize every PR with the change, the architecture, and the parts that need pushback.</p></div></div>
+              </div>
+              <div class="vitrine__entree">
+                <button class="vitrine__onglet" type="button" data-cible="v3" aria-expanded="false">Documentation</button>
+                <div class="vitrine__repli"><div><p class="carte-texte">Walk visitors through your docs so they leave with the answer they came for.</p></div></div>
+              </div>
+              <div class="vitrine__entree">
+                <button class="vitrine__onglet" type="button" data-cible="v4" aria-expanded="false">Design</button>
+                <div class="vitrine__repli"><div><p class="carte-texte">Review design options side by side and call out the tradeoffs so the team can pick a direction.</p></div></div>
+              </div>
+              <div class="vitrine__entree">
+                <button class="vitrine__onglet" type="button" data-cible="v5" aria-expanded="false">Marketing</button>
+                <div class="vitrine__repli"><div><p class="carte-texte">Recap the week&#39;s numbers to see what moved, what didn&#39;t, and what to improve on next.</p></div></div>
+              </div>
+            </div>
+          </div>
+          <div class="vitrine__pile" data-pile>
+            <div id="v1" data-reveler="media"><div class="cadre-media cadre-media--large"><img src="https://mainframe.app/landing-showcase-coding.webp" alt="Coding agents"></div></div>
+            <div id="v2" data-reveler="media"><div class="cadre-media cadre-media--large"><img src="https://mainframe.app/landing-showcase-pr.webp" alt="Pull requests"></div></div>
+            <div id="v3" data-reveler="media"><div class="cadre-media cadre-media--large"><img src="https://mainframe.app/landing-showcase-docs.webp" alt="Documentation"></div></div>
+            <div id="v4" data-reveler="media"><div class="cadre-media cadre-media--large"><img src="https://mainframe.app/landing-showcase-design.webp" alt="Design"></div></div>
+            <div id="v5" data-reveler="media"><div class="cadre-media cadre-media--large"><img src="https://mainframe.app/landing-showcase-marketing.webp" alt="Marketing"></div></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- == CARTES D'ATTRIBUT == -->
+      <div class="bloc-suivant pile-6">
+        <div class="duo">
+          <div data-reveler="montee">
+            <!-- Carte à disques : overflow VISIBLE, les disques sortent par le haut -->
+            <div class="carte-attribut">
+              <div class="disques" data-disques>
+                <span class="disque disque--1"></span>
+                <span class="disque disque--2"></span>
+                <span class="disque disque--3"></span>
+              </div>
+              <div class="carte-attribut__texte">
+                <h2 class="carte-titre">Your avatar</h2>
+                <p class="carte-texte">A persona for your agent.</p>
+              </div>
+            </div>
+          </div>
+          <div data-reveler="montee" style="--pas:1">
+            <!-- Carte à fond d'image : overflow HIDDEN -->
+            <div class="carte-attribut carte-attribut--rogne">
+              <div class="onde" style="background-image:url('https://mainframe.app/landing-voice-waveform.jpeg')"></div>
+              <!-- [arbitrage] la source dessine sa forme d'onde dans un SVG masqué généré
+                   à l'exécution ; ces barres en reproduisent le profil et le dégradé. -->
+              <div class="onde-sup"><div class="onde-sup__barres">
+                <span style="--h:18%"></span><span style="--h:34%"></span><span style="--h:56%"></span><span style="--h:78%"></span><span style="--h:58%"></span><span style="--h:38%"></span><span style="--h:66%"></span><span style="--h:92%"></span><span style="--h:74%"></span><span style="--h:48%"></span>
+                <span style="--h:28%"></span><span style="--h:44%"></span><span style="--h:64%"></span><span style="--h:88%"></span><span style="--h:68%"></span><span style="--h:42%"></span><span style="--h:24%"></span><span style="--h:40%"></span><span style="--h:60%"></span><span style="--h:84%"></span>
+                <span style="--h:100%"></span><span style="--h:78%"></span><span style="--h:54%"></span><span style="--h:32%"></span><span style="--h:50%"></span><span style="--h:72%"></span><span style="--h:94%"></span><span style="--h:70%"></span><span style="--h:44%"></span><span style="--h:28%"></span>
+                <span style="--h:52%"></span><span style="--h:80%"></span><span style="--h:60%"></span><span style="--h:38%"></span><span style="--h:22%"></span><span style="--h:46%"></span><span style="--h:68%"></span><span style="--h:90%"></span><span style="--h:62%"></span><span style="--h:40%"></span>
+                <span style="--h:30%"></span><span style="--h:50%"></span><span style="--h:34%"></span><span style="--h:20%"></span>
+              </div></div>
+              <div class="carte-attribut__texte">
+                <h2 class="carte-titre">Your voice</h2>
+                <p class="carte-texte">Narrated in your voice.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Carte large + rail de marques -->
+        <div data-reveler="montee">
+          <div class="carte-large">
+            <div class="carte-large__entete">
+              <h2 class="carte-titre">Your brand</h2>
+              <p class="carte-texte">In your palette and typeface.</p>
+            </div>
+            <div class="carte-large__corps">
+              <!-- Le conteneur est une révélation (flou 8px, 850 ms) ; les cartes du rail
+                   portent le VRAI système actif/inactif du site : 100 % pour la carte
+                   centrée, 25 % pour les autres, en 400 ms courbe de sortie. -->
+              <div class="rail-enveloppe" data-reveler="fondu">
+                <div class="rail" data-rail>
+                  <div class="rail__case"><button class="rail__carte est-active" type="button" aria-label="Center Acme brand card"><img src="https://mainframe.app/landing-brand-acme.webp" alt="Acme brand card"></button></div>
+                  <div class="rail__case"><button class="rail__carte" type="button" aria-label="Center Lumen brand card"><img src="https://mainframe.app/landing-brand-lumen.webp" alt="Lumen brand card"></button></div>
+                  <div class="rail__case"><button class="rail__carte" type="button" aria-label="Center Forge brand card"><img src="https://mainframe.app/landing-brand-forge.webp" alt="Forge brand card"></button></div>
+                  <div class="rail__case"><button class="rail__carte" type="button" aria-label="Center Pine brand card"><img src="https://mainframe.app/landing-brand-pine.webp" alt="Pine brand card"></button></div>
+                  <div class="rail__case"><button class="rail__carte" type="button" aria-label="Center Atlas brand card"><img src="https://mainframe.app/landing-brand-atlas.webp" alt="Atlas brand card"></button></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- == TARIFS == -->
+    <section class="section section--espacee">
+      <div class="tarifs" data-reveler="montee">
+        <section class="plan">
+          <div class="plan__corps">
+            <h2 class="plan__nom">Starter</h2>
+            <div class="plan__prix">Free</div>
+            <div class="plan__cale"></div>
+            <ul class="plan__liste">
+              <li><svg class="plan__puce" aria-hidden="true"><use href="#puce"/></svg>Unlimited uploads</li>
+              <li><svg class="plan__puce" aria-hidden="true"><use href="#puce"/></svg>Custom voice narration</li>
+              <li><svg class="plan__puce" aria-hidden="true"><use href="#puce"/></svg>Branded videos</li>
+              <li><svg class="plan__puce" aria-hidden="true"><use href="#puce"/></svg>10 generations/mo</li>
+            </ul>
+            <div class="plan__pied"><div class="plan__action"><a class="lien-nav" href="#">Continue</a></div></div>
+          </div>
+        </section>
+
+        <!-- [relevé] seul survol « riche » du site : saturation 0.4 → 1.2 et échelle 1.2 → 1, en 800 ms -->
+        <section class="plan plan--phare">
+          <div class="plan__fond" style="background-image:url('https://mainframe.app/landing-plan-pro-bg.jpeg')"></div>
+          <div class="plan__corps">
+            <h2 class="plan__nom">Pro</h2>
+            <div class="plan__prix">$20<span class="plan__unite">/user/mo</span></div>
+            <div class="plan__cale"></div>
+            <ul class="plan__liste">
+              <li><svg class="plan__puce" aria-hidden="true"><use href="#puce"/></svg>Unlimited uploads</li>
+              <li><svg class="plan__puce" aria-hidden="true"><use href="#puce"/></svg>Custom voice narration</li>
+              <li><svg class="plan__puce" aria-hidden="true"><use href="#puce"/></svg>Branded videos</li>
+              <li><svg class="plan__puce" aria-hidden="true"><use href="#puce"/></svg>No watermark</li>
+              <li><svg class="plan__puce" aria-hidden="true"><use href="#puce"/></svg>Invite your team</li>
+              <!-- [relevé] la dernière puce empile DEUX lignes : le libellé, puis une mention
+                   en texte secondaire — `flex min-w-0 select-text flex-col gap-1` -->
+              <li><svg class="plan__puce" aria-hidden="true"><use href="#puce"/></svg>
+                <span class="plan__ligne"><span>25 generations/mo</span><span class="plan__mention">$0.50 per additional</span></span>
+              </li>
+            </ul>
+            <div class="plan__pied"><div class="plan__action"><a class="lien-nav" href="#">Go Pro</a></div></div>
+          </div>
+        </section>
+      </div>
+    </section>
+  </div>
+
+  <!-- == ZONE BASSE == -->
+  <div class="zone-basse">
+    <div class="halo halo--bas">
+      <div class="halo__masque">
+        <div class="halo__cadre">
+          <img class="halo__img" src="https://mainframe.app/landing-wallpaper.jpg" alt="" aria-hidden="true">
+        </div>
+      </div>
+    </div>
+
+    <section class="cloture">
+      <div class="cloture__bloc">
+        <div class="cloture__pile">
+          <img class="cloture__objet" src="https://mainframe.app/mainframe-glass.png" alt="" aria-hidden="true" data-reveler="fondu">
+          <div class="cloture__titrage" data-reveler="montee">
+            <!-- [relevé] le titre de clôture est PLUS PETIT que le titre principal : 24px contre 28px -->
+            <h2 class="cloture__titre">Your agents, now playing.</h2>
+            <p class="sous-titre">It&#39;s free to start.</p>
+          </div>
+        </div>
+        <button class="bouton-primaire" type="button" data-reveler="montee" style="--pas:1">
+          <span class="bouton-primaire__texte">Get started</span>
+        </button>
+      </div>
+    </section>
+
+    <footer class="pied">
+      <div class="pied__rangee">
+        <a class="marque pied__marque" href="#" aria-label="Retour à l'accueil">
+          <span class="marque__pastille"></span><span>Mainframe</span>
+        </a>
+        <nav class="pied__nav">
+          <a href="#">Terms</a>
+          <a href="#">Privacy</a>
+          <a href="#">Blog</a>
+          <a href="#">Discord</a>
+          <a href="#">Help</a>
+        </nav>
+      </div>
+    </footer>
+  </div>
+</main>
+</body>
+</html>

@@ -1,0 +1,1747 @@
+/* =============================================================================
+   RÉFÉRENCE DE DESIGN — procédés relevés sur cursor.com (juillet 2026)
+   Source : index.html (647 707 o) + 4 feuilles CSS Next.js compilées.
+
+   [relevé]    = valeur lue textuellement dans la source (fichier indiqué)
+   [arbitrage] = choix de l'auteur de cette référence, absent de la source
+
+   Sources abrégées :  M = 15--1yty4lgos.css (313 018 o, feuille principale)
+                       B = 0n3w.msyn~5aj.css (68 334 o, CSS d'une démo)
+                       I = blocs <style> inline de index.html
+                       H = balisage de index.html
+   ========================================================================== */
+
+/* -----------------------------------------------------------------------------
+   1. JETONS
+-------------------------------------------------------------------------------*/
+:root {
+  color-scheme: light dark;
+
+  /* — POINTS DE BASCULE —
+     Le projet REDÉFINIT les paliers de Tailwind. Vérifié en isolant chaque bloc
+     @media de M et en cherchant quel préfixe y est compilé :
+       sm: → 420px · md: → 660px · lg: → 900px · xl: → 1140px
+     (`--breakpoint-md:660px` est le seul déclaré en clair. L'échelle du
+     conteneur confirme la série : 420 / 660 / 900 / 1140 / 1380 / 1470.)
+     Ne jamais présumer les 640/768/1024/1280 de Tailwind ici.     [relevé] M */
+
+  /* — Couleur, thème clair — [relevé] M, @layer theme :root */
+  --fond-page:         #f7f7f4;
+  --texte-primaire:    #26251e;
+  --texte-primaire-02: #3b3a33;   /* --color-theme-fg-02 */
+  --accent:            #f54e00;   /* --color-theme-accent */
+
+  /* Rampe de surfaces : 5 marches, toutes des hex OPAQUES — pas des alpha
+     empilés. Une carte survolée sur une carte reste exacte.       [relevé] M */
+  --surface-01: #f2f1ed;   /* carte au repos            --color-theme-card-hex */
+  --surface-02: #f0efeb;   /* survol de carte claire    --…-card-01-hex        */
+  --surface-03: #ebeae5;   /* survol de carte           --…-card-02-hex        */
+  --surface-04: #e6e5e0;   /* bouton secondaire         --…-card-03-hex        */
+  --surface-05: #e1e0db;   /* survol bouton secondaire  --…-card-04-hex        */
+  --surface-chaude: #f3ede6;                        /* --…-card-warm-hex       */
+
+  /* Dérivés : TOUS calculés en color-mix oklab depuis le texte primaire,
+     jamais en gris indépendants. Changer --texte-primaire refait la
+     hiérarchie entière.                                           [relevé] M */
+  --texte-secondaire: color-mix(in oklab, var(--texte-primaire) 60%, transparent);
+  --texte-median:     color-mix(in oklab, var(--texte-primaire) 50%, transparent);
+  --texte-tertiaire:  color-mix(in oklab, var(--texte-primaire) 40%, transparent);
+  --filet-discret:    color-mix(in oklab, var(--texte-primaire) 2.5%, transparent);
+  --filet-faible:     color-mix(in oklab, var(--texte-primaire) 5%,  transparent);
+  --filet-moyen:      color-mix(in oklab, var(--texte-primaire) 10%, transparent);
+  --filet-marque:     color-mix(in oklab, var(--texte-primaire) 20%, transparent);
+  --filet-fort:       color-mix(in oklab, var(--texte-primaire) 60%, transparent);
+
+  /* Couleurs de diff du produit — [relevé] M --color-theme-product-ansi-* */
+  --diff-ajout:   #1f8a65;
+  --diff-retrait: #cf2d56;
+
+  /* Fonds des médias en couches : trois paires relevées dans H, attribut style
+     `--layered-media-bg-light` / `--layered-media-bg-dark`.       [relevé] H */
+  --media-fond-a: #D9D5CF;
+  --media-fond-b: #CAC6BE;
+  --media-fond-c: #B6B9BE;
+
+  /* — SURFACES EN DÉGRADÉ —
+     Piège de lecture : les jetons `--color-theme-card*` SANS suffixe `-hex` ne
+     sont pas des couleurs mais des **images de fond empilées**. La rampe existe
+     donc en deux versions, et elles ne sont pas interchangeables :
+       · `--color-theme-card-03-hex` = #e6e5e0, couleur opaque, pour `background-color`
+       · `--color-theme-card-03`     = deux dégradés superposés, pour `background-image`
+     [relevé] M :
+       --color-theme-card:    linear-gradient(var(--color-theme-card-hex) 0% 100%)
+       --color-theme-card-02: linear-gradient(var(--color-theme-fg-02-5) 0% 100%),
+                              linear-gradient(var(--color-theme-card-hex) 0% 100%)
+       --color-theme-card-03: linear-gradient(var(--color-theme-fg-05) 0% 100%),
+                              linear-gradient(var(--color-theme-card-hex) 0% 100%)
+     Un dégradé d'une seule couleur « 0% 100% » n'est pas une coquetterie : il
+     permet d'EMPILER un voile (2,5 % ou 5 % du texte primaire) au-dessus du
+     fond de carte en une seule propriété, sans élément supplémentaire ni alpha
+     appliqué à l'élément entier. Le voile suit le thème, puisqu'il dérive du
+     texte primaire. Aplatir ces jetons en une couleur unie fait perdre
+     exactement la nuance qui sépare une scène de média de sa carte.
+     `bg-[image:var(--color-theme-card-03)]` apparaît 5 fois dans la page. */
+  --surface-carte:    linear-gradient(var(--surface-01) 0% 100%);
+  --surface-carte-02: linear-gradient(color-mix(in oklab, var(--texte-primaire) 2.5%, transparent) 0% 100%),
+                      linear-gradient(var(--surface-01) 0% 100%);
+  --surface-carte-03: linear-gradient(color-mix(in oklab, var(--texte-primaire) 5%, transparent) 0% 100%),
+                      linear-gradient(var(--surface-01) 0% 100%);
+  /* Masque de fondu latéral d'un défilement continu — le contenu s'efface dans
+     le fond de page plutôt que d'être coupé net.
+     [relevé] M : linear-gradient(90deg,transparent 0%,var(--color-theme-bg) 88%) */
+  --masque-lateral: linear-gradient(90deg, transparent 0%, var(--fond-page) 88%);
+
+  /* — RYTHME —
+     Deux pas INDÉPENDANTS : l'horizontal et le vertical ne partagent aucune
+     unité. Il n'y a pas de « grille 8pt » ici.                    [relevé] M */
+  --pas-h:     calc(10rem / 16);   /* --g         = 0.625rem */
+  --pas-v:     calc(1rem * 1.4);   /* --v         = 1.4rem   */
+  --gouttiere: calc(12rem / 15);   /* --grid-gap  = 0.8rem   */
+  --largeur-max:    1300px;        /* --max-width-container   */
+  --hauteur-entete: 56px;          /* --site-header-height    */
+
+  /* — TYPOGRAPHIE —
+     Pile système pure. AUCUNE webfont de texte sur la page : le seul fichier
+     de fonte chargé est une fonte d'icônes.                       [relevé] M */
+  --police: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+            "Helvetica Neue", Arial, sans-serif;
+  --police-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+            "Liberation Mono", "Courier New", monospace;
+
+  /* Échelle : 9 marches. Noter le saut vide entre 1.625 et 2.25rem. [relevé] M */
+  --t-xs: .75rem;      --t-sm: .875rem;   --t-base: 1rem;
+  --t-md-sm: 1.125rem; --t-md: 1.375rem;  --t-md-lg: 1.625rem;
+  --t-lg: 2.25rem;     --t-xl: 3.25rem;   --t-2xl: 4.5rem;
+  /* Échelle « produit », pour les interfaces reconstituées        [relevé] M */
+  --t-prod-sm: .6875rem; --t-prod: .75rem; --t-prod-lg: .8125rem;
+
+  /* Interlignes — 7 valeurs, resserrées quand la taille monte.    [relevé] M */
+  --int-serre: 1.1;  --int-2xserre: 1.15; --int-xserre: 1.2;
+  --int-mi: 1.25;    --int-mi-plus: 1.3;  --int-ample: 1.4;  --int-normal: 1.5;
+  --int-prod: 1.33333;
+
+  /* Approches — négatives dès qu'on dépasse le corps de texte.    [relevé] M */
+  --ap-sm: .01em;       --ap-base: .005em; --ap-md: -.005em;
+  --ap-md-lg: -.0125em; --ap-lg: -.02em;   --ap-xl: -.025em; --ap-2xl: -.03em;
+
+  /* — RAYONS — [relevé] M --radius-* ; `rounded-full` est compilé par
+     lightningcss en 3.40282e38px (borne d'un float 32 bits) : on écrit 999px. */
+  --r-2xs: 2px; --r-xs: 4px; --r-md: 8px; --r-lg: .5rem; --r-plein: 999px;
+
+  /* — MOUVEMENT — 3 durées de système + 3 courbes.                [relevé] M */
+  --duree-instant: .14s;  /* --duration      : états d'interface       */
+  --duree-lente:   .25s;  /* --duration-slow : panneaux, items de nav  */
+  --duree-ui:      .15s;  /* --default-transition-duration            */
+  --duree-longue:  .2s;   /* utilitaire .duration-200                 */
+  --duree-revele:  1s;    /* --animate-gallery-marquee-item-slide-up  */
+
+  --courbe-ressort: cubic-bezier(.25, 1, .5, 1);  /* --ease-out-spring */
+  --courbe-sortie:  cubic-bezier(0, 0, .2, 1);    /* --ease-out        */
+  --courbe-douce:   cubic-bezier(.4, 0, .2, 1);   /* --ease-in-out     */
+
+  /* Décalage de cascade des révélations : posé en JS dans la source, donc
+     illisible dans le CSS livré.                                [arbitrage] */
+  --cascade: 60ms;
+
+  /* — OMBRES — [relevé] M --shadow-flyout, --shadow-outline-theme ; l'ombre de
+     fenêtre est relevée dans H, attribut style des `#demo-window-*`. */
+  --ombre-flyout:  0 0 1rem #00000005, 0 0 .5rem #00000002;
+  --contour-theme: 0 0 0 1px var(--filet-moyen);
+  --ombre-fenetre: 0 28px 70px rgba(0,0,0,.14), 0 14px 32px rgba(0,0,0,.1),
+                   0 0 0 1px var(--filet-moyen);
+}
+
+@media (min-width: 900px) {
+  :root { --hauteur-entete: 52px; }   /* [relevé] M @media (min-width:900px) */
+}
+
+/* — Thème sombre —
+   Deux relevés combinés :
+   · `[data-theme=dark]{--color-theme-bg:#14120b;--color-theme-fg:#edecec;
+      --color-theme-fg-02:#d7d6d5}` existe littéralement dans M ;
+   · le bloc inline (I) ajoute le motif
+     `@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]) … }`.
+   C'est ce `:not([data-theme="light"])` À L'INTÉRIEUR du media query qui permet
+   de revenir au clair sur un appareil sombre. Sans lui, bascule à sens unique. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --fond-page: #14120b;  --texte-primaire: #edecec;  --texte-primaire-02: #d7d6d5;
+    --surface-01: #1b1913; --surface-02: #1d1b15; --surface-03: #201e18;
+    --surface-04: #26241e; --surface-05: #2b2923; --surface-chaude: #1c1713;
+    --media-fond-a: #4A443B; --media-fond-b: #47433C; --media-fond-c: #3C3935;
+  }
+}
+:root[data-theme="dark"] {
+  --fond-page: #14120b;  --texte-primaire: #edecec;  --texte-primaire-02: #d7d6d5;
+  --surface-01: #1b1913; --surface-02: #1d1b15; --surface-03: #201e18;
+  --surface-04: #26241e; --surface-05: #2b2923; --surface-chaude: #1c1713;
+  --media-fond-a: #4A443B; --media-fond-b: #47433C; --media-fond-c: #3C3935;
+}
+
+/* -----------------------------------------------------------------------------
+   2. BASE
+-------------------------------------------------------------------------------*/
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background-color: var(--fond-page);
+  color: var(--texte-primaire);
+  font-family: var(--police);
+  font-size: var(--t-base);
+  line-height: var(--int-normal);
+  letter-spacing: var(--ap-base);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;                  /* garde-fou anti-débordement [arbitrage] */
+}
+h1, h2, h3, p, figure, blockquote, ul, figcaption { margin: 0; }
+h1, h2, h3 { font-weight: 400; }       /* [relevé] M : --font-weight-normal partout */
+ul { padding: 0; list-style: none; }
+img, svg { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; }
+
+/* Anneau de focus unique pour TOUTE la page — offset en `ch`, pas en px : il
+   suit la taille de police du composant.
+   [relevé] M : outline:2px solid var(--color-theme-fg); outline-offset:.3ch */
+:where(a, button, [tabindex]):focus-visible {
+  outline: 2px solid var(--texte-primaire);
+  outline-offset: .3ch;
+}
+
+/* -----------------------------------------------------------------------------
+   3. GABARIT
+-------------------------------------------------------------------------------*/
+.conteneur {                      /* [relevé] M .container, règle finale l.3678 */
+  width: 100%; max-width: var(--largeur-max); margin-inline: auto;
+}
+
+/* Une seule classe porte TOUT le rythme vertical du site.
+   [relevé] M : .section{padding:var(--spacing-v3) var(--spacing-g2)}
+   → 3 pas verticaux (4.2rem) en bloc, 2 pas horizontaux (1.25rem) en ligne. */
+.section { padding: calc(var(--pas-v) * 3) calc(var(--pas-h) * 2); }
+.section--sans-y   { padding-block: 0; }                       /* [relevé] M */
+.section--sans-x   { padding-inline: 0; }                      /* [relevé] M */
+.section--compacte { padding-block: calc(var(--pas-v) * 2); }  /* [relevé] M */
+.section--titre    { padding-block: calc(var(--pas-v) * 3); }  /* [relevé] M */
+.section--coupee   { overflow: hidden; }                       /* [relevé] H */
+
+/* La première section d'un `main` prend 5 pas en haut sans qu'aucune classe ne
+   soit posée : le sélecteur est STRUCTUREL.
+   [relevé] M : main>.section:first-child,.section--first-child{…v5} */
+main > .section:first-child { padding-block-start: calc(var(--pas-v) * 5); }
+
+/* Le jardin de logos remonte contre le héros : `pt-0 pb-v1.5`.   [relevé] H */
+.section--logos { padding-block: 0 calc(var(--pas-v) * 1.5); }
+
+/* Grille de composition : 24 colonnes, gouttière = 1 pas horizontal.
+   [relevé] M .grid-cursor{gap:var(--spacing-g1);grid-template-columns:repeat(24,1fr)}
+   Jamais appliquée à la page entière — seulement DANS les grandes cartes. */
+.grille-24 { display: grid; grid-template-columns: repeat(24, 1fr); gap: var(--pas-h); }
+
+/* -----------------------------------------------------------------------------
+   4. TYPOGRAPHIE
+   Procédé : chaque classe fixe SIMULTANÉMENT taille, interligne et approche.
+   Aucune ne règle une seule des trois.                    [relevé] M .type-*
+-------------------------------------------------------------------------------*/
+.t-xs    { font-size: var(--t-xs);    line-height: var(--int-normal);  letter-spacing: var(--ap-sm); }
+.t-sm    { font-size: var(--t-sm);    line-height: var(--int-normal);  letter-spacing: var(--ap-sm); }
+.t-base  { font-size: var(--t-base);  line-height: var(--int-normal);  letter-spacing: var(--ap-base); }
+.t-md-sm { font-size: var(--t-md-sm); line-height: var(--int-ample); }
+.t-md    { font-size: var(--t-md);    line-height: var(--int-mi-plus); letter-spacing: var(--ap-md); }
+.t-md-lg { font-size: var(--t-md-lg); line-height: var(--int-mi);      letter-spacing: var(--ap-md-lg); }
+.t-lg    { font-size: var(--t-lg);    line-height: var(--int-xserre);  letter-spacing: var(--ap-lg); }
+.t-xl    { font-size: var(--t-xl);    line-height: var(--int-2xserre); letter-spacing: var(--ap-xl); }
+.t-2xl   { font-size: var(--t-2xl);   line-height: var(--int-serre);   letter-spacing: var(--ap-2xl); }
+/* Échelle des interfaces reconstituées.        [relevé] M .type-product-* */
+.t-prod    { font-size: var(--t-prod);    line-height: var(--int-prod); }
+.t-prod-sm { font-size: var(--t-prod-sm); line-height: 1.27273; letter-spacing: .0044em; }
+.t-prod-lg { font-size: var(--t-prod-lg); line-height: var(--int-prod); }
+.mono      { font-family: var(--police-mono); }
+
+/* `type-base md:type-md` : la seule bascule de taille des blocs.  [relevé] H */
+@media (min-width: 660px) {
+  .md-t-md { font-size: var(--t-md); line-height: var(--int-mi-plus);
+             letter-spacing: var(--ap-md); }
+}
+/* `type-xl sm:type-2xl` — et `sm:` vaut 420px ici : la bascule arrive dès le
+   petit mobile, pas à 640.                                       [relevé] H */
+@media (min-width: 420px) {
+  .sm-t-2xl { font-size: var(--t-2xl); line-height: var(--int-serre);
+              letter-spacing: var(--ap-2xl); }
+}
+
+.secondaire { color: var(--texte-secondaire); }
+.median     { color: var(--texte-median); }
+.tertiaire  { color: var(--texte-tertiaire); }
+.equilibre  { text-wrap: balance; }        /* [relevé] H text-balance */
+.souple     { text-wrap: pretty; }         /* [relevé] H text-pretty  */
+.centre     { text-align: center; }
+
+/* Quatre mesures nommées, jamais de largeur en pixels.            [relevé] M */
+.mesure             { max-width: 65ch; }  /* .max-w-prose                */
+.mesure--etroite    { max-width: 48ch; }  /* --spacing-prose-narrow      */
+.mesure--large      { max-width: 80ch; }  /* --spacing-prose-medium-wide */
+.mesure--tres-large { max-width: 96ch; }  /* --spacing-prose-wide        */
+.centrer-bloc { margin-inline: auto; }
+
+.invisible-lecteur {
+  position: absolute; width: 1px; height: 1px;
+  clip-path: inset(50%); white-space: nowrap; overflow: hidden;
+}
+
+/* -----------------------------------------------------------------------------
+   5. ENTÊTE ET NAVIGATION
+-------------------------------------------------------------------------------*/
+.entete {
+  position: fixed; inset: 0 0 auto 0; z-index: 50;
+  background-color: var(--fond-page);
+  padding-inline: calc(var(--pas-h) * 2);
+}
+/* [relevé] H : grid-cols-[1fr_auto_auto] lg:grid-cols-[auto_1fr_auto] — la
+   marque occupe la colonne souple en petit écran et devient auto au-delà, ce
+   qui recentre la navigation sans la déplacer. */
+.entete__grille {
+  display: grid; align-items: center; position: relative;
+  height: var(--hauteur-entete);
+  grid-template-columns: 1fr auto auto;
+}
+@media (min-width: 900px) { .entete__grille { grid-template-columns: auto 1fr auto; } }
+.marque { display: inline-flex; align-items: center; gap: .45rem; font-size: var(--t-md-sm); }
+.marque svg { width: 20px; height: 20px; }
+
+/* Lien d'évitement : caché par clip-path, jamais par display — il reste
+   focusable. [relevé] M .skipnav / .skipnav:not(:focus-visible):not(:active) */
+.evitement { position: absolute; top: .82rem; left: -.2rem; z-index: 50;
+             border-radius: var(--r-plein); }
+.evitement:not(:focus-visible):not(:active) {
+  width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap;
+}
+
+/* La nav est centrée en ABSOLU sur la largeur de l'entête, pas par la grille :
+   elle reste au milieu quelle que soit la largeur des blocs latéraux.
+   [relevé] H : nav class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" */
+.nav-centre { display: none; }
+@media (min-width: 900px) {
+  .nav-centre { display: block; position: absolute; top: 50%; left: 50%;
+                transform: translate(-50%, -50%); }
+}
+.nav-centre > ul { display: flex; align-items: center; }
+
+/* Le padding est asymétrique — 1,5 pas horizontal contre 3/12 de pas vertical.
+   La bordure transparente réserve la place du focus.             [relevé] M */
+.nav__lien, .nav__btn {
+  display: inline-flex; cursor: pointer;
+  font-size: var(--t-sm);
+  padding-inline: calc(var(--pas-h) * 1.5);
+  padding-block: calc(var(--pas-v) * 3 / 12);
+  background-color: transparent; border: 1px solid transparent;
+}
+/* Survol : PAS de fond, seulement une désaturation du texte par color-mix vers
+   transparent. Le survol ATTÉNUE, il ne renforce pas.            [relevé] M */
+.nav__lien:hover, .nav__btn:hover, .nav__btn[aria-expanded="true"] {
+  color: color-mix(in oklab, var(--texte-primaire) 75%, transparent);
+}
+
+.nav__groupe { position: relative; }
+
+/* ANIMATION 1 — chevron du menu.
+   [relevé] M : .nav__btn-caret{opacity:0;transition:opacity var(--duration)
+                var(--ease-out-spring);align-items:center;display:flex}
+                .nav__btn-caret--sm{…position:absolute;inset:0 0 0 auto}
+                .nav__btn-caret:focus-visible{opacity:1;outline:0}
+   ATTENTION — la source n'a AUCUNE règle `:hover` sur ce chevron : il est
+   révélé par `:focus-visible` et par une classe `.is-active` posée en JS.
+   La révélation au survol ci-dessous est un                   [arbitrage]. */
+.nav__chevron {
+  display: flex; align-items: center;
+  position: absolute; inset: 0 0 0 auto;
+  border: 0; background: none; cursor: pointer; font-size: var(--t-sm);
+  opacity: 0;
+  transition: opacity var(--duree-instant) var(--courbe-ressort);
+}
+.nav__chevron:focus-visible { opacity: 1; outline: 0; }            /* [relevé] M */
+.nav__groupe:hover .nav__chevron,
+.nav__groupe:focus-within .nav__chevron { opacity: 1; }            /* [arbitrage] */
+
+/* ANIMATION 2 — rotation du chevron. `transform` seul, même durée, même courbe.
+   Le glyphe pivoté n'est pas un chevron mais la flèche « ↓ », rendue par un jeu
+   stylistique de la fonte maison (font-feature-settings:"ss09").
+   [relevé] M .nav__btn-caret.is-active .nav__btn-caret__icon{transform:rotate(180deg)} */
+.nav__chevron span {
+  display: inline-flex;
+  transition: transform var(--duree-instant) var(--courbe-ressort);
+}
+.nav__groupe:hover .nav__chevron span,
+.nav__groupe:focus-within .nav__chevron span { transform: rotate(180deg); }
+
+/* ANIMATION 3 — LE procédé le plus réutilisable de la page.
+   Un panneau qui doit sortir de l'arbre d'accessibilité SANS couper son fondu :
+   `visibility` est transitionnée avec une durée 0 et un DÉLAI égal à la durée
+   du fondu ; à l'ouverture, `transition-delay:0s` annule ce délai.
+   Entrée immédiate, sortie qui laisse le fondu finir avant de masquer. Aucun
+   setTimeout, aucun animationend, aucun état applicatif.
+   [relevé] M : .nav__sub-nav{opacity:0;visibility:hidden;transition:opacity
+     var(--duration) var(--ease-out-spring), transform var(--duration)
+     var(--ease-out-spring), visibility 0s linear var(--duration);
+     transform:translateY(-.4rem)} */
+.nav__panneau {
+  position: absolute; top: 100%; left: 0;
+  padding-top: calc(var(--pas-v) * 3 / 12);
+  opacity: 0; visibility: hidden;
+  transform: translateY(-.4rem);
+  transition: opacity    var(--duree-instant) var(--courbe-ressort),
+              transform  var(--duree-instant) var(--courbe-ressort),
+              visibility 0s linear var(--duree-instant);
+}
+.nav__groupe:hover .nav__panneau,
+.nav__groupe:focus-within .nav__panneau {
+  opacity: 1; visibility: visible; transform: translateY(0); transition-delay: 0s;
+}
+/* La source pilote ce panneau en JS via aria-expanded ; ici c'est du CSS pur
+   (:hover / :focus-within) — même rendu.                        [arbitrage] */
+
+/* [relevé] M .card--sub-nav : padding vertical asymétrique, -.15em en haut. */
+.nav__panneau .carte {
+  padding: calc(var(--pas-h) - .15em) calc(var(--pas-h) * 1.5) calc(var(--pas-h) + .2em);
+}
+.nav__panneau ul { display: flex; flex-direction: column; }
+.nav__panneau li { min-width: 8rem; }                             /* [relevé] H */
+/* Le panneau « Resources » est sur 2 colonnes.
+   [relevé] H : grid-cols-[repeat(2,auto)] gap-x-g1 */
+.nav__panneau--double ul { display: grid; grid-template-columns: repeat(2, auto);
+                           column-gap: var(--pas-h); }
+.nav__sous-lien { display: flex; font-size: var(--t-sm);
+                  padding-block: calc(var(--pas-v) * 2.5 / 12); }
+.nav__sous-lien:hover { color: color-mix(in oklab, var(--texte-primaire) 75%, transparent); }
+
+/* ANIMATION 4 — flèche « lien externe », et son garde-fou tactile.
+   Elle occupe sa place en permanence : le libellé ne bouge pas au survol.
+   [relevé] M .nav__sub-nav__link__icon{transition:opacity var(--duration) var(--ease-out-spring)}
+
+   LE point à copier : la visibilité au repos dépend de la CAPACITÉ DE SURVOL du
+   pointeur, pas de la largeur d'écran. Sur un appareil tactile la flèche est
+   affichée en permanence — sinon elle resterait invisible à jamais, faute de
+   survol pour la révéler. Trois règles relevées telles quelles dans M, valables
+   pour `.nav__sub-nav__link__icon` comme pour `.footer-link__icon`. */
+.fleche-externe { display: inline-block;
+                  transition: opacity var(--duree-instant) var(--courbe-ressort); }
+@media (hover: none)  { .fleche-externe { opacity: 1; } }          /* [relevé] M */
+@media (hover: hover) {
+  .fleche-externe { opacity: 0; }                                  /* [relevé] M */
+  .nav__sous-lien:hover .fleche-externe,
+  .nav__sous-lien:focus-visible .fleche-externe,
+  .pied__lien:hover .fleche-externe,
+  .pied__lien:focus-visible .fleche-externe { opacity: 1; }        /* [relevé] M */
+}
+
+.entete__actions { display: flex; align-items: center; gap: var(--pas-h); justify-self: end; }
+.entete__actions .nav__lien { display: none; }
+@media (min-width: 900px) { .entete__actions .nav__lien { display: inline-flex; } }
+/* [relevé] H : w-v1.5 h-v1.5 ml-g1 -mr-[0.3rem] */
+.burger {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: calc(var(--pas-v) * 1.5); height: calc(var(--pas-v) * 1.5);
+  background: none; border: 0; cursor: pointer;
+  margin-left: var(--pas-h); margin-right: -.3rem;
+}
+@media (min-width: 900px) { .burger { display: none; } }
+
+/* ANIMATION 5 — panneau de nav mobile plein écran. Un seul canal animé
+   (opacity) + bascule de pointer-events, exactement comme la source, qui le
+   déclare en style inline sur l'élément.
+   [relevé] H : style="transition:opacity var(--duration) var(--ease-out-spring)"
+                class="… fixed inset-0 z-50 … pointer-events-none opacity-0" */
+.nav-mobile {
+  position: fixed; inset: 0; z-index: 60;
+  display: flex; flex-direction: column;
+  background-color: var(--fond-page);
+  padding-inline: calc(var(--pas-h) * 2);
+  overscroll-behavior: contain; overflow-y: auto;
+  opacity: 0; pointer-events: none;
+  transition: opacity var(--duree-instant) var(--courbe-ressort);
+}
+.nav-mobile[data-ouvert="true"] { opacity: 1; pointer-events: auto; }
+/* [relevé] H : type-lg mb-v3 flex h-[var(--site-header-height)] shrink-0
+                items-center justify-end */
+.nav-mobile__entete {
+  display: flex; align-items: center; justify-content: flex-end;
+  height: var(--hauteur-entete); flex-shrink: 0;
+  margin-bottom: calc(var(--pas-v) * 3);
+  font-size: var(--t-lg);
+}
+.nav-mobile a { display: block; padding-block: calc(var(--pas-v) * 4 / 12);
+                font-size: var(--t-md); }
+.nav-mobile__titre { color: var(--texte-secondaire); font-size: var(--t-sm);
+                     margin-top: var(--pas-v); }
+
+/* ANIMATION 6 — entrée en cascade des items du menu mobile.
+   [relevé] M : .nav-item-animate{animation:navItemSlideIn .25s var(--ease-out-spring)
+                forwards;opacity:0;transform:translateY(-4px)}
+                @keyframes navItemSlideIn{0%{opacity:0;transform:translateY(-4px)}
+                                          to{opacity:1;transform:translateY(0)}}
+   Amplitude : 4px. Le décalage entre items est posé en JS.       [arbitrage] */
+@keyframes navItemSlideIn { 0% { opacity: 0; transform: translateY(-4px); }
+                            to { opacity: 1; transform: translateY(0); } }
+.nav-mobile[data-ouvert="true"] .nav-item-animate {
+  animation: navItemSlideIn var(--duree-lente) var(--courbe-ressort) forwards;
+  opacity: 0; transform: translateY(-4px);
+  animation-delay: calc(var(--rang, 0) * 30ms);                   /* [arbitrage] */
+}
+
+/* -----------------------------------------------------------------------------
+   6. BOUTONS
+   Constat de relevé, contre-intuitif et volontaire : AUCUNE règle `.btn*` ni
+   `.card*` de la source ne déclare `transition`. Les changements d'état des
+   boutons et des cartes sont INSTANTANÉS. Le temps est réservé à ce qui
+   apparaît ou disparaît, jamais à ce qui change de teinte. Ne pas « corriger »
+   ce point en ajoutant une transition : c'est le procédé.  [relevé] M .btn
+-------------------------------------------------------------------------------*/
+.btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  cursor: pointer; line-height: 1;
+  font-size: var(--t-base); font-weight: 400;
+  padding: .89em 1.45em .91em;                    /* --button-padding-default */
+  border-radius: var(--r-plein);
+  background-color: var(--texte-primaire);
+  border: 1px solid var(--texte-primaire);
+  color: var(--fond-page);
+}
+@media (min-width: 900px) { .btn { padding: .78em 1.35em .8em; } } /* [relevé] M */
+/* Le survol ne se calcule pas : c'est une couleur nommée du thème.
+   [relevé] M --color-theme-button-hover-bg: var(--color-theme-fg-02) */
+.btn:hover  { background-color: var(--texte-primaire-02);
+              border-color: var(--texte-primaire-02); color: var(--fond-page); }
+.btn:active { background-color: var(--texte-primaire); }
+
+.btn--secondaire { background-color: var(--surface-04);
+                   border-color: var(--filet-discret); color: var(--texte-primaire); }
+.btn--secondaire:hover { background-color: var(--surface-05);
+                         border-color: var(--filet-discret); }
+
+.btn--fantome { background-color: transparent; border-color: var(--filet-marque);
+                color: var(--texte-primaire); }
+.btn--fantome:hover  { background-color: var(--surface-01); }
+.btn--fantome:active { background-color: var(--surface-04); }
+
+.btn--sm { font-size: var(--t-sm); padding: .45em .8em .46em; }
+@media (min-width: 900px) { .btn--sm { padding: .4em .75em .42em; } }
+.btn--md-sm { font-size: var(--t-base); padding: .64em 1.2em .66em; }
+@media (min-width: 900px) { .btn--md-sm { padding: .6em 1.25em .62em; } }
+
+/* Lien tertiaire : le SEUL endroit où l'accent orange sert de couleur de texte.
+   Il n'est jamais employé en fond.        [relevé] M .btn-tertiary / .btn-text */
+.lien-accent { display: inline-flex; align-items: center;
+               color: var(--accent); background: none; border: 0; padding: 0; }
+.lien-accent:hover { color: color-mix(in oklab, var(--accent) 75%, transparent); }
+
+.btn__icone { display: inline-flex; padding-inline-start: .25em; }  /* [relevé] M */
+
+/* Deux réglages OpenType relevés, appliqués à des rôles précis :
+   · `"case" 1` — ponctuation et symboles recentrés sur la hauteur des capitales,
+     pour les coches et signes isolés. [relevé] M .font-feature-case
+   · `"tnum"` — chiffres tabulaires sur les étiquettes de version, pour que
+     « 3.9 » et « 3.12 » aient la même largeur. [relevé] M .label
+   La source rend aussi ses flèches par des jeux stylistiques de sa fonte maison
+   (`"ss08"` pour ⤓, `"ss09"` pour ↓) — non reproductible sans la fonte. */
+.majuscule-alignee { font-feature-settings: "case" 1; }
+
+/* Étiquette de version — bordure héritée de la couleur du parent, chiffres
+   tabulaires, décalage optique de .03125rem.               [relevé] M .label */
+.etiquette {
+  display: inline-flex; line-height: 1; position: relative; top: .03125rem;
+  font-size: var(--t-sm); letter-spacing: var(--ap-sm);
+  border: 1px solid; border-color: inherit; color: inherit;
+  font-feature-settings: "tnum";
+  border-radius: var(--r-plein); padding: .28em .65em .29em;
+}
+
+/* -----------------------------------------------------------------------------
+   7. CARTES ET MÉDIAS — le filet en pseudo-élément
+   Procédé central : la bordure d'1px n'est JAMAIS posée sur l'élément. Elle est
+   dessinée par un ::before absolu, inset 0, z-index 30, pointer-events none.
+   Conséquences voulues :
+     · elle n'entre pas dans le calcul de taille (pas de décalage d'1px) ;
+     · elle passe AU-DESSUS d'une image en overflow:hidden, donc reste nette
+       dans les angles arrondis ;
+     · elle n'intercepte aucun clic.
+   [relevé] M .card:before / .media-border-container:after / .avatar-…:after
+-------------------------------------------------------------------------------*/
+.carte {
+  position: relative;
+  background-color: var(--surface-01);
+  border-radius: var(--r-xs);
+  padding-inline: calc(var(--pas-h) * 1.75);
+  padding-top: calc(var(--pas-h) * 1.75 - .1rem);   /* -.1rem : correction  */
+  padding-bottom: calc(var(--pas-h) * 1.75);        /*          optique     */
+}
+.carte::before {
+  content: ""; position: absolute; inset: 0; z-index: 30; pointer-events: none;
+  border: 1px solid var(--filet-discret); border-radius: var(--r-xs);
+}
+.carte--filet { background-color: transparent; padding: 0; }      /* .card-border */
+a.carte:hover  { background-color: var(--surface-03); }           /* [relevé] M */
+a.carte--claire:hover { background-color: var(--surface-02); }    /* .card--feature */
+a.carte:active { background-color: var(--surface-01); }
+.carte--flyout::before { border-color: var(--filet-faible); }     /* [relevé] M */
+.carte--flyout { box-shadow: var(--ombre-flyout); }
+/* [relevé] M : .card--large{padding-inline:g1.5;…} puis, au-delà de 900px,
+   `padding:var(--spacing-g1.75)` uniforme. */
+.carte--large { padding: calc(var(--pas-h) * 1.5); }
+@media (min-width: 900px) { .carte--large { padding: calc(var(--pas-h) * 1.75); } }
+/* [relevé] M .card--text */
+.carte--texte {
+  padding-inline: calc(var(--pas-h) * 1.5);
+  padding-top: calc(var(--pas-h) * 1.5 - .1rem);
+  padding-bottom: calc(var(--pas-h) * 1.5);
+}
+
+.media { position: relative; z-index: 1; overflow: hidden; border-radius: var(--r-xs); }
+.media::after {
+  content: ""; position: absolute; inset: 0; z-index: 30; pointer-events: none;
+  border: 1px solid var(--filet-discret); border-radius: var(--r-xs);
+}
+.avatar { position: relative; z-index: 1; overflow: hidden; border-radius: var(--r-plein); }
+.avatar::after {
+  content: ""; position: absolute; inset: 0; z-index: 30; pointer-events: none;
+  border: 1px solid var(--filet-discret); border-radius: var(--r-plein);
+}
+.avatar img { width: 100%; height: 100%; object-fit: cover; }
+
+/* -----------------------------------------------------------------------------
+   8. FENÊTRES FLOTTANTES — un système, cinq instances
+   Toutes les démos de la page posent une fausse fenêtre applicative dans une
+   scène, avec la MÊME formule de position :
+     left: clamp(marge + demi-largeur, ancre, 100% - marge - demi-largeur)
+   Le clamp garantit qu'elle ne colle jamais aux bords ; l'ancre décide où elle
+   se pose. Instances relevées dans H, attribut style des #demo-window-* :
+     cursor-ide          1080×620  ancre 50%/50%    z 10
+     cursor-agent-cli     480×360  ancre 100%/100%  z 15
+     agent-react-hooks    920×600  ancre 50%/50%    z 10
+     slack                540×340  ancre 42%/30%    z 10
+     automation-config    540×420  ancre 50%/50%    z 10
+   Toutes partagent la même ombre à 3 couches et le même rayon de 10px.
+-------------------------------------------------------------------------------*/
+.scene {
+  position: relative; overflow: hidden;
+  --marge: 32px;                                   /* [relevé] I --demo-pad */
+  height: min(780px, 70vh); min-height: 420px;     /* [relevé] H            */
+}
+@media (max-width: 767px) { .scene { --marge: 16px; } }   /* [relevé] I */
+/* Hauteur des scènes des blocs de fonctionnalité. Mesurée sur la source à
+   ~640px à 1440px de large ; la fenêtre qu'elle contient est plus grande que
+   la scène et se retrouve donc ROGNÉE en haut et en bas, ce qui est voulu :
+   `max-height:calc(100% - 2*var(--demo-pad))` la contraint.       [relevé] H */
+.scene--moyenne { height: 640px; min-height: 360px; }
+@media (max-width: 659px) { .scene--moyenne { height: 420px; } }  /* [arbitrage] */
+/* Fond de scène : l'image empilée, PAS une couleur unie.
+   [relevé] H : class="… bg-[image:var(--color-theme-card-03)]" */
+.scene--surface { background-image: var(--surface-carte-03); }
+.scene__fond { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+/* L'image de fond du héros est ASSOMBRIE de 10 % en thème sombre, pour que le
+   châssis clair des fenêtres garde son contraste par-dessus.
+   [relevé] M : .wallpaper-brightness-dark{filter:brightness()}
+                [data-theme=dark] .wallpaper-brightness-dark{filter:brightness(.9)}
+   (le `brightness()` sans argument du thème clair est une coquille de la
+   source, sans effet — on ne la reproduit pas.) */
+:root[data-theme="dark"] .scene__fond { filter: brightness(.9); }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .scene__fond { filter: brightness(.9); }
+}
+
+/* Boîte à ratio d'aspect — procédé de la source, et il n'utilise PAS
+   `aspect-ratio`. Une grille 1×1, plus un `::after` vide qui occupe la même
+   cellule et impose la hauteur par `padding-top` en pourcentage (75 % = 4/3,
+   100 % = 1/1). Le contenu se superpose dans la même cellule sans avoir besoin
+   d'être en position absolue.
+   [relevé] M : .aspect-4\/3-box{grid-template-rows:repeat(1,minmax(0,1fr));
+                grid-template-columns:repeat(1,minmax(0,1fr));display:grid}
+                .aspect-4\/3-box:after{content:"";pointer-events:none;
+                grid-area:1/1/-1/-1;padding-top:75%} */
+.ratio { display: grid; grid-template-rows: repeat(1, minmax(0, 1fr));
+         grid-template-columns: repeat(1, minmax(0, 1fr)); }
+.ratio > * { grid-area: 1 / 1 / -1 / -1; }
+.ratio::after { content: ""; pointer-events: none; grid-area: 1 / 1 / -1 / -1; }
+.ratio--4-3::after { padding-top: 75%; }
+.ratio--1-1::after { padding-top: 100%; }
+
+.fenetre {
+  position: absolute; z-index: var(--z, 10);
+  /* La source fige la demi-largeur en dur dans le clamp (540px pour 1080) ;
+     on la dérive de la largeur réelle pour que le centrage tienne aussi sous
+     1144px, largeur en dessous de laquelle le clamp d'origine décale la
+     fenêtre vers la droite.                                    [arbitrage] */
+  --l: min(var(--largeur-fenetre, 1080px), calc(100% - 2 * var(--marge)));
+  --h: min(var(--hauteur-fenetre, 620px), calc(100% - 2 * var(--marge)));
+  left: clamp(calc(var(--marge) + var(--l) / 2), var(--ancre-x, 50%),
+              calc(100% - var(--marge) - var(--l) / 2));
+  top:  clamp(calc(var(--marge) + var(--h) / 2), var(--ancre-y, 50%),
+              calc(100% - var(--marge) - var(--h) / 2));
+  width: var(--l); height: var(--h);
+  transform: translate(-50%, -50%);
+  transform-origin: center center;                                /* [relevé] H */
+  display: flex; flex-direction: column; overflow: hidden;
+  border-radius: 10px;                                            /* [relevé] H */
+  background-color: var(--fond-page);
+  box-shadow: var(--ombre-fenetre);                               /* [relevé] H */
+}
+/* [relevé] H : h-7 px-2 border-b border-theme-border-02 */
+.fenetre__barre {
+  position: relative; display: flex; align-items: center; justify-content: space-between;
+  height: 1.75rem; padding-inline: .5rem; flex-shrink: 0;
+  border-bottom: 1px solid var(--filet-moyen);
+}
+.fenetre__pastilles { display: flex; gap: .375rem; }              /* gap-1.5 */
+.fenetre__pastilles span {
+  width: .625rem; height: .625rem; border-radius: var(--r-plein);  /* h-2.5 w-2.5 */
+  background-color: var(--filet-moyen);
+}
+.fenetre__titre {
+  position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+  font-size: var(--t-prod); opacity: .7; pointer-events: none;     /* [relevé] H */
+  white-space: nowrap;
+}
+/* ANIMATION 7 — commandes de fenêtre révélées au survol du conteneur.
+   [relevé] H : "transition-opacity duration-200 … opacity-0 group-hover:opacity-100"
+   La courbe n'est PAS choisie : aucune classe `ease-*` n'accompagne
+   `duration-200`, donc `.transition-opacity` retombe sur
+   `var(--tw-ease, var(--default-transition-timing-function))`, soit
+   cubic-bezier(.4,0,.2,1). C'est le seul effet de la page qui n'emploie pas la
+   courbe ressort — par omission, pas par intention.               [relevé] M */
+.fenetre__cmd {
+  background: none; border: 0; cursor: pointer;
+  font-size: var(--t-prod); color: var(--texte-secondaire);
+  padding: .25rem .5rem; border-radius: var(--r-xs);
+  opacity: 0;
+  transition: opacity var(--duree-longue) var(--courbe-douce);
+}
+.fenetre:hover .fenetre__cmd, .fenetre:focus-within .fenetre__cmd { opacity: 1; }
+
+.fenetre__corps { flex: 1; min-height: 0; display: flex; }
+/* [relevé] H : style="flex-grow:2;flex-basis:0" + max-w-[320px] min-w-[220px] */
+.fenetre__flanc {
+  flex: 2 1 0; max-width: 320px; min-width: 220px;
+  border-right: 1px solid var(--filet-moyen);
+  background-color: var(--surface-01);
+  padding: .6rem .55rem; overflow: hidden;
+}
+/* Le flanc a un `min-w-[220px]` relevé, qui déborde sous 660px. La source
+   laisse déborder sous overflow:hidden ; le masquer est un    [arbitrage]. */
+@media (max-width: 659px) { .fenetre__flanc { display: none; } }
+.fenetre__flanc li { padding: .18rem .35rem; border-radius: var(--r-2xs);
+                     color: var(--texte-secondaire); font-size: var(--t-prod); }
+.fenetre__flanc li[aria-current] { background-color: var(--surface-03);
+                                   color: var(--texte-primaire); }
+.fenetre__scene { flex: 5 1 0; min-width: 0; padding: .6rem .7rem; overflow: hidden;
+                  background-color: var(--surface-01); }
+/* Troisième panneau : la fenêtre principale de la source est un TRIPTYQUE —
+   liste à gauche, édition au centre, conversation à droite. C'est cette
+   densité à trois colonnes qui donne au héros son poids visuel. [relevé] H */
+.fenetre__aside {
+  flex: 3 1 0; min-width: 0; max-width: 300px;
+  border-left: 1px solid var(--filet-moyen);
+  background-color: var(--surface-01);
+  padding: .6rem .55rem; overflow: hidden;
+}
+@media (max-width: 899px) { .fenetre__aside { display: none; } }  /* [arbitrage] */
+.bulle { background-color: var(--surface-03); border-radius: var(--r-md);
+         padding: .35rem .5rem; margin-bottom: .4rem; font-size: var(--t-prod); }
+.bulle--sortante { background-color: var(--surface-04); }
+.champ { border: 1px solid var(--filet-moyen); border-radius: var(--r-md);
+         padding: .35rem .5rem; font-size: var(--t-prod); color: var(--texte-tertiaire); }
+.fenetre__ligne { font-family: var(--police-mono); font-size: var(--t-prod);
+                  padding-block: .08rem; color: var(--texte-secondaire); white-space: pre; }
+.fenetre__ligne--ajout   { color: var(--diff-ajout);
+  background-color: color-mix(in srgb, var(--diff-ajout) 8%, transparent); }   /* [relevé] M */
+.fenetre__ligne--retrait { color: var(--diff-retrait);
+  background-color: color-mix(in srgb, var(--diff-retrait) 6%, transparent); } /* [relevé] M */
+
+/* Terminal — même châssis, corps monospace sans flanc. */
+.fenetre--terminal .fenetre__corps {
+  display: block; padding: .6rem .7rem; background-color: var(--surface-01);
+  font-family: var(--police-mono); font-size: var(--t-prod); overflow: hidden;
+}
+.terminal__ligne { padding-block: .12rem; color: var(--texte-secondaire);
+                   white-space: pre-wrap; }
+.terminal__invite { color: var(--accent); }
+
+/* -----------------------------------------------------------------------------
+   9. JARDIN DE LOGOS
+   Les trois paliers ne bougent PAS ensemble — chacun a le sien :
+     base   4 colonnes × 2 rangées, gouttière g0.75, cellule 4rem
+     ≥420   gouttière g1, cellule 4.5rem
+     ≥660   cellule 6.25rem
+     ≥900   8 colonnes × 1 rangée
+   [relevé] M .logo-garden-responsive-8 (3 blocs @media) + H
+-------------------------------------------------------------------------------*/
+.logos { display: grid; gap: calc(var(--pas-h) * .75);
+         grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(2, 1fr); }
+@media (min-width: 420px) { .logos { gap: var(--pas-h); } }
+@media (min-width: 900px) { .logos { grid-template-columns: repeat(8, 1fr);
+                                     grid-template-rows: 1fr; } }
+.logos > * { width: 100%; min-width: 0; }                         /* [relevé] M */
+/* Cellule = carte à FILET (`bg-theme-card-hex card-border rounded-xs`) : le fond
+   et le filet, sans le padding de `.card`.                       [relevé] H */
+.logos__cellule {
+  position: relative;
+  display: flex; align-items: center; justify-content: center;
+  height: 4rem; padding-inline: calc(var(--pas-h) * .75);
+  background-color: var(--surface-01); border-radius: var(--r-xs);
+  font-size: var(--t-sm);
+}
+.logos__cellule::before {
+  content: ""; position: absolute; inset: 0; z-index: 30; pointer-events: none;
+  border: 1px solid var(--filet-discret); border-radius: var(--r-xs);
+}
+@media (min-width: 420px) { .logos__cellule { height: 4.5rem; } }
+@media (min-width: 660px) { .logos__cellule { height: 6.25rem; } }
+
+/* -----------------------------------------------------------------------------
+   10. BLOCS DE FONCTIONNALITÉ — le procédé structurel le plus subtil
+   Chaque bloc est fait de DEUX COUCHES superposées dans une même
+   `grid grid-rows-[auto_1fr]`, toutes deux en `col-span-full row-span-full` :
+     · couche 1 : un <a class="card card--feature grid-cursor"> qui porte le
+       TEXTE et le fond cliquable, avec un emplacement média VIDE ;
+     · couche 2 : un <div class="grid-cursor p-g1.75"> superposé qui porte le
+       MÉDIA, avec un emplacement texte VIDE.
+   Pourquoi : le média sort ainsi du <a>. La carte reste cliquable par son
+   texte, mais le média — qui porte `cursor-default` et des éléments
+   interactifs — n'hérite ni du curseur ni du comportement de lien. Un seul
+   rectangle à l'écran, deux natures.                             [relevé] H
+   Le découpage sur la grille 24 ALTERNE d'un bloc à l'autre :
+     blocs 1 et 3 : texte colonnes 1→9,   média 9→25
+     blocs 2 et 4 : texte colonnes 17→25, média 1→17
+-------------------------------------------------------------------------------*/
+.bloc { display: grid; grid-template-rows: auto 1fr; }
+.bloc__couche { grid-column: 1 / -1; grid-row: 1 / -1; row-gap: 0; }
+
+/* LE point qui fait tenir le procédé en petit écran, et qu'il est facile de
+   rater : `max-lg:grid-rows-subgrid` sur les DEUX couches.        [relevé] H
+   Sans lui, chaque couche a ses propres rangées, calculées sur son seul
+   contenu : la rangée « texte » de la couche média est vide donc haute de 0,
+   et le média remonte se superposer au texte de l'autre couche. Le texte
+   disparaît derrière la démo. Avec `subgrid`, les deux couches empruntent les
+   rangées du PARENT : la rangée 1 fait la hauteur du texte, la rangée 2 celle
+   du média, et les deux couches s'alignent dessus.
+   Au-delà de 900px le problème ne se pose pas — texte et média occupent des
+   colonnes différentes. */
+@media (max-width: 899px) {
+  .bloc__couche { grid-template-rows: subgrid; }
+}
+/* Repli là où `subgrid` manque : on renonce à la superposition et on empile en
+   flux. Le texte reste lisible, la carte de fond n'englobe plus le média.
+   Dégradation acceptable, jamais de contenu masqué.            [arbitrage] */
+@supports not (grid-template-rows: subgrid) {
+  @media (max-width: 899px) {
+    .bloc, .bloc__couche { display: block; }
+    .bloc__couche--media { padding: 0; margin-top: calc(var(--pas-h) * 1.75); }
+    .bloc__couche .bloc__media,
+    .bloc__couche--media .bloc__media { margin-top: 0; padding-top: 0; }
+  }
+}
+.bloc__couche--media { padding: calc(var(--pas-h) * 1.75); }   /* [relevé] H p-g1.75 */
+.bloc__texte, .bloc__media { grid-column: 1 / -1; }
+.bloc__texte { grid-row: 1 / 2; display: grid; align-items: center; }
+.bloc__media { grid-row: 2 / 3; display: grid; align-items: end; cursor: default; }
+.bloc__couche .bloc__media { margin-top: calc(var(--pas-h) * 1.75); }  /* max-lg:mt-g1.75 */
+.bloc__couche--media .bloc__media { margin-top: 0; padding-top: var(--pas-v); } /* max-lg:pt-v1 */
+
+@media (min-width: 900px) {
+  .bloc__texte { grid-row: 1 / 3; grid-column: 1 / 9;
+                 padding-left: calc(var(--pas-h) * .25);
+                 padding-right: calc(var(--pas-h) * 3); }
+  .bloc__media { grid-row: 1 / 3; grid-column: 9 / 25; align-items: center; margin-top: 0; }
+  .bloc__couche--media .bloc__texte { grid-row: 1 / 2; }
+  .bloc__couche--media .bloc__media { grid-row: 2 / 3; padding-top: 0; }
+  /* Bloc inversé : texte à droite (17→25), média à gauche (1→17). [relevé] H */
+  .bloc--inverse .bloc__texte { grid-column: 17 / 25;
+                 padding-right: calc(var(--pas-h) * .25);
+                 padding-left: calc(var(--pas-h) * 3); }
+  .bloc--inverse .bloc__media { grid-column: 1 / 17; }
+  .bloc--inverse .bloc__texte > * { justify-self: end; }          /* lg:justify-self-end */
+}
+.bloc__lien  { margin-top: calc(var(--pas-v) * 8 / 12); }         /* [relevé] H mt-v8/12 */
+.bloc-espace { margin-bottom: calc(var(--pas-v) * 4); }           /* [relevé] H mb-v4 */
+
+/* Média en couches : DEUX div superposées, une par thème, commutées par
+   `display:none!important` — pas par opacité.
+   [relevé] M : .media-dark,[data-theme=light] .media-dark{display:none!important}
+                .media-light{display:none!important} (sous prefers-color-scheme:dark) */
+.media-couche { position: absolute; inset: 0; z-index: 0; }
+.media-clair  { display: block; }
+.media-sombre { display: none; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .media-clair  { display: none; }
+  :root:not([data-theme="light"]) .media-sombre { display: block; }
+}
+:root[data-theme="dark"] .media-clair  { display: none; }
+:root[data-theme="dark"] .media-sombre { display: block; }
+
+/* -----------------------------------------------------------------------------
+   11. DÉMOS RECONSTITUÉES
+   La source implémente ces panneaux en React. Ils sont reconstitués ici en HTML
+   statique, au châssis et aux jetons relevés ; la disposition interne est un
+   [arbitrage], les tailles de texte et les couleurs sont relevées.
+-------------------------------------------------------------------------------*/
+/* Panneau « mission control » : liste à gauche, détail à droite. */
+.mission { display: grid; grid-template-columns: 1fr; height: 100%; min-height: 0; }
+@media (min-width: 660px) { .mission { grid-template-columns: 13rem 1fr; } }
+.mission__liste { border-right: 1px solid var(--filet-moyen);
+                  background-color: var(--surface-01); padding: .5rem; overflow: hidden; }
+.mission__item { display: flex; align-items: center; gap: .4rem;
+                 padding: .3rem .4rem; border-radius: var(--r-2xs);
+                 font-size: var(--t-prod); color: var(--texte-secondaire); }
+.mission__item[aria-current] { background-color: var(--surface-03);
+                               color: var(--texte-primaire); }
+.mission__detail { padding: .75rem .9rem; overflow: hidden;
+                   background-color: var(--surface-01); }
+/* [relevé] H : text-[20px] font-bold / text-[14px] font-semibold — les seules
+   tailles en pixels de toute la page, parce qu'elles imitent une interface. */
+.mission__titre { font-size: 20px; font-weight: 700; line-height: var(--int-serre);
+                  margin-bottom: .25rem; }
+.mission__sous  { font-size: 14px; font-weight: 600;
+                  margin-top: .5rem; margin-bottom: .125rem; }
+
+/* Pastille d'état + halo pulsé.
+   [relevé] M @keyframes mobile-workspace-interaction-pulse
+     {0%,to{box-shadow:0 0 0 1px rgb(var(--c)/.24);transform:scale(1)}
+      50%{box-shadow:0 0 0 6px rgb(var(--c)/0);transform:scale(1.24)}}
+   employé en `animation:2.8s ease-in-out infinite`. */
+@keyframes pulse-etat {
+  0%, to { box-shadow: 0 0 0 1px color-mix(in srgb, var(--diff-ajout) 24%, transparent);
+           transform: scale(1); }
+  50%    { box-shadow: 0 0 0 6px transparent; transform: scale(1.24); }
+}
+.pastille { width: .4rem; height: .4rem; border-radius: var(--r-plein);
+            background-color: var(--diff-ajout); flex-shrink: 0;
+            animation: pulse-etat 2.8s ease-in-out infinite; }    /* [relevé] M */
+.pastille--attente { background-color: var(--texte-tertiaire); animation: none; }
+
+/* Barres d'activité — oscillations d'opacité décalées entre elles.
+   [relevé] M @keyframes mobileWorkingVerticalOpacity
+     {0%,to{opacity:.72}20%{opacity:.28}40%{opacity:.72}60%,80%{opacity:.28}} */
+@keyframes activite { 0%, to { opacity: .72 } 20% { opacity: .28 }
+                      40% { opacity: .72 } 60%, 80% { opacity: .28 } }
+.barres { display: flex; gap: 3px; align-items: flex-end; height: 12px; }
+.barres i { width: 3px; background-color: var(--texte-median); border-radius: 1px;
+            animation: activite 2.8s ease-in-out infinite; }
+
+/* Conversation type Slack. [relevé] M --text-slack-sm/base/lg = .75/.875/1rem */
+.fil { padding: .6rem .7rem; overflow: hidden; background-color: var(--surface-01); }
+.fil__entete { display: flex; align-items: center; gap: .35rem;
+               padding-bottom: .4rem; margin-bottom: .5rem;
+               border-bottom: 1px solid var(--filet-moyen); }
+.fil__salon { font-size: 1rem; font-weight: 600; }                /* --text-slack-lg */
+.fil__msg { display: flex; gap: .5rem; margin-bottom: .55rem; }
+.fil__msg .avatar { width: 1.4rem; height: 1.4rem; flex-shrink: 0;
+                    background-color: var(--surface-04); }
+.fil__nom    { font-size: .875rem; font-weight: 600; }            /* --text-slack-base */
+.fil__texte  { font-size: .875rem; color: var(--texte-secondaire); }
+.fil__mention { color: #2268ff; }                          /* [relevé] M --theme-blue-primary */
+
+/* ANIMATION 8 — chatoiement d'un texte en cours de génération.
+   [relevé] M : @keyframes shimmer{0%{background-position:200% 0}
+                                   to{background-position:-200% 0}}
+                animation:shimmer var(--shimmer-duration,2.5s) linear infinite
+                --shimmer-highlight-color: color-mix(in srgb,
+                  var(--color-theme-text) var(--shimmer-intensity,70%), …) */
+@keyframes shimmer { 0% { background-position: 200% 0 } to { background-position: -200% 0 } }
+.chatoie {
+  background-image: linear-gradient(90deg,
+    var(--texte-secondaire) 0%,
+    color-mix(in srgb, var(--texte-primaire) 70%, var(--texte-secondaire)) 50%,
+    var(--texte-secondaire) 100%);
+  background-size: 200% 100%;
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  animation: shimmer 2.5s linear infinite;
+}
+
+/* Panneau de configuration d'automatisation. */
+.config__ligne { display: flex; justify-content: space-between; align-items: center;
+                 padding: .4rem 0; border-bottom: 1px solid var(--filet-moyen);
+                 font-size: var(--t-prod); }
+.config__ligne:last-child { border-bottom: 0; }
+.config__val { color: var(--texte-secondaire); font-family: var(--police-mono); }
+.puce { display: inline-flex; align-items: center; gap: .25rem;
+        background-color: var(--surface-03); color: var(--texte-secondaire);
+        border-radius: var(--r-plein); padding: .1rem .45rem; font-size: var(--t-prod-sm); }
+
+/* Téléphone — la source dessine un vrai châssis d'appareil.
+   [relevé] M --mobile-phone-bg:#f8f8f6 (clair) / #1f1e1b (sombre)
+             --mobile-phone-text:#1f211d / #f4f0e8 */
+.telephone { width: 240px; margin-inline: auto;
+             border-radius: 28px; padding: 8px;
+             background-color: var(--surface-04); box-shadow: var(--ombre-fenetre); }
+.telephone__ecran { border-radius: 22px; overflow: hidden;
+                    background-color: #f8f8f6; color: #1f211d;
+                    padding: .7rem .6rem; min-height: 260px; font-size: var(--t-prod); }
+:root[data-theme="dark"] .telephone__ecran { background-color: #1f1e1b; color: #f4f0e8; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .telephone__ecran { background-color: #1f1e1b;
+                                                      color: #f4f0e8; }
+}
+/* [relevé] H : text-[19px] leading-tight font-[510] tracking-[-0.26px] */
+.telephone__titre { font-size: 19px; line-height: var(--int-serre); font-weight: 510;
+                    letter-spacing: -.26px; margin-bottom: 1rem; }
+.telephone__depot { display: flex; align-items: center; justify-content: space-between;
+                    padding: .45rem 0; border-bottom: 1px solid #0000000e; }
+.telephone__depot:last-child { border-bottom: 0; }
+
+/* -----------------------------------------------------------------------------
+   12. GRILLES DE CARTES
+   Deux grilles coexistent, avec des paliers DIFFÉRENTS. Les confondre est une
+   erreur : elles ne se réorganisent pas au même moment.
+-------------------------------------------------------------------------------*/
+/* `.trio` — fonctionnalités : `grid gap-g1 grid-cols-1 xl:grid-cols-3`, UN seul
+   palier, à 1140px. De 320 à 1139px la colonne reste unique.     [relevé] H */
+.trio { display: grid; gap: var(--pas-h); grid-template-columns: 1fr; align-items: stretch; }
+@media (min-width: 1140px) { .trio { grid-template-columns: repeat(3, 1fr); } }
+
+/* `.citations` — `grid-cols-1 md:grid-cols-2 lg:grid-cols-3`, deux paliers,
+   à 660 puis 900px.                                              [relevé] H */
+.citations { display: grid; gap: var(--pas-h); grid-template-columns: 1fr;
+             align-items: stretch; }
+@media (min-width: 660px) { .citations { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 900px) { .citations { grid-template-columns: repeat(3, 1fr); } }
+.trio .carte, .citations .carte { display: flex; flex-direction: column; height: 100%; }
+
+/* La source publie 6 citations dont 3 en `hidden md:block` : trois seulement
+   sous 660px, six au-delà.                                       [relevé] H
+   Déclaré APRÈS `.citations .carte{display:flex}` et avec la même spécificité
+   de classe — sinon la règle d'affichage l'emporte et les six restent visibles. */
+.citations .citation--secondaire { display: none; }
+@media (min-width: 660px) {
+  .citations .citation--secondaire { display: flex; }
+}
+/* Le h3 des cartes est une balise NUE dans un parent `.type-base` : il hérite,
+   ne porte aucune classe de taille et ne change pas avec la largeur.
+   [relevé] H : <div class="type-base max-w-prose …"><h3>…</h3> */
+.trio h3 { font-size: inherit; }
+.trio__corps  { display: flex; flex-direction: column; flex: 1; }  /* flex grow flex-col */
+.trio__pied   { margin-top: auto; padding-top: calc(var(--pas-v) * 8 / 12); }
+.trio__figure { padding-top: calc(var(--pas-h) * 1.75); }          /* [relevé] H pt-g1.75 */
+
+/* `min-h-[180px]` + `line-clamp-4 md:line-clamp-5` : plancher de hauteur ET
+   plafond de lignes, donc toutes les citations d'une rangée s'alignent quelle
+   que soit la longueur du texte.                                 [relevé] H */
+.citation { min-height: 180px; }
+.citation figure { display: flex; flex-direction: column; height: 100%; }
+.citation blockquote { flex: 1; overflow: hidden; }
+.citation p { display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden;
+              -webkit-line-clamp: 4; line-clamp: 4; }
+@media (min-width: 660px) { .citation p { -webkit-line-clamp: 5; line-clamp: 5; } }
+/* `mt-v2 space-x-(--grid-gap)` : l'écart avatar/légende est la gouttière de
+   texte, pas le pas horizontal.                                  [relevé] H */
+.citation figcaption { display: flex; align-items: center; gap: var(--gouttiere);
+                       margin-top: calc(var(--pas-v) * 2); }
+.citation .avatar { width: 2.5rem; height: 2.5rem; flex-shrink: 0;
+                    background-color: var(--surface-04); }
+
+/* -----------------------------------------------------------------------------
+   13. CARROUSEL À ANCRAGE
+   Le procédé le plus technique de la page : sur petit écran la liste défile
+   horizontalement et la largeur d'une carte est calculée SUR LA GRILLE 24, pas
+   en pourcentage. La formule dit « 18 colonnes sur 24, gouttières comprises » :
+     ((100vw − 2·marge − 23·gouttière) / 24) × 18 + 17·gouttière
+   Une carte s'aligne donc exactement sur la grille du reste de la page, et la
+   suivante dépasse juste assez pour signaler qu'on peut défiler.
+   [relevé] H, classe w-[calc(…)] des cartes de changelog.
+   Paliers, avec les points de bascule réels du projet :
+     base 18 col · ≥420 16 col · ≥660 14 col · ≥900 grille 3 col · ≥1140 4 col
+-------------------------------------------------------------------------------*/
+.piste {
+  margin-inline: calc(var(--pas-h) * -2);
+  padding-inline: calc(var(--pas-h) * 2);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: calc(var(--pas-h) * 2);
+  scrollbar-width: none; -ms-overflow-style: none;
+}
+.piste::-webkit-scrollbar { display: none; }                      /* [relevé] M */
+.piste__rail { display: flex; width: max-content; gap: var(--pas-h); }
+.piste__item {
+  flex-shrink: 0; scroll-snap-align: start;
+  --colonnes: 18;
+  width: calc(
+    ((100vw - 2 * var(--pas-h) * 2 - 23 * var(--pas-h)) / 24) * var(--colonnes)
+    + (var(--colonnes) - 1) * var(--pas-h)
+  );
+}
+@media (min-width: 420px) { .piste__item { --colonnes: 16; } }    /* sm: */
+@media (min-width: 660px) { .piste__item { --colonnes: 14; } }    /* md: */
+@media (min-width: 900px) {                                       /* lg: */
+  .piste { margin-inline: 0; padding-inline: 0; overflow: visible;
+           scroll-snap-type: none; scroll-padding-inline: 0; }
+  .piste__rail { display: grid; width: 100%; grid-template-columns: repeat(3, 1fr); }
+  .piste__item { width: auto; }
+}
+@media (min-width: 1140px) { .piste__rail { grid-template-columns: repeat(4, 1fr); } }
+/* La 4e carte porte `lg:hidden xl:block` : elle disparaît entre 900 et 1140px,
+   exactement sur la plage où la grille n'a que 3 colonnes. Sans ça, elle
+   retomberait seule sur une deuxième ligne.                      [relevé] H */
+@media (min-width: 900px) and (max-width: 1139px) {
+  .piste__item--surnumeraire { display: none; }
+}
+.piste__item article { height: 100%; }
+.piste__item .carte { display: flex; flex-direction: column; height: 100%; }
+/* [relevé] H : text-theme-text-mid + left-[-1px] + gap-x-(--grid-gap) */
+.piste__entete { display: flex; align-items: center; gap: var(--gouttiere);
+                 color: var(--texte-median); position: relative; left: -1px;
+                 flex-wrap: wrap; }
+.piste__titre { margin-top: calc(var(--pas-v) * .5); }
+.piste__pied  { margin-top: calc(var(--pas-v) * 9 / 12); }        /* [relevé] H mt-v9/12 */
+
+/* Carte de « faits marquants » : deux colonnes, texte souple + avatar fixe.
+   [relevé] H : card card--text grow-1 grid-cursor-v1 grid-cols-[1fr_auto] */
+.fait { display: grid; grid-template-columns: 1fr auto; gap: var(--gouttiere);
+        align-items: start; }
+.fait__meta { display: flex; flex-wrap: wrap; align-items: center;
+              gap: calc(var(--pas-v) * 2 / 12) calc(var(--pas-v) * 1 / 12);
+              color: var(--texte-median); }
+.fait .avatar { width: 1.5rem; height: 1.5rem; flex-shrink: 0;    /* h-6 w-6 */
+                background-color: var(--surface-04); }
+
+/* Boutons de défilement du carrousel — absents de la source, ajoutés pour
+   rendre le défilement pilotable au clavier et à la souris.   [arbitrage] */
+.piste-cadre { position: relative; }
+.piste-nav { display: none; }
+@media (min-width: 420px) and (max-width: 899px) {
+  .piste-nav {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 2rem; height: 2rem; border-radius: var(--r-plein);
+    background-color: var(--surface-04); border: 1px solid var(--filet-discret);
+    cursor: pointer; position: absolute; top: -2.7rem; right: 0;
+  }
+  .piste-nav--prec { right: 2.4rem; }
+  .piste-nav:hover { background-color: var(--surface-05); }
+  .piste-nav[disabled] { opacity: .4; cursor: default; }
+}
+
+/* -----------------------------------------------------------------------------
+   14. RÉVÉLATION AU SCROLL
+   La seule apparition au défilement du site.
+   [relevé] M : @keyframes gallery-marquee-item-slide-up
+                {0%{opacity:0;transform:translateY(25%)}
+                 to{opacity:1;transform:translate(0)}}
+   [relevé] M : --animate-… = « … 1s var(--ease-out-spring) both »
+
+   Trois décisions à copier :
+   1. le déplacement est en POURCENTAGE (25%), pas en pixels : il est
+      proportionnel à la hauteur de l'élément, donc la cascade paraît homogène
+      sans réglage par taille ;
+   2. `both` conserve l'image de départ avant déclenchement et celle d'arrivée
+      après — sans lui, l'élément clignoterait au retour à l'état natif ;
+   3. 1 seconde, sept fois la durée des états d'interface : « entrer en scène »
+      et « réagir à un geste » ne sont pas la même chose.
+
+   Déclencheur : IntersectionObserver (voir motion.js). Surtout PAS
+   `animation-timeline: view()` — pas « widely available » : là où il manque,
+   une keyframe démarrant à opacity:0 laisse l'élément invisible pour de bon.
+-------------------------------------------------------------------------------*/
+@keyframes revele-vers-haut {
+  from { opacity: 0; transform: translateY(25%); }
+  to   { opacity: 1; transform: translate(0); }
+}
+/* LE mécanisme exact de la source, en quatre règles — plus fin qu'il n'y paraît.
+   L'animation est TOUJOURS déclarée, mais **mise en pause** : `both` fige donc
+   l'élément sur son image de départ (opacity 0). Le JS ne masque rien, ne pose
+   aucun `opacity:0` ; il se contente de lever la pause.
+     [relevé] M : .animate-gallery-marquee-item-slide-up{animation-play-state:paused}
+                  [data-intro=true] .animate-…{animation-play-state:running}
+                  @media (scripting:none){.animate-…{animation-play-state:running}}
+                  @media (prefers-reduced-motion:reduce){.animate-…{animation:none}}
+
+   La troisième règle est le garde-fou que tout le monde oublie : si le
+   JavaScript est DÉSACTIVÉ, `scripting:none` remet l'animation en marche.
+
+   MAIS ce garde-fou a un trou, vérifié en test : `scripting:none` ne matche que
+   si le scripting est désactivé, PAS si le script est simplement absent, bloqué
+   par le réseau ou en erreur. Dans ces cas-là, la page de la source reste
+   figée sur l'image de départ — c'est-à-dire vide. Reproduit ici en servant la
+   page sans le `<script>` : toutes les sections révélées ont disparu.
+
+   Correction : on INVERSE la condition. L'animation joue par défaut ; la pause
+   n'est armée que si le script a effectivement installé son observateur, ce
+   qu'il signale par `data-js` sur <html>. Aucun script → aucune pause → la page
+   se révèle seule, quelle que soit la RAISON de l'absence du script.
+   Le procédé de la source est conservé (pause / reprise, jamais d'`opacity:0`
+   posé en JS) ; seule la polarité du déclencheur change.        [arbitrage] */
+[data-revele] {
+  animation: revele-vers-haut var(--duree-revele) var(--courbe-ressort) both;
+  animation-delay: calc(var(--rang, 0) * var(--cascade));
+}
+html[data-js] [data-revele] { animation-play-state: paused; }
+html[data-js] [data-revele].est-visible { animation-play-state: running; }
+/* Ceinture et bretelles : les deux garde-fous de la source restent en place. */
+@media (scripting: none) { [data-revele] { animation-play-state: running; } }
+[data-intro="true"] [data-revele] { animation-play-state: running; }
+
+/* -----------------------------------------------------------------------------
+   15. PIED DE PAGE
+-------------------------------------------------------------------------------*/
+/* [relevé] H : pt-v3 pb-v3 md:pb-g3 px-g2 bg-theme-card-hex relative */
+.pied { position: relative; background-color: var(--surface-01);
+        padding: calc(var(--pas-v) * 3) calc(var(--pas-h) * 2); }
+@media (min-width: 660px) { .pied { padding-bottom: calc(var(--pas-h) * 3); } }
+/* [relevé] H : mb-v4.5 sur le conteneur, gap-x-g1 gap-y-v2 grid-cols-2 md:grid-cols-5 */
+.pied__colonnes { display: grid; grid-template-columns: repeat(2, 1fr);
+                  column-gap: var(--pas-h); row-gap: calc(var(--pas-v) * 2);
+                  margin-bottom: calc(var(--pas-v) * 4.5); }
+@media (min-width: 660px) { .pied__colonnes { grid-template-columns: repeat(5, 1fr); } }
+/* Le titre de colonne est secondaire…             [relevé] H text-theme-text-sec */
+.pied h3 { font-size: var(--t-base); color: var(--texte-secondaire);
+           padding-bottom: calc(var(--pas-v) * 2.5 / 12); }
+/* …mais les LIENS ne portent aucune couleur au repos : ils héritent du texte
+   primaire. `.footer-link` n'a qu'une règle `:hover`, et cette règle les
+   ÉCLAIRCIT. Le survol atténue au lieu de renforcer, comme en nav.
+   Ne pas inverser : primaire au repos, 75 % au survol.   [relevé] M .footer-link */
+.pied__lien { display: inline-block; font-size: var(--t-base);
+              padding-block: calc(var(--pas-v) * 2.5 / 12); }
+@media (min-width: 660px) { .pied h3, .pied__lien { font-size: var(--t-sm); } }
+.pied__lien:hover { color: color-mix(in oklab, var(--texte-primaire) 75%, transparent); }
+.pied__bas { display: flex; flex-wrap: wrap; align-items: center;
+             justify-content: space-between; gap: var(--pas-h);
+             font-size: var(--t-base); color: var(--texte-tertiaire); }
+@media (min-width: 660px) { .pied__bas { font-size: var(--t-sm); } }
+/* La mention de copyright hérite du gris tertiaire de `.pied__bas` : la classe
+   ne sert qu'à l'identifier, elle ne redéclare rien.              [arbitrage] */
+.pied__copyright { color: inherit; }
+
+/* Sélecteur de langue : même procédé de menu qu'en nav, mais ouvert vers le
+   HAUT — `bottom-full` au lieu de `top-full`, et le décalage initial est donc
+   inversé (+.4rem au lieu de −.4rem).
+   [relevé] H : nav__sub-nav pt-v3/12 absolute bottom-full left-0 md:left-auto
+                md:right-0 z-50 mb-v6/12 privacy-dropdown-upward */
+.langue { position: relative; }
+.langue__panneau {
+  position: absolute; bottom: 100%; left: 0; z-index: 50;
+  margin-bottom: calc(var(--pas-v) * 6 / 12);
+  opacity: 0; visibility: hidden;
+  transform: translateY(.4rem);
+  transition: opacity    var(--duree-instant) var(--courbe-ressort),
+              transform  var(--duree-instant) var(--courbe-ressort),
+              visibility 0s linear var(--duree-instant);
+}
+@media (min-width: 660px) { .langue__panneau { left: auto; right: 0; } }
+.langue:hover .langue__panneau, .langue:focus-within .langue__panneau {
+  opacity: 1; visibility: visible; transform: translateY(0); transition-delay: 0s;
+}
+/* [relevé] H : card card--flyout px-0 py-g0.75 min-w-[10rem] bg-theme-card-02-hex */
+.langue__panneau .carte { padding: calc(var(--pas-h) * .75) 0; min-width: 10rem;
+                          background-color: var(--surface-03); }
+.langue__option {
+  display: flex; width: 100%; align-items: center; justify-content: space-between;
+  padding: calc(var(--pas-v) * 2.5 / 12) calc(var(--pas-h) * 1.5);
+  background: none; border: 0; cursor: pointer; font-size: var(--t-sm);
+  position: relative;
+}
+.langue__option:hover { color: color-mix(in oklab, var(--texte-primaire) 75%, transparent); }
+
+/* -----------------------------------------------------------------------------
+   16. UTILITAIRES DE PALIER
+   La source masque et démasque des libellés ENTIERS selon la largeur — ce ne
+   sont pas des variantes de style, ce sont des textes différents. Trois cas
+   relevés :
+     · héros : `hidden md:flex` sur « Download for macOS » et « Request a demo »,
+       et le bouton « Get started » les remplace sous 660px ;                 H
+     · entête : `<span class="xl:hidden">Contact</span>` +
+       `<span class="hidden xl:inline">Contact sales</span>` — le libellé change
+       à 1140px, la largeur du bouton avec ;                                  H
+     · `max-sm:hidden` sur « Download » : il disparaît sous 420px.            H
+-------------------------------------------------------------------------------*/
+.jusqu-md { display: inline-flex; }
+.des-md   { display: none; }
+@media (min-width: 660px) {
+  .jusqu-md { display: none; }
+  .des-md   { display: inline-flex; }
+}
+.des-xl   { display: none; }
+.jusqu-xl { display: inline; }
+@media (min-width: 1140px) {
+  .des-xl   { display: inline; }
+  .jusqu-xl { display: none; }
+}
+
+/* -----------------------------------------------------------------------------
+   17. ENTÊTE — compléments
+-------------------------------------------------------------------------------*/
+/* Wordmark : largeur FIXE en px, jamais en em — 95.37px, puis 95.75px au-delà
+   de 900px. Le décalage `top:.2rem left:-2px` est dans la source.  [relevé] H */
+.marque { position: relative; top: .2rem; left: -2px; }
+.marque svg { width: 95.37px; height: auto; }
+@media (min-width: 900px) { .marque svg { width: 95.75px; } }
+
+/* Le lien « Sign in » n'est pas un bouton : c'est `btn--quinary`, un lien nu
+   qui n'a qu'un état de survol atténué.                            [relevé] M */
+.btn--quinaire { display: inline-flex; align-items: center;
+                 font-size: var(--t-sm); padding: .4em .5em; }
+.btn--quinaire:hover { color: color-mix(in oklab, var(--texte-primaire) 75%, transparent); }
+/* `gap-g0.75` entre les actions d'entête — trois quarts de pas, pas un pas
+   entier comme ailleurs.                                           [relevé] H */
+.entete__actions { gap: calc(var(--pas-h) * .75); }
+.entete__contact { display: none; }
+@media (min-width: 900px) { .entete__contact { display: inline-flex; } }
+.entete__telecharger { display: none; }
+@media (min-width: 420px) { .entete__telecharger { display: inline-flex; } }
+
+/* -----------------------------------------------------------------------------
+   18. NAVIGATION MOBILE — panneaux poussés
+   La source rend ses sous-menus mobiles CÔTÉ CLIENT : ils sont absents du HTML
+   aspiré, seuls les boutons `aria-expanded="false"` et leur caret « → »
+   subsistent. Le caret dit tout du procédé : ce n'est pas un dépliage vers le
+   bas, c'est un panneau qui arrive par la droite.       [relevé] H + [arbitrage]
+-------------------------------------------------------------------------------*/
+.nav-mobile__corps { position: relative; flex: 1; min-height: 0; overflow: hidden; }
+.nav-mobile__corps > ul { overflow-y: auto; height: 100%; }
+.nav-mobile__item {
+  display: flex; width: 100%; align-items: center;
+  padding-block: calc(var(--pas-v) * 3 / 12);
+  font-size: var(--t-lg); line-height: var(--int-xserre);
+  letter-spacing: var(--ap-lg);
+  background: none; border: 0; cursor: pointer; text-align: left;
+}
+.nav-mobile__caret { color: var(--texte-tertiaire); }
+.nav-mobile__pousse {
+  position: absolute; inset: 0; z-index: 2;
+  background-color: var(--fond-page);
+  overflow-y: auto;
+  transform: translateX(100%);
+  opacity: 0; pointer-events: none;
+  transition: transform var(--duree-lente) var(--courbe-ressort),
+              opacity   var(--duree-lente) var(--courbe-ressort);
+}
+.nav-mobile__pousse[data-ouvert="true"] {
+  transform: translateX(0); opacity: 1; pointer-events: auto;
+}
+.nav-mobile__retour {
+  display: inline-flex; align-items: center; gap: .3rem;
+  background: none; border: 0; cursor: pointer;
+  color: var(--texte-secondaire); font-size: var(--t-base);
+  padding-block: calc(var(--pas-v) * 3 / 12);
+}
+
+/* -----------------------------------------------------------------------------
+   19. HÉROS — rythme du bloc de texte
+   `mb-v1` sous le h1, `mb-v2.5` sous le bloc entier, `gap-x-g1` entre boutons.
+   [relevé] H
+-------------------------------------------------------------------------------*/
+.hero__texte   { margin-bottom: calc(var(--pas-v) * 2.5); }
+.hero__texte h1 { margin-bottom: var(--pas-v); }
+.hero__actions { display: flex; align-items: center; gap: var(--pas-h); }
+.cta__actions  { display: flex; align-items: center; justify-content: center;
+                 gap: var(--pas-h); flex-wrap: wrap; }
+/* La scène du héros a sa propre hauteur, plus haute que les autres : la source
+   pose `height:min(780px,70vh);min-height:720px`.                  [relevé] H */
+.scene--hero { height: min(780px, 70vh); min-height: 720px; }
+@media (max-width: 659px) { .scene--hero { min-height: 420px; height: 460px; } }
+
+/* -----------------------------------------------------------------------------
+   20. CHÂSSIS DE FENÊTRE — outils de barre de titre
+-------------------------------------------------------------------------------*/
+.fenetre__outils { display: flex; align-items: center; margin-right: -.25rem; }
+.fenetre__icone {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 1.75rem; height: 1.75rem; border: 0; background: none; cursor: pointer;
+  border-radius: var(--r-xs); color: var(--texte-secondaire);
+  opacity: 0; transition: opacity var(--duree-longue) var(--courbe-sortie);
+}
+.fenetre:hover .fenetre__icone, .fenetre:focus-within .fenetre__icone { opacity: 1; }
+.fenetre__icone:hover { background-color: var(--surface-03); }
+
+/* -----------------------------------------------------------------------------
+   21. FLANC D'AGENTS — la liste de tâches des démos
+   Deux groupes titrés en CAPITALES, chacun avec un compteur à 50 % d'opacité.
+   La ligne active se distingue par un FOND, jamais par une barre latérale.
+   [relevé] H : uppercase type-product-sm-medium · text-theme-text/50 ·
+                background-color:var(--color-theme-card-hover-hex) ·
+                padding-left:calc(0.75rem + 2px) — 2px de compensation optique
+                pour la ligne sélectionnée, à reproduire tel quel.
+-------------------------------------------------------------------------------*/
+.flanc-agent {
+  flex: 2 1 0; min-width: 220px; max-width: 320px;
+  border-right: 1px solid var(--filet-moyen);
+  background-color: var(--surface-01);
+  overflow: hidden; padding-block: .3rem;
+}
+@media (max-width: 899px) { .flanc-agent { display: none; } }
+.flanc-agent__groupe { padding-block: .3125rem; }   /* py-1.25 */
+.flanc-agent__titre {
+  padding: .25rem .75rem; text-transform: uppercase;
+  font-size: var(--t-prod-sm); font-weight: 500; letter-spacing: .04em;
+  color: var(--texte-secondaire);
+}
+.flanc-agent__compte { color: color-mix(in oklab, var(--texte-primaire) 50%, transparent); }
+.flanc-agent__item {
+  display: flex; width: 100%; align-items: flex-start; gap: .5rem;
+  border: 0; background: none; cursor: pointer; text-align: left;
+  padding: .625rem .75rem .625rem calc(.75rem + 2px);
+  font-size: var(--t-prod); line-height: var(--int-prod);
+  transition: background-color var(--duree-instant) var(--courbe-sortie);
+}
+.flanc-agent__item:hover { background-color: var(--surface-02); }
+.flanc-agent__item[aria-current] { background-color: var(--surface-03); }
+.flanc-agent__glyphe { display: flex; width: 1rem; height: 1rem; flex-shrink: 0;
+                       align-items: center; justify-content: center;
+                       color: var(--texte-secondaire); }
+.flanc-agent__glyphe svg { width: 100%; height: 100%; }
+.flanc-agent__corps { display: flex; min-width: 0; flex: 1; flex-direction: column; gap: 1px; }
+.flanc-agent__nom { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.flanc-agent__nom--attenue { color: var(--texte-secondaire); }
+.flanc-agent__etat { font-size: var(--t-prod-sm); color: var(--texte-secondaire);
+                     overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.flanc-agent__etat--tertiaire { color: var(--texte-tertiaire); }
+.diff-plus  { color: var(--diff-ajout); }
+.diff-moins { color: var(--diff-retrait); }
+
+/* -----------------------------------------------------------------------------
+   22. APERÇU DE NAVIGATEUR — la seule zone SÉRIF de la page
+   Détail à ne pas rater : la page rendue dans l'aperçu bascule sur
+   `var(--font-serif)` et pose `font-feature-settings:"cswh" 1` sur le nom de
+   marque (paraphes calligraphiques), plus un `text-indent:-0.1rem` sur le
+   PREMIER alinéa seulement — un débord optique de guillemet.       [relevé] H
+-------------------------------------------------------------------------------*/
+.navigateur { flex: 3 1 0; min-width: 0; display: flex; flex-direction: column;
+              border-right: 1px solid var(--filet-moyen); overflow: hidden; }
+.navigateur__barre { display: flex; align-items: center; gap: .5rem;
+                     height: 1.75rem; flex-shrink: 0; padding-inline: .35rem;
+                     border-bottom: 1px solid var(--filet-moyen); }
+.navigateur__bouton { display: inline-flex; align-items: center; justify-content: center;
+                      width: 1.75rem; height: 1.75rem; flex-shrink: 0;
+                      border: 0; background: none; cursor: pointer;
+                      border-radius: var(--r-xs); color: var(--texte-secondaire); }
+.navigateur__bouton:hover { background-color: var(--surface-03); }
+.navigateur__url { flex: 1; min-width: 0; font-size: var(--t-prod);
+                   overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.apercu {
+  flex: 1; min-height: 0; overflow: hidden;
+  background-color: var(--fond-page);
+  padding: 2rem 1.5rem;                                       /* px-6 py-8 */
+  font-family: "Iowan Old Style", "Palatino Linotype", "URW Palladio L", P052,
+               ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+}
+.apercu__entete { margin-bottom: 2rem; }
+.apercu__marque { font-weight: 500; font-style: italic; font-size: 1.2rem;
+                  font-feature-settings: "cswh" 1; }
+.apercu__corps  { max-width: 48ch; font-size: 1.08rem; line-height: 1.35; }
+.apercu__alinea { text-indent: -.1rem; }
+.apercu__para   { margin-top: 1rem; }
+.apercu__actions { margin-top: 1.25rem; display: flex; align-items: center; gap: 1rem; }
+.apercu__cta   { padding: .375rem .75rem; background-color: var(--texte-primaire);
+                 color: var(--fond-page); border-radius: var(--r-2xs); font-size: .95rem; }
+.apercu__lien  { text-decoration: underline; text-underline-offset: .125em; font-size: .95rem; }
+.apercu__table { margin-top: 2rem; width: 100%; border-collapse: collapse; font-size: .95rem; }
+.apercu__table td { padding-block: .5rem; }
+.apercu__annee { padding-right: 1rem; opacity: .7; }
+.apercu__sujet { padding-right: 1rem; }
+.apercu__etat  { opacity: .7; }
+
+/* -----------------------------------------------------------------------------
+   23. PANNEAU DE CONVERSATION
+   `flex-grow:2.5` contre `2` pour le flanc : la conversation est la colonne la
+   plus large des trois.                                            [relevé] H
+-------------------------------------------------------------------------------*/
+.conversation { flex: 2.5 1 0; min-width: 0; display: flex; flex-direction: column;
+                background-color: var(--surface-01); overflow: hidden;
+                padding: .6rem .7rem; }
+@media (max-width: 1139px) { .fenetre .conversation:not(.conversation--large) { display: none; } }
+.conversation--large { flex: 3 1 0; }
+.conversation__titre { font-size: var(--t-prod-lg); margin-bottom: .5rem;
+                       text-align: center; color: var(--texte-secondaire); }
+.conversation__flux  { flex: 1; min-height: 0; overflow: hidden;
+                       display: flex; flex-direction: column; gap: .4rem; }
+.conversation__etape { font-size: var(--t-prod-sm); color: var(--texte-tertiaire);
+                       padding-left: .2rem; }
+.conversation__apercu { position: relative; height: 3.4rem; border-radius: var(--r-xs);
+                        background-color: var(--surface-03); overflow: hidden;
+                        display: flex; align-items: flex-end; gap: .5rem;
+                        padding: .4rem .5rem; }
+.conversation__marque { position: absolute; top: .35rem; left: .5rem;
+                        font-size: 6px; font-weight: 500; font-style: italic;
+                        line-height: 1; opacity: .4; }
+
+/* -----------------------------------------------------------------------------
+   24. COMPOSITEUR — le champ de saisie des démos
+   Motif constant de la source : un champ, puis un pied qui aligne un JETON de
+   mode (« Agent », « Plan », « Build ») et le NOM DU MODÈLE. Le modèle est en
+   texte secondaire, jamais mis en avant.                           [relevé] H
+-------------------------------------------------------------------------------*/
+.compo { margin-top: auto; padding-top: .5rem; }
+.compo__champ { border: 1px solid var(--filet-moyen); border-radius: var(--r-md);
+                padding: .45rem .55rem; font-size: var(--t-prod);
+                color: var(--texte-tertiaire); }
+/* `type-product-lg` + `line-height:1.8` + `opacity-60` — un champ volontairement
+   aéré, presque une invite d'accueil.                              [relevé] H */
+.compo__champ--grand { border: 0; padding: .625rem .75rem .5rem;
+                       font-size: var(--t-prod-lg); line-height: 1.8; opacity: .6; }
+.compo__pied { display: flex; align-items: center; gap: .5rem;
+               margin-top: .4rem; font-size: var(--t-prod-sm); }
+.compo__modele { color: var(--texte-secondaire); }
+.compo__auto   { color: var(--texte-secondaire); display: inline-flex;
+                 align-items: center; gap: .15rem; }
+.compo__envoi  { margin-left: auto; display: inline-flex; align-items: center;
+                 justify-content: center; width: 1.25rem; height: 1.25rem;
+                 border-radius: var(--r-plein);
+                 background-color: var(--texte-primaire); color: var(--fond-page);
+                 font-size: .7rem; }
+/* Le compositeur du trio flotte AU-DESSUS d'une boîte à ratio, à 12 % du haut,
+   sur 88 % de large plafonné à 360px.                              [relevé] H */
+.compo--flottant { position: absolute; top: 12%; left: 50%; transform: translateX(-50%);
+                   width: 88%; max-width: 360px; margin: 0; padding: 0;
+                   border: 1px solid var(--filet-moyen); border-radius: var(--r-lg);
+                   background-color: var(--surface-01);
+                   box-shadow: 0 10px 22px -14px rgba(0,0,0,.3); }
+.compo--flottant .compo__pied { padding: 0 .5rem .5rem; margin-top: 0; }
+
+.jeton { display: inline-flex; align-items: center; gap: .25rem;
+         padding: .1rem .4rem; border-radius: var(--r-2xs);
+         background-color: var(--surface-04); color: var(--texte-secondaire);
+         font-size: var(--t-prod-sm); }
+.jeton--discret { background-color: transparent; border: 1px solid var(--filet-moyen); }
+.jeton--rond    { border-radius: var(--r-plein); padding: .1rem .5rem; }
+
+/* Menu de modèles — rendu OUVERT dans la source (`opacity-100 scale-100
+   translate-y-0`), posé 8px sous son bouton, largeur mini 180px, avec une ombre
+   à DEUX couches dont l'une est le contour de thème.               [relevé] H */
+.modeles {
+  position: absolute; top: calc(100% + 8px); left: .5rem; z-index: 5;
+  min-width: 180px; padding: .25rem;
+  border-radius: var(--r-md); overflow: hidden;
+  background-color: var(--surface-01);
+  box-shadow: var(--contour-theme), 0 18px 36px -18px rgba(0,0,0,.28);
+}
+.modeles__item { display: flex; width: 100%; align-items: baseline; gap: .5rem;
+                 padding: calc(var(--pas-v) * 3 / 12) calc(var(--pas-h) * .75);
+                 border: 0; background: none; cursor: pointer; text-align: left;
+                 border-radius: var(--r-xs); font-size: var(--t-prod-lg); }
+.modeles__item--actif { background-color: var(--surface-03); }
+.modeles__item:hover  { background-color: var(--surface-02); }
+.modeles__nom  { flex: 1; }
+.modeles__sug  { color: var(--texte-tertiaire); font-size: var(--t-prod-sm); }
+.modeles__coche { margin-left: .5rem; }
+
+/* -----------------------------------------------------------------------------
+   25. ÉDITEUR — onglets, document, liste de tâches
+-------------------------------------------------------------------------------*/
+.editeur { flex: 4 1 0; min-width: 0; display: flex; flex-direction: column;
+           overflow: hidden; background-color: var(--fond-page); }
+.onglets { display: flex; align-items: center; gap: .4rem; flex-shrink: 0;
+           padding: .3rem .5rem; border-bottom: 1px solid var(--filet-moyen);
+           font-size: var(--t-prod-sm); }
+.onglets__item { padding: .1rem .35rem; border-radius: var(--r-2xs);
+                 color: var(--texte-secondaire); }
+.onglets__item--actif { background-color: var(--surface-03); color: var(--texte-primaire); }
+.onglets .jeton { margin-left: auto; }
+/* Le document rendu dans l'éditeur a sa PROPRE échelle typographique, en px
+   absolus et en graisses fortes — la seule zone de la page à sortir de
+   l'échelle du site. [relevé] H : text-[20px] font-bold puis text-[14px]
+   font-semibold, marges mt-0/mb-1 puis mt-2/mb-0.5. */
+.doc { padding: .75rem .9rem; overflow: hidden; flex: 1; min-height: 0; }
+.doc__titre { font-size: 20px; font-weight: 700; line-height: var(--int-serre);
+              margin: 0 0 .25rem; }
+.doc__sous  { font-size: 14px; font-weight: 600; margin: .5rem 0 .125rem; }
+.doc__para  { font-size: var(--t-prod); line-height: var(--int-prod);
+              color: var(--texte-secondaire); }
+.taches { border-top: 1px solid var(--filet-moyen); padding: .55rem .9rem;
+          flex-shrink: 0; }
+.taches__titre { font-size: var(--t-prod-sm); color: var(--texte-secondaire);
+                 margin-bottom: .35rem; }
+.taches__item  { display: flex; align-items: center; gap: .45rem;
+                 font-size: var(--t-prod); padding-block: .18rem; }
+.taches__champ { margin-top: .4rem; font-size: var(--t-prod);
+                 color: var(--texte-tertiaire); }
+.case { width: .7rem; height: .7rem; flex-shrink: 0; border-radius: var(--r-2xs);
+        border: 1px solid var(--filet-marque); }
+
+/* -----------------------------------------------------------------------------
+   26. FIL SLACK — compléments
+-------------------------------------------------------------------------------*/
+.fil__membres { font-size: var(--t-prod-sm); color: var(--texte-tertiaire);
+                margin-left: .4rem; }
+.fil__heure   { font-size: var(--t-prod-sm); color: var(--texte-tertiaire);
+                font-weight: 400; margin-left: .25rem; }
+/* Le badge « APP » de Slack : capitales minuscules sur fond atténué.  [relevé] H */
+.fil__app { display: inline-block; padding: 0 .25rem; border-radius: 2px;
+            background-color: var(--surface-04); color: var(--texte-secondaire);
+            font-size: 9px; font-weight: 700; letter-spacing: .04em;
+            vertical-align: middle; }
+.fil__actions { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: .4rem; }
+.fil__action  { padding: .15rem .45rem; border-radius: var(--r-2xs);
+                border: 1px solid var(--filet-moyen);
+                font-size: var(--t-prod-sm); color: var(--texte-secondaire); }
+.avatar--carre { border-radius: var(--r-2xs); }
+.avatar--carre::after { border-radius: var(--r-2xs); }
+.avatar--sm { width: 1.25rem; height: 1.25rem; flex-shrink: 0;
+              background-color: var(--surface-04); }
+
+/* -----------------------------------------------------------------------------
+   27. TERMINAL — compléments
+-------------------------------------------------------------------------------*/
+.terminal__titre  { color: var(--texte-primaire); }
+.terminal__chemin { color: var(--texte-tertiaire); }
+.terminal__sujet  { color: var(--texte-primaire); margin-top: .35rem; }
+.terminal__envoi  { margin-top: .45rem; }
+.terminal__modele { margin-top: .35rem; color: var(--texte-secondaire); }
+.terminal__astuce { margin-top: .2rem; color: var(--texte-tertiaire);
+                    font-size: var(--t-prod-sm); }
+/* La commande d'installation est posée dans le TEXTE du bloc, pas dans le
+   média : elle est sélectionnable et colorée par segment.          [relevé] H */
+.install { margin-top: calc(var(--pas-v) * 8 / 12); font-size: var(--t-prod-lg);
+           color: var(--texte-secondaire); }
+.install__cmd  { color: var(--accent); }
+.install__opt  { color: var(--texte-tertiaire); }
+.install__pipe { color: var(--texte-tertiaire); }
+
+/* -----------------------------------------------------------------------------
+   28. PANNEAU D'AUTOMATISATION
+-------------------------------------------------------------------------------*/
+.auto { flex: 1; min-height: 0; overflow: hidden; padding: .75rem .9rem;
+        display: flex; flex-direction: column; gap: .45rem;
+        font-size: var(--t-prod); }
+.auto__entete { font-size: var(--t-prod-lg); color: var(--texte-secondaire); }
+.auto__ligne  { display: flex; align-items: center; justify-content: space-between;
+                gap: .5rem; padding-block: .3rem;
+                border-bottom: 1px solid var(--filet-faible); }
+.auto__ligne--titre { border-bottom: 0; }
+.auto__nom { font-size: var(--t-prod-lg); }
+.auto__cle { color: var(--texte-secondaire); }
+.auto__val { color: var(--texte-primaire); }
+.auto__ajout { color: var(--accent); font-size: var(--t-prod-sm); }
+.auto__bloc { border: 1px solid var(--filet-moyen); border-radius: var(--r-md);
+              padding: .45rem .55rem; }
+.auto__invite { color: var(--texte-tertiaire); margin-block: .3rem; }
+.auto__prompt { color: var(--texte-primaire); line-height: var(--int-prod); }
+.auto__pied { display: flex; align-items: center; gap: .6rem; margin-top: auto;
+              padding-top: .45rem; font-size: var(--t-prod-sm); }
+
+/* -----------------------------------------------------------------------------
+   29. TÉLÉPHONE — châssis relevé au pixel
+   Le gabarit exact de la source : 300×650, rayon extérieur 44px, padding 4px,
+   écran à rayon 40px, encoche 96×28 posée à 8px du haut, et QUATRE touches
+   latérales aux positions relevées. `clip-path:inset(0 round …)` double le
+   rayon pour que rien ne dépasse du coin en Safari.                [relevé] H
+-------------------------------------------------------------------------------*/
+/* Le cadre de rognage : 378px de haut, `overflow:hidden`. C'est LUI qui coupe
+   l'appareil de 650px, pas un `max-height` sur le téléphone — la différence
+   compte, car le châssis garde ses proportions réelles et seule sa partie basse
+   disparaît.                                                       [relevé] H */
+.telephone-cadre { position: relative; width: 100%; height: 378px;
+                   overflow: hidden; border-radius: var(--r-xs); }
+.telephone { position: absolute; left: 50%; top: 1.5rem; transform: translateX(-50%);
+             width: 300px; height: 650px; margin: 0; }
+.telephone__touche { position: absolute; width: 4px; border-radius: 2px; }
+.telephone__touche--droite { right: -3px; top: 120px; height: 42px;
+                             background: linear-gradient(to right, #1c1c1e, #2c2c2e); }
+.telephone__touche--gauche { left: -3px;
+                             background: linear-gradient(to left, #1c1c1e, #2c2c2e); }
+.telephone__touche--g1 { top: 75px;  height: 20px; }
+.telephone__touche--g2 { top: 105px; height: 36px; }
+.telephone__touche--g3 { top: 150px; height: 36px; }
+.telephone__ecran { position: relative; width: 300px; height: 650px;
+                    border-radius: 44px; padding: 4px; background-color: #3a3a3c;
+                    overflow: hidden; clip-path: inset(0 round 44px); contain: paint;
+                    background-color: #3a3a3c; }
+.telephone__contenu { position: relative; height: 100%; width: 100%;
+                      border-radius: 40px; clip-path: inset(0 round 40px);
+                      contain: paint; overflow: hidden;
+                      background-color: #faf9f6; color: #26251e;
+                      padding: 3.5rem 1.25rem 0; }
+:root[data-theme="dark"] .telephone__contenu { background-color: #1f1e1b; color: #f4f0e8; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .telephone__contenu { background-color: #1f1e1b; color: #f4f0e8; }
+}
+.telephone__encoche { position: absolute; left: 50%; top: 8px; z-index: 50;
+                      transform: translateX(-50%); width: 96px; height: 28px;
+                      border-radius: var(--r-plein); background-color: #000; }
+/* `text-[19px] font-[510] tracking-[-0.26px]` — une graisse variable de 510,
+   valeur qu'aucune échelle standard ne propose.                    [relevé] H */
+.telephone__titre { font-size: 19px; line-height: var(--int-serre); font-weight: 510;
+                    letter-spacing: -.26px; margin-bottom: 1rem; }
+.telephone__section { font-size: 12px; color: currentColor; opacity: .5;
+                      margin-bottom: .35rem; }
+.telephone__depot { display: flex; flex-direction: column; gap: .1rem;
+                    padding-block: .5rem;
+                    border-bottom: 1px solid rgba(128,128,128,.18); }
+.telephone__depot:last-child { border-bottom: 0; }
+.telephone__nom  { font-size: 13px; line-height: 1.25; }
+.telephone__meta { display: flex; align-items: center; gap: .3rem;
+                   font-size: 11px; opacity: .55; }
+.telephone__sep  { opacity: .6; }
+
+/* -----------------------------------------------------------------------------
+   30. MÉDIAS DU TRIO, PHOTOS, LOGOS
+-------------------------------------------------------------------------------*/
+/* `max-h-mobile:420px` : les médias du trio sont plafonnés en hauteur sur
+   petit écran, jamais en ratio.                                    [relevé] H */
+.trio__media { position: relative; max-height: 420px; aspect-ratio: 4 / 3;
+               overflow: hidden; }
+@media (min-width: 660px) { .trio__media { aspect-ratio: 1 / 1; } }
+@media (min-width: 1140px) { .trio__media { overflow: visible; } }
+.trio__photo  { width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; }
+.equipe__photo { width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; }
+/* Les logos sont dimensionnés en HAUTEUR, jamais en largeur : `h-[2rem] w-auto
+   object-contain`, puis 2.25rem à 420px et 2.5rem à 660px. Des mots-symboles de
+   ratios très différents (Stripe 130×83, Nvidia 213×84) s'alignent ainsi sur
+   une même ligne optique.                                          [relevé] H */
+.logos__svg { height: 2rem; width: auto; object-fit: contain; }
+@media (min-width: 420px) { .logos__svg { height: 2.25rem; } }
+@media (min-width: 660px) { .logos__svg { height: 2.5rem; } }
+/* `class="contents"` : le span disparaît de la boîte de mise en page et le SVG
+   devient enfant direct du flex de la cellule.                     [relevé] H */
+.logos__cellule .contents { display: contents; }
+
+/* -----------------------------------------------------------------------------
+   31. FAITS MARQUANTS ET PIED — compléments
+-------------------------------------------------------------------------------*/
+.fait { grid-template-columns: 1fr; }
+.fait__pied { display: flex; align-items: center; gap: .4rem;
+              margin-top: calc(var(--pas-v) * 8 / 12); }
+.fait__sep  { margin-inline: .35rem; opacity: .6; }
+.pied__titre { font-size: var(--t-base); color: var(--texte-secondaire);
+               padding-bottom: calc(var(--pas-v) * 2.5 / 12); }
+@media (min-width: 660px) { .pied__titre { font-size: var(--t-sm); } }
+/* `flex-col items-start justify-between md:flex-row md:items-center gap-v2`.
+   L'empilement à gauche sous 660px n'est pas cosmétique : c'est LUI qui garde le
+   panneau de langue (`left:0`, min-width 10rem) à l'intérieur du viewport. Le
+   passer en `flex-wrap` avec un groupe droit collé au bord fait déborder la page
+   de 33px sur un écran de 500px — mesuré.                        [relevé] H */
+.pied__bas { flex-direction: column; align-items: flex-start; flex-wrap: nowrap;
+             gap: calc(var(--pas-v) * 2); }
+@media (min-width: 660px) { .pied__bas { flex-direction: row; align-items: center; } }
+.pied__gauche { display: flex; align-items: center;
+                gap: calc(var(--pas-h) * 1.5); color: var(--texte-secondaire); }
+.pied__droite { display: flex; align-items: center; gap: calc(var(--pas-h) * 1.5); }
+.pied__copyright, .pied__badge { font-size: inherit; }
+.pied__badge { display: inline-flex; align-items: center; gap: .3rem; }
+.pied__gauche a:hover { color: var(--texte-primaire); }
+
+/* -----------------------------------------------------------------------------
+   32. MOUVEMENT RÉDUIT — obligatoire, sans exception
+   La source coupe ses animations une par une (`.animate-…{animation:none}`,
+   `.logo-flip-card-inner{transition:none}`, `.mobile-interaction-pulse…
+   {opacity:.15;animation:none}`). On applique la même règle globalement : plus
+   rien ne bouge, MAIS tout reste visible.
+   Côté JS, `scrollBy({behavior:'smooth'})` n'écoute PAS cette préférence tout
+   seul — motion.js la lit et bascule sur 'instant'.
+-------------------------------------------------------------------------------*/
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 1ms !important;
+    animation-delay: 0ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+    transition-delay: 0ms !important;
+  }
+  /* `animation:none` seul suffit : sans animation, plus de `both`, donc plus
+     d'image de départ figée — l'élément revient à son état natif, visible.
+     [relevé] M : @media (prefers-reduced-motion:reduce){.animate-…{animation:none}} */
+  [data-revele], [data-revele].est-visible { animation: none; }
+  .nav__panneau, .langue__panneau { transition: none; }
+  /* Les boucles d'ambiance s'arrêtent sur une image LISIBLE, pas invisible —
+     exactement ce que fait la source pour ses pulsations.        [relevé] M */
+  .pastille { animation: none; }
+  .barres i { animation: none; opacity: .72; }
+  .chatoie  { animation: none; background: none;
+              -webkit-background-clip: border-box; background-clip: border-box;
+              color: var(--texte-secondaire); }
+}

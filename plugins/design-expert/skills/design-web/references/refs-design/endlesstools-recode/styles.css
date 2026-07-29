@@ -1,0 +1,439 @@
+/* Référence de design — page produit sombre.
+   Traçabilité : [relevé] = lu dans la feuille de la source
+   (_next/static/chunks/7cbd7ac42dbd96bf.css) ou dans un attribut du HTML source.
+   [arbitrage] = choix de cette référence, absent de la source. */
+
+:root {
+  /* ---- Couleur, nommée par rôle ---- */
+  --fond-page:        #000;      /* [relevé] body class bg-[#000] */
+  --fond-scene:       #0a0a0a;   /* [relevé] --color-black */
+  --fond-carte:       #080808;   /* [relevé] cartes d'avis bg-[#080808] */
+  --fond-carte-haute: #2a2a2a;   /* [relevé] --color-grey-2, liseré des vignettes au survol */
+  --fond-champ:       #1e1e1e;   /* [relevé] --color-secondary */
+  --fond-action:      #373737;   /* [relevé] --color-grey-1 */
+  --texte-primaire:   #fff;      /* [relevé] --color-white */
+  --texte-secondaire: #959595;   /* [relevé] --color-grey-4 */
+  --texte-tertiaire:  #555;      /* [relevé] --color-grey-3 */
+  --trait-discret:    #373737;   /* [relevé] ring-grey-1 */
+  --trait-carte:      #505050;   /* [relevé] ring-[#505050] sur les cartes d'offre */
+  --trait-jauge:      #333;      /* [relevé] bg-[#333] de la jauge du rail */
+  --accent-promo:     #ff3dae;   /* [relevé] badge de remise bg-[#FF3DAE] */
+  --lien-avis:        #1d9bf0;   /* [relevé] .et-tweet-content a */
+  --degrade-action:   linear-gradient(97.25deg, #b8ff45 3%, #ffcb45 22%, #ff00b8 100%); /* [relevé] .ui-button-upgrade-animated */
+  --voile-haut:       linear-gradient(#000 14.73%, #000a0a00 100%);  /* [relevé] .nav-gradient */
+  --voile-bas:        linear-gradient(#0000 0%, #000 85.27%);        /* [relevé] .ui-overlay-gradient */
+
+  /* ---- Rayons ---- */
+  --rayon-base:     10px;  /* [relevé] --radius-base */
+  --rayon-carte:    12px;  /* [relevé] --radius-fill */
+  --rayon-controle:  7px;  /* [relevé] rounded-[7px] boutons et cadres média */
+
+  /* ---- Typographie ---- */
+  --t-legende:     12px; --t-legende-i:     14px;  /* [relevé] --text-body-secondary */
+  --t-corps:       14px; --t-corps-i:       18px;  /* [relevé] --text-body-primary */
+  --t-sous-titre:  18px; --t-sous-titre-i:  20px;  /* [relevé] --text-subtitle */
+  --t-titre-2:     24px; --t-titre-2-i:     26px;  /* [relevé] --text-title-secondary */
+  --t-titre-1:     42px; --t-titre-1-i:     46px;  /* [relevé] --text-title-primary */
+  --graisse-forte:  500;                           /* [relevé] --font-weight-medium */
+  --serrage:      -.03em;                          /* [relevé] --text-title-*--letter-spacing */
+  --serrage-doux: -.025em;                         /* [relevé] --tracking-tight */
+
+  /* ---- Mouvement ---- */
+  --duree-etat:  .15s;                      /* [relevé] --default-transition-duration */
+  --courbe-etat: cubic-bezier(.4, 0, .2, 1);/* [relevé] --default-transition-timing-function */
+  --duree-lente: .3s;                       /* [relevé] règle .duration-300, non employée dans la page */
+  --duree-apparition:  .5s;                        /* [arbitrage] la source anime en JS, aucune durée dans la feuille */
+  --courbe-apparition: cubic-bezier(.16, 1, .3, 1);/* [arbitrage] même famille de sortie, sans rebond */
+  --amplitude-apparition: 5px;              /* [relevé] style inline transform:translateY(5px) */
+
+  /* ---- Rythme vertical ---- */
+  --pas-section: 150px; /* [relevé] mt/mb-[150px], my-[150px] */
+  --marge-bord:   20px; /* [relevé] px-[20px] */
+}
+@media (min-width: 48rem) { :root { --marge-bord: 40px; } } /* [relevé] md:px-[40px], md = 48rem */
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--fond-page);
+  color: var(--texte-primaire);
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif; /* [relevé] --font-inter */
+  font-size: var(--t-corps);
+  line-height: var(--t-corps-i);
+  -webkit-font-smoothing: antialiased;    /* [relevé] classe antialiased */
+  cursor: default;                        /* [relevé] classe cursor-default */
+  overflow-x: hidden;                     /* [arbitrage] garde-fou : les rails débordent volontairement */
+}
+img, video { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+h1, h2, h3, p, ul, hgroup { margin: 0; }
+ul { padding: 0; list-style: none; }
+button { font: inherit; color: inherit; background: none; border: 0; padding: 0; }
+
+/* ---------- Échelle typographique ----------
+   Cinq paliers, aucun intermédiaire : un titre vaut 24px sous 48rem et 42px au-dessus,
+   rien entre les deux — ni clamp(), ni fluide. [relevé] */
+.titre-1, .titre-2 { font-size: var(--t-titre-2); line-height: var(--t-titre-2-i); font-weight: var(--graisse-forte); letter-spacing: var(--serrage); }
+.sous-titre  { font-size: var(--t-sous-titre); line-height: var(--t-sous-titre-i); }
+.corps       { font-size: var(--t-corps); line-height: var(--t-corps-i); }
+.legende     { font-size: var(--t-legende); line-height: var(--t-legende-i); }
+.sourdine    { color: var(--texte-secondaire); }
+@media (min-width: 48rem) {
+  .titre-1 { font-size: var(--t-titre-1); line-height: var(--t-titre-1-i); } /* [relevé] md:text-title-primary */
+}
+
+/* ---------- Apparition au défilement ----------
+   État de départ relevé sur ~18 conteneurs de la source, en style inline.
+   Ici en CSS ; motion.js pose .est-visible à l'entrée dans le viewport. */
+[data-apparition] {
+  opacity: 0;
+  transform: translateY(var(--amplitude-apparition));
+  transition: opacity var(--duree-apparition) var(--courbe-apparition),
+              transform var(--duree-apparition) var(--courbe-apparition);
+}
+[data-apparition].est-visible { opacity: 1; transform: none; }
+
+/* ---------- Barre haute ---------- */
+.barre-haute { position: sticky; top: 0; z-index: 50; background: var(--voile-haut); } /* [relevé] sticky inset-x-0 top-0 z-50 */
+.barre-haute__interieur {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 20px var(--marge-bord); /* [relevé] py-[20px] px-[20px] md:px-[40px] */
+}
+.marque { font-weight: var(--graisse-forte); letter-spacing: var(--serrage); font-size: var(--t-sous-titre); } /* [arbitrage] la source pose ici un logo image de 120px (130px au-delà de md) */
+.barre-haute__actions { display: flex; gap: 10px; } /* [relevé] gap-x-[10px] */
+.pilule {
+  display: inline-flex; align-items: center;
+  height: 30px; padding-inline: 20px;   /* [relevé] h-[30px] px-[20px] */
+  border-radius: 999px;                 /* [relevé] rounded-full */
+  font-size: var(--t-legende); font-weight: var(--graisse-forte); /* [relevé] text-body-secondary font-medium */
+  backdrop-filter: blur(16px);          /* [relevé] backdrop-blur-lg = --blur-lg 16px */
+  transition: background-color var(--duree-etat) var(--courbe-etat),
+              color var(--duree-etat) var(--courbe-etat);
+}
+/* `ring-1 ring-inset` sans classe de couleur : le liseré prend `currentColor`, donc la
+   couleur du texte — il s'éclaircit avec lui au survol, sans règle dédiée. [relevé] */
+.pilule--discrete { background: color-mix(in oklab, var(--fond-champ) 80%, transparent); color: var(--texte-secondaire); box-shadow: inset 0 0 0 1px currentColor; } /* [relevé] bg-secondary/80 text-grey-4 */
+.pilule--discrete:hover { background: var(--fond-champ); color: var(--texte-primaire); } /* [relevé] hover:bg-secondary hover:text-white */
+.pilule--pleine { background: var(--fond-action); } /* [relevé] bg-grey-1 */
+.pilule--pleine:hover { background: color-mix(in oklab, var(--fond-action) 80%, transparent); } /* [relevé] hover:bg-grey-1/80 */
+
+/* ---------- Ouverture ---------- */
+.ouverture { margin-bottom: 100px; } /* [relevé] mb-[100px] */
+.colonne-etroite { max-width: 540px; margin-inline: auto; padding-inline: var(--marge-bord); } /* [relevé] max-w-[540px] md:max-w-[900px] */
+@media (min-width: 48rem) { .colonne-etroite { max-width: 900px; } }
+.ouverture__texte { text-align: center; margin-bottom: 25px; }  /* [relevé] text-center mb-[25px] */
+.ouverture__titre { margin-bottom: 10px; }                      /* [relevé] mb-[10px] */
+.ouverture__accroche { max-width: 370px; margin-inline: auto; } /* [relevé] max-w-[370px] mx-auto */
+.ouverture__action { display: flex; justify-content: center; }  /* [relevé] flex justify-center */
+.bouton-plein {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 95px; height: 35px; padding-inline: 25px;  /* [relevé] style inline min-width:95px;height:35px + px-[25px] */
+  border-radius: var(--rayon-base);                     /* [relevé] style inline border-radius:10px */
+  background: var(--texte-primaire); color: #000;       /* [relevé] bg-white text-black */
+  font-size: var(--t-legende); font-weight: var(--graisse-forte);
+  transition: opacity var(--duree-etat) var(--courbe-etat);
+}
+.bouton-plein:hover { opacity: .85; } /* [relevé] hover:opacity-85 */
+
+/* Scène : hauteur FIXE, et plus haute en petit écran qu'en grand (1200 → 760).
+   Le média est recadré par cover, jamais déformé, et la hauteur du bloc ne dépend
+   d'aucun fichier. */
+.scene { position: relative; width: 100%; height: 1200px; overflow: hidden; margin-top: 50px; background: var(--fond-scene); } /* [relevé] w-full overflow-hidden h-[1200px] mt-[50px] */
+@media (min-width: 48rem) { .scene { height: 760px; } }  /* [relevé] md:h-[760px] */
+.scene__voile { position: absolute; inset-inline: 0; bottom: 0; height: 340px; background: var(--voile-bas); pointer-events: none; z-index: 40; } /* [relevé] absolute z-40 bottom-0 inset-x-0 h-[340px] pointer-events-none */
+
+/* ---------- Mosaïque de l'ouverture ----------
+   Valeurs relevées dans le DOM hydraté de la page en ligne (le HTML servi ne contient
+   qu'un conteneur vide) : la grille et ses gouttières sont écrites en style inline par
+   le composant, les vignettes portent des classes utilitaires normales.
+
+   Le procédé : SIX colonnes indépendantes, chacune une grille d'une seule colonne. Les
+   images gardent leur ratio naturel, donc les colonnes se désynchronisent verticalement
+   toutes seules — aucun calcul de masonry, aucune position absolue. `align-items:start`
+   empêche l'étirement. La hauteur fixe de la scène coupe la mosaïque en pleine image, et
+   le voile bas fond la coupe dans le noir : on ne voit jamais une rangée finir. */
+.mosaique { padding-inline: 8px; padding-top: 1px; }        /* [relevé] px-[8px] pt-px */
+/* La source construit six conteneurs-colonnes en style inline
+   (`grid-template-columns: repeat(6, minmax(0,1fr))`, `column-gap:8px`, `row-gap:8px`,
+   `align-items:start`) et répartit les vignettes entre eux **en JavaScript**, en
+   recalculant le nombre de colonnes selon la largeur — deux colonnes en petit écran,
+   six au-delà. Les gouttières et le nombre de colonnes sont donc relevés, la
+   répartition non : elle est refaite ici par le multi-colonnes CSS, qui produit le même
+   masonry sans code. [arbitrage de mécanisme, valeurs relevées] */
+.mosaique__grille { columns: 2; column-gap: 8px; } /* [relevé] 2 colonnes sous 48rem, gouttière 8px */
+@media (min-width: 48rem) { .mosaique__grille { columns: 6; } } /* [relevé] 6 colonnes au-delà */
+.mosaique__colonne { display: contents; } /* les groupes du DOM source ne portent plus de mise en page */
+.vignette {
+  display: block; position: relative; overflow: hidden;     /* [relevé] block relative overflow-hidden */
+  break-inside: avoid; margin-bottom: 8px;                  /* [relevé] row-gap:8px, rendu par une marge en multi-colonnes */
+  border-radius: var(--rayon-base);                         /* [relevé] rounded-[10px] */
+  background: var(--fond-champ);                            /* [relevé] bg-secondary */
+  box-shadow: 0 0 0 0 var(--fond-carte-haute);              /* [relevé] ring-0 au repos */
+  transition: box-shadow var(--duree-etat) var(--courbe-etat); /* [relevé] transition */
+}
+.vignette:hover { box-shadow: 0 0 0 1px var(--fond-carte-haute); } /* [relevé] hover:ring-1 ring-grey-2 */
+.vignette__image { width: 100%; height: auto; transition: opacity var(--duree-etat) var(--courbe-etat); }
+.vignette__survol {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; /* [relevé] absolute inset-0 w-full h-full object-cover */
+  opacity: 0; transition: opacity var(--duree-etat) var(--courbe-etat);       /* [relevé] opacity-0 group-hover:opacity-100 */
+}
+.vignette:hover .vignette__image { opacity: 0; } /* [relevé] group-hover:opacity-0 */
+.vignette:hover .vignette__survol { opacity: 1; }
+/* Voile : la moitié basse seulement, du transparent au noir à 70 %. Décalé d'un pixel
+   sous le bord pour ne jamais laisser une ligne claire au ras du rayon. */
+.vignette__voile {
+  position: absolute; bottom: -1px; left: 0; right: 0; height: 50%; z-index: 10; /* [relevé] absolute -bottom-px z-10 left-0 right-0 h-[50%] */
+  background: linear-gradient(to bottom, color-mix(in oklab, var(--fond-scene) 0%, transparent), color-mix(in oklab, var(--fond-scene) 70%, transparent)); /* [relevé] bg-gradient-to-b from-black/0 to-black/70 */
+  pointer-events: none;
+}
+.vignette__legende { position: absolute; bottom: 0; inset-inline: 0; z-index: 20; width: 100%; padding: 5px; } /* [relevé] absolute bottom-0 z-20 inset-x-0 p-[5px] sm:p-[10px] w-full */
+@media (min-width: 40rem) { .vignette__legende { padding: 10px; } } /* [relevé] sm:p-[10px] */
+.vignette__titre { display: block; font-size: var(--t-legende); line-height: var(--t-legende-i); font-weight: var(--graisse-forte); margin-bottom: 5px; } /* [relevé] text-body-secondary font-medium mb-[5px] */
+.vignette__etiquettes { display: flex; flex-wrap: wrap; gap: 5px; } /* [relevé] flex flex-wrap gap-[5px] */
+/* Étiquettes : 8px sur un fond blanc à 50 % avec flou d'arrière-plan. Le flou est ce qui
+   les rend lisibles sur n'importe quelle image, sans assombrir la vignette. */
+.vignette__etiquettes span {
+  font-size: 8px; line-height: 10px; padding: 5px;      /* [relevé] text-[8px] leading-[10px] p-[5px] */
+  border-radius: 999px;                                 /* [relevé] rounded-full */
+  background: color-mix(in oklab, var(--texte-primaire) 50%, transparent); /* [relevé] bg-white/50 */
+  color: #000;
+  text-transform: uppercase;                            /* [relevé] uppercase */
+  backdrop-filter: blur(24px);                          /* [relevé] backdrop-blur-xl = --blur-xl 24px */
+}
+
+/* ---------- Cadres média ----------
+   Le ratio est réservé avant tout chargement : la boîte ne bouge pas si le média
+   n'arrive jamais. --ratio est la valeur padding-bottom relevée sur chaque média,
+   toujours le ratio exact du fichier, jamais une valeur ronde.
+   La source ne pose AUCUN object-fit sur ces médias (la règle .object-cover existe
+   dans la feuille mais n'apparaît nulle part dans la page) : le ratio du cadre étant
+   celui du fichier, un simple 100%/100% ne déforme rien. Le cover ci-dessous est un
+   garde-fou pour le jour où un média serait remplacé. [arbitrage] */
+.cadre-video, .cadre-image, .fonction__vignette {
+  position: relative; width: 100%; padding-bottom: var(--ratio, 56.25%);
+  overflow: hidden;
+}
+.cadre-video, .cadre-image { background: var(--fond-scene); } /* [arbitrage] la source laisse le cadre transparent */
+.cadre-video > *, .cadre-image > *, .fonction__vignette > * {
+  position: absolute; inset: 0; width: 100%; height: 100%; /* [relevé] style inline des médias */
+  object-fit: cover;                                       /* [arbitrage] absent de la source */
+}
+/* `ring-1 ring-grey-1` SANS `ring-inset` : liseré EXTERNE, il n'entame pas le média.
+   La source réserve `ring-inset` aux surfaces (cartes), jamais aux cadres média. [relevé] */
+.cadre-video--carte,
+.cadre-image { border-radius: var(--rayon-controle); box-shadow: 0 0 0 1px var(--trait-discret); } /* [relevé] rounded-[7px] ring-1 ring-grey-1 */
+
+/* ---------- Démonstration ---------- */
+.demonstration { padding-inline: var(--marge-bord); }
+.entete-centre { text-align: center; }
+.entete-centre__titre { max-width: 270px; margin-inline: auto; margin-bottom: 10px; } /* [relevé] max-w-[270px] md:max-w-[620px] mx-auto mb-[10px] */
+@media (min-width: 48rem) { .entete-centre__titre { max-width: 620px; } }
+.entete-centre__accroche { max-width: 215px; margin-inline: auto; } /* [relevé] max-w-[215px] mx-auto */
+.demonstration__cadre { position: relative; max-width: 900px; margin-inline: auto; } /* [relevé] relative max-w-[900px] mx-auto */
+
+/* ---------- Grille de fonctions ---------- */
+.fonctions { margin-block: var(--pas-section); padding-inline: var(--marge-bord); } /* [relevé] mt-[150px] mb-[150px] px-[20px] md:px-[40px] */
+.fonctions__interieur { max-width: 1170px; margin-inline: auto; } /* [relevé] max-w-[1170px] mx-auto */
+.fonctions__titre { max-width: 280px; margin-inline: auto; margin-bottom: 50px; text-align: center; } /* [relevé] text-center max-w-[280px] mx-auto mb-[50px] */
+@media (min-width: 48rem) { .fonctions__titre { max-width: 460px; margin-bottom: 100px; } } /* [relevé] md:max-w-[460px] md:mb-[100px] */
+/* La source ne pose pas de gouttière : elle donne `px-[25px]` à chaque cellule et
+   `mx-[-25px]` au conteneur pour annuler les bords. Le rendu vaut 50px entre colonnes. */
+.grille-fonctions {
+  display: grid; grid-template-columns: repeat(2, 1fr); /* [relevé] w-[50%] */
+  column-gap: 50px;                                     /* = 2 × px-[25px] [relevé] */
+  row-gap: 50px;                                        /* [relevé] gap-y-[50px] */
+}
+@media (min-width: 48rem) { .grille-fonctions { grid-template-columns: repeat(4, 1fr); } } /* [relevé] md:w-[25%] */
+.fonction { text-align: center; } /* [relevé] text-center */
+.fonction__vignette { padding-bottom: 100%; margin-bottom: 20px; } /* [relevé] pb-[100%] mb-[20px] */
+.fonction h3 { margin-bottom: 10px; } /* [relevé] mb-[10px] */
+
+/* ---------- Rails horizontaux ----------
+   Le HTML statique ne contient ni `overflow-x-auto`, ni `snap-*`, ni `translate-x`, ni
+   `transition-transform` : la source déplace ses rails en JS, styles posés au runtime.
+   Le défilement natif employé ici est donc un choix de cette référence. [arbitrage]
+   Sont relevés : `overflow-hidden relative` du conteneur, `flex items-end` de la piste,
+   et toutes les largeurs de cellule ci-dessous. */
+.rail { position: relative; overflow: hidden; } /* [relevé] overflow-hidden relative */
+.rail__piste {
+  display: flex; overflow-x: auto; scroll-snap-type: x mandatory;  /* [arbitrage] */
+  scrollbar-width: none; scroll-behavior: smooth;                  /* [arbitrage] */
+}
+.rail__piste::-webkit-scrollbar { display: none; }
+.rail__cellule { flex: 0 0 85%; scroll-snap-align: center; } /* [relevé] w-[85%] */
+
+/* Rail des offres */
+.rail__piste--tarifs { gap: 15px; max-width: 820px; margin-inline: auto; } /* [relevé] flex max-w-[820px] mx-auto gap-[15px] */
+.rail__cellule--tarif { display: flex; } /* [relevé] flex */
+.rail__cellule--tarif:first-child { margin-left: 20px; }  /* [relevé] first-of-type:ml-[20px] */
+.rail__cellule--tarif:last-child  { margin-right: 20px; } /* [relevé] last-of-type:mr-[20px] */
+@media (min-width: 40rem) {                               /* [relevé] palier sm = 40rem */
+  .rail__cellule--tarif { flex: 1 1 0; }                  /* [relevé] sm:w-full sm:flex-1 */
+  .rail__cellule--tarif:first-child { margin-left: 0; }   /* [relevé] sm:first-of-type:ml-0 */
+  .rail__cellule--tarif:last-child  { margin-right: 0; }  /* [relevé] sm:last-of-type:mr-0 */
+}
+
+/* Rail des avis : cartes calées en bas, de hauteurs libres */
+.rail__piste--avis { align-items: flex-end; } /* [relevé] flex items-end */
+.rail__cellule--avis { display: flex; align-items: flex-end; padding-inline: 5px; } /* [relevé] px-[5px] h-full flex items-end */
+@media (min-width: 40rem) { .rail__cellule--avis { flex: 0 0 45%; } } /* [relevé] sm:w-[45%] */
+@media (min-width: 48rem) { .rail__cellule--avis { flex: 0 0 33.3333%; } } /* [relevé] md:w-1/3 */
+
+.rail__commandes { display: flex; justify-content: center; align-items: center; gap: 10px; margin-top: 10px; } /* [relevé] flex justify-center items-center mt-[10px] space-x-[10px] */
+.rail__fleche {
+  display: flex; align-items: center; justify-content: center;
+  width: 40px; height: 40px; cursor: pointer; opacity: .65;  /* [relevé] w-[40px] h-[40px] cursor-pointer opacity-65 */
+  transition: opacity var(--duree-etat) var(--courbe-etat);
+}
+.rail__fleche:hover { opacity: 1; } /* [relevé] hover:opacity-100 */
+.rail__jauge { width: 50px; height: 6px; background: var(--trait-jauge); border-radius: 999px; overflow: hidden; } /* [relevé] w-[50px] h-[6px] bg-[#333] rounded-full overflow-hidden */
+.rail__jauge-remplissage { height: 100%; background: var(--texte-primaire); transition: width var(--duree-lente) var(--courbe-etat); } /* [relevé] h-full bg-white ; la transition est un [arbitrage] */
+
+/* ---------- Offres ---------- */
+.tarifs { margin-block: var(--pas-section); } /* [relevé] my-[150px] */
+@media (min-width: 40rem) { .tarifs { padding-inline: var(--marge-bord); } } /* [relevé] sm:px-[20px] md:px-[40px] — aucun padding sous 40rem */
+.tarifs__interieur { max-width: 1100px; margin-inline: auto; } /* [relevé] max-w-[1100px] mx-auto */
+.tarifs .entete-centre { margin-bottom: 45px; padding-inline: var(--marge-bord); } /* [relevé] mb-[45px] sur le hgroup */
+.entete-large { max-width: 335px; margin-inline: auto; margin-bottom: 15px; } /* [relevé] max-w-[335px] md:max-w-[820px] mx-auto mb-[15px] */
+@media (min-width: 48rem) { .entete-large { max-width: 820px; } }
+.tarifs__accroche { max-width: 335px; margin-inline: auto; } /* [relevé] max-w-[335px] md:max-w-[180px] mx-auto */
+@media (min-width: 48rem) { .tarifs__accroche { max-width: 180px; } }
+
+.bascule__enveloppe { display: flex; justify-content: center; margin-bottom: 20px; } /* [relevé] mb-[20px] flex justify-center */
+/* Le HTML source porte `text-sm` sur ce bloc, mais la feuille ne contient AUCUNE règle
+   `.text-sm` (le thème ne déclare pas `--text-sm`) : la classe est morte et la taille
+   retombe sur celle du body, 14px. C'est cette taille réelle qui est reprise. */
+.bascule { display: flex; gap: 25px; max-width: 820px; font-weight: var(--graisse-forte); letter-spacing: var(--serrage-doux); } /* [relevé] flex gap-[25px] font-medium tracking-tight max-w-[820px] */
+@media (min-width: 40rem) { .bascule { margin-left: -45px; } } /* [relevé] sm:ml-[-45px] — cale le sélecteur sur la carte, pas sur la page */
+.bascule__option { color: color-mix(in oklab, var(--texte-primaire) 30%, transparent); cursor: pointer; transition: color var(--duree-etat) var(--courbe-etat); } /* [relevé] text-white/30 transition-colors cursor-pointer */
+.bascule__option:hover { color: color-mix(in oklab, var(--texte-primaire) 75%, transparent); } /* [relevé] hover:text-white/75 */
+.bascule__option:disabled { color: var(--texte-primaire); cursor: default; } /* [relevé] disabled:text-white — l'option ACTIVE est celle qui est désactivée */
+.etiquette-promo { display: inline-flex; background: var(--accent-promo); color: var(--texte-primaire); border-radius: 999px; padding-inline: 10px; line-height: 25px; font-size: var(--t-legende); } /* [relevé] text-[12px] inline-flex leading-[25px] bg-[#FF3DAE] text-white rounded-full px-[10px] */
+
+.carte-tarif {
+  display: flex; flex-direction: column;                  /* [relevé] flex flex-col flex-1 */
+  flex: 1; padding: 25px;                                 /* [relevé] p-[25px] */
+  border-radius: var(--rayon-carte);                      /* [relevé] rounded-[12px] */
+  box-shadow: inset 0 0 0 1px var(--trait-carte);         /* [relevé] ring-1 ring-[#505050] ring-inset */
+}
+/* `justify-between` n'est posé que sur la carte d'essai : ses trois blocs s'écartent pour
+   occuper la hauteur imposée par la carte voisine. [relevé] */
+.carte-tarif--espacee { justify-content: space-between; }
+.carte-tarif__entete { display: flex; justify-content: space-between; margin-bottom: 35px; } /* [relevé] flex mb-[35px] justify-between */
+.carte-tarif__prix { text-align: right; } /* [relevé] text-right */
+.carte-tarif__montant { line-height: 20px; }  /* [relevé] leading-[20px] */
+.carte-tarif__mention { line-height: 15px; }  /* [relevé] leading-[15px] */
+.carte-tarif__pied { margin-top: 35px; }      /* [relevé] mt-[35px] */
+.jeton { display: inline-block; height: 35px; line-height: 35px; padding-inline: 15px; border-radius: var(--rayon-controle); font-weight: var(--graisse-forte); box-shadow: 0 0 0 1px currentColor; } /* [relevé] h-[35px] leading-[35px] px-[15px] rounded-[7px] ; `ring-1 text-white` sans ring-inset → liseré externe couleur du texte */
+.jeton--plein { background: var(--texte-primaire); color: #000; box-shadow: none; } /* [relevé] bg-white text-black */
+
+.liste-inclus { display: flex; flex-direction: column; gap: 20px; font-size: var(--t-legende); line-height: var(--t-legende-i); font-weight: var(--graisse-forte); } /* [relevé] flex flex-col gap-y-[20px] text-body-secondary font-medium */
+.liste-inclus li { max-width: 340px; } /* [relevé] max-w-[340px] */
+.liste-inclus__icone { margin-bottom: 5px; } /* [relevé] icône 15×15 (13×13 pour une) mb-[5px] */
+/* Titre et descriptif sont deux blocs de MÊME taille et MÊME graisse : seule la couleur
+   les distingue. La hiérarchie interne de la ligne tient entièrement au contraste. [relevé] */
+.liste-inclus span { display: block; }
+.liste-inclus__titre { color: var(--texte-primaire); }
+
+.bouton-large {
+  display: block; width: 100%; text-align: center;
+  line-height: 35px; border-radius: var(--rayon-controle);  /* [relevé] leading-[35px] rounded-[7px] */
+  background: var(--texte-primaire); color: #000;           /* [relevé] bg-white text-black */
+  font-size: var(--t-corps); font-weight: var(--graisse-forte); /* [relevé] text-body-primary font-medium */
+  transition: background-color var(--duree-etat) var(--courbe-etat);
+}
+.bouton-large:hover { background: color-mix(in oklab, var(--texte-primaire) 90%, transparent); } /* [relevé] hover:bg-white/90 */
+/* Seule animation autonome de la page : un dégradé qui glisse en boucle, sur le seul
+   bouton qu'on veut voir. Un point saturé unique dans une page monochrome. */
+.bouton-large--degrade {
+  background-image: var(--degrade-action);
+  background-size: 200% 200%; background-repeat: no-repeat; background-position: 0%; /* [relevé] */
+  animation: glissement-degrade 1.5s ease-in-out infinite alternate;                 /* [relevé] .animate-gradient-flow */
+}
+.bouton-large--degrade:hover { background-color: transparent; }
+@keyframes glissement-degrade { 0% { background-position: 0%; } to { background-position: 100%; } } /* [relevé] @keyframes move-gradient */
+
+/* ---------- Témoignages ---------- */
+.temoignages { padding-inline: var(--marge-bord); margin-bottom: 100px; } /* [relevé] px-[20px] md:px-[40px] mb-[100px] */
+.entete-centre--avis { margin-bottom: 50px; } /* [relevé] mb-[50px] */
+.temoignages__accroche { max-width: 340px; margin-inline: auto; } /* [relevé] max-w-[340px] md:max-w-[440px] mx-auto */
+@media (min-width: 48rem) { .temoignages__accroche { max-width: 440px; } }
+.temoignages__cadre { position: relative; max-width: 1000px; margin-inline: auto; } /* [relevé] max-w-[1000px] mx-auto relative */
+/* En petit écran le rail sort de la colonne : marge négative de 20px et largeur de
+   viewport entier, pour que les cartes touchent les bords. Annulé au palier md. */
+.temoignages__debord { margin-left: -20px; width: 100vw; } /* [relevé] ml-[-20px] w-[100vw] */
+@media (min-width: 48rem) { .temoignages__debord { margin-left: 0; width: 100%; } } /* [relevé] md:w-full md:ml-0 */
+
+.carte-avis {
+  width: 100%; padding: 15px;                             /* [relevé] w-full p-[15px] */
+  background: var(--fond-carte);                          /* [relevé] bg-[#080808] */
+  border-radius: var(--rayon-carte);                      /* [relevé] rounded-fill */
+  box-shadow: inset 0 0 0 1px var(--trait-discret);       /* [relevé] ring-1 ring-grey-1 ring-inset */
+  font-weight: var(--graisse-forte);                      /* [relevé] font-medium */
+  user-select: none;                                      /* [relevé] select-none */
+}
+.carte-avis__auteur { display: flex; align-items: center; gap: 5px; margin-bottom: 15px; } /* [relevé] flex items-center gap-x-[5px] mb-[15px] */
+.avatar { display: block; position: relative; width: 54px; height: 54px; border-radius: 999px; overflow: hidden; background: var(--fond-action); flex: none; } /* [relevé] w-[54px] h-[54px] rounded-full overflow-hidden bg-grey-1 relative */
+.avatar img { width: 100%; height: 100%; object-fit: cover; }
+.carte-avis__identite { display: flex; flex-direction: column; font-size: var(--t-legende); line-height: var(--t-legende-i); } /* [relevé] flex flex-col text-body-secondary */
+.carte-avis__nom { display: flex; align-items: center; gap: 2.5px; } /* [relevé] flex items-center gap-x-[2.5px] */
+.badge { width: 12px; height: 12px; flex: none; } /* [relevé] w-[12px] h-[12px] */
+.carte-avis__texte { margin-bottom: 10px; } /* [relevé] text-body-primary mb-[10px] */
+.carte-avis__texte a { color: var(--lien-avis); } /* [relevé] .et-tweet-content a */
+
+/* ---------- Inscription ---------- */
+.inscription { padding-inline: var(--marge-bord); } /* [relevé] px-[20px] md:px-[40px] */
+.inscription__interieur { max-width: 450px; margin-inline: auto; } /* [relevé] max-w-[450px] mx-auto */
+.inscription__titre { max-width: 250px; margin-inline: auto; margin-bottom: 40px; text-align: center; } /* [relevé] max-w-[250px] md:max-w-full mx-auto mb-[40px] text-center */
+@media (min-width: 48rem) { .inscription__titre { max-width: none; } }
+.inscription__groupe { display: flex; flex-direction: column; align-items: center; gap: 10px; margin-bottom: 20px; } /* [relevé] flex flex-col items-center space-y-[10px] mb-[20px] */
+.champ-enveloppe { width: 100%; max-width: 310px; } /* [relevé] w-full max-w-[310px] */
+.champ {
+  width: 100%; height: 35px; padding-inline: 20px; text-align: center; /* [relevé] h-[35px] w-full px-[20px] text-center */
+  background: var(--fond-champ); color: var(--texte-primaire);         /* [relevé] bg-secondary */
+  border: 0; box-shadow: 0 0 0 1px var(--trait-discret);               /* [relevé] ring-1 ring-grey-1, sans ring-inset */
+  border-radius: var(--rayon-carte);                                   /* [relevé] rounded-fill */
+  font-size: var(--t-legende); font-weight: var(--graisse-forte);      /* [relevé] text-body-secondary font-medium */
+  outline: none; transition: box-shadow var(--duree-etat) var(--courbe-etat); /* [relevé] outline-none transition */
+}
+.champ::placeholder { color: var(--texte-secondaire); } /* [arbitrage] la source laisse le gris par défaut du navigateur, illisible sur ce fond */
+.champ:focus-visible { box-shadow: 0 0 0 1px var(--texte-primaire); } /* [arbitrage] la source pose `outline-none` sans rien mettre à la place */
+.bouton-soumettre {
+  width: 100%; height: 35px; border-radius: var(--rayon-carte);  /* [relevé] h-[35px] w-full rounded-fill */
+  background: var(--texte-primaire); color: #000;                /* [relevé] bg-white text-black */
+  font-size: var(--t-legende); font-weight: var(--graisse-forte); cursor: pointer;
+  transition: background-color var(--duree-etat) var(--courbe-etat);
+}
+.bouton-soumettre:hover { background: color-mix(in oklab, var(--texte-primaire) 85%, transparent); } /* [relevé] hover:bg-white/85 */
+.consentement { display: flex; justify-content: center; align-items: center; text-align: center; gap: 10px; color: var(--texte-secondaire); font-size: var(--t-legende); } /* [relevé] flex justify-center items-center text-center gap-x-[10px] text-grey-4 text-body-secondary */
+@media (min-width: 48rem) { .consentement { font-size: var(--t-corps); } } /* [relevé] md:text-body-primary */
+.consentement__case { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); } /* [relevé] sr-only */
+.consentement__marque { width: 18px; height: 18px; border: 1px solid currentColor; border-radius: 999px; cursor: pointer; transition: background-color var(--duree-etat) var(--courbe-etat); flex: none; } /* [relevé] border-current border rounded-full w-[18px] h-[18px] cursor-pointer transition */
+.consentement__case:checked + .consentement__marque { background: var(--texte-primaire); } /* [relevé] peer-checked:bg-white */
+.consentement__case:focus-visible + .consentement__marque { outline: 2px solid var(--texte-primaire); outline-offset: 2px; } /* [arbitrage] la source n'expose aucun focus visible sur cette case */
+.consentement__texte { cursor: pointer; } /* [relevé] cursor-pointer */
+.consentement__texte a { text-decoration: underline; } /* [relevé] underline */
+.consentement__texte a:hover { text-decoration: none; } /* [relevé] hover:no-underline */
+
+/* ---------- Pied ---------- */
+.pied { text-align: center; color: var(--texte-secondaire); font-size: var(--t-legende); padding-top: var(--pas-section); padding-bottom: 75px; display: flex; flex-direction: column; gap: 20px; } /* [relevé] text-center text-grey-4 text-body-secondary pt-[150px] pb-[75px] space-y-[20px] */
+@media (min-width: 48rem) { .pied { font-size: var(--t-corps); } } /* [relevé] md:text-body-primary */
+.pied__rangee { display: flex; justify-content: center; flex-wrap: wrap; gap: 20px; } /* [relevé] flex justify-center space-x-[20px] */
+.pied a { transition: color var(--duree-etat) var(--courbe-etat); } /* [relevé] transition */
+.pied a:hover { color: var(--texte-primaire); } /* [relevé] hover:text-white */
+
+/* ---------- Mouvement réduit ----------
+   La source ne prévoit rien ici : ni pour les apparitions, ni pour l'animation de
+   dégradé, ni pour huit vidéos en lecture automatique. [arbitrage] */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+  [data-apparition] { opacity: 1; transform: none; }
+  .bouton-large--degrade { animation: none; background-position: 50%; }
+  .rail__piste { scroll-behavior: auto; }
+}

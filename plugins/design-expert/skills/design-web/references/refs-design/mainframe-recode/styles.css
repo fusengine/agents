@@ -1,0 +1,765 @@
+/* =====
+   Référence de design — procédés relevés sur https://mainframe.app
+   Traçabilité : [relevé] = valeur lue dans la source · [arbitrage] = choix ajouté
+   Source CSS  : _next/static/chunks/3lztth2y7b3--.css (Tailwind v4 compilé)
+   Source HTML : index.html (classes utilitaires + attributs style inline)
+   Couverture  : toutes les sections de la page source, dans l'ordre.
+   ===== */
+
+/* -----
+   1. JETONS
+   Nommés par rôle. La page source est servie en thème sombre forcé :
+   <main class="dark ... bg-black" style="color-scheme:dark">  [relevé]
+----- */
+:root {
+  color-scheme: dark;
+
+  /* -- Fonds -----
+     Les hex sont recopiés TELS QUELS depuis le bloc :root de la source ;
+     l'équivalent décimal est donné en commentaire, jamais l'inverse. */
+  --fond-page:            #000;        /* [relevé] fond du conteneur principal — noir pur, PAS le --background:#0a0a0a du thème */
+  --fond-surface:         #ffffff14;   /* [relevé] bg-white/[0.08] — cadres média, carte tarif phare */
+  --fond-champ:           #ffffff1a;   /* [relevé] --button-secondary-bg (thème sombre) — 1a = 0.102 */
+  --fond-inverse:         #fff;        /* [relevé] bouton primaire, fond blanc */
+  --fond-flottant:        #0a0a0ab3;   /* [relevé] bg-background/70 : --background sombre = #0a0a0a, à 70 % */
+
+  /* -- Texte ----- */
+  --texte-primaire:       #fff;        /* [relevé] --label-primary (thème sombre) */
+  --texte-secondaire:     #ffffffa3;   /* [relevé] --label-secondary (a3 = 0.639) */
+  --texte-tertiaire:      #fff6;       /* [relevé] --label-tertiary (6 = 0.4) */
+  --texte-sur-inverse:    rgb(0 0 0 / 0.8);  /* [relevé] littéral : [--label-primary:rgb(0_0_0_/_0.8)] */
+  --texte-discret:        #fff6;       /* [relevé] pied de page : text-white/40 */
+
+  /* -- Traits ----- */
+  --trait:                #ffffff1f;   /* [relevé] border-white/12 et dark:border-white/[0.12] = 0.12.
+                                          À ne pas confondre avec --border du thème, qui vaut #ffffff1a (0.10)
+                                          et n'est PAS celui que la page applique. */
+  --trait-interne:        rgb(255 255 255 / 0.08); /* [relevé] littéral : shadow-[inset_0_0_0_1px_rgb(255_255_255/0.08)] */
+  --trait-interne-fort:   rgb(255 255 255 / 0.2);  /* [relevé] littéral : shadow-[inset_0_0_0_1px_rgb(255_255_255/0.2)] */
+  --ombre-flottante:      0px 2px 4px 0px #00000005; /* [relevé] --tw-shadow de shadow-sm, redéfini par le projet
+                                                        (ce n'est PAS l'ombre par défaut du framework) */
+  --anneau-focus:         rgb(255 255 255 / 0.55); /* [arbitrage] la source pose ring-2 ring-ring/20, soit
+                                                       rgb(115 115 115 / .2) — invisible sur fond noir.
+                                                       Géométrie conservée, contraste remonté. */
+
+  /* -- Rayon ----- */
+  --rayon:                0.625rem;    /* [relevé] --radius:.625rem = 10px, seul rayon de toute la page */
+  --rayon-pilule:         999px;       /* [arbitrage] la source compile rounded-full en border-radius:3.40282e38px */
+
+  /* -- Échelle typographique -----
+     Échelle CUSTOM, pas celle par défaut du framework : la base est à 15px,
+     pas 16. Progression 15 / 17 / 20 / 24 / 28. [relevé] toutes les valeurs */
+  --t-15:      0.9375rem;  --t-15-h: 1.25rem;     /* [relevé] corps de texte de la page */
+  --t-17:      1.0625rem;  --t-17-h: 1.25rem;     /* [relevé] titres de carte, onglets */
+  --t-20:      1.25rem;    --t-20-h: 1.5rem;      /* [relevé] unité de prix */
+  --t-24:      1.5rem;     --t-24-h: 1.75rem;     /* [relevé] prix, titre de clôture */
+  --t-28:      1.75rem;    --t-28-h: 2rem;        /* [relevé] titre principal, sans variante responsive */
+
+  --graisse-moyenne:   500;  /* [relevé] navigation, boutons, prix, nom de formule */
+  --graisse-demi:      600;  /* [relevé] titres de carte et onglets — 16 occurrences */
+  --graisse-grasse:    700;  /* [relevé] titre principal et titre de clôture uniquement */
+
+  /* -- Mesures ----- */
+  --l-texte:      36rem;   /* [relevé] largeur du bloc d'accroche et de la grille tarifs */
+  --l-contenu:    56rem;   /* [relevé] largeur de toutes les sections de contenu */
+  --marge-bord:   1.5rem;  /* [relevé] marge latérale unique, mobile comme desktop */
+  --h-entete:     4.5rem;  /* [relevé] hauteur d'entête = 72px */
+
+  /* -- MOUVEMENT -----
+     Décompte exact sur index.html : 75 occurrences du mot « transition »
+     (43 dans des attributs class, 21 dans des attributs style, 11 dans le
+     payload de rendu qui duplique les class). 26 classes duration-*,
+     29 classes ease-*, 40 classes will-change-*, 0 classe animate-*. */
+  --d-reponse:          150ms;  /* [relevé] duration-150 ×12 — la plus fréquente */
+  --d-reponse-ample:    200ms;  /* [relevé] duration-200 ×5 */
+  --d-fondu:            400ms;  /* [relevé] duration-[400ms] ×5 — uniquement le rail de marques */
+  --d-scene:            800ms;  /* [relevé] duration-[800ms] ×2 (halos) + duration-800 ×1 (fond de carte tarif) */
+  --d-revelation:       850ms;  /* [relevé] duration-[850ms] ×1 + style="transition-duration:850ms" ×5 */
+  --d-revelation-lente: 1000ms; /* [relevé] style="transition-duration:1000ms" ×10 */
+
+  --c-sortie:      cubic-bezier(0, 0, 0.2, 1);       /* [relevé] ease-out ×14 */
+  --c-revelation:  cubic-bezier(0.23, 1, 0.32, 1);   /* [relevé] ease-[cubic-bezier(0.23,1,0.32,1)] ×10 */
+  --c-neutre:      cubic-bezier(0.4, 0, 0.2, 1);     /* [relevé] --default-transition-timing-function. S'applique
+                                                         implicitement — y compris aux 5 éléments portant la classe
+                                                         `ease`, qui ne génère AUCUNE règle dans la feuille compilée
+                                                         (vérifié : pas de sélecteur `.ease{}`). Classe morte. */
+}
+
+/* -----
+   2. BASE
+----- */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; border: 0 solid; }
+img, svg { display: block; max-width: 100%; height: auto; vertical-align: middle; } /* [relevé] normalisation de la source */
+ul { list-style: none; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; background: none; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  min-height: 100vh;
+  background: var(--fond-page);
+  color: var(--texte-primaire);
+  /* [relevé] pile de polices complète de la source, Inter en tête */
+  font-family: "Inter", "InterVariable", ui-sans-serif, system-ui, -apple-system,
+               BlinkMacSystemFont, "Segoe UI", sans-serif;
+  /* [arbitrage] la source ne pose PAS de taille sur le body : il hérite de 16px et
+     de line-height:1.5, chaque élément déclarant ensuite sa taille. Poser 15px ici
+     évite de répéter la classe de corps sur chaque nœud. */
+  font-size: var(--t-15);
+  line-height: var(--t-15-h);
+  -webkit-font-smoothing: antialiased;   /* [relevé] lissage forcé sur le body */
+  -moz-osx-font-smoothing: grayscale;
+  /* [relevé] la page n'ajuste JAMAIS l'interlettrage : aucune classe tracking-*. */
+}
+
+::selection { background: rgb(24 134 255 / 0.20); } /* [relevé] --selection-background:#1886ff33 */
+
+.page { position: relative; overflow-x: clip; } /* [relevé] rognage horizontal sur le conteneur principal */
+
+/* Focus visible unifié.
+   [relevé] la source pose un anneau de 2px sur 15 éléments interactifs.
+   [arbitrage] même géométrie, couleur remontée pour rester perceptible. */
+:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--anneau-focus);
+  border-radius: var(--rayon);
+}
+
+/* -----
+   3. PROCÉDÉ CENTRAL — LA RÉVÉLATION SANS KEYFRAME
+   La source ne joue AUCUNE @keyframes : tout le mouvement est une transition
+   entre deux états. L'état de repos est écrit sur l'élément
+   (style="opacity:0;filter:blur(8px)"), un observateur bascule vers l'état
+   final. Trois variantes relevées, distinguées par leur flou de départ.
+----- */
+[data-reveler] {
+  will-change: opacity, filter;  /* [relevé] déclaré exactement sur les propriétés animées, jamais "auto" */
+  transition-property: opacity, filter, transform;
+  /* [relevé] la source écrit toujours style="transition-delay:0ms" : elle
+     N'ÉCHELONNE PAS. [arbitrage] le pas de 70 ms ci-dessous est un ajout, isolé
+     sur --pas pour pouvoir être remis à 0 sans rien casser. */
+  transition-delay: calc(var(--pas, 0) * 70ms);
+}
+
+/* Variante A — fondu lent, flou 8px. [relevé] style="opacity:0;filter:blur(8px)" ×6, durée 1000ms */
+[data-reveler="fondu"] {
+  opacity: 0;
+  filter: blur(8px);
+  transition-duration: var(--d-revelation-lente);
+  transition-timing-function: var(--c-sortie);
+}
+
+/* Variante B — montée courte, flou 4px + 8px de translation.
+   [relevé] style="opacity:0;filter:blur(4px);transform:translateY(8px)" ×4, durée 850ms */
+[data-reveler="montee"] {
+  opacity: 0;
+  filter: blur(4px);
+  transform: translateY(8px);
+  transition-duration: var(--d-revelation);
+  transition-timing-function: var(--c-sortie);
+}
+
+/* Variante C — apparition de média, sur la courbe de révélation. */
+[data-reveler="media"] {
+  opacity: 0;
+  filter: blur(4px);
+  transition-duration: var(--d-revelation);
+  transition-timing-function: var(--c-revelation);
+}
+
+/* L'état final est identique pour les trois : c'est le repos qui porte la variante. */
+[data-reveler].est-visible {
+  opacity: 1;
+  filter: blur(0);
+  transform: none;
+}
+
+/* -----
+   4. DÉCOR — LES DEUX HALOS MASQUÉS
+   Une seule image sert de halo, dupliquée en haut et en bas, chacune coupée par
+   un masque alpha vertical de sens opposé.  [relevé] les deux masques
+----- */
+.halo { position: absolute; inset-inline: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+.halo--haut { top: 0; height: 140vh; min-height: 1100px; }   /* [relevé] */
+.halo--bas  { bottom: 0; height: 900px; }                    /* [relevé] */
+
+.halo__masque { position: absolute; inset: 0; overflow: hidden; mask-mode: alpha; }
+.halo--haut .halo__masque {
+  /* [relevé] linear-gradient(to bottom, rgb(0 0 0 / 1) 0%, rgb(0 0 0 / 0) 100%) */
+  -webkit-mask-image: linear-gradient(to bottom, rgb(0 0 0 / 1) 0%, rgb(0 0 0 / 0) 100%);
+          mask-image: linear-gradient(to bottom, rgb(0 0 0 / 1) 0%, rgb(0 0 0 / 0) 100%);
+}
+.halo--bas .halo__masque {
+  /* [relevé] même masque, sens inversé */
+  -webkit-mask-image: linear-gradient(to bottom, rgb(0 0 0 / 0) 0%, rgb(0 0 0 / 1) 100%);
+          mask-image: linear-gradient(to bottom, rgb(0 0 0 / 0) 0%, rgb(0 0 0 / 1) 100%);
+}
+.halo__cadre {
+  /* [relevé] cadre de 2000px centré, débordant volontairement la fenêtre */
+  position: absolute; left: 50%; top: 0; height: 100%;
+  width: 2000px; max-width: none; transform: translateX(-50%);
+}
+.halo__img {
+  /* [relevé] transition d'opacité de 800ms, courbe de sortie, déclenchée au chargement */
+  position: absolute; inset-inline: 0; top: 0; width: 100%; max-width: none; height: auto;
+  opacity: 0;
+  transition: opacity var(--d-scene) var(--c-sortie);
+}
+.halo__img.est-chargee { opacity: 1; }
+
+/* -----
+   5. STRUCTURE
+----- */
+.couche { position: relative; z-index: 10; }  /* [relevé] tout le contenu passe au-dessus des halos */
+
+.section {
+  /* [relevé] section centrée, largeur 56rem, marge latérale 24px, retrait bas 112px */
+  position: relative; z-index: 10;
+  display: flex; flex-direction: column;
+  width: 100%; max-width: var(--l-contenu);
+  margin-inline: auto;
+  padding-inline: var(--marge-bord);
+  padding-bottom: 7rem;
+}
+.section--espacee { gap: 2rem; }     /* [relevé] la section tarifs ajoute gap-8 */
+.bloc-suivant { margin-top: 8rem; }  /* [relevé] 128px — le seul écart inter-blocs de la page */
+
+/* -- Entête ----- */
+.entete {
+  position: relative; z-index: 10;
+  display: flex; align-items: center;
+  height: var(--h-entete); width: 100%;
+  padding-inline: var(--marge-bord);
+}
+.entete__rangee { display: flex; width: 100%; align-items: center; justify-content: space-between; }
+.entete__nav { display: flex; align-items: center; gap: 2rem; }  /* [relevé] 32px entre les liens */
+
+.marque { display: inline-flex; align-items: center; gap: .5rem; color: var(--texte-primaire); font-weight: var(--graisse-demi); }
+.marque__pastille {
+  /* [arbitrage] le logo source est un tracé propriétaire ; forme neutre de mêmes proportions */
+  width: 1.5rem; height: 1.125rem; border-radius: .25rem;
+  background: var(--fond-inverse);
+}
+
+/* Lien de navigation — le procédé de survol le plus répandu du site :
+   AUCUN changement de couleur, seulement l'opacité.  [relevé] */
+.lien-nav {
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: var(--t-15); font-weight: var(--graisse-moyenne);
+  color: var(--texte-primaire);
+  cursor: pointer;
+  /* [relevé] transition sur [color, opacity, transform] en 150ms, accélération GPU forcée */
+  transition: color var(--d-reponse) var(--c-neutre),
+              opacity var(--d-reponse) var(--c-neutre),
+              transform var(--d-reponse) var(--c-neutre);
+  transform: translateZ(0);
+  will-change: opacity;
+}
+.lien-nav:hover { opacity: 0.7; }  /* [relevé] */
+
+/* -- Accroche ----- */
+.hero {
+  /* [relevé] colonne centrée, texte centré, 32px de retrait haut, 64px bas */
+  position: relative; z-index: 10;
+  display: flex; flex-direction: column; align-items: center;
+  width: 100%; text-align: center;
+  padding-top: 2rem; padding-bottom: 4rem;
+}
+@media (min-width: 640px) { .hero { padding-bottom: 8rem; } }  /* [relevé] 128px au-delà de 640px */
+
+.hero__bloc {
+  display: flex; flex-direction: column; align-items: center;
+  gap: 2rem; width: 100%; max-width: var(--l-texte);
+  margin-inline: auto; padding-inline: var(--marge-bord);
+}
+.hero__titrage { display: flex; flex-direction: column; align-items: center; gap: .75rem; } /* [relevé] 12px titre↔sous-titre */
+
+.titre-page {
+  /* [relevé] 28px / 32px, gras — aucune variante responsive, même taille du mobile au desktop */
+  font-size: var(--t-28); line-height: var(--t-28-h);
+  font-weight: var(--graisse-grasse);
+  text-wrap: balance;    /* [relevé] équilibrage des lignes sur le titre et le sous-titre */
+}
+.sous-titre {
+  font-size: var(--t-15); line-height: var(--t-15-h);
+  color: var(--texte-secondaire); text-wrap: balance;
+}
+.hero__pictos { display: flex; align-items: center; gap: .75rem; color: var(--texte-tertiaire); } /* [relevé] 4 icônes, gouttière 12px */
+.picto { width: 1.5rem; height: 1.5rem; }  /* [relevé] size-6 — taille d'icône unique du site */
+
+.hero__actions { display: flex; width: 100%; flex-direction: column; align-items: center; gap: 1rem; } /* [relevé] 16px */
+
+/* -- Boutons ----- */
+/* Bouton primaire : trois propriétés, DEUX durées dans la même déclaration —
+   le fond répond en 150ms, la géométrie en 200ms.
+   [relevé] transition:background-color 150ms ease-out, scale 200ms ease-out,
+            transform 200ms ease-out */
+.bouton-primaire {
+  display: inline-flex; align-items: center; justify-content: center;
+  white-space: nowrap; flex-shrink: 0;
+  height: 36px; padding-inline: 18px;             /* [relevé] valeurs en pixels, hors échelle d'espacement */
+  border-radius: var(--rayon-pilule);
+  background: var(--fond-inverse);
+  color: var(--texte-sur-inverse);                /* [relevé] le bouton redéfinit localement le jeton de texte */
+  font-size: var(--t-15); font-weight: var(--graisse-moyenne);
+  cursor: pointer; user-select: none;
+  will-change: transform;                         /* [relevé] */
+  transition: background-color var(--d-reponse) var(--c-sortie),
+              scale             var(--d-reponse-ample) var(--c-sortie),
+              transform         var(--d-reponse-ample) var(--c-sortie);
+}
+.bouton-primaire__texte {
+  /* [relevé] le survol agit sur l'opacité du LABEL, pas sur le fond du bouton */
+  display: flex; align-items: center; justify-content: center;
+  transition: color var(--d-reponse) var(--c-neutre), opacity var(--d-reponse) var(--c-neutre);
+}
+.bouton-primaire:hover .bouton-primaire__texte { opacity: 0.7; }  /* [relevé] */
+.bouton-primaire:active { scale: 0.97; }                          /* [relevé] enfoncement au clic */
+
+.bouton-fantome {
+  /* [relevé] inline-flex cursor-pointer items-center gap-1.5 text-base text-label-secondary */
+  display: inline-flex; align-items: center; gap: .375rem;
+  font-size: var(--t-15); color: var(--texte-secondaire);
+  cursor: pointer;
+  transition: color var(--d-reponse) var(--c-neutre), opacity var(--d-reponse) var(--c-neutre);
+}
+.bouton-fantome:hover { color: var(--texte-primaire); }  /* [arbitrage] la source change l'icône, pas la couleur */
+.bouton-fantome svg { width: .875rem; height: .875rem; transform: translateY(1px); } /* [relevé] size-3.5 translate-y-px */
+
+/* -----
+   6. CARROUSEL PLEINE LARGEUR
+   Défilement horizontal débordant du conteneur : largeur = fenêtre entière.
+   Trois couches superposées, trois cadences. Le volet n'a PAS d'état
+   actif/inactif : c'est une apparition, pas une sélection.
+----- */
+.carrousel {
+  /* [relevé] largeur fenêtre, sans plafond, 64px sous le bloc d'accroche */
+  position: relative; margin-top: 4rem;
+  width: 100vw; max-width: none;
+  margin-inline: calc(50% - 50vw);
+}
+.carrousel__piste {
+  /* [relevé] la gouttière est portée par les enfants (retrait négatif du parent) */
+  display: flex; margin-left: -1.5rem;
+  overflow-x: auto; scroll-snap-type: x mandatory;
+  scrollbar-width: none; padding-block: .25rem;
+}
+.carrousel__piste::-webkit-scrollbar { display: none; }
+.carrousel__case { flex: 0 0 auto; min-width: 0; padding-left: 1.5rem; scroll-snap-align: center; } /* [relevé] */
+/* [arbitrage] marges de centrage : la source positionne les volets en JS */
+.carrousel__case:first-child { margin-left: max(1.5rem, calc(50vw - min(40vw, 320px))); }
+.carrousel__case:last-child  { margin-right: max(1.5rem, calc(50vw - min(40vw, 320px))); }
+
+/* [relevé] classes littérales du volet :
+     relative shrink-0 overflow-hidden rounded-lg bg-button-secondary-bg text-left
+     outline-none transition-[opacity,filter] ease will-change-[opacity,filter]
+     focus-visible:ring-2 focus-visible:ring-ring/20 aspect-video
+     w-[min(80vw,640px)] opacity-0 blur-[4px]
+   + style="transition-delay:0ms;transition-duration:850ms"
+   La classe `ease` ne compile pas : la courbe appliquée est la courbe par défaut. */
+.vignette {
+  position: relative; overflow: hidden;
+  border-radius: var(--rayon);
+  background: var(--fond-champ);
+  aspect-ratio: 16 / 9;
+  width: min(80vw, 640px);
+  opacity: 0;                                 /* [relevé] opacity-0 */
+  filter: blur(4px);                          /* [relevé] blur-[4px] */
+  transition-property: opacity, filter;       /* [relevé] */
+  transition-delay: 0ms;                      /* [relevé] littéral */
+  transition-duration: var(--d-revelation);   /* [relevé] 850ms */
+  transition-timing-function: var(--c-neutre);/* [relevé] par défaut, la classe `ease` étant morte */
+  will-change: opacity, filter;               /* [relevé] */
+}
+.vignette.est-visible { opacity: 1; filter: blur(0); }
+
+/* Couche de couleur sous l'image : chaque volet porte la teinte dominante de sa
+   vignette, en transition d'1 s sur la courbe de révélation.
+   [relevé] absolute inset-0 transition-[opacity,filter]
+            ease-[cubic-bezier(0.23,1,0.32,1)] will-change-[opacity,filter]
+            opacity-100 blur-0 + style="background-color:hsl(…);transition-duration:1000ms" */
+.vignette__teinte {
+  position: absolute; inset: 0;
+  transition-property: opacity, filter;
+  transition-duration: var(--d-revelation-lente);
+  transition-timing-function: var(--c-revelation);
+  will-change: opacity, filter;
+}
+.vignette__img {
+  /* [relevé] object-cover + style="position:absolute;height:100%;width:100%;left:0;top:0;right:0;bottom:0" */
+  position: absolute; inset: 0;
+  width: 100%; height: 100%; object-fit: cover;
+}
+.vignette__lecture {
+  /* [relevé] absolute inset-0 flex items-center justify-center transition-opacity
+              ease-[cubic-bezier(0.23,1,0.32,1)] opacity-100
+              + style="transition-duration:1000ms" */
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  transition: opacity var(--d-revelation-lente) var(--c-revelation);
+}
+
+/* Pastille de lecture — seul élément du site qui GRANDIT au survol.
+   [relevé] flex size-12 items-center justify-center rounded-full bg-background/70
+            text-label-secondary shadow-sm backdrop-blur
+            transition-transform duration-150 ease-out hover:scale-105 active:scale-95 */
+.pastille {
+  display: flex; align-items: center; justify-content: center;
+  width: 3rem; height: 3rem;                        /* [relevé] size-12 */
+  border-radius: var(--rayon-pilule);
+  background: var(--fond-flottant);
+  color: var(--texte-secondaire);
+  box-shadow: var(--ombre-flottante);
+  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);  /* [relevé] backdrop-blur compile en blur(8px) */
+  transition: transform var(--d-reponse) var(--c-sortie);
+}
+.vignette__lecture:hover  .pastille { transform: scale(1.05); }   /* [relevé] */
+.vignette__lecture:active .pastille { transform: scale(0.95); }   /* [relevé] */
+.pastille svg { width: 1.25rem; height: 1.25rem; margin-left: 0.125rem; } /* [relevé] size-5 ml-0.5 */
+
+/* -----
+   7. TRIO DE CARTES BORDÉES
+   Une seule bordure autour, des séparateurs internes qui basculent d'axe.
+----- */
+.trio {
+  /* [relevé] grid overflow-hidden rounded-lg border border-white/[0.12]
+              divide-y divide-white/[0.12] md:grid-cols-3 md:divide-x md:divide-y-0 */
+  display: grid; overflow: hidden;
+  border: 1px solid var(--trait);
+  border-radius: var(--rayon);
+}
+/* [relevé] le séparateur du framework cible `> :not(:last-child)` et pose une
+   bordure BASSE (pas `* + *` avec une bordure haute) — même rendu, autre mécanique. */
+.trio > :not(:last-child) { border-bottom: 1px solid var(--trait); }
+@media (min-width: 768px) {
+  .trio { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .trio > :not(:last-child) { border-bottom: 0; border-right: 1px solid var(--trait); }
+}
+.carte-trio {
+  /* [relevé] flex min-h-44 flex-col gap-4 p-6 */
+  display: flex; flex-direction: column; gap: 1rem;
+  min-height: 11rem; padding: 1.5rem;
+}
+.carte-trio .picto { color: var(--texte-tertiaire); }  /* [relevé] size-6 text-label-tertiary */
+.carte-titre { font-size: var(--t-17); line-height: var(--t-17-h); font-weight: var(--graisse-demi); } /* [relevé] text-lg font-semibold */
+.carte-texte { font-size: var(--t-15); line-height: 1.25rem; color: var(--texte-secondaire); }        /* [relevé] text-base leading-5 */
+
+/* -----
+   8. VITRINE — SOMMAIRE COLLANT EN ACCORDÉON + PILE D'IMAGES
+   Deux mises en page COMPLÈTES servies en parallèle dans le HTML, l'une masquée
+   par média query : la source ne réagence pas, elle duplique l'arbre.  [relevé]
+----- */
+.vitrine-mobile { display: flex; flex-direction: column; gap: 3rem; }  /* [relevé] flex flex-col gap-12 md:hidden */
+.vitrine-desktop { display: none; }                                    /* [relevé] hidden … md:grid */
+@media (min-width: 768px) {
+  .vitrine-mobile { display: none; }
+  .vitrine-desktop {
+    /* [relevé] md:grid md:grid-cols-[minmax(0,0.72fr)_minmax(0,1fr)] md:items-start md:gap-12 */
+    display: grid; align-items: start; gap: 3rem;
+    grid-template-columns: minmax(0, 0.72fr) minmax(0, 1fr);
+  }
+}
+.vitrine__sommaire {
+  /* [relevé] md:sticky md:top-32 md:h-[22rem] md:pl-6 */
+  position: sticky; top: 8rem; height: 22rem; padding-left: 1.5rem;
+}
+.vitrine__liste { display: flex; flex-direction: column; gap: 1rem; }  /* [relevé] gap-4 */
+
+/* [relevé] l'entrée ACTIVE porte `border-b border-white/12`, les autres non :
+   le filet suit la sélection, il ne sépare pas toutes les entrées. */
+.vitrine__entree { text-align: left; border-bottom: 1px solid transparent; }
+.vitrine__entree.est-active { border-bottom-color: var(--trait); }
+
+.vitrine__onglet {
+  /* [relevé] cursor-pointer text-left text-lg font-semibold transition-colors
+              duration-200 hover:text-label-primary + text-label-secondary à l'état inactif */
+  display: block; width: 100%; text-align: left; cursor: pointer;
+  font-size: var(--t-17); line-height: var(--t-17-h); font-weight: var(--graisse-demi);
+  color: var(--texte-secondaire);
+  transition: color var(--d-reponse-ample) var(--c-neutre);
+}
+.vitrine__onglet:hover { color: var(--texte-primaire); }                       /* [relevé] */
+.vitrine__entree.est-active .vitrine__onglet { color: var(--texte-primaire); } /* [relevé] */
+
+/* Le repli de l'accordéon.
+   [relevé] la source enveloppe le paragraphe dans un `overflow-hidden` et
+   déclare `transition-property: height, opacity` — sans durée explicite, donc
+   la durée par défaut du framework (150 ms) et la courbe par défaut. */
+.vitrine__repli {
+  overflow: hidden;
+  height: 0; opacity: 0;
+  transition-property: height, opacity;
+  transition-duration: var(--d-reponse);
+  transition-timing-function: var(--c-neutre);
+}
+.vitrine__repli > div { padding-bottom: 1.25rem; }        /* [relevé] pb-5 */
+.vitrine__repli p { padding-top: .75rem; }                /* [relevé] pt-3 */
+.vitrine__entree.est-active .vitrine__repli { opacity: 1; }
+
+.vitrine__pile { display: flex; flex-direction: column; align-items: flex-start; gap: 1.5rem; } /* [relevé] gap-6 */
+.vitrine__article { display: flex; flex-direction: column; gap: 1.25rem; }                     /* [relevé] gap-5 */
+.vitrine__legende { padding-top: .75rem; }                                                     /* [relevé] pt-3 */
+
+.cadre-media {
+  /* [relevé] relative flex max-w-none overflow-hidden rounded-lg bg-white/[0.08]
+              will-change-[opacity,transform] aspect-video */
+  position: relative; display: flex; overflow: hidden;
+  border-radius: var(--rayon); background: var(--fond-surface);
+  aspect-ratio: 16 / 9; max-width: none;
+  will-change: opacity, transform;
+}
+.cadre-media > img { display: block; width: 100%; height: 100%; object-fit: cover; } /* [relevé] block size-full object-cover */
+.cadre-media::after {
+  /* [relevé] pointer-events-none absolute inset-0 rounded-[inherit]
+              shadow-[inset_0_0_0_1px_rgb(255_255_255/0.08)] — liseré interne systématique */
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  border-radius: inherit; box-shadow: inset 0 0 0 1px var(--trait-interne);
+}
+.cadre-media--large { width: 52rem; }               /* [relevé] w-[52rem] : déborde volontairement sa colonne */
+.cadre-media--plein { width: 100%; height: auto; }  /* [relevé] h-auto w-full en mobile */
+
+/* -----
+   9. CARTES D'ATTRIBUT
+----- */
+.duo { display: grid; gap: 1.5rem; }                                                    /* [relevé] grid gap-6 */
+@media (min-width: 768px) { .duo { grid-template-columns: repeat(2, minmax(0, 1fr)); } } /* [relevé] md:grid-cols-2 */
+.pile-6 { display: flex; flex-direction: column; gap: 1.5rem; }                          /* [relevé] mt-32 flex flex-col gap-6 */
+
+.carte-attribut {
+  /* [relevé] relative flex h-64 flex-col justify-end rounded-lg border border-white/[0.12] p-6.
+     Le débordement N'EST PAS traité pareil sur les deux cartes de la rangée :
+     celle aux disques est en overflow VISIBLE, celle au fond d'image en HIDDEN. */
+  position: relative; display: flex; flex-direction: column; justify-content: flex-end;
+  height: 16rem; padding: 1.5rem;
+  border: 1px solid var(--trait); border-radius: var(--rayon);
+  overflow: visible;   /* [relevé] */
+}
+.carte-attribut--rogne { overflow: hidden; }                    /* [relevé] */
+.carte-attribut__texte { position: relative; z-index: 10; }     /* [relevé] relative z-10 */
+.carte-attribut__texte p { margin-top: .25rem; }                /* [relevé] mt-1 — 4px seulement sous le titre */
+
+/* Les trois disques. Géométrie intégralement relevée ; en revanche le CONTENU
+   de ces disques est un composant client livré VIDE dans le HTML source (aucune
+   couleur, aucune transition, aucun mix-blend-mode). [arbitrage] : le remplissage
+   ci-dessous est un ajout, choisi pour rendre la composition lisible. */
+.disques {
+  position: absolute; bottom: 76px; left: 50%;
+  width: 366px; height: 260px; transform: translateX(-50%);  /* [relevé] toutes les mesures */
+}
+.disque {
+  position: absolute; border-radius: var(--rayon-pilule);
+  overflow: hidden; clip-path: circle(50%);   /* [relevé] [clip-path:circle(50%)] */
+  will-change: transform;                     /* [relevé] */
+  /* [arbitrage] la couleur et sa cadence sont ajoutées ; la source ne les porte pas */
+  transition: background-color var(--d-revelation-lente) var(--c-neutre),
+              transform var(--d-reponse-ample) var(--c-sortie);
+}
+.disque--1 { bottom: 0;     left: 106px; width: 196px; height: 196px; }  /* [relevé] bottom-0 left-[106px] size-[196px] */
+.disque--2 { bottom: 4rem;  left: 0;     width: 92px;  height: 92px;  }  /* [relevé] bottom-16 left-0 size-[92px] */
+.disque--3 { bottom: 124px; left: 302px; width: 64px;  height: 64px;  }  /* [relevé] bottom-[124px] left-[302px] size-16 */
+
+/* Fond d'onde — image très atténuée, découpée par un masque en bande.
+   [relevé] bg-cover opacity-15, masque à trois arrêts, décalage horizontal de 100px */
+.onde {
+  position: absolute; inset: 0;
+  background-size: cover;
+  background-position: calc(50% - 100px) center;
+  opacity: 0.15;
+  -webkit-mask-image: linear-gradient(to bottom, transparent -16px, black 104px, transparent 224px);
+          mask-image: linear-gradient(to bottom, transparent -16px, black 104px, transparent 224px);
+}
+/* Couche supérieure de la carte « voix ».
+   [relevé] pointer-events-none h-full w-full overflow-hidden absolute inset-0 z-20,
+   contenant un bloc `absolute left-1/2 top-10 h-32 max-w-none -translate-x-1/2`.
+   Dans la source c'est un SVG masqué portant style="filter:saturate(1.35)" et un
+   rectangle en style="mix-blend-mode:overlay". [arbitrage] rendu ici par une trame
+   de barres : le SVG d'origine est généré à l'exécution. */
+.onde-sup { position: absolute; inset: 0; z-index: 20; overflow: hidden; pointer-events: none; }
+.onde-sup__barres {
+  position: absolute; left: 50%; top: 2.5rem; height: 8rem; max-width: none;  /* [relevé] top-10 h-32 */
+  width: 669px; transform: translateX(-50%);                                  /* [relevé] style="width:669px" */
+  filter: saturate(1.35);                                                     /* [relevé] style="filter:saturate(1.35)" */
+  display: flex; align-items: center; justify-content: space-between;
+  /* [relevé] le masque en bande de la source coupe l'onde aux deux extrémités */
+  -webkit-mask-image: linear-gradient(to right, transparent, black 18%, black 82%, transparent);
+          mask-image: linear-gradient(to right, transparent, black 18%, black 82%, transparent);
+}
+/* [arbitrage] barres de hauteurs variables : la source dessine sa forme d'onde dans
+   un SVG masqué généré à l'exécution, non reproductible depuis le HTML statique.
+   Le dégradé blanc → violet et la symétrie autour de l'axe sont relevés à l'écran. */
+.onde-sup__barres span {
+  flex: 0 0 auto; width: 3px; border-radius: 2px;
+  height: var(--h, 40%);
+  background: linear-gradient(180deg, #ffffff 0%, #c4b5fd 60%, #8b5cf6 100%);
+}
+
+/* Carte large : entête + rail masqué latéralement */
+.carte-large {
+  /* [relevé] relative overflow-hidden rounded-lg border border-white/[0.12] */
+  position: relative; overflow: hidden;
+  border: 1px solid var(--trait); border-radius: var(--rayon);
+}
+.carte-large__entete { padding: 1.5rem 1.5rem 0; }                /* [relevé] px-6 pt-6 */
+.carte-large__corps  { margin-top: 3rem; padding-bottom: 3rem; }  /* [relevé] mt-12 pb-12 */
+
+/* Le conteneur du rail est lui-même une révélation.
+   [relevé] relative transition-[opacity,filter] duration-[850ms] ease-out
+            will-change-[opacity,filter] opacity-0 blur-sm mx-auto w-full
+   blur-sm compile en blur(8px) — c'est la variante « fondu », pas « média ». */
+.rail-enveloppe { position: relative; width: 100%; margin-inline: auto; }
+.rail {
+  /* [relevé] la piste reprend la mécanique du carrousel : flex -ml-6 + pl-6 sur les cases */
+  display: flex; margin-left: -1.5rem; overflow-x: auto;
+  scrollbar-width: none; scroll-snap-type: x mandatory;
+}
+.rail::-webkit-scrollbar { display: none; }
+.rail__case { flex: 0 0 auto; min-width: 0; padding-left: 1.5rem; scroll-snap-align: center; } /* [relevé] */
+/* [arbitrage] marges de centrage : la source positionne le rail en JS */
+.rail__case:first-child { margin-left: max(1.5rem, calc(50% - min(50vw - 72px, 200px))); }
+.rail__case:last-child  { margin-right: max(1.5rem, calc(50% - min(50vw - 72px, 200px))); }
+
+/* Chaque carte du rail : ICI se trouve le seul système actif/inactif du site.
+   [relevé] relative aspect-video w-[min(calc(100vw-144px),400px)] shrink-0
+            cursor-pointer overflow-hidden rounded-lg outline-none
+            transition-opacity duration-[400ms] ease-out
+            + opacity-100 (centrée) / opacity-25 (les autres) */
+.rail__carte {
+  position: relative; display: block;
+  aspect-ratio: 16 / 9;
+  width: min(calc(100vw - 144px), 400px);
+  overflow: hidden; border-radius: var(--rayon);
+  cursor: pointer;
+  opacity: 0.25;                                        /* [relevé] opacity-25 */
+  transition: opacity var(--d-fondu) var(--c-sortie);   /* [relevé] 400ms ease-out */
+}
+.rail__carte.est-active { opacity: 1; }                 /* [relevé] opacity-100 */
+.rail__carte img { display: block; width: 100%; height: 100%; object-fit: cover; } /* [relevé] block size-full object-cover */
+.rail__carte::after {
+  /* [relevé] liseré interne, identique à celui des cadres média */
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  border-radius: inherit; box-shadow: inset 0 0 0 1px var(--trait-interne);
+}
+
+/* -----
+   10. TARIFS
+   Le seul survol « riche » du site : une image de fond qui se re-sature et
+   revient à l'échelle 1, en 800 ms.  [relevé] intégralement
+----- */
+.tarifs {
+  /* [relevé] grid w-full gap-4 sm:grid-cols-2 mx-auto max-w-xl pt-0 */
+  display: grid; gap: 1rem; width: 100%;
+  max-width: var(--l-texte); margin-inline: auto;
+}
+@media (min-width: 640px) { .tarifs { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+.plan {
+  /* [relevé] order-2 w-full max-w-72 justify-self-center rounded-lg border border-white/12
+              sm:order-1 sm:max-w-none */
+  position: relative; width: 100%; max-width: 18rem; justify-self: center;
+  border: 1px solid var(--trait); border-radius: var(--rayon);
+  order: 2;   /* [relevé] inversion d'ordre : l'offre payante passe en tête sous 640px */
+}
+.plan--phare {
+  /* [relevé] order-1 overflow-hidden bg-white/[0.08] shadow-[inset_0_0_0_1px_rgb(255_255_255/0.2)] sm:order-2 */
+  order: 1; overflow: hidden; border: 0;
+  background: var(--fond-surface);
+  box-shadow: inset 0 0 0 1px var(--trait-interne-fort);
+}
+@media (min-width: 640px) {
+  .plan { order: 1; max-width: none; }
+  .plan--phare { order: 2; max-width: none; }
+}
+.plan__fond {
+  /* [relevé] absolute inset-0 bg-[length:auto_100%] bg-top bg-no-repeat opacity-50
+              transition-[filter,transform] duration-800 ease-out
+              [filter:saturate(0.4)] [transform:scale(1.2)] */
+  position: absolute; inset: 0;
+  background-size: auto 100%; background-position: top; background-repeat: no-repeat;
+  opacity: 0.5;
+  filter: saturate(0.4);
+  transform: scale(1.2);
+  transition: filter var(--d-scene) var(--c-sortie), transform var(--d-scene) var(--c-sortie);
+}
+.plan--phare:hover .plan__fond {
+  filter: saturate(1.2);   /* [relevé] group-hover:[filter:saturate(1.2)] */
+  transform: scale(1);     /* [relevé] group-hover:[transform:scale(1)] */
+}
+.plan__corps {
+  /* [relevé] relative z-10 flex h-full flex-col px-6 pt-6 pb-3 */
+  position: relative; z-index: 10;
+  display: flex; flex-direction: column; height: 100%;
+  padding: 1.5rem 1.5rem .75rem;
+}
+.plan__nom   { font-size: var(--t-17); font-weight: var(--graisse-moyenne); text-align: left; }  /* [relevé] text-lg font-medium — la carte tarif change de graisse */
+.plan__prix  { margin-top: 2rem; font-size: var(--t-24); line-height: var(--t-24-h); font-weight: var(--graisse-moyenne); text-align: left; } /* [relevé] mt-8 text-2xl font-medium */
+.plan__unite { font-size: var(--t-20); line-height: var(--t-20-h); color: var(--texte-tertiaire); } /* [relevé] text-xl text-label-tertiary */
+.plan__cale  { margin-top: .5rem; height: 1rem; }   /* [relevé] mt-2 h-4 — cale vide qui aligne les deux cartes */
+.plan__liste { margin-top: 3rem; display: flex; flex-direction: column; gap: .75rem; }  /* [relevé] mt-12 gap-3 */
+.plan__liste li { display: flex; align-items: flex-start; gap: .75rem; text-align: left; font-size: var(--t-15); } /* [relevé] flex items-start gap-3 text-left text-base */
+.plan__puce { flex: 0 0 auto; width: 1rem; height: 1rem; margin-top: 3px; color: var(--texte-tertiaire); } /* [relevé] mt-[3px] size-4 shrink-0 */
+/* [relevé] la dernière puce empile deux lignes : `flex min-w-0 select-text flex-col gap-1` */
+.plan__ligne { display: flex; min-width: 0; flex-direction: column; gap: .25rem; }
+.plan__mention { color: var(--texte-secondaire); }  /* [relevé] text-base text-label-secondary */
+.plan__pied { margin-top: auto; padding-top: 2.5rem; }  /* [relevé] mt-auto pt-10 */
+.plan--phare .plan__pied { padding-top: 4rem; }         /* [relevé] pt-16 — asymétrie assumée entre les deux cartes */
+.plan__action { display: flex; height: 2.25rem; align-items: center; justify-content: center; } /* [relevé] flex h-9 — même hauteur que le bouton primaire */
+
+/* -----
+   11. CLÔTURE ET PIED
+----- */
+.zone-basse { position: relative; z-index: 0; overflow: visible; background: var(--fond-page); }
+
+.cloture {
+  /* [relevé] relative z-10 px-6 py-28 */
+  position: relative; z-index: 10;
+  padding: 7rem var(--marge-bord);
+}
+.cloture__bloc {
+  /* [relevé] relative mx-auto flex max-w-4xl flex-col items-center gap-8 text-center */
+  display: flex; flex-direction: column; align-items: center; gap: 2rem;
+  max-width: var(--l-contenu); margin-inline: auto; text-align: center;
+}
+.cloture__pile { display: flex; flex-direction: column; align-items: center; gap: 4rem; } /* [relevé] gap-16 — le plus grand écart intra-bloc de la page */
+.cloture__objet { width: 180px; height: auto; user-select: none; pointer-events: none; }  /* [relevé] w-[180px] */
+.cloture__titrage { display: flex; flex-direction: column; gap: .5rem; }                  /* [relevé] flex flex-col gap-2 */
+.cloture__titre { font-size: var(--t-24); line-height: var(--t-24-h); font-weight: var(--graisse-grasse); } /* [relevé] text-2xl font-bold — PLUS PETIT que le titre principal */
+
+.pied {
+  /* [relevé] relative z-10 border-t border-white/12 px-6 py-8 text-base text-white/40 */
+  position: relative; z-index: 10;
+  border-top: 1px solid var(--trait);
+  padding: 2rem var(--marge-bord);
+  font-size: var(--t-15); color: var(--texte-discret);
+}
+.pied__rangee { display: flex; width: 100%; align-items: center; justify-content: center; gap: 2rem; } /* [relevé] gap-8, centré en mobile */
+@media (min-width: 768px) { .pied__rangee { justify-content: space-between; } }  /* [relevé] md:justify-between */
+.pied__marque { display: none; }
+@media (min-width: 768px) { .pied__marque { display: inline-flex; } }            /* [relevé] hidden md:inline-flex */
+.pied__nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 2rem; }
+@media (min-width: 768px) { .pied__nav { justify-content: flex-end; } }          /* [relevé] md:justify-end */
+.pied__nav a { transition: color var(--d-reponse) var(--c-neutre); }
+.pied__nav a:hover { color: var(--texte-primaire); }  /* [arbitrage] la source ne pose aucun survol ici */
+
+/* -----
+   12. MOUVEMENT RÉDUIT — s'applique à TOUS les effets ci-dessus, sans exception
+----- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    transition-duration: 1ms !important;
+    transition-delay: 0ms !important;
+    animation-duration: 1ms !important;
+    scroll-behavior: auto !important;
+  }
+  /* Neutraliser la durée ne suffit pas : un état de repos à opacité 0 laisserait
+     le contenu invisible. On neutralise le REPOS, pas seulement la cadence. */
+  [data-reveler] { opacity: 1 !important; filter: none !important; transform: none !important; }
+  .halo__img   { opacity: 1 !important; }
+  .vignette    { opacity: 1 !important; filter: none !important; }
+  .rail__carte { opacity: 1 !important; }
+  .plan__fond  { filter: saturate(0.4); transform: none; }
+  .bouton-primaire:active { scale: 1; }
+  .vignette__lecture:hover .pastille,
+  .vignette__lecture:active .pastille { transform: none; }
+}

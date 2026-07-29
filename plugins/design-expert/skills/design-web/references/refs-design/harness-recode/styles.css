@@ -1,0 +1,1472 @@
+/* =============================================================================
+   RÉFÉRENCE DE DESIGN — page sombre à onglets rotatifs
+   Couverture intégrale de la page source, section par section, dans l'ordre.
+   Chaque valeur non triviale porte [relevé] (lue dans la source) ou [arbitrage].
+   Sources des [relevé] :
+     (A) cdn.prod.website-files.com/6222ca42ea87e1bd1aa1d10c/css/
+         harnessio.webflow.68751cfc31184e27debae3cb.fcb0aa6f4.opt.css   (790 Ko)
+     (B) blocs <style> inline de www.harness.io/index.html (n° de ligne cités)
+     (C) harnessio.webflow.shared.6154f9264.css (@font-face)
+   Tokens nommés PAR RÔLE, jamais par apparence.
+
+   SOMMAIRE
+     0. Polices · 1. Tokens · 2. Base · 3. Boutons
+     4. Nav + méga-menu · 5. Hero + média absolu · 6. Marquee
+     7. Modules à onglets · 8. Bloc typographique géant
+     9. Carrousel de témoignages · 10. Bande CTA · 11. Pied + bordure dégradée
+     12. Responsive · 13. Mouvement réduit
+   ========================================================================== */
+
+/* == 0. POLICES ============================================================
+   [relevé] C : 39 @font-face. WebFont.load() ne charge que Geist Mono,
+   Instrument Sans, Instrument Serif et Newsreader — ni Geist ni Calsans, qui
+   sont auto-hébergées sur le CDN. URL reconstruites depuis `../<hash>.woff2`. */
+@font-face { font-family: Calsans; font-weight: 600; font-style: normal; font-display: swap;
+  src: url("https://cdn.prod.website-files.com/6222ca42ea87e1bd1aa1d10c/661761b273dadb03cd8ea268_CalSans-SemiBold.woff2") format("woff2"); }
+@font-face { font-family: Geist; font-weight: 300; font-style: normal; font-display: swap;
+  src: url("https://cdn.prod.website-files.com/6222ca42ea87e1bd1aa1d10c/661761f9b36bebb5b63b7172_Geist-Light.woff2") format("woff2"); }
+@font-face { font-family: Geist; font-weight: 400; font-style: normal; font-display: swap;
+  src: url("https://cdn.prod.website-files.com/6222ca42ea87e1bd1aa1d10c/6617620049897bfcd1f62e34_Geist-Regular.woff2") format("woff2"); }
+@font-face { font-family: Geist; font-weight: 500; font-style: normal; font-display: swap;
+  src: url("https://cdn.prod.website-files.com/6222ca42ea87e1bd1aa1d10c/661761f96a03f2846c200c24_Geist-Medium.woff2") format("woff2"); }
+@font-face { font-family: Geist; font-weight: 600; font-style: normal; font-display: swap;
+  src: url("https://cdn.prod.website-files.com/6222ca42ea87e1bd1aa1d10c/661761f9eb6e5f2dcf6e810a_Geist-SemiBold.woff2") format("woff2"); }
+
+/* == 1. TOKENS ============================================================= */
+:root {
+  /* ---- Surfaces ---- */
+  --surface-page:        #070707;   /* [relevé] A, --dark-mode-bg */
+  --surface-nav:         #000;      /* [relevé] A, .nav_section */
+  --surface-bas-degrade: #050505;   /* [relevé] A, linear-gradient(#070707,#050505 88%) */
+  --surface-active:      #ffffff12; /* [relevé] A, .tools_module-card-link.w--current */
+  --surface-fantome:     #ffffff0d; /* [relevé] A, .btn_cta.is-secondary */
+  --surface-voile:       #0b0b0d9c; /* [relevé] A, .footer_home-special-bg */
+
+  /* ---- Texte ---- */
+  --texte-primaire:   #fff;    /* [relevé] A, --gray--100 */
+  --texte-secondaire: #c8cad0; /* [relevé] A, --gray--80 */
+  --texte-tertiaire:  #9195a1; /* [relevé] A, --gray--60 */
+  --texte-lien:       #b0b1c3; /* [relevé] A, --gray--300, couleur de .body-small */
+  --texte-clair:      #e4e5e8; /* [relevé] A, --gray--90, couleur de .body_paragraph.home */
+  --texte-nav:        #efeff1; /* [relevé] A, --white--94, couleur du bouton de nav */
+  --texte-nom:        #d9dae5; /* [relevé] A, --gray--scale-200, nom sous la citation */
+  --texte-pied:       #f0f0f0; /* [relevé] A, --white-smoke, couleur du pied */
+  --texte-accent:     #00ade4; /* [relevé] A, --primary-5, couleur du h1 */
+  --texte-lien-bleu:  #39f;    /* [relevé] A, .text-link-text — bleu des liens « › » */
+  --texte-mention:    #787887; /* [relevé] A, --gray--50, mention de consentement du pied */
+  --texte-pied-lien:  #a2a4a9; /* [relevé] A, .footer-links-column_label */
+
+  /* ---- Action ---- */
+  --action-fond:   var(--texte-primaire); /* [relevé] A, btn-cta_bg = --gray--100 en thème sombre */
+  --action-texte:  var(--surface-page);   /* [relevé] A, btn-cta_text = --dark-mode-bg */
+  --bordure-douce: #ffffff33;             /* [relevé] A, `1px solid #fff3` (notation courte étendue) */
+  --bordure-nav:   #303036;               /* [relevé] A, --gray--20, bordure du bouton de nav */
+  --bordure-pied:  #484851;               /* [relevé] A, --gray--30, filet des colonnes de pied */
+
+  /* ---- Halo, or, bordure du bandeau ---- */
+  --halo-haut:   #52cbf2;    /* [relevé] A, .home-vd_collection-item-bg */
+  --halo-bas:    #005ad0;    /* [relevé] A, idem */
+  --or-clair:    #ffeec3;    /* [relevé] A, .heading_medium.is-new-home-cta */
+  --or-milieu:   #efdcb7;    /* [relevé] A, idem, position 51% */
+  --or-sombre:   #938b87;    /* [relevé] A, idem */
+  --bord-promo:  #6cccff99;  /* [relevé] A, .stateofdev-promo-section--border.is-footer */
+
+  /* ---- Typographie ---- */
+  --police-titre: Calsans, Verdana, sans-serif; /* [relevé] A, --…headings-default, appliquée au h1 */
+  --police-corps: Geist, Verdana, sans-serif;   /* [relevé] A, --…body-text-default */
+  --police-serif: Newsreader, Georgia, serif;   /* [relevé] A — la seule famille à empattements
+                                                   de la page, réservée à la vignette claire du
+                                                   pied. Chargée par WebFont.load() côté source. */
+  --t-xl:       4rem;  /* [relevé] A, .heading_large — line-height 115% */
+  --t-l:        4rem;  /* [relevé] A, les h2 portent la même classe */
+  --t-m:        40px;  /* [relevé] A, .heading_medium — line-height 120% */
+  --t-cta:      65px;  /* [relevé] A, .heading_medium.is-new-home-cta — line-height 110% */
+  --t-pied:     4rem;  /* [relevé] A, .footer-heading — line-height 1.3 */
+  --t-geant:    186px; /* [relevé] A, .new-home-large-heading — line-height 1.3 */
+  --t-tagline:  36px;  /* [relevé] A, .stateofdev_hero-tagline */
+  --t-citation: 20px;  /* [relevé] A, .customer-slider_customer-quote — weight 300 */
+  --t-xs:       14px;  /* [relevé] A, .title_xsmall — weight 600 */
+  --t-corps:    16px;  /* [relevé] A, .body_paragraph — line-height 137% */
+  --t-corps-l:  18px;  /* [relevé] A, .body_paragraph.is-large — line-height 150% */
+  --t-corps-s:  14px;  /* [relevé] A, .body_paragraph.small */
+  --t-corps-xl: 24px;  /* [relevé] A, .body_paragraph.home.is-integrations */
+
+  /* ---- Rayons ---- */
+  --rayon-pilule:  32px;    /* [relevé] A, .btn_cta */
+  --rayon-nav:     40px;    /* [relevé] A, .nav_cta-button */
+  --rayon-carte:   8px;     /* [relevé] A, .tools_module-card-link.w--current */
+  --rayon-interne: 16px;    /* [relevé] A, .tools_module-content-wrapper */
+  --rayon-media:   10px;    /* [relevé] B l.393, .lottie-container-wrapper */
+  --rayon-halo:    1.5rem;  /* [relevé] A, .home-vd_collection-item-bg */
+  --rayon-slider:  1.25rem; /* [relevé] A, ._0630-slider_mask */
+  --rayon-promo:   1.5rem;  /* [relevé] A, .stateofdev-promo-section--border.is-footer */
+
+  /* ---- Rythme ---- */
+  --marge-laterale:  2rem;   /* [relevé] A, padding-left/right des sections */
+  --largeur-cadre:   1440px; /* [relevé] A, max-width des sections */
+  --largeur-contenu: 1200px; /* [relevé] A, .container / .home-hero_layout / .customer-group */
+  --largeur-media:   1400px; /* [relevé] B, .HTML-embed-new-home */
+  --largeur-promo:   1350px; /* [relevé] A, .stateofdev-promo-section--border */
+
+  /* ---- Mouvement ---- */
+  --duree-reveal: .65s;  /* [relevé] B l.74, transition du bloc révélé */
+  --duree-entree: 700ms; /* [relevé] B l.110/115, easeInMedia / easeInBg */
+  --duree-etat:   600ms; /* [relevé] B l.85, transition de la carte active */
+  --duree-carte:  .2s;   /* [relevé] A, `transition: max-width .2s` sur la carte active */
+  --duree-fond:   .3s;   /* [relevé] A, .btn_cta `transition: background-color .3s` */
+  --courbe-sortie: cubic-bezier(.22, .61, .36, 1); /* [relevé] B l.74 */
+}
+
+/* == 2. BASE =============================================================== */
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background-color: var(--surface-page);
+  color: var(--texte-primaire);
+  font-family: var(--police-corps); /* [relevé] A, body { font-family: Geist } */
+  font-size: var(--t-corps);        /* [relevé] A */
+  line-height: 137%;                /* [relevé] A */
+  overflow-x: hidden;               /* [arbitrage] garde-fou : marquee et méga-menu sont en 100vw */
+}
+img { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+
+/* [relevé] A : h1, h2 et h3 portent `text-transform: capitalize` et
+   `font-family: Calsans` en base. `.heading_large.is-new-home` REMET Geist sur
+   les h2 de section — mais pas sur le h1, qui reste en Calsans. Deux familles
+   cohabitent : Calsans pour le seul h1 et le bloc géant, Geist pour le reste. */
+.titre-xl {
+  margin: 0 0 .5rem;                /* [relevé] A, .heading_large.is-home */
+  font-family: var(--police-titre); /* [relevé] A, h1 + .heading_large */
+  font-size: var(--t-xl); font-weight: 600; line-height: 115%; /* [relevé] A */
+  text-transform: capitalize;       /* [relevé] A, h1 */
+  color: var(--texte-accent);       /* [relevé] A, .heading_large.is-home.text-color-blue */
+}
+.titre-l {
+  margin: 0;                        /* [relevé] A, .heading_large.is-new-home */
+  font-family: var(--police-corps); /* [relevé] A, .is-new-home remet Geist */
+  font-size: var(--t-l); font-weight: 600; line-height: 115%; /* [relevé] A */
+  text-transform: capitalize;       /* [relevé] A, h2 */
+  color: var(--texte-primaire);
+}
+.titre-m {
+  margin: 0; font-family: var(--police-corps);
+  font-size: var(--t-m); font-weight: 600; line-height: 120%; /* [relevé] A, .heading_medium */
+  opacity: 1;                       /* [relevé] A */
+  text-transform: capitalize;       /* [relevé] A, h3 */
+}
+/* [relevé] A : la 1re ligne du h1 passe par un background-clip:text sur fond
+   blanc plein (.home-loop_gradient) — emplacement prévu pour un dégradé animé,
+   laissé en blanc. Reproduit tel quel pour que le procédé reste lisible. */
+.titre-xl__ligne-claire {
+  background-color: var(--texte-primaire);
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent; color: transparent;
+}
+.titre-xs {
+  margin-bottom: 0;                 /* [relevé] A, .title_xsmall */
+  font-family: var(--police-corps); /* [relevé] A */
+  font-size: var(--t-xs); font-weight: 600; /* [relevé] A */
+  line-height: 1.3;                 /* [arbitrage] .title_xsmall n'en déclare aucune */
+  text-transform: capitalize;       /* [relevé] A — le titre d'onglet est un h3, et h1/h2/h3
+                                       portent `capitalize` en base. D'où « Infrastructure As
+                                       Code Management » au rendu, avec un A majuscule que
+                                       le HTML ne contient pas. */
+}
+
+.para { margin: 0; color: var(--texte-secondaire); font-size: var(--t-corps); line-height: 137%; } /* [relevé] A, .body_paragraph */
+.para--large { font-size: var(--t-corps-l); line-height: 150%; } /* [relevé] A, .body_paragraph.is-large */
+.para--small { font-size: var(--t-corps-s); }                    /* [relevé] A, .body_paragraph.small */
+
+/* Révélation générique au scroll — même courbe et même durée que le bloc à
+   onglets de la source (B l.71-81), appliquée aux titres et paragraphes.
+   [arbitrage] la source réserve ce traitement au bloc à onglets. */
+.reveal {
+  opacity: 0; transform: translateY(12px);
+  transition: opacity var(--duree-reveal) var(--courbe-sortie),
+              transform var(--duree-reveal) var(--courbe-sortie);
+}
+.reveal.is-revealed { opacity: 1; transform: none; }
+
+/* == 3. BOUTONS ============================================================ */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: 12px;                      /* [relevé] A, grid-column-gap: 12px */
+  flex: none; align-self: center; /* [relevé] A */
+  max-width: 100%; margin: 0;     /* [relevé] A */
+  padding: 1rem 1.5rem;           /* [relevé] A */
+  border: 0; border-radius: var(--rayon-pilule); /* [relevé] A, 32px */
+  background-color: var(--action-fond); color: var(--action-texte);
+  font-family: inherit;
+  font-size: 1.125rem; font-weight: 600; line-height: 1em; /* [relevé] A */
+  text-transform: none;           /* [relevé] A */
+  box-shadow: 2px 2px #0000000d;  /* [relevé] A */
+  transition: background-color var(--duree-fond); /* [relevé] A — la source ne transitionne QUE le fond */
+}
+.btn:hover { box-shadow: 2px 4px #0000000d; } /* [relevé] A — l'ombre glisse de 2px, sans transition */
+.btn--hero { font-size: 1.25rem; }            /* [relevé] A, .btn_cta.is-hero */
+.btn--ghost {
+  background-color: var(--surface-fantome);   /* [relevé] A, .btn_cta.is-secondary */
+  color: var(--texte-primaire);
+  border: 1px solid var(--bordure-douce);     /* [relevé] A */
+}
+.btn:focus-visible, .carte:focus-visible, .slider__puce:focus-visible,
+a:focus-visible, button:focus-visible, input:focus-visible {
+  outline: 2px solid var(--texte-accent); outline-offset: 2px; /* [arbitrage] absent de la source */
+}
+
+/* == 4. NAV + MÉGA-MENU ==================================================== */
+.nav {
+  position: sticky; top: 0;             /* [arbitrage] la source ne la fixe pas */
+  z-index: 1000;                        /* [relevé] A, .navbar_parent--dark-mode */
+  display: flex; align-items: center;   /* [relevé] A, .nav_section */
+  background-color: var(--surface-nav); /* [relevé] A */
+  padding: .25rem 2.5rem;               /* [relevé] A */
+}
+.nav__inner {
+  display: flex; align-items: center;
+  width: 100%; max-width: var(--largeur-cadre); margin: 0 auto; /* [relevé] A, .nav_menu-group */
+  min-height: 64px;                                             /* [arbitrage] */
+}
+.nav__logo { display: inline-flex; align-items: center; gap: 8px; font-size: 18px; font-weight: 600; letter-spacing: -.01em; } /* [arbitrage] */
+/* [relevé] A, .nav_logo-link-image { width:100px; height:24px } — la marque
+   occupe une boîte fixe de 100×24, ce qui fige le point de départ de la nav. */
+.nav__logo-mark { width: 24px; height: 24px; border-radius: 6px; background: linear-gradient(135deg, var(--texte-accent), var(--halo-bas)); } /* [arbitrage] */
+
+.nav__menu {
+  display: flex; align-items: center; flex: 1;  /* [relevé] A, .nav_container { flex:1 } */
+  margin-left: 60px; margin-right: auto;        /* [relevé] A, .nav_container */
+}
+.nav__item { position: static; padding-top: 1rem; padding-bottom: 1rem; } /* [relevé] A, .nav_dropdown { padding:1rem 0; position:static } */
+.nav__toggle {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: .5rem .75rem;                     /* [arbitrage] */
+  font-size: var(--t-corps-s); font-weight: 500;
+  color: var(--texte-nav);                   /* [relevé] A, --white--94 */
+  letter-spacing: -.28px;                    /* [relevé] A, .nav_cta-button */
+  transition: color var(--duree-fond);
+}
+.nav__toggle:hover { color: var(--texte-primaire); }
+.nav__chevron { transition: transform var(--duree-fond) var(--courbe-sortie); } /* [arbitrage] */
+.nav__item.is-open .nav__chevron { transform: rotate(180deg); }                 /* [arbitrage] */
+
+/* PROCÉDÉ — le panneau du méga-menu occupe TOUTE la largeur de la fenêtre.
+   [relevé] A : `.nav-dropdown_list-wrapper.w--open { width:100vw;
+   max-width:1440px; display:flex; justify-content:center; background:#0000 }`
+   et le parent `.nav_dropdown` est en `position:static` — c'est ce static qui
+   décroche le panneau de son déclencheur et le laisse s'ancrer sur la barre. */
+.nav__panneau {
+  position: absolute; left: 50%; transform: translateX(-50%);
+  top: 100%;
+  width: 100vw; max-width: var(--largeur-cadre); /* [relevé] A */
+  display: flex; justify-content: center; align-items: center; /* [relevé] A */
+  background-color: #0000;                                     /* [relevé] A */
+}
+.nav__panneau[hidden] { display: none; }
+/* [arbitrage] la source pose un fond transparent sur le wrapper et laisse un
+   enfant porter la surface ; ici le corps du panneau EST cette surface. */
+.nav__panneau-corps {
+  display: flex; flex-direction: column; gap: 1.5rem;
+  width: 100%; max-width: var(--largeur-contenu);
+  padding: 2rem; margin-top: .25rem;
+  border-radius: var(--rayon-interne);         /* [arbitrage] */
+  background-color: #0d0d10;                   /* [arbitrage] */
+  border: 1px solid #ffffff14;                 /* [arbitrage] */
+  box-shadow: 0 24px 60px #00000080;           /* [arbitrage] */
+}
+.nav__panneau-inner { display: flex; gap: 2.5rem; } /* [arbitrage] */
+
+/* [relevé] A, .nav-inner-banner_link — bannière pleine largeur en tête du
+   méga-menu Product : icône, libellé souligné au survol, flèche à droite. */
+.nav__banniere {
+  display: flex; align-items: center; gap: .75rem;
+  padding: .75rem 1rem; border-radius: 10px;              /* [arbitrage] */
+  background-color: #ffffff0a;                            /* [arbitrage] */
+  border: 1px solid #ffffff14;                            /* [arbitrage] */
+  transition: background-color var(--duree-fond);
+}
+.nav__banniere:hover { background-color: var(--surface-active); }
+.nav__banniere-icone { width: 24px; height: 24px; flex: none; }
+.nav__banniere-texte { font-size: var(--t-corps); font-weight: 500; color: var(--texte-primaire); }
+.nav__banniere-fleche { width: 14px; height: 14px; margin-left: auto; flex: none; }
+.nav__col { display: flex; flex-flow: column; gap: 1rem; flex: 1; } /* [relevé] A, .nav-dropdown_column */
+.nav__col-titre {
+  margin: 0; color: var(--texte-nav);          /* [relevé] A, .nav-dropdown_module-label */
+  letter-spacing: -.32px;                      /* [relevé] A */
+  font-family: var(--police-corps); line-height: 112.5%; /* [relevé] A */
+  font-size: var(--t-corps); font-weight: 600;
+}
+.nav__col-desc {
+  margin: 0; color: var(--texte-lien);         /* [relevé] A, .nav-dropdown_heading-description */
+  font-size: 14px; font-weight: 300; line-height: 130%; /* [relevé] A */
+}
+.nav__lien {
+  display: flex; align-items: center; justify-content: flex-start;
+  gap: 10px;                                   /* [relevé] A, .nav-dropdown_link */
+  padding: .5rem;                              /* [relevé] A */
+  color: var(--texte-primaire);                /* [relevé] A, var(--gray--100) */
+  position: relative;                          /* [relevé] A */
+  font-size: var(--t-corps-s);
+  border-radius: 6px;                          /* [arbitrage] */
+  transition: background-color var(--duree-fond);
+}
+.nav__lien:hover { background-color: var(--surface-active); } /* [arbitrage] la source change la couleur du texte */
+.nav__lien-icone { width: 20px; height: 20px; flex: none; }   /* [arbitrage] */
+.nav__badge {
+  margin-left: auto; padding: 2px 8px; border-radius: 999px;
+  font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .04em;
+  color: var(--surface-page); background: var(--texte-accent);
+} /* [arbitrage] la source utilise .nav-dropdown_badge.is-new, non relevée en détail */
+.nav__lien--accent { color: var(--texte-accent); } /* [relevé] A — « View all » se détache du reste de la colonne */
+.nav__col-titre--vide { visibility: hidden; }      /* [arbitrage] cale la 2e colonne Company sur la 1re */
+
+.nav__actions { display: flex; align-items: center; gap: 12px; } /* [arbitrage] */
+.nav__item--recherche, .nav__item--cta { padding-top: 1rem; padding-bottom: 1rem; }
+.nav__recherche {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 32px; height: 32px; border-radius: 50%; color: var(--texte-nav);
+  padding: 0;
+} /* [arbitrage] */
+
+/* PANNEAU DE RECHERCHE — [relevé] champ, intitulé « Trending searches », puis
+   deux familles de pastilles : « Products: » (5, avec icône de module) et
+   « Explore Business Values: » (4, sans icône). */
+.nav__panneau--recherche .nav__panneau-corps { gap: 1.25rem; max-width: 900px; }
+.recherche { display: flex; flex-direction: column; }
+.recherche__label {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip-path: inset(50%); white-space: nowrap;
+}
+.recherche__champ {
+  width: 100%; padding: .875rem 1rem;
+  border: 1px solid var(--bordure-nav); border-radius: 8px;   /* [arbitrage] */
+  background-color: #ffffff08; color: var(--texte-primaire); font: inherit;
+}
+.recherche__champ::placeholder { color: var(--texte-tertiaire); }
+.recherche__titre { margin: 0; font-size: var(--t-corps); font-weight: 600; color: var(--texte-primaire); }
+.recherche__famille { display: flex; flex-direction: column; gap: .625rem; }
+.recherche__legende { margin: 0; font-size: var(--t-corps-s); color: var(--texte-tertiaire); }
+.recherche__tags { display: flex; flex-wrap: wrap; gap: .5rem; }
+.tag {
+  display: inline-flex; align-items: center; gap: .5rem;
+  padding: .4rem .75rem; border-radius: 999px;                /* [arbitrage] .module-tags */
+  border: 1px solid var(--bordure-nav); background-color: #ffffff08;
+  font-size: var(--t-corps-s); color: var(--texte-primaire);
+  transition: background-color var(--duree-fond);
+}
+.tag:hover { background-color: var(--surface-active); }
+.tag img { width: 16px; height: 16px; flex: none; }
+
+/* GET STARTED — [relevé] .get-started_dropdown : le bouton principal déplie
+   Sign up / Sign in / Get a demo, il ne mène pas directement à l'inscription. */
+.nav__panneau--compact { left: auto; right: 0; transform: none; width: auto; max-width: none; justify-content: flex-end; }
+.nav__panneau-corps--compact { display: flex; flex-direction: column; gap: 0; width: max-content; min-width: 11rem; padding: .5rem; }
+/* [relevé] A, .nav_cta-button — noter le contraste inversé : dans une barre
+   noire, le bouton principal est CLAIR (#efeff1) avec un texte sombre. */
+.nav__cta {
+  display: inline-flex; align-items: center; gap: 6px;
+  border: 1px solid var(--bordure-nav);        /* [relevé] A, var(--gray--20) */
+  background-color: var(--texte-nav);          /* [relevé] A, var(--white--94) */
+  color: var(--bordure-nav);                   /* [relevé] A */
+  letter-spacing: -.28px;                      /* [relevé] A */
+  border-radius: var(--rayon-nav);             /* [relevé] A, 40px */
+  padding: 8px 12px;                           /* [relevé] A */
+  font-size: 14px; font-weight: 500; line-height: 14px; /* [relevé] A */
+}
+.nav__cta--secondaire {
+  color: var(--texte-nav);                     /* [relevé] A, .nav_cta-button.secondary */
+  background-color: #0000;                     /* [relevé] A */
+}
+
+/* == 5. HERO =============================================================== */
+.hero {
+  display: flex; flex-direction: column; align-items: center; /* [relevé] A, .module-hero_section */
+  width: 100%; max-width: var(--largeur-cadre);               /* [relevé] A */
+  margin-left: auto; margin-right: auto;                      /* [relevé] A */
+  padding: 100px var(--marge-laterale) 0;  /* [relevé] A — .new-home_hero écrase le `60px 2rem`
+                                              de la classe de base : 100px en haut, 0 en bas */
+  overflow: hidden;                        /* [relevé] A — c'est lui qui recadre le média débordant */
+  z-index: 50;                             /* [relevé] A */
+  position: relative;                      /* [relevé] A — contexte de positionnement du média */
+}
+.hero__layout {
+  display: grid;
+  grid-template-columns: 55% 30%; /* [relevé] A, .home-hero_layout — somme 85 %, pas 100 % */
+  grid-template-rows: auto;       /* [relevé] A */
+  column-gap: 0;                  /* [relevé] A, grid-column-gap: 0rem */
+  align-items: start;             /* [relevé] A */
+  width: 100%; max-width: var(--largeur-contenu); margin-left: auto; margin-right: auto; /* [relevé] A */
+  margin-bottom: 100px;           /* [relevé] A, .home-hero_layout.bmargin — l'élément porte les
+                                     DEUX classes, le 60px de la classe de base est écrasé */
+  position: relative;
+}
+.hero__content { z-index: 9; position: relative; } /* [relevé] A, .home-hero_content-block */
+.hero__h1-wrapper { display: flex; flex-flow: column; justify-content: flex-start; gap: .75rem; } /* [relevé] A, .home-hero_h1-wrapper */
+.hero__cta {
+  display: flex; align-items: center; /* [relevé] A, .layout_cta-group */
+  gap: 1rem;                          /* [relevé] A, grid-column-gap: 1rem */
+  padding-top: 2rem;                  /* [relevé] A */
+}
+
+/* PROCÉDÉ — MÉDIA ANCRÉ À DROITE, EN DÉBORDEMENT, DERRIÈRE LE TEXTE.
+   [relevé] A, `.home_hero-lottie-embed { z-index:-1; position:absolute;
+   inset:-15% -13% 0% auto }`. Quatre décisions dans un seul `inset` :
+     top -15 %  → le média remonte AU-DESSUS du haut de la section
+     right -13% → il sort par la droite de la fenêtre
+     bottom 0   → il reste collé au bas de la section
+     left auto  → sa largeur vient de son contenu (1400px), pas de l'inset
+   Vérifié sur le DOM rendu de la source en 1440×1200 : section h719 →
+   top −15 % = −108px → y mesuré −42 (66 − 108) ✓ ; right −13 % de 1440 = −187
+   → bord droit 1627, largeur 1400 → x mesuré 227 ✓.
+   Le wrapper intermédiaire mesure 0×0 : il ne porte aucune géométrie. */
+.hero__media { width: 0; height: 0; } /* [relevé] A, .home-hero_animation--wrapper mesuré 0×0 */
+.hero__media-video {
+  position: absolute; inset: -15% -13% 0% auto; z-index: -1;    /* [relevé] A */
+  width: var(--largeur-media); max-width: var(--largeur-media); /* [relevé] B, .HTML-embed-new-home */
+  aspect-ratio: 16 / 9; object-fit: cover; display: block;      /* [relevé] B */
+  height: auto;
+  will-change: transform;
+}
+
+/* == 6. MARQUEE ============================================================
+   [relevé] B l.376-386 : `animation: logoScroll 24s linear infinite`,
+   translateX(0) → translateX(-100%), pause au survol du conteneur. */
+/* [relevé] A, .home_logos-group — le bandeau n'occupe PAS toute la fenêtre : son
+   parent le borne à 1200px, le centre et le CLIPPE (`overflow:hidden`). C'est ce
+   clip, et non la largeur de la piste, qui décide où les logos apparaissent et
+   disparaissent — la piste, elle, reste déclarée en 100vw. */
+.marquee-bloc {
+  display: flex; flex-flow: column; align-items: center; /* [relevé] A */
+  gap: 1rem;                                             /* [relevé] A */
+  text-align: center;                                    /* [relevé] A */
+  width: 100%; max-width: var(--largeur-contenu);        /* [relevé] A */
+  margin: 40px auto 0;                                   /* [relevé] A */
+  padding: 0 10px;                                       /* [relevé] A */
+  position: relative; overflow: hidden;                  /* [relevé] A */
+}
+.marquee-bloc__legende { color: var(--texte-tertiaire); font-size: var(--t-corps-s); } /* [arbitrage] */
+.marquee {
+  display: flex; justify-content: center; align-items: center; /* [relevé] A */
+  width: 100vw; height: 5rem;            /* [relevé] A, .new-home-testimonial_group--looping */
+  margin-left: auto; margin-right: auto; /* [relevé] A */
+  overflow: hidden; position: relative; z-index: 20; opacity: 1; /* [relevé] A */
+}
+/* Deux règles de la source réunies sur un seul élément : le padding vertical
+   vient du wrapper (24px), le padding droit de la liste (40px). */
+.marquee__piste {
+  display: flex; align-items: center;      /* [relevé] A */
+  flex: none; flex-shrink: 0;              /* [relevé] A + B l.375 */
+  flex-wrap: nowrap;                       /* [relevé] A */
+  gap: 36px;                               /* [relevé] A, .module-hero_logo-list--scroll */
+  padding-top: 24px; padding-bottom: 24px; /* [relevé] A, .module-hero_logo-wrapper--scroll */
+  padding-right: 40px;                     /* [relevé] A */
+  animation: defilement 24s linear infinite; /* [relevé] B l.376 */
+}
+.marquee:hover .marquee__piste { animation-play-state: paused; } /* [relevé] B l.379-381 */
+@keyframes defilement {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-100%); } /* [relevé] B l.384-385 */
+}
+/* [relevé] A, .module-hero_logo — chaque logo vit dans une boîte de 210×67 max,
+   padding 16px 5px, object-fit contain, alignée au centre. L'image, elle, porte
+   `.module-hero_logo-image--scroll` : max-height 40px, opacity .8 remise à 1 par
+   la variante `.is-new-home` du bandeau d'accueil, overflow visible. */
+.marque {
+  flex: none; display: flex; align-items: center; justify-content: space-around;
+  align-self: center;
+  max-width: 210px; max-height: 67px; /* [relevé] A */
+  padding: 16px 5px;                  /* [relevé] A */
+  overflow: visible;                  /* [relevé] A */
+}
+.marque img {
+  width: 100%; max-width: none; max-height: 40px; height: 100%; /* [relevé] A */
+  margin: 0; overflow: visible;                                 /* [relevé] A */
+  object-fit: contain;                                          /* [relevé] A */
+  opacity: 1;                                                   /* [relevé] A, `.is-new-home` remet 1 */
+}
+
+/* == 7. MODULES À ONGLETS ==================================================
+   FONDS PAR SECTION, relevés un par un — la page ALTERNE, elle n'est pas d'un
+   noir uniforme, et c'est cette alternance qui sépare les blocs sans filet :
+     .module-hero_section      → AUCUN background déclaré (laisse voir le body)
+     .section.home-value-drivers → AUCUN background déclaré (idem)
+     .new-home-center_section  → #070707 + linear-gradient(#070707,#050505 88%)
+     .testimonial-trusted_section → même paire
+     .home-footer_cta-animation-group → AUCUN background déclaré
+     .footer-section.footer_bg--color → aucun fond, mais un enfant absolu
+                                        (.footer_home-special-bg) qui FLOUTE
+   Deux points de luminance sur 88 % de la hauteur, deux fois dans la page. */
+.vd {
+  max-width: var(--largeur-cadre);       /* [relevé] A, .section.home-value-drivers */
+  margin-left: auto; margin-right: auto; /* [relevé] A */
+  padding-top: 150px;                    /* [relevé] A */
+  padding-left: var(--marge-laterale); padding-right: var(--marge-laterale); /* [relevé] A */
+}
+.vd__ancre {
+  max-width: var(--largeur-contenu);         /* [relevé] A, .container */
+  margin: -100px auto 0; padding-top: 100px; /* [relevé] A, .container.is-home-vd.anchor-padding —
+                                                marge négative annulée par un padding égal : la
+                                                boîte ne bouge pas, mais l'ancre vise 100px plus haut */
+  padding-bottom: 100px;                     /* [arbitrage] séparation entre les 4 blocs */
+}
+.vd__heading {
+  display: flex; flex-flow: column; justify-content: center; align-items: center; /* [relevé] A */
+  gap: 1rem;              /* [relevé] A, .home-loop_heading-group */
+  text-align: center;     /* [relevé] A */
+  padding-bottom: 2.5rem; /* [relevé] A */
+  position: relative; z-index: 1; /* [relevé] A */
+}
+/* [relevé] A : le paragraphe d'intro porte `max-width-1000` dans le HTML, mais
+   AUCUNE règle `.max-width-1000` seule n'existe dans la feuille — elle n'y
+   apparaît qu'en combinaison. La classe est inerte : le paragraphe prend toute
+   la largeur du groupe. Piège classique du CSS généré. */
+.vd__intro { color: var(--texte-primaire); } /* [relevé] A, .body_paragraph.text-color_text-primary */
+
+/* PROCÉDÉ — révélation au scroll. [relevé] B l.71-81.
+   PIÈGE DE LA SOURCE : les 4 sections portent un `style="opacity:0"` INLINE que
+   rien, dans le HTML livré, ne remet à 1 — ni règle CSS, ni IX2, ni script de la
+   page. Ici l'état initial vit dans le CSS, avec <noscript> et filet de 800 ms. */
+/* COMPOSITION DU MODULE — [relevé] A : `.home-vd_tabs { flex-flow:column;
+   height:100%; display:flex }`, et dans le DOM `.home-vd_tabs-content-mask`
+   (le MÉDIA) PRÉCÈDE `.home-vd_tabs-list` (la RANGÉE d'onglets). Le média est
+   donc EN HAUT, pleine largeur, et les onglets forment une rangée horizontale
+   EN DESSOUS. Ce n'est pas un détail d'alignement : une variante onglets-à-
+   gauche / média-à-droite est une AUTRE composition. */
+.vd__outils {
+  display: flex; flex-flow: column; height: 100%; /* [relevé] A, .home-vd_tabs */
+  opacity: 0; transform: translateY(12px);
+  transition: opacity var(--duree-reveal) var(--courbe-sortie),
+              transform var(--duree-reveal) var(--courbe-sortie);
+  will-change: opacity, transform; /* [relevé] B l.76 */
+}
+.vd__outils.is-revealed { opacity: 1; transform: none; } /* [relevé] B l.78-81 */
+
+.vd__onglets {
+  display: flex;       /* [relevé] A — `display:flex` l'emporte sur le grid-template-columns voisin */
+  gap: 8px 16px;       /* [relevé] A, row-gap 8px / column-gap 16px */
+  margin-bottom: 40px; /* [relevé] A */
+  overflow: auto;      /* [relevé] A */
+  scrollbar-width: none;
+}
+.vd__onglets::-webkit-scrollbar { display: none; }
+
+.carte {
+  align-self: stretch; height: 100%; /* [relevé] A */
+  min-height: 13.7rem;               /* [relevé] B l.415 (déclaré !important dans la source) */
+  min-width: min-content;            /* CONSÉQUENCE DE LA FUSION DE DEUX ÉLÉMENTS.
+                                        La source empile `.tools_module-card-link`
+                                        (l'item flex) et `.tools_module-content-wrapper`
+                                        (qui porte `overflow:hidden`). Ici les deux sont
+                                        le MÊME élément, donc l'overflow:hidden ramène
+                                        `min-width:auto` à 0 : les cartes au repos se
+                                        contractent alors sous leur plus long mot et
+                                        « Infrastructure » se fait rogner. Rétablir
+                                        min-content redonne exactement le comportement
+                                        de la source — c'est l'active qui absorbe la
+                                        contraction, pas les cartes au repos. */
+  display: flex; flex-flow: column; justify-content: flex-start; align-items: flex-start; /* [relevé] A */
+  gap: .75rem;                       /* [relevé] A, .tools_module-content-wrapper */
+  padding: 16px;                     /* [relevé] A */
+  border-radius: var(--rayon-interne); /* [relevé] A, .tools_module-content-wrapper { 16px } */
+  overflow: hidden;                  /* [relevé] A */
+  background-color: #0000;           /* [relevé] A, .tools_module-card-link */
+  color: var(--texte-primaire); text-align: left;
+  transition: background-color var(--duree-etat) ease, transform var(--duree-etat) ease,
+              max-width var(--duree-carte), width var(--duree-carte);
+  /* [relevé] B l.85 (fond + transform, 600ms ease) et A (`max-width .2s`) —
+     deux règles distinctes dans la source, réunies ici. */
+}
+/* PROCÉDÉ — LA LARGEUR EST LE SIGNAL D'ÉTAT, PAS LE FOND.
+   [relevé] A : la carte au repos a une largeur FIXE, différente par module —
+   `.is-devops{width:130px}` · `.is-testing{width:220px}` · `.is-security{180px}`
+   · `.is-cost{30%}` — et l'active passe à `width:100%; max-width:40rem` (70 %
+   pour le module coût) en `transition: max-width .2s`. Les cartes au repos se
+   contractent librement (flex-shrink par défaut) pour tenir la rangée. */
+.vd__onglets--devops   .carte { width: 130px; } /* [relevé] A */
+.vd__onglets--testing  .carte { width: 220px; } /* [relevé] A */
+.vd__onglets--security .carte { width: 180px; } /* [relevé] A */
+.vd__onglets--cost     .carte { width: 30%; }   /* [relevé] A */
+.carte.is-active {
+  width: 100%; max-width: 40rem;           /* [relevé] A, .tools_module-card-link.w--current */
+  background-color: var(--surface-active); /* [relevé] A, #ffffff12 */
+  border-radius: var(--rayon-carte);       /* [relevé] A, 8px sur le lien actif */
+}
+.vd__onglets--cost .carte.is-active { width: 70%; max-width: 70%; } /* [relevé] A, .is-cost.w--current */
+/* [relevé] CONFLIT DANS LA SOURCE : l'état actif est déclaré deux fois —
+   `rgba(255,255,255,0.06)` dans le bloc inline (B l.84) et `#ffffff12` (≈ 7 %)
+   dans le CSS Webflow (A). Le second l'emporte en spécificité ; c'est lui retenu.
+   Deux rayons cohabitent aussi : 8px sur le lien, 16px sur le wrapper interne. */
+.carte:hover:not(.is-active) { background-color: #ffffff08; } /* [arbitrage] la source n'a AUCUN :hover ici */
+.carte__tete {
+  display: flex; flex-flow: column; justify-content: flex-start; align-items: flex-start; /* [relevé] A */
+  gap: .5rem; width: 100%;      /* [relevé] A, .home-vd_tab-module-title-wrapper */
+  color: var(--texte-primaire); /* [relevé] A */
+}
+.carte__icone { width: 24px; min-width: 20px; max-width: 24px; height: 24px; min-height: 20px; max-height: 24px; } /* [relevé] A, .tools_module-icon */
+
+/* PROCÉDÉ — le contenu secondaire n'existe QUE sur l'onglet actif.
+   [relevé] B l.451-452 : description et « En savoir plus » passent de
+   `display:none` à `display:block` sur `.w--current`. Le saut de hauteur est
+   absorbé par le min-height fixe de la carte : la rangée ne bouge pas. */
+/* PROCÉDÉ — sur la carte au repos, SEUL LE LIBELLÉ « Learn more » disparaît :
+   la flèche, elle, reste. [relevé] A, `.body-small.is-home-vd-module-learnmore,
+   .hide { display:none }` ne vise que le texte, et B l.451-452 le remet en
+   `block` sur `.w--current`. Reproduire l'inverse (masquer le lien entier)
+   priverait les 11 cartes au repos de leur seule affordance visible.
+   [relevé] A, `.learn-more_link.is-on-home { margin-top:auto; padding:0 }` —
+   c'est ce `margin-top:auto` qui plaque la flèche au bas de la carte, quelle
+   que soit la présence de la description. */
+.carte__desc { display: none; }
+.carte.is-active .carte__desc { display: block; color: var(--texte-secondaire); }
+.carte__lien {
+  display: inline-flex; align-items: center; justify-content: flex-start; /* [relevé] A, .learn-more_link */
+  gap: .5rem;                  /* [relevé] A */
+  margin-top: auto;            /* [relevé] A, .is-on-home */
+  padding: 0;                  /* [relevé] A, .is-on-home écrase le 6px/10px de la classe de base */
+  margin-bottom: 0;            /* [relevé] A, .body-small */
+  font-size: var(--t-corps-s); /* [relevé] A, .body-small */
+  color: var(--texte-lien);    /* [relevé] A, .body-small { color: var(--gray--300) } */
+}
+.carte__lien-texte { display: none; }                          /* [relevé] A */
+.carte.is-active .carte__lien-texte { display: block; }        /* [relevé] B l.451-452 */
+.carte__lien svg { transition: transform var(--duree-fond) var(--courbe-sortie); } /* [arbitrage] */
+.carte:hover .carte__lien svg { transform: translateX(3px); }                      /* [arbitrage] */
+
+/* [relevé] A, .home-vd_tabs-content-mask — le média est un bloc pleine largeur
+   posé AU-DESSUS de la rangée d'onglets, séparé d'elle par 48px. */
+.vd__scene {
+  z-index: 1;                                       /* [relevé] A */
+  display: flex; flex-flow: column; align-self: stretch; /* [relevé] A */
+  margin-bottom: 48px;                              /* [relevé] A */
+  overflow: visible;                                /* [relevé] A */
+  position: relative;
+}
+.pane { position: relative; } /* [relevé] A, .home-vd_video-image-embed-wrapper */
+.pane[hidden] { display: none; }
+
+/* PROCÉDÉ — LE HALO N'EST PAS UN DÉGRADÉ, C'EST DEUX TACHES FLOUTÉES.
+   [relevé] A : dans le panneau d'onglets, l'élément porte
+   `.home-vd_collection-item-bg.blurs`, variante qui met `background-image:none`
+   et `z-index:-1` — la classe de base (dégradé bleu, blur 50px) N'EST PAS celle
+   qui s'applique. La lumière vient de deux enfants absolus :
+     .color-1 { opacity:.5; blur(60px); linear-gradient(#fff,#191919);
+                border-radius:100%; 60vw × 50vw; inset:auto auto -25% 0% }
+     .color-2 { opacity:.5; blur(75px); même dégradé;
+                border-radius:100%; 50vw × 40vw; inset:-10% 0% auto auto }
+   Une tache en bas à gauche, une en haut à droite, toutes deux blanches et non
+   bleues : c'est une lueur diagonale, pas une aura colorée. Reproduites en
+   ::before / ::after pour ne pas ajouter deux div vides. */
+.pane__halo {
+  position: absolute; inset: 0%; z-index: -1; /* [relevé] A, .blurs */
+  filter: blur(20px);                         /* [relevé] A, .blurs */
+  background-image: none;                     /* [relevé] A, .blurs */
+  border-radius: var(--rayon-halo);           /* [relevé] A */
+  max-height: 36rem;                          /* [relevé] A, .blurs */
+  overflow: hidden;                           /* [relevé] A */
+}
+.pane__halo::before, .pane__halo::after {
+  content: ""; position: absolute; opacity: .5; /* [relevé] A */
+  background-image: linear-gradient(#fff, #191919); /* [relevé] A */
+  border-radius: 100%;                              /* [relevé] A */
+}
+.pane__halo::before { z-index: 1; filter: blur(60px); width: 60vw; height: 50vw; inset: auto auto -25% 0%; } /* [relevé] A, .color-1 */
+.pane__halo::after  { z-index: 1; filter: blur(75px); width: 50vw; height: 40vw; inset: -10% 0% auto auto; } /* [relevé] A, .color-2 */
+
+/* [relevé] A, .home-vd_video-image-embed — le média est SERTI dans un cadre
+   translucide : fond #ffffff1a, filet #ffffff1f, rayon 1rem, padding 1rem.
+   [relevé] B l.420-426 : un bloc inline écrase ensuite le flex par
+   `max-width:1200px; width:100%; height:auto; margin:0 auto; display:block`.
+   Ce cadre est la raison pour laquelle la capture d'écran ne touche jamais le
+   bord : il y a toujours 16px de verre autour d'elle. */
+.pane__cadre {
+  position: relative; z-index: 5;               /* [relevé] A */
+  background-color: #ffffff1a;                  /* [relevé] A */
+  border: 1px solid #ffffff1f;                  /* [relevé] A */
+  border-radius: 1rem;                          /* [relevé] A */
+  padding: 1rem;                                /* [relevé] A */
+  display: block; width: 100%; height: auto;    /* [relevé] B l.421-424 */
+  max-width: 1200px; margin: 0 auto;            /* [relevé] B l.420, 425 */
+}
+.pane__media {
+  position: relative;
+  width: auto; max-width: 1168px; margin: 0 auto;              /* [relevé] B l.390-392 */
+  max-height: 625px;                                           /* [relevé] B l.395 */
+  min-height: 22rem;                                           /* [arbitrage] filet : un panneau
+                                                                  Lottie encore vide garderait
+                                                                  sinon une hauteur nulle et le
+                                                                  cadre s'effondrerait. */
+  border-radius: var(--rayon-media); overflow: hidden;         /* [relevé] B l.393-394 */
+  display: flex; justify-content: center; align-items: center; /* [relevé] B l.396-398 */
+}
+.pane__media img, .pane__media svg {
+  width: 100%; height: 100%; max-height: 625px; display: block; /* [relevé] B l.406-410 */
+  object-fit: contain;                                          /* [relevé] B l.411 */
+  border-radius: var(--rayon-media);                            /* [relevé] B l.409 */
+}
+
+/* PROCÉDÉ — cascade d'entrée en deux temps sur changement d'onglet.
+   [relevé] B l.88-118. Le média entre à 120 ms, le halo à 420 ms : 300 ms
+   d'écart, et le halo part de plus près (0.99 contre 0.965) donc bouge moins —
+   un fond flouté qui se déplacerait autant que le média baverait.
+   `both` conserve l'état final : l'élément reste visible une fois terminé. */
+@keyframes entree-media {
+  from { opacity: 0; transform: scale(.965); } /* [relevé] B l.89-92 */
+  to   { opacity: 1; transform: scale(1); }
+}
+@keyframes entree-halo {
+  from { opacity: 0; transform: scale(.99); }  /* [relevé] B l.99-102 */
+  to   { opacity: 1; transform: scale(1); }
+}
+.is-media-entering {
+  animation: entree-media var(--duree-entree) ease both; /* [relevé] B l.110 */
+  animation-delay: .12s;                                 /* [relevé] B l.111 */
+  will-change: opacity, transform;                       /* [relevé] B l.112 */
+}
+.is-blur-bg-entering {
+  animation: entree-halo var(--duree-entree) ease both;  /* [relevé] B l.115 */
+  animation-delay: .42s;                                 /* [relevé] B l.116 */
+  will-change: opacity, transform;                       /* [relevé] B l.117 */
+}
+
+/* == 8. BLOC TYPOGRAPHIQUE GÉANT ==========================================
+   [relevé] A, .new-home-large-heading. Deux couches d'image de fond découpées
+   sur le texte, et c'est la PREMIÈRE qui fait le travail : l'aplat gris-bleu
+   semi-opaque (#b5bcc8bf, alpha ≈ 75 %) est posé PAR-DESSUS l'arc-en-ciel
+   radial et le désature. Sans lui, le dégradé serait criard.
+   Le radial est ancré `at 100% 100%` : la couleur naît en bas à droite. */
+.chiffre {
+  background-color: var(--surface-page);                                                  /* [relevé] A, .new-home-center_section */
+  background-image: linear-gradient(var(--surface-page), var(--surface-bas-degrade) 88%); /* [relevé] A */
+  object-fit: fill;                                                                       /* [relevé] A */
+  margin-left: auto; margin-right: auto;                                                  /* [relevé] A */
+  padding: 0 var(--marge-laterale) 100px;                                                 /* [relevé] A */
+}
+.chiffre__inner {
+  display: flex; flex-flow: column; flex: 1; align-items: center;            /* [relevé] A, .new-home-center_container */
+  max-width: var(--largeur-contenu); margin-left: auto; margin-right: auto;  /* [relevé] A */
+}
+.chiffre__h2 { margin: 0; display: flex; flex-direction: column; align-items: center; } /* [relevé] A — les deux lignes sont des <div> dans un <h2> */
+.chiffre__mot {
+  position: relative; z-index: 9;                                /* [relevé] A */
+  font-family: var(--police-titre);                              /* [relevé] A — hérité de h2, non redéfini */
+  /* [arbitrage] `min()` et non `var(--t-geant)` seul. Le palier responsive suivant est à
+     991px, or « Integrations » à 186px mesure 1308px : entre 992 et ~1330px il débordait
+     de 142px de chaque côté, rogné SANS barre de défilement par `body{overflow-x:hidden}`
+     — invisible et inatteignable. À 1440px et au-delà, `min()` rend exactement les 186px
+     relevés ; en dessous il suit la largeur. La marge du chevauchement passe en `em` pour
+     rester proportionnelle (voir plus bas). Aggravant écarté au passage : hors ligne la
+     police de repli est plus large que Calsans, ce qui creusait encore le débordement. */
+  font-size: min(var(--t-geant), 13vw); line-height: 1.3; font-weight: 600; /* [relevé] A (graisse héritée de h2) */
+  text-align: center; margin-bottom: 0; padding-top: 0;          /* [relevé] A */
+  background-image:
+    linear-gradient(to bottom, #b5bcc8bf, #b5bcc8bf),
+    radial-gradient(circle farthest-corner at 100% 100%,
+      #fff 36%, #da7731 46%, #fff 54%, #85f9ff 64%, #3174da 73%, #fff 78%); /* [relevé] A */
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent; color: transparent;      /* [relevé] A */
+}
+/* PROCÉDÉ — les deux lignes se CHEVAUCHENT par marge négative : -90px à 186px,
+   soit environ la moitié de l'interligne, réduite à chaque seuil. */
+.chiffre__mot--bas { margin-top: -.484em; } /* [relevé] A, .new-home-large-heading.bottom —
+   exprimé en `em` : -.484em vaut exactement -90px à 186px, la valeur relevée, mais suit
+   désormais la taille fluide ci-dessus au lieu de rester figé quand elle diminue. */
+.chiffre__texte {
+  position: relative; z-index: 10;                        /* [relevé] A, .body_paragraph.home.is-integrations */
+  max-width: 1015px; margin-top: 20px; text-align: center; /* [relevé] A */
+  font-size: var(--t-corps-xl);                           /* [relevé] A, 24px */
+  color: var(--texte-clair); font-weight: 300; line-height: 137%; /* [relevé] A, .body_paragraph.home */
+}
+/* [relevé] A, .home-cta_image — la section ne s'arrête PAS au paragraphe : une
+   planche de logos d'intégrations la suit, puis le lien « Developer resources ».
+   Les omettre laissait le chiffre géant flotter au-dessus du vide. */
+.chiffre__planche { width: 100%; max-width: 1015px; margin: 40px auto 0; } /* [arbitrage] largeur alignée sur le paragraphe */
+
+/* LIEN TEXTE — [relevé] A : `.text-link_wrapper { display:flex; gap:8px }` et
+   `.text-link-text { color:#39f; font-size:18px }`. Le chevron est un SVG 8×15
+   à `stroke:#3399FF`, repris tel quel. Motif utilisé trois fois dans la page :
+   Developer resources · Read our customer stories · View the full report. */
+.lien-texte { display: flex; justify-content: center; margin-top: 32px; } /* [arbitrage] centrage */
+.lien-texte--gauche { justify-content: flex-start; margin-top: 8px; }
+.lien-texte__a {
+  display: inline-flex; align-items: center; gap: 8px; /* [relevé] A */
+  color: var(--texte-lien-bleu);                       /* [relevé] A, #39f */
+  font-size: 18px;                                     /* [relevé] A */
+}
+.lien-texte__a svg { transition: transform var(--duree-fond) var(--courbe-sortie); } /* [arbitrage] */
+.lien-texte__a:hover svg { transform: translateX(3px); }                             /* [arbitrage] */
+
+/* == 9. CARROUSEL DE TÉMOIGNAGES =========================================== */
+.temoignages {
+  background-color: var(--surface-page);                                                  /* [relevé] A, .testimonial-trusted_section */
+  background-image: linear-gradient(var(--surface-page), var(--surface-bas-degrade) 88%); /* [relevé] A */
+  padding: 100px var(--marge-laterale);                                                   /* [relevé] A */
+}
+.temoignages__groupe {
+  display: flex; flex-flow: column; flex: 1;                                 /* [relevé] A, .customer-group */
+  max-width: var(--largeur-contenu); margin-left: auto; margin-right: auto;  /* [relevé] A */
+  position: relative;                                                        /* [relevé] A */
+}
+/* [relevé] A, ._0630-header-layout — grille 1.75fr / 1fr, align-items:end.
+   PIÈGE DÉJÀ TOMBÉ ICI : cette grille n'a qu'UN SEUL enfant dans la source
+   (`.hero-group new`), qui contient le titre, le paragraphe ET le lien empilés.
+   La seconde colonne reste VIDE. Ce n'est donc pas un vis-à-vis titre/texte
+   mais un cadrage à gauche sur 64 % de la largeur — deux compositions très
+   différentes, pour un CSS identique. */
+.temoignages__entete {
+  display: grid; grid-template-columns: 1.75fr 1fr; /* [relevé] A */
+  column-gap: 3rem; row-gap: 16px;                  /* [relevé] A */
+  align-items: end;                                 /* [relevé] A */
+  padding-bottom: 64px;                             /* [relevé] A */
+}
+.temoignages__col { display: flex; flex-direction: column; gap: 16px; } /* [relevé] A, .hero-group */
+.temoignages__col .titre-l { text-align: left; }
+
+.slider { position: relative; margin-bottom: 96px; } /* [relevé] A, ._0630-slider_component */
+.slider__masque { border-radius: var(--rayon-slider); overflow: hidden; } /* [relevé] A, ._0630-slider_mask { 1.25rem } */
+.slider__piste { position: relative; }
+.slide {
+  position: relative; min-height: 34rem; /* [arbitrage] hauteur : le slider Webflow la calcule au JS */
+  isolation: isolate; /* [arbitrage] INDISPENSABLE ici : l'image de fond relevée est en
+                         `z-index:-1`, ce qui la fait passer derrière le fond de la
+                         SECTION s'il n'existe pas de contexte d'empilement local. Dans
+                         la source, le `w-slide` de Webflow en crée un incidemment.
+                         Sans cette ligne, l'image disparaît — constaté au rendu. */
+}
+.slide[hidden] { display: none; }
+.slide__image { position: absolute; inset: 0%; z-index: -1; } /* [relevé] A, ._0630-slider_tab-image-wrapper */
+.slide__image img {
+  object-fit: cover; object-position: 50% 100%; /* [relevé] A, ._0630-slider_bg-image —
+                                                   l'ancrage en bas garde le sujet visible
+                                                   quand la boîte se raccourcit */
+  width: 100%; height: 100%;
+}
+/* PROCÉDÉ — VOILE DÉGRADÉ DE LISIBILITÉ. Un dégradé qui part du noir plein en
+   bas, reste presque opaque jusqu'à 22 %, puis disparaît : le texte posé en bas
+   reste lisible sans assombrir l'image entière. Le `height:102%` et
+   l'`inset:-1% 0 0` évitent le liseré d'anti-aliasing en bordure. */
+.slide__voile {
+  position: absolute; z-index: 1;
+  background-image: linear-gradient(0deg, #000, #000000e0 22%, #0000); /* [relevé] A, ._0630-slider_bg-overlay */
+  width: 100%; height: 102%;                                          /* [relevé] A */
+  inset: -1% 0% 0%;                                                   /* [relevé] A */
+}
+.slide__contenu {
+  position: relative; z-index: 2;
+  display: flex; justify-content: center; align-items: flex-end; /* [relevé] A, ._0630-slider_slide-content */
+  height: 100%; min-height: 34rem;
+  padding-bottom: 3rem;                                          /* [relevé] A */
+}
+.slide__contenu > * { }
+.slide__contenu {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 16px; /* [relevé] A, ._0630-slider_content-wrapper */
+  place-items: center;                                      /* [relevé] A */
+  padding-left: 3rem; padding-right: 3rem;                  /* [relevé] A */
+  text-align: left;                                         /* [relevé] A */
+  align-items: end;
+}
+.slide__col { display: flex; flex-direction: column; gap: 16px; width: 100%; } /* [relevé] A, grid-gap 16px */
+/* [relevé] A, ._0630-slider_quote-block-wrapper — la colonne de droite n'est pas
+   une simple pile : un grand guillemet en SVG blanc est posé EN REGARD du bloc
+   citation + signature, pas au-dessus. */
+.slide__col--citation { flex-direction: row; align-items: flex-start; gap: 1rem; }
+.slide__guillemet { width: 2rem; flex: none; opacity: .9; } /* [arbitrage] taille */
+.slide__citation-bloc { display: flex; flex-direction: column; }
+.slide__lien { display: inline-flex; align-items: center; gap: .5rem; font-size: var(--t-corps-s); color: var(--texte-lien); } /* [arbitrage] ._0630-slider_link-text n'a pas de règle propre */
+.slide__citation { margin: 0; color: var(--texte-primaire); font-size: var(--t-citation); font-weight: 300; } /* [relevé] A, .customer-slider_customer-quote */
+.slide__auteur { color: var(--texte-nom); margin-top: 12px; margin-bottom: 0; font-size: 14px; font-weight: 500; } /* [relevé] A, .customer-slider_customer-name */
+
+/* PROCÉDÉ — la navigation du carrousel n'est NI des puces NI des libellés.
+   [relevé] A : `._0630-slider_arrow { display:none }` masque les flèches
+   Webflow ; `._0630-slider_custom-slide-dot-wrapper` est un bloc de 7.5rem de
+   haut souligné d'un trait de 2px à opacité .4, et son contenu est le LOGO de
+   la référence (`._0630-slider_dot-image { width:5rem; max-width:none }`).
+   `.fs-sliderdots_active` remonte l'opacité à 1 ET passe le trait en --primary-5
+   — les deux, la source le déclare deux fois de suite dans la même règle.
+   Le repère est donc la marque elle-même : on reconnaît le client avant de
+   cliquer, ce qu'un mot ne fait pas aussi vite. */
+.slider__nav {
+  display: flex; flex-direction: row; justify-content: center; align-items: center; /* [relevé] A, ._0630-slider_wf-nav */
+  gap: 2rem;      /* [relevé] A */
+  margin-top: 2rem;
+}
+.slider__puce {
+  display: flex; justify-content: center; align-items: center;   /* [relevé] A */
+  height: 7.5rem;                                                /* [relevé] A */
+  padding: 1rem 2rem;                                            /* [relevé] A */
+  border-bottom: 2px solid var(--texte-lien);                    /* [relevé] A, var(--gray--300) */
+  opacity: .4;                                                   /* [relevé] A */
+  transition: opacity var(--duree-fond), border-bottom-color var(--duree-fond); /* [arbitrage] */
+}
+.slider__puce img { width: 5rem; max-width: none; height: auto; } /* [relevé] A, ._0630-slider_dot-image */
+.slider__puce.is-active {
+  border-bottom-color: var(--texte-accent); /* [relevé] A, .fs-sliderdots_active { border-bottom-color: var(--primary-5) } */
+  opacity: 1;                               /* [relevé] A, la même règle remet l'opacité à 1 */
+}
+
+/* == 10. BANDE D'APPEL À L'ACTION ========================================== */
+.cta { position: relative; }
+.cta__inner {
+  display: flex; flex-flow: column; justify-content: center; align-items: center; /* [relevé] A, .home-footer_cta-animation-group */
+  max-width: var(--largeur-cadre); margin: 0 auto;                                /* [relevé] A */
+  padding-left: var(--marge-laterale); padding-right: var(--marge-laterale);      /* [relevé] A */
+}
+.cta__contenu {
+  display: flex; flex-flow: column; justify-content: center; align-items: center; /* [relevé] A, .group_home-cta-content */
+  gap: 32px;                                       /* [relevé] A */
+  align-self: stretch; height: auto;               /* [relevé] A */
+  max-width: var(--largeur-contenu);               /* [relevé] A, .home-cta_container */
+  margin: 100px auto 0;                            /* [relevé] A, margin-top: 100px */
+}
+/* [relevé] A, `.heading_medium.is-new-home-cta` : 65px / 110 %, max-width 600px,
+   radial-gradient doré découpé sur le texte. Même mécanique que le bloc géant,
+   mais un radial SIMPLE — pas de couche de désaturation — et une palette CHAUDE
+   dans une page entièrement froide. C'est le seul élément doré de la page. */
+.titre-cta {
+  margin: 0; max-width: 600px; text-align: center;              /* [relevé] A */
+  font-family: var(--police-corps);                             /* [relevé] A, .heading_medium { Geist } */
+  font-size: var(--t-cta); font-weight: 600; line-height: 110%; /* [relevé] A */
+  text-transform: capitalize;                                   /* [relevé] A, h3 */
+  background-image: radial-gradient(circle, var(--or-clair), var(--or-milieu) 51%, var(--or-sombre)); /* [relevé] A */
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent; color: transparent;     /* [relevé] A */
+}
+/* [relevé] A, .home-demo-form { flex-flow:column; justify-content:center;
+   align-items:center; margin-inline:auto; display:flex } — le CTA ne propose PAS
+   deux boutons : il pose un FORMULAIRE de demande de démo, en colonne étroite
+   centrée sous le titre. Champs et libellés relevés au rendu du site en ligne.
+   [relevé] les champs Marketo font 350px de large, radius 5px, filet #0677D4,
+   fond blanc, texte noir, ombre `2px 2px 0 rgba(0,0,0,.05)` ; le bouton reprend
+   le même rayon et la même ombre, fond blanc, texte noir, graisse 600. */
+.demo { display: flex; flex-direction: column; align-items: flex-start; gap: 1rem; margin: 0 auto; } /* [relevé] A */
+.demo__champ { display: flex; flex-direction: column; gap: 4px; }
+.demo__label { font-size: 13px; color: var(--texte-lien); }            /* [relevé] A, .mktoLabel span { color:#B0B1C3 } */
+.demo__label--fort { font-weight: 700; color: var(--texte-primaire); } /* [relevé] rendu : ce seul libellé est en gras */
+.demo__requis { color: var(--texte-lien); }
+.demo__input {
+  width: 350px; max-width: 100%;                       /* [relevé] A, .mktoForm input[type=email] */
+  padding: 12px 12.453px 14px 13px;                    /* [relevé] A — valeur non arrondie de la source */
+  border-radius: 5px; border: 1px solid #0677D4;       /* [relevé] A */
+  background: #fff; color: #000;                       /* [relevé] A */
+  box-shadow: 2px 2px 0 0 #0000000d;                   /* [relevé] A */
+  font: inherit; font-size: 16px;
+}
+.demo__input--select { padding: 12px 13px; color: #444; }
+.demo__envoi {
+  align-self: flex-start;                    /* [relevé] rendu : le Submit s'aligne au bord
+                                                GAUCHE des champs ; `.btn` porte un
+                                                `align-self:center` relevé ailleurs qui le
+                                                recentrerait ici. */
+  border-radius: 5px;                        /* [relevé] A, .mktoButtonWrap.mktoSimple .mktoButton */
+  color: #000; background-color: #fff;       /* [relevé] A */
+  font-weight: 600;                          /* [relevé] A */
+  box-shadow: 2px 2px 0 0 #0000000d;         /* [relevé] A */
+  padding: 10px 20px;                        /* [relevé] A */
+  margin-top: .5rem;
+}
+/* [relevé] A, .new-home_footer-image-wrapper : `linear-gradient(0deg, #000,
+   #0000 35%)` — un fondu au noir sur les 35 % inférieurs, qui raccorde l'image
+   au pied sans couture. NUANCE IMPORTANTE : la source le pose en `background-image`
+   du WRAPPER, donc SOUS l'image — il n'a d'effet que si le média est translucide
+   (c'est une vidéo dans la source).
+   [arbitrage] ici le même dégradé est posé PAR-DESSUS via ::after, sinon il
+   n'aurait aucun effet sur une image opaque. Valeur relevée, position arbitrée. */
+.cta__image { position: relative; width: 100%; margin-top: 60px; }
+.cta__image::after {
+  content: ""; position: absolute; inset: 0;
+  background-image: linear-gradient(0deg, #000, #0000 35%);
+}
+.cta__image img { width: 100%; height: 34rem; object-fit: cover; object-position: 50% 40%; } /* [arbitrage] hauteur */
+
+/* == 11. PIED ============================================================== */
+/* [relevé] A — PIÈGE DE CASCADE, le même que pour le hero : `.footer-section`
+   déclare `padding: 100px 2rem`, mais l'élément porte AUSSI `.footer_bg--color`,
+   qui écrase le padding vertical par `1.5rem`, met `backdrop-filter: none` et
+   passe la couleur du texte à `--white-smoke`. Lire la seule classe de base
+   aurait donné un pied trois fois plus haut. En ≤991px, ce padding repasse à 40px. */
+.pied {
+  padding: 1.5rem var(--marge-laterale);  /* [relevé] A, .footer-section.footer_bg--color */
+  color: var(--texte-pied);               /* [relevé] A, var(--white-smoke) */
+  -webkit-backdrop-filter: none; backdrop-filter: none; /* [relevé] A */
+  position: relative;                     /* [relevé] A, .footer-section */
+  margin-left: auto; margin-right: auto;  /* [relevé] A */
+}
+/* PROCÉDÉ — le pied ne pose pas un fond opaque : il FLOUTE ce qui passe
+   dessous. [relevé] A, .footer_home-special-bg { backdrop-filter: blur(20px);
+   background-color:#0b0b0d9c; position:absolute; inset:0; z-index:-1 }.
+   Combiné à l'image du CTA qui déborde, cela produit un raccord vitreux. */
+.pied__voile {
+  position: absolute; inset: 0%; z-index: -1;      /* [relevé] A */
+  width: 100%; height: 100%;                       /* [relevé] A */
+  -webkit-backdrop-filter: blur(20px); backdrop-filter: blur(20px); /* [relevé] A */
+  background-color: var(--surface-voile);          /* [relevé] A */
+}
+.pied__logo-wrapper {
+  display: flex; align-items: flex-start; gap: 2px;
+  max-width: var(--largeur-contenu);                /* [relevé] A, .wrapper--footer-logo */
+  margin-left: auto; margin-right: auto;            /* [relevé] A */
+  padding-bottom: 2rem;                             /* [arbitrage] */
+}
+/* [relevé] A — le logo du pied n'est pas un texte : c'est une image distante
+   avec srcset (PNG 500w / WEBP 1557w) suivie d'un `®` en .registered-mark. */
+.pied__logo-img { width: 160px; height: auto; }     /* [arbitrage] largeur ; la source la laisse au flux */
+.pied__marque-deposee { font-size: 12px; color: var(--texte-pied); line-height: 1; padding-top: 4px; }
+.pied__inner {
+  width: 100%; max-width: var(--largeur-contenu); /* [relevé] A, .content-container_1200 */
+  margin-left: auto; margin-right: auto;          /* [relevé] A */
+  display: block; position: relative;             /* [relevé] A */
+}
+.pied__abonnement {
+  display: grid; grid-template-columns: 1fr 1fr; /* [relevé] A, .subscribe_footer-wrapper */
+  gap: 80px;                                     /* [relevé] A */
+  padding-top: 16px; padding-bottom: 40px;       /* [relevé] A */
+}
+.pied__abonnement-col { display: flex; flex-direction: column; gap: 16px; } /* [relevé] A, .subscribe_footer-content--wrapper */
+/* [relevé] A, .module_h4 — le titre d'abonnement est en CALSANS 32px/137.5 %,
+   pas dans la police de corps : c'est le seul titre du pied qui change de
+   famille. Son sous-titre (.footer_form-subtext) est en 16px GRAS, gris 80. */
+.pied__titre-abo {
+  margin: 0; color: var(--texte-primaire);                       /* [relevé] A, var(--gray--100) */
+  font-family: var(--police-titre);                              /* [relevé] A, Calsans */
+  font-size: 32px; font-weight: 600; line-height: 137.5%;        /* [relevé] A */
+}
+.pied__sous-titre {
+  margin: 0; max-width: 900px; color: var(--texte-secondaire);   /* [relevé] A, var(--gray--80) */
+  letter-spacing: .25px;                                         /* [relevé] A */
+  font-size: 16px; font-weight: 600; line-height: 24px;          /* [relevé] A */
+}
+/* [relevé] A, .footer_form-description — la mention de consentement est SOUS la
+   grille d'abonnement, pas dans la colonne du formulaire : 12px, gras, gris 50,
+   letter-spacing .5px. Texte verbatim dans le HTML. */
+.pied__mention-form {
+  margin: 0 0 32px; color: var(--texte-mention);                 /* [relevé] A, var(--gray--50) */
+  letter-spacing: .5px; font-size: 12px; font-weight: 600; line-height: 137.5%; /* [relevé] A */
+}
+.pied__form { display: flex; flex-direction: column; gap: 8px; }        /* [arbitrage] */
+.visuellement-cache {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip-path: inset(50%); white-space: nowrap;
+}
+/* [relevé] A — le formulaire Marketo du pied est en RANGÉE (`flex-direction:row`)
+   sur fond #0b0b0d, champ blanc de 350px à filet #0677D4 et bouton blanc. */
+.pied__form-ligne { display: flex; gap: 12px; flex-wrap: wrap; align-items: stretch; }
+.pied__input {
+  width: 350px; max-width: 100%;                     /* [relevé] A */
+  padding: 12px 12.453px 14px 13px;                  /* [relevé] A */
+  border: 1px solid #0677D4; border-radius: 5px;     /* [relevé] A */
+  background: #fff; color: #000; font: inherit;      /* [relevé] A */
+  box-shadow: 2px 2px 0 0 #0000000d;                 /* [relevé] A */
+}
+.pied__envoi {
+  border-radius: 5px; color: #000; background-color: #fff;  /* [relevé] A, .mktoSimple .mktoButton */
+  font-weight: 600; padding: 10px 20px;                     /* [relevé] A */
+  box-shadow: 2px 2px 0 0 #0000000d;                        /* [relevé] A */
+}
+
+/* PIED — GRILLE DES COLONNES, relevée cellule par cellule.
+   [relevé] A : `.footer_links-column-wrapper { grid-template-columns: auto ×5;
+   grid-template-rows: auto 1fr auto; column-gap:32px; row-gap:64px;
+   place-items:start; border-bottom:1px solid var(--gray--30);
+   margin-bottom:40px; padding-bottom:40px }`, puis Webflow pose chaque zone :
+     #…125d → 1/1/4/2  la carte promo, colonne 1 sur les 3 rangées
+     #…274  → 1/2/4/3  Platform, colonne 2 sur les 3 rangées (15 liens)
+     #…403  → 1/3/2/4  Harness AI
+     #…293  → 2/3/3/4  Pricing
+     #…29c  → 3/3/4/4  For Developers
+     #…2b5  → 1/4/4/5  Resources
+     #…2d2  → 1/5/4/6  Company
+   Trois familles COURTES empilées dans la colonne 3 : c'est ce qui équilibre la
+   rangée face à Platform, qui à elle seule fait la hauteur du bloc. */
+.pied__colonnes {
+  display: grid;
+  grid-template-columns: auto auto auto auto auto;                /* [relevé] A */
+  grid-template-rows: auto 1fr auto;                              /* [relevé] A */
+  column-gap: 32px; row-gap: 64px;                                /* [relevé] A */
+  place-items: start;                                             /* [relevé] A */
+  border-bottom: 1px solid var(--bordure-pied);                   /* [relevé] A, var(--gray--30) */
+  margin-bottom: 40px; padding-bottom: 40px;                      /* [relevé] A */
+}
+.promo                { grid-area: 1 / 1 / 4 / 2; } /* [relevé] A */
+.pied__col--platform  { grid-area: 1 / 2 / 4 / 3; } /* [relevé] A */
+.pied__col--ai        { grid-area: 1 / 3 / 2 / 4; } /* [relevé] A */
+.pied__col--pricing   { grid-area: 2 / 3 / 3 / 4; } /* [relevé] A */
+.pied__col--dev       { grid-area: 3 / 3 / 4 / 4; } /* [relevé] A */
+.pied__col--res       { grid-area: 1 / 4 / 4 / 5; } /* [relevé] A */
+.pied__col--company   { grid-area: 1 / 5 / 4 / 6; } /* [relevé] A */
+
+.pied__col { display: flex; flex-direction: column; }
+/* [relevé] A, .footer-links-column_title : 15px / 400 / 137.5 %, BLANC pur,
+   margin-bottom 4px — un titre de colonne à peine plus gros que ses liens ;
+   c'est la couleur (blanc contre #a2a4a9) qui le distingue, pas la graisse. */
+.pied__col-titre { margin: 0 0 4px; color: #fff; font-size: 15px; font-weight: 400; line-height: 137.5%; }
+/* [relevé] A, .footer-links-column_label : .875rem, #a2a4a9, letter-spacing .25px,
+   line-height 100 %, flex align-center — et l'espacement vient d'un
+   `margin-bottom:16px` sur .footer-link, pas d'un gap. */
+.pied__col a {
+  display: flex; align-items: center; flex-wrap: wrap; gap: 8px;
+  margin-bottom: 16px;
+  font-size: .875rem; color: var(--texte-pied-lien); letter-spacing: .25px; line-height: 100%;
+  transition: color var(--duree-fond);
+}
+.pied__col a:hover { color: var(--texte-primaire); }
+/* [relevé] A, .nav-dropdown_badge.is-free — seuls AI SRE et Database DevOps
+   portent « NEW » dans la colonne Platform. */
+.pied__badge {
+  padding: 2px 6px; border-radius: 999px;
+  font-size: 9px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase;
+  color: var(--texte-accent); background-color: #00ade41f;
+}
+
+/* PROCÉDÉ — BORDURE EN DÉGRADÉ, sans `border-image`.
+   [relevé] A : `.stateofdev-promo-section--border` porte le dégradé en
+   `background-image`, un `padding: 1px` et un `border-radius`. L'enfant
+   `--bg` est opaque et arrondi lui aussi : il recouvre tout sauf le liseré
+   de 1px laissé par le padding. C'est ce liseré qui EST la bordure.
+   Deux variantes dans la source :
+     · hors pied : linear-gradient(165deg, #ebf222 14%, #5dffff73 23%,
+       #242424 36% 72%, #80f77759 79%, #5dffff 90%) — un dégradé multicolore
+       dont les longues plages sombres (36 %→72 %) font paraître les extrémités
+       lumineuses comme des reflets ;
+     · dans le pied (notre cas) : linear-gradient(#6cccff99, #6cccff99),
+       soit un bleu translucide PLAT — même mécanisme, rendu discret. */
+/* PIÈGE DE CASCADE DÉJÀ TOMBÉ ICI : la carte du pied porte TROIS classes,
+   `.stateofdev-promo-section--bg.is-footer.is-engx-26`, et c'est la dernière qui
+   commande. Elle inverse tout : fond CRÈME #fdfcf9 au lieu de --dark-mode-bg,
+   rayon 1.5rem au lieu de 8px, padding 1rem (+1.5rem haut/bas) au lieu de 60px.
+   Dans une page entièrement noire, cette vignette est le SEUL bloc clair — et le
+   seul en Newsreader, un romain à empattements. Lire la classe de base seule
+   donnait une carte sombre de 60px de padding : l'exact contraire. */
+.promo { width: 230px; display: flex; } /* [relevé] A, .stateofdev-promo-container */
+.promo__bord {
+  background-image: linear-gradient(var(--bord-promo), var(--bord-promo)); /* [relevé] A, .is-footer */
+  background-clip: padding-box;                    /* [relevé] A */
+  border-radius: var(--rayon-promo);               /* [relevé] A, .is-footer { 1.5rem } */
+  padding: 1px;                                    /* [relevé] A — l'épaisseur de la bordure */
+  width: 100%;                                     /* [relevé] A, .is-footer */
+  margin-left: 0;                                  /* [relevé] A */
+  display: block;                                  /* [relevé] A */
+}
+.promo__fond {
+  background-color: #fdfcf9;                       /* [relevé] A, .is-engx-26 */
+  border-radius: var(--rayon-promo);               /* [relevé] A, .is-engx-26 { 1.5rem } */
+  padding: 1.5rem 1rem;                            /* [relevé] A, .is-footer 1rem + .is-engx-26 1.5rem */
+  overflow: hidden; position: relative;            /* [relevé] A */
+  display: flex; flex-flow: column; justify-content: center; /* [relevé] A */
+  width: 100%;
+}
+.promo__banniere {
+  display: flex; flex-flow: column; align-items: flex-start; /* [relevé] A, .stateof_card-content-wrapper */
+  gap: .75rem;                                               /* [arbitrage] la source empile sans gap déclaré */
+  position: relative; width: 100%;                           /* [relevé] A */
+}
+.promo__texte { display: flex; flex-direction: column; }
+/* [relevé] A, .stateofdev_hero-tagline.is-footer.engx : Newsreader 12px, NOIR,
+   graisse 400, letter-spacing .75px, margin-bottom 2px. Hors pied, la même
+   classe fait 36px avec 9px d'interlettrage — un filet graphique. */
+.promo__tagline {
+  margin: 0 0 2px; padding: 0;
+  color: #000;                                   /* [relevé] A, .engx */
+  font-family: var(--police-serif);              /* [relevé] A, Newsreader */
+  font-size: 12px; font-weight: 400;             /* [relevé] A */
+  letter-spacing: .75px;                         /* [relevé] A */
+  text-transform: uppercase;                     /* [relevé] A */
+  display: block;                                /* [relevé] A */
+}
+.promo__titre {
+  margin: 0; color: #000;                                  /* [relevé] A, .engx */
+  font-family: var(--police-serif);                        /* [relevé] A, Newsreader */
+  font-size: 28px; font-weight: 400; line-height: 120%;    /* [relevé] A */
+  text-transform: none;                                    /* [relevé] A — l'engx n'est pas capitalisé */
+}
+.promo__action { flex: none; }
+/* [relevé] A, .text-style_underline.is-stateof-card_text-link { border-bottom:
+   1px solid #4d8ffa } — le lien de la carte claire est souligné d'un filet
+   bleu, pas de la décoration par défaut. */
+.promo__action .lien-texte__a {
+  font-size: 12px; color: #4d8ffa; border-bottom: 1px solid #4d8ffa; gap: 4px;
+}
+/* [relevé] A, .stateof_footer-card-bg-element._3 { height:45px; position:
+   relative; inset:auto 0 auto auto } — l'ornement se cale à droite dans le flux. */
+.promo__ornement { height: 45px; width: auto; margin-left: auto; }
+
+.pied__bas {
+  display: flex; flex-wrap: wrap; justify-content: space-between; /* [relevé] A, .sub_footer-wrapper */
+  gap: 16px;                                                      /* [relevé] A */
+  margin-top: 50px;                                               /* [relevé] A */
+  align-items: flex-start;                                        /* [relevé] A, .footer_privacy-wrapper */
+  width: 100%;                                                    /* [relevé] A */
+}
+.pied__mentions { margin: 0; color: var(--texte-tertiaire); font-size: 12px; }
+.pied__mentions-liens { display: flex; gap: 1.5rem; flex-wrap: wrap; align-items: center; }
+.pied__mentions-liens a {
+  display: inline-flex; align-items: center; gap: 6px;
+  color: var(--texte-tertiaire); font-size: 12px; transition: color var(--duree-fond);
+}
+.pied__mentions-liens a:hover { color: var(--texte-primaire); }
+/* [relevé] A — « Opt Out » porte le pictogramme privacyoptions.svg (le badge
+   bleu/blanc réglementaire), pas une simple flèche. */
+.pied__optout { height: 12px; width: auto; }
+/* [arbitrage] les cinq réseaux de la source (Github, LinkedIn, Facebook,
+   Instagram, X) sont des SVG inline de 32×32 en `fill:currentColor` ; redessinés
+   ici en glyphes de 20px, même famille de destinations. */
+.pied__social { display: flex; gap: 1rem; align-items: center; }
+.pied__social a { color: var(--texte-pied); opacity: .85; transition: opacity var(--duree-fond); }
+.pied__social a:hover { opacity: 1; }
+
+/* == 12. RESPONSIVE =========================================================
+   Seuils Webflow 991 / 767 / 479. ATTENTION : `.heading_large` ne bouge PAS à
+   991px dans la source — son passage à 2rem se fait à 767px. Vérifié par la
+   position de la règle dans la feuille (MQ 991 : l.8664-19551 · MQ 767 :
+   l.19551-33474 · MQ 479 : l.33474+). */
+@media (max-width: 991px) {
+  .hero { padding-top: 60px; padding-bottom: 100px; } /* [relevé] A, .module-hero_section.new-home_hero en ≤991 */
+  .hero__layout { z-index: 50; }                      /* [relevé] A, .home-hero_layout en ≤991 */
+  .hero__media-video { top: 20%; right: 0%; }         /* [relevé] A, `.mobile-static.animation` en ≤991 */
+  .nav { padding-left: 0; padding-right: 0; }         /* [relevé] A, .nav_section en ≤991 */
+  .nav__inner { padding: 0 1.25rem; }                 /* [arbitrage] compense le padding retiré */
+  .nav__menu { display: none; }                       /* [arbitrage] la source bascule en menu burger */
+  .chiffre__mot { font-size: min(118px, 13vw); }      /* [relevé] A — `min()` pour la même
+     raison qu'au-dessus : à 768px, 118px donnent un mot de 830px qui débordait de 31px
+     de chaque côté. À 991px la valeur relevée s'applique intacte. */
+  .chiffre__mot--bas { margin-top: -60px; }           /* [relevé] A */
+  .titre-cta { font-size: 50px; }                     /* [relevé] A, .heading_medium.is-new-home-cta en ≤991 */
+  .vd__onglets { overflow: scroll; }                  /* [relevé] A, .home-vd_tabs-list en ≤991 */
+  .carte { min-height: 6rem; }                        /* [relevé] B l.436 */
+  .pane__cadre { max-width: 100%; }                   /* [relevé] B l.428-430 */
+  .pane__media, .pane__media img { border-radius: 6px; } /* [relevé] B l.440 */
+  .pied { padding-top: 40px; }                        /* [relevé] A, .footer-section.footer_bg--color en ≤991 */
+  /* [arbitrage] la grille à zones explicites du pied ne survit pas à un
+     changement de nombre de colonnes : on la remet en placement automatique. */
+  .pied__colonnes { grid-template-columns: repeat(3, minmax(0, auto)); grid-template-rows: none; }
+  .promo, .pied__col--platform, .pied__col--ai, .pied__col--pricing,
+  .pied__col--dev, .pied__col--res, .pied__col--company { grid-area: auto; }
+}
+@media (max-width: 767px) {
+  .titre-xl, .titre-l { font-size: 2rem; }            /* [relevé] A, .heading_large en ≤767 */
+  .titre-m { font-size: 24px; line-height: 1.2em; }   /* [relevé] A, .heading_medium en ≤767 */
+  .pied__titre-abo { font-size: 24px; }               /* [arbitrage] */
+  .vd { padding-top: 40px; }                          /* [relevé] A, .section.home-value-drivers en ≤767 */
+  .vd__ancre { padding-bottom: 60px; }                /* [arbitrage] */
+  .vd__onglets { flex-flow: column; gap: 8px; overflow: auto; } /* [relevé] A — les cartes S'EMPILENT */
+  /* [arbitrage] conséquence de l'empilement : les largeurs fixes par module
+     (130 / 220 / 180px, 30 %) écraseraient les cartes une fois l'axe principal
+     vertical. Toutes repassent en pleine largeur. */
+  .vd__onglets .carte,
+  .vd__onglets--devops .carte, .vd__onglets--testing .carte,
+  .vd__onglets--security .carte, .vd__onglets--cost .carte,
+  .vd__onglets--cost .carte.is-active { width: 100%; max-width: none; flex: none; height: auto; }
+  .pane__media { min-height: 12rem; }
+  .vd__intro { font-size: 14px; }                     /* [relevé] A, `.body_paragraph.…mobile-14` en ≤767 */
+  .chiffre__mot { font-size: 86px; }                  /* [relevé] A */
+  .chiffre__mot--bas { margin-top: -40px; }           /* [relevé] A */
+  /* [relevé] A : c'est à 767px — pas à 991 — que la grille 55/30 tombe. */
+  .hero__layout { display: block; grid-template-columns: 1fr; justify-items: center; gap: 2.5rem; }
+  .hero { padding-bottom: 60px; }                     /* [relevé] A, .new-home_hero en ≤767 */
+  .hero__media-video { top: 10%; right: -15%; z-index: 0; max-height: 400px; }
+  /* [relevé] A : `.home_hero-lottie-embed` passe à top:10%/right:-15%, et la
+     variante `.mobile-static.animation` à top:40%/right:14% avec z-index:0 —
+     le média repasse DEVANT le fond au lieu de rester derrière.
+     [relevé] B : max-height 400px sur la vidéo en @media(max-width:768px). */
+  .temoignages__entete { grid-template-columns: 1fr; }
+  .slide__contenu { grid-template-columns: 1fr; padding-left: 1.5rem; padding-right: 1.5rem; }
+  .slider__nav { flex-wrap: wrap; gap: 1rem; }
+  .slider__puce { height: auto; padding: .75rem 1rem; }
+  .slider__puce img { width: 3.5rem; }
+  .pied__abonnement { grid-template-columns: 1fr; gap: 2.5rem; }
+  .pied__colonnes { grid-template-columns: repeat(2, minmax(0, auto)); row-gap: 2.5rem; }
+  .hero, .vd, .chiffre, .temoignages, .cta__inner, .pied { padding-left: 1.25rem; padding-right: 1.25rem; }
+  .cta__contenu { margin-top: 60px; }
+  .demo { width: 100%; }
+  .demo__champ, .demo__input { width: 100%; }
+}
+@media (max-width: 479px) {
+  .titre-xl, .titre-l { font-size: 2rem; margin-bottom: 1rem; }  /* [relevé] A, .heading_large en ≤479 */
+  .titre-cta { font-size: 40px; }                                /* [relevé] A */
+  .chiffre__mot { font-size: 50px; }                             /* [relevé] A */
+  .chiffre__mot--bas { margin-top: -20px; margin-bottom: 20px; } /* [relevé] A */
+  .vd__heading { padding-bottom: 1.5rem; }                       /* [relevé] A, .home-loop_heading-group en ≤479 */
+  .pane__media, .pane__media img { border-radius: 8px; }         /* [relevé] A, .home-vd_video-image-embed en ≤479 */
+  /* [relevé] A : `.home-hero_layout` passe en flex colonne centrée et
+     `.bmargin` tombe à 0 ; le média s'étire des DEUX côtés. */
+  .hero__layout { display: flex; flex-direction: column; align-items: center; text-align: center; margin-bottom: 0; }
+  .hero__media-video { top: 29%; right: -22%; left: -44%; z-index: 0; width: auto; }
+  .btn, .btn--hero { font-size: 1rem; padding: .875rem 1.25rem; } /* [arbitrage] */
+  .hero__cta { width: 100%; }
+  .marquee { height: 4rem; }
+  .pied__colonnes { grid-template-columns: 1fr; }
+  .slide { min-height: 28rem; }
+  .slide__contenu { min-height: 28rem; }
+  .slide__col--citation { flex-direction: column; gap: .5rem; }
+  .promo { width: 100%; }
+}
+
+/* == 13. MOUVEMENT RÉDUIT ==================================================
+   Obligatoire sur CHAQUE effet, sans exception. La source couvre le reveal et
+   les deux entrées (B l.120-130) mais PAS le marquee : il continue de défiler
+   en reduced-motion. Corrigé ici. [arbitrage] */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .vd__outils, .reveal { transition: none; opacity: 1; transform: none; } /* [relevé] B l.121-125 */
+  .is-media-entering, .is-blur-bg-entering { animation: none; }           /* [relevé] B l.126-129 */
+  .marquee__piste { animation: none; }                                    /* [arbitrage] absent de la source */
+  .carte, .btn, .nav__toggle, .nav__lien, .nav__chevron, .nav__banniere, .tag,
+  .pied__col a, .pied__mentions-liens a, .slider__puce, .pied__social a { transition: none; }
+  .carte:hover .carte__lien svg, .lien-texte__a:hover svg { transform: none; }
+  .hero__media-video { will-change: auto; }
+}
+
+/* == 14. SCÈNES SVG DES PANNEAUX ===========================================
+   [arbitrage] La source confie six des quinze médias d'onglets à Lottie-web :
+   la bibliothèque vient de cdnjs, les six .json du CDN Webflow. Deux
+   dépendances réseau pour un seul effet, et aucune ne dégrade proprement —
+   hors ligne, six panneaux sur quinze sont des boîtes vides. Elles sont donc
+   remplacées par des SVG INLINE animés ici, en CSS : rien à télécharger, rien
+   à ajouter au livrable, et le panneau reste lisible même immobile.
+
+   RÈGLE D'ÉCRITURE — l'état AU REPOS de chaque scène est son état FINAL. Les
+   keyframes partent d'un état altéré et reviennent à la valeur naturelle. En
+   conséquence, couper les animations (mouvement réduit, panneau inactif)
+   laisse la scène dans sa forme aboutie, jamais dans un état intermédiaire :
+   c'est ce qui permet à § 14.4 de se contenter d'un `animation: none`.
+
+   Les scènes ne s'animent que dans le panneau ACTIF (`.pane.is-active`) :
+   changer d'onglet rejoue la scène, ce qui remplace la boucle de Lottie sans
+   minuteur ni instance à détruire. */
+
+/* ---- 14.1 Cadre et matière ------------------------------------------------ */
+.pane__media svg.scene {
+  width: 100%; height: auto;      /* prime sur `.pane__media svg { height:100% }` : un SVG
+                                     inline n'est PAS un élément remplacé, object-fit ne
+                                     l'atteint pas, et une hauteur en % dans un flex à
+                                     hauteur indéfinie s'effondre. */
+  aspect-ratio: 1168 / 625; max-height: 625px;
+  display: block; border-radius: var(--rayon-media);
+}
+/* Base des libellés. Portée par la CLASSE et non par le sélecteur d'élément
+   `.scene text` : les 90 `<text>` des six scènes portent tous `sc-t`, et une
+   base nommée évite une classe présente en HTML sans règle correspondante. */
+.sc-t {
+  font-family: var(--police-corps); font-size: 15px; font-weight: 400;
+  fill: #d7dae2; letter-spacing: -.01em;
+}
+.sc-t--dim  { fill: #868c9c; }
+.sc-t--ok   { fill: #4ec26a; }
+.sc-t--warn { fill: #f0b429; }
+.sc-t--err  { fill: #f0574a; }
+.sc-t--ai   { fill: #9b8cff; }
+.sc-t--big  { font-size: 30px; font-weight: 500; fill: #4ec26a; }
+
+.sc-bg     { fill: #0b0e14; }
+.sc-panel  { fill: #121722; stroke: #ffffff14; stroke-width: 1; }
+.sc-code   { fill: #0e131c; stroke: #ffffff12; stroke-width: 1; }
+.sc-rule   { stroke: #ffffff12; stroke-width: 1; fill: none; }
+.sc-grid   { stroke: #ffffff0d; stroke-width: 1; fill: none; }
+.sc-axis   { stroke: #ffffff1f; stroke-width: 1; fill: none; }
+.sc-chrome { fill: #ffffff26; }
+.sc-rowbg  { fill: #ffffff08; stroke: #ffffff0f; stroke-width: 1; }
+.sc-rowbg--ok  { fill: #4ec26a14; stroke: #4ec26a3d; }
+.sc-rowbg--err { fill: #2a1618;   stroke: #f0574a45; }
+.sc-track  { fill: #ffffff12; }
+.sc-fill   { fill: var(--texte-accent); }
+.sc-fill--hero { fill: #4ec26a; }
+.sc-fill--slow { fill: #ffffff26; }
+.sc-fill--a    { fill: #ffffff2e; }
+.sc-fill--b    { fill: #4ec26a; }
+.sc-pill       { fill: #ffffff0f; }
+.sc-pill--ok   { fill: #4ec26a1f; }
+.sc-pill--warn { fill: #f0b4291f; }
+.sc-pill--err  { fill: #f0574a1f; }
+.sc-pill--ai   { fill: #9b8cff24; }
+
+.sc-tick, .sc-check {
+  fill: none; stroke: #4ec26a; stroke-width: 2.2;
+  stroke-linecap: round; stroke-linejoin: round;
+}
+.sc-cross { fill: none; stroke: #f0574a; stroke-width: 2.2; stroke-linecap: round; }
+.sc-stage circle { fill: #121722; stroke: #4ec26a; stroke-width: 2; }
+/* Les deux lignes de la réparation se superposent : leur fond doit être OPAQUE,
+   sinon le fondu croisé additionne deux voiles translucides et la ligne
+   s'assombrit au passage. */
+.sc-heal .sc-rowbg { fill: #151a25; }
+.sc-heal .sc-rowbg--err { fill: #2a1618; }
+
+.sc-rail-bg { stroke: #ffffff14; stroke-width: 3; fill: none; }
+.sc-rail-on { stroke-width: 3; fill: none; stroke-linecap: round; }
+
+.sc-codelines rect { fill: #ffffff1a; }
+.sc-codehits  rect { fill: #f0574a2e; }
+.sc-scan  { opacity: 0; }              /* invisibles au repos : ce sont des gestes, */
+.sc-sweep { fill: #00ade414; opacity: 0; }  /* pas du décor. */
+/* Idem pour la ligne « avant réparation » : son animation `sc-out` FINIT à opacity 0,
+   son état de repos doit donc l'être aussi. Sans cette ligne, elle restait à 1 et se
+   superposait à `.sc-heal__after` — seul l'ordre de peinture et le fond opaque de la
+   ligne réparée la masquaient, au prix d'un liseré rouge (#f0574a45) qui bavait autour.
+   Un état de repos qui dépend de l'ordre du DOM est un piège, pas une propriété. */
+.sc-heal__before { opacity: 0; }
+
+.sc-line { fill: none; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+.sc-line--forecast { stroke: #868c9c; stroke-dasharray: 6 6; }
+.sc-line--actual   { stroke: #4ec26a; }
+.sc-switch__track { fill: #4ec26a3d; }
+.sc-switch__knob  { fill: #4ec26a; }
+
+/* ---- 14.2 Keyframes ------------------------------------------------------- */
+/* Chacune FINIT sur la valeur naturelle de la propriété — voir la règle
+   d'écriture en tête de section. */
+@keyframes sc-trace { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+@keyframes sc-pop   { from { opacity: 0; transform: scale(.72); } to { opacity: 1; transform: none; } }
+@keyframes sc-rise  { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+@keyframes sc-grow  { from { transform: scaleX(0); } to { transform: none; } }
+@keyframes sc-fade  { from { opacity: 0; } to { opacity: 1; } }
+@keyframes sc-knob  { from { transform: translateX(-52px); } to { transform: none; } }
+@keyframes sc-out   { 0%, 62% { opacity: 1; } 100% { opacity: 0; } }
+@keyframes sc-in    { 0%, 62% { opacity: 0; transform: scale(.98); } 76%, 100% { opacity: 1; transform: none; } }
+@keyframes sc-scanY { 0% { opacity: 0; transform: translateY(-40px); } 12%, 88% { opacity: 1; } 100% { opacity: 0; transform: translateY(430px); } }
+@keyframes sc-sweepY{ 0% { opacity: 0; transform: translateY(0); } 15%, 80% { opacity: 1; } 100% { opacity: 0; transform: translateY(340px); } }
+
+/* ---- 14.3 Mise en mouvement, panneau ACTIF uniquement --------------------- */
+/* `--i` est posé en attribut style sur chaque groupe : un seul jeu de règles
+   sert les six scènes, l'échelonnement est une donnée du balisage. */
+.pane.is-active .sc-rail-on {
+  stroke-dasharray: 1;              /* pathLength="1" sur le tracé : longueur normalisée,
+                                       aucune mesure à faire en JS. */
+  animation: sc-trace 1.5s cubic-bezier(.22,1,.36,1) .15s both;
+}
+.pane.is-active .sc-stage  { animation: sc-pop  .5s cubic-bezier(.34,1.2,.64,1) calc(.28s + var(--i) * .26s) both; transform-box: fill-box; transform-origin: center; }
+.pane.is-active .sc-row    { animation: sc-rise .5s cubic-bezier(.22,1,.36,1) calc(.5s + var(--i) * .13s) both; }
+.pane.is-active .sc-find   { animation: sc-rise .55s cubic-bezier(.22,1,.36,1) calc(.55s + var(--i) * .18s) both; }
+.pane.is-active .sc-lane   { animation: sc-fade .4s linear calc(.2s + var(--i) * .12s) both; }
+.pane.is-active .sc-legend { animation: sc-fade .5s linear 1.5s both; }
+.pane.is-active .sc-fill   { animation: sc-grow 1.1s cubic-bezier(.22,1,.36,1) .3s both; transform-box: fill-box; transform-origin: left center; }
+.pane.is-active .sc-lane .sc-fill { animation-delay: calc(.35s + var(--i) * .16s); }
+.pane.is-active .sc-switch__knob  { animation: sc-knob .45s cubic-bezier(.34,1.2,.64,1) .35s both; transform-box: fill-box; }
+.pane.is-active .sc-heal__before  { animation: sc-out 2.6s linear .3s both; }
+.pane.is-active .sc-heal__after   { animation: sc-in  2.6s cubic-bezier(.22,1,.36,1) .3s both; transform-box: fill-box; transform-origin: center; }
+.pane.is-active .sc-scan   { animation: sc-scanY 2.8s linear .3s both; }
+.pane.is-active .sc-sweep  { animation: sc-sweepY 2.6s linear .4s both; }
+.pane.is-active .sc-line--forecast { animation: sc-fade .6s linear .3s both; }
+.pane.is-active .sc-line--actual   { stroke-dasharray: 1; animation: sc-trace 1.4s cubic-bezier(.22,1,.36,1) .4s both; }
+.pane.is-active .sc-area   { animation: sc-fade .7s linear 1.2s both; }
+/* Les témoins de légende reprennent les mêmes classes que les courbes : on
+   neutralise ici le tracé progressif, qui n'a pas de sens sur un trait de 28px. */
+.pane.is-active .sc-line--swatch { stroke-dasharray: none; animation: none; }
+.pane.is-active .sc-line--forecast.sc-line--swatch { stroke-dasharray: 6 6; }
+
+/* ---- 14.4 Mouvement réduit ------------------------------------------------ */
+/* Un seul `animation: none` suffit : par construction (§ 14, règle d'écriture)
+   l'état au repos EST l'état final. Le balayage et la ligne « avant
+   réparation » sont les deux seuls éléments dont l'état de repos est
+   l'invisibilité — ce sont des gestes, pas du contenu, et leur disparition ne
+   retire aucune information de la scène. */
+@media (prefers-reduced-motion: reduce) {
+  .pane.is-active .sc-rail-on, .pane.is-active .sc-stage, .pane.is-active .sc-row,
+  .pane.is-active .sc-find, .pane.is-active .sc-lane, .pane.is-active .sc-legend,
+  .pane.is-active .sc-fill, .pane.is-active .sc-switch__knob,
+  .pane.is-active .sc-heal__before, .pane.is-active .sc-heal__after,
+  .pane.is-active .sc-scan, .pane.is-active .sc-sweep,
+  .pane.is-active .sc-line--forecast, .pane.is-active .sc-line--actual,
+  .pane.is-active .sc-area { animation: none; }
+  .pane.is-active .sc-rail-on, .pane.is-active .sc-line--actual { stroke-dasharray: none; }
+  .pane.is-active .sc-line--forecast { stroke-dasharray: 6 6; }
+}

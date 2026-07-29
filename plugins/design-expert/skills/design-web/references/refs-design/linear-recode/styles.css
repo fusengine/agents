@@ -1,0 +1,2239 @@
+/* RÉFÉRENCE DE DESIGN — procédés relevés sur linear.app/homepage (Next.js).
+   [relevé] = lu textuellement dans la source · [arbitrage] = mon choix.
+   Chaque règle cite son fichier CSS d'origine (index.css, Header.css, etc.).
+   Couleurs et ombres en notation littérale de la source (hex à alpha) : une
+   conversion en rgba() introduirait un arrondi et empêcherait la vérification. */
+
+/* ============================================================
+   1. RESET
+   ============================================================ */
+/* [relevé] index.css @layer web.reset : héritage total de font-* sur tous les
+   éléments — la typo ne peut venir QUE des tokens. */
+*, *::before, *::after { box-sizing: border-box; }
+h1, h2, h3, h4, p, ul, ol, li, figure, figcaption, blockquote, dl, dd {
+  font-size: inherit; font-weight: inherit; line-height: inherit;
+  margin: 0; padding: 0; border: 0;
+}
+ul, ol { list-style: none; }
+img, svg { display: block; max-width: 100%; }
+button { font: inherit; color: inherit; background: none; border: none;
+  margin: 0; padding: 0; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+a { color: inherit; text-decoration: none; cursor: pointer; }
+cite { font-style: normal; }           /* [relevé] index.css reset */
+table { border-collapse: collapse; }
+
+/* ============================================================
+   2. TOKENS — GABARIT
+   ============================================================ */
+:root {
+  --hauteur-entete: 72px;              /* [relevé] --header-height */
+  --flou-entete: 20px;                 /* [relevé] --header-blur */
+  --marge-exterieure: 46px;            /* [relevé] --homepage-outer-padding */
+  --marge-interieure: 32px;            /* [relevé] --homepage-padding-inset */
+  --largeur-max: calc(1344px + var(--marge-exterieure) * 2); /* [relevé] --homepage-max-width */
+  --colonnes: 12;                      /* [relevé] --grid-columns */
+  --gouttiere: 32px;                   /* [relevé] Grid.css --grid-gap */
+  --rayon-4: 4px; --rayon-6: 6px; --rayon-8: 8px; --rayon-12: 12px;
+  --rayon-16: 16px; --rayon-20: 20px; --rayon-22: 22px; --rayon-24: 24px;
+  --rayon-plein: 9999px;               /* [relevé] --radius-rounded */
+  --filet: 1px;                        /* [relevé] --border-hairline */
+  --taille-tactile: 44px;              /* [relevé] --min-tap-size */
+}
+/* [relevé] index.css : la marge EXTÉRIEURE et la marge INTÉRIEURE sont deux
+   variables distinctes qui ne changent pas aux mêmes paliers. L'extérieure
+   rétrécit puis regrossit entre 1280 et 1024 — la grille se recale, elle ne
+   se comprime pas linéairement. */
+@media (max-width: 1280px) { :root { --marge-exterieure: 10px; } }
+@media (max-width: 1024px) { :root { --marge-exterieure: 28px; --marge-interieure: 8px; } }
+@media (max-width: 640px)  { :root { --marge-exterieure: 16px; --hauteur-entete: 64px; } }
+@media (max-width: 768px)  { :root { --colonnes: 8; } }
+@media (max-width: 640px)  { :root { --colonnes: 4; } }
+/* [relevé] index.css — filet demi-pixel sur écran rétina */
+@media only screen and (min-resolution: 192dpi) { :root { --filet: .5px; } }
+
+/* ============================================================
+   3. TOKENS — TYPOGRAPHIE
+   ============================================================ */
+:root {
+  /* [relevé] index.css --font-regular / --font-monospace.
+     Berkeley Mono est propriétaire → repli système. [arbitrage] */
+  --police-texte: "Inter", "Inter Variable", "SF Pro Display", -apple-system,
+                  BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+  --police-mono: ui-monospace, "SF Mono", Menlo, monospace;
+
+  /* [relevé] graisses NON rondes — signature de la police variable */
+  --graisse-legere: 300;
+  --graisse-normale: 400;
+  --graisse-moyenne: 510;
+  --graisse-demi-grasse: 590;
+  --graisse-grasse: 680;
+
+  /* [relevé] échelle de titres. Règle d'interlettrage : -.012em jusqu'à
+     1.5rem, -.022em au-delà. L'interligne DESCEND quand la taille monte. */
+  --titre-1-taille: 1.0625rem; --titre-1-interligne: 1.4;   --titre-1-lettrage: -.012em;
+  --titre-2-taille: 1.25rem;   --titre-2-interligne: 1.33;  --titre-2-lettrage: -.012em;
+  --titre-3-taille: 1.5rem;    --titre-3-interligne: 1.33;  --titre-3-lettrage: -.012em;
+  --titre-4-taille: 2rem;      --titre-4-interligne: 1.125; --titre-4-lettrage: -.022em;
+  --titre-5-taille: 2.5rem;    --titre-5-interligne: 1.1;   --titre-5-lettrage: -.022em;
+  --titre-6-taille: 3rem;      --titre-6-interligne: 1;     --titre-6-lettrage: -.022em;
+  --titre-7-taille: 3.5rem;    --titre-7-interligne: 1.1;   --titre-7-lettrage: -.022em;
+  --titre-8-taille: 4rem;      --titre-8-interligne: 1.06;  --titre-8-lettrage: -.022em;
+  --titre-9-taille: 4.5rem;    --titre-9-interligne: 1;     --titre-9-lettrage: -.022em;
+
+  /* [relevé] échelle de textes courants — interlettrage NÉGATIF sur le corps */
+  --texte-grand-taille: 1.0625rem; --texte-grand-interligne: 1.6; --texte-grand-lettrage: 0;
+  --texte-taille: .9375rem;        --texte-interligne: 1.6;       --texte-lettrage: -.011em;
+  --texte-petit-taille: .875rem;   --texte-petit-interligne: calc(21 / 14); --texte-petit-lettrage: -.013em;
+  --texte-mini-taille: .8125rem;   --texte-mini-interligne: 1.5;  --texte-mini-lettrage: -.01em;
+  --texte-micro-taille: .75rem;    --texte-micro-interligne: 1.4; --texte-micro-lettrage: 0;
+  --texte-nano-taille: .625rem;    --texte-nano-interligne: 1.5;  --texte-nano-lettrage: -.015em;
+}
+
+/* ============================================================
+   4. TOKENS — MOUVEMENT
+   ============================================================ */
+:root {
+  /* [relevé] index.css — 4 vitesses nommées. Asymétrie volontaire : une
+     surbrillance APPARAÎT instantanément et s'efface lentement. */
+  --duree-surbrillance-entree: 0s;
+  --duree-surbrillance-sortie: .15s;
+  --duree-rapide: .1s;                 /* [relevé] --speed-quickTransition */
+  --duree-standard: .25s;              /* [relevé] --speed-regularTransition */
+  /* [relevé] durées littérales récurrentes dans les composants */
+  --duree-survol: .16s;
+  --duree-menu: .18s;
+  --duree-apparition: .4s;
+
+  /* [relevé] index.css — 18 courbes déclarées. AUCUNE courbe à rebond. */
+  --courbe-entree-quad: cubic-bezier(.55, .085, .68, .53);
+  --courbe-entree-cubic: cubic-bezier(.55, .055, .675, .19);
+  --courbe-sortie-quad: cubic-bezier(.25, .46, .45, .94);
+  --courbe-sortie-cubic: cubic-bezier(.215, .61, .355, 1);
+  --courbe-sortie-quart: cubic-bezier(.165, .84, .44, 1);
+  --courbe-sortie-quint: cubic-bezier(.23, 1, .32, 1);
+  --courbe-sortie-expo: cubic-bezier(.19, 1, .22, 1);
+  --courbe-douce-quad: cubic-bezier(.455, .03, .515, .955);
+  --courbe-douce-cubic: cubic-bezier(.645, .045, .355, 1);
+  --courbe-douce-expo: cubic-bezier(1, 0, 0, 1);
+
+  /* [relevé] index.css — jeu de masques nommés, littéral */
+  --masque-visible: black;
+  --masque-transition: #0003;
+  --masque-invisible: transparent;
+}
+
+/* ============================================================
+   5. TOKENS — COULEUR
+   ============================================================ */
+/* [relevé] index.css — accents absolus, invariants entre thèmes */
+:root {
+  --accent-bleu: #4ea7fc;
+  --accent-rouge: #eb5757;
+  --accent-vert: #27a644;
+  --accent-orange: #fc7840;
+  --accent-jaune: #f0bf00;
+  --accent-indigo: #5e6ad2;
+  --accent-cyan: #00b8cc;
+  /* [relevé] index.css — 3 couleurs de gamme produit */
+  --gamme-plan: #68cc58;
+  --gamme-build: #d4b144;
+  --gamme-securite: #7a7fad;
+  --epaisseur-focus: 2px;
+  --decalage-focus: 2px;
+}
+/* [relevé] index.css — double garde P3 : la media query donne un repli sRGB
+   plus vif, le @supports donne la vraie couleur P3. */
+@media (dynamic-range: high) or (color-gamut: p3) {
+  :root { --accent-bleu: #5eb0ff; }
+  @supports (color: color(display-p3 0 0 0)) {
+    :root { --accent-bleu: color(display-p3 .431 .6816 .9988); }
+  }
+}
+
+/* [relevé] index.css [data-theme=dark] — thème par défaut du site.
+   Les gris ne sont PAS neutres : le canal bleu est toujours ≥ au rouge. */
+:root, [data-theme="dark"] {
+  color-scheme: dark;
+  --fond-entete: #0b0b0bcc;
+  --bordure-entete: #ffffff14;
+  --fond-primaire: #08090a;
+  --fond-secondaire: #1c1c1f;
+  --fond-tertiaire: #232326;
+  --fond-quaternaire: #28282c;
+  --fond-quinaire: #282828;
+  --fond-marketing: #010102;
+  --fond-translucide: #ffffff0d;
+  --fond-panneau: #0f1011;
+  --fond-niveau-0: #08090a;
+  --fond-niveau-1: #0f1011;
+  --fond-niveau-2: #141516;
+  --fond-niveau-3: #191a1b;
+  --fond-teinte: #141516;
+  --bordure-primaire: #23252a;
+  --bordure-secondaire: #34343a;
+  --bordure-tertiaire: #3e3e44;
+  --bordure-translucide: #ffffff0d;
+  --bordure-translucide-forte: #ffffff14;
+  --verre-survol: #ffffff14;           /* [relevé] Header.css --anchor-glass-bg */
+  --ligne-primaire: #37393a;
+  --ligne-secondaire: #202122;
+  --ligne-tertiaire: #18191a;
+  --texte-primaire: #f7f8f8;
+  --texte-secondaire: #d0d6e0;
+  --texte-tertiaire: #8a8f98;
+  --texte-quaternaire: #62666d;
+  --lien-primaire: #828fff;
+  --marque-fond: #5e6ad2;
+  --marque-texte: #fff;
+  --bouton-inverse-fond: #e5e5e6;
+  --bouton-inverse-fond-survol: #fff;
+  --accent: #7170ff;
+  --accent-survol: #828fff;
+  --accent-teinte: #18182f;
+  --couleur-focus: var(--accent-indigo);
+  --ombre-basse: 0px 2px 4px #0000001a;
+  --ombre-moyenne: 0px 4px 24px #0003;
+  --ombre-haute: 0px 7px 32px #00000059;
+  /* [relevé] --shadow-stack-low : 5 ombres de 0 à 8px, chacune invisible
+     seule. C'est l'empilement qui fait le relief. */
+  --ombre-empilee: 0px 8px 2px 0px #0000, 0px 5px 2px 0px #00000003,
+                   0px 3px 2px 0px #0000000a, 0px 1px 1px 0px #00000012,
+                   0px 0px 1px 0px #00000014;
+  --selection-fond: color-mix(in lch, var(--marque-fond), black 10%);
+  --selection-texte: #fff;
+  --selection-attenuee: color-mix(in lch, var(--marque-fond), transparent 80%);
+}
+
+/* [relevé] index.css [data-theme=light] — inversion complète. La couleur de
+   MARQUE change aussi (#5e6ad2 → #7070ff) : ce n'est pas la même couleur,
+   la version claire est plus saturée pour tenir sur blanc. */
+[data-theme="light"] {
+  color-scheme: light;
+  --fond-entete: var(--fond-primaire);
+  --bordure-entete: #00000014;
+  --fond-primaire: #fff;
+  --fond-secondaire: #f9f8f9;
+  --fond-tertiaire: #f4f2f4;
+  --fond-quaternaire: #eeedef;
+  --fond-quinaire: #e9e8ea;
+  --fond-translucide: #00000005;
+  --fond-panneau: #f8f8f8;
+  --fond-niveau-0: #fff;
+  --fond-niveau-1: #f8f8f8;
+  --fond-niveau-2: #f4f4f4;
+  --fond-niveau-3: #f0f0f0;
+  --fond-teinte: #f4f4f5;
+  --bordure-primaire: #e9e8ea;
+  --bordure-secondaire: #e4e2e4;
+  --bordure-tertiaire: #dcdbdd;
+  --bordure-translucide: #0000000d;
+  --bordure-translucide-forte: #00000014;
+  --verre-survol: #00000014;
+  --ligne-primaire: #d4d4d6;
+  --ligne-secondaire: #eaeaeb;
+  --ligne-tertiaire: #f0f0f0;
+  --texte-primaire: #282a30;
+  --texte-secondaire: #3c4149;
+  --texte-tertiaire: #6f6e77;
+  --texte-quaternaire: #86848d;
+  --lien-primaire: #7070ff;
+  --marque-fond: #7070ff;
+  --bouton-inverse-fond: #282a30;
+  --bouton-inverse-fond-survol: #1f2024;
+  --accent: #7170ff;
+  --accent-survol: #8989f0;
+  --accent-teinte: #f1f1ff;
+  --couleur-focus: #0006;
+  --ombre-tenue: 0px 1px 1px 0px #00000017;
+  --ombre-basse: 0px 1px 4px -1px #00000017;
+  --ombre-moyenne: 0px 3px 12px #00000017;
+  --ombre-haute: 0px 7px 24px #0000000f;
+  /* [relevé] en clair la pile gagne une 6ᵉ couche INSET en tête : sur fond
+     blanc, l'ombre portée seule ne détache plus l'élément. */
+  --ombre-empilee: 0px -1px 1px 0px #0000001c inset, 0px 8px 2px 0px #0000,
+                   0px 5px 2px 0px #00000003, 0px 3px 2px 0px #0000000a,
+                   0px 1px 1px 0px #00000012, 0px 0px 1px 0px #00000014;
+  --selection-fond: color-mix(in lch, var(--marque-fond), transparent 64%);
+  --selection-texte: currentColor;
+  --selection-attenuee: color-mix(in lch, var(--marque-fond), transparent 80%);
+}
+
+/* ============================================================
+   6. BASE
+   ============================================================ */
+/* [relevé] index.css : cv01 + ss03 sur tout le document — change le dessin
+   du « a » et des chiffres d'Inter. Réglage signature. */
+html, body {
+  background: var(--fond-primaire);
+  color: var(--texte-primaire);
+  --font-settings: "cv01", "ss03";
+  font-feature-settings: var(--font-settings);
+  font-variation-settings: "opsz" auto;
+  -webkit-tap-highlight-color: transparent;
+  margin: 0; padding: 0;
+}
+html { font-size: 100%; font-weight: var(--graisse-normale);
+  scroll-padding-top: calc(var(--hauteur-entete) + 36px); scroll-padding-bottom: 32px; }
+body {
+  font-family: var(--police-texte); line-height: 1.5; overflow-x: hidden;
+  -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility; -webkit-text-size-adjust: none;
+}
+::selection { color: var(--selection-texte); background: var(--selection-fond); }
+img::selection { background: var(--selection-attenuee); }
+:focus:not(:focus-visible) { outline: none; }
+:focus-visible { outline: var(--epaisseur-focus) solid var(--couleur-focus);
+  outline-offset: var(--decalage-focus); }
+
+/* [relevé] index.css — utilitaires d'affichage conditionnel par palier */
+@media (max-width: 640px)  { .cache-mobile  { display: none !important; } }
+@media (min-width: 641px)  { .montre-mobile { display: none !important; } }
+@media (max-width: 1024px) { .cache-laptop  { display: none !important; } }
+@media (min-width: 1025px) { .montre-laptop { display: none !important; } }
+
+/* Rôles typographiques */
+.t-titre-9 { font: var(--graisse-demi-grasse) var(--titre-9-taille)/var(--titre-9-interligne) var(--police-texte); letter-spacing: var(--titre-9-lettrage); }
+.t-titre-7 { font: var(--graisse-demi-grasse) var(--titre-7-taille)/var(--titre-7-interligne) var(--police-texte); letter-spacing: var(--titre-7-lettrage); }
+.t-titre-6 { font: var(--graisse-demi-grasse) var(--titre-6-taille)/var(--titre-6-interligne) var(--police-texte); letter-spacing: var(--titre-6-lettrage); }
+.t-titre-5 { font: var(--graisse-demi-grasse) var(--titre-5-taille)/var(--titre-5-interligne) var(--police-texte); letter-spacing: var(--titre-5-lettrage); }
+.t-titre-3 { font: var(--graisse-demi-grasse) var(--titre-3-taille)/var(--titre-3-interligne) var(--police-texte); letter-spacing: var(--titre-3-lettrage); }
+.t-titre-1 { font: var(--graisse-demi-grasse) var(--titre-1-taille)/var(--titre-1-interligne) var(--police-texte); letter-spacing: var(--titre-1-lettrage); }
+.t-grand  { font: var(--texte-grand-taille)/var(--texte-grand-interligne) var(--police-texte); letter-spacing: var(--texte-grand-lettrage); }
+.t-corps  { font: var(--texte-taille)/var(--texte-interligne) var(--police-texte); letter-spacing: var(--texte-lettrage); }
+.t-petit  { font: var(--texte-petit-taille)/var(--texte-petit-interligne) var(--police-texte); letter-spacing: var(--texte-petit-lettrage); }
+.t-mini   { font: var(--texte-mini-taille)/var(--texte-mini-interligne) var(--police-texte); letter-spacing: var(--texte-mini-lettrage); }
+.t-micro  { font: var(--texte-micro-taille)/var(--texte-micro-interligne) var(--police-texte); letter-spacing: var(--texte-micro-lettrage); }
+.c-primaire   { color: var(--texte-primaire); }
+.c-secondaire { color: var(--texte-secondaire); }
+.c-tertiaire  { color: var(--texte-tertiaire); }
+.c-quaternaire{ color: var(--texte-quaternaire); }
+/* [relevé] utils.css .Fzcv4W_slashedZero — le zéro BARRÉ des numéros de
+   section. Trois réglages solidaires : feature "zero", lining-nums,
+   tabular-nums. C'est ce qui donne le registre « document technique ». */
+.zero-barre { font-feature-settings: var(--font-settings), "zero";
+  font-variant-numeric: lining-nums tabular-nums slashed-zero; }
+/* [relevé] Header.css .Fzcv4W_truncate */
+.tronque { white-space: nowrap; text-overflow: ellipsis; overflow: hidden; }
+
+/* [relevé] Layout.css / PageSection.css — conteneur central */
+.enveloppe { max-width: var(--largeur-max); margin-inline: auto;
+  padding-inline: var(--marge-exterieure); }
+/* [relevé] Grid.css — grille 12→8→4, gouttière CONSTANTE à 32px */
+.grille { display: grid; gap: var(--gouttiere);
+  grid-template-columns: repeat(var(--colonnes), minmax(0, 1fr)); }
+
+/* ============================================================
+   7. EN-TÊTE
+   ============================================================ */
+/* [relevé] Header.css : fond déjà translucide ET dégradé de 100 % à 95 %
+   d'opacité, par dessus un flou de 20px. Le flou est un token. */
+.entete {
+  position: sticky; top: 0; z-index: 100;
+  background: linear-gradient(to bottom, var(--fond-entete) 0%,
+              color-mix(in oklab, var(--fond-entete) 100%, transparent 5%) 100%);
+  border-bottom: 1px solid var(--bordure-entete);
+  -webkit-backdrop-filter: blur(var(--flou-entete));
+  backdrop-filter: blur(var(--flou-entete));
+}
+.entete__barre {
+  display: flex; align-items: center; height: var(--hauteur-entete);
+  max-width: var(--largeur-max); margin-inline: auto;
+  /* [relevé] Header.css — le -1px aligne le logo sur le filet vertical */
+  padding-left: calc(var(--marge-interieure) + var(--marge-exterieure) - 1px);
+  padding-right: calc(var(--marge-interieure) + var(--marge-exterieure) - 1px);
+}
+/* [relevé] Header.css .TZTsQG_logoLink — 32px de haut, rayon 6, décalé de
+   -8px à gauche pour que le glyphe affleure la colonne. */
+.entete__marque { display: flex; justify-content: flex-start; align-items: center;
+  height: 32px; margin-left: -8px; padding: 0 8px; border-radius: var(--rayon-6);
+  gap: 8px; font-weight: var(--graisse-demi-grasse);
+  font-size: var(--titre-1-taille); letter-spacing: var(--titre-1-lettrage); }
+.entete__pastille { width: 16px; height: 16px; border-radius: var(--rayon-4);
+  background: var(--marque-fond); flex-shrink: 0; }
+/* [relevé] Header.css .TZTsQG_rightSideWrapper — la nav n'est PAS centrée :
+   elle est dans un bloc de droite (max-width 620px) collé aux actions. Le
+   logo reste seul à gauche, séparé par tout l'espace disponible. */
+.entete__droite { display: flex; align-items: center; flex-shrink: 0;
+  margin-left: auto; }
+/* [relevé] Header.css .TZTsQG_navItems — flex centré, sans gap déclaré :
+   l'espacement vient du rembourrage des items eux-mêmes. */
+.entete__nav { display: flex; align-items: center;
+  height: var(--hauteur-entete); }
+/* [relevé] Header.css .TZTsQG_navDivider — filet vertical de 16px SEULEMENT
+   (pas toute la hauteur d'en-tête), en bordure primaire, marges de 8px.
+   Il sépare la navigation des actions de compte. */
+.entete__separateur { width: 1px; height: 16px; margin-inline: 8px;
+  background: var(--bordure-primaire); flex-shrink: 0; }
+/* [relevé] Header.css .TZTsQG_anchor — l'item de nav est une PILULE
+   (--radius-rounded), pas un rectangle arrondi ; sa transition est
+   --speed-quickTransition (.1s), pas la .16s des boutons, et ne porte que
+   sur `color, background`. Son fond de survol est un token DÉDIÉ
+   --anchor-glass-bg (#ffffff14 / #00000014), pas un niveau de fond. */
+.entete__lien {
+  display: flex; justify-content: center; align-items: center;
+  height: 32px; padding: 0 12px; font-size: 13px;
+  border-radius: var(--rayon-plein); color: var(--texte-tertiaire); background: 0 0;
+  transition: var(--duree-rapide) var(--courbe-sortie-quad);
+  transition-property: color, background;
+}
+.entete__lien:hover, .entete__lien[data-actif] {
+  color: var(--texte-primaire); background: var(--verre-survol);
+}
+.entete__chevron { width: 12px; height: 12px; margin-left: 4px; opacity: .6; }
+.entete__actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+/* [relevé] Header.css .TZTsQG_menuButton — carré à ratio 1, marge négative
+   de -28px pour coller au bord. */
+.entete__burger { display: none; align-items: center; justify-content: center;
+  height: var(--hauteur-entete); aspect-ratio: 1; margin-right: -28px;
+  color: var(--texte-secondaire); }
+/* [arbitrage] sous 640px le rembourrage d'en-tête tombe à 23px : la marge
+   négative de -28px de la source déborde alors du viewport. Je la borne. */
+@media (max-width: 640px) { .entete__burger { margin-right: -8px; } }
+@media (max-width: 1024px) {
+  .entete__nav { display: none; }
+  .entete__actions { margin-left: auto; }
+  .entete__burger { display: flex; }
+}
+
+/* ============================================================
+   8. BOUTONS ET BADGES
+   ============================================================ */
+/* [relevé] Button.css — TOUT est variabilisé par taille. Une variante ne
+   redéfinit QUE des couleurs et des ombres, jamais une métrique. */
+.btn {
+  --btn-hauteur: 40px; --btn-corps: 15px; --btn-rembourrage: 0 16px;
+  --btn-ecart: 6px; --btn-icone: 18px;
+  display: inline-flex; align-items: center; justify-content: center;
+  flex-shrink: 0; white-space: nowrap; user-select: none; max-width: 100%;
+  height: var(--btn-hauteur); line-height: var(--btn-hauteur);
+  padding: var(--btn-rembourrage); gap: var(--btn-ecart);
+  font-size: var(--btn-corps); font-weight: var(--graisse-moyenne);
+  border-radius: var(--rayon-plein);
+  transition: var(--duree-survol) var(--courbe-sortie-quad);
+  transition-property: border, background-color, color, box-shadow, opacity, filter, transform;
+}
+.btn > svg { width: var(--btn-icone); height: var(--btn-icone); fill: currentColor; }
+.btn--mini   { --btn-hauteur: 24px; --btn-icone: 12px; --btn-corps: 12px; --btn-rembourrage: 0 10px; --btn-ecart: 4px; }
+.btn--petit  { --btn-hauteur: 32px; --btn-icone: 16px; --btn-corps: 13px; --btn-rembourrage: 0 12px; --btn-ecart: 8px; }
+.btn--moyen  { --btn-hauteur: 40px; --btn-icone: 16px; --btn-corps: 13px; --btn-rembourrage: 0 14px; --btn-ecart: 8px; }
+.btn--grand  { --btn-hauteur: 44px; --btn-icone: 18px; --btn-corps: 16px; --btn-rembourrage: 0 20px; --btn-ecart: 6px; }
+/* [relevé] Button.css — le survol PRIMAIRE ne change pas de couleur : il
+   applique brightness(115%). Procédé réutilisé partout sur le site. */
+.btn--primaire { background: var(--marque-fond); color: var(--marque-texte); border: none; }
+@media (any-hover: hover) { .btn--primaire:not(:disabled):hover { filter: brightness(115%); } }
+/* [relevé] Button.css — secondaire : 4 box-shadow (2 internes pour le liseré
+   haut, 2 externes) + backdrop-filter blur(4px). AUCUNE border. */
+.btn--secondaire {
+  background: var(--fond-translucide); color: var(--texte-primaire); border: none;
+  -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px);
+  box-shadow: inset 0 0 0 1px #ffffff08, inset 0 1px #ffffff0a,
+              0 0 0 1px #0009, 0 4px 4px #0000001a;
+}
+[data-theme="light"] .btn--secondaire {
+  background: var(--fond-primaire);
+  box-shadow: 0 0 0 1px #00000014, var(--ombre-basse);
+}
+@media (any-hover: hover) { .btn--secondaire:not(:disabled):hover { background: var(--fond-niveau-3); } }
+.btn--secondaire:active { background: var(--fond-niveau-3); }
+/* [relevé] Button.css .variant-tertiary */
+.btn--tertiaire { border: 1px solid var(--fond-secondaire);
+  background: var(--fond-primaire); color: var(--texte-tertiaire); }
+[data-theme="light"] .btn--tertiaire { border: 1px solid var(--bordure-translucide); }
+@media (any-hover: hover) { .btn--tertiaire:not(:disabled):hover {
+  color: var(--texte-primaire); border-color: var(--fond-tertiaire); background: var(--fond-tertiaire); } }
+/* [relevé] Button.css .variant-invert — porte l'ombre EMPILÉE */
+.btn--inverse { background: var(--bouton-inverse-fond);
+  border: 1px solid var(--bouton-inverse-fond); color: var(--fond-primaire);
+  box-shadow: var(--ombre-empilee); }
+[data-theme="light"] .btn--inverse { box-shadow: none; }
+@media (any-hover: hover) { .btn--inverse:not(:disabled):hover { background: var(--bouton-inverse-fond-survol); } }
+/* [relevé] Button.css .variant-ghost */
+.btn--fantome { color: var(--texte-tertiaire); background: 0 0; }
+@media (any-hover: hover) { .btn--fantome:not(:disabled):hover {
+  color: var(--texte-primaire); background: var(--fond-quaternaire); } }
+/* [relevé] Button.css — l'état :active est un scale(.97) sur TOUTES les
+   variantes. La primaire y ajoute brightness(98%) : elle s'assombrit à
+   l'appui alors qu'elle s'éclaircit au survol. */
+.btn:active { transform: scale(.97); }
+.btn--primaire:active { filter: brightness(98%); }
+.btn:disabled { opacity: .5; cursor: not-allowed; }
+/* [relevé] Button.css — le raccourci clavier intégré disparaît sur tactile */
+.btn > kbd { display: inline-flex; align-items: center; justify-content: center;
+  min-width: 20px; height: 20px; padding: 0 4px; border-radius: 5px;
+  font-size: .8em; font-weight: var(--graisse-moyenne); line-height: normal;
+  background: var(--fond-tertiaire); }
+@media not (any-hover: hover) { .btn > kbd { display: none; } }
+@media (max-width: 640px) { .btn > kbd { display: none; } }
+
+/* [relevé] Badge.css ._4H9I6q_root — hauteur variabilisée 24px, rayon 4,
+   bordure TRANSPARENTE de 1.5px (elle réserve la place sans se voir),
+   graisse demi-grasse et chiffres tabulaires. */
+.badge { --badge-hauteur: 24px;
+  display: inline-flex; align-items: center; justify-content: center;
+  height: var(--badge-hauteur); padding: 0 6px;
+  border: 1.5px solid transparent; border-radius: var(--rayon-4);
+  font-weight: var(--graisse-demi-grasse); font-variant-numeric: tabular-nums;
+  line-height: normal; vertical-align: middle; font-size: var(--texte-micro-taille); }
+.badge--marque { background: var(--marque-fond); color: var(--marque-texte); }
+
+/* ============================================================
+   9. HÉROS
+   ============================================================ */
+/* [arbitrage] rythme vertical du héros : Hero.css ne déclare que les largeurs
+   de description et la taille de titre mobile ; le reste vient de composants
+   Flex/Grid dont je n'ai pas les props. */
+.heros { padding-top: 96px; }
+@media (max-width: 640px) { .heros { padding-top: 48px; } }
+.heros__entete { padding-inline: var(--marge-interieure); }
+/* [relevé] NewHeroIllustration.css — la ligne d'annonce : badge + texte en
+   dégradé animé + points révélés + un filet qui remplit l'espace restant. */
+.annonce { display: flex; align-items: center; gap: 8px; width: 100%;
+  font-size: 12px; font-weight: var(--graisse-moyenne);
+  transition: filter var(--duree-survol) var(--courbe-sortie-quad); }
+@media (any-hover: hover) { .annonce:hover { filter: brightness(1.3); } }
+/* [relevé] .w9ZFkq_animatedTextGradient — dégradé à -.6turn, background-size
+   300 %, clipé sur le texte. Le texte n'a PAS de couleur propre. La zone
+   claire est plus SOMBRE que le texte de base : le balayage assombrit. */
+.annonce__texte {
+  background: linear-gradient(-.6turn, var(--texte-tertiaire) 0%,
+              var(--texte-quaternaire) 60%, var(--texte-tertiaire) 80%,
+              var(--texte-tertiaire) 100%);
+  background-size: 300%;
+  -webkit-background-clip: text; background-clip: text;
+  color: transparent; -webkit-text-fill-color: transparent;
+  animation: balayage-texte 2.2s linear infinite;
+}
+/* [relevé] .w9ZFkq_dots — clip-path animé en step-end : les points
+   apparaissent un par un, sans fondu. */
+.annonce__points { display: inline-block; clip-path: inset(0 100% 0 0);
+  color: var(--texte-tertiaire);
+  animation: revelation-points 2.1s step-end infinite; }
+/* [relevé] .w9ZFkq_yLine — flex:1, 1px, bordure translucide forte */
+.annonce__ligne { flex: 1; height: 1px; min-width: 24px;
+  background: var(--bordure-translucide-forte); }
+/* [relevé] .w9ZFkq_separator — filet VERTICAL de 8px, 1px de large */
+.annonce__separateur { width: 1px; height: 8px; margin-left: 8px;
+  background: var(--bordure-primaire); transform: translateX(-50%); }
+
+.heros__titre { max-width: 20ch; text-wrap: balance; }
+/* [relevé] Hero.css .QI8oKG_title — 38px + max-width 360px sous 640px */
+@media (max-width: 1280px) { .heros__titre { font-size: var(--titre-8-taille); } }
+@media (max-width: 1024px) { .heros__titre { font-size: var(--titre-7-taille); } }
+@media (max-width: 640px)  { .heros__titre { font-size: 38px; line-height: 1.1; max-width: 360px; } }
+/* [relevé] Hero.css .QI8oKG_descriptionContainer — aligné sur la LIGNE DE
+   BASE en dessous de 1280px, puis passé en colonne sous 1024px. */
+.heros__bas { display: flex; align-items: baseline; gap: 40px; margin-top: 24px; }
+@media (max-width: 1024px) { .heros__bas { flex-direction: column;
+  align-items: flex-start; gap: 20px; } }
+/* L'annonce vient APRÈS la description dans le flux (ordre relevé). */
+.annonce { margin-top: 28px; }
+/* [relevé] Hero.css .QI8oKG_description — inline-block, 378px à ≤1280 et
+   276px à ≤640. Deux largeurs en PIXELS, pas en ch : la description doit
+   casser à un mot précis. */
+.heros__description { display: inline-block; max-width: 46ch; color: var(--texte-secondaire); }
+@media (max-width: 1280px) { .heros__description { max-width: 378px; } }
+@media (max-width: 640px)  { .heros__description { max-width: 276px; } }
+.heros__actions { display: flex; gap: 8px; flex-shrink: 0; }
+@media (max-width: 640px) { .heros__actions { flex-direction: column;
+  align-items: stretch; width: 100%; } }
+/* [arbitrage] respiration entre le texte du héros et son illustration */
+.heros__illustration { margin-top: 64px; padding-inline: var(--marge-exterieure); }
+@media (max-width: 640px) { .heros__illustration { margin-top: 40px; padding-inline: 0; } }
+
+/* ============================================================
+   10. CHÂSSIS D'ILLUSTRATION — le motif répété de la page
+   ============================================================ */
+/* [relevé] page.css / Plan.css / Build.css / Monitor.css / SlackIssue.css :
+   les CINQ sections et le héros partagent EXACTEMENT le même châssis
+   (.MwJdiW_container + .MwJdiW_panel). C'est ce qui donne son rythme à la
+   page : un même cadre revient six fois, seul le contenu change.
+   Rayon 22px, rembourrage 8px, masque de dissolution vers le bas à 60 %. */
+.chassis {
+  position: relative; overflow: hidden; padding: 8px;
+  border-radius: var(--rayon-22);
+  border: 1px solid var(--bordure-translucide-forte); user-select: none;
+  -webkit-mask-image: linear-gradient(to bottom, var(--masque-visible) 0%,
+                      var(--masque-visible) 60%, var(--masque-invisible) 100%);
+  mask-image: linear-gradient(to bottom, var(--masque-visible) 0%,
+              var(--masque-visible) 60%, var(--masque-invisible) 100%);
+}
+/* [relevé] .MwJdiW_panel — la bordure est un box-shadow INTERNE, pas un
+   `border` : elle ne consomme pas la boîte et suit l'arrondi 12px 12px 0 0. */
+.chassis__panneau {
+  position: relative; overflow: hidden;
+  background: var(--fond-niveau-1);
+  box-shadow: inset 0 0 0 1px var(--bordure-primaire);
+  border-radius: var(--rayon-12) var(--rayon-12) 0 0;
+}
+/* [relevé] DiffsIllustration.css ._8fVXdW_container — variante à bordure
+   PLEINE (--color-border-primary) et débords latéraux de -8px. */
+.chassis--diffs { border-color: var(--bordure-primaire);
+  margin-left: -8px; margin-right: -8px; }
+.chassis--diffs .chassis__panneau { background: var(--fond-panneau); }
+/* [relevé] page.css .MwJdiW_glow — halo radial 400px, opacité .04,
+   mix-blend-mode lighten, positionné par --x/--y (suivi de pointeur en JS). */
+.chassis__halo {
+  position: absolute; top: 0; left: 0; width: 400px; height: 400px;
+  --halo-opacite: .04; pointer-events: none; mix-blend-mode: lighten;
+  background: radial-gradient(circle, rgba(255,255,255, var(--halo-opacite)) 0%, transparent 50%);
+  transform: translate(calc(var(--x, 50%) - 50%), calc(var(--y, 30%) - 50%));
+}
+/* [relevé] page.css .MwJdiW_shine — une bordure PLEINE de 1px, MASQUÉE par
+   un dégradé radial suivant le curseur : seul le segment proche du pointeur
+   est visible. Le JS n'écrit que --x et --y, aucune propriété de layout. */
+.chassis__lisere {
+  position: absolute; inset: 0; pointer-events: none; border-radius: inherit;
+  border: 1px solid #383b3f; --faisceau: 200px;
+  -webkit-mask-image: radial-gradient(ellipse var(--faisceau) var(--faisceau)
+    at var(--x, 50%) var(--y, 30%), #000 0%, #0009 30%, #0003 50%, #0000 70%);
+  mask-image: radial-gradient(ellipse var(--faisceau) var(--faisceau)
+    at var(--x, 50%) var(--y, 30%), #000 0%, #0009 30%, #0003 50%, #0000 70%);
+}
+[data-theme="light"] .chassis__lisere { border-color: var(--bordure-secondaire); }
+/* [relevé] page.css .MwJdiW_fixedGlowBgRight/Left — le halo de fond n'est
+   PAS un filter:blur() : c'est un SVG data-URI contenant un rect pivoté à
+   45° passé dans feGaussianBlur stdDeviation=64. Coût GPU nul au scroll. */
+.chassis__fond {
+  position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1280' height='832' fill='none'%3E%3Cpath fill='%231C1D1E' d='M0 0h1280v832H0z'/%3E%3Cg filter='url(%23a)' opacity='0.22'%3E%3Crect width='240' height='560' x='781' y='133' fill='%23F7F8F8' rx='120' transform='rotate(45 781 133)'/%3E%3C/g%3E%3Cdefs%3E%3Cfilter id='a' width='722.274' height='722.274' x='306.726' y='54.706' color-interpolation-filters='sRGB' filterUnits='userSpaceOnUse'%3E%3CfeFlood flood-opacity='0' result='BackgroundImageFix'/%3E%3CfeBlend in='SourceGraphic' in2='BackgroundImageFix' result='shape'/%3E%3CfeGaussianBlur result='effect1_foregroundBlur_1_2' stdDeviation='64'/%3E%3C/filter%3E%3C/defs%3E%3C/svg%3E");
+  background-position: -200px 0; background-repeat: no-repeat;
+  background-size: 1280px 832px;
+}
+.chassis__fond--gauche { background-position: 112% 0; }
+/* [arbitrage] opacité .55. Le SVG a un fond plein #1C1D1E, plus CLAIR que
+   --fond-niveau-1 (#0f1011) : posé en pleine surface il délave le contenu.
+   Dans la source il n'habille qu'un élément décoratif précis, que je n'ai
+   pas pu identifier ; je le garde en nappe atténuée pour que le contenu du
+   panneau reste lisible par-dessus. */
+.chassis__fond { opacity: .38; }
+/* [relevé] page.css — le halo de fond disparaît sous 640px */
+@media (max-width: 640px) { .chassis__fond { background-image: none; } }
+/* [arbitrage] la couleur du SVG est codée en dur (#1C1D1E) : ce halo
+   n'existe que pour le thème sombre. En clair il repeint le panneau en noir
+   et le texte devient illisible. Piège du data-URI, qui échappe aux tokens. */
+[data-theme="light"] .chassis__fond { background-image: none; }
+
+/* [relevé] SlackIssue.css / Plan.css / Monitor.css : chaque illustration de
+   section porte un TRIPLE masque composé avec `mask-composite: intersect` —
+   un dégradé vers le bas, un vers la droite, un vers la gauche, avec des
+   arrêts DIFFÉRENTS par section. C'est ce qui fait « flotter » chaque
+   maquette sans bord net. Les valeurs ci-dessous sont celles de la source. */
+.fondu-triple { -webkit-mask-composite: source-in; mask-composite: intersect; }
+/* [relevé] SlackIssue.css .qM9FAa_container */
+.fondu-triple--intake {
+  -webkit-mask-image:
+    linear-gradient(to bottom, var(--masque-visible) 0%, var(--masque-visible) 40%, var(--masque-invisible) 90%),
+    linear-gradient(to right,  var(--masque-visible) 0%, var(--masque-visible) 68%, var(--masque-invisible) 96%),
+    linear-gradient(to left,   var(--masque-visible) 0%, var(--masque-visible) 55%, var(--masque-invisible) 65%);
+  mask-image:
+    linear-gradient(to bottom, var(--masque-visible) 0%, var(--masque-visible) 40%, var(--masque-invisible) 90%),
+    linear-gradient(to right,  var(--masque-visible) 0%, var(--masque-visible) 68%, var(--masque-invisible) 96%),
+    linear-gradient(to left,   var(--masque-visible) 0%, var(--masque-visible) 55%, var(--masque-invisible) 65%);
+}
+/* [relevé] Plan.css ._9Zs8oG_container */
+.fondu-triple--plan {
+  -webkit-mask-image:
+    linear-gradient(to bottom, var(--masque-visible) 0%, var(--masque-visible) 50%, var(--masque-invisible) 90%),
+    linear-gradient(to right,  var(--masque-visible) 0%, var(--masque-visible) 60%, var(--masque-invisible) 100%),
+    linear-gradient(to left,   var(--masque-visible) 0%, var(--masque-visible) 60%, var(--masque-invisible) 100%);
+  mask-image:
+    linear-gradient(to bottom, var(--masque-visible) 0%, var(--masque-visible) 50%, var(--masque-invisible) 90%),
+    linear-gradient(to right,  var(--masque-visible) 0%, var(--masque-visible) 60%, var(--masque-invisible) 100%),
+    linear-gradient(to left,   var(--masque-visible) 0%, var(--masque-visible) 60%, var(--masque-invisible) 100%);
+}
+/* [relevé] Monitor.css .LwA8Xa_container — plus margin-inline:-57px */
+.fondu-triple--monitor {
+  margin-inline: -57px;
+  -webkit-mask-image:
+    linear-gradient(to bottom, var(--masque-visible) 0%, var(--masque-visible) 40%, var(--masque-invisible) 100%),
+    linear-gradient(to right,  var(--masque-visible) 0%, var(--masque-visible) 80%, var(--masque-invisible) 100%),
+    linear-gradient(to left,   var(--masque-visible) 0%, var(--masque-visible) 60%, var(--masque-invisible) 95%);
+  mask-image:
+    linear-gradient(to bottom, var(--masque-visible) 0%, var(--masque-visible) 40%, var(--masque-invisible) 100%),
+    linear-gradient(to right,  var(--masque-visible) 0%, var(--masque-visible) 80%, var(--masque-invisible) 100%),
+    linear-gradient(to left,   var(--masque-visible) 0%, var(--masque-visible) 60%, var(--masque-invisible) 95%);
+}
+@media (max-width: 1024px) { .fondu-triple--monitor { margin-inline: 0; } }
+
+/* ============================================================
+   11. MAQUETTES DE PRODUIT — reconstruites en DOM + CSS
+   ============================================================ */
+/* DIAGNOSTIC. La source ne sert AUCUNE capture ni vidéo pour ses maquettes :
+   homepage.html contient 0 <video>, 0 <canvas>, et ses 32 <img> sont TOUS des
+   avatars ronds de 14 à 36px. Les six maquettes — fenêtre d'application du
+   héros, tableau Intake, frise Plan, journal d'agent Build, diff Diffs,
+   tableaux de bord Monitor — sont des reconstructions en DOM + CSS, chacune
+   avec sa feuille : NewHeroIllustration.css, SlackIssue.css, Plan.css,
+   Build.css, DiffsIllustration.css, Monitor.css. Toutes les valeurs ci-dessous
+   en viennent. Les avatars sont repris par URL distante sur le CDN d'origine
+   (aucun binaire dans le livrable). */
+/* ---- 11.0 Primitives communes aux six maquettes ---------------------- */
+/* [relevé] CV-gUa_labelButton — 26px, PILULE, 12px, bordure 1px primaire,
+   gap 2px, padding-inline 5px. .CV-gUa_accentColor est un carré de 16px
+   contenant un point de 6px CENTRÉ, pas un point de 16px. */
+.mq-accent { position: relative; width: 16px; height: 16px; flex-shrink: 0; }
+.mq-accent::after { content: ""; position: absolute; top: 50%; left: 50%;
+  width: 6px; height: 6px; border-radius: 50%; background: var(--accent-point);
+  transform: translate(-50%, -50%); }
+.mq-avatar { width: 16px; height: 16px; border-radius: 50%; flex-shrink: 0; }
+/* [relevé] CV-gUa_header (44px, filet translucide) + w9ZFkq_header, dont le
+   rembourrage est ASYMÉTRIQUE : 31px à gauche, 24px à droite. */
+.app__barre { display: flex; justify-content: space-between; align-items: center;
+  height: 44px; padding-inline: 31px 24px;
+  border-bottom: var(--filet) solid var(--bordure-translucide); }
+/* min-width:0 sur les deux moitiés : sans lui, un élément flex refuse de
+   descendre sous son min-content et fait déborder la barre en petit écran. */
+.app__fil { display: flex; align-items: center; gap: 8px; min-width: 0;
+  font-size: var(--texte-mini-taille); color: var(--texte-secondaire); }
+.app__outils { display: flex; align-items: center; gap: 4px; min-width: 0; }
+@media (max-width: 640px) { .app__filtre { display: none; } }
+/* [relevé] CV-gUa_buttonBase — 24×24, rayon 4, transition transform .16s */
+.app__bouton { display: grid; place-items: center; width: 24px; height: 24px;
+  border-radius: var(--rayon-4); color: var(--texte-quaternaire);
+  transition: transform var(--duree-survol) var(--courbe-sortie-quad); }
+.app__bouton:hover { color: var(--texte-secondaire); background: var(--fond-niveau-3); }
+.app__bouton:active { transform: scale(.9); }
+/* [relevé] CV-gUa_filterButton — 26px, rayon 4, padding-inline 8px */
+.app__filtre { display: flex; align-items: center; height: 26px;
+  padding-inline: 8px; border-radius: var(--rayon-4);
+  color: var(--texte-tertiaire); font-size: var(--texte-micro-taille); }
+/* [relevé] CV-gUa_labelButton — 26px, PILULE, 12px, bordure 1px primaire,
+   gap 2px, padding-inline 5px, survol brightness(1.4) */
+.app__etiquette { display: inline-flex; align-items: center; gap: 2px; height: 26px;
+  padding-inline: 5px; border-radius: var(--rayon-plein);
+  border: 1px solid var(--bordure-primaire); color: var(--texte-secondaire);
+  font-size: 12px; font-weight: var(--graisse-moyenne);
+  transition: filter var(--duree-survol) var(--courbe-sortie-quad),
+              transform var(--duree-survol) var(--courbe-sortie-quad); }
+.app__etiquette:hover { filter: brightness(1.4); }
+.app__pastille { width: 8px; height: 8px; border-radius: var(--rayon-plein);
+  background: currentColor; flex-shrink: 0; }
+/* [relevé] CV-gUa_wrapperWithSidebar — 1fr 320px, 280px au palier inférieur */
+.app__corps { display: grid; grid-template-columns: minmax(0, 1fr) 320px;
+  width: 100%; height: 100%; min-height: 0; }
+@media (max-width: 1280px) { .app__corps { grid-template-columns: minmax(0, 1fr) 280px; } }
+@media (max-width: 768px)  { .app__corps { grid-template-columns: minmax(0, 1fr); } }
+/* [relevé] CV-gUa_sidebar — filet à GAUCHE, translucide */
+.app__aside { border-left: var(--filet) solid var(--bordure-translucide);
+  display: flex; flex-direction: column; min-height: 0; }
+@media (max-width: 768px) { .app__aside { display: none; } }
+/* [relevé] w9ZFkq_sidebarHeader — rembourrage ASYMÉTRIQUE 31px / 24px */
+.app__aside-entete { display: flex; align-items: center; height: 44px;
+  padding-inline: 31px 24px;
+  border-bottom: var(--filet) solid var(--bordure-translucide);
+  font-size: var(--texte-micro-taille); color: var(--texte-tertiaire); }
+/* [relevé] w9ZFkq_sidebarContent — opacité .8, rembourrage 28px 30px */
+.app__aside-contenu { opacity: .8; padding: 28px 30px;
+  display: flex; flex-direction: column; gap: 16px; }
+/* [relevé] w9ZFkq_activityRow — 24px */
+.app__activite { display: flex; align-items: center; gap: 8px; height: 24px;
+  font-size: var(--texte-micro-taille); color: var(--texte-tertiaire); }
+.app__avatar { width: 16px; height: 16px; border-radius: var(--rayon-plein);
+  background: var(--fond-quaternaire); flex-shrink: 0; }
+/* [relevé] w9ZFkq_code — MONOSPACE avec font-feature-settings NEUTRALISÉ
+   (`normal`) : le code ne doit pas hériter des ligatures cv01/ss03. */
+.app__code { display: inline-flex; align-items: center; height: 24px;
+  padding-inline: 6px; border-radius: var(--rayon-4);
+  border: var(--filet) solid var(--bordure-translucide-forte);
+  background: var(--fond-translucide); color: var(--texte-secondaire);
+  font-family: var(--police-mono); font-size: var(--texte-micro-taille);
+  font-feature-settings: normal; font-variation-settings: normal; }
+/* [relevé] w9ZFkq_note — --stretch 16px : la note DÉBORDE de sa colonne de
+   16px de chaque côté via max-width + margin-inline négatifs. */
+.app__note { --etirement: 16px;
+  display: flex; flex-direction: column; gap: 8px;
+  max-width: calc(100% + var(--etirement) * 2);
+  margin-inline: calc(var(--etirement) * -1);
+  padding: 12px 20px 16px 15px; border-radius: var(--rayon-6);
+  border: var(--filet) solid var(--bordure-translucide-forte);
+  background: #ffffff03; box-shadow: 0 0 0 1px #0003;
+  font-size: var(--texte-mini-taille); color: var(--texte-secondaire); }
+/* [relevé] w9ZFkq_summaryPill — pilule ancrée en haut à droite, 24px,
+   fond #1c1c1d EN DUR (hors système de tokens). */
+.app__pilule { position: absolute; top: 8px; right: 8px;
+  display: flex; align-items: center; gap: 6px; height: 24px;
+  padding: 0 8px 0 6px; border-radius: var(--rayon-plein);
+  border: var(--filet) solid var(--bordure-translucide-forte);
+  background: #1c1c1d; font-size: var(--texte-micro-taille);
+  color: var(--texte-tertiaire); }
+.app__mention { color: #6d78d5; }
+/* [relevé] w9ZFkq_separator — filet VERTICAL de 8px, 1px de large, décalé */
+.app__filet-v { width: 1px; height: 8px; margin-left: 8px;
+  background: var(--bordure-primaire); transform: translateX(-50%); }
+
+/* ---- 11.1 HÉROS — fenêtre d'application (NewHeroIllustration.css) ---- */
+/* [relevé] .JgFxua_frameWrapper — le héros n'utilise PAS le châssis à rayon
+   22px des cinq sections : il a son propre appareil, avec un tampon latéral. */
+.cadre-enveloppe { --tampon: 60px; position: relative; margin: 0 auto;
+  padding-inline: var(--tampon); overflow: hidden; }
+@media (max-width: 1280px) { .cadre-enveloppe { --tampon: 32px; } }
+@media (max-width: 1024px) { .cadre-enveloppe { --tampon: 28px; } }
+@media (max-width: 640px)  { .cadre-enveloppe { --tampon: 18px; height: 360px; } }
+/* [relevé] le cadre fait 1320px et ne descend JAMAIS sous 1200px : dès 1240px
+   de fenêtre il déborde, et un voile de 360px le dissout à droite. C'est ce
+   débord qui fait lire « fenêtre plus grande que l'écran ». */
+@media (max-width: 1240px) {
+  .cadre-enveloppe::after { content: ""; position: absolute; inset: 0 0 0 auto;
+    z-index: 10; width: 360px; pointer-events: none;
+    background: linear-gradient(90deg, #08090a00 0%, #08090acc 100%); }
+}
+@media (max-width: 640px) { .cadre-enveloppe::after {
+  background: linear-gradient(90deg, #08090a00 70%, #08090acc 100%); } }
+/* [relevé] .JgFxua_frame — grille 232px + reste, fond #090a0b, rayon 12,
+   rembourrage 8. La fenêtre est un objet à taille FIXE, pas un bloc fluide. */
+.cadre { --largeur-barre: 232px;
+  position: relative; display: grid; margin: 0 auto;
+  grid-template-columns: var(--largeur-barre) 1fr; grid-template-rows: 1fr;
+  width: 100%; max-width: 1320px; min-width: 1200px; height: 720px;
+  padding: 8px; border-radius: var(--rayon-12);
+  background: #090a0b; overflow: hidden; user-select: none; }
+@media (max-width: 1280px) { .cadre { max-width: 1160px; } }
+@media (max-width: 640px)  { .cadre { transform-origin: 0 0; transform: scale(.5); } }
+/* [relevé] .JgFxua_frameBackground */
+.cadre__fond { position: absolute; inset: 0; border-radius: inherit;
+  background: #101112; border: 1px solid #ffffff14; }
+/* [relevé] .JgFxua_view — fond #121314, rayon 7, DOUBLE liseré : une bordure
+   translucide plus un box-shadow de 2px noir à 10 %. */
+.vue { position: relative; z-index: 1; min-width: 0; width: 100%; height: 100%;
+  border: var(--filet) solid var(--bordure-translucide-forte);
+  background: #121314; border-radius: 7px; overflow: hidden;
+  box-shadow: 0 0 0 2px #0000001a; }
+/* [relevé] .JgFxua_glow — halo blanc de 400px à 4 %, ancré en haut à gauche */
+.vue__halo { position: absolute; top: 0; left: 0; width: 400px; height: 400px;
+  border-radius: 400px; pointer-events: none;
+  background: radial-gradient(50% 50%, #ffffff0a 0%, #fff0 90%);
+  transform: translate(-50%, -50%); }
+
+/* Barre latérale de l'application — [relevé] .M1bpsa_* */
+.bl { position: relative; z-index: 1; padding: 8px 14px 14px 8px; }
+/* [relevé] .M1bpsa_sidebar:after — pastille de 240px floutée à 80px, à 3 %.
+   Elle éclaire le COIN de la fenêtre, pas la barre. */
+.bl::after { content: ""; position: absolute; left: -8px; top: -8px;
+  width: 240px; height: 240px; border-radius: var(--rayon-plein);
+  pointer-events: none; background: #f7f8f808; filter: blur(80px);
+  transform: translate(-50%, -50%); }
+.bl__tete { display: flex; align-items: center; justify-content: space-between; }
+.bl__espace { display: flex; gap: 6px; }
+/* [relevé] .M1bpsa_switchWorkspaceButton — 28px, rayon 4, gap 6, pad 4 */
+.bl__atelier { display: flex; align-items: center; gap: 6px; height: 28px;
+  padding-inline: 4px; border-radius: var(--rayon-4);
+  font-size: var(--texte-mini-taille); color: var(--texte-primaire);
+  font-weight: var(--graisse-moyenne);
+  transition: background var(--duree-survol) var(--courbe-sortie-quad); }
+@media (any-hover: hover) { .bl__atelier:hover { background: #ffffff08; } }
+/* [relevé] .M1bpsa_logoWrapper — 20px, rayon 2, fond #121414 */
+.bl__logo { display: grid; place-items: center; width: 20px; height: 20px;
+  border-radius: 2px; background: #121414; color: #e2e4e6; }
+/* [relevé] .M1bpsa_searchButton / .M1bpsa_newIssueButton — 28px, RONDS.
+   Le bouton « nouveau » a une bordure, la loupe n'en a pas. */
+.bl__rond { display: grid; place-items: center; width: 28px; height: 28px;
+  border-radius: var(--rayon-plein); color: var(--texte-quaternaire); }
+.bl__rond--borde { color: #e2e4e6; background: #ffffff05;
+  border: var(--filet) solid #24282c; }
+.bl__groupe { display: flex; flex-direction: column; gap: 2px; }
+.bl__ecart { height: 12px; }
+/* [relevé] .M1bpsa_navItem — 28px, 13px, graisse 510, rayon 6, pad 6, gap 8 */
+.bl__item { display: flex; align-items: center; gap: 8px; width: 100%;
+  height: 28px; padding-inline: 6px; border-radius: var(--rayon-6);
+  font-size: var(--texte-mini-taille); font-weight: var(--graisse-moyenne);
+  color: var(--texte-secondaire); }
+.bl__item[data-actif] { background: #ffffff0a; }
+.bl__item:hover:not([data-actif]) { background: #ffffff05; }
+.bl__item > svg { color: var(--texte-quaternaire); flex-shrink: 0; }
+/* [relevé] .M1bpsa_collapsible — gap 0 et retrait de 4px : les en-têtes de
+   groupe ne s'alignent PAS sur les items qu'ils coiffent. */
+.bl__repliable { gap: 0; padding-left: 4px; color: var(--texte-quaternaire); }
+/* [relevé] .M1bpsa_navIconWrapper — 20px, rayon 2, avec un fond de la couleur
+   de l'item posé à 8 % en ::before. */
+.bl__vignette { position: relative; display: grid; place-items: center;
+  width: 20px; height: 20px; border-radius: 2px; flex-shrink: 0;
+  color: var(--teinte); }
+.bl__vignette::before { content: ""; position: absolute; inset: 0;
+  border-radius: inherit; background: var(--teinte); opacity: .08; }
+.bl__vignette > svg { position: relative; color: inherit; }
+
+/* Fiche d'issue — [relevé] .CV-gUa_wrapperWithSidebar (1fr + 320px), repris
+   par .app__corps déclaré plus haut. */
+.fiche { position: relative; min-width: 0; display: flex; flex-direction: column; }
+/* [relevé] .w9ZFkq_body — 48px 68px, ramené à 48px 32px sous 1280 */
+.fiche__corps { flex: 1; min-height: 0; padding: 48px 68px; overflow: hidden;
+  display: flex; flex-direction: column; }
+@media (max-width: 1280px) { .fiche__corps { padding: 48px 32px; } }
+.fiche__compteur { display: flex; align-items: center; gap: 4px;
+  font-size: var(--texte-micro-taille); color: var(--texte-quaternaire); }
+.fiche__titre { font-size: var(--titre-2-taille); line-height: var(--titre-2-interligne);
+  letter-spacing: var(--titre-2-lettrage); font-weight: var(--graisse-demi-grasse);
+  color: var(--texte-primaire); }
+.fiche__texte { max-width: 58ch; font-size: var(--texte-taille);
+  line-height: var(--texte-interligne); color: var(--texte-secondaire); }
+.fiche__rubrique { font-size: var(--texte-mini-taille); color: var(--texte-tertiaire);
+  font-weight: var(--graisse-moyenne); }
+.fiche__note-tete { display: flex; align-items: center; gap: 8px; }
+.fiche__note-tete b { color: var(--texte-secondaire);
+  font-weight: var(--graisse-moyenne); }
+.fiche__note-tete i { font-style: normal; color: var(--texte-quaternaire);
+  font-size: var(--texte-micro-taille); }
+/* [relevé] hauteur fixe de 24px par ligne de propriété, gap 8 */
+.fiche__propriete { display: flex; align-items: center; gap: 8px; height: 24px;
+  font-size: var(--texte-mini-taille); color: var(--texte-secondaire); }
+.fiche__propriete--sous { margin-left: 20px; }
+.fiche__groupe-titre { font-size: var(--texte-micro-taille);
+  color: var(--texte-quaternaire); }
+/* [relevé] .CV-gUa_labelButton — pilule de 26px à bordure primaire */
+.fiche__label { display: inline-flex; align-items: center; gap: 2px; height: 26px;
+  padding-inline: 5px 10px; border-radius: var(--rayon-plein);
+  border: 1px solid var(--bordure-primaire); color: var(--texte-secondaire);
+  font-size: 12px; font-weight: var(--graisse-moyenne); }
+
+/* Boîte de conversation — [relevé] .w9ZFkq_chatBox : 400×488, ancrée en bas à
+   droite à 12px, fond #161718. Elle RECOUVRE le corps de la fiche. */
+.causerie { position: absolute; right: 12px; bottom: 12px; z-index: 1;
+  display: flex; flex-direction: column; width: 400px; height: 488px;
+  border: 1px solid var(--bordure-translucide); border-radius: var(--rayon-8);
+  background: #161718; }
+/* [relevé] .w9ZFkq_chatBoxHeader — 48px, rembourrage 0 16px 0 20px */
+.causerie__entete { display: flex; align-items: center; justify-content: space-between;
+  height: 48px; padding: 0 16px 0 20px;
+  border-bottom: 1px solid var(--bordure-translucide);
+  font-size: var(--texte-mini-taille); color: var(--texte-secondaire); }
+.causerie__marque { display: flex; align-items: center; gap: 8px; }
+/* [relevé] .w9ZFkq_chatBoxLabel — 16px de haut, 11px, rayon 4, bordure #313234 */
+.causerie__etiquette { display: inline-block; height: 16px; margin-left: 6px;
+  padding-inline: 4px; border-radius: var(--rayon-4);
+  border: var(--filet) solid #313234; font-size: 11px; line-height: 14px;
+  color: var(--texte-tertiaire); }
+.causerie__boutons { display: flex; }
+/* [relevé] .w9ZFkq_chatButton — 32×32 */
+.causerie__bouton { display: grid; place-items: center; width: 32px; height: 32px;
+  color: var(--texte-quaternaire);
+  transition: color var(--duree-survol) var(--courbe-sortie-quad); }
+.causerie__bouton:hover { color: var(--texte-secondaire); }
+/* [relevé] .w9ZFkq_chatBoxContent — flex 1, gap 12, rembourrage 14px 20px */
+/* [relevé] .w9ZFkq_finished — une fois la session terminée le fil est ancré
+   EN BAS. Sans cela, la boîte s'ouvre sur un grand vide entre les messages
+   et le champ de saisie. */
+.causerie__contenu { display: flex; flex-direction: column; flex: 1; gap: 12px;
+  justify-content: flex-end; padding: 14px 20px; overflow: hidden;
+  font-size: var(--texte-mini-taille); color: var(--texte-tertiaire); }
+.causerie__ligne { display: flex; align-items: center; gap: 4px; }
+/* [relevé] .w9ZFkq_agentNote — --inset 8px, DÉBORD de 3 × 8px (asymétrique) */
+.causerie__note { --retrait: 8px;
+  width: calc(100% + var(--retrait) * 3);
+  margin-inline: calc(var(--retrait) * -1); margin-bottom: 8px;
+  display: flex; flex-direction: column; gap: 6px; padding: 12px;
+  border: var(--filet) solid var(--bordure-translucide-forte);
+  border-radius: var(--rayon-6); background: #ffffff05; }
+/* [relevé] .w9ZFkq_animatedTextGradient — même dégradé balayé que la ligne
+   d'annonce du héros, mais en 12px. Le « Thinking… » n'a pas de couleur. */
+.causerie__pense { font-size: 12px;
+  background: linear-gradient(-.6turn, var(--texte-tertiaire) 0%,
+              var(--texte-quaternaire) 60%, var(--texte-tertiaire) 80%,
+              var(--texte-tertiaire) 100%);
+  background-size: 300%; -webkit-background-clip: text; background-clip: text;
+  color: transparent; -webkit-text-fill-color: transparent;
+  animation: balayage-texte 2.2s linear infinite; }
+/* [relevé] .w9ZFkq_commentBoxContainer — marges 0 12px 4px */
+.causerie__saisie-boite { position: relative; margin: 0 12px 4px 12px; }
+/* [relevé] .w9ZFkq_commentBox — 68px de haut, fond #ffffff05, rayon 6 */
+.causerie__saisie { width: 100%; height: 68px; padding: 12px 14px;
+  border: var(--filet) solid var(--bordure-translucide-forte);
+  border-radius: var(--rayon-6); background: #ffffff05;
+  color: var(--texte-quaternaire); font-size: 13px;
+  box-shadow: 0 0 0 1px #0003; }
+/* [relevé] .w9ZFkq_commentActions — ancrées à 20px du bas et de la droite */
+.causerie__actions { position: absolute; right: 20px; bottom: 20px;
+  display: flex; align-items: center; gap: 6px; }
+.causerie__action { display: grid; place-items: center; width: 24px; height: 24px;
+  color: var(--texte-quaternaire); }
+/* [relevé] .w9ZFkq_sendButton:disabled — rond, bordure fine, fond #ffffff08 */
+.causerie__envoi { display: grid; place-items: center; width: 24px; height: 24px;
+  border-radius: 50%; background: #ffffff08;
+  border: var(--filet) solid var(--bordure-translucide-forte);
+  color: var(--texte-quaternaire); }
+
+/* ---- 11.2 INTAKE (1.0) — tableau + fil de discussion (SlackIssue.css) */
+/* [relevé] .qM9FAa_container — le tableau est LARGE de 110 % et décalé de
+   -120px : il sort du châssis des deux côtés, et seul le triple masque en
+   arrête la lecture. */
+.intake { width: 110%; transform: translateX(-120px); }
+@media (max-width: 768px) { .intake { transform: translateX(-20px); } }
+/* [relevé] .qM9FAa_panel — 608px, rembourrage GAUCHE de 385px : le tableau est
+   poussé vers la droite pour dégager la place du fil de discussion. */
+.tableau { display: flex; gap: 16px; height: 608px; opacity: .8;
+  padding: 24px 0 24px 385px; }
+/* [relevé] .qM9FAa_col — 300px FIXES, jamais fluides */
+.tableau__colonne { width: 300px; flex-shrink: 0; }
+/* [relevé] .qM9FAa_colHeader — 24px sous l'en-tête, retrait latéral de 8px */
+.tableau__entete { display: flex; align-items: center; gap: 8px;
+  margin-bottom: 24px; padding-inline: 8px; }
+.tableau__nom { font-size: var(--texte-micro-taille); color: var(--texte-secondaire);
+  font-weight: var(--graisse-moyenne); }
+.tableau__nombre { font-size: var(--texte-micro-taille); color: var(--texte-tertiaire); }
+.tableau__outils { display: flex; margin-left: auto; }
+/* [relevé] .qM9FAa_headerButton — 20×20, icône de 14px */
+.tableau__bouton { display: grid; place-items: center; width: 20px; height: 20px;
+  border-radius: 2px; color: var(--texte-quaternaire); pointer-events: none; }
+.tableau__pile { display: flex; flex-direction: column; gap: 8px; }
+/* [relevé] .qM9FAa_issue — 300×96, rayon 6, gap 3, ombre 0 2px 4px #0006 */
+.tache { display: flex; flex-direction: column; gap: 3px;
+  width: 300px; height: 96px; padding: 8px; border-radius: var(--rayon-6);
+  border: var(--filet) solid var(--bordure-translucide); background: #ffffff05;
+  box-shadow: 0 2px 4px #0006; transform: translateZ(0); }
+.tache__tete { display: flex; align-items: center; justify-content: space-between; }
+/* [relevé] .dWXgBS — la référence est en 10px MAJUSCULES quaternaires */
+.tache__ref { font-size: var(--texte-nano-taille);
+  line-height: var(--texte-nano-interligne);
+  letter-spacing: var(--texte-nano-lettrage); text-transform: uppercase;
+  color: var(--texte-quaternaire); }
+.tache__titre { font-size: var(--texte-micro-taille); color: var(--texte-secondaire); }
+.tache__bas { display: flex; align-items: center; gap: 4px; margin-top: auto; }
+/* [relevé] .qM9FAa_priorityButton — 20×20, rayon 2, ombre 0 1.2px #00000008 */
+.tache__priorite { display: grid; place-items: center; width: 20px; height: 20px;
+  border-radius: 2px; color: var(--texte-quaternaire);
+  border: var(--filet) solid var(--bordure-translucide);
+  background: var(--fond-translucide); box-shadow: 0 1.2px #00000008; }
+/* [relevé] .qM9FAa_label — 20px, 10px, rayon 2, pad 2/8 ; le point fait 4px
+   et porte 5px de marge de chaque côté. Ce sont les SEULES couleurs vives
+   de la maquette : #EB5757 bug, #8B5CF6 design, #6366F1 IA, #10B981 perf. */
+.etiq { display: inline-flex; align-items: center; height: 20px;
+  padding-inline: 2px 8px; border-radius: 2px;
+  border: var(--filet) solid var(--bordure-translucide);
+  background: var(--fond-translucide); box-shadow: 0 1.2px #00000008;
+  font-size: 10px; font-weight: var(--graisse-moyenne);
+  color: var(--texte-tertiaire); }
+.etiq__point { width: 4px; height: 4px; margin-inline: 5px; border-radius: 50%;
+  background: var(--couleur-etiq); }
+
+/* Boîte flottante — appareil PARTAGÉ par les sections 1.0, 2.0 et 5.0.
+   [relevé] le fond N'EST PAS un background sur l'élément : c'est un ::before
+   assombri portant l'ombre, doublé d'un ::after qui ne porte QUE la bordure.
+   Deux couches pour que la bordure ne soit pas assombrie avec le fond. */
+.boite { position: absolute; top: -28px; left: var(--marge-interieure);
+  border-radius: var(--rayon-16); overflow: hidden;
+  transform: translateX(-24px); user-select: none; }
+@media (max-width: 1024px) { .boite { top: -16px; left: 24px; } }
+.boite__fond { position: absolute; inset: var(--filet); z-index: 0;
+  border-radius: inherit; pointer-events: none; filter: brightness(.8);
+  background: linear-gradient(#ffffff05 0% 100%), #0f1011;
+  box-shadow: 0 4px 32px #08090a99; }
+.boite__lisere { position: absolute; inset: 0; z-index: 0; border-radius: inherit;
+  pointer-events: none;
+  border: var(--filet) solid var(--bordure-translucide-forte); }
+.boite__corps { position: relative; z-index: 1; }
+.boite--slack { width: 100%; max-width: 480px; padding-bottom: 12px; }
+/* [relevé] .qM9FAa_header — 17px 24px */
+.boite__entete { display: flex; align-items: center; justify-content: space-between;
+  padding: 17px 24px; }
+/* [relevé] .qM9FAa_chatMessages — 342px, gap 24, messages ancrés EN BAS */
+.fil { display: flex; flex-direction: column; justify-content: flex-end; gap: 24px;
+  height: 342px; padding: 26px 24px 32px; overflow: hidden; }
+/* [relevé] .qM9FAa_chatMessage — gap 15px ; l'avatar fait 36px, rayon 6 */
+.fil__message { display: flex; gap: 15px; }
+.fil__avatar { width: 36px; height: 36px; border-radius: var(--rayon-6);
+  flex-shrink: 0; }
+/* [relevé] .qM9FAa_messageHeader — 22px, remonté de 4px, aligné LIGNE DE BASE */
+.fil__tete { display: flex; align-items: baseline; gap: 8px; height: 22px;
+  margin-top: -4px; }
+.fil__nom { font-size: var(--texte-taille); font-weight: var(--graisse-demi-grasse);
+  color: var(--texte-primaire); }
+.fil__heure { font-size: var(--texte-micro-taille); color: var(--texte-quaternaire); }
+.fil__texte { font-size: var(--texte-taille); line-height: 1.55;
+  color: var(--texte-secondaire); }
+/* [relevé] .qM9FAa_chatInput — 160px, marges latérales 12px, rayon 8 */
+.fil__saisie { position: relative; display: flex; flex-direction: column; gap: 12px;
+  height: 160px; margin-inline: 12px; padding: 16px;
+  border: var(--filet) solid var(--bordure-translucide);
+  border-radius: var(--rayon-8); background: #ffffff05; }
+.fil__saisie-texte { flex: 1; font-size: 15px; color: var(--texte-secondaire); }
+/* [relevé] .qM9FAa_mention — #6d78d5 sur #232534, 24px, rayon 4 */
+.fil__mention { display: inline-flex; align-items: center; height: 24px;
+  margin-right: 4px; padding-inline: 3px; border-radius: var(--rayon-4);
+  color: #6d78d5; background: #232534; }
+/* [relevé] .qM9FAa_cursor — 1px de large, 19px de haut, clignotement en
+   PALIERS (0 / 1, sans fondu), cycle de 1,25s */
+.fil__curseur { display: inline-block; width: 1px; height: 19px; margin-left: 4px;
+  border-radius: 1px; background: var(--texte-quaternaire);
+  transform: translateY(4px); animation: clignote 1.25s infinite; }
+@keyframes clignote { 0%, 49% { opacity: 1; } 50%, 99% { opacity: 0; } 100% { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .fil__curseur { animation: none; } }
+.fil__barre { display: flex; align-items: center; }
+/* [relevé] .qM9FAa_attachmentButton — 32px, ROND, fond translucide */
+.fil__attache { display: grid; place-items: center; width: 32px; height: 32px;
+  margin-right: 4px; border-radius: 50%; background: var(--fond-translucide);
+  color: var(--texte-tertiaire); }
+.fil__icone { display: grid; place-items: center; width: 28px; height: 28px;
+  border-radius: var(--rayon-4); color: var(--texte-quaternaire); }
+.fil__separateur { width: 1px; height: 20px; margin-inline: 4px;
+  background: var(--bordure-translucide); }
+/* [relevé] .qM9FAa_sendButtonGroup — 65×28, fond de MARQUE, rayon 6, avec un
+   filet blanc à 20 % qui sépare l'envoi du menu déroulant. */
+.fil__envoi { display: flex; align-items: center; margin-left: auto;
+  width: 65px; height: 28px; border-radius: var(--rayon-6);
+  background: var(--marque-fond); color: #fff; }
+.fil__envoi > span { display: grid; place-items: center; width: 32px; height: 28px; }
+.fil__envoi-filet { width: 1px; height: 16px; background: #fff3; }
+/* [relevé] .qM9FAa_appBadge — 14px de haut, 10px, MAJUSCULES, fond #ffffff1a */
+.fil__badge { display: grid; place-items: center; height: 14px; padding-inline: 2px;
+  border-radius: var(--rayon-4); background: #ffffff1a;
+  font-size: 10px; text-transform: uppercase; color: var(--texte-tertiaire); }
+
+/* ---- 11.3 PLAN (2.0) — frise chronologique (Plan.css) --------------- */
+/* [relevé] ._9Zs8oG_panel — 600px, colonne, débordement VISIBLE : les barres
+   dépassent du panneau, c'est le masque du châssis qui les coupe. */
+.frise-panneau { display: flex; flex-direction: column; justify-content: flex-start;
+  height: 600px; overflow: visible; }
+/* [relevé] ._9Zs8oG_timeline — gap 8, 16px en haut/bas, 24px latéraux */
+.frise { display: flex; flex-direction: column; gap: 8px;
+  min-width: max-content; padding-block: 16px; padding-inline: 24px;
+  overflow: visible; }
+.frise__mois { display: flex; }
+/* [relevé] ._9Zs8oG_timelineMonthName — 160px par mois, EXACTEMENT */
+.frise__mois-nom { position: relative; display: flex; align-items: center;
+  width: 160px; font-size: var(--texte-micro-taille);
+  font-weight: var(--graisse-moyenne); color: var(--texte-quaternaire); }
+/* [relevé] le trait de séparation des mois est un POINTILLÉ VERTICAL construit
+   en repeating-linear-gradient 4px plein / 4px vide — pas un border dashed. */
+.frise__mois-nom::before { content: ""; position: absolute; top: 0; bottom: 0;
+  width: 1px; transform: translateX(-9px);
+  background: repeating-linear-gradient(#ffffff0d 0 4px, #0000 4px 8px); }
+.frise__mois-nom:first-child::before { content: none; }
+.frise__separateur { position: absolute; top: 4px; left: 0; width: 1px; height: 8px;
+  background: var(--bordure-translucide); }
+/* [relevé] ._9Zs8oG_timelineStripes — les traits de semaine remplissent
+   l'espace restant du mois, en space-between. */
+.frise__traits { display: flex; flex: 1; justify-content: space-between; gap: 8px;
+  padding-inline: 8px; }
+.frise__trait { width: 1px; height: 8px; background: var(--bordure-translucide); }
+/* [relevé] ._9Zs8oG_timelineDates — cases de 20px espacées de 20px */
+.frise__dates { display: flex; gap: 20px; }
+.frise__date { display: flex; justify-content: center; width: 20px;
+  font-size: var(--texte-micro-taille); color: var(--texte-quaternaire); }
+.frise__contenu { display: flex; flex-direction: column; }
+@media (max-width: 1280px) { .frise__contenu { transform: translateX(28px); } }
+@media (max-width: 1024px) { .frise__contenu { transform: translateX(-310px); } }
+/* [relevé] chaque projet est positionné en marges LITTÉRALES : ._9Zs8oG_topBar
+   578/43, ._9Zs8oG_splitFares 450/56, ._9Zs8oG_autonomyStatus 828/56. Une
+   frise de projet ne se calcule pas, elle se pose. */
+.projet { position: relative; display: flex; flex-direction: column; gap: 8px;
+  width: var(--largeur); }
+.projet--haut     { margin-left: 578px; margin-top: 43px; }
+.projet--fares    { margin-left: 450px; margin-top: 56px; }
+.projet--autonomy { margin-left: 828px; margin-top: 56px; }
+.projet__titre { display: flex; align-items: center; gap: 5px; margin-left: 4px;
+  font-size: var(--texte-mini-taille); color: var(--texte-secondaire); }
+/* [relevé] ._9Zs8oG_bar — la barre est en DEUX parties : un segment PLEIN à
+   gauche et un segment POINTILLÉ à droite qui prend le reste. Les jalons sont
+   des libellés de 10px suspendus 8px SOUS la barre. */
+.barre { --couleur-barre: #21b3ff; position: relative; display: flex; }
+.barre__plein { display: flex; flex-direction: column; align-items: center; gap: 8px;
+  width: var(--plein, 66%); }
+.barre__plein-int { display: flex; align-items: center; justify-content: space-between;
+  width: 100%; height: 24px; border-radius: var(--rayon-4) 0 0 var(--rayon-4);
+  background: #ffffff08; border: .5px solid #ffffff1a;
+  box-shadow: inset 0 0 12px #0003; }
+.barre__jalon { position: relative; }
+.barre__jalon-txt { position: absolute; top: calc(100% + 8px); left: 50%;
+  white-space: nowrap; font-size: 10px; color: var(--texte-quaternaire);
+  transform: translateX(-50%); }
+/* [relevé] ._9Zs8oG_dashed — dégradé de 0 % à 20 % de la couleur de barre,
+   par-dessus #ffffff08, avec un tracé pointillé 3 / 3.5. */
+.barre__pointille { position: relative; flex: 1; height: 24px; overflow: hidden;
+  border-radius: 0 var(--rayon-4) var(--rayon-4) 0;
+  background: linear-gradient(90deg,
+      color-mix(in srgb, var(--couleur-barre) 0%, transparent) 0%,
+      color-mix(in srgb, var(--couleur-barre) 20%, transparent) 100%), #ffffff08;
+  box-shadow: inset 0 0 12px #0003; }
+/* [relevé] ._9Zs8oG_dashedPath — un TRACÉ horizontal en stroke-dasharray
+   3 / 3.5, pas un contour de boîte : le pointillé marque la trajectoire
+   restante du projet, il n'encadre rien. */
+.barre__pointille::after { content: ""; position: absolute; left: 0; right: 0;
+  top: 50%; height: 1px; opacity: .8;
+  background: repeating-linear-gradient(to right, var(--couleur-barre) 0,
+    var(--couleur-barre) 3px, transparent 3px, transparent 6.5px); }
+/* [relevé] ._9Zs8oG_initiativesBox — 400px, ancrée à 88px du haut, décalée de
+   -24px comme la boîte Slack de la section 1.0 : même appareil, même retrait. */
+.boite--initiatives { width: 400px; top: 88px; border-radius: var(--rayon-12); }
+.boite--initiatives .boite__fond { filter: brightness(.85); }
+/* [relevé] ._9Zs8oG_initiativesBoxHeader — 60px, 24px latéraux */
+.boite__entete--60 { height: 60px; padding: 0 24px;
+  border-bottom: var(--filet) solid var(--bordure-translucide-forte); }
+/* [relevé] ._9Zs8oG_initiativesBoxTable — gap de 32px ENTRE LIGNES et 22px de
+   rembourrage. Le premier tableau porte un filet bas, le second non. */
+.inits { position: relative; display: flex; flex-direction: column; gap: 32px;
+  padding: 22px 22px 26px; }
+.inits--premier { border-bottom: var(--filet) solid var(--bordure-translucide-forte); }
+.inits__ligne { position: relative; display: flex; align-items: center; gap: 12px;
+  font-size: var(--texte-mini-taille); color: var(--texte-secondaire); }
+/* [relevé] ._9Zs8oG_secondaryItem — retrait de 26px, avec un rail vertical
+   tracé dans la gouttière (--left-offset / 2). */
+.inits__ligne--sous { padding-left: 26px; }
+.inits__ligne--sous::before { content: ""; position: absolute; left: 12px;
+  top: -34px; bottom: 50%; width: 1px; background: var(--bordure-primaire); }
+.inits__ligne--sous::after { content: ""; position: absolute; left: 12px;
+  bottom: 50%; width: 8px; height: 1px; background: var(--bordure-primaire); }
+.inits__icone { display: grid; place-items: center; width: 24px; height: 24px;
+  border-radius: 50%; background: var(--teinte); flex-shrink: 0;
+  color: var(--texte-primaire); }
+.inits__compte { margin-left: auto; color: var(--texte-quaternaire); }
+
+/* ---- 11.4 BUILD (3.0) — journal d'agent + palette (Build.css) ------- */
+/* [relevé] .pwxCzW_agentsPanel — 528px */
+.agents-panneau { position: relative; height: 528px; }
+/* [relevé] .pwxCzW_header — 60px, fond niveau 1, rayon SUPÉRIEUR seulement,
+   marges de 1px pour laisser voir le liseré du panneau dessous. */
+.agents__entete { position: relative; z-index: 1; display: flex; align-items: center;
+  justify-content: space-between; height: 60px;
+  margin: 1px 1px 0 1px; padding-left: 28px; padding-right: 24px;
+  background: var(--fond-niveau-1);
+  border-bottom: 1px solid var(--bordure-translucide);
+  border-radius: var(--rayon-12) var(--rayon-12) 0 0; }
+.agents__nom { display: flex; align-items: center;
+  font-size: var(--texte-petit-taille); font-weight: var(--graisse-moyenne);
+  color: var(--texte-secondaire); }
+.agents__nom img { width: 20px; height: 20px; border-radius: 50%; margin-right: 12px; }
+/* [relevé] .pwxCzW_content — le journal est ancré EN BAS (justify-content:
+   flex-end) et plafonné à 352px : les lignes anciennes sortent par le haut. */
+.journal { position: relative; display: flex; flex-direction: column;
+  justify-content: flex-end; align-items: flex-start; gap: 16px;
+  max-height: 352px; padding: 24px 32px 56px;
+  font-size: var(--texte-petit-taille); color: var(--texte-tertiaire); }
+.journal__ligne { display: flex; align-items: baseline; gap: 8px;
+  white-space: nowrap; }
+/* [relevé] .esWcuN — les fragments techniques passent en MONO quaternaire,
+   avec l'interlettrage remis à `normal` (le corps du site est négatif). */
+.journal__mono { font-family: var(--police-mono); font-feature-settings: normal;
+  font-variation-settings: normal; letter-spacing: normal;
+  color: var(--texte-quaternaire); }
+.journal__pense span { color: var(--texte-quaternaire); }
+/* [relevé] .pwxCzW_cmdkContainer — 560px, ancrée à 41px du haut et 100px de
+   la droite : la palette CHEVAUCHE le panneau, elle n'est pas dedans. */
+.palette { position: absolute; top: 41px; right: 100px; z-index: 2;
+  width: 100%; max-width: 560px; border-radius: var(--rayon-12);
+  overflow: hidden; box-shadow: 0 4px 32px #08090a99; }
+@media (max-width: 1280px) { .palette { right: var(--marge-interieure); } }
+@media (max-width: 1024px) { .palette { max-width: 440px; top: 50px;
+  right: calc(var(--marge-interieure) + 16px); } }
+.palette__fond { position: absolute; inset: var(--filet); z-index: 0;
+  border-radius: inherit; pointer-events: none; filter: brightness(.85);
+  background: linear-gradient(0deg, #ffffff03 0%, #ffffff03 100%), #0f1011; }
+.palette__lisere { position: absolute; inset: 0; z-index: 0; border-radius: inherit;
+  pointer-events: none;
+  border: var(--filet) solid var(--bordure-translucide-forte); }
+.palette__corps { position: relative; z-index: 1; border-radius: inherit;
+  box-shadow: 0 0 0 1px #08090a1a, 0 0 64px #08090a66; }
+/* [relevé] .pwxCzW_input — 64px, 16px, rembourrage latéral de 32px */
+.palette__saisie { position: relative; display: flex; align-items: center;
+  height: 64px; margin-inline: 1px; padding-inline: 32px;
+  border-bottom: var(--filet) solid var(--bordure-translucide-forte);
+  font-size: 16px; color: var(--texte-quaternaire); }
+/* [relevé] .pwxCzW_blink — le caret est un rectangle de 1px sur 20px posé à
+   32px du bord, de la couleur de MARQUE. */
+.palette__caret { position: absolute; top: 22px; left: 32px;
+  width: 1px; height: 20px; background: var(--marque-fond);
+  animation: clignote 1.25s infinite; }
+@media (prefers-reduced-motion: reduce) { .palette__caret { animation: none; } }
+.palette__liste { padding: 12px; min-height: 336px; max-height: 336px;
+  overflow: hidden; }
+/* [relevé] .pwxCzW_item — 56px, rayon 8, gap 8, pad 12/16/12/12 */
+.palette__item { position: relative; display: flex; align-items: center; gap: 8px;
+  width: 100%; height: 56px; padding: 12px 16px 12px 12px;
+  border-radius: var(--rayon-8); }
+.palette__item[data-choisi] { background: #ffffff05; }
+.palette__item[data-choisi] .palette__titre { color: var(--texte-primaire); }
+.palette__item img { width: 24px; height: 24px; border-radius: 50%; flex-shrink: 0; }
+.palette__titre { font-size: 16px; font-weight: var(--graisse-moyenne);
+  color: var(--texte-secondaire); white-space: nowrap; }
+/* [relevé] .pwxCzW_agentBadge — 22px, rayon 4, pad 6 */
+.palette__badge { display: flex; align-items: center; height: 22px;
+  padding-inline: 6px; border-radius: var(--rayon-4);
+  background: var(--fond-translucide);
+  border: var(--filet) solid var(--bordure-translucide-forte);
+  font-size: var(--texte-micro-taille); color: var(--texte-tertiaire); }
+.palette__item > svg:last-child { position: absolute; right: 16px;
+  color: var(--texte-quaternaire); }
+
+/* ---- 11.5 DIFFS (4.0) — diff structurel (DiffsIllustration.css) ----- */
+/* [relevé] ._8fVXdW_header — 24px, gap 15px */
+.diffs__entete { position: relative; z-index: 1; display: flex; align-items: center;
+  gap: 15px; padding: 24px; }
+.diffs__chemin { font-family: var(--police-mono); font-feature-settings: normal;
+  letter-spacing: normal; font-size: var(--texte-petit-taille);
+  color: var(--texte-quaternaire); }
+/* [relevé] ._8fVXdW_codeSection — DEUX colonnes égales, séparées par un
+   box-shadow interne de 1px (et non un border : il ne décale pas la grille). */
+.diffs__code { display: grid; grid-template-columns: 1fr 1fr;
+  border-top: 1px solid var(--bordure-primaire); }
+.diffs__colonne { min-width: 0; padding: 32px 0; overflow: hidden; }
+.diffs__colonne + .diffs__colonne { box-shadow: inset 1px 0 0 0 var(--bordure-primaire); }
+@media (max-width: 928px) {
+  .diffs__code { grid-template-columns: 1fr; }
+  .diffs__colonne + .diffs__colonne { display: none; }
+}
+/* [relevé] ._8fVXdW_codeColumn pre — 14px sur 24px de haut de ligne, compteur
+   de lignes en decimal-leading-zero (01, 02, …), gouttière de 1em. */
+.diffs__colonne pre { margin: 0; padding: 0; border: none; background: none;
+  counter-reset: ligne; font-family: var(--police-mono);
+  font-feature-settings: normal; font-variation-settings: normal;
+  letter-spacing: normal; font-size: 14px; line-height: 24px; }
+.diffs__colonne code { display: flex; flex-direction: column; padding: 0;
+  background: none; }
+.diffs__colonne .l { display: block; height: 24px; line-height: 24px;
+  padding: 0 32px 0 24px; border-left: 1px solid transparent;
+  white-space: pre; color: var(--jeton-texte); }
+.diffs__colonne .l::before { counter-increment: ligne;
+  content: counter(ligne, decimal-leading-zero); margin-right: 1em;
+  color: #62666d; user-select: none; }
+/* [relevé] --diff-old-* / --diff-new-* : rouge à 10 %, vert à 7 %. Le vert est
+   volontairement PLUS FAIBLE que le rouge — une ligne ajoutée doit se lire
+   comme un acquis, pas comme une alerte. */
+.diffs { --diff-vieux-fond: rgba(243, 78, 82, .1); --diff-vieux: #F34E52;
+         --diff-neuf-fond: rgba(39, 166, 68, .07); --diff-neuf: #27A644;
+  /* [relevé] code-diff.css — huit rôles de coloration, tous nommés. Aucun
+     n'est une couleur « de marque » : la palette du code est autonome. */
+  --jeton-texte: #E2E4E7; --jeton-mot-cle: #F79CE0; --jeton-variable: #f7bf8b;
+  --jeton-chaine: #ffdf9f; --jeton-constante: #8FA6FF; --jeton-entite: #83dcdc;
+  --jeton-ponctuation: #D2D7DE; --jeton-commentaire: #8B93A1; }
+.diffs__colonne .l.vieux { background: var(--diff-vieux-fond);
+  border-left-color: var(--diff-vieux); }
+.diffs__colonne .l.vieux::before { color: var(--diff-vieux); }
+.diffs__colonne .l.neuf { background: var(--diff-neuf-fond);
+  border-left-color: var(--diff-neuf); }
+.diffs__colonne .l.neuf::before { color: var(--diff-neuf); }
+.tk-k { color: var(--jeton-mot-cle); }
+.tk-v { color: var(--jeton-variable); }
+.tk-s { color: var(--jeton-chaine); }
+.tk-c { color: var(--jeton-constante); }
+.tk-e { color: var(--jeton-entite); }
+.tk-p { color: var(--jeton-ponctuation); }
+/* [relevé] .ngusfW_charAdded / .ngusfW_charRemoved — la surbrillance est au
+   CARACTÈRE et non à la ligne : vert à 10 %, rouge à 12 %, rayon 2px. */
+.ca { background: rgba(0, 255, 5, .1); border-radius: 2px; }
+.cr { background: rgba(255, 0, 0, .12); border-radius: 2px; }
+
+/* ---- 11.6 MONITOR (5.0) — tableaux de bord (Monitor.css) ------------ */
+/* [relevé] .LwA8Xa_grid — deux cellules égales, gap 16, pad 24/32 */
+.bord { --pointille: repeating-linear-gradient(to right,
+    var(--bordure-primaire) 0, var(--bordure-primaire) 3px,
+    transparent 3px, transparent 7px);
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;
+  padding: 24px 32px; }
+/* [relevé] .LwA8Xa_cell — rayon 20px : les cartes de données sont BEAUCOUP
+   plus arrondies que tout le reste de la page. */
+.bord__cellule { display: flex; flex-direction: column; min-width: 0;
+  border: var(--filet) solid var(--bordure-primaire);
+  border-radius: var(--rayon-20); }
+.bord__entete { padding: 20px 24px;
+  border-bottom: 1px solid var(--bordure-translucide);
+  font-size: var(--texte-petit-taille); font-weight: var(--graisse-moyenne);
+  color: var(--texte-secondaire); }
+/* [relevé] .LwA8Xa_issueCountGraph — 30px à droite pour les étiquettes d'axe */
+.compte { position: relative; padding: 10px 30px 0 24px; }
+/* [relevé] .LwA8Xa_issueCountGraphBar — 22px de marge en haut ET en bas : la
+   réglure est ce qui donne son échelle au graphe, pas les barres. */
+.compte__reglure { display: flex; align-items: center; gap: 12px;
+  margin-block: 22px; }
+.compte__reglure:first-of-type { margin-top: 0; }
+.compte__reglure:last-of-type { margin-bottom: 0; }
+.compte__trait { flex: 1; height: 1px; background: var(--pointille); }
+.compte__trait--plein { background: var(--bordure-primaire); }
+.compte__valeur { font-size: 12px; color: var(--texte-quaternaire); }
+/* [relevé] .LwA8Xa_bars — les barres sont ABSOLUES par-dessus la réglure, à
+   9px du bas et 75px de la droite, assombries à 75 %. Elles n'ont PAS de
+   `left` : le groupe se dimensionne sur son contenu et forme un amas étroit
+   près du bord droit — il ne balaie pas la cellule. */
+.compte__barres { position: absolute; right: 75px; bottom: 9px;
+  display: flex; align-items: flex-end; justify-content: space-around; gap: 12px;
+  height: 100%; pointer-events: none; filter: brightness(75%); }
+/* [relevé] .LwA8Xa_bar — 12px de large, DEUX segments empilés séparés de 2px */
+.compte__barre { display: flex; flex-direction: column; justify-content: flex-end;
+  gap: 2px; width: 12px; }
+.compte__haut { background: #5cf; }
+.compte__bas  { background: #02b8cc; }
+/* [relevé] .LwA8Xa_issueCountXAxis — 55px de haut, 512px max, centré */
+.compte__axe { display: flex; align-items: center; justify-content: space-between;
+  width: 100%; max-width: 512px; height: 55px; margin: 0 auto;
+  font-size: 12px; color: var(--texte-tertiaire); }
+/* [relevé] .LwA8Xa_agent* — nuage de points sur double grille : lignes
+   horizontales pointillées, plus deux verticales, en space-evenly. */
+.nuage { position: relative; display: flex; flex-direction: column; flex: 1; }
+.nuage__reglure { position: absolute; inset: 0 0 66px;
+  display: flex; flex-direction: column; justify-content: space-evenly;
+  pointer-events: none; }
+.nuage__reglure > i { height: 1px; background: var(--pointille); }
+.nuage__verticales { position: absolute; inset: 0;
+  display: flex; justify-content: space-evenly; pointer-events: none; }
+.nuage__verticales > i { width: 1px;
+  background: repeating-linear-gradient(to bottom, var(--bordure-primaire) 0,
+    var(--bordure-primaire) 3px, transparent 3px, transparent 7px); }
+.nuage__grille { position: relative; flex: 1;
+  display: grid; grid-template-columns: repeat(3, 1fr); }
+.nuage__col { display: flex; flex-direction: column; }
+.nuage__points { position: relative; flex: 1; margin-bottom: 4px; }
+.nuage__points > i { position: absolute; left: var(--x); bottom: var(--y);
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--pt, var(--texte-quaternaire)); transform: translateX(-50%); }
+/* [relevé] .LwA8Xa_agentName — 65px, filet EN HAUT */
+.nuage__nom { display: grid; place-items: center; height: 65px;
+  border-top: 1px solid var(--bordure-translucide-forte);
+  font-size: 12px; color: var(--texte-tertiaire); }
+/* [relevé] .LwA8Xa_orangeLine / purpleLine — deux repères de moyenne ancrés à
+   134px et 261px du BAS, en pixels absolus. */
+.nuage__moyenne { position: absolute; left: 0; right: 0; height: 1px; }
+.nuage__moyenne--orange { bottom: 134px; background: var(--accent-orange); opacity: .5; }
+.nuage__moyenne--violet { bottom: 261px; background: var(--accent); opacity: .5; }
+
+/* [relevé] .LwA8Xa_pulse — 520px, ancrée à 56px du haut et 8px de la gauche.
+   Troisième occurrence du MÊME appareil de boîte flottante : la page ne
+   dispose que d'un seul objet « panneau posé sur la maquette ». */
+.boite--pulse { top: 56px; left: 8px; width: 100%; max-width: 520px;
+  padding: 28px 24px 40px; border-radius: var(--rayon-12); transform: none; }
+@media (max-width: 1024px) { .boite--pulse { max-width: 450px; top: 50px; left: 0; } }
+.boite--pulse .boite__fond { background: var(--fond-niveau-2);
+  filter: brightness(.85); }
+/* [relevé] .LwA8Xa_pulseHeader — 32px sous l'en-tête */
+.pulse__entete { position: relative; padding-bottom: 32px;
+  display: flex; align-items: center; justify-content: space-between; }
+.pulse__titre { font-size: var(--texte-grand-taille);
+  font-weight: var(--graisse-demi-grasse); color: var(--texte-secondaire); }
+.pulse__lecture { display: flex; align-items: center; }
+/* [relevé] .LwA8Xa_playbackSpeedSelector — 12px, tertiaire, sans fond */
+.pulse__vitesse { margin-left: 8px; font-size: 12px; color: var(--texte-tertiaire); }
+.pulse__rubrique { display: flex; align-items: center; gap: 12px;
+  font-size: var(--texte-mini-taille); font-weight: var(--graisse-moyenne);
+  color: var(--texte-tertiaire); }
+.pulse__filet { flex: 1; height: 1px; background: var(--bordure-translucide-forte); }
+.pulse__projet { display: flex; flex-direction: column; gap: 8px; }
+.pulse__nom { font-size: var(--texte-taille); font-weight: var(--graisse-moyenne);
+  color: var(--texte-primaire); }
+.pulse__etat { display: flex; align-items: center; gap: 8px;
+  font-size: var(--texte-mini-taille); }
+.pulse__etat--risque { color: #F34E52; }
+.pulse__etat--suivi  { color: #008D2C; }
+.pulse__auteur { padding-left: 4px; font-size: var(--texte-mini-taille);
+  color: var(--texte-tertiaire); }
+/* [relevé] .LwA8Xa_pulseItem — la puce est un « ・ » (point médian) posé en
+   ::before à -22px, PAS un list-style. */
+.pulse__liste { display: flex; flex-direction: column; gap: 8px; }
+.pulse__item { position: relative; margin-left: 22px; list-style: none;
+  font-size: var(--texte-taille); color: var(--texte-secondaire);
+  max-width: 400px; }
+.pulse__item::before { content: "・"; position: absolute; top: 0; left: -22px;
+  color: var(--texte-secondaire); }
+
+/* ============================================================
+   12. BANDEAU DE LOGOS (marquee)
+   ============================================================ */
+/* [relevé] Marquee.css — deux copies du contenu, la 2ᵉ décalée de +100%+gap,
+   les deux translatées en boucle. Masque latéral. Aucun JS. */
+.marquee {
+  --marquee-ecart: 24px; --marquee-duree: 30s; --marquee-fondu: 64px;
+  position: relative; display: flex; overflow: hidden; max-width: 100%;
+  user-select: none;
+  -webkit-mask-image: linear-gradient(to right, var(--masque-invisible) 0%,
+    var(--masque-transition) calc(var(--marquee-fondu) / 2),
+    var(--masque-visible) var(--marquee-fondu),
+    var(--masque-visible) calc(100% - var(--marquee-fondu)),
+    var(--masque-transition) calc(100% - var(--marquee-fondu) / 2),
+    var(--masque-invisible) 100%);
+  mask-image: linear-gradient(to right, var(--masque-invisible) 0%,
+    var(--masque-transition) calc(var(--marquee-fondu) / 2),
+    var(--masque-visible) var(--marquee-fondu),
+    var(--masque-visible) calc(100% - var(--marquee-fondu)),
+    var(--masque-transition) calc(100% - var(--marquee-fondu) / 2),
+    var(--masque-invisible) 100%);
+}
+.marquee__piste { display: flex; align-items: center; flex-shrink: 0;
+  gap: var(--marquee-ecart); min-width: 100%; }
+.marquee__piste:nth-child(2) { position: absolute; top: 0; left: 0; visibility: hidden; }
+/* [relevé] Marquee.css — l'animation est déclarée SOUS no-preference. Sans
+   mouvement, la 2ᵉ piste reste cachée : aucun doublon. */
+@media (prefers-reduced-motion: no-preference) {
+  .marquee__piste { animation: defilement var(--marquee-duree) linear infinite; }
+  .marquee__piste:nth-child(2) { visibility: visible;
+    animation: defilement-decale var(--marquee-duree) linear infinite; }
+}
+/* [relevé] Marquee.css — pause au survol, uniquement sur pointeur fin */
+@media (any-hover: hover) { .marquee:hover .marquee__piste { animation-play-state: paused; } }
+/* [relevé] Logos.css .MR81zG_root — rangée de 28px de haut, transition
+   filter .2s ; passe en grille 2 colonnes à 768px et DISPARAÎT sous 640px
+   au profit du marquee mobile. */
+.logos { display: flex; align-items: center; justify-content: space-between;
+  width: 100%; height: 28px; transition: filter .2s var(--courbe-sortie-quad); }
+.logos__item { display: grid; place-items: center; height: 100%;
+  color: var(--texte-primaire); }
+@media (max-width: 1140px) { .logos__item--cache-laptop { display: none; } }
+@media (max-width: 768px) { .logos { display: grid; grid-template-columns: 1fr 1fr;
+  place-items: start; gap: 48px; height: auto; } }
+@media (max-width: 640px) { .logos { display: none; } }
+/* [relevé] Logos.css .MR81zG_mobileMarqueeWrapper — débord négatif de la
+   SOMME des deux marges, pour que le marquee touche les bords de l'écran.
+   [relevé] .MR81zG_marquee { --Marquee-shadow-size: 24px } */
+.logos-marquee { --marquee-fondu: 24px; overflow: hidden;
+  margin-left: calc(-1 * (var(--marge-interieure) + var(--marge-exterieure)));
+  margin-right: calc(-1 * (var(--marge-interieure) + var(--marge-exterieure))); }
+@media (min-width: 641px) { .logos-marquee { display: none; } }
+/* [relevé] Logos.css .MR81zG_marqueeItem — 28px de haut, flex centré.
+   [arbitrage] les logos de la source sont des SVG de marques ; je les
+   remplace par des mots-repères neutres à la même hauteur de rangée. */
+.logo-mot { display: flex; align-items: center; justify-content: center;
+  height: 28px; white-space: nowrap;
+  font-size: var(--texte-grand-taille); font-weight: var(--graisse-demi-grasse);
+  letter-spacing: -.02em; color: var(--texte-secondaire); opacity: .85; }
+.logos-marquee .logo-mot { padding-inline: 12px; }
+.bandeau-logos { margin-top: 88px; padding-inline: var(--marge-interieure); }
+@media (max-width: 640px) { .bandeau-logos { margin-top: 56px; } }
+
+/* ============================================================
+   13. SECTION DE PAGE
+   ============================================================ */
+/* [relevé] PageSection.css — rythme vertical : 128px haut ET bas en desktop,
+   48/96 en tablette, 0 en mobile (la section suivante fournit l'air).
+   Sous 640px la section s'inverse en `column-reverse` : l'illustration passe
+   AVANT le texte. Détail structurel facile à rater. */
+/* [relevé] l'ORDRE interne est : en-tête (titre + description + lien
+   numéroté), PUIS l'illustration, PUIS le pied de sous-liens. Sous 640px la
+   source inverse tout en `column-reverse` : l'illustration passe devant le
+   texte, et le pied — masqué — disparaît. */
+.section { margin-inline: auto; padding-top: 128px; padding-bottom: 128px;
+  display: flex; flex-direction: column; }
+.section > .enveloppe { order: 1; }
+.section__illustration-conteneur { order: 2; }
+.section > .enveloppe--pied { order: 3; }
+@media (max-width: 768px) { .section { padding-top: 48px; padding-bottom: 96px; } }
+@media (max-width: 640px) { .section { padding-top: 0; padding-bottom: 0;
+  flex-direction: column-reverse; } }
+/* [relevé] PageSection.css .b-30Va_header — grille 1fr/1fr, alignée en haut,
+   96px de respiration avant l'illustration. Jamais de titre centré. */
+.section__entete { display: grid; grid-template-columns: 1fr 1fr;
+  align-items: start; padding-bottom: 96px; }
+@media (max-width: 1024px) { .section__entete { grid-template-columns: 1fr;
+  padding-bottom: 64px; } }
+@media (max-width: 640px)  { .section__entete { padding-top: 40px; padding-bottom: 48px; } }
+/* [relevé] PageSection.css .b-30Va_titleContainer — 32px à droite. Le
+   text-box:trim retire le talon de la boîte de texte pour que le titre
+   s'aligne OPTIQUEMENT sur la ligne de grille, pas sur sa boîte. */
+.section__titre-conteneur { padding-left: var(--marge-interieure);
+  padding-right: 32px; }
+@supports (text-box: trim-both cap alphabetic) {
+  .section__titre { text-box: trim-both cap alphabetic; }
+}
+.section__titre { text-wrap: balance; }
+@media (max-width: 640px) { .section__titre { font-size: 38px; line-height: 1.1; } }
+/* [relevé] PageSection.css .b-30Va_descriptionContainer — rembourré des DEUX
+   côtés par la marge intérieure. */
+.section__description-conteneur { padding-inline: var(--marge-interieure); }
+@media (max-width: 1024px) { .section__description-conteneur { margin-top: 24px; } }
+/* [relevé] PageSection.css — mesure en CH, pas en px. Et la couleur DESCEND
+   d'un cran en mobile (secondaire → tertiaire) : moins de contraste sur
+   petit écran, où le texte est plus près de l'œil. */
+.section__description { max-width: 38ch; color: var(--texte-secondaire); }
+@supports (text-box: trim-both cap alphabetic) {
+  .section__description { text-box: trim-both cap alphabetic; }
+}
+@media (max-width: 640px) { .section__description { color: var(--texte-tertiaire); } }
+/* [relevé] PageSection.css .b-30Va_actionWrapper — 48px, 24px sous 1024px */
+.section__action-conteneur { margin-top: 48px; }
+@media (max-width: 1024px) { .section__action-conteneur { margin-top: 24px; } }
+/* [relevé] PageSection.css .b-30Va_action — survol brightness(1.4), appui
+   scale(.97), transition .16s ease-out-quad sur filter ET transform. */
+.section__action { display: inline-flex; align-items: center;
+  font-size: var(--texte-mini-taille); color: var(--texte-primaire);
+  transition: filter var(--duree-survol) var(--courbe-sortie-quad),
+              transform var(--duree-survol) var(--courbe-sortie-quad); }
+@media (any-hover: hover) { .section__action:hover { filter: brightness(1.4); } }
+.section__action:active { transform: scale(.97); }
+/* [relevé] le numéro de section porte .Fzcv4W_slashedZero, puis 12px avant
+   le nom du module et 6px avant la flèche — marges INLINE dans la source.
+   Cette numérotation « 1.0 · 2.0 · … » est un marqueur d'identité fort :
+   elle transforme cinq sections marketing en sommaire de document. */
+.section__numero { color: var(--texte-quaternaire); }
+.section__nom    { display: inline-block; margin-left: 12px; color: var(--texte-primaire); }
+.section__fleche { display: inline-block; margin-left: 6px; color: var(--texte-tertiaire); }
+/* [relevé] PageSection.css .b-30Va_illustrationWrapper */
+.section__illustration-conteneur { display: flex; justify-content: center;
+  padding-inline: var(--marge-exterieure); }
+.section__illustration { position: relative; width: 100%;
+  max-width: var(--largeur-max); }
+/* [relevé] PageSection.css .b-30Va_footer — grille 1fr/1fr dont SEULE la
+   2ᵉ colonne est occupée : le pied de section s'aligne sur la description,
+   pas sur le titre. */
+.section__pied { display: grid; grid-template-columns: 1fr 1fr;
+  padding-top: 48px; }
+@media (max-width: 1024px) { .section__pied { grid-template-columns: 1fr; } }
+.section__pied-contenu { grid-column: 2; padding-inline: var(--marge-interieure); }
+@media (max-width: 1024px) { .section__pied-contenu { grid-column: 1; } }
+.section__pied-large { grid-column: 1 / -1; }
+/* [relevé] `.b-30Va_footer hide-mobile` : le pied de section DISPARAÎT sous
+   640px. Les sous-liens ne sont pas repliés, ils sont retirés. */
+@media (max-width: 640px) { .section__pied { display: none; } }
+
+/* Sous-liens numérotés — composant Pillar [relevé Pillar.css]
+   Chaque section liste ses modules en « 1.1 · 1.2 · 1.3 … » sur DEUX
+   colonnes. C'est le prolongement direct de la numérotation « 1.0 » : la
+   page se lit comme un sommaire de document technique, à deux niveaux. */
+.reglure { display: grid; grid-template-columns: 1fr 1fr;
+  padding-inline-start: 0; padding-right: 0; list-style: none; }
+@media (max-width: 640px) { .reglure { grid-template-columns: 1fr; } }
+/* [relevé] Pillar.css .M31rWW_unevenIngredient — filet vertical de 28px en
+   ::before, calé sur le bas à -2px ; la DERNIÈRE entrée fait 26px et se cale
+   à 0. Deux valeurs différentes pour que la réglure se ferme proprement. */
+.reglure__entree { position: relative; padding-left: 32px; }
+.reglure__entree::before { content: ""; position: absolute; left: 0; bottom: -2px;
+  width: 1px; height: 28px; background: var(--bordure-translucide-forte); }
+.reglure__entree:last-of-type::before { height: 26px; bottom: 0; }
+/* [relevé] Pillar.css .M31rWW_ingredient — hauteur fixe de 28px */
+.reglure__lien { display: flex; align-items: center; height: 28px;
+  font-size: var(--texte-mini-taille); color: var(--texte-tertiaire);
+  transition: filter var(--duree-survol) var(--courbe-sortie-quad),
+              transform var(--duree-survol) var(--courbe-sortie-quad); }
+.reglure__numero { color: var(--texte-quaternaire); margin-right: 12px; }
+.reglure__nom { color: var(--texte-secondaire); }
+/* [relevé] Pillar.css .M31rWW_ingredientPlus — le « + » est TOUJOURS présent,
+   à opacity:0 et scale(0) ; il se déplie au survol. Aucune insertion de nœud,
+   donc aucun reflow. Survol du lien : brightness(1.4). */
+.reglure__plus { margin-left: 4px; font-size: 18px; opacity: 0; transform: scale(0);
+  color: var(--texte-quaternaire);
+  transition: opacity var(--duree-survol) var(--courbe-sortie-quad),
+              transform var(--duree-survol) var(--courbe-sortie-quad); }
+@media (any-hover: hover) {
+  .reglure__lien:hover { filter: brightness(1.4); }
+  .reglure__lien:hover .reglure__plus { opacity: 1; transform: scale(1); }
+}
+.reglure__lien:active { transform: scale(.97); }
+
+/* ============================================================
+   13 bis. SECTION « BÉNÉFICES » — énoncé + 3 colonnes FIG
+   ============================================================ */
+/* [relevé] Pillar.css .M31rWW_root — 96px en haut, 160px en bas. Le bloc
+   respire beaucoup plus par le bas : il pousse la section suivante. */
+.bloc-enonce { margin-inline: auto; padding-block: 96px 160px; }
+@media (max-width: 768px) { .bloc-enonce { padding-block: 64px 96px; } }
+/* [arbitrage] mesure de l'énoncé. L'effet DEUX TONS (première phrase en
+   texte primaire, suite en tertiaire) est lui relevé sur la source : une
+   seule phrase, deux niveaux de la rampe de texte, aucun autre marquage. */
+.enonce { max-width: 30ch; padding-inline: var(--marge-interieure);
+  color: var(--texte-tertiaire); text-wrap: pretty; }
+.enonce strong { font-weight: inherit; color: var(--texte-primaire); }
+@media (max-width: 640px) { .enonce { max-width: none; } }
+
+/* [relevé] Benefits.css — 3 colonnes séparées par un filet vertical, hauteur
+   FIXE 468px (360px sous 1280px), contenu ancré en BAS. La première colonne
+   perd son rembourrage gauche et la dernière son filet : le bloc affleure la
+   grille au lieu d'y flotter. */
+.benefices { display: grid; grid-template-columns: repeat(3, 1fr);
+  margin-top: 96px; padding-inline: var(--marge-interieure); }
+@media (max-width: 1024px) { .benefices { grid-template-columns: 1fr;
+  padding-inline: 0; } }
+.benefice { position: relative; display: flex; flex-direction: column;
+  justify-content: flex-end; height: 468px;
+  padding-inline: var(--marge-interieure);
+  border-right: 1px solid var(--bordure-translucide-forte); }
+@media (max-width: 1280px) { .benefice { height: 360px; padding-inline: 32px; } }
+@media (max-width: 1024px) { .benefice { border-right: none;
+  border-bottom: 1px solid var(--bordure-translucide-forte); padding-inline: 32px; } }
+.benefice:first-of-type { padding-left: 0; }
+.benefice:last-of-type { border-right: none; padding-right: 0; }
+@media (max-width: 1024px) { .benefice:first-of-type { padding-left: 32px; }
+  .benefice:last-of-type { padding-right: 32px; border-bottom: none; } }
+/* [relevé] Benefits.css — text-wrap: balance seulement AU-DESSUS de 1280px ;
+   en dessous la source repasse en `initial`. La balance coûte trop cher en
+   lignes courtes. */
+.benefice p { max-width: 368px; text-wrap: balance; }
+@media (max-width: 1280px) { .benefice p { text-wrap: initial; } }
+/* [relevé] Benefits.css .GJ9TEa_figure — position absolue, top 0, left =
+   marge intérieure ; l'opacité .4 est en style inline dans le HTML source.
+   [arbitrage] la fonte monospace, le corps micro et l'interlettrage : la
+   classe ne déclare AUCUNE règle typographique. */
+.benefice__fig { position: absolute; top: 0; left: var(--marge-interieure);
+  opacity: .4; font-family: var(--police-mono); font-feature-settings: normal;
+  font-size: var(--texte-micro-taille); letter-spacing: .04em; }
+.benefice:first-of-type .benefice__fig { left: 0; }
+@media (max-width: 1024px) { .benefice__fig,
+  .benefice:first-of-type .benefice__fig { left: 32px; } }
+/* [relevé] Benefits.css .GJ9TEa_illustration — flex:1, min-height:0,
+   place-items center, overflow hidden : l'illustration prend la place
+   restante et se fait couper plutôt que de pousser le texte. */
+.benefice__illustration { flex: 1; min-height: 0; display: grid;
+  place-items: center; overflow: hidden; }
+.benefice__titre { margin-bottom: 8px; }
+
+/* [relevé] HomepageSeparator.css — le séparateur est fait de DEUX éléments
+   de 1px : `.keyline` en bordure translucide forte et `.shadow` en noir.
+   Crée une arête, pas un trait.
+   [arbitrage] je les fusionne en un dégradé à paliers sur un seul nœud. */
+.filet-double { width: 100%; height: 2px;
+  background: linear-gradient(to bottom,
+    var(--bordure-translucide-forte) 0 1px, #000 1px 2px); }
+[data-theme="light"] .filet-double { background: linear-gradient(to bottom,
+  var(--bordure-translucide-forte) 0 1px, var(--bordure-primaire) 1px 2px); }
+
+/* ============================================================
+   13 ter. CHANGELOG — frise chronologique
+   ============================================================ */
+.changelog { padding-block: 128px; }
+@media (max-width: 768px) { .changelog { padding-block: 96px; } }
+.changelog__entete { padding-inline: var(--marge-interieure); padding-bottom: 64px; }
+/* [relevé] Changelog.css .fjOtda_changelog — 4 → 3 (≤1280) → 2 (≤1024)
+   colonnes, gap de 64px. Un gap énorme pour des colonnes de texte : c'est
+   lui qui fait lire la frise comme une chronologie et pas comme un tableau. */
+.changelog__grille { --pastille: 32px;
+  position: relative; display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 64px; padding-inline: var(--marge-interieure); }
+@media (max-width: 1280px) { .changelog__grille { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 1024px) { .changelog__grille { grid-template-columns: repeat(2, 1fr); } }
+/* [relevé] .fjOtda_changelogItem — la DERNIÈRE entrée disparaît sous 1280px,
+   l'avant-dernière sous 1024px. La grille reste toujours pleine : on retire
+   du contenu plutôt que de laisser une colonne orpheline. */
+@media (max-width: 1280px) { .changelog__item:last-of-type { display: none; } }
+@media (max-width: 1024px) { .changelog__item:nth-last-child(2) { display: none; } }
+.changelog__item { min-width: 0; }
+/* [relevé] .fjOtda_changelogLine — un filet de 1px posé à la MOITIÉ de la
+   hauteur de pastille, traversant toute la rangée, derrière les pastilles. */
+.changelog__ligne { position: absolute; left: 50%; width: 100%; height: 1px;
+  top: calc(var(--pastille) / 2);
+  transform: translateX(-50%) translateY(-50%);
+  background: var(--bordure-translucide-forte); }
+/* [relevé] .fjOtda_changelogIndicator — un carré de 32px rempli de la
+   couleur de FOND DE PAGE : il perce un trou dans le filet. Le point visible
+   est un ::after de 6px, entouré d'un halo ::before de 20px à 20 %
+   d'opacité. Décalé de -12px pour que le point tombe sur la colonne. */
+.changelog__pastille { position: relative; width: var(--pastille); height: var(--pastille);
+  margin-bottom: 48px; background: var(--fond-primaire); transform: translateX(-12px); }
+.changelog__pastille::before { content: ""; position: absolute; top: 50%; left: 50%;
+  width: 20px; height: 20px; border-radius: 50%; transform: translate(-50%, -50%);
+  background: var(--texte-quaternaire); opacity: .2; }
+.changelog__pastille::after { content: ""; position: absolute; top: 50%; left: 50%;
+  width: 6px; height: 6px; border-radius: 100%; transform: translate(-50%, -50%);
+  background: var(--texte-quaternaire); }
+/* [relevé] la PREMIÈRE entrée passe en rouge — halo à 10 % au lieu de 20 %.
+   Une seule entrée porte la couleur : c'est le repère « dernier en date ». */
+.changelog__pastille[data-premier="true"]::before { background: var(--accent-rouge); opacity: .1; }
+.changelog__pastille[data-premier="true"]::after { background: var(--accent-rouge); }
+/* [relevé] .fjOtda_link — transition filter à --speed-quickTransition (.1s),
+   survol brightness(1.25) : plus discret que le 1.4 des liens de section. */
+.changelog__lien { display: block; border-radius: var(--rayon-4);
+  transition: filter var(--duree-rapide); }
+.changelog__lien:hover { filter: brightness(1.25); }
+.changelog__titre { margin-bottom: 8px; }
+.changelog__date { margin-top: 12px; }
+
+/* ============================================================
+   14. CITATIONS CLIENTS
+   ============================================================ */
+.clients { padding-block: 128px; }
+@media (max-width: 768px) { .clients { padding-block: 96px; } }
+.clients__entete { padding-inline: var(--marge-interieure); padding-bottom: 48px; }
+/* [relevé] CustomerQuotes.css .Dc5tqa_customerCards — gap 8px, rembourrage
+   ASYMÉTRIQUE 12px 12px 0 : rien en bas, les cartes plongent hors du cadre. */
+.clients__cartes { position: relative; display: flex; gap: 8px; padding: 12px 12px 0; }
+/* [relevé] .Dc5tqa_customerCards::before — un cadre de 1px à inset -1px,
+   arrondi 20px, masqué par DEUX dégradés composés en
+   `mask-composite: intersect` : il s'efface vers le bas ET vers la droite.
+   Le cadre n'entoure donc jamais complètement les cartes — il les AMORCE. */
+.clients__cartes::before {
+  content: ""; position: absolute; inset: -1px; pointer-events: none;
+  border: 1px solid var(--bordure-primaire); border-radius: var(--rayon-20);
+  -webkit-mask-image:
+    linear-gradient(to bottom, var(--masque-visible) 0%, transparent 100%),
+    linear-gradient(to right,  var(--masque-visible) 0%, transparent 50%);
+  mask-image:
+    linear-gradient(to bottom, var(--masque-visible) 0%, transparent 100%),
+    linear-gradient(to right,  var(--masque-visible) 0%, transparent 50%);
+  -webkit-mask-composite: source-in; mask-composite: intersect;
+}
+/* [relevé] .Dc5tqa_customerCard — 480px de haut, rayon 8, rembourrage
+   24px 32px, transition filter .16s, survol brightness(1.03).
+   Ces cartes sont le SEUL endroit coloré de toute la page : elles portent la
+   couleur de la marque citée, en style inline. Trois valeurs relevées dans le
+   HTML source : un dégradé bleu→lavande, un jaune-vert #e4f222, un bleu
+   #1C85E8. Le texte y passe en couleur de FOND de page — inversion locale. */
+.client-carte { position: relative; overflow: hidden;
+  display: flex; flex-direction: column; height: 480px;
+  padding: 24px 32px; border-radius: var(--rayon-8);
+  background: var(--carte-fond, var(--texte-primaire));
+  quotes: "\201C" "\201D" "\2018" "\2019";
+  transition: filter var(--duree-survol) var(--courbe-sortie-quad); }
+/* [relevé] procédé central : un VOILE BLANC PLAT à 40 % est empilé PAR-DESSUS
+   le dégradé de marque, dans la même déclaration `background`. Il désature
+   n'importe quelle couleur client et la ramène dans la même plage tonale —
+   c'est ce qui permet d'afficher des marques très différentes côte à côte
+   sans que la page se disloque. À copier tel quel. */
+.client-carte--marque-a { --carte-fond:
+  linear-gradient(0deg, rgba(255,255,255,.4) 0%, rgba(255,255,255,.4) 100%),
+  linear-gradient(180deg, #b2d5ff 0%, #dfd1ff 100%); }
+.client-carte--marque-b { --carte-fond: #e4f222; }
+.client-carte--marque-c { --carte-fond: #1C85E8; }
+.client-carte:hover { filter: brightness(1.03); }
+/* [relevé] .Dc5tqa_primary { flex:1 } / .Dc5tqa_secondary { width:432px } —
+   la première carte s'étire, les suivantes ont une largeur FIXE. */
+.client-carte--principale { flex: 1; }
+.client-carte--secondaire { flex-shrink: 0; width: 432px; }
+@media (max-width: 1024px) { .client-carte--secondaire { width: auto; flex: 1; } }
+/* [relevé] .Dc5tqa_customerQuote — max-width 28ch, text-indent -.4em.
+   Les guillemets sont GÉNÉRÉS par `content: open-quote` et le retrait
+   négatif les fait PENDRE hors de la colonne : ponctuation suspendue,
+   faite à la main. Procédé typographique rare, très reconnaissable. */
+.client-carte__citation { max-width: 28ch; color: var(--fond-primaire);
+  text-wrap: pretty; text-indent: -.4em;
+  font-size: var(--titre-3-taille); line-height: var(--titre-3-interligne);
+  letter-spacing: var(--titre-3-lettrage); }
+.client-carte__citation::before { content: open-quote; }
+.client-carte__citation::after  { content: close-quote; }
+/* [arbitrage] garde thème clair : la source encre ces cartes en
+   `--color-bg-primary`, qui devient BLANC en clair — illisible sur le jaune
+   #e4f222. Je force une encre sombre sur les cartes colorées. */
+[data-theme="light"] .client-carte:not(.client-carte--inverse) {
+  --encre-carte: #08090a;
+}
+.client-carte:not(.client-carte--inverse) .client-carte__citation,
+.client-carte:not(.client-carte--inverse) .client-carte__marque,
+.client-carte:not(.client-carte--inverse) .client-carte__auteur,
+.client-carte:not(.client-carte--inverse) .client-carte__filigrane {
+  color: var(--encre-carte, var(--fond-primaire));
+}
+/* [relevé] .Dc5tqa_invert — variante où la carte reprend le fond de page ;
+   son survol monte à brightness(1.1) au lieu de 1.03. */
+.client-carte--inverse { background: var(--fond-niveau-1); }
+.client-carte--inverse .client-carte__citation,
+.client-carte--inverse .client-carte__citation::before,
+.client-carte--inverse .client-carte__citation::after { color: var(--texte-primaire); }
+.client-carte--inverse:hover { filter: brightness(1.1); }
+/* [relevé] .Dc5tqa_stackedFooter — margin-top auto, colonne, gap 24px */
+.client-carte__pied { position: relative; display: flex; align-items: center;
+  margin-top: auto; }
+/* [relevé] .Dc5tqa_stackedLogo svg { height: 28px } */
+.client-carte__marque { display: flex; align-items: center; height: 28px;
+  color: var(--fond-primaire); font-weight: var(--graisse-demi-grasse);
+  font-size: var(--texte-grand-taille); letter-spacing: -.02em; }
+.client-carte--inverse .client-carte__marque { color: var(--texte-primaire); }
+/* [relevé] .Dc5tqa_authorInfoDesktop — filet gauche à 5 % de la couleur de
+   fond, marge et rembourrage de 18px. La version compacte : 16px et 10 %. */
+.client-carte__auteur { margin-left: 18px; padding-left: 18px;
+  border-left: 1px solid color-mix(in srgb, var(--fond-primaire) 5%, transparent);
+  color: var(--fond-primaire); font-size: var(--texte-mini-taille); }
+.client-carte--inverse .client-carte__auteur { color: var(--texte-primaire);
+  border-left-color: color-mix(in srgb, var(--texte-primaire) 5%, transparent); }
+.client-carte__auteur small { display: block; opacity: .6;
+  font-size: var(--texte-micro-taille); }
+/* [relevé] .Dc5tqa_primaryLogo — le logo de marque en FILIGRANE : ratio 1,
+   opacité .2, ancré à droite, translaté de 40 % HORS de la carte et
+   sur-échelonné à 2.5. Il déborde volontairement. */
+.client-carte__filigrane { position: absolute; top: 50%; right: 0;
+  aspect-ratio: 1; height: 100%; opacity: .2; pointer-events: none;
+  display: grid; place-items: center;
+  transform: translate(40%, -50%) scale(2.5);
+  font-size: 64px; font-weight: var(--graisse-grasse);
+  color: var(--fond-primaire); }
+.client-carte--inverse .client-carte__filigrane { color: var(--texte-primaire); }
+/* [relevé] .Dc5tqa_footer — le pied de section reprend la marge intérieure */
+.clients__pied { margin-top: 48px; padding-inline: var(--marge-interieure);
+  color: var(--texte-tertiaire); }
+.clients__action { display: inline-block; color: var(--texte-primaire);
+  transition: filter var(--duree-survol) var(--courbe-sortie-quad),
+              transform var(--duree-survol) var(--courbe-sortie-quad); }
+@media (any-hover: hover) { .clients__action:hover { filter: brightness(1.4); } }
+/* [relevé] .Dc5tqa_mobileCard — 320×360, rayon 6, rembourrage TRÈS
+   asymétrique 20px 60px 28px 28px : les 60px de droite réservent la place
+   du filigrane. [relevé] .Dc5tqa_stackedCarouselItem — min(85vw, 360px). */
+.clients__carrousel { display: flex; gap: 8px; overflow-x: auto;
+  padding-inline: var(--marge-interieure);
+  scroll-snap-type: x mandatory; scrollbar-width: none; }
+.clients__carrousel::-webkit-scrollbar { display: none; }
+.client-carte--mobile { flex-shrink: 0; width: min(85vw, 320px); height: 360px;
+  padding: 20px 60px 28px 28px; border-radius: var(--rayon-6);
+  justify-content: space-between; scroll-snap-align: start; }
+.client-carte--mobile .client-carte__citation { max-width: 250px;
+  font-size: var(--titre-2-taille); line-height: var(--titre-2-interligne); }
+@media (min-width: 1025px) { .clients__carrousel { display: none; } }
+@media (max-width: 1024px) { .clients__cartes { display: none; } }
+
+/* ============================================================
+   15. AVANT-PIED
+   ============================================================ */
+/* [relevé] CTA.css .dYXc1G_homepagePrefooter — marges verticales énormes et
+   dégressives : 224px → 128px → 96px. C'est le vide qui fait l'emphase. */
+.avant-pied { display: flex; flex-direction: column; justify-content: center;
+  align-items: center; gap: 40px; width: 100%; margin-block: 224px;
+  text-align: center; user-select: text; }
+@media (max-width: 768px) { .avant-pied { margin-block: 128px; } }
+@media (max-width: 640px) { .avant-pied { margin-block: 96px; } }
+.avant-pied__titre { max-width: 18ch; text-wrap: balance; }
+/* [relevé] CTA.css .dYXc1G_heading — 38px en mobile */
+@media (max-width: 640px) { .avant-pied__titre { font-size: 38px; line-height: 1.1; } }
+/* [relevé] CTA.css .dYXc1G_newActions — 8px, centré en mobile */
+.avant-pied__actions { display: flex; gap: 8px; }
+@media (max-width: 640px) { .avant-pied__actions { flex-direction: column;
+  align-items: center; } }
+
+/* ============================================================
+   16. PIED DE PAGE
+   ============================================================ */
+/* [relevé] Layout.css — pied en 6 colonnes → 4 → 2, rembourrage 56px */
+.pied { position: relative; z-index: 50; max-width: 100%;
+  background: var(--fond-primaire);
+  border-top: 1px solid var(--bordure-primaire); }
+.pied__enveloppe { max-width: var(--largeur-max); margin-inline: auto; }
+.pied__inner { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr));
+  place-items: start; gap: 0; padding: 56px var(--marge-exterieure); }
+@media (max-width: 1024px) { .pied__inner {
+  grid-template-columns: repeat(4, minmax(0, 1fr)); row-gap: 48px; } }
+@media (max-width: 768px)  { .pied__inner { column-gap: 16px; } }
+@media (max-width: 640px)  { .pied__inner {
+  grid-template-columns: repeat(2, minmax(0, 1fr)); padding-bottom: 24px; } }
+/* [relevé] Layout.css .Jmh1Wq_section — le pied entier est en texte mini */
+.pied__colonne { width: 100%; padding-inline: var(--marge-interieure);
+  font-size: var(--texte-mini-taille); line-height: var(--texte-mini-interligne);
+  letter-spacing: var(--texte-mini-lettrage); color: var(--texte-tertiaire); }
+/* [relevé] Layout.css .Jmh1Wq_logoColumn — marge gauche = marge intérieure ;
+   occupe 2 rangées sous 1024px, toute la largeur sous 768px. */
+.pied__marque { display: flex; align-items: center; gap: 8px;
+  margin-left: var(--marge-interieure);
+  font-weight: var(--graisse-demi-grasse); color: var(--texte-primaire); }
+@media (max-width: 1024px) { .pied__marque { grid-row: 1 / 3; } }
+@media (max-width: 768px)  { .pied__marque { grid-area: 1 / 1 / 1 / -1; } }
+/* [relevé] Layout.css .Jmh1Wq_sectionTitle — hérite la taille, ne change que
+   la graisse et la couleur. 24px de respiration, 16px en tablette. */
+.pied__titre { font: inherit; letter-spacing: inherit;
+  font-weight: var(--graisse-moyenne); color: var(--texte-primaire);
+  margin-bottom: 24px; }
+@media (max-width: 768px) { .pied__titre { margin-bottom: 16px; } }
+/* [relevé] Layout.css .Jmh1Wq_sectionList — gap de 2px SEULEMENT : la
+   hauteur de ligne vient du min-height des liens, pas de l'écart. */
+.pied__liste { display: flex; flex-direction: column; gap: 2px; }
+/* [relevé] Layout.css .Jmh1Wq_sectionLink — hauteur MINIMALE de 28px : la
+   zone cliquable est garantie même quand le texte est court. */
+.pied__lien { display: inline-flex; align-items: center; min-height: 28px;
+  white-space: nowrap;
+  transition: color var(--duree-survol) var(--courbe-sortie-quad); }
+.pied__lien:hover { color: var(--texte-primaire); }
+@media (max-width: 768px) { .pied__lien { white-space: normal; } }
+/* [relevé] Layout.css — la mention légale, le statut et le sélecteur de
+   thème sont décalés de 80px vers le bas, hors alignement des colonnes. */
+.pied__legal { grid-column: 2; align-self: center; margin-top: 80px; }
+@media (max-width: 768px) { .pied__legal { grid-column: 1 / -1; margin-top: 24px; } }
+.pied__legal-liens { display: flex; gap: 20px; }
+.pied__legal-liens a { color: var(--texte-quaternaire);
+  font-size: var(--texte-mini-taille); }
+.pied__legal-liens a:hover { color: var(--texte-tertiaire); }
+/* [relevé] Layout.css .Jmh1Wq_status — grid-column 3/-2, 80px de décalage */
+.pied__statut { grid-column: 3 / -2; margin-top: 80px; }
+@media (max-width: 1024px) { .pied__statut { grid-column: 2 / -2; margin-top: 0; } }
+@media (max-width: 768px)  { .pied__statut { grid-column: 1 / -1; } }
+.pied__statut-lien { display: inline-flex; align-items: center; gap: 8px;
+  min-height: 28px; color: var(--texte-tertiaire); }
+.pied__statut-point { width: 8px; height: 8px; border-radius: var(--rayon-plein);
+  background: var(--accent-vert); }
+.pied__theme { grid-column: -2 / -1; align-self: center; margin-top: 80px;
+  padding-inline: var(--marge-interieure); }
+@media (max-width: 1024px) { .pied__theme { margin-top: 0; } }
+@media (max-width: 768px)  { .pied__theme { grid-column: 1; } }
+/* [relevé] ThemeToggle.css — 2 boutons de 24×22px, rayon 5, dans un
+   conteneur arrondi 8 avec 2px de rembourrage. Transition color .2s. */
+.bascule { display: flex; padding: 2px; border-radius: var(--rayon-8);
+  border: 1px solid var(--bordure-primaire); }
+.bascule__item { position: relative; display: flex; align-items: center;
+  justify-content: center; width: 24px; height: 22px; border-radius: 5px;
+  color: var(--bordure-tertiaire); transition: color .2s; }
+.bascule__item svg { position: relative; z-index: 1; width: 14px; height: 14px; }
+.bascule__item[aria-pressed="true"] { color: var(--texte-primaire);
+  background: var(--fond-quaternaire); }
+
+/* ============================================================
+   17. GRAIN
+   ============================================================ */
+/* [relevé] Grain.css — tuile 256×256, mix-blend-mode overlay, opacité .9
+   (.6 en version discrète), plus une nappe #ffffff0f en ::after annulée
+   sous WebKit. Seul calque non vectoriel de la page.
+   [arbitrage] Grain.css ne déclare AUCUNE background-image : la texture est
+   un binaire externe. Le feTurbulence ci-dessous est mon substitut. */
+.grain { position: absolute; inset: 0; pointer-events: none;
+  border-radius: inherit; opacity: .6; mix-blend-mode: overlay;
+  background-size: 256px 256px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='256'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3'/%3E%3C/filter%3E%3Crect width='256' height='256' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E"); }
+.grain::after { content: ""; position: absolute; inset: 0;
+  border-radius: inherit; pointer-events: none; background: #ffffff0f; }
+@supports (-webkit-hyphens: none) { .grain::after { background: 0 0; } }
+
+/* ============================================================
+   18. ANIMATIONS — DÉCLARATIONS
+   ============================================================ */
+/* [relevé] Marquee.css @keyframes xt7VyG_scroll / scroll-abs. Le décalage
+   est calc(-100% - gap) : l'écart fait PARTIE du cycle, sinon la boucle
+   saute d'une gouttière à chaque tour. */
+@keyframes defilement {
+  0% { transform: translateX(0); }
+  to { transform: translateX(calc(-100% - var(--marquee-ecart))); }
+}
+@keyframes defilement-decale {
+  0% { transform: translateX(calc(100% + var(--marquee-ecart))); }
+  to { transform: translateX(0); }
+}
+/* [relevé] NewHeroIllustration.css @keyframes w9ZFkq_shine — un seul repère
+   à 0 % et l'arrivée implicite : 0% → -300% de background-position. */
+@keyframes balayage-texte { 0% { background-position: 0%; } to { background-position: -300%; } }
+/* [relevé] @keyframes w9ZFkq_revealDots — 3 paliers d'ouverture, fermeture
+   SÈCHE à 65 %, puis temps mort jusqu'à 100 %. Le temps mort fait respirer
+   la boucle : sans lui l'effet est nerveux. */
+@keyframes revelation-points {
+  0%      { clip-path: inset(0 100% 0 0); }
+  15%     { clip-path: inset(0 66.6% 0 0); }
+  30%     { clip-path: inset(0 33.3% 0 0); }
+  45%     { clip-path: inset(0); }
+  65%, to { clip-path: inset(0 100% 0 0); }
+}
+/* [relevé] @keyframes w9ZFkq_staggerIn — 4px seulement de translation.
+   L'amplitude est volontairement sous le seuil de perception. */
+@keyframes apparition { 0% { opacity: 0; transform: translateY(4px); } }
+/* [relevé] CTA.css @keyframes dYXc1G_fadeIn + Providers.css _5pslva_fadeIn */
+@keyframes fondu-entrant { 0% { opacity: 0; } to { opacity: 1; } }
+/* [relevé] Header.css @keyframes TZTsQG_scaleIn — 0.98, pas 0.95 */
+@keyframes ouverture-menu {
+  0% { opacity: 0; transform: scale(.98); }
+  to { opacity: 1; transform: scale(1); }
+}
+@keyframes fermeture-menu {
+  0% { opacity: 1; transform: scale(1); }
+  to { opacity: 0; transform: scale(.98); }
+}
+/* [relevé] Header.css @keyframes TZTsQG_mobileMenuIn / mobileMenuOut */
+@keyframes menu-mobile-entree { 0% { opacity: 0; } to { opacity: 1; } }
+@keyframes menu-mobile-sortie { 0% { opacity: 1; } to { opacity: 0; } }
+/* [relevé] Header.css @keyframes TZTsQG_enterFromRight / exitToLeft —
+   l'amplitude est une VARIABLE (--anim-amount), pas une constante. */
+@keyframes entree-droite {
+  0% { opacity: 0; transform: translateX(var(--amplitude, 24px)); }
+  to { opacity: 1; transform: translateX(0); }
+}
+@keyframes entree-gauche {
+  0% { opacity: 0; transform: translateX(calc(-1 * var(--amplitude, 24px))); }
+  to { opacity: 1; transform: translateX(0); }
+}
+/* [relevé] Blink.css @keyframes PPSGPG_blink — un seul repère à 50 %,
+   timing step-end : le curseur clignote sans fondu. */
+@keyframes clignotement { 50% { visibility: hidden; } }
+/* [relevé] SlackIssue.css @keyframes qM9FAa_cursorBlink — variante en
+   opacité avec paliers 49/50/99 : quasi-créneau mais interpolable. */
+@keyframes clignotement-curseur {
+  0%, 49% { opacity: 1; } 50%, 99% { opacity: 0; } to { opacity: 1; }
+}
+/* [relevé] Collapsibles.css @keyframes lAb7VG_highlight — visible seulement
+   entre 20 % et 80 % du cycle : entrée et sortie douces sans écrire de fondu. */
+@keyframes surbrillance-cible {
+  20%, 80% { background-color: var(--fond-tertiaire);
+             border-color: var(--bordure-secondaire); }
+}
+/* [relevé] Image.css @keyframes Sz_9La_load — l'image n'apparaît pas en
+   fondu d'opacité seul : un masque linéaire de 400 % balaie de droite à
+   gauche pendant que l'opacité monte. */
+@keyframes chargement-image {
+  to { opacity: 1;
+    -webkit-mask: linear-gradient(to right, #000 25%, #000000e6 50%, #0000) 0 / 400% no-repeat;
+    mask: linear-gradient(to right, #000 25%, #000000e6 50%, #0000) 0 / 400% no-repeat; }
+}
+/* [relevé] Dialog.css @keyframes wOrUyW_dialogBounce — un SEUL repère à
+   50 % : la boîte se comprime à .98 en milieu de course puis revient. */
+@keyframes rebond-dialogue { 50% { transform: translateX(-50%) scale(.98); } }
+/* [relevé] valeurs (0.3 / 1 ; 8 paliers de 12.5 %) de grid-dot-*-pong.
+   [arbitrage] redistribution en 5 phases décalées d'un palier chacune. */
+@keyframes matrice-p0 { 0%, 37.5% { opacity: .3; } 37.5%, 75% { opacity: 1; } 75%, 100% { opacity: .3; } }
+@keyframes matrice-p1 { 0%, 25%   { opacity: .3; } 25%, 62.5% { opacity: 1; } 62.5%, 100% { opacity: .3; } }
+@keyframes matrice-p2 { 0%, 12.5% { opacity: .3; } 12.5%, 50% { opacity: 1; } 50%, 100% { opacity: .3; } }
+@keyframes matrice-p3 { 0%, 62.5% { opacity: 1; } 62.5%, 100% { opacity: .3; } }
+@keyframes matrice-p4 { 0%, 50%   { opacity: .3; } 50%, 87.5% { opacity: 1; } 87.5%, 100% { opacity: .3; } }
+
+/* ============================================================
+   19. ANIMATIONS — APPLICATION
+   ============================================================ */
+/* [relevé] NewHeroIllustration.css : .4s ease-out-quart BACKWARDS.
+   [arbitrage] le DÉCLENCHEUR : la source anime au montage React ; ici c'est
+   IntersectionObserver (motion.js) qui pose .est-visible. Valeurs
+   identiques, gâchette différente. La cascade de 60ms est aussi un
+   [arbitrage] : aucun animation-delay n'existe dans les CSS relevés. */
+.apparait { opacity: 0; }
+.apparait.est-visible { opacity: 1;
+  animation: apparition var(--duree-apparition) var(--courbe-sortie-quart) backwards;
+  animation-delay: calc(var(--rang, 0) * 60ms); }
+.fondu.est-visible { animation: fondu-entrant .5s .1s backwards; }
+
+/* [relevé] la source déclare l'image en opacity:0 + masque et ne l'anime
+   qu'une fois [data-loaded=true] posé par JS ; le sélecteur exige html.js.
+   Sans script, aucune image n'est jamais invisible. */
+html.js img[data-fondu="true"] {
+  opacity: 0;
+  -webkit-mask: linear-gradient(to right, #000 25%, #000000e6 50%, #0000) 150% 0 / 400% no-repeat;
+  mask: linear-gradient(to right, #000 25%, #000000e6 50%, #0000) 150% 0 / 400% no-repeat;
+}
+html.js img[data-fondu="true"][data-charge="true"] { animation: chargement-image .8s both; }
+
+/* [relevé] Blink.css — le curseur est un composant à part entière, avec ses
+   propres tokens --blink-duration / --blink-timing. */
+.curseur { --clignote-duree: 1.2s; --clignote-pas: step-end;
+  display: inline-block;
+  animation: clignotement var(--clignote-duree) var(--clignote-pas) infinite; }
+.curseur-opacite { animation: clignotement-curseur 1.25s infinite; }
+
+/* Menu mobile ------------------------------------------------------------- */
+/* [relevé] Header.css — .18s `both` sur l'entrée ET la sortie. Le `both`
+   fige l'état de départ avant le premier repère : pas de saut. */
+.menu-mobile { position: fixed; inset: var(--hauteur-entete) 0 0;
+  z-index: 90; display: none; flex-direction: column; gap: 4px;
+  padding: 24px var(--marge-exterieure);
+  background: var(--fond-primaire); overflow-y: auto; }
+.menu-mobile[data-ouvert="true"] { display: flex;
+  animation: menu-mobile-entree var(--duree-menu) both; }
+.menu-mobile[data-ferme="true"]  { display: flex;
+  animation: menu-mobile-sortie var(--duree-menu) both; }
+.menu-mobile a { display: flex; align-items: center; min-height: 44px;
+  font-size: var(--titre-2-taille); letter-spacing: var(--titre-2-lettrage);
+  color: var(--texte-secondaire); }
+.menu-mobile a:hover { color: var(--texte-primaire); }
+@media (min-width: 1025px) { .menu-mobile { display: none !important; } }
+
+/* Matrice de points ------------------------------------------------------- */
+/* [relevé] Benefits.css — perspective 1000px sur le PARENT puis
+   rotateX(60deg) rotateY(3deg) scale(.85) rotate(43deg) sur la grille.
+   Le rotateY(3deg) est le détail qui casse la symétrie parfaite. */
+.matrice-scene { position: relative; display: grid; place-items: center;
+  width: 100%; height: 100%; perspective: 1000px; }
+.matrice { display: grid; grid-template-columns: repeat(5, 12px); gap: 10px;
+  transform: rotateX(60deg) rotateY(3deg) scale(.85) rotate(43deg); }
+/* [arbitrage] taille, écart et couleur des points : la source dessine sa
+   matrice en SVG inline. Seules les opacités .3/1 et le pas viennent d'elle. */
+.matrice i { width: 12px; height: 12px; border-radius: var(--rayon-plein);
+  background: var(--texte-secondaire); opacity: .3; }
+/* [relevé] durées et fonction de temps exactes du HTML source :
+   pong 1600ms · upDown 2800ms · agent 3200ms, TOUJOURS steps(1, end). */
+.matrice--pong   i { animation: matrice-p0 1600ms steps(1, end) infinite; }
+.matrice--upDown i { animation: matrice-p0 2800ms steps(1, end) infinite; }
+.matrice--agent  i { animation: matrice-p0 3200ms steps(1, end) infinite; }
+.matrice i[data-p="1"] { animation-name: matrice-p1; }
+.matrice i[data-p="2"] { animation-name: matrice-p2; }
+.matrice i[data-p="3"] { animation-name: matrice-p3; }
+.matrice i[data-p="4"] { animation-name: matrice-p4; }
+
+/* ============================================================
+   19 bis. INTÉRIEURS DE MAQUETTE — jeu de règles utilisé par index.html
+   ------------------------------------------------------------
+   NOTE DE COLLISION : la section 11 de ce fichier a été réécrite par un
+   autre agent pendant ma passe (classes .bl__*, .palette__*, .diffs__*),
+   ce qui a laissé 33 sélecteurs de mon index.html sans règle. Je réinjecte
+   ici les règles manquantes SANS supprimer son travail. À arbitrer : les
+   deux jeux couvrent le même besoin et l'un des deux doit disparaître.
+   Valeurs ci-dessous : [relevé] pour les métriques de chrome (CV-gUa_*,
+   w9ZFkq_*), [arbitrage] pour la composition des écrans.
+   ============================================================ */
+/* [relevé] w9ZFkq_listItem — décalage de -6px pour que la puce affleure */
+.app__liste { display: flex; flex-direction: column; padding: 8px 0; }
+.app__ligne { display: flex; align-items: center; gap: 12px; height: 40px;
+  margin-left: -6px; padding-inline: 20px 16px;
+  font-size: var(--texte-mini-taille); color: var(--texte-secondaire); }
+.app__ligne + .app__ligne { border-top: var(--filet) solid var(--bordure-translucide); }
+.app__ligne:hover { background: var(--fond-niveau-2); }
+.app__ref { min-width: 68px; color: var(--texte-quaternaire);
+  font-family: var(--police-mono); font-feature-settings: normal;
+  font-size: var(--texte-micro-taille); }
+.app__etat { width: 12px; height: 12px; border-radius: var(--rayon-plein);
+  border: 2px solid var(--texte-quaternaire); flex-shrink: 0; }
+.app__etat--cours { border-color: var(--accent-jaune); }
+.app__etat--fait  { border-color: var(--accent-indigo); background: var(--accent-indigo); }
+.app__etat--bloque{ border-color: var(--accent-rouge); }
+.app__titre-ligne { flex: 1; min-width: 0; }
+.app__meta { display: flex; align-items: center; gap: 8px;
+  color: var(--texte-quaternaire); font-size: var(--texte-micro-taille); }
+/* [relevé] w9ZFkq_chatBoxHeader — 48px, rembourrage 0 16px 0 20px */
+.app__chat-entete { display: flex; justify-content: space-between; align-items: center;
+  height: 48px; padding: 0 16px 0 20px;
+  border-bottom: 1px solid var(--bordure-translucide);
+  font-size: var(--texte-mini-taille); color: var(--texte-secondaire); }
+/* [relevé] w9ZFkq_chatBoxContent — gap 12px, rembourrage 14px 20px */
+.app__chat { display: flex; flex-direction: column; flex: 1; gap: 12px;
+  padding: 14px 20px; overflow: hidden auto; }
+.app__bulle { max-width: 90%; padding: 10px 12px; border-radius: var(--rayon-8);
+  background: var(--fond-niveau-2); font-size: var(--texte-mini-taille);
+  color: var(--texte-secondaire); }
+/* [relevé] w9ZFkq_finished — la réponse est poussée à droite */
+.app__bulle--moi { align-self: flex-end; background: var(--marque-fond);
+  color: var(--marque-texte); }
+/* [relevé] w9ZFkq_chatButton — 32×32, couleur quaternaire, transition .16s */
+.app__chat-bouton { display: grid; place-items: center; width: 32px; height: 32px;
+  color: var(--texte-quaternaire);
+  transition: color var(--duree-survol) var(--courbe-sortie-quad); }
+.app__chat-bouton:hover { color: var(--texte-primaire); }
+/* [arbitrage] composition du tableau de colonnes (section Plan) */
+.app__colonnes { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px; padding: 16px 20px; }
+.app__colonne { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.app__colonne-titre { display: flex; align-items: center; gap: 6px; height: 26px;
+  font-size: var(--texte-micro-taille); color: var(--texte-tertiaire); }
+.app__carte { padding: 10px 12px; border-radius: var(--rayon-6);
+  background: var(--fond-niveau-2);
+  box-shadow: inset 0 0 0 1px var(--bordure-translucide);
+  font-size: var(--texte-micro-taille); color: var(--texte-secondaire); }
+.app__barre-progres { height: 4px; margin-top: 8px; border-radius: 2px;
+  background: var(--fond-quaternaire); overflow: hidden; }
+.app__barre-progres > i { display: block; height: 100%; border-radius: inherit;
+  background: var(--gamme-plan); }
+
+/* Diff — [relevé] code-diff.css : les fonds de ligne sont composés en
+   color-mix à faible pourcentage, jamais une couleur pleine. */
+.diff { padding: 12px 0; font-family: var(--police-mono);
+  font-feature-settings: normal; font-size: var(--texte-micro-taille);
+  line-height: 1.9; }
+.diff__ligne { display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 12px;
+  padding-inline: 16px; color: var(--texte-tertiaire); }
+.diff__ligne--plus  { color: var(--texte-secondaire);
+  background: color-mix(in srgb, var(--accent-vert) 12%, transparent); }
+.diff__ligne--moins { color: var(--texte-secondaire);
+  background: color-mix(in srgb, var(--accent-rouge) 12%, transparent); }
+.diff__num { text-align: right; color: var(--texte-quaternaire); }
+
+/* Graphe — [relevé] Monitor.css --dashed-border : la réglure est un
+   repeating-linear-gradient de 3px plein / 4px vide, PAS un border dashed
+   (qui ne permet pas de régler la longueur des tirets). */
+.graphe { --reglure: repeating-linear-gradient(to right,
+    var(--bordure-primaire) 0, var(--bordure-primaire) 3px,
+    transparent 3px, transparent 7px);
+  padding: 20px 24px; }
+.graphe__grille { display: grid; gap: 28px; }
+.graphe__ligne { height: 1px; background: var(--reglure); }
+/* [relevé] Stats.css .do0YxW_barContainer — une barre fait 56px de large.
+   Sans cette borne, douze barres en `flex:1` sur 1300px donnent des blocs
+   de 100px : le graphe cesse d'être un graphe. */
+.graphe__barres { display: flex; align-items: flex-end; gap: 10px;
+  height: 145px; margin-top: -145px; }
+.graphe__barre { flex: 1; max-width: 56px; border-radius: 2px 2px 0 0;
+  background: var(--texte-quaternaire); transition: opacity var(--duree-standard); }
+.graphe__barre--fort { background: var(--texte-secondaire); }
+.graphe__legende { display: flex; gap: 16px; margin-top: 16px;
+  font-size: var(--texte-micro-taille); color: var(--texte-tertiaire); }
+/* [relevé] Stats.css .do0YxW_legendWrapper — 4px 8px, rayon 6, bordure
+   translucide, transition opacity .2s, curseur par défaut (non cliquable). */
+.graphe__cle { display: flex; align-items: center; gap: 6px; padding: 4px 8px;
+  border: 1px solid var(--bordure-translucide); border-radius: var(--rayon-6);
+  transition: opacity .2s; cursor: default; }
+/* [relevé] Stats.css .do0YxW_marker — 16×16, rayon 2 */
+.graphe__marqueur { width: 16px; height: 16px; border-radius: 2px;
+  background: var(--texte-quaternaire); }
+.graphe__marqueur--fort { background: var(--texte-secondaire); }
+
+/* ============================================================
+   20. MOUVEMENT RÉDUIT
+   ============================================================ */
+/* [relevé] NewHeroIllustration.css neutralise par `animation: none` SANS
+   toucher l'opacité (ses keyframes n'ont pas de repère à 100 %). Ici les
+   éléments partent d'opacity:0 : couper l'animation ne suffit pas, il faut
+   AUSSI les rendre visibles. [arbitrage] obligatoire. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .apparait, .apparait.est-visible, .fondu { opacity: 1 !important; }
+  .annonce__points { clip-path: none !important; }
+  .matrice i { opacity: .6 !important; }
+  .marquee__piste:nth-child(2) { visibility: hidden; }
+  html.js img[data-fondu="true"] { opacity: 1 !important;
+    -webkit-mask: none !important; mask: none !important; }
+}

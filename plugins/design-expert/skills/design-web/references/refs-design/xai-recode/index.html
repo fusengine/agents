@@ -1,0 +1,692 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>xAI — Frontier AI models for everything you build</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- [arbitrage] Universal Sans (fonderie propriétaire, chargée par la source via
+     --font-universal-sans-display) remplacée par Geist ; Geist Mono correspond au
+     rôle mono relevé (--font-geist-mono, cité littéralement dans les styles inline
+     du terminal de la source). -->
+<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;700&family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script src="motion.js" defer></script>
+</head>
+<body>
+
+<!-- Glyphes réutilisés. [relevé] les tracés `arrow-up-right`, `player-play` et
+     l'icône « copy » sont ceux des SVG 24×24 de la source, path compris. -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="g-coche" viewBox="0 0 24 24"><path fill="currentColor" d="M19.7998 6.59961L10.1221 19.5039L4.30762 13.9219L5.69238 12.4785L9.87793 16.4961L18.2002 5.40039L19.7998 6.59961Z"/></symbol>
+  <!-- [relevé] name=arrow-up-right -->
+  <symbol id="g-fleche-nord-est" viewBox="0 0 24 24"><path fill="currentColor" d="M18 16.5H16V9.41406L6.99998 18.4141L5.58591 17L14.5859 8H7.49998V6H18V16.5Z"/></symbol>
+  <!-- [relevé] la « flèche » des boutons : une pointe de chevron seule, dont la
+       hampe est un <line opacity="0"> — elle se déplie au survol. -->
+  <symbol id="g-pointe" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line class="hampe" x1="15" y1="12" x2="15" y2="12"/><line x1="11" y1="8" x2="15" y2="12"/><line x1="11" y1="16" x2="15" y2="12"/></g></symbol>
+  <!-- [relevé] name=player-play -->
+  <symbol id="g-lecture" viewBox="0 0 24 24"><path fill="currentColor" d="M6 17.9284V6.07151C6 4.50848 7.71248 3.54952 9.04512 4.3663L18.7178 10.2947C19.991 11.0751 19.991 12.9248 18.7178 13.7051L9.04512 19.6336C7.71249 20.4503 6 19.4914 6 17.9284Z"/></symbol>
+  <symbol id="g-chevron" viewBox="0 0 16 16"><polyline points="4,6 8,10 12,6" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <!-- [relevé] icône du bouton « Copy » de la fenêtre de code -->
+  <symbol id="g-copie" viewBox="0 0 24 24"><rect x="3" y="8" width="13" height="13" rx="4" fill="none" stroke="currentColor" stroke-width="2"/><path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" d="M13 2.00004L12.8842 2.00002C12.0666 1.99982 11.5094 1.99968 11.0246 2.09611C9.92585 2.31466 8.95982 2.88816 8.25008 3.69274C7.90896 4.07944 7.62676 4.51983 7.41722 5.00004H9.76392C10.189 4.52493 10.7628 4.18736 11.4147 4.05768C11.6802 4.00488 12.0228 4.00004 13 4.00004H14.6C15.7366 4.00004 16.5289 4.00081 17.1458 4.05121C17.7509 4.10066 18.0986 4.19283 18.362 4.32702C18.9265 4.61464 19.3854 5.07358 19.673 5.63807C19.8072 5.90142 19.8994 6.24911 19.9488 6.85428C19.9992 7.47112 20 8.26343 20 9.40004V11C20 11.9773 19.9952 12.3199 19.9424 12.5853C19.8127 13.2373 19.4748 13.8114 19 14.2361V16.5829C20.4795 15.9374 21.5804 14.602 21.9039 12.9755C22.0004 12.4907 22.0002 11.9334 22 11.1158L22 11V9.40004V9.35725C22 8.27346 22 7.3993 21.9422 6.69141C21.8826 5.96256 21.7568 5.32238 21.455 4.73008C20.9757 3.78927 20.2108 3.02437 19.27 2.545C18.6777 2.24322 18.0375 2.1174 17.3086 2.05785C16.6007 2.00002 15.7266 2.00003 14.6428 2.00004L14.6 2.00004H13Z"/></symbol>
+  <symbol id="g-menu" viewBox="0 0 16 16"><g fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><line x1="2.5" y1="5" x2="13.5" y2="5"/><line x1="2.5" y1="11" x2="13.5" y2="11"/></g></symbol>
+</svg>
+
+<!-- ═══ 1. EN-TÊTE — fixe, voile flouté, filet révélé au scroll ═══
+     [relevé] <header class="group fixed inset-x-0 top-0 z-50 duration-200">,
+     nav `py-4 nav:h-16` (64px), bascule de nav à 1100px (breakpoint `nav:`). -->
+<header class="entete" id="entete">
+  <div class="entete__voile" aria-hidden="true"></div>
+  <div class="conteneur" style="position:relative">
+    <div class="entete__filet" aria-hidden="true"></div>
+    <nav class="nav" aria-label="Main">
+      <!-- [arbitrage] La source rend le mot-symbole dans un <canvas> 173×32 peint
+           en JS (vide dans l'aspiration), enveloppé d'un `opacity-0
+           transition-opacity duration-300`. Le tracé n'est pas relevable ; ce qui
+           l'est — l'enveloppe de 173×32 révélée en 300 ms — est repris (motion.js §6). -->
+      <a href="#" class="marque" id="marque" aria-label="SpaceXAI Homepage">SpaceXAI</a>
+
+      <div class="nav__zone">
+        <ul class="nav__liens">
+          <li class="nav__item" data-menu>
+            <a class="lien-doux nav__lien" href="#produits">Products<svg class="chev" aria-hidden="true"><use href="#g-chevron"/></svg></a>
+            <div class="menu" role="group">
+              <div class="menu__carte">
+                <div class="menu__rubrique">Products</div>
+                <a class="menu__lien" href="#produits"><span>Grok</span><svg class="menu__fleche" aria-hidden="true"><use href="#g-fleche-nord-est"/></svg></a>
+                <a class="menu__lien" href="#produits"><span>Business</span></a>
+                <a class="menu__lien" href="#produits"><span>Government</span></a>
+              </div>
+            </div>
+          </li>
+          <li class="nav__item" data-menu>
+            <a class="lien-doux nav__lien" href="#offres">Solutions<svg class="chev" aria-hidden="true"><use href="#g-chevron"/></svg></a>
+            <div class="menu" role="group">
+              <div class="menu__carte">
+                <div class="menu__rubrique">Solutions</div>
+                <a class="menu__lien" href="#offres"><span>Business</span></a>
+                <a class="menu__lien" href="#offres"><span>Government</span></a>
+                <a class="menu__lien" href="#offres"><span>Customer Support</span></a>
+                <a class="menu__lien" href="#offres"><span>Legal</span></a>
+                <a class="menu__lien" href="#offres"><span>Security</span></a>
+                <a class="menu__lien" href="#offres"><span>Use Cases</span></a>
+              </div>
+            </div>
+          </li>
+          <li class="nav__item" data-menu>
+            <a class="lien-doux nav__lien" href="#api">Developer<svg class="chev" aria-hidden="true"><use href="#g-chevron"/></svg></a>
+            <div class="menu" role="group">
+              <div class="menu__carte">
+                <div class="menu__rubrique">Developers</div>
+                <a class="menu__lien" href="#api"><span>API Console</span><svg class="menu__fleche" aria-hidden="true"><use href="#g-fleche-nord-est"/></svg></a>
+                <a class="menu__lien" href="#api"><span>Documentation</span><svg class="menu__fleche" aria-hidden="true"><use href="#g-fleche-nord-est"/></svg></a>
+                <a class="menu__lien" href="#api"><span>CLI</span></a>
+              </div>
+            </div>
+          </li>
+          <li class="nav__item" data-menu>
+            <a class="lien-doux nav__lien" href="#actus">Company<svg class="chev" aria-hidden="true"><use href="#g-chevron"/></svg></a>
+            <div class="menu" role="group">
+              <div class="menu__carte">
+                <div class="menu__rubrique">Company</div>
+                <a class="menu__lien" href="#actus"><span>About</span></a>
+                <a class="menu__lien" href="#actus"><span>Colossus</span></a>
+                <a class="menu__lien" href="#actus"><span>Careers</span></a>
+                <a class="menu__lien" href="#actus"><span>News</span></a>
+                <a class="menu__lien" href="#actus"><span>Contact</span></a>
+              </div>
+            </div>
+          </li>
+          <li class="nav__item"><a class="lien-doux nav__lien" href="#offres">Pricing</a></li>
+          <li class="nav__item"><a class="lien-doux nav__lien" href="#actus">News</a></li>
+        </ul>
+      </div>
+
+      <div class="nav__actions">
+        <!-- Aucun sélecteur de thème dans la barre : la source n'en a pas. Le
+             thème suit `prefers-color-scheme`, comme elle. -->
+        <a class="btn btn--fantome btn--petit masque-mobile" href="#offres"><span class="btn__cible"></span>Contact Sales</a>
+
+        <!-- [relevé] « Try for free » n'est PAS un bouton : c'est un duo posé sur un
+             seul fond `bg-primary`, séparé par un filet `bg-background/20` de 1px,
+             dont la moitié droite ouvre un panneau. -->
+        <div class="duo-bouton masque-mobile" data-menu>
+          <div class="duo-bouton__corps">
+            <a class="duo-bouton__texte" href="#produits">Try for free</a>
+            <div class="duo-bouton__filet" aria-hidden="true"></div>
+            <button class="duo-bouton__chevron" type="button" aria-label="More options" aria-expanded="false">
+              <svg class="chev" aria-hidden="true"><use href="#g-chevron"/></svg>
+            </button>
+          </div>
+          <div class="menu menu--droite" role="group">
+            <div class="menu__carte">
+              <div class="menu__rubrique">Products</div>
+              <a class="menu__lien" href="#produits"><span>Grok</span><svg class="menu__fleche" aria-hidden="true"><use href="#g-fleche-nord-est"/></svg></a>
+              <a class="menu__lien" href="#produits"><span>Business</span></a>
+              <a class="menu__lien" href="#produits"><span>Government</span></a>
+              <hr class="menu__filet">
+              <div class="menu__rubrique">Download</div>
+              <a class="menu__lien" href="#produits"><span>iOS</span><svg class="menu__fleche" aria-hidden="true"><use href="#g-fleche-nord-est"/></svg></a>
+              <a class="menu__lien" href="#produits"><span>Android</span><svg class="menu__fleche" aria-hidden="true"><use href="#g-fleche-nord-est"/></svg></a>
+              <a class="menu__lien" href="#produits"><span>Grok on X</span><svg class="menu__fleche" aria-hidden="true"><use href="#g-fleche-nord-est"/></svg></a>
+              <hr class="menu__filet">
+              <div class="menu__rubrique">Developers</div>
+              <a class="menu__lien" href="#api"><span>API Console</span><svg class="menu__fleche" aria-hidden="true"><use href="#g-fleche-nord-est"/></svg></a>
+              <a class="menu__lien" href="#api"><span>Documentation</span><svg class="menu__fleche" aria-hidden="true"><use href="#g-fleche-nord-est"/></svg></a>
+              <a class="menu__lien" href="#api"><span>CLI</span></a>
+            </div>
+          </div>
+        </div>
+
+        <!-- [relevé] sous 1100px : une pilule « Try for free » pleine + un bouton
+             carré (aspect-square) qui ouvre le menu. -->
+        <a class="btn btn--plein btn--petit nav-mobile" href="#produits"><span class="btn__cible"></span>Try for free</a>
+        <button class="btn btn--fantome btn--petit btn--carre nav-mobile" id="burger" type="button" aria-label="Open menu" aria-expanded="false">
+          <svg width="16" height="16" aria-hidden="true"><use href="#g-menu"/></svg>
+        </button>
+      </div>
+    </nav>
+  </div>
+
+  <!-- Volet mobile : les mêmes rubriques que les menus de bureau, empilées. -->
+  <div class="volet" id="volet" hidden>
+    <div class="conteneur volet__interieur">
+      <div class="volet__groupe"><span class="volet__titre">Products</span>
+        <a class="lien-doux" href="#produits">Grok</a><a class="lien-doux" href="#produits">Business</a><a class="lien-doux" href="#produits">Government</a></div>
+      <div class="volet__groupe"><span class="volet__titre">Download</span>
+        <a class="lien-doux" href="#produits">iOS</a><a class="lien-doux" href="#produits">Android</a><a class="lien-doux" href="#produits">Grok on X</a></div>
+      <div class="volet__groupe"><span class="volet__titre">Developers</span>
+        <a class="lien-doux" href="#api">API Console</a><a class="lien-doux" href="#api">Documentation</a><a class="lien-doux" href="#api">CLI</a></div>
+      <div class="volet__groupe"><span class="volet__titre">Company</span>
+        <a class="lien-doux" href="#actus">About</a><a class="lien-doux" href="#actus">Colossus</a><a class="lien-doux" href="#actus">Careers</a><a class="lien-doux" href="#actus">News</a><a class="lien-doux" href="#actus">Contact</a></div>
+      <div class="volet__pied"><a class="btn btn--fantome btn--petit btn--large" href="#offres"><span class="btn__cible"></span>Contact Sales</a></div>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<!-- ═══ 2. HÉROS — bloc titre (42rem, centré) puis bento pleine largeur ═══
+     [relevé] <div class="home-hero-pt relative">, padding-top calc(4rem + 2.25rem)
+     puis 3.75rem / 5.25rem aux paliers supérieurs. -->
+<div class="heros">
+  <div class="conteneur heros__interieur">
+
+    <div class="heros__titre" data-reveler>
+      <!-- Pilule d'annonce. [relevé] mb-6 sm:mb-8, py-1.5 pe-1.5 ps-2.5,
+           badge « New » en --color-sunset, texte 13px, pastille de 24px. -->
+      <div class="annonce monte" style="--i:0">
+        <button class="annonce__pilule" type="button" aria-label="Meet Grok 4.5, our new model">
+          <span class="annonce__etiquette">New</span>
+          <span class="annonce__texte"><b>Meet Grok 4.5</b><span class="annonce__sep"> • </span><span class="annonce__suite">Our new model</span></span>
+          <span class="annonce__fleche"><svg><use href="#g-lecture"/></svg></span>
+        </button>
+      </div>
+
+      <!-- [relevé] titre VERBATIM, coupes comprises : <br> ferme après « models »,
+           <br class="sm:hidden"> ne coupe qu'en dessous de 640px. Le dernier mot
+           porte le filet dégradé de 3px qui balaie en 3 s. -->
+      <h1 class="titre-1">
+        <span class="mot" style="--i:0">Frontier</span>
+        <span class="mot" style="--i:1">AI</span>
+        <span class="mot" style="--i:2">models</span><br>
+        <span class="mot" style="--i:3">for</span>
+        <span class="mot" style="--i:4">everything</span>
+        <span class="mot" style="--i:5">you</span><br class="coupe-mobile">
+        <span class="mot" style="--i:6"><span class="souligne">build</span>.</span>
+      </h1>
+
+      <div class="monte" style="--i:7">
+        <!-- [relevé] le sous-titre déborde son gabarit : lg:w-[140%] lg:-translate-x-[14.3%]. -->
+        <p class="heros__accroche">Reasoning, code, voice, images, and video. <br class="masque-large">Trained on the world's largest supercluster.</p>
+      </div>
+
+      <div class="heros__actions">
+        <div class="monte" style="--i:8"><a class="btn btn--plein" href="#api"><span class="btn__cible"></span>Get API Access<svg><use href="#g-pointe"/></svg></a></div>
+        <div class="monte" style="--i:9"><a class="btn btn--fantome" href="#api"><span class="btn__cible"></span>View Documentation</a></div>
+      </div>
+    </div>
+
+    <!-- Bento de 4 cartes égales. [relevé] grid gap-3 sm:grid-cols-2, cartes
+         h-[220px] sm:h-[280px], rounded-2xl, et un style="opacity:0" sur la
+         grille elle-même (état de départ, pas le design). -->
+    <div class="bento monte" id="produits" data-reveler>
+
+      <!-- Carte 1 — Chat ------------------------------------------------ -->
+      <a class="carte" href="#produits">
+        <span class="carte__scene">
+          <span class="chat" data-bulles>
+            <span class="chat__ligne chat__ligne--moi"><span class="chat__bulle">Explain quantum entanglement simply</span></span>
+            <span class="chat__ligne chat__ligne--eux"><span class="chat__bulle">Two particles become linked — measuring one instantly determines the other, regardless of distance.</span></span>
+            <span class="chat__ligne chat__ligne--moi"><span class="chat__bulle">Why is the sky blue?</span></span>
+            <span class="chat__ligne chat__ligne--eux"><span class="chat__bulle">Shorter blue wavelengths scatter more off air molecules than longer red ones.</span></span>
+            <span class="chat__ligne chat__ligne--moi"><span class="chat__bulle">How do black holes form?</span></span>
+          </span>
+        </span>
+        <span class="carte__reflet" aria-hidden="true"><i></i></span>
+        <span class="flou-progressif" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+        <span class="carte__pied">
+          <span class="carte__titre">Chat</span><span class="carte__lien">Explore →</span>
+        </span>
+      </a>
+
+      <!-- Carte 2 — Build (terminal), sur îlot de thème sombre ------------ -->
+      <a class="carte" href="#produits">
+        <span class="carte__scene">
+          <span class="sombre-local" style="display:block;height:100%">
+            <span class="terminal-carte">
+              <span class="terminal-carte__barre">
+                <span class="pastilles" aria-hidden="true"><i></i><i></i><i></i></span>
+                <span class="terminal-carte__chemin">projects/main</span>
+                <span class="terminal-carte__jauge">
+                  <span class="t-tube" aria-hidden="true">|</span>
+                  <span class="t-jauge"><i data-jauge style="--fin:11.6%"></i></span>
+                  <span class="t-pourcent">11.60%</span>
+                  <span class="t-tube" aria-hidden="true">|</span>
+                </span>
+              </span>
+              <span class="terminal-carte__corps" data-terminal>
+
+                <span class="t-ligne">
+                  <span class="t-panneau">
+                    <span class="t-invite">❯</span>
+                    <span class="t-prompt">Migrate auth from sessions to JWT.</span>
+                  </span>
+                </span>
+
+                <span class="t-ligne">
+                  <span class="t-pense">
+                    <span class="t-points" aria-hidden="true" data-points><i></i><i></i><i></i><i></i><i></i><i></i></span>
+                    <span class="t-attenue">Thinking...</span>
+                  </span>
+                </span>
+
+                <span class="t-ligne"><span class="t-outil-l">
+                  <span class="t-outil">▸ read_file</span><span class="t-arg">src/middleware/auth.ts</span><span class="t-etat">68 lines</span>
+                </span></span>
+                <span class="t-ligne"><span class="t-outil-l">
+                  <span class="t-outil">▸ grep</span><span class="t-arg">"session" src/</span><span class="t-etat">4 matches</span>
+                </span></span>
+                <span class="t-ligne"><span class="t-outil-l">
+                  <span class="t-outil">▸ read_file</span><span class="t-arg">src/lib/jwt.ts</span><span class="t-etat">42 lines</span>
+                </span></span>
+
+                <span class="t-ligne"><span class="t-agent">
+                  <span class="t-agent__g"><span class="t-tuyau">|</span><span class="t-arg">Audit auth middleware</span><span class="t-etat">explore</span></span>
+                  <span class="t-statut">[running]</span>
+                </span></span>
+                <span class="t-ligne"><span class="t-agent">
+                  <span class="t-agent__g"><span class="t-tuyau">|</span><span class="t-arg">Design token rotation</span><span class="t-etat">general</span></span>
+                  <span class="t-statut">[running]</span>
+                </span></span>
+                <span class="t-ligne"><span class="t-agent t-agent--fait">
+                  <span class="t-agent__g"><span class="t-tuyau">|</span><span class="t-arg">Find session references</span><span class="t-etat">explore</span></span>
+                  <span class="t-statut">[done]</span>
+                </span></span>
+
+                <span class="t-ligne"><span class="t-pense">
+                  <span class="t-losange">◆</span><span class="t-attenue">Thought for 4.1s</span>
+                </span></span>
+
+                <span class="t-ligne"><span class="t-edit">
+                  <span class="t-losange">◆</span><span class="t-edit__mot">Edit</span><span class="t-edit__fichier">src/middleware/auth.ts</span>
+                </span></span>
+
+                <span class="t-ligne"><span class="t-diff">
+                  <span class="t-diff__no">42</span><span class="t-diff__code">export async function handler(req) {</span>
+                </span></span>
+                <span class="t-ligne"><span class="t-diff t-diff--ajout">
+                  <span class="t-diff__no">43</span><span class="t-diff__code">  const token = extractBearer(req);</span>
+                </span></span>
+
+              </span>
+            </span>
+          </span>
+        </span>
+        <span class="carte__reflet" aria-hidden="true"><i></i></span>
+        <span class="flou-progressif" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+        <span class="carte__pied carte__pied--clair">
+          <span class="carte__titre">Build</span><span class="carte__lien">Explore →</span>
+        </span>
+      </a>
+
+      <!-- Carte 3 — Imagine. [relevé] cette carte, et elle seule, porte p-1 et un
+           cadre interne rounded-xl ; mosaïque 3 colonnes × 2 rangées, gap 3px, la
+           première cellule occupant 2 colonnes sur 2 rangées. Médias en URL
+           DISTANTE, query string conservée (elle pilote le redimensionnement CDN). -->
+      <a class="carte carte--marge" href="#produits">
+        <span class="carte__cadre-interne">
+          <span class="carte__scene">
+            <span class="mosaique">
+              <span class="mosaique__cell"><img loading="lazy" decoding="async" alt="" sizes="320px" onerror="this.dataset.indisponible=''"
+                srcset="https://x.ai/_next/image?url=%2Fimages%2Fimagine-demo%2Fnav%2Fnav-1.jpg&w=640&q=75&dpl=fede12d2e09a0fbea28bb86fa2b6640c66e3da0b 640w, https://x.ai/_next/image?url=%2Fimages%2Fimagine-demo%2Fnav%2Fnav-1.jpg&w=1080&q=75&dpl=fede12d2e09a0fbea28bb86fa2b6640c66e3da0b 1080w"
+                src="https://x.ai/_next/image?url=%2Fimages%2Fimagine-demo%2Fnav%2Fnav-1.jpg&w=640&q=75&dpl=fede12d2e09a0fbea28bb86fa2b6640c66e3da0b">
+                <span class="flou-progressif flou-progressif--tuile" aria-hidden="true"><i></i><i></i><i></i><i></i></span></span>
+              <span class="mosaique__cell"><img loading="lazy" decoding="async" alt="" sizes="320px" onerror="this.dataset.indisponible=''"
+                srcset="https://x.ai/_next/image?url=%2Fimages%2Fimagine-demo%2Fnav%2Fnav-7.jpg&w=384&q=75&dpl=fede12d2e09a0fbea28bb86fa2b6640c66e3da0b 384w, https://x.ai/_next/image?url=%2Fimages%2Fimagine-demo%2Fnav%2Fnav-7.jpg&w=750&q=75&dpl=fede12d2e09a0fbea28bb86fa2b6640c66e3da0b 750w"
+                src="https://x.ai/_next/image?url=%2Fimages%2Fimagine-demo%2Fnav%2Fnav-7.jpg&w=384&q=75&dpl=fede12d2e09a0fbea28bb86fa2b6640c66e3da0b"></span>
+              <span class="mosaique__cell"><img loading="lazy" decoding="async" alt="" sizes="320px" onerror="this.dataset.indisponible=''"
+                srcset="https://x.ai/_next/image?url=%2Fimages%2Fimagine-demo%2Fnav%2Fnav-8.jpg&w=384&q=75&dpl=fede12d2e09a0fbea28bb86fa2b6640c66e3da0b 384w, https://x.ai/_next/image?url=%2Fimages%2Fimagine-demo%2Fnav%2Fnav-8.jpg&w=750&q=75&dpl=fede12d2e09a0fbea28bb86fa2b6640c66e3da0b 750w"
+                src="https://x.ai/_next/image?url=%2Fimages%2Fimagine-demo%2Fnav%2Fnav-8.jpg&w=384&q=75&dpl=fede12d2e09a0fbea28bb86fa2b6640c66e3da0b">
+                <span class="flou-progressif flou-progressif--tuile" aria-hidden="true"><i></i><i></i><i></i><i></i></span></span>
+            </span>
+          </span>
+          <span class="carte__reflet" aria-hidden="true"><i></i></span>
+          <span class="carte__pied carte__pied--clair">
+            <span class="carte__titre">Imagine</span><span class="carte__lien">Explore →</span>
+          </span>
+        </span>
+      </a>
+
+      <!-- Carte 4 — Voice. Le conteneur est VIDE dans la source (peint en JS) ;
+           motion.js §5 le remplit à partir du @keyframes waveform relevé. -->
+      <a class="carte" href="#produits">
+        <span class="carte__scene">
+          <span class="onde" data-onde></span>
+        </span>
+        <span class="carte__reflet" aria-hidden="true"><i></i></span>
+        <span class="flou-progressif" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+        <span class="carte__pied">
+          <span class="carte__titre">Voice</span><span class="carte__lien">Explore →</span>
+        </span>
+      </a>
+
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 3. « FOR DEVELOPERS » — duo texte / fenêtre de code ═══
+     [relevé] grid gap-12 lg:grid-cols-2 lg:items-center lg:gap-24, py-16 sm:py-24. -->
+<section class="section" id="api">
+  <div class="conteneur">
+    <div class="duo">
+
+      <div data-reveler>
+        <div class="monte" style="--i:0">
+          <p class="sur-titre">For developers</p>
+          <!-- [relevé] la 2e ligne du titre passe en --secondary : la hiérarchie
+               se fait DANS le titre, pas sous lui. -->
+          <h2 class="titre-2 titre-2--ample">One API.<br><span class="attenue">Every modality.</span></h2>
+          <p class="api__texte">Text, code, voice, images, and video — all through a single unified API. Start building in seconds.</p>
+          <div class="api__actions">
+            <a class="btn btn--plein btn--petit" href="#api"><span class="btn__cible"></span>Get API Key</a>
+            <a class="btn btn--fantome btn--petit" href="#api"><span class="btn__cible"></span>Read Docs</a>
+          </div>
+          <dl class="mini-stats">
+            <div><dt>1M+</dt><dd>API calls per day</dd></div>
+            <div><dt>&lt;200ms</dt><dd>Median latency</dd></div>
+            <div><dt>5+</dt><dd>Model families</dd></div>
+          </dl>
+        </div>
+      </div>
+
+      <div>
+        <div class="cadre-code">
+          <div class="cadre-code__fond" aria-hidden="true"></div>
+          <div class="fenetre-code">
+            <div class="fenetre-code__barre">
+              <span class="pastilles" aria-hidden="true"><i></i><i></i><i></i></span>
+              <button class="fenetre-code__copier" type="button" aria-label="Copy code" data-copier><svg width="14" height="14" aria-hidden="true"><use href="#g-copie"/></svg><span data-copier-txt>Copy</span></button>
+            </div>
+            <!-- Code VERBATIM de la source, coloration Shiki github-light/dark
+                 rejouée par classes de jetons. -->
+            <pre role="tabpanel" id="p-py" aria-labelledby="t-py"><code><span class="l"><span class="j-mot">import</span> os</span><span class="l"><span class="j-mot">from</span> xai_sdk <span class="j-mot">import</span> Client</span><span class="l"><span class="j-mot">from</span> xai_sdk.chat <span class="j-mot">import</span> user</span><span class="l"></span><span class="l">client <span class="j-mot">=</span> Client(</span><span class="l">    <span class="j-par">api_key</span><span class="j-mot">=</span>os.getenv(<span class="j-txt">"XAI_API_KEY"</span>)</span><span class="l">)</span><span class="l"></span><span class="l">chat <span class="j-mot">=</span> client.chat.create(<span class="j-par">model</span><span class="j-mot">=</span><span class="j-txt">"grok-4.5"</span>)</span><span class="l">chat.append(user(<span class="j-txt">"Explain quantum computing"</span>))</span><span class="l"></span><span class="l">response <span class="j-mot">=</span> chat.sample()</span><span class="l"><span class="j-fn">print</span>(response.content)</span></code></pre>
+            <pre role="tabpanel" id="p-ts" aria-labelledby="t-ts" hidden><code><span class="l"><span class="j-mot">import</span> OpenAI <span class="j-mot">from</span> <span class="j-txt">"openai"</span>;</span><span class="l"></span><span class="l"><span class="j-mot">const</span> client <span class="j-mot">=</span> <span class="j-mot">new</span> <span class="j-fn">OpenAI</span>({</span><span class="l">  apiKey: process.env.<span class="j-par">XAI_API_KEY</span>,</span><span class="l">  baseURL: <span class="j-txt">"https://api.x.ai/v1"</span>,</span><span class="l">});</span><span class="l"></span><span class="l"><span class="j-mot">const</span> response <span class="j-mot">=</span> <span class="j-mot">await</span> client.chat.completions.<span class="j-fn">create</span>({</span><span class="l">  model: <span class="j-txt">"grok-4.5"</span>,</span><span class="l">  messages: [{ role: <span class="j-txt">"user"</span>, content: <span class="j-txt">"Explain quantum computing"</span> }],</span><span class="l">});</span><span class="l"></span><span class="l">console.<span class="j-fn">log</span>(response.choices[<span class="j-num">0</span>].message.content);</span></code></pre>
+            <pre role="tabpanel" id="p-cu" aria-labelledby="t-cu" hidden><code><span class="l"><span class="j-fn">curl</span> https://api.x.ai/v1/chat/completions \</span><span class="l">  <span class="j-mot">-H</span> <span class="j-txt">"Authorization: Bearer $XAI_API_KEY"</span> \</span><span class="l">  <span class="j-mot">-H</span> <span class="j-txt">"Content-Type: application/json"</span> \</span><span class="l">  <span class="j-mot">-d</span> <span class="j-txt">'{</span></span><span class="l"><span class="j-txt">    "model": "grok-4.5",</span></span><span class="l"><span class="j-txt">    "messages": [</span></span><span class="l"><span class="j-txt">      { "role": "user", "content": "Explain quantum computing" }</span></span><span class="l"><span class="j-txt">    ]</span></span><span class="l"><span class="j-txt">  }'</span></span><span class="l"></span><span class="l"></span></code></pre>
+          </div>
+          <!-- Les 7 carrés de 14px qui rongent le pavé coloré en marches. -->
+          <div class="cadre-code__coins" aria-hidden="true">
+            <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+          </div>
+        </div>
+        <!-- [relevé] onglets SOUS la fenêtre (mt-5), pas dans sa barre. -->
+        <div class="onglets" role="tablist" aria-label="Language">
+          <button class="onglet" role="tab" aria-selected="true" aria-controls="p-py" id="t-py">Python</button>
+          <button class="onglet" role="tab" aria-selected="false" aria-controls="p-ts" id="t-ts">TypeScript</button>
+          <button class="onglet" role="tab" aria-selected="false" aria-controls="p-cu" id="t-cu">cURL</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 4. BANDEAU DE CHIFFRES — quadrillage 80px + balayage + halo d'accent ═══
+     [relevé] <section class="relative overflow-hidden">, py-20 sm:py-28 lg:py-36,
+     grid gap-12 text-center sm:grid-cols-3, chiffres text-5xl→7xl. -->
+<section class="bandeau">
+  <div class="bandeau__grille" aria-hidden="true"></div>
+  <div class="bandeau__balayage" aria-hidden="true" data-balayage></div>
+  <div class="bandeau__halo" aria-hidden="true"></div>
+  <div class="conteneur bandeau__interieur">
+    <div class="chiffres" data-reveler>
+      <div class="monte" style="--i:0">
+        <p class="chiffre__valeur"><span data-compteur="300">300</span>M+</p>
+        <p class="chiffre__libelle">queries processed daily</p>
+      </div>
+      <div class="monte" style="--i:1">
+        <p class="chiffre__valeur"><span data-compteur="150">150</span>K</p>
+        <p class="chiffre__libelle">
+          <!-- [relevé] ce libellé est un LIEN, et le mot final est le
+               mot-symbole COLOSSUS en SVG inline, h-[8px]. -->
+          <a class="chiffre__lien" href="#actus">GPUs in
+            <svg class="colossus" viewBox="0 0 1550 114" fill="currentColor" aria-label="Colossus" role="img">
+              <path d="M428.636 91.1836H505.96C505.952 91.1728 505.943 91.1621 505.935 91.1514L719.285 91.1426C738.395 91.1425 753.887 75.6509 753.887 56.541C753.887 52.1085 753.053 47.8706 751.534 43.9756H781.262C782.181 48.0202 782.666 52.2295 782.666 56.5518C782.666 87.7453 757.389 113.041 726.195 113.041H552.849V113.082H423.662C410.466 113.082 399.768 102.384 399.768 89.1875V0H428.636V91.1836Z"/>
+              <path d="M138.89 0.0410156C150.984 0.0410156 160.788 9.84526 160.788 21.9395H28.8682V91.1426H160.788C160.788 103.237 150.984 113.041 138.89 113.041H23.8945C10.6981 113.041 0 102.343 0 89.1465V23.9355C0 10.7391 10.6981 0.0410156 23.8945 0.0410156H138.89Z"/>
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M358.894 21.9395C358.894 9.84521 349.089 0.0410156 336.995 0.0410156H220.005C207.911 0.0410156 198.106 9.84521 198.106 21.9395H198.188C198.134 22.5977 198.105 23.2634 198.105 23.9355V89.1465C198.105 89.8186 198.134 90.4844 198.188 91.1426H198.106C198.106 103.237 207.911 113.041 220.005 113.041H336.995C349.089 113.041 358.894 103.237 358.894 91.1426H358.812C358.844 90.7549 358.867 90.3645 358.88 89.9717C358.89 89.6978 358.895 89.4226 358.895 89.1465V23.9355C358.895 23.2634 358.866 22.5977 358.812 21.9395H358.894ZM226.974 91.1426H330.026V21.9395H226.974V91.1426Z"/>
+              <path d="M933.873 45.8379C947.069 45.8381 957.767 56.5361 957.767 69.7324V89.1465C957.767 102.343 947.069 113.041 933.873 113.041H818.877C806.783 113.041 796.979 103.237 796.979 91.1426H928.899V67.7412H822.864C810.338 67.7412 800.063 58.1029 799.052 45.8379H933.873Z"/>
+              <path d="M1129.27 0.0410156C1141.36 0.0410156 1151.17 9.84526 1151.17 21.9395H1023.23V45.8379H1129.26C1142.46 45.838 1153.16 56.5362 1153.16 69.7324V89.1465C1153.16 102.343 1142.46 113.041 1129.26 113.041H1014.27C1002.17 113.041 992.369 103.237 992.369 91.1426H1124.29V67.7412H1018.25C1005.06 67.7412 994.361 57.0439 994.36 43.8477V23.9355C994.36 10.7391 1005.06 0.0410156 1018.25 0.0410156H1129.27Z"/>
+              <path d="M1221.1 91.1426H1324.16V0.0410156H1331.13C1343.22 0.0410156 1353.02 9.84521 1353.02 21.9395L1352.94 21.9248C1353 22.5878 1353.03 23.2583 1353.03 23.9355V89.1465C1353.03 89.8187 1353 90.4844 1352.94 91.1426H1353.02C1353.02 103.237 1343.22 113.041 1331.13 113.041H1214.14C1202.04 113.041 1192.24 103.237 1192.24 91.1426H1192.32C1192.26 90.4844 1192.24 89.8187 1192.24 89.1465V23.9355C1192.24 23.2583 1192.27 22.5877 1192.32 21.9248L1192.24 21.9395C1192.24 9.84521 1202.04 0.0410156 1214.14 0.0410156H1221.1V91.1426Z"/>
+              <path d="M1525.49 0.0410156C1537.59 0.0410156 1547.39 9.84526 1547.39 21.9395H1419.46V45.8379H1525.49C1538.69 45.838 1549.38 56.5362 1549.38 69.7324V89.1465C1549.38 102.343 1538.69 113.041 1525.49 113.041H1410.49C1398.4 113.041 1388.6 103.237 1388.6 91.1426H1520.52V67.7412H1414.48C1401.29 67.7412 1390.59 57.0439 1390.59 43.8477V23.9355C1390.59 10.7391 1401.29 0.0410156 1414.48 0.0410156H1525.49Z"/>
+              <path d="M933.876 0.0410156C945.97 0.0410156 955.774 9.84521 955.774 21.9395H770.834L770.89 22.0117H721.533C720.79 21.9641 720.04 21.9395 719.285 21.9395H707.837V22.0117H679.045L679.051 21.9395H557.436C538.326 21.9395 522.834 37.4313 522.834 56.541C522.834 61.0042 523.679 65.2703 525.218 69.1875H495.458C494.507 65.0792 494.002 60.8001 493.998 56.4043C493.97 25.2396 519.252 0.041038 550.417 0.0410156H933.876Z"/>
+            </svg>
+          </a>
+        </p>
+      </div>
+      <div class="monte" style="--i:2">
+        <!-- [relevé] la source rend littéralement 0 ici (aria-label="0", un seul
+             chiffre dans la pile NumberFlow) : c'est l'état SSR du compteur. -->
+        <p class="chiffre__valeur"><span data-compteur="0">0</span></p>
+        <p class="chiffre__libelle">mission to understand the universe</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 5. LATEST NEWS — les seules images du flux ═══
+     [relevé] mb-10 flex items-end justify-between, puis grid gap-5 sm:grid-cols-2
+     lg:grid-cols-4, vignettes en aspect-ratio 1200/630, cadre rounded-lg. -->
+<section class="section" id="actus">
+  <div class="conteneur">
+    <div class="entete-section">
+      <h2 class="titre-2">Latest news</h2>
+      <a class="lien-doux" href="#actus">All posts <svg width="14" height="14" aria-hidden="true"><use href="#g-pointe"/></svg></a>
+    </div>
+    <div class="grille-actus">
+      <a class="actu" href="#actus">
+        <span class="actu__cadre"><span class="actu__visuel"><img loading="lazy" decoding="async" alt="Grok 4.5" width="1200" height="630"
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw" onerror="this.dataset.indisponible=''"
+          srcset="https://x.ai/_next/image?url=%2Fimages%2Fnews%2Fgrok-4-5-og.png&w=640&q=75&dpl=fede12d2e09a0fbea28bb86fa2b6640c66e3da0b 640w, https://x.ai/_next/image?url=%2Fimages%2Fnews%2Fgrok-4-5-og.png&w=1080&q=75&dpl=fede12d2e09a0fbea28bb86fa2b6640c66e3da0b 1080w"
+          src="https://x.ai/_next/image?url=%2Fimages%2Fnews%2Fgrok-4-5-og.png&w=1080&q=75&dpl=fede12d2e09a0fbea28bb86fa2b6640c66e3da0b"></span></span>
+        <span class="actu__texte">
+          <span class="actu__date">Jul 16, 2026</span>
+          <span class="actu__titre">Introducing Grok 4.5</span>
+        </span>
+      </a>
+      <a class="actu" href="#actus">
+        <span class="actu__cadre"><span class="actu__visuel"><img loading="lazy" decoding="async" alt="Grok in Google Workspace add-on" width="1200" height="630"
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw" onerror="this.dataset.indisponible=''"
+          srcset="https://x.ai/_next/image?url=%2Fimages%2Fnews%2Fgrok-in-google-workspace-og.png&w=640&q=75&dpl=fede12d2e09a0fbea28bb86fa2b6640c66e3da0b 640w, https://x.ai/_next/image?url=%2Fimages%2Fnews%2Fgrok-in-google-workspace-og.png&w=1080&q=75&dpl=fede12d2e09a0fbea28bb86fa2b6640c66e3da0b 1080w"
+          src="https://x.ai/_next/image?url=%2Fimages%2Fnews%2Fgrok-in-google-workspace-og.png&w=1080&q=75&dpl=fede12d2e09a0fbea28bb86fa2b6640c66e3da0b"></span></span>
+        <span class="actu__texte">
+          <span class="actu__date">Jul 24, 2026</span>
+          <span class="actu__titre">Grok in Google Workspace</span>
+        </span>
+      </a>
+      <a class="actu" href="#actus">
+        <span class="actu__cadre"><span class="actu__visuel"><img loading="lazy" decoding="async" alt="The Grok Build workflows panel fanning a PR review out across parallel agents" width="1200" height="630"
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw" onerror="this.dataset.indisponible=''"
+          srcset="https://x.ai/_next/image?url=%2Fimages%2Fnews%2Fworkflows-og.png&w=640&q=75&dpl=fede12d2e09a0fbea28bb86fa2b6640c66e3da0b 640w, https://x.ai/_next/image?url=%2Fimages%2Fnews%2Fworkflows-og.png&w=1080&q=75&dpl=fede12d2e09a0fbea28bb86fa2b6640c66e3da0b 1080w"
+          src="https://x.ai/_next/image?url=%2Fimages%2Fnews%2Fworkflows-og.png&w=1080&q=75&dpl=fede12d2e09a0fbea28bb86fa2b6640c66e3da0b"></span></span>
+        <span class="actu__texte">
+          <span class="actu__date">Jul 23, 2026</span>
+          <span class="actu__titre">Workflows in Grok Build</span>
+        </span>
+      </a>
+      <a class="actu" href="#actus">
+        <span class="actu__cadre"><span class="actu__visuel"><img loading="lazy" decoding="async" alt="Grok 4.5 on iOS, Android, Web, and X" width="1200" height="630"
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw" onerror="this.dataset.indisponible=''"
+          srcset="https://x.ai/_next/image?url=%2Fimages%2Fnews%2Fgrok-4-5-everywhere-og.png&w=640&q=75&dpl=fede12d2e09a0fbea28bb86fa2b6640c66e3da0b 640w, https://x.ai/_next/image?url=%2Fimages%2Fnews%2Fgrok-4-5-everywhere-og.png&w=1080&q=75&dpl=fede12d2e09a0fbea28bb86fa2b6640c66e3da0b 1080w"
+          src="https://x.ai/_next/image?url=%2Fimages%2Fnews%2Fgrok-4-5-everywhere-og.png&w=1080&q=75&dpl=fede12d2e09a0fbea28bb86fa2b6640c66e3da0b"></span></span>
+        <span class="actu__texte">
+          <span class="actu__date">Jul 22, 2026</span>
+          <span class="actu__titre">Bringing Grok 4.5 to iOS, Android, Web, and X</span>
+        </span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 6. CHOOSE HOW TO GET STARTED — titre centré, 2 panneaux, CTA pleine largeur ═══
+     [relevé] le conteneur porte border-t ; panneaux bg-card rounded-2xl p-8 sm:p-10,
+     filet <hr> EN TIRETS (border-dashed) entre l'accroche et la liste. -->
+<section id="offres">
+  <div class="conteneur section filet-haut">
+    <h2 class="titre-2 titre-centre">Choose how to get started</h2>
+    <div class="grille-offres">
+      <div class="offre">
+        <h3 class="titre-3">Build on your own</h3>
+        <p class="offre__accroche">Launch your AI-powered product with:</p>
+        <hr class="offre__filet">
+        <ul class="offre__liste">
+          <li><svg class="offre__coche" aria-hidden="true"><use href="#g-coche"/></svg>Access to all Grok models</li>
+          <li><svg class="offre__coche" aria-hidden="true"><use href="#g-coche"/></svg>Usage-based pricing</li>
+          <li><svg class="offre__coche" aria-hidden="true"><use href="#g-coche"/></svg>Automatically increasing rate limits</li>
+          <li><svg class="offre__coche" aria-hidden="true"><use href="#g-coche"/></svg>Comprehensive documentation and guides</li>
+        </ul>
+        <div class="offre__pied"><a class="btn btn--plein btn--petit btn--large" href="#api"><span class="btn__cible"></span>Start Building</a></div>
+      </div>
+      <div class="offre">
+        <h3 class="titre-3">Get extra support</h3>
+        <p class="offre__accroche">Custom rate limits and hands-on support for your team.</p>
+        <hr class="offre__filet">
+        <ul class="offre__liste">
+          <li><svg class="offre__coche" aria-hidden="true"><use href="#g-coche"/></svg>Dedicated onboarding support</li>
+          <li><svg class="offre__coche" aria-hidden="true"><use href="#g-coche"/></svg>Custom rate limits</li>
+          <li><svg class="offre__coche" aria-hidden="true"><use href="#g-coche"/></svg>Billing via monthly invoices</li>
+          <li><svg class="offre__coche" aria-hidden="true"><use href="#g-coche"/></svg>Single sign-on and audit logging</li>
+          <li><svg class="offre__coche" aria-hidden="true"><use href="#g-coche"/></svg>Data residency options</li>
+        </ul>
+        <div class="offre__pied"><a class="btn btn--fantome btn--petit btn--large" href="#offres"><span class="btn__cible"></span>Contact Sales</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ═══ 7. PIED DE PAGE — colonne de marque 280px + filet vertical EN TIRETS
+     + 9 rubriques réparties sur 5 colonnes ═══
+     [relevé] pb-16 pt-10, border-t ; la colonne de marque est `shrink-0
+     lg:w-[280px]`, le séparateur `border-l border-dashed border-primary/[0.1]`. -->
+<footer>
+  <div class="conteneur pied filet-haut">
+    <div class="pied__corps">
+
+      <div class="pied__marque">
+        <span class="pied__signe">SpaceXAI</span>
+        <span class="pied__mentions">© 2026 X.AI LLC</span>
+        <div class="pied__pastille">
+          <span class="pied__jeton" aria-hidden="true"></span>
+          <a class="pied__signature" href="#produits">Built with Grok</a>
+        </div>
+      </div>
+
+      <div class="pied__filet" aria-hidden="true"></div>
+
+      <div class="pied__colonnes">
+        <div class="pied__pile">
+          <div class="pied__groupe">
+            <span class="pied__titre">Products</span>
+            <ul>
+              <li><a class="lien-doux" href="#produits">Chat</a></li>
+              <li><a class="lien-doux" href="#produits">Build</a></li>
+              <li><a class="lien-doux" href="#produits">Imagine</a></li>
+              <li><a class="lien-doux" href="#produits">Voice</a></li>
+              <li><a class="lien-doux" href="#produits">Grokipedia</a></li>
+            </ul>
+          </div>
+          <div class="pied__groupe">
+            <span class="pied__titre">Download</span>
+            <ul>
+              <li><a class="lien-doux" href="#produits">grok.com</a></li>
+              <li><a class="lien-doux" href="#produits">iOS</a></li>
+              <li><a class="lien-doux" href="#produits">Android</a></li>
+              <li><a class="lien-doux" href="#produits">Grok on X</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="pied__pile">
+          <div class="pied__groupe">
+            <span class="pied__titre">Solutions</span>
+            <ul>
+              <li><a class="lien-doux" href="#offres">Business</a></li>
+              <li><a class="lien-doux" href="#offres">Government</a></li>
+              <li><a class="lien-doux" href="#offres">Customer Support</a></li>
+              <li><a class="lien-doux" href="#offres">Legal</a></li>
+              <li><a class="lien-doux" href="#offres">Security</a></li>
+              <li><a class="lien-doux" href="#offres">Use Cases</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="pied__pile">
+          <div class="pied__groupe">
+            <span class="pied__titre">Developers</span>
+            <ul>
+              <li><a class="lien-doux" href="#api">API Overview</a></li>
+              <li><a class="lien-doux" href="#offres">Pricing</a></li>
+              <li><a class="lien-doux" href="#api">Models</a></li>
+              <li><a class="lien-doux" href="#api">Console</a></li>
+              <li><a class="lien-doux" href="#api">Docs</a></li>
+              <li><a class="lien-doux" href="#api">Status</a></li>
+            </ul>
+          </div>
+          <div class="pied__groupe">
+            <span class="pied__titre">Enterprise</span>
+            <ul>
+              <li><a class="lien-doux" href="#offres">Contact Sales</a></li>
+              <li><a class="lien-doux" href="#offres">FAQs</a></li>
+              <li><a class="lien-doux" href="#offres">BAA</a></li>
+              <li><a class="lien-doux" href="#offres">DPA</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="pied__pile">
+          <div class="pied__groupe">
+            <span class="pied__titre">Company</span>
+            <ul>
+              <li><a class="lien-doux" href="#actus">About</a></li>
+              <li><a class="lien-doux" href="#actus">Colossus</a></li>
+              <li><a class="lien-doux" href="#actus">Careers</a></li>
+              <li><a class="lien-doux" href="#actus">News</a></li>
+              <li><a class="lien-doux" href="#actus">Contact</a></li>
+            </ul>
+          </div>
+          <div class="pied__groupe">
+            <span class="pied__titre">Trust</span>
+            <ul>
+              <li><a class="lien-doux" href="#actus">Safety</a></li>
+              <li><a class="lien-doux" href="#actus">Security</a></li>
+              <li><a class="lien-doux" href="#actus">Privacy Portal</a></li>
+              <li><a class="lien-doux" href="#actus">Subprocessors</a></li>
+              <li><a class="lien-doux" href="#actus">Help Center</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="pied__pile">
+          <div class="pied__groupe">
+            <!-- [relevé] seul en-tête de colonne qui est un LIEN. -->
+            <a class="pied__titre pied__titre--lien" href="#actus">Legal</a>
+            <ul>
+              <li><a class="lien-doux" href="#actus">Terms</a></li>
+              <li><a class="lien-doux" href="#actus">Enterprise Terms</a></li>
+              <li><a class="lien-doux" href="#actus">Privacy</a></li>
+              <li><a class="lien-doux" href="#actus">Cookies</a></li>
+              <li><a class="lien-doux" href="#actus">AUP</a></li>
+              <li><a class="lien-doux" href="#actus">Brand</a></li>
+            </ul>
+          </div>
+          <div class="pied__groupe">
+            <span class="pied__titre">Social</span>
+            <ul>
+              <li><a class="lien-doux" href="#actus">@spacexai</a></li>
+              <li><a class="lien-doux" href="#actus">@grok</a></li>
+              <li><a class="lien-doux" href="#actus">Discord</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- [relevé] la pastille « Built with Grok » repasse SOUS les colonnes en
+         dessous de 1024px (max-lg:hidden / lg:hidden). -->
+    <div class="pied__pastille pied__pastille--bas">
+      <span class="pied__jeton" aria-hidden="true"></span>
+      <a class="pied__signature" href="#produits">Built with Grok</a>
+    </div>
+  </div>
+</footer>
+
+<noscript><style>
+  .mot, .monte { opacity: 1; transform: none; }
+  .souligne::after { transform: scaleX(1); opacity: 1; }
+  .t-ligne, .chat__ligne { opacity: 1; transform: none; }
+</style></noscript>
+</body>
+</html>

@@ -1,0 +1,103 @@
+/* ELYSIAN — static end-states.
+   `html.no-motion` is present in the served markup and removed by the inline
+   bootstrap script only when JS runs AND the user has not asked for reduced
+   motion. So this is both the no-JS baseline and the reduced-motion layout:
+   every chamber renders unpinned, in its most legible state. */
+
+.no-motion .grain { animation: none; opacity: 0.18; }
+
+/* aperture: already open, no lantern, no letter rise */
+.no-motion .aperture {
+  animation: none;
+  --ap-s: var(--ap-s-end);
+  --ap-t: var(--ap-t-end);
+}
+.no-motion .aperture__lamp { display: none; }
+.no-motion .wm__l > span { transform: none; animation: none; }
+.no-motion .aperture__foot { opacity: 1; animation: none; }
+
+/* pinning off: each chamber becomes one readable full-height plate.
+   With the pin no longer positioned, absolutely placed layers resolve against
+   .chamber instead, so the clip has to move up with them. */
+.no-motion .chamber { overflow: clip; }
+
+.no-motion .pin {
+  position: static;
+  height: auto;
+  min-height: 100svh;
+}
+.no-motion .chamber--slats,
+.no-motion .chamber--arch,
+.no-motion .chamber--pan,
+.no-motion .chamber--type { height: auto; }
+
+.no-motion .specimen { display: none; }
+.no-motion .ledger__bleed { transform: none; }
+
+/* I — slats assembled, copy on a scrim */
+.no-motion .chamber--slats { --p: 0; }
+.no-motion .chamber--slats .scene__copy {
+  opacity: 1;
+  inset: auto 0 0 0;
+  justify-items: start;
+  text-align: left;
+  padding-top: var(--s9);
+  background: linear-gradient(
+    to top,
+    color-mix(in oklab, var(--ink-abyss) 92%, transparent) 32%,
+    transparent
+  );
+}
+.no-motion .chamber--slats .plate-tag {
+  flex-direction: row;
+  align-items: baseline;
+}
+.no-motion .chamber--slats .plate-tag__name { text-align: left; }
+
+/* II — arch fully open */
+.no-motion .chamber--arch { --p: 1; }
+.no-motion .marginalia { display: none; }
+.no-motion .chamber--arch .scene__copy {
+  opacity: 1;
+  transform: none;
+  padding-top: var(--s9);
+  background: linear-gradient(
+    to top,
+    color-mix(in oklab, var(--ink-abyss) 92%, transparent) 32%,
+    transparent
+  );
+}
+
+/* III — mid pan, colour already revealed */
+.no-motion .chamber--pan { --p: 0.5; }
+.no-motion .pan__duo { display: none; }
+.no-motion .pan__word { transform: none; }
+
+/* IV — the plate held inside the letterforms */
+.no-motion .chamber--type { --p: 0; }
+.no-motion .chamber--type .pin { display: block; padding-bottom: var(--s8); }
+.no-motion .type__wrap {
+  position: relative;
+  opacity: 1;
+  transform: none;
+  padding-block: var(--s9) var(--s6);
+}
+.no-motion .type__full { opacity: 0.3; transform: none; }
+.no-motion .type__stars { animation: none; opacity: 0.35; }
+.no-motion .chamber--type .scene__copy {
+  opacity: 1;
+  position: relative;
+  inset: auto;
+  justify-items: start;
+  text-align: left;
+  max-width: 46rem;
+  padding-bottom: var(--s9);
+}
+.no-motion .chamber--type .plate-tag { flex-direction: row; }
+
+/* seal: no spatial break, straight fade */
+.no-motion .seal[data-open="true"] .wax__half--l,
+.no-motion .seal[data-open="true"] .wax__half--r {
+  transform: none;
+  opacity: 0;
+}

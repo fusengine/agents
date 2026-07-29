@@ -1,0 +1,604 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fora — The community platform for creators</title>
+<meta name="description" content="Courses, events, and community — all under your own domain. Fora gives creators, educators, and coaches a fully branded space. Start free for 14 days.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- [relevé] la source charge Inter (400/500/600). « Inter Display », demandé sur les
+     h3, n'est pas distribué par Google Fonts : substitué par Inter. -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script src="motion.js" defer></script>
+</head>
+<body>
+<!-- Les titres, libellés de navigation, libellés de boutons, étiquettes et chiffres
+     sont repris TELS QUELS de la source : leur longueur exacte commande les coupes de
+     ligne et le rythme vertical. Seuls les paragraphes longs sont abrégés, à longueur
+     visuelle égale (même nombre de lignes au rendu). -->
+
+<!-- ═══════════ NAVIGATION ═══════════
+     [relevé] .framer-wz7sin{height:min-content;padding:var(--1gxu5kl);…gap:10px;width:1440px}
+     avec --1gxu5kl:0px 40px 0px 40px (desktop) et 0px 24px 0px 24px (mobile). -->
+<nav class="nav" id="nav">
+  <span class="nav__voile" aria-hidden="true"></span>
+  <!-- La BARRE couvre la largeur de section (pour que son voile dégradé porte d'un
+       filet à l'autre au défilement) ; le CONTENU de la barre est borné au même
+       conteneur que le reste de la page, pour que le logo et le CTA tombent sur les
+       mêmes gouttières que le hero. Sans ce niveau, la barre à 1440px et le contenu
+       à 1080px donnent deux systèmes d'alignement concurrents. -->
+  <div class="nav__inner">
+    <a class="nav__marque" href="#hero"><span class="nav__logo"></span>Fora</a>
+    <div class="nav__liens" id="nav-liens">
+      <a class="lien-doux" href="#about">About</a>
+      <a class="lien-doux" href="#features">Features</a>
+      <a class="lien-doux" href="#pricing">Pricing</a>
+      <a class="lien-doux" href="#blog">Blog</a>
+      <a class="lien-doux" href="#faq">Contact</a>
+    </div>
+    <div class="nav__actions">
+      <a class="lien-doux ui" href="https://auth.fora.so/login">Go to app</a>
+      <a class="lien-doux ui" href="https://auth.fora.so/login">Login</a>
+      <a class="btn btn--primaire btn--m" href="https://auth.fora.so/signup">Get started</a>
+      <button class="nav__bascule" type="button" aria-expanded="false"
+              aria-controls="nav-liens" aria-label="Menu"><span></span></button>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══════════ HERO ═══════════
+     Le dégradé est écrit en clair dans la source ; les deux images de collines sont
+     ancrées EN BAS, pleine largeur. Ce n'est pas un fond de section, c'est un horizon. -->
+<section class="section hero" id="hero">
+  <div class="hero__fonds" aria-hidden="true">
+    <span class="hero__degrade"></span>
+    <img class="hero__loin" data-monte style="--y:72px" alt=""
+         src="https://framerusercontent.com/images/h5VHoQg2qBhfygdenEQ0WUtEZU.png?scale-down-to=2048&width=2464&height=909">
+    <img class="hero__pres" data-monte style="--y:48px" alt=""
+         src="https://framerusercontent.com/images/T6hTfVKiQ81oLHCljxjb0WPLHY8.png?scale-down-to=2048&width=2464&height=848">
+  </div>
+
+  <div class="contenu contenu--centre">
+    <div class="hero__lockup">
+      <div class="hero__titres">
+        <span class="chip chip--serre" data-monte>Community platform for creators</span>
+        <h1 data-monte data-retard="1">Your community deserves its own home.</h1>
+        <p class="hero__accroche" data-monte data-retard="2">Fora gives creators, educators,
+          and coaches a fully branded space with courses, events, discussions, and members.</p>
+      </div>
+      <div class="hero__actions" data-monte data-retard="3">
+        <a class="btn btn--primaire" href="#pricing">Get started free</a>
+      </div>
+    </div>
+
+    <!-- Maquette d'application. Le composant s'appelle « Chat UI » dans la source mais
+         n'est PAS un fil de discussion : rail de navigation + panneau affichant une
+         fiche de communauté centrée. -->
+    <div class="app" data-observe data-monte style="--y:36px">
+      <div class="app__rail">
+        <div class="app__rail-tete">
+          <span class="app__logo"></span>
+          <span class="app__loupe" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M16.5 16.5 21 21"/></svg></span>
+        </div>
+        <!-- Icônes : géométrie 24×24, stroke 2, opacity .8 — toutes relevées.
+             Seuls les tracés sont redessinés, le sprite <symbol> n'étant pas
+             détaillé par l'export. -->
+        <div class="app__nav">
+          <span class="app__item" aria-current="true"><i class="app__pastille"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></i>Overview</span>
+          <span class="app__item"><i class="app__pastille"><svg viewBox="0 0 24 24"><path d="M20 12a8 8 0 0 1-8 8H4l2-3a8 8 0 1 1 14-5Z"/></svg></i>Chat</span>
+          <span class="app__item"><i class="app__pastille"><svg viewBox="0 0 24 24"><path d="M4 19V5M4 15l5-5 4 4 7-7"/></svg></i>Analytics</span>
+          <span class="app__item"><i class="app__pastille"><svg viewBox="0 0 24 24"><path d="M4 5h11M4 12h11M4 19h7M19 5v14"/></svg></i>Courses</span>
+          <span class="app__item"><i class="app__pastille"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></i>Events</span>
+          <span class="app__item"><i class="app__pastille"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0M17 11.5a3 3 0 1 0-2-5.3M18 20a5.5 5.5 0 0 0-2.5-4.6"/></svg></i>Members</span>
+          <span class="app__item"><i class="app__pastille"><svg viewBox="0 0 24 24"><path d="M7 4h10v5a5 5 0 0 1-10 0V4ZM7 6H4v1a3 3 0 0 0 3 3M17 6h3v1a3 3 0 0 1-3 3M12 14v4M8 21h8"/></svg></i>Leaderboard</span>
+        </div>
+      </div>
+      <div class="app__panneau app__panneau--shader">
+        <span class="shader" aria-hidden="true"></span>
+        <span class="app__filet" aria-hidden="true"></span>
+        <div class="fiche">
+          <div class="fiche__bloc" style="--i:0">
+            <span class="fiche__avatar">S</span>
+            <p class="fiche__nom">Strong By Ava</p>
+            <p class="fiche__meta">
+              <span class="pile">
+                <img alt="" src="https://framerusercontent.com/images/J17st5pcaAXO9GWA5udu8FGf50.jpg?scale-down-to=512&width=1024&height=1024">
+                <img alt="" src="https://framerusercontent.com/images/MVRiYah2MhTCdKz3Q79AIXobIM.jpg?scale-down-to=512&width=1024&height=1024">
+                <img alt="" src="https://framerusercontent.com/images/mO82b4q0xkPyk9UthT8GcXc2vf8.jpg?scale-down-to=512&width=1024&height=1024">
+              </span>
+              847 members
+            </p>
+          </div>
+          <a class="btn btn--primaire" href="#pricing" style="--i:1">Join now</a>
+          <p class="fiche__desc" style="--i:2">Ava Torres is a certified strength coach with
+            80k+ followers on Instagram. → 12-week progressive training programs with video
+            lessons → Weekly live Q&amp;As and form-check threads → A supportive community of
+            women training for strength</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ INTRO : LE TEXTE QUI S'ILLUMINE ═══════════
+     [relevé] trois <h4> à style="opacity:0.25" (variante « Idle ») dans une colonne de
+     560px à gap:36px, surmontés de quatre zones vides #intro-1 … #intro4.
+     Cet opacity:0.25 est un état de REPOS, pas un état d'avant-animation. -->
+<section class="section intro" id="about">
+  <div class="contenu contenu--centre">
+    <span class="chip" data-monte>Intro</span>
+    <div class="intro__prose">
+      <div class="intro__declencheurs" aria-hidden="true">
+        <span id="intro-1"></span><span id="intro-2"></span>
+        <span id="intro-3"></span><span id="intro4"></span>
+      </div>
+      <h4>Fora is a community platform built for creators, educators, and coaches.
+        Courses, events, discussions, and a member directory, all in one place, under
+        one login, with one URL.</h4>
+      <h4>That URL is yours. Every community on Fora runs on its own subdomain or a
+        custom domain you own. Members sign up and sign in inside your branded space.
+        They never see Fora's name, and they never should.</h4>
+      <h4>You set it up in minutes. Fora handles the routing, the auth, and the
+        infrastructure in the background. What your members experience is entirely yours.</h4>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ FEATURES : ONGLETS + GALERIE ═══════════
+     [relevé] quatre .framer-8x98wc (width:376px; padding:8px 24px; gap:12px) dans une
+     pilule à rayon 72px, puis la galerie, puis une légende en pilule flanquée de deux
+     boutons ronds « L Icon ». -->
+<section class="section features" id="features">
+  <div class="contenu contenu--gauche">
+    <div class="entete">
+      <div class="groupe">
+        <span class="chip" data-monte>Core Features</span>
+        <h2 data-monte data-retard="1">One platform to run right
+          <span class="h2-second">your entire community.</span></h2>
+      </div>
+      <p class="entete__prose" data-monte data-retard="2">Fora brings your courses, events,
+        discussions, and members into one space, so you stop switching between tools and
+        start spending time with your community.</p>
+    </div>
+
+    <div class="features__bloc">
+      <!-- L'état actif révèle une carte interne à rayon 66px et un filet lumineux de
+           2px estompé aux deux bouts par un masque en dégradé. -->
+      <div class="onglets" role="tablist" aria-label="Product views" data-monte>
+        <span class="onglets__fond" aria-hidden="true"></span>
+        <button class="onglet" role="tab" type="button" aria-selected="true"
+                data-legende="Post, discuss, react — the feed your members live in.">
+          <span class="onglet__actif" aria-hidden="true"></span>
+          <span class="onglet__filet" aria-hidden="true"></span>Community</button>
+        <button class="onglet" role="tab" type="button" aria-selected="false" tabindex="-1"
+                data-legende="Chapters, lessons and progress — structured the way you teach.">
+          <span class="onglet__actif" aria-hidden="true"></span>
+          <span class="onglet__filet" aria-hidden="true"></span>Courses</button>
+        <button class="onglet" role="tab" type="button" aria-selected="false" tabindex="-1"
+                data-legende="A shared calendar, sign-ups and reminders in one place.">
+          <span class="onglet__actif" aria-hidden="true"></span>
+          <span class="onglet__filet" aria-hidden="true"></span>Events</button>
+        <button class="onglet" role="tab" type="button" aria-selected="false" tabindex="-1"
+                data-legende="A directory that makes people want to introduce themselves.">
+          <span class="onglet__actif" aria-hidden="true"></span>
+          <span class="onglet__filet" aria-hidden="true"></span>Members</button>
+      </div>
+
+      <div class="carte carte--visuel carte--noire" data-monte data-retard="1" data-lueur
+           style="width:100%">
+        <span class="lueur"></span><span class="fond"></span>
+        <div class="galerie" id="galerie">
+          <img class="galerie__calque is-active" alt=""
+               src="https://framerusercontent.com/images/yzwKdfh1gcsfSCL6ylKvhrtgbY.png?scale-down-to=1024&width=3200&height=1800">
+          <img class="galerie__calque" alt=""
+               src="https://framerusercontent.com/images/jtkBouztMWHN35tV9uDupUp7b0.png?scale-down-to=1024&width=3200&height=1800">
+          <img class="galerie__calque" alt=""
+               src="https://framerusercontent.com/images/GggiItB2BHGATkulRf4FZJ9tmGo.png?scale-down-to=1024&width=3200&height=1800">
+          <img class="galerie__calque" alt=""
+               src="https://framerusercontent.com/images/giwgubyK5fSpftrgOfka34sQA.png?scale-down-to=1024&width=3200&height=1800">
+        </div>
+      </div>
+
+      <div class="galerie__pied" data-monte data-retard="2">
+        <div class="legende">
+          <span class="legende__fond" aria-hidden="true"></span>
+          <p class="legende__texte" id="legende" aria-live="polite">Post, discuss, react —
+            the feed your members live in.</p>
+        </div>
+        <div class="galerie__fleches">
+          <button class="btn btn--secondaire btn--icone" type="button" id="prec" aria-label="Previous view">
+            <svg viewBox="0 0 24 24"><path d="M14 6 8 12l6 6"/></svg></button>
+          <button class="btn btn--secondaire btn--icone" type="button" id="suiv" aria-label="Next view">
+            <svg viewBox="0 0 24 24"><path d="M10 6l6 6-6 6"/></svg></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ WHAT YOU GET ═══════════
+     [relevé] .framer-uc3xgg{flex-flow:column;…gap:48px…} — TROIS GRANDES CARTES
+     EMPILÉES, pas une grille de trois colonnes. Chacune coupée en deux moitiés dont
+     l'ordre s'inverse d'une carte à l'autre. -->
+<section class="section recits-section" id="what-you-get">
+  <div class="contenu contenu--gauche">
+    <div class="entete">
+      <div class="groupe">
+        <span class="chip" data-monte>What you get</span>
+        <h2 data-monte data-retard="1">Set up once. <br>
+          <span class="h2-second">Run it the way you want.</span></h2>
+      </div>
+      <p class="entete__prose" data-monte data-retard="2">Fora is built so you spend time
+        with your community, not configuring it. From your first setting to your hundredth
+        member, the platform stays out of your way.</p>
+    </div>
+
+    <div class="recits">
+      <article class="carte recit" data-monte data-lueur>
+        <span class="lueur"></span><span class="fond"></span>
+        <div class="corps">
+          <div class="recit__texte">
+            <p class="micro">Your front door</p>
+            <h4>A community overview page that sells itself.</h4>
+            <p>Customize your hero with a static color or animated gradient. Add a headline,
+              a description and member avatars. Your overview page is the first thing a
+              visitor sees — make it yours.</p>
+            <p class="recit__pied"><svg viewBox="0 0 24 24"><path d="M12 3v18M3 12h18"/></svg>
+              First impressions that convert.</p>
+          </div>
+          <div class="recit__visuel"><img alt=""
+            src="https://framerusercontent.com/images/9UBZAGM31zJYY1cxzKu0pWhMNs.png?scale-down-to=1024&width=2399&height=1358"></div>
+        </div>
+      </article>
+
+      <article class="carte recit recit--inverse" data-monte data-lueur>
+        <span class="lueur"></span><span class="fond"></span>
+        <div class="corps">
+          <div class="recit__texte">
+            <p class="micro">Friendly competition</p>
+            <h4>A leaderboard your members actually check.</h4>
+            <p>Rankings based on posts, completions, and activity — surfaced automatically.
+              Gives your most engaged members a reason to stay and your quieter ones a
+              reason to show up.</p>
+            <p class="recit__pied"><svg viewBox="0 0 24 24"><path d="M4 20V10M12 20V4M20 20v-6"/></svg>
+              Engagement that compounds over time.</p>
+          </div>
+          <div class="recit__visuel"><img alt=""
+            src="https://framerusercontent.com/images/9n8OOMGCaEmCo8MDRO2tHo17cQ.png?scale-down-to=1024&width=2400&height=1345"></div>
+        </div>
+      </article>
+
+      <article class="carte recit" data-monte data-lueur>
+        <span class="lueur"></span><span class="fond"></span>
+        <div class="corps">
+          <div class="recit__texte">
+            <p class="micro">Courses</p>
+            <h4>Build your course the way you teach.</h4>
+            <p>Structure your content into chapters and lessons, in any order you want. Add
+              your material, hit publish, and your members can start learning — right inside
+              the community they already live in.</p>
+            <p class="recit__pied"><svg viewBox="0 0 24 24"><path d="M4 5h16M4 12h16M4 19h10"/></svg>
+              Courses that feel like yours, not a template.</p>
+          </div>
+          <div class="recit__visuel"><img alt=""
+            src="https://framerusercontent.com/images/EisEW7TIP5i38O4TWciQ1Zf6Q.webp?scale-down-to=1024&width=2048&height=1536"></div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ PRICING ═══════════ -->
+<section class="section pricing" id="pricing">
+  <div class="contenu contenu--gauche">
+    <div class="groupe">
+      <span class="chip" data-monte>Pricing</span>
+      <h2 data-monte data-retard="1">Clear pricing plans <br>that scale with you</h2>
+    </div>
+
+    <div class="bascule-ligne" data-monte data-retard="2">
+      <div class="bascule" role="group" aria-label="Billing period">
+        <span class="bascule__curseur" aria-hidden="true"></span>
+        <button type="button" data-periode="mois" aria-pressed="true">Monthly</button>
+        <button type="button" data-periode="an" aria-pressed="false">Yearly</button>
+      </div>
+      <span class="bascule__note">Two months free on yearly</span>
+    </div>
+
+    <div class="tarifs">
+      <article class="carte tarif" data-monte data-lueur>
+        <span class="lueur"></span><span class="fond"></span>
+        <div class="corps">
+          <p class="tarif__etiquette">STARTER</p>
+          <div class="tarif__ligne">
+            <span class="rouleau" data-prix data-mois="9" data-an="7">$0</span>
+            <span class="tarif__periode">/month</span>
+          </div>
+          <p class="ui doux">Everything you need to launch your community.</p>
+          <a class="btn btn--secondaire btn--m" href="#pricing">Get Started</a>
+          <div class="tarif__liste">
+            <p class="tarif__item"><span class="coche"><svg viewBox="0 0 24 24"><path d="M4 12l6 6L20 6"/></svg></span>Up to 200 members</p>
+            <p class="tarif__item"><span class="coche"><svg viewBox="0 0 24 24"><path d="M4 12l6 6L20 6"/></svg></span>Fora subdomain</p>
+            <p class="tarif__item"><span class="coche"><svg viewBox="0 0 24 24"><path d="M4 12l6 6L20 6"/></svg></span>Community feed &amp; chat</p>
+            <p class="tarif__item"><span class="coche"><svg viewBox="0 0 24 24"><path d="M4 12l6 6L20 6"/></svg></span>Courses &amp; events</p>
+            <p class="tarif__item"><span class="coche"><svg viewBox="0 0 24 24"><path d="M4 12l6 6L20 6"/></svg></span>Member profiles</p>
+            <p class="tarif__item"><span class="coche"><svg viewBox="0 0 24 24"><path d="M4 12l6 6L20 6"/></svg></span>Analytics</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="carte tarif tarif--phare" data-monte data-retard="1" data-lueur>
+        <span class="lueur"></span><span class="fond"></span>
+        <div class="corps">
+          <p class="tarif__etiquette">PRO</p>
+          <div class="tarif__ligne">
+            <span class="rouleau" data-prix data-mois="19" data-an="15">$0</span>
+            <span class="tarif__periode">/month</span>
+          </div>
+          <p class="ui doux">For creators serious about their brand.</p>
+          <a class="btn btn--primaire btn--m" href="#pricing">Get Started</a>
+          <div class="tarif__liste">
+            <p class="tarif__item"><span class="coche"><svg viewBox="0 0 24 24"><path d="M4 12l6 6L20 6"/></svg></span>Up to 5000 members</p>
+            <p class="tarif__item"><span class="coche"><svg viewBox="0 0 24 24"><path d="M4 12l6 6L20 6"/></svg></span>Custom domain</p>
+            <p class="tarif__item"><span class="coche"><svg viewBox="0 0 24 24"><path d="M4 12l6 6L20 6"/></svg></span>Community feed &amp; chat</p>
+            <p class="tarif__item"><span class="coche"><svg viewBox="0 0 24 24"><path d="M4 12l6 6L20 6"/></svg></span>Courses &amp; events</p>
+            <p class="tarif__item"><span class="coche"><svg viewBox="0 0 24 24"><path d="M4 12l6 6L20 6"/></svg></span>Member profiles</p>
+            <p class="tarif__item"><span class="coche"><svg viewBox="0 0 24 24"><path d="M4 12l6 6L20 6"/></svg></span>Analytics</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="carte tarif" data-monte data-retard="2" data-lueur>
+        <span class="lueur"></span><span class="fond"></span>
+        <div class="corps">
+          <p class="tarif__etiquette">ENTERPRISE</p>
+          <div class="tarif__ligne"><h3>Custom price</h3></div>
+          <p class="ui doux">For teams that need <br>more control.</p>
+          <a class="btn btn--secondaire btn--m" href="#faq">Contact us</a>
+          <div class="tarif__liste">
+            <p class="tarif__item"><span class="coche"><svg viewBox="0 0 24 24"><path d="M4 12l6 6L20 6"/></svg></span>Unlimited members</p>
+            <p class="tarif__item"><span class="coche"><svg viewBox="0 0 24 24"><path d="M4 12l6 6L20 6"/></svg></span>Everything in Pro</p>
+            <p class="tarif__item"><span class="coche"><svg viewBox="0 0 24 24"><path d="M4 12l6 6L20 6"/></svg></span>Priority support</p>
+            <p class="tarif__item"><span class="coche"><svg viewBox="0 0 24 24"><path d="M4 12l6 6L20 6"/></svg></span>Dedicated onboarding</p>
+            <p class="tarif__item"><span class="coche"><svg viewBox="0 0 24 24"><path d="M4 12l6 6L20 6"/></svg></span>SLA &amp; uptime guarantee</p>
+            <p class="tarif__item"><span class="coche"><svg viewBox="0 0 24 24"><path d="M4 12l6 6L20 6"/></svg></span>Custom contract</p>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ FAQ ═══════════
+     [relevé] .framer-2jfjwj{flex-flow:column;flex:2 0 0;…gap:8px…} : deux colonnes au
+     ratio 1:2, catégories et encart de contact à gauche, accordéons à droite. -->
+<section class="section faq-section" id="faq">
+  <div class="contenu contenu--gauche">
+    <div class="entete">
+      <div class="groupe">
+        <span class="chip" data-monte>FAQ</span>
+        <h2 data-monte data-retard="1">Answers to the questions that come up most.</h2>
+      </div>
+      <p class="entete__prose" data-monte data-retard="2">Learn how Fora works, what's
+        included in the beta, what your members experience, and what to expect as the
+        platform grows.</p>
+    </div>
+
+    <div class="faq__grille">
+      <div class="faq__aside" data-monte>
+        <div class="faq__cats" role="group" aria-label="Categories">
+          <button class="faq__cat" type="button" data-groupe="tout" aria-pressed="true">General</button>
+          <button class="faq__cat" type="button" data-groupe="produit" aria-pressed="false">Community &amp; Features</button>
+          <button class="faq__cat" type="button" data-groupe="compte" aria-pressed="false">Privacy &amp; Access</button>
+        </div>
+        <div class="carte carte--m faq__contact">
+          <span class="fond"></span>
+          <div class="corps">
+            <h6>Got Questions?</h6>
+            <p class="ui doux">Can't find what you're looking for? Reach out — we're fast.</p>
+            <p class="ui"><a class="lien-doux" href="#pricing">Contact us →</a></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq__liste" data-monte data-retard="1">
+        <div class="carte carte--m faq__item" data-groupe="produit">
+          <span class="fond"></span>
+          <button class="faq__tete" type="button" aria-expanded="false">
+            What is Fora? <span class="faq__signe" aria-hidden="true"></span>
+          </button>
+          <div class="faq__corps"><div><p>Fora is a white-label community platform for
+            creators, educators, and coaches. You get a fully branded space with courses,
+            events, discussions, and members — all running on your own subdomain or custom
+            domain.</p></div></div>
+        </div>
+        <div class="carte carte--m faq__item" data-groupe="produit">
+          <span class="fond"></span>
+          <button class="faq__tete" type="button" aria-expanded="false">
+            How long does it take to set up? <span class="faq__signe" aria-hidden="true"></span>
+          </button>
+          <div class="faq__corps"><div><p>Most communities are live in under 20 minutes. You
+            pick a subdomain, customize your overview page, and invite your first members.
+            No code, no infrastructure.</p></div></div>
+        </div>
+        <div class="carte carte--m faq__item" data-groupe="produit">
+          <span class="fond"></span>
+          <button class="faq__tete" type="button" aria-expanded="false">
+            Do I need technical knowledge? <span class="faq__signe" aria-hidden="true"></span>
+          </button>
+          <div class="faq__corps"><div><p>Not at all. Everything happens through a clean
+            dashboard. The only technical step is adding a DNS record if you want a fully
+            custom domain — and we walk you through it.</p></div></div>
+        </div>
+        <div class="carte carte--m faq__item" data-groupe="compte">
+          <span class="fond"></span>
+          <button class="faq__tete" type="button" aria-expanded="false">
+            Is Fora really free right now? <span class="faq__signe" aria-hidden="true"></span>
+          </button>
+          <div class="faq__corps"><div><p>Yes. Fora is in beta and completely free. No credit
+            card, no trial period — just sign up and go. When paid plans launch, beta members
+            get a permanent discount locked in.</p></div></div>
+        </div>
+        <div class="carte carte--m faq__item" data-groupe="compte">
+          <span class="fond"></span>
+          <button class="faq__tete" type="button" aria-expanded="false">
+            What happens when the beta ends? <span class="faq__signe" aria-hidden="true"></span>
+          </button>
+          <div class="faq__corps"><div><p>You'll get early notice before anything changes.
+            Beta members are first to know, first to get access to paid plans, and first to
+            lock in their discount.</p></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ BLOG ═══════════ -->
+<section class="section blog" id="blog">
+  <div class="contenu contenu--gauche">
+    <div class="entete">
+      <div class="groupe">
+        <span class="chip" data-monte>Blog</span>
+        <h2 data-monte data-retard="1">Ideas, updates, and practical AI workflows</h2>
+      </div>
+      <a class="lien-doux entete__lien" href="#blog" data-monte data-retard="2">Visit blog →</a>
+    </div>
+
+    <div class="blog__grille">
+      <a class="carte billet" href="#blog" data-monte data-lueur>
+        <span class="lueur"></span><span class="fond"></span>
+        <div class="corps">
+          <div class="billet__visuel"><img alt=""
+            src="https://framerusercontent.com/images/EisEW7TIP5i38O4TWciQ1Zf6Q.webp?scale-down-to=1024&width=2048&height=1536"></div>
+          <h6>Fora vs Mighty Networks: Full Comparison for Creators &amp; Educators (2026)</h6>
+          <p class="micro billet__meta">Comparisons<br>Jun 3, 2026</p>
+        </div>
+      </a>
+      <a class="carte billet" href="#blog" data-monte data-retard="1" data-lueur>
+        <span class="lueur"></span><span class="fond"></span>
+        <div class="corps">
+          <div class="billet__visuel"><img alt=""
+            src="https://framerusercontent.com/images/9UBZAGM31zJYY1cxzKu0pWhMNs.png?scale-down-to=1024&width=2399&height=1358"></div>
+          <h6>How to Launch an Online Community in 2026: A Step-by-Step Guide</h6>
+          <p class="micro billet__meta">Guides<br>Jun 3, 2026</p>
+        </div>
+      </a>
+      <a class="carte billet" href="#blog" data-monte data-retard="2" data-lueur>
+        <span class="lueur"></span><span class="fond"></span>
+        <div class="corps">
+          <div class="billet__visuel"><img alt=""
+            src="https://framerusercontent.com/images/9n8OOMGCaEmCo8MDRO2tHo17cQ.png?scale-down-to=1024&width=2400&height=1345"></div>
+          <h6>Best White-Label Community Platform for Coaches &amp; Educators</h6>
+          <p class="micro billet__meta">Community Building <br>Jun 3, 2026</p>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ CTA ═══════════
+     La maquette déborde de 272px hors de sa colonne et se fait couper par le bord de
+     section. Elle est dans un conteneur SŒUR du texte : placée dedans, elle le
+     recouvrirait. Un bandeau d'horizon de 190px ferme la section. -->
+<section class="section cta">
+  <div class="contenu">
+    <div class="cta__grille">
+      <div class="cta__lockup">
+        <h2 data-monte>Your community is one sec away.</h2>
+        <p data-monte data-retard="1">Fora is in beta and free to join. Set up your space,
+          invite your first members, and see what it feels like when everything lives in
+          one place — under your name.</p>
+        <span data-monte data-retard="2"><a class="btn btn--primaire" href="#pricing">Start for free</a></span>
+      </div>
+
+      <div class="cta__scene">
+        <!-- Même composant que dans le hero, variante à fond plat : ici .framer-t90imi
+             porte background-color:#ffffff0d et il n'y a pas de shader. -->
+        <div class="app app--deborde" data-observe aria-hidden="true">
+          <div class="app__rail">
+            <div class="app__rail-tete">
+              <span class="app__logo"></span>
+              <span class="app__loupe"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M16.5 16.5 21 21"/></svg></span>
+            </div>
+            <div class="app__nav">
+              <span class="app__item" aria-current="true"><i class="app__pastille"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></i>Overview</span>
+              <span class="app__item"><i class="app__pastille"><svg viewBox="0 0 24 24"><path d="M20 12a8 8 0 0 1-8 8H4l2-3a8 8 0 1 1 14-5Z"/></svg></i>Chat</span>
+              <span class="app__item"><i class="app__pastille"><svg viewBox="0 0 24 24"><path d="M4 5h11M4 12h11M4 19h7M19 5v14"/></svg></i>Courses</span>
+              <span class="app__item"><i class="app__pastille"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></i>Events</span>
+              <span class="app__item"><i class="app__pastille"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0M17 11.5a3 3 0 1 0-2-5.3M18 20a5.5 5.5 0 0 0-2.5-4.6"/></svg></i>Members</span>
+              <span class="app__item"><i class="app__pastille"><svg viewBox="0 0 24 24"><path d="M7 4h10v5a5 5 0 0 1-10 0V4ZM7 6H4v1a3 3 0 0 0 3 3M17 6h3v1a3 3 0 0 1-3 3M12 14v4M8 21h8"/></svg></i>Leaderboard</span>
+            </div>
+          </div>
+          <div class="app__panneau">
+            <span class="app__filet" aria-hidden="true"></span>
+            <div class="fiche">
+              <div class="fiche__bloc" style="--i:0">
+                <span class="fiche__avatar">S</span>
+                <p class="fiche__nom">Strong By Ava</p>
+                <p class="fiche__meta">
+                  <span class="pile">
+                    <img alt="" src="https://framerusercontent.com/images/J17st5pcaAXO9GWA5udu8FGf50.jpg?scale-down-to=512&width=1024&height=1024">
+                    <img alt="" src="https://framerusercontent.com/images/MVRiYah2MhTCdKz3Q79AIXobIM.jpg?scale-down-to=512&width=1024&height=1024">
+                    <img alt="" src="https://framerusercontent.com/images/mO82b4q0xkPyk9UthT8GcXc2vf8.jpg?scale-down-to=512&width=1024&height=1024">
+                  </span>
+                  847 members
+                </p>
+              </div>
+              <span class="btn btn--primaire" style="--i:1">Join now</span>
+              <p class="fiche__desc" style="--i:2">Ava Torres is a certified strength coach
+                with 80k+ followers on Instagram. → 12-week progressive training programs with
+                video lessons → Weekly live Q&amp;As and form-check threads → A supportive
+                community of women training for strength</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- [relevé] .framer-1p8lytk{z-index:0;flex:none;height:190px;position:absolute;
+       bottom:0;left:0;right:0}, image 1600×349 nommée « rolling landscape ». -->
+  <img class="cta__horizon" alt="" aria-hidden="true"
+       src="https://framerusercontent.com/images/KEyElslPaeEXTKlix9xtVlt4.png?scale-down-to=1024&width=1600&height=349">
+</section>
+
+<!-- ═══════════ FOOTER ═══════════ -->
+<footer class="section">
+  <div class="pied">
+    <div class="pied__haut">
+      <div class="pied__col">
+        <a class="nav__marque" href="#hero" style="margin-bottom:4px"><span class="nav__logo"></span>Fora</a>
+      </div>
+      <!-- Ordre des colonnes [relevé] : Product, Legal, Compare. -->
+      <div class="pied__col"><strong>Product</strong>
+        <a href="#about">About</a><a href="https://fora.so/pricing">Pricing</a><a href="https://fora.so/blog">Blog</a><a href="https://fora.so/contact">Contact</a><a href="https://feedback.fora.so/updates">Changelog</a></div>
+      <div class="pied__col"><strong>Legal</strong>
+        <a href="https://fora.so/terms-of-use">Terms of use</a><a href="https://fora.so/privacy-policy">Privacy policy</a><a href="https://fora.so/privacy-policy">Cookie Policy</a></div>
+      <div class="pied__col"><strong>Compare</strong>
+        <a href="https://fora.so/compare/fora-vs-skool">Skool</a><a href="https://fora.so/compare/fora-vs-circle">Circle</a><a href="https://fora.so/compare/fora-vs-mighty-networks">Mighty Networks</a></div>
+    </div>
+
+    <!-- [relevé] quatre badges de répertoires en height="40". Servis depuis leur
+         domaine d'origine — aucun binaire dans le livrable. -->
+    <div class="pied__badges">
+      <a class="pied__badge" href="https://findly.tools/fora?utm_source=fora">
+        <img src="https://findly.tools/badges/findly-tools-badge-light.svg" alt="Featured on Findly.tools" height="40" loading="lazy"></a>
+      <a class="pied__badge" href="https://startupfa.me/s/fora.so-898?utm_source=fora.so">
+        <img src="https://startupfa.me/badges/featured-badge.webp" alt="Featured on Startup Fame" height="40" loading="lazy"></a>
+      <a class="pied__badge" href="https://twelve.tools">
+        <img src="https://twelve.tools/badge0-light.svg" alt="Featured on Twelve Tools" height="40" loading="lazy"></a>
+      <a class="pied__badge" href="https://turbo0.com/item/fora">
+        <img src="https://img.turbo0.com/badge-listed-light.svg" alt="Listed on Turbo0" height="40" loading="lazy"></a>
+    </div>
+
+    <div class="pied__bas">
+      <span>© Fora. 2026. All rights reserved</span>
+      <a class="lien-doux" href="mailto:contact@fora.so">contact@fora.so</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
