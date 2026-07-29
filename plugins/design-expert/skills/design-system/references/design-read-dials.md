@@ -46,7 +46,7 @@ Set each on a 1-10 scale. These become **Inputs** of Phases 1+.
 
 ## What a notch actually looks like — read this before setting a dial
 
-The 1/10 poles above are the range, not a scale. Eleven shipped pages carry measured
+The 1/10 poles above are the range, not a scale. Ten shipped pages carry measured
 triples in `../../design-web/references/refs-design/*/design-system.md`, and
 `../../design-method/SKILL.md` turns them into an anchored scale — which page sits at
 which notch, and what that gives on screen. **That file is canonical; read the scale
@@ -59,17 +59,45 @@ tables below should be used:
 - A **high value obliges.** MOTION 6+ without a documented material/duration/curve
   set, VARIANCE 7+ without a departing macrostructure and a repeated signature
   procedure: lower the dial rather than ship the number.
+- **A low DENSITY obliges too, and this is the one the numbers hide.** The anchored
+  table in `design-method/SKILL.md` carries a fourth column stating what is physically
+  on screen at each notch, because the notch alone does not say. Both corpus pages at
+  DENSITY 2 are carrying real matter — `reve` has 51 images and 2 videos, `supercommon`
+  three photographs and a looping video under a 30vh scrim. **Density says how much
+  scroll a quantity of matter is spread over; it never says how much matter there is.**
+  A `2` copied onto a page with no assets does not reproduce `reve`, it reproduces the
+  number and drops the page.
+
+**Before setting DENSITY at all, check the screen-holding floor.** `VISUAL_DENSITY` ≤ 3
+combined with `DESIGN_VARIANCE` ≥ 6 **and** no visual asset in the brief is not a
+direction, it is an empty page: the variance drops the furniture, the density spreads
+what is left, and nothing is available to fill what they cleared. The corpus has no such
+page. The rule, its countable check and the three ways out (raise the density,
+manufacture the matter, lower the variance) are canonical in `design-method/SKILL.md`
+§*The screen-holding floor* — read them there, they are not restated here.
 
 ## Preset defaults by use-case (Fusengine — override from the Design Read)
 
 Derived from the verified taste-skill brief-to-direction mapping; the numbers are our
 coherent defaults, not values quoted from the repo.
 
-**These are a floor for a thin brief, never a target.** Measured against the corpus they
-sit systematically low: the SaaS row reads 4·5·4 where `harness` ships 4·9·6; the luxury
-row reads 5·3·7 where `elysian` ships 9·4·8. Taking a preset as the answer is the
-mechanism that pulls every output toward the middle. Start here only when the brief
-tells you nothing, then argue each dial up or down from the subject.
+**These are a floor for a thin brief, never a target.** The SaaS row reads 4·5·4 where
+`harness`, a SaaS landing, ships 4·9·6 — and no row here reaches 9 on any axis, while the
+corpus does. Taking a preset as the answer is the mechanism that pulls every output toward
+the middle. Start here only when the brief tells you nothing, then argue each dial up or
+down from the subject.
+
+Two rows fail the other way: agency 8·4·7 and luxury 5·3·7 sit **above** anything on disk,
+since the corpus tops out at variance 7 and motion 6. Those two are not anchored by any
+reference; claim them only with the obligations `design-method/SKILL.md` attaches to a high
+value, and say in the plan that no page in the corpus demonstrates the number.
+
+**The luxury row carries a second, quieter trap: its `VISUAL_DENSITY 3`.** Luxury and
+cinematic briefs are the ones most likely to arrive with no photo library — and a `3` taken
+from this row on a brief with no assets walks straight into the screen-holding floor above.
+The row assumes a page with *few, large* things on it, not a page with *nothing* on it.
+Either the matter exists (photography, an object, a document, a drawn surface), or the
+density is not a 3 — count first, per Gate 0 artefact 4, and set the dial after.
 
 | Use-case | DESIGN_VARIANCE | VISUAL_DENSITY | MOTION_INTENSITY |
 |----------|:---:|:---:|:---:|

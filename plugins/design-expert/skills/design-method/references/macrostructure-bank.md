@@ -20,7 +20,7 @@ hero** … The failure mode is the **body**." Picking a treatment here leaves th
 mode untouched. A plan that names only a hero treatment has composed its first screen and
 improvised the rest of the scroll — which is exactly how interchangeable bodies get shipped.
 
-`body-sequence-bank.md` holds eleven body sequences read off shipped code, each with the
+`body-sequence-bank.md` holds ten body sequences read off shipped code, each with the
 principle that decides its order and what it drops from the canon.
 
 ## The forbidden default

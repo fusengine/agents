@@ -1,6 +1,6 @@
 ---
 name: body-sequence-bank
-description: "Eleven body sequences read off shipped code — the order of a page's BODY sections, the principle that decides that order, and what each page drops from the canonical skeleton."
+description: "Ten body sequences read off shipped code — the order of a page's BODY sections, the principle that decides that order, and what each page drops from the canonical skeleton."
 when-to-use: "Whenever a page body is planned (generate step 4, redesign, any macrostructure pick). macrostructure-bank.md covers the first screen; the body sequence comes from here."
 keywords: body, sequence, section-order, macrostructure, canon, saas-furniture, anti-slop, corpus
 priority: high
@@ -13,7 +13,7 @@ related: macrostructure-bank.md, register/brand.md, moves/generate.md, ../../des
 part `register/brand.md` names as the proven failure mode: "The failure mode is the
 **body**." A hero treatment does not address it; nor does a canon skeleton minus one section.
 
-Eleven sequences, one per page in `../../design-web/references/refs-design/` (headings name
+Ten sequences, one per page in `../../design-web/references/refs-design/` (headings name
 the source folder under it), read off shipped code: section order, the principle deciding
 that order, what the page does NOT carry from the canon, what subject it suits. Numeric
 limits are not restated — `../../design-web/references/layout-discipline.md` owns them and
@@ -36,7 +36,7 @@ opening and the closing and nothing else; vertical padding is set section by sec
 the end cropped by the section edge. Choosing the canon is legitimate **when it is treated**
 — entry 5 exists so it can be chosen honestly instead of by omission.
 
-## The eleven sequences
+## The ten sequences
 
 ### 1. Mega-Menu Mirror — `harness-recode/design-system.md`
 
@@ -173,19 +173,6 @@ the end cropped by the section edge. Choosing the canon is legitimate **when it 
   table, footer columns.
 - **Right when** — you own enough real output to fill every showing block. It is the canon
   reordered, so it earns nothing if the sets are stock imagery.
-
-### 11. Vitrine Descent — `elysian/design-system.md`
-
-- **Order** — Aperture → Ledger → four Plate chambers, each with its own image
-  transformation → Seal → Colophon.
-- **Principle** — a catalogue descent: an index announces the lots, each lot then gets one
-  chamber and one transformation of its own, and the seal closes the object instead of
-  pitching it. Section padding is deliberately unequal chamber to chamber.
-- **Absent from canon** — everything transactional: feature grid, testimonials, pricing,
-  FAQ, CTA band. Navigation is the ledger itself plus a three-entry masthead, no burger.
-- **Right when** — the deliverable is an experience or a catalogue of discrete objects and
-  the motion budget is genuinely high. It is the corpus's only non-tech register; on a page
-  that must convert, it has nowhere to put the ask.
 
 ## Selection rule
 

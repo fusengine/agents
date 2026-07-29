@@ -24,6 +24,17 @@ The last step before reporting the deliverable done.
   Present/absent check in Part 2 item 4. **A missing, truncated or untagged line is a
   blocking Part 1 finding** — Part 2's binary verdict has no input without it, and reporting
   it as passed on an absent declaration is the failure this gate exists to stop.
+- **The corpus pages opened**, from Gate 0 artefact 3 and the `2a pages OPENED` line of the
+  `generate` report: at least two `{reference}-recode/index.html`, named. The
+  `[corpus: …/{tokens section}]` tags above prove the corpus was *read*; they do not prove
+  it was *seen*, and a deliverable sourced from markdown alone is the documented cause of a
+  page that clears every mechanical check and reads dead
+  (`design-web/references/refs-design/README.md` §*Look before you read*). Absent ⇒
+  blocking Part 1 finding, same status as an absent `Je reproduis` line.
+- **The on-screen inventory**, from Gate 0 artefact 4 / the `Step 4 bis` block of the
+  `generate` report: what each section physically carries, and the screen-holding-floor
+  verdict. Absent ⇒ blocking Part 1 finding whenever `VISUAL_DENSITY` ≤ 3 or
+  `DESIGN_VARIANCE` ≥ 6; a reported finding otherwise.
 - Any declared premium pattern(s) — same present/absent check. The signature element
   (`design-method` Step 2) instead gets **Signature Dominance** in Part 2.
 - The plan's structural picks: the hero treatment from
@@ -45,8 +56,9 @@ The last step before reporting the deliverable done.
 3. **Color format — judges the produced code, never the source values.** Grep the shipped
    HTML/CSS for hex (`#fff`) / `rgb()` / `rgba()` / `hsl()`; every color **in the
    deliverable** must be `oklch()`. The corpus stores its measurements in whatever format
-   its source shipped (`umbrel` `--surface-page: #000`, `fora` `rgba(0,0,0,.85)`,
-   `supercommon` `rgb(24, 25, 28)`; only `elysian` is already OKLCH) — those are inputs.
+   its source shipped, and **not one reference is already in OKLCH** (`umbrel`
+   `--surface-page: #000`, `fora` `rgba(0,0,0,.85)`, `supercommon` `rgb(24, 25, 28)`,
+   `mainframe` `#ffffff14`) — those are inputs.
    **Convert the measured value to OKLCH and keep it**; never drop a corpus value because
    it arrived as hex or rgb, and never paste one through unconverted. A `[relevé]` comment
    citing the source value next to the converted token is expected, not a violation.
@@ -92,6 +104,10 @@ The last step before reporting the deliverable done.
 Any Critical/Major finding from Part 1 gets fixed before Part 2 runs.
 
 ## Part 2 — Bounded Visual Review
+
+**Read `fuse-ai-pilot:fuse-browser-usage` before the first `mcp__fuse-browser__*` call** —
+capture rules, session handling, and where output files land. A review whose screenshots are
+taken wrong reviews the wrong pixels.
 
 1. **Serve** the output: `python3 -m http.server 8899`; if the port is busy, retry
    8900→ 8905 in order, then stop and report if all are unavailable.

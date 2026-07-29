@@ -1,6 +1,6 @@
 ---
 name: design-inspiration
-description: "Use before generating any page, to source taste — palette, typography, depth, craft technique. Order is fixed: the local corpus (`refs-design/`, eleven pages with measured procedures) first and mandatory, then 1-2 real production sites in the client's own sector for register only. The corpus sets a floor of execution, never a ceiling: it also grants the right to invent a procedure no reference contains, provided it is derived from the subject and documented. Do NOT use for section structure — the first screen comes from macrostructure-bank, the body order from body-sequence-bank. Also holds the canonical Lookalike Test."
+description: "Use before generating any page, to source taste — palette, typography, depth, craft technique. Order is fixed: the local corpus (`refs-design/`, ten pages with measured procedures) first and mandatory, then 1-2 real production sites in the client's own sector for register only. The corpus sets a floor of execution, never a ceiling: it also grants the right to invent a procedure no reference contains, provided it is derived from the subject and documented. Do NOT use for section structure — the first screen comes from macrostructure-bank, the body order from body-sequence-bank. Also holds the canonical Lookalike Test."
 related: design-inspiration-urls.md, refs-design/README.md, 21st-dev.md, gemini/gemini-feedback-loop.md, ../../design-method/references/macrostructure-bank.md, ../../design-method/references/body-sequence-bank.md, ../../design-method/references/register/brand.md
 ---
 
@@ -25,19 +25,38 @@ copy skeleton is precisely the failure this file exists to prevent.
 ./refs-design/README.md
 ```
 
-Eleven references built and accepted for this purpose. Ten are real production pages rebuilt
-by hand; one (`elysian/`) is an original build in a different register. Each of the eleven
-folders carries two files that do not overlap:
+Ten references built and accepted for this purpose, all of them real production pages
+rebuilt by hand from their live source. Each of the ten folders carries two files that do
+not overlap:
 
 | File | Answers | Holds |
 |---|---|---|
-| `tokens-<name>.md` | **how** | the procedures, the measured values, the traps — 33 indexed across the corpus |
+| `tokens-<name>.md` | **how** | the procedures, the measured values, the traps — 25 indexed across the corpus |
 | `design-system.md` | **what** and **why** | register, tone, signature element, the named macrostructure and its section sequence |
 
-Open `README.md` first: it holds the procedure index (technique → reference → section), so
-you read the two or three `tokens-*.md` sections that matter instead of everything. Read a
-`design-system.md` when you want to see how a page's decisions were argued — never to lift
-its structure, which comes from the two banks named above.
+**Open the rendered pages before you open any of this.** Each of the ten folders holds an
+`index.html` that opens by double-click — `file://`, no server, no build. Open the ones you
+are considering, scroll them to the bottom, and only then reach for a markdown file. These
+pages were accepted on the render, by eye; that judgment is not in the markdown and cannot
+be extracted from it. `refs-design/README.md` §*Look before you read* owns this rule and
+states the full order.
+
+```
+open ./refs-design/{reference}-recode/index.html
+```
+
+Then `README.md`: it holds the procedure index (technique → reference → section), which
+tells you **where** a procedure is written down. It does not tell you what that procedure
+looks like or whether it fits your subject — the render answers the first, the reference's
+`design-system.md` the second. Read a `design-system.md` when you want to see how a page's
+decisions were argued — never to lift its structure, which comes from the two banks named
+above. Reach for `tokens-*.md` **last**, for the values of a procedure you have already
+seen and already chosen: measured values let you *reproduce* a procedure, they never let
+you *choose* one.
+
+Reading two `tokens-*.md` sections instead of all ten files is a legitimate economy. Doing
+it without ever opening a page is not an economy, it is skipping the step that carries the
+taste — and it produces a deliverable that passes every check and reads dead.
 
 **2. Real sites in the client's actual sector — 1-2, for register only.**
 
@@ -53,11 +72,14 @@ FORBIDDEN below).
 
 ## The standard the corpus sets
 
-Ten of the eleven are dense, dark, precisely-built product pages. That is **deliberate**: it
-fixes the level of execution expected — tight tokens, real depth, motion that carries
-meaning, no filler section. Read it as a quality floor, not as a theme to apply. `elysian/`
-is in the corpus specifically to prove the same rigour holds in a completely different
-register (neoclassical, printed, warm) — the standard travels, the look does not.
+All ten are dense, dark, precisely-built product pages. That is **deliberate**: it fixes
+the level of execution expected — tight tokens, real depth, motion that carries meaning, no
+filler section. Read it as a quality floor, not as a theme to apply.
+
+Be aware of the corollary: the corpus is **single-register**, and it contains no page that
+proves the same rigour in a warm, printed, institutional or retail register. That the
+standard travels is a claim this folder no longer demonstrates — it holds anyway, but you
+are the one who has to carry it across.
 
 So: take the standard from every reference, take the register from the subject. A bakery
 built to this standard is not a dark product page; it is a bakery page that is actually
@@ -66,7 +88,7 @@ built.
 ### A floor, not a ceiling
 
 That protects against copying the corpus's *register*. The same thing has to be said one
-level down, about its *procedures*: the 33 indexed procedures are a point of departure, not
+level down, about its *procedures*: the 25 indexed procedures are a point of departure, not
 a catalogue to work through. Two consequences, and they cut in opposite directions.
 
 - **A page that uses none of them and holds the same level of execution has succeeded.**
@@ -84,12 +106,17 @@ Nothing above obliges you to assemble a page out of borrowed mechanisms. **If th
 asks for something no file in the corpus contains, build it.** That is a first move, not a
 consolation for an index that came up empty.
 
-`elysian/` is the proof, and it is on disk. Its four image transformations — slat shear,
-arch aperture, torn counter-pan, letterform plate (`refs-design/elysian/tokens-elysian.md`
-§§ 3-6) — come from no reference. They were derived from what that page is about: four
-engraved plates and an auction house cataloguing objects that do not exist. It is also the
-only page in the corpus standing outside the dominant register, and it got there by
-inventing rather than by borrowing.
+`mainframe-recode/` is the proof, and it is on disk. Its macrostructure — *Shrinking Aperture*,
+`refs-design/mainframe-recode/design-system.md` §Macrostructure — matches no row of the
+procedure index and no row could have produced it. Its order is set by decreasing display
+surface rather than by argument (100vw carousel → 52rem frames → 16rem cards → 400px rail
+cards → pricing with no media → a 180px object), and that came out of what the page is
+about: a tool for *watching* agent runs. The type is held to the same rule — the closing
+heading, at 24px, is smaller than the 28px h1, so nothing re-amplifies to compensate.
+
+That it was invented by the source's designers rather than by a rebuilder changes nothing
+about the point: a procedure that decides a whole page can come from reading the subject,
+and no index would ever have handed it over.
 
 The counterpart is exactly the one a borrowed procedure carries — no lighter, no heavier.
 
@@ -97,9 +124,11 @@ The counterpart is exactly the one a borrowed procedure carries — no lighter, 
    back to the thing being designed is decoration, whoever authored it. "It looked good" is
    not a derivation.
 2. **Documented**: the mechanism, the values you settled on, and what breaks if it is
-   transposed elsewhere. `elysian § 3.4` and `§ 17` are the model — the slat shear's `--n`
-   duplicates a DOM child count with nothing checking it, and a global
-   `img { max-width: 100% }` silently defeats the whole effect. Both are written down.
+   transposed elsewhere. `supercommon § 1.1` and `§ 4` are the model — the first gives the
+   mechanism (vertical rhythm carried by empty `vh` blocks rather than padding), its fifteen
+   measured values, and the condition under which it fails: long silences are a large-screen
+   luxury and turn into a fault on a phone, which is why the source cuts two of them below
+   1440px. The second lists what broke during the rebuild. Both are written down.
 3. **Declared** on the `Invented` line of the Reference Selection Format below, so a
    reviewer reads it as a decision you took and defended, not as an unexplained flourish.
 
@@ -107,9 +136,13 @@ Inventing removes no obligation. It removes a boundary that was never there.
 
 ## Rules (CRITICAL)
 
-1. **Corpus first, every time.** Read `refs-design/README.md` plus at least **two
-   `tokens-*.md` sections** relevant to what you are building, before any browsing and
-   before any code. This read is also the Gate 0 evidence artefact — cite the sections.
+1. **Corpus first, every time — and rendered pages before markdown.** Open at least **two
+   of the ten `index.html`** in a browser and scroll them through; *then* read
+   `refs-design/README.md` plus at least **two `tokens-*.md` sections** relevant to what
+   you are building. All of it before any browsing and before any code. This is also the
+   Gate 0 evidence artefact: cite **the pages you opened** and **the sections you read**. A
+   citation naming only sections proves the corpus was read, not that it was seen — and the
+   gate asks for both.
 2. **Borrow a technique, never a composition.** The test: could the element you are about to
    reuse sit on a brand in an unrelated sector without changing a pixel? Then it is a
    composition — rework it. A technique carries a *function*, not a look. Borrowing is not
@@ -139,6 +172,13 @@ Each file also has a section on what it deliberately did **not** reproduce. Read
 assuming a gap is an oversight.
 
 ## Sector browsing — fuse-browser workflow
+
+**Read `fuse-ai-pilot:fuse-browser-usage` before the first `mcp__fuse-browser__*` call.**
+It routes fetch/crawl/SERP vs a live browser session vs screenshot capture, and carries the
+four zero-tolerance rules. The sequence below is the design-specific path through it, not a
+replacement for it — a design agent that calls these tools without having read that skill is
+guessing at the tool, which is how a capture ends up outside its own working directory or a
+screenshot lands before the page has settled.
 
 Only for step 2, only for register, 1-2 sites.
 

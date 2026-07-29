@@ -1,6 +1,6 @@
 ---
 name: design-inspiration-urls
-description: "Use when sourcing taste for a page or screen. Look in `refs-design/` first (eleven references — ten hand-rebuilt pages plus one original, each procedure documented with measured values), then real production sites in the client's sector. Do NOT use for structure — that comes from register + macrostructure-bank."
+description: "Use when sourcing taste for a page or screen. Look in `refs-design/` first (ten hand-rebuilt production pages, each procedure documented with measured values), then real production sites in the client's sector. Do NOT use for structure — that comes from register + macrostructure-bank."
 related: design-inspiration.md, ../../design-method/references/moves/generate.md
 ---
 
@@ -19,12 +19,11 @@ That rule has not changed. What changed is **where you look**.
 ./refs-design/README.md          (next to this file, inside the skill)
 ```
 
-Eleven references. Ten are public pages rebuilt by hand from their live source
-and accepted by the owner; one (`elysian/`) is an original build in a completely
-different register. Each folder carries two files: `tokens-<name>.md` for how the
+Ten references, all of them public pages rebuilt by hand from their live source
+and accepted by the owner. Each folder carries two files: `tokens-<name>.md` for how the
 page is made (procedures, measured values, traps) and `design-system.md` for what
 it decided and why (register, tone, signature element, section sequence). Roughly
-7 800 lines of tokens and 33 indexed procedures across the corpus.
+6 500 lines of tokens and 25 indexed procedures across the corpus.
 
 **Open `README.md` first.** It holds the procedure index: which technique lives
 in which reference, and in which section of its `tokens-*.md`.
@@ -44,8 +43,8 @@ bare bar.
 
 The corpus is frozen and measured — that is the whole advantage over a browsed
 site, which changes under you and gives you pixels only. It is **not** offline:
-ten of the eleven load images or video from the network and nine load their
-typefaces too, only `elysian/` is self-contained, and two pages (`harness`,
+all ten load images or video from the network and nine load their typefaces too —
+no folder here is self-contained — and two pages (`harness`,
 `reve`) fetch their woff2 from a third-party CDN that can purge it. Offline the
 renders degrade — fallback fonts, `alt` text
 in place of images — but the measured values stay readable in the markdown, which
@@ -53,11 +52,15 @@ is what you came for. `README.md` has the per-folder count.
 
 ## Second source — real sites in the client's actual sector
 
-The corpus carries two registers: dark tech product (ten of them) and
-neoclassical print (`elysian`). It will not hand you the register for a driving
-school, a law practice, a bakery. **That comes from the subject**, and the
+The corpus carries **one** register: dark tech product, all ten of them. It will
+not hand you the register for a driving school, a law practice, a bakery — and it
+holds no counter-example to show you what one would look like at this level of
+execution. **That comes from the subject**, and the
 fastest way to see how a sector actually presents itself is to look at real
 companies in it — not at templates built to be interchangeable.
+
+Read `fuse-ai-pilot:fuse-browser-usage` before the first `mcp__fuse-browser__*` call —
+it decides fetch vs live session vs capture, and carries the zero-tolerance rules.
 
 Use `mcp__fuse-browser__browser_serp_batch` on the project's real vertical, then
 browse 1–2 actual production sites. Award galleries (`awwwards.com/websites/`,
@@ -81,5 +84,6 @@ production-grade pages whose craft is documented rather than guessed.
 ## Citing sources
 
 Whatever was actually used — corpus references and browsed sites alike — goes in
-the `design-system.md` "Design Reference" block. `elysian/design-system.md` shows
-the form: sources listed, and one line on what the palette was sampled from.
+the `design-system.md` "Design Reference" block. `mainframe-recode/design-system.md`
+shows the form: source URL and stack listed, and one line on what the palette was
+sampled from — there, "sampled from nothing", with the reason on the next line.

@@ -19,7 +19,7 @@ Structure comes from two other files, and only from them:
 
 - **First screen** — `../../../design-method/references/macrostructure-bank.md`,
   eight hero treatments plus the forbidden centered-hero default.
-- **Body** — `../../../design-method/references/body-sequence-bank.md`, eleven
+- **Body** — `../../../design-method/references/body-sequence-bank.md`, ten
   body sequences read off shipped code, each with the principle that decides
   its order and what it drops from the canon. Its rule 2 is the one that
   matters here: *the canon is not the enemy, uniform treatment of it is* —
@@ -68,7 +68,7 @@ device per section, at most.
 | # | Path | Device (one per file) |
 |---|------|------------------------|
 | 01 | `01-numbered-services/description.md` | Bracketed `[01]` index rows + hover image reveal |
-| 02 | `02-alternating-sections/description.md` | Hard-cut background inversion at ONE boundary + sub-5% dot-grid watermark |
+| 02 | `02-alternating-sections/description.md` | Hard-cut background change at ONE boundary, inside the locked theme — never a light/dark flip — + sub-5% dot-grid watermark |
 | 03 | `03-hero-badge-inline/description.md` | Pill badge and icon set inline in the H1 text flow |
 | 04 | `04-bento-grid/description.md` | Asymmetric bento cell mix (2x2 / 2x1 / 1x1) |
 | 05 | `05-fullbleed-hero/description.md` | Oversized low-opacity wordmark watermark + hue-tinted image overlay |
@@ -122,6 +122,43 @@ using it must pass:
 A beautiful hover reveal over a generic "Fast. Reliable. Scalable." headline
 still fails.
 
+### Relief is not inversion — arbitration with pre-flight check 3
+
+This file used to offer "ONE inverted band" as the cure for a flat page, while
+`../../../design-review/references/pre-flight-checklist.md` check 3 failed **any**
+section that inverted. Two rules, one page, opposite verdicts — and check 3
+always won, because only it blocks mechanically. Both were adjusted on a count
+taken across the ten corpus pages, and the count settles it:
+
+- **Theme inversion at section level: 0 of 10.** Not one page in
+  `../refs-design/` puts a light section in a dark page or a dark section in a
+  light one. `cursor` is the only light-based page; its sole dark surfaces are a
+  phone chassis drawn in CSS and its own whole-page dark theme.
+- **A section departing from the page base *inside* the theme: 5 of 10** —
+  `supercommon` (first band on a metallic gradient rising to `#bfc6c1`), `fora`
+  (closing band `#000 → #1b2228` under a 190px horizon image), `harness`
+  (`#070707 → #050505` under two sections), `umbrel` (a 160px joint dissolving one
+  band into the next), `xai` (an 80px grid drawn in two 1px gradients under an
+  elliptical mask).
+
+So the relief this section demands is real and the corpus supplies it — as a
+**surface** change, never a **theme** change. Check 3 stands as written; the word
+"inverted" is gone from the table above because nothing on disk does it.
+
+Two things worth copying from `supercommon`, since it is the corpus's clearest
+case of this device:
+
+1. **One departure, and the CSS enforces it.** Three later bands carry a
+   `.band--opaque` rule whose only job is to stop that metallic gradient bleeding
+   under them. The page does not merely happen to have one special band; it is
+   built so the others cannot become special.
+2. **It lands on the section that earns it** — the title band, the first thing
+   read. A departure spent on a mid-page filler section buys nothing.
+
+Pattern `02-alternating-sections/` carries this device. Its own file already
+caps it at one boundary and already warns that strict light/dark alternation on
+every boundary is itself an AI signature; read it there before applying it.
+
 ### Flatness is banned — and so is one mandatory recipe for relief
 
 The list below names failures. It deliberately does **not** prescribe a single
@@ -131,7 +168,7 @@ a mandatory 3-level shadow on every card reads as a framework default.
 
 | Failure | Why it fails | Ways out (pick one, deliberately) |
 |---------|--------------|-----------------------------------|
-| Every section on the same background with no other relief device | The page reads as one undifferentiated column | ONE inverted band; a tinted section; a full-bleed image section; per-section vertical padding rhythm (`body-sequence-bank.md` rule 2); a rule or motif crossing section boundaries |
+| Every section on the same background with no other relief device | The page reads as one undifferentiated column | ONE section whose background departs from the base **without leaving the theme** — a tint, a gradient, a full-bleed image section, a drawn pattern; or per-section vertical padding rhythm (`body-sequence-bank.md` rule 2); or a rule or motif crossing section boundaries. **Never a theme inversion** — see below |
 | Display headline sized like body copy (register `brand`) | No focal block — `../layout-discipline.md` §9 fails | Scale the display type, or give the viewport its focal block another way (image, number, full-bleed panel). `../layout-discipline.md` §1 owns the hero numbers, not this file. Register `product` is exempt |
 | Cards with no border AND no tint AND no elevation AND no image | The card is invisible; the grid reads as loose text | Any ONE of border, tint, elevation, image. Not all four, and not a mandatory 3-level shadow scale |
 | A raw `<ul>` of more than 5 service items | Already a `../layout-discipline.md` §7 fail | Numbered rows (01), accordion (10), tabs (09), 2-col split, scroll-snap pills |

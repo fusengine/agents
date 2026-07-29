@@ -58,7 +58,7 @@ table first — if the surface is a marketing/landing page instead, use `design-
    instruments: a hero treatment from
    `../design-method/references/macrostructure-bank.md` (eight treatments of the first
    screen) **and** a body sequence from `../design-method/references/body-sequence-bank.md`
-   (eleven sequences read off shipped code). Naming one without the other is an incomplete
+   (ten sequences read off shipped code). Naming one without the other is an incomplete
    plan — *there*.
 
    Neither applies to an app surface, and this is a real difference, not a shortcut: an app
@@ -121,14 +121,25 @@ table first — if the surface is a marketing/landing page instead, use `design-
     rather than duplicating them — this skill only adds what's specific to apps: density,
     data-heavy states, and persistent navigation.
 
-11. **No sector browsing — corpus reading is mandatory.** Apps are function-first: skip the
-    fuse-browser step, don't go look at sector sites, and never pull taste from a template
-    platform (banned plugin-wide, `../design-web/references/design-inspiration.md`). But
-    skipping the browse is not skipping the source of taste. The corpus is local, offline,
-    and two of its entries are application interfaces — read at least one before generating.
-    It is the only place depth, surface hierarchy and real UI procedures come from here;
-    without it this skill has no source of taste at all, which is worse than browsing.
-    Paths below are relative to `../design-web/references/`.
+11. **No sector browsing — but the corpus is opened, looked at, then read.** Apps are
+    function-first: skip the fuse-browser step, don't go look at sector sites, and never
+    pull taste from a template platform (banned plugin-wide,
+    `../design-web/references/design-inspiration.md`). But skipping the browse is not
+    skipping the source of taste. The corpus is local and two of its entries are
+    application interfaces.
+
+    **Open `../design-web/references/refs-design/reve-recode/index.html` in a browser and
+    scroll it before you read a line of the token file below.** Double-click, `file://`, no
+    server. The surface
+    hierarchy described in §3 is a thing you can see in about four seconds and cannot
+    reconstruct from a list of hex values — white panels separating from a `neutral-50`
+    ground by a 4% border plus a very low shadow is a *look*, and the numbers only let you
+    reproduce it once you know what it is. `../design-web/references/refs-design/linear-recode/index.html`
+    is the second application surface worth opening; it draws six product windows in markup.
+
+    Then read. This is the only place depth, surface hierarchy and real UI procedures come
+    from here; without it this skill has no source of taste at all, which is worse than
+    browsing. Paths below are relative to `../design-web/references/`.
 
     **`refs-design/reve-recode/tokens-reve.md` — an app token system, read whole.**
     - **§3 Surface hierarchy** — the page ground is `neutral-50`, *not* white; white is

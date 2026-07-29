@@ -1,19 +1,26 @@
 ---
 name: sector-palettes
-description: Concrete OKLCH color values per sector — copy-paste ready CSS variables for light and dark mode
-when-to-use: Choosing brand colors based on sector and personality
-keywords: oklch, palette, sector, fintech, health, ecommerce, colors, brand, CSS
+description: "Seven OKLCH palettes, all derived from software companies — light and dark CSS variables. Deliberately NOT exhaustive and NOT a sector lookup: no luxury, hospitality or prestige real-estate entry exists, and none is to be invented. See the closing section for where a colour decision actually comes from."
+when-to-use: "Building a ramp for a sector this file actually lists. For any other register, read the closing section first — the answer comes from the subject, not from the nearest row."
+keywords: oklch, palette, sector, fintech, health, ecommerce, colors, brand, CSS, not-a-lookup
 priority: high
-related: identity-brief.md, typography-pairs.md
+related: identity-brief.md, typography-pairs.md, oklch-system.md, color-mapping.md
 ---
 
 # Sector Palettes (OKLCH)
 
+**Read the closing section, *This file is not exhaustive*, before using anything here.**
+Seven palettes, all software-derived. If your sector is not one of the seven, this file
+does not hold your answer and must not be made to fake one.
+
 ## How to Use
 
-1. Identify sector from the identity brief
-2. Copy the CSS variables block for your sector
-3. Adjust hue ±15° to differentiate from competitors
+1. Check that your sector is genuinely one of the seven below — if not, go to the closing
+   section; do not substitute the nearest row
+2. Copy the CSS variables block for that sector
+3. Adjust hue ±15° to differentiate from competitors — and check the result against the
+   two-level slop test in `design-method/SKILL.md`, since a hue kept as-shipped is the
+   category reflex
 4. Dark mode: keep hue, increase L +15–20%, reduce C slightly
 
 **OKLCH format:** `oklch(L% C H)` — L=lightness, C=chroma, H=hue angle
@@ -318,28 +325,73 @@ Chroma guide: 0.13–0.18 (vivid, gamified, engaging)
 
 ---
 
-## Sector Mapping Table (for unlisted industries)
+## This file is not exhaustive, and it is not a lookup
 
-If your project's sector is not listed above, use this table to find the closest palette:
+**Seven palettes, and all seven are software.** Fintech, health, e-commerce, dev tools,
+agency, enterprise SaaS, education — each derived from software companies, each naming the
+three it came from. There is **no luxury palette here, no hospitality palette, no prestige
+real-estate palette**, and none for artisans, restaurants, cultural institutions or
+heritage brands. That is a limit of this file, not a gap to close by picking the
+least-wrong row.
 
-| Project Sector | Use Palette | Typography Pair | Why |
-|---|---|---|---|
-| Auto-ecole / Driving school | **Education** | Pair 16 (Nunito + DM Sans) | Learning-focused, friendly, approachable |
-| Immobilier / Real estate | **Enterprise SaaS** | Pair 3 (Plus Jakarta Sans + Source Sans 3) | Professional, trust-oriented |
-| Restauration / Food service | **E-commerce** | Pair 6 (Bricolage Grotesque + DM Sans) | Warm, conversion-focused, friendly |
-| Juridique / Legal | **Fintech** | Pair 2 (Neue Haas Grotesk + DM Sans) | Institutional, rigorous, trust |
-| Sport / Fitness | **Health / Wellness** | Pair 14 (Outfit + DM Sans) | Energetic but approachable |
-| Tourisme / Travel | **E-commerce** | Pair 5 (Clash Display + Satoshi) | Aspirational, visual, premium |
-| Comptabilite / Accounting | **Fintech** | Pair 1 (Cabinet Grotesk + Geist) | Precise, trustworthy, numbers |
-| Association / Non-profit | **Health / Wellness** | Pair 15 (Nunito + Plus Jakarta Sans) | Warm, human, inclusive |
-| Logistique / Logistics | **Dev Tools** | Pair 9 (Space Grotesk + Space Mono) | Technical, operational, data-heavy |
-| Architecture / Design | **Creative / Agency** | Pair 11 (Familjen Grotesk + Literata) | Editorial, visual, warm |
-| Media / Podcast | **Media / Publishing** | Pair 18 (Playfair Display + Source Serif 4) | Editorial authority |
-| Gaming / eSport | **Creative / Agency** | Pair 10 (Switzer + General Sans) | Bold, expressive, high-energy |
+**Nothing was invented to close those gaps, deliberately.** A "luxury = charcoal + brass"
+entry written here would be the *category reflex* this pipeline bans at first order:
+`design-method/SKILL.md` §*The AI-slop test* names "finance → navy + gold" and "healthcare →
+white + teal" as failures. Adding "prestige real estate → cream + gold" would install the
+slop inside the file meant to prevent it. A palette with no measured source is a guess with
+a hex code, and a guess dressed as a reference is worse than an admitted gap.
 
-**Rule:** Adjust the palette hue ±15° to differentiate from the base sector. For example, auto-ecole can shift Education green toward teal (hue +20°) for a road/safety feel.
+### What was removed here, and why
+
+Until 2026-07 this section held a twelve-row *Sector Mapping Table* routing any unlisted
+industry to one of the seven above. It is gone. The row that decided it:
+
+> `| Immobilier / Real estate | Enterprise SaaS | Pair 3 (Plus Jakarta Sans + Source Sans 3) | Professional, trust-oriented |`
+
+A prestige estate agency sent to the Notion/Salesforce palette and a neutral product sans,
+in the file whose whole job is to stop that. The same table routed *Media / Podcast* to a
+**Media / Publishing** palette that has never existed in this file. Its typography column
+was the sounder half — those pair numbers are real — but it never pointed anyone at the
+*Luxury / Editorial* pairs that [typography-pairs.md](typography-pairs.md) has carried all
+along. A routing table teaches lookup; lookup is the mechanism being removed.
+
+### Where a colour decision actually comes from
+
+In this order. Not one of these steps is a lookup.
+
+1. **The subject.** What the thing physically is and is made of, where it happens, what the
+   client already owns — a material, a light, a location, a document, a livery. That is the
+   source, and it sits upstream of everything in this folder
+   (`../../design-web/references/refs-design/README.md` §*What this corpus does not give
+   you*).
+2. **The Design Read and the register**, resolved in `design-method/SKILL.md` before any
+   palette is touched. A tone committed to one extreme decides more about colour than a
+   sector name ever will.
+3. **The corpus, opened and looked at** — `../../design-web/references/refs-design/`, the
+   ten `index.html` first, markdown second. It hands you no palette for your sector (all
+   ten are tech) and is not meant to. What it hands you is how far a colour decision has to
+   be carried before it holds: `fora` runs an entire page on one 1px rule at white 10%;
+   `mainframe` ships with no accent at all.
+4. **The mechanics** — [oklch-system.md](oklch-system.md) to build the ramp,
+   [contrast-ratios.md](contrast-ratios.md) for the floor,
+   [color-mapping.md](color-mapping.md) for role assignment. Those are canonical and they
+   work in any register, listed here or not.
+5. **The two-level slop test** (`design-method/SKILL.md`) applied to the result: guessable
+   from the category alone is the first reflex; guessable from category-plus-anti-reference
+   is the second.
+
+### If you still want to start from a block above
+
+Legitimate, under one condition: take it for its **chroma and lightness discipline**, never
+for its hue. The chroma guides under each palette — and the quick guide above — are the
+transferable part: they encode how saturated a surface can get before it reads cheap. The
+hue is not transferable, it belongs to the three companies named at the top of that block.
+Change it, and write in `design-system.md` what the new hue was read off **in the subject**.
 
 ---
 
 -> See [identity-brief.md](identity-brief.md) for sector selection
+-> See [typography-pairs.md](typography-pairs.md) — organised by sector too, and it *does*
+   carry **Luxury / Editorial** and **Media / Publishing** sections, plus the serif
+   discipline gating them
 -> See [visual-technique-matrix.md](visual-technique-matrix.md) for allowed visual effects per sector

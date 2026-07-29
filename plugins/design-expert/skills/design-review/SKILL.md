@@ -34,6 +34,13 @@ skipped, never reported as passed if it wasn't actually run
   the craft) and **one tagged `[sector: {url} — register]`** (register signal only;
   `[sector: none — register from brief]` is valid, an empty slot is not). A missing or
   untagged line is a blocking Part 1 finding — the binary verdict has no input without it.
+- **The corpus pages opened** (Gate 0 artefact 3): at least two
+  `{reference}-recode/index.html`, named. The `[corpus: …]` tags prove the corpus was read,
+  never that it was seen — and a page sourced from markdown alone clears every mechanical
+  check and reads dead. Absent ⇒ blocking Part 1 finding.
+- **The on-screen inventory** (Gate 0 artefact 4): what each section physically carries,
+  plus the screen-holding-floor verdict. Blocking when `VISUAL_DENSITY` ≤ 3 or
+  `DESIGN_VARIANCE` ≥ 6; reported otherwise.
 - Any declared premium pattern(s); the signature element (`design-method` Step 2) instead
   gets a **Signature Dominance** verdict.
 - The plan's two structural picks — hero treatment
