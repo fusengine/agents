@@ -1,19 +1,57 @@
-# Design reference corpus — eleven pages
+# Design reference corpus — ten pages
 
-Eleven references, of two kinds.
+Ten references, all of one kind.
 
 **Ten rebuilds** (`*-recode/`) — public pages rebuilt by hand from their live source,
 each reviewed and accepted by the owner. Every folder holds `index.html`, `styles.css`,
 one or more `motion*.js`, plus the two markdown files described below.
 
-**One original** (`elysian/`) — not a rebuild of anything: a fictional maison, built from
-four supplied plates, with its fonts and images in `assets/`. Its markers differ for that
-reason: `[mesuré]` and `[arbitrage]`, never `[relevé]` — there is no source to measure
-against.
+There is **no original creation here**, and that is deliberate: every value in this folder
+was measured against something that actually shipped, which is what makes `[relevé]` mean
+anything.
 
-All eleven open by double-click, `file://`, no server, no build. They are **not**
-self-contained: ten of the eleven pull images, video and — for nine of them — their
-typefaces from the network. Read *Network dependency* below before relying on one offline.
+---
+
+## Look before you read — the order is not negotiable
+
+These ten are **pages**, not documentation. They were accepted one by one *on the render*,
+by eye, and that judgment is the only thing in this folder that was never written down.
+
+**Open the pages first.** Double-click `index.html` in the folders you are considering —
+`file://`, no server, no build, nothing to install. Scroll each one to the bottom. Do this
+before you open a single `.md` file in here.
+
+```
+open design-web/references/refs-design/{reference}-recode/index.html
+```
+
+Then, and only then:
+
+| Order | What you open | What you are there for |
+|---|---|---|
+| 1 | `index.html`, rendered in a browser | what the page **is**. Whether it holds. Whether it is anything like what your subject needs. |
+| 2 | `design-system.md` | the **decision** — register, tone, signature element, macrostructure, and the argument behind them |
+| 3 | `tokens-<name>.md` | the **values**, once you already know which procedure you want and have seen what it gives |
+
+**Why that order, stated plainly: measured values let you *reproduce* a procedure. They
+never let you *choose* one.** `VISUAL_DENSITY 2` read in a table and `VISUAL_DENSITY 2`
+seen on screen are not the same information. The first is a number. The second is `reve`
+giving one editing capability the full height of the window — with fifty-one images inside
+it. An agent that reads the number and skips the render infers "sparse means empty", and
+ships three screens with nothing on them. That has happened, on a real brief, and it is
+why this section exists.
+
+Reading this corpus without opening a page is not a shortcut. It is a different and lesser
+activity: a `tokens-*.md` opened before the render it documents is a list of numbers with
+no referent.
+
+**What you actually get offline.** These pages are frozen but not autonomous: every one
+pulls images or video from the network, and nine of the ten pull their typefaces too.
+Online you see what the owner accepted. Offline, images resolve to their `alt` text and two
+pages lose their typography entirely — you still see the structure, the rhythm, the spacing
+and the scale, which is most of what a first pass is for. Full breakdown in *Network
+dependency* below. A degraded render is a reason to note what you are missing; it is never
+a reason to skip the render and read the markdown instead.
 
 ---
 
@@ -44,14 +82,17 @@ index comes up empty — as a first move, whenever the subject asks for somethin
 does not contain. Nothing in this plugin requires a page to be assembled out of borrowed
 mechanisms.
 
-**The proof is in the corpus.** `elysian`'s four image transformations — slat shear, arch
-aperture, torn counter-pan, letterform plate (`elysian/tokens-elysian.md` §§ 3-6) — are in
-no reference. They were derived from what that page is about: four engraved plates and an
-auction house cataloguing objects that do not exist. The still life comes apart into seven
-sliding slats because a plate is a printed sheet, and a sheet can be cut. The keyhole
-widens into the full arch because the arch is the only opening in that architecture, so it
-becomes the only crop in the system. `elysian` is the one page here that owes nothing to
-the register of the other ten — and it got there by inventing, not by borrowing.
+**The proof is in the corpus.** `mainframe`'s macrostructure — *Shrinking Aperture*
+(`mainframe-recode/design-system.md`, §Macrostructure and the §Principle line under it) —
+appears in no row of the index below, and no row could have produced it. Its order is set
+by **decreasing display surface, not by argument**: a 100vw carousel, then 52rem frames,
+then 16rem cards, then 400px rail cards, then pricing with no media at all, then a 180px
+object. That order comes straight out of what the page is about — a tool that turns agent
+runs into videos a team can watch, a subject whose whole claim is *watching*. So the page
+opens at the largest viewing surface it can afford and closes the aperture step by step,
+and the type is forbidden to compensate: the h1 is 28px from 390 to 1440 and the closing
+heading, at 24px, is *smaller* than it. Even the header obeys — it is not sticky, it
+scrolls away and never returns. Nothing here was borrowed; it was read off the subject.
 
 **What it costs.** Exactly what a borrowed procedure costs, no more and no less.
 
@@ -59,47 +100,60 @@ the register of the other ten — and it got there by inventing, not by borrowin
   back to the thing being designed is decoration, whether you invented it or lifted it.
   "It looked good" is not a derivation.
 - **Documented like everything else here**: the mechanism, the values you settled on, and
-  what breaks if someone transposes it. `elysian § 3.4` and `§ 17` are the model — the slat
-  shear's `--n` is a hand-maintained duplicate of the DOM child count with nothing checking
-  it, and the global `img { max-width: 100% }` reset silently defeats the whole procedure.
-  Both are written down. An invented procedure with no such note is unfinished, not
-  original.
+  what breaks if someone transposes it. `supercommon § 1.1` and `§ 4` are the model — the
+  first gives the mechanism (vertical rhythm carried by empty `vh` blocks, not padding),
+  its fifteen measured values, and the condition under which it fails: long silences are a
+  large-screen luxury and become a fault on a phone, which is why the source itself cuts
+  two of them below 1440px. The second is a two-entry list of what broke during the
+  rebuild. An invented procedure with no such note is unfinished, not original.
 
 Inventing exempts you from nothing. It only means the index was never the boundary.
 
 ---
 
-## Two registers, not one
+## One register — and it is not the one you are designing for
 
 The ten rebuilds are all tech products, mostly dark and dense — umbrel, linear, cursor,
-harness, xai, mainframe, reve, endlesstools, supercommon, fora. Same industry, one
-visual register.
+harness, xai, mainframe, reve, endlesstools, supercommon, fora. Same industry, one visual
+register, no counter-example on disk.
 
-**elysian is the other one**: neoclassical, inscriptional, riso-printed, deadpan. Same
-rigour, a register that owes nothing to the other ten. It is worth reading precisely for
-that — it shows the procedures below are not tied to a dark product page.
+Read that as a **limit of this folder, not as its recommendation.** What the ten
+demonstrate is a level of execution, and that level is register-independent — but the
+demonstration is not here, because no non-tech page is. The nearest thing the corpus
+offers is a page arguing *against* its own lane: `mainframe` is register `brand` — a
+launch page whose job is conversion — that argues in `product` terms, with no display
+type, no accent, no proof section and no persuasion device, and it holds.
 
 They are all here as **inspiration**: for the quality of their execution and the
 mechanisms they use, not as a template to trace. Take the mechanism, bring your own
-register — it comes from the subject you are designing for, not from this folder.
+register — on this corpus it can only come from the subject you are designing for, never
+from this folder.
 
 ---
 
 ## Two documents per folder
 
-Each of the eleven folders carries both, and they do not overlap.
+Each of the ten folders carries both, and they do not overlap.
 
 | File | Answers | Holds |
 |---|---|---|
 | `tokens-<name>.md` | **how** | the procedures, the measured values, the traps |
 | `design-system.md` | **what** and **why** | register, tone, signature element, the named macrostructure and its section sequence |
 
-Open `design-system.md` for the decision — what the page commits to and what it refuses;
-`tokens-*.md` to build the thing. The technique index below points into `tokens-*.md` only.
+**Both come after the render** — see *Look before you read* above. Open `design-system.md`
+for the decision, what the page commits to and what it refuses; `tokens-*.md` to build the
+thing, once you have seen what the thing looks like.
 
-**Structure never comes from this folder directly.** The eleven body sequences have been
-lifted out into `../../../design-method/references/body-sequence-bank.md`, and the eleven
-first-screen treatments into `../../../design-method/references/macrostructure-bank.md`.
+The technique index below indexes `tokens-*.md` sections. That means it can tell you
+**where a procedure is written down** — and nothing else. It does not tell you what the
+procedure looks like on screen, nor whether it suits your subject. Those two questions are
+answered by the render and by `design-system.md`, in that order; the index answers neither.
+Using it as the entry point is exactly how a page gets assembled out of values nobody has
+ever looked at.
+
+**Structure never comes from this folder directly.** The ten body sequences have been
+lifted out into `../../../design-method/references/body-sequence-bank.md`, and the
+first-screen treatments live in `../../../design-method/references/macrostructure-bank.md`.
 Pick from those two banks. A folder's `design-system.md` is here for a different use: it
 explains why *this* structure was right for *this* subject — a worked argument, not an
 option to select.
@@ -135,17 +189,10 @@ option to select.
 | Application UI patterns | reve | `## 4. Application UI patterns` |
 | Surface hierarchy | reve | `## 3. Surface hierarchy` |
 | Motion system as the page's backbone | mainframe | `## 1. The motion system` |
-| One rAF loop driving every pinned section | elysian | `## 1. The scroll engine` |
-| Image torn into sliding slats | elysian | `## 3. Transformation I — slat shear` |
-| Keyhole widening into a full arch | elysian | `## 4. Transformation II — arch aperture` |
-| Split image, halves panning apart | elysian | `## 5. Transformation III — torn counter-pan` |
-| Word filled with an image, then zoomed | elysian | `## 6. Transformation IV — letterform plate` |
-| One shape as the only crop in the system | elysian | `## 8. The arch as the only crop` |
-| Named menu, three entries, no burger | elysian | `## 9. The masthead` |
-| Reduced-motion built as a second layout | elysian | `## 11. prefers-reduced-motion handled as a second layout` |
 
-Section titles are cited by their opening words; several run longer in the file itself.
-Search on the number and the first few words, not on an exact string match.
+Twenty-five procedures. Section titles are cited by their opening words; several run
+longer in the file itself. Search on the number and the first few words, not on an exact
+string match.
 
 ### Reading this index the other way
 
@@ -160,8 +207,10 @@ slides, opens, loops, reveals, holds still. Either a listed mechanism already pe
 motion and you have your starting point, or nothing does — which is an answer too, and the
 section *The other side of that rule* above says what to do with it.
 
-`elysian` is the worked example: its subject produced four procedures no row of this table
-could have supplied.
+`mainframe` is the worked example, and it is a structural one: its subject is a tool for
+*watching* something, so the page was ordered by decreasing display surface rather than by
+argument — a verb ("it closes") no row of this table supplies, and one that decided the
+whole scroll before a single technique was picked.
 
 ---
 
@@ -201,10 +250,11 @@ included.
 | linear | 20 | Inter, Google Fonts |
 | xai | 19 | Geist, Google Fonts |
 | supercommon | 11 | Inter, Google Fonts |
-| **elysian** | **0** | self-hosted, `assets/fonts/` |
 
-**`elysian` is the only page that owes the network nothing.** Fonts and images ship in
-`assets/`; open it on a plane and it is the page the owner accepted.
+**No page here is autonomous.** The lowest count in the table is 11, not 0: there is no
+folder you can open on a plane and see the page the owner accepted. `cursor` is the only
+one whose *typography* survives offline, and only because it ships no webfont at all — it
+runs on the system stack.
 
 **Two pages take their typefaces from a third-party CDN.** `harness` pulls five woff2
 (Geist Light/Regular/Medium/SemiBold, CalSans-SemiBold) from `cdn.prod.website-files.com`;
@@ -251,14 +301,15 @@ Everything else in these files is English.
 
 ## What this corpus does not give you
 
-It does not give you **the idea, the subject, or the angle.** Nothing in these eleven
+It does not give you **the idea, the subject, or the angle.** Nothing in these ten
 folders tells you what a page should be about, what claim it should make, or what it should
 refuse to say. Those come from the brief and from the thing being designed — never from
 here, and never from an index row.
 
 It does not tell you **which register suits a given brand** either. That judgment — a
 driving school is not a developer tool, an artisan is not a SaaS — is upstream of
-everything here, and no amount of reading these eleven references will produce it.
+everything here, and no amount of reading these ten references will produce it — the more
+so as all ten sit in the same sector.
 
 What it does give is a **level**: how well an idea has to be executed before it holds up.
 That is a floor to clear, not a set of solutions to choose from — and the difference
