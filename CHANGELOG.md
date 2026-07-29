@@ -1,5 +1,9 @@
 # Release Notes
 
+## [1.39.20] - 29-07-2026
+
+- chore(deps): bump `@fusengine/harness` to `^0.1.85` — repo source had stayed at `^0.1.83` while the deployed install was already on `0.1.85`; a git-based deploy would have regressed the constraint and reinstalled a harness predating the design-corpus doctrine hardening (`FONT_QUOTED_PROP_RE` now flags any `--*` custom property whose value quotes a banned font, using the quote as the usage signal instead of an English keyword in the property name).
+
 ## [1.39.19] - 29-07-2026
 
 - refactor(prompts): add structured `<role>`/`<objective>` blocks and tighten frontmatter `description` fields across `agents/*.md` and `skills/*/SKILL.md` ecosystem-wide, for sharper agent routing and less ambiguous "use when / do not use for" boundaries. (fuse-ai-pilot 1.2.39, fuse-astro 1.0.11, fuse-cartographer 1.0.10, fuse-changelog 1.0.13, fuse-rules 1.0.20, fuse-commit-pro 1.2.24, fuse-design 2.2.3, fuse-go 1.0.4, fuse-laravel 1.2.5, fuse-nextjs 1.1.21, fuse-php 1.0.4, fuse-prompt-engineer 1.1.10, fuse-react 1.0.18, fuse-rust 1.0.4, fuse-security 1.0.16, fuse-seo 1.0.9, fuse-shadcn-ui 1.0.15, fuse-solid 1.0.16, fuse-swift-apple-expert 1.1.17, fuse-tailwindcss 1.1.8, fuse-tanstack-start 1.0.3, fuse-typescript 1.0.4)
