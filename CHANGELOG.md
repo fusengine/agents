@@ -1,5 +1,11 @@
 # Release Notes
 
+## [1.39.21] - 29-07-2026
+
+- feat(design-expert): move `elysian` out of the 11-page design reference corpus into `plugins/design-expert/_artistic/elysian/` — it had become the de-facto default reference by position in `refs-design/README.md` (first named, four cumulated model roles) rather than relevance, and it is the only reference whose process depends on transforming photo assets. Corpus goes from 11 to 10 references; `refs-design/README.md` rewritten with a process index, counts, and the four model roles redistributed. (fuse-design 2.2.4)
+- fix(design-expert): five corpus and skill defects surfaced by a real prestige-real-estate design test — the corpus is read from `.md` tokens only, never viewed (fixed to open `index.html` pages first); asset-density dial counts showed a bare number with no substance next to it (now show the underlying image/video/SVG counts); `sector-palettes.md` pretended to be a sector → palette lookup table (rewritten to state it is neither exhaustive nor a sector map); `pre-flight-checklist.md` control 3 contradicted `PATTERNS.md` on the inverted band (resolved in both files); missing `fuse-ai-pilot:fuse-browser-usage` references added where the browser is prescribed. (fuse-design 2.2.4)
+- chore(deps): bump `@fusengine/harness` to `^0.1.86` — fixes seven design-gate defects the same test revealed (batch screenshots credited to quota, corpus resolution by structural suffix across `marketplaces/` and `cache/` trees, `motion*.js` writable, `full` quota raised to README + 3 tokens, `design-system.md` credited as a new `sheet` type, Tailwind gate classifying by content instead of extension).
+
 ## [1.39.20] - 29-07-2026
 
 - chore(deps): bump `@fusengine/harness` to `^0.1.85` — repo source had stayed at `^0.1.83` while the deployed install was already on `0.1.85`; a git-based deploy would have regressed the constraint and reinstalled a harness predating the design-corpus doctrine hardening (`FONT_QUOTED_PROP_RE` now flags any `--*` custom property whose value quotes a banned font, using the quote as the usage signal instead of an English keyword in the property name).
