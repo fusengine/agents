@@ -1,6 +1,6 @@
 ---
 name: php-standards
-description: Use when setting up a PHP package, choosing a coding style, wiring autoloading, or selecting PSR interfaces — PSR-4 autoloading, PER Coding Style 3.0 vs PSR-12, the active PSR catalog, and modern composer.json. Do NOT use for language syntax/features (use php-language-modern) or Laravel-specific conventions (use the laravel plugin).
+description: Use when setting up PHP-package autoloading, coding style, or PSR interfaces — PSR-4, PER Coding Style 3.0, composer.json. Do NOT use for syntax or Laravel.
 versions:
   per-coding-style: "3.0"
   psr-4: "accepted"
@@ -9,6 +9,14 @@ user-invocable: false
 references: references/per-coding-style.md, references/psr-catalog.md, references/psr4-autoloading.md, references/templates/composer-json.md, references/templates/project-structure.md
 related-skills: php-language-modern
 ---
+
+<objective>
+Covers the standards that shape a framework-agnostic PHP package: PSR-4 autoloading (and why PSR-0 is deprecated), PER Coding Style 3.0 versus the still-Accepted PSR-12, and the current PSR catalog to depend on for logging (PSR-3), caching (PSR-6/16), HTTP (PSR-7/15/17/18), DI containers (PSR-11), events (PSR-14), and time (PSR-20).
+
+Includes composer.json and project-structure templates (src/ for library code, tests/ wired via autoload-dev, PSR-4 namespace mapping), and the core PER/PSR-1 file rules (4 spaces, LF endings, no closing ?>).
+
+Do NOT use this skill for language syntax or feature questions — that is php-language-modern. Do NOT use it for Laravel-specific conventions, which live in the Laravel plugin.
+</objective>
 
 # PHP Standards (PSR / PER / Composer)
 

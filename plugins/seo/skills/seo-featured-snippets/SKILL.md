@@ -1,9 +1,13 @@
 ---
 name: seo-featured-snippets
-description: Use when optimizing for position 0 featured snippets and AI Overviews. Covers paragraph, list, table, and video snippet recipes with format-specific HTML patterns.
+description: Use when optimizing for position 0 featured snippets and AI Overviews with format-specific HTML recipes.
 user-invocable: false
 related-skills: seo, seo-geo, seo-content, seo-sxo
 ---
+
+<objective>
+Provides format-specific HTML recipes for winning featured snippets (position 0): paragraph (40-60 word direct answer), list (ordered/unordered, 4-8 items), table (comparison data), and video (embed + timestamps) — each mapped to its trigger query patterns. Explains why featured snippets are primary AI Overview training data (70%+ citation correlation) and lists snippet anti-patterns (buried answer, vague intro, marketing language in the target passage).
+</objective>
 
 # Featured Snippets (Position 0)
 

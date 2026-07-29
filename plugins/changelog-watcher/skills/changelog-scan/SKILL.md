@@ -1,9 +1,13 @@
 ---
 name: changelog-scan
-description: "Scan Claude Code changelog for new versions, features, and changes. Fetches official docs, parses release notes, and generates structured update report. Use when: checking for new Claude Code versions, features, or changes since the last known release."
+description: "Use when checking for new Claude Code versions, features, or changes since the last known release."
 argument-hint: "[--since <version>]"
 user-invocable: true
 ---
+
+<objective>
+Fetches the official Claude Code changelog via the harness CLI's `changelog` command (ported from the old `fetch-changelog`, WebFetch on `code.claude.com/docs/en/changelog.md` as manual fallback), parses version headers and per-version changes (features/fixes/breaking), compares against the last known version recorded in the state file (`~/.claude/logs/00-changelog/<date>-state.json`), and generates a structured update report using `references/templates/changelog-report.md`.
+</objective>
 
 # Changelog Scan Skill
 

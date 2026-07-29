@@ -1,23 +1,43 @@
 ---
 name: macrostructure-bank
-description: Bank of alternative page-skeleton macrostructures, used to satisfy the "Macrostructure Variety" rule in design-method SKILL.md
-when-to-use: Before Pass 1 of the two-pass process, to pick a page skeleton other than the forbidden default (centered hero + 3-column icon-card grid)
-keywords: macrostructure, layout, skeleton, variety, anti-slop
+description: "Bank of eight hero treatments — how the FIRST SCREEN is composed, and the forbidden centered-hero default. The order of the body's sections comes from body-sequence-bank.md, not from here."
+when-to-use: "When planning a page's first screen (generate step 4, redesign, any macrostructure pick) — always paired with a body-sequence pick from body-sequence-bank.md; naming one without the other is an incomplete plan."
+keywords: hero, first-screen, macrostructure, variety, anti-slop, skeleton
 priority: high
-related: ../SKILL.md, ../../design-web/references/layout-discipline.md, ../../design-web/references/design-inspiration.md
+related: body-sequence-bank.md, ../SKILL.md, register/brand.md, ../../design-web/references/layout-discipline.md, ../../design-web/references/design-inspiration.md
 ---
 
-# Macrostructure Bank
+# Macrostructure Bank — Hero Treatments
 
-This applies the same "vary every time" discipline `design-web/references/design-inspiration.md`
-already enforces for inspiration sourcing (never reuse the same 4 sites) one level up, to
-the chosen page skeleton. The forbidden default: a centered hero (headline + subtext + 2
-CTAs) immediately followed by a 3-column grid of icon cards. Pick ONE alternative below,
-or a deliberate variant, and name it in the Pass 1 plan. Each entry is a skeleton, not a
-finished design — `design-web/references/layout-discipline.md` still governs the numeric
-limits (hero elements, eyebrow cap, zigzag cap, bento cell count) once a skeleton is chosen.
+**Scope: the first screen.** The eight entries below are ways of composing what the reader
+meets before the first scroll. None of them decides the order of the body's sections, and
+five of them (1, 2, 5, 7, 8) describe nothing but the hero.
 
-## Alternatives
+## Read `body-sequence-bank.md` for the body — not optional
+
+`register/brand.md` states the diagnosis plainly: "The proven failure mode is **not the
+hero** … The failure mode is the **body**." Picking a treatment here leaves that failure
+mode untouched. A plan that names only a hero treatment has composed its first screen and
+improvised the rest of the scroll — which is exactly how interchangeable bodies get shipped.
+
+`body-sequence-bank.md` holds eleven body sequences read off shipped code, each with the
+principle that decides its order and what it drops from the canon.
+
+## The forbidden default
+
+A centered hero (headline + subtext + two CTAs) immediately followed by a 3-column grid of
+icon cards. Banned as a skeleton, in both halves: the hero shape AND the grid that follows.
+Pick ONE treatment below, or a deliberate variant of one, and name it in the plan.
+
+Each entry is a composition of the first screen, not a finished design —
+`../../design-web/references/layout-discipline.md` still owns the numeric limits (hero
+element cap, eyebrow cap, bento cell count) once a treatment is chosen.
+
+Vary the pick from task to task, for the same reason
+`../../design-web/references/design-inspiration.md` varies where taste is sourced: a
+treatment reused by reflex across briefs becomes its own template, whichever one it is.
+
+## Hero treatments
 
 1. **Split hero** — headline + CTA on one side, a large asymmetric visual/demo/product
    shot on the other, full-bleed. No centered stack.
@@ -36,9 +56,21 @@ limits (hero elements, eyebrow cap, zigzag cap, bento cell count) once a skeleto
 8. **Single dominant statement** — one full-viewport headline/visual with no subtext or
    CTA row at all; CTAs appear only after the first scroll (high-luxury/brand sites).
 
-## Selection Rule
+Entries 3, 4 and 6 carry consequences past the fold (a continuous narrative, a persistent
+rail, an off-axis rhythm). They still do not name a section order — pair them with a body
+sequence like every other entry.
 
-State the choice explicitly in Pass 1: "Macrostructure: {alternative name}." If the brief
-or sector genuinely calls for the centered-hero pattern (rare — e.g. a strict enterprise
-compliance page), the plan must say so explicitly as a deliberate exception, not a
-default reached by omission.
+## Selection rule
+
+The plan must name **two** things, on one line:
+
+```
+Macrostructure: {hero treatment} + {body sequence}
+```
+
+Naming one without the other is an incomplete plan — send it back, do not fill the gap by
+defaulting to the canonical section order. If the brief or sector genuinely calls for the
+centered-hero pattern (rare — e.g. a strict enterprise compliance page), the plan must say
+so explicitly as a deliberate exception, not a default reached by omission. The same
+applies to the canonical body order: it is choosable, under the conditions stated in
+`body-sequence-bank.md` rule 2 and entry 5 (Bookended Canon).

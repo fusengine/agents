@@ -1,9 +1,13 @@
 ---
 name: seo-images
-description: Use when optimizing images for SEO. Covers alt text, descriptive filenames, modern formats (WebP/AVIF), lazy loading, responsive sizing (srcset), ImageObject schema.
+description: Use when optimizing images for SEO — alt text, filenames, formats, lazy loading, responsive sizing.
 user-invocable: false
 related-skills: seo, seo-schema, seo-technical
 ---
+
+<objective>
+Checks image SEO fundamentals: descriptive `alt` text (empty only for decorative images), kebab-case descriptive filenames, modern formats (WebP/AVIF with JPG/PNG fallback), `loading="lazy"` on below-fold images, responsive `srcset`/`sizes`, explicit `width`/`height` to prevent CLS, ImageObject schema, and file-size/quality targets per image role (hero/content/thumbnail).
+</objective>
 
 # Image SEO
 

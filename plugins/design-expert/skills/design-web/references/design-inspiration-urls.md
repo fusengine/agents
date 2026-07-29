@@ -1,121 +1,85 @@
 ---
 name: design-inspiration-urls
-description: Complete verified URL catalog for fuse-browser browsing across the 9 KNOWN_DOMAINS (Framer, Webflow, Awwwards, Godly, Lapa Ninja, One Page Love, SaaSFrame, Best Website Gallery, Landingfolio) — taste-extraction sources (palette/typography/depth/craft), NOT structure templates. Includes divergent-discovery guidance beyond the fixed slug pool. See design-inspiration.md for what to extract vs never extract.
-related: design-inspiration.md
+description: "Use when sourcing taste for a page or screen. Look in `refs-design/` first (eleven references — ten hand-rebuilt pages plus one original, each procedure documented with measured values), then real production sites in the client's sector. Do NOT use for structure — that comes from register + macrostructure-bank."
+related: design-inspiration.md, ../../design-method/references/moves/generate.md
 ---
 
 ## Read First
 
-Every URL below is a **taste-extraction source** — a place to pull palette,
-typography, and depth/craft technique from. None of them is a skeleton to
-clone. The lists are grouped by sector as a starting index, not a
-prescriptive "use this slug for this sector" lookup — cross-sector browsing
-is encouraged specifically to avoid convergence (pulling craft technique from
-an agency site for a fintech project is fine; cloning that agency site's
-section flow is not, regardless of sector match). Structure comes from
-`design-method/references/register/brand.md` (or `product.md`) +
-`design-method/references/macrostructure-bank.md` — never from this file.
+Taste is extracted, never cloned. Palette, typography, depth, craft technique:
+yes. Section flow, spacing rhythm, skeleton: never — structure comes from
+`design-method/references/register/brand.md` (or `product.md`) plus
+`design-method/references/macrostructure-bank.md`.
 
-## Phase-1 Anchor — 9 KNOWN_DOMAINS (harness-required; browse at least 2 per session)
+That rule has not changed. What changed is **where you look**.
 
-1. `{slug}-wbs.framer.website` (Webestica Framer)
-2. `{slug}.webflow.io` (Webflow)
-3. `awwwards.com/sites/{name}` (Awwwards)
-4. `godly.website`
-5. `lapa.ninja`
-6. `onepagelove.com`
-7. `saasframe.io`
-8. `bestwebsite.gallery`
-9. `landingfolio.com`
+## Primary source — the local corpus
 
-## Webestica Framer — `https://{slug}-wbs.framer.website`
+```
+./refs-design/README.md          (next to this file, inside the skill)
+```
 
-All 25 verified live. The `-wbs` suffix is MANDATORY.
+Eleven references. Ten are public pages rebuilt by hand from their live source
+and accepted by the owner; one (`elysian/`) is an original build in a completely
+different register. Each folder carries two files: `tokens-<name>.md` for how the
+page is made (procedures, measured values, traps) and `design-system.md` for what
+it decided and why (register, tone, signature element, section sequence). Roughly
+7 800 lines of tokens and 33 indexed procedures across the corpus.
 
-SaaS: `boxsi`, `botflow`, `maximux`, `ailex`, `draftr`, `cloudkit`, `worklane`
-Agency: `agnos`, `bold-studio`, `ignitex`, `crevo`, `voxo`, `agenza`, `three-circles`
-Portfolio: `aiden`, `showoff`, `hazel-bennet`, `myspark`, `jaxon-cruz`, `okeystudio`
-B2B: `b2bizz`, `clavion`, `altrion`, `consultantt`
-Fintech: `financer` | Healthcare: `dermato`, `nursing-care`, `senior-care`
-E-commerce: `villabliss`, `slice-town`, `mivora`
+**Open `README.md` first.** It holds the procedure index: which technique lives
+in which reference, and in which section of its `tokens-*.md`.
 
-## Webflow — `https://{slug}.webflow.io`
+Why this beats a template gallery, concretely:
 
-### SaaS / AI
-`startify-template`, `setrex-saas-template`, `saa-ai`, `flowbit`, `ai-saas-company-website`
-BRIX: `neuralflowtemplate`, `agentflowtemplate`, `launchhubtemplate`, `builderflowtemplate`
+| A screenshot gives you | `tokens-*.md` gives you |
+|---|---|
+| what it looks like | the mechanism, with its measured values |
+| a result | the trap that breaks it elsewhere |
+| one viewport | what the author deliberately did not reproduce |
 
-### Agency / Creative
-`agency-portfolio-template`, `digitaltemplate`, `altero-template`, `fylla-template`
-`besnik-marketing`, `kreatryx`, `aesthetica-template`
-BRIX: `cinemaflowtemplate`, `gradientprotemplate`, `colorflowtemplate`
+Example: a capture of a scroll-collapsing nav shows a pill. `tokens-fora.md`
+§ 5 quinquies gives the scrim, the blur radius, the two distinct top offsets
+for resting and scrolled state, and why the pill needs more clearance than the
+bare bar.
 
-### Portfolio
-`vox-studio-ttm`, `bungee-pro`, `stuxen`, `minimaltemplate-v1`
-`personal-portfolio-design-template`, `agency-portfolioo`, `awakeagency`
+The corpus is frozen and measured — that is the whole advantage over a browsed
+site, which changes under you and gives you pixels only. It is **not** offline:
+ten of the eleven load images or video from the network and nine load their
+typefaces too, only `elysian/` is self-contained, and two pages (`harness`,
+`reve`) fetch their woff2 from a third-party CDN that can purge it. Offline the
+renders degrade — fallback fonts, `alt` text
+in place of images — but the measured values stay readable in the markdown, which
+is what you came for. `README.md` has the per-folder count.
 
-### B2B / Law / Consulting
-`lawfarm-webflow-template`, `loi-wcopilot`, `mediate-template`
-`attorneyster-law-firm-website-template`, `brandt-law-firm-business-template`
-`jurri-template`, `kodex-template`, `on-consult-template`, `pipely`
+## Second source — real sites in the client's actual sector
 
-### Fintech / Finance
-`finflow-template`, `finlab-saas`, `payora-template`, `payvio-template`
-BRIX: `financetemplate-showcase`, `fintechtemplate-showcase`, `investflowtemplate`
-`defichaintemplate`, `cardpaytemplate`, `creditcoretemplate`
+The corpus carries two registers: dark tech product (ten of them) and
+neoclassical print (`elysian`). It will not hand you the register for a driving
+school, a law practice, a bakery. **That comes from the subject**, and the
+fastest way to see how a sector actually presents itself is to look at real
+companies in it — not at templates built to be interchangeable.
 
-### Healthcare / Medical
-`lunira`, `mediflow-template`, `reliacare`, `healthcare-institution-128`
-`sanaris-healthcare-medtech`, `heltro`
+Use `mcp__fuse-browser__browser_serp_batch` on the project's real vertical, then
+browse 1–2 actual production sites. Award galleries (`awwwards.com/websites/`,
+`godly.website`, `bestwebsite.gallery`) are useful for one thing only: they link
+out to real production sites. Follow those links; do not extract from the
+gallery page itself.
 
-### E-commerce
-`ecommerce-tnc`, `fabrid`, `skategods-template`, `padelthon`
-`spacekit-template`, `forerunner-template`
-BRIX: `consumertemplate`, `matchatemplate`, `cartflowtemplates`, `decortemplates`
+## What was removed, and why
 
-## Awwwards — `https://awwwards.com/sites/{name}`
+This file used to list roughly a hundred Framer and Webflow template slugs.
+They are gone. Its own text carried the diagnosis:
 
-Browse filtered galleries, then follow "Visit Website" to real production URLs:
-- `awwwards.com/websites/` → all award-winning sites
-- `awwwards.com/websites/law/` → law firms
-- `awwwards.com/websites/finance/` → fintech
-- `awwwards.com/websites/health/` → healthcare
-- `awwwards.com/websites/e-commerce/` → e-commerce
+> Every generated page pulling from the same ~100 templates is the root cause
+> of the generic-body problem this file used to encode.
 
-Example: `awwwards.com/sites/voidzero` → links to the real site
+Marketing templates are built to be interchangeable — that is their product
+requirement. Extracting taste from them converges every output toward the same
+body. The corpus replaces them because it offers the opposite: idiosyncratic,
+production-grade pages whose craft is documented rather than guessed.
 
-## Best Website Gallery — `https://bestwebsite.gallery`
+## Citing sources
 
-Browse the curated gallery (filter by category where available) → open the
-real production sites linked from each entry. Taste-extraction only, same
-rule as every other source in this file.
-
-## Landingfolio — `https://landingfolio.com`
-
-Browse filtered by sector/category → open real production landing pages.
-Taste-extraction only.
-
-## Beyond the Fixed Pool — Divergent Discovery
-
-The slug lists above are a fallback index (verified live at last check), not
-a ceiling. Every generated page pulling from the same ~100 templates is the
-root cause of the generic-body problem this file used to encode. Once
-phase-1 is satisfied (2+ of the 9 KNOWN_DOMAINS browsed), prefer branching
-out:
-
-- Use `mcp__fuse-browser__browser_serp_batch` to search for **real
-  production sites** in the project's actual sector/vertical (not
-  marketing-template galleries) — e.g. "{sector} company site design 2026"
-  — and browse 1-2 of those as additional taste donors.
-- Awwwards, Godly, Best Website Gallery, and Landingfolio already link out
-  to real production sites (not templates) via "Visit Website" — prefer
-  following those links over the raw Framer/Webflow slugs when time allows;
-  real production sites carry more idiosyncratic craft detail than
-  marketing templates built to be interchangeable.
-- Cite whichever sources were actually used in the `design-system.md`
-  "Design Reference" block (see `design-inspiration.md`).
-
-## Other Platforms
-
-Astro demos: `astro.build/themes` → each theme has a "Live Demo" link
-Squarespace: `squarespace.com/templates/{slug}-fluid-demo`
+Whatever was actually used — corpus references and browsed sites alike — goes in
+the `design-system.md` "Design Reference" block. `elysian/design-system.md` shows
+the form: sources listed, and one line on what the palette was sampled from.

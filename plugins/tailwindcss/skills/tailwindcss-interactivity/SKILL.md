@@ -1,8 +1,14 @@
 ---
 name: tailwindcss-interactivity
-description: "Interactivity utilities Tailwind CSS v4.1. Cursor (cursor-*), Scroll (scroll-smooth, scroll-snap-*, overscroll-*), User select (select-*), Pointer events (pointer-events-*), Touch action, Resize, Caret color, Accent color. Use when: controlling cursor appearance, scroll snap/smooth behavior, text selection, pointer-events, touch actions, resize handles, or caret/accent colors on form controls."
+description: "Use when controlling cursor appearance, scroll snap/smooth behavior, text selection, pointer-events, touch actions, or caret/accent colors."
 user-invocable: false
 ---
+
+<objective>
+Complete reference for Tailwind CSS v4.1 interactivity utilities: `cursor-*` (standard, resize, zoom, grab, and special cursors), scroll behavior and snap (`scroll-smooth`, `scroll-snap-type`/`-align`/`-stop`, `overscroll-*`), `select-*` for text-selection control, `pointer-events-*`, `touch-*` action utilities, `resize-*`, `caret-*` color for input cursors, and `accent-*` color for checkboxes/radios/range inputs.
+
+Also documents the pseudo-class state variants (`hover:`, `focus:`, `active:`, `disabled:`) and their chaining with responsive/dark-mode prefixes.
+</objective>
 
 # Tailwind CSS Interactivity Utilities
 

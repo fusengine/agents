@@ -1,12 +1,18 @@
 ---
 name: astro-seo
-description: SEO for Astro sites — meta tags, Open Graph, Twitter Cards, JSON-LD structured data, sitemap, RSS, robots.txt, canonical URLs, hreflang, Core Web Vitals. Use when optimizing search engine visibility or social sharing.
+description: Use when optimizing SEO for an Astro site — meta tags, Open Graph, JSON-LD structured data, sitemap/RSS, canonical URLs, hreflang, Core Web Vitals.
 versions:
   astro: "7"
 user-invocable: true
 references: references/meta-tags.md, references/structured-data.md, references/sitemap-rss.md, references/canonical-hreflang.md, references/core-web-vitals.md, references/templates/seo-head.md, references/templates/json-ld.md
 related-skills: astro-7, astro-content, astro-assets, astro-i18n
 ---
+
+<objective>
+Implements SEO for Astro 7 sites: meta tags, Open Graph, and Twitter Cards via a reusable `<SEO />`/`<Head />` component; JSON-LD structured data injected with `set:html` (never string interpolation, to avoid XSS); `@astrojs/sitemap` and `@astrojs/rss` setup; robots.txt and canonical URLs built with `Astro.site`; hreflang for multilingual SEO; and Core Web Vitals optimization leveraging Astro's zero-JS-by-default output.
+
+Does not cover locale routing mechanics beyond hreflang tag generation (astro-i18n), Content Layer schema design (astro-content), or image-specific optimization like `<Image />`/`<Picture />` (astro-assets) — those are separate skills.
+</objective>
 
 # Astro SEO
 

@@ -10,6 +10,17 @@ references: references/components.md, references/wire-directives.md, references/
 related-skills: laravel-blade, laravel-testing, laravel-api
 ---
 
+<objective>
+Covers Livewire 4 on Laravel 13: reactive class-based components with Blade
+views, wire:model two-way binding and its modifiers (.blur, .live,
+.debounce), actions, component lifecycle hooks, forms/validation, events
+(dispatch/listen), Alpine.js integration ($wire, @entangle), file uploads,
+component nesting, loading states, SPA navigation, testing, security
+(auth/rate limiting), and the Volt (single-file components) and Folio
+(file-based routing) sub-features, including Precognition live validation
+and Reverb WebSocket integration.
+</objective>
+
 # Laravel Livewire
 
 ## Agent Workflow (MANDATORY)

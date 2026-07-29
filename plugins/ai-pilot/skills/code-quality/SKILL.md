@@ -1,9 +1,15 @@
 ---
 name: code-quality
-description: "Code quality validation with linters, SOLID principles, DRY detection, error detection, and architecture compliance across all languages. Use when: validating code quality after modifications — SOLID compliance, DRY duplication, linter errors, or architecture violations. Do NOT use for: verifying the original problem is functionally resolved (run verification FIRST — code-quality validates quality AFTER functional verification passes)."
+description: "Use when validating code quality after modifications -- SOLID compliance, DRY duplication, linter errors, architecture violations. Do NOT use for functional verification (run verification FIRST, then code-quality)."
 argument-hint: "[file-or-directory]"
 user-invocable: true
 ---
+
+<objective>
+Code Quality is the canonical 7-phase validation workflow shared with the `sniper` agent (this skill and `agents/sniper.md` must stay in sync): explore architecture, research documentation, analyze impact via Grep usages, detect duplication with jscpd (DRY), detect errors via linters, apply precision corrections informed by docs/impact/DRY findings, then re-verify until linters, tests, and duplication are all clean. It covers SOLID compliance, DRY thresholds, error priority (security/logic/performance/style), file-size limits, and architecture-pattern violations across all languages.
+
+It validates quality AFTER the fact -- it does not confirm the original problem was actually solved. Run the `verification` skill first to confirm functional resolution, then code-quality to confirm the fix is clean.
+</objective>
 
 # Code Quality Skill
 

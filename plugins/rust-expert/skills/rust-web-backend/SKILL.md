@@ -1,6 +1,6 @@
 ---
 name: rust-web-backend
-description: Use when building a REST/HTTP backend in Rust — routing, extractors, shared state, middleware, error responses, database access, and structured logging. Covers the 2026 standard stack axum + tokio + sqlx + tracing, plus honest alternatives (sea-orm, diesel). Do NOT use for raw async/concurrency questions (rust-async-concurrency) or crate selection across domains (rust-ecosystem-crates).
+description: Use when building a REST/HTTP backend in Rust — axum routing, extractors, shared state, middleware, error responses, sqlx database access. Not for raw async/concurrency (rust-async-concurrency).
 versions:
   axum: "0.8.9"
   tokio: "1.52"
@@ -11,6 +11,21 @@ user-invocable: false
 references: references/architecture.md, references/error-handling.md, references/database.md, references/observability.md, references/templates/rest-service.md
 related-skills: rust-async-concurrency, solid-rust
 ---
+
+<objective>
+This skill covers the 2026 standard Rust web-backend stack: axum 0.8.x routing (including
+the /{id} path syntax that replaced /:id) and extractors, sharing state via State<T>,
+composing tower-http middleware (trace, cors, timeout, compression), mapping domain errors
+to IntoResponse instead of unwrapping in handlers, and sqlx 0.9 database access with
+compile-time-checked query!/query_as! (including the .sqlx/ offline cache for CI).
+
+It also names the honest alternatives — sea-orm for an ActiveRecord-style ORM, diesel for a
+mature but synchronous alternative needing spawn_blocking — and structured observability via
+tracing.
+
+Out of scope: raw async/concurrency primitives (channels, locks, task spawning) belong to
+rust-async-concurrency; cross-domain crate selection belongs to rust-ecosystem-crates.
+</objective>
 
 # Rust Web Backend
 

@@ -1,9 +1,13 @@
 ---
 name: seo-entity
-description: Use when optimizing entity-based / semantic SEO 2026. Covers entity maps, Google Knowledge Graph resolution, salience scoring, passage-level ranking, about/sameAs/knowsAbout schema, Cloud Natural Language API validation.
+description: Use when optimizing entity-based / semantic SEO — Knowledge Graph resolution, salience scoring, about/sameAs/knowsAbout schema.
 user-invocable: false
 related-skills: seo, seo-schema, seo-geo, seo-content
 ---
+
+<objective>
+Covers entity-based/semantic SEO 2026: building an entity map (person/concept/organization/product) that inventories every entity a topic should cover, understanding NLP salience scoring (0-1, relative — entities on a page compete for a total that sums to ~1.0) and passage-level ranking, and wiring `about` (Wikidata URI), `sameAs`, and `knowsAbout` schema to resolve identity against the Knowledge Graph (~8 billion entities). Includes the Google Cloud Natural Language API validation step to confirm the primary entity wins salience before publishing. Distinct from seo-schema (general JSON-LD types/templates) and seo-content (topical coverage, answer capsules).
+</objective>
 
 # Entity-Based / Semantic SEO 2026
 

@@ -1,6 +1,6 @@
 ---
 name: astro-actions
-description: Expert Astro Server Actions — defineAction, astro:actions, Zod validation, ActionError, HTML form actions, accept form, progressive enhancement, redirect patterns. Use when handling form submissions, mutations, or any server-side logic with type safety.
+description: Use when handling form submissions, mutations, or server-side logic with type safety in Astro via defineAction / astro:actions.
 versions:
   astro: 7
   zod: 4
@@ -8,6 +8,12 @@ user-invocable: true
 references: references/overview.md, references/defining-actions.md, references/error-handling.md, references/forms.md, references/progressive-enhancement.md, references/templates/contact-form.md, references/templates/json-action.md
 related-skills: astro-7, astro-content, astro-islands
 ---
+
+<objective>
+Implements Astro Server Actions: `defineAction()` with Zod-validated `input`, the `astro:actions` client import for type-safe calls, standardized `ActionError` codes (UNAUTHORIZED, FORBIDDEN, NOT_FOUND, BAD_REQUEST, INTERNAL_SERVER_ERROR, CONFLICT, TOO_MANY_REQUESTS), `accept: 'form'` for direct HTML form submission, and progressive enhancement so forms work without JavaScript.
+
+Covers the full action lifecycle from `src/actions/index.ts` structure through error handling and redirect patterns. Does not cover Astro DB integration in depth (astro-db handles the database layer) or Content Layer schemas (astro-content) — this skill focuses on the request/validation/response boundary.
+</objective>
 
 # Astro Actions Expert
 

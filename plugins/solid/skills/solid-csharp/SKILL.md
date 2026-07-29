@@ -1,6 +1,6 @@
 ---
 name: solid-csharp
-description: "SOLID principles for C# 12/.NET 9. Files < 100 lines, interfaces separated, modular architecture. Contracts MANDATORY. Use when: writing or refactoring C#/.NET code, structuring Modules/[Feature]/ layers, or defining Contracts/ interfaces."
+description: "Use when writing or refactoring C#/.NET code, structuring Modules/[Feature]/ layers, or defining Contracts/ interfaces (SOLID, files < 100 lines)."
 versions:
   csharp: "12"
   dotnet: "9"
@@ -8,6 +8,12 @@ user-invocable: true
 references: references/principles.md, references/patterns.md
 related-skills: solid-detection
 ---
+
+<objective>
+SOLID C# enforces a modular architecture for C# 12/.NET 9 projects: every feature lives under `Modules/[Feature]/` (Controllers, Services, Repositories, Contracts, Models) with shared code centralized in `Core/`, contracts are mandatory and live only in `Contracts/` directories, and interfaces stay small (1-3 members). File limits are strict (100 lines, split at 90; controllers under 50).
+
+Before writing any new code it requires a DRY check -- grep the codebase and `Core/Services`/`Core/Contracts` for existing logic to reuse before creating something new. See `principles.md` for the 5 SOLID principles and `patterns.md` for directory layout, testing, and record usage.
+</objective>
 
 # SOLID C# - Modular Architecture
 

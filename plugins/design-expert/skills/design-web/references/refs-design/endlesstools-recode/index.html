@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Référence de design — page produit sombre</title>
+<link rel="preconnect" href="https://rsms.me">
+<link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+<link rel="stylesheet" href="styles.css">
+<script src="motion.js" defer></script>
+</head>
+<body>
+
+<!-- ============ Barre haute — sticky, masque en dégradé, pas de fond opaque ============ -->
+<div class="barre-haute">
+  <div class="barre-haute__interieur">
+    <span class="marque">Render Studio</span>
+    <nav class="barre-haute__actions">
+      <a class="pilule pilule--discrete" href="#tarifs">Sign in</a>
+      <a class="pilule pilule--pleine" href="#tarifs">Start for free</a>
+    </nav>
+  </div>
+</div>
+
+<main>
+
+  <!-- ============ 1. Ouverture ============ -->
+  <div class="ouverture">
+    <div class="colonne-etroite">
+      <div class="ouverture__texte">
+        <div data-apparition>
+          <h1 class="titre-1 ouverture__titre">Art direction<br>is now software.</h1>
+        </div>
+        <div data-apparition>
+          <p class="corps sourdine ouverture__accroche">Templates for real-time 3D, motion and visual content. Fully customizable. Ready to use.</p>
+        </div>
+      </div>
+      <div data-apparition class="ouverture__action">
+        <a class="bouton-plein" href="#tarifs">Start for free</a>
+      </div>
+    </div>
+
+    <!-- Scène : hauteur FIXE (1200px, 760px au-delà de 48rem), débordement masqué.
+         Elle contient une mosaïque de 20 vignettes en 6 colonnes, montée côté client dans
+         la source : le HTML servi n'en garde qu'un conteneur vide. Les valeurs ci-dessous
+         viennent du DOM hydraté de la page en ligne, pas de la capture statique.
+         Chaque vignette : image de couverture, vidéo de survol superposée, voile bas,
+         titre et étiquettes. -->
+    <div data-apparition class="scene">
+      <div class="mosaique">
+        <div class="mosaique__grille">
+
+          <div class="mosaique__colonne">
+            <a class="vignette" href="#tarifs">
+              <img class="vignette__image" alt="" loading="lazy" src="https://endlesstools.io/_next/image?url=https%3A%2F%2Fapi.endlesstools.io%2Fstorage%2Fv1%2Fobject%2Fpublic%2Ftemplates%2Ftemplates%2F05a1fbc9-722f-4ebe-9a97-5a480c71593c%2Fcover-1780560112691-mus3aonxu5.jpg&amp;w=640&amp;q=75">
+              <video class="vignette__survol" data-video-survol loop muted playsinline preload="none"
+                     data-src="https://api.endlesstools.io/storage/v1/object/public/templates/templates/05a1fbc9-722f-4ebe-9a97-5a480c71593c/hover-1780560125247-4lm1297v20b.mp4"></video>
+              <span class="vignette__voile" aria-hidden="true"></span>
+              <span class="vignette__legende">
+                <span class="vignette__titre">Digital Atrifact</span>
+                <span class="vignette__etiquettes"><span>graphic</span><span>contrast</span><span>symbol</span></span>
+              </span>
+            </a>
+            <a class="vignette" href="#tarifs">
+              <img class="vignette__image" alt="" loading="lazy" src="https://endlesstools.io/_next/image?url=https%3A%2F%2Fapi.endlesstools.io%2Fstorage%2Fv1%2Fobject%2Fpublic%2Ftemplates%2Ftemplates%2Fa31417d7-607d-4c02-ad4f-432a8931091f%2Fcover-1775119969797-al16jz3zrp.jpg&amp;w=640&amp;q=75">
+              <video class="vignette__survol" data-video-survol loop muted playsinline preload="none"
+                     data-src="https://api.endlesstools.io/storage/v1/object/public/templates/templates/a31417d7-607d-4c02-ad4f-432a8931091f/hover-1775119970353-g6epf17vjbb.mp4"></video>
+              <span class="vignette__voile" aria-hidden="true"></span>
+              <span class="vignette__legende">
+                <span class="vignette__titre">Liquid Metal</span>
+                <span class="vignette__etiquettes"><span>interactive</span><span>abstract</span><span>effect</span></span>
+              </span>
+            </a>
+            <a class="vignette" href="#tarifs">
+              <img class="vignette__image" alt="" loading="lazy" src="https://endlesstools.io/_next/image?url=https%3A%2F%2Fapi.endlesstools.io%2Fstorage%2Fv1%2Fobject%2Fpublic%2Ftemplates%2Ftemplates%2F64f4ca81-f4f1-4a3b-981f-f02c457b4eeb%2Fcover-1782219240010-liu7u9leco8.jpg&amp;w=640&amp;q=75">
+              <span class="vignette__voile" aria-hidden="true"></span>
+              <span class="vignette__legende">
+                <span class="vignette__titre">Heatwave</span>
+                <span class="vignette__etiquettes"><span>typography</span><span>hot</span><span>effects</span></span>
+              </span>
+            </a>
+            <a class="vignette" href="#tarifs">
+              <img class="vignette__image" alt="" loading="lazy" src="https://endlesstools.io/_next/image?url=https%3A%2F%2Fapi.endlesstools.io%2Fstorage%2Fv1%2Fobject%2Fpublic%2Ftemplates%2Ftemplates%2Fe224bf1c-f5ac-45bd-bd3c-c89ae8a89679%2Fcover-1774015551138-2rzhvwiq8hr.jpg&amp;w=640&amp;q=75">
+              <span class="vignette__voile" aria-hidden="true"></span>
+              <span class="vignette__legende">
+                <span class="vignette__titre">Frog</span>
+                <span class="vignette__etiquettes"><span>toon</span><span>contrast</span><span>symbol</span></span>
+              </span>
+            </a>
+          </div>
+
+          <div class="mosaique__colonne">
+            <a class="vignette" href="#tarifs">
+              <img class="vignette__image" alt="" loading="lazy" src="https://endlesstools.io/_next/image?url=https%3A%2F%2Fapi.endlesstools.io%2Fstorage%2Fv1%2Fobject%2Fpublic%2Ftemplates%2Ftemplates%2F30e47bac-8f68-4062-9b16-0dc0ef690b62%2Fcover-1775719543125-vbugcvua7ok.jpg&amp;w=640&amp;q=75">
+              <video class="vignette__survol" data-video-survol loop muted playsinline preload="none"
+                     data-src="https://api.endlesstools.io/storage/v1/object/public/templates/templates/30e47bac-8f68-4062-9b16-0dc0ef690b62/hover-1775719543499-5pxpn5cm1zq.mp4"></video>
+              <span class="vignette__voile" aria-hidden="true"></span>
+              <span class="vignette__legende">
+                <span class="vignette__titre">Earth &amp; Moon</span>
+                <span class="vignette__etiquettes"><span>interactive</span><span>shadow</span><span>embed</span></span>
+              </span>
+            </a>
+            <a class="vignette" href="#tarifs">
+              <img class="vignette__image" alt="" loading="lazy" src="https://endlesstools.io/_next/image?url=https%3A%2F%2Fapi.endlesstools.io%2Fstorage%2Fv1%2Fobject%2Fpublic%2Ftemplates%2Ftemplates%2Ff62b7acc-1606-40e9-81e3-b0988bb2d1d9%2Fcover-1769090891993-xegun59rg2p.jpg&amp;w=640&amp;q=75">
+              <video class="vignette__survol" data-video-survol loop muted playsinline preload="none"
+                     data-src="https://api.endlesstools.io/storage/v1/object/public/templates/templates/f62b7acc-1606-40e9-81e3-b0988bb2d1d9/hover-1769090892856-9bnri8sc73.mp4"></video>
+              <span class="vignette__voile" aria-hidden="true"></span>
+              <span class="vignette__legende">
+                <span class="vignette__titre">Lego Landscape</span>
+                <span class="vignette__etiquettes"><span>video</span><span>animation</span><span>effect</span></span>
+              </span>
+            </a>
+            <a class="vignette" href="#tarifs">
+              <img class="vignette__image" alt="" loading="lazy" src="https://endlesstools.io/_next/image?url=https%3A%2F%2Fapi.endlesstools.io%2Fstorage%2Fv1%2Fobject%2Fpublic%2Ftemplates%2Ftemplates%2F8b641176-8328-4fad-bdfc-ec074a1bd643%2Fcover-1774009677820-jb50gpv1oel.jpg&amp;w=640&amp;q=75">
+              <span class="vignette__voile" aria-hidden="true"></span>
+              <span class="vignette__legende">
+                <span class="vignette__titre">Color Flow</span>
+                <span class="vignette__etiquettes"><span>abstract</span><span>soft</span><span>animation</span></span>
+              </span>
+            </a>
+            <a class="vignette" href="#tarifs">
+              <img class="vignette__image" alt="" loading="lazy" src="https://endlesstools.io/_next/image?url=https%3A%2F%2Fapi.endlesstools.io%2Fstorage%2Fv1%2Fobject%2Fpublic%2Ftemplates%2Ftemplates%2Fead1fd0d-9da6-4edd-9e28-223876a7bbf5%2Fcover-1768995046818-ax6t0juld3p.jpg&amp;w=640&amp;q=75">
+              <span class="vignette__voile" aria-hidden="true"></span>
+              <span class="vignette__legende">
+                <span class="vignette__titre">Pixel World</span>
+                <span class="vignette__etiquettes"><span>8bit</span><span>3d</span><span>glass</span><span>collection</span></span>
+              </span>
+            </a>
+          </div>
+
+          <div class="mosaique__colonne">
+            <a class="vignette" href="#tarifs">
+              <img class="vignette__image" alt="" loading="lazy" src="https://endlesstools.io/_next/image?url=https%3A%2F%2Fapi.endlesstools.io%2Fstorage%2Fv1%2Fobject%2Fpublic%2Ftemplates%2Ftemplates%2Fc7cc4571-2624-46e3-b95b-b9e4d6d8d8a8%2Fcover-1776690954102-icvhpmumsn.jpg&amp;w=640&amp;q=75">
+              <video class="vignette__survol" data-video-survol loop muted playsinline preload="none"
+                     data-src="https://api.endlesstools.io/storage/v1/object/public/templates/templates/c7cc4571-2624-46e3-b95b-b9e4d6d8d8a8/hover-1776690954668-79p636utggu.mp4"></video>
+              <span class="vignette__voile" aria-hidden="true"></span>
+              <span class="vignette__legende">
+                <span class="vignette__titre">Modern Forms</span>
+                <span class="vignette__etiquettes"><span>abstract</span><span>3d</span><span>collection</span></span>
+              </span>
+            </a>
+            <a class="vignette" href="#tarifs">
+              <img class="vignette__image" alt="" loading="lazy" src="https://endlesstools.io/_next/image?url=https%3A%2F%2Fapi.endlesstools.io%2Fstorage%2Fv1%2Fobject%2Fpublic%2Ftemplates%2Ftemplates%2Fadb39422-9284-4b9b-bff1-c2bac96316d8%2Fcover-1774353457277-aah807dwyzu.jpg&amp;w=640&amp;q=75">
+              <video class="vignette__survol" data-video-survol loop muted playsinline preload="none"
+                     data-src="https://api.endlesstools.io/storage/v1/object/public/templates/templates/adb39422-9284-4b9b-bff1-c2bac96316d8/hover-1774353130674-z1s2mzg6bb.mp4"></video>
+              <span class="vignette__voile" aria-hidden="true"></span>
+              <span class="vignette__legende">
+                <span class="vignette__titre">Smileys</span>
+                <span class="vignette__etiquettes"><span>loop</span><span>trail</span><span>animation</span></span>
+              </span>
+            </a>
+            <a class="vignette" href="#tarifs">
+              <img class="vignette__image" alt="" loading="lazy" src="https://endlesstools.io/_next/image?url=https%3A%2F%2Fapi.endlesstools.io%2Fstorage%2Fv1%2Fobject%2Fpublic%2Ftemplates%2Ftemplates%2F1eec58ea-3dd3-424e-8fb4-28d4bdd2af85%2Fcover-1768907592004-uafw02dtzsp.jpg&amp;w=640&amp;q=75">
+              <span class="vignette__voile" aria-hidden="true"></span>
+              <span class="vignette__legende">
+                <span class="vignette__titre">Say 👋</span>
+                <span class="vignette__etiquettes"><span>text</span><span>wide-angle</span><span>serif</span></span>
+              </span>
+            </a>
+          </div>
+
+          <div class="mosaique__colonne">
+            <a class="vignette" href="#tarifs">
+              <img class="vignette__image" alt="" loading="lazy" src="https://endlesstools.io/_next/image?url=https%3A%2F%2Fapi.endlesstools.io%2Fstorage%2Fv1%2Fobject%2Fpublic%2Ftemplates%2Ftemplates%2F39dcd01e-072a-47a9-a9e6-e146c09eb763%2Fcover-1774362244258-ytsj8odiyqs.jpg&amp;w=640&amp;q=75">
+              <video class="vignette__survol" data-video-survol loop muted playsinline preload="none"
+                     data-src="https://api.endlesstools.io/storage/v1/object/public/templates/templates/39dcd01e-072a-47a9-a9e6-e146c09eb763/hover-1774362245102-vfargs7qt6q.mp4"></video>
+              <span class="vignette__voile" aria-hidden="true"></span>
+              <span class="vignette__legende">
+                <span class="vignette__titre">System Error</span>
+                <span class="vignette__etiquettes"><span>halftone</span><span>monitor</span><span>classic</span></span>
+              </span>
+            </a>
+            <a class="vignette" href="#tarifs">
+              <img class="vignette__image" alt="" loading="lazy" src="https://endlesstools.io/_next/image?url=https%3A%2F%2Fapi.endlesstools.io%2Fstorage%2Fv1%2Fobject%2Fpublic%2Ftemplates%2Ftemplates%2F1d5e21e0-28c2-4ac1-bd1f-4abbce4b5a30%2Fcover-1775120942673-ubbtvgpk1x.jpg&amp;w=640&amp;q=75">
+              <video class="vignette__survol" data-video-survol loop muted playsinline preload="none"
+                     data-src="https://api.endlesstools.io/storage/v1/object/public/templates/templates/1d5e21e0-28c2-4ac1-bd1f-4abbce4b5a30/hover-1775120943134-pjs88b7wem.mp4"></video>
+              <span class="vignette__voile" aria-hidden="true"></span>
+              <span class="vignette__legende">
+                <span class="vignette__titre">Ampelmann</span>
+                <span class="vignette__etiquettes"><span>halftone</span><span>bloom</span><span>symbol</span></span>
+              </span>
+            </a>
+            <a class="vignette" href="#tarifs">
+              <img class="vignette__image" alt="" loading="lazy" src="https://endlesstools.io/_next/image?url=https%3A%2F%2Fapi.endlesstools.io%2Fstorage%2Fv1%2Fobject%2Fpublic%2Ftemplates%2Ftemplates%2Fac79d975-83f6-47a1-8bd7-587df9e08ae5%2Fcover-1769173148160-euh31dmd3a.jpg&amp;w=640&amp;q=75">
+              <span class="vignette__voile" aria-hidden="true"></span>
+              <span class="vignette__legende">
+                <span class="vignette__titre">Ancient Drama</span>
+                <span class="vignette__etiquettes"><span>shadow</span><span>depth of field</span><span>realistic</span></span>
+              </span>
+            </a>
+          </div>
+
+          <div class="mosaique__colonne">
+            <a class="vignette" href="#tarifs">
+              <img class="vignette__image" alt="" loading="lazy" src="https://endlesstools.io/_next/image?url=https%3A%2F%2Fapi.endlesstools.io%2Fstorage%2Fv1%2Fobject%2Fpublic%2Ftemplates%2Ftemplates%2F433e51a7-fa68-42da-b006-41761186e2fa%2Fcover-1774628377590-iw2fzjbnej.jpg&amp;w=640&amp;q=75">
+              <video class="vignette__survol" data-video-survol loop muted playsinline preload="none"
+                     data-src="https://api.endlesstools.io/storage/v1/object/public/templates/templates/433e51a7-fa68-42da-b006-41761186e2fa/hover-1774628371601-h718150gj79.mp4"></video>
+              <span class="vignette__voile" aria-hidden="true"></span>
+              <span class="vignette__legende">
+                <span class="vignette__titre">Digital Knight</span>
+                <span class="vignette__etiquettes"><span>animation</span><span>halftone</span><span>video</span></span>
+              </span>
+            </a>
+            <a class="vignette" href="#tarifs">
+              <img class="vignette__image" alt="" loading="lazy" src="https://endlesstools.io/_next/image?url=https%3A%2F%2Fapi.endlesstools.io%2Fstorage%2Fv1%2Fobject%2Fpublic%2Ftemplates%2Ftemplates%2F90ce8102-bb09-427d-afc3-0805e3c75ca2%2Fcover-1774359758274-uw5p1vkimv.jpg&amp;w=640&amp;q=75">
+              <video class="vignette__survol" data-video-survol loop muted playsinline preload="none"
+                     data-src="https://api.endlesstools.io/storage/v1/object/public/templates/templates/90ce8102-bb09-427d-afc3-0805e3c75ca2/hover-1774359758612-egxc3vqrte9.mp4"></video>
+              <span class="vignette__voile" aria-hidden="true"></span>
+              <span class="vignette__legende">
+                <span class="vignette__titre">Thanks</span>
+                <span class="vignette__etiquettes"><span>16-bit</span><span>classic</span><span>text</span></span>
+              </span>
+            </a>
+            <a class="vignette" href="#tarifs">
+              <img class="vignette__image" alt="" loading="lazy" src="https://endlesstools.io/_next/image?url=https%3A%2F%2Fapi.endlesstools.io%2Fstorage%2Fv1%2Fobject%2Fpublic%2Ftemplates%2Ftemplates%2Fa51a9db8-d7bb-467e-87f4-fd5ff5a5d0b9%2Fcover-1774520323373-c0464oom3n9.jpg&amp;w=640&amp;q=75">
+              <span class="vignette__voile" aria-hidden="true"></span>
+              <span class="vignette__legende">
+                <span class="vignette__titre">Retro Futuristic</span>
+                <span class="vignette__etiquettes"><span>collection</span><span>extrude</span><span>future</span></span>
+              </span>
+            </a>
+          </div>
+
+          <div class="mosaique__colonne">
+            <a class="vignette" href="#tarifs">
+              <img class="vignette__image" alt="" loading="lazy" src="https://endlesstools.io/_next/image?url=https%3A%2F%2Fapi.endlesstools.io%2Fstorage%2Fv1%2Fobject%2Fpublic%2Ftemplates%2Ftemplates%2Fa1bdab93-12af-4170-b832-6d6b7f0adf9a%2Fcover-1774357205758-yti3utqt31.jpg&amp;w=640&amp;q=75">
+              <video class="vignette__survol" data-video-survol loop muted playsinline preload="none"
+                     data-src="https://api.endlesstools.io/storage/v1/object/public/templates/templates/a1bdab93-12af-4170-b832-6d6b7f0adf9a/hover-1774357305766-v8tjnqr11l.mp4"></video>
+              <span class="vignette__voile" aria-hidden="true"></span>
+              <span class="vignette__legende">
+                <span class="vignette__titre">Dream</span>
+                <span class="vignette__etiquettes"><span>chrome</span><span>glow</span><span>gothic</span></span>
+              </span>
+            </a>
+            <a class="vignette" href="#tarifs">
+              <img class="vignette__image" alt="" loading="lazy" src="https://endlesstools.io/_next/image?url=https%3A%2F%2Fapi.endlesstools.io%2Fstorage%2Fv1%2Fobject%2Fpublic%2Ftemplates%2Ftemplates%2Ff8acb4ab-d766-4344-a1a1-cc37d5184ea8%2Fcover-1769505211486-qo4uq6bcvs8.jpg&amp;w=640&amp;q=75">
+              <video class="vignette__survol" data-video-survol loop muted playsinline preload="none"
+                     data-src="https://api.endlesstools.io/storage/v1/object/public/templates/templates/f8acb4ab-d766-4344-a1a1-cc37d5184ea8/hover-1769507755840-f6au6ijra8m.mp4"></video>
+              <span class="vignette__voile" aria-hidden="true"></span>
+              <span class="vignette__legende">
+                <span class="vignette__titre">Eyeball</span>
+                <span class="vignette__etiquettes"><span>interactive</span><span>embed</span><span>3d</span></span>
+              </span>
+            </a>
+            <a class="vignette" href="#tarifs">
+              <img class="vignette__image" alt="" loading="lazy" src="https://endlesstools.io/_next/image?url=https%3A%2F%2Fapi.endlesstools.io%2Fstorage%2Fv1%2Fobject%2Fpublic%2Ftemplates%2Ftemplates%2F9b79fb80-25b1-4aa0-baab-18509c71af7a%2Fcover-1768916960185-mxdatqx9oi.jpg&amp;w=640&amp;q=75">
+              <span class="vignette__voile" aria-hidden="true"></span>
+              <span class="vignette__legende">
+                <span class="vignette__titre">Acid Skull</span>
+                <span class="vignette__etiquettes"><span>toon</span><span>artwork</span><span>3d</span></span>
+              </span>
+            </a>
+          </div>
+
+        </div>
+      </div>
+      <div class="scene__voile" aria-hidden="true"></div>
+    </div>
+  </div>
+
+  <!-- ============ 2. Démonstration ============ -->
+  <div class="demonstration" id="demo">
+    <div class="entete-centre">
+      <h2 class="titre-1 entete-centre__titre">A new way to create pro-level design content.</h2>
+      <p class="corps sourdine entete-centre__accroche">Built to give you full control over the final look.</p>
+    </div>
+    <div class="demonstration__cadre">
+      <div class="cadre-video" style="--ratio:73.4285%">
+        <video data-video-differee loop muted playsinline
+               preload="none" data-src="https://endlesstools.io/videos/main.mp4"></video>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ 3. Grille de fonctions — 8 vignettes carrées ============ -->
+  <section class="fonctions" id="fonctions">
+    <div class="fonctions__interieur">
+      <div data-apparition>
+        <h2 class="titre-1 fonctions__titre">Everything you need for art-directed design.</h2>
+      </div>
+      <div class="grille-fonctions">
+        <article data-apparition class="fonction">
+          <div class="fonction__vignette"><img alt="" loading="lazy" src="https://endlesstools.io/_next/image?url=%2Ffeatures%2Fnew%2F01.png&amp;w=1080&amp;q=75"></div>
+          <h3 class="sous-titre">3D Extrude</h3>
+          <p class="legende sourdine">Make your vectors 3D or browse shapes from the Noun Project</p>
+        </article>
+        <article data-apparition class="fonction">
+          <div class="fonction__vignette"><img alt="" loading="lazy" src="https://endlesstools.io/_next/image?url=%2Ffeatures%2Fnew%2F02.png&amp;w=1080&amp;q=75"></div>
+          <h3 class="sous-titre">AI 3D Generation</h3>
+          <p class="legende sourdine">Generate 3D models with AI or browse our model collections</p>
+        </article>
+        <article data-apparition class="fonction">
+          <div class="fonction__vignette"><img alt="" loading="lazy" src="https://endlesstools.io/_next/image?url=%2Ffeatures%2Fnew%2F03.png&amp;w=1080&amp;q=75"></div>
+          <h3 class="sous-titre">Visual Effects</h3>
+          <p class="legende sourdine">Add animated real-time effects to images, videos, or 3D scenes</p>
+        </article>
+        <article data-apparition class="fonction">
+          <div class="fonction__vignette"><img alt="" loading="lazy" src="https://endlesstools.io/_next/image?url=%2Ffeatures%2Fnew%2F04.png&amp;w=1080&amp;q=75"></div>
+          <h3 class="sous-titre">3D Text</h3>
+          <p class="legende sourdine">Create and animate 3D typography using a curated font collection</p>
+        </article>
+        <article data-apparition class="fonction">
+          <div class="fonction__vignette"><img alt="" loading="lazy" src="https://endlesstools.io/_next/image?url=%2Ffeatures%2Fnew%2F05.png&amp;w=1080&amp;q=75"></div>
+          <h3 class="sous-titre">AI Textures</h3>
+          <p class="legende sourdine">Generate realistic textures with AI and apply them to any 3D model</p>
+        </article>
+        <article data-apparition class="fonction">
+          <div class="fonction__vignette"><img alt="" loading="lazy" src="https://endlesstools.io/_next/image?url=%2Ffeatures%2Fnew%2F06.png&amp;w=1080&amp;q=75"></div>
+          <h3 class="sous-titre">Embeds</h3>
+          <p class="legende sourdine">Embed interactive scenes and effects directly into your website</p>
+        </article>
+        <article data-apparition class="fonction">
+          <div class="fonction__vignette"><img alt="" loading="lazy" src="https://endlesstools.io/_next/image?url=%2Ffeatures%2Fnew%2F07.png&amp;w=1080&amp;q=75"></div>
+          <h3 class="sous-titre">8K Render</h3>
+          <p class="legende sourdine">Export high-quality 8K images ready for commercial use</p>
+        </article>
+        <article data-apparition class="fonction">
+          <div class="fonction__vignette"><img alt="" loading="lazy" src="https://endlesstools.io/_next/image?url=%2Ffeatures%2Fnew%2F08.png&amp;w=1080&amp;q=75"></div>
+          <h3 class="sous-titre">Post-processing</h3>
+          <p class="legende sourdine">Add post-processing effects to images, videos, and animations</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 4. Tarifs ============ -->
+  <section class="tarifs" id="tarifs">
+    <div class="tarifs__interieur">
+      <hgroup class="entete-centre">
+        <div data-apparition><h2 class="titre-1 entete-large">Try it free before going PRO.</h2></div>
+        <div data-apparition><p class="corps sourdine tarifs__accroche">Free 3-day trial with access to core features.</p></div>
+      </hgroup>
+
+      <div data-apparition>
+        <div class="bascule__enveloppe">
+          <div class="bascule">
+            <button class="bascule__option" type="button" disabled>Yearly <span class="etiquette-promo">Save 17%</span></button>
+            <button class="bascule__option" type="button">Monthly</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="rail" data-rail>
+        <div class="rail__piste rail__piste--tarifs">
+          <div data-apparition class="rail__cellule rail__cellule--tarif">
+            <div class="carte-tarif carte-tarif--espacee">
+              <div><span class="jeton">FREE</span></div>
+              <p class="titre-2">Basic access to core features for 3 days — explore, test, and play with Render Studio.</p>
+              <div><a class="bouton-large" href="#tarifs">Start for free</a></div>
+            </div>
+          </div>
+          <div data-apparition class="rail__cellule rail__cellule--tarif">
+            <div class="carte-tarif">
+              <div class="carte-tarif__entete">
+                <span class="jeton jeton--plein">PRO</span>
+                <div class="carte-tarif__prix">
+                  <div class="titre-2 carte-tarif__montant">$20 /month</div>
+                  <div class="legende sourdine carte-tarif__mention">Billed annually $249.99</div>
+                </div>
+              </div>
+              <ul class="liste-inclus">
+                <li>
+                  <img class="liste-inclus__icone" alt="" width="15" height="15" loading="lazy" src="https://endlesstools.io/_next/static/media/PlanAiGeneration.eecd5a62.svg">
+                  <span class="liste-inclus__titre">AI Generation</span>
+                  <span class="sourdine">500 AI credits /month<br>3D models • PBR textures • Variations • Style presets</span>
+                </li>
+                <li>
+                  <img class="liste-inclus__icone" alt="" width="15" height="15" loading="lazy" src="https://endlesstools.io/_next/static/media/PlanExport.98ac4c49.svg">
+                  <span class="liste-inclus__titre">Export</span>
+                  <span class="sourdine">Commercial use, no watermarks<br>Up to 8K images • Video Export • USDZ • GLB • Web embeds • Alpha</span>
+                </li>
+                <li>
+                  <img class="liste-inclus__icone" alt="" width="13" height="13" loading="lazy" src="https://endlesstools.io/_next/static/media/PlanEffects.63e7c6ec.svg">
+                  <span class="liste-inclus__titre">Visual Effects</span>
+                  <span class="sourdine">Real-time effects • Video textures • Stackable effects</span>
+                </li>
+                <li>
+                  <img class="liste-inclus__icone" alt="" width="15" height="15" loading="lazy" src="https://endlesstools.io/_next/static/media/PlanAssets.f5f4413e.svg">
+                  <span class="liste-inclus__titre">Assets</span>
+                  <span class="sourdine">3D import • Animated objects • Custom materials • Noun Project library</span>
+                </li>
+                <li>
+                  <img class="liste-inclus__icone" alt="" width="15" height="15" loading="lazy" src="https://endlesstools.io/_next/static/media/PlanStorage.e3d43171.svg">
+                  <span class="liste-inclus__titre">Storage</span>
+                  <span class="sourdine">Project saving • Personal cloud</span>
+                </li>
+                <li>
+                  <img class="liste-inclus__icone" alt="" width="15" height="15" loading="lazy" src="https://endlesstools.io/_next/static/media/PlanHeart.7717a003.svg">
+                  <span class="liste-inclus__titre">Unlimited Access to Templates</span>
+                  <span class="sourdine">Full template library • Fully customizable • Regular updates</span>
+                </li>
+              </ul>
+              <div class="carte-tarif__pied"><a class="bouton-large bouton-large--degrade" href="#tarifs">Go PRO</a></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 5. Témoignages — 14 cartes, 7 vidéos + 7 images ============ -->
+  <section class="temoignages" id="avis">
+    <hgroup class="entete-centre entete-centre--avis">
+      <div data-apparition><h2 class="titre-1 entete-large">Created with Render Studio</h2></div>
+      <div data-apparition><p class="corps sourdine temoignages__accroche">Used by freelancers and top agencies worldwide. Here's what people create with Render Studio.</p></div>
+    </hgroup>
+
+    <div class="temoignages__cadre">
+      <div class="temoignages__debord">
+        <div class="rail" data-rail>
+          <div class="rail__piste rail__piste--avis">
+
+            <!-- 01 -->
+            <div class="rail__cellule rail__cellule--avis">
+              <article class="carte-avis">
+                <header class="carte-avis__auteur">
+                  <span class="avatar"><img alt="" loading="lazy" src="https://endlesstools.io/_next/image?url=%2Ftweets%2FKeRz57wj_x96.jpg&amp;w=128&amp;q=75"></span>
+                  <span class="carte-avis__identite">
+                    <span class="carte-avis__nom">Compte A<img class="badge" alt="" width="12" height="12" loading="lazy" src="https://endlesstools.io/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FDone.18165df3.png&amp;w=32&amp;q=75"></span>
+                    <span class="legende sourdine">@compte-a</span>
+                  </span>
+                </header>
+                <p class="corps carte-avis__texte">Thank you page, put together in one evening.</p>
+                <div class="cadre-video cadre-video--carte" style="--ratio:58.44%">
+                  <video data-video-differee loop muted playsinline preload="none"
+                         data-src="https://endlesstools.io/tweets/Sang%20-%201986115678320099499%20-%201848x1080.mp4"></video>
+                </div>
+              </article>
+            </div>
+
+            <!-- 02 -->
+            <div class="rail__cellule rail__cellule--avis">
+              <article class="carte-avis">
+                <header class="carte-avis__auteur">
+                  <span class="avatar"><img alt="" loading="lazy" src="https://endlesstools.io/_next/image?url=%2Ftweets%2Fz3e-DVr8_x96.jpg&amp;w=128&amp;q=75"></span>
+                  <span class="carte-avis__identite">
+                    <span class="carte-avis__nom">Compte B<img class="badge" alt="" width="12" height="12" loading="lazy" src="https://endlesstools.io/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FDone.18165df3.png&amp;w=32&amp;q=75"></span>
+                    <span class="legende sourdine">@compte-b</span>
+                  </span>
+                </header>
+                <p class="corps carte-avis__texte">first landing page assembled last night. what do you think of the mark?</p>
+                <div class="cadre-video cadre-video--carte" style="--ratio:73.66%">
+                  <video data-video-differee loop muted playsinline preload="none"
+                         data-src="https://endlesstools.io/tweets/kirill%20-%201967696811386343744%20-%201466x1080.mp4"></video>
+                </div>
+              </article>
+            </div>
+
+            <!-- 03 -->
+            <div class="rail__cellule rail__cellule--avis">
+              <article class="carte-avis">
+                <header class="carte-avis__auteur">
+                  <span class="avatar"><img alt="" loading="lazy" src="https://endlesstools.io/_next/image?url=%2Ftweets%2Fv2e4e_hb_x96.jpg&amp;w=128&amp;q=75"></span>
+                  <span class="carte-avis__identite">
+                    <span class="carte-avis__nom">Compte C<img class="badge" alt="" width="12" height="12" loading="lazy" src="https://endlesstools.io/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FDone.18165df3.png&amp;w=32&amp;q=75"></span>
+                    <span class="legende sourdine">@compte-c</span>
+                  </span>
+                </header>
+                <p class="corps carte-avis__texte">been playing with this for two weeks<br><br>and honestly impressed by how it nails the balance between fun, simplicity, and quality. just look at this shiny</p>
+                <div class="cadre-video cadre-video--carte" style="--ratio:56.047904%">
+                  <video data-video-differee loop muted playsinline preload="none"
+                         data-src="https://endlesstools.io/tweets/Alex%20Burdin%20-%201978898680158527687%20-%201670x936.mp4"></video>
+                </div>
+              </article>
+            </div>
+
+            <!-- 04 -->
+            <div class="rail__cellule rail__cellule--avis">
+              <article class="carte-avis">
+                <header class="carte-avis__auteur">
+                  <span class="avatar"><img alt="" loading="lazy" src="https://endlesstools.io/_next/image?url=%2Ftweets%2F03-avatar.jpg&amp;w=128&amp;q=75"></span>
+                  <span class="carte-avis__identite">
+                    <span class="carte-avis__nom">Compte D<img class="badge" alt="" width="12" height="12" loading="lazy" src="https://endlesstools.io/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FDone.18165df3.png&amp;w=32&amp;q=75"></span>
+                    <span class="legende sourdine">@compte-d</span>
+                  </span>
+                </header>
+                <p class="corps carte-avis__texte">Meet Ancient Artifacts—a ready-to-use exhibition landing page template crafted for the occasion. It features interactive 3D embeds, clean typography, a harmonious color palette, and dynamic animations.</p>
+                <div class="cadre-image" style="--ratio:56.25%">
+                  <img alt="" loading="lazy" src="https://endlesstools.io/_next/image?url=%2Ftweets%2F08.jpg&amp;w=1080&amp;q=75">
+                </div>
+              </article>
+            </div>
+
+            <!-- 05 — sans badge de vérification -->
+            <div class="rail__cellule rail__cellule--avis">
+              <article class="carte-avis">
+                <header class="carte-avis__auteur">
+                  <span class="avatar"><img alt="" loading="lazy" src="https://endlesstools.io/_next/image?url=%2Ftweets%2F09-avatar.jpg&amp;w=128&amp;q=75"></span>
+                  <span class="carte-avis__identite">
+                    <span class="carte-avis__nom">Compte E</span>
+                    <span class="legende sourdine">@compte-e</span>
+                  </span>
+                </header>
+                <p class="corps carte-avis__texte">that's pretty cool honestly</p>
+                <div class="cadre-video cadre-video--carte" style="--ratio:74.380165%">
+                  <video data-video-differee loop muted playsinline preload="none"
+                         data-src="https://endlesstools.io/tweets/09.mp4"></video>
+                </div>
+              </article>
+            </div>
+
+            <!-- 06 — sans badge -->
+            <div class="rail__cellule rail__cellule--avis">
+              <article class="carte-avis">
+                <header class="carte-avis__auteur">
+                  <span class="avatar"><img alt="" loading="lazy" src="https://endlesstools.io/_next/image?url=%2Ftweets%2F01-avatar.jpg&amp;w=128&amp;q=75"></span>
+                  <span class="carte-avis__identite">
+                    <span class="carte-avis__nom">Compte F</span>
+                    <span class="legende sourdine">@compte-f</span>
+                  </span>
+                </header>
+                <p class="corps carte-avis__texte">C'maaaaaaaaaaaan</p>
+                <div class="cadre-video cadre-video--carte" style="--ratio:57.324841%">
+                  <video data-video-differee loop muted playsinline preload="none"
+                         data-src="https://endlesstools.io/tweets/01.mp4"></video>
+                </div>
+              </article>
+            </div>
+
+            <!-- 07 -->
+            <div class="rail__cellule rail__cellule--avis">
+              <article class="carte-avis">
+                <header class="carte-avis__auteur">
+                  <span class="avatar"><img alt="" loading="lazy" src="https://endlesstools.io/_next/image?url=%2Ftweets%2F03-avatar.jpg&amp;w=128&amp;q=75"></span>
+                  <span class="carte-avis__identite">
+                    <span class="carte-avis__nom">Compte D<img class="badge" alt="" width="12" height="12" loading="lazy" src="https://endlesstools.io/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FDone.18165df3.png&amp;w=32&amp;q=75"></span>
+                    <span class="legende sourdine">@compte-d</span>
+                  </span>
+                </header>
+                <p class="corps carte-avis__texte">Introducing The Newold — a fresh pitch presentation template featuring interactive, draggable elements, muted color palette, seamless animations, and 3D objects made for the occasion.<br><br>It's a ready-to-use and fully customizable template, allowing you to tailor it perfectly to…</p>
+                <div class="cadre-image" style="--ratio:56.25%">
+                  <img alt="" loading="lazy" src="https://endlesstools.io/_next/image?url=%2Ftweets%2F03.jpg&amp;w=1080&amp;q=75">
+                </div>
+              </article>
+            </div>
+
+            <!-- 08 -->
+            <div class="rail__cellule rail__cellule--avis">
+              <article class="carte-avis">
+                <header class="carte-avis__auteur">
+                  <span class="avatar"><img alt="" loading="lazy" src="https://endlesstools.io/_next/image?url=%2Ftweets%2F04-avatar.jpg&amp;w=128&amp;q=75"></span>
+                  <span class="carte-avis__identite">
+                    <span class="carte-avis__nom">Compte G<img class="badge" alt="" width="12" height="12" loading="lazy" src="https://endlesstools.io/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FDone.18165df3.png&amp;w=32&amp;q=75"></span>
+                    <span class="legende sourdine">@compte-g</span>
+                  </span>
+                </header>
+                <p class="corps carte-avis__texte">Having too much fun with that image tool x 3D tool combo</p>
+                <div class="cadre-image" style="--ratio:50%">
+                  <img alt="" loading="lazy" src="https://endlesstools.io/_next/image?url=%2Ftweets%2F04.jpg&amp;w=1080&amp;q=75">
+                </div>
+              </article>
+            </div>
+
+            <!-- 09 -->
+            <div class="rail__cellule rail__cellule--avis">
+              <article class="carte-avis">
+                <header class="carte-avis__auteur">
+                  <span class="avatar"><img alt="" loading="lazy" src="https://endlesstools.io/_next/image?url=%2Ftweets%2F05-avatar.jpg&amp;w=128&amp;q=75"></span>
+                  <span class="carte-avis__identite">
+                    <span class="carte-avis__nom">Compte H<img class="badge" alt="" width="12" height="12" loading="lazy" src="https://endlesstools.io/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FDone.18165df3.png&amp;w=32&amp;q=75"></span>
+                    <span class="legende sourdine">@compte-h</span>
+                  </span>
+                </header>
+                <p class="corps carte-avis__texte">The beauty of building onchain is that other apps can plug in and build experiences on top of yours.<br><br>Posts published here can now be minted from another app</p>
+                <div class="cadre-video cadre-video--carte" style="--ratio:100%">
+                  <video data-video-differee loop muted playsinline preload="none"
+                         data-src="https://endlesstools.io/tweets/05.mp4"></video>
+                </div>
+              </article>
+            </div>
+
+            <!-- 10 -->
+            <div class="rail__cellule rail__cellule--avis">
+              <article class="carte-avis">
+                <header class="carte-avis__auteur">
+                  <span class="avatar"><img alt="" loading="lazy" src="https://endlesstools.io/_next/image?url=%2Ftweets%2F06-avatar.jpg&amp;w=128&amp;q=75"></span>
+                  <span class="carte-avis__identite">
+                    <span class="carte-avis__nom">Compte I<img class="badge" alt="" width="12" height="12" loading="lazy" src="https://endlesstools.io/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FDone.18165df3.png&amp;w=32&amp;q=75"></span>
+                    <span class="legende sourdine">@compte-i</span>
+                  </span>
+                </header>
+                <p class="corps carte-avis__texte">Rapid identity and web for a UAE based consulting project focusing on car-sharing, ride hailing, predictive maintenance.</p>
+                <div class="cadre-image" style="--ratio:50%">
+                  <img alt="" loading="lazy" src="https://endlesstools.io/_next/image?url=%2Ftweets%2F06.jpg&amp;w=1080&amp;q=75">
+                </div>
+              </article>
+            </div>
+
+            <!-- 11 -->
+            <div class="rail__cellule rail__cellule--avis">
+              <article class="carte-avis">
+                <header class="carte-avis__auteur">
+                  <span class="avatar"><img alt="" loading="lazy" src="https://endlesstools.io/_next/image?url=%2Ftweets%2F02-avatar.jpg&amp;w=128&amp;q=75"></span>
+                  <span class="carte-avis__identite">
+                    <span class="carte-avis__nom">Compte J<img class="badge" alt="" width="12" height="12" loading="lazy" src="https://endlesstools.io/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FDone.18165df3.png&amp;w=32&amp;q=75"></span>
+                    <span class="legende sourdine">@compte-j</span>
+                  </span>
+                </header>
+                <p class="corps carte-avis__texte">Thank you for making these real. ❤️</p>
+                <div class="cadre-image" style="--ratio:75%">
+                  <img alt="" loading="lazy" src="https://endlesstools.io/_next/image?url=%2Ftweets%2F07.jpg&amp;w=1080&amp;q=75">
+                </div>
+              </article>
+            </div>
+
+            <!-- 12 -->
+            <div class="rail__cellule rail__cellule--avis">
+              <article class="carte-avis">
+                <header class="carte-avis__auteur">
+                  <span class="avatar"><img alt="" loading="lazy" src="https://endlesstools.io/_next/image?url=%2Ftweets%2F10-avatar.jpg&amp;w=128&amp;q=75"></span>
+                  <span class="carte-avis__identite">
+                    <span class="carte-avis__nom">Compte K<img class="badge" alt="" width="12" height="12" loading="lazy" src="https://endlesstools.io/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FDone.18165df3.png&amp;w=32&amp;q=75"></span>
+                    <span class="legende sourdine">@compte-k</span>
+                  </span>
+                </header>
+                <p class="corps carte-avis__texte">This tool is wild. Makes mocking up 3D concepts so simple. This is not a paid ad although I wish it was. Why are kids cavities so expensive??</p>
+                <div class="cadre-image" style="--ratio:49.867374%">
+                  <img alt="" loading="lazy" src="https://endlesstools.io/_next/image?url=%2Ftweets%2F10.jpg&amp;w=1080&amp;q=75">
+                </div>
+              </article>
+            </div>
+
+            <!-- 13 -->
+            <div class="rail__cellule rail__cellule--avis">
+              <article class="carte-avis">
+                <header class="carte-avis__auteur">
+                  <span class="avatar"><img alt="" loading="lazy" src="https://endlesstools.io/_next/image?url=%2Ftweets%2F11-avatar.jpg&amp;w=128&amp;q=75"></span>
+                  <span class="carte-avis__identite">
+                    <span class="carte-avis__nom">Compte L<img class="badge" alt="" width="12" height="12" loading="lazy" src="https://endlesstools.io/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FDone.18165df3.png&amp;w=32&amp;q=75"></span>
+                    <span class="legende sourdine">@compte-l</span>
+                  </span>
+                </header>
+                <p class="corps carte-avis__texte">I tried something new. A lovely 3D design tool.<br><br>The result is awesome! 🤩</p>
+                <div class="cadre-image" style="--ratio:57.692308%">
+                  <img alt="" loading="lazy" src="https://endlesstools.io/_next/image?url=%2Ftweets%2F11.jpg&amp;w=1080&amp;q=75">
+                </div>
+              </article>
+            </div>
+
+            <!-- 14 -->
+            <div class="rail__cellule rail__cellule--avis">
+              <article class="carte-avis">
+                <header class="carte-avis__auteur">
+                  <span class="avatar"><img alt="" loading="lazy" src="https://endlesstools.io/_next/image?url=%2Ftweets%2F02-avatar.jpg&amp;w=128&amp;q=75"></span>
+                  <span class="carte-avis__identite">
+                    <span class="carte-avis__nom">Compte J<img class="badge" alt="" width="12" height="12" loading="lazy" src="https://endlesstools.io/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FDone.18165df3.png&amp;w=32&amp;q=75"></span>
+                    <span class="legende sourdine">@compte-j</span>
+                  </span>
+                </header>
+                <p class="corps carte-avis__texte">Found this through a tool roundup<br><br>Now I am making some insane interactions through my websites.</p>
+                <div class="cadre-video cadre-video--carte" style="--ratio:69.632495%">
+                  <video data-video-differee loop muted playsinline preload="none"
+                         data-src="https://endlesstools.io/tweets/12.mp4"></video>
+                </div>
+              </article>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="rail__commandes">
+          <button class="rail__fleche" type="button" data-rail-pas="-1" aria-label="Précédent">
+            <img alt="" width="6" height="10" loading="lazy" src="https://endlesstools.io/_next/static/media/ArrowLeft.ff68b2fe.svg">
+          </button>
+          <div class="rail__jauge"><div class="rail__jauge-remplissage" data-rail-jauge></div></div>
+          <button class="rail__fleche" type="button" data-rail-pas="1" aria-label="Suivant">
+            <img alt="" width="6" height="10" loading="lazy" src="https://endlesstools.io/_next/static/media/ArrowRight.9b988920.svg">
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 6. Inscription ============ -->
+  <section class="inscription" id="inscription">
+    <div class="inscription__interieur">
+      <div data-apparition><h2 class="titre-1 inscription__titre">Get updates on new templates and features</h2></div>
+      <form onsubmit="return false">
+        <div class="inscription__groupe">
+          <div data-apparition class="champ-enveloppe">
+            <input class="champ" name="mail" type="email" placeholder="Your email" autocomplete="email">
+          </div>
+          <div data-apparition class="champ-enveloppe">
+            <button class="bouton-soumettre" type="submit">Stay updated</button>
+          </div>
+        </div>
+        <div data-apparition>
+          <div class="consentement">
+            <input type="checkbox" id="consentement" class="consentement__case">
+            <label for="consentement" class="consentement__marque" aria-hidden="true"></label>
+            <label for="consentement" class="consentement__texte">I agree to the <a href="#tarifs">Privacy Policy</a></label>
+          </div>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <footer class="pied">
+    <div class="pied__rangee"><a href="#tarifs">Get in touch</a><a href="#tarifs">Instagram</a><a href="#tarifs">Linked In</a><a href="#tarifs">X</a><a href="#tarifs">TikTok</a></div>
+    <div class="pied__rangee"><a href="#tarifs">Privacy policy</a><a href="#tarifs">Terms of use</a></div>
+    <div>©RenderStudio 2026</div>
+  </footer>
+
+</main>
+</body>
+</html>

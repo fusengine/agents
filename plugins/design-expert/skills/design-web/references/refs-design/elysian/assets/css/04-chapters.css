@@ -1,0 +1,463 @@
+/* ELYSIAN — the four plate chambers, one transformation each */
+
+.chamber { --p: 0; }
+
+.scene__ink {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+      88% 68% at 50% 56%,
+      color-mix(in oklab, var(--ink-abyss) 78%, transparent) 0%,
+      transparent 62%
+    ),
+    linear-gradient(
+      to bottom,
+      color-mix(in oklab, var(--ink-abyss) 60%, transparent),
+      transparent 30% 66%,
+      color-mix(in oklab, var(--ink-abyss) 72%, transparent)
+    );
+}
+
+.scene__copy {
+  position: absolute;
+  z-index: 4;
+  isolation: isolate;
+  display: grid;
+  gap: var(--s4);
+  padding: var(--s6) var(--gutter);
+}
+
+/* every copy block sits on its own ink so the plate can stay loud underneath */
+.scene__scrim {
+  background: linear-gradient(
+    to top,
+    color-mix(in oklab, var(--ink-abyss) 96%, transparent) 0%,
+    color-mix(in oklab, var(--ink-abyss) 91%, transparent) 48%,
+    color-mix(in oklab, var(--ink-abyss) 52%, transparent) 80%,
+    transparent 100%
+  );
+  padding-top: var(--s8);
+}
+
+@media (min-width: 900px) {
+  .scene__scrim {
+    background: linear-gradient(
+      to top,
+      color-mix(in oklab, var(--ink-abyss) 94%, transparent) 16%,
+      color-mix(in oklab, var(--ink-abyss) 68%, transparent) 60%,
+      transparent 100%
+    );
+    padding-top: var(--s9);
+  }
+}
+
+/* the pocket nav floats over the bottom of every chamber below 1024 */
+@media (max-width: 1023px) {
+  .scene__copy { padding-bottom: calc(var(--s8) + env(safe-area-inset-bottom)); }
+}
+
+.scene__copy p { text-wrap: pretty; }
+
+.scene__body {
+  font-family: var(--font-display);
+  font-size: var(--t-lead);
+  line-height: 1.28;
+  color: var(--bone);
+  max-width: 30ch;
+}
+
+/* =========================================================
+   PLATE I — the still life comes apart in vertical slats
+   ========================================================= */
+
+.chamber--slats { height: 200vh; }
+@media (min-width: 720px) {
+  .chamber--slats { height: 260vh; }
+}
+
+.slats {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  gap: clamp(2px, 0.45vw, 9px);
+  /* --n must always equal the number of .slat children */
+  --n: 7;
+  transform: scale(calc(1 - var(--p) * 0.05));
+}
+
+.slat {
+  position: relative;
+  overflow: hidden;
+  transform: translateY(calc(var(--dir) * var(--p) * var(--amp) * 1vh));
+}
+
+.slat img {
+  position: absolute;
+  inset-block: 0;
+  left: 0;
+  width: calc(var(--n) * 100%);
+  max-width: none;
+  height: 100%;
+  object-fit: cover;
+  transform: translateX(calc(var(--i) * -100% / var(--n)));
+}
+
+.slat:nth-child(odd) { --dir: -1; }
+.slat:nth-child(even) { --dir: 1; }
+.slat:nth-child(1) { --amp: 26; }
+.slat:nth-child(2) { --amp: 15; }
+.slat:nth-child(3) { --amp: 34; }
+.slat:nth-child(4) { --amp: 20; }
+.slat:nth-child(5) { --amp: 30; }
+.slat:nth-child(6) { --amp: 12; }
+.slat:nth-child(7) { --amp: 24; }
+
+.chamber--slats .scene__copy {
+  inset: auto 0 0 0;
+  justify-items: start;
+  opacity: clamp(0, calc((var(--p) - 0.12) * 4), 1);
+}
+
+@media (min-width: 720px) {
+  .chamber--slats .scene__copy {
+    inset: 0;
+    align-content: center;
+    justify-items: center;
+    text-align: center;
+    background: none;
+    padding-top: var(--s6);
+  }
+  /* a lit ellipse rather than a band: the slats keep breathing around it */
+  .chamber--slats .scene__copy::before {
+    content: "";
+    position: absolute;
+    inset: 14% -8%;
+    z-index: -1;
+    background: radial-gradient(
+      46% 52% at 50% 50%,
+      color-mix(in oklab, var(--ink-abyss) 95%, transparent) 0%,
+      color-mix(in oklab, var(--ink-abyss) 78%, transparent) 44%,
+      transparent 74%
+    );
+  }
+  .chamber--slats .scene__body { max-width: 34ch; }
+  .chamber--slats .plate-tag { flex-direction: column; align-items: center; gap: var(--s2); }
+  .chamber--slats .plate-tag__name { text-align: center; max-width: 20ch; }
+}
+
+/* =========================================================
+   PLATE II — the arch aperture widens from a keyhole
+   ========================================================= */
+
+.chamber--arch { height: 200vh; }
+@media (min-width: 720px) {
+  .chamber--arch { height: 250vh; }
+}
+
+.chamber--arch .pin { background: var(--ink-abyss); }
+
+.arch {
+  position: absolute;
+  inset: 0;
+  clip-path: inset(
+    calc(26% - var(--p) * 26%)
+    calc(38% - var(--p) * 38%)
+    calc(12% - var(--p) * 12%)
+    calc(38% - var(--p) * 38%)
+    round var(--arch-head) var(--arch-head) 4px 4px
+  );
+}
+
+.arch img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(calc(1.32 - var(--p) * 0.32));
+}
+
+.arch::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  clip-path: inherit;
+  box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--marigold) 70%, transparent);
+  opacity: calc(1 - var(--p) * 0.75);
+}
+
+.marginalia {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--gutter);
+  pointer-events: none;
+  opacity: clamp(0, calc(1 - var(--p) * 2.4), 1);
+}
+
+.marginalia div {
+  display: grid;
+  gap: var(--s5);
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: var(--t-body);
+  color: var(--bone-mute);
+  max-width: 12ch;
+}
+
+.marginalia div:first-child {
+  transform: translateX(calc(var(--p) * -8vw));
+}
+.marginalia div:last-child {
+  text-align: right;
+  transform: translateX(calc(var(--p) * 8vw));
+}
+
+@media (max-width: 719px) {
+  .marginalia div:last-child { display: none; }
+  .marginalia { justify-content: center; text-align: center; }
+  .marginalia div:first-child { max-width: 20ch; text-align: center; }
+}
+
+.chamber--arch .scene__copy {
+  inset: auto 0 0 0;
+  justify-items: start;
+  opacity: clamp(0, calc((var(--p) - 0.45) * 3.4), 1);
+  transform: translateY(calc((1 - var(--p)) * 3vh));
+}
+
+@media (min-width: 900px) {
+  .chamber--arch .scene__copy { max-width: 46rem; }
+}
+
+/* =========================================================
+   PLATE III — horizontal pan, colour wipes over the duotone
+   ========================================================= */
+
+.chamber--pan { height: 240vh; }
+@media (min-width: 720px) {
+  .chamber--pan { height: 310vh; }
+}
+
+/* the valley is torn along one hairline and the two halves pan against each
+   other, so the landscape never sits still as a single rectangle */
+.pan {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: var(--ink-abyss);
+}
+
+.pan__band { position: absolute; inset: 0; }
+
+.pan__band--top { clip-path: inset(0 0 55.9% 0); }
+.pan__band--bot { clip-path: inset(44.5% 0 0 0); }
+
+.pan__band img {
+  position: absolute;
+  inset-block: 0;
+  left: 0;
+  width: 190%;
+  max-width: none;
+  height: 100%;
+  object-fit: cover;
+}
+
+.pan__band--top img { transform: translateX(calc(var(--p) * -47%)); }
+.pan__band--bot img { transform: translateX(calc(-34% + var(--p) * 34%)); }
+
+@media (min-width: 720px) {
+  .pan__band img { width: 170%; }
+  .pan__band--top img { transform: translateX(calc(var(--p) * -41%)); }
+  .pan__band--bot img { transform: translateX(calc(-28% + var(--p) * 28%)); }
+}
+
+.pan__duo {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent 0 calc(var(--p) * 122%),
+    #000 calc(var(--p) * 122% + 15%) 100%
+  );
+  mask-image: linear-gradient(
+    90deg,
+    transparent 0 calc(var(--p) * 122%),
+    #000 calc(var(--p) * 122% + 15%) 100%
+  );
+}
+
+.pan__duo img {
+  filter: grayscale(1) sepia(1) hue-rotate(146deg) saturate(3.4) brightness(0.52)
+    contrast(1.15);
+}
+
+/* the seam between the two halves */
+.pan__seam {
+  position: absolute;
+  z-index: 2;
+  left: 0;
+  right: 0;
+  top: 44.6%;
+  height: 1px;
+  background: color-mix(in oklab, var(--marigold) 55%, transparent);
+  pointer-events: none;
+}
+
+.pan__word {
+  position: absolute;
+  z-index: 3;
+  top: 44.6%;
+  left: 50%;
+  translate: -50% -50%;
+  transform: translateX(calc(38vw - var(--p) * 78vw));
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 1rem + 11vw, 10rem);
+  line-height: 0.9;
+  white-space: nowrap;
+  /* an outline, so the valley is never covered by its own caption */
+  color: transparent;
+  -webkit-text-stroke: 1.4px color-mix(in oklab, var(--bone) 78%, transparent);
+  paint-order: stroke fill;
+  pointer-events: none;
+}
+
+.chamber--pan .scene__copy {
+  inset: auto 0 0 0;
+  justify-items: start;
+  align-content: end;
+}
+
+@media (min-width: 900px) {
+  /* this copy crosses a snow-lit ridge, so it needs more ink than the others */
+  .chamber--pan .scene__copy {
+    background: linear-gradient(
+      to top,
+      color-mix(in oklab, var(--ink-abyss) 96%, transparent) 18%,
+      color-mix(in oklab, var(--ink-abyss) 84%, transparent) 52%,
+      transparent 100%
+    );
+  }
+}
+
+@media (min-width: 900px) {
+  .chamber--pan .scene__copy {
+    grid-template-columns: auto minmax(0, 34rem);
+    align-items: end;
+    gap: var(--s8);
+    justify-items: start;
+  }
+}
+
+/* =========================================================
+   PLATE IV — the plate lives inside the letterforms, then opens
+   ========================================================= */
+
+.chamber--type { height: 230vh; }
+@media (min-width: 720px) {
+  .chamber--type { height: 290vh; }
+}
+
+.chamber--type .pin { background: var(--ink-abyss); }
+
+.type__full {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* never fully absent: a ghost of the plate lies under the letterforms */
+  opacity: clamp(0.26, calc((var(--p) - 0.22) * 3.4), 1);
+  filter: brightness(calc(0.4 + var(--p) * 0.6)) saturate(calc(0.5 + var(--p) * 0.5));
+  transform: scale(calc(1.14 - var(--p) * 0.14));
+}
+
+.type__margins {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: var(--s6) var(--gutter);
+  pointer-events: none;
+  opacity: clamp(0, calc((0.58 - var(--p)) * 3.4), 1);
+}
+
+.type__margins > :last-child {
+  align-self: flex-end;
+  text-align: right;
+}
+
+.type__stars {
+  position: absolute;
+  inset: -20%;
+  pointer-events: none;
+  opacity: calc(0.55 - var(--p) * 0.35);
+  background-image:
+    radial-gradient(1.6px 1.6px at 12% 22%, var(--bone), transparent),
+    radial-gradient(1.4px 1.4px at 68% 12%, var(--bone), transparent),
+    radial-gradient(1.8px 1.8px at 84% 46%, var(--marigold), transparent),
+    radial-gradient(1.2px 1.2px at 30% 62%, var(--bone), transparent),
+    radial-gradient(1.6px 1.6px at 52% 84%, var(--bone), transparent),
+    radial-gradient(1.3px 1.3px at 92% 76%, var(--bone), transparent),
+    radial-gradient(1.5px 1.5px at 6% 78%, var(--marigold), transparent);
+  animation: star-drift 78s linear infinite;
+}
+
+@keyframes star-drift {
+  to { transform: translate3d(4%, -3%, 0) rotate(0.5deg); }
+}
+
+.type__wrap {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: grid;
+  place-items: center;
+  padding: 0 var(--gutter);
+  transform: scale(calc(1 + var(--p) * var(--type-zoom, 4.2)));
+  /* the letterform defocuses as it opens, so the in-between state reads as an
+     optical dissolve rather than a half-drawn shape */
+  filter: blur(calc(var(--p) * var(--p) * 26px));
+  opacity: clamp(0, calc((0.56 - var(--p)) * 5.4), 1);
+}
+
+@media (min-width: 720px) {
+  .type__wrap { --type-zoom: 5.4; }
+}
+
+.type__svg { width: 100%; height: auto; }
+
+.chamber--type .scene__copy {
+  inset: auto 0 0 0;
+  justify-items: start;
+  opacity: clamp(0, calc((var(--p) - 0.66) * 4), 1);
+}
+
+@media (min-width: 900px) {
+  .chamber--type .scene__copy {
+    inset: auto 0 0 auto;
+    justify-items: end;
+    text-align: right;
+    max-width: 50rem;
+    padding-bottom: var(--s8);
+    /* a corner of ink that fades in two directions, never a panel */
+    background: radial-gradient(
+      132% 150% at 94% 86%,
+      color-mix(in oklab, var(--ink-abyss) 93%, transparent) 0%,
+      color-mix(in oklab, var(--ink-abyss) 74%, transparent) 44%,
+      transparent 80%
+    );
+  }
+  .chamber--type .plate-tag {
+    flex-direction: row-reverse;
+    gap: var(--s6);
+  }
+  .chamber--type .plate-tag__num { font-size: clamp(3rem, 1rem + 6vw, 6rem); }
+}

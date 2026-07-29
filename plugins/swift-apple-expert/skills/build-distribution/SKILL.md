@@ -1,12 +1,20 @@
 ---
 name: build-distribution
-description: App build, code signing, TestFlight, and App Store distribution for all Apple platforms. Use when preparing releases, configuring signing, uploading to TestFlight, or submitting to App Store.
+description: Use when preparing an Apple release — code signing, TestFlight upload, App Store submission, or app icons/CI across all platforms.
 versions:
   xcode: 26
 user-invocable: false
 references: references/code-signing.md, references/testflight.md, references/app-store.md, references/app-icons.md, references/storekit2.md
 related-skills: swift-core, ios, macos, mcp-tools
 ---
+
+<objective>
+Covers app build, code signing, and distribution across all Apple platforms: certificate/profile management, TestFlight beta distribution, App Store submission, app icon/asset preparation, and StoreKit 2 in-app purchases/subscriptions.
+
+Includes a release checklist (version/build number, app icons for light/dark/tinted, privacy manifest, release configuration, archive validation, TestFlight testing, screenshots, App Store metadata) and guidance on automating releases with fastlane and CI/CD (e.g. GitHub Actions).
+
+Best practices favor automatic signing, TestFlight testing before any public release, incrementing the build number on every upload, and a mandatory privacy manifest for App Store submission.
+</objective>
 
 # Build & Distribution
 

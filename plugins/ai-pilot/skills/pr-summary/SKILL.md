@@ -8,6 +8,10 @@ disable-model-invocation: false
 user-invocable: true
 ---
 
+<objective>
+PR Summary produces a structured overview of the current pull request from `gh pr diff`, `gh pr view --comments`, and `gh pr status`: what the PR does, the key file-level changes, potential risks (breaking changes, security concerns), and what a reviewer should check carefully. It runs in a forked context via the `explore-codebase` agent so the full diff and comment thread don't pollute the parent conversation.
+</objective>
+
 # PR Summary Skill
 
 Summarize the current pull request.

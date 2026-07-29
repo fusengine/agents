@@ -1,6 +1,6 @@
 ---
 name: laravel-upgrade-v13
-description: Use when upgrading a Laravel 12 application to Laravel 13.0. Covers PHP 8.3 requirement, composer commands, breaking changes (PHPUnit 12, Pest 4, VerifyCsrfToken → PreventRequestForgery, cache prefixes, serializable_classes, pheanstalk 8.0+), Attributes migration (Eloquent + Queue), Symfony 7.4/8.0 upgrade, and Laravel Boost MCP automated upgrade.
+description: Use when upgrading a Laravel 12 application to Laravel 13.0 — composer bump, breaking changes, and Attributes migration.
 versions:
   laravel: "13.0"
   php: "8.3"
@@ -8,6 +8,18 @@ user-invocable: true
 references: references/composer-upgrade.md, references/breaking-changes.md, references/attributes-migration.md, references/laravel-boost-mcp.md, references/checklist.md, references/templates/composer.json.md, references/templates/upgrade-script.sh.md
 related-skills: laravel-architecture, laravel-eloquent, laravel-queues, laravel-attributes, laravel-auth, laravel-testing, solid-php
 ---
+
+<objective>
+Covers the full Laravel 12 → 13.0 upgrade path: the PHP 8.3 minimum
+requirement, composer commands to bump Laravel/PHPUnit 12/Pest 4/Tinker,
+mandatory breaking changes (VerifyCsrfToken → PreventRequestForgery, cache
+prefix hyphens, serializable_classes hardening, pheanstalk 8.0+ for
+Beanstalkd, Symfony 7.4/8.0 support), the optional Eloquent + Queue
+Attributes migration, and the Laravel Boost MCP automated
+`/upgrade-laravel-v13` path. Provides a phased checklist (pre-upgrade audit
+→ composer bump → breaking-change fixes → attributes migration →
+validation).
+</objective>
 
 # Laravel 12 → 13 Upgrade Guide
 

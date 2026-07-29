@@ -1,17 +1,20 @@
 ---
 name: start-server-functions
-description: >-
-  Use when creating type-safe RPC server logic in TanStack Start with
-  createServerFn — GET/POST methods, .validator() (Zod or function),
-  .handler(), useServerFn hook, FormData input, Response output, strict
-  serialization, throw redirect()/notFound(), server context utilities,
-  and CSRF protection. Do NOT use for: raw external HTTP endpoints
-  (use start-server-routes), reusable middleware chains (use
-  start-middleware), or Next.js/Remix "use server" patterns.
+description: Use when creating type-safe RPC server logic with createServerFn — validators, handlers, FormData, redirects. Do NOT use for raw HTTP endpoints or middleware chains.
 version: 1.0.0
 user-invocable: true
 references: references/creating.md, references/calling.md, references/security.md, references/templates/crud-server-functions.md, references/templates/form-with-validation.md
 ---
+
+<objective>
+Covers createServerFn, TanStack Start's same-origin type-safe RPC mechanism: GET/POST methods, .validator() (Zod or a plain function), .handler(), the useServerFn hook, FormData input, Response output, strict serialization, throwing redirect()/notFound(), server context utilities, and CSRF protection. Server functions run only on the server but are callable from loaders, components, hooks, and other server functions. Targets @tanstack/react-start v1.166.2.
+
+Critical rules: a server function is an independent HTTP endpoint reachable directly, so a route's beforeLoad redirect protects the UI only — auth must live inside the handler or its middleware for every function touching private data; never use Next.js/Remix patterns ("use server", getServerSideProps, Remix loader/action); loaders are isomorphic, so DB/secrets/filesystem access belongs in a server function, never a loader; useServerFn is mandatory when a function throws redirect() or notFound() (optional otherwise); and strict serialization is on by default (FormData allowed as POST input, Response as output).
+
+Includes templates for a full CRUD module and for FormData submissions with Zod validation.
+
+Do NOT use this skill for raw external/public HTTP endpoints (use start-server-routes), for composable middleware chains (use start-middleware), or for Next.js/Remix "use server" patterns.
+</objective>
 
 # TanStack Start Server Functions
 

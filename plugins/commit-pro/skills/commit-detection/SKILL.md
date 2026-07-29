@@ -4,6 +4,10 @@ description: Detects optimal commit type from git changes. Use when analyzing co
 allowed-tools: Bash, Read, Grep
 ---
 
+<objective>
+Detects the optimal conventional commit type (feat/fix/docs/style/refactor/perf/test/build/ci/chore) from staged and unstaged git changes, using file-pattern categorization (docs/test/config/ci/build/src) plus diff-keyword heuristics ("fix", "bug", "optimize", etc.), and derives a scope suggestion from the primary changed directory (e.g. `src/api/auth.ts` → `auth`). Covers the full detection algorithm, the rule cascade, scope extraction, and worked examples. Does not perform the commit itself — routes to the matching `/commit-pro:<type>` command, or to the `commit` skill for full smart analysis when no rule matches cleanly.
+</objective>
+
 # Commit Type Detection Skill
 
 Expert knowledge for detecting the optimal conventional commit type.

@@ -1,0 +1,722 @@
+<!doctype html>
+<!-- [relevé] lang="en-US" : les libellés d'interface sont repris tels quels de
+     la source. Sur une page où les titres n'ont pas de largeur imposée, leur
+     longueur exacte commande les coupes de ligne et donc le rythme vertical —
+     paraphraser un libellé déplace toute la mise en page. -->
+<html lang="en-US">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Référence de design — app.reve.com</title>
+<meta name="description" content="Relevé de procédés : structure, surfaces, typographie et animations d'état de la page modèle app.reve.com.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+<link rel="stylesheet" href="styles.css">
+<!-- L'ordre des `defer` est garanti : motion-bande.js expose window.RevBande,
+     que motion.js consomme pour le carrousel du hero et pour la galerie. -->
+<script src="motion-bande.js" defer></script>
+<script src="motion.js" defer></script>
+</head>
+<body>
+
+<!-- =============================================================================
+     EN-TÊTE FIXE + VOILE PROGRESSIF
+     [relevé] <rv-marketing-header redirect="/home"> est le premier enfant du
+     <body>, en position:fixed, z-index 3. Il est VIDE dans le HTML : son
+     contenu est rendu par le composant en JS.
+     [arbitrage] Marque, navigation et action sont donc reconstruites ici.
+
+     [relevé] Dessous, DEUX couches distinctes : .header-veil (3 <i> de flou
+     croissant) et .header-veil-tint. Le commentaire de la source explicite la
+     séparation : « a persistent progressive blur under the fixed header (never
+     toggles, so its backdrop layers never re-rasterize), plus a light scrim
+     tint above it that fades in below the fold (app.ts wireHeaderVeil) ».
+     ========================================================================= -->
+<header class="entete">
+  <span class="entete-marque">Brand</span>
+  <!-- [arbitrage] La source ne fournit AUCUN libellé d'en-tête : le composant
+       est vide. Les intitulés reprennent ceux des sections de la page, et
+       l'action reprend « Get started », le seul libellé d'action de la source. -->
+  <nav class="entete-nav" aria-label="Main">
+    <a href="#edition">Edit</a>
+    <a href="#references">References</a>
+    <a href="#gabarits">Templates</a>
+    <a href="#calques">Layers</a>
+  </nav>
+  <a class="entete-cta" href="#invite">Get started</a>
+</header>
+<div class="voile" aria-hidden="true"><i></i><i></i><i></i></div>
+<div class="voile-teinte" aria-hidden="true"></div>
+
+<!-- =============================================================================
+     HERO — bloc, scène collante, bande d'exemples
+     [relevé] Commentaire de la source : « a marquee carousel of curated
+     examples. The strip drifts on its own and loops seamlessly (app.ts
+     wireHeroMarquee clones the card set once); visitors can grab it directly
+     at any width, and the page scrolls past it like any other section. »
+     La dérive et le clonage sont implémentés dans motion.js.
+
+     [relevé] Les attributs width/height donnent leur taille intrinsèque aux
+     cartes avant l'arrivée des octets : « without them the cards lay out at
+     zero width until load ». Les 13 cartes de la source sont toutes présentes.
+     ========================================================================= -->
+<div class="hero-bloc" id="hero" data-zone="image">
+  <div class="hero-scene">
+    <div class="hero-texte">
+      <h1 class="hero-titre">See your ideas</h1>
+      <!-- [relevé] Même corps, même famille, même graisse que le titre : seule
+           la couleur sépare les deux lignes (primaire vs tertiaire). Le
+           sous-titre passe sur deux lignes par `max-width: 34ch`. -->
+      <p class="hero-sous-titre">Create, edit and design with the best 4K image model.</p>
+      <!-- [relevé] `hero-copy-actions` SEULE : la source ne met pas
+           `intro-actions` ici. Les deux règles ont des marges différentes
+           (32px contre 28px−espace-l = 8px) et `intro-actions`, plus
+           spécifique, l'emporterait — remontant tout le bloc de 24px. -->
+      <div class="hero-actions">
+        <a class="intro-cta intro-cta--primaire" href="#invite">Get started</a>
+        <!-- [relevé] Le suffixe masqué rend le libellé du lien descriptif pour
+             l'audit sans changer le rendu visuel. -->
+        <a class="intro-cta intro-cta--secondaire" href="#edition">Learn more<span class="invisible-lecteur"> about the model</span></a>
+      </div>
+    </div>
+
+    <!-- [relevé] role=list / role=listitem rétablis à la main : display:flex
+         supprime la sémantique de liste. -->
+    <div class="hero-bande" role="list" data-marquee data-vitesse="18">
+      <figure class="hero-carte" role="listitem">
+        <!-- [relevé] La première carte visible est la candidate LCP : elle est
+             chargée en priorité, les suivantes en différé. -->
+        <img class="hero-image" src="https://app.reve.com/model-landing/hero-carousel-1.png"
+             srcset="https://app.reve.com/model-landing/hero-carousel-1-800.png 578w,
+                     https://app.reve.com/model-landing/hero-carousel-1-1200.png 867w,
+                     https://app.reve.com/model-landing/hero-carousel-1.png 1156w"
+             sizes="(max-width:750px) 55vw,(max-width:1024px) 85vw,45vw"
+             width="1156" height="1600" fetchpriority="high" alt="">
+        <figcaption class="hero-legende">Graphic design</figcaption>
+      </figure>
+      <figure class="hero-carte" role="listitem">
+        <img class="hero-image" src="https://app.reve.com/model-landing/hero-carousel-2.png"
+             srcset="https://app.reve.com/model-landing/hero-carousel-2-800.png 613w,
+                     https://app.reve.com/model-landing/hero-carousel-2-1200.png 919w,
+                     https://app.reve.com/model-landing/hero-carousel-2.png 1226w"
+             sizes="(max-width:750px) 55vw,(max-width:1024px) 85vw,45vw"
+             width="1226" height="1600" alt="">
+        <figcaption class="hero-legende">Art direction</figcaption>
+      </figure>
+      <figure class="hero-carte" role="listitem">
+        <img class="hero-image" src="https://app.reve.com/model-landing/hero-carousel-7.png"
+             srcset="https://app.reve.com/model-landing/hero-carousel-7-800.png 597w,
+                     https://app.reve.com/model-landing/hero-carousel-7-1200.png 895w,
+                     https://app.reve.com/model-landing/hero-carousel-7.png 1194w"
+             sizes="(max-width:750px) 55vw,(max-width:1024px) 85vw,45vw"
+             width="1194" height="1600" alt="" loading="lazy">
+        <figcaption class="hero-legende">Product photography</figcaption>
+      </figure>
+      <!-- [relevé] À partir d'ici la source diffère le chargement par
+           data-deferred-src / data-deferred-srcset, résolus en JS. -->
+      <figure class="hero-carte" role="listitem">
+        <img class="hero-image" data-src="https://app.reve.com/model-landing/hero-carousel-4.png"
+             data-srcset="https://app.reve.com/model-landing/hero-carousel-4-800.png 577w,
+                          https://app.reve.com/model-landing/hero-carousel-4-1200.png 866w,
+                          https://app.reve.com/model-landing/hero-carousel-4.png 1155w"
+             sizes="(max-width:750px) 55vw,(max-width:1024px) 85vw,45vw"
+             width="1155" height="1600" alt="" loading="lazy">
+        <figcaption class="hero-legende">3D Rendering</figcaption>
+      </figure>
+      <figure class="hero-carte" role="listitem">
+        <img class="hero-image" data-src="https://app.reve.com/model-landing/hero-carousel-3.png"
+             data-srcset="https://app.reve.com/model-landing/hero-carousel-3-800.png 800w,
+                          https://app.reve.com/model-landing/hero-carousel-3-1200.png 1200w,
+                          https://app.reve.com/model-landing/hero-carousel-3.png 1600w"
+             sizes="(max-width:750px) 55vw,(max-width:1024px) 85vw,45vw"
+             width="1600" height="1600" alt="" loading="lazy">
+        <figcaption class="hero-legende">Portraits</figcaption>
+      </figure>
+      <figure class="hero-carte" role="listitem">
+        <img class="hero-image" data-src="https://app.reve.com/model-landing/hero-carousel-6.png"
+             data-srcset="https://app.reve.com/model-landing/hero-carousel-6-800.png 547w,
+                          https://app.reve.com/model-landing/hero-carousel-6-1200.png 821w,
+                          https://app.reve.com/model-landing/hero-carousel-6.png 1095w"
+             sizes="(max-width:750px) 55vw,(max-width:1024px) 85vw,45vw"
+             width="1095" height="1600" alt="" loading="lazy">
+        <figcaption class="hero-legende">Interior Design</figcaption>
+      </figure>
+      <figure class="hero-carte" role="listitem">
+        <img class="hero-image" data-src="https://app.reve.com/model-landing/hero-carousel-5.png"
+             data-srcset="https://app.reve.com/model-landing/hero-carousel-5-800.png 533w,
+                          https://app.reve.com/model-landing/hero-carousel-5-1200.png 799w,
+                          https://app.reve.com/model-landing/hero-carousel-5.png 1066w"
+             sizes="(max-width:750px) 55vw,(max-width:1024px) 85vw,45vw"
+             width="1066" height="1600" alt="" loading="lazy">
+        <figcaption class="hero-legende">Fashion</figcaption>
+      </figure>
+      <!-- [relevé] Carte vidéo. Commentaire de la source : « Poster by default;
+           hovering plays the silent 6s loop, which fades in only once frames
+           are actually rendering — so a slow-loading video just leaves the
+           poster in place (app.ts wireHeroVideoHover). » -->
+      <figure class="hero-carte" role="listitem">
+        <div class="hero-media" tabindex="0" data-video-hover>
+          <img class="hero-image" data-src="https://app.reve.com/model-landing/hero-carousel-8-poster.png"
+               width="1600" height="900" alt="" loading="lazy">
+          <video class="hero-video" width="1280" height="720" muted loop playsinline
+                 disableremoteplayback disablepictureinpicture preload="none">
+            <source src="https://app.reve.com/model-landing/hero-carousel-8.webm" type="video/webm">
+            <source src="https://app.reve.com/model-landing/hero-carousel-8.mp4" type="video/mp4">
+          </video>
+        </div>
+        <figcaption class="hero-legende">Filmmaking</figcaption>
+      </figure>
+      <figure class="hero-carte" role="listitem">
+        <img class="hero-image" data-src="https://app.reve.com/model-landing/hero-carousel-9.png"
+             data-srcset="https://app.reve.com/model-landing/hero-carousel-9-800.png 637w,
+                          https://app.reve.com/model-landing/hero-carousel-9-1200.png 956w,
+                          https://app.reve.com/model-landing/hero-carousel-9.png 1275w"
+             sizes="(max-width:750px) 55vw,(max-width:1024px) 85vw,45vw"
+             width="1275" height="1600" alt="" loading="lazy">
+        <figcaption class="hero-legende">Architecture</figcaption>
+      </figure>
+      <figure class="hero-carte" role="listitem">
+        <div class="hero-media" tabindex="0" data-video-hover>
+          <img class="hero-image" data-src="https://app.reve.com/model-landing/hero-carousel-10.png"
+               data-srcset="https://app.reve.com/model-landing/hero-carousel-10-800.png 577w,
+                            https://app.reve.com/model-landing/hero-carousel-10-1200.png 866w,
+                            https://app.reve.com/model-landing/hero-carousel-10.png 1155w"
+               sizes="(max-width:750px) 55vw,(max-width:1024px) 85vw,45vw"
+               width="1155" height="1600" alt="" loading="lazy">
+          <video class="hero-video" width="900" height="1600" muted loop playsinline
+                 disableremoteplayback disablepictureinpicture preload="none">
+            <source src="https://app.reve.com/model-landing/hero-carousel-10.webm" type="video/webm">
+            <source src="https://app.reve.com/model-landing/hero-carousel-10.mp4" type="video/mp4">
+          </video>
+        </div>
+        <figcaption class="hero-legende">Concept Development</figcaption>
+      </figure>
+      <figure class="hero-carte" role="listitem">
+        <img class="hero-image" data-src="https://app.reve.com/model-landing/hero-carousel-11.png"
+             data-srcset="https://app.reve.com/model-landing/hero-carousel-11-800.png 577w,
+                          https://app.reve.com/model-landing/hero-carousel-11-1200.png 866w,
+                          https://app.reve.com/model-landing/hero-carousel-11.png 1155w"
+             sizes="(max-width:750px) 55vw,(max-width:1024px) 85vw,45vw"
+             width="1155" height="1600" alt="" loading="lazy">
+        <figcaption class="hero-legende">Graphics &amp; Illustration</figcaption>
+      </figure>
+      <figure class="hero-carte" role="listitem">
+        <img class="hero-image" data-src="https://app.reve.com/model-landing/hero-carousel-12.png"
+             data-srcset="https://app.reve.com/model-landing/hero-carousel-12-800.png 547w,
+                          https://app.reve.com/model-landing/hero-carousel-12-1200.png 821w,
+                          https://app.reve.com/model-landing/hero-carousel-12.png 1095w"
+             sizes="(max-width:750px) 55vw,(max-width:1024px) 85vw,45vw"
+             width="1095" height="1600" alt="" loading="lazy">
+        <figcaption class="hero-legende">Post-Production</figcaption>
+      </figure>
+      <figure class="hero-carte" role="listitem">
+        <img class="hero-image" data-src="https://app.reve.com/model-landing/hero-carousel-13.png"
+             data-srcset="https://app.reve.com/model-landing/hero-carousel-13-800.png 545w,
+                          https://app.reve.com/model-landing/hero-carousel-13-1200.png 818w,
+                          https://app.reve.com/model-landing/hero-carousel-13.png 1091w"
+             sizes="(max-width:750px) 55vw,(max-width:1024px) 85vw,45vw"
+             width="1091" height="1600" alt="" loading="lazy">
+        <figcaption class="hero-legende">Product Rendering</figcaption>
+      </figure>
+    </div>
+  </div>
+</div>
+
+<div class="page-modele">
+<main class="sections">
+
+  <!-- ===========================================================================
+       1 / 7 — SECTION « ÉDITION DIRECTE » (featureleft, avec éditeur embarqué)
+       [relevé] Commentaire de la source : « Live-embed section in the feature
+       arrangement: while the editor is up (wide viewports, boot OK) the CSS
+       lays the copy out as a header row over the embed; when the embed yields
+       to its static pair (narrow viewports or a failed boot) the plain
+       featureleft side-by-side takes over — panel on the left, copy on the
+       right. » Les deux présentations coexistent dans le DOM.
+       ======================================================================== -->
+  <!-- [relevé] data-zone : nature de la zone pour l'inversion de thème de
+       l'en-tête. Le hero est la seule zone « image » (fond noir) ; toutes les
+       sections de contenu sont des zones « text » (fond neutre-50), ce qui fait
+       basculer l'en-tête en clair et la teinte du voile sur neutre-50. -->
+  <section class="section section-gauche" id="edition" data-section="edition-directe" data-zone="text">
+    <div class="feature-agencement">
+      <div class="cadre-duo embed-statique">
+        <img class="fond-flou" src="https://app.reve.com/model-landing/directly-edit-1.png"
+             srcset="https://app.reve.com/model-landing/directly-edit-1-800.png 800w,
+                     https://app.reve.com/model-landing/directly-edit-1-1200.png 1200w,
+                     https://app.reve.com/model-landing/directly-edit-1.png 1600w"
+             sizes="(max-width:750px) 66vw,44vw" width="1600" height="1600" alt="" loading="lazy">
+        <div class="duo-piste">
+          <img src="https://app.reve.com/model-landing/directly-edit-2.png"
+               srcset="https://app.reve.com/model-landing/directly-edit-2-800.png 800w,
+                       https://app.reve.com/model-landing/directly-edit-2-1200.png 1200w,
+                       https://app.reve.com/model-landing/directly-edit-2.png 1600w"
+               sizes="(max-width:750px) 66vw,44vw" width="1600" height="1600"
+               alt="The same poster with the radio recolored" loading="lazy">
+          <img src="https://app.reve.com/model-landing/directly-edit-1.png"
+               srcset="https://app.reve.com/model-landing/directly-edit-1-800.png 800w,
+                       https://app.reve.com/model-landing/directly-edit-1-1200.png 1200w,
+                       https://app.reve.com/model-landing/directly-edit-1.png 1600w"
+               sizes="(max-width:750px) 66vw,44vw" width="1600" height="1600"
+               alt="Directly edit demo — poster scene with the radio selected" loading="lazy">
+        </div>
+      </div>
+      <div class="feature-copie">
+        <div class="intro-copie">
+          <h2 class="intro-titre">Directly edit anything</h2>
+          <p class="intro-sous">Move, resize or recolor any object</p>
+        </div>
+        <div class="intro-actions">
+          <a class="intro-cta intro-cta--primaire" href="#invite">Get started</a>
+        </div>
+      </div>
+    </div>
+    <!-- [arbitrage] Emplacement de <rv-landing-explore-frame> : éditeur
+         interactif monté en JS, non reproductible. Signalé, pas approximé. -->
+    <div class="embed-corps" role="note">
+      <!-- [relevé] L'affiche est celle que la source passe au composant :
+           poster="/model-landing/directly-edit-base.png". C'est ce que
+           l'éditeur montre avant son amorçage. -->
+      <img class="embed-affiche" src="https://app.reve.com/model-landing/directly-edit-base.png"
+           alt="Affiche de l'éditeur avant amorçage" loading="lazy">
+      <span class="embed-note">Emplacement de <code>&lt;rv-landing-explore-frame&gt;</code> —
+      éditeur interactif monté en JS, hors du CSS relevable</span>
+    </div>
+  </section>
+
+  <!-- ===========================================================================
+       2 / 7 — SECTION « ANNOTATION » (featureright, sans embed)
+       [relevé] Arrangement miroir : copie à gauche, panneau à droite, saignée
+       de l'autre côté. Deux boutons d'action ici, un seul dans la précédente.
+       ======================================================================== -->
+  <section class="section section-droite" id="annotation" data-section="annotation" data-zone="text">
+    <div class="feature-agencement">
+      <div class="feature-copie">
+        <div class="intro-copie">
+          <h2 class="intro-titre">Draw what you want to see</h2>
+          <p class="intro-sous">Add a sketch, bring your vision to life</p>
+        </div>
+        <div class="intro-actions">
+          <a class="intro-cta intro-cta--primaire" href="#invite">Get started</a>
+          <a class="intro-cta intro-cta--secondaire" href="#references">Learn more<span class="invisible-lecteur"> about annotations</span></a>
+        </div>
+      </div>
+      <div class="cadre-duo">
+        <img class="fond-flou" src="https://app.reve.com/model-landing/draw-2.png"
+             srcset="https://app.reve.com/model-landing/draw-2-800.png 604w,
+                     https://app.reve.com/model-landing/draw-2-1200.png 906w,
+                     https://app.reve.com/model-landing/draw-2.png 1208w"
+             sizes="(max-width:750px) 66vw,44vw" width="1208" height="1600" alt="" loading="lazy">
+        <div class="duo-piste">
+          <img src="https://app.reve.com/model-landing/draw-1.png"
+               srcset="https://app.reve.com/model-landing/draw-1-800.png 604w,
+                       https://app.reve.com/model-landing/draw-1-1200.png 906w,
+                       https://app.reve.com/model-landing/draw-1.png 1208w"
+               sizes="(max-width:750px) 66vw,44vw" width="1208" height="1600"
+               alt="Empty living room with sketched furniture outlines and labels — sofa, lounge chairs, coffee tables, lamps" loading="lazy">
+          <img src="https://app.reve.com/model-landing/draw-2.png"
+               srcset="https://app.reve.com/model-landing/draw-2-800.png 604w,
+                       https://app.reve.com/model-landing/draw-2-1200.png 906w,
+                       https://app.reve.com/model-landing/draw-2.png 1208w"
+               sizes="(max-width:750px) 66vw,44vw" width="1208" height="1600"
+               alt="The same living room rendered fully furnished from the sketch" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===========================================================================
+       3 / 7 — SECTION « ÉLÉMENTS DE RÉFÉRENCE »
+       Le pattern d'UI applicative le plus net de la page : une grille de cartes
+       sélectionnables dont l'état actif se signale par la SURFACE et une ombre
+       basse, jamais par une bordure d'accent.
+       [relevé] Les cartes sont de vrais <button> portant l'image cible en
+       data-card ; la sélection et l'échange d'image sont pilotés en JS.
+       ======================================================================== -->
+  <section class="section section-references" id="references" data-section="references" data-zone="text">
+    <div class="references-agencement">
+      <div class="references-cadre">
+        <img class="fond-flou" src="https://app.reve.com/model-landing/reference-default.png"
+             srcset="https://app.reve.com/model-landing/reference-default-800.png 800w,
+                     https://app.reve.com/model-landing/reference-default-1200.png 1200w,
+                     https://app.reve.com/model-landing/reference-default.png 1240w"
+             sizes="(max-width:750px) 55vw,(max-width:900px) 88vw,40vw"
+             width="1240" height="1240" alt="" data-fond-flou>
+        <!-- [arbitrage] Deux couches empilées pour enchaîner sans clignotement
+             (la source remplace le src en place). -->
+        <div class="references-pile">
+          <img class="references-image" src="https://app.reve.com/model-landing/reference-default.png"
+               srcset="https://app.reve.com/model-landing/reference-default-800.png 800w,
+                       https://app.reve.com/model-landing/reference-default-1200.png 1200w,
+                       https://app.reve.com/model-landing/reference-default.png 1240w"
+               sizes="(max-width:750px) 55vw,(max-width:900px) 88vw,40vw"
+               width="1240" height="1240" alt="Aperçu de l'élément sélectionné" data-ref-base>
+          <img class="references-image" alt="" aria-hidden="true" width="1240" height="1240" data-ref-couche>
+        </div>
+      </div>
+      <div class="references-copie">
+        <div class="intro-copie">
+          <h2 class="intro-titre">Reference anything</h2>
+          <p class="intro-sous">Apply styles, swap people, change locations</p>
+        </div>
+        <div class="intro-actions">
+          <a class="intro-cta intro-cta--primaire" href="#invite">Get started</a>
+          <a class="intro-cta intro-cta--secondaire" href="#gabarits">Learn more<span class="invisible-lecteur"> about references</span></a>
+        </div>
+        <div class="references-vignettes" role="group" aria-label="Choose a reference">
+          <button class="reference-carte est-active" type="button" aria-pressed="true"
+                  data-card="https://app.reve.com/model-landing/reference-beach.png">
+            <img class="reference-carte-img" src="https://app.reve.com/model-landing/ref-beach.png"
+                 width="385" height="385" alt="" loading="lazy">
+            <span class="reference-carte-libelle">
+              <span class="reference-carte-nom">@Beach</span>
+              <span class="reference-carte-meta">Style · 2 items</span>
+            </span>
+          </button>
+          <button class="reference-carte" type="button" aria-pressed="false"
+                  data-card="https://app.reve.com/model-landing/reference-gorp.png">
+            <img class="reference-carte-img" src="https://app.reve.com/model-landing/ref-gorp.png"
+                 width="385" height="385" alt="" loading="lazy">
+            <span class="reference-carte-libelle">
+              <span class="reference-carte-nom">@Brian-gorp</span>
+              <span class="reference-carte-meta">Person · 2 items</span>
+            </span>
+          </button>
+          <button class="reference-carte" type="button" aria-pressed="false"
+                  data-card="https://app.reve.com/model-landing/reference-wabi.png">
+            <img class="reference-carte-img" src="https://app.reve.com/model-landing/ref-wabi.png"
+                 width="385" height="385" alt="" loading="lazy">
+            <span class="reference-carte-libelle">
+              <span class="reference-carte-nom">@Wabi-studio</span>
+              <span class="reference-carte-meta">Style · 4 items</span>
+            </span>
+          </button>
+          <button class="reference-carte" type="button" aria-pressed="false"
+                  data-card="https://app.reve.com/model-landing/reference-yosemite.png">
+            <img class="reference-carte-img" src="https://app.reve.com/model-landing/ref-yosemite.png"
+                 width="385" height="385" alt="" loading="lazy">
+            <span class="reference-carte-libelle">
+              <span class="reference-carte-nom">@Yosemite</span>
+              <span class="reference-carte-meta">Place · 3 items</span>
+            </span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===========================================================================
+       4 / 7 — SECTION « GABARITS »
+       [relevé] Commentaire de la source : « centered head, then a two-pane demo
+       — a mock template-editor card (label + input + product thumbnail) with
+       prev/next arrows below it, and the rendered template on the right. The
+       arrows cycle all three in lockstep (app.ts wires it). »
+       Recette de surface « carte posée » : blanc, rayon 16, bordure à 4 % de
+       noir, ombre très basse. La bordure ne sert qu'à détacher le blanc du
+       blanc, l'ombre à donner l'altitude.
+       ======================================================================== -->
+  <section class="section section-gabarits" id="gabarits" data-section="gabarits" data-zone="text">
+    <div class="produit-entete">
+      <h2 class="produit-titre">Create with Templates</h2>
+      <p class="produit-sous">Change what matters, AI does the rest</p>
+      <div class="intro-actions">
+        <a class="intro-cta intro-cta--primaire" href="#invite">Get started</a>
+        <a class="intro-cta intro-cta--secondaire" href="#calques">Learn more<span class="invisible-lecteur"> about templates</span></a>
+      </div>
+    </div>
+    <div class="gabarits-demo">
+      <div class="gabarits-rendu" data-gabarits-rendu>
+        <img class="est-active" src="https://app.reve.com/model-landing/template-1.png"
+             srcset="https://app.reve.com/model-landing/template-1-800.png 800w,
+                     https://app.reve.com/model-landing/template-1-1200.png 1200w,
+                     https://app.reve.com/model-landing/template-1.png 1600w"
+             sizes="(max-width:600px) 62vw,42vw" width="1600" height="1368"
+             alt="Rendu du gabarit sélectionné">
+        <img src="https://app.reve.com/model-landing/template-2.png"
+             srcset="https://app.reve.com/model-landing/template-2-800.png 796w,
+                     https://app.reve.com/model-landing/template-2-1200.png 1194w,
+                     https://app.reve.com/model-landing/template-2.png 1592w"
+             sizes="(max-width:600px) 62vw,42vw" width="1592" height="1600" alt="" loading="lazy">
+        <img src="https://app.reve.com/model-landing/template-3.png"
+             srcset="https://app.reve.com/model-landing/template-3-800.png 800w,
+                     https://app.reve.com/model-landing/template-3-1200.png 1200w,
+                     https://app.reve.com/model-landing/template-3.png 1600w"
+             sizes="(max-width:600px) 62vw,42vw" width="1600" height="1066" alt="" loading="lazy">
+        <img src="https://app.reve.com/model-landing/template-4.png"
+             srcset="https://app.reve.com/model-landing/template-4-800.png 800w,
+                     https://app.reve.com/model-landing/template-4-1200.png 1200w,
+                     https://app.reve.com/model-landing/template-4.png 1600w"
+             sizes="(max-width:600px) 62vw,42vw" width="1600" height="1066" alt="" loading="lazy">
+
+        <div class="gabarits-cote">
+          <div class="gabarits-carte">
+            <label class="gabarits-libelle" for="gabarits-nom">Company name</label>
+            <input class="gabarits-champ" id="gabarits-nom" value="Willow &amp; Co" readonly>
+            <span class="gabarits-libelle">Product</span>
+            <div class="gabarits-vignette" data-gabarits-vignette>
+              <img class="est-active" src="https://app.reve.com/model-landing/template-1b.png"
+                   width="800" height="684" alt="" data-nom="Willow &amp; Co">
+              <img src="https://app.reve.com/model-landing/template-2b.png"
+                   width="796" height="800" alt="" loading="lazy" data-nom="Northwood">
+              <img src="https://app.reve.com/model-landing/template-3b.png"
+                   width="800" height="745" alt="" loading="lazy" data-nom="Matcha &amp; Co">
+              <img src="https://app.reve.com/model-landing/template-4b.png"
+                   width="800" height="684" alt="" loading="lazy" data-nom="Fern and Root">
+            </div>
+          </div>
+          <div class="gabarits-fleches">
+            <button class="gabarits-fleche" type="button" data-dir="-1" aria-label="Previous template">‹</button>
+            <button class="gabarits-fleche" type="button" data-dir="1" aria-label="Next template">›</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===========================================================================
+       5 / 7 — SECTION « EFFETS » (featureright, avec éditeur embarqué)
+       [relevé] Même bascule embarqué/statique que la section 1, arrangement
+       inversé : copie à gauche, panneau à droite.
+       ======================================================================== -->
+  <section class="section section-droite" id="effets" data-section="effets" data-zone="text">
+    <div class="feature-agencement">
+      <div class="feature-copie">
+        <div class="intro-copie">
+          <h2 class="intro-titre">Create any visual effect</h2>
+          <p class="intro-sous">Apply presets or create custom shaders</p>
+        </div>
+        <div class="intro-actions">
+          <a class="intro-cta intro-cta--primaire" href="#invite">Get started</a>
+        </div>
+      </div>
+      <div class="cadre-duo embed-statique">
+        <img class="fond-flou" src="https://app.reve.com/model-landing/effect-1.png"
+             srcset="https://app.reve.com/model-landing/effect-1-800.png 652w,
+                     https://app.reve.com/model-landing/effect-1-1200.png 978w,
+                     https://app.reve.com/model-landing/effect-1.png 1304w"
+             sizes="(max-width:750px) 66vw,44vw" width="1304" height="1600" alt="" loading="lazy">
+        <div class="duo-piste">
+          <img src="https://app.reve.com/model-landing/effect-1.png"
+               srcset="https://app.reve.com/model-landing/effect-1-800.png 652w,
+                       https://app.reve.com/model-landing/effect-1-1200.png 978w,
+                       https://app.reve.com/model-landing/effect-1.png 1304w"
+               sizes="(max-width:750px) 66vw,44vw" width="1304" height="1600"
+               alt="Add effects demo — the base render" loading="lazy">
+          <img src="https://app.reve.com/model-landing/effect-2.png"
+               srcset="https://app.reve.com/model-landing/effect-2-800.png 652w,
+                       https://app.reve.com/model-landing/effect-2-1200.png 978w,
+                       https://app.reve.com/model-landing/effect-2.png 1304w"
+               sizes="(max-width:750px) 66vw,44vw" width="1304" height="1600"
+               alt="Add effects demo — the render with the effect applied" loading="lazy">
+        </div>
+      </div>
+    </div>
+    <div class="embed-corps" role="note">
+      <!-- [relevé] poster="/model-landing/add-effects-base.png" -->
+      <img class="embed-affiche" src="https://app.reve.com/model-landing/add-effects-base.png"
+           alt="Affiche de l'éditeur avant amorçage" loading="lazy">
+      <span class="embed-note">Second emplacement de <code>&lt;rv-landing-explore-frame&gt;</code>
+      — même composant, non reproductible</span>
+    </div>
+  </section>
+
+  <!-- ===========================================================================
+       6 / 7 — SECTION « CALQUES » (featureleft, statique)
+       [relevé] Commentaire de la source : « Static section (embed retired per
+       the static-by-default direction): the references arrangement with the
+       panel on the left. »
+       ======================================================================== -->
+  <section class="section section-gauche" id="calques" data-section="calques" data-zone="text">
+    <div class="feature-agencement">
+      <div class="cadre-duo">
+        <img class="fond-flou" src="https://app.reve.com/model-landing/live-layers-1.png"
+             srcset="https://app.reve.com/model-landing/live-layers-1-800.png 594w,
+                     https://app.reve.com/model-landing/live-layers-1-1200.png 891w,
+                     https://app.reve.com/model-landing/live-layers-1.png 1189w"
+             sizes="(max-width:750px) 66vw,44vw" width="1189" height="1600" alt="" loading="lazy">
+        <div class="duo-piste">
+          <img src="https://app.reve.com/model-landing/live-layers-2.png"
+               srcset="https://app.reve.com/model-landing/live-layers-2-800.png 594w,
+                       https://app.reve.com/model-landing/live-layers-2-1200.png 891w,
+                       https://app.reve.com/model-landing/live-layers-2.png 1189w"
+               sizes="(max-width:750px) 66vw,44vw" width="1189" height="1600"
+               alt='"Picnic at the park" poster as flat black-and-white line art' loading="lazy">
+          <img src="https://app.reve.com/model-landing/live-layers-1.png"
+               srcset="https://app.reve.com/model-landing/live-layers-1-800.png 594w,
+                       https://app.reve.com/model-landing/live-layers-1-1200.png 891w,
+                       https://app.reve.com/model-landing/live-layers-1.png 1189w"
+               sizes="(max-width:750px) 66vw,44vw" width="1189" height="1600"
+               alt="The same picnic poster in a pastel halftone print on crumpled paper" loading="lazy">
+        </div>
+      </div>
+      <div class="feature-copie">
+        <div class="intro-copie">
+          <h2 class="intro-titre">Compose with text and images</h2>
+          <p class="intro-sous">Use live layers to create polished graphics</p>
+        </div>
+        <div class="intro-actions">
+          <a class="intro-cta intro-cta--primaire" href="#invite">Get started</a>
+          <a class="intro-cta intro-cta--secondaire" href="#cadrage">Learn more<span class="invisible-lecteur"> about live layers</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===========================================================================
+       7 / 7 — SECTION « CADRAGE » (featureright, statique)
+       [relevé] Commentaire de la source : « the references arrangement flipped
+       — copy left, panel right. Before/after pair: the annotated cove on its
+       extended blank canvas, then the reframed result with the sailboat added. »
+       ======================================================================== -->
+  <section class="section section-droite" id="cadrage" data-section="cadrage" data-zone="text">
+    <div class="feature-agencement">
+      <div class="feature-copie">
+        <div class="intro-copie">
+          <h2 class="intro-titre">Reshoot and change your layout</h2>
+          <p class="intro-sous">Reframe your scene in any aspect ratio</p>
+        </div>
+        <div class="intro-actions">
+          <a class="intro-cta intro-cta--primaire" href="#invite">Get started</a>
+          <a class="intro-cta intro-cta--secondaire" href="#invite">Learn more<span class="invisible-lecteur"> about reframe</span></a>
+        </div>
+      </div>
+      <div class="cadre-duo">
+        <img class="fond-flou" src="https://app.reve.com/model-landing/reframe-2.png"
+             srcset="https://app.reve.com/model-landing/reframe-2-800.png 800w,
+                     https://app.reve.com/model-landing/reframe-2-1200.png 1200w,
+                     https://app.reve.com/model-landing/reframe-2.png 1600w"
+             sizes="(max-width:750px) 66vw,44vw" width="1600" height="1600" alt="" loading="lazy">
+        <div class="duo-piste">
+          <img src="https://app.reve.com/model-landing/reframe-1.png"
+               srcset="https://app.reve.com/model-landing/reframe-1-800.png 800w,
+                       https://app.reve.com/model-landing/reframe-1-1200.png 1200w,
+                       https://app.reve.com/model-landing/reframe-1.png 1600w"
+               sizes="(max-width:750px) 66vw,44vw" width="1600" height="1600"
+               alt='Coastal cove photo on an extended blank canvas with an "Add a sailboat" note' loading="lazy">
+          <img src="https://app.reve.com/model-landing/reframe-2.png"
+               srcset="https://app.reve.com/model-landing/reframe-2-800.png 800w,
+                       https://app.reve.com/model-landing/reframe-2-1200.png 1200w,
+                       https://app.reve.com/model-landing/reframe-2.png 1600w"
+               sizes="(max-width:750px) 66vw,44vw" width="1600" height="1600"
+               alt="The cove reframed to a full scene with a sailboat on the horizon" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+</div>
+
+<!-- =============================================================================
+     ZONE FINALE — invite, galerie, pied
+     [relevé] Un marqueur de hauteur nulle déclenche le chargement différé de
+     cette zone : « 0-height marker that lazy-loads the footer (rv-footer /
+     composer / gallery) as it nears the viewport ».
+     [arbitrage] <rv-logged-out-composer>, <rv-horizontal-gallery> et
+     <rv-footer> sont vides dans le HTML et rendus en JS : leur contenu est
+     reconstruit ici avec les jetons relevés. Seules les dimensions du CSS
+     inline (58×rythme pour l'invite, 26svh/30svh pour la galerie, z-index 10,
+     hauteur de page 100svh − image − 108px) sont relevées.
+     ========================================================================= -->
+<div class="lazy-trigger" aria-hidden="true" data-lazy-pied></div>
+
+<div class="zone-pied" data-zone="text">
+  <section class="section section-lache section-texte page" id="invite">
+    <!-- [relevé] « What will you make? » — seul <h2> de la zone finale. -->
+    <h2>What will you make?</h2>
+    <form class="invite" onsubmit="return false">
+      <label class="invisible-lecteur" for="invite-zone">Describe what you want to make</label>
+      <textarea class="invite-zone" id="invite-zone" rows="2"
+                placeholder="Describe an image, or drop one in to edit"></textarea>
+      <div class="invite-barre">
+        <button class="invite-outil" type="button" aria-label="Attach an image">+</button>
+        <button class="invite-outil" type="button" aria-label="Choose a style">◒</button>
+        <button class="invite-outil" type="button" aria-label="Choose an aspect ratio">▭</button>
+        <button class="invite-envoi" type="submit" aria-label="Submit">↑</button>
+      </div>
+    </form>
+  </section>
+
+  <!-- [arbitrage] <rv-horizontal-gallery> est vide dans la source : les
+       légendes reprennent les intitulés de catégorie du carrousel, seuls
+       libellés de ce registre que la source fournit. -->
+  <div class="galerie" role="list" aria-label="Recent creations" data-marquee data-vitesse="12">
+    <figure class="galerie-vignette" role="listitem" tabindex="0">
+      <img src="https://app.reve.com/model-landing/hero-carousel-2.png" width="1226" height="1600" alt="" loading="lazy">
+      <figcaption>Art direction</figcaption>
+    </figure>
+    <figure class="galerie-vignette" role="listitem" tabindex="0">
+      <img src="https://app.reve.com/model-landing/hero-carousel-7.png" width="1194" height="1600" alt="" loading="lazy">
+      <figcaption>Product photography</figcaption>
+    </figure>
+    <figure class="galerie-vignette" role="listitem" tabindex="0">
+      <img src="https://app.reve.com/model-landing/hero-carousel-9.png" width="1275" height="1600" alt="" loading="lazy">
+      <figcaption>Architecture</figcaption>
+    </figure>
+    <figure class="galerie-vignette" role="listitem" tabindex="0">
+      <img src="https://app.reve.com/model-landing/hero-carousel-11.png" width="1155" height="1600" alt="" loading="lazy">
+      <figcaption>Graphics &amp; Illustration</figcaption>
+    </figure>
+    <figure class="galerie-vignette" role="listitem" tabindex="0">
+      <img src="https://app.reve.com/model-landing/hero-carousel-13.png" width="1091" height="1600" alt="" loading="lazy">
+      <figcaption>Product Rendering</figcaption>
+    </figure>
+    <figure class="galerie-vignette" role="listitem" tabindex="0">
+      <img src="https://app.reve.com/model-landing/hero-carousel-1.png" width="1156" height="1600" alt="" loading="lazy">
+      <figcaption>Graphic design</figcaption>
+    </figure>
+  </div>
+
+  <footer class="pied">
+    <!-- [relevé] Le reset ne retire les puces que sur `nav ul` : les colonnes de
+         liens sont donc de vraies zones de navigation, pas des <div>. -->
+    <!-- [arbitrage] <rv-footer> est vide dans la source : intitulés reconstruits
+         à partir des sections et des libellés d'action qu'elle fournit. -->
+    <nav class="pied-colonnes" aria-label="Footer">
+      <div>
+        <h3>Product</h3>
+        <ul>
+          <li><a href="#edition">Directly edit anything</a></li>
+          <li><a href="#references">Reference anything</a></li>
+          <li><a href="#gabarits">Create with Templates</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Capabilities</h3>
+        <ul>
+          <li><a href="#calques">Compose with text and images</a></li>
+          <li><a href="#cadrage">Reshoot and change your layout</a></li>
+          <li><a href="#effets">Create any visual effect</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Company</h3>
+        <ul>
+          <li><a href="#hero">Model</a></li>
+          <li><a href="#hero">API</a></li>
+        </ul>
+      </div>
+    </nav>
+    <div class="pied-raccourcis">
+      <h3>Shortcuts</h3>
+      <ul>
+        <li><span class="rangee">Search <kbd><kbd>⌘</kbd><kbd>K</kbd></kbd></span></li>
+        <li><span class="rangee">New image <kbd><kbd>⌘</kbd><kbd>N</kbd></kbd></span></li>
+      </ul>
+    </div>
+    <div class="pied-bas">
+      <span>Design reference — procedure survey, unaffiliated.</span>
+      <span class="rangee">
+        <span class="article-info">
+          <span class="article-nom">Item name</span>
+          <span class="article-desc">Secondary description truncated to one line</span>
+        </span>
+        <span class="etiquette">Beta</span>
+      </span>
+    </div>
+  </footer>
+</div>
+
+</body>
+</html>

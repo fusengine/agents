@@ -1,6 +1,6 @@
 ---
 name: laravel-eloquent
-description: Complete Eloquent ORM for Laravel 13 - PHP Attributes (#[Table], #[Fillable], #[Casts]), models, relationships, queries, observers, factories. Use when working with database models.
+description: Use when working with database models — Eloquent ORM, PHP attributes, relationships, queries, observers, or factories in Laravel 13.
 versions:
   laravel: "13.0"
   php: "8.3"
@@ -8,6 +8,17 @@ user-invocable: true
 references: references/legacy-properties.md, references/models.md, references/relationships-basic.md, references/relationships-many-to-many.md, references/relationships-advanced.md, references/relationships-polymorphic.md, references/eager-loading.md, references/scopes.md, references/casts.md, references/accessors-mutators.md, references/events-observers.md, references/soft-deletes.md, references/collections.md, references/serialization.md, references/factories.md, references/performance.md, references/resources.md, references/transactions.md, references/pagination.md, references/aggregates.md, references/batch-operations.md, references/query-debugging.md, references/templates/ModelBasic.php.md, references/templates/ModelRelationships.php.md, references/templates/ModelCasts.php.md, references/templates/Observer.php.md, references/templates/Factory.php.md, references/templates/Resource.php.md, references/templates/EagerLoadingExamples.php.md
 related-skills: laravel-attributes, laravel-migrations, laravel-api, laravel-testing
 ---
+
+<objective>
+Covers Laravel 13 Eloquent ORM with PHP 8.3 Attributes as the primary
+metadata mechanism (#[Table], #[Fillable], #[Hidden], #[Visible], #[Guarded],
+#[Casts], #[Appends], #[Touches], #[Connection]) alongside legacy property
+equivalents for backward compatibility. Includes all relationship types
+(basic, many-to-many, advanced, polymorphic), eager loading, scopes,
+accessors/mutators, events/observers, soft deletes, collections,
+serialization, factories, API resources, transactions, pagination,
+aggregates, batch operations, and query debugging/performance.
+</objective>
 
 # Laravel Eloquent ORM (L13 — Attributes-first)
 

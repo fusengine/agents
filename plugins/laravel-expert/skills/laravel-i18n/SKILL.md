@@ -1,6 +1,6 @@
 ---
 name: laravel-i18n
-description: Laravel localization - __(), trans_choice(), lang files, JSON translations, pluralization, middleware, formatting. Use when implementing translations.
+description: Use when implementing Laravel translations — __(), trans_choice(), lang files, pluralization, locale middleware, or formatting.
 versions:
   laravel: "13.0"
   php: "8.3"
@@ -8,6 +8,14 @@ user-invocable: true
 references: references/localization.md, references/pluralization.md, references/blade-translations.md, references/middleware.md, references/formatting.md, references/packages.md, references/best-practices.md, references/templates/SetLocaleMiddleware.php.md, references/templates/lang-files.md, references/templates/LocaleServiceProvider.php.md, references/templates/LocaleRoutes.php.md
 related-skills: laravel-blade, laravel-api
 ---
+
+<objective>
+Covers Laravel localization: PHP vs JSON translation files, pluralization
+rules, Blade translation helpers, locale-detection middleware, date/number/
+currency formatting, vendor package translations, and organizing
+translations for large apps. Includes queue-safe locale propagation via
+Context::add() in Laravel 13.
+</objective>
 
 # Laravel Internationalization
 

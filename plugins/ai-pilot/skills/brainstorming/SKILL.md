@@ -1,11 +1,17 @@
 ---
 name: brainstorming
-description: Use when user requests creative work - creating features, building components, adding functionality, or modifying behavior. Activates BEFORE APEX Analyze phase to refine requirements through structured questioning.
+description: Use when creating a feature/component or adding functionality. Fires BEFORE APEX Analyze to refine requirements via structured questioning.
 user-invocable: true
 references: references/workflow.md, references/anti-patterns.md
 related-skills: apex-methodology, research, exploration
 argument-hint: "[feature-or-task-description]"
 ---
+
+<objective>
+Brainstorming runs a design-first, no-code-before-approval process ahead of any non-trivial feature, component, or behavior change: explore project context, ask clarifying questions one at a time, diverge to 6-8 approaches via a named technique before converging on 2-3 with a trade-off table, present the design for explicit approval, save it to `docs/plans/`, then hand off to APEX Analyze along with the research already gathered (so Analyze doesn't repeat it).
+
+Skip it entirely for trivial fixes, typos, or simple renames -- those go straight to APEX.
+</objective>
 
 # Brainstorming Skill
 

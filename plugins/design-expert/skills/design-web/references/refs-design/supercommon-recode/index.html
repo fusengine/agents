@@ -1,0 +1,403 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>supercommon systems</title>
+<meta name="description" content="interval is a premium macOS focus timer for work and sport rhythm, featuring notch-first controls, instant reminder drag, a/b cycles, ext/pos tracking, and clean always-on timing without distractions.">
+<link rel="preconnect" href="https://framerusercontent.com" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Inter : substitution MESURÉE d'« Akt Variable Thin » (commerciale). À
+     56px/-.06em elle rend « two modes. named by you. » à 617 px, soit exactement
+     la largeur de la source. Voir le détail des mesures dans styles.css (--police).
+     Sans ce lien, la page retombe sur Helvetica Neue, ~8 % plus étroite : les
+     titres rétrécissent et tous les paragraphes perdent une ligne. -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400&display=swap">
+<link rel="stylesheet" href="styles.css">
+<script src="motion.js" defer></script>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════════════════════════════════
+     BARRE HAUTE
+     [relevé] .framer-aers59 — row, width:1440px, padding:20px ; la variante
+     desktop .framer-v-1w353mn passe à padding:20px 40px, la variante mobile
+     .framer-v-1f7lyg6 à width:360px, padding:16px et icônes 40 x 40.
+     ════════════════════════════════════════════════════════════════════════ -->
+<header class="topbar">
+  <a class="topbar__side topbar__side--start" href="#">
+    <svg class="topbar__icon" viewBox="0 0 48 48" aria-hidden="true"><use href="#svg-1949803328_2197"/></svg>
+    <h5 class="topbar__label">contact</h5>
+  </a>
+  <div class="topbar__center">
+    <a class="wordmark" href="#" aria-label="supercommon systems"></a>
+  </div>
+  <!-- [relevé] .framer-kfg5j9 : l'icône vient AVANT le libellé, comme à gauche —
+       le groupe entier est simplement poussé à droite par place-content:flex-end.
+       Inverser les deux renvoie le pictogramme au bord de la fenêtre. -->
+  <a class="topbar__side topbar__side--end" href="#">
+    <svg class="topbar__icon" viewBox="0 0 48 48" aria-hidden="true"><use href="#svg1315259080_1634"/></svg>
+    <h5 class="topbar__label">manual</h5>
+  </a>
+</header>
+
+<main>
+
+<!-- ════════════════════════════════════════════════════════════════════════
+     1 + 2. BANDEAU MÉTALLIQUE — titre ET hero dans le MÊME conteneur
+     [relevé] .framer-17iwuz2 enveloppe .framer-1jrwauy (le titre) ET
+     .framer-1xblbl0 (le hero). Le dégradé en 5 arrêts se déploie donc sur
+     toute cette hauteur : le noir tient le titre (0 → 19 %), le clair
+     (#bfc6c1 à 75 %) tombe DERRIÈRE l'image du hero.
+     Les séparer — ce que j'avais fait d'abord — fait remonter le clair juste
+     sous le titre et change complètement l'impression de la page.
+     ════════════════════════════════════════════════════════════════════════ -->
+<section class="titleband">
+  <div class="spacer" style="--h:6vh"></div><!-- [relevé] .framer-4vxme9 6vh -->
+  <div class="titleband__head" data-reveal>
+    <div class="titleband__row">
+      <!-- [relevé] .framer-1skvjim : row, gap:12px, width:100% -->
+      <h3 class="titleband__word">interval</h3>
+      <span class="mark" aria-hidden="true"><span class="mark__dots"></span></span>
+      <h3 class="titleband__word">for macOS</h3>
+    </div>
+    <h1 class="display">time as an instrument</h1>
+  </div>
+  <div class="spacer" style="--h:7vh"></div><!-- [relevé] .framer-1jlbrmj 7vh -->
+
+  <!-- [relevé] .framer-1xblbl0 aspect-ratio:1.8042 (710px sous 1440) -->
+  <div class="hero">
+  <img class="hero__img" alt=""
+       src="https://framerusercontent.com/images/k2hTUMRvuxIEcleQsvFCANDKZk.jpg?lossless=1&width=3437&height=1905"
+       srcset="https://framerusercontent.com/images/k2hTUMRvuxIEcleQsvFCANDKZk.jpg?scale-down-to=1024&lossless=1&width=3437&height=1905 1024w,
+               https://framerusercontent.com/images/k2hTUMRvuxIEcleQsvFCANDKZk.jpg?scale-down-to=2048&lossless=1&width=3437&height=1905 2048w"
+       sizes="100vw">
+
+  <!-- [relevé] .framer-jd46e4 : le scrim CONTIENT les mentions — il n'est pas
+       qu'un décor, c'est le conteneur qui les rend lisibles sur l'image. -->
+  <div class="hero__ramp">
+    <div class="hero__notes">
+      <p class="fine">direct license key - use on any two macs.</p>
+      <p class="fine">app store - purchase tied to your apple id.</p>
+      <p class="fine"><a class="link" href="#">app store version</a></p>
+    </div>
+  </div>
+
+  <!-- [relevé] .framer-2j27ep : top:58%, left:50%, translate(-50%,-50%),
+       gap:16px, z-index:2. Le centrage par transform interdit d'y poser
+       l'animation d'apparition : la boîte animée est imbriquée. -->
+  <div class="hero__offer">
+    <div class="hero__offer-in" data-reveal>
+      <h3 class="hero__kicker">one-time purchase</h3>
+      <button class="btn" type="button"><h5 class="btn__label">buy for $21.99</h5></button>
+      <p class="fine hero__terms hero__terms--wide">all taxes included · early release price · macOS 14+ · apple silicon &amp; intel</p>
+      <div class="fine hero__terms hero__terms--narrow">
+        <p>all taxes included · early release price</p>
+        <p>macOS 14+ · apple silicon &amp; intel</p>
+      </div>
+    </div>
+  </div>
+  </div><!-- /.hero -->
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════════════
+     3. MANIFESTE — aucun visuel, un seul bloc de texte
+     [relevé] .framer-1srhlqc padding:0 40px · .framer-flwwvz max-width:1120px
+     ════════════════════════════════════════════════════════════════════════ -->
+<section class="band">
+  <div class="spacer" style="--h:32vh"></div><!-- [relevé] .framer-c44fd4 32vh -->
+  <div class="band__block">
+    <!-- [relevé] la source écrit bien « stilness » (un seul l) dans ce titre, alors
+         qu'elle écrit « stillness. » plus bas. Coquille conservée : c'est le texte
+         de la source, et sa longueur commande la coupe de ligne. -->
+    <h2 class="display" data-reveal>stilness vs motion.</h2>
+    <div class="spacer" style="--h:8vh"></div><!-- [relevé] .framer-1g6k1tv 8vh -->
+    <p class="lede" data-reveal>your brain is not a server. it doesn’t perform under constant load. it needs
+      contrast to stay precise. focus and release are different states. they should not compete.
+      they should alternate. we built an instrument to hold that boundary. to switch states
+      without thinking. to move between modes without friction. this is not about productivity.
+      it’s about control. a digital tool for a biological rhythm.</p>
+  </div>
+  <div class="spacer" style="--h:5vh"></div><!-- [relevé] .framer-1bin8ru 5vh -->
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════════════
+     4. DUO — image carrée pleine largeur, deux mots posés dessus
+     [relevé] .framer-1gg9id2 z-index:1 · .framer-pb2yt6 width:4%
+     ════════════════════════════════════════════════════════════════════════ -->
+<section class="duo">
+  <img class="duo__img" alt="" loading="lazy"
+       src="https://framerusercontent.com/images/WgcM5KR0yzwqpA4X8i2Pf5AfvCg.jpg?scale-down-to=1024&lossless=1&width=2048&height=2048">
+  <div class="duo__row">
+    <h2 class="display duo__word">stillness.</h2>
+    <h2 class="display duo__word duo__word--hot" tabindex="0">motion.</h2>
+  </div>
+  <!-- [relevé] .framer-1v0tc2g : 60vh, dégradé à trois arrêts (0 / .8 à 45% / 1 à 95%) -->
+  <div class="duo__ramp" aria-hidden="true"></div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════════════
+     5. DEUX MODES — chapeau, titre large, vidéo en boucle
+     ════════════════════════════════════════════════════════════════════════ -->
+<section class="band band--opaque">
+  <div class="spacer" style="--h:25vh;--hm:1vh"></div><!-- [relevé] .framer-1v5m74q 25vh / 1vh -->
+  <p class="eyebrow" data-reveal>a two-mode timer for macOS</p>
+  <div class="spacer" style="--h:4vh;--hm:1vh"></div><!-- [relevé] .framer-pttglp 4vh / 1vh -->
+  <!-- [relevé] .framer-1w9zuai padding:0 40px (20px sous 1440) -->
+  <!-- [relevé] la source sert DEUX versions de ce titre via ses ssr-variants :
+       ≥1440 en trois lignes forcées par <br>, <1440 en une seule chaîne qui se
+       replie toute seule. Ce n'est pas une redondance — la coupe imposée à
+       1440 n'a aucun sens à 390, où elle produirait six lignes très courtes. -->
+  <h2 class="display display--wide display--wide-only" data-reveal>two modes. named by you.<br>any activity. any duration.<br>switch automatically or never.</h2>
+  <h2 class="display display--wide display--narrow-only" data-reveal>two modes. named by you. any activity. any duration. switch automatically or never.</h2>
+  <div class="media">
+    <video class="media__video" muted loop playsinline preload="none"
+           poster="https://framerusercontent.com/images/lyNgdVtkmxMMCSenyE8ICOMyw.jpg?scale-down-to=1024&lossless=1&width=3200&height=2400"
+           src="https://resources.supercommon.systems/downloads/output.webm"></video>
+    <div class="media__ramp" aria-hidden="true"></div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════════════
+     6. TROIS FORMES — contrôle segmenté + capture contextuelle
+     [relevé] .framer-sujigt padding:0 16px · .framer-1472m5q gap:2px padding:2px
+     ════════════════════════════════════════════════════════════════════════ -->
+<section class="band band--notch band--opaque">
+  <div class="spacer" style="--h:1vh"></div><!-- [relevé] .framer-gq2chr 1vh -->
+  <h2 class="display display--tight" data-reveal>present when needed.<br>invisible otherwise.</h2>
+  <div class="spacer" style="--h:6vh"></div><!-- [relevé] .framer-f504ui 6vh -->
+
+  <div class="segmented" data-reveal role="tablist" aria-label="display density">
+    <span class="segmented__thumb" aria-hidden="true"></span>
+    <button class="segmented__tab is-on" role="tab" aria-selected="true" type="button"><h6 class="segmented__label">large</h6></button>
+    <button class="segmented__tab" role="tab" aria-selected="false" type="button"><h6 class="segmented__label">pill</h6></button>
+    <button class="segmented__tab" role="tab" aria-selected="false" type="button"><h6 class="segmented__label">slim</h6></button>
+  </div>
+
+  <div class="spacer" style="--h:5vh"></div><!-- [relevé] .framer-lhmy7o 5vh -->
+  <figure class="shot">
+    <img class="shot__img" alt="" loading="lazy"
+         src="https://framerusercontent.com/images/0KpwrRrlKBLGFd2UxFwGy8BBxA.jpg?scale-down-to=2048&lossless=1&width=3200&height=2203">
+    <!-- [relevé] .framer-uitjqc : top:82%, left:50%, width:48%, padding:0 40px -->
+    <figcaption class="shot__caption fine">interval running on macOS. background app shown for context.</figcaption>
+  </figure>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════════════
+     7. CAPACITÉS — dix entrées, aucune icône, aucun filet
+     [relevé] la source sépare les entrées par un <h3> VIDE : l'espacement est
+     typographique, pas un gap. Reproduit ici par gap = une interligne.
+     ════════════════════════════════════════════════════════════════════════ -->
+<section class="band">
+  <div class="spacer" style="--h:15vh"></div><!-- [relevé] .framer-1xjo61h 15vh -->
+  <h2 class="display" data-reveal>capabilities</h2>
+  <div class="spacer" style="--h:12vh"></div><!-- [relevé] .framer-hpk8iv 12vh -->
+  <div class="caps" data-reveal data-stagger>
+    <h3 class="caps__item"><strong>two configurable states</strong><br><span>• independent, persistent</span></h3>
+    <h3 class="caps__item"><strong>manual or automatic switching</strong><br><span>• user-driven or rule-based</span></h3>
+    <h3 class="caps__item"><strong>count up / count down</strong><br><span>• per state</span></h3>
+    <h3 class="caps__item"><strong>idle-aware pausing</strong><br><span>• respects inactivity</span></h3>
+    <h3 class="caps__item"><strong>gesture-based reminders</strong><br><span>• non-intrusive signals</span></h3>
+    <h3 class="caps__item"><strong>menu bar presence</strong><br><span>• always available</span></h3>
+    <h3 class="caps__item"><strong>global keyboard shortcuts</strong><br><span>• system-level control</span></h3>
+    <h3 class="caps__item"><strong>multiple display densities</strong><br><span>• adapts to context</span></h3>
+    <h3 class="caps__item"><strong>sound &amp; haptic feedback</strong><br><span>• minimal, optional</span></h3>
+    <h3 class="caps__item"><strong>no subscriptions</strong><br><span>• one-time purchase</span></h3>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════════════
+     8. GRILLE — NEUF cellules, 3 x 3
+     [relevé] .framer-28mkr5 : grid-template-rows:repeat(2,…) + grid-auto-rows,
+     3 colonnes, gap:80px 40px, max-width:800px. Une colonne sous 1440.
+     Chaque cellule : .framer-4dmrqa gap:20px · boîte d'icône .framer-1embbqn
+     height:60px · bloc texte .framer-1t6e5iq gap:10px.
+     Les pictogrammes sont les SVG de la source, repris tels quels (voir le
+     bloc #svg-templates en fin de document) — c'est là que vit la seule
+     polychromie de la page.
+     ════════════════════════════════════════════════════════════════════════ -->
+<section class="band band--opaque">
+  <div class="spacer" style="--h:40vh"></div><!-- [relevé] .framer-1s4a1lk 40vh -->
+  <h2 class="display" data-reveal>time, held in place</h2>
+  <div class="spacer" style="--h:15vh;--hm:12vh"></div><!-- [relevé] .framer-174jvzv 15vh / 12vh -->
+
+  <!-- [relevé] .framer-1hmqa5w : colonne à gap:80px qui enveloppe la grille -->
+  <div class="grid-wrap">
+  <div class="grid" data-reveal data-stagger>
+    <div class="cell">
+      <div class="cell__slot"><svg class="picto" style="--pw:112px;--ph:48px" viewBox="0 0 112 48" aria-hidden="true"><use href="#svg-2080996658_2818"/></svg></div>
+      <div class="cell__text">
+        <h3 class="cell__title">notch modes</h3>
+        <p class="cell__note">adaptive interface across three forms, tuned for focus, glance, and full control.</p>
+      </div>
+    </div>
+    <div class="cell">
+      <div class="cell__slot"><span class="picto picto--timer" style="--pw:117px;--ph:34px" aria-hidden="true"></span></div>
+      <div class="cell__text">
+        <h3 class="cell__title">reminder</h3>
+        <p class="cell__note">independent countdown layered over your session, never interrupting the main cycle.</p>
+      </div>
+    </div>
+    <div class="cell">
+      <div class="cell__slot"><svg class="picto" style="--pw:48px;--ph:48px" viewBox="0 0 48 48" aria-hidden="true"><use href="#svg-2008056199_671"/></svg></div>
+      <div class="cell__text">
+        <h3 class="cell__title">time ring</h3>
+        <p class="cell__note">progress wrapped around the primary control, readable without shifting attention.</p>
+      </div>
+    </div>
+    <div class="cell">
+      <div class="cell__slot"><span class="picto picto--scrub" style="--pw:50px;--ph:48px" aria-hidden="true"></span></div>
+      <div class="cell__text">
+        <h3 class="cell__title">time scrubber</h3>
+        <!-- [relevé] la source emploie ici le trait d'union insécable U+2011 -->
+        <p class="cell__note">drag to adjust duration instantly, with fine‑grained tactile feedback.</p>
+      </div>
+    </div>
+    <div class="cell">
+      <div class="cell__slot"><svg class="picto" style="--pw:64px;--ph:32px" viewBox="0 0 64 32" aria-hidden="true"><use href="#svg-1296484369_1641"/></svg></div>
+      <div class="cell__text">
+        <h3 class="cell__title">post time</h3>
+        <p class="cell__note">automatic overtime tracking once the plan ends, with zero extra input.</p>
+      </div>
+    </div>
+    <div class="cell">
+      <div class="cell__slot"><svg class="picto" style="--pw:64px;--ph:32px" viewBox="0 0 64 32" aria-hidden="true"><use href="#svg319860667_656"/></svg></div>
+      <div class="cell__text">
+        <h3 class="cell__title">extended time</h3>
+        <p class="cell__note">manual extension beyond the planned duration when work expands on demand.</p>
+      </div>
+    </div>
+    <div class="cell">
+      <div class="cell__slot"><svg class="picto picto--wide" style="--pw:83px;--ph:36px" viewBox="0 0 92 40" aria-hidden="true"><use href="#svg1998448633_1066"/></svg></div>
+      <div class="cell__text">
+        <h3 class="cell__title">state indicator</h3>
+        <p class="cell__note">symbol and color cue that shows the active mode at a glance.</p>
+      </div>
+    </div>
+    <div class="cell">
+      <div class="cell__slot"><svg class="picto" style="--pw:131px;--ph:40px" viewBox="0 0 131 40" aria-hidden="true"><use href="#svg-1497144722_855"/></svg></div>
+      <div class="cell__text">
+        <h3 class="cell__title">hotkeys</h3>
+        <!-- [relevé] deux traits d'union insécables U+2011 dans cette phrase -->
+        <p class="cell__note">customizable multi‑key control for power users and muscle‑memory workflows.</p>
+      </div>
+    </div>
+    <div class="cell">
+      <div class="cell__slot"><svg class="picto" style="--pw:112px;--ph:31px" viewBox="0 0 112 31" aria-hidden="true"><use href="#svg-1721136149_3730"/></svg></div>
+      <div class="cell__text">
+        <h3 class="cell__title">digits</h3>
+        <p class="cell__note">three display styles designed for distance, clarity, and quick scanning.</p>
+      </div>
+    </div>
+  </div>
+  </div><!-- /.grid-wrap -->
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════════════
+     9. SORTIE — un seul bouton, surface inversée
+     [relevé] .framer-ly855p background #fff, padding:31px
+     ════════════════════════════════════════════════════════════════════════ -->
+<section class="band">
+  <div class="spacer" style="--h:15vh;--hm:8vh"></div><!-- [relevé] .framer-8ks4su 15vh / 8vh -->
+  <a class="btn btn--wide" href="#" data-reveal><h5 class="btn__label">read the full manual</h5></a>
+  <div class="spacer" style="--h:15vh"></div><!-- [relevé] .framer-10e2vk0 15vh -->
+</section>
+
+</main>
+
+<!-- ════════════════════════════════════════════════════════════════════════
+     PIED — [relevé] .framer-15lp0e7 height:88px, padding:0 40px, gap:52px
+     ════════════════════════════════════════════════════════════════════════ -->
+<footer class="foot">
+  <nav class="foot__side foot__side--start">
+    <h5 class="foot__item"><a class="link" href="#">contact</a></h5>
+    <h5 class="foot__item"><a class="link" href="#">manual</a></h5>
+  </nav>
+  <div class="foot__center"><a class="wordmark" href="#" aria-label="supercommon systems"></a></div>
+  <nav class="foot__side foot__side--end">
+    <h5 class="foot__item"><a class="link" href="#">terms</a></h5>
+    <h5 class="foot__item"><a class="link" href="#">policy</a></h5>
+    <h5 class="foot__item foot__item--static">© 2026</h5>
+  </nav>
+</footer>
+
+<!-- ════════════════════════════════════════════════════════════════════════
+     SPRITES SVG — relevé INTÉGRAL du bloc #svg-templates de la source.
+     Neuf pictogrammes vectoriels, référencés par <use href="#id">. C'est le
+     procédé de la source : un seul dépôt caché en fin de document, zéro
+     requête réseau, et des pictos qui restent du texte vectoriel.
+     Ne pas reformater : ce bloc est copié au caractère près.
+     ════════════════════════════════════════════════════════════════════════ -->
+<div id="svg-templates" style="position: absolute; overflow: hidden; bottom: 0; left: 0; width: 0; height: 0; z-index: 0; contain: strict" aria-hidden="true">
+<svg width="48" height="48" viewBox="0 0 48 48" fill="none" id="svg-1949803328_2197">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M42 45C43.6569 45 45 43.6569 45 42V6C45 4.34315 43.6569 3 42 3H6C4.34315 3 3 4.34315 3 6V25.4043C3.02075 25.3824 3.03909 25.3582 3.06055 25.3369L13.3213 15.1533C14.0909 14.3895 15.3388 14.3896 16.1084 15.1533C16.878 15.9171 16.8779 17.1552 16.1084 17.9189L18.0986 15.9434C18.8681 15.1797 20.1161 15.1799 20.8857 15.9434C21.6553 16.7071 21.6553 17.9452 20.8857 18.709L22.4785 17.1289C23.2481 16.3651 24.496 16.3651 25.2656 17.1289C26.0352 17.8926 26.0351 19.1307 25.2656 19.8945L30.2217 14.9873C30.9913 14.2235 32.2392 14.2235 33.0088 14.9873C33.7781 15.7511 33.7782 16.9892 33.0088 17.7529L20.4541 30.2021C20.3486 30.3068 20.2892 30.4486 20.2891 30.5967C20.2891 30.9052 20.5408 31.1561 20.8516 31.1562C21.0009 31.1563 21.1444 31.097 21.25 30.9922L26.0615 26.2168C27.051 25.2348 28.656 25.2348 29.6455 26.2168C30.6348 27.1988 30.6349 28.7915 29.6455 29.7734L20.5693 38.7803C20.0075 39.3379 19.2476 39.6513 18.4561 39.6514H12.1641C11.3751 39.6514 10.6181 39.9623 10.0566 40.5166L5.54883 44.9668C5.69596 44.989 5.84668 45 6 45H42ZM32.5 12C31.9477 12 31.5 11.5523 31.5 11V7C31.5 6.44772 31.9477 6 32.5 6C33.0523 6 33.5 6.44772 33.5 7V11C33.5 11.5523 33.0523 12 32.5 12ZM36.3887 13.0244C35.9982 13.4148 35.3651 13.4149 34.9746 13.0244C34.5842 12.6339 34.5842 12.0008 34.9746 11.6104L37.8037 8.78223C38.1942 8.39182 38.8273 8.39178 39.2178 8.78223C39.6082 9.17272 39.6082 9.80584 39.2178 10.1963L36.3887 13.0244ZM30.0254 13.0254C29.635 13.4161 29.0021 13.4166 28.6113 13.0264L25.7822 10.1973C25.3918 9.80677 25.3918 9.1737 25.7822 8.7832C26.1727 8.39273 26.8058 8.39277 27.1963 8.7832L30.0254 11.6113C30.4159 12.0018 30.4157 12.6347 30.0254 13.0254ZM37 16.5C36.4477 16.5 36 16.0523 36 15.5C36 14.9477 36.4477 14.5 37 14.5H41C41.5523 14.5 42 14.9477 42 15.5C42 16.0523 41.5523 16.5 41 16.5H37ZM39.2178 22.2178C38.8274 22.6084 38.1944 22.609 37.8037 22.2188L34.9746 19.3896C34.5842 18.9992 34.5842 18.3661 34.9746 17.9756C35.3651 17.5851 35.9982 17.5852 36.3887 17.9756L39.2178 20.8037C39.6083 21.1942 39.6081 21.8271 39.2178 22.2178Z" fill="#EEEEEE"/>
+</svg>
+<svg width="48" height="48" viewBox="0 0 48 48" fill="none" id="svg1315259080_1634">
+<path d="M23.5986 37.2764H19.7236L21.6611 31.8857L23.5986 37.2764Z" fill="#EEEEEE"/>
+<path d="M37.9336 36.2676C38.5774 36.2676 39.091 36.4497 39.4736 36.8135C39.8655 37.1681 40.0624 37.6537 40.0625 38.2695C40.0625 38.8855 39.8656 39.3762 39.4736 39.7402C39.091 40.0947 38.5774 40.2715 37.9336 40.2715H34.6436V36.2676H37.9336Z" fill="#EEEEEE"/>
+<path d="M37.9062 31.6475C38.5315 31.6475 39.0214 31.8067 39.376 32.124C39.7306 32.4414 39.9082 32.9268 39.9082 33.5801C39.9082 34.1959 39.7261 34.6719 39.3623 35.0078C38.9984 35.3438 38.5128 35.5117 37.9062 35.5117H34.6436V31.6475H37.9062Z" fill="#EEEEEE"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M42 3C43.6569 3 45 4.34315 45 6V42C45 43.6569 43.6569 45 42 45H6C4.34315 45 3 43.6569 3 42V6C3 4.34315 4.34315 3 6 3H42ZM17.4893 41H18.3848L19.457 38.0176H23.8643L24.9365 41H25.917L22.2764 30.9199H21.1006L17.4893 41ZM33.7061 41H37.9902C38.9328 41 39.6702 40.7621 40.2021 40.2861C40.7341 39.8008 41 39.1282 41 38.2695C40.9999 37.7658 40.9019 37.3413 40.7061 36.9961C40.5101 36.6509 40.2721 36.3849 39.9922 36.1982C39.7215 36.0116 39.46 35.89 39.208 35.834C39.4786 35.7873 39.7402 35.671 39.9922 35.4844C40.2442 35.2977 40.4497 35.0405 40.6084 34.7139C40.767 34.3779 40.8457 33.9763 40.8457 33.5098C40.8457 32.6512 40.5938 32.0074 40.0898 31.5781C39.5952 31.1395 38.8999 30.9199 38.0039 30.9199H33.7061V41ZM27.1377 37.1777H31.2959V36.4219H27.1377V37.1777ZM9 6C7.34315 6 6 7.34315 6 9C6 10.6569 7.34315 12 9 12C10.6569 12 12 10.6569 12 9C12 7.34315 10.6569 6 9 6Z" fill="#EEEEEE"/>
+</svg>
+<svg width="112" height="48" viewBox="0 0 112 48" fill="none" id="svg-2080996658_2818">
+<g clip-path="url(#svg-2080996658_2818_clip0_2489_5943)">
+<path d="M98.2042 0.55072C101.405 -0.306792 104 1.68416 104 4.9978V56.9733L102.068 57.4909V5.51543C102.068 3.37547 100.445 2.06264 98.4032 2.50227L98.2042 2.55072L13.7953 25.168C11.6614 25.7398 9.9316 27.9941 9.9316 30.2033V82.1788L7.99976 82.6964V30.7209C7.99976 27.4072 10.5945 24.0257 13.7953 23.168L98.2042 0.55072Z" fill="#808080"/>
+<path d="M73.2852 12.9932C73.2851 13.7831 72.6165 14.6547 71.8535 14.8594L39.6279 23.4941C39.287 23.5854 39.0735 23.5078 38.959 23.4199C38.8444 23.332 38.7139 23.1453 38.7139 22.792V17.5273L73.2852 8.26367V12.9932Z" stroke="#808080" stroke-width="2"/>
+<path d="M53.7339 29.8852L57.8024 28.795C58.691 28.5569 59.3478 28.5729 59.7729 28.843C60.2056 29.1111 60.422 29.6291 60.422 30.3971C60.422 31.4211 60.0704 32.1393 59.3672 32.5517C59.7072 32.5806 59.9931 32.732 60.2249 33.0059C60.4567 33.2718 60.5726 33.6607 60.5726 34.1727C60.5726 34.9647 60.3331 35.6489 59.854 36.2253C59.3826 36.7916 58.691 37.1969 57.7792 37.4412L53.7339 38.5252V29.8852ZM57.5705 32.4092C58.2351 32.2311 58.5674 31.782 58.5674 31.062C58.5674 30.342 58.2351 30.0711 57.5705 30.2492L55.5885 30.7802V32.9402L57.5705 32.4092ZM55.5885 36.6362L57.6285 36.0896C57.9762 35.9964 58.2428 35.837 58.4283 35.6113C58.6215 35.3836 58.7181 35.0737 58.7181 34.6817C58.7181 34.2897 58.6215 34.0316 58.4283 33.9073C58.2428 33.781 57.9762 33.7644 57.6285 33.8576L55.5885 34.4042V36.6362Z" fill="#808080"/>
+<path d="M68.6707 27.2269C67.9984 27.407 67.5116 27.7935 67.2102 28.3862C66.9165 28.9689 66.7697 29.7442 66.7697 30.7122C66.7697 31.6802 66.9165 32.3809 67.2102 32.8142C67.5116 33.2375 67.9984 33.359 68.6707 33.1789C69.1652 33.0464 69.5168 32.8242 69.7255 32.5123C69.9341 32.1923 70.0384 31.8604 70.0384 31.5164L71.893 31.0195C71.893 31.5235 71.7694 32.0206 71.5221 32.5108C71.2748 32.9931 70.9077 33.4275 70.4209 33.8139C69.9341 34.2003 69.3507 34.4847 68.6707 34.6669C67.4265 35.0002 66.4877 34.8478 65.854 34.2096C65.2281 33.5613 64.9151 32.5612 64.9151 31.2092C64.9151 29.8332 65.2204 28.6634 65.8308 27.6998C66.4413 26.7362 67.3879 26.0826 68.6707 25.7389C69.3275 25.5629 69.8993 25.5297 70.3861 25.6392C70.873 25.7488 71.2439 25.9814 71.4989 26.3371C71.7616 26.6827 71.893 27.1235 71.893 27.6595L70.0384 28.1564C70.0384 27.8604 69.9457 27.5972 69.7602 27.3669C69.5748 27.1286 69.2116 27.0819 68.6707 27.2269Z" fill="#808080"/>
+<path d="M47.598 40.1684L47.0184 38.4637L44.0048 39.2712L43.4252 41.2865L41.7097 41.7462L44.4568 32.3701L46.7055 31.7676L49.5221 39.6529L47.598 40.1684ZM46.578 37.1417L45.5116 34.0075L44.4452 37.7132L46.578 37.1417Z" fill="#EEEEEE"/>
+</g>
+<defs>
+<clipPath id="svg-2080996658_2818_clip0_2489_5943">
+<rect width="112" height="48" fill="white"/>
+</clipPath>
+</defs>
+</svg>
+<svg width="48" height="48" viewBox="0 0 48 48" fill="none" id="svg-2008056199_671">
+<rect x="1" y="1" width="46" height="46" rx="23" stroke="#333333" stroke-width="2"/>
+<path d="M19.7156 32V16L32.287 24L19.7156 32Z" fill="white"/>
+<path d="M24 1C27.7824 1 31.5064 1.93281 34.8421 3.71581C38.1779 5.49881 41.0224 8.07696 43.1238 11.2219C45.2252 14.3668 46.5185 17.9814 46.8892 21.7456C47.26 25.5098 46.6967 29.3073 45.2492 32.8017C43.8018 36.2962 41.5149 39.3797 38.591 41.7792C35.6672 44.1787 32.1968 45.8202 28.4871 46.5581C24.7774 47.296 20.943 47.1076 17.3235 46.0096C13.704 44.9117 10.4111 42.938 7.73655 40.2635" stroke="white" stroke-width="2"/>
+</svg>
+<svg width="64" height="32" viewBox="0 0 64 32" fill="none" id="svg-1296484369_1641">
+<rect x="1" y="1" width="62" height="30" rx="7" stroke="#CD739E" stroke-width="2"/>
+<path d="M15.4961 8.01563C18.7656 8.01563 20.7578 10.1953 20.7578 13.1836C20.7578 16.207 18.7422 18.3398 15.4844 18.3398H12.0156V24.0117H9.35547V8.01563H15.4961ZM18.0508 13.1836C18.0508 11.2969 16.9492 10.2188 15.0977 10.2188H12.0156V16.1602H14.1484C16.5977 16.1602 18.0508 15.5625 18.0508 13.1836Z" fill="#CD739E"/>
+<path d="M38.2164 17.1797C38.2164 21.7031 35.6383 24.3281 31.5484 24.3281C27.4469 24.3281 24.9039 21.7031 24.9039 17.1797V14.9883C24.9039 10.4414 27.4937 7.69922 31.5719 7.69922C35.6734 7.69922 38.2164 10.4531 38.2164 14.9883V17.1797ZM35.5211 14.9648C35.5211 11.6602 33.8336 9.97266 31.5602 9.97266C29.2867 9.97266 27.5875 11.6602 27.5875 14.9648V17.1797C27.5875 20.4961 29.2867 22.0664 31.5602 22.0664C33.8336 22.0664 35.5211 20.4961 35.5211 17.1797V14.9648Z" fill="#CD739E"/>
+<path d="M42.4797 19.5703H45.0813C45.1984 20.9531 46.4172 22.1367 48.6789 22.1367C50.7531 22.1367 51.9836 21.1641 51.9836 19.6523C51.9836 18.4336 51.1633 17.7773 49.4523 17.3672L46.8273 16.7109C44.7648 16.2305 42.9133 15 42.9133 12.3984C42.9133 9.33984 45.5852 7.66406 48.6906 7.66406C51.7961 7.66406 54.3859 9.33984 54.4445 12.3281H51.8898C51.7727 10.9688 50.7297 9.84375 48.6555 9.84375C46.8273 9.84375 45.5852 10.7109 45.5852 12.1992C45.5852 13.2422 46.3117 13.9922 47.8 14.332L50.4133 14.9766C52.8156 15.5625 54.6438 16.6992 54.6438 19.418C54.6438 22.5586 52.1008 24.3281 48.4797 24.3281C44.0266 24.3281 42.5383 21.7266 42.4797 19.5703Z" fill="#CD739E"/>
+</svg>
+<svg width="64" height="32" viewBox="0 0 64 32" fill="none" id="svg319860667_656">
+<rect x="1" y="1" width="62" height="30" rx="7" stroke="#71B48A" stroke-width="2"/>
+<path d="M20.9492 21.7656V24.0039H10.9648V8.00781H20.9492V10.2461H13.6133V14.8047H20.5273V16.9492H13.6133V21.7656H20.9492Z" fill="#71B48A"/>
+<path d="M38.2086 8.00781L33.0172 16.0586L38.1266 24.0039H35.0211L31.3531 18.0391H31.2242L27.5328 24.0039H24.6031L29.6773 15.9414L24.6617 8.00781H27.8141L31.4586 14.0313H31.5875L35.1969 8.00781H38.2086Z" fill="#71B48A"/>
+<path d="M48.882 24.0039H46.2453V10.2813H41.5461V8.00781H53.5813V10.2813H48.882V24.0039Z" fill="#71B48A"/>
+</svg>
+<svg width="92" height="40" viewBox="0 0 92 40" fill="none" id="svg1998448633_1066">
+<rect x="1.74846e-06" y="40" width="40" height="40" rx="20" transform="rotate(-90 1.74846e-06 40)" fill="#B8824C"/>
+<path d="M26.4502 31.0705L24.4288 25.1667H15.1881L13.1667 31.0705H9.76563L17.7229 7.96875H22.1507L30.2363 31.0705H26.4502ZM23.4662 22.3753L19.8085 11.6586L16.1507 22.3753H23.4662Z" fill="black"/>
+<rect x="51.4258" y="40" width="40" height="40" rx="11.4286" transform="rotate(-90 51.4258 40)" fill="#3C7BAF"/>
+<path d="M63.5293 31.4258V8.57422H72.6364C76.6208 8.57422 79.1989 10.7171 79.1989 14.1992C79.1989 16.8778 77.6922 18.5854 75.4155 19.2215V19.389C78.2949 19.7238 80.4378 21.6825 80.4378 24.9972C80.4378 29.0486 77.2402 31.4258 72.469 31.4258H63.5293ZM67.3128 11.5876V18.2338H70.5271C73.9255 18.2338 75.4322 17.0954 75.4322 14.8354C75.4322 12.8097 74.1097 11.5876 71.8496 11.5876H67.3128ZM67.3128 21.0965V28.4124H70.9456C74.9467 28.4124 76.5706 27.274 76.5706 24.8633C76.5706 22.5028 74.9802 21.0965 72.1509 21.0965H67.3128Z" fill="black"/>
+</svg>
+<svg width="131" height="40" viewBox="0 0 131 40" fill="none" id="svg-1497144722_855">
+<rect x="0.75" y="0.75" width="38.5" height="38.5" rx="5.25" stroke="#B2B2B2" stroke-width="1.5"/>
+<path d="M13.8633 23.0569L19.9983 16.9219L26.1333 23.0569" stroke="#B2B2B2" stroke-width="1.65"/>
+<rect x="46.2109" y="0.75" width="38.5" height="38.5" rx="5.25" stroke="#B2B2B2" stroke-width="1.5"/>
+<path d="M59.9141 18.1416L65.4678 12.5879M65.4678 12.5879L71.0215 18.1416M65.4678 12.5879V27.411" stroke="#B2B2B2" stroke-width="1.65"/>
+<rect x="91.6719" y="0.75" width="38.5" height="38.5" rx="5.25" stroke="#B2B2B2" stroke-width="1.5"/>
+<path d="M110.879 14.8092L107.325 27.7538H105.128L101.574 12.2461H103.513L106.442 25.4061L109.953 12.2461H111.999L115.617 25.4061L118.439 12.2461H120.27L116.716 27.7538H114.454L110.879 14.8092Z" fill="#B2B2B2"/>
+</svg>
+<svg width="112" height="31" viewBox="0 0 112 31" fill="none" id="svg-1721136149_3730">
+<g clip-path="url(#svg-1721136149_3730_clip0_2489_5910)">
+<path d="M18.6761 0.755859H22.7577V20.3104H26.3198V22.6852H22.7577V30.4402H20.3458V22.6852H0.79126V18.7891L18.6761 0.755859ZM19.6779 3.0935L3.1289 19.7539V20.3104H20.3458V3.0935H19.6779Z" fill="white"/>
+<path d="M47.4798 24.8373C48.0735 23.8231 48.3703 22.7223 48.3703 21.5349C48.3703 20.3475 48.0735 19.2591 47.4798 18.2696C46.9109 17.2554 46.1193 16.4638 45.1051 15.8949C44.0908 15.3012 42.99 15.0044 41.8027 15.0044H28.1478V0.755859H49.5577V3.0935H30.5597V12.6296H41.8027C43.4106 12.6296 44.8948 13.0254 46.2553 13.817C47.6406 14.6086 48.729 15.697 49.5206 17.0823C50.3369 18.4428 50.7451 19.927 50.7451 21.5349C50.7451 23.1428 50.3369 24.6394 49.5206 26.0247C48.729 27.3852 47.6406 28.4613 46.2553 29.2529C44.8948 30.0444 43.4106 30.4402 41.8027 30.4402H28.1478V28.0655H41.8027C42.99 28.0655 44.0785 27.781 45.0679 27.2121C46.0822 26.6184 46.8861 25.8268 47.4798 24.8373Z" fill="white"/>
+<path d="M55.0963 25.3568V22.0173H58.3987V25.3568H55.0963ZM55.0963 9.43854V6.13615H58.3987V9.43854H55.0963Z" fill="white"/>
+<path d="M68.3931 2.27718C70.1247 1.26297 72.0171 0.755859 74.0702 0.755859C76.0987 0.755859 77.9787 1.26297 79.7103 2.27718C81.4418 3.2914 82.8147 4.6643 83.829 6.39589C84.8432 8.10274 85.3503 9.98275 85.3503 12.0359V19.1231C85.3503 21.1762 84.8432 23.0686 83.829 24.8002C82.8147 26.5318 81.4418 27.9047 79.7103 28.9189C77.9787 29.9331 76.0987 30.4402 74.0702 30.4402C72.0171 30.4402 70.1247 29.9331 68.3931 28.9189C66.6615 27.9047 65.2886 26.5318 64.2744 24.8002C63.2602 23.0686 62.7531 21.1762 62.7531 19.1231V12.0359C62.7531 9.98275 63.2602 8.10274 64.2744 6.39589C65.2886 4.6643 66.6615 3.2914 68.3931 2.27718ZM78.5229 4.35509C77.1623 3.53877 75.6781 3.13061 74.0702 3.13061C72.4623 3.13061 70.9657 3.53877 69.5805 4.35509C68.2199 5.14667 67.1439 6.22273 66.3523 7.58327C65.5607 8.9438 65.1649 10.428 65.1649 12.0359V19.1231C65.1649 20.731 65.5607 22.2276 66.3523 23.6128C67.1439 24.9734 68.2199 26.0494 69.5805 26.841C70.9657 27.6326 72.4623 28.0284 74.0702 28.0284C75.6781 28.0284 77.1623 27.6326 78.5229 26.841C79.8834 26.0494 80.9595 24.9734 81.7511 23.6128C82.5674 22.2276 82.9755 20.731 82.9755 19.1231V12.0359C82.9755 10.428 82.5674 8.9438 81.7511 7.58327C80.9595 6.22273 79.8834 5.14667 78.5229 4.35509Z" fill="white"/>
+<path d="M94.2655 2.27718C95.997 1.26297 97.8894 0.755859 99.9426 0.755859C101.971 0.755859 103.851 1.26297 105.583 2.27718C107.314 3.2914 108.687 4.6643 109.701 6.39589C110.716 8.10274 111.223 9.98275 111.223 12.0359V19.1231C111.223 21.1762 110.716 23.0686 109.701 24.8002C108.687 26.5318 107.314 27.9047 105.583 28.9189C103.851 29.9331 101.971 30.4402 99.9426 30.4402C97.8894 30.4402 95.997 29.9331 94.2655 28.9189C92.5339 27.9047 91.161 26.5318 90.1467 24.8002C89.1325 23.0686 88.6254 21.1762 88.6254 19.1231V12.0359C88.6254 9.98275 89.1325 8.10274 90.1467 6.39589C91.161 4.6643 92.5339 3.2914 94.2655 2.27718ZM104.395 4.35509C103.035 3.53877 101.551 3.13061 99.9426 3.13061C98.3347 3.13061 96.8381 3.53877 95.4528 4.35509C94.0923 5.14667 93.0162 6.22273 92.2247 7.58327C91.4331 8.9438 91.0373 10.428 91.0373 12.0359V19.1231C91.0373 20.731 91.4331 22.2276 92.2247 23.6128C93.0162 24.9734 94.0923 26.0494 95.4528 26.841C96.8381 27.6326 98.3347 28.0284 99.9426 28.0284C101.551 28.0284 103.035 27.6326 104.395 26.841C105.756 26.0494 106.832 24.9734 107.623 23.6128C108.44 22.2276 108.848 20.731 108.848 19.1231V12.0359C108.848 10.428 108.44 8.9438 107.623 7.58327C106.832 6.22273 105.756 5.14667 104.395 4.35509Z" fill="white"/>
+</g>
+<defs>
+<clipPath id="svg-1721136149_3730_clip0_2489_5910">
+<rect width="112" height="31" fill="white"/>
+</clipPath>
+</defs>
+</svg>
+</div>
+</body>
+</html>

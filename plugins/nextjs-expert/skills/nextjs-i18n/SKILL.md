@@ -1,6 +1,6 @@
 ---
 name: nextjs-i18n
-description: Next.js 16 internationalization with next-intl or DIY. Use when implementing i18n, translations, localization, multilingual, language switch, locale routing, or formatters.
+description: Use when implementing i18n in Next.js 16 — next-intl or DIY dictionaries, locale routing, language switch, or formatters.
 versions:
   next-intl: 4.0
   nextjs: 16
@@ -8,6 +8,12 @@ user-invocable: true
 references: references/installation.md, references/pages-router.md, references/routing-setup.md, references/routing-config.md, references/translations.md, references/formatting.md, references/navigation.md, references/server-components.md, references/client-components.md, references/middleware-proxy.md, references/error-files.md, references/configuration.md, references/plugin.md, references/extraction.md, references/messages-validation.md, references/typescript.md, references/testing.md, references/integrations.md, references/seo.md, references/core-library.md, references/runtime-requirements.md, references/diy-dictionaries.md, references/diy-locale-detection.md
 related-skills: nextjs-16, solid-nextjs
 ---
+
+<objective>
+Implements internationalization for Next.js 16 App Router apps via two approaches: next-intl (recommended — full Server Components support, type-safe messages, ICU MessageFormat, async message loading, proxy.ts-compatible routing) or a lightweight DIY dictionary approach using dynamic imports.
+
+Covers `[locale]`-prefixed routing, localized navigation components (Link, redirect, usePathname, useRouter), date/number/currency/relative-time formatting, RTL language support, SEO hreflang tags, and localized special files (`[locale]/error.tsx`, `[locale]/not-found.tsx`, `global-error.tsx`). This is the Next.js-specific i18n skill (App Router routing, proxy.ts integration) — for plain React apps without Next.js see react-i18n, and for Astro see astro-i18n.
+</objective>
 
 # Next.js 16 Internationalization
 

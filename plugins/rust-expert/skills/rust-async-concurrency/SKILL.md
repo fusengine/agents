@@ -1,6 +1,6 @@
 ---
 name: rust-async-concurrency
-description: Use when writing async Rust — spawning tasks, sharing state across tasks/threads, choosing channels vs mutexes, or hitting Send-bound errors with async traits. Covers tokio runtime, Mutex/RwLock/atomics, mpsc/oneshot/broadcast/watch, spawn_blocking, and the async-fn-in-traits Send problem. Do NOT use for HTTP service structure — routing, extractors, middleware (use rust-web-backend) — or sync-only ownership questions (use rust-core-language).
+description: Use when writing async Rust — spawning tasks, sharing state across tasks/threads, choosing channels vs mutexes, or hitting Send-bound errors with async traits. Not for HTTP service structure (rust-web-backend) or sync-only ownership (rust-core-language).
 versions:
   tokio: "1.52"
   rust-edition: "2024"
@@ -8,6 +8,19 @@ user-invocable: false
 references: references/runtime-and-tasks.md, references/shared-state.md, references/channels.md, references/async-traits.md, references/templates/task-patterns.md, references/templates/graceful-shutdown.md
 related-skills: rust-web-backend, solid-rust
 ---
+
+<objective>
+This skill covers writing and reviewing async Rust code on the tokio runtime: spawning and
+supervising tasks (spawn, JoinHandle, JoinSet, spawn_blocking), choosing shared-state
+primitives (Mutex, RwLock, atomics) versus message passing, and picking the right channel
+shape (mpsc, oneshot, broadcast, watch).
+
+It also covers the async-fn-in-traits Send problem — why `async fn` in traits does not give
+Send futures by default and how to work around it.
+
+Out of scope: HTTP service structure (routing, extractors, middleware) is owned by
+rust-web-backend; sync-only ownership and borrowing questions belong to rust-core-language.
+</objective>
 
 # Rust Async & Concurrency
 

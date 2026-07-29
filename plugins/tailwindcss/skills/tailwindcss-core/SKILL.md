@@ -1,8 +1,14 @@
 ---
 name: tailwindcss-core
-description: "Configuration and directives Tailwind CSS v4.1. @theme, @import, @source, @utility, @variant, @apply, @config. CSS-first mode without tailwind.config.js. Use when: configuring Tailwind CSS-first (no tailwind.config.js), defining theme tokens via @theme, scanning source files with @source, or creating custom utilities/variants. Do NOT use for: v3-to-v4 migration and breaking changes (use tailwindcss-v4), utility class lookup by category (use tailwindcss-layout/spacing/typography/backgrounds/borders/effects/sizing/interactivity/transforms)."
+description: "Use when configuring Tailwind CSS-first (no config.js), defining @theme tokens, or creating custom utilities/variants. Do NOT use for v3-to-v4 migration or category utility lookup."
 user-invocable: false
 ---
+
+<objective>
+Documents Tailwind CSS v4.1's CSS-first configuration directives: `@import "tailwindcss"`, `@theme` for defining theme tokens as CSS custom properties, `@source` for scanning additional source files, `@utility`/`@variant` for custom utilities and variants, `@apply` for composing utilities in custom CSS, and `@config` for loading a legacy JS config.
+
+Also covers dark-mode variant setup, responsive breakpoints via `@theme`, CSS layer hierarchy (`theme, base, components, utilities`), and plugin integration — the full CSS-first replacement for `tailwind.config.js`.
+</objective>
 
 # Tailwind CSS Core v4.1
 

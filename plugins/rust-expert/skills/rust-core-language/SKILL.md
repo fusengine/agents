@@ -1,12 +1,27 @@
 ---
 name: rust-core-language
-description: Use when writing or reviewing idiomatic Rust — edition 2024 features, ownership/borrowing design, and correcting the pitfalls that show up in LLM-generated Rust (clone tax, unwrap infestation, String vs &str, indexed loops, over-annotated lifetimes). Do NOT use for error-type design (use rust-error-handling), async runtimes, or SOLID/file-layout rules (use fuse-solid:solid-rust).
+description: Use when writing or reviewing idiomatic Rust — edition 2024 ownership/borrowing design, or fixing LLM pitfalls (clone tax, unwrap infestation, indexed loops). Not for error-type design (rust-error-handling) or SOLID layout (solid-rust).
 versions:
   rust: "1.96.1"
   edition: "2024"
 references: references/edition-2024.md, references/ownership-borrowing.md, references/llm-pitfalls.md, references/templates/idiomatic-code.md
 related-skills: rust-error-handling, fuse-solid:solid-rust
 ---
+
+<objective>
+This skill covers idiomatic Rust for stable 1.96.1, edition 2024: designing function
+signatures and data flow around ownership and borrowing, and using edition-2024 features
+(let chains, async closures) correctly.
+
+It also covers correcting the recurring failure modes of machine-generated Rust: the clone
+tax (cloning to silence the borrow checker instead of redesigning ownership), unwrap/expect
+infestation, String vs &str misuse, indexed loops instead of iterators, and over-annotated
+lifetimes the compiler could elide.
+
+Out of scope: error-type design (thiserror vs anyhow) belongs to rust-error-handling; async
+runtime questions belong to rust-async-concurrency; SOLID/file-layout rules belong to
+fuse-solid:solid-rust.
+</objective>
 
 # Rust Core Language
 

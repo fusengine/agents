@@ -1,9 +1,13 @@
 ---
 name: seo-redirects
-description: Use when planning redirects or site migration. Covers 301 vs 302 vs 307/308, migration plans, redirect chains, link equity preservation, www/non-www, HTTP→HTTPS, 404 monitoring.
+description: Use when planning redirects or a site migration — status codes, link equity, redirect chains.
 user-invocable: false
 related-skills: seo, seo-technical, seo-sitemap
 ---
+
+<objective>
+Covers redirect and migration planning: the 301/302/307/308 status-code decision table and their SEO/link-equity impact, the full migration checklist (URL mapping CSV, implementing 301s, staging tests, updating internal links and sitemap, Search Console Change of Address, 90-day 404 monitoring), redirect-chain and redirect-loop detection and fixes, common redirect patterns (HTTP→HTTPS, www/non-www, trailing slash, slug changes), and anti-patterns (mass redirect-to-homepage, soft 404s, JS-based redirects, meta-refresh redirects).
+</objective>
 
 # Redirects & Migrations
 

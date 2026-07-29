@@ -1,8 +1,14 @@
 ---
 name: prompt-testing
-description: "A/B testing and performance metrics for prompts. Use when: comparing two prompt variants, defining quality/efficiency/robustness metrics, or deciding whether to adopt a challenger prompt over a baseline."
+description: "Use when comparing two prompt variants, defining quality/efficiency/robustness metrics, or deciding whether to adopt a challenger prompt over a baseline."
 allowed-tools: Read, Write, Bash
 ---
+
+<objective>
+Prompt Testing runs A/B comparisons between prompt variants through a 5-step workflow: define the objective and metrics, prepare variants A/B and a test dataset, execute on the dataset, analyze and compare results, then decide. Metrics span three categories -- quality (accuracy, compliance, consistency, relevance), efficiency (input/output tokens, latency, cost), and robustness (edge-case handling, jailbreak resistance, error recovery) -- plus a UX category detailed in `metrics.md`.
+
+The adoption decision is rule-based: adopt B if its accuracy is at least equal with acceptable token cost, consider B as a trade-off if accuracy improves >10% despite <20% token regression, otherwise keep A or iterate. Requires a minimum of 20 test cases with 15-20% edge cases for statistical significance.
+</objective>
 
 # Prompt Testing
 

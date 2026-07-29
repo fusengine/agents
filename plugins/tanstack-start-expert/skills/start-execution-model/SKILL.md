@@ -1,18 +1,20 @@
 ---
 name: start-execution-model
 version: 1.0.0
-description: >-
-  TanStack Start execution model — isomorphic-by-default, environment boundary
-  functions (createServerFn, createServerOnlyFn, createClientOnlyFn,
-  createIsomorphicFn), <ClientOnly>, useHydrated(), server-only/client-only
-  import markers, and env-var safety (VITE_/PUBLIC_ prefix vs process.env). Use
-  when: deciding where code runs, fixing secret leaks, DB/filesystem in a loader,
-  hydration mismatches, "process.env is undefined on the server". Do NOT use for:
-  initial setup (use start-core), file/directory SOLID organization (use
-  solid-tanstack-start).
+description: Use when deciding where TanStack Start code runs, fixing secret leaks, DB-in-loader bugs, or hydration mismatches.
 user-invocable: true
 references: references/isomorphic-by-default.md, references/environment-boundaries.md, references/environment-variables.md, references/templates/boundaries.md
 ---
+
+<objective>
+Covers TanStack Start's execution model — where code actually runs, described as the single most important concept in Start and the #1 source of AI-generated bugs. Targets @tanstack/react-start v1.166.2.
+
+Every module is isomorphic by default: it runs in BOTH server and client bundles, and route loaders run on both server (SSR) and client (navigation) — so DB access, filesystem, and secrets must live inside createServerFn or createServerOnlyFn, never a bare loader or module scope. process.env must be read per request, not at module scope, because module-level reads can leak into the client bundle and are undefined on edge runtimes that inject env at request time. VITE_/PUBLIC_-prefixed vars are exposed to the client, so server secrets must never carry that prefix.
+
+Documents every environment-boundary API at a glance — createServerFn, createServerOnlyFn, createClientOnlyFn, createIsomorphicFn, <ClientOnly>, useHydrated(), and the server-only/client-only import markers — with a decision framework for which to use and complete copy-paste boundary examples.
+
+Do NOT use this skill for initial project setup (use start-core) or for file/directory SOLID organization (use solid-tanstack-start).
+</objective>
 
 # TanStack Start Execution Model
 

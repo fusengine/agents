@@ -9,6 +9,16 @@ references: references/components.md, references/slots-attributes.md, references
 related-skills: laravel-livewire, laravel-i18n, fusecore
 ---
 
+<objective>
+Covers Laravel Blade templating: anonymous and class-based components, named
+slots and attribute bags ($attributes->merge()), layouts (component-based and
+@extends/@section inheritance), directives (@if, @foreach, @auth, @can, and
+advanced ones like @once/@use/@inject/@switch/stacks), custom directives
+(Blade::if, Blade::directive), security (XSS/CSRF escaping), Vite asset
+integration, forms/validation helpers (@error), and fragments for
+HTMX-style partial updates.
+</objective>
+
 # Laravel Blade
 
 ## Agent Workflow (MANDATORY)

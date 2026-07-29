@@ -1,6 +1,6 @@
 ---
 name: laravel-migrations
-description: Laravel 13 database migrations - Schema Builder, columns, indexes, foreign keys, seeders, pgvector. Use when designing database schema or managing migrations.
+description: Use when designing a database schema or managing Laravel 13 migrations — Schema Builder, columns, indexes, foreign keys, or seeders.
 versions:
   laravel: "13.0"
   php: "8.3"
@@ -8,6 +8,16 @@ user-invocable: true
 references: references/schema.md, references/columns.md, references/indexes.md, references/foreign-keys.md, references/commands.md, references/seeding.md, references/testing.md, references/production.md, references/troubleshooting.md, references/templates/CreateTableMigration.php.md, references/templates/ModifyTableMigration.php.md, references/templates/PivotTableMigration.php.md, references/templates/Seeder.php.md, references/templates/MigrationTest.php.md
 related-skills: laravel-eloquent, laravel-testing, laravel-architecture
 ---
+
+<objective>
+Covers Laravel 13 database migrations: the Schema Builder API for
+creating/modifying/dropping tables, the 50+ column types and modifiers,
+index types (primary, unique, fulltext, spatial), foreign key constraints
+with cascade options, Artisan migration commands, seeders, testing
+migrations, safe production rollout, troubleshooting, and enabling pgvector
+via Schema::ensureVectorExtensionExists() for vector columns (see
+laravel-vector-search for querying them).
+</objective>
 
 # Laravel Migrations
 

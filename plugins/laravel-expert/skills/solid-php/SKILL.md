@@ -1,6 +1,6 @@
 ---
 name: solid-php
-description: SOLID principles for Laravel 13 and PHP 8.3+. Files < 100 lines, interfaces separated, PHPDoc mandatory. Auto-detects Laravel and FuseCore architecture.
+description: Use when applying SOLID principles to Laravel 13 / PHP 8.3+ code — file size limits, interface placement, or PHPDoc enforcement.
 versions:
   laravel: "13.0"
   php: "8.3"
@@ -8,6 +8,18 @@ user-invocable: true
 references: references/solid-principles.md, references/single-responsibility.md, references/open-closed.md, references/liskov-substitution.md, references/interface-segregation.md, references/dependency-inversion.md, references/anti-patterns.md, references/decision-guide.md, references/php85-features.md, references/laravel12-structure.md, references/fusecore-structure.md, references/templates/code-templates.md, references/templates/controller-templates.md, references/templates/refactoring-guide.md
 related-skills: laravel-architecture, fusecore
 ---
+
+<objective>
+Enforces SOLID principles and DRY on Laravel 13 + PHP 8.3+ code: files under
+100 lines (split at 90), interfaces separated into
+FuseCore/[Module]/App/Contracts/ (or FuseCore/Core/App/Contracts/ for shared
+ones), and mandatory PHPDoc on all public methods. Auto-detects Laravel vs
+FuseCore modular architecture and routes code placement accordingly
+(Controllers/Requests/Actions/Services/Repositories/DTOs/Contracts/Events/
+Policies), with anti-pattern detection (fat classes, business logic in
+models, concrete dependencies, missing strict_types) and refactoring
+guidance per SOLID principle (SRP/OCP/LSP/ISP/DIP).
+</objective>
 
 # SOLID PHP - Laravel 13 + PHP 8.3
 

@@ -1,6 +1,6 @@
 ---
 name: start-deployment
-description: "Use when: building or deploying a TanStack Start app — Nitro/Vite build, official adapters (Cloudflare Workers, Netlify, Vercel, Node, Bun, Railway), static prerendering (tanstackStart prerender), production env vars, or a deploy checklist. Do NOT use for: app data/auth logic (see start-routing-data / start-auth) or generic Vite config unrelated to Start."
+description: Use when building or deploying a TanStack Start app — Cloudflare, Netlify, Vercel/Node/Bun, prerendering, or env vars. Do NOT use for app logic or generic Vite config.
 versions:
   "@tanstack/react-start": "^1"
   vite: "^6"
@@ -8,6 +8,16 @@ user-invocable: false
 references: references/build-and-adapters.md, references/cloudflare.md, references/prerendering.md, references/env-and-checklist.md, references/templates/vite-config-adapters.md, references/templates/cloudflare-deploy.md
 related-skills: nextjs-16, astro-deployment
 ---
+
+<objective>
+Covers building and deploying TanStack Start apps across hosting targets: dedicated Vite plugins for Cloudflare Workers (@cloudflare/vite-plugin + wrangler.jsonc) and Netlify (@netlify/vite-plugin-tanstack-start), the Nitro layer for Vercel/Node/Docker/Bun/Railway (.output/server/index.mjs), and static prerendering via tanstackStart({ prerender }).
+
+Covers production env-var handling (read process.env per request, never at module scope — Cloudflare injects env at request time so module-level reads are undefined on the edge), plugin ordering (cloudflare() before tanstackStart()), matching start scripts to the build output, React 19 pinning for Bun, and prerendering limits (dynamic $id routes, layout _ routes, and component-less routes are skipped unless linked via crawlLinks).
+
+Includes full vite.config.ts templates per adapter and a complete Cloudflare Workers deploy template, plus a production checklist.
+
+Do NOT use this skill for app data/auth logic (see start-routing-data / start-auth) or for generic Vite config unrelated to Start.
+</objective>
 
 # TanStack Start — Deployment
 

@@ -1,10 +1,16 @@
 ---
 name: react-forms
-description: TanStack Form v1 - type-safe forms with Zod/Yup/Valibot validation, async validation, arrays, nested fields, React 19 Server Actions
+description: Use when building type-safe forms in React with TanStack Form v1 — Zod/Yup/Valibot validation, async validation, field arrays.
 version: 1.0.0
 user-invocable: true
 references: references/tanstack-form-basics.md, references/zod-validation.md, references/async-validation.md, references/server-actions.md, references/arrays-nested.md, references/typescript.md, references/yup-valibot.md, references/shadcn-integration.md, references/listeners.md, references/linked-fields.md, references/reactivity.md, references/reset-api.md, references/ssr-hydration.md, references/devtools.md, references/react-native.md, references/standard-schema.md, references/templates/basic-form.md, references/templates/multi-step-form.md, references/templates/dynamic-fields.md, references/templates/file-upload-form.md, references/templates/server-action-form.md, references/templates/optimistic-form.md, references/templates/nested-form.md, references/templates/search-form.md, references/templates/conditional-fields.md, references/templates/form-composition.md, references/templates/listeners-form.md, references/templates/linked-fields-form.md, references/templates/reactivity-form.md, references/templates/reset-form.md, references/templates/ssr-form.md, references/templates/devtools-form.md, references/templates/react-native-form.md
 ---
+
+<objective>
+Implements TanStack Form v1 in React: core hooks (`useForm()`, `useField()`, `form.Field`, `form.Subscribe`), validation adapters (Zod ~12KB, Yup ~40KB, Valibot ~6KB, plus Standard Schema support for ArkType/Effect Schema), debounced async validation, and React 19 Server Actions integration via `useActionState`.
+
+Also covers array/nested fields with dot notation, listeners for side effects (onMount/onChange/onBlur with debouncing), linked/cross-field validation, reactivity via `useStore` selectors, the Reset API, SSR/hydration (TanStack Start), devtools, and React Native patterns. This is the React skill for TanStack Form — for the Next.js Server Actions-specific variant see nextjs-tanstack-form, and for SOLID file-organization rules see solid-react.
+</objective>
 
 # TanStack Form v1 Core Features
 

@@ -1,7 +1,16 @@
 ---
 name: go-architecture
-description: Structure Go 1.22+ services — standard cmd/internal layout, constructor-based dependency injection, HTTP routing (net/http ServeMux vs chi vs echo/gin/fiber), and type-safe database access with sqlc + pgx. Use when laying out a new Go project, choosing a router or DB layer, or wiring dependencies. Do NOT use for goroutines/channels patterns (go-concurrency) or language idioms (go-core-idioms).
+description: Use when laying out a new Go service, choosing an HTTP router or DB layer, or wiring dependencies. Not for concurrency (go-concurrency) or language idioms (go-core-idioms).
 ---
+
+<objective>
+Structure Go 1.22+ backend services: the standard cmd/internal layout, choosing an
+HTTP router (net/http ServeMux, chi, echo/gin/fiber), constructor-based dependency
+injection, and type-safe database access with sqlc + pgx. Covers laying out a new
+Go project, choosing a router or DB layer, wiring dependencies, and reviewing an
+existing service's structure. Does not cover goroutines/channels concurrency
+patterns (see go-concurrency) or general language idioms (see go-core-idioms).
+</objective>
 
 # Go Architecture
 

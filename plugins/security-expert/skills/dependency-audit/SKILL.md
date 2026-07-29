@@ -1,9 +1,24 @@
 ---
 name: dependency-audit
-description: "Audit project dependencies for known vulnerabilities using ecosystem-specific tools (npm audit, composer audit, pip-audit, cargo audit, etc). Use when: running ecosystem-specific vulnerability scans across project dependencies, with optional auto-fix."
+description: "Use when running ecosystem-specific vulnerability scans across project dependencies (npm/composer/pip/cargo/go/etc), with optional auto-fix."
 argument-hint: "[--fix] [ecosystem]"
 user-invocable: true
 ---
+
+<objective>
+This skill runs native package-manager audit tools across a project's full dependency tree,
+detecting the package manager from lock files and running the matching command:
+npm/yarn/pnpm/bun audit, composer audit, pip-audit/safety check, cargo audit, govulncheck,
+pod audit, or bundle audit.
+
+It parses each tool's output, classifies findings by severity (CRITICAL/HIGH/MEDIUM/LOW),
+and suggests fix versions or alternatives. With the --fix flag it applies safe auto-fixes
+where supported (npm audit fix, cargo audit fix) and gives manual guidance for ecosystems
+without auto-fix.
+
+Out of scope: researching a single named dependency's CVE history in depth belongs to
+cve-research.
+</objective>
 
 # Dependency Audit Skill
 

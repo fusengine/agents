@@ -1,12 +1,18 @@
 ---
 name: solid-java
-description: "SOLID principles for Java 21+. Files < 100 lines, interfaces separated, modular architecture. Modules MANDATORY. Use when: writing or refactoring Java code, structuring modules/[feature]/ layers, or defining interfaces/ contracts."
+description: "Use when writing or refactoring Java code, structuring modules/[feature]/ layers, or defining interfaces/ contracts (SOLID, files < 100 lines)."
 versions:
   java: "21"
 user-invocable: true
 references: references/solid-principles.md, references/single-responsibility.md, references/open-closed.md, references/liskov-substitution.md, references/interface-segregation.md, references/dependency-inversion.md, references/architecture-patterns.md, references/templates/module.md, references/templates/service.md, references/templates/interface.md, references/templates/repository.md, references/templates/error.md, references/templates/test.md
 related-skills: solid-detection
 ---
+
+<objective>
+SOLID Java enforces a modular architecture for Java 21+: every feature lives under `modules/[feature]/` (controllers, services, repositories, interfaces, models/DTOs) with shared code in `modules/core/`, interfaces live only in `modules/[feature]/interfaces/`, controllers stay under 50 lines and delegate to services, records are used for DTOs and sealed types for restricted hierarchies, and every public method carries Javadoc.
+
+Before writing any new code it requires a DRY check against `modules/core/services` and `modules/core/interfaces`. See `solid-principles.md` for the overview, the per-principle references for SRP/OCP/LSP/ISP/DIP detail, and the templates for module/service/interface/repository/error/test scaffolding.
+</objective>
 
 # SOLID Java - Modular Architecture
 

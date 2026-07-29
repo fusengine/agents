@@ -1,8 +1,12 @@
 ---
 name: tailwindcss-typography
-description: "Typography utilities Tailwind CSS v4.1. Font (font-sans, font-serif, font-mono, font-size, font-weight), Text (text-color, text-align, text-wrap, text-shadow NEW), Letter/Line spacing, Decoration, Transform. Use when: setting font family/size/weight, aligning or wrapping text (balance/pretty), applying text-shadow or decoration, or adjusting letter/line spacing."
+description: "Use when setting font family/size/weight, aligning or wrapping text (balance/pretty), applying text-shadow or decoration, or letter/line spacing."
 user-invocable: false
 ---
+
+<objective>
+Complete reference for Tailwind CSS v4.1 typography utilities: font family (`font-sans`/`font-serif`/`font-mono`), font size and weight, text color/alignment, text wrapping including the v4.1 `balance`/`pretty` values, the new `text-shadow` utility, letter spacing (`tracking-*`), line height (`leading-*`), text decoration, and text transform (`uppercase`/`lowercase`/`capitalize`).
+</objective>
 
 # Tailwind CSS Typography v4.1
 

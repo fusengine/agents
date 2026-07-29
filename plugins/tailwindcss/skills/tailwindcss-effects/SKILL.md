@@ -1,8 +1,14 @@
 ---
 name: tailwindcss-effects
-description: "Effects utilities Tailwind CSS v4.1. Shadows (shadow-*, shadow-color, inset-shadow-* NEW), Opacity (opacity-*), Filters (blur, brightness, contrast, grayscale, sepia), Backdrop filters (backdrop-blur-*, backdrop-brightness-*), Masks (mask-* NEW). Use when: adding box/inset shadows, controlling opacity, applying CSS filters or backdrop filters (glassmorphism), or masking elements with mask-* utilities."
+description: "Use when adding box/inset shadows, controlling opacity, applying CSS filters or backdrop filters (glassmorphism), or mask-* utilities."
 user-invocable: false
 ---
+
+<objective>
+Complete reference for Tailwind CSS v4.1 visual-effects utilities: box shadows (`shadow-*`, custom shadow colors, the new `inset-shadow-*`), `opacity-*`, CSS filters (blur/brightness/contrast/grayscale/sepia/hue-rotate/invert/saturate), backdrop filters (`backdrop-blur-*`, `backdrop-brightness-*`, etc. — for glassmorphism/frosted-glass effects), and the new `mask-*` utilities (image, position, size, repeat).
+
+Includes combined-effect patterns (blur+brightness, backdrop blur+brightness for frosted glass), responsive/dark-mode variants, custom `@theme`/`@utility` extension, and browser-support notes per effect category.
+</objective>
 
 # Tailwind CSS v4.1 Effects
 

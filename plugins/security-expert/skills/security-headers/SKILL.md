@@ -1,9 +1,21 @@
 ---
 name: security-headers
-description: "Verify and configure HTTP security headers (CSP, HSTS, CORS, X-Frame-Options, etc). Checks current configuration and generates framework-specific fixes. Use when: verifying or configuring HTTP security headers for a web application (Next.js, Laravel, Express, Django)."
+description: "Use when verifying or configuring HTTP security headers (CSP, HSTS, CORS, X-Frame-Options) for a web application (Next.js, Laravel, Express, Django)."
 argument-hint: "[framework]"
 user-invocable: true
 ---
+
+<objective>
+This skill audits and configures HTTP security headers for a web application:
+Content-Security-Policy and Strict-Transport-Security (HIGH severity if missing),
+X-Content-Type-Options and X-Frame-Options (MEDIUM), and Referrer-Policy,
+Permissions-Policy, X-XSS-Protection (LOW).
+
+It detects the framework (Next.js next.config.js headers/middleware.ts, Laravel
+SecurityHeaders middleware, Express helmet, Django SECURE_* settings), checks the current
+configuration against best practice, generates a framework-specific fix, and validates the
+headers are properly set.
+</objective>
 
 # Security Headers Skill
 

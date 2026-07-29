@@ -1,0 +1,1163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Référence de design — page sombre à onglets rotatifs</title>
+<link rel="preconnect" href="https://cdn.prod.website-files.com" crossorigin>
+<!-- [relevé] la source appelle WebFont.load({google:{families:["Geist Mono…",
+     "Instrument Sans…","Instrument Serif:400","Newsreader:300,400,500,600,700"]}}).
+     Seul Newsreader sert au rendu de cette page : la vignette claire du pied.
+     Les autres familles ne sont utilisées nulle part dans le DOM relevé.
+     [arbitrage] la feuille Google Fonts qui chargeait Newsreader est RETIRÉE :
+     un `<link rel=stylesheet>` distant est une feuille de style, pas un média,
+     et il bloque le rendu tant qu'il n'a pas échoué. Son unique usage — deux
+     règles de la vignette claire du pied — retombe sur Georgia, déjà déclarée
+     en second dans `--police-serif`. Les .woff2 de Calsans et Geist restent en
+     @font-face distants : ce sont des MÉDIAS, au même titre que les images de
+     la page, et ils dégradent seuls vers Verdana. -->
+<!-- [relevé] Calsans et Geist sont AUTO-HÉBERGÉES sur le CDN de la source
+     (39 @font-face dans harnessio.webflow.shared.*.css), pas servies par Google
+     Fonts : WebFont.load() n'y charge que Geist Mono, Instrument Sans,
+     Instrument Serif et Newsreader. Les @font-face sont dans styles.css.
+
+     TEXTES : titres, sous-titres, libellés de navigation, de boutons, d'onglets,
+     de colonnes de pied, NOMS et CITATIONS clients sont REPRIS VERBATIM de la
+     source. La longueur exacte d'un titre commande ses coupes de ligne, la
+     hauteur de son bloc et le rythme vertical autour : la paraphraser casse la
+     composition même quand la typo est juste. AUCUN texte n'est inventé ; les
+     quatre citations portent leurs vrais auteurs, titres et entreprises.
+     Seuls les paragraphes de prose longue seraient abrégés — aucun ne l'est. -->
+<link rel="stylesheet" href="styles.css">
+<!-- [arbitrage] filet absent de la source : sans JS, les blocs révélés au scroll
+     resteraient invisibles. Un état initial masqué DOIT avoir sa sortie de secours. -->
+<noscript><style>.vd__outils,.reveal{opacity:1!important;transform:none!important}</style></noscript>
+<!-- [relevé] la source charge Lottie-web 5.12.2 depuis cdnjs et injecte les
+     animations via `data-lottie-url` sur `.lottie-container-wrapper` : 6 des 15
+     médias d'onglets sont des .json, les 9 autres des images.
+     [arbitrage] la page doit s'ouvrir en double-clic sans réseau. Or Lottie est
+     une DOUBLE dépendance — la bibliothèque (cdnjs) ET les six .json (CDN
+     Webflow) — et elle n'échoue pas proprement : sans elle, six panneaux sur
+     quinze restent des boîtes vides. Les six sont donc remplacées par des SVG
+     INLINE animés en CSS (§ « SCÈNES SVG » de styles.css), autonomes, sans
+     aucun fichier ajouté au livrable. Les neuf autres médias restent des images
+     distantes : une image manquante laisse un cadre, pas un trou fonctionnel. -->
+<!-- [arbitrage] DEUX fichiers de comportement, et non un. La fusion en un seul
+     motion.js produit 264 lignes, au-delà du plafond par fichier appliqué au
+     poste de travail ; y tenir imposerait de supprimer ~65 lignes d'annotations
+     [relevé]/[arbitrage] d'un fichier déjà validé. Le corpus n'exige pas quatre
+     fichiers : cursor-recode en livre trois de JS, reve-recode deux. Cette page
+     a donc la même forme que reve-recode. Détail : tokens-harness.md § 10.7. -->
+<script src="motion.js" defer></script>
+<script src="motion-nav.js" defer></script>
+</head>
+<body>
+
+<!-- =========================================================================
+     1. BARRE DE NAVIGATION  (source : <nav class="navbar_parent--dark-mode">)
+     Ordre des entrées relevé : Product · Customers · Open Source · Pricing ·
+     Learn · Company, puis la loupe et le groupe d'actions.
+     ========================================================================= -->
+<header class="nav">
+  <div class="nav__inner">
+    <a class="nav__logo" href="#" aria-label="Harness">
+      <span class="nav__logo-mark" aria-hidden="true"></span>harness
+    </a>
+
+    <nav class="nav__menu" aria-label="Main">
+      <div class="nav__item" data-menu>
+        <button class="nav__toggle" aria-expanded="false" aria-controls="menu-product">Product
+          <svg class="nav__chevron" width="10" height="6" viewBox="0 0 10 6" aria-hidden="true"><path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </button>
+        <!-- [relevé] .nav-dropdown_list-wrapper.w--open { width:100vw; max-width:1440px;
+             display:flex; justify-content:center } — le panneau occupe toute la largeur
+             de la fenêtre, indépendamment de la position du déclencheur. -->
+        <div class="nav__panneau" id="menu-product" hidden>
+          <div class="nav__panneau-corps">
+            <!-- [relevé] .nav-inner-banner_link — le méga-menu Product s'ouvre sur une
+                 BANNIÈRE pleine largeur (icône + titre + flèche), pas sur une vignette
+                 en fin de rangée. Elle précède les colonnes dans le DOM. -->
+            <a class="nav__banniere" href="#devops-mod">
+              <img class="nav__banniere-icone" alt="" loading="lazy" src="https://cdn.prod.website-files.com/6222ca42ea87e1bd1aa1d10c/6897b6098fe3070c39218537_Harness%20AI.svg">
+              <span class="nav__banniere-texte">AI Across the SDLC</span>
+              <img class="nav__banniere-fleche" alt="" loading="lazy" src="https://cdn.prod.website-files.com/6222ca42ea87e1bd1aa1d10c/6650c994b6ac15e0e8b40946_arrow%20right%20white%20bolf.svg">
+            </a>
+            <div class="nav__panneau-inner">
+              <div class="nav__col">
+                <p class="nav__col-titre">AI for DevOps &amp; Automation</p>
+                <p class="nav__col-desc">Accelerate innovation velocity with a modern DevOps toolchain.</p>
+                <a class="nav__lien" href="#devops-mod"><img class="nav__lien-icone" alt="" loading="lazy" src="https://cdn.prod.website-files.com/622642781cd7e96ac1f66807/622d5f12f85ef648a5e5ff53_icon-cd.svg">Continuous Delivery &amp; GitOps</a>
+                <a class="nav__lien" href="#devops-mod"><img class="nav__lien-icone" alt="" loading="lazy" src="https://cdn.prod.website-files.com/622642781cd7e96ac1f66807/6233c6c9a9079d642da0ddda_icon-ci.svg">Continuous Integration</a>
+                <a class="nav__lien" href="#devops-mod"><img class="nav__lien-icone" alt="" loading="lazy" src="https://cdn.prod.website-files.com/622642781cd7e96ac1f66807/66e3ad3ea2fe9b7c8432a740_Internal%20Developer%20Portal.svg">Internal Developer Portal</a>
+                <a class="nav__lien" href="#devops-mod"><img class="nav__lien-icone" alt="" loading="lazy" src="https://cdn.prod.website-files.com/622642781cd7e96ac1f66807/64e7a73adf75be3a06e64c9c_IaC-product-icon--Solid.svg">Infrastructure as Code Management</a>
+                <a class="nav__lien" href="#devops-mod"><img class="nav__lien-icone" alt="" loading="lazy" src="https://cdn.prod.website-files.com/622642781cd7e96ac1f66807/672d37b84b4e1c2982182c22_db-devops-icon.svg">Database DevOps</a>
+                <a class="nav__lien" href="#devops-mod"><img class="nav__lien-icone" alt="" loading="lazy" src="https://cdn.prod.website-files.com/622642781cd7e96ac1f66807/66df6b5a2412cc4f06c3f126_artifact-registry-logo-icon.svg">Artifact Registry</a>
+              </div>
+              <div class="nav__col">
+                <p class="nav__col-titre">AI for Testing &amp; Resilience</p>
+                <p class="nav__col-desc">Build and deploy reliable applications that scale with confidence.</p>
+                <a class="nav__lien" href="#test-resilience"><img class="nav__lien-icone" alt="" loading="lazy" src="https://cdn.prod.website-files.com/622642781cd7e96ac1f66807/69af3b44f5afbac01935ce42_fme-logo.svg">Feature Management &amp; Experimentation</a>
+                <a class="nav__lien" href="#test-resilience"><img class="nav__lien-icone" alt="" loading="lazy" src="https://cdn.prod.website-files.com/622642781cd7e96ac1f66807/62fbc9dc25b0e264824968f0_625ec07af7e112aa08643eee_icon-ce.webp">Resilience Testing</a>
+                <!-- [relevé] sur les 11 badges « NEW » du méga-menu, 9 portent
+                     `w-condition-invisible` : SEULS AI Test Automation et AI SRE
+                     sont réellement affichés. Recopier les 11 aurait constellé la
+                     colonne de badges que la source ne montre pas. -->
+                <a class="nav__lien" href="#test-resilience"><img class="nav__lien-icone" alt="" loading="lazy" src="https://cdn.prod.website-files.com/622642781cd7e96ac1f66807/6812b891d89c9b90a6dfe2e0_AI%20Test%20Automation.svg">AI Test Automation<span class="nav__badge">NEW</span></a>
+                <a class="nav__lien" href="#test-resilience"><img class="nav__lien-icone" alt="" loading="lazy" src="https://cdn.prod.website-files.com/622642781cd7e96ac1f66807/68a479cfe361124d3f257813_AI%20SRE%20Logo.svg">AI SRE<span class="nav__badge">NEW</span></a>
+                <a class="nav__lien" href="#test-resilience"><img class="nav__lien-icone" alt="" loading="lazy" src="https://cdn.prod.website-files.com/622642781cd7e96ac1f66807/6812b891d89c9b90a6dfe2e0_AI%20Test%20Automation.svg">AI Evals</a>
+              </div>
+              <div class="nav__col">
+                <p class="nav__col-titre">AI for Security &amp; Compliance</p>
+                <p class="nav__col-desc">Governance and security at every stage of the SDLC - from design to runtime.</p>
+                <a class="nav__lien" href="#security-compliance"><img class="nav__lien-icone" alt="" loading="lazy" src="https://cdn.prod.website-files.com/622642781cd7e96ac1f66807/698fb0b0449fdba0cfaa03c3_ast-logo.svg">Application Security Testing</a>
+                <a class="nav__lien" href="#security-compliance"><img class="nav__lien-icone" alt="" loading="lazy" src="https://cdn.prod.website-files.com/622642781cd7e96ac1f66807/698fa7e13dc3e0029f1fe547_Application%20&amp;%20API%20Protection.svg">Web Application &amp; API Protection</a>
+                <a class="nav__lien" href="#security-compliance"><img class="nav__lien-icone" alt="" loading="lazy" src="https://cdn.prod.website-files.com/622642781cd7e96ac1f66807/69b8e169b0a89d411d0b1b71_ai-security-logo.svg">AI Security</a>
+              </div>
+              <div class="nav__col">
+                <p class="nav__col-titre">AI for Cost &amp; Optimization</p>
+                <p class="nav__col-desc">Optimize cloud spend, resource utilization, and developer productivity.</p>
+                <a class="nav__lien" href="#cost-optimization"><img class="nav__lien-icone" alt="" loading="lazy" src="https://cdn.prod.website-files.com/622642781cd7e96ac1f66807/6233c6e11c563d8aa28b056f_icon-ccm.svg">Cloud &amp; AI Cost Management</a>
+                <a class="nav__lien" href="#cost-optimization"><img class="nav__lien-icone" alt="" loading="lazy" src="https://cdn.prod.website-files.com/622642781cd7e96ac1f66807/672d37c6041e6f6b14688ab9_sei-icon.svg">AI DLC Insights</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="nav__item"><a class="nav__toggle" href="#customers">Customers</a></div>
+      <div class="nav__item"><a class="nav__toggle" href="#integrations">Open Source</a></div>
+      <div class="nav__item"><a class="nav__toggle" href="#cta">Pricing</a></div>
+
+      <div class="nav__item" data-menu>
+        <button class="nav__toggle" aria-expanded="false" aria-controls="menu-learn">Learn
+          <svg class="nav__chevron" width="10" height="6" viewBox="0 0 10 6" aria-hidden="true"><path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </button>
+        <div class="nav__panneau" id="menu-learn" hidden>
+          <div class="nav__panneau-corps">
+            <div class="nav__panneau-inner">
+              <div class="nav__col">
+                <p class="nav__col-titre">Developer</p>
+                <a class="nav__lien" href="#">Documentation</a>
+                <a class="nav__lien" href="#">API Reference Docs</a>
+                <a class="nav__lien" href="#">Developer Hub</a>
+                <a class="nav__lien" href="#">Commitment to Open Source</a>
+                <a class="nav__lien" href="#">Engineering Blog</a>
+                <a class="nav__lien" href="#">Community</a>
+                <a class="nav__lien" href="#">Training</a>
+                <a class="nav__lien" href="#">Certifications</a>
+              </div>
+              <div class="nav__col">
+                <p class="nav__col-titre">RESOURCES</p>
+                <a class="nav__lien" href="#">Ebooks</a>
+                <a class="nav__lien" href="#">Blog</a>
+                <a class="nav__lien" href="#">Case Studies</a>
+                <a class="nav__lien" href="#">Comparison Guide</a>
+                <a class="nav__lien" href="#">DevOps Academy</a>
+                <a class="nav__lien" href="#">Harness Support</a>
+                <a class="nav__lien" href="#">Professional Services</a>
+                <a class="nav__lien" href="#">Webinars</a>
+                <a class="nav__lien" href="#">Research Reports</a>
+              </div>
+              <div class="nav__col">
+                <p class="nav__col-titre">Events</p>
+                <a class="nav__lien" href="#">Upcoming Events</a>
+                <a class="nav__lien" href="#">On-Demand</a>
+                <a class="nav__lien" href="#">Harness Summits</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="nav__item" data-menu>
+        <button class="nav__toggle" aria-expanded="false" aria-controls="menu-company">Company
+          <svg class="nav__chevron" width="10" height="6" viewBox="0 0 10 6" aria-hidden="true"><path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </button>
+        <div class="nav__panneau" id="menu-company" hidden>
+          <div class="nav__panneau-corps">
+            <div class="nav__panneau-inner">
+              <div class="nav__col">
+                <p class="nav__col-titre">Company</p>
+                <a class="nav__lien" href="#footer">About us</a>
+                <a class="nav__lien" href="#footer">Careers</a>
+                <a class="nav__lien" href="#footer">Security</a>
+                <a class="nav__lien" href="#footer">Press &amp; News</a>
+              </div>
+              <div class="nav__col">
+                <p class="nav__col-titre nav__col-titre--vide">&nbsp;</p>
+                <a class="nav__lien" href="#footer">Legal</a>
+                <a class="nav__lien" href="#footer">Partners</a>
+                <a class="nav__lien" href="#footer">Contact us</a>
+                <a class="nav__lien nav__lien--accent" href="#footer">View all</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <div class="nav__actions">
+      <div class="nav__item nav__item--recherche" data-menu>
+        <button class="nav__recherche nav__toggle" aria-label="Search" aria-expanded="false" aria-controls="menu-search">
+          <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M11 11l3.5 3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        </button>
+        <!-- [relevé] le panneau de recherche est un dropdown de la barre, avec un
+             champ, un intitulé « Trending searches » puis deux familles de
+             pastilles : « Products: » (5, avec icône) et « Explore Business
+             Values: » (4, sans icône). -->
+        <div class="nav__panneau nav__panneau--recherche" id="menu-search" hidden>
+          <div class="nav__panneau-corps">
+            <form class="recherche" onsubmit="return false">
+              <label class="recherche__label" for="q">Search</label>
+              <input class="recherche__champ" id="q" type="search" placeholder="Search harness.io" autocomplete="off">
+            </form>
+            <p class="recherche__titre">Trending searches</p>
+            <div class="recherche__famille">
+              <p class="recherche__legende">Products:</p>
+              <div class="recherche__tags">
+                <a class="tag" href="#devops-mod"><img alt="" width="16" height="16" loading="lazy" src="https://cdn.prod.website-files.com/6222ca42ea87e1bd1aa1d10c/65283c4f280fd4c5720d2a98_drone-icon.svg">Continuous Integration</a>
+                <a class="tag" href="#devops-mod"><img alt="" width="16" height="16" loading="lazy" src="https://cdn.prod.website-files.com/6222ca42ea87e1bd1aa1d10c/646fe402fcd5ab2bc853335a_cd-icon.svg">Continuous Delivery &amp; GitOps</a>
+                <a class="tag" href="#test-resilience"><img alt="" width="16" height="16" loading="lazy" src="https://cdn.prod.website-files.com/6222ca42ea87e1bd1aa1d10c/6346df227d7abbeb832685e4_icon-ce-module.svg">Resilience Testing</a>
+                <a class="tag" href="#security-compliance"><img alt="" width="16" height="16" loading="lazy" src="https://cdn.prod.website-files.com/6222ca42ea87e1bd1aa1d10c/652d71dbf04de39f437153fa_harness-icon-Software%20Supply%20Chain%20Assurance.svg">Supply Chain Security</a>
+                <a class="tag" href="#devops-mod"><img alt="" width="16" height="16" loading="lazy" src="https://cdn.prod.website-files.com/6222ca42ea87e1bd1aa1d10c/64de6eefbd67da3843caa049_idp-icon.svg">Internal Developer Portal</a>
+              </div>
+            </div>
+            <div class="recherche__famille">
+              <p class="recherche__legende">Explore Business Values:</p>
+              <div class="recherche__tags">
+                <a class="tag" href="#devops-mod">DevOps &amp; Automation</a>
+                <a class="tag" href="#security-compliance">Security &amp; Compliance</a>
+                <a class="tag" href="#cost-optimization">Cost &amp; Optimization</a>
+                <a class="tag" href="#test-resilience">Testing &amp; Resilience</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <a class="nav__cta nav__cta--secondaire" href="#cta">Contact us</a>
+      <!-- [relevé] .get-started_dropdown — « Get started » n'est pas un lien : c'est
+           un dropdown qui déplie Sign up / Sign in / Get a demo. -->
+      <div class="nav__item nav__item--cta" data-menu>
+        <button class="nav__cta nav__toggle" aria-expanded="false" aria-controls="menu-start">Get started
+          <svg class="nav__chevron" width="10" height="6" viewBox="0 0 10 6" aria-hidden="true"><path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </button>
+        <div class="nav__panneau nav__panneau--compact" id="menu-start" hidden>
+          <div class="nav__panneau-corps nav__panneau-corps--compact">
+            <a class="nav__lien" href="#cta">Sign up</a>
+            <a class="nav__lien" href="#cta">Sign in</a>
+            <a class="nav__lien" href="#cta">Get a demo</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- =========================================================================
+     2. HERO  (source : <main class="module-hero_section new-home_hero">)
+     ========================================================================= -->
+<main class="hero">
+  <div class="hero__layout">
+    <div class="hero__content">
+      <!-- [relevé] le h1 vit dans un wrapper flex-column à gap .75rem
+           (.home-hero_h1-wrapper) ; le paragraphe et le groupe de boutons sont
+           ses frères — l'espacement ne vient pas d'un gap unique.
+           [relevé] le <br/> après le span est dans la source : la coupe de ligne
+           est décidée dans le markup, pas laissée au rendu. -->
+      <div class="hero__h1-wrapper">
+        <h1 class="titre-xl">
+          <span class="titre-xl__ligne-claire">AI for</span><br>Everything After Code
+        </h1>
+      </div>
+      <p class="para para--large">Harness delivers intelligent AI automation, so your team ships code faster, safer, and smarter.</p>
+      <div class="hero__cta">
+        <a class="btn btn--hero" href="#cta">Get started
+          <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M5 2l5 5-5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- [relevé] .home_hero-lottie-embed { position:absolute; inset:-15% -13% 0% auto;
+       z-index:-1 } — le média est un FRÈRE de la grille, ancré à droite, débordant
+       en haut et à droite, DERRIÈRE le texte. Voir §3.1 de tokens-harness.md.
+       [relevé] média d'origine : <video loop playsinline muted autoplay>, deux
+       sources (mp4 puis webm), max-width 1400px, aspect-ratio 16/9, object-fit
+       cover. Les deux URL distantes de la source sont reprises telles quelles. -->
+  <div class="hero__media">
+    <video class="hero__media-video" data-parallaxe loop playsinline muted autoplay preload="metadata"
+           poster="https://cdn.prod.website-files.com/6222ca42ea87e1bd1aa1d10c/67409bcd6a8cfda0a42da274_eee83b210139776d6d959342a9f343c1_pipe-footer-image.avif">
+      <source src="https://cms.harness.io/videos/Homepage_pipe-animation.mp4" type="video/mp4">
+      <source src="https://cms.harness.io/uploads/harness_hero_animation_968c087dc5.webm" type="video/webm">
+    </video>
+  </div>
+
+  <!-- ---- Bandeau de logos défilant (dans le hero, comme la source) ----
+       [relevé] .testimonial-scroll { display:flex } contient TROIS
+       .module-hero_logo-wrapper--scroll identiques, chacune animée
+       `logoScroll 24s linear infinite` de translateX(0) à translateX(-100%).
+       Trois pistes, pas deux : avec un décalage de 100 % de LEUR PROPRE largeur,
+       la piste sortante est toujours remplacée par une piste identique, donc
+       aucun saut visible. Les groupes 2 et 3 sont aria-hidden.
+       [relevé] 9 logos, PAS 10 : Ulta Beauty n'est pas dans le marquee (elle
+       n'apparaît que dans le carrousel de témoignages). -->
+  <div class="marquee-bloc">
+    <p class="para marquee-bloc__legende">World's most innovative engineering teams build with Harness</p>
+    <div class="marquee">
+      <div class="marquee__piste">
+        <span class="marque"><img alt="vmware" loading="eager" src="https://cdn.prod.website-files.com/622642781cd7e96ac1f66807/661806ebb476e2067006ddee_vmware.svg"></span>
+        <span class="marque"><img alt="ncr" loading="eager" src="https://cdn.prod.website-files.com/622642781cd7e96ac1f66807/661806aada67337e99f7e1f6_ncr.svg"></span>
+        <span class="marque"><img alt="jobvite" loading="eager" src="https://cdn.prod.website-files.com/622642781cd7e96ac1f66807/66180692070002bca05ead19_jobvite.svg"></span>
+        <span class="marque"><img alt="CITI" loading="eager" src="https://cdn.prod.website-files.com/622642781cd7e96ac1f66807/66180677bdafadc4030c7a47_Citi-R_White-RedArc_RGB%201.svg"></span>
+        <span class="marque"><img alt="Ancestry" loading="eager" src="https://cdn.prod.website-files.com/622642781cd7e96ac1f66807/6618063fbdafadc4030c4962_Ancestry.svg"></span>
+        <span class="marque"><img alt="United Airlines" loading="eager" src="https://cdn.prod.website-files.com/622642781cd7e96ac1f66807/661806def7bb5e89c75aebd7_united%20logo-white.svg"></span>
+        <span class="marque"><img alt="Choice Hotels" loading="eager" src="https://cdn.prod.website-files.com/622642781cd7e96ac1f66807/6618065cd1969b679483c9ea_choice%20hotels%20logo-white.svg"></span>
+        <span class="marque"><img alt="Anaplan" loading="eager" src="https://cdn.prod.website-files.com/622642781cd7e96ac1f66807/6618061f63efede5a6a4ab00_anaplan%20logo-white.svg"></span>
+        <span class="marque"><img alt="Home Depot" loading="eager" src="https://cdn.prod.website-files.com/622642781cd7e96ac1f66807/66180687d2671a2306763be8_home%20depot%20%20logo-white.svg"></span>
+      </div>
+      <div class="marquee__piste" aria-hidden="true">
+        <span class="marque"><img alt="" loading="eager" src="https://cdn.prod.website-files.com/622642781cd7e96ac1f66807/661806ebb476e2067006ddee_vmware.svg"></span>
+        <span class="marque"><img alt="" loading="eager" src="https://cdn.prod.website-files.com/622642781cd7e96ac1f66807/661806aada67337e99f7e1f6_ncr.svg"></span>
+        <span class="marque"><img alt="" loading="eager" src="https://cdn.prod.website-files.com/622642781cd7e96ac1f66807/66180692070002bca05ead19_jobvite.svg"></span>
+        <span class="marque"><img alt="" loading="eager" src="https://cdn.prod.website-files.com/622642781cd7e96ac1f66807/66180677bdafadc4030c7a47_Citi-R_White-RedArc_RGB%201.svg"></span>
+        <span class="marque"><img alt="" loading="eager" src="https://cdn.prod.website-files.com/622642781cd7e96ac1f66807/6618063fbdafadc4030c4962_Ancestry.svg"></span>
+        <span class="marque"><img alt="" loading="eager" src="https://cdn.prod.website-files.com/622642781cd7e96ac1f66807/661806def7bb5e89c75aebd7_united%20logo-white.svg"></span>
+        <span class="marque"><img alt="" loading="eager" src="https://cdn.prod.website-files.com/622642781cd7e96ac1f66807/6618065cd1969b679483c9ea_choice%20hotels%20logo-white.svg"></span>
+        <span class="marque"><img alt="" loading="eager" src="https://cdn.prod.website-files.com/622642781cd7e96ac1f66807/6618061f63efede5a6a4ab00_anaplan%20logo-white.svg"></span>
+        <span class="marque"><img alt="" loading="eager" src="https://cdn.prod.website-files.com/622642781cd7e96ac1f66807/66180687d2671a2306763be8_home%20depot%20%20logo-white.svg"></span>
+      </div>
+      <div class="marquee__piste" aria-hidden="true">
+        <span class="marque"><img alt="" loading="eager" src="https://cdn.prod.website-files.com/622642781cd7e96ac1f66807/661806ebb476e2067006ddee_vmware.svg"></span>
+        <span class="marque"><img alt="" loading="eager" src="https://cdn.prod.website-files.com/622642781cd7e96ac1f66807/661806aada67337e99f7e1f6_ncr.svg"></span>
+        <span class="marque"><img alt="" loading="eager" src="https://cdn.prod.website-files.com/622642781cd7e96ac1f66807/66180692070002bca05ead19_jobvite.svg"></span>
+        <span class="marque"><img alt="" loading="eager" src="https://cdn.prod.website-files.com/622642781cd7e96ac1f66807/66180677bdafadc4030c7a47_Citi-R_White-RedArc_RGB%201.svg"></span>
+        <span class="marque"><img alt="" loading="eager" src="https://cdn.prod.website-files.com/622642781cd7e96ac1f66807/6618063fbdafadc4030c4962_Ancestry.svg"></span>
+        <span class="marque"><img alt="" loading="eager" src="https://cdn.prod.website-files.com/622642781cd7e96ac1f66807/661806def7bb5e89c75aebd7_united%20logo-white.svg"></span>
+        <span class="marque"><img alt="" loading="eager" src="https://cdn.prod.website-files.com/622642781cd7e96ac1f66807/6618065cd1969b679483c9ea_choice%20hotels%20logo-white.svg"></span>
+        <span class="marque"><img alt="" loading="eager" src="https://cdn.prod.website-files.com/622642781cd7e96ac1f66807/6618061f63efede5a6a4ab00_anaplan%20logo-white.svg"></span>
+        <span class="marque"><img alt="" loading="eager" src="https://cdn.prod.website-files.com/622642781cd7e96ac1f66807/66180687d2671a2306763be8_home%20depot%20%20logo-white.svg"></span>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- =========================================================================
+     3. QUATRE MODULES À ONGLETS ROTATIFS
+     (source : <section class="section home-value-drivers"> contenant quatre
+      <section class="container is-home-vd anchor-padding"> — 6, 4, 3 et 2
+      onglets VISIBLES. Les listes du HTML contiennent en plus un gabarit caché
+      dans un <div class="hide">, qu'il ne faut pas compter.
+
+      COMPOSITION — relevé décisif : `.home-vd_tabs { flex-flow: column }` et,
+      dans le DOM, `.home-vd_tabs-content-mask` (le MÉDIA, margin-bottom 48px)
+      précède `.home-vd_tabs-list` (la RANGÉE d'onglets, display:flex, gap 16px,
+      margin-bottom 40px). Donc : MÉDIA EN HAUT, ONGLETS EN RANGÉE EN DESSOUS.
+      Les cartes inactives ont une largeur FIXE par module — 130px (devops),
+      220px (testing), 180px (security), 30 % (cost) — et l'active s'élargit
+      jusqu'à max-width 40rem en `transition: max-width .2s`. C'est cette
+      largeur variable, pas un fond, qui signale l'onglet actif.
+
+      [relevé] cette section ne déclare AUCUN background : elle laisse voir le
+      fond du <body> (#070707). Ce sont les sections 4, 5 et 6 qui posent un
+      dégradé — l'alternance est un procédé, pas un oubli.)
+     ========================================================================= -->
+<section class="vd">
+
+  <!-- ---- 3.1 — AI for DevOps & Automation, 6 onglets ---- -->
+  <section class="vd__ancre" id="devops-mod">
+    <div class="vd__heading">
+      <h2 class="titre-l reveal">AI for DevOps &amp; Automation</h2>
+      <p class="para vd__intro reveal">Unleash developer productivity with AI that understands your DevOps ecosystem. Harness combines the industry's fastest, most secure CI/CD with developer self-service to automate pipelines, infrastructure, and the entire path from code to production.</p>
+    </div>
+    <div class="vd__outils" data-vd>
+      <div class="vd__scene">
+        <div class="pane is-active" id="p1-1" role="tabpanel" aria-labelledby="t1-1">
+          <div class="pane__halo"></div>
+          <div class="pane__cadre"><div class="pane__media">
+<!-- SCÈNE 1/6 — remplace CD_test.json. Sujet : un pipeline de déploiement qui
+     progresse d'étape en étape puis bascule le trafic. -->
+<svg class="scene" viewBox="0 0 1168 625" role="img" aria-label="Pipeline de déploiement : les étapes Build, Test, Approve, Canary et Rollout passent au vert l'une après l'autre." xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- userSpaceOnUse OBLIGATOIRE ici : le rail est un tracé horizontal, donc sa
+         bounding box a une hauteur NULLE. En objectBoundingBox (le défaut), un
+         dégradé posé sur une boîte dégénérée ne peint rien — le rail restait
+         invisible, seul le trait gris de fond se voyait. -->
+    <linearGradient id="cd-rail" gradientUnits="userSpaceOnUse" x1="140" y1="190" x2="1028" y2="190">
+      <stop offset="0" stop-color="#00ade4"/><stop offset="1" stop-color="#4ec26a"/>
+    </linearGradient>
+  </defs>
+  <rect class="sc-bg" width="1168" height="625" rx="10"/>
+  <rect class="sc-panel" x="40" y="36" width="1088" height="553" rx="12"/>
+  <path class="sc-rule" d="M40 92h1088"/>
+  <circle class="sc-chrome" cx="70" cy="64" r="4.5"/><circle class="sc-chrome" cx="88" cy="64" r="4.5"/><circle class="sc-chrome" cx="106" cy="64" r="4.5"/>
+  <text class="sc-t" x="132" y="69">deploy-prod · us-east-1</text>
+  <rect class="sc-pill sc-pill--ok" x="960" y="50" width="128" height="28" rx="14"/>
+  <text class="sc-t sc-t--ok" x="1024" y="69" text-anchor="middle">Succeeded</text>
+
+  <path class="sc-rail-bg" d="M140 190h888"/>
+  <path class="sc-rail-on" pathLength="1" d="M140 190h888" stroke="url(#cd-rail)"/>
+
+  <g class="sc-stage" style="--i:0"><circle cx="140" cy="190" r="26"/><path class="sc-check" d="M129 190l7 8 14-16"/><text class="sc-t sc-t--dim" x="140" y="248" text-anchor="middle">Build</text></g>
+  <g class="sc-stage" style="--i:1"><circle cx="362" cy="190" r="26"/><path class="sc-check" d="M351 190l7 8 14-16"/><text class="sc-t sc-t--dim" x="362" y="248" text-anchor="middle">Test</text></g>
+  <g class="sc-stage" style="--i:2"><circle cx="584" cy="190" r="26"/><path class="sc-check" d="M573 190l7 8 14-16"/><text class="sc-t sc-t--dim" x="584" y="248" text-anchor="middle">Approve</text></g>
+  <g class="sc-stage" style="--i:3"><circle cx="806" cy="190" r="26"/><path class="sc-check" d="M795 190l7 8 14-16"/><text class="sc-t sc-t--dim" x="806" y="248" text-anchor="middle">Canary</text></g>
+  <g class="sc-stage" style="--i:4"><circle cx="1028" cy="190" r="26"/><path class="sc-check" d="M1017 190l7 8 14-16"/><text class="sc-t sc-t--dim" x="1028" y="248" text-anchor="middle">Rollout</text></g>
+
+  <g class="sc-row" style="--i:0"><rect class="sc-rowbg" x="80" y="300" width="1008" height="44" rx="8"/><path class="sc-tick" d="M104 322l6 7 12-14"/><text class="sc-t" x="140" y="328">Fetched manifests from Git</text><text class="sc-t sc-t--dim" x="1060" y="328" text-anchor="end">0.4s</text></g>
+  <g class="sc-row" style="--i:1"><rect class="sc-rowbg" x="80" y="354" width="1008" height="44" rx="8"/><path class="sc-tick" d="M104 376l6 7 12-14"/><text class="sc-t" x="140" y="382">Applied Kubernetes workload</text><text class="sc-t sc-t--dim" x="1060" y="382" text-anchor="end">1.2s</text></g>
+  <g class="sc-row" style="--i:2"><rect class="sc-rowbg" x="80" y="408" width="1008" height="44" rx="8"/><path class="sc-tick" d="M104 430l6 7 12-14"/><text class="sc-t" x="140" y="436">Verified with automated health checks</text><text class="sc-t sc-t--dim" x="1060" y="436" text-anchor="end">8.0s</text></g>
+  <g class="sc-row" style="--i:3"><rect class="sc-rowbg" x="80" y="462" width="1008" height="44" rx="8"/><path class="sc-tick" d="M104 484l6 7 12-14"/><text class="sc-t" x="140" y="490">Shifted 25% of traffic to canary</text><text class="sc-t sc-t--dim" x="1060" y="490" text-anchor="end">2.1s</text></g>
+  <g class="sc-row" style="--i:4"><rect class="sc-rowbg" x="80" y="516" width="1008" height="44" rx="8"/><path class="sc-tick" d="M104 538l6 7 12-14"/><text class="sc-t" x="140" y="544">Promoted to 100%</text><text class="sc-t sc-t--dim" x="1060" y="544" text-anchor="end">0.9s</text></g>
+</svg>
+          </div></div>
+        </div>
+        <div class="pane" id="p1-2" role="tabpanel" aria-labelledby="t1-2" hidden>
+          <div class="pane__halo"></div>
+          <div class="pane__cadre"><div class="pane__media">
+<!-- SCÈNE 2/6 — remplace CI_LP hero animation.json. Sujet : quatre cibles
+     construites en parallèle, et l'écart de durée revendiqué par l'onglet. -->
+<svg class="scene" viewBox="0 0 1168 625" role="img" aria-label="Quatre cibles de build s'exécutent en parallèle et se terminent, sous un comparatif de durée entre Harness CI et un CI classique." xmlns="http://www.w3.org/2000/svg">
+  <rect class="sc-bg" width="1168" height="625" rx="10"/>
+  <rect class="sc-panel" x="40" y="36" width="1088" height="553" rx="12"/>
+  <path class="sc-rule" d="M40 92h1088"/>
+  <circle class="sc-chrome" cx="70" cy="64" r="4.5"/><circle class="sc-chrome" cx="88" cy="64" r="4.5"/><circle class="sc-chrome" cx="106" cy="64" r="4.5"/>
+  <text class="sc-t" x="132" y="69">build #4821 · main</text>
+  <rect class="sc-pill sc-pill--ok" x="960" y="50" width="128" height="28" rx="14"/>
+  <text class="sc-t sc-t--ok" x="1024" y="69" text-anchor="middle">Passed</text>
+
+  <text class="sc-t sc-t--dim" x="80" y="148">Parallel build matrix</text>
+
+  <g class="sc-lane" style="--i:0"><text class="sc-t" x="80" y="192">linux / amd64</text><rect class="sc-track" x="280" y="176" width="700" height="18" rx="9"/><rect class="sc-fill" x="280" y="176" width="700" height="18" rx="9"/><text class="sc-t sc-t--dim" x="1060" y="192" text-anchor="end">0m 41s</text></g>
+  <g class="sc-lane" style="--i:1"><text class="sc-t" x="80" y="252">linux / arm64</text><rect class="sc-track" x="280" y="236" width="700" height="18" rx="9"/><rect class="sc-fill" x="280" y="236" width="700" height="18" rx="9"/><text class="sc-t sc-t--dim" x="1060" y="252" text-anchor="end">0m 48s</text></g>
+  <g class="sc-lane" style="--i:2"><text class="sc-t" x="80" y="312">macos / arm64</text><rect class="sc-track" x="280" y="296" width="700" height="18" rx="9"/><rect class="sc-fill" x="280" y="296" width="700" height="18" rx="9"/><text class="sc-t sc-t--dim" x="1060" y="312" text-anchor="end">1m 04s</text></g>
+  <g class="sc-lane" style="--i:3"><text class="sc-t" x="80" y="372">windows / amd64</text><rect class="sc-track" x="280" y="356" width="700" height="18" rx="9"/><rect class="sc-fill" x="280" y="356" width="700" height="18" rx="9"/><text class="sc-t sc-t--dim" x="1060" y="372" text-anchor="end">1m 12s</text></g>
+
+  <path class="sc-rule" d="M80 424h1008"/>
+
+  <g class="sc-lane" style="--i:4"><text class="sc-t" x="80" y="484">Harness CI</text><rect class="sc-track" x="280" y="466" width="700" height="22" rx="11"/><rect class="sc-fill sc-fill--hero" x="280" y="466" width="88" height="22" rx="11"/><text class="sc-t sc-t--ok" x="1060" y="484" text-anchor="end">1m 12s</text></g>
+  <g class="sc-lane" style="--i:5"><text class="sc-t sc-t--dim" x="80" y="544">Legacy CI</text><rect class="sc-track" x="280" y="526" width="700" height="22" rx="11"/><rect class="sc-fill sc-fill--slow" x="280" y="526" width="700" height="22" rx="11"/><text class="sc-t sc-t--dim" x="1060" y="544" text-anchor="end">9m 36s</text></g>
+</svg>
+          </div></div>
+        </div>
+        <div class="pane" id="p1-3" role="tabpanel" aria-labelledby="t1-3" hidden>
+          <div class="pane__halo"></div>
+          <div class="pane__cadre"><div class="pane__media"><img alt="" loading="lazy" src="https://cdn.prod.website-files.com/6222ca42ea87e1bd1aa1d10c/689789c364975e650dc2f5d7_Catalog_%20Default%20View%20.png"></div></div>
+        </div>
+        <div class="pane" id="p1-4" role="tabpanel" aria-labelledby="t1-4" hidden>
+          <div class="pane__halo"></div>
+          <div class="pane__cadre"><div class="pane__media"><img alt="" loading="lazy" src="https://cdn.prod.website-files.com/6222ca42ea87e1bd1aa1d10c/689fcdcb7cb37e2a044da52a_IaCM-home-vd-screen.avif"></div></div>
+        </div>
+        <div class="pane" id="p1-5" role="tabpanel" aria-labelledby="t1-5" hidden>
+          <div class="pane__halo"></div>
+          <div class="pane__cadre"><div class="pane__media"><img alt="" loading="lazy" src="https://cdn.prod.website-files.com/6222ca42ea87e1bd1aa1d10c/68978b02a0567099881c81e4_DB%20DevOps%20Screen%20.png"></div></div>
+        </div>
+        <div class="pane" id="p1-6" role="tabpanel" aria-labelledby="t1-6" hidden>
+          <div class="pane__halo"></div>
+          <div class="pane__cadre"><div class="pane__media"><img alt="" loading="lazy" src="https://cdn.prod.website-files.com/6222ca42ea87e1bd1aa1d10c/689e7e5957ee36ec3a67b32f_Policy%20Sets%20AR.png"></div></div>
+        </div>
+      </div>
+      <div class="vd__onglets vd__onglets--devops" role="tablist" aria-label="AI for DevOps &amp; Automation">
+        <button class="carte is-active" role="tab" aria-selected="true" aria-controls="p1-1" id="t1-1"><span class="carte__tete"><img class="carte__icone" width="24" height="24" alt="" loading="lazy" src="https://cdn.prod.website-files.com/622642781cd7e96ac1f66807/622d5f12f85ef648a5e5ff53_icon-cd.svg"><span class="titre-xs">Continuous Delivery &amp; GitOps</span></span><span class="para para--small carte__desc">Fully automate pipelines for multi-cloud, multi-region, and multi-service software deployments.</span><span class="carte__lien"><span class="carte__lien-texte">Learn more</span><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h9M8.5 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+        <button class="carte" role="tab" aria-selected="false" aria-controls="p1-2" id="t1-2"><span class="carte__tete"><img class="carte__icone" width="24" height="24" alt="" loading="lazy" src="https://cdn.prod.website-files.com/622642781cd7e96ac1f66807/6233c6c9a9079d642da0ddda_icon-ci.svg"><span class="titre-xs">Continuous Integration</span></span><span class="para para--small carte__desc">Build 8x faster with any source code, in any language, and on any operating system.</span><span class="carte__lien"><span class="carte__lien-texte">Learn more</span><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h9M8.5 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+        <button class="carte" role="tab" aria-selected="false" aria-controls="p1-3" id="t1-3"><span class="carte__tete"><img class="carte__icone" width="24" height="24" alt="" loading="lazy" src="https://cdn.prod.website-files.com/622642781cd7e96ac1f66807/66e3ad3ea2fe9b7c8432a740_Internal%20Developer%20Portal.svg"><span class="titre-xs">Internal Developer Portal</span></span><span class="para para--small carte__desc">Accelerate developer onboarding from months to hours with a low effort enterprise-grade IDP built on top of Backstage.</span><span class="carte__lien"><span class="carte__lien-texte">Learn more</span><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h9M8.5 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+        <button class="carte" role="tab" aria-selected="false" aria-controls="p1-4" id="t1-4"><span class="carte__tete"><img class="carte__icone" width="24" height="24" alt="" loading="lazy" src="https://cdn.prod.website-files.com/622642781cd7e96ac1f66807/64e7a73adf75be3a06e64c9c_IaC-product-icon--Solid.svg"><span class="titre-xs">Infrastructure as Code Management</span></span><span class="para para--small carte__desc">Simplify infrastructure as code with automation, faster collaboration, error reduction, and cost control.</span><span class="carte__lien"><span class="carte__lien-texte">Learn more</span><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h9M8.5 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+        <button class="carte" role="tab" aria-selected="false" aria-controls="p1-5" id="t1-5"><span class="carte__tete"><img class="carte__icone" width="24" height="24" alt="" loading="lazy" src="https://cdn.prod.website-files.com/622642781cd7e96ac1f66807/672d37b84b4e1c2982182c22_db-devops-icon.svg"><span class="titre-xs">Database DevOps</span></span><span class="para para--small carte__desc">Integrate database changes into your deployment pipeline and gain database transparency across environments.</span><span class="carte__lien"><span class="carte__lien-texte">Learn more</span><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h9M8.5 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+        <button class="carte" role="tab" aria-selected="false" aria-controls="p1-6" id="t1-6"><span class="carte__tete"><img class="carte__icone" width="24" height="24" alt="" loading="lazy" src="https://cdn.prod.website-files.com/622642781cd7e96ac1f66807/66df6b5a2412cc4f06c3f126_artifact-registry-logo-icon.svg"><span class="titre-xs">Artifact Registry</span></span><span class="para para--small carte__desc">Centralize, secure and streamline your artifact management for faster, safer delivery.</span><span class="carte__lien"><span class="carte__lien-texte">Learn more</span><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h9M8.5 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---- 3.2 — AI for Testing & Resilience, 4 onglets ---- -->
+  <section class="vd__ancre" id="test-resilience">
+    <div class="vd__heading">
+      <h2 class="titre-l reveal">AI for Testing &amp; Resilience</h2>
+      <p class="para vd__intro reveal">Release software confidently using AI-powered predictive analytics and testing. Make every change fast, safe, and resilient, so your teams can focus on shipping quality code instead of chasing bugs and triaging outages.</p>
+    </div>
+    <div class="vd__outils" data-vd>
+      <div class="vd__scene">
+        <div class="pane is-active" id="p2-1" role="tabpanel" aria-labelledby="t2-1">
+          <div class="pane__halo"></div>
+          <div class="pane__cadre"><div class="pane__media">
+<!-- SCÈNE 3/6 — remplace AI test automation_final_resized.json. Sujet : une
+     suite e2e dont un sélecteur cassé se répare seul (self-healing). -->
+<svg class="scene" viewBox="0 0 1168 625" role="img" aria-label="Suite de tests bout en bout : un test échoue sur un sélecteur introuvable, puis se répare seul et repasse au vert." xmlns="http://www.w3.org/2000/svg">
+  <rect class="sc-bg" width="1168" height="625" rx="10"/>
+  <rect class="sc-panel" x="40" y="36" width="1088" height="553" rx="12"/>
+  <path class="sc-rule" d="M40 92h1088"/>
+  <circle class="sc-chrome" cx="70" cy="64" r="4.5"/><circle class="sc-chrome" cx="88" cy="64" r="4.5"/><circle class="sc-chrome" cx="106" cy="64" r="4.5"/>
+  <text class="sc-t" x="132" y="69">e2e · checkout.spec</text>
+  <rect class="sc-pill sc-pill--ok" x="944" y="50" width="144" height="28" rx="14"/>
+  <text class="sc-t sc-t--ok" x="1016" y="69" text-anchor="middle">6 / 6 passing</text>
+
+  <rect class="sc-sweep" x="80" y="128" width="1008" height="72" rx="8"/>
+
+  <g class="sc-row" style="--i:0"><rect class="sc-rowbg" x="80" y="128" width="1008" height="52" rx="8"/><path class="sc-tick" d="M108 154l6 7 12-14"/><text class="sc-t" x="148" y="160">opens the product page</text><text class="sc-t sc-t--dim" x="1056" y="160" text-anchor="end">1.1s</text></g>
+  <g class="sc-row" style="--i:1"><rect class="sc-rowbg" x="80" y="190" width="1008" height="52" rx="8"/><path class="sc-tick" d="M108 216l6 7 12-14"/><text class="sc-t" x="148" y="222">adds an item to the cart</text><text class="sc-t sc-t--dim" x="1056" y="222" text-anchor="end">0.8s</text></g>
+  <g class="sc-row" style="--i:2"><rect class="sc-rowbg" x="80" y="252" width="1008" height="52" rx="8"/><path class="sc-tick" d="M108 278l6 7 12-14"/><text class="sc-t" x="148" y="284">applies a discount code</text><text class="sc-t sc-t--dim" x="1056" y="284" text-anchor="end">1.4s</text></g>
+
+  <g class="sc-heal">
+    <g class="sc-heal__before">
+      <rect class="sc-rowbg sc-rowbg--err" x="80" y="314" width="1008" height="52" rx="8"/>
+      <path class="sc-cross" d="M108 334l16 16M124 334l-16 16"/>
+      <text class="sc-t sc-t--err" x="148" y="346">submits the payment form</text>
+      <text class="sc-t sc-t--err" x="1056" y="346" text-anchor="end">selector #btn-pay not found</text>
+    </g>
+    <g class="sc-heal__after">
+      <rect class="sc-rowbg" x="80" y="314" width="1008" height="52" rx="8"/>
+      <path class="sc-tick" d="M108 340l6 7 12-14"/>
+      <text class="sc-t" x="148" y="346">submits the payment form</text>
+      <rect class="sc-pill sc-pill--ai" x="820" y="326" width="120" height="28" rx="14"/>
+      <text class="sc-t sc-t--ai" x="880" y="345" text-anchor="middle">AI healed</text>
+      <text class="sc-t sc-t--dim" x="1056" y="346" text-anchor="end">2.0s</text>
+    </g>
+  </g>
+
+  <g class="sc-row" style="--i:4"><rect class="sc-rowbg" x="80" y="376" width="1008" height="52" rx="8"/><path class="sc-tick" d="M108 402l6 7 12-14"/><text class="sc-t" x="148" y="408">shows the order confirmation</text><text class="sc-t sc-t--dim" x="1056" y="408" text-anchor="end">1.6s</text></g>
+  <g class="sc-row" style="--i:5"><rect class="sc-rowbg" x="80" y="438" width="1008" height="52" rx="8"/><path class="sc-tick" d="M108 464l6 7 12-14"/><text class="sc-t" x="148" y="470">emails the receipt</text><text class="sc-t sc-t--dim" x="1056" y="470" text-anchor="end">0.7s</text></g>
+
+  <text class="sc-t sc-t--dim" x="80" y="544">1 selector repaired automatically · no test rewritten</text>
+</svg>
+          </div></div>
+        </div>
+        <div class="pane" id="p2-2" role="tabpanel" aria-labelledby="t2-2" hidden>
+          <div class="pane__halo"></div>
+          <div class="pane__cadre"><div class="pane__media"><img alt="" loading="lazy" src="https://cdn.prod.website-files.com/6222ca42ea87e1bd1aa1d10c/689fcfa826002f180f7e1fed_Chaos-Engineering-home-vd-screen.avif"></div></div>
+        </div>
+        <div class="pane" id="p2-3" role="tabpanel" aria-labelledby="t2-3" hidden>
+          <div class="pane__halo"></div>
+          <div class="pane__cadre"><div class="pane__media">
+<!-- SCÈNE 4/6 — remplace FME.json. Sujet : un feature flag qu'on active, une
+     exposition progressive, et la mesure de deux variantes. -->
+<svg class="scene" viewBox="0 0 1168 625" role="img" aria-label="Un feature flag est activé, exposé à la moitié des utilisateurs, et deux variantes sont comparées sur leur taux de conversion." xmlns="http://www.w3.org/2000/svg">
+  <rect class="sc-bg" width="1168" height="625" rx="10"/>
+  <rect class="sc-panel" x="40" y="36" width="1088" height="553" rx="12"/>
+  <path class="sc-rule" d="M40 92h1088"/>
+  <circle class="sc-chrome" cx="70" cy="64" r="4.5"/><circle class="sc-chrome" cx="88" cy="64" r="4.5"/><circle class="sc-chrome" cx="106" cy="64" r="4.5"/>
+  <text class="sc-t" x="132" y="69">flag · new-checkout-flow</text>
+
+  <text class="sc-t" x="80" y="152">Targeting</text>
+  <g class="sc-switch">
+    <rect class="sc-switch__track" x="988" y="130" width="100" height="34" rx="17"/>
+    <circle class="sc-switch__knob" cx="1071" cy="147" r="13"/>
+  </g>
+  <text class="sc-t sc-t--ok" x="960" y="153" text-anchor="end">On</text>
+
+  <path class="sc-rule" d="M80 196h1008"/>
+
+  <text class="sc-t sc-t--dim" x="80" y="248">Rollout</text>
+  <text class="sc-t" x="1088" y="248" text-anchor="end">50% of users</text>
+  <rect class="sc-track" x="80" y="268" width="1008" height="20" rx="10"/>
+  <rect class="sc-fill" x="80" y="268" width="504" height="20" rx="10"/>
+
+  <text class="sc-t sc-t--dim" x="80" y="356">Conversion by variant</text>
+
+  <g class="sc-lane" style="--i:2">
+    <text class="sc-t" x="80" y="412">Variant A · control</text>
+    <rect class="sc-track" x="320" y="394" width="620" height="22" rx="11"/>
+    <rect class="sc-fill sc-fill--a" x="320" y="394" width="372" height="22" rx="11"/>
+    <text class="sc-t sc-t--dim" x="1088" y="412" text-anchor="end">3.1%</text>
+  </g>
+  <g class="sc-lane" style="--i:3">
+    <text class="sc-t" x="80" y="484">Variant B</text>
+    <rect class="sc-track" x="320" y="466" width="620" height="22" rx="11"/>
+    <rect class="sc-fill sc-fill--b" x="320" y="466" width="558" height="22" rx="11"/>
+    <text class="sc-t sc-t--ok" x="1088" y="484" text-anchor="end">4.6%</text>
+  </g>
+
+  <g class="sc-row" style="--i:5">
+    <rect class="sc-pill sc-pill--ok" x="80" y="524" width="196" height="30" rx="15"/>
+    <text class="sc-t sc-t--ok" x="178" y="544" text-anchor="middle">Variant B leading</text>
+    <text class="sc-t sc-t--dim" x="300" y="544">Kill switch ready · no redeploy</text>
+  </g>
+</svg>
+          </div></div>
+        </div>
+        <div class="pane" id="p2-4" role="tabpanel" aria-labelledby="t2-4" hidden>
+          <div class="pane__halo"></div>
+          <div class="pane__cadre"><div class="pane__media"><img alt="" loading="lazy" src="https://cdn.prod.website-files.com/6222ca42ea87e1bd1aa1d10c/68a22e997fc9a0ca071ead5a_aisre-home-vd-screen.avif"></div></div>
+        </div>
+      </div>
+      <div class="vd__onglets vd__onglets--testing" role="tablist" aria-label="AI for Testing &amp; Resilience">
+        <button class="carte is-active" role="tab" aria-selected="true" aria-controls="p2-1" id="t2-1"><span class="carte__tete"><img class="carte__icone" width="24" height="24" alt="" loading="lazy" src="https://cdn.prod.website-files.com/622642781cd7e96ac1f66807/6812b891d89c9b90a6dfe2e0_AI%20Test%20Automation.svg"><span class="titre-xs">AI Test Automation</span></span><span class="para para--small carte__desc">Modernize end-to-end tests with AI test authoring and self-healing. Accelerate development with code suggestions and explanations.</span><span class="carte__lien"><span class="carte__lien-texte">Learn more</span><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h9M8.5 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+        <button class="carte" role="tab" aria-selected="false" aria-controls="p2-2" id="t2-2"><span class="carte__tete"><img class="carte__icone" width="24" height="24" alt="" loading="lazy" src="https://cdn.prod.website-files.com/622642781cd7e96ac1f66807/62fbc9dc25b0e264824968f0_625ec07af7e112aa08643eee_icon-ce.webp"><span class="titre-xs">Resilience Testing</span></span><span class="para para--small carte__desc">Discover how your applications stand up to real-world failure scenarios with over 225 out-of-the box or bring-your-own experiments.</span><span class="carte__lien"><span class="carte__lien-texte">Learn more</span><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h9M8.5 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+        <button class="carte" role="tab" aria-selected="false" aria-controls="p2-3" id="t2-3"><span class="carte__tete"><img class="carte__icone" width="24" height="24" alt="" loading="lazy" src="https://cdn.prod.website-files.com/622642781cd7e96ac1f66807/69af3b44f5afbac01935ce42_fme-logo.svg"><span class="titre-xs">Feature Management &amp; Experimentation</span></span><span class="para para--small carte__desc">Release software confidently with feature flags connected to critical impact data, and run experiments at scale.</span><span class="carte__lien"><span class="carte__lien-texte">Learn more</span><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h9M8.5 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+        <button class="carte" role="tab" aria-selected="false" aria-controls="p2-4" id="t2-4"><span class="carte__tete"><img class="carte__icone" width="24" height="24" alt="" loading="lazy" src="https://cdn.prod.website-files.com/622642781cd7e96ac1f66807/68a479cfe361124d3f257813_AI%20SRE%20Logo.svg"><span class="titre-xs">AI SRE</span></span><span class="para para--small carte__desc">Resolve incidents faster with AI-driven triage, contextual insights, and streamlined collaboration for improved reliability.</span><span class="carte__lien"><span class="carte__lien-texte">Learn more</span><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h9M8.5 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---- 3.3 — AI for Security & Compliance, 3 onglets ---- -->
+  <section class="vd__ancre" id="security-compliance">
+    <div class="vd__heading">
+      <h2 class="titre-l reveal">AI for Security &amp; Compliance</h2>
+      <p class="para vd__intro reveal">Make secure software your new default. From application and API discovery to AI-powered threat prevention, Harness uses contextual insights and agentic workflows to detect and mitigate risks from build to post-deployment.</p>
+    </div>
+    <div class="vd__outils" data-vd>
+      <div class="vd__scene">
+        <div class="pane is-active" id="p3-1" role="tabpanel" aria-labelledby="t3-1">
+          <div class="pane__halo"></div>
+          <div class="pane__cadre"><div class="pane__media">
+<!-- SCÈNE 5/6 — remplace SAST.json. Sujet : un balayage du code source qui fait
+     remonter des vulnérabilités classées par sévérité. -->
+<svg class="scene" viewBox="0 0 1168 625" role="img" aria-label="Analyse statique du code : un balayage parcourt le fichier et fait apparaître trois vulnérabilités classées par sévérité." xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="sast-scan" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#00ade4" stop-opacity="0"/>
+      <stop offset=".55" stop-color="#00ade4" stop-opacity=".28"/>
+      <stop offset="1" stop-color="#00ade4" stop-opacity="0"/>
+    </linearGradient>
+    <clipPath id="sast-clip"><rect x="72" y="112" width="496" height="452" rx="10"/></clipPath>
+  </defs>
+  <rect class="sc-bg" width="1168" height="625" rx="10"/>
+  <rect class="sc-panel" x="40" y="36" width="1088" height="553" rx="12"/>
+  <path class="sc-rule" d="M40 92h1088"/>
+  <circle class="sc-chrome" cx="70" cy="64" r="4.5"/><circle class="sc-chrome" cx="88" cy="64" r="4.5"/><circle class="sc-chrome" cx="106" cy="64" r="4.5"/>
+  <text class="sc-t" x="132" y="69">scan · api-service</text>
+  <rect class="sc-pill sc-pill--err" x="960" y="50" width="128" height="28" rx="14"/>
+  <text class="sc-t sc-t--err" x="1024" y="69" text-anchor="middle">3 findings</text>
+
+  <rect class="sc-code" x="72" y="112" width="496" height="452" rx="10"/>
+  <g clip-path="url(#sast-clip)">
+    <g class="sc-codelines">
+      <rect x="112" y="140" width="300" height="8" rx="4"/><rect x="112" y="168" width="220" height="8" rx="4"/>
+      <rect x="136" y="196" width="360" height="8" rx="4"/><rect x="136" y="224" width="264" height="8" rx="4"/>
+      <rect x="112" y="252" width="180" height="8" rx="4"/><rect x="136" y="280" width="332" height="8" rx="4"/>
+      <rect x="136" y="308" width="248" height="8" rx="4"/><rect x="112" y="336" width="292" height="8" rx="4"/>
+      <rect x="136" y="364" width="204" height="8" rx="4"/><rect x="136" y="392" width="348" height="8" rx="4"/>
+      <rect x="112" y="420" width="236" height="8" rx="4"/><rect x="136" y="448" width="308" height="8" rx="4"/>
+      <rect x="136" y="476" width="192" height="8" rx="4"/><rect x="112" y="504" width="280" height="8" rx="4"/>
+      <rect x="112" y="532" width="160" height="8" rx="4"/>
+    </g>
+    <g class="sc-codehits">
+      <rect x="136" y="192" width="360" height="16" rx="4"/>
+      <rect x="136" y="360" width="204" height="16" rx="4"/>
+    </g>
+    <rect class="sc-scan" x="72" y="112" width="496" height="72" fill="url(#sast-scan)"/>
+  </g>
+
+  <g class="sc-find" style="--i:0">
+    <rect class="sc-rowbg" x="612" y="128" width="476" height="88" rx="10"/>
+    <rect class="sc-pill sc-pill--err" x="636" y="150" width="88" height="26" rx="13"/>
+    <text class="sc-t sc-t--err" x="680" y="168" text-anchor="middle">Critical</text>
+    <text class="sc-t" x="636" y="200">SQL injection sink</text>
+    <text class="sc-t sc-t--dim" x="1064" y="200" text-anchor="end">orders.ts:118</text>
+  </g>
+  <g class="sc-find" style="--i:1">
+    <rect class="sc-rowbg" x="612" y="232" width="476" height="88" rx="10"/>
+    <rect class="sc-pill sc-pill--warn" x="636" y="254" width="88" height="26" rx="13"/>
+    <text class="sc-t sc-t--warn" x="680" y="272" text-anchor="middle">High</text>
+    <text class="sc-t" x="636" y="304">Hardcoded credential</text>
+    <text class="sc-t sc-t--dim" x="1064" y="304" text-anchor="end">pool.ts:42</text>
+  </g>
+  <g class="sc-find" style="--i:2">
+    <rect class="sc-rowbg" x="612" y="336" width="476" height="88" rx="10"/>
+    <rect class="sc-pill" x="636" y="358" width="88" height="26" rx="13"/>
+    <text class="sc-t sc-t--dim" x="680" y="376" text-anchor="middle">Medium</text>
+    <text class="sc-t" x="636" y="408">Outdated dependency</text>
+    <text class="sc-t sc-t--dim" x="1064" y="408" text-anchor="end">lodash 4.17.15</text>
+  </g>
+  <g class="sc-find" style="--i:3">
+    <rect class="sc-rowbg" x="612" y="452" width="476" height="88" rx="10"/>
+    <path class="sc-tick" d="M640 494l6 7 12-14"/>
+    <text class="sc-t" x="680" y="488">Remediation proposed</text>
+    <text class="sc-t sc-t--dim" x="680" y="514">Pull request opened automatically</text>
+  </g>
+</svg>
+          </div></div>
+        </div>
+        <div class="pane" id="p3-2" role="tabpanel" aria-labelledby="t3-2" hidden>
+          <div class="pane__halo"></div>
+          <div class="pane__cadre"><div class="pane__media"><img alt="" loading="lazy" src="https://cdn.prod.website-files.com/6222ca42ea87e1bd1aa1d10c/69b96b5089cb8442ac0d6873_Posture%20Insights%20-%20short.webp"></div></div>
+        </div>
+        <div class="pane" id="p3-3" role="tabpanel" aria-labelledby="t3-3" hidden>
+          <div class="pane__halo"></div>
+          <div class="pane__cadre"><div class="pane__media"><img alt="" loading="lazy" src="https://cdn.prod.website-files.com/6222ca42ea87e1bd1aa1d10c/69aa8f01d50d17a9a02d76e4_63a4880c6e2bef71384ebb649858ad56_AI%20Security%20Hero.webp"></div></div>
+        </div>
+      </div>
+      <div class="vd__onglets vd__onglets--security" role="tablist" aria-label="AI for Security &amp; Compliance">
+        <button class="carte is-active" role="tab" aria-selected="true" aria-controls="p3-1" id="t3-1"><span class="carte__tete"><img class="carte__icone" width="24" height="24" alt="" loading="lazy" src="https://cdn.prod.website-files.com/622642781cd7e96ac1f66807/698fb0b0449fdba0cfaa03c3_ast-logo.svg"><span class="titre-xs">Application Security Testing</span></span><span class="para para--small carte__desc">Identifies and remediates vulnerabilities from code to runtime by integrating security testing for API's and AI Apps in your pipelines.</span><span class="carte__lien"><span class="carte__lien-texte">Learn more</span><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h9M8.5 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+        <button class="carte" role="tab" aria-selected="false" aria-controls="p3-2" id="t3-2"><span class="carte__tete"><img class="carte__icone" width="24" height="24" alt="" loading="lazy" src="https://cdn.prod.website-files.com/622642781cd7e96ac1f66807/698fa7e13dc3e0029f1fe547_Application%20&amp;%20API%20Protection.svg"><span class="titre-xs">Web Application &amp; API Protection</span></span><span class="para para--small carte__desc">Continuously monitor and evaluate your API footprint, identify sensitive data exposure in both first- and third-party services.</span><span class="carte__lien"><span class="carte__lien-texte">Learn more</span><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h9M8.5 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+        <button class="carte" role="tab" aria-selected="false" aria-controls="p3-3" id="t3-3"><span class="carte__tete"><img class="carte__icone" width="24" height="24" alt="" loading="lazy" src="https://cdn.prod.website-files.com/622642781cd7e96ac1f66807/69b8e169b0a89d411d0b1b71_ai-security-logo.svg"><span class="titre-xs">AI Security</span></span><span class="para para--small carte__desc">Discover and protect every AI asset in your environment to understand your AI attack surface and assess your security posture.</span><span class="carte__lien"><span class="carte__lien-texte">Learn more</span><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h9M8.5 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---- 3.4 — AI for Cost & Optimization, 2 onglets ---- -->
+  <section class="vd__ancre" id="cost-optimization">
+    <div class="vd__heading">
+      <h2 class="titre-l reveal">AI for Cost &amp; Optimization</h2>
+      <p class="para vd__intro reveal">Optimize cloud spend and engineering effectiveness. Use AI-powered recommendations to cut cloud costs, and frameworks like DORA to improve engineering performance.</p>
+    </div>
+    <div class="vd__outils" data-vd>
+      <div class="vd__scene">
+        <div class="pane is-active" id="p4-1" role="tabpanel" aria-labelledby="t4-1">
+          <div class="pane__halo"></div>
+          <div class="pane__cadre"><div class="pane__media">
+<!-- SCÈNE 6/6 — remplace CCM_final_resized.json. Sujet : la dépense cloud qui
+     décroche de sa trajectoire prévue, et les recommandations qui l'expliquent. -->
+<svg class="scene" viewBox="0 0 1168 625" role="img" aria-label="La dépense cloud décroche de sa trajectoire prévue ; l'écart chiffré est détaillé par trois recommandations." xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="ccm-save" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#4ec26a" stop-opacity=".26"/>
+      <stop offset="1" stop-color="#4ec26a" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect class="sc-bg" width="1168" height="625" rx="10"/>
+  <rect class="sc-panel" x="40" y="36" width="1088" height="553" rx="12"/>
+  <path class="sc-rule" d="M40 92h1088"/>
+  <circle class="sc-chrome" cx="70" cy="64" r="4.5"/><circle class="sc-chrome" cx="88" cy="64" r="4.5"/><circle class="sc-chrome" cx="106" cy="64" r="4.5"/>
+  <text class="sc-t" x="132" y="69">cost · all cloud accounts</text>
+
+  <text class="sc-t sc-t--dim" x="80" y="140">Monthly cloud spend</text>
+
+  <path class="sc-grid" d="M100 200h540M100 270h540M100 340h540M100 410h540"/>
+  <path class="sc-axis" d="M100 420h540"/>
+
+  <path class="sc-area" d="M280 310 370 288 460 262 550 232 640 196 640 364 550 352 460 336 370 318 280 310Z" fill="url(#ccm-save)"/>
+  <path class="sc-line sc-line--forecast" pathLength="1" d="M100 340 190 326 280 310 370 288 460 262 550 232 640 196"/>
+  <path class="sc-line sc-line--actual" pathLength="1" d="M100 340 190 326 280 310 370 318 460 336 550 352 640 364"/>
+
+  <g class="sc-legend">
+    <path class="sc-line sc-line--forecast sc-line--swatch" d="M100 462h28"/>
+    <text class="sc-t sc-t--dim" x="140" y="467">Forecast without Harness · $49,130</text>
+    <path class="sc-line sc-line--actual sc-line--swatch" d="M100 502h28"/>
+    <text class="sc-t" x="140" y="507">Actual spend · $38,410</text>
+  </g>
+
+  <g class="sc-find" style="--i:0">
+    <rect class="sc-rowbg" x="700" y="128" width="388" height="76" rx="10"/>
+    <text class="sc-t" x="724" y="162">Right-size 12 idle nodes</text>
+    <text class="sc-t sc-t--dim" x="724" y="186">us-east-1 · eks-prod</text>
+    <text class="sc-t sc-t--ok" x="1064" y="172" text-anchor="end">−$4,180</text>
+  </g>
+  <g class="sc-find" style="--i:1">
+    <rect class="sc-rowbg" x="700" y="220" width="388" height="76" rx="10"/>
+    <text class="sc-t" x="724" y="254">Auto-stop non-prod at 19:00</text>
+    <text class="sc-t sc-t--dim" x="724" y="278">34 workloads</text>
+    <text class="sc-t sc-t--ok" x="1064" y="264" text-anchor="end">−$2,640</text>
+  </g>
+  <g class="sc-find" style="--i:2">
+    <rect class="sc-rowbg" x="700" y="312" width="388" height="76" rx="10"/>
+    <text class="sc-t" x="724" y="346">Commit to a 1-year savings plan</text>
+    <text class="sc-t sc-t--dim" x="724" y="370">Coverage 41% → 78%</text>
+    <text class="sc-t sc-t--ok" x="1064" y="356" text-anchor="end">−$3,900</text>
+  </g>
+  <g class="sc-find" style="--i:3">
+    <rect class="sc-rowbg sc-rowbg--ok" x="700" y="428" width="388" height="96" rx="10"/>
+    <text class="sc-t sc-t--dim" x="724" y="466">Recommended savings</text>
+    <text class="sc-t sc-t--big" x="724" y="502">−$10,720 / month</text>
+  </g>
+</svg>
+          </div></div>
+        </div>
+        <div class="pane" id="p4-2" role="tabpanel" aria-labelledby="t4-2" hidden>
+          <div class="pane__halo"></div>
+          <div class="pane__cadre"><div class="pane__media"><img alt="" loading="lazy" src="https://cdn.prod.website-files.com/6222ca42ea87e1bd1aa1d10c/688cd52c75dc4f2fa3ea67d7_software_engineering_insights_2x.webp"></div></div>
+        </div>
+      </div>
+      <div class="vd__onglets vd__onglets--cost" role="tablist" aria-label="AI for Cost &amp; Optimization">
+        <button class="carte is-active" role="tab" aria-selected="true" aria-controls="p4-1" id="t4-1"><span class="carte__tete"><img class="carte__icone" width="24" height="24" alt="" loading="lazy" src="https://cdn.prod.website-files.com/622642781cd7e96ac1f66807/6233c6e11c563d8aa28b056f_icon-ccm.svg"><span class="titre-xs">Cloud &amp; AI Cost Management</span></span><span class="para para--small carte__desc">Continuously optimize cloud spend by enforcing cloud cost policies and compliance at scale.</span><span class="carte__lien"><span class="carte__lien-texte">Learn more</span><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h9M8.5 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+        <button class="carte" role="tab" aria-selected="false" aria-controls="p4-2" id="t4-2"><span class="carte__tete"><img class="carte__icone" width="24" height="24" alt="" loading="lazy" src="https://cdn.prod.website-files.com/622642781cd7e96ac1f66807/672d37c6041e6f6b14688ab9_sei-icon.svg"><span class="titre-xs">AI DLC Insights</span></span><span class="para para--small carte__desc">Discover and fix bottlenecks across people, process, and tooling by leveraging frameworks like DORA and SPACE.</span><span class="carte__lien"><span class="carte__lien-texte">Learn more</span><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h9M8.5 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+      </div>
+    </div>
+  </section>
+</section>
+
+<!-- =========================================================================
+     4. BLOC TYPOGRAPHIQUE GÉANT
+     (source : <section class="new-home-center_section integrations">)
+     [relevé] cette section POSE un fond : background-color #070707 ET
+     background-image linear-gradient(#070707, #050505 88%).
+     [relevé] elle ne s'arrête PAS au paragraphe : suivent une planche de logos
+     d'intégrations (.home-cta_image) puis le lien « Developer resources › ».
+     ========================================================================= -->
+<section class="chiffre" id="integrations">
+  <div class="chiffre__inner">
+    <h2 class="chiffre__h2">
+      <span class="chiffre__mot" data-compteur data-cible="100" data-suffixe="+ ">0+ </span>
+      <span class="chiffre__mot chiffre__mot--bas">Integrations</span>
+    </h2>
+    <p class="para chiffre__texte reveal">Seamlessly deploy the entire Harness platform or separate best-in-class modules into your current environment with built-in integrations. No manual scripting or maintenance.</p>
+    <img class="chiffre__planche reveal" loading="lazy"
+         alt="Grid of cloud service and technology logos including Azure, AWS, GCP, OCI, Tanzu, Amazon ECS, Azure Functions, AWS Lambda, and Kubernetes."
+         src="https://cdn.prod.website-files.com/6222ca42ea87e1bd1aa1d10c/676344f3be56784ebddbcf11_integration-logos-v2.avif">
+    <div class="lien-texte reveal">
+      <a class="lien-texte__a" href="#">Developer resources
+        <svg width="8" height="15" viewBox="0 0 8 15" fill="none" aria-hidden="true"><path d="M1 1.92773L7 7.92773L1 13.9277" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================================
+     5. CARROUSEL DE TÉMOIGNAGES
+     (source : <section class="testimonial-trusted_section">)
+     [relevé] même fond que la section 4 : #070707 + linear-gradient(…88%).
+     [relevé] ._0630-header-layout est une grille 1.75fr/1fr, mais elle n'a
+     QU'UN SEUL enfant : titre, paragraphe ET lien sont EMPILÉS dans la première
+     colonne, la seconde restant vide. C'est un cadrage à gauche sur 64 % de la
+     largeur, pas un vis-à-vis titre/texte.
+     ========================================================================= -->
+<section class="temoignages" id="customers">
+  <div class="temoignages__groupe">
+    <div class="temoignages__entete">
+      <div class="temoignages__col">
+        <h2 class="titre-l reveal">Hear from our customers</h2>
+        <p class="para reveal">See why hundreds of DevOps and engineering teams trust Harness to automate processes, reduce manual interventions, and consolidates tools.</p>
+        <div class="lien-texte lien-texte--gauche reveal">
+          <a class="lien-texte__a" href="#">Read our customer stories
+            <svg width="8" height="15" viewBox="0 0 8 15" fill="none" aria-hidden="true"><path d="M1 1.92773L7 7.92773L1 13.9277" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="slider" data-slider>
+      <div class="slider__masque">
+        <div class="slider__piste">
+          <!-- CITATIONS — VERBATIM DE LA SOURCE, avec les vrais auteurs.
+               Aucun de ces quatre blocs n'est reformulé : sur une page de
+               référence, une citation approchée attribuée à une personne réelle
+               est une fabrication, pas une approximation de mise en page. -->
+          <article class="slide is-active">
+            <div class="slide__image"><img alt="" loading="lazy" src="https://cdn.prod.website-files.com/6222ca42ea87e1bd1aa1d10c/68e7cd1110a6ff6e0160cbd5_city-urban-sky-view-poster-00001.jpg"></div>
+            <div class="slide__voile"></div>
+            <div class="slide__contenu">
+              <div class="slide__col">
+                <h3 class="titre-m">Citi improves software delivery performance with Harness</h3>
+                <span class="slide__lien">Read their story <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h9M8.5 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              </div>
+              <div class="slide__col slide__col--citation">
+                <img class="slide__guillemet" alt="" loading="lazy" src="https://cdn.prod.website-files.com/6222ca42ea87e1bd1aa1d10c/656a25c4c509a499d3a1070a_quote-symbol-icon-white.svg">
+                <div class="slide__citation-bloc">
+                  <p class="slide__citation">Harness CD lets us release each change within minutes of a pull request being merged. Running all the necessary tests and scans during the pipeline gives us the confidence to do this.</p>
+                  <p class="slide__auteur">Stefanos Piperoglou<br>Technical Program Manager, Citi Bank</p>
+                </div>
+              </div>
+            </div>
+          </article>
+          <article class="slide" hidden>
+            <div class="slide__image"><img alt="" loading="lazy" src="https://cdn.prod.website-files.com/6222ca42ea87e1bd1aa1d10c/68e7cd65a7511a0a3b7f2791_airplane-flying-ground-view-poster-00001.jpg"></div>
+            <div class="slide__voile"></div>
+            <div class="slide__contenu">
+              <div class="slide__col">
+                <h3 class="titre-m">United Airlines Accelerates Deployments by 75% With Harness</h3>
+                <span class="slide__lien">Read their story <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h9M8.5 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              </div>
+              <div class="slide__col slide__col--citation">
+                <img class="slide__guillemet" alt="" loading="lazy" src="https://cdn.prod.website-files.com/6222ca42ea87e1bd1aa1d10c/656a25c4c509a499d3a1070a_quote-symbol-icon-white.svg">
+                <div class="slide__citation-bloc">
+                  <p class="slide__citation">By choosing Harness for CI and CD, we were able to give the governance policies to the developers and create the guardrails we needed. Harness gives us a platform rather than just a DevOps tool.</p>
+                  <p class="slide__auteur">Ratna Devarapalli<br>Director of IT - Architecture, Platform Engineering &amp; DevOps</p>
+                </div>
+              </div>
+            </div>
+          </article>
+          <article class="slide" hidden>
+            <div class="slide__image"><img alt="" loading="lazy" src="https://cdn.prod.website-files.com/6222ca42ea87e1bd1aa1d10c/68e7c9a066e47c412c49a6fb_family-celebrating-compressed-poster-00001.jpg"></div>
+            <div class="slide__voile"></div>
+            <div class="slide__contenu">
+              <div class="slide__col">
+                <h3 class="titre-m">Ancestry adds consistency and governance to cut downtime and systems onboarding effort</h3>
+                <span class="slide__lien">Read their story <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h9M8.5 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              </div>
+              <div class="slide__col slide__col--citation">
+                <img class="slide__guillemet" alt="" loading="lazy" src="https://cdn.prod.website-files.com/6222ca42ea87e1bd1aa1d10c/656a25c4c509a499d3a1070a_quote-symbol-icon-white.svg">
+                <div class="slide__citation-bloc">
+                  <p class="slide__citation">Harness now empowers Ancestry to implement new features once and then automatically extend those across every pipeline, representing an 80-to-1 reduction in developer effort.</p>
+                  <p class="slide__auteur">Ken Angell<br>Principal Architect, Ancestry</p>
+                </div>
+              </div>
+            </div>
+          </article>
+          <article class="slide" hidden>
+            <div class="slide__image"><img alt="" loading="lazy" src="https://cdn.prod.website-files.com/6222ca42ea87e1bd1aa1d10c/68e7c9f82b09efc732ed27e7_makeup-video-compressed-poster-00001.jpg"></div>
+            <div class="slide__voile"></div>
+            <div class="slide__contenu">
+              <div class="slide__col">
+                <h3 class="titre-m">Ulta Beauty Speeds Time-to-Market By Easing and Accelerating Deployments</h3>
+                <span class="slide__lien">Read their story <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h9M8.5 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              </div>
+              <div class="slide__col slide__col--citation">
+                <img class="slide__guillemet" alt="" loading="lazy" src="https://cdn.prod.website-files.com/6222ca42ea87e1bd1aa1d10c/656a25c4c509a499d3a1070a_quote-symbol-icon-white.svg">
+                <div class="slide__citation-bloc">
+                  <p class="slide__citation">Time-to-market for our eCommerce platform was a huge benefit of Harness. We saved months of time. Months. Harness really came through in a big way for that project.</p>
+                  <p class="slide__auteur">Michael Alderson<br>Principal Cloud Architect, Ulta</p>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+      <!-- [relevé] ._0630-slider_arrow { display:none } — les flèches Webflow sont
+           masquées ; la navigation passe par ces blocs de 7.5rem soulignés d'un
+           trait de 2px à opacité .4, l'actif prenant --primary-5. Leur contenu
+           n'est PAS un libellé : c'est le LOGO de la référence, en 5rem de large
+           (._0630-slider_dot-image { width:5rem }). -->
+      <div class="slider__nav" role="tablist" aria-label="Customer stories">
+        <button class="slider__puce is-active" role="tab" aria-selected="true"><img alt="Citi logo in white" loading="eager" src="https://cdn.prod.website-files.com/6222ca42ea87e1bd1aa1d10c/656a2534558d0c1f25bd9ed5_citi-logo-white.svg"></button>
+        <button class="slider__puce" role="tab" aria-selected="false"><img alt="United Airlines black and white logo with the word UNITED and a stylized globe design." loading="lazy" src="https://cdn.prod.website-files.com/6222ca42ea87e1bd1aa1d10c/64b0e796bfa43fcb05e1a409_united-airlines-logo-black-and-white.webp"></button>
+        <button class="slider__puce" role="tab" aria-selected="false"><img alt="Ancestry logo in white" loading="lazy" src="https://cdn.prod.website-files.com/6222ca42ea87e1bd1aa1d10c/656a34871b6f71db6f4a783c_ancestry-logo-white.svg"></button>
+        <button class="slider__puce" role="tab" aria-selected="false"><img alt="Ulta Beauty logo" loading="lazy" src="https://cdn.prod.website-files.com/6222ca42ea87e1bd1aa1d10c/66197a57fd21d98135e2eba4_Ulta_Beauty_logo%201.svg"></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================================
+     6. BANDE D'APPEL À L'ACTION
+     (source : <section class="home-footer_cta-animation-group">)
+     [relevé] cette section ne déclare AUCUN fond : elle repose sur le body.
+     [relevé] il n'y a PAS deux boutons : le titre est suivi d'un FORMULAIRE de
+     demande de démo (.home-demo-form, formulaire Marketo mktoForm_3798) en
+     colonne étroite centrée. Les 8 champs relevés au rendu du site en ligne :
+     Work Email Address, Company Name, First Name, Last Name, Job Title,
+     Phone Number, Country (select), How did you hear about us: (select),
+     et un bouton Submit. Les 7 premiers sont marqués requis par un astérisque
+     AVANT le libellé, convention Marketo.
+     ========================================================================= -->
+<section class="cta" id="cta">
+  <div class="cta__inner">
+    <div class="cta__contenu">
+      <!-- [relevé] .heading_medium.is-new-home-cta : 65px, dégradé doré radial
+           découpé sur le texte, max-width 600px. Second procédé de texte
+           découpé de la page, et le seul en palette chaude. -->
+      <h3 class="titre-cta reveal">Request a Harness Platform Demo</h3>
+
+      <form class="demo reveal" onsubmit="return false" aria-label="Request a Harness Platform Demo">
+        <div class="demo__champ">
+          <label class="demo__label" for="d-email"><span class="demo__requis">*</span> Work Email Address</label>
+          <input class="demo__input" id="d-email" type="email" autocomplete="email" required>
+        </div>
+        <div class="demo__champ">
+          <label class="demo__label" for="d-company"><span class="demo__requis">*</span> Company Name</label>
+          <input class="demo__input" id="d-company" type="text" autocomplete="organization" required>
+        </div>
+        <div class="demo__champ">
+          <label class="demo__label" for="d-first"><span class="demo__requis">*</span> First Name</label>
+          <input class="demo__input" id="d-first" type="text" autocomplete="given-name" required>
+        </div>
+        <div class="demo__champ">
+          <label class="demo__label" for="d-last"><span class="demo__requis">*</span> Last Name</label>
+          <input class="demo__input" id="d-last" type="text" autocomplete="family-name" required>
+        </div>
+        <div class="demo__champ">
+          <label class="demo__label" for="d-title"><span class="demo__requis">*</span> Job Title</label>
+          <input class="demo__input" id="d-title" type="text" autocomplete="organization-title" required>
+        </div>
+        <div class="demo__champ">
+          <label class="demo__label" for="d-phone"><span class="demo__requis">*</span> Phone Number:</label>
+          <input class="demo__input" id="d-phone" type="tel" autocomplete="tel" required>
+        </div>
+        <div class="demo__champ">
+          <label class="demo__label" for="d-country"><span class="demo__requis">*</span> Country:</label>
+          <select class="demo__input demo__input--select" id="d-country" required>
+            <option value="">Select Country</option>
+            <option>United States</option>
+            <option>United Kingdom</option>
+            <option>France</option>
+            <option>Germany</option>
+            <option>India</option>
+          </select>
+        </div>
+        <div class="demo__champ">
+          <label class="demo__label demo__label--fort" for="d-source">How did you hear about us:</label>
+          <select class="demo__input demo__input--select" id="d-source">
+            <option value="">Select...</option>
+            <option>Search engine</option>
+            <option>Social media</option>
+            <option>Event or conference</option>
+            <option>Word of mouth</option>
+          </select>
+        </div>
+        <button class="btn demo__envoi" type="submit">Submit</button>
+      </form>
+    </div>
+  </div>
+  <!-- [relevé] .new-home_footer-image-wrapper { background-image:
+       linear-gradient(0deg, #000, #0000 35%) } — l'image de bas de page est
+       fondue au noir sur ses 35 % inférieurs, ce qui la raccorde au pied.
+       [relevé] le fichier EST relevé : …_pipe-footer-image.avif. -->
+  <div class="cta__image">
+    <img alt="" loading="lazy" src="https://cdn.prod.website-files.com/6222ca42ea87e1bd1aa1d10c/67409bcd6a8cfda0a42da274_eee83b210139776d6d959342a9f343c1_pipe-footer-image.avif">
+  </div>
+</section>
+
+<!-- =========================================================================
+     7. PIED DE PAGE
+     (source : <footer class="footer-section footer_bg--color"> + le bloc
+      <section class="container-large-v1 is-footer-bottom">)
+     [relevé] .footer_bg--color ÉCRASE le padding 100px de .footer-section par
+     1.5rem haut et bas, met backdrop-filter:none et passe la couleur du texte
+     à --white-smoke. La classe de base seule aurait donné un pied trois fois
+     plus haut : c'est la classe modificatrice qui commande.
+     ========================================================================= -->
+<footer class="pied" id="footer">
+  <!-- [relevé] .footer_home-special-bg { backdrop-filter: blur(20px);
+       background-color:#0b0b0d9c; position:absolute; inset:0; z-index:-1 } —
+       le pied ne pose pas un fond opaque : il FLOUTE ce qui passe dessous. -->
+  <div class="pied__voile" aria-hidden="true"></div>
+
+  <!-- [relevé] .wrapper--footer-logo — le logo du pied est une IMAGE distante
+       avec srcset (500w PNG / 1557w WEBP) suivie d'un `®` en .registered-mark. -->
+  <div class="pied__logo-wrapper">
+    <img class="pied__logo-img" alt="Harness" loading="lazy" sizes="100vw"
+         srcset="https://cdn.prod.website-files.com/6222ca42ea87e1bd1aa1d10c/67c1e03a066112554425a47b_harness-logo%20white-p-500.png 500w, https://cdn.prod.website-files.com/6222ca42ea87e1bd1aa1d10c/67c1e03a066112554425a47b_harness-logo%20white.webp 1557w"
+         src="https://cdn.prod.website-files.com/6222ca42ea87e1bd1aa1d10c/67c1e03a066112554425a47b_harness-logo%20white.webp">
+    <span class="pied__marque-deposee">®</span>
+  </div>
+
+  <div class="pied__inner">
+    <!-- [relevé] .subscribe_footer-wrapper { grid-template-columns:1fr 1fr;
+         gap:80px; padding:16px 0 40px }. Les trois textes sont VERBATIM :
+         .module_h4 « Sign up for Harness Updates », .footer_form-subtext, et
+         .footer_form-description, qui est la mention de consentement placée
+         SOUS la grille — pas dans la colonne du formulaire. -->
+    <div class="pied__abonnement">
+      <div class="pied__abonnement-col">
+        <h2 class="pied__titre-abo reveal">Sign up for Harness Updates</h2>
+        <p class="pied__sous-titre">Subscribe to our newsletter to receive the latest Harness updates in your inbox</p>
+      </div>
+      <div class="pied__abonnement-col">
+        <form class="pied__form" onsubmit="return false">
+          <label class="visuellement-cache" for="email">Email Address</label>
+          <div class="pied__form-ligne">
+            <input class="pied__input" id="email" type="email" autocomplete="email">
+            <button class="pied__envoi" type="submit">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <p class="pied__mention-form">By submitting this form, you acknowledge and agree that Harness Inc will process your personal information in accordance with the Privacy Statement.</p>
+
+    <!-- [relevé] .footer_links-column-wrapper { grid-template-columns: auto ×5;
+         grid-template-rows: auto 1fr auto; column-gap:32px; row-gap:64px;
+         border-bottom:1px solid var(--gray--30); margin-bottom:40px;
+         padding-bottom:40px }.
+         Les grid-area sont posées une par une par Webflow (#w-node-…) :
+           col 1 rangées 1-3 → la carte promo « the State of »
+           col 2 rangées 1-3 → Platform
+           col 3 rangée 1    → Harness AI
+           col 3 rangée 2    → Pricing
+           col 3 rangée 3    → For Developers
+           col 4 rangées 1-3 → Resources
+           col 5 rangées 1-3 → Company
+         Trois familles courtes PARTAGENT la troisième colonne : c'est ce qui
+         équilibre la rangée face à la colonne Platform, qui est très longue. -->
+    <nav class="pied__colonnes" aria-label="Footer">
+      <!-- PROCÉDÉ — BORDURE EN DÉGRADÉ, cellule 1/1 → 4/2. Voir §3.12. -->
+      <div class="promo">
+        <div class="promo__bord">
+          <div class="promo__fond">
+            <div class="promo__banniere">
+              <div class="promo__texte">
+                <p class="promo__tagline">the State of</p>
+                <h2 class="promo__titre">Engineering<br>Excellence 2026</h2>
+              </div>
+              <div class="promo__action">
+                <a class="lien-texte__a" href="#">View the full report
+                  <svg width="8" height="15" viewBox="0 0 8 15" fill="none" aria-hidden="true"><path d="M1 1.92773L7 7.92773L1 13.9277" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </a>
+              </div>
+              <img class="promo__ornement" height="32" alt="" loading="lazy" src="https://cdn.prod.website-files.com/6222ca42ea87e1bd1aa1d10c/6a047bb5278d75ed22b2d061_engx%20footer%20element.svg">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pied__col pied__col--platform">
+        <p class="pied__col-titre">Platform</p>
+        <a href="#">Continuous Delivery &amp; GitOps</a>
+        <a href="#">Continuous Integration</a>
+        <a href="#">Feature Management &amp; Experimentation</a>
+        <a href="#">Infrastructure as Code Management</a>
+        <a href="#">Resilience Testing</a>
+        <a href="#">AI SRE<span class="pied__badge">NEW</span></a>
+        <a href="#">Database DevOps<span class="pied__badge">NEW</span></a>
+        <a href="#">Artifact Registry</a>
+        <a href="#">Internal Developer Portal</a>
+        <a href="#">AI DLC Insights</a>
+        <a href="#">Application Security Testing</a>
+        <a href="#">Web Application &amp; API Protection</a>
+        <a href="#">AI Security</a>
+        <a href="#">Cloud &amp; AI Cost Management</a>
+        <a href="#">AI Test Automation</a>
+      </div>
+
+      <div class="pied__col pied__col--ai">
+        <p class="pied__col-titre">Harness AI</p>
+        <a href="#">Harness AI</a>
+      </div>
+      <div class="pied__col pied__col--pricing">
+        <p class="pied__col-titre">Pricing</p>
+        <a href="#">View plans</a>
+      </div>
+      <div class="pied__col pied__col--dev">
+        <p class="pied__col-titre">For Developers</p>
+        <a href="#">Documentation</a>
+        <a href="#">Developer Hub</a>
+        <a href="#">Open Source</a>
+        <a href="#">Commitment to Open Source</a>
+        <a href="#">Community</a>
+        <a href="#">API Reference Docs</a>
+        <a href="#">Engineering Blog</a>
+        <a href="#">Harness University</a>
+        <a href="#">Training</a>
+      </div>
+
+      <div class="pied__col pied__col--res">
+        <p class="pied__col-titre">Resources</p>
+        <a href="#">Blog</a>
+        <a href="#">Comparison Guide</a>
+        <a href="#">Collateral</a>
+        <a href="#">Customers</a>
+        <a href="#">DevOps Academy</a>
+        <a href="#">Ebooks</a>
+        <a href="#">Engineering Maturity Assessment</a>
+        <a href="#">On-demand Videos</a>
+        <a href="#">Webinars</a>
+        <a href="#">Support</a>
+        <a href="#">Professional Services</a>
+      </div>
+
+      <div class="pied__col pied__col--company">
+        <p class="pied__col-titre">Company</p>
+        <a href="#">About Us</a>
+        <a href="#">Press &amp; News</a>
+        <a href="#">Partners</a>
+        <a href="#">Careers</a>
+        <a href="#">Contact Us</a>
+        <a href="#">Trademark Policy</a>
+        <a href="#">Security</a>
+        <a href="#">Legal</a>
+        <a href="#">Press Kit</a>
+      </div>
+    </nav>
+
+    <!-- [relevé] .sub_footer-wrapper { justify-content:space-between;
+         margin-top:50px; gap:16px; flex-wrap:wrap }. Mentions et liens sont
+         verbatim ; « Opt Out » porte le pictogramme privacyoptions.svg.
+         [arbitrage] les cinq icônes sociales de la source sont des SVG inline
+         de 32×32 ; redessinées ici en glyphes simples, mêmes destinations. -->
+    <div class="pied__bas">
+      <p class="pied__mentions">© 2026 Harness Inc.</p>
+      <div class="pied__mentions-liens">
+        <a href="#">Subscription Terms</a>
+        <a href="#">Website Terms of Use</a>
+        <a href="#">Privacy Statement</a>
+        <a href="#">Opt Out<img class="pied__optout" alt="" loading="lazy" src="https://cdn.prod.website-files.com/6222ca42ea87e1bd1aa1d10c/6613fea4c0a0d1f3a0a977a0_privacyoptions.svg"></a>
+      </div>
+      <div class="pied__social">
+        <a href="#" aria-label="Github"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5A11.5 11.5 0 0 0 .5 12a11.5 11.5 0 0 0 7.86 10.92c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.54-3.88-1.54-.53-1.34-1.29-1.7-1.29-1.7-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.2 1.77 1.2 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.56-.29-5.25-1.28-5.25-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.79 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.24 2.76.12 3.05.74.81 1.18 1.84 1.18 3.1 0 4.43-2.69 5.4-5.26 5.69.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12 11.5 11.5 0 0 0 12 .5Z"/></svg></a>
+        <a href="#" aria-label="LinkedIn"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 3h18v18H3V3Zm3.2 5.6a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3ZM5 18.5h2.5V10H5v8.5Zm5 0h2.4v-4.7c0-1.2.9-1.7 1.6-1.7.7 0 1.4.5 1.4 1.7v4.7H19V13.5c0-2.6-1.5-3.7-3.1-3.7-1.2 0-2 .6-2.5 1.3V10H10v8.5Z"/></svg></a>
+        <a href="#" aria-label="Facebook"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5A11.5 11.5 0 0 0 10.2 23v-7.9H7.3V12h2.9V9.7c0-2.9 1.7-4.5 4.3-4.5 1.3 0 2.6.23 2.6.23v2.8h-1.5c-1.4 0-1.9.9-1.9 1.8V12h3.2l-.5 3.1h-2.7V23A11.5 11.5 0 0 0 12 .5Z"/></svg></a>
+        <a href="#" aria-label="Instagram"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1" fill="currentColor" stroke="none"/></svg></a>
+        <a href="#" aria-label="X"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.5 3h3.1l-6.8 7.8L21.8 21h-6.2l-4.9-6.4L5 21H1.9l7.3-8.3L1.6 3H8l4.4 5.8L17.5 3Zm-1.1 16.1h1.7L7.7 4.8H5.9l10.5 14.3Z"/></svg></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

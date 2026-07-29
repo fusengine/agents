@@ -1,9 +1,13 @@
 ---
 name: seo-content-brief
-description: Use when generating detailed SEO content briefs. Covers target keywords, search intent, outline (H2/H3), word count, internal links, schema requirements, GEO readiness checklist.
+description: Use when generating a detailed SEO content brief for a single page or topic before writing.
 user-invocable: false
 related-skills: seo, seo-content, seo-cluster, seo-geo, seo-entity
 ---
+
+<objective>
+Generates a full content brief for one target page: runs local keyword-density analysis first (`scripts/analyze-keywords.ts`, no API key), then produces target keywords (primary/secondary/long-tail layered by buyer state L1-L4), search intent classification, meta title/description constraints, a full H2/H3 outline with a self-contained answer capsule (40-60 words, citation-eligible) opening every H2, a word-count target, 5-10 internal link suggestions, required schema types, and a GEO readiness checklist. One brief targets one buyer state per URL. Does not build the keyword cluster itself (seo-cluster) or score already-published content quality (seo-content).
+</objective>
 
 # Content Brief Generator
 

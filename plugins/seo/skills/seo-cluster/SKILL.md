@@ -1,9 +1,13 @@
 ---
 name: seo-cluster
-description: Use when building semantic keyword clusters from SERP overlap. Covers seed keyword expansion, Jaccard SERP overlap, intent grouping, pillar/cluster content architecture.
+description: Use when building semantic keyword clusters from SERP overlap for pillar/cluster content architecture.
 user-invocable: false
 related-skills: seo, seo-internal-linking, seo-content, seo-content-brief
 ---
+
+<objective>
+Builds semantic keyword clusters by expanding a seed keyword (autocomplete + "People Also Ask"), fetching each candidate's SERP, and grouping keywords whose SERP overlaps the seed's by Jaccard index ≥30% into one cluster (pillar = highest-volume keyword). Layers clusters by buyer state (L1 awareness through L4 decision) rather than lexical similarity, splits local vs global intent into separate pages, and runs an anti-cannibalization check against existing pages before proposing new cluster pages. Does not write the content itself — hands off to seo-content-brief per cluster page and seo-internal-linking for the resulting link mesh.
+</objective>
 
 # Semantic Clustering
 

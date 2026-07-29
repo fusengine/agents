@@ -1,10 +1,16 @@
 ---
 name: react-19
-description: React 19.2 features - use(), useOptimistic, useActionState, useEffectEvent, Activity component, React Compiler. Use when implementing React 19 patterns.
+description: Use when implementing React 19.2 patterns — use(), useOptimistic, useActionState, useEffectEvent, Activity component, React Compiler.
 version: 19.2.0
 user-invocable: true
 references: references/new-hooks.md, references/activity-component.md, references/actions-api.md, references/react-compiler.md, references/ref-as-prop.md, references/context-improvements.md, references/suspense-patterns.md, references/document-metadata.md, references/resource-loading.md, references/migration-18-19.md, references/virtualization.md, references/lazy-loading.md, references/profiling.md, references/templates/action-form.md, references/templates/optimistic-update.md, references/templates/activity-tabs.md, references/templates/use-promise.md, references/templates/use-context.md, references/templates/use-effect-event.md, references/templates/error-boundary.md, references/templates/ref-as-prop.md, references/templates/document-metadata.md, references/templates/resource-loading.md, references/templates/virtual-list.md, references/templates/lazy-components.md, references/templates/profiling-devtools.md, references/hooks-improved.md, references/templates/use-deferred-value.md, references/templates/use-transition-async.md, references/use-state.md, references/use-effect.md, references/use-ref.md, references/use-memo.md, references/use-callback.md, references/use-layout-effect.md, references/use-id.md, references/use-imperative-handle.md, references/use-sync-external-store.md, references/custom-hooks-patterns.md, references/templates/state-patterns.md, references/templates/effect-patterns.md, references/templates/ref-patterns.md, references/templates/custom-hooks.md, references/templates/external-store.md
 ---
+
+<objective>
+Covers React 19.2's new hooks and features: `use()` for reading promises/context in render, `useOptimistic` for instant UI updates, `useActionState` for form action state, `useFormStatus` for child-component pending state, `useEffectEvent` for non-reactive effect callbacks, the `Activity` component for hiding/showing UI while preserving state, and the React Compiler's automatic memoization (making manual `useMemo`/`useCallback` mostly obsolete).
+
+Also documents all classic hooks (useState, useEffect, useLayoutEffect, useRef, useImperativeHandle, useMemo, useCallback, useId, useSyncExternalStore) and React 18→19 breaking changes (`ref` as a prop instead of `forwardRef`, `<Context value={}>` instead of `<Context.Provider>`). This is the core React hooks/features skill — for global state see react-state, for forms see react-forms, and for SOLID architecture rules see solid-react.
+</objective>
 
 # React 19.2 Core Features
 

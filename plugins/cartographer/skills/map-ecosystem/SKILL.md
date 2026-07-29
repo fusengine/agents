@@ -1,9 +1,13 @@
 ---
 name: map-ecosystem
-description: "Enrich auto-generated .cartographer/ maps with full descriptions from source files. Use when: cartography index descriptions are truncated, a new plugin/skill was just added, or after SessionStart regenerates the map."
+description: "Use when cartography index descriptions are truncated, a new plugin/skill was just added, or after SessionStart regenerates the map."
 context: fork
 user-invocable: true
 ---
+
+<objective>
+Enriches the auto-generated `.cartographer/` index.md files with complete descriptions extracted from source file frontmatter — restores the full skill/agent `description` text that auto-generation truncates at 60 characters. Read-only against everything outside `.cartographer/*.md`: it never modifies source files, never deletes or restructures the tree, and never assumes a description — it always reads the actual frontmatter first.
+</objective>
 
 # Map Ecosystem — Enrich Descriptions
 

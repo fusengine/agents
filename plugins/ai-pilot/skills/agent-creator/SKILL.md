@@ -8,6 +8,12 @@ references: references/architecture.md, references/frontmatter.md, references/re
 related-skills: skill-creator, exploration
 ---
 
+<objective>
+Agent Creator scaffolds a complete Claude Code expert agent: frontmatter (name, description, model, tools, skills, hooks), the mandatory Agent Workflow section, hook scripts, and marketplace registration. It covers three flows -- creating a brand-new domain/framework expert, adapting an existing agent to a new stack, and updating an agent's skills or hooks -- each ending with a `fuse-ai-pilot:sniper` validation pass.
+
+It does not create the skills an agent references -- for that, use `skill-creator`; agent-creator only wires the agent frontmatter and workflow around skills that already exist or are created alongside it.
+</objective>
+
 # Agent Creator
 
 ## Agent Workflow (MANDATORY)

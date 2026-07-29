@@ -9,6 +9,12 @@ references: references/installation.md, references/store-patterns.md, references
 related-skills: react-19, react-forms, solid-react
 ---
 
+<objective>
+Implements Zustand v5 global state management for React applications: the v5 currying syntax (`create<State>()((set) => ({...}))`), the selector pattern (`useStore((s) => s.field)`), `useShallow` for array/object selectors to prevent unnecessary re-renders, and middleware composition (devtools → persist → immer, order-sensitive for TypeScript).
+
+Covers separating stores by domain (auth, cart, ui, theme) rather than one giant store, SOLID file organization (`store.ts`, `store.interface.ts`, `use-store.ts`), and forbidden patterns (persisting auth tokens, v4 syntax, skipping `useShallow`). This is the plain-React variant of Zustand (no App Router request-isolation concerns) — for Next.js App Router see nextjs-zustand, and for server state use TanStack Query instead of this skill.
+</objective>
+
 # Zustand for React
 
 Minimal, scalable state management with React 18+ useSyncExternalStore.

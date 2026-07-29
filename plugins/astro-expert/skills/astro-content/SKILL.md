@@ -1,6 +1,6 @@
 ---
 name: astro-content
-description: Expert Astro Content Layer API — content.config.ts, glob/file loaders, custom loaders, getCollection, getEntry, render(), Zod schemas, MDX, Remark/Rehype plugins. Use when managing structured content, blog posts, or any typed data collections.
+description: Use when managing structured content, blog posts, or typed data collections in Astro via the Content Layer API (content.config.ts).
 versions:
   astro: 7
   zod: 4
@@ -8,6 +8,12 @@ user-invocable: true
 references: references/overview.md, references/config.md, references/loaders.md, references/querying.md, references/rendering.md, references/mdx.md, references/templates/blog-collection.md, references/templates/custom-loader.md
 related-skills: astro-7, astro-actions, astro-seo
 ---
+
+<objective>
+Implements Astro's Content Layer API: the `src/content.config.ts` config file, built-in `glob()` and `file()` loaders for local Markdown/MDX/JSON/YAML content, custom loaders for remote APIs/CMS/databases, Zod 4 schemas for type-safe frontmatter, and the query APIs `getCollection()`, `getEntry()`, and `render()` (which returns a `Content` component plus headings).
+
+Also covers MDX authoring with Remark/Rehype plugins and the `astro sync` workflow for generating collection types. Does not cover form submission via Astro Actions (astro-actions) or SEO metadata generation from content (astro-seo) — those are handled by their own skills.
+</objective>
 
 # Astro Content Layer Expert
 

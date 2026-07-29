@@ -1,11 +1,17 @@
 ---
 name: solid-generic
-description: "SOLID principles for generic TypeScript, Bun, and Node.js projects. Files < 100 lines, interfaces separated, JSDoc mandatory. Use when: building CLI tools, libraries, scripts, hooks, or non-framework TypeScript code."
+description: "Use when building CLI tools, libraries, scripts, hooks, or non-framework TypeScript code (Bun/Node.js -- SOLID, files < 100 lines, JSDoc mandatory)."
 version: 1.0.0
 user-invocable: true
 references: references/solid-principles.md, references/single-responsibility.md, references/open-closed.md, references/liskov-substitution.md, references/interface-segregation.md, references/dependency-inversion.md, references/architecture-patterns.md, references/templates/module.md, references/templates/service.md, references/templates/interface.md, references/templates/validator.md, references/templates/factory.md, references/templates/error.md, references/templates/test.md
 related-skills: solid-react, solid-nextjs, solid-php, solid-swift
 ---
+
+<objective>
+SOLID Generic enforces a modular architecture for plain TypeScript/Bun/Node.js code with no framework (CLI tools, libraries, scripts, hooks): interfaces live in `modules/[feature]/src/interfaces/` or `modules/cores/interfaces/` for shared types, never in implementation files; files stay under 100 lines (modules <80, services <60, validators <40); every export carries JSDoc.
+
+Before writing any new code it requires a DRY check across `modules/cores/lib`, `modules/cores/interfaces`, and `modules/cores/errors`, extracting anything repeated 3+ times into a shared helper. Each of the 5 SOLID principles has its own detailed reference (`single-responsibility.md` through `dependency-inversion.md`), plus copy-paste-ready templates for modules, services, interfaces, validators, factories, errors, and tests.
+</objective>
 
 # SOLID Generic - TypeScript / Bun / Node.js
 

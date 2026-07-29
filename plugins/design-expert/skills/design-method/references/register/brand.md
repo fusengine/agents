@@ -31,6 +31,26 @@ that claim, it doesn't belong on the page in that form.
 - Write the POV down. A POV held only "in your head" is not a POV — same discipline as
   Gate 0's four artefacts: present/absent, not a feeling.
 
+### Signature Device Test
+
+The signature element (Gate 0, item 2) must be *derived from the subject*, not applied
+to it. Name the object, gesture, instrument, or ritual it comes from — something that
+already exists in the client's trade — and state what it does on the page beyond
+looking good.
+
+**Test**: if the same element could be lifted onto a brand in an unrelated sector
+without changing a pixel, it is decoration, not signature. Rework it.
+
+A geometric shape, an abstract pattern, a gradient, a floating orb: all fail — they
+satisfy Signature Dominance mechanically while meaning nothing. So does a literal
+picture of the trade's object sitting in a box; the device must *do* something
+structural — carry progress, separate, navigate, reveal, or measure.
+
+Driving school — a rounded card with a car icon is decoration. A continuous road
+marking running the length of the page, doubling as scroll progress, section
+separator, and kilometre-post navigation, is a signature device: it comes from the
+trade and it works.
+
 ## 2. Body ≠ SaaS Furniture
 
 These five section-types are the default reach for any generic brief and, used unchanged,

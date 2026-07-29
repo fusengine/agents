@@ -1,9 +1,13 @@
 ---
 name: git-flow
-description: Use when committing, branching, opening PRs, or deciding merge strategy. Covers GitHub Flow (default), trunk-based, branch naming conventions, squash vs rebase, branch lifecycle, and protected branch enforcement.
+description: Use when committing, branching, opening PRs, or deciding merge/branch strategy.
 user-invocable: false
 related-skills: commit-optimization, post-commit, commit-detection
 ---
+
+<objective>
+Covers Git workflow strategy end to end: the GitHub Flow (default) vs trunk-based vs Git Flow tradeoff table, the branch naming convention (`<type>/<scope-or-summary>`, kebab-case, <50 chars, no personal prefix), protected-branch enforcement (main/master/develop/production never committed to directly, auto-named feature branch proposed instead), the full branch lifecycle (create → work → push → PR → review → merge → delete), merge strategy (real merge commit is fuse-commit-pro's default; rebase vs squash tradeoffs — squash is unused here because it would orphan the release tag's target commit), the CI-gate-before-merge decision tree (three cases by whether required checks are configured, including the `gh pr checks` registration-race workaround), post-merge tag timing, the PR description template, anti-patterns, and solo-dev mode.
+</objective>
 
 # Git Flow Best Practices (2026)
 

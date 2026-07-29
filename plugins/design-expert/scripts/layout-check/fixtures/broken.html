@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Page-témoin cassée — les 6 contrôles doivent lever</title>
+<style>
+  /* ═══ Toutes les couleurs sont en OKLCH / color-mix, JAMAIS en hex ═══
+     `getComputedStyle(el).color` renvoie alors `oklch(...)` tel quel :
+     une page-témoin en hex validerait un parseur `rgb()` cassé.
+     Réf : developer.mozilla.org/en-US/docs/Web/API/CSS_Object_Model/CSS_value_serialization */
+  :root {
+    --fond:      oklch(1 0 0);
+    --encre:     oklch(0.20 0.02 250);
+    --gris-pale: oklch(0.82 0.01 250);      /* ~1.7:1 sur blanc → fautif */
+    --vert:      oklch(0.787 0.227 134.3);
+    --creme:     oklch(0.955 0.011 82);     /* ~1.6:1 sur vert → fautif */
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: system-ui, sans-serif; background: var(--fond); color: var(--encre); }
+  section { padding: 24px; }
+  h1 { font-size: 28px; line-height: 36px; margin: 0 0 8px; }
+  h2 { font-size: 15px; line-height: 22px; margin: 0 0 12px; color: var(--encre); }
+
+  /* ── Défaut 1 · text-overflow : mot plus large que sa boîte, débordement rogné ── */
+  .badge {
+    width: 120px; overflow: hidden; white-space: nowrap;
+    border: 1px solid var(--encre); padding: 4px 8px; font-size: 16px;
+  }
+
+  /* ── Défaut 1 bis · text-overflow, CAS RÉEL relevé sur une page cliente ──
+       Pastille de marquee : conteneur flex, `white-space: pre` (le libellé ne
+       peut pas se couper) et boîte plus étroite que le texte. Rien n'est rogné,
+       le mot sort simplement de la pastille peinte — « Lightning Node » qui
+       dépasse, « Plex » tronqué à l'œil. Détecté par les DEUX prédicats. */
+  .pastille {
+    display: flex; align-items: center; gap: 5px;
+    width: 100px; padding: 11px; border-radius: 13px;
+    background: oklch(0.90 0.01 250); white-space: pre; overflow: visible;
+    font-size: 16px;
+  }
+  .pastille__ico { flex: none; width: 24px; height: 24px; border-radius: 6px;
+                   background: oklch(0.75 0.02 250); }
+
+  /* ── Défaut 1 quater · LE CAS D'ORIGINE, celui qui avait échappé au gate ──
+       `width: min-content` + hauteur contrainte, conteneur flex, `overflow: visible`.
+       Mesuré : `min-content` NE PEUT PAS produire de débordement horizontal (c'est
+       par définition la largeur minimale sans débordement). Ce qu'il produit, c'est
+       un libellé de deux mots qui passe à DEUX LIGNES ; dans une pastille à hauteur
+       fixe, ces deux lignes sortent de la boîte peinte, 6px en haut et 6px en bas.
+       `scrollWidth − clientWidth` = 0 ET `scrollHeight − clientHeight` = 0 :
+       les deux métriques de scroll sont aveugles en `overflow: visible`.
+       Seule la mesure « lignes × line-height vs hauteur allouée » le voit. */
+  .pastille-min {
+    display: flex; align-items: center; gap: 5px;
+    width: min-content; height: 46px; overflow: visible;
+    padding: 11px; border-radius: 13px;
+    background: oklch(0.90 0.01 250); font-size: 16px;
+  }
+
+  /* ── Défaut 1 ter · text-overflow vers le START ──
+       `scrollWidth − clientWidth` vaut 0 ici : la région de débordement
+       défilable ignore le côté start. Seule la mesure d'encre le voit. */
+  .debord-gauche {
+    width: 160px; padding: 8px; text-indent: -40px; white-space: nowrap;
+    overflow: visible; background: oklch(0.90 0.01 250); font-size: 16px;
+  }
+
+  /* ── Défaut 2 · overlap : marge négative, aucun position/z-index/transform ──
+       (une superposition par positionnement serait réputée VOLONTAIRE et ignorée) */
+  .bloc-a { width: 260px; background: oklch(0.90 0.01 250); padding: 12px; font-size: 16px; }
+  .bloc-b { width: 260px; background: oklch(0.86 0.01 250); padding: 12px; font-size: 16px;
+            margin-top: -40px; margin-left: 60px; }
+
+  /* ── Défaut 3 · cta-wrap : boîte trop étroite, le libellé passe à 2 lignes ── */
+  .cta {
+    display: inline-block; width: 150px; padding: 12px 16px;
+    background: var(--encre); color: var(--fond);
+    font-size: 16px; line-height: 20px; text-align: center; text-decoration: none;
+  }
+
+  /* ── Défaut 4 · contrast : trois couples fautifs, tous en espace non-sRGB ── */
+  .texte-pale   { color: var(--gris-pale); font-size: 16px; }
+  .texte-melange{ color: color-mix(in oklab, var(--encre) 26%, var(--fond)); font-size: 16px; }
+  .bouton-vert  { display: inline-block; padding: 12px 20px; font-size: 16px; font-weight: 650;
+                  background: var(--vert); color: var(--creme); text-decoration: none; }
+
+  /* ── Défaut 5 · document-overflow : bloc plus large que tout viewport testé ── */
+  .trop-large { width: 1700px; height: 56px; padding: 16px; font-size: 16px;
+                background: oklch(0.92 0.02 250); }
+
+  /* ── Défaut 6 · hidden-text : texte à opacité 0, jamais révélé ──
+       Pas de `@media (prefers-reduced-motion)` ici : le contenu reste invisible
+       même sous émulation reduced-motion, donc non mesurable par les 5 autres
+       contrôles. Le garde-fou doit le signaler au lieu de laisser passer. */
+  .revele { opacity: 0; }
+</style>
+</head>
+<body>
+  <section>
+    <h1>Page-témoin volontairement cassée</h1>
+    <p>Six défauts, un par contrôle. Couleurs en OKLCH et color-mix.</p>
+  </section>
+
+  <section>
+    <h2>1 · text-overflow</h2>
+    <div class="badge">Anticonstitutionnellement</div>
+  </section>
+
+  <section>
+    <h2>1 bis · text-overflow — pastille de marquee (cas réel)</h2>
+    <ul style="list-style:none;display:flex;gap:12px;padding:0;margin:0">
+      <li class="pastille"><span class="pastille__ico"></span>Lightning Node</li>
+      <li class="pastille"><span class="pastille__ico"></span>Nostr Relay</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>1 quater · width: min-content — le cas d'origine</h2>
+    <ul style="list-style:none;display:flex;gap:12px;padding:0;margin:0">
+      <li class="pastille-min"><span class="pastille__ico"></span>Lightning Node</li>
+      <li class="pastille-min"><span class="pastille__ico"></span>Bitcoin Node</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>1 ter · text-overflow vers la gauche</h2>
+    <div class="debord-gauche">Texte tiré hors de sa boîte</div>
+  </section>
+
+  <section>
+    <h2>2 · overlap</h2>
+    <div class="bloc-a">Bloc A — premier paragraphe de contenu.</div>
+    <div class="bloc-b">Bloc B — recouvre le bloc A sur 40 pixels.</div>
+  </section>
+
+  <section>
+    <h2>3 · cta-wrap</h2>
+    <a class="cta" href="#">Voir les projets sélectionnés</a>
+  </section>
+
+  <section>
+    <h2>4 · contrast</h2>
+    <p class="texte-pale">Gris très clair sur blanc : loin sous 4.5:1, couleur déclarée en oklch().</p>
+    <p class="texte-melange">Texte issu d'un color-mix en oklab : tout aussi illisible.</p>
+    <a class="bouton-vert" href="#">S'inscrire</a>
+  </section>
+
+  <section>
+    <h2>5 · document-overflow</h2>
+    <div class="trop-large">Bloc de 1700px : le document défile horizontalement à toutes les largeurs.</div>
+  </section>
+
+  <section>
+    <h2>6 · hidden-text</h2>
+    <div class="revele">
+      <p>Ce paragraphe attend une révélation qui n'arrive jamais : il reste à opacité 0.</p>
+      <p>Aucun des cinq autres contrôles ne peut le mesurer.</p>
+    </div>
+  </section>
+</body>
+</html>

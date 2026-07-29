@@ -1,9 +1,13 @@
 ---
 name: seo-geo
-description: Use when optimizing for AI search engines (Generative Engine Optimization 2026). Covers Google AI Overviews, ChatGPT, Perplexity, Claude, Gemini, Copilot, LLM-readiness scoring 0-100, llms.txt.
+description: Use when optimizing for AI search engines (GEO) — AI Overviews, ChatGPT, Perplexity, Claude, Gemini, Copilot readiness.
 user-invocable: false
 related-skills: seo, seo-content, seo-featured-snippets, seo-schema
 ---
+
+<objective>
+Covers Generative Engine Optimization (GEO) 2026 for the six target AI engines (Google AI Overviews, ChatGPT with web search, Perplexity, Claude with web search, Gemini, Bing Copilot). Documents the `scripts/geo-score.ts` LLM-readiness scoring (0-100 across 10 weighted signals), quantified impact data (statistics/authoritative citations/expert quotes boost AI visibility up to +40%; keyword stuffing costs -10%), the recommended content structure for LLM extraction, and llms.txt placement (ignored by Google's crawlers, useful for other LLMs). Distinct from seo-featured-snippets (position-0 HTML recipes) and seo-entity (the schema/salience signals that feed AI citations).
+</objective>
 
 # GEO — Generative Engine Optimization 2026
 

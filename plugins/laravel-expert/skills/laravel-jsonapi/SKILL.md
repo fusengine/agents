@@ -1,6 +1,6 @@
 ---
 name: laravel-jsonapi
-description: Use when building JSON:API compliant endpoints in Laravel 13 using the first-party `JsonApiResource` base class. Covers sparse fieldsets, inclusion, links, and response headers.
+description: Use when building JSON:API spec-compliant endpoints in Laravel 13 with the first-party `JsonApiResource` base class.
 versions:
   laravel: "13.0"
   php: "8.3"
@@ -8,6 +8,15 @@ user-invocable: true
 references: references/resources.md, references/sparse-fieldsets.md, references/relationships.md, references/templates/PostResource.php.md, references/templates/UserResource.php.md
 related-skills: laravel-api, laravel-eloquent
 ---
+
+<objective>
+Covers Laravel 13's JsonApiResource base class for JSON:API v1.1-compliant
+responses: the toAttributes() method, resource $type declaration, sparse
+fieldsets (?fields[type]=a,b), relationship inclusion (?include=) with the
+included array, resource identifiers, self/related links, and the
+application/vnd.api+json content type. For general (non-JSON:API-spec) REST
+API building, see laravel-api instead.
+</objective>
 
 # Laravel 13 JSON:API Resources
 

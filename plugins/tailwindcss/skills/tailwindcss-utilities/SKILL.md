@@ -1,8 +1,14 @@
 ---
 name: tailwindcss-utilities
-description: "Complete reference for Tailwind CSS utility classes, indexing the categorical skills (layout, spacing, typography, backgrounds, effects, borders, transforms). Use when: you need a single entry point to locate which categorical tailwindcss-* skill covers a given utility class. Router/index only: identifies WHICH category skill to load. Do NOT use for: actual utility class content (load the category skill it points to)."
+description: "Use when needing a single entry point to find which categorical tailwindcss-* skill covers a given utility class. Router/index only - do NOT use for actual class content."
 user-invocable: false
 ---
+
+<objective>
+A routing index over the categorical Tailwind CSS skills — layout, spacing, typography, backgrounds, effects, borders, transforms — mapping utility-class families (flexbox/grid, padding/margin, font/text, colors, shadows, borders, transforms/transitions) to the specific `tailwindcss-*` skill and section that documents them.
+
+Contains no utility-class content itself; every entry links straight to the category skill that owns the worked examples.
+</objective>
 
 # Tailwind CSS Utilities Reference
 

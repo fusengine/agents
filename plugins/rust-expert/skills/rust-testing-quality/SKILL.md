@@ -1,6 +1,6 @@
 ---
 name: rust-testing-quality
-description: Use when writing, organizing, or running Rust tests — unit, integration, doc-tests, property-based (proptest), benchmarks (criterion), or mutation testing (cargo-mutants). Covers test layout, the nextest doctest pitfall, and quality gates. Do NOT use for CI pipeline wiring (use rust-tooling-cicd) or non-Rust test suites.
+description: Use when writing, organizing, or running Rust tests — unit, integration, doc-tests, proptest, criterion benchmarks, or cargo-mutants. Not for CI pipeline wiring (rust-tooling-cicd).
 versions:
   cargo-nextest: "0.9"
   proptest: "1"
@@ -9,6 +9,21 @@ user-invocable: false
 references: references/test-organization.md, references/property-and-mutation.md, references/templates/test-suite.md, references/templates/criterion-bench.md
 related-skills: solid-rust, rust-tooling-cicd
 ---
+
+<objective>
+This skill covers organizing and running the full Rust test spectrum: unit tests in
+#[cfg(test)] modules, integration tests in tests/*.rs against the public API only,
+doc-tests compiled from /// examples, property-based testing with proptest (including
+committing proptest-regressions/), criterion benchmarks (harness = false), and mutation
+testing with cargo-mutants as a scheduled quality gate rather than a per-push check.
+
+It also covers the nextest doctest pitfall: `cargo nextest run` never runs doc-tests, so
+`cargo test --doc` must always be paired alongside it — a green nextest run alone is not
+full coverage.
+
+Out of scope: CI pipeline wiring and gate ordering belong to rust-tooling-cicd; non-Rust
+test suites are not covered.
+</objective>
 
 # Rust Testing & Quality
 

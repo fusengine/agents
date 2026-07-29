@@ -1,58 +1,100 @@
 ---
-name: Alternating Sections
+name: Inverted Band
+device: Hard-cut background inversion at one boundary, plus a sub-5% dot-grid watermark
 source: https://boxsi-wbs.framer.website
-sector: SaaS
+seen-in: SaaS
 ---
 
-## Alternating Sections
+## Inverted Band — the background cut IS the separator
 
-### What it is
-A SaaS landing page with strict dark/light alternating full-width sections. Hard color cuts (no gradients between). Each section has headline + body + visual. SVG dot-grid watermarks at ultra-low opacity. Single warm red-orange accent for CTAs. The hero highlights "AI" with an inline pill.
+> `source:` is provenance — where the device was measured. Not a site to browse
+> for taste; `../../design-inspiration.md` owns that ban. Read the values here.
 
-### When to use
-- SaaS/AI product pages with 6+ feature sections needing strong visual rhythm
-- Content-heavy pages requiring immediate section separation without dividers
-- Products wanting bold, high-contrast editorial feel
+### The device
 
-### Full Visual Walkthrough (top to bottom)
-1. **Nav** (light bg): logo "boxsi" left in `oklch(0.13 0 0)` weight 700 0.9375rem. Links center: 0.8125rem weight 450 `oklch(0.40 0 0)` tracking 0.01em. CTA right: pill `oklch(0.62 0.22 25)` bg, white text, 8px radius, padding 10px 20px. Nav height ~56px, `padding: 14px 48px`
-2. **Hero** (light `oklch(0.98 0 0)`): centered. Headline "Create better content with AI in minutes" at `clamp(2.5rem, 5vw, 4rem)` weight 700 tracking -0.035em line-height 1.08 `oklch(0.13 0 0)`. "AI" wrapped in inline pill: `padding: 4px 16px; border-radius: 999px; background: oklch(0.62 0.22 25); color: oklch(0.98 0 0)`. Subtitle below: 1.0625rem `oklch(0.42 0 0)` line-height 1.65 max-width 520px centered. CTA row: primary red-orange + ghost button. Padding: 120px 72px 96px
-3. **Features grid** (dark `oklch(0.11 0 0)`): "Powerful features" heading `clamp(1.75rem, 3.5vw, 2.75rem)` weight 700 tracking -0.03em `oklch(0.95 0 0)`. Subhead: 1rem `oklch(0.52 0 0)`. Below: 3-column grid `repeat(3, 1fr)` gap 32px. Each cell: icon 40x40 rounded-full `oklch(0.20 0 0)` bg, title 1rem weight 600, desc 0.875rem `oklch(0.52 0 0)` line-height 1.5. SVG dot-grid watermark at 2.5% opacity `background: radial-gradient(circle, oklch(0.50 0 0) 1px, transparent 1px); background-size: 24px 24px`
-4. **Feature detail 1** (light): 2-col grid `1fr 1fr` gap 56px align-items center. Left: section heading + body text + small feature list (checkmark + text). Right: UI screenshot mockup `border-radius: 12px; box-shadow: 0 4px 24px oklch(0 0 0 / 0.10); overflow: hidden`
-5. **Feature detail 2** (dark): same 2-col but reversed — screenshot left, text right. Text colors switch: heading `oklch(0.95 0 0)`, body `oklch(0.52 0 0)`
-6. **Feature detail 3** (light): same as 4, text left, image right
-7. **Social proof** (dark): centered heading, logo row `display: flex; gap: 40px; justify-content: center; align-items: center; opacity: 0.5; filter: brightness(2)` — partner logos in white
-8. **Integrations** (light): heading + 4x2 grid of integration cards: `padding: 20px; border-radius: 10px; border: 1px solid oklch(0.90 0 0); bg: oklch(0.99 0 0)`. Icon 32px + name 0.875rem weight 500
-9. **Pricing** (dark): "Plans that fit" heading. 2-3 pricing cards side by side: `padding: 40px; border-radius: 16px; border: 1px solid oklch(0.22 0 0); bg: oklch(0.14 0 0)`. Price `clamp(2rem, 3vw, 2.5rem)` weight 700. Featured card: border `oklch(0.62 0.22 25)`, badge "Popular" pill top-right
-10. **FAQ** (light): accordion — question 1rem weight 600 `oklch(0.13 0 0)`, chevron right, answer 0.9375rem `oklch(0.42 0 0)`. Border-bottom 1px `oklch(0.90 0 0)` between items
-11. **Footer** (dark `oklch(0.09 0 0)`): 4-column grid `repeat(4, 1fr)` gap 32px. Logo + tagline left. Link columns: title 0.8125rem weight 600 `oklch(0.95 0 0)`, links 0.8125rem weight 400 `oklch(0.45 0 0)`. Bottom bar: copyright + social icons. Padding: 64px 72px
+Two adjacent sections meet on a hard colour cut: no gradient, no divider rule,
+no spacer. The inverted band carries its own text scale (light text on the dark
+side, dark on the light side) and an SVG dot-grid watermark at 2.5% opacity that
+gives the flat surface a texture without adding an element.
 
-### CSS Specifications Summary
-- **Dark sections**: `bg: oklch(0.11 0 0); color: oklch(0.95 0 0)` — **Light sections**: `bg: oklch(0.98 0 0); color: oklch(0.13 0 0)`
-- **Section padding**: `96px 72px` desktop, `56px 20px` mobile — **Container**: `max-width: 1180px; margin: 0 auto`
-- **Accent**: `oklch(0.62 0.22 25)` — buttons, pills, featured card borders
-- **CTA button**: `padding: 14px 32px; border-radius: 10px; font-size: 0.9375rem; weight: 600; transition: background 0.2s ease; hover: oklch(0.56 0.22 25)`
-- **Ghost button**: same sizing, `border: 1.5px solid oklch(0.30 0 0); bg: transparent`
-- **All headings**: weight 700, tracking -0.03em, line-height 1.08-1.12
-- **Body text**: 1.0625rem, line-height 1.65, max-width 480px
-- **Responsive**: 768px breakpoint — grids stack to 1fr, padding 56px 20px
+The device is **one boundary**, not a page rhythm. It buys a single strong
+separation for the section that deserves it — the one section you want the
+reader to register as a different register.
 
-### AI Generation Prompt
-SaaS landing page with strict alternating dark oklch(0.11 0 0) and light oklch(0.98 0 0) full-width sections — hard cuts, no gradients.
-Nav: 56px, logo left, links center 0.8125rem, red-orange CTA pill right oklch(0.62 0.22 25).
-Hero (light): centered headline clamp(2.5rem, 5vw, 4rem) weight 700 tracking -0.035em, "AI" in inline pill (999px radius, red-orange bg). Subtitle 1.0625rem oklch(0.42 0 0). Two CTAs.
-Features (dark): 3-col icon grid, 32px gap, icons 40px round. Dot-grid SVG watermark 2.5% opacity 24px spacing.
-Feature details: alternating 2-col grids (1fr 1fr, 56px gap), text one side, screenshot other side (12px radius, box-shadow 0 4px 24px 10% black). Text/image sides flip each section.
-Social proof (dark): centered partner logos at 50% opacity.
-Integrations (light): 4x2 card grid, 10px radius, 1px border oklch(0.90 0 0).
-Pricing (dark): cards 16px radius, featured card has oklch(0.62 0.22 25) border + "Popular" pill.
-FAQ (light): accordion, 1px separators.
-Footer (dark oklch(0.09 0 0)): 4-col grid, 64px padding.
-All body text 1.0625rem. All CTAs oklch(0.62 0.22 25) 10px radius. Max-width 1180px.
+### Correction — this file used to prescribe a page
 
-### Anti-patterns (what NOT to do)
-- Do not gradient between sections — hard color cuts only
-- Do not place two same-bg sections consecutively — strict alternation
-- Do not raise SVG watermark above 5% opacity
-- Do not use multiple accent colors — single oklch(0.62 0.22 25)
-- Do not add section dividers — bg contrast IS the separator
+The measured source alternates dark/light across eleven sections and ran three
+consecutive `1fr 1fr` image+text splits with the sides flipping. Both were
+written here as prescriptions. Both are wrong:
+
+- **Three consecutive splits is a pre-flight fail.** `../../layout-discipline.md`
+  §3 caps consecutive image+text split sections at two. That file owns the limit;
+  it is not restated or softened here.
+- **Strict light/dark alternation on every boundary is itself a tell.** Applied
+  to every section it produces the zebra rhythm that reads as generated. The
+  relief it provides is real; the recipe applied everywhere is the problem. See
+  `../PATTERNS.md` "Flatness is banned — and so is one mandatory recipe for
+  relief" for the other ways out.
+- **Uniform section padding was prescribed here** (`96px 72px` on every
+  section). `../../../SKILL.md` lists identical padding on every section as a
+  mechanical anti-slop flag; `../../../../design-method/references/body-sequence-bank.md`
+  rule 2 shows the alternative on shipped evidence — `fora` sets vertical padding
+  section by section (160/180/180/160/180/180/180). Treat any number below as a
+  starting point to vary, never a page-wide constant.
+
+### CSS (measured)
+
+```css
+/* the two surfaces — hard cut, no transition element between them */
+.band--dark  { background: oklch(0.11 0 0); color: oklch(0.95 0 0); }
+.band--light { background: oklch(0.98 0 0); color: oklch(0.13 0 0); }
+
+/* muted body text per surface */
+.band--dark  .body { color: oklch(0.52 0 0); }
+.band--light .body { color: oklch(0.42 0 0); }
+
+/* dot-grid watermark — texture, never a visible pattern */
+.band--dark {
+  background-image: radial-gradient(circle, oklch(0.50 0 0) 1px, transparent 1px);
+  background-size: 24px 24px;
+  /* dots drawn at 2.5% effective opacity — keep under 5% */
+}
+```
+
+Starting vertical padding on the band: `96px` desktop / `56px` mobile, horizontal
+`72px` / `20px` — then vary it against its neighbours rather than repeating it.
+If the band carries an accent, keep one (`oklch(0.62 0.22 25)` in the source) and
+use it for the CTA only.
+
+### Conditions of use
+
+- **One inverted band per page.** Two is a rhythm; three is a zebra.
+- Give the band the section that earns the register change — the closing ask, a
+  proof band, a single feature that carries the POV. Not "the third section".
+- The inverted surface needs its own muted-text value; reusing the light
+  surface's muted grey on a dark band fails contrast.
+- If the band contains an image+text split, count it against
+  `../../layout-discipline.md` §3 like any other split.
+
+### Anti-patterns
+
+- Do not gradient between the two surfaces — the hard cut is the device.
+- Do not add a divider rule on top of the colour cut; that is the same
+  separation stated twice.
+- Do not raise the dot-grid above 5% opacity — it becomes a pattern and reads as
+  a hero background.
+- Do not use more than one accent inside the band.
+- Do not alternate every section. See the Correction above.
+
+### Optional section prompt (this section only)
+
+Invert ONE section against its neighbours: hard colour cut, no gradient and no
+divider element between them. Dark surface `oklch(0.11 0 0)` with text
+`oklch(0.95 0 0)` and muted `oklch(0.52 0 0)`, against light neighbours
+`oklch(0.98 0 0)` / `oklch(0.13 0 0)` / `oklch(0.42 0 0)` — or the inverse.
+Add a dot-grid texture on the band only:
+`background-image: radial-gradient(circle, oklch(0.50 0 0) 1px, transparent 1px);
+background-size: 24px 24px`, kept under 5% effective opacity. Start the band's
+vertical padding at 96px desktop / 56px mobile and set the neighbouring sections'
+padding to different values. Do not invert any other section, and do not emit
+the sections around it.

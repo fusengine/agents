@@ -1,8 +1,12 @@
 ---
 name: post-commit
-description: Universal post-commit actions. CHANGELOG update for all repos (git tag is created POST-MERGE, not here — see `commit` command Step 8). Plugin version bumping for marketplace repos. Triggered after any code commit (except wip/amend/undo).
+description: Use when a code commit just landed (not wip/amend/undo) and CHANGELOG or plugin-version post-commit actions are needed.
 allowed-tools: Bash, Read, Edit
 ---
+
+<objective>
+Runs universal post-commit actions after any non-wip/amend/undo code commit. Detects repo type: if `.claude-plugin/marketplace.json` exists, follows the Marketplace Path (bump each modified plugin's version, bump the suite version, recompute every README shields.io badge from the filesystem, check documentation parity for newly-added plugins); otherwise follows the Standard Path (CHANGELOG only). Updates `CHANGELOG.md` with a new entry and commits the bump as a commit separate from the code change. The git tag itself is NOT created here — it is created POST-MERGE by the `commit` command's Step 8 (or locally in LOCAL/DEGRADED mode when no remote/`gh` is available).
+</objective>
 
 # Post-Commit Skill
 

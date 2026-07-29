@@ -1,12 +1,18 @@
 ---
 name: solid-astro
-description: Use when applying SOLID principles and clean architecture to Astro projects. Enforces files < 100 lines, src/interfaces/ for types, JSDoc on all exports, modular directory structure, and DRY enforcement.
+description: Use when applying SOLID principles to an Astro project — file-size limits, src/interfaces/ for types, JSDoc, modular structure, DRY.
 versions:
   astro: "7"
 user-invocable: true
 references: references/solid-principles.md, references/file-limits.md, references/interfaces.md, references/architecture.md, references/dry-enforcement.md, references/jsdoc.md, references/templates/component.md, references/templates/layout.md, references/templates/service.md, references/templates/interface.md
 related-skills: astro-7, astro-content, astro-styling, astro-i18n
 ---
+
+<objective>
+Enforces SOLID and DRY architecture on Astro projects: files under 100 lines (split at 90), all TypeScript types moved to `src/interfaces/` (never in component files), mandatory JSDoc on exported functions, no business logic in `src/pages/`, and mandatory grepping for existing logic/utilities in `src/lib/` and `src/components/` before writing new code.
+
+Provides ready-to-copy templates for components, layouts, services, and interfaces that already follow these rules. This is a cross-cutting code-quality skill, not a feature skill — it doesn't teach Astro APIs themselves (see astro-7, astro-content, astro-i18n, astro-styling for that), only how to structure the code that uses them.
+</objective>
 
 # SOLID Astro — Modular Architecture
 

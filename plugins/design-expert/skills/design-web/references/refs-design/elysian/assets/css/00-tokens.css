@@ -1,0 +1,189 @@
+/* ELYSIAN — tokens, fonts, reset */
+
+@font-face {
+  font-family: "Bodoni Moda";
+  src: url("../fonts/bodoni-moda.woff2") format("woff2-variations");
+  font-weight: 400 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Bodoni Moda";
+  src: url("../fonts/bodoni-moda-italic.woff2") format("woff2-variations");
+  font-weight: 400 900;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Archivo";
+  src: url("../fonts/archivo.woff2") format("woff2-variations");
+  font-weight: 400 800;
+  font-stretch: 62% 125%;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  /* sampled from the four plates */
+  --ink-abyss: oklch(0.132 0.032 219);
+  --ink: oklch(0.205 0.048 219);
+  --ink-2: oklch(0.285 0.055 216);
+  --ink-3: oklch(0.38 0.052 213);
+  --slate: oklch(0.6 0.038 235);
+  --bone: oklch(0.945 0.016 84);
+  --bone-dim: oklch(0.8 0.02 84);
+  --bone-mute: oklch(0.755 0.022 84);
+  --marigold: oklch(0.795 0.163 71);
+  --marigold-2: oklch(0.665 0.155 62);
+  --coral: oklch(0.755 0.135 28);
+  --verdigris: oklch(0.7 0.075 178);
+
+  --rule: color-mix(in oklab, var(--slate) 34%, transparent);
+  --rule-strong: color-mix(in oklab, var(--bone) 26%, transparent);
+
+  --font-display: "Bodoni Moda", ui-serif, "Times New Roman", serif;
+  --font-text: "Archivo", ui-sans-serif, system-ui, sans-serif;
+
+  /* fluid scale, ratio ~1.25 */
+  --t-micro: 0.6875rem;
+  --t-small: 0.8125rem;
+  --t-body: 1.0625rem;
+  --t-lead: clamp(1.25rem, 0.9rem + 1.2vw, 1.75rem);
+  --t-h3: clamp(1.6rem, 1.1rem + 2vw, 2.6rem);
+  --t-h2: clamp(2.2rem, 1.2rem + 4.2vw, 4.5rem);
+  --t-h1: clamp(3.4rem, 1rem + 12vw, 11rem);
+  --t-numeral: clamp(3rem, 1rem + 9vw, 8rem);
+
+  /* 8pt grid */
+  --s1: 4px;
+  --s2: 8px;
+  --s3: 12px;
+  --s4: 16px;
+  --s5: 24px;
+  --s6: 32px;
+  --s7: 48px;
+  --s8: 64px;
+  --s9: 96px;
+  --s10: 144px;
+
+  --gutter: clamp(20px, 5vw, 88px);
+  --rail: 0px;
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-inout: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-soft: cubic-bezier(0.33, 0.75, 0.25, 1);
+
+  --arch-head: 999px;
+  color-scheme: dark;
+}
+
+/* --rail stays 0 at every width: the side spine was removed in favour of the
+   masthead. The token is kept — `main`, `.progress` and `.masthead` all offset by
+   it — so reinstating a side rail is a one-value change, not a hunt through five
+   rules. */
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  /* no smooth scrolling: the page is ~12 viewports tall, so an animated jump
+     to a plate reads as a fault and can be interrupted mid-flight */
+  overflow-x: clip;
+}
+
+body {
+  margin: 0;
+  background: var(--ink);
+  color: var(--bone);
+  font-family: var(--font-text);
+  font-size: var(--t-body);
+  line-height: 1.6;
+  font-variation-settings: "wdth" 100;
+  /* clip, never hidden: `hidden` makes body a scroll container and breaks
+     position: sticky on iOS Safari */
+  overflow-x: clip;
+  -webkit-font-smoothing: antialiased;
+}
+
+img,
+svg { display: block; max-width: 100%; }
+
+h1, h2, h3, p, figure, blockquote { margin: 0; }
+
+a { color: inherit; }
+
+:focus-visible {
+  outline: 2px solid var(--marigold);
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
+::selection {
+  background: var(--marigold);
+  color: var(--ink-abyss);
+}
+
+.u-eyebrow {
+  font-size: var(--t-micro);
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  font-variation-settings: "wdth" 112;
+  font-weight: 600;
+  color: var(--marigold);
+}
+
+.u-label {
+  font-size: var(--t-micro);
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  font-variation-settings: "wdth" 110;
+  font-weight: 600;
+  color: var(--bone-mute);
+}
+
+.u-serif {
+  font-family: var(--font-display);
+  font-weight: 500;
+  line-height: 1.02;
+  letter-spacing: -0.015em;
+}
+
+.u-prose {
+  max-width: 62ch;
+  color: var(--bone-dim);
+  text-wrap: pretty;
+}
+
+.u-riso {
+  text-shadow:
+    0.02em 0.014em 0 color-mix(in oklab, var(--coral) 42%, transparent),
+    -0.018em -0.012em 0 color-mix(in oklab, var(--verdigris) 30%, transparent);
+}
+
+.u-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.skip {
+  position: fixed;
+  z-index: 90;
+  top: var(--s4);
+  left: var(--s4);
+  padding: var(--s3) var(--s5);
+  background: var(--marigold);
+  color: var(--ink-abyss);
+  font-size: var(--t-small);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transform: translateY(-200%);
+  transition: transform 0.24s var(--ease-out);
+}
+.skip:focus-visible { transform: none; }

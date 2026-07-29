@@ -44,10 +44,32 @@ Set each on a 1-10 scale. These become **Inputs** of Phases 1+.
 
 `MOTION_INTENSITY` qualitative bands: **calm** (< 4) subtle fades/hovers only · **expressive** (4-7) scroll reveals + deliberate transitions · **cinematic** (> 7) pinned/scrubbed/parallax storytelling.
 
+## What a notch actually looks like — read this before setting a dial
+
+The 1/10 poles above are the range, not a scale. Eleven shipped pages carry measured
+triples in `../../design-web/references/refs-design/*/design-system.md`, and
+`../../design-method/SKILL.md` turns them into an anchored scale — which page sits at
+which notch, and what that gives on screen. **That file is canonical; read the scale
+there, do not restate it here.** Three things it establishes, which change how the
+tables below should be used:
+
+- A **low value is not a low score.** `fora` and `cursor` are at VARIANCE 3 and both
+  read specific. A value held and treated beats a value claimed and unmet.
+- **No page in the corpus is high on all three axes.** Every one gives something up.
+- A **high value obliges.** MOTION 6+ without a documented material/duration/curve
+  set, VARIANCE 7+ without a departing macrostructure and a repeated signature
+  procedure: lower the dial rather than ship the number.
+
 ## Preset defaults by use-case (Fusengine — override from the Design Read)
 
 Derived from the verified taste-skill brief-to-direction mapping; the numbers are our
 coherent defaults, not values quoted from the repo.
+
+**These are a floor for a thin brief, never a target.** Measured against the corpus they
+sit systematically low: the SaaS row reads 4·5·4 where `harness` ships 4·9·6; the luxury
+row reads 5·3·7 where `elysian` ships 9·4·8. Taking a preset as the answer is the
+mechanism that pulls every output toward the middle. Start here only when the brief
+tells you nothing, then argue each dial up or down from the subject.
 
 | Use-case | DESIGN_VARIANCE | VISUAL_DENSITY | MOTION_INTENSITY |
 |----------|:---:|:---:|:---:|
@@ -69,6 +91,13 @@ documented fallback and note it in the Design Read:
 
 Then bias each fallback toward the nearest matching preset row if even a rough
 use-case is known.
+
+**Two 5s are a signal, not a resting state.** `design-method/SKILL.md` treats a triple
+sitting at the middle on more than one axis as a choice not made — legitimate only when
+argued in the plan. No page in the corpus carries a 5 on more than one axis. If you have
+landed here by fallback rather than by reading the brief, say so in the Design Read and
+go back for the one fact that would move a dial: what the subject is *for*, and what it
+would be embarrassing for this page to look like.
 
 ## Next
 These dials feed `design-web` (composition variety, consistency rules) and

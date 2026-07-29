@@ -1,0 +1,982 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Umbrel — référence de design</title>
+<meta name="description" content="Reconstruction fidèle et légère de la page d'accueil umbrel.com, à usage de référence de design.">
+
+<!-- Inter couvre les deux familles de la source (Inter Display pour les
+     titres, Inter Variable pour les labels). Deux graisses suffisent :
+     500 pour le texte, 600 pour les titres. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="styles.css">
+<!-- Tout le comportement d'interface vit dans motion.js : apparitions
+     au défilement, carrousel, pause du marquee. `defer` l'exécute
+     après l'analyse du document, sans bloquer le rendu. -->
+<script src="motion.js" defer></script>
+</head>
+<body>
+
+<!-- ============================================================
+     Navigation — pilule flottante, pas une barre pleine largeur.
+     ============================================================ -->
+<header class="nav">
+  <div class="nav__pilule">
+    <a class="nav__marque" href="#" aria-label="Umbrel, accueil">
+      <svg viewBox="0 0 40 20" fill="none" stroke="currentColor" stroke-width="1.7"
+           stroke-linejoin="round" aria-hidden="true">
+        <path d="M2.5 16.5C2.5 8.5 10.3 2.5 20 2.5s17.5 6 17.5 14c0 0-3.4-3.6-7.6-3.6
+                 s-6.1 3.6-9.9 3.6-5.7-3.6-9.9-3.6-7.6 3.6-7.6 3.6Z"/>
+      </svg>
+    </a>
+    <nav class="nav__liens" aria-label="Principale">
+      <a href="#pro">Umbrel Pro</a>
+      <a href="#home">Umbrel Home</a>
+      <a href="#os">umbrelOS</a>
+      <a href="#store">App Store</a>
+      <a href="#careers">Careers</a>
+    </nav>
+    <span class="nav__pays" role="img" aria-label="Suisse"></span>
+    <!-- Trait de menu relevé tel quel dans la source : deux lignes, pas
+         trois, arrondies, épaisseur 1,25. -->
+    <button class="nav__menu" type="button" aria-label="Ouvrir le menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+           stroke-width="1.25" stroke-linecap="round" aria-hidden="true">
+        <path d="M6 9h13M6 16h13"/>
+      </svg>
+    </button>
+  </div>
+</header>
+
+<main>
+
+<!-- ============================================================
+     Hero — centré, lueur radiale en fond, trois preuves d'usage.
+     La source n'a AUCUN h1 (son titre est un <span>) ; corrigé ici.
+     ============================================================ -->
+<section class="bande hero">
+  <div class="shell">
+    <h1 class="titre-hero hero__titre" data-reveal>
+      <span class="fondu">Your cloud. In your </span><span class="mot-chaud">home.</span>
+    </h1>
+    <p class="chapo hero__chapo" data-reveal>
+      Stop renting your digital life. And start owning it with a home server.
+    </p>
+
+    <ul class="preuves" data-reveal>
+      <li class="preuve">
+        <span class="pile" aria-hidden="true">
+          <img src="https://framerusercontent.com/images/AeGrrO10RXINLS14e54r9eIfNPs.png?width=174&height=173" alt="" width="174" height="173" decoding="async">
+          <img src="https://framerusercontent.com/images/anfNc8lmnhI1Hh7Ppf4xmKPmE.png?width=192&height=193" alt="" width="192" height="193" decoding="async">
+          <img src="https://framerusercontent.com/images/9NMavjn7lKc6PBpF2DCb7EDcC2w.png?width=203&height=204" alt="" width="203" height="204" decoding="async">
+        </span>
+        <p>Store all your <b>files, photos</b>, and videos on your home cloud</p>
+      </li>
+      <li class="preuve">
+        <span class="pile" aria-hidden="true">
+          <img src="https://framerusercontent.com/images/N7yCIuHkTxXnIffmtDt36hEfZ0.svg?width=256&height=256" alt="" width="256" height="256" decoding="async">
+          <img src="https://framerusercontent.com/images/I5yCvDTm2j3kVgcjzLpB4uDgh9A.png?width=502&height=502" alt="" width="502" height="502" decoding="async">
+          <img src="https://framerusercontent.com/images/y20pBuz1MS0Lq8djw2UmviEMQyg.png?width=255&height=255" alt="" width="255" height="255" decoding="async">
+        </span>
+        <p>Run <b>OpenClaw</b>, Hermes Agent, and Ollama on your hardware</p>
+      </li>
+      <li class="preuve">
+        <span class="pile" aria-hidden="true">
+          <img src="https://framerusercontent.com/images/Kw6xmUwUmOeCibFLUOOPD2c2lxs.png?width=256&height=256" alt="" width="256" height="256" decoding="async">
+          <img src="https://framerusercontent.com/images/FHxtDIM8oDtR6IqVRJVPD1besVI.svg?width=256&height=256" alt="" width="256" height="256" decoding="async">
+          <img src="https://framerusercontent.com/images/O2QarihZ4lz2Vmed8njk9um1rko.png?width=256&height=256" alt="" width="256" height="256" decoding="async">
+        </span>
+        <p>Run your own <b>Bitcoin node</b> and connect your wallets to it</p>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============================================================
+     Umbrel Pro — photo plein cadre, texte posé à gauche.
+     ============================================================ -->
+<section class="produit bande--raccord" id="pro">
+  <img class="produit__photo" alt="Umbrel Pro in aluminum and American Walnut"
+       src="https://framerusercontent.com/images/VFzB451PEWsPYR0El5GEdv7S08.jpg?lossless=1&width=2688&height=2140">
+  <div class="produit__voile" aria-hidden="true"></div>
+
+  <div class="shell">
+    <div class="produit__contenu" data-reveal>
+      <p><span class="pastille">NEW</span></p>
+      <h2 class="titre-produit">Umbrel Pro</h2>
+      <p class="corps">Your personal home cloud server with up to 32TB of SSD storage.</p>
+      <p class="corps">In an all-new aluminum and American Walnut wood finish.</p>
+      <p class="produit__prix">From&nbsp;&nbsp;$699 <span>Shipping now.</span></p>
+      <p class="actions">
+        <a class="btn btn--plein" href="#">Order now</a>
+        <a class="btn btn--voile" href="#">Explore</a>
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     Duo Umbrel Home / umbrelOS — deux colonnes, deux fonds.
+     ============================================================ -->
+<section class="duo">
+  <div class="duo__volet" id="home" data-reveal>
+    <div class="duo__scene">
+      <img alt="Umbrel Home held in a hand" width="1024" height="1024" loading="lazy"
+           src="https://framerusercontent.com/images/wzRrIPwmhVn2q20FWjgSSL94TI.png?width=1024&height=1024">
+    </div>
+    <h2 class="titre-section">Umbrel Home</h2>
+    <p class="corps">Plug-and-play home cloud</p>
+    <p class="duo__prix">From&nbsp;&nbsp;$549</p>
+    <p class="actions">
+      <a class="btn btn--froid" href="#">Buy now</a>
+      <a class="btn btn--voile" href="#">Learn more</a>
+    </p>
+
+    <!-- La grille de spécifications appartient à SA colonne : elle est
+         imbriquée dans le volet, pas posée en bande pleine largeur sous
+         les deux. C'est ce qui donne à la section ses deux récits
+         parallèles au lieu d'un empilement. Chaque tuile EST un rendu
+         qui contient déjà son titre gravé — rien n'est surimprimé. -->
+    <div class="specs">
+      <ul class="specs__rangee">
+        <li class="spec" data-reveal>
+          <img src="https://framerusercontent.com/images/acY28JOPS1FNm2kGeVFquznhZlo.png?scale-down-to=1024&width=952&height=782" alt="Room for everything that matters. Four terabytes, NVMe SSD." width="952" height="782" loading="lazy" decoding="async">
+        </li>
+        <li class="spec" data-reveal>
+          <img src="https://framerusercontent.com/images/ypbqV6AMNGeIzRnNsONOfvHPlWQ.png?scale-down-to=1024&width=952&height=782" alt="Snappy performance. Always. Intel N150." width="952" height="782" loading="lazy" decoding="async">
+        </li>
+      </ul>
+      <ul class="specs__rangee">
+        <li class="spec" data-reveal>
+          <img src="https://framerusercontent.com/images/oQ4MwsUAiZ2YF5WfWZu5dzjYS6o.png?scale-down-to=1024&width=952&height=782" alt="Juggle apps. Effortlessly. 16GB RAM LPDDR5." width="952" height="782" loading="lazy" decoding="async">
+        </li>
+        <li class="spec" data-reveal>
+          <img src="https://framerusercontent.com/images/5W5CGMEYrWkxX9QP0b1P60uepm8.png?scale-down-to=1024&width=952&height=782" alt="Instant magic. Plug and play." width="952" height="782" loading="lazy" decoding="async">
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="duo__volet duo__volet--os" id="os" data-reveal>
+    <!-- Halo. Le procédé est celui de la source et il compte plus que
+         la couleur : un CONTENEUR dimensionné qui porte l'opacité, et
+         une image qui le remplit en object-fit: cover. L'opacité n'est
+         jamais sur l'image — c'est ce qui permet de recadrer le halo
+         sans toucher à son intensité. Le srcset sert 4 paliers pour un
+         affichage à ~939 px, jamais le 3099 natif. -->
+    <div class="duo__lueur" aria-hidden="true">
+      <img alt="" width="3099" height="3099" loading="lazy" decoding="async"
+           sizes="(min-width: 1220px) 938.82px, (min-width: 810px) and (max-width: 1219.98px) 958.82px, (max-width: 809.98px) 957.82px"
+           srcset="https://framerusercontent.com/images/79RI1LMHmDs5ElfCjulPfPDFvg.png?scale-down-to=512&width=3099&height=3099 512w,
+                   https://framerusercontent.com/images/79RI1LMHmDs5ElfCjulPfPDFvg.png?scale-down-to=1024&width=3099&height=3099 1024w,
+                   https://framerusercontent.com/images/79RI1LMHmDs5ElfCjulPfPDFvg.png?scale-down-to=2048&width=3099&height=3099 2048w,
+                   https://framerusercontent.com/images/79RI1LMHmDs5ElfCjulPfPDFvg.png?width=3099&height=3099 3099w"
+           src="https://framerusercontent.com/images/79RI1LMHmDs5ElfCjulPfPDFvg.png?scale-down-to=1024&width=3099&height=3099">
+    </div>
+    <div class="duo__scene">
+      <!-- Rotations 3D relevées telles quelles dans la source. -->
+      <img class="duo__ecran--tablette" alt="umbrelOS on a tablet" width="1502" height="1179" loading="lazy"
+           src="https://framerusercontent.com/images/O7kTDJvFXu8PFwYRG27B32JjzE.png?width=1502&height=1179">
+      <img class="duo__ecran--tel" alt="umbrelOS on a phone" width="1290" height="1716" loading="lazy"
+           src="https://framerusercontent.com/images/D6VxOGLYprxETPKdvUrtgYTXWs.png?width=1290&height=1716">
+    </div>
+    <h2 class="titre-section">umbrelOS</h2>
+    <p class="corps">The ultimate OS for running<br>your own home cloud</p>
+    <p class="actions"><a class="btn btn--voile" href="#">Learn more</a></p>
+
+    <div class="specs">
+      <ul class="specs__rangee">
+        <li class="spec" data-reveal>
+          <img src="https://framerusercontent.com/images/hw0KjVu2GeNiXcsIZPuYZQ0hd4.png?scale-down-to=1024&width=876&height=721" alt="Store all your files &amp; media." width="876" height="721" loading="lazy" decoding="async">
+        </li>
+        <li class="spec" data-reveal>
+          <img src="https://framerusercontent.com/images/RijUuLN6Hw8hwVDvxHzYPI8C3tk.png?scale-down-to=1024&width=876&height=721" alt="Hundreds of self-hosted apps." width="876" height="721" loading="lazy" decoding="async">
+        </li>
+      </ul>
+      <ul class="specs__rangee">
+        <li class="spec" data-reveal>
+          <img src="https://framerusercontent.com/images/tUCBLEvbOpelcKnfis1RDtqfoY.png?scale-down-to=1024&width=876&height=721" alt="Access everything from a web browser." width="876" height="721" loading="lazy" decoding="async">
+        </li>
+        <li class="spec" data-reveal>
+          <img src="https://framerusercontent.com/images/j70vviz91He3Z00NcYSUnaTp4.png?scale-down-to=1024&width=876&height=721" alt="Monitor everything." width="876" height="721" loading="lazy" decoding="async">
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+<!-- ============================================================
+     Files — une carte large, photo en fond.
+     ============================================================ -->
+<section class="bande bande--serree files-bande">
+  <div class="shell">
+    <div class="files" data-reveal="zoom">
+      <img alt="The Files app on umbrelOS" width="2100" height="900" loading="lazy"
+           src="https://framerusercontent.com/images/ibiIGPQWO78Oy0aqZdi0AE8VV8.png?width=2100&height=900">
+      <div class="files__contenu">
+        <p><span class="pastille pastille--voile">Out now in umbrelOS 1.4.</span></p>
+        <p class="files__marque">
+          <img class="files__glyphe" src="https://framerusercontent.com/images/AnPmpdrq3EXLToZzZDPfSPsgS9A.png?width=203&height=204" alt="" width="203" height="204" loading="lazy" decoding="async">
+          <span class="titre-section">Files</span>
+        </p>
+        <p class="corps">The new home for all your files &amp; documents.</p>
+        <p class="actions">
+          <a class="btn btn--plein" href="#">Watch the launch</a>
+          <a class="btn btn--voile" href="#">Learn more</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     Superpowers — rail horizontal de cartes colorées.
+     ============================================================ -->
+<section class="bande superpowers">
+  <div class="shell">
+    <p class="surtitre" data-reveal>What can I do with umbrelOS?</p>
+    <!-- Le gimmick de la section : le mot illustre son propre sens. Les
+         « s » répétés s'effacent parce que le dégradé qui remplit le
+         glyphe devient transparent vers la droite. Un seul mot, aucune
+         animation, aucun découpage lettre par lettre. -->
+    <h2 class="titre-vedette" data-reveal>
+      <span class="fondu">The superpowers are </span><span class="mot-electrique">endlessssssssss</span>
+    </h2>
+  </div>
+
+  <div class="carrousel" data-reveal>
+    <ul class="rail">
+      <li class="pouvoir pouvoir--nuit">
+        <img class="pouvoir__icone" src="https://framerusercontent.com/images/FimxhhXuuAjGAx7OZbE1YQqck.png?scale-down-to=512&width=256&height=256" alt="Ollama" width="256" height="256" loading="lazy" decoding="async">
+        <div class="pouvoir__carte">
+          <h3 class="fondu">Run DeepSeek R1, LLama 3, and more.</h3>
+          <p>Download and run advanced AI models directly on your own hardware.
+             Self-hosting AI models ensures full control over your data and
+             protects your privacy.</p>
+          <img class="pouvoir__ecran" src="https://framerusercontent.com/images/pvRsvBbC98us2MgvBCx6a1Tc4.png?scale-down-to=1024&width=1141&height=823" alt="" width="1141" height="823" loading="lazy" decoding="async">
+        </div>
+      </li>
+      <li class="pouvoir pouvoir--lagon">
+        <img class="pouvoir__icone" src="https://framerusercontent.com/images/MkZDQ57bdWG4x9UDtjKzldt0Lg.png?scale-down-to=512&width=192&height=193" alt="Home Assistant" width="192" height="193" loading="lazy" decoding="async">
+        <div class="pouvoir__carte">
+          <h3 class="fondu">Automate your home and appliances.</h3>
+          <p>Home Assistant integrates with over a thousand different devices
+             and services to make your home work for you.</p>
+          <img class="pouvoir__ecran" src="https://framerusercontent.com/images/DZtdVA1t4cCP7AeCSwwNsRzApdE.png?scale-down-to=1024&width=2560&height=1348" alt="" width="2560" height="1348" loading="lazy" decoding="async">
+        </div>
+      </li>
+      <li class="pouvoir pouvoir--or">
+        <img class="pouvoir__icone" src="https://framerusercontent.com/images/n3cIWrnc5e1G6jA0YgpiRUIyt00.png?scale-down-to=512&width=192&height=192" alt="Plex" width="192" height="192" loading="lazy" decoding="async">
+        <div class="pouvoir__carte">
+          <h3 class="fondu">Stream your movies &amp; TV shows.</h3>
+          <p>Stream the movies and TV shows you download on your umbrelOS home
+             server effortlessly to your TV, computer, and phone.</p>
+          <img class="pouvoir__ecran" src="https://framerusercontent.com/images/Nf3SUCE5KohIpdurFteYcUbbY.png?scale-down-to=1024&width=2320&height=1248" alt="" width="2320" height="1248" loading="lazy" decoding="async">
+        </div>
+      </li>
+      <li class="pouvoir pouvoir--braise">
+        <img class="pouvoir__icone" src="https://framerusercontent.com/images/bHQIVJx38uI8kJjNS5gJY9FLk.png?scale-down-to=512&width=192&height=192" alt="Pi-hole" width="192" height="192" loading="lazy" decoding="async">
+        <div class="pouvoir__carte">
+          <h3 class="fondu">Block ads on your entire network.</h3>
+          <p>Get Pi-hole® on your Umbrel and your entire network gets rid of
+             ads. Yes, the entire network, not just your browser.</p>
+          <img class="pouvoir__ecran" src="https://framerusercontent.com/images/Vzt7yBHKceIQhPmsfuHzJHQduA4.png?scale-down-to=1024&width=2560&height=1348" alt="" width="2560" height="1348" loading="lazy" decoding="async">
+        </div>
+      </li>
+      <li class="pouvoir pouvoir--ambre">
+        <img class="pouvoir__icone" src="https://framerusercontent.com/images/56rLLT6EF4I7lEcZzR65EcY5Iw.png?scale-down-to=512&width=192&height=192" alt="Bitcoin Node" width="192" height="192" loading="lazy" decoding="async">
+        <div class="pouvoir__carte">
+          <h3 class="fondu">Run your own Bitcoin node.</h3>
+          <p>Don't trust. Verify. Run your own node and achieve unparalleled
+             privacy by connecting your wallets directly to your Bitcoin
+             node.</p>
+          <img class="pouvoir__ecran" src="https://framerusercontent.com/images/wwvvv6s0IFQpk794oQrHEay7sW8.png?scale-down-to=1024&width=1159&height=697" alt="" width="1159" height="697" loading="lazy" decoding="async">
+        </div>
+      </li>
+    </ul>
+    <span class="carrousel__fleche carrousel__fleche--g" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"
+           stroke-linecap="round" stroke-linejoin="round"><path d="M14 6l-6 6 6 6"/></svg>
+    </span>
+    <span class="carrousel__fleche carrousel__fleche--d" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"
+           stroke-linecap="round" stroke-linejoin="round"><path d="M10 6l6 6-6 6"/></svg>
+    </span>
+  </div>
+</section>
+
+<!-- ============================================================
+     App Store.
+     Trois choses à ne pas manquer ici :
+     · la lueur de fond est une PHOTO, pas un dégradé CSS ;
+     · l'indigo #2d2a89 n'est pas un lavis de section mais des FILETS
+       de 1 px qui s'éteignent en dégradé — un décor de grille ;
+     · le marquee écrit son contenu exactement DEUX fois, ce qui rend
+       le translateX(-50%) parfaitement bouclé.
+     ============================================================ -->
+<section class="bande store" id="store">
+  <img class="store__lueur" alt="" aria-hidden="true" width="1920" height="1280" loading="lazy" decoding="async"
+       sizes="(min-width: 810px) 100vw, 580px"
+       srcset="https://framerusercontent.com/images/6OFRUG07Ah8ElVZxz3GB9jftiQ.jpg?scale-down-to=1024&width=1920&height=1280 1024w,
+               https://framerusercontent.com/images/6OFRUG07Ah8ElVZxz3GB9jftiQ.jpg?width=1920&height=1280 1920w"
+       src="https://framerusercontent.com/images/6OFRUG07Ah8ElVZxz3GB9jftiQ.jpg?scale-down-to=1024&width=1920&height=1280">
+
+  <!-- Filets de grille. Relevés : 1 px de large, dégradé indigo qui
+       s'éteint, l'un vers le bas, l'autre vers le haut. -->
+  <span class="filet filet--descend" aria-hidden="true"></span>
+  <span class="filet filet--monte" aria-hidden="true"></span>
+
+  <div class="shell">
+    <p class="surtitre" data-reveal>That's all. Except not.</p>
+    <h2 class="titre-vedette" data-reveal>
+      <span class="fondu">There's an entire </span><span class="mot-iris">app store.</span>
+    </h2>
+    <p class="corps store__chapo" data-reveal>
+      Discover amazing self-hosted apps in the Umbrel App Store and install them
+      in one click on umbrelOS.
+    </p>
+    <img class="store__collage" data-reveal="zoom" loading="lazy" decoding="async"
+         sizes="(min-width: 810px) 900px, 100vw"
+         srcset="https://framerusercontent.com/images/eoh9h3TnTTdgbU6lni413C4xpuU.png?scale-down-to=1024&width=1268&height=808 1024w,
+                 https://framerusercontent.com/images/eoh9h3TnTTdgbU6lni413C4xpuU.png?width=1268&height=808 1268w"
+         src="https://framerusercontent.com/images/eoh9h3TnTTdgbU6lni413C4xpuU.png?scale-down-to=1024&width=1268&height=808"
+         alt="The Umbrel App Store on umbrelOS" width="1268" height="808">
+    <p class="actions" data-reveal>
+      <a class="btn btn--froid" href="#">Browse Umbrel App Store</a>
+      <a class="btn btn--voile" href="#">Launch your own app</a>
+    </p>
+  </div>
+
+  <!-- Icônes : les 19 applications de la source en portent TOUTES une.
+       Trois sont des fichiers image — Bitcoin Node, Lightning Node,
+       Nostr Relay ; les seize autres sont des tracés vectoriels repris
+       tels quels du sprite SVG de la source, rassemblés en fin de page
+       dans #sprite-applis et instanciés par <use>. La composition en
+       couches est celle du relevé : une pastille de 60 px à coins
+       arrondis qui rogne son contenu, et par-dessus une à onze couches
+       en position absolue. Leur géométrie est écrite en % de cette base
+       de 60 px : elle suit --echelle-pastille sans être recalculée.
+       [relevé] -->
+  <div class="marquee">
+    <div class="marquee__piste">
+      <ul class="marquee__groupe">
+        <li class="appli"><span class="appli__ico"><svg class="appli__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-bitcoin-node"></use></svg><img class="appli__c" src="https://framerusercontent.com/images/elGNPTDUXJZqRmMVRmZgr1bDlgc.png?width=195&amp;height=220" alt="" width="195" height="220" loading="lazy" decoding="async" style="left:8.333%;top:5%;width:81.667%;height:90%;object-fit:contain"></span>Bitcoin Node</li>
+        <li class="appli"><span class="appli__ico"><svg class="appli__c" viewBox="0 0 61 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-lightning-shell-1"></use></svg><svg class="appli__c" viewBox="0 0 61 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-lightning-shell-2"></use></svg><svg class="appli__c" viewBox="0 0 10 10" style="left:15%;top:15%;width:16.667%;height:15%" aria-hidden="true"><use href="#ico-lightning-shell-3"></use></svg><svg class="appli__c" viewBox="0 0 12 2" style="left:33.333%;top:31.667%;width:18.333%;height:1.667%" aria-hidden="true"><use href="#ico-lightning-shell-4"></use></svg></span>Lightning Shell</li>
+        <li class="appli"><span class="appli__ico"><svg class="appli__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-samourai"></use></svg></span>Samourai</li>
+        <li class="appli"><span class="appli__ico"><svg class="appli__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-lightning-node-1"></use></svg><svg class="appli__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-lightning-node-2"></use></svg><img class="appli__c" src="https://framerusercontent.com/images/wtfjZGxQ8qYhRWGrQCtDLmQGE.png?width=170&amp;height=207" alt="" width="170" height="207" loading="lazy" decoding="async" style="left:15%;top:8.333%;width:70%;height:86.667%;object-fit:contain"></span>Lightning Node</li>
+        <li class="appli"><span class="appli__ico"><svg class="appli__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-plex"></use></svg></span>Plex</li>
+        <li class="appli"><span class="appli__ico"><img class="appli__c" src="https://framerusercontent.com/images/bSOgvYMTi69dF1xyLwOv82kcL8.png?width=256&amp;height=256" alt="" width="256" height="256" loading="lazy" decoding="async" style="left:0;top:0;width:100%;height:100%;object-fit:cover"></span>Nostr Relay</li>
+        <li class="appli"><span class="appli__ico"><svg class="appli__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-ghostfolio"></use></svg></span>Ghostfolio</li>
+        <li class="appli"><span class="appli__ico"><svg class="appli__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-torq"></use></svg></span>Torq</li>
+        <li class="appli"><span class="appli__ico"><svg class="appli__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-simpletorrent-1"></use></svg><svg class="appli__c" viewBox="0 0 40 29" style="left:16.667%;top:25%;width:56.667%;height:40%" aria-hidden="true"><use href="#ico-simpletorrent-2"></use></svg></span>SimpleTorrent</li>
+      </ul>
+      <ul class="marquee__groupe" aria-hidden="true">
+        <li class="appli"><span class="appli__ico"><svg class="appli__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-bitcoin-node"></use></svg><img class="appli__c" src="https://framerusercontent.com/images/elGNPTDUXJZqRmMVRmZgr1bDlgc.png?width=195&amp;height=220" alt="" width="195" height="220" loading="lazy" decoding="async" style="left:8.333%;top:5%;width:81.667%;height:90%;object-fit:contain"></span>Bitcoin Node</li>
+        <li class="appli"><span class="appli__ico"><svg class="appli__c" viewBox="0 0 61 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-lightning-shell-1"></use></svg><svg class="appli__c" viewBox="0 0 61 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-lightning-shell-2"></use></svg><svg class="appli__c" viewBox="0 0 10 10" style="left:15%;top:15%;width:16.667%;height:15%" aria-hidden="true"><use href="#ico-lightning-shell-3"></use></svg><svg class="appli__c" viewBox="0 0 12 2" style="left:33.333%;top:31.667%;width:18.333%;height:1.667%" aria-hidden="true"><use href="#ico-lightning-shell-4"></use></svg></span>Lightning Shell</li>
+        <li class="appli"><span class="appli__ico"><svg class="appli__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-samourai"></use></svg></span>Samourai</li>
+        <li class="appli"><span class="appli__ico"><svg class="appli__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-lightning-node-1"></use></svg><svg class="appli__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-lightning-node-2"></use></svg><img class="appli__c" src="https://framerusercontent.com/images/wtfjZGxQ8qYhRWGrQCtDLmQGE.png?width=170&amp;height=207" alt="" width="170" height="207" loading="lazy" decoding="async" style="left:15%;top:8.333%;width:70%;height:86.667%;object-fit:contain"></span>Lightning Node</li>
+        <li class="appli"><span class="appli__ico"><svg class="appli__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-plex"></use></svg></span>Plex</li>
+        <li class="appli"><span class="appli__ico"><img class="appli__c" src="https://framerusercontent.com/images/bSOgvYMTi69dF1xyLwOv82kcL8.png?width=256&amp;height=256" alt="" width="256" height="256" loading="lazy" decoding="async" style="left:0;top:0;width:100%;height:100%;object-fit:cover"></span>Nostr Relay</li>
+        <li class="appli"><span class="appli__ico"><svg class="appli__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-ghostfolio"></use></svg></span>Ghostfolio</li>
+        <li class="appli"><span class="appli__ico"><svg class="appli__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-torq"></use></svg></span>Torq</li>
+        <li class="appli"><span class="appli__ico"><svg class="appli__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-simpletorrent-1"></use></svg><svg class="appli__c" viewBox="0 0 40 29" style="left:16.667%;top:25%;width:56.667%;height:40%" aria-hidden="true"><use href="#ico-simpletorrent-2"></use></svg></span>SimpleTorrent</li>
+      </ul>
+    </div>
+
+    <div class="marquee__piste marquee__piste--inverse">
+      <ul class="marquee__groupe">
+        <li class="appli"><span class="appli__ico"><svg class="appli__c" viewBox="0 0 60 31" style="left:0;top:-1.667%;width:100%;height:51.667%" aria-hidden="true"><use href="#ico-mempool-1"></use></svg><svg class="appli__c" viewBox="0 0 60 31" style="left:0;top:48.333%;width:100%;height:51.667%" aria-hidden="true"><use href="#ico-mempool-2"></use></svg><svg class="appli__c" viewBox="0 0 11 48" style="left:70%;top:10%;width:18.333%;height:78.333%" aria-hidden="true"><use href="#ico-mempool-3"></use></svg></span>mempool</li>
+        <li class="appli"><span class="appli__ico"><svg class="appli__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-woofbot-1"></use></svg><svg class="appli__c" viewBox="0 0 13 22" style="left:11.667%;top:16.667%;width:21.667%;height:35%" aria-hidden="true"><use href="#ico-woofbot-2"></use></svg><svg class="appli__c" viewBox="0 0 13 22" style="left:66.667%;top:16.667%;width:20%;height:35%" aria-hidden="true"><use href="#ico-woofbot-3"></use></svg><svg class="appli__c" viewBox="0 0 32 38" style="left:23.333%;top:20%;width:50%;height:60%" aria-hidden="true"><use href="#ico-woofbot-4"></use></svg><svg class="appli__c" viewBox="0 0 18 17" style="left:35%;top:45%;width:28.333%;height:26.667%" aria-hidden="true"><use href="#ico-woofbot-5"></use></svg><svg class="appli__c" viewBox="0 0 8 7" style="left:43.333%;top:56.667%;width:11.667%;height:10%" aria-hidden="true"><use href="#ico-woofbot-6"></use></svg><svg class="appli__c" viewBox="0 0 18 12" style="left:35%;top:55%;width:28.333%;height:16.667%" aria-hidden="true"><use href="#ico-woofbot-7"></use></svg><svg class="appli__c" viewBox="0 0 48 40" style="left:10%;top:16.667%;width:76.667%;height:66.667%" aria-hidden="true"><use href="#ico-woofbot-8"></use></svg><svg class="appli__c" viewBox="0 0 6 5" style="left:31.667%;top:41.667%;width:6.667%;height:6.667%" aria-hidden="true"><use href="#ico-woofbot-9"></use></svg><svg class="appli__c" viewBox="0 0 6 5" style="left:58.333%;top:41.667%;width:6.667%;height:6.667%" aria-hidden="true"><use href="#ico-woofbot-10"></use></svg><svg class="appli__c" viewBox="0 0 6 3" style="left:45%;top:73.333%;width:10%;height:3.333%" aria-hidden="true"><use href="#ico-woofbot-11"></use></svg></span>WoofBot</li>
+        <li class="appli"><span class="appli__ico"><svg class="appli__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-libreoffice"></use></svg></span>LibreOffice</li>
+        <li class="appli"><span class="appli__ico"><svg class="appli__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-sphinx-relay-1"></use></svg><svg class="appli__c" viewBox="0 0 44 42" style="left:13.333%;top:13.333%;width:71.667%;height:68.333%" aria-hidden="true"><use href="#ico-sphinx-relay-2"></use></svg></span>Sphinx Relay</li>
+        <li class="appli"><span class="appli__ico"><svg class="appli__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-tailscale"></use></svg></span>Tailscale</li>
+        <li class="appli"><span class="appli__ico"><svg class="appli__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-nextcloud-1"></use></svg><svg class="appli__c" viewBox="0 0 46 22" style="left:11.667%;top:31.667%;width:75%;height:35%" aria-hidden="true"><use href="#ico-nextcloud-2"></use></svg></span>Nextcloud</li>
+        <li class="appli"><span class="appli__ico"><svg class="appli__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-firefox"></use></svg></span>Firefox</li>
+        <li class="appli"><span class="appli__ico"><svg class="appli__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-photoprism-1"></use></svg><svg class="appli__c" viewBox="0 0 40 35" style="left:16.667%;top:20%;width:61.667%;height:53.333%" aria-hidden="true"><use href="#ico-photoprism-2"></use></svg></span>PhotoPrism</li>
+        <li class="appli"><span class="appli__ico"><svg class="appli__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-trilium-notes"></use></svg></span>Trilium Notes</li>
+        <li class="appli"><span class="appli__ico"><svg class="appli__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-n8n"></use></svg></span>n8n</li>
+      </ul>
+      <ul class="marquee__groupe" aria-hidden="true">
+        <li class="appli"><span class="appli__ico"><svg class="appli__c" viewBox="0 0 60 31" style="left:0;top:-1.667%;width:100%;height:51.667%" aria-hidden="true"><use href="#ico-mempool-1"></use></svg><svg class="appli__c" viewBox="0 0 60 31" style="left:0;top:48.333%;width:100%;height:51.667%" aria-hidden="true"><use href="#ico-mempool-2"></use></svg><svg class="appli__c" viewBox="0 0 11 48" style="left:70%;top:10%;width:18.333%;height:78.333%" aria-hidden="true"><use href="#ico-mempool-3"></use></svg></span>mempool</li>
+        <li class="appli"><span class="appli__ico"><svg class="appli__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-woofbot-1"></use></svg><svg class="appli__c" viewBox="0 0 13 22" style="left:11.667%;top:16.667%;width:21.667%;height:35%" aria-hidden="true"><use href="#ico-woofbot-2"></use></svg><svg class="appli__c" viewBox="0 0 13 22" style="left:66.667%;top:16.667%;width:20%;height:35%" aria-hidden="true"><use href="#ico-woofbot-3"></use></svg><svg class="appli__c" viewBox="0 0 32 38" style="left:23.333%;top:20%;width:50%;height:60%" aria-hidden="true"><use href="#ico-woofbot-4"></use></svg><svg class="appli__c" viewBox="0 0 18 17" style="left:35%;top:45%;width:28.333%;height:26.667%" aria-hidden="true"><use href="#ico-woofbot-5"></use></svg><svg class="appli__c" viewBox="0 0 8 7" style="left:43.333%;top:56.667%;width:11.667%;height:10%" aria-hidden="true"><use href="#ico-woofbot-6"></use></svg><svg class="appli__c" viewBox="0 0 18 12" style="left:35%;top:55%;width:28.333%;height:16.667%" aria-hidden="true"><use href="#ico-woofbot-7"></use></svg><svg class="appli__c" viewBox="0 0 48 40" style="left:10%;top:16.667%;width:76.667%;height:66.667%" aria-hidden="true"><use href="#ico-woofbot-8"></use></svg><svg class="appli__c" viewBox="0 0 6 5" style="left:31.667%;top:41.667%;width:6.667%;height:6.667%" aria-hidden="true"><use href="#ico-woofbot-9"></use></svg><svg class="appli__c" viewBox="0 0 6 5" style="left:58.333%;top:41.667%;width:6.667%;height:6.667%" aria-hidden="true"><use href="#ico-woofbot-10"></use></svg><svg class="appli__c" viewBox="0 0 6 3" style="left:45%;top:73.333%;width:10%;height:3.333%" aria-hidden="true"><use href="#ico-woofbot-11"></use></svg></span>WoofBot</li>
+        <li class="appli"><span class="appli__ico"><svg class="appli__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-libreoffice"></use></svg></span>LibreOffice</li>
+        <li class="appli"><span class="appli__ico"><svg class="appli__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-sphinx-relay-1"></use></svg><svg class="appli__c" viewBox="0 0 44 42" style="left:13.333%;top:13.333%;width:71.667%;height:68.333%" aria-hidden="true"><use href="#ico-sphinx-relay-2"></use></svg></span>Sphinx Relay</li>
+        <li class="appli"><span class="appli__ico"><svg class="appli__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-tailscale"></use></svg></span>Tailscale</li>
+        <li class="appli"><span class="appli__ico"><svg class="appli__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-nextcloud-1"></use></svg><svg class="appli__c" viewBox="0 0 46 22" style="left:11.667%;top:31.667%;width:75%;height:35%" aria-hidden="true"><use href="#ico-nextcloud-2"></use></svg></span>Nextcloud</li>
+        <li class="appli"><span class="appli__ico"><svg class="appli__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-firefox"></use></svg></span>Firefox</li>
+        <li class="appli"><span class="appli__ico"><svg class="appli__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-photoprism-1"></use></svg><svg class="appli__c" viewBox="0 0 40 35" style="left:16.667%;top:20%;width:61.667%;height:53.333%" aria-hidden="true"><use href="#ico-photoprism-2"></use></svg></span>PhotoPrism</li>
+        <li class="appli"><span class="appli__ico"><svg class="appli__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-trilium-notes"></use></svg></span>Trilium Notes</li>
+        <li class="appli"><span class="appli__ico"><svg class="appli__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-n8n"></use></svg></span>n8n</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     Cartes d'appui — grille volontairement asymétrique.
+     ============================================================ -->
+<section class="bande bande--serree">
+  <div class="shell">
+    <div class="appui">
+      <a class="carte" href="#" data-reveal>
+        <span class="carte__entete">
+          <span class="carte__titre">Community</span>
+          <span class="carte__fleche" aria-hidden="true">
+            <svg viewBox="0 0 14 14"><path d="M3 11 11 3M4.5 3H11v6.5"/></svg>
+          </span>
+        </span>
+        <p>A place to get your questions answered, and to connect with fellow sovereign individuals.</p>
+      </a>
+
+      <a class="carte" href="#" data-reveal>
+        <span class="carte__entete">
+          <span class="carte__titre">Support</span>
+          <span class="carte__fleche" aria-hidden="true">
+            <svg viewBox="0 0 14 14"><path d="M3 11 11 3M4.5 3H11v6.5"/></svg>
+          </span>
+        </span>
+        <p>Get help with installing and troubleshooting umbrelOS and Umbrel Home.</p>
+      </a>
+
+      <a class="carte" href="#" id="careers" data-reveal>
+        <span class="carte__entete">
+          <span class="carte__titre">Careers</span>
+          <span class="carte__fleche" aria-hidden="true">
+            <svg viewBox="0 0 14 14"><path d="M3 11 11 3M4.5 3H11v6.5"/></svg>
+          </span>
+        </span>
+        <p>We're hiring! Join us and shape the future of Umbrel.</p>
+      </a>
+
+      <div class="carte" data-reveal>
+        <div>
+          <h2 class="titre-bloc">Stay in the loop</h2>
+          <p style="margin-top:8px">Follow our journey in enabling sovereign individuals truly own
+             their data. Better yet, be a part of it.</p>
+        </div>
+        <form class="infolettre" action="#" method="post">
+          <label class="hors-ecran" for="courriel">Email</label>
+          <input id="courriel" type="email" name="email" placeholder="Email" required>
+          <button type="submit">Subscribe</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ============================================================
+     Pied
+     ============================================================ -->
+<footer class="shell">
+  <div class="pied">
+    <div class="pied__social">
+      <a href="#" aria-label="X"><svg viewBox="0 0 24 24"><path d="M18.9 2H22l-7 8 8.2 12h-6.4l-5-7.3-5.7 7.3H2.9l7.5-8.6L2.5 2h6.6l4.5 6.7L18.9 2Z"/></svg></a>
+      <a href="#" aria-label="Discord"><svg viewBox="0 0 24 24"><path d="M19.3 5.4A16 16 0 0 0 15.5 4l-.3.5a12 12 0 0 1 3 1.4 12.6 12.6 0 0 0-12.4 0A12 12 0 0 1 8.8 4.5L8.5 4a16 16 0 0 0-3.8 1.4C2.3 9 1.6 12.6 2 16.1A16 16 0 0 0 6.7 18l1-1.4a10 10 0 0 1-1.6-.8l.4-.3a11 11 0 0 0 9.4 0l.4.3a10 10 0 0 1-1.6.8l1 1.4a16 16 0 0 0 4.7-1.9c.5-4-.7-7.6-2.1-10.7ZM9 14c-.9 0-1.6-.9-1.6-1.9S8.1 10.2 9 10.2s1.6.8 1.6 1.9S9.9 14 9 14Zm6 0c-.9 0-1.6-.9-1.6-1.9s.7-1.9 1.6-1.9 1.6.8 1.6 1.9S15.9 14 15 14Z"/></svg></a>
+      <a href="#" aria-label="YouTube"><svg viewBox="0 0 24 24"><path d="M23 7.5a3 3 0 0 0-2.1-2.1C19 4.9 12 4.9 12 4.9s-7 0-8.9.5A3 3 0 0 0 1 7.5 31 31 0 0 0 .5 12 31 31 0 0 0 1 16.5a3 3 0 0 0 2.1 2.1c1.9.5 8.9.5 8.9.5s7 0 8.9-.5a3 3 0 0 0 2.1-2.1 31 31 0 0 0 .5-4.5 31 31 0 0 0-.5-4.5ZM9.8 15.3V8.7l5.7 3.3-5.7 3.3Z"/></svg></a>
+      <a href="#" aria-label="GitHub"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-3.2 19.5c.5.1.7-.2.7-.5v-1.7c-2.8.6-3.4-1.4-3.4-1.4-.5-1.2-1.1-1.5-1.1-1.5-1-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.6 2.4 1.1 3 .9.1-.7.4-1.1.7-1.4-2.2-.3-4.6-1.1-4.6-5 0-1.1.4-2 1-2.7-.1-.3-.4-1.3.1-2.7 0 0 .8-.3 2.7 1a9.4 9.4 0 0 1 5 0c1.9-1.3 2.7-1 2.7-1 .5 1.4.2 2.4.1 2.7.6.7 1 1.6 1 2.7 0 3.9-2.4 4.7-4.6 5 .4.3.7.9.7 1.9v2.8c0 .3.2.6.7.5A10 10 0 0 0 12 2Z"/></svg></a>
+    </div>
+    <nav aria-label="Pied de page">
+      <a href="#careers">Careers</a>
+      <a href="#">Community</a>
+      <a href="#">Affiliates</a>
+      <a href="#">Support</a>
+      <a href="#">Legal</a>
+    </nav>
+  </div>
+</footer>
+
+<!-- Sprite des icônes d’applications. Chaque tracé est repris tel quel
+     de la source ; défini une seule fois, instancié par <use> : le
+     marquee duplique ses items, pas ses tracés. [relevé] -->
+<!-- Le sprite est retiré du flux, PAS mis en display:none : sous
+     Chrome, un sous-arbre en display:none n'instancie pas ses
+     ressources SVG, et tout ce qui est peint par référence — dégradé,
+     masque, filtre — retombe alors à vide. Les icônes n'affichaient
+     plus que leurs aplats littéraux. -->
+<svg id="sprite-applis" aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden">
+<symbol fill="none" id="ico-bitcoin-node" viewBox="0 0 60 61">
+<path d="M0.000976562 0.0090332H60.0005V60.0086H0.000976562V0.0090332Z" fill="url(#svg1665701033_447_paint0_linear_832_12470)"/>
+<defs>
+<linearGradient id="svg1665701033_447_paint0_linear_832_12470" x1="30.0007" y1="0.0090332" x2="17.9305" y2="58.0164" gradientUnits="userSpaceOnUse">
+<stop stop-color="#FFBE40"/>
+<stop offset="1" stop-color="#FF8D23"/>
+</linearGradient>
+</defs>
+</symbol>
+<symbol fill="none" id="ico-lightning-shell-1" viewBox="0 0 61 61">
+<path d="M60.0015 0.608154H0.00146484V60.6081H60.0015V0.608154Z" fill="url(#svg267524470_477_paint0_radial_832_12475)"/>
+<defs>
+<radialGradient id="svg267524470_477_paint0_radial_832_12475" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(30.0015 30.6081) rotate(90) scale(30 30)">
+<stop stop-color="#454C54"/>
+<stop offset="1" stop-color="#0C0F13"/>
+</radialGradient>
+</defs>
+</symbol>
+<symbol fill="none" id="ico-lightning-shell-2" viewBox="0 0 61 61">
+<path d="M60.0015 0.608154H0.00146484V60.6081H60.0015V0.608154Z" fill="#262626"/>
+</symbol>
+<symbol fill="none" id="ico-lightning-shell-3" viewBox="0 0 10 10">
+<path d="M0.424684 0.982666V2.97007L7.36186 5.33135L0.375488 7.77134V9.79809L9.96945 6.31521V4.52459L0.424684 0.982666Z" fill="white"/>
+</symbol>
+<symbol fill="none" id="ico-lightning-shell-4" viewBox="0 0 12 2">
+<path d="M11.393 0.196289H0.199951V1.33758H11.393V0.196289Z" fill="#F9F9F9"/>
+</symbol>
+<symbol fill="none" id="ico-samourai" viewBox="0 0 60 61">
+<g clip-path="url(#svg-2095558680_3050_clip0_832_12387)">
+<path d="M60.0005 0.20874H0.000976562V60.2083H60.0005V0.20874Z" fill="url(#svg-2095558680_3050_paint0_linear_832_12387)"/>
+<mask id="svg-2095558680_3050_mask0_832_12387" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="61" height="61">
+<path d="M60.0005 0.20874H0.000976562V60.2083H60.0005V0.20874Z" fill="url(#svg-2095558680_3050_paint1_linear_832_12387)"/>
+</mask>
+<g mask="url(#svg-2095558680_3050_mask0_832_12387)">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M15.0845 26.7422C16.9191 26.9463 18.1487 26.663 19.9834 26.8671C19.9834 26.7992 21.6765 27.0624 21.9467 27.2749C24.0044 27.2749 22.1676 23.8451 21.9467 22.9887C21.7166 21.6297 22.9188 19.8041 24.2528 19.6211C25.2728 19.4812 25.6504 19.5347 26.4864 20.0021C27.5005 20.8561 27.5584 21.4331 27.9803 22.4885C28.535 23.8763 26.8961 26.4553 28.7553 27.3047C34.1773 29.2809 34.7501 37.0647 34.5697 44.7125C34.8083 46.5017 35.329 46.8076 36.3678 47.637C39.9919 50.2121 48.0286 49.894 51.7975 52.463C51.6735 52.8211 51.7595 52.6613 51.6009 52.8715C51.4286 53.427 51.2652 53.4715 51.0112 53.8927C50.7981 53.7071 50.9945 53.9086 50.8145 53.6883C47.3346 51.4355 38.8692 51.215 35.1235 49.2259C35.1235 49.2938 36.5122 50.4347 36.5122 50.4347C38.5564 52.5554 40.8926 56.9719 41.4267 60.4427C39.2553 60.3314 35.6154 60.4427 33.1702 60.4427H15.8709V60.2383C16.7227 58.128 18.677 57.2177 19.5288 55.1074C19.9555 54.3992 21.4094 51.9809 21.8625 51.3664C22.6391 50.3129 24.6292 47.4629 25.1169 45.9167C23.6404 45.3767 21.1312 40.593 20.6146 37.9607C17.0845 36.9531 8.23148 34.7662 8.95703 32.2833C9.35766 31.7114 12.0685 29.2723 11.3495 28.7845C10.6448 26.7827 8.46782 26.8383 8.2041 24.087C9.3245 22.6295 8.55388 22.7694 11.1529 22.2488C12.4361 23.0077 13.8335 21.627 13.905 20.8191C15.7236 20.1297 15.7567 19.9039 15.8709 19.5936C16.9099 19.6232 17.1718 20.5154 17.1718 20.5154C19.2153 20.0164 26.7953 17.0581 29.645 16.1708C32.495 15.2835 39.6835 12.9891 42.9087 11.8907C45.5348 10.9963 47.7468 10.0894 51.3618 10.0525V10.2567C51.2036 10.4653 51.4886 9.9042 51.3618 10.2567C49.3964 10.6656 47.0901 11.591 45.4643 12.095C41.0609 13.4598 32.8998 16.2537 28.6621 17.6005C26.9891 18.1322 16.7981 21.5043 17.7897 22.3034C17.0199 23.3064 15.2705 25.2462 15.0845 26.7422Z" fill="white"/>
+</g>
+</g>
+<rect x="0.134906" y="0.34267" width="59.7317" height="59.7317" rx="11.866" stroke="black" stroke-opacity="0.2" stroke-width="0.267859"/>
+<defs>
+<linearGradient id="svg-2095558680_3050_paint0_linear_832_12387" x1="30.0007" y1="0.20874" x2="30.0007" y2="60.2083" gradientUnits="userSpaceOnUse">
+<stop stop-color="#C12526"/>
+<stop offset="1" stop-color="#9D1E1F"/>
+</linearGradient>
+<linearGradient id="svg-2095558680_3050_paint1_linear_832_12387" x1="30.0007" y1="0.20874" x2="30.0007" y2="60.2083" gradientUnits="userSpaceOnUse">
+<stop stop-color="#C12526"/>
+<stop offset="1" stop-color="#9D1E1F"/>
+</linearGradient>
+<clipPath id="svg-2095558680_3050_clip0_832_12387">
+<rect x="0.000976562" y="0.20874" width="59.9995" height="59.9995" rx="11.9999" fill="white"/>
+</clipPath>
+</defs>
+</symbol>
+<symbol fill="none" id="ico-lightning-node-1" viewBox="0 0 60 61">
+<path d="M45.9381 0.80835H14.0634C6.29692 0.80835 0.000976562 7.1043 0.000976562 14.8707V46.7455C0.000976562 54.5119 6.29692 60.8079 14.0634 60.8079H45.9381C53.7046 60.8079 60.0005 54.5119 60.0005 46.7455V14.8707C60.0005 7.1043 53.7046 0.80835 45.9381 0.80835Z" fill="url(#svg653718106_730_paint0_linear_832_12486)"/>
+<defs>
+<linearGradient id="svg653718106_730_paint0_linear_832_12486" x1="49.3365" y1="0.808352" x2="18.5165" y2="59.2844" gradientUnits="userSpaceOnUse">
+<stop stop-color="#91DAF9"/>
+<stop offset="0.330529" stop-color="#9BAAFF"/>
+<stop offset="0.525841" stop-color="#AD97FD"/>
+<stop offset="1" stop-color="#F472EE"/>
+</linearGradient>
+</defs>
+</symbol>
+<symbol fill="none" id="ico-lightning-node-2" viewBox="0 0 60 61">
+<path d="M60.0005 0.80835H0.000976562V60.8079H60.0005V0.80835Z" fill="url(#svg-1782432939_437_paint0_linear_832_12487)"/>
+<defs>
+<linearGradient id="svg-1782432939_437_paint0_linear_832_12487" x1="45.5866" y1="0.80835" x2="8.90715" y2="55.0657" gradientUnits="userSpaceOnUse">
+<stop stop-color="#D27BFF"/>
+<stop offset="1" stop-color="#8855F9"/>
+</linearGradient>
+</defs>
+</symbol>
+<symbol fill="none" id="ico-plex" viewBox="0 0 60 61">
+<path d="M60.0005 0.407959H0.000976562V60.4075H60.0005V0.407959Z" fill="url(#svg1811585423_881_paint0_radial_832_12489)"/>
+<path d="M17.5789 10.0173H29.3896L42.4224 30.4078L29.3896 50.7983H17.5789L30.6116 30.4078L17.5789 10.0173Z" fill="url(#svg1811585423_881_paint1_radial_832_12489)"/>
+<defs>
+<radialGradient id="svg1811585423_881_paint0_radial_832_12489" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(30.0007 30.4077) rotate(90) scale(29.9998)">
+<stop stop-color="#281B07"/>
+<stop offset="1" stop-color="#0E0C08"/>
+</radialGradient>
+<radialGradient id="svg1811585423_881_paint1_radial_832_12489" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(39.7292 30.3028) scale(22.9807 37.7217)">
+<stop stop-color="#F9BE03"/>
+<stop offset="1" stop-color="#CC7C19"/>
+</radialGradient>
+</defs>
+</symbol>
+<symbol fill="none" id="ico-ghostfolio" viewBox="0 0 60 61">
+<g clip-path="url(#svg1353469617_2713_clip0_832_12399)">
+<rect x="0.000976562" y="0.606934" width="60" height="60" rx="13.128" fill="url(#svg1353469617_2713_paint0_linear_832_12399)"/>
+<g clip-path="url(#svg1353469617_2713_clip1_832_12399)">
+<g filter="url(#svg1353469617_2713_filter0_d_832_12399)">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M41.9541 27.42V43.9903C41.9541 44.8575 40.876 45.3028 40.2432 44.6934L37.9697 42.3262L34.6885 45.6778C34.29 46.0762 33.6807 46.0762 33.2822 45.6778L30.001 42.3262L26.7197 45.6778C26.3213 46.0762 25.7119 46.0762 25.3135 45.6778L22.0322 42.3262L19.7588 44.6934C19.126 45.3028 18.0479 44.8575 18.0479 43.9903V27.3262C18.0479 20.7403 23.3916 15.3966 29.9775 15.3731C36.5635 15.3497 41.9541 20.8341 41.9541 27.42ZM28.0088 28.3106C28.0088 26.67 26.6728 25.3341 25.0088 25.3341C23.3682 25.3341 22.0322 26.67 22.0322 28.3106C22.0322 29.9747 23.3682 31.3106 25.0088 31.3106C26.6728 31.3106 28.0088 29.9747 28.0088 28.3106ZM37.9697 28.3106C37.9697 26.67 36.6338 25.3341 34.9697 25.3341C33.3291 25.3341 31.9932 26.67 31.9932 28.3106C31.9932 29.9747 33.3291 31.3106 34.9697 31.3106C36.6338 31.3106 37.9697 29.9747 37.9697 28.3106Z" fill="url(#svg1353469617_2713_paint1_linear_832_12399)" shape-rendering="crispEdges"/>
+</g>
+</g>
+</g>
+<defs>
+<filter id="svg1353469617_2713_filter0_d_832_12399" x="6.79785" y="11.1543" width="46.4062" height="53.1035" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dy="7.03125"/>
+<feGaussianBlur stdDeviation="5.625"/>
+<feComposite in2="hardAlpha" operator="out"/>
+<feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.12 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_832_12399"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_832_12399" result="shape"/>
+</filter>
+<linearGradient id="svg1353469617_2713_paint0_linear_832_12399" x1="30.001" y1="0.606934" x2="30.001" y2="60.6069" gradientUnits="userSpaceOnUse">
+<stop stop-color="#0C4E4B"/>
+<stop offset="1" stop-color="#082524"/>
+</linearGradient>
+<linearGradient id="svg1353469617_2713_paint1_linear_832_12399" x1="30.001" y1="15.373" x2="30.001" y2="45.9766" gradientUnits="userSpaceOnUse">
+<stop stop-color="white"/>
+<stop offset="1" stop-color="white" stop-opacity="0.8"/>
+</linearGradient>
+<clipPath id="svg1353469617_2713_clip0_832_12399">
+<rect x="0.000976562" y="0.606934" width="60" height="60" rx="13.128" fill="white"/>
+</clipPath>
+<clipPath id="svg1353469617_2713_clip1_832_12399">
+<rect width="60" height="60" fill="white" transform="translate(0.000976562 0.607422)"/>
+</clipPath>
+</defs>
+</symbol>
+<symbol fill="none" id="ico-torq" viewBox="0 0 60 61">
+<g clip-path="url(#svg-1857362033_2221_clip0_832_12404)">
+<rect x="0.000976562" y="0.207031" width="60" height="60" rx="13.12" fill="url(#svg-1857362033_2221_paint0_linear_832_12404)"/>
+<g filter="url(#svg-1857362033_2221_filter0_d_832_12404)">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M21.3671 12.2397H27.7971V29.6054H21.3671V12.2397ZM17.856 12.2401H11.4259V29.6057H17.856V12.2401ZM48.6799 12.2401H31.3142V29.6057H48.6799V12.2401ZM42.2575 34.8123H37.736V39.8273H32.7215V44.3487H37.736V49.3635H42.2575V44.3487H47.2727V39.8273H42.2575V34.8123ZM19.6117 50.3772C24.1896 50.3772 27.9007 46.6661 27.9007 42.0883C27.9007 37.5104 24.1896 33.7993 19.6117 33.7993C15.0338 33.7993 11.3228 37.5104 11.3228 42.0883C11.3228 46.6661 15.0338 50.3772 19.6117 50.3772Z" fill="url(#svg-1857362033_2221_paint1_linear_832_12404)"/>
+</g>
+</g>
+<defs>
+<filter id="svg-1857362033_2221_filter0_d_832_12404" x="4.76025" y="5.67725" width="67.3572" height="68.1377" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dx="8.4375" dy="8.4375"/>
+<feGaussianBlur stdDeviation="7.5"/>
+<feComposite in2="hardAlpha" operator="out"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0.156863 0 0 0 0 0.247059 0 0 0 0 0.352941 0 0 0 0.15 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_832_12404"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_832_12404" result="shape"/>
+</filter>
+<linearGradient id="svg-1857362033_2221_paint0_linear_832_12404" x1="0.000976563" y1="0.207031" x2="57.3662" y2="57.3406" gradientUnits="userSpaceOnUse">
+<stop stop-color="white"/>
+<stop offset="0.541668" stop-color="white"/>
+<stop offset="1" stop-color="#DAE6F3"/>
+</linearGradient>
+<linearGradient id="svg-1857362033_2221_paint1_linear_832_12404" x1="11.3228" y1="12.2397" x2="48.6799" y2="50.3772" gradientUnits="userSpaceOnUse">
+<stop stop-color="#617B9B"/>
+<stop offset="1" stop-color="#182D47"/>
+</linearGradient>
+<clipPath id="svg-1857362033_2221_clip0_832_12404">
+<rect x="0.000976562" y="0.207031" width="60" height="60" rx="13.12" fill="white"/>
+</clipPath>
+</defs>
+</symbol>
+<symbol fill="none" id="ico-simpletorrent-1" viewBox="0 0 60 61">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M0.000976562 0.807129H60.001V60.8071H0.000976562V0.807129Z" fill="url(#svg1459285233_528_paint0_linear_832_12479)"/>
+<defs>
+<linearGradient id="svg1459285233_528_paint0_linear_832_12479" x1="30.001" y1="0.807129" x2="30.001" y2="60.8071" gradientUnits="userSpaceOnUse">
+<stop stop-color="#67A4E6"/>
+<stop offset="0.958333" stop-color="#2F72BC"/>
+<stop offset="1" stop-color="#4283CA"/>
+</linearGradient>
+</defs>
+</symbol>
+<symbol fill="none" id="ico-simpletorrent-2" viewBox="0 0 40 29">
+<path d="M29.6353 11.2382C29.8545 10.6673 29.9775 10.0429 29.9775 9.39205C29.9775 6.56385 27.6785 4.26918 24.8447 4.26918C23.7914 4.26918 22.8075 4.58936 21.995 5.13364C20.5139 2.57225 17.7497 0.854004 14.5791 0.854004C9.85265 0.854004 6.02441 4.67474 6.02441 9.39205C6.02441 9.53596 6.02976 9.6801 6.0351 9.82424C3.04096 10.8754 0.891602 13.7249 0.891602 17.076C0.891602 21.3185 4.34022 24.7602 8.59082 24.7602H28.2666C32.0466 24.7602 35.1103 21.7026 35.1103 17.9299C35.1103 14.6268 32.7577 11.868 29.6353 11.2382Z" stroke="white" stroke-width="2.34375"/>
+</symbol>
+<symbol fill="none" id="ico-mempool-1" viewBox="0 0 60 31">
+<path d="M60.0005 0.407227H0.000976562V30.407H60.0005V0.407227Z" fill="#2E3349"/>
+</symbol>
+<symbol fill="none" id="ico-mempool-2" viewBox="0 0 60 31">
+<path d="M60.0005 0.407227H0.000976562V30.407H60.0005V0.407227Z" fill="url(#svg-1039279698_438_paint0_linear_832_12473)"/>
+<defs>
+<linearGradient id="svg-1039279698_438_paint0_linear_832_12473" x1="30.0007" y1="0.407227" x2="30.0007" y2="30.407" gradientUnits="userSpaceOnUse">
+<stop stop-color="#8B81F6"/>
+<stop offset="1" stop-color="#3BCAE2"/>
+</linearGradient>
+</defs>
+</symbol>
+<symbol fill="none" id="ico-mempool-3" viewBox="0 0 11 48">
+<path opacity="0.300003" d="M10.8298 46.3141C10.8312 47.2323 10.2038 47.9774 9.42849 47.9786L1.66113 47.9901C0.886061 47.9912 0.256769 47.2478 0.255363 46.3298L0.190675 2.54582C0.189504 1.62766 0.816687 0.882239 1.59153 0.881114L9.35889 0.86963C10.1342 0.868482 10.7637 1.61205 10.7651 2.53021L10.8298 46.3141Z" fill="white"/>
+</symbol>
+<symbol fill="none" id="ico-woofbot-1" viewBox="0 0 60 61">
+<path d="M60.0005 0.00634766H0.000976562V60.0059H60.0005V0.00634766Z" fill="url(#svg-22831355_484_paint0_radial_832_12494)"/>
+<defs>
+<radialGradient id="svg-22831355_484_paint0_radial_832_12494" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(30.0007 30.0061) rotate(90) scale(29.9998)">
+<stop stop-color="#FFD300"/>
+<stop offset="1" stop-color="#E8AA1B"/>
+</radialGradient>
+</defs>
+</symbol>
+<symbol fill="none" id="ico-woofbot-2" viewBox="0 0 13 22">
+<path d="M12.8495 3.69138C12.3057 1.60675 10.7951 0.791016 9.22406 0.791016C5.65905 0.791016 0.522949 10.0537 0.522949 11.6674C0.522949 11.7581 2.49393 13.0895 2.69821 16.0181C2.97013 19.9153 6.18773 24.13 8.49897 20.3685C10.5878 16.9692 5.32669 7.22622 9.22406 3.69138" fill="#B27C00"/>
+</symbol>
+<symbol fill="none" id="ico-woofbot-3" viewBox="0 0 13 22">
+<path d="M0.1521 3.69138C0.695845 1.60675 2.20661 0.791016 3.77762 0.791016C7.34243 0.791016 12.4787 10.0537 12.4787 11.6674C12.4787 11.7581 10.5076 13.0895 10.3033 16.0181C10.0314 19.9153 6.81392 24.13 4.50253 20.3685C2.4138 16.9692 7.67478 7.22622 3.77762 3.69138" fill="#B27C00"/>
+</symbol>
+<symbol fill="none" id="ico-woofbot-4" viewBox="0 0 32 38">
+<path d="M31.1673 19.8882C31.2025 19.5168 29.8682 16.1408 29.8682 15.7403L31.2212 4.40592C29.6415 -0.891528 26.4693 1.82758 25.1552 2.05417C22.495 2.51288 21.8149 1.08464 16.0915 1.23846C10.4719 1.38953 9.95465 1.30143 7.39032 2.1448C6.44444 2.45598 2.45063 -2.34171 0.767334 4.40592L1.95214 16.7373C1.95214 17.1318 0.785451 19.505 0.819622 19.8714L0.773849 19.8191C0.773849 25.6198 3.1304 28.9732 7.29969 32.1457C8.33187 32.9311 9.46153 36.1064 13.6566 36.9914C14.1309 37.0915 14.3334 37.0847 14.7319 37.1306C15.3211 37.1986 15.409 37.2213 15.9994 37.2213H16.0008C16.5912 37.2213 16.522 37.1533 17.3604 37.1306C17.7611 37.1198 17.8708 37.0915 18.345 36.9914C22.54 36.1064 23.6697 32.9311 24.7019 32.1457C28.8711 28.9732 31.2278 25.6198 31.2278 19.8191L31.1673 19.8882Z" fill="#F2A900"/>
+</symbol>
+<symbol fill="none" id="ico-woofbot-5" viewBox="0 0 18 17">
+<path d="M8.99425 0.831055C7.62738 0.831055 6.35286 1.51238 5.59888 2.6526C3.70984 5.50821 0.293213 10.8336 0.293213 11.9868C0.293213 13.5803 3.19351 19.1581 8.99425 15.9709C14.795 19.1583 17.6954 13.5805 17.6954 11.9868C17.6954 10.8334 14.2787 5.50821 12.3898 2.6526C11.6356 1.51238 10.3613 0.831055 8.99425 0.831055Z" fill="#FFD300"/>
+</symbol>
+<symbol fill="none" id="ico-woofbot-6" viewBox="0 0 8 7">
+<path d="M7.62628 3.29734C7.62628 5.07741 4.00076 6.51998 4.00076 6.51998C4.00076 6.51998 0.375244 5.07741 0.375244 3.29734C0.375244 1.51775 1.99851 0.719238 4.00076 0.719238C6.00301 0.719238 7.62628 1.51775 7.62628 3.29734Z" fill="#464655"/>
+</symbol>
+<symbol fill="none" id="ico-woofbot-7" viewBox="0 0 18 12">
+<path d="M16.9768 7.51979C16.1757 7.51979 15.553 7.99252 14.8937 8.49291C14.1149 9.084 13.3098 9.69525 12.0684 9.69525C10.6108 9.69525 9.72579 8.99002 9.72579 8.67994V7.99369C10.0977 7.82096 10.6495 7.5437 11.2059 7.18581C12.6294 6.26965 13.3513 5.29793 13.3513 4.29716C13.3513 2.25975 11.6842 0.994141 9.00064 0.994141C6.3173 0.994141 4.65021 2.25975 4.65021 4.29716C4.65021 5.29793 5.37184 6.26965 6.79566 7.18581C7.35183 7.5437 7.90378 7.82096 8.27549 7.99369V8.67994C8.27549 8.99002 7.3905 9.69525 5.93293 9.69525C4.69169 9.69525 3.88639 9.084 3.1078 8.49291C2.44827 7.99252 1.82561 7.51979 1.02467 7.51979C0.624239 7.51979 0.299561 7.84463 0.299561 8.24494C0.299561 8.64549 0.624239 8.97009 1.02467 8.97009C1.33762 8.97009 1.75167 9.28439 2.23103 9.64814C3.0635 10.28 4.20373 11.1453 5.93293 11.1453C7.19292 11.1453 8.31065 10.7436 9.00064 10.1274C9.69087 10.7436 10.8086 11.1453 12.0684 11.1453C13.7978 11.1453 14.9378 10.28 15.7703 9.64814C16.2498 9.28439 16.6637 8.97009 16.9768 8.97009C17.3771 8.97009 17.7017 8.64549 17.7017 8.24494C17.7017 7.84463 17.3771 7.51979 16.9768 7.51979ZM6.10027 4.29716C6.10027 2.62467 8.12854 2.44421 9.00064 2.44421C9.87275 2.44421 11.901 2.62467 11.901 4.29716C11.901 5.11278 10.2583 6.17894 9.00064 6.73324C7.74276 6.17871 6.10027 5.11278 6.10027 4.29716Z" fill="black"/>
+</symbol>
+<symbol fill="none" id="ico-woofbot-8" viewBox="0 0 48 40">
+<path d="M44.0627 5.21343C42.4493 2.86513 40.0493 0.065918 37.7777 0.065918C35.7394 0.065918 34.1792 1.22616 33.5449 3.18763C32.5535 3.6533 31.8045 3.46098 30.4198 3.10196C29.0183 2.73869 27.099 2.24118 24.0008 2.24118C20.9029 2.24118 18.9833 2.73869 17.5818 3.10196C16.197 3.46088 15.4482 3.6533 14.4567 3.18763C13.8226 1.22616 12.2623 0.065918 10.2241 0.065918C7.95254 0.065918 5.55246 2.86513 3.93897 5.21343C2.42832 7.41211 0.797852 10.5049 0.797852 11.6674C0.797852 11.9977 0.996436 12.1821 1.15604 12.3302C1.56807 12.7126 2.82195 13.8766 2.97485 16.0685C3.16129 18.741 4.70438 21.9548 6.87224 22.4868C7.03656 22.5271 7.23613 22.5585 7.46073 22.5583C7.64572 22.5583 7.84756 22.5372 8.0603 22.4826C8.14369 25.1134 8.7281 27.358 9.84231 29.3251C10.9148 31.2186 12.5095 32.9335 14.8606 34.7225C15.0502 34.8666 15.3186 35.2247 15.6027 35.6037C16.8206 37.2279 18.8587 39.9462 24.0008 39.9462C29.1429 39.9462 31.1811 37.2279 32.3989 35.6037C32.6829 35.2247 32.9515 34.8666 33.1411 34.7225C35.4921 32.9335 37.0868 31.2186 38.1593 29.3253C39.2735 27.3582 39.858 25.1136 39.9412 22.4826C40.154 22.5372 40.3561 22.5585 40.5408 22.5585C40.7655 22.5585 40.9652 22.5273 41.1293 22.4868C43.2972 21.9548 44.8403 18.741 45.0267 16.0685C45.1797 13.8768 46.4336 12.7127 46.8456 12.3302C47.0052 12.1821 47.2037 11.9978 47.2037 11.6675C47.2037 10.5049 45.5734 7.41211 44.0627 5.21343ZM43.5801 15.9675C43.4158 18.3234 42.0829 20.7597 40.7838 21.0784C40.211 21.2191 39.6513 20.8525 39.1205 19.9888C38.3555 18.7438 38.8387 16.0682 39.3061 13.4808C39.9886 9.70203 40.762 5.41945 38.2648 3.15428C37.968 2.88517 37.5096 2.90765 37.2405 3.2042C36.9715 3.50087 36.9937 3.9594 37.2905 4.22841C39.1919 5.95314 38.5247 9.64883 37.879 13.2228C37.3397 16.2098 36.8299 19.0312 37.8848 20.748C38.0972 21.0932 38.3154 21.3756 38.5345 21.6065C38.5139 21.6737 38.5026 21.745 38.5026 21.8188C38.5026 27.6299 36.0082 30.7187 32.2629 33.5684C31.9125 33.8349 31.6001 34.2516 31.2385 34.7337C30.1154 36.2318 28.4178 38.4959 24.0008 38.4959C19.584 38.4959 17.8865 36.2318 16.7631 34.7337C16.4016 34.2516 16.0893 33.8349 15.7389 33.5684C11.9934 30.7184 9.49898 27.6299 9.49898 21.8188C9.49898 21.745 9.48773 21.6737 9.46725 21.6067C9.68641 21.3759 9.90456 21.0934 10.1168 20.7482C11.1718 19.0314 10.6621 16.21 10.1226 13.223C9.47714 9.64892 8.8096 5.95321 10.7112 4.22857C11.0078 3.95958 11.0302 3.50103 10.7612 3.20439C10.4922 2.90774 10.0335 2.88543 9.73699 3.15444C7.23958 5.41954 8.01308 9.70222 8.69557 13.4808C9.16289 16.0685 9.64617 18.7441 8.8812 19.9891C8.35053 20.8527 7.79092 21.2193 7.21792 21.0787C5.91874 20.7597 4.58584 18.3236 4.4215 15.9677C4.29824 14.201 3.58204 12.6686 2.29217 11.4098C2.50608 10.5915 3.49195 8.42507 5.13418 6.03479C7.07826 3.2053 8.98099 1.5161 10.2241 1.5161C11.0863 1.5161 12.6126 1.82245 13.1479 3.87446C13.1485 3.87683 13.1495 3.8791 13.1501 3.88144C13.1537 3.89478 13.1582 3.9079 13.1626 3.92105C13.1659 3.93085 13.1688 3.9409 13.1725 3.95051C13.1768 3.96193 13.1821 3.97308 13.1871 3.98431C13.1918 3.99502 13.1961 4.0059 13.2013 4.01623C13.2061 4.02582 13.2117 4.03507 13.217 4.0444C13.2232 4.05565 13.2291 4.06707 13.2359 4.07775C13.2416 4.08692 13.2482 4.09545 13.2543 4.10431C13.2615 4.11474 13.2684 4.12526 13.2761 4.13522C13.2835 4.14483 13.2917 4.15381 13.2996 4.16304C13.307 4.17148 13.3139 4.18027 13.3216 4.18842C13.3302 4.19759 13.3396 4.206 13.3487 4.21482C13.3566 4.22241 13.3643 4.23021 13.3725 4.23746C13.3812 4.24498 13.3906 4.25187 13.3996 4.25904C13.4092 4.26675 13.4188 4.27463 13.4288 4.28178C13.4372 4.28768 13.4461 4.29312 13.4548 4.29874C13.4664 4.30627 13.4779 4.31386 13.49 4.32075C13.4921 4.32202 13.4941 4.32347 13.4962 4.32467C14.2752 4.75945 14.9514 4.91707 15.6231 4.91707C16.3595 4.91707 17.0906 4.72753 17.9458 4.50593C19.3454 4.14293 21.0878 3.69139 24.0008 3.69139C26.9141 3.69139 28.6562 4.14293 30.0561 4.50584C30.9113 4.72753 31.6421 4.91697 32.3785 4.91697C33.0502 4.91697 33.7266 4.75926 34.5054 4.32457C34.5075 4.32338 34.5092 4.32202 34.5113 4.32085C34.5239 4.3136 34.5361 4.30564 34.5485 4.29764C34.5565 4.29239 34.5647 4.28749 34.5724 4.28196C34.5835 4.27418 34.5938 4.26565 34.6043 4.25731C34.6125 4.25079 34.6212 4.24453 34.6289 4.23774C34.6383 4.22958 34.647 4.2207 34.6559 4.212C34.6638 4.20429 34.6723 4.19686 34.6798 4.1888C34.6887 4.17938 34.6969 4.16921 34.7053 4.15925C34.7119 4.15137 34.7192 4.14366 34.7255 4.1355C34.7342 4.12444 34.7417 4.11275 34.7496 4.10114C34.755 4.09343 34.7606 4.08591 34.7656 4.07794C34.7731 4.06643 34.7794 4.05429 34.786 4.04222C34.7909 4.03362 34.796 4.02518 34.8005 4.0163C34.8056 4.00561 34.8103 3.99429 34.8152 3.98323C34.8199 3.97236 34.8249 3.96158 34.8293 3.95051C34.8328 3.9409 34.8359 3.93085 34.8392 3.92086C34.8436 3.90774 34.8481 3.89478 34.8516 3.88144C34.8523 3.8791 34.8532 3.87683 34.8537 3.87446C35.389 1.82245 36.9155 1.5161 37.7777 1.5161C39.0206 1.5161 40.9235 3.2053 42.8674 6.0347C44.5096 8.42498 45.4954 10.5913 45.7094 11.4097C44.4196 12.6685 43.7034 14.201 43.5801 15.9675Z" fill="black"/>
+</symbol>
+<symbol fill="none" id="ico-woofbot-9" viewBox="0 0 6 5">
+<path d="M3.02465 4.64341C4.22603 4.64341 5.1999 3.66958 5.1999 2.46819C5.1999 1.26679 4.22603 0.292969 3.02465 0.292969C1.82328 0.292969 0.849365 1.26679 0.849365 2.46819C0.849365 3.66958 1.82328 4.64341 3.02465 4.64341Z" fill="black"/>
+</symbol>
+<symbol fill="none" id="ico-woofbot-10" viewBox="0 0 6 5">
+<path d="M2.97697 4.64341C4.17813 4.64341 5.15218 3.66958 5.15218 2.46819C5.15218 1.26679 4.17813 0.292969 2.97697 0.292969C1.77557 0.292969 0.801514 1.26679 0.801514 2.46819C0.801514 3.66958 1.77557 4.64341 2.97697 4.64341Z" fill="black"/>
+</symbol>
+<symbol fill="none" id="ico-woofbot-11" viewBox="0 0 6 3">
+<path d="M5.04959 0.693057C3.68999 0.930243 2.31141 0.930243 0.951809 0.693057C0.557124 0.624151 0.181658 0.888288 0.112986 1.28274C0.0440806 1.67719 0.307985 2.05266 0.702435 2.12156C1.46509 2.25469 2.23289 2.32125 3.0007 2.32125C3.7685 2.32125 4.53631 2.25469 5.29873 2.12156C5.69341 2.05266 5.95732 1.67719 5.88841 1.28274C5.81974 0.888288 5.44451 0.624151 5.04959 0.693057Z" fill="black"/>
+</symbol>
+<symbol fill="none" id="ico-libreoffice" viewBox="0 0 60 61">
+<rect x="0.000976562" y="0.605957" width="59.9997" height="59.9994" rx="13.1228" fill="#009B00"/>
+<g filter="url(#svg15134282_2373_filter0_d_832_12424)">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M17.9404 15.3462V45.8626H42.0619V26.4805L30.9235 15.3462H17.9404ZM31.6624 12.769C31.8726 12.769 32.0743 12.8525 32.223 13.0012L44.4067 25.1805C44.5554 25.3292 44.639 25.531 44.639 25.7413V47.6468C44.639 48.0847 44.284 48.4397 43.846 48.4397H16.1563C15.7183 48.4397 15.3633 48.0847 15.3633 47.6468V13.562C15.3633 13.1241 15.7183 12.769 16.1563 12.769H31.6624Z" fill="url(#svg15134282_2373_paint0_linear_832_12424)"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M36.8217 11.8467C36.4482 11.8467 36.1114 12.0717 35.9683 12.4168C35.8253 12.7619 35.9043 13.1592 36.1684 13.4234L43.9847 21.2442C44.2488 21.5084 44.6462 21.5876 44.9914 21.4446C45.3367 21.3017 45.5618 20.9648 45.5618 20.5912V12.7704C45.5618 12.2603 45.1482 11.8467 44.6381 11.8467H36.8217Z" fill="url(#svg15134282_2373_paint1_linear_832_12424)"/>
+</g>
+<defs>
+<filter id="svg15134282_2373_filter0_d_832_12424" x="13.4883" y="11.8467" width="41.4484" height="47.8432" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dx="3.74997" dy="5.62496"/>
+<feGaussianBlur stdDeviation="2.81248"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.12 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_832_12424"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_832_12424" result="shape"/>
+</filter>
+<linearGradient id="svg15134282_2373_paint0_linear_832_12424" x1="15.3612" y1="13.5847" x2="44.1197" y2="48.5905" gradientUnits="userSpaceOnUse">
+<stop stop-color="white"/>
+<stop offset="0.770844" stop-color="white" stop-opacity="0.867292"/>
+<stop offset="1" stop-color="white" stop-opacity="0.72"/>
+</linearGradient>
+<linearGradient id="svg15134282_2373_paint1_linear_832_12424" x1="35.8973" y1="12.0677" x2="43.2647" y2="22.9897" gradientUnits="userSpaceOnUse">
+<stop stop-color="white"/>
+<stop offset="0.770844" stop-color="white" stop-opacity="0.867292"/>
+<stop offset="1" stop-color="white" stop-opacity="0.72"/>
+</linearGradient>
+</defs>
+</symbol>
+<symbol fill="none" id="ico-sphinx-relay-1" viewBox="0 0 60 61">
+<path d="M60.0005 0.205566H0.000976562V60.2051H60.0005V0.205566Z" fill="#618AFF"/>
+</symbol>
+<symbol fill="none" id="ico-sphinx-relay-2" viewBox="0 0 44 42">
+<path d="M35.7842 5.87271C33.7697 4.03492 31.4295 2.58982 28.8842 1.61181C26.7059 0.751586 24.3894 0.29491 22.0475 0.26416H22.0335C19.694 0.296527 17.3798 0.753954 15.2038 1.61415C12.6545 2.59015 10.3103 4.03452 8.29218 5.87271C4.87033 8.98987 0.792236 14.7438 0.792236 24.4445C0.794346 24.6824 0.858611 24.9158 0.978657 25.1213C1.0987 25.3269 1.27033 25.4975 1.47661 25.6163C1.51879 25.6398 5.59689 28.0444 6.37032 32.7342C6.90235 35.9592 9.0867 38.4342 12.6984 39.8967C14.3254 40.5461 16.0389 40.9528 17.7843 41.1037C17.9704 41.1152 18.1572 41.0885 18.3325 41.0252C18.508 40.9617 18.6688 40.8632 18.8048 40.7353C18.9405 40.6075 19.049 40.4533 19.1228 40.282C19.1969 40.1109 19.2351 39.9262 19.2351 39.7397V30.053C20.1301 30.3162 21.0585 30.4479 21.9913 30.4444C22.9663 30.4486 23.9364 30.3071 24.8694 30.0249V39.7514C24.8668 40.1126 25.0074 40.4601 25.2606 40.7179C25.5135 40.9757 25.8582 41.1227 26.2194 41.1272H26.3038C28.0491 40.9762 29.7626 40.5696 31.3897 39.9201C34.9896 38.46 37.174 35.9827 37.7177 32.7577C38.067 30.7681 39.0068 28.9297 40.4154 27.4819C41.066 26.7767 41.805 26.1582 42.6138 25.6421C42.82 25.5233 42.9916 25.3527 43.1118 25.1471C43.2318 24.9416 43.2961 24.7081 43.2982 24.4702C43.2841 14.7438 39.206 8.99222 35.7842 5.87271ZM22.0311 2.9993H22.0452C24.8296 2.9993 28.8795 4.00241 32.517 6.7188L30.117 11.3078H13.896L11.5523 6.72583C15.1851 4.00241 19.2444 2.9993 22.0311 2.9993ZM9.06561 32.296C8.28983 27.6085 4.9922 24.7609 3.5344 23.7132C3.71956 16.1172 6.67032 11.3617 9.42186 8.57738L11.6882 13.0023L11.7 18.7656C11.6991 20.8607 12.1981 22.9255 13.1554 24.789C13.9387 26.3412 15.0813 27.6837 16.4882 28.7054V38.1764C14.1492 37.7358 9.73592 36.36 9.06561 32.3007V32.296ZM15.5812 23.5163C14.8252 22.0403 14.4323 20.4053 14.4351 18.7469V14.0359H29.5709L29.5287 18.5406C29.5156 20.2487 29.1151 21.9318 28.3569 23.4624C27.3889 25.396 25.4952 27.6999 21.9702 27.6999C18.3069 27.7093 16.3945 25.0867 15.5812 23.521V23.5163ZM35.0084 32.296C34.6357 34.546 33.0935 36.2452 30.4217 37.3444C29.5062 37.7147 28.5563 37.9933 27.5858 38.1764V28.6444C28.955 27.6015 30.0577 26.2489 30.8037 24.6976C31.7471 22.7914 32.2449 20.6957 32.2592 18.5687L32.3131 13.0023L34.6357 8.54925C37.3943 11.336 40.3638 16.0914 40.5419 23.7062C39.0841 24.7632 35.7865 27.6015 35.0107 32.3007L35.0084 32.296Z" fill="white"/>
+</symbol>
+<symbol fill="none" id="ico-tailscale" viewBox="0 0 60 61">
+<g clip-path="url(#svg-1653992833_2884_clip0_832_12435)">
+<path d="M60.0016 0.804199H0.00146484V60.8042H60.0016V0.804199Z" fill="#1F2124"/>
+<mask id="svg-1653992833_2884_mask0_832_12435" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="61" height="61">
+<path d="M60.0026 0.803223H0.00244141V60.8032H60.0026V0.803223Z" fill="#C4C4C4"/>
+</mask>
+<g mask="url(#svg-1653992833_2884_mask0_832_12435)">
+<path d="M16.0021 21.3109C18.5992 21.3109 20.7046 19.2045 20.7046 16.6061C20.7046 14.0078 18.5992 11.9014 16.0021 11.9014C13.405 11.9014 11.2996 14.0078 11.2996 16.6061C11.2996 19.2045 13.405 21.3109 16.0021 21.3109Z" fill="#54514D"/>
+<path d="M16.0021 35.3379C18.5992 35.3379 20.7046 33.2313 20.7046 30.6331C20.7046 28.0348 18.5992 25.9282 16.0021 25.9282C13.405 25.9282 11.2996 28.0348 11.2996 30.6331C11.2996 33.2313 13.405 35.3379 16.0021 35.3379Z" fill="#FFFEFA"/>
+<path d="M16.0021 49.6265C18.5992 49.6265 20.7046 47.5199 20.7046 44.9216C20.7046 42.3231 18.5992 40.2168 16.0021 40.2168C13.405 40.2168 11.2996 42.3231 11.2996 44.9216C11.2996 47.5199 13.405 49.6265 16.0021 49.6265Z" fill="#54514D"/>
+<path d="M30.1083 35.3379C32.7054 35.3379 34.8108 33.2313 34.8108 30.6331C34.8108 28.0348 32.7054 25.9282 30.1083 25.9282C27.5112 25.9282 25.4058 28.0348 25.4058 30.6331C25.4058 33.2313 27.5112 35.3379 30.1083 35.3379Z" fill="#FFFEFA"/>
+<path d="M30.1083 49.6265C32.7054 49.6265 34.8108 47.5199 34.8108 44.9216C34.8108 42.3231 32.7054 40.2168 30.1083 40.2168C27.5112 40.2168 25.4058 42.3231 25.4058 44.9216C25.4058 47.5199 27.5112 49.6265 30.1083 49.6265Z" fill="#FFFEFA"/>
+<path d="M30.1083 21.3109C32.7054 21.3109 34.8108 19.2045 34.8108 16.6061C34.8108 14.0078 32.7054 11.9014 30.1083 11.9014C27.5112 11.9014 25.4058 14.0078 25.4058 16.6061C25.4058 19.2045 27.5112 21.3109 30.1083 21.3109Z" fill="#54514D"/>
+<path d="M44.0419 21.3109C46.639 21.3109 48.7444 19.2045 48.7444 16.6061C48.7444 14.0078 46.639 11.9014 44.0419 11.9014C41.4447 11.9014 39.3394 14.0078 39.3394 16.6061C39.3394 19.2045 41.4447 21.3109 44.0419 21.3109Z" fill="#54514D"/>
+<path d="M44.0426 35.3379C46.6397 35.3379 48.7451 33.2313 48.7451 30.6331C48.7451 28.0348 46.6397 25.9282 44.0426 25.9282C41.4455 25.9282 39.3401 28.0348 39.3401 30.6331C39.3401 33.2313 41.4455 35.3379 44.0426 35.3379Z" fill="#FFFEFA"/>
+<path d="M44.0426 49.6265C46.6397 49.6265 48.7451 47.5199 48.7451 44.9216C48.7451 42.3231 46.6397 40.2168 44.0426 40.2168C41.4455 40.2168 39.3401 42.3231 39.3401 44.9216C39.3401 47.5199 41.4455 49.6265 44.0426 49.6265Z" fill="#54514D"/>
+</g>
+</g>
+<rect x="0.118164" y="0.921875" width="59.7657" height="59.7656" rx="13.0078" stroke="black" stroke-opacity="0.2" stroke-width="0.234375"/>
+<defs>
+<clipPath id="svg-1653992833_2884_clip0_832_12435">
+<rect x="0.000976562" y="0.804688" width="60.0001" height="60" rx="13.125" fill="white"/>
+</clipPath>
+</defs>
+</symbol>
+<symbol fill="none" id="ico-nextcloud-1" viewBox="0 0 60 61">
+<path d="M60.0005 0.404785H0.000976562V60.4043H60.0005V0.404785Z" fill="url(#svg-66068337_439_paint0_linear_832_12519)"/>
+<defs>
+<linearGradient id="svg-66068337_439_paint0_linear_832_12519" x1="7.29291" y1="60.4043" x2="60.0005" y2="0.40479" gradientUnits="userSpaceOnUse">
+<stop stop-color="#0082C9"/>
+<stop offset="1" stop-color="#1CAFFF"/>
+</linearGradient>
+</defs>
+</symbol>
+<symbol fill="none" id="ico-nextcloud-2" viewBox="0 0 46 22">
+<path d="M23.0083 0.85791C18.3009 0.85791 14.3111 4.08146 13.0745 8.44903C11.9998 6.13248 9.67085 4.5094 6.98831 4.5094C3.29916 4.5094 0.266602 7.5727 0.266602 11.2992C0.266602 15.0255 3.29916 18.0902 6.98831 18.0902C9.67085 18.0902 11.9998 16.4662 13.0745 14.1492C14.3111 18.5172 18.3009 21.7417 23.0083 21.7417C27.6808 21.7417 31.6501 18.5657 32.9183 14.2472C34.0131 16.5115 36.3132 18.0902 38.9576 18.0902C42.6467 18.0902 45.6806 15.0255 45.6806 11.2992C45.6806 7.5727 42.6467 4.5094 38.9576 4.5094C36.3132 4.5094 34.0131 6.08701 32.9183 8.35106C31.6501 4.03282 27.6808 0.85791 23.0083 0.85791ZM23.0083 4.84366C26.5616 4.84366 29.4004 7.70958 29.4004 11.2992C29.4004 14.8887 26.5616 17.756 23.0083 17.756C19.4547 17.756 16.6174 14.8887 16.6174 11.2992C16.6174 7.70958 19.4547 4.84366 23.0083 4.84366ZM6.98831 8.4952C8.54516 8.4952 9.76558 9.72659 9.76558 11.2992C9.76558 12.8716 8.54516 14.1045 6.98831 14.1045C5.43144 14.1045 4.21239 12.8716 4.21239 11.2992C4.21239 9.72659 5.43144 8.4952 6.98831 8.4952ZM38.9576 8.4952C40.5143 8.4952 41.7347 9.72659 41.7347 11.2992C41.7347 12.8716 40.5143 14.1045 38.9576 14.1045C37.4007 14.1045 36.1817 12.8716 36.1817 11.2992C36.1817 9.72659 37.4007 8.4952 38.9576 8.4952Z" fill="white"/>
+</symbol>
+<symbol fill="none" id="ico-firefox" viewBox="0 0 60 61">
+<rect x="0.000976562" y="0.00488281" width="60" height="60" rx="13.12" fill="white"/>
+<g clip-path="url(#svg1990722599_15520_clip0_832_12441)">
+<path d="M52.226 21.0615C51.1842 18.5537 49.0725 15.8463 47.415 14.9911C48.7642 17.6366 49.5446 20.2901 49.8429 22.27C49.8429 22.27 49.8429 22.2839 49.8479 22.3099C47.1366 15.5499 42.5381 12.8236 38.7829 6.88895C38.5923 6.58957 38.4027 6.29019 38.2171 5.96986C38.1123 5.78923 38.0275 5.62558 37.9537 5.4709C37.7981 5.17082 37.6778 4.85369 37.5954 4.52586C37.5961 4.51029 37.5909 4.49504 37.581 4.48305C37.571 4.47107 37.557 4.46321 37.5415 4.461C37.5268 4.45701 37.5113 4.45701 37.4966 4.461C37.4927 4.4628 37.489 4.46516 37.4856 4.46798C37.4797 4.46798 37.4737 4.47497 37.4677 4.47696L37.4777 4.46399C31.4532 7.99265 29.4094 14.5201 29.2218 17.7863C26.8144 17.9509 24.5126 18.8374 22.6166 20.33C22.4184 20.1624 22.2112 20.0058 21.9959 19.861C21.4495 17.9482 21.4264 15.9239 21.929 13.9992C19.4651 15.1218 17.5491 16.8931 16.156 18.4609H16.145C15.194 17.2564 15.2609 13.2836 15.3148 12.4544C15.3038 12.4025 14.6062 12.8166 14.5164 12.8795C13.6772 13.4782 12.8928 14.1501 12.1723 14.8873C11.3524 15.7186 10.6034 16.6168 9.93295 17.5727C8.39056 19.7586 7.29671 22.2285 6.71465 24.8396C6.70367 24.8915 6.69369 24.9454 6.68271 24.9983C6.6378 25.2089 6.47514 26.2657 6.4462 26.4952V26.5481C6.23415 27.64 6.10207 28.746 6.05103 29.8572V29.9799C6.05103 43.2244 16.7887 53.9621 30.0331 53.9621C41.8955 53.9621 51.744 45.35 53.673 34.0375C53.7129 33.7311 53.7458 33.4218 53.7818 33.1124C54.2588 28.999 53.7289 24.676 52.226 21.0615ZM24.5835 39.8344C24.6952 39.8873 24.801 39.9462 24.9158 39.9981L24.9318 40.0081C24.817 39.9522 24.7002 39.8943 24.5845 39.8344H24.5835ZM49.8499 22.3209V22.2979V22.3239V22.3209Z" fill="url(#svg1990722599_15520_paint0_linear_832_12441)"/>
+<path d="M52.2262 21.0611C51.1843 18.5533 49.0727 15.8459 47.4152 14.9907C48.7644 17.6362 49.5447 20.2897 49.8431 22.2696V22.3185C52.1064 28.4537 50.873 34.6928 49.0967 38.5048C46.3484 44.4026 39.6952 50.448 29.2799 50.1536C18.0363 49.8343 8.12389 41.4806 6.27274 30.5484C5.93545 28.823 6.27274 27.9478 6.44239 26.5477C6.23582 27.6264 6.15699 27.9388 6.0542 29.8568V29.9796C6.0542 43.224 16.7919 53.9617 30.0363 53.9617C41.8986 53.9617 51.7472 45.3496 53.6762 34.0371C53.7161 33.7308 53.749 33.4214 53.7849 33.112C54.2589 28.9986 53.729 24.6756 52.2262 21.0611V21.0611Z" fill="url(#svg1990722599_15520_paint1_radial_832_12441)"/>
+<path d="M52.2262 21.0611C51.1843 18.5533 49.0727 15.8459 47.4152 14.9907C48.7644 17.6362 49.5447 20.2897 49.8431 22.2696V22.3185C52.1064 28.4537 50.873 34.6928 49.0967 38.5048C46.3484 44.4026 39.6952 50.448 29.2799 50.1536C18.0363 49.8343 8.12389 41.4806 6.27274 30.5484C5.93545 28.823 6.27274 27.9478 6.44239 26.5477C6.23582 27.6264 6.15699 27.9388 6.0542 29.8568V29.9796C6.0542 43.224 16.7919 53.9617 30.0363 53.9617C41.8986 53.9617 51.7472 45.3496 53.6762 34.0371C53.7161 33.7308 53.749 33.4214 53.7849 33.112C54.2589 28.9986 53.729 24.6756 52.2262 21.0611V21.0611Z" fill="url(#svg1990722599_15520_paint2_radial_832_12441)"/>
+<path d="M40.5709 23.88C40.6237 23.9169 40.6706 23.9538 40.7205 23.9907C40.1187 22.922 39.3688 21.9437 38.4932 21.0848C31.0387 13.6303 36.5392 4.92041 37.4663 4.47733L37.4763 4.46436C31.4518 7.99302 29.4081 14.5204 29.2205 17.7867C29.4999 17.7677 29.7783 17.7437 30.0627 17.7437C34.5584 17.7437 38.4742 20.2166 40.5709 23.88Z" fill="url(#svg1990722599_15520_paint3_radial_832_12441)"/>
+<path d="M30.0778 25.3684C30.0389 25.9671 27.9313 28.0229 27.1938 28.0229C20.374 28.0229 19.2673 32.1483 19.2673 32.1483C19.5667 35.623 21.9877 38.4841 24.9166 39.998C25.0503 40.0668 25.185 40.1287 25.3158 40.1906C25.5503 40.2903 25.7858 40.3901 26.0203 40.4789C27.0247 40.8332 28.0766 41.035 29.1408 41.0777C41.0939 41.6385 43.4111 26.7854 34.7841 22.4724C36.9925 22.0882 39.2857 22.9773 40.566 23.8765C38.4704 20.2131 34.5535 17.7402 30.0579 17.7402C29.7735 17.7402 29.4951 17.7642 29.2156 17.7831C26.81 17.9498 24.5103 18.8373 22.6164 20.3298C22.9826 20.6402 23.3957 21.0533 24.2649 21.9096C25.8955 23.5182 30.0689 25.1738 30.0778 25.3684V25.3684Z" fill="url(#svg1990722599_15520_paint4_radial_832_12441)"/>
+<path d="M30.0778 25.3684C30.0389 25.9671 27.9313 28.0229 27.1938 28.0229C20.374 28.0229 19.2673 32.1483 19.2673 32.1483C19.5667 35.623 21.9877 38.4841 24.9166 39.998C25.0503 40.0668 25.185 40.1287 25.3158 40.1906C25.5503 40.2903 25.7858 40.3901 26.0203 40.4789C27.0247 40.8332 28.0766 41.035 29.1408 41.0777C41.0939 41.6385 43.4111 26.7854 34.7841 22.4724C36.9925 22.0882 39.2857 22.9773 40.566 23.8765C38.4704 20.2131 34.5535 17.7402 30.0579 17.7402C29.7735 17.7402 29.4951 17.7642 29.2156 17.7831C26.81 17.9498 24.5103 18.8373 22.6164 20.3298C22.9826 20.6402 23.3957 21.0533 24.2649 21.9096C25.8955 23.5182 30.0689 25.1738 30.0778 25.3684V25.3684Z" fill="url(#svg1990722599_15520_paint5_radial_832_12441)"/>
+<path d="M21.5013 19.533C21.6959 19.6587 21.8556 19.7645 22.0003 19.8613C21.4539 17.9486 21.4308 15.9242 21.9334 13.9995C19.4695 15.1222 17.5535 16.8935 16.1604 18.4612C16.2732 18.4582 19.7519 18.3954 21.5013 19.533V19.533Z" fill="url(#svg1990722599_15520_paint6_radial_832_12441)"/>
+<path d="M6.27216 30.5489C8.1233 41.4812 18.0357 49.8348 29.2873 50.1542C39.7026 50.4485 46.3518 44.4031 49.1041 38.5054C50.8804 34.6923 52.1138 28.4543 49.8505 22.319V22.2731C49.8505 22.2791 49.8505 22.2871 49.8555 22.3131C50.7057 27.8685 47.8806 33.2503 43.4638 36.8897C43.4592 36.8999 43.4549 36.9103 43.4508 36.9207C34.8437 43.9291 26.6079 41.1489 24.9403 40.0142C24.8246 39.9584 24.7078 39.9005 24.5921 39.8406C19.5735 37.4456 17.5008 32.8701 17.9449 28.9493C13.7087 28.9493 12.2637 25.3747 12.2637 25.3747C12.2637 25.3747 16.0678 22.6623 21.0814 25.0214C25.7247 27.2069 30.0856 25.3757 30.0856 25.3747C30.0766 25.1801 25.9033 23.5195 24.2757 21.9159C23.4065 21.0597 22.9934 20.6465 22.6271 20.3362C22.429 20.1686 22.2218 20.012 22.0064 19.8671C21.8637 19.7673 21.7071 19.6676 21.5075 19.5388C19.7581 18.4012 16.2793 18.4641 16.1646 18.4671H16.1536C15.2026 17.2626 15.2694 13.2898 15.3233 12.4605C15.3124 12.4086 14.6148 12.8228 14.525 12.8857C13.6858 13.4843 12.9014 14.1562 12.1809 14.8935C11.361 15.7247 10.6119 16.623 9.94152 17.5789C8.39913 19.7647 7.30529 22.2346 6.72322 24.8458C6.70426 24.8917 5.85103 28.6169 6.27216 30.5489V30.5489Z" fill="url(#svg1990722599_15520_paint7_radial_832_12441)"/>
+<path d="M38.4932 21.0844C39.3688 21.9433 40.1187 22.9217 40.7205 23.9904C40.8453 24.0841 40.9652 24.184 41.0798 24.2898C46.5165 29.2954 43.6724 36.3816 43.4559 36.8906C47.8727 33.2511 50.6978 27.8693 49.8476 22.3139C47.1362 15.5499 42.5378 12.8236 38.7826 6.88895C38.592 6.58957 38.4024 6.29019 38.2168 5.96986C38.112 5.78923 38.0271 5.62558 37.9533 5.4709C37.7977 5.17082 37.6775 4.85369 37.595 4.52586C37.5957 4.51029 37.5905 4.49504 37.5806 4.48305C37.5706 4.47107 37.5566 4.46321 37.5412 4.461C37.5265 4.45701 37.511 4.45701 37.4963 4.461C37.4923 4.4628 37.4886 4.46516 37.4853 4.46798C37.4793 4.46798 37.4733 4.47497 37.4673 4.47696C36.5392 4.92004 31.0387 13.6299 38.4932 21.0844V21.0844Z" fill="url(#svg1990722599_15520_paint8_radial_832_12441)"/>
+<path d="M41.0781 24.2849C40.9634 24.1791 40.8435 24.0792 40.7188 23.9855C40.6699 23.9486 40.619 23.9117 40.5691 23.8748C39.2888 22.9766 36.9956 22.0865 34.7872 22.4707C43.4132 26.7837 41.097 41.6368 29.1439 41.076C28.0797 41.0333 27.0278 40.8315 26.0234 40.4772C25.7889 40.3894 25.5534 40.2926 25.3188 40.1888C25.1831 40.127 25.0484 40.0651 24.9197 39.9962L24.9356 40.0062C26.6032 41.1439 34.839 43.9241 43.4461 36.9127C43.4461 36.9127 43.4511 36.8997 43.4591 36.8817C43.6727 36.3818 46.5168 29.2955 41.0781 24.2849Z" fill="url(#svg1990722599_15520_paint9_radial_832_12441)"/>
+<path d="M19.267 32.1481C19.267 32.1481 20.3737 28.0227 27.1935 28.0227C27.931 28.0227 30.0386 25.9649 30.0775 25.3682C30.1165 24.7714 25.7166 27.2004 21.0733 25.0149C16.0597 22.6558 12.2556 25.3682 12.2556 25.3682C12.2556 25.3682 13.7006 28.9427 17.9368 28.9427C17.4927 32.8636 19.5654 37.4351 24.584 39.8341C24.6957 39.887 24.8015 39.9459 24.9163 39.9978C21.9874 38.4869 19.5694 35.6229 19.267 32.1481Z" fill="url(#svg1990722599_15520_paint10_radial_832_12441)"/>
+<path d="M52.226 21.0615C51.1842 18.5537 49.0725 15.8463 47.415 14.9911C48.7642 17.6366 49.5446 20.2901 49.8429 22.27C49.8429 22.27 49.8429 22.2839 49.8479 22.3099C47.1366 15.5499 42.5381 12.8236 38.7829 6.88895C38.5923 6.58957 38.4027 6.29019 38.2171 5.96986C38.1123 5.78924 38.0275 5.62558 37.9537 5.4709C37.7981 5.17082 37.6778 4.85369 37.5954 4.52586C37.5961 4.51029 37.5909 4.49504 37.581 4.48305C37.571 4.47107 37.557 4.46321 37.5415 4.461C37.5268 4.45701 37.5113 4.45701 37.4966 4.461C37.4927 4.4628 37.489 4.46516 37.4856 4.46798C37.4797 4.46798 37.4737 4.47497 37.4677 4.47696L37.4777 4.46399C31.4532 7.99265 29.4094 14.5201 29.2218 17.7863C29.5013 17.7673 29.7797 17.7434 30.0641 17.7434C34.5597 17.7434 38.4756 20.2162 40.5722 23.8796C39.2919 22.9815 36.9987 22.0913 34.7903 22.4755C43.4163 26.7886 41.1001 41.6417 29.147 41.0808C28.0828 41.0382 27.0309 40.8364 26.0265 40.4821C25.792 40.3943 25.5565 40.2975 25.3219 40.1937C25.1862 40.1318 25.0515 40.0699 24.9228 40.0011L24.9387 40.0111C24.823 39.9552 24.7062 39.8973 24.5905 39.8374C24.7022 39.8903 24.808 39.9492 24.9228 40.0011C21.9879 38.4872 19.5699 35.6232 19.2675 32.1484C19.2675 32.1484 20.3742 28.023 27.1941 28.023C27.9315 28.023 30.0391 25.9653 30.0781 25.3685C30.0691 25.1739 25.8958 23.5134 24.2681 21.9097C23.3989 21.0535 22.9858 20.6404 22.6196 20.33C22.4214 20.1624 22.2142 20.0058 21.9989 19.861C21.4525 17.9482 21.4294 15.9239 21.932 13.9992C19.4681 15.1218 17.5521 16.8931 16.159 18.4609H16.148C15.197 17.2564 15.2639 13.2837 15.3178 12.4544C15.3068 12.4025 14.6092 12.8166 14.5194 12.8795C13.6802 13.4782 12.8958 14.1501 12.1753 14.8873C11.3554 15.7186 10.6063 16.6168 9.93595 17.5727C8.39355 19.7586 7.29971 22.2285 6.71764 24.8396C6.70666 24.8915 6.69668 24.9454 6.68571 24.9983C6.6408 25.2089 6.43722 26.2806 6.40928 26.5101C6.40928 26.4932 6.40928 26.5281 6.40928 26.5101C6.22243 27.6176 6.10279 28.7353 6.05103 29.8572V29.9799C6.05103 43.2244 16.7887 53.9621 30.0331 53.9621C41.8955 53.9621 51.744 45.35 53.673 34.0375C53.7129 33.7311 53.7458 33.4218 53.7818 33.1124C54.2588 28.999 53.7289 24.676 52.226 21.0615Z" fill="url(#svg1990722599_15520_paint11_linear_832_12441)"/>
+</g>
+<defs>
+<linearGradient id="svg1990722599_15520_paint0_linear_832_12441" x1="49.0516" y1="12.1271" x2="9.23838" y2="50.5392" gradientUnits="userSpaceOnUse">
+<stop offset="0.05" stop-color="#FFF44F"/>
+<stop offset="0.11" stop-color="#FFE847"/>
+<stop offset="0.22" stop-color="#FFC830"/>
+<stop offset="0.37" stop-color="#FF980E"/>
+<stop offset="0.4" stop-color="#FF8B16"/>
+<stop offset="0.46" stop-color="#FF672A"/>
+<stop offset="0.53" stop-color="#FF3647"/>
+<stop offset="0.7" stop-color="#E31587"/>
+</linearGradient>
+<radialGradient id="svg1990722599_15520_paint1_radial_832_12441" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(47.2116 9.9522) scale(49.997 49.997)">
+<stop offset="0.13" stop-color="#FFBD4F"/>
+<stop offset="0.19" stop-color="#FFAC31"/>
+<stop offset="0.25" stop-color="#FF9D17"/>
+<stop offset="0.28" stop-color="#FF980E"/>
+<stop offset="0.4" stop-color="#FF563B"/>
+<stop offset="0.47" stop-color="#FF3750"/>
+<stop offset="0.71" stop-color="#F5156C"/>
+<stop offset="0.78" stop-color="#EB0878"/>
+<stop offset="0.86" stop-color="#E50080"/>
+</radialGradient>
+<radialGradient id="svg1990722599_15520_paint2_radial_832_12441" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(28.9426 30.3917) scale(49.997 49.997)">
+<stop offset="0.3" stop-color="#960E18"/>
+<stop offset="0.35" stop-color="#B11927" stop-opacity="0.74"/>
+<stop offset="0.43" stop-color="#DB293D" stop-opacity="0.34"/>
+<stop offset="0.5" stop-color="#F5334B" stop-opacity="0.09"/>
+<stop offset="0.53" stop-color="#FF3750" stop-opacity="0"/>
+</radialGradient>
+<radialGradient id="svg1990722599_15520_paint3_radial_832_12441" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(34.9705 -1.39346) scale(36.2207 36.2207)">
+<stop offset="0.13" stop-color="#FFF44F"/>
+<stop offset="0.25" stop-color="#FFDC3E"/>
+<stop offset="0.51" stop-color="#FF9D12"/>
+<stop offset="0.53" stop-color="#FF980E"/>
+</radialGradient>
+<radialGradient id="svg1990722599_15520_paint4_radial_832_12441" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(23.4127 43.4518) scale(23.8055 23.8055)">
+<stop offset="0.35" stop-color="#3A8EE6"/>
+<stop offset="0.47" stop-color="#5C79F0"/>
+<stop offset="0.67" stop-color="#9059FF"/>
+<stop offset="1" stop-color="#C139E6"/>
+</radialGradient>
+<radialGradient id="svg1990722599_15520_paint5_radial_832_12441" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(29.6602 24.4499) rotate(-13.8972) scale(12.6123 14.8164)">
+<stop offset="0.21" stop-color="#9059FF" stop-opacity="0"/>
+<stop offset="0.28" stop-color="#8C4FF3" stop-opacity="0.06"/>
+<stop offset="0.75" stop-color="#7716A8" stop-opacity="0.45"/>
+<stop offset="0.97" stop-color="#6E008B" stop-opacity="0.6"/>
+</radialGradient>
+<radialGradient id="svg1990722599_15520_paint6_radial_832_12441" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(28.3101 7.90718) scale(17.1264 17.1264)">
+<stop stop-color="#FFE226"/>
+<stop offset="0.12" stop-color="#FFDB27"/>
+<stop offset="0.3" stop-color="#FFC82A"/>
+<stop offset="0.5" stop-color="#FFA930"/>
+<stop offset="0.73" stop-color="#FF7E37"/>
+<stop offset="0.79" stop-color="#FF7139"/>
+</radialGradient>
+<radialGradient id="svg1990722599_15520_paint7_radial_832_12441" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(41.7723 -2.9554) scale(73.069 73.069)">
+<stop offset="0.11" stop-color="#FFF44F"/>
+<stop offset="0.46" stop-color="#FF980E"/>
+<stop offset="0.62" stop-color="#FF5634"/>
+<stop offset="0.72" stop-color="#FF3647"/>
+<stop offset="0.9" stop-color="#E31587"/>
+</radialGradient>
+<radialGradient id="svg1990722599_15520_paint8_radial_832_12441" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(34.7094 5.02772) rotate(84.2321) scale(53.2601 34.9921)">
+<stop stop-color="#FFF44F"/>
+<stop offset="0.06" stop-color="#FFE847"/>
+<stop offset="0.17" stop-color="#FFC830"/>
+<stop offset="0.3" stop-color="#FF980E"/>
+<stop offset="0.36" stop-color="#FF8B16"/>
+<stop offset="0.45" stop-color="#FF672A"/>
+<stop offset="0.57" stop-color="#FF3647"/>
+<stop offset="0.74" stop-color="#E31587"/>
+</radialGradient>
+<radialGradient id="svg1990722599_15520_paint9_radial_832_12441" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(27.9075 14.2498) scale(45.6171 45.6171)">
+<stop offset="0.14" stop-color="#FFF44F"/>
+<stop offset="0.48" stop-color="#FF980E"/>
+<stop offset="0.59" stop-color="#FF5634"/>
+<stop offset="0.66" stop-color="#FF3647"/>
+<stop offset="0.9" stop-color="#E31587"/>
+</radialGradient>
+<radialGradient id="svg1990722599_15520_paint10_radial_832_12441" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(39.949 16.9197) scale(49.9282 49.9282)">
+<stop offset="0.09" stop-color="#FFF44F"/>
+<stop offset="0.23" stop-color="#FFE141"/>
+<stop offset="0.51" stop-color="#FFAF1E"/>
+<stop offset="0.63" stop-color="#FF980E"/>
+</radialGradient>
+<linearGradient id="svg1990722599_15520_paint11_linear_832_12441" x1="48.5726" y1="11.9215" x2="14.697" y2="45.798" gradientUnits="userSpaceOnUse">
+<stop offset="0.17" stop-color="#FFF44F" stop-opacity="0.8"/>
+<stop offset="0.27" stop-color="#FFF44F" stop-opacity="0.63"/>
+<stop offset="0.49" stop-color="#FFF44F" stop-opacity="0.22"/>
+<stop offset="0.6" stop-color="#FFF44F" stop-opacity="0"/>
+</linearGradient>
+<clipPath id="svg1990722599_15520_clip0_832_12441">
+<rect width="51.0937" height="51.0938" fill="white" transform="translate(4.4541 4.45801)"/>
+</clipPath>
+</defs>
+</symbol>
+<symbol fill="none" id="ico-photoprism-1" viewBox="0 0 60 61">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M0.000976562 0.604492H60.001V60.6045H0.000976562V0.604492Z" fill="url(#svg-191060628_482_paint0_linear_832_12492)"/>
+<defs>
+<linearGradient id="svg-191060628_482_paint0_linear_832_12492" x1="8.78734" y1="51.8182" x2="51.2147" y2="9.39086" gradientUnits="userSpaceOnUse">
+<stop stop-color="#C2FDE4"/>
+<stop offset="1" stop-color="#CDC6E9"/>
+</linearGradient>
+</defs>
+</symbol>
+<symbol fill="none" id="ico-photoprism-2" viewBox="0 0 40 35">
+<path d="M18.9712 0.432617L22.9336 3.09854M37.2778 27.6743L36.476 32.516L37.2778 27.6743ZM0.744741 27.8725L3.71298 30.6745L0.744741 27.8725ZM22.9054 3.12458L3.69294 30.6365C3.69058 30.6391 3.68905 30.6424 3.68854 30.6459C3.68802 30.6494 3.68854 30.6529 3.69004 30.6562C3.69154 30.6592 3.69393 30.6621 3.69695 30.6639C3.69995 30.6658 3.70344 30.6668 3.70698 30.6665L36.4579 32.542C36.4612 32.5422 36.4645 32.5417 36.4673 32.5403C36.4703 32.5389 36.4729 32.5368 36.4748 32.5342C36.4767 32.5317 36.4776 32.5284 36.4778 32.5251C36.4781 32.5221 36.4774 32.5188 36.476 32.516L22.9336 3.12856C22.9303 3.12432 22.9256 3.12151 22.9202 3.12076C22.915 3.12001 22.9096 3.12139 22.9054 3.12458ZM18.9492 0.464633L0.722686 27.8346C0.720647 27.8383 0.719639 27.8428 0.719733 27.847C0.719826 27.8514 0.721045 27.8557 0.723248 27.8596C0.725428 27.8634 0.728568 27.8664 0.732318 27.8688C0.736068 27.8711 0.740334 27.8723 0.744741 27.8725L37.2576 27.7125C37.2621 27.7125 37.2665 27.7113 37.2703 27.7092C37.2743 27.7068 37.2773 27.7035 37.2794 27.6996C37.2815 27.6956 37.2825 27.6911 37.2822 27.6867C37.2818 27.6822 37.2804 27.678 37.2778 27.6743L18.9911 0.464633C18.989 0.460883 18.986 0.457766 18.9825 0.455586C18.9787 0.453406 18.9745 0.452258 18.97 0.452258C18.9658 0.452258 18.9616 0.453406 18.9579 0.455586C18.9541 0.457766 18.9511 0.460883 18.9492 0.464633Z" stroke="#1D1D1B" stroke-width="1.17187" stroke-miterlimit="10"/>
+</symbol>
+<symbol fill="none" id="ico-trilium-notes" viewBox="0 0 60 61">
+<g clip-path="url(#svg-1917023903_5452_clip0_832_12460)">
+<rect x="0.000976562" y="0.20459" width="60" height="60" rx="13.128" fill="url(#svg-1917023903_5452_paint0_linear_832_12460)"/>
+<g filter="url(#svg-1917023903_5452_filter0_d_832_12460)">
+<path d="M42.4765 15.8211C40.1068 15.7478 38.879 16.8568 38.5824 16.9597C38.8522 16.4488 39.0327 16.1269 39.7226 15.4086C37.3761 15.384 35.2004 15.8918 33.5404 17.4448C31.3139 19.5275 31.487 21.2531 31.4825 21.2446C31.4829 21.2455 31.1312 20.1193 31.0257 18.9148C28.6028 22.2687 27.6462 26.7127 29.4831 30.0278C30.6234 27.2769 32.4341 24.9062 34.7676 23.0367C34.8445 21.0751 35.6336 19.4177 36.881 18.194C35.7554 19.5413 35.2587 21.0762 35.3088 22.6231C38.023 20.5982 41.3496 19.2486 45.0038 18.8058C42.3582 19.2919 39.9611 20.3464 37.866 21.7846C39.1773 22.3835 40.6749 22.4774 42.249 21.9292C40.7399 22.6364 39.0647 22.7521 37.3701 22.1362C35.866 23.2377 34.5283 24.5391 33.3786 25.9694C35.4197 26.6367 37.6524 26.4988 39.8742 25.3663C37.8346 26.6838 35.4384 27.1778 32.878 26.6168C31.8573 27.9866 31.0018 29.4579 30.3331 30.9742C31.1568 31.5815 34.7312 33.4869 40.8626 28.9654C39.9968 28.7096 39.2952 28.3478 39.2949 28.3472C39.3144 28.3559 39.9268 28.4121 41.7176 27.3393C43.3009 26.4134 44.6629 24.7362 45.6683 23.4307C44.8131 23.1156 44.147 22.7849 44.1467 22.7841C44.1463 22.7837 45.2519 22.8585 46.967 21.5456C48.4968 20.3745 50.2046 18.6769 50.2098 18.7249C50.2207 18.7351 46.4425 15.9436 42.4765 15.8211" fill="url(#svg-1917023903_5452_paint1_linear_832_12460)"/>
+<path d="M15.1643 21.9205C16.9626 21.3978 18.1077 22.0013 18.3538 22.0212C18.0524 21.6848 17.8544 21.4751 17.1932 21.0635C18.9827 20.5824 20.7407 20.5406 22.2991 21.3972C24.3894 22.5462 24.5782 23.8957 24.5801 23.8884C24.5798 23.8892 24.6392 22.9614 24.4956 22.0224C26.9727 24.1016 28.5316 27.3006 27.7442 30.1896C26.3603 28.3174 24.5343 26.8671 22.402 25.9018C21.9781 24.4218 21.066 23.3137 19.8845 22.6268C20.996 23.4319 21.6615 24.5041 21.9113 25.6931C19.459 24.6844 16.6642 24.3112 13.7878 24.6938C15.9012 24.5431 20.3778 24.8493 24.0102 27.8635C22.5739 28.7745 20.8411 29.1094 18.9316 28.684C20.7363 29.2861 22.6603 29.1907 24.5135 28.2584C25.549 29.1014 26.4771 30.0544 27.2708 31.0785C26.754 31.7038 24.3758 33.8605 18.8458 31.6222C19.4602 31.2566 19.9292 30.8424 19.9294 30.8419C19.9162 30.8523 19.4584 31.016 17.8892 30.5512C16.5063 30.1574 15.1528 29.1472 14.1408 28.3501C14.7361 27.9415 15.1839 27.5582 15.1839 27.5575C15.1841 27.5571 14.3528 27.832 12.797 27.1693C11.4092 26.5779 9.7873 25.6205 9.79225 25.6581C9.78589 25.668 12.1549 22.7955 15.1643 21.9205" fill="url(#svg-1917023903_5452_paint2_linear_832_12460)"/>
+<path d="M28.073 46.6462C26.7616 45.4259 26.7055 44.1833 26.6021 43.971C26.4691 44.3864 26.3911 44.6535 26.371 45.4024C25.0983 44.1687 24.2068 42.7426 24.1599 41.0337C24.0972 38.7422 25.1279 37.9155 25.121 37.9177C25.1218 37.9177 24.321 38.3301 23.6096 38.9152C24.1322 35.8424 26.034 32.9685 28.8217 32.1798C27.9385 34.25 27.6216 36.474 27.8577 38.7091C26.833 39.7942 26.3557 41.0957 26.36 42.4099C26.4881 41.0947 27.0558 40.0137 27.9234 39.2168C28.2793 41.7368 29.3311 44.2228 31.0513 46.4C29.896 44.7354 27.9688 40.8987 28.7063 36.4098C30.1642 37.1392 31.2875 38.3987 31.8643 40.1821C31.4857 38.3972 30.4685 36.861 28.7895 35.7992C28.9862 34.5278 29.3269 33.2901 29.792 32.1274C30.5641 32.242 33.5179 33.1268 34.3506 38.7914C33.7471 38.4676 33.1739 38.2875 33.1734 38.2877C33.1887 38.2934 33.5479 38.5887 33.9259 40.1113C34.2722 41.4455 34.0916 43.0619 33.9215 44.2912C33.2912 44.0044 32.7541 43.8265 32.7537 43.8269C32.7533 43.8269 33.387 44.3745 33.594 45.9846C33.7784 47.4209 33.7722 49.2319 33.8011 49.2091C33.8125 49.2095 30.2678 48.688 28.073 46.6462" fill="url(#svg-1917023903_5452_paint3_linear_832_12460)"/>
+</g>
+</g>
+<defs>
+<filter id="svg-1917023903_5452_filter0_d_832_12460" x="-1.45776" y="11.189" width="62.9177" height="56.3018" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dy="7.03125"/>
+<feGaussianBlur stdDeviation="5.625"/>
+<feComposite in2="hardAlpha" operator="out"/>
+<feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.08 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_832_12460"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_832_12460" result="shape"/>
+</filter>
+<linearGradient id="svg-1917023903_5452_paint0_linear_832_12460" x1="30.001" y1="0.20459" x2="30.001" y2="60.2046" gradientUnits="userSpaceOnUse">
+<stop stop-color="#1D1D1D"/>
+<stop offset="1"/>
+</linearGradient>
+<linearGradient id="svg-1917023903_5452_paint1_linear_832_12460" x1="39.3666" y1="15.4077" x2="39.3666" y2="31.8933" gradientUnits="userSpaceOnUse">
+<stop stop-color="white"/>
+<stop offset="1" stop-color="#DEDEDE"/>
+</linearGradient>
+<linearGradient id="svg-1917023903_5452_paint2_linear_832_12460" x1="18.871" y1="20.7227" x2="18.871" y2="32.6153" gradientUnits="userSpaceOnUse">
+<stop stop-color="white"/>
+<stop offset="1" stop-color="#DEDEDE"/>
+</linearGradient>
+<linearGradient id="svg-1917023903_5452_paint3_linear_832_12460" x1="28.9801" y1="32.1274" x2="28.9801" y2="49.2093" gradientUnits="userSpaceOnUse">
+<stop stop-color="white"/>
+<stop offset="1" stop-color="#DEDEDE"/>
+</linearGradient>
+<clipPath id="svg-1917023903_5452_clip0_832_12460">
+<rect x="0.000976562" y="0.20459" width="60" height="60" rx="13.128" fill="white"/>
+</clipPath>
+</defs>
+</symbol>
+<symbol fill="none" id="ico-n8n" viewBox="0 0 60 61">
+<rect x="0.000976562" y="0.804688" width="60" height="60" rx="13.128" fill="url(#svg-293652378_3377_paint0_linear_832_12467)"/>
+<g filter="url(#svg-293652378_3377_filter0_d_832_12467)">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M49.1963 24.8984C49.1963 27.0731 47.4334 28.8359 45.2588 28.8359C43.4241 28.8359 41.8825 27.5811 41.4453 25.8828H35.948C34.9855 25.8828 34.1642 26.5786 34.006 27.5279L33.8442 28.4989C33.6905 29.4208 33.2241 30.2232 32.5647 30.8047C33.2241 31.3862 33.6905 32.1886 33.8442 33.1105L34.006 34.0815C34.1642 35.0308 34.9855 35.7266 35.948 35.7266H37.5078C37.945 34.0283 39.4866 32.7734 41.3213 32.7734C43.4959 32.7734 45.2588 34.5363 45.2588 36.7109C45.2588 38.8856 43.4959 40.6484 41.3213 40.6484C39.4866 40.6484 37.945 39.3936 37.5078 37.6953H35.948C34.0232 37.6953 32.3805 36.3038 32.0641 34.4051L31.9022 33.4341C31.744 32.4849 30.9226 31.7891 29.9603 31.7891H28.3543C27.8628 33.4035 26.362 34.5781 24.5869 34.5781C22.8118 34.5781 21.311 33.4035 20.8195 31.7891H18.5105C18.019 33.4035 16.5183 34.5781 14.7432 34.5781C12.5685 34.5781 10.8057 32.8152 10.8057 30.6406C10.8057 28.466 12.5685 26.7031 14.7432 26.7031C16.6365 26.7031 18.2177 28.0394 18.5951 29.8203H20.735C21.1124 28.0394 22.6936 26.7031 24.5869 26.7031C26.4802 26.7031 28.0614 28.0394 28.4389 29.8203H29.9603C30.9226 29.8203 31.744 29.1245 31.9022 28.1752L32.0641 27.2042C32.3805 25.3056 34.0232 23.9141 35.948 23.9141H41.4453C41.8825 22.2158 43.4241 20.9609 45.2588 20.9609C47.4334 20.9609 49.1963 22.7238 49.1963 24.8984ZM47.2275 24.8984C47.2275 25.9857 46.3461 26.8672 45.2588 26.8672C44.1715 26.8672 43.29 25.9857 43.29 24.8984C43.29 23.8111 44.1715 22.9297 45.2588 22.9297C46.3461 22.9297 47.2275 23.8111 47.2275 24.8984ZM14.7432 32.6094C15.8305 32.6094 16.7119 31.7279 16.7119 30.6406C16.7119 29.5533 15.8305 28.6719 14.7432 28.6719C13.6559 28.6719 12.7744 29.5533 12.7744 30.6406C12.7744 31.7279 13.6559 32.6094 14.7432 32.6094ZM24.5869 32.6094C25.6742 32.6094 26.5556 31.7279 26.5556 30.6406C26.5556 29.5533 25.6742 28.6719 24.5869 28.6719C23.4996 28.6719 22.6181 29.5533 22.6181 30.6406C22.6181 31.7279 23.4996 32.6094 24.5869 32.6094ZM41.3213 38.6797C42.4086 38.6797 43.29 37.7982 43.29 36.7109C43.29 35.6236 42.4086 34.7422 41.3213 34.7422C40.234 34.7422 39.3525 35.6236 39.3525 36.7109C39.3525 37.7982 40.234 38.6797 41.3213 38.6797Z" fill="white"/>
+</g>
+<defs>
+<filter id="svg-293652378_3377_filter0_d_832_12467" x="2.83692" y="20.2578" width="54.3281" height="35.625" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dy="7.26562"/>
+<feGaussianBlur stdDeviation="3.98437"/>
+<feComposite in2="hardAlpha" operator="out"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.16 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_832_12467"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_832_12467" result="shape"/>
+</filter>
+<linearGradient id="svg-293652378_3377_paint0_linear_832_12467" x1="0.000976563" y1="0.804688" x2="60.001" y2="60.8047" gradientUnits="userSpaceOnUse">
+<stop stop-color="#F26587"/>
+<stop offset="1" stop-color="#E23A62"/>
+</linearGradient>
+</defs>
+</symbol>
+</svg>
+</body>
+</html>

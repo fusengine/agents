@@ -1,9 +1,13 @@
 ---
 name: seo-hreflang
-description: Use when auditing or generating hreflang for i18n SEO. Covers HTML link tags, HTTP headers, XML sitemap hreflang, self-referencing, return tags, x-default, ISO 639-1 + ISO 3166-1 code validation.
+description: Use when auditing or generating hreflang tags for i18n/multilingual SEO.
 user-invocable: false
 related-skills: seo, seo-technical, seo-sitemap
 ---
+
+<objective>
+Audits or generates hreflang across all three implementation surfaces — HTML `<link>` tags, HTTP headers, and XML sitemap `<xhtml:link>` entries — validating self-referencing, return tags, x-default, and ISO 639-1 + ISO 3166-1 code correctness via `scripts/parse-hreflang.ts`. Lists the common mistakes: missing self-reference, missing return tags, invalid region codes (`en-UK` vs `en-GB`), HTTP/HTTPS mismatch between alternates, and trailing-slash inconsistency.
+</objective>
 
 # Hreflang / i18n SEO
 

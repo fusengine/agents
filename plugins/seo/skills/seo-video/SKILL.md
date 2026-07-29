@@ -1,9 +1,13 @@
 ---
 name: seo-video
-description: Use when optimizing video SEO. Covers VideoObject schema, YouTube metadata, transcripts, chapters, SeekToAction, Clip schema for key moments, BroadcastEvent for live streams.
+description: Use when optimizing video SEO — VideoObject schema, YouTube metadata, transcripts, live streams.
 user-invocable: false
 related-skills: seo, seo-schema, seo-content
 ---
+
+<objective>
+Covers video SEO: the required VideoObject JSON-LD schema, YouTube optimization (title/description/tags/thumbnail/chapters/captions/end-screens), embedding indexable transcripts with timestamp links, Clip schema for chapter/key-moment markup, SeekToAction for enabling seek in rich results, and BroadcastEvent schema for live-stream LIVE badges.
+</objective>
 
 # Video SEO
 

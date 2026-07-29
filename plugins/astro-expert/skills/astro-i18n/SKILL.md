@@ -1,12 +1,18 @@
 ---
 name: astro-i18n
-description: Use when implementing internationalization in Astro, configuring i18n routing, setting up locale strategies, using getRelativeLocaleUrl/getAbsoluteLocaleUrl, handling Astro.currentLocale, or adding hreflang tags with sitemap.
+description: Use when implementing i18n in Astro — locale routing strategies, getRelativeLocaleUrl/getAbsoluteLocaleUrl, Astro.currentLocale, or hreflang with sitemap.
 versions:
   astro: "7"
 user-invocable: true
 references: references/routing-config.md, references/strategies.md, references/helper-functions.md, references/content-translation.md, references/sitemap-hreflang.md, references/fallback.md, references/templates/i18n-config.md, references/templates/locale-page.md, references/templates/language-switcher.md
 related-skills: astro-7, astro-content, astro-seo, solid-astro
 ---
+
+<objective>
+Implements Astro's built-in i18n system (Astro 3.5+): file-based locale routing under `src/pages/[locale]/`, `defaultLocale` and routing-strategy configuration (prefix-always vs prefix-other-locales), URL helper functions from `astro:i18n` (`getRelativeLocaleUrl`, `getAbsoluteLocaleUrl`), reading `Astro.currentLocale` in components, and fallback-locale configuration to avoid 404s on missing translations.
+
+Also covers translating Content Collections per locale and adding `hreflang` alternate links via `@astrojs/sitemap`'s `i18n` option for SEO. Does not cover general SEO meta tags beyond hreflang (astro-seo) or the Content Layer API itself (astro-content) — this skill focuses specifically on locale routing and URL generation.
+</objective>
 
 # Astro i18n
 

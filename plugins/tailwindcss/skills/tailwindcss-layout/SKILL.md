@@ -1,8 +1,14 @@
 ---
 name: tailwindcss-layout
-description: "Layout utilities Tailwind CSS v4.1. Flexbox (flex, justify, items, gap), Grid (grid-cols, grid-rows, place), Position (absolute, relative, fixed, sticky, inset, z-index), Container queries (@container). Use when: building flex or grid layouts, positioning elements (absolute/relative/fixed/sticky), managing z-index/inset, or writing container-query responsive styles."
+description: "Use when building flex or grid layouts, positioning elements (absolute/relative/fixed/sticky), managing z-index/inset, or @container queries."
 user-invocable: false
 ---
+
+<objective>
+Layout utilities for Tailwind CSS v4.1: Flexbox (`flex`, direction, `justify-*`, `items-*`, `gap`), Grid (`grid-cols-*`, `grid-rows-*`, `place-*`), Position (`absolute`/`relative`/`fixed`/`sticky`, `inset-*`, `z-*`), Display (`block`/`inline`/`flex`/`grid`/`hidden`), and Container Queries (`@container`, `@md`/`@lg` container-relative breakpoints).
+
+Also covers multi-directional spacing (`gap`, `space-x`/`space-y`) and multi-axis alignment utilities.
+</objective>
 
 # Tailwind CSS Layout Utilities (v4.1)
 

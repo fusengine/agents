@@ -1,9 +1,13 @@
 ---
 name: seo-audit
-description: Use when running a full-site SEO audit via /seo audit. Covers parallel sub-agent orchestration, business-type detection, SEO Health Score 0-100, prioritized action plan.
+description: Use when running a full-site SEO audit via /seo audit — orchestrates all SEO sub-agents in parallel for one unified Health Score.
 user-invocable: false
 related-skills: seo, seo-technical, seo-schema, seo-content, seo-geo, seo-images, seo-sitemap
 ---
+
+<objective>
+Orchestrates a full-site SEO audit: detects business type from homepage signals (SaaS/local/ecommerce/publisher/agency), spawns SEO sub-agents in parallel (seo-technical, seo-schema, seo-content, seo-geo, seo-entity, seo-images, seo-sitemap, plus seo-local and/or seo-cluster conditionally), aggregates results into a weighted SEO Health Score (0-100: technical 25, schema 15, content 20, GEO 20, images 10, local 10), and generates a prioritized action plan (Critical → High → Medium → Low) at `.fuse-seo/reports/<date>-audit.md`. This is the entry point for "audit the whole site" requests — for a single URL only, use seo-page instead.
+</objective>
 
 # SEO Audit Orchestrator
 

@@ -1,11 +1,17 @@
 ---
 name: design-ios
-description: "iOS + macOS mockups and handoff specs — Dynamic Type scale, semantic colors, device viewports, Liquid Glass, macOS text/window/pointer conventions, device-framed HTML mockup, and a SwiftUI-ready handoff spec. Produces tokens + mockup only, never SwiftUI code."
+description: "Use when designing an iOS or macOS screen or flow — deliverable is a device/window-framed HTML mockup and handoff spec, never SwiftUI code."
 when-to-use: "Designing an iOS or macOS screen or flow — the deliverable is a device/window-framed HTML mockup and a handoff spec for swift-expert or an Apple-platform developer to implement, not working SwiftUI."
 keywords: ios, macos, hig, dynamic-type, liquid-glass, swiftui, handoff, mockup, desktop-tinting
 priority: critical
 related: design-method, design-system, design-review
 ---
+
+<objective>
+Produces iOS and macOS mockups and developer handoff specs: mapping design tokens to the Dynamic Type scale (iOS) or macOS's fixed text-size variants, semantic colors, device/window viewports, Liquid Glass materials, and macOS-specific conventions (system window chrome, desktop tinting, pointer states).
+
+The deliverable is a device-framed (iOS) or window-framed (macOS) HTML mockup at exact viewport dimensions plus a SwiftUI-ready handoff spec (named tokens, text styles, semantic colors, sizing, states, spacing). This skill never writes SwiftUI code — implementation is left to `swift-expert` or an Apple-platform developer.
+</objective>
 
 ## Design iOS/macOS — Mockup and Handoff, Not Code
 

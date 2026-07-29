@@ -1,18 +1,20 @@
 ---
 name: start-middleware
-description: >-
-  Use when composing cross-cutting server logic in TanStack Start with
-  createMiddleware — request vs server function middleware, chaining via
-  .middleware([...]), shared context with next({ context }), client↔server
-  sendContext, client middleware (.client), global middleware via createStart
-  in src/start.ts, middleware factories for authorization, and
-  staticFunctionMiddleware. Do NOT use for: defining the RPC itself (use
-  start-server-functions), raw HTTP endpoints (use start-server-routes), or
-  route-level UX guards (use router beforeLoad).
+description: Use when composing cross-cutting server logic in TanStack Start with createMiddleware — chaining, context, auth factories.
 version: 1.0.0
 user-invocable: true
 references: references/types.md, references/context.md, references/global.md, references/templates/auth-authorization.md, references/templates/client-middleware.md
 ---
+
+<objective>
+Covers composing cross-cutting server logic in TanStack Start with createMiddleware: request middleware vs server-function middleware, chaining via .middleware([...]), sharing context with next({ context }), passing client-to-server context with sendContext, client-side middleware (.client()), global middleware declared via createStart in src/start.ts, parameterized authorization factories, and staticFunctionMiddleware ordering. Targets @tanstack/react-start v1.166.2.
+
+Critical rules enforced: the method chain order is fixed (.middleware() → .validator() → .client() → .server()); shape-validated sendContext data is NOT authorization — always re-check access against the server-trusted session before using a client-sent value as a query key, filter, or path param; client context is never sent to the server unless explicitly opted in, and the client can lie about anything it sends; .client() runs on the server during SSR, so browser-only APIs need a typeof window guard; and staticFunctionMiddleware must always be last in the chain.
+
+Includes templates for an auth + permission-based authorization factory and for client-side middleware (headers, custom fetch, telemetry).
+
+Do NOT use this skill for defining the RPC itself (use start-server-functions), raw HTTP endpoints (use start-server-routes), or route-level UX guards (use router beforeLoad).
+</objective>
 
 # TanStack Start Middleware
 

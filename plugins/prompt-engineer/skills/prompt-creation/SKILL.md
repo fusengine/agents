@@ -1,8 +1,14 @@
 ---
 name: prompt-creation
-description: "Techniques and templates for creating optimal prompts following Anthropic conventions. Use when: writing a new system prompt from scratch, structuring it with Anthropic's 9-element format, or choosing emphasis levels and few-shot examples."
+description: "Use when writing a new system prompt from scratch, structuring it with Anthropic's 9-element format, or choosing emphasis levels and few-shot examples."
 allowed-tools: Read, Write
 ---
+
+<objective>
+Prompt Creation covers Anthropic's official 9-element system-prompt structure (task context, tone, task description + rules, few-shot examples, input data, immediate task, precognition/scratchpad, output formatting, prefill) and the 6-level emphasis scale from "Please do X" up to "CRITICAL - ZERO TOLERANCE". It also covers the 8-step creation workflow from defining the objective through iterating after mental edge-case testing.
+
+For RAG/retrieval-augmented prompts specifically, see `rag-patterns.md`; for prompts combining images with text (vision, screenshot-to-code, diagram understanding), see `multimodal-prompting.md`.
+</objective>
 
 # Prompt Creation
 

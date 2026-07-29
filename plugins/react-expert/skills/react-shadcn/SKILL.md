@@ -10,6 +10,12 @@ references: references/installation.md, references/configuration.md, references/
 related-skills: react-19, react-forms, tailwindcss-core, solid-react
 ---
 
+<objective>
+Builds UI components for a React SPA (Vite/CRA) with shadcn/ui 3.8.0 on Radix UI primitives (not Base UI) and Tailwind CSS v4: forms (Field/FieldLabel/FieldError pattern with TanStack Form, never React Hook Form), overlays (Dialog, Sheet, Drawer, Popover, Tooltip), feedback (Alert, Sonner toasts, Progress, Skeleton), data display (Table, Badge, Calendar, Chart), and navigation (Sidebar, Command, DropdownMenu).
+
+Requires installing components via `bunx --bun shadcn@latest add` (never hand-written) to `@/modules/cores/shadcn/components/ui/`, and covers MCP registry tools (`mcp__shadcn__*`) for discovering components before implementing. This is the plain-React variant of shadcn/ui — for Next.js App Router see nextjs-shadcn instead.
+</objective>
+
 # shadcn/ui for React
 
 Beautiful, accessible components built on Radix UI with Tailwind CSS styling.

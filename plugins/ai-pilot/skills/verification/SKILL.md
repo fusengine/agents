@@ -1,7 +1,13 @@
 ---
 name: verification
-description: "Use when marking a task as complete, finishing a feature, or claiming a bug is fixed. Ensures functional resolution is verified with evidence before closing. Do NOT use for: lint/type/code-quality validation (use code-quality / sniper AFTER functional verification passes)."
+description: "Use when marking a task complete, finishing a feature, or claiming a bug fixed -- verifies functional resolution before closing. Do NOT use for lint/quality checks (use sniper AFTER this)."
 ---
+
+<objective>
+Verification confirms the original request is actually fulfilled -- distinct from sniper, which only confirms the code is clean. It runs a 6-step process: re-read the original request word for word, list every acceptance criterion (explicit and implicit), verify each with concrete evidence (test output, logs, screenshots, diffs), run the full test suite to check for regressions, review every modified file for accidental side effects, then route the "functionally resolved" claim through the `challenger` agent before writing it down.
+
+Step 6 always persists `.claude/apex/docs/verify-{task-slug}.md` -- an in-context "it works" declaration doesn't survive a session boundary, and this artifact is what later gates (sniper, elicitation) actually check. It sits between eLicit and eXamine in APEX: a task is only complete when both verification and sniper pass.
+</objective>
 
 # Verification Before Completion
 

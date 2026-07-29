@@ -1,6 +1,6 @@
 ---
 name: nextjs-tanstack-query
-description: "TanStack Query v5 integration with Next.js 16. Server-side prefetching, hydration, useQuery, useMutation, cache management. Use when: implementing client-side data fetching with caching, server-side prefetching with hydration, or optimistic mutations in Next.js."
+description: Use when implementing client-side data fetching, server prefetching with hydration, or optimistic mutations in Next.js 16 with TanStack Query.
 versions:
   tanstack-query: 5
   nextjs: 16
@@ -9,6 +9,12 @@ user-invocable: true
 references: references/query-patterns.md, references/hydration.md
 related-skills: nextjs-16, nextjs-server-components, react-19
 ---
+
+<objective>
+Implements TanStack Query v5 server-state management in Next.js 16: creating one `QueryClient` per request in a Server Component and sharing it via context, `prefetchQuery` for SSR data with `HydrationBoundary` to transfer the server cache to the client, and optimistic mutations with rollback on error.
+
+Covers serializable query keys, `staleTime` tuning on prefetched queries to avoid immediate refetch, cache invalidation with `invalidateQueries` after writes, infinite scrolling/pagination, and DevTools setup gated to development only. Does not cover the Server Component boundary itself (nextjs-server-components) or core Next.js caching primitives like `use cache` (nextjs-16) — this skill is specifically about TanStack Query's client-side cache layer.
+</objective>
 
 # TanStack Query for Next.js
 

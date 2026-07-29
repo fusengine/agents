@@ -1,11 +1,17 @@
 ---
 name: design-android
-description: "Android mockups and handoff specs — Material 3 Expressive type scale (baseline + emphasized), full color-role system (45 roles incl. surface-container ramp + dynamic color), elevation tokens, shape scale, window size classes, FAB tiers, motion, device-framed HTML mockup, and a Compose-ready handoff spec. Produces tokens + mockup only, never Compose code."
+description: "Use when designing an Android screen or flow — deliverable is a device-framed HTML mockup and developer handoff spec, never Compose code."
 when-to-use: "Designing an Android screen or flow — the deliverable is a device-framed HTML mockup and a handoff spec for an Android developer to implement, not working Compose."
 keywords: android, material3, expressive, compose, handoff, mockup, window-size-classes, elevation, fab, motion
 priority: critical
 related: design-method, design-system, design-review
 ---
+
+<objective>
+Produces Android mockups and developer handoff specs: mapping design tokens to the Material 3 Expressive type scale (baseline plus the parallel Emphasized set), the full color-role system (45 roles, including the surface-container ramp and dynamic color), elevation tokens, the shape scale, window size classes, and FAB tiers.
+
+The deliverable is a device-framed HTML mockup at the target window size class plus a Compose-ready handoff spec (colors, typography, shapes, spacing, states, tonal elevation). This skill never writes Jetpack Compose code — implementation is left to an Android developer.
+</objective>
 
 ## Design Android — Mockup and Handoff, Not Code
 

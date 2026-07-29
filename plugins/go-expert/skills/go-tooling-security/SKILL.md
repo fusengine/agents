@@ -1,6 +1,6 @@
 ---
 name: go-tooling-security
-description: "Use when: setting up Go modules/workspaces, configuring golangci-lint v2, scanning dependencies with govulncheck, modernizing code with go fix, or building a Go CI quality gate. Do NOT use for: writing Go application logic (use the Go expert), non-Go languages, SOLID/architecture refactoring (use solid-go), or generic dependency audits in other ecosystems."
+description: Use when setting up Go modules/workspaces, configuring golangci-lint v2, running govulncheck, or building a Go CI quality gate. Not for app logic or non-Go audits.
 versions:
   go: "1.26"
   golangci-lint: "2"
@@ -9,6 +9,15 @@ user-invocable: true
 references: references/modules-workspaces.md, references/golangci-lint-v2.md, references/govulncheck.md, references/go-fix-modernizers.md, references/templates/golangci-v2-config.md, references/templates/ci-workflow.md
 related-skills: solid-go
 ---
+
+<objective>
+Covers Go tooling and dependency security: modules and workspaces (go.mod/go.work),
+golangci-lint v2 configuration and migration, dependency vulnerability scanning
+with govulncheck, modernizing code with go fix, and building a Go CI quality gate.
+Does not cover writing Go application logic (see the Go expert), non-Go
+languages, SOLID/architecture refactoring (see solid-go), or generic dependency
+audits in other ecosystems.
+</objective>
 
 # Go Tooling & Security
 

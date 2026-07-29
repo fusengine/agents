@@ -1,6 +1,6 @@
 ---
 name: rust-tooling-cicd
-description: Use when structuring a Cargo workspace, wiring features, or building a Rust CI pipeline — fmt, clippy, cargo-deny, cargo-audit, nextest, doc-tests, coverage, MSRV. Covers the canonical CI gate order and supply-chain checks. Do NOT use for writing the tests themselves (use rust-testing-quality) or non-Rust CI.
+description: Use when structuring a Cargo workspace or building a Rust CI pipeline — fmt, clippy, cargo-deny/audit, nextest, coverage, MSRV. Not for writing the tests themselves (rust-testing-quality).
 versions:
   cargo: "1.9x (edition 2024)"
   cargo-deny: "0.16"
@@ -9,6 +9,20 @@ user-invocable: false
 references: references/workspaces-features.md, references/ci-gate.md, references/templates/ci-workflow.md, references/templates/deny-toml.md
 related-skills: rust-testing-quality, solid-rust
 ---
+
+<objective>
+This skill covers structuring Cargo workspaces (member layout, workspace.dependencies
+inheritance, feature design, MSRV) and building the canonical Rust CI gate: fmt → clippy
+(-D warnings) → cargo deny → cargo audit → nextest → cargo test --doc → coverage, in that
+fixed order so cheap checks fail fast.
+
+It also covers supply-chain policy as code — committing deny.toml, centralizing dependency
+versions in [workspace.dependencies] rather than pinning per member — and auxiliary tooling
+like cargo hack (feature-powerset checks) and cargo machete (unused-dependency pruning).
+
+Out of scope: writing the tests themselves (unit/integration/proptest/criterion) belongs to
+rust-testing-quality; non-Rust CI pipelines are not covered.
+</objective>
 
 # Rust Tooling & CI/CD
 

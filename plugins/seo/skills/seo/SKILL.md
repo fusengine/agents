@@ -1,11 +1,15 @@
 ---
 name: seo
-description: Use when running SEO, GEO, schema, Core Web Vitals, sitemap, hreflang, E-E-A-T, AI Overviews, technical SEO, or structured data tasks. Covers full-site audits, single-page analysis, schema markup, content quality, AI search optimization, local SEO, sitemap/robots, internal linking, semantic clustering, and search experience.
+description: Use when running any SEO/GEO task via /seo — the top-level orchestrator that routes to all SEO sub-skills.
 argument-hint: "[command] [url-or-path]"
 user-invocable: true
 references: 01-seo-foundations, 02-onpage-seo, 03-schema-org, 04-geo-2026, 05-technical-seo, 06-content-strategy, 07-sea-google-ads, 08-measurement, 09-checklists, 10-local-seo
 related-skills: seo-audit, seo-page, seo-technical, seo-schema, seo-content, seo-geo, seo-local, seo-sitemap, seo-hreflang, seo-cluster, seo-entity
 ---
+
+<objective>
+Top-level SEO/GEO 2026 orchestrator invoked as `/seo $1 $2` ($1 = command, $2 = URL or local path). Routes to 20 sub-skills covering full-site audits (seo-audit), single-page analysis (seo-page), technical SEO, schema markup, content quality (E-E-A-T), AI search / GEO optimization (AI Overviews readiness), local SEO, sitemap/robots, internal linking, semantic clustering, content briefs, strategic planning by business type, search experience (SXO), featured snippets, entity/semantic SEO, e-commerce, video, hreflang/i18n, and redirects/migration — see the Quick Reference command table in the body for the full command-to-sub-skill mapping. Local-first (zero third-party APIs, zero Google APIs, zero Python — TS/Bun scripts only); delegates framework-specific implementation to fuse-astro/fuse-nextjs/fuse-laravel. Also owns the `.fuse-seo` opt-in activation hook on first invocation per project and post-analysis report generation under `.fuse-seo/reports/`.
+</objective>
 
 # SEO/GEO Orchestrator
 

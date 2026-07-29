@@ -1,9 +1,13 @@
 ---
 name: seo-internal-linking
-description: Use when designing internal linking strategy. Covers pillar/cluster architecture, anchor text optimization, link distribution, orphan page detection, click depth, broken link audit.
+description: Use when designing or auditing internal linking strategy — pillar/cluster architecture, anchors, orphan pages.
 user-invocable: false
 related-skills: seo, seo-cluster, seo-content
 ---
+
+<objective>
+Covers internal linking end to end: the pillar/cluster link model (cluster pages link up, pillar links down, cluster pages cross-link contextually), anchor text rules (descriptive/varied vs generic/over-optimized), the local vs global URL architecture and link mesh (global pillar → local pages with geo-specific anchors, regional hub → city pages), the doorway-page quality judgement (differentiate on ≥3-4 dimensions, watch for 70-90% near-duplicate content across local pages), and audits for orphan pages, click depth (≤3 clicks from homepage), link distribution (no page concentrating >10% of internal links), and broken internal links.
+</objective>
 
 # Internal Linking
 

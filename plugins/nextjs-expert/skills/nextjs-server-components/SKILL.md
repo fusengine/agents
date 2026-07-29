@@ -1,6 +1,6 @@
 ---
 name: nextjs-server-components
-description: "React Server Components patterns for Next.js 16. Server vs Client boundaries, async components, data fetching, serialization rules, streaming with Suspense. Use when: deciding server vs client component boundaries, fetching data directly in components, or streaming UI with Suspense."
+description: Use when deciding Server vs Client Component boundaries in Next.js 16, fetching data directly in components, or streaming with Suspense.
 versions:
   nextjs: 16
   react: 19
@@ -8,6 +8,12 @@ user-invocable: true
 references: references/rsc-patterns.md, references/streaming.md
 related-skills: nextjs-16, nextjs-tanstack-query, react-19
 ---
+
+<objective>
+Explains React Server Components as the default rendering model in Next.js 16 with React 19: when to add `'use client'` (hooks, events, browser APIs) versus staying server-only, async Server Components with direct database/file access (no API layer needed), serialization rules for props crossing the server/client boundary (no functions/classes/Dates), and streaming with Suspense boundaries.
+
+Covers composition patterns (passing Server Components as `children` into Client Components), the `server-only` package to prevent accidental secret leakage, parallel data fetching with `Promise.all()`, and caching server computations with `use cache`. Does not cover Next.js routing/caching APIs generally (nextjs-16) or client-side data-fetching libraries (nextjs-tanstack-query) — this skill is specifically about the server/client component boundary itself.
+</objective>
 
 # Next.js Server Components
 

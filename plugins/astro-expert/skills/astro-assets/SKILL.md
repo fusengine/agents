@@ -1,12 +1,18 @@
 ---
 name: astro-assets
-description: Image and asset optimization in Astro 7 — <Image />, <Picture />, getImage(), remote images, @astrojs/sharp, Fonts API, OG image generation with Satori, Cloudinary/Imgix. Use for any image optimization or asset handling task.
+description: Use when optimizing images or other assets in Astro — <Image />, <Picture />, getImage(), Fonts API, or OG image generation.
 versions:
   astro: "7"
 user-invocable: true
 references: references/image-component.md, references/picture-responsive.md, references/remote-images.md, references/fonts-api.md, references/og-satori.md, references/cdn-integration.md, references/templates/image-setup.md, references/templates/og-image-route.md
 related-skills: astro-7, astro-seo, astro-deployment
 ---
+
+<objective>
+Handles image and asset optimization in Astro 7 via the `astro:assets` module: `<Image />` and `<Picture />` components (automatic WebP/AVIF conversion, responsive `srcset`/`sizes`, required `alt`), `getImage()` for server-side generation (API routes, CSS backgrounds), remote image handling with `inferSize`, and `@astrojs/sharp` as the default processing service.
+
+Also covers the built-in Fonts API (stable since Astro 6.0) for zero-layout-shift font loading, dynamic OG image generation with Satori at build time, and CDN integration (Cloudinary, Imgix). Does not cover general SEO meta tags (astro-seo) or deployment-specific image CDN config beyond the adapter itself (astro-deployment).
+</objective>
 
 # Astro Assets
 

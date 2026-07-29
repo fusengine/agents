@@ -1,6 +1,6 @@
 ---
 name: nextjs-shadcn
-description: shadcn/ui for Next.js App Router with TanStack Form. Use when building UI components, forms, dialogs, tables, toasts, or accessible components.
+description: Use when building UI components in Next.js App Router with shadcn/ui — forms, dialogs, tables, toasts, accessible components.
 versions:
   shadcn-ui: 3.8.0
   nextjs: 16
@@ -9,6 +9,12 @@ user-invocable: true
 references: references/installation.md, references/configuration.md, references/theming.md, references/button.md, references/input.md, references/label.md, references/textarea.md, references/card.md, references/select.md, references/checkbox.md, references/switch.md, references/radio-group.md, references/slider.md, references/toggle.md, references/toggle-group.md, references/input-otp.md, references/dialog.md, references/alert-dialog.md, references/sheet.md, references/drawer.md, references/popover.md, references/tooltip.md, references/hover-card.md, references/context-menu.md, references/collapsible.md, references/toast.md, references/alert.md, references/skeleton.md, references/progress.md, references/spinner.md, references/table.md, references/tabs.md, references/accordion.md, references/badge.md, references/avatar.md, references/separator.md, references/scroll-area.md, references/aspect-ratio.md, references/resizable.md, references/carousel.md, references/chart.md, references/dropdown.md, references/command.md, references/breadcrumb.md, references/navigation-menu.md, references/menubar.md, references/sidebar.md, references/pagination.md, references/calendar.md, references/field-patterns.md, references/form-examples.md
 related-skills: nextjs-16, nextjs-tanstack-form, tailwindcss-core, solid-nextjs
 ---
+
+<objective>
+Builds UI components for Next.js App Router with shadcn/ui 3.8.0 on Radix UI primitives (not Base UI) and Tailwind CSS v4: forms (Field/FieldLabel/FieldError pattern with TanStack Form, never React Hook Form), overlays (Dialog, Sheet, Drawer, Popover, Tooltip), feedback (Alert, Sonner toasts, Progress, Skeleton), data display (Table, Badge, Calendar, Chart), and navigation (Sidebar, Command, DropdownMenu).
+
+Requires installing components via `bunx --bun shadcn@latest add` (never hand-written) to `@/modules/cores/shadcn/components/ui/`, and covers MCP registry tools (`mcp__shadcn__*`) for discovering components before implementing. This is the Next.js App Router variant of shadcn/ui — for a plain React/Vite app see react-shadcn instead.
+</objective>
 
 # shadcn/ui for Next.js
 

@@ -1,12 +1,6 @@
 ---
 name: apex-methodology
-description: |
-  Systematic development workflow: Analyze → Plan → Execute → eLicit → eXamine.
-  Use for ANY development task: features, bug fixes, refactoring, hotfixes.
-  Triggers: "implement", "create", "build", "fix", "add feature", "refactor", "develop".
-  Auto-detects project type (Laravel, Next.js, React, Swift) and loads framework-specific references.
-  Enforces: files <100 lines, interfaces separated, SOLID principles, expert self-review, sniper validation.
-  Modes: --auto (default), --manual, --skip-elicit
+description: "Use when starting ANY development task -- feature, bug fix, refactor, hotfix (triggers: implement, create, build, fix, add feature, refactor, develop)."
 argument-hint: "[task-description]"
 user-invocable: false
 hooks:
@@ -22,6 +16,12 @@ hooks:
           command: |
             echo '{"decision":"block","reason":"APEX RULE: File created via Write. You MUST immediately launch sniper agent to validate this change before proceeding."}'
 ---
+
+<objective>
+APEX Methodology drives the full Analyze -> Plan -> Execute -> eLicit -> eXamine workflow for any development task -- new features, bug fixes, refactors, hotfixes. It auto-detects the project type (Laravel, Next.js, React, Swift) and loads the matching framework-specific reference set, then walks through branch creation, brainstorming, codebase analysis, planning, TDD execution, expert self-review (eLicit), functional verification, and sniper validation (eXamine) through to PR creation.
+
+It enforces the project's hard constraints throughout: files under 100 lines (split at 90), interfaces kept out of component files, SOLID principles, and a mandatory sniper pass after every Edit/Write (blocked by PostToolUse hooks until it runs). Three modes control how much is automatic: `--auto` (default, no prompts), `--manual` (step-by-step confirmation), and `--skip-elicit` (bypasses the self-review phase).
+</objective>
 
 **Current Task:** $ARGUMENTS
 

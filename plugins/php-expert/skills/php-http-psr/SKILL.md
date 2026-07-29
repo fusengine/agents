@@ -1,6 +1,6 @@
 ---
 name: php-http-psr
-description: Use when building framework-agnostic HTTP code in PHP — PSR-7 messages, PSR-15 middleware pipelines, PSR-17 factories, PSR-18 HTTP clients. Covers immutable Request/Response/Stream/Uri, RequestHandler + Middleware, factory interfaces, and reference implementations (nyholm/psr7, guzzlehttp/psr7, laminas-diactoros). Do NOT use for Laravel HTTP (use laravel-expert) or Symfony HttpFoundation (not PSR-7 — see references/implementations.md).
+description: Use when building framework-agnostic PHP HTTP code — PSR-7/15/17/18 messages, middleware, factories, clients. Do NOT use for Laravel HTTP or Symfony HttpFoundation (not PSR-7).
 versions:
   psr-http-message: "2.0"
   psr-http-server-middleware: "1.0"
@@ -10,6 +10,14 @@ user-invocable: true
 references: references/psr7-messages.md, references/psr15-middleware.md, references/psr17-factories.md, references/psr18-client.md, references/implementations.md, references/templates/middleware-pipeline.md
 related-skills: php-ecosystem-reference, solid-php
 ---
+
+<objective>
+Covers the four PSR HTTP standards that let PHP libraries handle HTTP without coupling to any framework: PSR-7 immutable Request/Response/Stream/Uri messages, PSR-15 RequestHandler + Middleware pipelines, PSR-17 factory interfaces, and PSR-18 HTTP clients.
+
+Includes guidance on reference implementations (nyholm/psr7, guzzlehttp/psr7, laminas-diactoros) and how to choose between them, plus a complete middleware-pipeline template.
+
+Do NOT use this skill for Laravel's own HTTP layer (route to laravel-expert instead) or for Symfony's HttpFoundation component, which is a different, non-PSR-7 HTTP model — bridge the two via symfony/psr-http-message-bridge when needed (see references/implementations.md).
+</objective>
 
 # PHP HTTP — PSR-7 / 15 / 17 / 18
 

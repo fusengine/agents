@@ -1,11 +1,19 @@
 ---
 name: design-motion
-description: "Motion pass on a settled layout — the animation-decision gate, transform/opacity-first materials, the 100/300/500 duration scale, exponential/emphasized easing (no bounce), mandatory reduced-motion, and the AI-motion-signature ban."
+description: "Use when adding or reviewing motion on an already-settled layout or component — never to hide or compensate for an unfinished one."
 when-to-use: "After the static body/component exists (design-web/design-webapp/design-ios/design-android) and motion is being added or reviewed — never to hide an unfinished layout."
 keywords: motion, animation, easing, duration, transform, opacity, reduced-motion, ai-slop
 priority: high
 related: design-web, design-webapp, design-review, design-system
 ---
+
+<objective>
+A motion pass applied on top of an already-settled layout: the animation-decision gate (should this even animate, what's its purpose, what easing, what duration), transform/opacity-first materials, the 100/300/500ms duration scale, exponential/emphasized easing curves (bounce and elastic are banned outright), and the mandatory `prefers-reduced-motion` fallback shipped in the same pass.
+
+Also enforces the ban on the AI motion signature (`opacity:0 + translateY(20px) + ease-in-out` applied uniformly to every entrance).
+
+Runs only after the static body/component exists (`design-web`, `design-webapp`, `design-ios`, `design-android`) — never used to hide or compensate for an unfinished layout.
+</objective>
 
 ## Design Motion — Timing, Easing, Materials, Restraint
 
@@ -85,7 +93,9 @@ is not an edge case. `design-review` Part 1 treats a missing reduced-motion fall
 ### Ban — the AI motion signature
 The single most common AI-generated motion tell: `opacity: 0` + `translateY(20px)` +
 `ease-in-out`, applied uniformly to every entrance on the page with zero variation by
-element role (grounding: ~83% of AI-generated pages ship this exact pattern). Vary
+element role. (No figure is attached to this one: the "~83%" belongs to the
+palette/font/radius triad and to it alone — see `../design-method/SKILL.md`
+§Absolute bans. Never borrow it for another ban or detector.) Vary
 instead: stagger timing and entrance direction/distance by section role, easing chosen
 per the Q3 decision table above, duration chosen per the tier table above — never one
 blanket transition rule copy-pasted down every section. `design-review` catches leftovers

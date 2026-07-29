@@ -1,0 +1,357 @@
+/* ELYSIAN — the aperture (opening chamber) */
+
+@property --ap-s {
+  syntax: "<percentage>";
+  inherits: true;
+  initial-value: 44%;
+}
+@property --ap-t {
+  syntax: "<percentage>";
+  inherits: true;
+  initial-value: 34%;
+}
+@property --mx {
+  syntax: "<percentage>";
+  inherits: true;
+  initial-value: 50%;
+}
+@property --my {
+  syntax: "<percentage>";
+  inherits: true;
+  initial-value: 44%;
+}
+
+.aperture {
+  position: relative;
+  height: 100svh;
+  min-height: 620px;
+  overflow: hidden;
+  isolation: isolate;
+  --ap-s: 44%;
+  --ap-t: 34%;
+  --ap-s-end: 4%;
+  --ap-t-end: 5%;
+  --mx: 150%;
+  --my: 50%;
+  animation: aperture-open 1700ms var(--ease-out) 220ms both;
+}
+
+@media (min-width: 900px) {
+  .aperture {
+    --ap-s-end: 9%;
+    --ap-t-end: 8%;
+  }
+}
+
+@keyframes aperture-open {
+  from {
+    --ap-s: 44%;
+    --ap-t: 34%;
+  }
+  to {
+    --ap-s: var(--ap-s-end);
+    --ap-t: var(--ap-t-end);
+  }
+}
+
+.aperture__stage { position: absolute; inset: 0; }
+
+.aperture__plate {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 62% 50%;
+}
+
+/* the world outside the arch: sunk into the ink */
+.aperture__plate--dim {
+  filter: grayscale(0.72) brightness(0.32) contrast(1.06) sepia(0.35)
+    hue-rotate(148deg) saturate(1.5);
+  transform: scale(1.08);
+}
+
+/* the arch aperture: the signature frame, full colour inside */
+.aperture__window {
+  position: absolute;
+  inset: 0;
+  clip-path: inset(
+    var(--ap-t) var(--ap-s) 0 var(--ap-s)
+    round var(--arch-head) var(--arch-head) 0 0
+  );
+}
+
+.aperture__window::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--marigold) 55%, transparent);
+  clip-path: inherit;
+}
+
+.aperture__lamp {
+  position: absolute;
+  inset: 0;
+  background-image: url("../img/field-01-stilllife.webp");
+  background-size: cover;
+  background-position: 62% 50%;
+  filter: invert(1) hue-rotate(184deg) saturate(1.9) contrast(1.08);
+  /* the lamp only exists once a pointer has actually picked it up */
+  opacity: 0;
+  transition: opacity 0.65s var(--ease-out);
+  -webkit-mask-image: radial-gradient(
+    circle var(--lamp-r, 210px) at var(--mx) var(--my),
+    #000 0 30%,
+    rgba(0, 0, 0, 0.4) 56%,
+    transparent 74%
+  );
+  mask-image: radial-gradient(
+    circle var(--lamp-r, 210px) at var(--mx) var(--my),
+    #000 0 30%,
+    rgba(0, 0, 0, 0.4) 56%,
+    transparent 74%
+  );
+}
+
+.aperture[data-lit="true"] .aperture__lamp { opacity: 0.9; }
+
+@media (hover: none) {
+  .aperture__lamp {
+    opacity: 0.9;
+    animation: lamp-drift 19s var(--ease-inout) infinite alternate;
+    --lamp-r: 150px;
+  }
+}
+
+@keyframes lamp-drift {
+  0% { --mx: 22%; --my: 34%; }
+  35% { --mx: 68%; --my: 55%; }
+  70% { --mx: 40%; --my: 26%; }
+  100% { --mx: 78%; --my: 40%; }
+}
+
+.aperture__wash {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      to top,
+      var(--ink-abyss) 0%,
+      color-mix(in oklab, var(--ink-abyss) 94%, transparent) 13%,
+      color-mix(in oklab, var(--ink-abyss) 52%, transparent) 27%,
+      transparent 44%
+    ),
+    linear-gradient(
+      to bottom,
+      color-mix(in oklab, var(--ink-abyss) 80%, transparent) 0%,
+      transparent 24%
+    );
+}
+
+/* ---------- type layer ---------- */
+
+.aperture__type {
+  position: relative;
+  z-index: 3;
+  height: 100%;
+  display: grid;
+  grid-template-rows: auto 1fr auto auto;
+  gap: var(--s4);
+  padding: var(--s6) var(--gutter) max(var(--s6), env(safe-area-inset-bottom));
+}
+
+/* clear the floating plate pill */
+@media (max-width: 1023px) {
+  .aperture__type {
+    padding-bottom: calc(58px + max(var(--s5), env(safe-area-inset-bottom)));
+  }
+}
+
+/* below 640 the plate needs the room more than the marginal labels do */
+@media (max-width: 639px) {
+  .aperture { --ap-s-end: 6%; --ap-t-end: 11%; }
+}
+
+.aperture__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--s5);
+  flex-wrap: wrap;
+}
+
+/* base band: the wordmark sits over the plate, everything small sits on ink */
+.aperture__base {
+  display: grid;
+  gap: var(--s5);
+  align-items: end;
+  padding-top: var(--s4);
+  border-top: 1px solid var(--rule);
+}
+
+@media (min-width: 820px) {
+  .aperture__base {
+    grid-template-columns: 1fr auto;
+    gap: var(--s8);
+  }
+}
+
+.aperture__pitch { max-width: 46ch; }
+
+@media (min-width: 820px) {
+  .aperture__pitch {
+    justify-self: end;
+    text-align: right;
+    width: min(42ch, 44vw);
+  }
+  .aperture__pitch .aperture__sub { margin-left: auto; }
+}
+
+.aperture__tag {
+  font-family: var(--font-display);
+  font-size: var(--t-lead);
+  line-height: 1.14;
+  text-wrap: balance;
+  margin-bottom: var(--s3);
+}
+
+.aperture__sub {
+  font-size: var(--t-small);
+  color: var(--bone-dim);
+  max-width: 40ch;
+  margin-bottom: var(--s5);
+  text-wrap: pretty;
+}
+
+/* ---------- wordmark ---------- */
+
+/* one ink band under the wordmark: it has to win the squint, not tie with the
+   brightest part of the plate */
+.wm-band {
+  position: relative;
+  isolation: isolate;
+}
+
+.wm-band::before {
+  content: "";
+  position: absolute;
+  inset: -6% calc(var(--gutter) * -1) -14%;
+  z-index: -1;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    color-mix(in oklab, var(--ink-abyss) 62%, transparent) 26%,
+    color-mix(in oklab, var(--ink-abyss) 72%, transparent) 62%,
+    color-mix(in oklab, var(--ink-abyss) 40%, transparent) 88%,
+    transparent 100%
+  );
+}
+
+.wm {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-variation-settings: "opsz" 96;
+  font-size: var(--t-h1);
+  line-height: 0.84;
+  letter-spacing: -0.02em;
+  margin: 0;
+  color: var(--bone);
+  /* riso misregistration, plus enough ink under the letterforms to survive
+     the brightest part of the plate */
+  text-shadow:
+    0.018em 0.013em 0 color-mix(in oklab, var(--coral) 46%, transparent),
+    -0.016em -0.011em 0 color-mix(in oklab, var(--verdigris) 32%, transparent),
+    0 0.03em 0.14em color-mix(in oklab, var(--ink-abyss) 82%, transparent),
+    0 0 0.42em color-mix(in oklab, var(--ink-abyss) 70%, transparent);
+}
+
+.wm__l {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.06em;
+}
+
+.wm__l > span {
+  display: block;
+  transform: translateY(115%);
+  animation: wm-rise 1s var(--ease-out) forwards;
+  animation-delay: var(--d, 0ms);
+}
+
+@keyframes wm-rise {
+  to { transform: translateY(0); }
+}
+
+/* ---------- arch button ---------- */
+
+.arch-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s3);
+  min-height: 48px;
+  padding: var(--s3) var(--s6);
+  border: 1px solid var(--marigold);
+  border-radius: 999px 999px 4px 4px;
+  background: transparent;
+  color: var(--bone);
+  font-family: var(--font-text);
+  font-size: var(--t-small);
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  overflow: hidden;
+  isolation: isolate;
+  transition: color 0.24s var(--ease-out);
+}
+
+.arch-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--marigold);
+  transform: translateY(101%);
+  transition: transform 0.28s var(--ease-out);
+}
+
+.arch-btn:hover,
+.arch-btn:focus-visible { color: var(--ink-abyss); }
+
+.arch-btn:hover::before,
+.arch-btn:focus-visible::before { transform: translateY(0); }
+
+.arch-btn:active { transform: translateY(1px); }
+
+.arch-btn__glyph {
+  width: 10px;
+  height: 14px;
+  border-radius: 999px 999px 1px 1px;
+  border: 1px solid currentColor;
+  border-bottom: 0;
+}
+
+.aperture__foot {
+  display: grid;
+  gap: var(--s2);
+  align-content: end;
+  opacity: 0;
+  animation: fade-plain 900ms var(--ease-out) 1500ms forwards;
+}
+
+@keyframes fade-plain {
+  to { opacity: 1; }
+}
+
+/* small screens: drop the marginal labels, keep the plate and the one CTA */
+@media (max-width: 639px) {
+  .aperture__top > :last-child,
+  .aperture__foot { display: none; }
+  .aperture__base { padding-top: var(--s3); }
+  .aperture__tag { font-size: clamp(1.35rem, 1rem + 2.4vw, 1.75rem); }
+}

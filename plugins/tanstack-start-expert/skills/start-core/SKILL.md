@@ -1,17 +1,20 @@
 ---
 name: start-core
 version: 1.0.0
-description: >-
-  TanStack Start setup and project anatomy — tanstackStart() Vite (and Rsbuild)
-  plugin, getRouter() factory, root route document shell (HeadContent, Outlet,
-  Scripts), routeTree.gen.ts, tsconfig, src/ layout. Use when: scaffolding a
-  Start project from scratch, wiring the build tool, understanding where files
-  go, debugging setup (blank page, hydration, no client JS). Do NOT use for:
-  server-only vs isomorphic boundaries (use start-execution-model), SOLID/code
-  organization (use solid-tanstack-start), plain React SPA without Start.
+description: Use when scaffolding a TanStack Start project, wiring the build tool, or debugging setup (blank page, hydration, no client JS).
 user-invocable: true
 references: references/project-setup.md, references/project-anatomy.md, references/common-mistakes.md, references/templates/minimal-project.md
 ---
+
+<objective>
+Covers TanStack Start project setup and anatomy: the tanstackStart() Vite (and Rsbuild) plugin, the getRouter() factory, the root route document shell (HeadContent, Outlet, Scripts), the generated routeTree.gen.ts, tsconfig, and overall src/ layout. Targets @tanstack/react-start v1.166.2.
+
+States the framework's identity clearly: Start is built on TanStack Router + Vite, not Next.js — no getServerSideProps, no "use server" directives, no app/layout.tsx. Routes live in src/routes/, server-only code uses createServerFn, code is isomorphic by default (loaders run on both server and client), and types are fully inferred (never cast or annotate inferred values).
+
+Documents the two hand-written wiring files every app needs (src/router.tsx, src/routes/__root.tsx) plus the one generated file that must never be edited (routeTree.gen.ts), a minimal Vite config, and the CLI scaffolding shortcut.
+
+Do NOT use this skill for server-only vs isomorphic execution boundaries in depth (use start-execution-model), for SOLID/code organization (use solid-tanstack-start), or for a plain React SPA without Start.
+</objective>
 
 # TanStack Start Core
 

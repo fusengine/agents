@@ -1,8 +1,14 @@
 ---
 name: agent-design
-description: "Design AI agents with recommended patterns and architectures. Use when: choosing between workflow vs agent patterns, structuring orchestrator/subagent pipelines, or writing a Claude Code agent template."
+description: "Use when choosing between workflow vs agent patterns, structuring orchestrator/subagent pipelines, or writing a Claude Code agent template."
 allowed-tools: Read, Write
 ---
+
+<objective>
+Agent Design covers the architectural decisions behind building a high-performance AI agent: the workflow-vs-agent distinction (code-orchestrated vs LLM-directed control), the minimal agent structure (identity, capabilities, tools, constraints, workflow), and the "fresh eyes" principle -- each sub-agent gets only the context it needs, never the full orchestrator history.
+
+It routes to four references depending on the task: `patterns.md` for architecture choice (Single Agent, Orchestrator, Pipeline, Network, Supervisor, Hierarchical, Meta-Prompting), `workflows.md` for implementing APEX/TDD/Explore-Plan-Code/Review/Debug patterns inside an agent, `templates.md` for the full production frontmatter and Claude Code agent template, and `anti-patterns.md` for reviewing a design against common mistakes.
+</objective>
 
 # Agent Design
 

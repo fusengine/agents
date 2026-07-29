@@ -1,12 +1,18 @@
 ---
 name: solid-rust
-description: "SOLID principles for Rust 2024+. Files < 100 lines, traits separated, modular architecture. Modules MANDATORY. Use when: writing or refactoring Rust code, structuring src/modules/[feature]/ layers, or defining traits.rs interfaces."
+description: "Use when writing or refactoring Rust code, structuring src/modules/[feature]/ layers, or defining traits.rs interfaces (SOLID, files < 100 lines)."
 versions:
   rust: "2024"
 user-invocable: true
 references: references/solid-principles.md, references/single-responsibility.md, references/open-closed.md, references/liskov-substitution.md, references/interface-segregation.md, references/dependency-inversion.md, references/architecture-patterns.md, references/templates/module.md, references/templates/service.md, references/templates/trait-def.md, references/templates/handler.md, references/templates/error.md, references/templates/test.md
 related-skills: solid-detection
 ---
+
+<objective>
+SOLID Rust enforces a modular architecture for Rust 2024 edition: every feature lives under `src/modules/[feature]/` (handlers.rs, services.rs, repository.rs, traits.rs, models.rs) with shared code in `src/core/`, traits live only in `traits.rs` or `src/core/traits/`, generics use trait bounds instead of concrete types, `thiserror` handles custom errors, and every public item carries a rustdoc `///` comment.
+
+Before writing any new code it requires a DRY check against `src/core/services` and `src/core/traits`. See `solid-principles.md` for the overview, the per-principle references for SRP/OCP/LSP/ISP/DIP detail, and the templates for module/service/trait/handler/error/test scaffolding.
+</objective>
 
 # SOLID Rust - Modular Architecture
 

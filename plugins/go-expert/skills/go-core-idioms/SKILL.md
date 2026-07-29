@@ -1,12 +1,20 @@
 ---
 name: go-core-idioms
-description: "Use when: writing or reviewing idiomatic sequential Go — error handling (%w wrapping, errors.Join, errors.Is/As, errors.AsType), slog structured logging, generics, small consumer-side interfaces, naming/style, new(expr), go fix modernizers. Do NOT use for: goroutines/channels/errgroup/context concurrency (use go-concurrency), non-Go languages, framework-specific code."
+description: Use when writing or reviewing idiomatic sequential Go — error handling, slog logging, generics, interfaces, style. Not for concurrency (go-concurrency).
 versions:
   go: "1.26"
 user-invocable: false
 references: references/error-handling.md, references/slog-logging.md, references/generics-and-1.26.md, references/interfaces-and-style.md, references/templates/error-patterns.md, references/templates/slog-setup.md
 related-skills: go-concurrency, solid-go
 ---
+
+<objective>
+Covers idiomatic sequential Go 1.26: error handling (%w wrapping, errors.Join,
+errors.Is/As, errors.AsType), slog structured logging, generics, small
+consumer-side interfaces, naming/style conventions, new(expr), and go fix
+modernizers. Does not cover goroutines/channels/errgroup/context concurrency
+(see go-concurrency), non-Go languages, or framework-specific code.
+</objective>
 
 # Go Core Idioms
 

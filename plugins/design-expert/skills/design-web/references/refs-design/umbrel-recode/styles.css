@@ -1,0 +1,982 @@
+/* =============================================================
+   umbrel-recode — feuille unique
+   Référence de design reconstruite depuis umbrel.com.
+
+   Convention de lecture, valable sur tout le fichier :
+     [relevé]    valeur lue dans la source (capture wget du DOM)
+     [arbitrage] décision de recodage — la source ne porte pas
+                 cette valeur, ou la porte via son runtime JS.
+
+   Plan : 1 tokens · 2 base · 3 layout · 4 composants
+          5 mouvement · 6 responsive
+   ============================================================= */
+
+/* =============================================================
+   1. TOKENS
+   Nommés par rôle. Un agent qui ne reprend que ce bloc a déjà
+   l'essentiel du système.
+   ============================================================= */
+:root {
+  /* --- Surfaces -------------------------------------------------
+     Page intégralement sombre. Le noir est PUR (#000), pas un
+     gris foncé : c'est ce qui fait "disparaître" les bords des
+     photos produit en plein cadre. Les cartes ne sont pas des
+     aplats mais des voiles blancs très faibles posés sur ce noir,
+     doublés d'un filet à 9 % — jamais de bordure pleine.        */
+  --surface-page: #000;                       /* [relevé] */
+  --surface-profonde: #131415;                /* [relevé] token Framer bf966309 */
+  --surface-elevee: #222426;                  /* [relevé] token Framer 965e5c17 */
+  --surface-carte: rgba(255, 255, 255, .035); /* [arbitrage] */
+  --surface-verre: rgba(18, 18, 20, .72);     /* [arbitrage] barre de nav */
+  --filet: rgba(255, 255, 255, .09);          /* [arbitrage] */
+  --filet-fort: rgba(255, 255, 255, .16);     /* [arbitrage] */
+
+  /* --- Texte ----------------------------------------------------
+     Quatre niveaux seulement. Le secondaire n'est pas un gris :
+     c'est du blanc à 62 % d'opacité, donc il se re-teinte tout
+     seul au-dessus d'une photo ou d'un dégradé coloré.          */
+  --texte-primaire: #fff;                     /* [relevé] */
+  --texte-secondaire: rgba(255, 255, 255, .62); /* [relevé] sous-titre du hero */
+  --texte-tertiaire: #ababab;                 /* [relevé] corps des cartes */
+  --texte-eyebrow: #e0e0e0;                   /* [relevé] surtitres de section */
+  --texte-inverse: #1d1d1f;                   /* [relevé] token Framer eeb489be */
+
+  /* --- Accents --------------------------------------------------
+     Quatre accents, un rôle chacun, jamais interchangeables :
+       chaud      le mot pivot du h1, et lui seul
+       froid      action principale (bouton plein, lien)
+       electrique dégradé de la section « superpowers »
+       signal     pastille d'annonce (NEW)                        */
+  --accent-chaud: #e3a081;                    /* [relevé] rgb(227,160,129) */
+  --accent-froid: #5351ea;                    /* [relevé] token Framer db64987f */
+  --accent-electrique: #1c1aff;               /* [relevé] dégradé "endlessssssssss" */
+  --accent-signal: #e9c341;                   /* [arbitrage] pastille NEW */
+  --accent-bois: #bd9366;                     /* [relevé] token Framer 4769b124 */
+
+  /* --- Typographie ----------------------------------------------
+     La source charge Inter Display (titres) et Inter Variable
+     (labels) ; Inter seule couvre les deux.
+     L'échelle n'est PAS modulaire : aucune raison constante ne
+     la traverse. Les rapports mesurés sont
+       48/43 = 1,12 · 43/27 = 1,59 · 27/24 = 1,13 · 24/20 = 1,20
+       20/18 = 1,11 · 18/14 = 1,29 · 14/13 = 1,08
+     Autrement dit : deux grappes serrées (affichage ~1,12,
+     interface ~1,08) séparées par deux sauts francs. C'est une
+     échelle réglée à la main, et c'est ce qui lui donne son
+     assise — la copier en ratio unique la casse.                */
+  --police: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+  --t-hero: 48px;      /* [relevé] h1 */
+  --t-titre: 43px;     /* [relevé] nom produit en bande */
+  --t-section: 32px;   /* [relevé] titre de colonne */
+  --t-carte: 27px;     /* [relevé] titre de carte large */
+  --t-sous-titre: 24px;/* [relevé] titre de carte / prix */
+  --t-lead: 20px;      /* [relevé] chapô */
+  --t-corps: 18px;     /* [relevé] paragraphe, surtitre */
+  --t-ui: 14px;        /* [relevé] nav, légende, bouton */
+  --t-note: 13px;      /* [relevé] mention basse */
+  --t-micro: 12px;     /* [relevé] pastille */
+
+  /* Deux graisses, pas trois : 500 pour tout ce qui se lit,
+     600 pour tout ce qui titre. (110 vs 88 occurrences ; le 700
+     n'apparaît que 2 fois dans toute la source.)                */
+  --g-texte: 500;      /* [relevé] */
+  --g-titre: 600;      /* [relevé] */
+
+  /* Approche resserrée partout, graduée par taille : plus le
+     corps est gros, plus on serre.                              */
+  --ls-affichage: -.03em; /* [relevé] hero, cartes, chapô */
+  --ls-titre: -.02em;     /* [relevé] nom produit */
+  --ls-ui: -.01em;        /* [relevé] nav, légendes */
+
+  --lh-serre: 110%;    /* [relevé] chapô, mot vedette */
+  --lh-titre: 120%;    /* [relevé] tous les titres */
+  --lh-lisible: 124%;  /* [relevé] surtitres */
+  --lh-corps: 130%;    /* [relevé] paragraphes */
+
+  /* --- Espacement -----------------------------------------------
+     Le pas de la source est 10, pas 8 : les paddings relevés sont
+     60 / 50 / 40 / 30 / 20 / 10 px, dans cet ordre de fréquence.
+     Seuls les micro-écarts (4, 8, 12) sortent de ce rythme.     */
+  --e-xs: 4px;         /* [relevé] */
+  --e-s: 10px;         /* [relevé] pas de base */
+  --e-m: 20px;         /* [relevé] */
+  --e-l: 40px;         /* [relevé] */
+  --e-xl: 60px;        /* [relevé] */
+  --e-2xl: 80px;       /* [relevé] */
+  /* Respiration inter-sections. La source est SERRÉE : sa page fait
+     ~5500 px de haut à 1440 pour dix sections. Une version antérieure
+     de ce fichier montait à 7300 px — même contenu, mais lu comme un
+     site différent. La densité verticale est un trait de style, pas un
+     réglage neutre. [arbitrage calé sur la hauteur totale mesurée] */
+  --e-section: 60px;
+
+  /* --- Grille ---------------------------------------------------
+     960 px utiles, mesurés sur le rendu à 1440 (contenu de
+     x=240 à x=1200). Les bandes photo, elles, sont pleine
+     largeur : le conteneur ne borne que le texte.               */
+  --conteneur: 960px;       /* [relevé] texte courant */
+  --conteneur-large: 1044px;/* [relevé] bandes photo pleine hauteur */
+  --gouttiere: 20px;        /* [arbitrage] marge mobile */
+
+  /* --- Rayons ---------------------------------------------------
+     Trois rayons de bloc + une pilule. 24 domine les grandes
+     cartes, 20/22 les cartes moyennes, 12 les vignettes.        */
+  --r-s: 12px;         /* [relevé] */
+  --r-m: 22px;         /* [relevé] */
+  --r-l: 24px;         /* [relevé] */
+  --r-pilule: 99px;    /* [relevé] */
+
+  /* --- Mouvement ------------------------------------------------
+     La source ne contient qu'UNE transition CSS dans toute sa
+     feuille — celle-ci. Tout le reste (apparitions, marquee,
+     survols) est piloté par le runtime Framer, donc réécrit ici. */
+  --courbe: cubic-bezier(.44, 0, .56, 1);      /* [relevé] */
+  --courbe-sortie: cubic-bezier(.16, 1, .3, 1);/* [arbitrage] */
+  --duree-court: .3s;                          /* [relevé] */
+  --duree-long: .7s;                           /* [arbitrage] */
+  --perspective: 1200px;                       /* [relevé] */
+}
+
+/* =============================================================
+   2. BASE
+   ============================================================= */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--surface-page);
+  color: var(--texte-primaire);
+  font: var(--g-texte) var(--t-ui) / var(--lh-corps) var(--police);
+  letter-spacing: var(--ls-ui);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden; /* garde-fou : aucune bande ne doit déborder */
+}
+
+h1, h2, h3, p, figure, ul { margin: 0; }
+ul { padding: 0; list-style: none; }
+img { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+:focus-visible { outline: 2px solid var(--accent-chaud); outline-offset: 3px; }
+
+/* Libellé lu par les technologies d'assistance, invisible à l'écran. */
+.hors-ecran {
+  position: absolute; width: 1px; height: 1px;
+  margin: -1px; padding: 0; border: 0;
+  clip-path: inset(50%); overflow: hidden; white-space: nowrap;
+}
+
+/* Rôles typographiques. Ils s'appliquent à n'importe quelle
+   balise : la hiérarchie HTML reste sémantique, la taille est
+   décidée ici. */
+.titre-hero {
+  font-size: var(--t-hero); font-weight: var(--g-titre);
+  letter-spacing: var(--ls-affichage); line-height: var(--lh-titre);
+}
+.titre-produit {
+  font-size: var(--t-titre); font-weight: var(--g-titre);
+  letter-spacing: var(--ls-titre); line-height: var(--lh-titre);
+}
+.titre-section {
+  font-size: var(--t-section); font-weight: var(--g-titre);
+  letter-spacing: var(--ls-affichage); line-height: var(--lh-titre);
+}
+.titre-carte {
+  font-size: var(--t-carte); font-weight: var(--g-titre);
+  letter-spacing: var(--ls-affichage); line-height: var(--lh-titre);
+}
+.titre-bloc {
+  font-size: var(--t-sous-titre); font-weight: var(--g-titre);
+  letter-spacing: var(--ls-affichage); line-height: var(--lh-titre);
+}
+.chapo {
+  font-size: var(--t-lead); font-weight: var(--g-texte);
+  letter-spacing: var(--ls-affichage); line-height: var(--lh-serre);
+  color: var(--texte-secondaire);
+}
+.corps {
+  font-size: var(--t-corps); font-weight: var(--g-texte);
+  letter-spacing: var(--ls-affichage); line-height: var(--lh-corps);
+  color: var(--texte-secondaire);
+}
+.surtitre {
+  font-size: var(--t-corps); font-weight: var(--g-texte);
+  letter-spacing: var(--ls-affichage); line-height: var(--lh-lisible);
+  color: var(--texte-eyebrow);
+}
+.note { font-size: var(--t-note); color: var(--texte-secondaire); }
+
+/* Remplissage du texte par un dégradé. C'est LA signature
+   typographique de la page : les titres ne sont pas blancs, ils
+   sont un dégradé blanc → blanc 80 % du bas vers le haut, ce qui
+   les creuse très légèrement. [relevé] */
+.fondu {
+  background-image: linear-gradient(0deg, #fff 0%, rgba(255, 255, 255, .8) 100%);
+  -webkit-background-clip: text; background-clip: text;
+  color: transparent;
+}
+.mot-chaud { color: var(--accent-chaud); }  /* [relevé] */
+
+/* =============================================================
+   3. LAYOUT
+   ============================================================= */
+.shell {
+  width: 100%; max-width: var(--conteneur);
+  margin-inline: auto;
+  padding-inline: var(--gouttiere);
+}
+.bande { position: relative; padding-block: var(--e-section); }
+/* Fond de bloc teinté. Le procédé est systématique dans la source :
+   un radial-gradient ANCRÉ EN HAUT DU BLOC (`at 50% 0`), qui part
+   d'une couleur saturée et tombe vers un quasi-noir teinté avant la
+   fin. Jamais un aplat, jamais un linéaire de haut en bas.
+   Cette valeur est relevée, mais la classe reste NON APPLIQUÉE :
+   vérification faite sur le rendu, toutes les sections de cette page
+   sont sur noir pur, et poser ce fond ailleurs serait inventer une
+   affectation. Elle est ici pour le procédé, pas pour la décoration.
+   [relevé, non affecté] */
+.bande--teintee {
+  background: radial-gradient(113.039% 100% at 50% 0,
+    #181818 0%, #191919 .01%, #080808cf 100%);
+}
+/* Raccord entre deux blocs : la source ne coupe jamais net, elle
+   fond vers le noir sur les 16 derniers pour cent. [relevé] */
+.bande--raccord::after {
+  content: ""; position: absolute; inset: auto 0 0; height: 160px;
+  background: linear-gradient(#0000 0%, #000 84.0354%);
+  pointer-events: none;
+}
+.bande--serree { padding-block: var(--e-l); }
+.bande--pleine { padding-inline: 0; }
+
+/* =============================================================
+   4. COMPOSANTS
+   ============================================================= */
+
+/* --- 4.1 Barre de navigation ---------------------------------
+   Pilule flottante, pas une barre pleine largeur : 800 px
+   centrés, détachés du bord haut de 20 px. Le fond est un verre
+   dépoli, pas un aplat — le contenu défile visiblement dessous. */
+.nav {
+  position: fixed; inset: var(--e-m) 0 auto; z-index: 50;
+  display: flex; justify-content: center; pointer-events: none;
+}
+.nav__pilule {
+  pointer-events: auto;
+  display: flex; align-items: center; gap: var(--e-m);
+  width: min(800px, calc(100% - var(--e-l)));
+  padding: var(--e-s) var(--e-m);
+  border: 1px solid var(--filet);
+  border-radius: var(--r-pilule);
+  background: var(--surface-verre);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+}
+.nav__marque { display: flex; align-items: center; margin-right: auto; }
+.nav__marque svg { width: 34px; height: auto; fill: var(--texte-primaire); }
+.nav__liens { display: flex; gap: var(--e-m); font-size: var(--t-ui); }
+.nav__liens a { transition: color var(--duree-court) var(--courbe); }
+.nav__liens a:hover { color: var(--texte-secondaire); }
+.nav__pays {
+  width: 20px; height: 15px; border-radius: 3px;
+  border: 1px solid var(--filet-fort);
+  background: linear-gradient(#d52b1e 0 100%);
+  position: relative; flex: none;
+}
+/* Croix suisse en pur CSS — la source sert un SVG de drapeau. [arbitrage] */
+.nav__pays::before, .nav__pays::after {
+  content: ""; position: absolute; background: #fff;
+  top: 50%; left: 50%; translate: -50% -50%;
+}
+.nav__pays::before { width: 8px; height: 2.5px; }
+.nav__pays::after { width: 2.5px; height: 8px; }
+.nav__menu {
+  display: none; place-items: center;
+  width: 32px; height: 32px; padding: 0;
+  border: 0; border-radius: 50%; cursor: pointer;
+  background: rgba(255, 255, 255, .1); color: var(--texte-primaire);
+}
+.nav__menu svg { width: 22px; height: 22px; }
+
+/* --- 4.2 Boutons ---------------------------------------------
+   Deux niveaux, jamais plus : plein (action) et voile (second
+   choix). Toujours en pilule, toujours côte à côte. */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 8px 16px;                        /* [relevé] */
+  border: 1px solid transparent; border-radius: var(--r-pilule);
+  font: var(--g-titre) var(--t-ui) / 1 var(--police);
+  letter-spacing: var(--ls-ui); cursor: pointer;
+  transition: background-color var(--duree-court) var(--courbe),
+              color var(--duree-court) var(--courbe);
+}
+/* Aucun bouton de cette page n'est un aplat. Tous portent un dégradé
+   vertical très court — clair en haut, sombre en bas — qui suffit à
+   les faire lire comme des volumes sans une seule ombre portée. C'est
+   le même procédé que les cartes : dégradé descendant, pas d'ombre.
+   [relevé] */
+.btn--plein { background: var(--texte-primaire); color: var(--texte-inverse); }
+.btn--plein:hover { background: rgba(255, 255, 255, .85); }
+.btn--froid {                                    /* action principale */
+  background: linear-gradient(#5351f3 0%, #312ee9 100%); color: #fff;
+}
+.btn--voile {                                    /* second choix */
+  background: linear-gradient(#2e2e2e 0%, #191919 100%);
+  border-color: var(--filet); color: var(--texte-primaire);
+}
+.btn--froid:hover, .btn--voile:hover { filter: brightness(1.15); }
+.actions { display: flex; flex-wrap: wrap; gap: var(--e-s); }
+
+/* Pastille d'annonce. */
+.pastille {
+  display: inline-block; padding: 5px var(--e-s);
+  border-radius: var(--r-pilule);
+  background: var(--accent-signal); color: var(--texte-inverse);
+  font-size: var(--t-micro); font-weight: 700; letter-spacing: .02em;
+}
+.pastille--voile {
+  background: rgba(255, 255, 255, .12); color: var(--texte-primaire);
+  border: 1px solid var(--filet); font-weight: var(--g-texte);
+  letter-spacing: var(--ls-ui); padding: 6px 14px;
+}
+
+/* --- 4.3 Hero ------------------------------------------------
+   Centré, très aéré, et surtout : le fond n'est pas noir plat —
+   une lueur radiale très basse en opacité décolle le titre. */
+.hero { padding-block: 130px var(--e-xl); text-align: center; }
+/* Pas de lueur ici : vérifié sur le rendu, le hero de la source est
+   sur noir pur. Une version antérieure de ce fichier y posait un
+   halo violet — il était inventé, il est retiré. */
+.hero > * { position: relative; }
+/* Le titre tient sur UNE ligne au-dessus de 810 px : c'est ce qui
+   donne au hero sa ligne d'horizon très basse. [relevé] */
+.hero__titre { text-wrap: balance; }
+.hero__chapo { margin-top: var(--e-s); }
+
+/* Trois preuves d'usage, alignées sous le chapô. */
+.preuves {
+  display: grid; grid-template-columns: repeat(3, minmax(0, 240px));
+  justify-content: center; gap: var(--e-l);
+  margin-top: var(--e-xl);
+}
+.preuve { display: grid; justify-items: center; gap: 14px; }
+.preuve p { font-size: var(--t-ui); color: var(--texte-secondaire); }
+.preuve b { color: var(--texte-primaire); font-weight: var(--g-titre); }
+
+/* Pile de trois icônes d'application qui se chevauchent et
+   s'inclinent. Ce sont les vraies icônes de la source, servies
+   par le CDN Framer. [relevé] */
+.pile { display: flex; }
+.pile img {
+  width: 44px; height: 44px; border-radius: var(--r-s);
+  object-fit: cover;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, .5);
+}
+.pile img:nth-child(1) { rotate: -8deg; }
+/* Chevauchement fort : le groupe mesure 88 px pour 3 tuiles de 44,
+   soit exactement la moitié de chaque tuile masquée. [relevé] */
+.pile img:nth-child(2) { margin-inline: -22px; z-index: 1; }
+.pile img:nth-child(3) { rotate: 8deg; }
+
+/* --- 4.4 Bande produit ---------------------------------------
+   Photo plein cadre, texte posé dessus à gauche. Le voile n'est
+   pas un noir uniforme : un dégradé horizontal, opaque à gauche
+   et nul au tiers, sinon la photo est tuée. */
+.produit {
+  position: relative; min-height: 700px;
+  display: flex; align-items: center;
+  padding-block: var(--e-2xl);
+  isolation: isolate;
+}
+.produit__photo {
+  position: absolute; inset: 0; z-index: -2;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: 70.3% 48.4%; /* [relevé] cadrage exact de la source */
+}
+/* Le voile de la source est VERTICAL et part de gris transparent,
+   pas de noir : `#75757500` à 15,7 % → `#000000d6` à 69 %. Il n'atteint
+   jamais l'opaque (d6 = 84 %), donc la photo reste lisible dessous.
+   [relevé] */
+.produit__voile {
+  position: absolute; inset: 0; z-index: -1;
+  background: linear-gradient(#75757500 15.6907%, #000000d6 69.019%);
+}
+/* Ce second voile, horizontal, n'est PAS dans la source : le texte de
+   cette bande est à gauche sur une photo claire, il fallait le
+   détacher. [arbitrage] */
+.produit__voile::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(90deg, #000 0%, rgba(0, 0, 0, .6) 26%, transparent 58%);
+}
+.produit .shell { max-width: var(--conteneur-large); }
+.produit__contenu { max-width: 340px; display: grid; gap: var(--e-m); }
+.produit__prix { font-size: var(--t-sous-titre); font-weight: var(--g-texte); line-height: 1; }
+.produit__prix span {
+  display: block; margin-top: var(--e-s);
+  font-size: 16px; color: var(--texte-secondaire);
+}
+
+/* --- 4.5 Duo Home / OS ---------------------------------------
+   Deux colonnes de même hauteur, fonds différents : noir à
+   gauche, nuit violacée à droite. Elles ne partagent que la
+   grille — c'est ce contraste de fond qui sépare les deux
+   produits sans une seule bordure. */
+/* Le clip est posé sur la RANGÉE, pas sur le volet : le halo est plus
+   large que sa colonne et doit pouvoir déborder sur la voisine, comme
+   dans la source. Le clipper au volet dessinerait une arête nette. */
+.duo { display: grid; grid-template-columns: 1fr 1fr; overflow: clip; }
+.duo__volet {
+  display: grid; justify-items: center; align-content: start; gap: var(--e-s);
+  padding: var(--e-xl) var(--e-l) var(--e-xl);
+  text-align: center;
+}
+/* overflow: clip est indispensable — la lueur ci-dessous est plus
+   large que la colonne (939 px pour 720) et faisait défiler le
+   document de 108 px de chaque côté. */
+/* Ce volet n'a AUCUN fond. Vérifié : la source ne pose rien dessus,
+   le noir est celui de `body`. Le halo ci-dessous est donc le seul
+   apport chromatique de la section — une image posée sur du noir pur,
+   pas un dégradé de section. [relevé] */
+.duo__volet--os { position: relative; isolation: isolate; }
+.duo__lueur {
+  position: absolute; z-index: -1;
+  /* Le conteneur porte l'opacité, jamais l'image. [relevé] */
+  opacity: .08;
+  /* Trois largeurs FIXES, une par palier — ce n'est pas un
+     pourcentage. [relevé] */
+  width: 938.82px; height: 938.82px;
+  /* Le centrage, lui, est un choix : la source positionne ce bloc
+     dans son propre système de coordonnées Framer. [arbitrage] */
+  top: 50%; left: 50%; translate: -50% -50%;
+  pointer-events: none;
+}
+.duo__lueur img { width: 100%; height: 100%; object-fit: cover; }
+.duo__scene {
+  height: 320px; width: 100%;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: var(--e-m);
+  perspective: var(--perspective); /* [relevé] */
+  /* Les rotations 3D ci-dessous débordent la boîte de mise en page
+     (67 px mesurés à 390 px de large) : sans ce clip, le document
+     défile horizontalement. */
+  overflow: clip;
+}
+.duo__scene img { max-height: 100%; width: auto; object-fit: contain; }
+/* Rotations 3D exactes des deux écrans umbrelOS. [relevé] */
+.duo__ecran--tablette { transform: rotateX(-12deg) rotateY(24deg); width: 390px; }
+.duo__ecran--tel {
+  transform: rotateX(-10deg) rotateY(-16deg);
+  width: 120px; margin-left: -70px; align-self: flex-end;
+}
+.duo__prix { font-size: var(--t-sous-titre); font-weight: var(--g-texte); margin-top: var(--e-s); }
+.duo .actions { margin-top: var(--e-m); justify-content: center; }
+
+/* --- 4.6 Grille de spécifications ----------------------------
+   Deux jeux de 4 cartes. Titre en deux temps : première ligne
+   blanche, seconde grisée. Le contraste interne au titre porte
+   toute la hiérarchie — pas la taille. */
+/* --- 4.6 bis Grilles de spécification -------------------------
+   Deux rangées de deux, jamais une grille CSS : la source empile des
+   flex-rows. Chaque tuile est en `flex: 1 0 0; width: 1px` — la ruse
+   classique pour que des enfants de contenus différents fassent
+   exactement la même largeur. Le format est fixé par
+   `aspect-ratio: 1.21667`, soit 189 px de haut au bureau, 138 en
+   mobile. [relevé] */
+.specs {
+  display: flex; flex-direction: column; gap: var(--e-m);
+  padding-block: var(--e-s);
+  /* La grille vit DANS sa colonne : 605 px mesurés au rendu pour une
+     colonne de 720. [relevé au rendu] */
+  width: 100%; max-width: 605px; margin-top: var(--e-m);
+}
+.specs__rangee { display: flex; gap: var(--e-m); width: 100%; }
+.spec {
+  flex: 1 0 0; width: 1px;
+  aspect-ratio: 1.21667;
+  border-radius: var(--r-m);              /* [arbitrage] */
+  overflow: hidden;
+}
+.spec img { width: 100%; height: 100%; object-fit: cover; }
+
+/* --- 4.7 Bande Files -----------------------------------------
+   Une seule carte très large, photo en fond, contenu à gauche. */
+/* La bande Files est plus large que le texte courant : elle prend le
+   conteneur large, pas les 960. [relevé au rendu] */
+.files-bande .shell { max-width: var(--conteneur-large); }
+.files {
+  position: relative; min-height: 420px; overflow: hidden;
+  border-radius: var(--r-l);
+  display: flex; align-items: center;
+}
+.files > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+/* Voile relevé de la source (vertical, gris transparent → noir 84 %),
+   doublé d'une composante horizontale qui, elle, est un arbitrage :
+   le texte de cette bande est à gauche sur une photo claire. */
+.files::after {
+  content: ""; position: absolute; inset: 0;
+  background:
+    linear-gradient(90deg, rgba(0, 0, 0, .7) 0%, rgba(0, 0, 0, .4) 38%, transparent 62%),
+    linear-gradient(#75757500 15.6907%, #000000d6 69.019%);
+}
+.files__contenu {
+  position: relative; z-index: 1;
+  display: grid; gap: 14px; justify-items: start;
+  padding: var(--e-l);
+  max-width: 440px;
+}
+.files__marque { display: flex; align-items: center; gap: var(--e-s); }
+.files__glyphe { width: 40px; height: 40px; border-radius: var(--r-s); }
+
+/* --- 4.8 Superpowers -----------------------------------------
+   Rangée de cartes hautes qui défile horizontalement. Chaque
+   carte est un aplat coloré saturé — seule zone de la page où la
+   couleur prend le dessus sur le noir. */
+.superpowers { text-align: center; }
+/* Titre de section : 32 px sur bureau, 24 sur mobile. Attention en
+   relevant ces valeurs — la source écrit les 3 variantes responsive
+   dans le HTML et la PREMIÈRE du document n'est pas toujours celle
+   du bureau. [relevé] */
+.titre-vedette {
+  margin-top: var(--e-xs);
+  font-size: 32px; font-weight: var(--g-titre);
+  letter-spacing: var(--ls-affichage); line-height: var(--lh-titre);
+}
+.titre-vedette + .corps { margin-top: var(--e-m); }
+/* Le mot vedette : dégradé bleu qui devient transparent vers la
+   DROITE (270deg part du bord droit). Les « s » répétés s'effacent
+   donc d'eux-mêmes — le mot dit ce qu'il montre. [relevé] */
+.mot-electrique {
+  background-image: linear-gradient(270deg,
+    rgba(28, 26, 255, 0) 15.4156%, var(--accent-electrique) 70.4955%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+
+/* --- Carrousel ------------------------------------------------
+   Ce n'est pas une grille : les cartes défilent, débordent des deux
+   côtés du viewport, et un fondu aux extrémités les fait s'éteindre
+   dans le noir de la page. Les chevrons sont posés par-dessus, à
+   hauteur du milieu des cartes. */
+.carrousel { position: relative; margin-top: var(--e-xl); }
+.rail {
+  display: flex; gap: 26px;             /* [relevé] */
+  /* 3 cartes visibles et centrées à partir de 1300 px. */
+  padding-inline: max(var(--gouttiere), calc((100vw - 1246px) / 2));
+  overflow-x: auto; scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  mask-image: linear-gradient(90deg, transparent 0, #000 7%, #000 93%, transparent 100%);
+}
+.rail::-webkit-scrollbar { display: none; }
+/* [arbitrage] la source pilote ces chevrons par son runtime ; leur
+   couleur et leur pastille sont reconstruites d'après le rendu.
+   motion.js les rend réellement cliquables et focalisables. */
+.carrousel__fleche {
+  position: absolute; top: 50%; translate: 0 -50%; z-index: 2;
+  cursor: pointer;
+  display: grid; place-items: center;
+  width: 40px; height: 40px; border-radius: 50%;
+  background: rgba(255, 255, 255, .07);
+  color: rgba(255, 255, 255, .55);
+  transition: background-color var(--duree-court) var(--courbe),
+              color var(--duree-court) var(--courbe);
+}
+.carrousel__fleche:hover {
+  background: rgba(255, 255, 255, .14); color: var(--texte-primaire);
+}
+.carrousel__fleche svg { width: 22px; height: 22px; }
+.carrousel__fleche--g { left: var(--e-l); }
+.carrousel__fleche--d { right: var(--e-l); }
+/* Anatomie relevée au pixel dans la source :
+     enveloppe 398 × 586      carte 398 × 554, décalée de 32 px
+     rayon     24 dehors, 22 dedans · anneau 2 px · blur 8.1
+     icône     64 × 64, rayon 15, filet 1 px #242424, à 20 px du bord
+     texte     bloc de 326 px à 62 px du haut de la carte, gap 10
+     capture   438 × 230, rayon 20, posée à 320 px du haut
+
+   Deux détails font toute la carte, et ils sont contre-intuitifs :
+
+   1. L'icône est posée à `top: 0` de l'ENVELOPPE, pas de la carte.
+      Comme la carte commence 32 px plus bas, l'icône chevauche son
+      bord supérieur — elle flotte à moitié dehors.
+   2. La capture fait 438 px de large dans une carte de 398, posée à
+      30 px du bord gauche : elle sort donc de 70 px à droite et
+      touche le bas. Elle n'est jamais « contenue avec une marge »,
+      elle est toujours rognée par deux bords.
+
+   L'anneau de 2 px ne coûte aucun élément : deux fonds, l'un en
+   padding-box, l'autre en border-box, sur une bordure transparente. */
+.pouvoir {
+  position: relative;
+  flex: none; width: 398px; padding-top: 32px;
+  scroll-snap-align: center;
+  text-align: left;
+}
+.pouvoir__carte {
+  position: relative; height: 554px;
+  padding: 62px 30px 0;
+  border: 2px solid transparent; border-radius: 24px;
+  overflow: hidden;
+  backdrop-filter: blur(8.1px); -webkit-backdrop-filter: blur(8.1px);
+  background-origin: border-box;
+}
+/* La carte au centre du rail est à pleine intensité, les latérales
+   reculent d'un cran. Sur la source c'est le fondu du masque qui
+   produit seul cet effet ; le doubler d'un état explicite rend la
+   position lisible même quand une carte n'est pas encore masquée.
+   La classe est posée par motion.js. [arbitrage] */
+.pouvoir { transition: opacity var(--duree-court) var(--courbe); }
+/* Retrait volontairement TÉNU : comparaison faite côte à côte, la
+   source n'assombrit pas ses cartes latérales — seul le fondu des
+   extrémités du rail les éteint. Un retrait marqué donnerait une
+   autre page. [arbitrage, calé sur le rendu source] */
+.js .rail .pouvoir { opacity: .82; }
+.js .rail .pouvoir.est-au-centre { opacity: 1; }
+.pouvoir__icone {
+  position: absolute; top: 0; left: 20px; z-index: 1;
+  width: 64px; height: 64px;
+  border-radius: 15px; border: 1px solid #242424;
+  object-fit: cover;
+}
+/* Le bloc de texte fait 326 px, pas la largeur disponible : c'est
+   cette largeur qui commande les coupes de ligne du titre et du
+   corps, donc la hauteur du bloc et le rythme de la carte. [relevé] */
+.pouvoir h3, .pouvoir p { max-width: 326px; }
+.pouvoir h3 {
+  font-size: var(--t-carte); font-weight: var(--g-titre);
+  letter-spacing: var(--ls-affichage); line-height: var(--lh-titre);
+}
+.pouvoir p { margin-top: var(--e-s); font-size: var(--t-ui); opacity: .8; }
+.pouvoir__ecran {
+  position: absolute; top: 320px; left: 30px;
+  width: 438px; height: 230px;
+  border-radius: 20px; object-fit: cover; object-position: left top;
+}
+
+/* Les 5 couples anneau / intérieur sont relevés tels quels. Chaque
+   intérieur est un dégradé radial ancré en HAUT au centre : la
+   lumière tombe du même point sur les cinq cartes, ce qui tient la
+   série malgré cinq teintes. L'affectation suit les couleurs
+   observées sur le site en ligne. */
+.pouvoir--nuit .pouvoir__carte {
+  background:
+    radial-gradient(131.767% 100% at 52.4614% 0%, #212121 5.96336%, #000000e0 63.2584%, #000 100%) padding-box,
+    linear-gradient(-26deg, #7c2424 0%, #2c27ff75 22.631%, #ff000080 100%) border-box;
+}
+.pouvoir--lagon .pouvoir__carte {
+  background:
+    radial-gradient(200.828% 100% at 52.4614% 0%, #006868 5.96336%, #01204fe0 51.5019%, #00001c 100%) padding-box,
+    linear-gradient(305deg, #7d24245e 0%, #2c27ff75 22.631%, #ff000080 100%) border-box;
+}
+.pouvoir--or .pouvoir__carte {
+  background:
+    radial-gradient(192.93% 100% at 50% 0%, #d77700 0%, #291a08 60.1135%, #000808 100%) padding-box,
+    linear-gradient(-26deg, #0056ff4a 0%, #c28e01 100%) border-box;
+}
+.pouvoir--braise .pouvoir__carte {
+  background:
+    radial-gradient(116.887% 100% at 50% 0%, #8f0100 0%, #400011 50%, #05001a 100%) padding-box,
+    linear-gradient(-26deg, #591010 0%, #45001075 22.631%, #ff3b3b80 100%) border-box;
+}
+.pouvoir--ambre .pouvoir__carte {
+  background:
+    radial-gradient(94.423% 100% at 50% 0%, #ec770a 0%, #1b006a 100%) padding-box,
+    linear-gradient(-26deg, #855dff45 0%, #fe7900 100%) border-box;
+}
+
+/* --- 4.9 App Store -------------------------------------------
+   La lueur est une PHOTO, servie en srcset. Aucun dégradé CSS ne la
+   reproduit : elle a un grain et une asymétrie qu'un radial n'a pas. */
+.store { position: relative; overflow: hidden; text-align: center; }
+.store__lueur {
+  position: absolute; inset: 0; z-index: -1;
+  width: 100%; height: 100%; object-fit: cover;
+}
+.store > :not(.store__lueur) { position: relative; }
+.store__chapo { max-width: 52ch; margin: var(--e-m) auto 0; }
+.store .actions { justify-content: center; margin-top: var(--e-l); }
+.store__collage {
+  width: min(100%, 900px); height: auto;
+  margin: var(--e-l) auto 0;
+  border-radius: var(--r-l);              /* [arbitrage] */
+}
+/* Dégradé du mot « app store. », relevé au chiffre près — y compris
+   le rayon vertical de 1182 %, qui aplatit le dégradé en bande
+   horizontale au lieu d'un cercle. [relevé] */
+.mot-iris {
+  background-image: radial-gradient(100% 1182.8% at 100% 50%,
+    rgb(191, 88, 202) 0%, rgb(94, 92, 255) 100%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+
+/* Filets de grille. Ce sont des éléments de 1 px de LARGE, hauts de
+   toute la section et débordant de 199 px en haut et en bas, remplis
+   d'un dégradé indigo qui s'éteint. Deux sens opposés, deux
+   positions. C'est le décor le plus discret de la page et le plus
+   réutilisable : une trame, pas un lavis. [relevé] */
+.filet {
+  position: absolute; top: -199px; bottom: -199px;
+  z-index: 1; width: 1px; pointer-events: none;
+}
+.filet--descend { left: 200px;  background: linear-gradient(#0000 0%, #2d2a89 100%); }
+.filet--monte   { right: 200px; background: linear-gradient(#2d2a89 0%, #0000 100%); }
+
+/* --- 4.10 Marquee d'applications -----------------------------
+   Deux rangées en sens inverse. Le contenu de chaque piste est écrit
+   EXACTEMENT deux fois : c'est ce qui rend le translateX(-50%)
+   parfaitement bouclé, quel que soit le nombre d'éléments. Le
+   duplicata est masqué aux lecteurs d'écran. */
+.marquee {
+  margin-top: var(--e-l); display: grid; gap: var(--e-m);
+  overflow: hidden;
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+.marquee__piste { display: flex; width: max-content; }
+/* `align-items: stretch` par défaut : chaque pastille prend la
+   hauteur de la rangée, ce qui verrouille l'alignement même si une
+   pastille venait à grandir. */
+.marquee__groupe { display: flex; gap: var(--e-m); padding-right: var(--e-m); }
+/* Anatomie relevée de la pastille : verre dépoli à 14,4 px de flou
+   sur un noir à 50 %, rayon 16, gouttière 6,4, retrait 12,8. Les
+   décimales viennent d'un facteur d'échelle appliqué au composant
+   source — elles se relèvent telles quelles. Le liseré est un
+   box-shadow INSET, pas une bordure : il éclaire le haut-gauche
+   comme une arête, sans occuper de place dans la boîte. [relevé] */
+/* Deux choses à comprendre ici.
+
+   1. HAUTEUR UNIQUE. Dans la source, TOUTE pastille porte une icône de
+      60 px — fichier image ou tracé vectoriel. Les dix-neuf sont donc
+      relevées avec la leur, et la hauteur est la même partout. Le
+      `min-height` reste comme garde-fou : sans icône, une pastille
+      retomberait à la hauteur de sa ligne de texte (~40 px) et la
+      bande ondulerait — c'est ce qui la faisait paraître déformée.
+
+   2. LE FACTEUR D'ÉCHELLE. Le CSS de la source annonce icône 60 +
+      padding 12,8 → 85,6 px de haut. Mesurée sur le rendu à 1440, la
+      pastille fait 72 px, soit 0,84 × cette valeur. Les décimales du
+      relevé (12,8 = 16 × 0,8 · 6,4 = 8 × 0,8) trahissent déjà un
+      facteur appliqué au composant ; il en reste un second que je
+      n'ai pas localisé dans la feuille. Les proportions relevées sont
+      donc conservées et l'ensemble est ramené à la taille observée
+      par --echelle-pastille. [relevé + facteur mesuré au rendu] */
+.appli {
+  --echelle-pastille: .841;             /* 72 / 85,6 */
+  display: flex; align-items: center; justify-content: center;
+  gap: calc(6.4px * var(--echelle-pastille));
+  min-height: calc(85.6px * var(--echelle-pastille));
+  width: min-content;
+  padding: calc(12.8px * var(--echelle-pastille));
+  border-radius: calc(16px * var(--echelle-pastille));
+  background-color: #00000080;
+  backdrop-filter: blur(14.4px); -webkit-backdrop-filter: blur(14.4px);
+  box-shadow: inset .8px .8px .96px #ffffff29, 0 2px 38px #0000008a;
+  font-size: var(--t-corps); font-weight: var(--g-texte);
+  letter-spacing: var(--ls-affichage);
+  color: rgba(255, 255, 255, .9);
+  /* Halo blanc très faible sous le texte : la pastille passe sur des
+     fonds saturés, c'est ce qui garde le mot lisible. [relevé] */
+  text-shadow: 0 0 24px #ffffff52;
+  white-space: pre;
+}
+/* La pastille d'icône, telle que la source la compose : une boîte de
+   60 px à coins arrondis qui rogne son contenu, et par-dessus une à
+   onze couches en position absolue — un fond, puis les tracés du logo.
+   C'est cette superposition qui explique qu'aucune icône ne soit
+   déformée dans la source : le cadre et le logo n'occupent pas la même
+   boîte, chacun a sa propre géométrie. [relevé] */
+.appli__ico {
+  position: relative; flex: none; overflow: hidden;
+  width: calc(60px * var(--echelle-pastille));       /* [relevé] 60 */
+  height: calc(60px * var(--echelle-pastille));
+  border-radius: calc(12px * var(--echelle-pastille));  /* [relevé] 12 */
+}
+/* Une couche. Sa géométrie — left/top/width/height en % de la base de
+   60 px — est portée par son style en ligne, relevée couche par couche
+   sur la source ; elle suit donc l'échelle sans être recalculée.
+   `object-fit` reste en ligne aussi : la source met `contain` sur les
+   deux logos en portrait (195×220, 170×207) et `cover` sur le seul
+   carré (256×256). [relevé] */
+.appli__c { position: absolute; display: block; }
+
+/* --- 4.11 Cartes de bas de page ------------------------------
+   Grille délibérément asymétrique : 585 / 349 puis 349 / 585.
+   L'alternance large-étroit / étroit-large casse la symétrie
+   sans casser l'alignement — c'est le détail le plus travaillé
+   de la page. [relevé] */
+.appui {
+  display: grid; gap: 25px;
+  /* 3 pistes pour obtenir 2 largeurs alternées sur 2 rangées :
+     349 + 25 + 211 = 585 (large) · 349 (étroite). */
+  grid-template-columns: 349fr 211fr 349fr;
+}
+.appui > :nth-child(1) { grid-column: 1 / 3; }
+.appui > :nth-child(2) { grid-column: 3; }
+.appui > :nth-child(3) { grid-column: 1; }
+.appui > :nth-child(4) { grid-column: 2 / 4; }
+/* Même procédé que les cartes du carrousel : PAS de bordure de
+   couleur, mais deux fonds — le corps en padding-box, le filet en
+   border-box — sur une bordure transparente. Le filet est donc lui
+   aussi un dégradé, plus clair en haut : c'est ce qui simule la
+   lumière rasante sans une seule ombre. [relevé] */
+.carte {
+  position: relative; min-height: 230px;
+  display: flex; flex-direction: column; justify-content: space-between;
+  padding: var(--e-m) var(--e-l) var(--e-l) var(--e-l);
+  border: 1px solid transparent; border-radius: var(--r-l);
+  background:
+    linear-gradient(#0a0a0a 0%, #0d0d0d36 100%) padding-box,
+    linear-gradient(#303030 0%, #121212 100%) border-box;
+}
+.carte__entete { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--e-m); }
+.carte__titre { font-size: var(--t-section); font-weight: var(--g-titre);
+  letter-spacing: var(--ls-affichage); line-height: var(--lh-titre); }
+.carte p { font-size: var(--t-ui); color: var(--texte-secondaire); max-width: 46ch; }
+.carte__fleche {
+  display: grid; place-items: center; flex: none;
+  width: 32px; height: 32px; border-radius: 50%;
+  background: rgba(255, 255, 255, .1);
+  transition: background-color var(--duree-court) var(--courbe);
+}
+.carte:hover .carte__fleche { background: rgba(255, 255, 255, .22); }
+.carte__fleche svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 1.6; }
+
+/* Formulaire d'infolettre : un seul champ en pilule, le bouton
+   vit dedans. */
+.infolettre {
+  display: flex; align-items: center; gap: var(--e-s);
+  margin-top: var(--e-m); padding: 6px 6px 6px var(--e-m);
+  border-radius: var(--r-pilule);
+  background: rgba(255, 255, 255, .05);
+  border: 1px solid var(--filet);
+}
+.infolettre input {
+  flex: 1; min-width: 0; padding: var(--e-s) 0;
+  border: 0; background: none; color: var(--texte-primaire);
+  font: var(--g-texte) var(--t-corps) / 1 var(--police);
+  letter-spacing: var(--ls-affichage);
+}
+.infolettre input::placeholder { color: var(--texte-secondaire); }
+.infolettre button {
+  border: 0; background: none; cursor: pointer;
+  padding: var(--e-s) var(--e-m);
+  color: var(--texte-primaire);
+  font: var(--g-titre) var(--t-corps) / 1 var(--police);
+  letter-spacing: var(--ls-affichage);
+  transition: color var(--duree-court) var(--courbe);
+}
+.infolettre button:hover { color: var(--texte-secondaire); }
+
+/* --- 4.12 Pied ------------------------------------------------ */
+.pied {
+  display: flex; flex-wrap: wrap; align-items: center;
+  justify-content: space-between; gap: var(--e-m);
+  padding-block: var(--e-2xl) var(--e-l);
+}
+.pied__social { display: flex; gap: var(--e-m); }
+.pied__social a { color: var(--texte-secondaire); transition: color var(--duree-court) var(--courbe); }
+.pied__social a:hover { color: var(--texte-primaire); }
+.pied__social svg { width: 18px; height: 18px; fill: currentColor; }
+.pied nav { display: flex; flex-wrap: wrap; gap: var(--e-m); font-size: var(--t-ui); }
+.pied nav a { color: var(--texte-secondaire); transition: color var(--duree-court) var(--courbe); }
+.pied nav a:hover { color: var(--texte-primaire); }
+
+/* =============================================================
+   5. MOUVEMENT
+   La source ne porte AUCUN @keyframes ni AUCUN :hover dans ses
+   feuilles : tout passait par le runtime Framer. Le mouvement
+   ci-dessous est donc entièrement réécrit, pas relevé.
+   ============================================================= */
+
+/* Apparition au défilement.
+   L'état caché est conditionné à la classe .js posée par le
+   script : sans JavaScript, rien n'est jamais masqué. C'est le
+   piège exact de la source, où 27 éléments restent à
+   opacity:.001 quand le runtime ne tourne pas. */
+.js [data-reveal] {
+  opacity: 0;
+  transform: translateY(20px);   /* [relevé] amplitude d'origine */
+  transition: opacity var(--duree-long) var(--courbe-sortie),
+              transform var(--duree-long) var(--courbe-sortie);
+}
+.js [data-reveal="descend"] { transform: translateY(-20px); } /* [relevé] */
+.js [data-reveal="zoom"]    { transform: scale(1.06); }       /* [relevé] scale(1.1) adouci */
+.js [data-reveal].est-visible { opacity: 1; transform: none; }
+
+/* Marquee. Le -50% est relatif à la largeur de la piste, qui
+   contient exactement deux copies du contenu : la boucle est
+   donc invisible quel que soit le nombre d'éléments. */
+@keyframes defile-gauche { to { transform: translateX(-50%); } }
+@keyframes defile-droite { from { transform: translateX(-50%); } }
+.marquee__piste { animation: defile-gauche 46s linear infinite; }
+.marquee__piste--inverse { animation-name: defile-droite; animation-duration: 54s; }
+
+/* Neutralisation complète : ni défilement, ni apparition. */
+@media (prefers-reduced-motion: reduce) {
+  .marquee__piste { animation: none; }
+  .js .rail .pouvoir { opacity: 1; }
+  .pouvoir { transition: none; }
+  .js [data-reveal] { opacity: 1; transform: none; transition: none; }
+  * { scroll-behavior: auto !important; }
+}
+
+/* =============================================================
+   6. RESPONSIVE
+   Les points d'arrêt sont ceux de la source, mesurés dans ses
+   media queries : 1220 et 810. (Pas 1200 — la source pose
+   min-width:1220px / max-width:1219.98px.)
+   ============================================================= */
+@media (max-width: 1219.98px) {
+  :root {
+    --t-hero: 36px;      /* [relevé] */
+    --t-section: 28px;   /* [arbitrage] */
+    --e-section: 90px;   /* [arbitrage] */
+  }
+  .produit { min-height: 620px; }
+  .duo__lueur { width: 958.82px; height: 958.82px; }   /* [relevé] */
+}
+
+@media (max-width: 809.98px) {
+  :root {
+    --t-hero: 30px;      /* [relevé] */
+    --t-titre: 32px;     /* [arbitrage] */
+    --t-section: 24px;   /* [arbitrage] */
+    --t-carte: 23px;     /* [relevé] présent dans l'échelle source */
+    --t-corps: 16px;     /* [relevé] */
+    --e-section: 70px;
+    --e-2xl: 50px;
+  }
+  .nav__liens { display: none; }             /* menu réduit au bouton */
+  .nav__menu { display: grid; }
+  .hero { padding-block: 130px var(--e-xl); }
+  .preuves { grid-template-columns: 1fr; gap: var(--e-l); }
+  .produit { min-height: 0; padding-block: 380px var(--e-2xl); }
+  /* [arbitrage] en colonne, le texte passe sous la photo : le voile
+     s'inverse pour remonter du bas. */
+  .produit__voile { background: linear-gradient(0deg, #000 34%, transparent 92%); }
+  .produit__voile::after { background: none; }
+  .produit__photo { object-position: 62% 30%; }
+  .duo { grid-template-columns: 1fr; }
+  .duo__lueur { width: 957.82px; height: 957.82px; }   /* [relevé] */
+  .specs { padding-block: var(--e-l) var(--e-m); }     /* [relevé] */
+  .specs__rangee { gap: var(--e-s); }
+  .filet--descend { left: 40px; }
+  .filet--monte { right: 40px; }
+  .appui { grid-template-columns: 1fr; }
+  .appui > * { grid-column: 1 !important; }
+  .duo__volet { padding-inline: var(--gouttiere); }
+  .duo__ecran--tablette { width: 68%; }
+  .duo__ecran--tel { width: 22%; margin-left: -12%; }
+  .files { flex-direction: column; align-items: stretch; }
+  /* Le voile bascule à la verticale en même temps que la colonne. */
+  .files::after { background: linear-gradient(180deg, rgba(0,0,0,.8) 0%, rgba(0,0,0,.45) 55%, transparent 85%); }
+  .files__contenu { padding: var(--e-m); }
+  .titre-vedette { font-size: 24px; }   /* [relevé] */
+  .surtitre { font-size: 15px; }        /* [relevé] */
+  .pouvoir { width: 86vw; }
+  .pouvoir__carte { height: 470px; padding: 52px var(--e-m) 0; }
+  .pouvoir__ecran { top: 268px; left: var(--e-m); width: 108%; height: 190px; }
+  .carrousel__fleche { display: none; }
+  .carte { min-height: 200px; padding: var(--e-m); }
+  .pied { flex-direction: column; align-items: flex-start; }
+}

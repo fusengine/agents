@@ -7,6 +7,10 @@ user-invocable: true
 argument-hint: "[file-or-directory]"
 ---
 
+<objective>
+Sniper Check runs the full sniper agent 6-phase code-quality workflow (parallel explore-codebase + research-expert, Grep-based impact analysis, linter error detection, minimal correction, re-verification to zero errors) in an isolated forked context, so only the final validation report returns to the parent conversation -- nothing of the investigation itself pollutes it. Use it after any code modification, on a specific file, a directory, or the whole project.
+</objective>
+
 **Target:** $ARGUMENTS
 
 # Sniper Check

@@ -1,12 +1,18 @@
 ---
 name: astro-integrations
-description: Expert Astro UI framework integrations — @astrojs/react, @astrojs/vue, @astrojs/svelte, @astrojs/solid-js, @astrojs/preact, @astrojs/alpinejs, @astrojs/lit, @qwikdev/astro, @analogjs/astro-angular. Setup, multi-framework config, usage patterns.
+description: Use when adding React, Vue, Svelte, Solid, Preact, or another UI framework to an Astro project via @astrojs/* integrations.
 versions:
   astro: 7
 user-invocable: true
 references: references/overview.md, references/react.md, references/vue.md, references/svelte.md, references/solid.md, references/preact.md, references/others.md, references/multi-framework.md, references/templates/react-setup.md, references/templates/multi-framework.md
 related-skills: astro-7, astro-islands, astro-styling
 ---
+
+<objective>
+Sets up and configures Astro's UI framework integrations: `@astrojs/react`, `@astrojs/vue`, `@astrojs/svelte`, `@astrojs/solid-js`, `@astrojs/preact`, `@astrojs/alpinejs`, `@astrojs/lit`, `@qwikdev/astro`, and `@analogjs/astro-angular`. Covers the `astro add` CLI installation flow, per-framework configuration options, and multi-framework projects (e.g. React + Vue in the same codebase) including `include` scoping to avoid JSX-framework conflicts.
+
+This skill is Astro-specific (the framework is embedded via `astro.config.ts`, not a standalone React/Vue/Svelte app). Does not cover hydration directives once a component is added (astro-islands) or component styling (astro-styling) — those are separate skills.
+</objective>
 
 # Astro Integrations Expert
 
