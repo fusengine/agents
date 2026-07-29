@@ -155,6 +155,25 @@ says which:
    supplies no photography: `xai` holds density 7 on seven images by building its interface
    out of markup; `supercommon` makes a whole band out of a gradient and one 56px line;
    `mainframe` makes two halos out of a single image cut by opposite alpha masks.
+
+   **When the brief does supply usable photography, manufacturing matter instead is not a
+   neutral choice** — it is refusing what the subject actually has, and a page that then
+   labels a section "photographed" over nothing but drawings contradicts itself in public.
+   Drawing is a way of filling a screen; it is never a way out of using the client's
+   images. Use them, and draw around them. And where the brief supplies none, a free-stock
+   image is still reachable before a drawing is — sourcing rules live in
+   `design-web/references/photos-images.md`, the source hierarchy is enforced at
+   `design-review/references/pre-flight-checklist.md` check 15.
+
+   **Better still, carry both — they reinforce each other.** Drawing and photography are not
+   competitors, and a page holding both holds better than a page holding either alone. The
+   division of labour is clean: the photograph carries matter, light, the real thing; the
+   drawing carries structure, measure, and what the eye cannot see on its own — a section, a
+   survey line, a scale, a before/after. Real estate and architecture are the plain case: a
+   plan or a cross-section set beside a photograph of the place says what neither says
+   alone, the photograph showing what it is like and the drawing how it is made. One limit,
+   and it is intention: an SVG pictogram parked next to a photo is not this — this is a
+   drawing that tells the reader something the photograph cannot.
 3. **Lower the variance** — a canonical skeleton at least arrives with its own blocks.
 
 What is never an answer is shipping the triple and letting body copy carry three screens on

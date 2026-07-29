@@ -1,6 +1,6 @@
 ---
 name: pre-flight-checklist
-description: "Mechanical grep/count checks run as the last filter before a design is declared audit-clean (em-dash crutch threshold, eyebrow count, theme lock, motion-claimed-motion-shown, cluster #1 co-occurrence)."
+description: "Mechanical grep/count/measure checks run as the last filter before a design is declared audit-clean (em-dash crutch threshold, eyebrow count, theme lock, motion-claimed-motion-shown, cluster #1 co-occurrence, plus the composition gate: dominant block, vertical rhythm, centred container, image floor, motion floor, small-viewport legibility)."
 when-to-use: "The last mechanical filter before the output is declared audit-clean, after the audit checklist and anti-slop pass."
 keywords: pre-flight, mechanical, grep, audit, checklist
 priority: critical
@@ -176,6 +176,294 @@ This mechanizes `design-web/references/layout-discipline.md` §6 (CTA label on o
 button-text contrast), which had no mechanical counterpart here. Full option list and
 known limits: `scripts/layout-check/README.md`.
 
+## 12. Hierarchy — one block dominates, measured on the render
+
+The rule already exists and is **not restated here**: `design-web/references/layout-discipline.md`
+§9 *Focal-Block Floor* (lines 69-72) requires ≥ 1 dominant focal block per viewport, and
+`elicitation-visual.md` §1 *Squint Test* (lines 17-22) is the lens that reads it. Neither
+was ever in a blocking gate — this check makes running them mandatory here, with a
+countable predicate.
+
+```bash
+# rendered area of every candidate, grouped by family (section / card / figure / media)
+node -e '…' # or, in the review browser session, on the full-page capture:
+#   [...document.querySelectorAll("section > *, .card, figure, img, svg, video")]
+#     .map(e => ({ tag: e.tagName, cls: e.className,
+#                  area: Math.round(e.getBoundingClientRect().width * e.getBoundingClientRect().height) }))
+#     .sort((a, b) => b.area - a.area)
+```
+Run it on the same full-page capture Part 2 already produced (`design-review/SKILL.md`
+Part 2), at 1440 **and** 1920 — see check 14 for why the wide viewport is not optional.
+
+**Predicate — both halves, both blocking.** A "family" is a set of elements sharing one
+repeated role: the media, the cards, the section headings.
+
+- **(a) One block dominates.** In each family present on the page, the largest member's
+  rendered area is **≥ 2× the next member of that same family**.
+- **(b) No flat group survives inside a family.** Any group of **≥ 3 members of one family
+  where no member reaches 2× any other member of that group** is a fail on its own, even
+  when (a) passes elsewhere on the page. Without this half, a single oversized hero clears
+  (a) for the whole media family while 20 identically-sized drawings sit untouched
+  underneath it — which is the exact page this check exists to stop.
+
+A page whose 20 drawings, 3 project cards or 5 `<h2>` all land within a factor of 2 of each
+other has no first read and fails on (b). The 2× ratio is the Fusengine operationalization
+of §9's "not tied with 2+ other blocks of near-equal area/contrast" — the rule is the
+repo's, the number is ours, and (b) reuses it rather than introducing a second threshold
+(see Provenance).
+
+**Register `product` exempt**, in the words of `layout-discipline.md:72`: *"Register
+`product` exempt (dashboards, panels of equal-weight density): a single dominant block is
+not required — at most a soft-flag, never a Block."* On `brand`, it blocks.
+
+## 13. Vertical rhythm — sections are not one repeated value
+
+The detector exists at `anti-ai-slop-audit.md` entry 15, conjunct **(b) Uniform rhythm**
+(line 48), where it only ever fires **in conjunction** with the canonical section order.
+Here it is **unconditional and blocking on its own** — a page can pick a bespoke body
+sequence and still stamp every section with one padding, which is what "no respiration"
+looked like on all three test pages. Its grep, taken verbatim from entry 15(b):
+
+```bash
+grep -oE 'padding(-block(-start|-end)?|-top|-bottom)?:[^;]*' *.css   # restrict to rules selecting section/.section/the section wrapper
+# then: | sort -u   → exactly 1 distinct value with zero per-section override = FAIL
+```
+Reference point, measured in that same entry: `fora-recode` returns **12** distinct
+`padding-block` values, its section rules alone carrying 160px 0 / 180px / 180px 80px /
+180px / 160px 80px / 180px / 180px / 180px 0.
+
+Two additions the source detector does not cover, both floored by the **declared density
+profile** in `design-system/references/spacing-density.md` (Enterprise Dense lines 16-28,
+Standard lines 30-42, Editorial lines 44-56) — use the profile the deliverable declared, no
+other:
+
+- **Inter-section separation**, not just padding inside a section: the gap between two
+  consecutive sections is ≥ that profile's **Section gap** — 16px (Enterprise Dense,
+  line 25) / 24-32px (Standard, line 39) / 48-64px (Editorial, line 53).
+- **Table row padding**: rows resolve to ≥ that profile's **Table row height** — 36px
+  (line 28) / 48px (line 42) / 56px (line 56). A 13-row table at a tighter value than its
+  own declared profile is a fail, not a taste call.
+
+```bash
+# rows, measured not read:
+#   [...document.querySelectorAll("tr, [role=row]")].map(r => r.getBoundingClientRect().height)
+```
+No number here is invented: each is quoted from `spacing-density.md` with its line. Card
+padding from the same tables (16 / 24 / 32-48px, lines 24, 38, 52) is the companion floor
+when the page uses cards instead of a table.
+
+## 14. Container centred, and the nav shares its gutter
+
+New check — nothing in this repo covered it, and it is the defect that crossed an entire
+review unseen: a main container pinned to the left of a 1440px viewport with a hard empty
+band on the right, and a nav that did not share the content gutter.
+
+**This cannot be delegated to check 11.** `scripts/layout-check/layout-check.ts` runs five
+predicates — `text-overflow`, `overlap`, `cta-wrap`, `contrast`, `document-overflow`
+(`scripts/layout-check/README.md` §*Les cinq contrôles*). Every one of them measures a box
+against another box or against the document's scroll width. **None measures where the
+container sits inside the viewport**: an off-centre container overflows nothing, overlaps
+nothing, wraps nothing and changes no contrast ratio, so it scores 0 violations while
+looking broken. Its default widths also stop at 1440 (`README.md` §*Options*:
+`360,390,768,1024,1280,1440`), and this bug was only obvious wider.
+
+```bash
+# (a) the main container is centred on an explicit max-width
+grep -nE '(max-width|max-inline-size)\s*:\s*[0-9]' *.css
+grep -nE 'margin(-inline)?\s*:\s*[^;]*auto' *.css
+#   every max-width container above must also carry margin-inline:auto (or margin:0 auto)
+
+# (b) nav and content share ONE max-width and ONE gutter
+grep -nE '(nav|header|\.nav|\.header|\.container|\.wrap|\.shell)[^{]*\{[^}]*(max-width|padding-inline|padding-left|padding-right)' *.css
+#   the nav's max-width and inline padding must equal the content container's, value for value
+
+# (c) no section overrides the container max-width
+grep -nE '(section|\.section)[^{]*\{[^}]*(max-width|width)\s*:\s*(100vw|[0-9]{3,}px)' *.css
+```
+Then **verify on capture at 1440 AND 1920** — measured, not eyeballed: the container's
+left and right offsets inside the viewport must be equal (`getBoundingClientRect().left`
+vs `innerWidth - .right`), and the nav's `left` must equal the content's `left`. Re-run
+check 11 at the wide viewport in the same pass:
+
+```bash
+bun run layout-check.ts "$FILE" --widths 1440,1920 --out /tmp/layout-check-wide.json
+```
+Any inequality is a hard fail. A deliberate asymmetric layout is not exempt by intent — it
+is exempt only if the asymmetry is the declared signature element (`design-method` Gate 0
+artefact 2) and the nav still shares the content gutter.
+
+## 15. Image floor — the page carries images, and says where they came from
+
+```bash
+grep -c '<img' "$FILE"          # count real images
+grep -c '<svg' "$FILE"          # drawn matter, for comparison — never a substitute here
+grep -noE '<img[^>]*src="[^"]*"' "$FILE"   # read every source: client file, stock URL, or placeholder
+```
+
+**A page with zero `<img>` fails this check.** That is the floor, and it holds whatever the
+SVG count is: three deliverables shipped 20 drawings and no photograph each, and every one
+of them cleared checks 1-11.
+
+**Source hierarchy — first available wins, and the page must sit at the highest rung it
+could reach:**
+
+1. **Client files**, whenever the brief supplies them. Then `grep -c '<img'` must be **≥
+   the number of subjects the brief declares photographed** — the count comes from the
+   brief, not from a number chosen here. A brief saying "3 projects are properly
+   photographed by a professional" sets the floor at 3.
+2. **Free stock, as a direct URL in `src`**, sourced via the `mcp__fuse-browser__*` tools.
+   This is the normal path when the brief supplies no file — not an exception, and not a
+   reason to fall back to a drawing.
+3. **A marked placeholder — last resort only**, at the final visual's format and aspect
+   ratio, explicitly marked as a placeholder in the markup. An empty grey box is not a
+   placeholder; it is what the failing pages actually shipped. A page resting on rung 3
+   states in its report why rungs 1 and 2 were unreachable.
+4. **Drawn matter adds to the above, it never replaces it.** `<svg>` in place of an
+   available photograph is a fail here, and `design-method/SKILL.md` §*The screen-holding
+   floor* now says the same thing at the plan stage.
+
+**Which banks, which licence, which URL form is NOT decided here** —
+`design-web/references/photos-images.md` owns image sourcing and image quality (sources,
+licence, URL form, resolution floors, focal point, alt text). This check only counts what
+the delivered page carries and whether it matches what the page claims. One rule, one home.
+
+The floor generalizes the only positive image rule the repo already had, local to one
+optional pattern — `design-web/references/premium-patterns/01-numbered-services/description.md:61-62`:
+*"Requires one real photograph per row. No photograph, no device — do not ship the reveal
+with a placeholder or a duplicate image."* It also closes Gate 0 artefact 4
+(`design-method/SKILL.md` §Gate 0, "What will be on screen, counted") at the exit, where
+until now it was only checked at the entrance.
+
+**Label ⇄ content coherence, same check, hard fail.** No visible label may assert a
+photograph the page does not carry. A section headed "COMPLETED AND PHOTOGRAPHED" over
+zero `<img>` is the page contradicting itself:
+
+```bash
+grep -niE 'photograph|photo|shot|cliché|photographi' "$FILE"   # read every hit against the <img> count
+```
+Each hit either resolves to a real image in that same section, or the label is rewritten.
+`design-web/references/photos-images.md` stays the quality reference for the images once
+present (sources, resolution floors, focal point, alt text) — it says nothing about
+whether an image must exist, which is what this check adds.
+
+## 16. Motion floor — presence, not only coherence
+
+Check 4 above verifies **coherence**: it fires only when the design read set
+`MOTION_INTENSITY > 4`, and a page that declared nothing passes it with an entirely static
+artifact. That is exactly what happened twice. This check adds the **presence** floor, and
+does not contradict check 4 — it runs whatever the dial says.
+
+```bash
+[ "$(grep -ocE 'transition[-a-z]*\s*:' "$FILE")" -ge 4 ]        # ≥ 4 transition declarations
+grep -cE ':hover'         "$FILE"
+grep -cE ':focus-visible' "$FILE"
+grep -cE 'prefers-reduced-motion' "$FILE"                       # must be ≥ 1
+```
+
+- **≥ 4 transitions bound to content or state.** The floor is the corpus floor, not a
+  chosen number: `reve-recode` sits at `MOTION_INTENSITY` 3 with *"0 `@keyframes`, 4
+  transitions, no scroll reveal anywhere"* (`design-method/SKILL.md` §`MOTION_INTENSITY`).
+  Below four, the page is under every page in the corpus.
+- **A content reveal is required from `MOTION_INTENSITY` ≥ 4** — the "expressive" band
+  (`design-method/SKILL.md` §Design Read, bands calm <4 / expressive 4-7 / cinematic >7).
+  Below 4, transitions and states alone satisfy this check; `reve` is the proof it can be
+  done well.
+- **`:hover` and `:focus-visible` on every interactive element** — links, buttons, inputs,
+  cards that act as links. `:focus-visible` is not optional and never suppressed: it is
+  already in the *Non-negotiable floor* of `design-method/SKILL.md` (§Design guidance).
+  This check is where its absence blocks.
+- **`prefers-reduced-motion: reduce` neutralizes all of it** — same Non-negotiable floor.
+- **The default DOM state stays visible without JS.** Copy the corpus solution rather than
+  inventing one: `cursor-recode` declares its single reveal keyframe *paused* and lets JS
+  only lift the pause, *"so a failed script leaves everything visible"*
+  (`design-method/SKILL.md` §`MOTION_INTENSITY`). A reveal that starts at `opacity: 0` with
+  no such guarantee is a fail here, and is also what makes check 11 report `hidden-text`
+  warnings (`scripts/layout-check/README.md` §5).
+
+## 17. Small-viewport legibility floor — a variant, not a scale-down
+
+Responsive is already covered, and this check does **not** re-do any of it: the five
+predicates run at six widths (`scripts/layout-check/config.ts:9`, `:18`), the mobile menu
+must actually work (`review-procedure.md:89-91`), captures are taken at three viewports
+(`review-procedure.md:117`), and touch targets are floored at 44×44
+(`audit-checklist.md:60`). What none of them asks is whether the **content is still
+readable** once it has been shrunk.
+
+**Why check 11 cannot carry this — two reasons, the second decisive.** A shrunken drawing
+overflows nothing (`document-overflow` clean), overlaps nothing (`overlap` clean), wraps no
+CTA label (`cta-wrap` clean), and its contrast ratio is unchanged by scale (`contrast`
+clean). The predicate that comes closest is `text-overflow`, and it still misses: it
+compares `scrollWidth`/`clientWidth` and ink extent against the content box — a 4px label
+sitting comfortably inside its box is not overflowing anything. **No predicate in
+`checks/` reads `fontSize` at all.** And the decisive reason:
+`scripts/layout-check/config.ts:11` excludes `"svg *"` from every check by default, so the
+`<text>` nodes inside a drawing are not merely missed, they are **out of scope by
+configuration**. Zero violations on illegible content, by construction.
+
+```js
+// Part 2 browser session, viewport 360px wide. Rendered size, not declared size:
+// every scale applied by viewBox / width:100% / transform is already in the CTM.
+[...document.querySelectorAll("svg")].flatMap(svg => {
+  const k = svg.getScreenCTM();                     // conteneur → écran
+  const s = Math.sqrt(Math.abs(k.a * k.d - k.b * k.c));   // facteur d'échelle effectif
+  return [...svg.querySelectorAll("text, tspan")].map(t => ({
+    text: t.textContent.trim().slice(0, 40),
+    declared: parseFloat(getComputedStyle(t).fontSize),
+    rendered: +(parseFloat(getComputedStyle(t).fontSize) * s).toFixed(2),
+  }));
+}).filter(r => r.rendered < 14)                      // ce qui passe sous le plancher
+// dense table cells, same viewport:
+[...document.querySelectorAll("td, th, [role=cell], [role=columnheader]")]
+  .map(c => ({ text: c.textContent.trim().slice(0, 40),
+               rendered: parseFloat(getComputedStyle(c).fontSize) }))
+  .filter(c => c.rendered < 14)
+```
+
+**Floor: 14px of effective rendered size at 360px**, for any text carrying information —
+SVG `<text>`/`<tspan>` labels, dimensions, legends, annotations, and dense table cells.
+Non-empty output above is a hard fail.
+
+**Why 360 and not 375.** The failure was observed at 375 (annotations at ~4-5px), but 360
+is the width to measure at, for two reasons that stack: it is the **worse case** — the
+narrower the viewport, the harder the container scales the drawing down, so a `<text>` that
+clears 360 also clears 375, and the converse is false — and it is **one of the six widths
+the script already runs** (`scripts/layout-check/config.ts:9`), so this floor and the rest
+of the responsive gate finally talk about the same viewport.
+
+Provenance of the number, stated plainly: **14px is the lowest named tier in the repo's own
+type scale** — `design-system/references/typography.md:115`, "Caption/meta → text-sm
+text-muted-foreground (14px)". Applying it as a floor on **rendered** size inside a graphic
+is my extension; the file gives it as a declared step in a typographic scale, not as a
+rendering floor. The reason no existing rule catches this: the **Body-Size Floor**
+(`typography.md:198-199`) does require ≥ 16px at every breakpoint but **explicitly exempts
+caption/small/label tokens** — and a plan annotation is a label. That exemption is exactly
+the door the 4px dimensions walked through. This check closes it for graphic-embedded text
+without touching the exemption for ordinary captions.
+
+**Under the floor, a scale-down is not a fix — ship a variant.** One of:
+
+- a **simplified SVG** for the small breakpoint: fewer annotations, thicker strokes, a
+  `viewBox` recropped onto what matters;
+- a **reorganized table** — column priority, stacked rows, or a disclosure;
+- the information **moved out of the graphic** into real text next to it.
+
+**Horizontal scroll is a legitimate answer for a table** — `design-webapp/references/layouts/patterns/data-table.md:17-18`
+("Horizontal scroll on mobile" on header and body) keeps its full validity, and so does the
+"Scale down on mobile" of the illustrations in `layouts/pages/error-pages.md` and
+`empty-state.md`. **It is not a legitimate answer for a drawing whose annotations carry the
+information.** A table that scrolls keeps every cell at a readable size; a drawing that
+scrolls at 4px is unreadable in every position it can be scrolled to. Those rules say what
+to do when the content survives shrinking; this check decides **when it no longer does**,
+and hands the case to a variant.
+
+Row height and cell padding at small viewport stay governed by check 13 and the density
+profile it quotes — this check only floors the **text size** inside the cell.
+
+**Known gap, named on purpose.** Text baked into a bitmap — a plan exported to PNG with its
+dimensions burned in — is neither a `<text>` node nor a table cell, so **both snippets miss
+it entirely** and no floor applies. There is no mechanism here for that case: it stays on
+the visual review (Part 2), by eye, on the small-viewport capture.
+
 ---
 
 Any fail here blocks the "audit passed" verdict (`design-review` Part 1), except check 10
@@ -183,6 +471,14 @@ Any fail here blocks the "audit passed" verdict (`design-review` Part 1), except
 the failing command; do not proceed to the visual review (Part 2) with an open mechanical
 fail (warnings excepted). Check 11 is not optional and not replaceable by looking at the
 page: its exit code is the gate.
+
+Checks 12-17 are **composition** checks and block on the same terms. Three of them (12, 14,
+17) are measured on the rendered page rather than on the source, so they run **after**
+Part 2 has produced its captures, or on a capture taken here — a source grep alone does not
+clear them. Check 12 is `brand`-only (`product` exempt, per `layout-discipline.md:72`);
+13, 14, 15, 16 and 17 apply to both registers. Check 17 is measured at **360px** — a width
+the script does run (`config.ts:9`), but on nodes it excludes by default (`config.ts:11`,
+`"svg *"`), which is why the width being shared does not make the check redundant.
 
 ## Provenance
 
@@ -206,3 +502,36 @@ Each check was verified against the raw `taste-skill/SKILL.md`
   written in this repo but never machine-verified. Its thresholds (1.6 × line-height,
   10% intersection area, WCAG 4.5:1 / 3:1) and its false-positive filters were calibrated
   against real pages, not chosen in the abstract — see `scripts/layout-check/README.md`.
+- **Fusengine, small-viewport legibility (check 17)** — not in the source taste-skill, and
+  not previously anywhere in this repo. Added after a delivered page rendered its plan
+  annotations (LIMITE PARCELLE, EXISTANT, cotes 17.40 / 22.00) at ~4-5px at 375px: the SVG
+  had been shrunk, not rethought. The 14px floor is quoted from `typography.md:115`
+  (lowest named tier of the repo's own scale); **applying it to rendered size inside a
+  graphic is ours**, as is the choice of the measurement width: the failure was seen at
+  375px, the floor is measured at **360px** — the worse of the two, and one the script
+  already runs. The gap it closes
+  is structural, not an oversight: the Body-Size Floor (`typography.md:198-199`) exempts
+  caption/small/label tokens, and `scripts/layout-check/config.ts:11` excludes `"svg *"`
+  from every predicate — so graphic-embedded text had no floor at all, at any width. This
+  check does not modify either: it adds the missing floor beside them.
+- **Fusengine, composition gate (checks 12-16)** — none is in the source taste-skill. All
+  five were added after three real deliverables passed checks 1-11 and were judged
+  unshippable (flat hierarchy, no vertical rhythm, an off-centre container, zero `<img>`
+  on a brief that supplied photography, no motion at all). **Four of the five gate a rule
+  that already existed elsewhere and had no blocking counterpart**, and they point at it
+  rather than restating it: check 12 → `design-web/references/layout-discipline.md` §9 +
+  `elicitation-visual.md` §1; check 13 → `anti-ai-slop-audit.md` entry 15(b) (lifted out of
+  its conjunction) + the three density profiles of
+  `design-system/references/spacing-density.md`; check 15 → the per-row photograph rule of
+  `premium-patterns/01-numbered-services/description.md` + Gate 0 artefact 4, with all
+  sourcing questions (banks, licence, URL form, quality) delegated to
+  `design-web/references/photos-images.md` — this check counts what the page carries, it
+  never decides where an image comes from; check 16 →
+  the `MOTION_INTENSITY` corpus anchors and the *Non-negotiable floor* of
+  `design-method/SKILL.md`. **Check 14 (container centring / shared gutter) is genuinely
+  new** — no file in the repo carried it, and check 11 cannot: none of its five predicates
+  measures the container's offset inside the viewport. Every numeric threshold in 13, 15
+  and 16 is quoted from an existing file with its line; the only number chosen here is
+  check 12's **2× area ratio**, which operationalizes §9's "not tied with 2+ other blocks
+  of near-equal area/contrast" and is ours, on the same footing as check 4's `> 4` dial
+  threshold.
