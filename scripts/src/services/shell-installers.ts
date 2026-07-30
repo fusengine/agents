@@ -16,13 +16,24 @@ const HOME = process.env.HOME || process.env.USERPROFILE || "";
 const SCRIPT_DIR = dirname(dirname(dirname(import.meta.path)));
 const ENV_SHELL_DIR = join(SCRIPT_DIR, "env-shell");
 
-/** Install fish configuration */
+/**
+ * Install fish configuration, plus the BASH_ENV shim it points at.
+ * The shim is required: claude-env.fish sets BASH_ENV to it so non-interactive
+ * bash loads the FUSE_*-filtered loader instead of the raw ~/.claude/.env.
+ */
 export function installFishConfig(): void {
 	const confDir = join(HOME, ".config", "fish", "conf.d");
 	mkdirSync(confDir, { recursive: true });
 	copyFileSync(
 		join(ENV_SHELL_DIR, "claude-env.fish"),
 		join(confDir, "claude-env.fish"),
+	);
+
+	const claudeDir = join(HOME, ".claude");
+	mkdirSync(claudeDir, { recursive: true });
+	copyFileSync(
+		join(ENV_SHELL_DIR, "bash-env-loader.sh"),
+		join(claudeDir, "bash-env-loader.sh"),
 	);
 }
 

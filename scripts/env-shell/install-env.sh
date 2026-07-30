@@ -60,10 +60,6 @@ detect_user_shell() {
 install_posix_shell() {
     local shell="$1"
     local rc_file="$2"
-    local source_line="# Claude Code - Load API keys
-if [[ -f ~/.claude/.env ]]; then
-    source ~/.claude/.env
-fi"
 
     # Create file if not exists
     touch "$rc_file" 2>/dev/null || true
@@ -73,8 +69,38 @@ fi"
         return 0
     fi
 
+    # Quoted heredoc: the block below is written verbatim, never expanded here.
+    # Parsed line by line instead of `source`d, so FUSE_* (per-harness keys)
+    # never leak into a non-Claude agent's environment.
     echo "" >> "$rc_file"
-    echo "$source_line" >> "$rc_file"
+    cat >> "$rc_file" << 'POSIX_LOADER'
+# Claude Code - Load API keys from ~/.claude/.env (FUSE_* excluded: per-harness)
+if [ -f "$HOME/.claude/.env" ]; then
+    while IFS= read -r __fuse_line || [ -n "$__fuse_line" ]; do
+        __fuse_line="${__fuse_line#"${__fuse_line%%[! 	]*}"}"
+        case "$__fuse_line" in ''|'#'*) continue ;; esac
+        case "$__fuse_line" in 'export '*) __fuse_line="${__fuse_line#export }" ;; esac
+        case "$__fuse_line" in *=*) ;; *) continue ;; esac
+        __fuse_key="${__fuse_line%%=*}"
+        __fuse_val="${__fuse_line#*=}"
+        case "$__fuse_key" in
+            FUSE_*) continue ;;
+            [!A-Za-z_]*|*[!A-Za-z0-9_]*) continue ;;
+        esac
+        case "$__fuse_val" in
+            '"'*) __fuse_val="${__fuse_val#\"}"; __fuse_val="${__fuse_val%%\"*}" ;;
+            "'"*) __fuse_val="${__fuse_val#\'}"; __fuse_val="${__fuse_val%%\'*}" ;;
+            *)
+                __fuse_val="${__fuse_val%% #*}"
+                __fuse_val="${__fuse_val%%	#*}"
+                __fuse_val="${__fuse_val%"${__fuse_val##*[! 	]}"}"
+                ;;
+        esac
+        export "$__fuse_key=$__fuse_val"
+    done < "$HOME/.claude/.env"
+    unset __fuse_line __fuse_key __fuse_val
+fi
+POSIX_LOADER
     echo -e "  ${GREEN}$shell: Installed ($rc_file)${NC}"
 }
 
@@ -84,6 +110,11 @@ install_fish() {
     local conf_file="$conf_dir/claude-env.fish"
 
     mkdir -p "$conf_dir"
+
+    # BASH_ENV shim: non-interactive bash must load the filtered loader, never
+    # the raw .env (which would re-export the FUSE_* the fish config skips).
+    mkdir -p "$HOME/.claude"
+    cp "$SCRIPT_DIR/bash-env-loader.sh" "$HOME/.claude/bash-env-loader.sh"
 
     if [[ -f "$conf_file" ]]; then
         echo -e "  ${YELLOW}fish: Already installed${NC}"
@@ -120,13 +151,21 @@ install_powershell() {
     # Append PowerShell loader
     cat >> "$profile_file" << 'PWSH'
 
-# Claude Code - Load API keys
+# Claude Code - Load API keys from ~/.claude/.env (FUSE_* excluded: per-harness)
 $envFile = "$HOME/.claude/.env"
 if (Test-Path $envFile) {
-    Get-Content $envFile | ForEach-Object {
-        if ($_ -match '^export\s+(\w+)=["\x27]?([^"\x27]*)["\x27]?$') {
-            [System.Environment]::SetEnvironmentVariable($matches[1], $matches[2], "Process")
-        }
+    foreach ($line in Get-Content $envFile) {
+        $entry = $line.Trim()
+        if ($entry -eq "" -or $entry.StartsWith("#")) { continue }
+        $entry = $entry -replace '^export\s+', ''
+        if ($entry -notmatch '^([A-Za-z_][A-Za-z0-9_]*)=(.*)$') { continue }
+        $key = $matches[1]
+        $val = $matches[2]
+        if ($key -like "FUSE_*") { continue }
+        if ($val -match '^"([^"]*)"') { $val = $matches[1] }
+        elseif ($val -match "^'([^']*)'") { $val = $matches[1] }
+        else { $val = ($val -replace '\s+#.*$', '').TrimEnd() }
+        [System.Environment]::SetEnvironmentVariable($key, $val, "Process")
     }
 }
 PWSH
