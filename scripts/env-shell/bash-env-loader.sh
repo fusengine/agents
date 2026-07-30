@@ -1,10 +1,10 @@
-#!/bin/bash
-# Claude Code - Load API keys from ~/.claude/.env
-# Add to ~/.bashrc: source /path/to/claude-env.bash
+# Claude Code - BASH_ENV shim: load ~/.claude/.env, minus the FUSE_* keys.
+# Install: copy to ~/.claude/bash-env-loader.sh (pointed at by BASH_ENV).
 #
-# Parsed line by line instead of `source`d: FUSE_* keys are per-harness
-# (FUSE_HARNESS_REFS points at ONE harness' rules tree) and must never be
-# exported globally, or a Codex/Kimi run inherits Claude's SOLID rules.
+# SOURCED, never executed: no `exit`, exports land in the current shell.
+# Reads the .env on every invocation, so a newly added API key is picked up
+# with no resync. FUSE_* are per-harness (FUSE_HARNESS_REFS points at one
+# harness' rules tree) and must NEVER leak into another agent's environment.
 
 if [ -f "$HOME/.claude/.env" ]; then
     while IFS= read -r __fuse_line || [ -n "$__fuse_line" ]; do

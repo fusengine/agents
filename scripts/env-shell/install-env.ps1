@@ -38,13 +38,21 @@ if ((Test-Path $profileFile) -and (Select-String -Path $profileFile -Pattern "cl
     # Append loader to profile
     $loaderScript = @'
 
-# Claude Code - Load API keys from ~/.claude/.env
+# Claude Code - Load API keys from ~/.claude/.env (FUSE_* excluded: per-harness)
 $claudeEnvFile = "$HOME\.claude\.env"
 if (Test-Path $claudeEnvFile) {
-    Get-Content $claudeEnvFile | ForEach-Object {
-        if ($_ -match '^export\s+(\w+)=["\x27]?([^"\x27]*)["\x27]?$') {
-            [System.Environment]::SetEnvironmentVariable($matches[1], $matches[2], "Process")
-        }
+    foreach ($line in Get-Content $claudeEnvFile) {
+        $entry = $line.Trim()
+        if ($entry -eq "" -or $entry.StartsWith("#")) { continue }
+        $entry = $entry -replace '^export\s+', ''
+        if ($entry -notmatch '^([A-Za-z_][A-Za-z0-9_]*)=(.*)$') { continue }
+        $key = $matches[1]
+        $val = $matches[2]
+        if ($key -like "FUSE_*") { continue }
+        if ($val -match '^"([^"]*)"') { $val = $matches[1] }
+        elseif ($val -match "^'([^']*)'") { $val = $matches[1] }
+        else { $val = ($val -replace '\s+#.*$', '').TrimEnd() }
+        [System.Environment]::SetEnvironmentVariable($key, $val, "Process")
     }
 }
 '@
