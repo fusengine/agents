@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Trove.link — a quiet home for every link you keep</title>
+<meta name="description" content="One tap to keep any link. An agent reads it, sorts it, and returns it the second you ask. Zero folders, zero tags, zero filing.">
+<!-- [relevé] la source charge deux familles en woff2 local : "Geist Variable"
+     (grotesque) et "Instrument Serif" (400 + italique 400). Mêmes familles,
+     servies ici par Google Fonts. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap">
+<link rel="stylesheet" href="styles.css">
+<script src="motion.js" defer></script>
+</head>
+<body>
+
+<!-- Icônes définies une fois, référencées par <use>. Géométrie Lucide,
+     comme la source ([relevé] : arrow-right, check, chevron-down, sparkles,
+     search, bookmark, settings). -->
+<svg width="0" height="0" aria-hidden="true" style="position:absolute">
+  <symbol id="i-fleche" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></symbol>
+  <symbol id="i-coche" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></symbol>
+  <symbol id="i-etincelle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/><path d="M20 3v4"/><path d="M22 5h-4"/><path d="M4 17v2"/><path d="M5 18H3"/></symbol>
+  <symbol id="i-loupe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></symbol>
+  <symbol id="i-signet" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"/></symbol>
+  <symbol id="i-reglages" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></symbol>
+</svg>
+
+<!-- =====================================================================
+     EN-TÊTE — pilule flottante fixe.
+     [relevé] header fixed inset-x-0 top-0 z-50 > div mx-4 mt-4 h-12
+     max-w-6xl rounded-full border border-white/[0.08] bg-…/70 backdrop-blur-xl
+     px-5 sm:px-6 lg:mx-auto. Trois liens masqués sous 768px, un bouton à droite.
+     ===================================================================== -->
+<header class="entete">
+  <div class="entete__pilule">
+    <a class="marque" href="#">Trove<span class="marque__suffixe">.link</span></a>
+    <nav class="nav" aria-label="Sections">
+      <a href="#agent">The agent</a>
+      <a href="#ios">iOS app</a>
+      <a href="#pricing">Pricing</a>
+    </nav>
+    <a class="bouton bouton--verre bouton--compact" href="#pricing">Sign in</a>
+  </div>
+</header>
+
+<main>
+
+<!-- =====================================================================
+     1 ▸ HÉROS — grande carte photographique arrondie, texte centré dessus.
+     [relevé] section px-6 pt-24 sm:pt-28 > div mx-auto max-w-6xl
+     overflow-hidden rounded-[2rem] border. Image absolue object-cover
+     object-[center_30%] + 2 dégradés + grain. Contenu px-6 pb-20 pt-16
+     sm:px-12 sm:pb-28 sm:pt-24 lg:px-16.
+     ===================================================================== -->
+<section class="hero">
+  <div class="hero__carte">
+    <img class="hero__image" src="img/hero.webp" width="1920" height="1054" alt="Desert rock formations at sunset, deep teal shadows lit by a coral horizon" fetchpriority="high" decoding="async">
+    <div class="hero__voile" aria-hidden="true"></div>
+    <div class="hero__pied-voile" aria-hidden="true"></div>
+    <div class="grain" aria-hidden="true"></div>
+
+    <div class="hero__contenu" data-groupe-hero>
+      <p class="hero__surtitre" data-monte>Agentic bookmarks · Web + iOS</p>
+      <h1 class="hero__titre serif" data-monte>A quiet home for all<br><em>you keep.</em></h1>
+      <p class="hero__accroche" data-monte>One tap to keep any link. An agent reads it, sorts it, and returns it the second you ask. You never file a single thing.</p>
+      <div class="hero__actions" data-monte>
+        <a class="bouton bouton--verre" href="#pricing">Start keeping free<svg class="bouton__icone" aria-hidden="true"><use href="#i-fleche"/></svg></a>
+        <a class="bouton bouton--fantome" href="#ios">Get the iOS app</a>
+      </div>
+      <ul class="hero__preuves" data-monte>
+        <li>Free forever</li>
+        <li>20 links</li>
+        <li>No credit card</li>
+        <li>Web + iOS</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- =====================================================================
+     2 ▸ LE PROBLÈME — titre en deux voix + trois cartes de constat.
+     [relevé] section px-6 py-24 sm:py-32 · h2 max-w-3xl text-4xl sm:text-6xl
+     leading-[1.05] · grille mt-14 gap-4 sm:grid-cols-3 · carte rounded-3xl
+     border-white/[0.06] bg-white/[0.03] p-7.
+     ===================================================================== -->
+<section class="probleme">
+  <div class="contenance">
+    <div data-reveal>
+      <p class="surtitre surtitre--accent">The problem</p>
+      <h2 class="titre-section titre-section--large">Keeping was never the hard part. <em class="serif degrade">Finding it again is.</em></h2>
+      <p class="paragraphe paragraphe--etroit">You have 900 saved links and cannot find one. A folder named &ldquo;read-soon-3&rdquo;. Two apps you quit. And buried in there, the exact page you need right now.</p>
+    </div>
+
+    <div class="grille-trois" data-cascade>
+      <article class="carte" data-reveal>
+        <h3 class="carte__titre serif">Folders rot</h3>
+        <p class="carte__texte">Every folder system dies the day you are too busy to file. Which is every day.</p>
+      </article>
+      <article class="carte" data-reveal>
+        <h3 class="carte__titre serif">Tags need discipline</h3>
+        <p class="carte__texte">Manual tagging holds until Tuesday. After that it is guilt with extra steps.</p>
+      </article>
+      <article class="carte" data-reveal>
+        <h3 class="carte__titre serif">Search reads titles</h3>
+        <p class="carte__texte">You remember the feel, not the title. Ctrl+F was never finding &ldquo;that teal pricing page&rdquo;.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- =====================================================================
+     3 ▸ LE REMÈDE — carte photo à titre en bas + bandeau de trois cellules
+     séparées par un filet d'un pixel (grid gap-px sur fond blanc/6 %).
+     [relevé] rounded-[2.5rem] · img h-[420px] sm:h-[520px] · cellules p-8 sm:p-10.
+     ===================================================================== -->
+<section class="remede">
+  <div class="contenance contenance--cadre" data-reveal>
+    <div class="remede__scene">
+      <img class="remede__image" src="img/portal.webp" width="1920" height="1280" alt="A lit rectangular portal standing on rocks above a teal night landscape" loading="lazy" decoding="async">
+      <div class="remede__voile" aria-hidden="true"></div>
+      <div class="remede__legende">
+        <p class="surtitre surtitre--clair">The fix</p>
+        <h2 class="titre-section titre-section--large titre-section--sur-image">One rule: <em class="serif">&ldquo;just keep it.&rdquo;</em></h2>
+      </div>
+    </div>
+
+    <div class="remede__etapes">
+      <article class="etape">
+        <p class="etape__numero serif">01</p>
+        <h3 class="etape__titre">You keep</h3>
+        <p class="etape__texte">One tap, from any app, any browser, any device. That is your entire job.</p>
+      </article>
+      <article class="etape">
+        <p class="etape__numero serif">02</p>
+        <h3 class="etape__titre">The agent moves in</h3>
+        <p class="etape__texte">Screenshot, full text, transcript, tags, category. Captured and filed in seconds, on its own.</p>
+      </article>
+      <article class="etape">
+        <p class="etape__numero serif">03</p>
+        <h3 class="etape__titre">You ask</h3>
+        <p class="etape__texte">In plain words, like texting a friend who remembers everything you ever sent them.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- =====================================================================
+     4 ▸ LE VERSANT AGENTIQUE — deux colonnes : discours + petite carte photo
+     à gauche, panneau d'agent recréé en HTML/CSS à droite.
+     [relevé] grid items-center gap-12 lg:grid-cols-2 · image h-56 sm:h-64 ·
+     panneau rounded-3xl bg-… shadow-2xl, barre de titre + zone min-h-[320px]
+     sm:min-h-[380px] + champ de saisie.
+     ===================================================================== -->
+<section class="agent" id="agent">
+  <div class="contenance">
+    <div class="duo">
+      <div data-reveal>
+        <p class="surtitre surtitre--accent">The agentic side</p>
+        <h2 class="titre-section titre-section--large">Your library <em class="serif degrade">works for you</em> now.</h2>
+        <p class="paragraphe paragraphe--court">A tireless agent lives inside your shelf. It reads every link, indexes it by meaning, and answers questions. It hands you answers, not a search box.</p>
+        <figure class="agent__vignette">
+          <img src="img/hills.webp" width="1920" height="1093" alt="Rolling hills at first light under mist, teal ridges opening onto a coral horizon" loading="lazy" decoding="async">
+        </figure>
+      </div>
+
+      <div data-reveal>
+        <div class="panneau">
+          <div class="panneau__barre">
+            <div class="panneau__gauche">
+              <span class="pastilles" aria-hidden="true"><i></i><i></i><i></i></span>
+              <span class="panneau__nom"><svg class="panneau__icone" aria-hidden="true"><use href="#i-etincelle"/></svg>Trove Agent</span>
+            </div>
+            <span class="panneau__etat"><i aria-hidden="true"></i>Online</span>
+          </div>
+
+          <div class="panneau__fil" data-fil>
+            <p class="bulle bulle--utilisateur" data-message>Find me the caching thing I kept in spring</p>
+            <div class="resultat" data-message>
+              <p class="resultat__entete"><span class="resultat__source">swequiz.com</span><span class="resultat__marque">Kept</span></p>
+              <p class="resultat__titre">A Crash Course on Caching Fundamentals</p>
+            </div>
+            <div class="resultat" data-message>
+              <p class="resultat__entete"><span class="resultat__source">tontinton.com</span><span class="resultat__marque">Kept</span></p>
+              <p class="resultat__titre">Database Fundamentals, from disk to query</p>
+            </div>
+            <p class="bulle bulle--agent" data-message>Found 2 matches in your shelf. Want a summary of both?</p>
+          </div>
+
+          <div class="panneau__saisie">
+            <p class="panneau__champ">Ask about your library&hellip;</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =====================================================================
+     5 ▸ LA PROMESSE — carte photo pleine largeur, dégradé horizontal, texte
+     à gauche, cinq pilules de requête ; puis trois cartes-chiffres.
+     [relevé] gradient-to-r from-…/95 via-…/60 to-…/10 · contenu px-8 py-20
+     sm:px-14 sm:py-28 · pilules rounded-full border-white/20 backdrop-blur-md ·
+     stats mt-4 grid gap-4 sm:grid-cols-3.
+     ===================================================================== -->
+<section class="promesse">
+  <div class="contenance contenance--cadre promesse__scene" data-reveal>
+    <img class="promesse__image" src="img/forest.webp" width="1920" height="1280" alt="A conifer forest at dusk seen from above, a teal canopy flecked with coral crowns" loading="lazy" decoding="async">
+    <div class="promesse__voile" aria-hidden="true"></div>
+    <div class="grain" aria-hidden="true"></div>
+    <div class="promesse__contenu">
+      <p class="surtitre surtitre--clair">The 100% promise</p>
+      <h2 class="titre-section titre-section--large titre-section--sur-image">If you kept it, <em class="serif">you will find it.</em></h2>
+      <p class="paragraphe paragraphe--court paragraphe--sur-image">Every link is captured whole: screenshot, full text, transcript. All indexed by meaning. So you can search by feel, by half-memory, by whatever is left in your head:</p>
+      <ul class="requetes">
+        <li>&ldquo;that teal landing page&rdquo;</li>
+        <li>&ldquo;the video where she explains pricing&rdquo;</li>
+        <li>&ldquo;thread about focus, last week&rdquo;</li>
+        <li>&ldquo;the ramen recipe with miso butter&rdquo;</li>
+        <li>&ldquo;that repo for PDF parsing&rdquo;</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="contenance grille-trois grille-trois--collee" data-cascade>
+    <article class="carte" data-reveal>
+      <p class="carte__chiffre serif">0 folders</p>
+      <p class="carte__texte">You will never make one again. The agent files every link it reads.</p>
+    </article>
+    <article class="carte" data-reveal>
+      <p class="carte__chiffre serif">Under 1 sec</p>
+      <p class="carte__texte">To find anything by meaning, not by title and not by luck.</p>
+    </article>
+    <article class="carte" data-reveal>
+      <p class="carte__chiffre serif">$5/mo</p>
+      <p class="carte__texte">Billed annually ($60/year). Free forever with 20 links, no credit card.</p>
+    </article>
+  </div>
+</section>
+
+<!-- =====================================================================
+     6 ▸ LE VERSANT iOS — carte photo, discours à gauche, châssis de téléphone
+     dessiné en CSS à droite (aucune capture d'écran en image).
+     [relevé] cadre w-[280px] sm:w-[300px] rounded-[3rem] p-2.5, encoche
+     h-6 w-24, écran h-[560px] rounded-[2.4rem] clair, deux cartes 16/9,
+     barre d'onglets à deux entrées.
+     ===================================================================== -->
+<section class="ios" id="ios">
+  <div class="contenance contenance--cadre ios__scene" data-reveal>
+    <img class="ios__image" src="img/arch.webp" width="1920" height="1280" alt="A natural rock arch at dusk, its opening framing a coral horizon over a dark plain" loading="lazy" decoding="async">
+    <div class="ios__voile" aria-hidden="true"></div>
+    <div class="grain" aria-hidden="true"></div>
+
+    <div class="ios__contenu">
+      <div>
+        <p class="surtitre surtitre--clair">The iOS side</p>
+        <h2 class="titre-section titre-section--large titre-section--sur-image">Your pocket has a <em class="serif">shelf</em> too.</h2>
+        <p class="paragraphe paragraphe--court paragraphe--sur-image">Share, tap Trove, done. From TikTok, Safari, X or YouTube, your link is kept before you have closed the app. Your whole shelf, one thumb away.</p>
+        <a class="bouton bouton--plein" href="#pricing">Download on the App Store</a>
+      </div>
+
+      <div class="telephone-cadre">
+        <div class="telephone">
+          <div class="telephone__encoche" aria-hidden="true"></div>
+          <div class="telephone__ecran">
+            <div class="ecran__entete">
+              <p class="ecran__titre">Shelf</p>
+              <svg class="ecran__loupe" aria-hidden="true"><use href="#i-loupe"/></svg>
+            </div>
+            <div class="ecran__liste">
+              <article class="fiche">
+                <div class="fiche__apercu fiche__apercu--un" aria-hidden="true"></div>
+                <div class="fiche__corps">
+                  <p class="fiche__source"><span class="fiche__pastille" aria-hidden="true"></span>swequiz.com</p>
+                  <p class="fiche__titre">A Crash Course on Caching</p>
+                </div>
+              </article>
+              <article class="fiche">
+                <div class="fiche__apercu fiche__apercu--deux" aria-hidden="true"></div>
+                <div class="fiche__corps">
+                  <p class="fiche__source"><span class="fiche__pastille" aria-hidden="true"></span>tontinton.com</p>
+                  <p class="fiche__titre">Database Fundamentals</p>
+                </div>
+              </article>
+            </div>
+            <div class="ecran__onglets">
+              <p class="onglet onglet--actif"><svg aria-hidden="true"><use href="#i-signet"/></svg>Shelf</p>
+              <p class="onglet"><svg aria-hidden="true"><use href="#i-reglages"/></svg>Settings</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =====================================================================
+     7 ▸ TARIFS — chapeau centré (max-w-2xl), deux formules côte à côte.
+     [relevé] h2 text-4xl sm:text-5xl (une marche SOUS les autres titres) ·
+     grille mt-14 max-w-4xl gap-4 sm:grid-cols-2 · carte phare bordée d'accent
+     avec badge absolu -top-3 right-8.
+     ===================================================================== -->
+<section class="tarifs" id="pricing">
+  <div class="contenance">
+    <div class="tarifs__chapeau" data-reveal>
+      <p class="surtitre surtitre--accent">Pricing</p>
+      <h2 class="titre-section">One flat price. <em class="serif degrade">Zero surprises.</em></h2>
+    </div>
+
+    <div class="tarifs__grille">
+      <article class="formule" data-reveal>
+        <p class="formule__nom">Free</p>
+        <p class="formule__prix"><span class="serif">$0</span><span class="formule__unite">forever</span></p>
+        <p class="formule__note"><span class="formule__point" aria-hidden="true"></span>No credit card required</p>
+        <p class="formule__texte">Everything you need to feel what zero filing is like.</p>
+        <ul class="formule__liste">
+          <li><svg aria-hidden="true"><use href="#i-coche"/></svg>20 links</li>
+          <li><svg aria-hidden="true"><use href="#i-coche"/></svg>Agentic search</li>
+          <li><svg aria-hidden="true"><use href="#i-coche"/></svg>Browser extension</li>
+          <li><svg aria-hidden="true"><use href="#i-coche"/></svg>iOS app</li>
+        </ul>
+        <a class="bouton bouton--verre bouton--pleine-largeur" href="#">Start free</a>
+      </article>
+
+      <article class="formule formule--phare" data-reveal>
+        <p class="formule__badge">Most popular</p>
+        <p class="formule__nom">Pro</p>
+        <p class="formule__prix"><span class="serif">$5</span><span class="formule__unite">/month</span></p>
+        <p class="formule__note"><span class="formule__point formule__point--accent" aria-hidden="true"></span>Billed annually · $60/year</p>
+        <p class="formule__texte">Your whole reading life in one shelf. No per-link pricing.</p>
+        <ul class="formule__liste">
+          <li><svg aria-hidden="true"><use href="#i-coche"/></svg>Up to 50,000 links</li>
+          <li><svg aria-hidden="true"><use href="#i-coche"/></svg>API access</li>
+          <li><svg aria-hidden="true"><use href="#i-coche"/></svg>Export to CSV</li>
+          <li><svg aria-hidden="true"><use href="#i-coche"/></svg>Priority support</li>
+        </ul>
+        <a class="bouton bouton--accent bouton--pleine-largeur" href="#">Go Pro</a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- =====================================================================
+     8 ▸ FAQ — colonne de titre étroite à gauche (lg:w-72), accordéon à droite.
+     [relevé] max-w-5xl flex-col gap-12 lg:flex-row · items séparés par une
+     bordure basse sauf le dernier · déclencheur py-5 text-[15px] + chevron.
+     ===================================================================== -->
+<section class="faq">
+  <div class="contenance contenance--moyenne faq__disposition">
+    <div class="faq__colonne" data-reveal>
+      <p class="surtitre surtitre--accent">FAQ</p>
+      <h2 class="titre-section titre-section--compact">Questions<br><em class="serif degrade">&amp; answers.</em></h2>
+    </div>
+
+    <div class="faq__liste" data-reveal>
+      <div class="pli">
+        <h3><button class="pli__declencheur" type="button" aria-expanded="true" aria-controls="pli-1">Do I really never have to file anything?<svg aria-hidden="true"><use href="#i-chevron"/></svg></button></h3>
+        <div class="pli__panneau" id="pli-1"><div><p>Never. The agent reads each link, writes its own tags and picks its own category. You can override any of it, and most people never open that screen.</p></div></div>
+      </div>
+      <div class="pli">
+        <h3><button class="pli__declencheur" type="button" aria-expanded="true" aria-controls="pli-2">What can I keep?<svg aria-hidden="true"><use href="#i-chevron"/></svg></button></h3>
+        <div class="pli__panneau" id="pli-2"><div><p>Any URL: articles, videos, threads, repositories, recipes, PDFs. Video and audio are transcribed, so a spoken sentence is searchable like body text.</p></div></div>
+      </div>
+      <div class="pli">
+        <h3><button class="pli__declencheur" type="button" aria-expanded="true" aria-controls="pli-3">Can I bring my existing bookmarks?<svg aria-hidden="true"><use href="#i-chevron"/></svg></button></h3>
+        <div class="pli__panneau" id="pli-3"><div><p>Yes. Drop in an HTML export from any browser, or from Pocket, Raindrop and the rest. The agent reads the whole backlog and indexes it in the background.</p></div></div>
+      </div>
+      <div class="pli">
+        <h3><button class="pli__declencheur" type="button" aria-expanded="true" aria-controls="pli-4">How much does it cost?<svg aria-hidden="true"><use href="#i-chevron"/></svg></button></h3>
+        <div class="pli__panneau" id="pli-4"><div><p>Free forever for 20 links, no credit card. Pro is $5 a month billed annually, or $7 month to month, for up to 50,000 links.</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =====================================================================
+     9 ▸ CLÔTURE — carte photo, texte centré, les deux boutons du héros.
+     [relevé] gradient-to-t from-…/90 via-…/40 to-…/30 · contenu px-8 py-24
+     sm:py-32 · h2 max-w-2xl · boutons mt-9.
+     ===================================================================== -->
+<section class="cloture">
+  <div class="contenance contenance--cadre cloture__scene" data-reveal>
+    <img class="cloture__image" src="img/lake.webp" width="1920" height="1281" alt="A still mountain lake at dusk mirroring a coral band on the horizon" loading="lazy" decoding="async">
+    <div class="cloture__voile" aria-hidden="true"></div>
+    <div class="grain" aria-hidden="true"></div>
+    <div class="cloture__contenu">
+      <h2 class="titre-section titre-section--large titre-section--sur-image">Come <em class="serif">back</em> to everything you kept.</h2>
+      <p class="paragraphe paragraphe--court paragraphe--sur-image">Set up in 30 seconds. Your first 20 links are on the house.</p>
+      <div class="cloture__actions">
+        <a class="bouton bouton--plein" href="#pricing">Start keeping free</a>
+        <a class="bouton bouton--verre" href="#ios">Get the iOS app</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- =====================================================================
+     PIED — une colonne de marque puis quatre colonnes de liens, barre basse.
+     [relevé] max-w-5xl px-4 my-14 · md:grid-cols-[1fr_2fr] · colonnes de liens
+     grid-cols-2 sm:grid-cols-4 · barre basse pt-8, copyright + deux liens.
+     ===================================================================== -->
+<footer class="pied">
+  <div class="contenance contenance--moyenne">
+    <div class="pied__haut">
+      <div class="pied__marque">
+        <p class="marque marque--pied">Trove<span class="marque__suffixe">.link</span></p>
+        <p class="pied__accroche">Never lose a link again. Keep, search and revisit everything worth reading.</p>
+      </div>
+      <div class="pied__colonnes">
+        <div>
+          <p class="pied__titre">Product</p>
+          <nav aria-label="Product"><a href="#">Blog</a><a href="#">Docs</a><a href="#">Changelog</a><a href="#ios">iOS app</a></nav>
+        </div>
+        <div>
+          <p class="pied__titre">Tools</p>
+          <nav aria-label="Tools"><a href="#">All tools</a><a href="#">OG images</a><a href="#">Extract metadata</a><a href="#">Extract content</a><a href="#">Extract favicons</a><a href="#">Video metadata</a></nav>
+        </div>
+        <div>
+          <p class="pied__titre">Company</p>
+          <nav aria-label="Company"><a href="#">About</a><a href="#">Contact</a><a href="#">Changelog</a></nav>
+        </div>
+        <div>
+          <p class="pied__titre">Compare</p>
+          <nav aria-label="Compare"><a href="#">vs Pocket</a><a href="#">vs MyMind</a><a href="#">vs Raindrop</a><a href="#">Best of 2026</a></nav>
+        </div>
+      </div>
+    </div>
+    <div class="pied__bas">
+      <p>&copy; 2026 Trove.link. All rights reserved.</p>
+      <nav aria-label="Legal"><a href="#">Privacy policy</a><a href="#">Terms of service</a></nav>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

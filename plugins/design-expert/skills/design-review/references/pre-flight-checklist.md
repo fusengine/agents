@@ -1,6 +1,6 @@
 ---
 name: pre-flight-checklist
-description: "Mechanical grep/count/measure checks run as the last filter before a design is declared audit-clean (em-dash crutch threshold, eyebrow count, theme lock, motion-claimed-motion-shown, cluster #1 co-occurrence, plus the composition gate: dominant block, vertical rhythm, centred container, image floor, motion floor, small-viewport legibility)."
+description: "Mechanical grep/count/measure checks run as the last filter before a design is declared audit-clean (em-dash crutch threshold, eyebrow count, theme lock, motion-claimed-motion-shown, cluster #1 co-occurrence, plus the composition gate: dominant block, vertical rhythm, centred container, image floor, motion floor, small-viewport legibility, and the selection gate: reference picked by the subject's verb, named in the report)."
 when-to-use: "The last mechanical filter before the output is declared audit-clean, after the audit checklist and anti-slop pass."
 keywords: pre-flight, mechanical, grep, audit, checklist
 priority: critical
@@ -61,19 +61,36 @@ This check and the flatness table in
 `../../design-web/references/premium-patterns/PATTERNS.md` used to contradict each other:
 that table offered "ONE inverted band" as a cure for a page where every section shares one
 background, while this check failed any section that inverted. This check won by default,
-because only it blocks mechanically. **Both were adjusted, on a count taken across the ten
-corpus pages:**
+because only it blocks mechanically. **Both were adjusted, on a count taken across the
+corpus — re-taken at fifteen pages, and one number moved:**
 
-- **Theme inversion at section level: 0 of 10.** No page in the corpus puts a light section
-  in a dark page or a dark section in a light one. `cursor` is the only light-based page
-  and its sole dark surfaces are a phone chassis drawn in CSS, plus its whole-page dark
-  theme. **This check is upheld, unchanged in substance.**
-- **A section whose background departs from the page base, inside the same theme: 5 of 10.**
+- **Theme inversion at section level: 1 of 15.** It was 0 of 10, and `stripe-recode` is the
+  exception: a light-locked page carrying a **dark block mid-scroll** (`section.infra`,
+  `background-color: var(--d-990)`). It is not an oversight and not a licence. Its own
+  `tokens-stripe.md § 8.1` records the item as *"écarté au nom de la fidélité — la source a
+  un bloc sombre médian (`hds-mode--dark`), reproduit. Signalé, non corrigé"*: the source
+  ships the inversion, the rebuild reproduces it, and the check is logged as failed rather
+  than argued away. **That is the only shape this exception has** — a reproduction of a
+  shipped page, declared as a fail in the deliverable's own report. On original work the
+  check blocks, unchanged in substance.
+  `cursor` remains the only light-based page among the first ten, and its sole dark surfaces
+  are a phone chassis drawn in CSS, plus its whole-page dark theme.
+  **A related case that is *not* an inversion:** `parley` puts a `#14181d` footer under a
+  `#f4f5f7` page. Its `tokens-parley.md § 9` argues, and this check accepts, that a footer
+  is the page *ending*, not a flip *mid-scroll* — and that its two other dark surfaces are a
+  terminal and a phone chassis, dark because the depicted object is dark, which this check's
+  own note already allows.
+- **A section whose background departs from the page base, inside the same theme: 7 of 15.**
   `supercommon` gives its first band a metallic gradient rising to `#bfc6c1`; `fora` closes
   on a `#000 → #1b2228` gradient under a 190px horizon image; `harness` runs
   `#070707 → #050505` under two sections; `umbrel` dissolves one band into the next over
-  160px; `xai` draws an 80px grid under an elliptical mask. **None of these is a fail here,
-  and none ever was** — they change the surface, never the theme.
+  160px; `xai` draws an 80px grid under an elliptical mask; `dispatch` gives its counter
+  band a `--surface-band` fill, the page's only bordered band; `parley` alternates
+  `--pearl` and `--pearl-tint` across nine sections. **None of these is a fail here, and
+  none ever was** — they change the surface, never the theme.
+  The remaining six (`mosa`, `stash`, `reve`, `linear`, `cursor`, `mainframe`) take their
+  relief from full-bleed photography or drawn matter instead, which is the same answer by
+  another route.
 
 So: **relief is not inversion.** A page needs relief (`PATTERNS.md` §*Flatness is banned*)
 and gets it from a tint, a gradient, a full-bleed image, a drawn pattern or a per-section
@@ -464,6 +481,47 @@ dimensions burned in — is neither a `<text>` node nor a table cell, so **both 
 it entirely** and no floor applies. There is no mechanism here for that case: it stays on
 the visual review (Part 2), by eye, on the small-viewport capture.
 
+## 18. Reference picked by verb, not by tone — named in the report
+
+New check. The criterion it enforces already existed and was **inoperative**: it lived at
+`../../design-web/references/refs-design/README.md` §*Reading this index the other way*,
+**below** the technique index, so a reference had already been chosen by the time anyone
+read it, and nothing anywhere verified the choice. The paragraph has been moved above the
+index; this check is what makes it bind.
+
+The rule, unchanged: name what the subject physically **is** and what it **does** — a
+**verb** — then scan the index for that verb. Never pick by resemblance of tone.
+
+**This one is read, not grepped**, like checks 7 and 12. Read the deliverable's report and
+find both halves. Either missing is a fail.
+
+- **(a) The subject's verb, stated as a verb.** One line: what the thing being designed
+  does — it tears, it stacks, it advances, it executes, it closes, it gives back. A noun
+  phrase ("a premium artisan brand", "a modern SaaS") is not a verb and does not clear this;
+  neither does a mood ("clean", "editorial", "high-end").
+- **(b) The reference retained and the procedure borrowed from it**, cited to a folder and a
+  section — `stash § 6`, `stripe § 2.3`, `harness § 3`. "Inspired by the corpus" is not a
+  citation.
+
+**"None of them" is a passing answer to (b), and the only other one.** If no listed
+mechanism performs the verb, say so explicitly and point at the procedure you invented
+instead — `README.md` §*The other side of that rule* licenses exactly that, and requires the
+invented procedure to be derived from the subject and documented like any other. What fails
+here is silence: a report that names no verb, or names a reference without saying which
+procedure came from it.
+
+```bash
+# not a gate, an aid: confirm the cited section actually exists before accepting the report
+grep -n '^#\{2,3\} .*<cited section>' \
+  "$CORPUS/<reference>-recode/tokens-<reference>.md"
+```
+
+**Two worked examples exist on purpose** (`README.md`, same section): `mainframe` — verb
+*"it closes"*, which set an order by decreasing display surface — and `dispatch` — verb
+*"it executes"*, which set an order where every claim is followed within its own section by
+a surface that runs it. Two, not one, because a single worked example becomes the model
+everyone reaches for, which recreates the bias this check exists to break.
+
 ---
 
 Any fail here blocks the "audit passed" verdict (`design-review` Part 1), except check 10
@@ -479,6 +537,12 @@ clear them. Check 12 is `brand`-only (`product` exempt, per `layout-discipline.m
 13, 14, 15, 16 and 17 apply to both registers. Check 17 is measured at **360px** — a width
 the script does run (`config.ts:9`), but on nodes it excludes by default (`config.ts:11`,
 `"svg *"`), which is why the width being shared does not make the check redundant.
+
+**Check 18 is the odd one and runs first, not last.** It reads the *report*, not the
+artifact, and what it verifies was decided before a line of HTML existed — so a fail here
+cannot be patched by editing the page. It is listed at the end because that is where the
+verdict is signed; run it at the top of the pass, so a page picked by tone is caught before
+seventeen mechanical checks are spent on it.
 
 ## Provenance
 
@@ -514,6 +578,15 @@ Each check was verified against the raw `taste-skill/SKILL.md`
   caption/small/label tokens, and `scripts/layout-check/config.ts:11` excludes `"svg *"`
   from every predicate — so graphic-embedded text had no floor at all, at any width. This
   check does not modify either: it adds the missing floor beside them.
+- **Fusengine, selection gate (check 18)** — not in the source taste-skill. The criterion is
+  the repo's own (`refs-design/README.md`, §*Read this before the table*); **making it
+  blocking, and requiring both halves to be named in the report, is ours.** It was added
+  after three measured defects in the same paragraph: it sat *below* the technique index so
+  it was read after the choice was made; nothing verified it; and it offered `mainframe` as
+  the single "worked example", which turned one reference into the default pick. The
+  paragraph was moved above the index and given a second example (`dispatch`); this check
+  supplies the enforcement it never had. No threshold is invented here — the check is
+  read-and-verify, like checks 7 and 12(b).
 - **Fusengine, composition gate (checks 12-16)** — none is in the source taste-skill. All
   five were added after three real deliverables passed checks 1-11 and were judged
   unshippable (flat hierarchy, no vertical rhythm, an off-centre container, zero `<img>`

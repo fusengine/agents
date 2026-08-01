@@ -368,8 +368,8 @@ In this order. Not one of these steps is a lookup.
    palette is touched. A tone committed to one extreme decides more about colour than a
    sector name ever will.
 3. **The corpus, opened and looked at** — `../../design-web/references/refs-design/`, the
-   ten `index.html` first, markdown second. It hands you no palette for your sector (all
-   ten are tech) and is not meant to. What it hands you is how far a colour decision has to
+   fifteen `index.html` first, markdown second. It hands you no palette for your sector (all
+   fifteen are tech) and is not meant to. What it hands you is how far a colour decision has to
    be carried before it holds: `fora` runs an entire page on one 1px rule at white 10%;
    `mainframe` ships with no accent at all.
 4. **The mechanics** — [oklch-system.md](oklch-system.md) to build the ramp,

@@ -1,6 +1,6 @@
 ---
 name: design-inspiration
-description: "Use before generating any page, to source taste — palette, typography, depth, craft technique. Order is fixed: the local corpus (`refs-design/`, ten pages with measured procedures) first and mandatory, then 1-2 real production sites in the client's own sector for register only. The corpus sets a floor of execution, never a ceiling: it also grants the right to invent a procedure no reference contains, provided it is derived from the subject and documented. Do NOT use for section structure — the first screen comes from macrostructure-bank, the body order from body-sequence-bank. Also holds the canonical Lookalike Test."
+description: "Use before generating any page, to source taste — palette, typography, depth, craft technique. Order is fixed: the local corpus (`refs-design/`, fifteen pages with measured procedures) first and mandatory, then 1-2 real production sites in the client's own sector for register only. The corpus sets a floor of execution, never a ceiling: it also grants the right to invent a procedure no reference contains, provided it is derived from the subject and documented. Do NOT use for section structure — the first screen comes from macrostructure-bank, the body order from body-sequence-bank. Also holds the canonical Lookalike Test."
 related: design-inspiration-urls.md, refs-design/README.md, 21st-dev.md, gemini/gemini-feedback-loop.md, ../../design-method/references/macrostructure-bank.md, ../../design-method/references/body-sequence-bank.md, ../../design-method/references/register/brand.md
 ---
 
@@ -25,16 +25,16 @@ copy skeleton is precisely the failure this file exists to prevent.
 ./refs-design/README.md
 ```
 
-Ten references built and accepted for this purpose, all of them real production pages
-rebuilt by hand from their live source. Each of the ten folders carries two files that do
+Fifteen references built and accepted for this purpose, all of them real production pages
+rebuilt by hand from their live source. Each of the fifteen folders carries two files that do
 not overlap:
 
 | File | Answers | Holds |
 |---|---|---|
-| `tokens-<name>.md` | **how** | the procedures, the measured values, the traps — 25 indexed across the corpus |
+| `tokens-<name>.md` | **how** | the procedures, the measured values, the traps — 38 indexed across the corpus |
 | `design-system.md` | **what** and **why** | register, tone, signature element, the named macrostructure and its section sequence |
 
-**Open the rendered pages before you open any of this.** Each of the ten folders holds an
+**Open the rendered pages before you open any of this.** Each of the fifteen folders holds an
 `index.html` that opens by double-click — `file://`, no server, no build. Open the ones you
 are considering, scroll them to the bottom, and only then reach for a markdown file. These
 pages were accepted on the render, by eye; that judgment is not in the markdown and cannot
@@ -54,7 +54,7 @@ above. Reach for `tokens-*.md` **last**, for the values of a procedure you have 
 seen and already chosen: measured values let you *reproduce* a procedure, they never let
 you *choose* one.
 
-Reading two `tokens-*.md` sections instead of all ten files is a legitimate economy. Doing
+Reading two `tokens-*.md` sections instead of all fifteen files is a legitimate economy. Doing
 it without ever opening a page is not an economy, it is skipping the step that carries the
 taste — and it produces a deliverable that passes every check and reads dead.
 
@@ -72,14 +72,22 @@ FORBIDDEN below).
 
 ## The standard the corpus sets
 
-All ten are dense, dark, precisely-built product pages. That is **deliberate**: it fixes
-the level of execution expected — tight tokens, real depth, motion that carries meaning, no
-filler section. Read it as a quality floor, not as a theme to apply.
+All fifteen are precisely-built product pages, and **twelve of them are dense and dark**.
+That is **deliberate**: it fixes the level of execution expected — tight tokens, real
+depth, motion that carries meaning, no filler section. Read it as a quality floor, not as a
+theme to apply.
 
-Be aware of the corollary: the corpus is **single-register**, and it contains no page that
-proves the same rigour in a warm, printed, institutional or retail register. That the
-standard travels is a claim this folder no longer demonstrates — it holds anyway, but you
-are the one who has to carry it across.
+Three are not dark, and they are the only proof on disk that the floor is not a colour:
+`parley` is a fully light page and its `tokens-parley.md § 11` is the one place here that
+writes down what light costs (the hairline replaces the glow, shadows must be tinted with
+the page's ink, weight has to rise a step, alpha stops being free); `stripe` is light,
+saturated and the densest page in the corpus; `cursor` is light but grey and unaccented.
+
+Be aware of the corollary, which the three do **not** fix: the corpus is **single-sector**
+— all fifteen are software products — and it contains no page that proves the same rigour
+in a warm, printed, institutional or retail register. That the standard travels is a claim
+this folder still does not demonstrate — it holds anyway, but you are the one who has to
+carry it across.
 
 So: take the standard from every reference, take the register from the subject. A bakery
 built to this standard is not a dark product page; it is a bakery page that is actually
@@ -137,7 +145,7 @@ Inventing removes no obligation. It removes a boundary that was never there.
 ## Rules (CRITICAL)
 
 1. **Corpus first, every time — and rendered pages before markdown.** Open at least **two
-   of the ten `index.html`** in a browser and scroll them through; *then* read
+   of the fifteen `index.html`** in a browser and scroll them through; *then* read
    `refs-design/README.md` plus at least **two `tokens-*.md` sections** relevant to what
    you are building. All of it before any browsing and before any code. This is also the
    Gate 0 evidence artefact: cite **the pages you opened** and **the sections you read**. A

@@ -54,10 +54,11 @@ values measured on the source. **Applied literally as a light/dark flip it fails
 locks one theme for the whole page — and check 3 blocks mechanically, so a page
 built on the literal reading gets sent back.
 
-The count that settled it: across the ten pages of `../../refs-design/`,
-**0 of 10** carry a theme inversion at section level; **5 of 10** give one section
-a background that departs from the base *within* the theme. The device is real;
-the flip is not what makes it work. The hard cut is.
+The count that settled it: across the fifteen pages of `../../refs-design/`,
+**1 of 15** carries a theme inversion at section level — `stripe`, and only because
+it reproduces a source that ships one, logged as a check-3 fail kept for fidelity —
+while **7 of 15** give one section a background that departs from the base *within*
+the theme. The device is real; the flip is not what makes it work. The hard cut is.
 
 **So read the two surfaces below as `base` and `departed`, not as `light` and
 `dark`.** On a dark-locked page the departed surface is a lighter tint, a
@@ -124,7 +125,8 @@ departed band at `oklch(0.92 0 0)`–`oklch(0.88 0 0)` with text `oklch(0.13 0 0
 and muted `oklch(0.42 0 0)`; on a dark-locked page, `oklch(0.11 0 0)` neighbours
 against a departed band at `oklch(0.17 0 0)`–`oklch(0.22 0 0)` with text
 `oklch(0.95 0 0)` and muted `oklch(0.52 0 0)`. Do **not** flip light↔dark: that
-fails pre-flight check 3 and appears in none of the ten corpus pages.
+fails pre-flight check 3, and the single corpus page that does it (`stripe`) does it
+as a declared, reported failure while reproducing a source — not as a technique.
 Add a dot-grid texture on the band only:
 `background-image: radial-gradient(circle, oklch(0.50 0 0) 1px, transparent 1px);
 background-size: 24px 24px`, kept under 5% effective opacity. Start the band's

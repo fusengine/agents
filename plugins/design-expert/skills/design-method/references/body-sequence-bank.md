@@ -1,6 +1,6 @@
 ---
 name: body-sequence-bank
-description: "Ten body sequences read off shipped code — the order of a page's BODY sections, the principle that decides that order, and what each page drops from the canonical skeleton."
+description: "Fifteen body sequences read off shipped code — the order of a page's BODY sections, the principle that decides that order, and what each page drops from the canonical skeleton."
 when-to-use: "Whenever a page body is planned (generate step 4, redesign, any macrostructure pick). macrostructure-bank.md covers the first screen; the body sequence comes from here."
 keywords: body, sequence, section-order, macrostructure, canon, saas-furniture, anti-slop, corpus
 priority: high
@@ -13,7 +13,7 @@ related: macrostructure-bank.md, register/brand.md, moves/generate.md, ../../des
 part `register/brand.md` names as the proven failure mode: "The failure mode is the
 **body**." A hero treatment does not address it; nor does a canon skeleton minus one section.
 
-Ten sequences, one per page in `../../design-web/references/refs-design/` (headings name
+Fifteen sequences, one per page in `../../design-web/references/refs-design/` (headings name
 the source folder under it), read off shipped code: section order, the principle deciding
 that order, what the page does NOT carry from the canon, what subject it suits. Numeric
 limits are not restated — `../../design-web/references/layout-discipline.md` owns them and
@@ -36,7 +36,14 @@ opening and the closing and nothing else; vertical padding is set section by sec
 the end cropped by the section edge. Choosing the canon is legitimate **when it is treated**
 — entry 5 exists so it can be chosen honestly instead of by omission.
 
-## The ten sequences
+## The fifteen sequences
+
+Entries 1-10 are the original corpus; 11-15 were added with the five folders that ship
+local photography (`mosa`, `stash`, `parley`, `dispatch`, `stripe`). Three of the five —
+11, 12, 14 — are variants of one idea, *alternate an assertion and the surface that
+settles it*, and they are listed separately because what plays the role of the surface
+differs each time: a fake interface, a photograph, a running machine. Pick on that, not on
+the shared shape.
 
 ### 1. Mega-Menu Mirror — `harness-recode/design-system.md`
 
@@ -173,6 +180,114 @@ the end cropped by the section edge. Choosing the canon is legitimate **when it 
   table, footer columns.
 - **Right when** — you own enough real output to fill every showing block. It is the canon
   reordered, so it earns nothing if the sets are stock imagery.
+
+### 11. Demonstrate, Enumerate, Price — `mosa-recode/design-system.md`
+
+- **Order** — hero, a `100svh` photograph with a backers strip on the headline's baseline →
+  three scene cards → four tabs swapping a scene/label pair → three steps on a hairline
+  rail lit by scroll position → six bordered benefit cards → a full-bleed snap rail of six
+  quote cards → one box divided into ten logo cells → three plans behind a monthly/yearly
+  switch → seven accordions → closing image band repeating the hero's buttons → footer.
+- **Principle** — the page **shows the product before it names a benefit**: three of the
+  first four blocks are a fake interface drawn in HTML/CSS over a darkened photograph, and
+  the first sentence that promises anything arrives 2,600px in. Only then does it
+  enumerate, and only then does it price.
+- **Absent from canon** — no numbered feature rows, no comparison table, no video, no stats
+  band, no team section, no blog teaser. Present but mutated: features exist **three times
+  over** (three scenes, six cards, three steps), so there is no single features block; the
+  CTA band is the closing section and repeats the hero verbatim.
+- **Right when** — you can *draw* the product's interface, and the demonstration is
+  legible without a caption. With nothing to show, the first 2,600px are three empty
+  rectangles and the deferred benefit never gets paid for.
+
+### 12. Surface and Receipt — `stash-recode/design-system.md`
+
+- **Order** — hero photographic card + four-item trust strip → the one imageless section:
+  three constat cards → photographic card with its heading on the bottom edge, then three
+  step cells on a 1px grid gap → copy + small photographic card against an agent window
+  drawn in HTML/CSS → photographic card, five frosted query pills, three number cards
+  pulled tight against it → photographic card + a CSS phone chassis → two plans → four-entry
+  accordion → closing photographic card repeating the hero's buttons → footer.
+- **Principle** — alternate **a surface and its receipt**: a photographic card always
+  precedes or contains the claim, and the small bordered cards immediately after are the
+  proof of it. Enforced by a second rule — **no two consecutive sections share a geometry**,
+  which is what stops six photographic cards reading as one repeated band.
+- **Absent from canon** — testimonials in every form (no quote, no logo wall, no customer
+  name), comparison table, newsletter, burger menu, sticky sub-nav, breadcrumb, any
+  dark/light toggle. Social proof is replaced by five *imagined* search queries.
+- **Right when** — you have one distinct photograph per surface and none is reused. Six
+  cards fed by three images stock-rotated is the failure mode; so is a page where the
+  receipt cards say the same thing as the image above them.
+
+### 13. Four-Band Caesura — `parley-recode/design-system.md`
+
+- **Order** — hero photographic card, dark type on a white wash, a browser mock overlapping
+  its lower edge by 144px → three numbered cards → three icon rows against a floating
+  context card → three plain text columns, no card → **photographic band + white status
+  card** → four cards in a 2×2 grid → **photographic band + dark terminal** → CSS phone
+  chassis + copy → four numbered setup steps → **photographic band, nothing on it** →
+  three plans → a two-column grid of ten fully open Q&A pairs → **photographic band +
+  centred CTA card** → dark footer with a giant wordmark.
+- **Principle** — the text column **stops dead four times** and a full-bleed landscape
+  takes the whole viewport width. Twice something floats on it, once nothing does — and the
+  empty one is what makes the other three read as deliberate rather than as a template
+  slot. The caesura, not the content, is the rhythm.
+- **Absent from canon** — no logo wall, no testimonial, no metric strip, no comparison
+  table, no newsletter capture, **and no accordion**: the FAQ is ten questions with their
+  answers all visible, which is what makes the page 10,600px tall.
+- **Right when** — you own four photographs that can each hold a full viewport alone, and
+  the page is long enough that four interruptions read as chapters. On a short page four
+  bands are most of the page. Note the register: this is the corpus's only light page, and
+  `tokens-parley.md § 11` is where the cost of that is written down.
+
+### 14. Claim and Executable Proof — `dispatch-recode/design-system.md`
+
+- **Order** — hero in a 32px photographic frame → a terminal chassis pulled `-6rem` **into**
+  the hero → 42rem manifesto, the only block with no component in it → features three times
+  in three geometries (3 numbered cards, 6 cards, 4 cards) with a four-tab code block
+  between them → page builder: text beside a photograph carrying a chat overlay → a timed
+  four-step demo inside a browser chassis → four counters in the page's only bordered band
+  → the maker column → three plans → **a calculator on a log10 range with a live verdict**
+  → sticky-heading FAQ → closing photographic block → footer.
+- **Principle** — **every claim is followed within one section by a surface that executes
+  it.** The hero says *pipe it* and the terminal beneath prints the pipe; the pricing states
+  a rate and the calculator below applies it. The page never argues twice in a row without a
+  machine speaking in between — which is also why the four interface surfaces are recreated
+  in HTML/CSS rather than screenshotted: a screenshot cannot run.
+- **Absent from canon** — testimonials in any form, comparison table, newsletter capture,
+  sticky sub-nav, breadcrumb, cookie banner. Mutated: the logo wall exists as *integrations*
+  (four AI clients, not customers); the CTA band is a photograph, not a colour field.
+- **Right when** — the product genuinely produces machine output you can print, and at
+  least one claim on the page can be made *interactive* rather than illustrated. Without
+  that, the terminals are decoration and the sequence is a feature list with a shell
+  border. This is the corpus's second worked example of picking by verb: the verb is
+  **"it executes"**.
+
+### 15. Audience Ladder — `stripe-recode/design-system.md`
+
+- **Order** — hero with a counting eyebrow over a fan of seven blurred ribbons → a
+  seven-logo band between two rules → a six-tile bento on six columns, one tile at 4×2 →
+  full-width gradient promo card → four figures + a 46-ray CSS burst → accordion of four
+  customer cases → three icon columns → a seven-card step-scrolled rail → two promo cards →
+  a gradient panel carrying a dashboard and four floating code bubbles → rotating quote with
+  four progress-bar tabs → **a dark block** (orchestration diagram, three gradient figures,
+  three thumbnails) → foldable news blades → a two-column book panel → three-column CTA →
+  four-column footer.
+- **Principle** — the order follows the **size of the company being addressed**, not the
+  argument: everyone (bento), then large enterprises, then startups, then platforms, then
+  developers (the dark block), then the brand itself. Each rung re-arms with the same
+  template — title/action duo + paragraph, one visual piece, three icon columns — so the
+  repetition is the ladder and the visual piece is what distinguishes the rungs.
+- **Absent from canon** — **no pricing grid at all**, no comparison table, no FAQ, no
+  newsletter form, no trust bar under the hero. Mutated: customer proof exists four times
+  in four geometries (accordion, rail, quote, logo band), so there is no testimonials
+  section.
+- **Right when** — you genuinely address several distinct company sizes with different
+  products, and you can draw a screen for each. This is `VISUAL_DENSITY 9` and the densest
+  page on disk: run at half the matter and the ladder reads as repetition. **One caveat
+  before copying it**: its dark block is a theme inversion mid-page, kept for fidelity to
+  the source and failing pre-flight check 3 — see that check's arbitration section before
+  reproducing it.
 
 ## Selection rule
 

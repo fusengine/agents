@@ -36,7 +36,7 @@ routes here for that one page (see `design-webapp`'s reciprocal note).
 
 1. **Structure comes from register + two structural picks, never from template
    reproduction.** `references/design-inspiration.md` sources taste in a fixed order: the
-   local corpus (`references/refs-design/`, ten rebuilt pages whose `tokens-*.md` carry
+   local corpus (`references/refs-design/`, fifteen rebuilt pages whose `tokens-*.md` carry
    measured procedures) supplies palette, typography, depth and craft; 1-2 real production
    sites in the client's own sector supply **register only** — vocabulary, codes, level of
    formality. Section flow, spacing rhythm and layout are never copied from either. The
@@ -50,7 +50,7 @@ routes here for that one page (see `design-webapp`'s reciprocal note).
 
 2. **Pick a body sequence, and state what its principle becomes for this subject.** The
    body, not the hero, is the proven failure mode (`register/brand.md`). Choose one of the
-   ten sequences read off shipped code in
+   fifteen sequences read off shipped code in
    `../design-method/references/body-sequence-bank.md` and name it in the plan in that
    file's own format: **"Body sequence: {name} — principle applied here: {one line}."**
    State the principle in the brief's own terms; a plan naming the sequence but not what
@@ -164,13 +164,13 @@ restated or renumbered here). A fail is structural, never cosmetic: send it back
 | `references/buttons-guide.md` | Button states, sizing, CTA discipline |
 | `references/premium-patterns/PATTERNS.md` | 10 premium patterns with CSS specs + AI prompts, sector-mapped |
 | `references/design-inspiration.md` | Taste sourcing order (corpus first, then sector for register) + canonical Lookalike Test |
-| `references/refs-design/README.md` | The local corpus — ten rebuilt pages, procedure index (technique → reference → section) |
+| `references/refs-design/README.md` | The local corpus — fifteen rebuilt pages, procedure index (technique → reference → section), preceded by the verb-first selection rule |
 | `references/component-composition-ref.md` | Component composition rules |
 | `references/grids-layout.md`, `forms-guide.md`, `icons-guide.md`, `photos-images.md` | Supporting component guides |
 | `references/reference-index.md` | Full index of this skill's references and templates |
 | `../design-method/references/register/brand.md` | POV lock, Body ≠ SaaS Furniture, Competitor Lift Test |
 | `../design-method/references/macrostructure-bank.md` | Eight hero treatments — first screen only (step 1) |
-| `../design-method/references/body-sequence-bank.md` | Ten body sequences — the order of everything after the first screen (step 2) |
+| `../design-method/references/body-sequence-bank.md` | Fifteen body sequences — the order of everything after the first screen (step 2) |
 
 ### Shared with design-webapp (load from there, don't duplicate)
 | File | Purpose |
