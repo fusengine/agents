@@ -92,7 +92,7 @@ collided even when they cite different bank entries.
 
 ### 2. The fourth road — a sequence that is in no bank
 
-`../body-sequence-bank.md` holds ten sequences read off shipped code. Ten observations, not
+`../body-sequence-bank.md` holds fifteen sequences read off shipped code. Fifteen observations, not
 a list of legal moves. Any sketch may instead propose a sequence **derived from its subject** that
 matches none of them.
 
@@ -101,7 +101,7 @@ format: **forged name · section order · the principle that decides that order 
 the canonical skeleton · what subject it suits**. Anything less is an improvisation wearing a
 name, and the challenger should be able to tell.
 
-The precedent is the bank itself: **every one of its ten entries was off-bank once.** None was
+The precedent is the bank itself: **every one of its fifteen entries was off-bank once.** None was
 picked from a list — each was forged by the page's own designers out of their subject and only
 catalogued afterwards, which is why the headings name a folder and not a pattern. Entry 7,
 `Void-Metered Stack` (`supercommon-recode`), is the plainest case: six consecutive sections
@@ -112,7 +112,7 @@ are all simply absent. No canonical skeleton produces that; a focus timer does.
 Being off-bank earns neither credit nor penalty: the challenger is never told which sketches are
 off-bank, and judges all three on the same question. Three well-transposed bank sequences are a
 complete exploration; no run owes anyone a forged one. Forge a sequence when the subject carries
-an order the ten do not — and then make it earn its place on the ten's terms.
+an order the fifteen do not — and then make it earn its place on the fifteen's terms.
 
 ### 3. Judge comparatively — blind, fresh context
 
@@ -176,7 +176,7 @@ exploration ran when it didn't.
    `../../../design-web/references/design-inspiration.md`, in its fixed order:
 
    **2a. The corpus (mandatory, always).** Read `../../../design-web/references/refs-design/README.md`,
-   then **at least two `tokens-*.md` sections** relevant to what you are building. These are ten
+   then **at least two `tokens-*.md` sections** relevant to what you are building. These are fifteen
    rebuilt pages whose procedures are documented with measured values — that is where palette,
    typography, depth and craft technique come from. Name in the plan which references and which
    sections you pulled from, and what each gave.

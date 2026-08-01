@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Salut — Live chat that answers before the tab closes</title>
+<meta name="description" content="Salut is a conversion-focused chat agent: it sees what your visitor is reading, drafts the reply, and hands the thread over the moment it needs you." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300..800;1,300..800&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<a class="skip" href="#problem">Skip to content</a>
+
+<!-- ============================== HEADER ============================== -->
+<header class="site-header" data-header>
+  <div class="header-inner">
+    <a class="brand" href="#top" aria-label="Salut, home">
+      <svg class="brand-mark" viewBox="0 0 48 48" fill="none" aria-hidden="true" focusable="false">
+        <path fill="currentColor" fill-rule="evenodd" d="M24 4a18 18 0 0 0-18 18v14a8 8 0 0 0 8 8h6v-9h-5V22a9 9 0 0 1 18 0v13h-5v9h6a8 8 0 0 0 8-8V22A18 18 0 0 0 24 4Z" />
+      </svg>
+      <span class="brand-word">Salut</span>
+    </a>
+    <nav class="nav" aria-label="Primary">
+      <a href="#how">How it works</a>
+      <a href="#agents">For agents</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#setup">Setup</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <a class="btn btn-primary btn-sm header-cta" href="#pricing">Start free</a>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- ============================== HERO ============================== -->
+<section class="hero">
+  <div class="hero-card">
+    <div class="hero-media">
+      <img
+        src="img/hero.webp"
+        alt="Rolling pearl-grey hills under a wide, pale slate sky"
+        width="1920" height="825"
+        loading="eager" fetchpriority="high" decoding="async"
+        class="media-img is-hero" data-fade />
+    </div>
+    <div class="hero-wash" aria-hidden="true"></div>
+    <div class="hero-foot-wash" aria-hidden="true"></div>
+
+    <div class="hero-body">
+      <span class="hero-kicker">Agentic live chat · Web and iOS</span>
+      <h1 class="hero-title">The shortest way<br /><em>to a yes.</em></h1>
+      <p class="hero-sub">One question sits between a visitor and a sale. Salut shows you what they are reading, writes the answer, and sends it before they close the tab.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#pricing">Start free
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ico ico-sm arrow" aria-hidden="true"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
+        </a>
+        <a class="btn btn-ghost" href="#how">See how it works</a>
+      </div>
+      <div class="hero-trust">
+        <span>Free forever</span>
+        <span class="dot" aria-hidden="true">·</span>
+        <span>50 conversations / month</span>
+        <span class="dot" aria-hidden="true">·</span>
+        <span>No credit card</span>
+        <span class="dot hide-sm" aria-hidden="true">·</span>
+        <span class="hide-sm">One snippet</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- browser mock overlapping the hero card -->
+  <div class="hero-mock">
+    <div class="browser">
+      <div class="browser-bar">
+        <span class="tl tl-a"></span><span class="tl tl-b"></span><span class="tl tl-c"></span>
+        <span class="url">yourshop.com/plans</span>
+      </div>
+      <div class="browser-body">
+        <div class="skeleton" aria-hidden="true">
+          <span class="sk sk-1"></span><span class="sk sk-2"></span><span class="sk sk-3"></span>
+          <span class="sk-card"></span><span class="sk-card"></span><span class="sk-card"></span>
+        </div>
+        <div class="widget" role="img" aria-label="Chat widget showing a visitor question and the answer sent back">
+          <div class="widget-head">
+            <span class="avatar">NB</span>
+            <span class="widget-meta">
+              <strong>Nadia</strong>
+              <em>Usually replies in a few minutes</em>
+            </span>
+            <span class="live" aria-hidden="true"></span>
+          </div>
+          <div class="widget-thread">
+            <p class="bubble bubble-in">Is the free plan enough if I only run one site?</p>
+            <p class="bubble bubble-out">Yes. Free covers 1 site and 50 conversations a month. Pro adds volume and your own AI account.</p>
+          </div>
+          <div class="widget-input"><span>Write a message…</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ico ico-sm" aria-hidden="true"><path d="m22 2-7 20-4-9-9-4Z" /><path d="M22 2 11 13" /></svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== PROBLEM ============================== -->
+<section id="problem" class="band band-base">
+  <div class="wrap">
+    <div class="head head-center" data-reveal>
+      <p class="eyebrow">The silent drop-off</p>
+      <h2 class="h2">Most visitors leave without saying a word</h2>
+      <p class="lede">Your best prospects are the ones who almost bought. They are also the ones you never hear from.</p>
+    </div>
+
+    <div class="grid grid-3 mt-14">
+      <article class="card" data-reveal>
+        <span class="numeral">01</span>
+        <h3 class="h3">They had one question</h3>
+        <p class="body">Does it cover my case? Is there a refund? Is this the right plan? One sentence would have settled it.</p>
+      </article>
+      <article class="card" data-reveal>
+        <span class="numeral">02</span>
+        <h3 class="h3">They never asked it</h3>
+        <p class="body">Writing to a stranger and waiting a day is more effort than closing the tab. So they close the tab.</p>
+      </article>
+      <article class="card" data-reveal>
+        <span class="numeral">03</span>
+        <h3 class="h3">You saw a bounce</h3>
+        <p class="body">Analytics tells you someone left the pricing page. It never tells you what stopped them.</p>
+      </article>
+    </div>
+
+    <p class="closing" data-reveal>A chat bubble on the page turns that silence into a sentence. Salut is built so answering it takes you fifteen seconds, not fifteen minutes.</p>
+  </div>
+</section>
+
+<!-- ============================== HOW ============================== -->
+<section id="how" class="band band-tint">
+  <div class="wrap wrap-wide">
+    <div class="head head-center" data-reveal>
+      <p class="eyebrow">How it works</p>
+      <h2 class="h2">Answer the real question, not a guess</h2>
+      <p class="lede">Other chat tools hand you a message in a vacuum. Salut hands you the message and everything around it.</p>
+    </div>
+
+    <div class="split mt-14">
+      <ul class="feature-list">
+        <li data-reveal>
+          <span class="pill-ico">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ico" aria-hidden="true"><path d="M2.06 12.35a1 1 0 0 1 0-.7 10.75 10.75 0 0 1 19.88 0 1 1 0 0 1 0 .7 10.75 10.75 0 0 1-19.88 0" /><circle cx="12" cy="12" r="3" /></svg>
+          </span>
+          <div>
+            <h3 class="h3">You see what they see</h3>
+            <p class="body">The page they are on, how long they have been there, where they came from, and who they are if they are signed in. No more asking which plan they mean.</p>
+          </div>
+        </li>
+        <li data-reveal>
+          <span class="pill-ico">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ico" aria-hidden="true"><path d="M11.02 2.81a1 1 0 0 1 1.96 0l1.05 5.56a2 2 0 0 0 1.6 1.59l5.55 1.05a1 1 0 0 1 0 1.97l-5.55 1.05a2 2 0 0 0-1.6 1.59l-1.05 5.56a1 1 0 0 1-1.96 0l-1.05-5.56a2 2 0 0 0-1.6-1.59l-5.55-1.05a1 1 0 0 1 0-1.97l5.55-1.05a2 2 0 0 0 1.6-1.59z" /><path d="M20 2v4" /><path d="M22 4h-4" /></svg>
+          </span>
+          <div>
+            <h3 class="h3">The answer is already drafted</h3>
+            <p class="body">Salut reads your site and the context you wrote yourself, then prepares a reply. You approve it, edit it, or ignore it and write your own.</p>
+          </div>
+        </li>
+        <li data-reveal>
+          <span class="pill-ico">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ico" aria-hidden="true"><path d="m22 2-7 20-4-9-9-4Z" /><path d="M22 2 11 13" /></svg>
+          </span>
+          <div>
+            <h3 class="h3">You send, they buy</h3>
+            <p class="body">One message, in context, while they are still on the page. The conversation closes and the inbox goes back to empty.</p>
+          </div>
+        </li>
+      </ul>
+
+      <div class="context-card" data-reveal>
+        <div class="ctx-top">
+          <span class="ctx-name">Sarah Klein</span>
+          <span class="badge badge-signal">Open</span>
+        </div>
+        <ul class="ctx-list">
+          <li>
+            <span class="ctx-ico">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ico ico-xs" aria-hidden="true"><path d="M4.04 4.69a.5.5 0 0 1 .65-.65l16 6.5a.5.5 0 0 1-.06.95l-6.13 1.58a2 2 0 0 0-1.44 1.43l-1.58 6.13a.5.5 0 0 1-.95.06z" /></svg>
+            </span>
+            <span class="ctx-pair">
+              <span class="ctx-label">Reading</span>
+              <span class="ctx-value">/plans · 2 min 40 s</span>
+            </span>
+          </li>
+          <li>
+            <span class="ctx-ico">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ico ico-xs" aria-hidden="true"><circle cx="12" cy="12" r="10" /><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" /><path d="M2 12h20" /></svg>
+            </span>
+            <span class="ctx-pair">
+              <span class="ctx-label">Came from</span>
+              <span class="ctx-value">google.com · “salut live chat”</span>
+            </span>
+          </li>
+          <li>
+            <span class="ctx-ico">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ico ico-xs" aria-hidden="true"><path d="M20 6 9 17l-5-5" /></svg>
+            </span>
+            <span class="ctx-pair">
+              <span class="ctx-label">Identity</span>
+              <span class="ctx-value">sarah@studio.co · verified</span>
+            </span>
+          </li>
+        </ul>
+        <div class="ctx-draft">
+          <span class="ctx-label">AI answered</span>
+          <p>Free covers 1 site, so you are good. Pro adds volume and your own AI account.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== INBOX ============================== -->
+<section class="band band-base band-short">
+  <div class="wrap">
+    <div class="head head-center" data-reveal>
+      <p class="eyebrow">Clean conversations</p>
+      <h2 class="h2">An inbox that ends the day empty</h2>
+      <p class="lede">Support tools grow into a second job. Salut is built around getting back to zero, so the chat never becomes the thing you avoid opening.</p>
+    </div>
+    <div class="grid grid-3 mt-12">
+      <div class="plain" data-reveal>
+        <h3 class="h3">Three states, no taxonomy</h3>
+        <p class="body">Open, in progress, closed. No tags to maintain, no queues to design, no workflow to configure before the first reply.</p>
+      </div>
+      <div class="plain" data-reveal>
+        <h3 class="h3">AI clears the repeats</h3>
+        <p class="body">Questions you have answered a hundred times get handled from the context you wrote once. What is left is the conversation that actually needs you.</p>
+      </div>
+      <div class="plain" data-reveal>
+        <h3 class="h3">Close in bulk, or let it close itself</h3>
+        <p class="body">Sweep resolved threads in one action from the dashboard, the API, or your agent. The inbox is meant to be empty.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- full-bleed photographic band + floating status card -->
+<div class="bleed bleed-a">
+  <img
+    src="img/peak.webp"
+    alt="A snow-covered summit under a clear pale sky, shadows tinted slate blue"
+    width="1920" height="1281"
+    loading="lazy" decoding="async" class="media-img" data-fade />
+  <div class="bleed-overlay bleed-overlay-bottom">
+    <div class="status-card">
+      <span class="status-ico">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" class="ico" aria-hidden="true"><path d="M20 6 9 17l-5-5" /></svg>
+      </span>
+      <p class="status-title">No open conversations</p>
+      <p class="status-sub">Everything answered. Go build.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============================== AGENTS ============================== -->
+<section id="agents" class="band band-base">
+  <div class="wrap">
+    <div class="head head-center" data-reveal>
+      <p class="eyebrow">Built for agents</p>
+      <h2 class="h2">Hand it to your agent and walk away</h2>
+      <p class="lede">Salut was designed to be driven by software as comfortably as by a person. Everything you can do in the dashboard, an agent can do over the API, including the install.</p>
+    </div>
+
+    <div class="grid grid-2 mt-14">
+      <article class="card card-tall" data-reveal>
+        <span class="sq-ico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ico" aria-hidden="true"><path d="M8 3H7a2 2 0 0 0-2 2v5a2 2 0 0 1-2 2 2 2 0 0 1 2 2v5c0 1.1.9 2 2 2h1" /><path d="M16 21h1a2 2 0 0 0 2-2v-5c0-1.1.9-2 2-2a2 2 0 0 1-2-2V5a2 2 0 0 0-2-2h-1" /></svg>
+        </span>
+        <h3 class="h3">REST API</h3>
+        <p class="body">About thirty tools over one endpoint: conversations, messages, websites, AI context, memories, notifications and analytics. Authenticated with an sl_ key you create in the dashboard.</p>
+        <code class="chip">POST /api/v1/tools/{tool}</code>
+      </article>
+      <article class="card card-tall" data-reveal>
+        <span class="sq-ico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ico" aria-hidden="true"><path d="M12 19h8" /><path d="m4 17 6-6-6-6" /></svg>
+        </span>
+        <h3 class="h3">MCP server</h3>
+        <p class="body">The same tools, spoken natively by your assistant. Ready-made config for Claude Code, Claude Desktop and Cursor, plus any other MCP client you already run.</p>
+        <code class="chip">https://salut.chat/api/mcp</code>
+      </article>
+      <article class="card card-tall" data-reveal>
+        <span class="sq-ico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ico" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z" /></svg>
+        </span>
+        <h3 class="h3">Signed webhooks</h3>
+        <p class="body">The moment a visitor sends a message, Salut posts it to your endpoint, signed with HMAC-SHA256 so you can verify it came from us before you act on it.</p>
+        <code class="chip">X-Salut-Signature: sha256=…</code>
+      </article>
+      <article class="card card-tall" data-reveal>
+        <span class="sq-ico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ico" aria-hidden="true"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" /></svg>
+        </span>
+        <h3 class="h3">Your own tools</h3>
+        <p class="body">Give the Salut support AI an endpoint of yours, such as order lookup, licence check or seat count, and it calls it live inside the conversation. Visitor identity is injected server-side, never by the model.</p>
+        <code class="chip">POST /hooks/order-lookup</code>
+      </article>
+    </div>
+
+    <p class="note" data-reveal>There is a written brief in the docs your agent can follow end to end: create the website, write the AI context, install the widget, verify it fired. You paste one prompt and check the result.</p>
+  </div>
+</section>
+
+<!-- full-bleed photographic band + floating terminal -->
+<div class="bleed bleed-b">
+  <img
+    src="img/meadow.webp"
+    alt="A cool-toned meadow rolling into soft hills, a few signal-red flowers in the grass"
+    width="1920" height="1280"
+    loading="lazy" decoding="async" class="media-img" data-fade />
+  <div class="bleed-overlay">
+    <div class="terminal">
+      <div class="term-bar">
+        <span class="tl tl-mono"></span><span class="tl tl-mono"></span><span class="tl tl-mono"></span>
+        <span class="term-title">your coding agent</span>
+      </div>
+      <div class="term-body">
+        <p class="term-prompt"><span class="caret">&gt;</span> Set up Salut on studio.co and tell me what people asked this week</p>
+        <ul class="term-steps">
+          <li data-step><span class="tick">◉</span><span class="tool">create_website</span><span class="arg">studio.co</span><span class="done">done</span></li>
+          <li data-step><span class="tick">◉</span><span class="tool">update_context</span><span class="arg">"Refunds within 14 days…"</span><span class="done">done</span></li>
+          <li data-step><span class="tick">◉</span><span class="tool">create_webhook</span><span class="arg">studio.co/api/chat</span><span class="done">done</span></li>
+          <li data-step><span class="tick">◉</span><span class="tool">get_conversation_stats</span><span class="arg">last 7 days</span><span class="done">done</span></li>
+        </ul>
+        <p class="term-out">34 conversations, 28 closed. Top question: “Does it work with Webflow?” asked 9 times. Added to your AI context so it answers itself next time.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================== PHONE ============================== -->
+<section class="band band-tint">
+  <div class="wrap split-phone">
+    <div class="phone-holder" data-reveal>
+      <div class="phone">
+        <div class="phone-screen">
+          <div class="phone-status"><span>9:41</span><span class="notch" aria-hidden="true"></span><span>100%</span></div>
+          <div class="phone-head">
+            <span class="avatar avatar-sm">SK</span>
+            <span class="phone-meta">
+              <strong>Sarah Klein</strong>
+              <em>sarah@studio.co</em>
+            </span>
+            <span class="badge badge-signal">Open</span>
+          </div>
+          <div class="phone-thread">
+            <p class="bubble bubble-in">Is the free plan enough if I only run one site?</p>
+            <p class="bubble bubble-out">Yes. Free covers 1 site, you are set.</p>
+            <span class="stamp">11:23</span>
+          </div>
+          <div class="phone-input"><span>Type a message…</span><span class="ai-tag">AI</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="phone-copy">
+      <p class="eyebrow" data-reveal>On your phone</p>
+      <h2 class="h2" data-reveal>Answer from the queue at the bakery</h2>
+      <p class="lede" data-reveal>You are not sitting at a helpdesk. The iOS app exists so the two minutes that decide a sale do not have to wait until you are back at your laptop.</p>
+      <ul class="feature-list feature-list-tight">
+        <li data-reveal>
+          <span class="pill-ico pill-ico-sm">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ico ico-sm" aria-hidden="true"><path d="M10.27 21a2 2 0 0 0 3.46 0" /><path d="M3.26 15.33A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.67C19.41 13.96 18 12.5 18 8A6 6 0 0 0 6 8c0 4.5-1.41 5.96-2.74 7.33" /></svg>
+          </span>
+          <div>
+            <h3 class="h3 h3-sm">It buzzes when it matters</h3>
+            <p class="body">A push the second someone writes, not a digest tomorrow morning. Reply from the notification and the visitor sees it before they leave the page.</p>
+          </div>
+        </li>
+        <li data-reveal>
+          <span class="pill-ico pill-ico-sm">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ico ico-sm" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 2" /></svg>
+          </span>
+          <div>
+            <h3 class="h3 h3-sm">The AI keeps working while you walk</h3>
+            <p class="body">It answers on its own and taps you only when it cannot. Take over from the train and the conversation is closed by the next stop.</p>
+          </div>
+        </li>
+        <li data-reveal>
+          <span class="pill-ico pill-ico-sm">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ico ico-sm" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2" /><path d="M3 10h18" /><path d="M8 4v16" /></svg>
+          </span>
+          <div>
+            <h3 class="h3 h3-sm">Everything, not a cut-down version</h3>
+            <p class="body">The full conversation history, visitor context and status changes. Not a viewer, the actual inbox.</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== SETUP ============================== -->
+<section id="setup" class="band band-base">
+  <div class="wrap">
+    <div class="head head-center" data-reveal>
+      <p class="eyebrow">Setup</p>
+      <h2 class="h2">Live before your coffee gets cold</h2>
+      <p class="lede">Four steps, no configuration meeting, no implementation call. Every step ships with a prompt you can paste straight into your coding agent.</p>
+    </div>
+    <ol class="grid grid-4 mt-12 steps">
+      <li data-reveal>
+        <span class="numeral numeral-sm">01</span>
+        <h3 class="h3 h3-sm">Give it your domain</h3>
+        <p class="body">One field. Salut creates the website, reads your public pages, and writes the first draft of the context its AI will answer from.</p>
+      </li>
+      <li data-reveal>
+        <span class="numeral numeral-sm">02</span>
+        <h3 class="h3 h3-sm">Take the snippet, or the prompt</h3>
+        <p class="body">Copy one script tag, or copy the ready-written prompt and hand it to Claude Code, Cursor or your own agent. It installs itself and reports back.</p>
+      </li>
+      <li data-reveal>
+        <span class="numeral numeral-sm">03</span>
+        <h3 class="h3 h3-sm">Ship it</h3>
+        <p class="body">Deploy whenever you like. Salut watches for the widget to come online and tells you the moment it does. Skip the wait if you already know it is live.</p>
+      </li>
+      <li data-reveal>
+        <span class="numeral numeral-sm">04</span>
+        <h3 class="h3 h3-sm">Catch the first message</h3>
+        <p class="body">Open your own site, say hello, and watch it arrive. When you see it land you are done: that is the whole setup.</p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- full-bleed photographic band, no overlay -->
+<div class="bleed bleed-c">
+  <img
+    src="img/meadow.webp"
+    alt="The same cool meadow seen wider, hills fading into a pale slate horizon"
+    width="1920" height="1280"
+    loading="lazy" decoding="async" class="media-img media-img-low" data-fade />
+</div>
+
+<!-- ============================== PRICING ============================== -->
+<section id="pricing" class="band band-tint">
+  <div class="wrap wrap-wide">
+    <div class="head head-center" data-reveal>
+      <p class="eyebrow">Pricing</p>
+      <h2 class="h2">Start free, pay when it earns its keep</h2>
+      <p class="lede">No seat minimum, no onboarding fee, no annual contract to sign before you have had your first conversation.</p>
+    </div>
+
+    <div class="grid grid-3 mt-14 plans">
+      <article class="plan" data-reveal>
+        <div class="plan-top">
+          <h3 class="h3">Free</h3>
+          <p class="body body-sm">Start taking visitor questions today.</p>
+        </div>
+        <p class="price"><span class="amount">$0</span><span class="per">forever</span></p>
+        <ul class="ticks">
+          <li><span class="tickmark" aria-hidden="true"></span>1 website</li>
+          <li><span class="tickmark" aria-hidden="true"></span>2 team members</li>
+          <li><span class="tickmark" aria-hidden="true"></span>50 conversations a month</li>
+          <li><span class="tickmark" aria-hidden="true"></span>20 AI replies a month</li>
+          <li><span class="tickmark" aria-hidden="true"></span>Widget, inbox, iOS app</li>
+        </ul>
+        <a class="btn btn-ghost btn-block" href="#setup">Start free</a>
+      </article>
+
+      <article class="plan plan-featured" data-reveal>
+        <div class="plan-top">
+          <h3 class="h3">Pro <span class="badge badge-signal badge-pop">Popular</span></h3>
+          <p class="body body-sm">One site, your own AI account, room to grow.</p>
+        </div>
+        <p class="price"><span class="amount">$20</span><span class="per">per month</span></p>
+        <p class="price-alt">or $200 a year</p>
+        <ul class="ticks">
+          <li><span class="tickmark" aria-hidden="true"></span>1 website</li>
+          <li><span class="tickmark" aria-hidden="true"></span>2 team members</li>
+          <li><span class="tickmark" aria-hidden="true"></span>1,000 conversations a month</li>
+          <li><span class="tickmark" aria-hidden="true"></span>1,000 AI replies a month</li>
+          <li><span class="tickmark" aria-hidden="true"></span>Bring your own model key</li>
+          <li><span class="tickmark" aria-hidden="true"></span>Remove the Salut badge</li>
+          <li><span class="tickmark" aria-hidden="true"></span>Buy more as you go</li>
+        </ul>
+        <a class="btn btn-primary btn-block" href="#setup">Start 14-day trial</a>
+      </article>
+
+      <article class="plan" data-reveal>
+        <div class="plan-top">
+          <h3 class="h3">Business</h3>
+          <p class="body body-sm">Several sites and a full team in one inbox.</p>
+        </div>
+        <p class="price"><span class="amount">$99</span><span class="per">per month</span></p>
+        <p class="price-alt">or $990 a year</p>
+        <ul class="ticks">
+          <li><span class="tickmark" aria-hidden="true"></span>10 websites</li>
+          <li><span class="tickmark" aria-hidden="true"></span>10 team members</li>
+          <li><span class="tickmark" aria-hidden="true"></span>10,000 conversations a month</li>
+          <li><span class="tickmark" aria-hidden="true"></span>10,000 AI replies a month</li>
+          <li><span class="tickmark" aria-hidden="true"></span>Bring your own model key</li>
+          <li><span class="tickmark" aria-hidden="true"></span>Remove the Salut badge</li>
+          <li><span class="tickmark" aria-hidden="true"></span>Buy more as you go</li>
+        </ul>
+        <a class="btn btn-ghost btn-block" href="#setup">Start 14-day trial</a>
+      </article>
+    </div>
+
+    <p class="footnote" data-reveal>The API and the MCP server work on every plan. Go past a monthly number on a paid plan and Salut buys what the next message needs: 100 more AI replies for $3, 500 more conversations for $2, up to a spend cap you set, $50 by default. At the cap chat keeps running and only the AI pauses. Connect your own model account and its replies stop counting at all.</p>
+  </div>
+</section>
+
+<!-- ============================== FAQ ============================== -->
+<section id="faq" class="band band-base">
+  <div class="wrap">
+    <h2 class="h2 h2-left" data-reveal>Questions <em>&amp; answers</em></h2>
+    <div class="qa mt-12">
+      <div class="qa-item" data-reveal>
+        <h3 class="h3 h3-sm">Will the AI answer my customers without me?</h3>
+        <p class="body">Yes, that is the default. A new website replies on its own from the context you write during onboarding, and hands the thread to you when it cannot answer. Turn auto-replies off per website whenever you would rather write every reply yourself.</p>
+      </div>
+      <div class="qa-item" data-reveal>
+        <h3 class="h3 h3-sm">How long does the install actually take?</h3>
+        <p class="body">One script tag before the closing body tag. If you use a coding agent, onboarding hands you a written prompt and the agent does the edit for you.</p>
+      </div>
+      <div class="qa-item" data-reveal>
+        <h3 class="h3 h3-sm">Can I tell who I am talking to?</h3>
+        <p class="body">Yes. If your visitor is signed in, pass their details to the widget with a server-computed HMAC hash and Salut marks the identity as verified. Nobody can impersonate a customer by editing their browser console.</p>
+      </div>
+      <div class="qa-item" data-reveal>
+        <h3 class="h3 h3-sm">What does the widget look like on my site?</h3>
+        <p class="body">A bubble in the corner with your colour and your name. It loads asynchronously, so it never blocks your page, and it works on mobile Safari.</p>
+      </div>
+      <div class="qa-item" data-reveal>
+        <h3 class="h3 h3-sm">Can my agent run all of this?</h3>
+        <p class="body">That is the point. Every dashboard action is available as a tool over the REST API and the MCP server: create a website, write the AI context, read conversations, send messages, close threads, pull stats.</p>
+      </div>
+      <div class="qa-item" data-reveal>
+        <h3 class="h3 h3-sm">What happens when I hit a monthly limit?</h3>
+        <p class="body">Chat keeps working: visitors still reach you and you still answer by hand. Only the AI pauses, and new conversations hand off to your team instead. We warn you at 80% and email you the moment it happens, and everything resumes on your next billing date.</p>
+      </div>
+      <div class="qa-item" data-reveal>
+        <h3 class="h3 h3-sm">What counts as a conversation?</h3>
+        <p class="body">A visitor writing to you for the first time. Opening the widget and leaving is not a conversation, spam is not a conversation, and every later message in the same thread is free. You are billed once, when someone actually starts talking.</p>
+      </div>
+      <div class="qa-item" data-reveal>
+        <h3 class="h3 h3-sm">Can I use my own AI account instead?</h3>
+        <p class="body">Yes, on any paid plan. Connect your model account or paste your own API key, pick any model that key can reach, and Salut runs replies on your account instead of ours. Those replies never count against your monthly AI allowance.</p>
+      </div>
+      <div class="qa-item" data-reveal>
+        <h3 class="h3 h3-sm">Do I need a credit card to try it?</h3>
+        <p class="body">No. The free plan covers one website and never expires. Pro and Business add a 14-day trial on top of that if you want the bigger allowances.</p>
+      </div>
+      <div class="qa-item" data-reveal>
+        <h3 class="h3 h3-sm">Can I get notified somewhere other than the app?</h3>
+        <p class="body">Yes: email, and a signed webhook that fires the moment a visitor writes, so you can route it into Slack, Telegram or anything else you already run.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== CTA ============================== -->
+<section class="bleed bleed-cta">
+  <img
+    src="img/dusk.webp"
+    alt="A rolling landscape at the end of the day, very pale sky turning slate grey over low mist"
+    width="1920" height="1280"
+    loading="lazy" decoding="async" class="media-img" data-fade />
+  <div class="bleed-overlay">
+    <div class="cta-card" data-reveal>
+      <p class="eyebrow">Two minutes from here</p>
+      <h2 class="h2">Start the conversation your visitors were never going to start</h2>
+      <p class="lede lede-sm">Add your domain, drop in the snippet, send yourself the first message. You will know within the hour whether people had questions you never heard.</p>
+      <a class="btn btn-primary" href="#pricing">Start free
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ico ico-sm arrow" aria-hidden="true"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
+      </a>
+      <p class="cta-fine">Free plan, 50 conversations a month, no credit card.</p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ============================== FOOTER ============================== -->
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="brand brand-inv" href="#top">
+          <svg class="brand-mark" viewBox="0 0 48 48" fill="none" aria-hidden="true" focusable="false">
+            <path fill="currentColor" fill-rule="evenodd" d="M24 4a18 18 0 0 0-18 18v14a8 8 0 0 0 8 8h6v-9h-5V22a9 9 0 0 1 18 0v13h-5v9h6a8 8 0 0 0 8-8V22A18 18 0 0 0 24 4Z" />
+          </svg>
+          <span class="brand-word brand-word-lg">Salut</span>
+        </a>
+        <p class="footer-blurb">Conversion-focused chat that helps small teams answer visitors faster, with the human still in control.</p>
+        <div class="footer-social">
+          <a href="#top" aria-label="Salut on X" class="soc"><svg viewBox="0 0 24 24" fill="currentColor" class="ico ico-xs" aria-hidden="true"><path d="M18.24 2.25h3.31l-7.23 8.26 8.5 11.24h-6.65l-5.21-6.82-5.97 6.82H1.68l7.73-8.84L1.25 2.25h6.83l4.71 6.23zm-1.16 17.52h1.83L7.08 4.13H5.12z" /></svg></a>
+          <a href="#top" class="soc soc-wide">Changelog
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ico ico-xs" aria-hidden="true"><path d="M7 7h10v10" /><path d="M7 17 17 7" /></svg>
+          </a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <p class="footer-head">Product</p>
+        <a href="#how">Features</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#agents">Documentation</a>
+        <a href="#setup">Changelog</a>
+      </div>
+      <div class="footer-col">
+        <p class="footer-head">Account</p>
+        <a href="#top">Dashboard</a>
+        <a href="#top">Settings</a>
+        <a href="#top">Sign in</a>
+      </div>
+      <div class="footer-col">
+        <p class="footer-head">Legal</p>
+        <a href="#top">Terms of service</a>
+        <a href="#top">Privacy policy</a>
+        <a href="#top">Contact</a>
+      </div>
+    </div>
+    <div class="footer-legal">
+      <p>© 2026 Salut. All rights reserved.</p>
+      <p>18 Quai de la Poste, Genève</p>
+    </div>
+    <div class="wordmark" aria-hidden="true">Salut</div>
+  </div>
+</footer>
+
+<script src="motion.js"></script>
+</body>
+</html>

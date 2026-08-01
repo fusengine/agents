@@ -46,7 +46,7 @@ Set each on a 1-10 scale. These become **Inputs** of Phases 1+.
 
 ## What a notch actually looks like — read this before setting a dial
 
-The 1/10 poles above are the range, not a scale. Ten shipped pages carry measured
+The 1/10 poles above are the range, not a scale. Fifteen shipped pages carry measured
 triples in `../../design-web/references/refs-design/*/design-system.md`, and
 `../../design-method/SKILL.md` turns them into an anchored scale — which page sits at
 which notch, and what that gives on screen. **That file is canonical; read the scale

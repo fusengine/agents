@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Solvo : infrastructure de paiement et services financiers</title>
+<meta name="description" content="Solvo est une plateforme de services financiers qui aide les entreprises de toutes tailles a accepter des paiements, construire leur facturation et faire circuler leurs fonds.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<a class="saut" href="#contenu">Aller au contenu</a>
+
+<!-- ============================================================ 1. ENTETE -->
+<header class="entete" id="entete">
+  <div class="entete__piste">
+    <a class="marque" href="#" aria-label="Solvo, page d'accueil">
+      <span class="marque__signe" aria-hidden="true"></span>
+      <span class="marque__mot">solvo</span>
+    </a>
+    <nav class="nav" aria-label="Navigation principale">
+      <ul class="nav__liste">
+        <li><button class="nav__lien" type="button" aria-expanded="false">Produits<span class="chevron" aria-hidden="true"></span></button></li>
+        <li><button class="nav__lien" type="button" aria-expanded="false">Solutions<span class="chevron" aria-hidden="true"></span></button></li>
+        <li><button class="nav__lien" type="button" aria-expanded="false">Développeurs<span class="chevron" aria-hidden="true"></span></button></li>
+        <li><button class="nav__lien" type="button" aria-expanded="false">Ressources<span class="chevron" aria-hidden="true"></span></button></li>
+        <li><a class="nav__lien" href="#tarifs">Tarifs</a></li>
+      </ul>
+    </nav>
+    <div class="entete__actions">
+      <a class="bouton bouton--fantome" href="#connexion">Se connecter</a>
+      <a class="bouton bouton--plein" href="#contact">Contacter notre équipe<span class="fleche" aria-hidden="true"></span></a>
+    </div>
+    <button class="burger" type="button" aria-expanded="false" aria-controls="menu-mobile" aria-label="Ouvrir le menu">
+      <span aria-hidden="true"></span><span aria-hidden="true"></span>
+    </button>
+  </div>
+  <div class="menu-mobile" id="menu-mobile" hidden>
+    <ul>
+      <li><a href="#suite">Produits</a></li>
+      <li><a href="#entreprises">Solutions</a></li>
+      <li><a href="#infra">Développeurs</a></li>
+      <li><a href="#actus">Ressources</a></li>
+      <li><a href="#tarifs">Tarifs</a></li>
+    </ul>
+    <div class="menu-mobile__actions">
+      <a class="bouton bouton--fantome" href="#connexion">Se connecter</a>
+      <a class="bouton bouton--plein" href="#contact">Contacter notre équipe</a>
+    </div>
+  </div>
+</header>
+
+<main id="contenu">
+
+<!-- ============================================================ 2. HEROS -->
+<section class="heros" aria-labelledby="titre-heros">
+  <div class="heros__fond" aria-hidden="true">
+    <div class="ruban ruban--1"></div>
+    <div class="ruban ruban--2"></div>
+    <div class="ruban ruban--3"></div>
+    <div class="ruban ruban--4"></div>
+    <div class="ruban ruban--5"></div>
+    <div class="ruban ruban--6"></div>
+    <div class="ruban ruban--7"></div>
+  </div>
+  <div class="heros__blanc" aria-hidden="true"></div>
+  <div class="piste heros__piste">
+    <p class="heros__sourcil">
+      <span class="heros__sourcil-label">Part du PIB mondial traité sur Solvo</span>
+      <span class="heros__sourcil-valeur" data-compteur data-cible="1,41072936">0,00000000</span><span class="heros__sourcil-pct">%</span>
+    </p>
+    <h1 class="heros__titre" id="titre-heros"><span class="heros__titre-principal">Une infrastructure financière</span> qui accélère votre croissance. Encaissez, facturez et pilotez vos revenus, quel que soit votre volume de transactions.</h1>
+    <div class="heros__actions">
+      <a class="bouton bouton--plein bouton--large" href="#contact">Démarrer maintenant<span class="fleche" aria-hidden="true"></span></a>
+      <a class="bouton bouton--clair bouton--large" href="#contact">Parler à un expert<span class="fleche" aria-hidden="true"></span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ 3. BANDE LOGOS -->
+<section class="logos" aria-label="Ils utilisent Solvo">
+  <div class="piste logos__piste">
+    <span class="logos__item logos__item--serif">Maréchal</span>
+    <span class="logos__item logos__item--gras">amberly</span>
+    <span class="logos__item">NOVASTRAT</span>
+    <span class="logos__item logos__item--serif">Le Courrier</span>
+    <span class="logos__item logos__item--gras">Kestrel</span>
+    <span class="logos__item">ORBITE</span>
+    <span class="logos__item logos__item--gras">peartree</span>
+  </div>
+</section>
+
+<!-- ============================================================ 4. SUITE / BENTO -->
+<section class="suite" id="suite" aria-labelledby="titre-suite">
+  <div class="piste">
+    <h2 class="titre titre--lg" id="titre-suite">
+      <span>Des briques flexibles pour chaque modèle économique.</span>
+      <span class="titre--attenue">Développez votre activité grâce à une suite modulaire d'outils de paiement et de services financiers, à déployer ensemble ou séparément.</span>
+    </h2>
+    <div class="bento" data-reveal-groupe>
+      <!-- Carte dominante -->
+      <article class="tuile tuile--majeure" data-reveal>
+        <header class="tuile__tete">
+          <h3 class="tuile__titre">Acceptez et optimisez les paiements en ligne ou en personne dans le monde entier</h3>
+          <span class="tuile__loupe" aria-hidden="true"></span>
+        </header>
+        <div class="tuile__scene scene--paiement">
+          <!-- maquette produit recréée en HTML/CSS : terminal mobile -->
+          <div class="tel" role="img" aria-label="Écran de paiement mobile affichant un montant de 26,89 euros">
+            <div class="tel__ecran">
+              <div class="tel__enseigne"><span class="pastille" aria-hidden="true"></span>cartsy</div>
+              <p class="tel__libelle">Payer Cartsy</p>
+              <p class="tel__montant">26,89 €</p>
+              <p class="tel__note">Réglez par carte, virement ou portefeuille</p>
+              <dl class="tel__lignes">
+                <div><dt>Chemise Deluxe</dt><dd>22,60 €</dd></div>
+                <div><dt>TVA</dt><dd>4,29 €</dd></div>
+                <div class="tel__total"><dt>Total</dt><dd>26,89 €</dd></div>
+              </dl>
+              <p class="tel__bouton">Continuer</p>
+            </div>
+          </div>
+          <!-- maquette produit recréée en HTML/CSS : tunnel navigateur -->
+          <div class="fenetre" role="img" aria-label="Tunnel de paiement dans un navigateur">
+            <div class="fenetre__barre"><span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span><em>cartsy.com/checkout</em></div>
+            <div class="fenetre__corps">
+              <div class="fenetre__col">
+                <p class="fenetre__enseigne">CARTSY</p>
+                <label class="champ"><span>E-mail</span><i>camille.rivet@exemple.com</i></label>
+                <div class="portefeuilles">
+                  <span class="pf pf--vert">link</span>
+                  <span class="pf pf--noir">Pay</span>
+                </div>
+                <p class="fenetre__ou">ou</p>
+                <p class="fenetre__soustitre">Moyen de paiement</p>
+                <div class="moyen moyen--actif"><span class="moyen__ico" aria-hidden="true"></span>Carte bancaire</div>
+                <div class="moyen"><span class="moyen__ico moyen__ico--rouge" aria-hidden="true"></span>Paiement en 4 fois, sans frais, à partir de 50,28 €</div>
+                <div class="moyen"><span class="moyen__ico" aria-hidden="true"></span>Virement</div>
+                <p class="fenetre__cta">Payer 26,89 €</p>
+              </div>
+              <div class="fenetre__col fenetre__col--recap">
+                <p class="fenetre__soustitre">Récapitulatif</p>
+                <div class="article">
+                  <span class="article__vignette" aria-hidden="true"></span>
+                  <span class="article__texte"><b>Pull à capuche</b><i>Marine, taille M</i></span>
+                  <span class="article__prix">41,70 €</span>
+                </div>
+                <dl class="recap">
+                  <div><dt>Sous-total</dt><dd>41,70 €</dd></div>
+                  <div><dt>TVA</dt><dd>7,91 €</dd></div>
+                  <div><dt>Livraison</dt><dd>Offerte</dd></div>
+                  <div class="recap__total"><dt>Total</dt><dd>49,61 €</dd></div>
+                </dl>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="tuile tuile--facturation" data-reveal>
+        <header class="tuile__tete">
+          <h3 class="tuile__titre">Adoptez le modèle de facturation de votre choix</h3>
+          <span class="tuile__loupe" aria-hidden="true"></span>
+        </header>
+        <div class="tuile__scene scene--facturation">
+          <div class="carte-flottante" role="img" aria-label="Panneau de configuration d'une offre par abonnement">
+            <p class="carte-flottante__tete"><span class="ico-rond" aria-hidden="true"></span><b>Offre Pro</b><i>Facturation mensuelle</i></p>
+            <dl class="carte-flottante__lignes">
+              <div><dt>Unités</dt><dd>0,01 € pour 1 000 unités</dd></div>
+              <div><dt>Compteur d'usage</dt><dd>Activé</dd></div>
+            </dl>
+            <div class="jauge" aria-hidden="true"><span style="width:64%"></span></div>
+          </div>
+          <div class="carte-flottante carte-flottante--basse" role="img" aria-label="Compteur d'unités consommées sur trente jours">
+            <p class="carte-flottante__mini">Unités consommées sur 30 jours</p>
+            <p class="carte-flottante__gros">1 500 000 000</p>
+            <div class="sparkline" aria-hidden="true"><i style="height:22%"></i><i style="height:38%"></i><i style="height:31%"></i><i style="height:52%"></i><i style="height:44%"></i><i style="height:66%"></i><i style="height:58%"></i><i style="height:81%"></i><i style="height:73%"></i><i style="height:96%"></i></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="tuile" data-reveal>
+        <header class="tuile__tete">
+          <h3 class="tuile__titre">Ouvrez vos revenus au commerce agentique</h3>
+          <span class="tuile__loupe" aria-hidden="true"></span>
+        </header>
+        <div class="tuile__scene scene--agent">
+          <div class="fil" role="img" aria-label="Conversation avec un agent qui recommande deux articles">
+            <p class="bulle bulle--user">Je renouvelle ma garde-robe. Peux-tu me recommander des basiques confortables en taille M ?</p>
+            <p class="bulle bulle--agent">Bien sûr. Voici deux pièces qui s'accordent bien et forment un bon point de départ.</p>
+            <div class="fil__produits">
+              <span class="produit"><i class="produit__img produit__img--bleu" aria-hidden="true"></i><b>T-shirt haut de gamme</b><em>Bleu, taille M</em><strong>23,00 €</strong></span>
+              <span class="produit"><i class="produit__img produit__img--marine" aria-hidden="true"></i><b>Pull à capuche</b><em>Marine, taille M</em><strong>43,00 €</strong></span>
+            </div>
+            <p class="fil__acheter">Acheter les deux</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="tuile" data-reveal>
+        <header class="tuile__tete">
+          <h3 class="tuile__titre">Lancez votre propre programme d'émission de cartes</h3>
+          <span class="tuile__loupe" aria-hidden="true"></span>
+        </header>
+        <div class="tuile__scene scene--carte">
+          <div class="carte-bancaire" role="img" aria-label="Carte de paiement à dégradé violet et pêche">
+            <span class="carte-bancaire__puce" aria-hidden="true"></span>
+            <span class="carte-bancaire__onde" aria-hidden="true"></span>
+            <span class="carte-bancaire__reseau">VISA</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="tuile" data-reveal>
+        <header class="tuile__tete">
+          <h3 class="tuile__titre">Faites circuler vos fonds par-delà les frontières, en stablecoins comme en devises</h3>
+          <span class="tuile__loupe" aria-hidden="true"></span>
+        </header>
+        <div class="tuile__scene scene--globe">
+          <div class="globe" role="img" aria-label="Globe pointillé figurant les corridors de paiement">
+            <span class="globe__anneau" aria-hidden="true"></span>
+            <span class="globe__anneau globe__anneau--2" aria-hidden="true"></span>
+            <span class="globe__anneau globe__anneau--3" aria-hidden="true"></span>
+          </div>
+        </div>
+      </article>
+
+      <article class="tuile tuile--large" data-reveal>
+        <div class="tuile__colonne">
+          <header class="tuile__tete">
+            <h3 class="tuile__titre">Intégrez les paiements directement dans votre plateforme</h3>
+            <span class="tuile__loupe" aria-hidden="true"></span>
+          </header>
+        </div>
+        <div class="tuile__scene scene--plateforme">
+          <div class="recu" role="img" aria-label="Reçu de commande accepté">
+            <p class="recu__tete"><span class="ico-rond ico-rond--chaud" aria-hidden="true"></span>Quiet Fire Yoga</p>
+            <p class="recu__merci">Merci. Votre paiement a été accepté.</p>
+            <dl class="recu__lignes">
+              <div><dt>Numéro de commande</dt><dd>#194756</dd></div>
+              <div><dt>Date</dt><dd>20 févr.</dd></div>
+              <div><dt>Moyen de paiement</dt><dd>Portefeuille</dd></div>
+              <div><dt>Votre achat</dt><dd>22,00 €</dd></div>
+              <div class="recu__total"><dt>Total</dt><dd>22,00 €</dd></div>
+            </dl>
+          </div>
+          <div class="tableau-bord" role="img" aria-label="Tableau de bord listant les comptes connectés et leurs volumes">
+            <div class="fenetre__barre"><span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span><em>tableau.zenflow.com</em></div>
+            <div class="tableau-bord__corps">
+              <p class="tableau-bord__titre">Comptes connectés</p>
+              <table class="grille">
+                <thead><tr><th scope="col">Compte</th><th scope="col" class="col-pays">Pays</th><th scope="col">Solde</th><th scope="col" class="col-vol">Volume</th></tr></thead>
+                <tbody>
+                  <tr><td><span class="jeton jeton--v" aria-hidden="true"></span>Vital Flow</td><td class="col-pays">Canada</td><td>7 513,00 €</td><td class="col-vol">64 406,68 €</td></tr>
+                  <tr><td><span class="jeton jeton--r" aria-hidden="true"></span>Yoga Daybreak</td><td class="col-pays">États-Unis</td><td>1 352,00 €</td><td class="col-vol">7 989,00 €</td></tr>
+                  <tr><td><span class="jeton jeton--o" aria-hidden="true"></span>Sacred Space</td><td class="col-pays">RU</td><td>1 122,00 €</td><td class="col-vol">22 112,18 €</td></tr>
+                  <tr><td><span class="jeton jeton--b" aria-hidden="true"></span>Jackson Hot Yoga</td><td class="col-pays">Australie</td><td>3 290,00 €</td><td class="col-vol">11 378,97 €</td></tr>
+                  <tr><td><span class="jeton jeton--v" aria-hidden="true"></span>Harmony Flow</td><td class="col-pays">Canada</td><td>27 840,00 €</td><td class="col-vol">265 202,69 €</td></tr>
+                  <tr><td><span class="jeton jeton--r" aria-hidden="true"></span>Balance at Brunch</td><td class="col-pays">États-Unis</td><td>302,00 €</td><td class="col-vol">3 285,32 €</td></tr>
+                  <tr><td><span class="jeton jeton--o" aria-hidden="true"></span>Studio Breathline</td><td class="col-pays">États-Unis</td><td>2 021,00 €</td><td class="col-vol">7 747,00 €</td></tr>
+                  <tr><td><span class="jeton jeton--b" aria-hidden="true"></span>Zenith Zen</td><td class="col-pays">Australie</td><td>594,00 €</td><td class="col-vol">1 478,97 €</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ 5. PROMO PLEINE LARGEUR -->
+<section class="promo" aria-labelledby="titre-promo">
+  <div class="piste">
+    <div class="promo__cadre">
+      <div class="promo__nappe" aria-hidden="true"></div>
+      <div class="promo__texte">
+        <h2 class="titre titre--md promo__titre" id="titre-promo">L'infrastructure économique de l'IA</h2>
+        <a class="bouton bouton--clair" href="#actus">Regarder la conférence<span class="fleche" aria-hidden="true"></span></a>
+      </div>
+      <p class="promo__signature" aria-hidden="true"><b>solvo</b> assises</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ 6. PILIER + CHIFFRES -->
+<section class="pilier" aria-labelledby="titre-pilier">
+  <div class="piste">
+    <h2 class="titre titre--xxl pilier__titre" id="titre-pilier">Le socle<br>du commerce mondial</h2>
+  </div>
+  <div class="piste">
+    <ul class="chiffres">
+      <li><span class="chiffres__valeur">128+</span><span class="chiffres__legende">devises et moyens de paiement pris en charge</span></li>
+      <li><span class="chiffres__valeur">1,4 Bn $US</span><span class="chiffres__legende">en volume de paiements traités en 2025</span></li>
+      <li><span class="chiffres__valeur">99,999 %</span><span class="chiffres__legende">de disponibilité historique des services Solvo</span></li>
+      <li><span class="chiffres__valeur">180 M+</span><span class="chiffres__legende">d'abonnements actifs gérés sur Solvo Billing</span></li>
+    </ul>
+  </div>
+  <div class="gerbe" aria-hidden="true">
+    <div class="gerbe__halo"></div>
+    <div class="gerbe__rayons" data-gerbe></div>
+  </div>
+</section>
+
+<!-- ============================================================ 7. TOUTES TAILLES -->
+<section class="tailles" aria-labelledby="titre-tailles">
+  <div class="piste">
+    <h2 class="titre titre--lg" id="titre-tailles">
+      <span>Une réponse adaptée aux entreprises de toutes tailles.</span>
+      <span class="titre--attenue">Développez votre activité sur une plateforme fiable, qui suit le rythme de vos besoins.</span>
+    </h2>
+  </div>
+</section>
+
+<!-- ============================================================ 8. GRANDES ENTREPRISES -->
+<section class="entreprises" id="entreprises" aria-labelledby="titre-entreprises">
+  <div class="piste">
+    <div class="duo">
+      <div class="duo__gauche">
+        <h3 class="titre titre--sm" id="titre-entreprises">Transformez votre entreprise grâce à une infrastructure financière flexible</h3>
+        <a class="bouton bouton--plein" href="#contact">Solvo pour les grandes entreprises<span class="fleche" aria-hidden="true"></span></a>
+      </div>
+      <p class="duo__droite">48 % des entreprises du Fortune 100 ont utilisé Solvo pour développer leur activité, que ce soit pour se déployer à l'international ou pour refondre leur expérience client.</p>
+    </div>
+
+    <div class="accordeon" data-accordeon>
+      <article class="pli pli--ouvert" data-pli>
+        <h4 class="pli__tete">
+          <button type="button" class="pli__bouton" aria-expanded="true" aria-controls="pli-1">
+            <span class="pli__sigle pli__sigle--jaune" aria-hidden="true">H</span>
+            <span class="pli__intitule">Hertel unifie ses activités commerciales avec Solvo</span>
+            <span class="pli__signe" aria-hidden="true"></span>
+          </button>
+        </h4>
+        <div class="pli__corps" id="pli-1">
+          <div class="pli__interieur">
+            <img class="pli__image" src="img/hero.webp" alt="Vue aérienne d'un quartier d'affaires à l'aube, le ciel passant du violet indigo à l'orange pêche puis au cyan pâle" width="1920" height="885">
+            <div class="pli__pied">
+              <dl class="pli__stats">
+                <div><dt>152</dt><dd>pays</dd></div>
+                <div><dt>Plus de 9 k</dt><dd>agences dans le monde entier</dd></div>
+              </dl>
+              <p class="pli__produits"><b>Produits utilisés :</b> Payments, Terminal, Connect, Radar et Solvo Sigma</p>
+              <a class="lien-fleche" href="#temoignage">Lire le témoignage<span class="fleche" aria-hidden="true"></span></a>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="pli" data-pli>
+        <h4 class="pli__tete">
+          <button type="button" class="pli__bouton" aria-expanded="false" aria-controls="pli-2">
+            <span class="pli__sigle" aria-hidden="true">UR</span>
+            <span class="pli__intitule">Urbane centralise 4 milliards d'euros de chiffre d'affaires en ligne et en magasin sur Solvo</span>
+            <span class="pli__signe" aria-hidden="true"></span>
+          </button>
+        </h4>
+        <div class="pli__corps" id="pli-2" hidden>
+          <div class="pli__interieur">
+            <img class="pli__image" src="img/shop.webp" alt="Intérieur d'une boutique moderne et lumineuse, comptoir et terminal de paiement, touches violet et pêche" loading="lazy" width="1920" height="1280">
+            <div class="pli__pied">
+              <dl class="pli__stats">
+                <div><dt>Plus de 5</dt><dd>marques grand public</dd></div>
+                <div><dt>Plus de 640</dt><dd>points de vente</dd></div>
+              </dl>
+              <p class="pli__produits"><b>Produits utilisés :</b> Payments, Terminal, Connect, Solvo Sigma et Radar</p>
+              <a class="lien-fleche" href="#temoignage">Lire le témoignage<span class="fleche" aria-hidden="true"></span></a>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="pli" data-pli>
+        <h4 class="pli__tete">
+          <button type="button" class="pli__bouton" aria-expanded="false" aria-controls="pli-3">
+            <span class="pli__sigle pli__sigle--vert" aria-hidden="true">PA</span>
+            <span class="pli__intitule">Panierly s'appuie sur Solvo pour son service de livraison de courses</span>
+            <span class="pli__signe" aria-hidden="true"></span>
+          </button>
+        </h4>
+        <div class="pli__corps" id="pli-3" hidden>
+          <div class="pli__interieur">
+            <img class="pli__image" src="img/desk.webp" alt="Plan de travail clair vu de dessus, ordinateur portable et carnet, reflets violet et cyan discrets" loading="lazy" width="1920" height="1280">
+            <div class="pli__pied">
+              <dl class="pli__stats">
+                <div><dt>Plus de 540 k</dt><dd>acheteurs</dd></div>
+                <div><dt>1,6 k</dt><dd>partenaires dans près de 90 k magasins</dd></div>
+              </dl>
+              <p class="pli__produits"><b>Produits utilisés :</b> Payments, Connect, Data Pipeline et Issuing</p>
+              <a class="lien-fleche" href="#temoignage">Lire le témoignage<span class="fleche" aria-hidden="true"></span></a>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="pli" data-pli>
+        <h4 class="pli__tete">
+          <button type="button" class="pli__bouton" aria-expanded="false" aria-controls="pli-4">
+            <span class="pli__sigle pli__sigle--sombre" aria-hidden="true">LC</span>
+            <span class="pli__intitule">Le Courrier accélère ses paiements locaux et internationaux avec Solvo</span>
+            <span class="pli__signe" aria-hidden="true"></span>
+          </button>
+        </h4>
+        <div class="pli__corps" id="pli-4" hidden>
+          <div class="pli__interieur">
+            <img class="pli__image" src="img/city.webp" alt="Skyline urbaine au crépuscule, le ciel passant du violet indigo à l'orange pêche" loading="lazy" width="1920" height="1081">
+            <div class="pli__pied">
+              <dl class="pli__stats">
+                <div><dt>100 %</dt><dd>des paiements numériques et papier traités par Solvo</dd></div>
+                <div><dt>Moins de 3 mois</dt><dd>pour intégrer Solvo et passer en production</dd></div>
+              </dl>
+              <p class="pli__produits"><b>Produits utilisés :</b> Payments, Solvo Sigma et Radar</p>
+              <a class="lien-fleche" href="#temoignage">Lire le témoignage<span class="fleche" aria-hidden="true"></span></a>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ 9. EXPERTS -->
+<section class="experts" aria-labelledby="titre-experts">
+  <div class="piste">
+    <h3 class="titre titre--sm" id="titre-experts">Atteignez vos objectifs plus vite grâce à des experts dédiés</h3>
+    <ul class="trio">
+      <li class="trio__item" data-reveal>
+        <span class="trio__ico" aria-hidden="true"><i class="glyphe glyphe--noeuds"></i></span>
+        <p class="trio__texte"><b>Services aux entreprises.</b> Bénéficiez de conseils personnalisés de la part d'experts Solvo, qui vous aideront à réussir votre lancement, vos intégrations les plus complexes ou vos migrations majeures.</p>
+        <a class="lien-fleche" href="#contact">Découvrir les services<span class="fleche" aria-hidden="true"></span></a>
+      </li>
+      <li class="trio__item" data-reveal>
+        <span class="trio__ico" aria-hidden="true"><i class="glyphe glyphe--duo"></i></span>
+        <p class="trio__texte"><b>Experts certifiés par Solvo.</b> Faites appel à l'un des partenaires de notre réseau, qui se chargera d'intégrer et de déployer les solutions Solvo pour vous.</p>
+        <a class="lien-fleche" href="#contact">Découvrir les partenaires<span class="fleche" aria-hidden="true"></span></a>
+      </li>
+      <li class="trio__item" data-reveal>
+        <span class="trio__ico" aria-hidden="true"><i class="glyphe glyphe--cible"></i></span>
+        <p class="trio__texte"><b>Offres de support.</b> Bénéficiez d'une assistance quotidienne pour toutes vos questions techniques, avec des offres progressives adaptées à vos besoins.</p>
+        <a class="lien-fleche" href="#contact">Découvrir les offres<span class="fleche" aria-hidden="true"></span></a>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============================================================ 10. STARTUPS + CARROUSEL -->
+<section class="startups" aria-labelledby="titre-startups">
+  <div class="piste">
+    <div class="duo">
+      <div class="duo__gauche">
+        <h3 class="titre titre--sm" id="titre-startups">Posez des bases solides pour faire grandir votre startup</h3>
+        <a class="bouton bouton--plein" href="#contact">Solvo pour les startups<span class="fleche" aria-hidden="true"></span></a>
+      </div>
+      <p class="duo__droite">Solvo aide les startups à innover pour l'avenir grâce à une infrastructure financière simple à intégrer, des pionniers du stablecoin à 74 % des entreprises du classement Forbes AI 50.</p>
+    </div>
+    <div class="rail" data-rail>
+      <div class="rail__commandes">
+        <button class="rond" type="button" data-rail-prec aria-label="Cas clients précédents"><span class="fleche fleche--gauche" aria-hidden="true"></span></button>
+        <button class="rond" type="button" data-rail-suiv aria-label="Cas clients suivants"><span class="fleche" aria-hidden="true"></span></button>
+      </div>
+      <ul class="rail__piste" data-rail-piste>
+        <li class="cas"><span class="cas__visuel cas__visuel--vert" aria-hidden="true"><b>Sablier</b></span><p class="cas__texte">Sablier enregistre une hausse de plus de 520 % de son volume de paiements avec Solvo.</p><a class="lien-fleche" href="#temoignage">Découvrir l'histoire de Sablier<span class="fleche" aria-hidden="true"></span></a></li>
+        <li class="cas"><span class="cas__visuel cas__visuel--eau" aria-hidden="true"><b>Ressac</b></span><p class="cas__texte">Ressac préserve la disponibilité de ses développeurs grâce aux solutions sans code de Solvo.</p><a class="lien-fleche" href="#temoignage">Découvrir l'histoire de Ressac<span class="fleche" aria-hidden="true"></span></a></li>
+        <li class="cas"><span class="cas__visuel cas__visuel--nuit" aria-hidden="true"><b>Fleuris</b></span><p class="cas__texte">Fleuris s'impose comme une référence du code assisté par l'IA grâce à Solvo.</p><a class="lien-fleche" href="#temoignage">Découvrir l'histoire de Fleuris<span class="fleche" aria-hidden="true"></span></a></li>
+        <li class="cas"><span class="cas__visuel cas__visuel--grille" aria-hidden="true"><b>Socle</b></span><p class="cas__texte">Socle commercialise sa solution de back-end géré dans 140 pays avec Solvo.</p><a class="lien-fleche" href="#temoignage">Découvrir l'histoire de Socle<span class="fleche" aria-hidden="true"></span></a></li>
+        <li class="cas"><span class="cas__visuel cas__visuel--chaud" aria-hidden="true"><b>Gamme</b></span><p class="cas__texte">Gamme franchit le cap des 90 M $US d'ARR et des 60 millions d'utilisateurs avec Solvo.</p><a class="lien-fleche" href="#temoignage">Découvrir l'histoire de Gamme<span class="fleche" aria-hidden="true"></span></a></li>
+        <li class="cas"><span class="cas__visuel cas__visuel--violet" aria-hidden="true"><b>Onze</b></span><p class="cas__texte">Onze atteint un chiffre d'affaires de 2,4 Md $US avec Solvo, et devient un leader mondial de l'audio générée par l'IA.</p><a class="lien-fleche" href="#temoignage">Regarder la vidéo<span class="fleche" aria-hidden="true"></span></a></li>
+        <li class="cas"><span class="cas__visuel cas__visuel--cyan" aria-hidden="true"><b>Meridi</b></span><p class="cas__texte">Meridi ouvre ses paiements à 30 nouveaux marchés en un trimestre avec Solvo.</p><a class="lien-fleche" href="#temoignage">Découvrir l'histoire de Meridi<span class="fleche" aria-hidden="true"></span></a></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ 11. DUO PROMO -->
+<section class="promos" aria-label="Programmes Solvo">
+  <div class="piste promos__grille">
+    <article class="promos__carte" data-reveal>
+      <div class="promos__texte">
+        <p><b>Programme Solvo Startups.</b> Accédez à des avantages financiers, à une communauté dédiée et à des ressources d'experts qui vous aideront à développer votre entreprise.</p>
+        <a class="lien-fleche" href="#contact">Rejoindre le programme<span class="fleche" aria-hidden="true"></span></a>
+      </div>
+      <div class="promos__forme promos__forme--magenta" aria-hidden="true"></div>
+    </article>
+    <article class="promos__carte" data-reveal>
+      <div class="promos__texte">
+        <p><b>Solvo Atlas.</b> Constituez votre entreprise et obtenez tout ce dont vous avez besoin pour lever des fonds, ouvrir un compte bancaire et accepter des paiements en deux jours ouvrables.</p>
+        <a class="lien-fleche" href="#contact">Créer votre entreprise<span class="fleche" aria-hidden="true"></span></a>
+      </div>
+      <div class="promos__forme promos__forme--ambre" aria-hidden="true"></div>
+    </article>
+  </div>
+</section>
+
+<!-- ============================================================ 12. PLATEFORMES -->
+<section class="plateformes" aria-labelledby="titre-plateformes">
+  <div class="piste">
+    <div class="duo">
+      <div class="duo__gauche">
+        <h3 class="titre titre--sm" id="titre-plateformes">Faites de votre plateforme SaaS un véritable écosystème financier</h3>
+        <a class="bouton bouton--plein" href="#contact">Solvo pour les plateformes<span class="fleche" aria-hidden="true"></span></a>
+      </div>
+      <p class="duo__droite">De nombreuses plateformes SaaS du classement Fortune 100 et Forbes Cloud 100 s'appuient sur Solvo pour enrichir leur offre en y intégrant des fonctionnalités de paiement ou des services financiers.</p>
+    </div>
+
+    <div class="scene-connect" data-reveal>
+      <div class="scene-connect__nappe" aria-hidden="true"></div>
+      <div class="scene-connect__fenetre" role="img" aria-label="Tableau de bord d'une plateforme, entouré d'extraits de code d'intégration">
+        <div class="fenetre__barre"><span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span><em>tableau.zenflow.com</em></div>
+        <div class="scene-connect__corps">
+          <aside class="scene-connect__menu">
+            <p class="scene-connect__enseigne"><span class="ico-rond ico-rond--chaud" aria-hidden="true"></span>Zenflow</p>
+            <ul><li class="est-actif">Accueil</li><li>Paiements</li><li>Rapports</li><li>Paramètres</li></ul>
+          </aside>
+          <div class="scene-connect__panneau">
+            <p class="scene-connect__salut">Bonjour, Daybreak Yoga</p>
+            <div class="alerte"><b>Action requise.</b> Nous devons collecter des informations supplémentaires avant de confirmer que nous pouvons prendre en charge votre entreprise. <span class="alerte__cta">Fournir les informations</span></div>
+            <div class="scene-connect__paire">
+              <div class="bloc-chiffre"><p class="bloc-chiffre__mini">Solde total</p><p class="bloc-chiffre__gros">738,50 €</p><p class="bloc-chiffre__mini">Disponible pour virement <b>307,62 €</b></p><p class="bloc-chiffre__cta">Effectuer un virement</p></div>
+              <div class="bloc-chiffre bloc-chiffre--offre"><p class="bloc-chiffre__mini">Expire le 12 juin</p><p class="bloc-chiffre__moyen">Vous remplissez les conditions requises pour un financement d'un montant maximal de 33 300 €</p><p class="bloc-chiffre__cta">Demander un financement</p></div>
+            </div>
+            <p class="scene-connect__titre-table">Paiements</p>
+            <table class="grille grille--paiements">
+              <thead><tr><th scope="col">Montant</th><th scope="col">État</th><th scope="col" class="col-moyen">Moyen de paiement</th><th scope="col" class="col-desc">Description</th></tr></thead>
+              <tbody>
+                <tr><td>39 €</td><td><span class="etat etat--ok">Réussi</span></td><td class="col-moyen">Carte 1234</td><td class="col-desc">Cours à l'unité</td></tr>
+                <tr><td>39 €</td><td><span class="etat etat--ko">Contesté</span></td><td class="col-moyen">Carte 4010</td><td class="col-desc">Cours à l'unité</td></tr>
+                <tr><td>900,00 €</td><td><span class="etat etat--ok">Réussi</span></td><td class="col-moyen">Virement</td><td class="col-desc">Abonnement annuel</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="bulle-code bulle-code--a"><p><b>Virements.</b> Affiche le solde total et permet à un compte connecté de déclencher ses virements.</p><code>solvo.create(<em>'payouts'</em>);</code></div>
+      <div class="bulle-code bulle-code--b"><p><b>Paiements.</b> Affiche la liste des paiements et ouvre l'export, le remboursement et la contestation.</p><code>solvo.create(<em>'payments'</em>);</code></div>
+      <div class="bulle-code bulle-code--c"><p><b>Bannière de notification.</b> Affiche les actions requises en matière d'entrée en relation et de risque.</p><code>solvo.create(<em>'notification-banner'</em>);</code></div>
+      <div class="bulle-code bulle-code--d"><p><b>Promotion du financement.</b> Affiche le montant de financement disponible pour un compte connecté et lui permet d'en faire la demande.</p><code>solvo.create(<em>'capital-promotion'</em>);</code></div>
+    </div>
+
+    <ul class="trio">
+      <li class="trio__item" data-reveal>
+        <span class="trio__ico" aria-hidden="true"><i class="glyphe glyphe--fusee"></i></span>
+        <p class="trio__texte"><b>Accélérez votre lancement.</b> Développez des produits de paiement avec des frais d'exploitation réduits grâce à des composants intégrés et des outils sans code.</p>
+        <a class="lien-fleche" href="#contact">Lire le guide<span class="fleche" aria-hidden="true"></span></a>
+      </li>
+      <li class="trio__item" data-reveal>
+        <span class="trio__ico" aria-hidden="true"><i class="glyphe glyphe--courbe"></i></span>
+        <p class="trio__texte"><b>Créez de nouvelles sources de revenus.</b> Monétisez différents aspects des transactions de votre plateforme, y compris les paiements, les frais d'interchange et les frais de financement.</p>
+        <a class="lien-fleche" href="#contact">Lire le guide<span class="fleche" aria-hidden="true"></span></a>
+      </li>
+      <li class="trio__item" data-reveal>
+        <span class="trio__ico" aria-hidden="true"><i class="glyphe glyphe--bouclier"></i></span>
+        <p class="trio__texte"><b>Gérez les risques liés à votre plateforme.</b> Gardez une longueur d'avance sur les réglementations internationales grâce à des outils intégrés de conformité, de gestion des risques et de sécurité.</p>
+        <a class="lien-fleche" href="#contact">Lire le guide<span class="fleche" aria-hidden="true"></span></a>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============================================================ 13. TEMOIGNAGE -->
+<section class="temoignage" id="temoignage" aria-label="Témoignages clients">
+  <div class="piste">
+    <div class="temoignage__scene" data-temoignage>
+      <figure class="temoignage__bloc est-visible" data-temoin>
+        <p class="temoignage__enseigne">PLANITÉ</p>
+        <blockquote class="temoignage__citation">« Solvo nous permet d'aider les salons à se concentrer sur leur cœur de métier, les coupes et les soins, en automatisant toutes les autres tâches. »</blockquote>
+        <figcaption class="temoignage__auteur"><b>Antoine Puymirat,</b> cofondateur et PDG chez Planité</figcaption>
+        <a class="lien-fleche" href="#contact">Lire le témoignage<span class="fleche" aria-hidden="true"></span></a>
+      </figure>
+      <figure class="temoignage__bloc" data-temoin hidden>
+        <p class="temoignage__enseigne">bsport</p>
+        <blockquote class="temoignage__citation">« Nous avons ouvert onze marchés en un an sans recruter une seule personne côté paiements. Le socle Solvo a absorbé toute la complexité réglementaire. »</blockquote>
+        <figcaption class="temoignage__auteur"><b>Léa Fontenay,</b> directrice des opérations chez bsport</figcaption>
+        <a class="lien-fleche" href="#contact">Lire le témoignage<span class="fleche" aria-hidden="true"></span></a>
+      </figure>
+      <figure class="temoignage__bloc" data-temoin hidden>
+        <p class="temoignage__enseigne">substrat</p>
+        <blockquote class="temoignage__citation">« Notre facturation à l'usage était un projet de dix-huit mois. Elle a été livrée en six semaines, compteurs et rapports compris. »</blockquote>
+        <figcaption class="temoignage__auteur"><b>Marc Ozanne,</b> directeur technique chez Substrat</figcaption>
+        <a class="lien-fleche" href="#contact">Lire le témoignage<span class="fleche" aria-hidden="true"></span></a>
+      </figure>
+      <figure class="temoignage__bloc" data-temoin hidden>
+        <p class="temoignage__enseigne">helloasso</p>
+        <blockquote class="temoignage__citation">« Les dons transitent par plus de trente moyens de paiement locaux. Nos associations n'ont jamais eu à s'en soucier. »</blockquote>
+        <figcaption class="temoignage__auteur"><b>Sonia Belkacem,</b> responsable produit chez Helloasso</figcaption>
+        <a class="lien-fleche" href="#contact">Lire le témoignage<span class="fleche" aria-hidden="true"></span></a>
+      </figure>
+    </div>
+    <div class="onglets" role="tablist" aria-label="Choisir un témoignage">
+      <button class="onglet est-actif" type="button" role="tab" aria-selected="true" data-onglet="0"><span class="onglet__barre" aria-hidden="true"><i data-barre></i></span>PLANITÉ</button>
+      <button class="onglet" type="button" role="tab" aria-selected="false" data-onglet="1"><span class="onglet__barre" aria-hidden="true"><i data-barre></i></span>bsport</button>
+      <button class="onglet" type="button" role="tab" aria-selected="false" data-onglet="2"><span class="onglet__barre" aria-hidden="true"><i data-barre></i></span>substrat</button>
+      <button class="onglet" type="button" role="tab" aria-selected="false" data-onglet="3"><span class="onglet__barre" aria-hidden="true"><i data-barre></i></span>helloasso</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ 14. INFRA (BLOC SOMBRE) -->
+<section class="infra" id="infra" aria-labelledby="titre-infra">
+  <div class="piste">
+    <h2 class="titre titre--lg" id="titre-infra">
+      <span>Une infrastructure fiable et évolutive, compatible avec tous vos outils existants.</span>
+      <span class="titre--attenue">Adaptez Solvo aux besoins de votre entreprise grâce à des options d'intégration flexibles.</span>
+    </h2>
+    <div class="infra__actions">
+      <a class="bouton bouton--plein" href="#contact">Consulter la documentation<span class="fleche" aria-hidden="true"></span></a>
+      <a class="bouton bouton--sombre" href="#contact">Voir le dépôt public de Solvo</a>
+    </div>
+
+    <div class="infra__bloc" data-reveal>
+      <h3 class="titre titre--sm"><span>Intégrez Solvo à vos systèmes existants.</span> <span class="titre--attenue">Orchestrez les paiements vers vos différents sous-traitants, créez des workflows personnalisés et connectez-vous à des solutions tierces grâce aux API et aux intégrations partenaires ou préconfigurées.</span></h3>
+      <div class="schema" role="img" aria-label="Schéma d'orchestration reliant les systèmes métier à Solvo, puis aux prestataires de paiement">
+        <div class="schema__rang">
+          <span class="noeud">ERP</span><span class="noeud">CRM</span><span class="noeud">Abonnements</span><span class="noeud">Logiciel de facturation</span><span class="noeud">Système de réservation</span>
+        </div>
+        <div class="schema__rang schema__rang--serre">
+          <span class="noeud">SDK</span><span class="noeud">Destinations d'évènements</span>
+        </div>
+        <div class="schema__rang schema__rang--centre">
+          <span class="noeud noeud--large">Marketplace d'applications</span>
+          <span class="noeud noeud--coeur">solvo</span>
+          <span class="noeud noeud--large">Data Pipeline</span>
+        </div>
+        <div class="schema__rang schema__rang--centre"><span class="noeud">Orchestration</span></div>
+        <div class="schema__rang schema__rang--centre">
+          <span class="noeud noeud--petit">PSP</span><span class="noeud noeud--petit">PSP</span><span class="noeud noeud--petit">PSP</span><span class="noeud noeud--petit">PSP</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="infra__bloc" data-reveal>
+      <h3 class="titre titre--sm"><span>Développez votre activité en toute confiance.</span> <span class="titre--attenue">Gérez des milliers de transactions par seconde avec une rapidité et une fiabilité constantes, même lors des pics d'activité.</span></h3>
+      <div class="onde" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
+      <ul class="chiffres chiffres--sombre">
+        <li><span class="chiffres__valeur chiffres__valeur--degrade">440 M+</span><span class="chiffres__legende">requêtes API par jour</span></li>
+        <li><span class="chiffres__valeur chiffres__valeur--degrade">9 k+</span><span class="chiffres__legende">requêtes API par seconde</span></li>
+        <li><span class="chiffres__valeur chiffres__valeur--degrade">130 k+</span><span class="chiffres__legende">transactions par minute</span></li>
+      </ul>
+    </div>
+
+    <div class="infra__bloc" data-reveal>
+      <h3 class="titre titre--sm"><span>Choisissez votre stratégie d'intégration.</span> <span class="titre--attenue">Grâce à l'IA, à une documentation détaillée et à des outils de diagnostic intégrés, vous mettez rapidement en place la configuration la plus adaptée à votre entreprise.</span></h3>
+      <ul class="trio trio--sombre">
+        <li class="trio__item">
+          <div class="vignette vignette--sanscode" aria-hidden="true">
+            <span class="vignette__bulle">Bonjour, je cherche une crème de jour avec protection solaire.</span>
+            <span class="vignette__produit">Crème Pure Brillance</span>
+            <span class="vignette__lien">payer.solvo.com/c/v1a3</span>
+            <span class="vignette__qr"></span>
+            <span class="vignette__prix">17,99 €</span>
+          </div>
+          <p class="trio__texte"><b>Tirez parti d'outils sans code.</b> Configurez des abonnements, acceptez des paiements en personne ou partagez un lien de paiement directement depuis le tableau de bord Solvo, sans écrire une ligne de code.</p>
+          <a class="lien-fleche" href="#contact">Découvrir les outils sans code<span class="fleche" aria-hidden="true"></span></a>
+        </li>
+        <li class="trio__item">
+          <div class="vignette vignette--partenaires" aria-hidden="true">
+            <span class="pastille-app pastille-app--1"></span><span class="pastille-app pastille-app--2"></span><span class="pastille-app pastille-app--3"></span>
+            <span class="pastille-app pastille-app--4"></span><span class="pastille-app pastille-app--5"></span><span class="pastille-app pastille-app--6"></span>
+            <span class="pastille-app pastille-app--7"></span><span class="pastille-app pastille-app--8"></span><span class="pastille-app pastille-app--9"></span>
+          </div>
+          <p class="trio__texte"><b>Utilisez une plateforme pré-intégrée.</b> Découvrez notre répertoire de plateformes partenaires qui intègrent Solvo à leurs propres workflows.</p>
+          <a class="lien-fleche" href="#contact">Consulter le répertoire<span class="fleche" aria-hidden="true"></span></a>
+        </li>
+        <li class="trio__item">
+          <div class="vignette vignette--code" aria-hidden="true">
+            <pre><span><i>1</i>const solvo = require(<em>'solvo'</em>)(</span><span><i>2</i>  <em>'sk_test_abc123'</em></span><span><i>3</i>);</span><span><i>4</i>await solvo.<b>accountLinks</b></span><span><i>5</i>  .<b>create</b>({ account });</span></pre>
+            <p class="vignette__console">$ node serveur.js &amp;&amp; solvo listen<br>&gt; Prêt. En attente de requêtes.</p>
+          </div>
+          <p class="trio__texte"><b>Créez votre propre intégration.</b> Utilisez nos SDK, nos API, notre serveur MCP et nos outils de développement basés sur l'IA pour créer et maintenir votre intégration avec Solvo.</p>
+          <a class="lien-fleche" href="#contact">Démarrer maintenant<span class="fleche" aria-hidden="true"></span></a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ 15. ACTUALITES -->
+<section class="actus" id="actus" aria-labelledby="titre-actus">
+  <div class="piste">
+    <div class="actus__tete">
+      <h2 class="titre titre--lg" id="titre-actus">
+        <span>Nouveautés</span>
+        <span class="titre--attenue">Suivez l'actualité de Solvo.</span>
+      </h2>
+      <div class="rail__commandes">
+        <button class="rond" type="button" data-actu-prec aria-label="Actualité précédente"><span class="fleche fleche--gauche" aria-hidden="true"></span></button>
+        <button class="rond" type="button" data-actu-suiv aria-label="Actualité suivante"><span class="fleche" aria-hidden="true"></span></button>
+      </div>
+    </div>
+    <div class="lames" data-lames>
+      <div class="lame est-ouverte" data-lame>
+        <span class="lame__fond lame__fond--violet" aria-hidden="true"></span>
+        <span class="lame__legende" aria-hidden="true">Lettre annuelle<br>2025</span>
+        <button class="lame__declencheur" type="button" data-declencheur aria-expanded="true" aria-label="Lettre annuelle 2025"></button>
+      </div>
+      <div class="lame" data-lame>
+        <span class="lame__fond lame__fond--tour" aria-hidden="true"></span>
+        <span class="lame__legende" aria-hidden="true">Records de vente<br>de fin d'année</span>
+        <button class="lame__declencheur" type="button" data-declencheur aria-expanded="false" aria-label="Records de vente de fin d'année"></button>
+      </div>
+      <div class="lame" data-lame>
+        <span class="lame__fond lame__fond--eau" aria-hidden="true"></span>
+        <span class="lame__legende" aria-hidden="true">Baromètre<br>SaaS 2025</span>
+        <button class="lame__declencheur" type="button" data-declencheur aria-expanded="false" aria-label="Baromètre SaaS 2025"></button>
+      </div>
+      <div class="lame" data-lame>
+        <span class="lame__fond lame__fond--portrait" aria-hidden="true"></span>
+        <span class="lame__legende" aria-hidden="true">Entretien<br>fondateurs</span>
+        <button class="lame__declencheur" type="button" data-declencheur aria-expanded="false" aria-label="Entretien fondateurs"></button>
+      </div>
+      <div class="lame" data-lame>
+        <span class="lame__fond lame__fond--rayures" aria-hidden="true"></span>
+        <span class="lame__legende" aria-hidden="true">Paiements<br>hors magasins</span>
+        <button class="lame__declencheur" type="button" data-declencheur aria-expanded="false" aria-label="Paiements hors magasins d'applications"></button>
+      </div>
+      <div class="lame" data-lame>
+        <span class="lame__fond lame__fond--cyan" aria-hidden="true"></span>
+        <span class="lame__legende" aria-hidden="true">Commerce<br>agentique</span>
+        <button class="lame__declencheur" type="button" data-declencheur aria-expanded="false" aria-label="Commerce agentique"></button>
+      </div>
+    </div>
+    <div class="actus__pied">
+      <p class="actus__resume" data-actu-resume><b>Les entreprises utilisant Solvo ont généré 1,4 Bn $US en 2025.</b> <span>Notre lettre annuelle explore les tendances qui façonnent l'économie d'Internet : une croissance plus marquée pour les entreprises récentes, une expansion internationale plus rapide, les avancées des stablecoins et le commerce agentique.</span></p>
+      <a class="bouton bouton--clair" href="#contact">Lire la lettre<span class="fleche" aria-hidden="true"></span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ 16. LIVRE -->
+<section class="livre" aria-labelledby="titre-livre">
+  <div class="piste">
+    <h2 class="titre titre--lg" id="titre-livre">
+      <span>Le livre de la semaine</span>
+      <span class="titre--attenue">Toute entreprise commence par une idée.</span>
+    </h2>
+    <div class="livre__panneau">
+      <div class="livre__couverture" aria-hidden="true">
+        <span class="livre__titre-couv">L'ATELIER<br>DES<br>MACHINES</span>
+        <span class="livre__auteur-couv">Claire Nadaud</span>
+      </div>
+      <div class="livre__texte">
+        <span class="livre__sceau" aria-hidden="true">La bibliothèque de Solvo</span>
+        <h3 class="titre titre--xs">L'atelier des machines : comment deux ingénieurs ont bâti une industrie<br><span class="titre--attenue">Claire Nadaud</span></h3>
+        <p>Au début des années 1990, un petit groupe d'ingénieurs a transformé un outil de laboratoire en une plateforme de production de masse. Nadaud suit leurs choix techniques, leurs désaccords et les compromis qui ont fini par séparer les deux fondateurs, tout en montrant comment des talents complémentaires portés par une approche ouverte ont créé une industrie entière.</p>
+        <p class="livre__mention">Pour en savoir plus sur le progrès économique et l'innovation technologique, consultez nos publications internes :</p>
+        <div class="livre__liens">
+          <a class="bouton bouton--clair" href="#contact"><span class="ico-carre" aria-hidden="true"></span>Solvo Presse</a>
+          <a class="bouton bouton--clair" href="#contact"><span class="ico-carre ico-carre--clair" aria-hidden="true"></span>Chantiers en cours</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ 17. CLOTURE -->
+<section class="cloture" id="tarifs" aria-labelledby="titre-cloture">
+  <div class="piste cloture__grille">
+    <div class="cloture__principal">
+      <h2 class="titre titre--lg" id="titre-cloture">Envie de vous lancer ?</h2>
+      <p>Créez un compte instantanément ou contactez-nous pour concevoir une offre sur mesure adaptée à votre entreprise.</p>
+      <div class="cloture__actions">
+        <a class="bouton bouton--plein bouton--large" href="#contact">Démarrer maintenant<span class="fleche" aria-hidden="true"></span></a>
+        <a class="bouton bouton--clair bouton--large" href="#contact">Contacter notre équipe</a>
+      </div>
+    </div>
+    <div class="cloture__annexe">
+      <span class="trio__ico" aria-hidden="true"><i class="glyphe glyphe--etiquette"></i></span>
+      <p><b>Découvrez ce que vous paierez</b><br>Une tarification par transaction, sans aucuns frais cachés.</p>
+      <a class="lien-fleche" href="#contact">Détails de la tarification<span class="fleche" aria-hidden="true"></span></a>
+    </div>
+    <div class="cloture__annexe">
+      <span class="trio__ico" aria-hidden="true"><i class="glyphe glyphe--chevrons"></i></span>
+      <p><b>Commencez sans délai</b><br>Lancez-vous sur Solvo en seulement 10 minutes.</p>
+      <a class="lien-fleche" href="#contact">Options d'intégration<span class="fleche" aria-hidden="true"></span></a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ============================================================ 18. PIED -->
+<footer class="pied" id="contact">
+  <div class="piste pied__grille">
+    <div class="pied__col">
+      <p class="pied__titre">Produits et tarifs</p>
+      <ul><li><a href="#tarifs">Tarifs</a></li><li><a href="#tarifs">Atlas</a></li><li><a href="#tarifs">Billing</a></li><li><a href="#tarifs">Capital</a></li><li><a href="#tarifs">Checkout</a></li><li><a href="#tarifs">Climat</a></li><li><a href="#tarifs">Connect</a></li><li><a href="#tarifs">Crypto</a></li><li><a href="#tarifs">Data Pipeline</a></li><li><a href="#tarifs">Elements</a></li><li><a href="#tarifs">Identity</a></li><li><a href="#tarifs">Invoicing</a></li><li><a href="#tarifs">Issuing</a></li><li><a href="#tarifs">Link</a></li><li><a href="#tarifs">Payments</a></li><li><a href="#tarifs">Radar</a></li><li><a href="#tarifs">Sigma</a></li><li><a href="#tarifs">Terminal</a></li><li><a href="#tarifs">Treasury</a></li></ul>
+    </div>
+    <div class="pied__col">
+      <p class="pied__titre">Solutions</p>
+      <ul><li><a href="#entreprises">Grandes entreprises</a></li><li><a href="#entreprises">Startups</a></li><li><a href="#entreprises">Commerce agentique</a></li><li><a href="#entreprises">Cryptomonnaie</a></li><li><a href="#entreprises">E-commerce</a></li><li><a href="#entreprises">Services financiers intégrés</a></li><li><a href="#entreprises">Entreprises internationales</a></li><li><a href="#entreprises">Paiements in-app</a></li><li><a href="#entreprises">Marketplaces</a></li><li><a href="#entreprises">Plateformes</a></li><li><a href="#entreprises">SaaS</a></li><li><a href="#entreprises">Entreprises d'IA</a></li><li><a href="#entreprises">Jeux</a></li><li><a href="#entreprises">Assurance</a></li><li><a href="#entreprises">Secteur public</a></li><li><a href="#entreprises">Vente au détail</a></li></ul>
+      <p class="pied__titre pied__titre--second">Développeurs</p>
+      <ul><li><a href="#infra">Documentation</a></li><li><a href="#infra">Documentation de l'API</a></li><li><a href="#infra">État de l'API</a></li><li><a href="#infra">Bibliothèques et SDK</a></li><li><a href="#infra">Blog des développeurs</a></li></ul>
+    </div>
+    <div class="pied__col">
+      <p class="pied__titre">Intégrations et solutions personnalisées</p>
+      <ul><li><a href="#suite">Solvo App Marketplace</a></li><li><a href="#suite">Écosystème de partenaires</a></li><li><a href="#suite">Services aux entreprises</a></li></ul>
+      <p class="pied__titre pied__titre--second">Ressources</p>
+      <ul><li><a href="#actus">Feuille de route produits</a></li><li><a href="#actus">Guides</a></li><li><a href="#actus">Témoignages clients</a></li><li><a href="#actus">Blog</a></li><li><a href="#actus">Communauté</a></li><li><a href="#actus">Conférence annuelle</a></li><li><a href="#actus">Licences</a></li><li><a href="#actus">Plan du site</a></li><li><a href="#actus">Mentions légales</a></li></ul>
+    </div>
+    <div class="pied__col">
+      <p class="pied__titre">Entreprise</p>
+      <ul><li><a href="#contact">Carrières</a></li><li><a href="#contact">Communiqués de presse</a></li><li><a href="#contact">Solvo Presse</a></li><li><a href="#contact">Contacter notre équipe</a></li></ul>
+      <p class="pied__titre pied__titre--second">Support</p>
+      <ul><li><a href="#contact">Site de support</a></li><li><a href="#contact">Offres de support</a></li></ul>
+      <p class="pied__lien-fort"><a href="#connexion">Se connecter<span class="fleche" aria-hidden="true"></span></a></p>
+    </div>
+  </div>
+  <div class="piste pied__bas">
+    <p class="pied__locale"><span class="ico-globe" aria-hidden="true"></span>France (Français)</p>
+    <p class="pied__mentions">© 2026 Solvo, SAS.</p>
+    <span class="pied__signe" aria-hidden="true"></span>
+  </div>
+</footer>
+
+<script src="motion.js"></script>
+<script src="motion-carrousel.js"></script>
+</body>
+</html>

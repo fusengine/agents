@@ -8,7 +8,7 @@ related: design-system, design-web, design-webapp, design-ios, design-android, d
 ---
 
 <objective>
-The core design method and entry point for any design task: resolves the Register (brand vs product), states the Design Read one-liner and sets the 3 numeric dials (DESIGN_VARIANCE, VISUAL_DENSITY, MOTION_INTENSITY) against a scale anchored on the ten reference pages, enforces the Gate 0 brief lock before any HTML/CSS/tokens are touched, applies the Absolute bans, runs the 2-level AI-slop test, and routes to the matching move (generate, critique, audit, bolder, quieter, distill, harden, polish, redesign) and its target skill.
+The core design method and entry point for any design task: resolves the Register (brand vs product), states the Design Read one-liner and sets the 3 numeric dials (DESIGN_VARIANCE, VISUAL_DENSITY, MOTION_INTENSITY) against a scale anchored on the fifteen reference pages, enforces the Gate 0 brief lock before any HTML/CSS/tokens are touched, applies the Absolute bans, runs the 2-level AI-slop test, and routes to the matching move (generate, critique, audit, bolder, quieter, distill, harden, polish, redesign) and its target skill.
 
 Read this first — before `design-system`, any `register/*.md` file, or any `moves/*.md` file. This skill owns the gate and the routing table, not the move procedures themselves.
 </objective>
@@ -88,9 +88,9 @@ uses the documented fallback and says so in the Design Read line, never a silent
 
 Poles alone are unusable: nobody knows what a 7 looks like, so an unanchored dial drifts
 to the middle and the middle is where every generated page already lives. The scales below
-are anchored on the ten reference pages, each value read from that page's own
+are anchored on the fifteen reference pages, each value read from that page's own
 `design-system.md` under `../design-web/references/refs-design/` (short names below are those
-directories). These are not scores. All ten pages were judged good; the numbers say what
+directories). These are not scores. All fifteen pages were judged good; the numbers say what
 kind of page it is, never how well it was done.
 
 **`DESIGN_VARIANCE` — how far the composition departs from the canonical skeleton.**
@@ -100,9 +100,10 @@ kind of page it is, never how well it was done.
 | 3 | `fora-recode` | "Bookended Canon" — nav, hero, intro, features, what-you-get, pricing, footer, almost to the letter. Reads specific anyway: one device, a 1px rule at white 10%, is the only line in the system and carries every edge, card outline and divider. |
 | 3 | `cursor-recode` | "Ramp and Newsroom" — deliberately unstyled page furniture; the art direction lives entirely in the floating product window, not in the layout. |
 | 3 | `endlesstools-recode` | "Showreel Canon" — the canonical order, compressed, with every slot filled by footage instead of a card. |
-| 4 | `harness-recode`, `linear-recode`, `xai-recode` | Canon kept, one structural inversion each: the tab row sits *below* the media (harness); numbered `1.0`/`1.1` markers turn five marketing sections into a document index (linear); the feature grid is pulled up *into* the hero, leaving five sections total (xai). |
-| 5 | `mainframe-recode`, `umbrel-recode`, `reve-recode` | Skeleton rebuilt but still legible: seven short blocks under a header that scrolls away and never returns (mainframe); solo bands alternating with duet bands, then a store pivot (umbrel); seven capability panels alternating which edge they bleed off (reve). |
-| 7 | `supercommon-recode` | "Void-Metered Stack" — testimonials, pricing table, FAQ, CTA band and any nav dropped outright; six consecutive sections share one `band` class and are told apart only by content; a single lowercase display line is the composition; no local asset anywhere. |
+| 4 | `harness-recode`, `linear-recode`, `xai-recode`, `mosa-recode` | Canon kept, one structural inversion each: the tab row sits *below* the media (harness); numbered `1.0`/`1.1` markers turn five marketing sections into a document index (linear); the feature grid is pulled up *into* the hero, leaving five sections total (xai); the canonical order is followed almost exactly, but every media slot is a fake interface drawn over a photograph and features appear three times in three geometries, so there is no features block to recognise (mosa). |
+| 5 | `mainframe-recode`, `umbrel-recode`, `reve-recode`, `parley-recode` | Skeleton rebuilt but still legible: seven short blocks under a header that scrolls away and never returns (mainframe); solo bands alternating with duet bands, then a store pivot (umbrel); seven capability panels alternating which edge they bleed off (reve); a canonical text spine cut four times by a full-bleed photographic band, and a FAQ that refuses to be an accordion — ten questions and answers all open (parley). |
+| 6 | `stash-recode`, `stripe-recode` | Canon dissolved into a repeated device rather than reordered: six of nine sections are the same rounded photographic card and no two consecutive sections share a geometry, so the skeleton is legible only by function (stash); seventeen sections ordered by the *size of the company addressed* instead of by argument, each rung re-arming with the same title/action template (stripe). |
+| 7 | `supercommon-recode`, `dispatch-recode` | "Void-Metered Stack" — testimonials, pricing table, FAQ, CTA band and any nav dropped outright; six consecutive sections share one `band` class and are told apart only by content; a single lowercase display line is the composition; no local asset anywhere (supercommon). Sixteen sections in which four separate surfaces recreate a running interface in HTML/CSS — two terminal chassis, a browser chassis, a chat overlay — the first pulled `-6rem` *into* the hero, and the pricing answered by an interactive calculator rather than a table (dispatch). |
 
 **`VISUAL_DENSITY` — how much is on screen per unit of scroll.**
 
@@ -112,15 +113,16 @@ kind of page it is, never how well it was done.
 | 2 | `supercommon-recode` | Extremely sparse vertically, tight typographically: exactly one padding value in the whole page. | **3 photographs + 1 looping video + 18 inline SVG pictograms.** The hero is a 3437×1905 image, full-bleed at `sizes="100vw"`, under a 30vh scrim (`.hero__ramp`); a 2048×2048 square carries the two words; a 3200×2203 screenshot carries the last band. The one page here with no *local* asset still puts four remote media on screen. |
 | 4 | `mainframe-recode` | Editorial: a **single** 128px inter-block gap repeated everywhere, so page length comes from what a block contains and never from padding — six blocks over 5,752px at 1440. | **23 `<img>`.** One wallpaper used twice as a 140vh halo, a five-panel full-window carousel, five showcase `.webp` shipped twice over (two complete trees, one hidden per media query), five brand-rail logos, one 180px closing object. Every media surface is the same 10px inset-hairline frame. |
 | 5 | `cursor-recode`, `fora-recode` | Airy between, dense within: the 24-column grid exists only *inside* large cards, never on the page (cursor); 36px card padding and 20px pricing rows inside airy sections (fora). | cursor: **18 `<img>`** (avatars and logos, 48–96px) **+ 20 inline SVG, 42 KB** — plus a phone drawn entirely in CSS and two floating product windows on a full-bleed plate. fora: **23 `<img>` + 38 inline SVG** — and *one* rendered app window carrying every claim, in the hero, then bled 272px off the CTA edge over a 190px horizon strip. |
-| 6 | `umbrel-recode` | Deliberately tight — a 60px section stack at desktop that *rises* at narrower breakpoints, inverting the usual direction; ten sections in ~5,500px. | **42 `<img>` + 88 inline SVG, 75 KB — the largest drawn payload in the corpus.** Full-bleed product photography on each solo band, a five-card snap rail, a collage, and two marquees running in opposite directions. |
-| 7 | `endlesstools-recode`, `linear-recode`, `xai-recode` | Split density, the mark of a high value done well: 8px gutters and 8px type inside the mosaic against 150px of nothing between sections (endlesstools); dense inside the mockups, `padding-block: 128px` around them (linear); dense without noise, five sections, every visual drawn in markup (xai). | endlesstools: **69 `<img>` + 20 `<video>`** — a 20-tile mosaic on a fixed 1200px scene, 8 image tiles, 14 review cards. linear: **25 `<img>` + 95 inline SVG** — six application-window mockups, each in a 22px frame with a bottom mask, plus animated dot matrices. xai: **7 `<img>` only** (three at 320px, four news thumbs at 1200×630) **+ 30 inline SVG** — a five-bubble conversation, a terminal with eight lines of output, a 3×2 mosaic, a waveform, a full-size code window, every one drawn in markup. |
-| 9 | `harness-recode` | Counted, not felt: a four-column mega-menu, fifteen tab panels, an eight-field form and a fifteen-link footer column. | **91 `<img>` + 39 inline SVG + 2 `<video>` + 5 CSS `url()`.** The customer logos are declared three times over to feed the marquee; on top of that the mega-menu, the fifteen tab panels, the form and the footer column above. |
+| 6 | `umbrel-recode`, `stash-recode`, `parley-recode` | Deliberately tight — a 60px section stack at desktop that *rises* at narrower breakpoints, inverting the usual direction; ten sections in ~5,500px (umbrel). Nine sections in which six are one repeated rounded photographic card, each carrying its own text (stash). Fifteen sections over 10,600px, so density comes from *what a band contains*, never from how close the bands are (parley). | umbrel: **42 `<img>` + 88 inline SVG, 75 KB — the largest drawn payload in the corpus.** Full-bleed product photography on each solo band, a five-card snap rail, a collage, and two marquees running in opposite directions. stash: **6 `<img>` (all local, none reused) + 18 inline SVG** — one photograph per photographic surface, plus a single icon sprite referenced by `<use>`, an agent window and a phone chassis drawn in CSS. parley: **5 `<img>` + 21 inline SVG** — four photographs, one of them twice, four floating interface mocks and a phone chassis, all drawn. |
+| 7 | `endlesstools-recode`, `linear-recode`, `xai-recode`, `dispatch-recode` | Split density, the mark of a high value done well: 8px gutters and 8px type inside the mosaic against 150px of nothing between sections (endlesstools); dense inside the mockups, `padding-block: 128px` around them (linear); dense without noise, five sections, every visual drawn in markup (xai); sixteen sections where the density sits inside four recreated interfaces and a live calculator, with a 42rem manifesto deliberately carrying no component at all (dispatch). | endlesstools: **69 `<img>` + 20 `<video>`** — a 20-tile mosaic on a fixed 1200px scene, 8 image tiles, 14 review cards. linear: **25 `<img>` + 95 inline SVG** — six application-window mockups, each in a 22px frame with a bottom mask, plus animated dot matrices. xai: **7 `<img>` only** (three at 320px, four news thumbs at 1200×630) **+ 30 inline SVG** — a five-bubble conversation, a terminal with eight lines of output, a 3×2 mosaic, a waveform, a full-size code window, every one drawn in markup. dispatch: **4 `<img>` (local) + 10 inline SVG** — and four interface surfaces built in HTML/CSS instead: two terminal chassis, a browser-chromed demo, a chat overlay laid on a photograph. |
+| 8 | `mosa-recode` | Every media slot filled and none of them idle: ten sections, each one carrying either a scene, a tab-swapped pair, a snap rail or a ten-cell logo box — with one 4px radius across the entire page so the density never gets visual relief from shape. | **10 `<img>` from 4 local files + 0 `<svg>`.** The four photographs are re-cropped and re-veiled per slot; every interface fragment on top of them — chat panel, chip chain, composer, avatar disc, send pill, toggle — is HTML/CSS, so the drawn payload is real but carries no SVG at all. |
+| 9 | `harness-recode`, `stripe-recode` | Counted, not felt: a four-column mega-menu, fifteen tab panels, an eight-field form and a fifteen-link footer column (harness). The corpus ceiling, and the only page that gets there on colour as well as count: seventeen sections, seven product mockups, four customer cases, eighteen figures, two carousels and an accordion (stripe). | harness: **91 `<img>` + 39 inline SVG + 2 `<video>` + 5 CSS `url()`.** The customer logos are declared three times over to feed the marquee; on top of that the mega-menu, the fifteen tab panels, the form and the footer column above. stripe: **4 `<img>` (local) + 0 `<svg>`** — the entire visual payload is HTML/CSS: seven product mockups, a 46-ray burst, an orchestration diagram, a dashboard panel, four floating code bubbles, a CSS-drawn book cover. The four photographs appear only inside the customer-case accordion. |
 
-**Read the fourth column before you copy a number from the first.** Not one of the ten
+**Read the fourth column before you copy a number from the first.** Not one of the fifteen
 holds a low density with an empty screen. `reve` and `supercommon` sit at the corpus floor
-and still put fifty-one images and four media files in front of the reader; `xai` holds the
-corpus's *highest* density on seven images, because it draws its interface in markup
-instead of photographing it. A density value says how much scroll a given quantity of
+and still put fifty-one images and four media files in front of the reader; `stripe` holds
+the corpus's *highest* density on **four** images and zero `<svg>`, because it draws seven
+product screens in markup instead of capturing them — the same trick `xai` runs at 7. A density value says how much scroll a given quantity of
 matter is spread over. **It never says how much matter there is.** Copying `2` from `reve`
 onto a page with nothing to show does not reproduce `reve` — it reproduces the number and
 drops the page.
@@ -190,27 +192,41 @@ composition; it is a page that failed to get made.
 | 3 | `linear-recode` | `translateY(4px)` on entry, `scale(.97)` on press; eighteen curves declared and not one bounces. Nothing moves; everything settles. |
 | 3 | `xai-recode` | 182 transition triggers, 73% of which move nothing — they change a colour. Five duration tiers ruled by "the bigger the element, the slower it is". |
 | 3 | `cursor-recode` | One reveal keyframe for the whole page, always declared and *paused*; JS only lifts the pause, so a failed script leaves everything visible. Buttons declare no transition at all, on purpose. |
+| 3 | `parley-recode` | 1 `@keyframes`, 14 transition lines, and the reveal is deliberately kept below the threshold where it would need to earn itself: the page is 10,600px of hairline-separated bands and motion is asked to do none of the separating. |
 | 4 | `umbrel-recode`, `supercommon-recode` | Three named entrance variants plus two marquees and a `scroll-snap` rail (umbrel); three durations, two curves, one 60ms cascade step and no one-off value anywhere else (supercommon). |
+| 5 | `mosa-recode` | **Zero `@keyframes`** and 25 transitions: three durations (200/300/700ms) with a declared hole between them, and everything that moves is `transform` or `opacity` — no `width`, `height`, `top`, `left`, `margin` or `padding` anywhere. Coverage of every state, one reveal, and no periodic animation at all. |
 | 6 | `mainframe-recode` | Total coverage, minimal amplitude: 75 transitions, zero keyframes applied, two duration regimes — response at 150/200ms, reveal at 400–1000ms — with a deliberate hole between them. |
 | 6 | `harness-recode`, `fora-recode`, `endlesstools-recode` | Entrances differentiated by role, with a 300ms gap so the light arrives after the object (harness); `grid-template-rows: 0fr → 1fr` accordions and `mask-image` hairlines (fora); one curve on eleven of twelve transitions plus twenty running videos (endlesstools). |
+| 6 | `stash-recode`, `stripe-recode` | 0 `@keyframes` in the source and 0 here, 24 transitions, a press gesture copied literally, hover adding something in exactly two places, and one staged sequence inside the agent panel (stash). 6 `@keyframes` and 20 transitions: three `scale`-only breathing loops on the hero ribbons, a counting eyebrow, a rotating quote with progress-bar tabs, and a step-scrolled rail (stripe). |
+| 7 | `dispatch-recode` | **The one page above the old ceiling.** Total coverage, low amplitude, one exception: every block enters on `opacity 0 → 1` + a 24px rise over 700ms, while the two h1 lines get a 110% translate inside an `overflow: hidden` mask, 900ms, cascaded 110ms apart. On top of that, three periodic animations (SCROLL tick 2.2s, terminal caret 1.1s `steps(1)`, demo gauge 1.6s) and four scripted behaviours — hero parallax at `0.18 × scrollY`, four counters over 1400ms, tab groups, and the calculator. |
 
 Read the corpus honestly on one point: at 6, motion is **coverage**, not amplitude —
 mainframe and harness earn a 6 because every state is covered by a documented system, not
-because anything is spectacular. **6 is also the corpus ceiling**: no page on disk plays a
-pinned, scrubbed or parallax sequence, so from 7 up the scale has poles but no anchor. A
-brief that lands at 8 is not thereby wrong — it is unanchored, and the obligations under
-*A high value commits you to producing something* below are the only thing holding it. Say
-in the plan that nothing in the corpus demonstrates the value you claimed.
+because anything is spectacular. **7 is now the corpus ceiling, and it was 6 until
+`dispatch` landed.** Read what moved that number, because it is not what the scale's poles
+suggest: `dispatch` earns a 7 by adding three *periodic* animations and four *scripted*
+behaviours — including a genuine parallax at `0.18 × scrollY` — on top of the same total,
+low-amplitude coverage the 6s have. Still **no page on disk plays a pinned or scrubbed
+sequence.** So 7 has one anchor and it is a modest one; from 8 up the scale has poles but
+no anchor at all. A brief that lands at 8 is not thereby wrong — it is unanchored, and the
+obligations under *A high value commits you to producing something* below are the only
+thing holding it. Say in the plan that nothing in the corpus demonstrates the value you
+claimed.
 
-Notches nobody occupies — 1, 2, 6, 8, 9, 10 on variance; 1, 3, 8, 10 on density; 1, 2, 5,
-7, 8, 9, 10 on motion — are not forbidden. Where the notch sits *between* two occupied
-ones, interpolate and say what the in-between buys you; where it sits *above* everything
-(variance 8+, motion 7+), there is nothing to interpolate from and the number is a promise
-with no precedent — treat it accordingly. And note what the corpus does *not* contain:
-**no page is high on all three axes.** Every one of the ten gives something up — harness
-is a 9 in density but a 4 in variance; supercommon is a 7 in variance but a 2 in density;
-reve sits at the corpus floor on two axes at once, 5 · 2 · 3, and is the only page that
-does. A brief that arrives at 8/8/8 has not made a choice, it has made a wish.
+Notches nobody occupies — 1, 2, 8, 9, 10 on variance; 1, 3, 10 on density; 1, 2, 8, 9, 10
+on motion — are not forbidden. Where the notch sits *between* two occupied ones,
+interpolate and say what the in-between buys you; where it sits *above* everything
+(variance 8+, density 10, motion 8+), there is nothing to interpolate from and the number
+is a promise with no precedent — treat it accordingly. And note what the corpus does *not*
+contain: **no page is high on all three axes.** Every one of the fifteen gives something up
+— harness is a 9 in density but a 4 in variance; supercommon is a 7 in variance but a 2 in
+density; stripe reaches 9 in density and pays for it at 6 · 6 on the other two; reve sits
+at the corpus floor on two axes at once, 5 · 2 · 3, and is the only page that does. The
+closest thing to an exception is `dispatch` at **7 · 7 · 7**, and it is worth naming as
+such: it is the only page that refuses to give an axis up, and the price is visible — it
+carries the corpus's most complex motion budget on a page that also has to keep four
+recreated interfaces legible. A brief that arrives at 8/8/8 has not made a choice, it has
+made a wish.
 
 One more thing the comparison exposes, and it now cuts both ways. Where a preset row sits
 *below* what the subject supports, the corpus proves it: the "SaaS / product landing"
@@ -312,7 +328,7 @@ HTML/CSS/tokens — six artefacts must exist **in writing**, not just in your he
    one sentence.
 3. **The corpus actually seen, then read** — in that order, and both halves are required:
 
-   - **at least two of the ten pages opened in a browser and scrolled through**, named in
+   - **at least two of the fifteen pages opened in a browser and scrolled through**, named in
      the plan as `{reference}-recode/index.html`. They open by double-click, `file://`, no
      server, no build;
    - `design-web/references/refs-design/README.md` plus at least two `tokens-*.md`
@@ -500,7 +516,7 @@ produce token specs, an HTML device-framed mockup, and a platform handoff spec.
 | Visual design technique | `skills/design-web/references/ui-visual-design.md` |
 | Hero treatments (first screen only) | `skills/design-method/references/macrostructure-bank.md` |
 | Body sequences (section order after the hero) | `skills/design-method/references/body-sequence-bank.md` |
-| Reference corpus (taste source; also the anchor set for the 3 dials) — **the ten `index.html` are opened and scrolled FIRST, the markdown second** | `skills/design-web/references/refs-design/{reference}-recode/index.html`, then `refs-design/README.md` §*Look before you read*, then the `tokens-*.md` it indexes |
+| Reference corpus (taste source; also the anchor set for the 3 dials) — **the fifteen `index.html` are opened and scrolled FIRST, the markdown second** | `skills/design-web/references/refs-design/{reference}-recode/index.html`, then `refs-design/README.md` §*Look before you read*, then the `tokens-*.md` it indexes |
 | Dial presets by use-case, partial-brief fallbacks, `MOTION_INTENSITY` bands | `skills/design-system/references/design-read-dials.md` (the anchored scale itself lives in this file, §Design Read) |
 | Premium layout patterns | `skills/design-web/references/premium-patterns/PATTERNS.md` |
 | Component composition | `skills/design-web/references/component-composition-ref.md` |

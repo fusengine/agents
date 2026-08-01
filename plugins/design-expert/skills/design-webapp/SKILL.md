@@ -58,7 +58,7 @@ table first — if the surface is a marketing/landing page instead, use `design-
    instruments: a hero treatment from
    `../design-method/references/macrostructure-bank.md` (eight treatments of the first
    screen) **and** a body sequence from `../design-method/references/body-sequence-bank.md`
-   (ten sequences read off shipped code). Naming one without the other is an incomplete
+   (fifteen sequences read off shipped code). Naming one without the other is an incomplete
    plan — *there*.
 
    Neither applies to an app surface, and this is a real difference, not a shortcut: an app

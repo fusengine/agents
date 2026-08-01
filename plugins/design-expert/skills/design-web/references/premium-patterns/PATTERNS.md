@@ -19,7 +19,7 @@ Structure comes from two other files, and only from them:
 
 - **First screen** — `../../../design-method/references/macrostructure-bank.md`,
   eight hero treatments plus the forbidden centered-hero default.
-- **Body** — `../../../design-method/references/body-sequence-bank.md`, ten
+- **Body** — `../../../design-method/references/body-sequence-bank.md`, fifteen
   body sequences read off shipped code, each with the principle that decides
   its order and what it drops from the canon. Its rule 2 is the one that
   matters here: *the canon is not the enemy, uniform treatment of it is* —
@@ -128,18 +128,30 @@ This file used to offer "ONE inverted band" as the cure for a flat page, while
 `../../../design-review/references/pre-flight-checklist.md` check 3 failed **any**
 section that inverted. Two rules, one page, opposite verdicts — and check 3
 always won, because only it blocks mechanically. Both were adjusted on a count
-taken across the ten corpus pages, and the count settles it:
+taken across the corpus — re-taken at fifteen pages, and the count still settles
+it:
 
-- **Theme inversion at section level: 0 of 10.** Not one page in
-  `../refs-design/` puts a light section in a dark page or a dark section in a
-  light one. `cursor` is the only light-based page; its sole dark surfaces are a
-  phone chassis drawn in CSS and its own whole-page dark theme.
-- **A section departing from the page base *inside* the theme: 5 of 10** —
+- **Theme inversion at section level: 1 of 15.** It was 0 of 10. The one page that
+  does it is `stripe-recode`, a light-locked page with a dark block mid-scroll —
+  and it is a **reproduction** of a source that ships that block, logged in its own
+  `tokens-stripe.md § 8.1` as a check-3 fail *kept for fidelity and reported, not
+  corrected*. It licenses nothing here: no original page in the corpus inverts, and
+  the cure this file offers must still not be a flip. `cursor` is the only
+  light-based page among the first ten; its sole dark surfaces are a phone chassis
+  drawn in CSS and its own whole-page dark theme.
+- **A section departing from the page base *inside* the theme: 7 of 15** —
   `supercommon` (first band on a metallic gradient rising to `#bfc6c1`), `fora`
   (closing band `#000 → #1b2228` under a 190px horizon image), `harness`
   (`#070707 → #050505` under two sections), `umbrel` (a 160px joint dissolving one
   band into the next), `xai` (an 80px grid drawn in two 1px gradients under an
-  elliptical mask).
+  elliptical mask), `dispatch` (a `--surface-band` fill on its counter band, the
+  page's only bordered one), `parley` (`--pearl` alternating with `--pearl-tint`
+  across nine sections).
+- **The five most recent folders add a third answer this file did not have:** relief
+  from a **full-bleed photograph** rather than from a tint. `stash` gets it from six
+  rounded photographic cards, `parley` from four full-width bands, `mosa` from a
+  darkened photograph under every media slot. That is now the corpus's most common
+  cure for flatness, and it inverts nothing.
 
 So the relief this section demands is real and the corpus supplies it — as a
 **surface** change, never a **theme** change. Check 3 stands as written; the word

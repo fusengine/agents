@@ -3,7 +3,7 @@
 Working document: the reusable procedures of the Elysian page, for a corpus
 of design procedures.
 
-**Elysian is not a reproduction.** The other ten files in this corpus survey
+**Elysian is not a reproduction.** The other fifteen files in this corpus survey
 an existing site; this one surveys a page invented from nothing — a fictional
 maison, four supplied plates, no external source to check against. That
 changes the markers and only the markers:

@@ -1,0 +1,732 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Sodium — the newsletter platform that lives in your shell</title>
+<meta name="description" content="Sodium runs your newsletter from the command line and from any MCP client. 62 tools, a TypeScript SDK, an AI editor. Free tier: 3,000 emails a month." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@100..900&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<!-- ═══ 1 ▸ EN-TÊTE — pilule fixe, flottante, largeur 48rem [relevé] ═══ -->
+<header class="entete">
+  <div class="entete__pilule">
+    <a class="marque" href="#haut">Sodium</a>
+    <nav class="entete__nav" aria-label="Main">
+      <a class="lien-nav" href="#plateforme">Docs</a>
+      <a class="lien-nav" href="#tarifs">Pricing</a>
+      <a class="lien-nav" href="#faq">Sign in</a>
+      <button type="button" class="burger" aria-label="Menu" aria-controls="menu-mobile" aria-expanded="false">
+        <span class="burger__trait burger__trait--haut"></span>
+        <span class="burger__trait burger__trait--bas"></span>
+      </button>
+      <a class="bouton bouton--blanc bouton--compact" href="#tarifs">Start free</a>
+    </nav>
+  </div>
+  <div class="menu-mobile" id="menu-mobile" hidden>
+    <a href="#plateforme">Docs</a>
+    <a href="#tarifs">Pricing</a>
+    <a href="#faq">Sign in</a>
+  </div>
+</header>
+
+<main id="haut">
+
+<!-- ═══ 2 ▸ HÉROS — cadre photographique 32px, texte centré, 88svh [relevé] ═══ -->
+<section class="heros">
+  <div class="heros__cadre">
+    <div class="heros__fond" data-parallaxe>
+      <img src="img/hero.webp" width="1920" height="640" alt="Night sky over a dark plain, a broad sodium-orange glow spread through the low clouds under an anthracite star field" fetchpriority="high" decoding="async" />
+    </div>
+    <div class="heros__voile" aria-hidden="true"></div>
+    <div class="heros__degrade" aria-hidden="true"></div>
+
+    <div class="heros__contenu">
+      <div data-reveal><span class="surtitre surtitre--pilule">The terminal-first email platform</span></div>
+
+      <h1 class="heros__titre">
+        <span class="masque"><span class="masque__ligne" data-ligne>Stop clicking your newsletter.</span></span>
+        <span class="masque"><span class="masque__ligne" data-ligne><em>Pipe it.</em></span></span>
+      </h1>
+
+      <p class="heros__sous" data-reveal>Drive your whole email workflow from Claude, Cursor, Codex, or any MCP client. You write the intent. Your agent runs the send.</p>
+
+      <div class="heros__actions" data-reveal>
+        <a class="bouton bouton--blanc" href="#tarifs">Start free — 3,000 emails/mo</a>
+        <a class="bouton bouton--fantome" href="#integrations">Read the docs</a>
+      </div>
+
+      <div class="heros__meta" data-reveal>
+        <span>62 MCP tools</span>
+        <span>TypeScript SDK</span>
+        <span>EU-hosted</span>
+        <span>No credit card</span>
+      </div>
+
+      <div class="heros__scroll" data-reveal>
+        <span class="scroll__mot">SCROLL</span>
+        <span class="scroll__rail"><span class="scroll__curseur"></span></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 3 ▸ TERMINAL — chevauche le héros de 96px, max-w 48rem [relevé] ═══ -->
+<section class="zone-terminal">
+  <div class="terminal">
+    <div class="terminal__barre">
+      <span class="pastille pastille--a"></span>
+      <span class="pastille pastille--b"></span>
+      <span class="pastille pastille--c"></span>
+      <span class="terminal__titre">claude — sodium</span>
+      <span class="terminal__etat"><span class="etat__point"></span>62 MCP tools connected</span>
+    </div>
+
+    <div class="onglets" role="tablist" aria-label="Sodium terminal scenarios">
+      <button class="onglet" id="t-ship" role="tab" aria-selected="true" aria-controls="p-ship" tabindex="0" type="button">Ship a campaign</button>
+      <button class="onglet" id="t-seg" role="tab" aria-selected="false" aria-controls="p-seg" tabindex="-1" type="button">Grow segments</button>
+      <button class="onglet" id="t-ana" role="tab" aria-selected="false" aria-controls="p-ana" tabindex="-1" type="button">Read analytics</button>
+    </div>
+
+    <div class="console" id="p-ship" role="tabpanel" aria-labelledby="t-ship">
+      <div class="console__pale">$ claude</div>
+      <div class="console__saisie"><span class="jeton-invite">❯</span><span class="jeton-clair">Send this week&rsquo;s issue to everyone who opened the last three</span></div>
+      <div class="console__appels">
+        <div class="appel"><span class="jeton-outil">⏺</span><span class="appel__nom">draft_campaign</span><span class="appel__note">subject lines + body drafted</span></div>
+        <div class="appel"><span class="jeton-outil">⏺</span><span class="appel__nom">segment_subscribers</span><span class="appel__note">3,104 matched</span></div>
+        <div class="appel"><span class="jeton-outil">⏺</span><span class="appel__nom">schedule_send</span><span class="appel__note">Tuesday 08:00</span></div>
+      </div>
+      <div class="jeton-ok">✓ Done in 9 seconds — review and send with one word.</div>
+      <div class="console__saisie"><span class="jeton-invite">❯</span><span class="jeton-clair">Send it</span></div>
+      <div class="jeton-ok">✓ Sent to 3,104 subscribers · est. open rate 46.8%<span class="curseur" aria-hidden="true"></span></div>
+    </div>
+
+    <div class="console" id="p-seg" role="tabpanel" aria-labelledby="t-seg" hidden>
+      <div class="console__pale">$ claude</div>
+      <div class="console__saisie"><span class="jeton-invite">❯</span><span class="jeton-clair">Build a segment of readers who clicked twice but never bought</span></div>
+      <div class="console__appels">
+        <div class="appel"><span class="jeton-outil">⏺</span><span class="appel__nom">query_events</span><span class="appel__note">90 days scanned</span></div>
+        <div class="appel"><span class="jeton-outil">⏺</span><span class="appel__nom">create_segment</span><span class="appel__note">warm-no-purchase · 812 people</span></div>
+        <div class="appel"><span class="jeton-outil">⏺</span><span class="appel__nom">attach_workflow</span><span class="appel__note">3-step nurture armed</span></div>
+      </div>
+      <div class="jeton-ok">✓ Segment is live and refreshes itself every night.</div>
+      <div class="console__saisie"><span class="jeton-invite">❯</span><span class="jeton-clair">Show me who is in it</span></div>
+      <div class="jeton-ok">✓ 812 rows written to segments/warm-no-purchase.csv<span class="curseur" aria-hidden="true"></span></div>
+    </div>
+
+    <div class="console" id="p-ana" role="tabpanel" aria-labelledby="t-ana" hidden>
+      <div class="console__pale">$ claude</div>
+      <div class="console__saisie"><span class="jeton-invite">❯</span><span class="jeton-clair">How did the last four issues perform?</span></div>
+      <div class="console__appels">
+        <div class="appel"><span class="jeton-outil">⏺</span><span class="appel__nom">list_campaigns</span><span class="appel__note">4 sends found</span></div>
+        <div class="appel"><span class="jeton-outil">⏺</span><span class="appel__nom">fetch_metrics</span><span class="appel__note">opens, clicks, churn</span></div>
+        <div class="appel"><span class="jeton-outil">⏺</span><span class="appel__nom">compare_periods</span><span class="appel__note">vs. previous month</span></div>
+      </div>
+      <div class="jeton-ok">✓ Open rate 46.8% (+4.1) · clicks 11.2% (+0.8) · churn 0.3%.</div>
+      <div class="console__saisie"><span class="jeton-invite">❯</span><span class="jeton-clair">Which subject line won?</span></div>
+      <div class="jeton-ok">✓ &ldquo;Ship it before Friday&rdquo; — 52.4% open, 14.9% click.<span class="curseur" aria-hidden="true"></span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 4 ▸ MANIFESTE — bloc centré, 42rem, py 112/144 [relevé] ═══ -->
+<section class="manifeste">
+  <div class="manifeste__bloc">
+    <div data-reveal><span class="surtitre">Manifesto</span></div>
+    <h2 class="manifeste__titre" data-reveal>Email tools were drawn for the click era. Six screens to send one letter. <em>You were not.</em></h2>
+    <p class="manifeste__texte" data-reveal>No panel to memorise. No drag-and-drop ceremony. One sentence of intent, and a platform that carries it out.</p>
+    <p class="manifeste__signe" data-reveal>— the shell was always enough.</p>
+  </div>
+</section>
+
+<!-- ═══ 5 ▸ COMMENT ÇA MARCHE — 3 cartes numérotées [relevé] ═══ -->
+<section class="section">
+  <div class="conteneur">
+    <div class="entete-section">
+      <div data-reveal><span class="surtitre">How it works</span></div>
+      <h2 class="titre-section" data-reveal>Three steps. <em>Then you just talk.</em></h2>
+    </div>
+    <div class="grille grille--3">
+      <div data-reveal>
+        <article class="carte" data-projecteur>
+          <span class="carte__halo" aria-hidden="true"></span>
+          <div class="carte__corps">
+            <span class="carte__index">01</span>
+            <h3 class="carte__titre carte__titre--espace">Connect</h3>
+            <p class="carte__texte">Run the guided setup, then pick MCP, Skill + CLI, or both at once.</p>
+          </div>
+        </article>
+      </div>
+      <div data-reveal>
+        <article class="carte" data-projecteur>
+          <span class="carte__halo" aria-hidden="true"></span>
+          <div class="carte__corps">
+            <span class="carte__index">02</span>
+            <h3 class="carte__titre carte__titre--espace">Prompt</h3>
+            <p class="carte__texte">Say what should go out — the agent drafts, segments and schedules with 62 tools.</p>
+          </div>
+        </article>
+      </div>
+      <div data-reveal>
+        <article class="carte" data-projecteur>
+          <span class="carte__halo" aria-hidden="true"></span>
+          <div class="carte__corps">
+            <span class="carte__index">03</span>
+            <h3 class="carte__titre carte__titre--espace">Ship</h3>
+            <p class="carte__texte">Read it back, say send, watch the numbers land. No panel tour required.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 6 ▸ LA PLATEFORME — grille de 6 cartes [relevé] ═══ -->
+<section class="section" id="plateforme">
+  <div class="conteneur">
+    <div class="entete-section">
+      <div data-reveal><span class="surtitre">The platform</span></div>
+      <h2 class="titre-section" data-reveal>Everything a newsletter needs.<br />Nothing a dashboard demands.</h2>
+    </div>
+    <div class="grille grille--6">
+      <div data-reveal>
+        <article class="carte" data-projecteur>
+          <span class="carte__halo" aria-hidden="true"></span>
+          <div class="carte__corps">
+            <h3 class="carte__titre">MCP server</h3>
+            <p class="carte__texte">Hands Claude, Cursor and any compatible client direct use of 62 organisation-aware Sodium tools.</p>
+          </div>
+        </article>
+      </div>
+      <div data-reveal>
+        <article class="carte" data-projecteur>
+          <span class="carte__halo" aria-hidden="true"></span>
+          <div class="carte__corps">
+            <h3 class="carte__titre">AI editor</h3>
+            <p class="carte__texte">Drafts that keep your cadence, subject lines that get opened, grammar cleared in one pass. The blank page is gone.</p>
+          </div>
+        </article>
+      </div>
+      <div data-reveal>
+        <article class="carte" data-projecteur>
+          <span class="carte__halo" aria-hidden="true"></span>
+          <div class="carte__corps">
+            <h3 class="carte__titre">Skill + CLI</h3>
+            <p class="carte__texte">One setup command teaches your agent the Sodium CLI and keeps every action printed in your terminal.</p>
+          </div>
+        </article>
+      </div>
+      <div data-reveal>
+        <article class="carte" data-projecteur>
+          <span class="carte__halo" aria-hidden="true"></span>
+          <div class="carte__corps">
+            <h3 class="carte__titre">Workflows</h3>
+            <p class="carte__texte">Welcome sequences, drip series, conditional branches. Set the loop once — it runs while you sleep.</p>
+          </div>
+        </article>
+      </div>
+      <div data-reveal>
+        <article class="carte" data-projecteur>
+          <span class="carte__halo" aria-hidden="true"></span>
+          <div class="carte__corps">
+            <h3 class="carte__titre">Live segments</h3>
+            <p class="carte__texte">Filter on behaviour, tags, custom fields, engagement. Write to the readers who lean in, not to the whole list.</p>
+          </div>
+        </article>
+      </div>
+      <div data-reveal>
+        <article class="carte" data-projecteur>
+          <span class="carte__halo" aria-hidden="true"></span>
+          <div class="carte__corps">
+            <h3 class="carte__titre">Open analytics</h3>
+            <p class="carte__texte">Opens, clicks, growth — queryable from the panel, the REST API, or a single line in your shell.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 7 ▸ INTÉGRATIONS AGENT — bloc de code à 4 onglets [relevé] ═══ -->
+<section class="section" id="integrations">
+  <div class="conteneur">
+    <div class="entete-section">
+      <div data-reveal><span class="surtitre">Agent integrations</span></div>
+      <h2 class="titre-section" data-reveal>MCP or Skill + CLI. <em>Your call.</em></h2>
+      <p class="texte-section" data-reveal>Run one guided command, choose MCP, Skill + CLI, or both, and let your agent reach Sodium from its own native tools.</p>
+    </div>
+
+    <div class="terminal terminal--large" data-reveal>
+      <div class="terminal__barre">
+        <span class="pastille pastille--a"></span>
+        <span class="pastille pastille--b"></span>
+        <span class="pastille pastille--c"></span>
+        <span class="terminal__titre">terminal</span>
+      </div>
+
+      <div class="onglets" role="tablist" aria-label="Sodium integration examples">
+        <button class="onglet" id="c-setup" role="tab" aria-selected="true" aria-controls="cp-setup" tabindex="0" type="button">Guided setup</button>
+        <button class="onglet" id="c-mcp" role="tab" aria-selected="false" aria-controls="cp-mcp" tabindex="-1" type="button">MCP</button>
+        <button class="onglet" id="c-cli" role="tab" aria-selected="false" aria-controls="cp-cli" tabindex="-1" type="button">Skill + CLI</button>
+        <button class="onglet" id="c-ts" role="tab" aria-selected="false" aria-controls="cp-ts" tabindex="-1" type="button">TypeScript SDK</button>
+      </div>
+
+      <pre class="code" id="cp-setup" role="tabpanel" aria-labelledby="c-setup" tabindex="0"><code><span class="cd-pale">$ </span><span class="cd-cmd">pnpm dlx sodium setup</span>
+
+<span class="cd-pale">How do you want to integrate Sodium?</span>
+  1) MCP
+  2) Skill (CLI)
+  3) Both
+
+<span class="cd-pale">Choice &gt; </span><span class="cd-ok">3</span>
+<span class="cd-ok">✓ MCP server registered</span>
+<span class="cd-ok">✓ Skill + CLI configured</span>
+<span class="cd-ok">✓ Setup complete</span></code></pre>
+
+      <pre class="code" id="cp-mcp" role="tabpanel" aria-labelledby="c-mcp" tabindex="0" hidden><code><span class="cd-pale">// .mcp.json</span>
+{
+  <span class="cd-cle">"mcpServers"</span>: {
+    <span class="cd-cle">"sodium"</span>: {
+      <span class="cd-cle">"command"</span>: <span class="cd-txt">"npx"</span>,
+      <span class="cd-cle">"args"</span>: [<span class="cd-txt">"-y"</span>, <span class="cd-txt">"@sodium/mcp"</span>],
+      <span class="cd-cle">"env"</span>: { <span class="cd-cle">"SODIUM_TOKEN"</span>: <span class="cd-txt">"sk_live_…"</span> }
+    }
+  }
+}
+<span class="cd-ok">✓ 62 tools exposed to the client</span></code></pre>
+
+      <pre class="code" id="cp-cli" role="tabpanel" aria-labelledby="c-cli" tabindex="0" hidden><code><span class="cd-pale">$ </span><span class="cd-cmd">sodium campaigns draft --from notes.md</span>
+<span class="cd-pale">drafting…</span>
+<span class="cd-ok">✓ draft cmp_8f21 · 3 subject lines proposed</span>
+
+<span class="cd-pale">$ </span><span class="cd-cmd">sodium segments new "opened-3x" --window 30d</span>
+<span class="cd-ok">✓ segment seg_4a90 · 3,104 subscribers</span>
+
+<span class="cd-pale">$ </span><span class="cd-cmd">sodium send cmp_8f21 --to seg_4a90 --at "tue 08:00"</span>
+<span class="cd-ok">✓ scheduled</span></code></pre>
+
+      <pre class="code" id="cp-ts" role="tabpanel" aria-labelledby="c-ts" tabindex="0" hidden><code><span class="cd-mot">import</span> { Sodium } <span class="cd-mot">from</span> <span class="cd-txt">"@sodium/sdk"</span>;
+
+<span class="cd-mot">const</span> sodium = <span class="cd-mot">new</span> <span class="cd-cmd">Sodium</span>(process.env.SODIUM_TOKEN);
+
+<span class="cd-mot">const</span> segment = <span class="cd-mot">await</span> sodium.segments.create({
+  <span class="cd-cle">name</span>: <span class="cd-txt">"opened-3x"</span>,
+  <span class="cd-cle">where</span>: { <span class="cd-cle">opens</span>: { <span class="cd-cle">gte</span>: <span class="cd-num">3</span> }, <span class="cd-cle">window</span>: <span class="cd-txt">"30d"</span> },
+});
+
+<span class="cd-mot">await</span> sodium.campaigns.send(<span class="cd-txt">"cmp_8f21"</span>, { <span class="cd-cle">to</span>: segment.id });
+<span class="cd-ok">✓ 3,104 recipients queued</span></code></pre>
+    </div>
+
+    <a class="lien-mono" href="#faq" data-reveal>MCP guide · guided Skill + CLI setup · 62 tools →</a>
+  </div>
+</section>
+
+<!-- ═══ 8 ▸ INTÉGRATIONS — 4 cartes d'applications [relevé] ═══ -->
+<section class="section">
+  <div class="conteneur">
+    <div class="entete-section">
+      <div data-reveal><span class="surtitre">Integrations</span></div>
+      <h2 class="titre-section" data-reveal>Works inside <em>your AI apps.</em></h2>
+      <p class="texte-section" data-reveal>Use MCP for direct tool access, or install the Sodium skill and CLI with a single guided command.</p>
+    </div>
+    <div class="grille grille--4">
+      <div data-reveal>
+        <article class="carte carte--lien" data-projecteur>
+          <span class="carte__halo" aria-hidden="true"></span>
+          <a class="carte__corps carte__corps--lien" href="#integrations">
+            <span class="carte__ligne-haute">
+              <span class="jeton-icone" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-3.2-6.9" /><path d="M21 4v5h-5" /></svg>
+              </span>
+              <span class="carte__fleche" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
+              </span>
+            </span>
+            <h3 class="carte__titre carte__titre--app">Claude</h3>
+            <p class="carte__texte">MCP for Code and Desktop</p>
+          </a>
+        </article>
+      </div>
+      <div data-reveal>
+        <article class="carte carte--lien" data-projecteur>
+          <span class="carte__halo" aria-hidden="true"></span>
+          <a class="carte__corps carte__corps--lien" href="#integrations">
+            <span class="carte__ligne-haute">
+              <span class="jeton-icone" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v12H8l-4 4z" /></svg>
+              </span>
+              <span class="carte__fleche" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
+              </span>
+            </span>
+            <h3 class="carte__titre carte__titre--app">ChatGPT</h3>
+            <p class="carte__texte">OAuth-backed MCP app</p>
+          </a>
+        </article>
+      </div>
+      <div data-reveal>
+        <article class="carte carte--lien" data-projecteur>
+          <span class="carte__halo" aria-hidden="true"></span>
+          <a class="carte__corps carte__corps--lien" href="#integrations">
+            <span class="carte__ligne-haute">
+              <span class="jeton-icone" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m6 8-4 4 4 4" /><path d="m18 8 4 4-4 4" /><path d="m14 4-4 16" /></svg>
+              </span>
+              <span class="carte__fleche" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
+              </span>
+            </span>
+            <h3 class="carte__titre carte__titre--app">Cursor</h3>
+            <p class="carte__texte">Native skill + Sodium CLI</p>
+          </a>
+        </article>
+      </div>
+      <div data-reveal>
+        <article class="carte carte--lien" data-projecteur>
+          <span class="carte__halo" aria-hidden="true"></span>
+          <a class="carte__corps carte__corps--lien" href="#integrations">
+            <span class="carte__ligne-haute">
+              <span class="jeton-icone" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 17V7l8 5 8-5v10" /><path d="M4 7h16v10H4z" /></svg>
+              </span>
+              <span class="carte__fleche" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
+              </span>
+            </span>
+            <h3 class="carte__titre carte__titre--app">Codex</h3>
+            <p class="carte__texte">Skill registry + Sodium CLI</p>
+          </a>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 9 ▸ GÉNÉRATEUR DE PAGES — 2 colonnes, image + chat incrusté [relevé] ═══ -->
+<section class="section">
+  <div class="conteneur duo">
+    <div data-reveal>
+      <span class="surtitre">AI page builder</span>
+      <h2 class="titre-section titre-section--serre">Describe a page.<br />Watch it exist.</h2>
+      <p class="texte-section texte-section--court">Landing pages used to cost a weekend. Now they cost a sentence. Talk to the builder, watch the page assemble in live preview, publish when it feels right — versioned, rollback-safe, wired straight into your list.</p>
+      <div class="puces-mono">
+        <span>→ Live preview while it builds</span>
+        <span>→ Publish, roll back, iterate</span>
+        <span>→ Every visitor lands in your audience</span>
+      </div>
+    </div>
+
+    <div class="panneau-image" data-reveal>
+      <div class="panneau-image__cadre">
+        <img src="img/trails.webp" width="1920" height="1280" alt="Ribbons of sodium-orange light streaking across a dark night landscape" loading="lazy" decoding="async" />
+        <div class="panneau-image__voile" aria-hidden="true"></div>
+        <div class="panneau-image__chat">
+          <div class="console__saisie"><span class="jeton-invite">❯</span><span class="jeton-clair">A launch page for my Rust course. Dark, one email field.</span></div>
+          <div class="chat__ligne"><span class="jeton-outil">⏺</span> generating — hero, proof, capture form…</div>
+          <div class="chat__ligne jeton-ok">✓ Live at sodium.sh/c/rust — collecting subscribers.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 10 ▸ DÉMO — le cadre vide de la source est ici REMPLI (voir tokens §9) ═══ -->
+<section class="section" id="demo">
+  <div class="conteneur">
+    <div class="entete-section">
+      <div data-reveal><span class="surtitre">Demo</span></div>
+      <h2 class="titre-section" data-reveal>Up and running <em>in under a minute.</em></h2>
+    </div>
+
+    <div class="demo" data-reveal>
+      <div class="demo__barre">
+        <span class="pastille pastille--a"></span>
+        <span class="pastille pastille--b"></span>
+        <span class="pastille pastille--c"></span>
+        <span class="demo__url">sodium.sh — first send</span>
+      </div>
+      <ol class="demo__piste">
+        <li class="demo__etape">
+          <span class="demo__temps">0:00</span>
+          <span class="demo__point" aria-hidden="true"></span>
+          <span class="demo__nom">Install</span>
+          <span class="demo__detail">pnpm dlx sodium setup</span>
+        </li>
+        <li class="demo__etape">
+          <span class="demo__temps">0:11</span>
+          <span class="demo__point" aria-hidden="true"></span>
+          <span class="demo__nom">Connect</span>
+          <span class="demo__detail">MCP server registered, 62 tools live</span>
+        </li>
+        <li class="demo__etape">
+          <span class="demo__temps">0:29</span>
+          <span class="demo__point" aria-hidden="true"></span>
+          <span class="demo__nom">Draft</span>
+          <span class="demo__detail">one prompt, three subject lines back</span>
+        </li>
+        <li class="demo__etape demo__etape--fin">
+          <span class="demo__temps">0:52</span>
+          <span class="demo__point" aria-hidden="true"></span>
+          <span class="demo__nom">Send</span>
+          <span class="demo__detail">3,104 recipients queued</span>
+        </li>
+      </ol>
+      <div class="demo__pied">
+        <span class="demo__rail" aria-hidden="true"><span class="demo__jauge"></span></span>
+        <span class="demo__legende">A first send, timed end to end. No panel was opened.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 11 ▸ BANDEAU DE CHIFFRES — 4 compteurs, bordé haut et bas [relevé] ═══ -->
+<section class="bandeau">
+  <div class="bandeau__grille">
+    <div data-reveal>
+      <div class="chiffre" data-compteur="9" data-suffixe="s">0s</div>
+      <p class="chiffre__note">from prompt to scheduled campaign</p>
+    </div>
+    <div data-reveal>
+      <div class="chiffre" data-compteur="3000">0</div>
+      <p class="chiffre__note">free emails every month, no card required</p>
+    </div>
+    <div data-reveal>
+      <div class="chiffre" data-compteur="0">0</div>
+      <p class="chiffre__note">panels you must open in order to ship</p>
+    </div>
+    <div data-reveal>
+      <div class="chiffre" data-compteur="62">0</div>
+      <p class="chiffre__note">MCP tools your agent can call</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 12 ▸ POURQUOI — colonne image + colonne texte + signature [relevé] ═══ -->
+<section class="section section--large">
+  <div class="conteneur duo duo--large">
+    <div class="portrait" data-reveal>
+      <img src="img/nebula.webp" width="1920" height="2880" alt="Long-exposure star field, dense over an anthracite ground, threaded with sodium-orange and amber filaments" loading="lazy" decoding="async" />
+      <div class="portrait__voile" aria-hidden="true"></div>
+      <div class="portrait__degrade" aria-hidden="true"></div>
+      <span class="portrait__legende">Sodium has no founder photograph on this page.</span>
+    </div>
+
+    <div data-reveal>
+      <span class="surtitre">From the makers</span>
+      <h2 class="titre-section titre-section--serre">Why we built <em>Sodium.</em></h2>
+      <div class="prose">
+        <p>We ran newsletters for years beside the code we shipped. Every platform we tried was either too heavy, too closed, or drawn for a marketing team we did not have.</p>
+        <p>None of them met us where we already worked. We wanted to run a list from the same shell as the build, not from six browser tabs.</p>
+        <p>So we wrote Sodium. 62 MCP tools, a full REST API, and an editor that earns its place.</p>
+      </div>
+      <div class="signature">
+        <span class="signature__trait" aria-hidden="true"></span>
+        <span class="signature__nom">the Sodium team</span>
+        <span class="signature__role">Written collectively. Sodium is a team, not a person.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 13 ▸ TARIFS — 3 colonnes, la médiane marquée [relevé] ═══ -->
+<section class="section" id="tarifs">
+  <div class="conteneur">
+    <div class="entete-section">
+      <div data-reveal><span class="surtitre">Plans</span></div>
+      <h2 class="titre-section" data-reveal>Simple pricing, <em>no surprises.</em></h2>
+      <p class="texte-section" data-reveal>Start free with 3,000 emails a month. Move up only when the volume asks for it.</p>
+    </div>
+
+    <div class="grille grille--tarifs">
+      <article data-reveal>
+        <div class="carte carte--plan" data-projecteur>
+          <span class="carte__halo" aria-hidden="true"></span>
+          <div class="carte__corps plan">
+            <div class="plan__tete"><h3 class="plan__nom">Free</h3></div>
+            <p class="plan__pitch">For one person and a list that is just getting started</p>
+            <div class="plan__prix"><span class="plan__montant">$0</span><span class="plan__unite">/month</span></div>
+            <ul class="plan__liste">
+              <li><span class="coche" aria-hidden="true">✓</span><span>Unlimited subscribers</span></li>
+              <li><span class="coche" aria-hidden="true">✓</span><span>3,000 emails included</span></li>
+              <li><span class="coche" aria-hidden="true">✓</span><span>2 sending domains</span></li>
+              <li><span class="coche" aria-hidden="true">✓</span><span>5 workflows</span></li>
+              <li><span class="coche" aria-hidden="true">✓</span><span>100 AI credits per month</span></li>
+            </ul>
+            <a class="bouton bouton--sourd plan__action" href="#tarifs">Start free</a>
+          </div>
+        </div>
+      </article>
+
+      <article data-reveal>
+        <div class="carte carte--plan carte--phare" data-projecteur>
+          <span class="carte__halo" aria-hidden="true"></span>
+          <div class="carte__corps plan">
+            <div class="plan__tete"><h3 class="plan__nom">Standard</h3><span class="badge">Most picked</span></div>
+            <p class="plan__pitch">For a growing list and a team that sends every week</p>
+            <div class="plan__prix"><span class="plan__montant">$18</span><span class="plan__unite">/month</span></div>
+            <ul class="plan__liste">
+              <li><span class="coche" aria-hidden="true">✓</span><span>Unlimited subscribers</span></li>
+              <li><span class="coche" aria-hidden="true">✓</span><span>25,000 emails included · then $0.60/1,000</span></li>
+              <li><span class="coche" aria-hidden="true">✓</span><span>10 sending domains</span></li>
+              <li><span class="coche" aria-hidden="true">✓</span><span>Unlimited workflows</span></li>
+              <li><span class="coche" aria-hidden="true">✓</span><span>1,000 AI credits per month</span></li>
+            </ul>
+            <a class="bouton bouton--blanc plan__action" href="#tarifs">Start with Standard</a>
+          </div>
+        </div>
+      </article>
+
+      <article data-reveal>
+        <div class="carte carte--plan" data-projecteur>
+          <span class="carte__halo" aria-hidden="true"></span>
+          <div class="carte__corps plan">
+            <div class="plan__tete"><h3 class="plan__nom">Scale</h3></div>
+            <p class="plan__pitch">For high volume, several brands and a shared inbox reputation</p>
+            <div class="plan__prix"><span class="plan__montant">$180</span><span class="plan__unite">/month</span></div>
+            <ul class="plan__liste">
+              <li><span class="coche" aria-hidden="true">✓</span><span>Unlimited subscribers</span></li>
+              <li><span class="coche" aria-hidden="true">✓</span><span>500,000 emails included · then $0.40/1,000</span></li>
+              <li><span class="coche" aria-hidden="true">✓</span><span>Unlimited domains</span></li>
+              <li><span class="coche" aria-hidden="true">✓</span><span>Unlimited workflows</span></li>
+              <li><span class="coche" aria-hidden="true">✓</span><span>10,000 AI credits per month</span></li>
+            </ul>
+            <a class="bouton bouton--sourd plan__action" href="#tarifs">Start with Scale</a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 14 ▸ ESTIMATION — calculateur à curseur, échelle log10 [relevé] ═══ -->
+<section class="section">
+  <div class="conteneur">
+    <div class="entete-section">
+      <div data-reveal><span class="surtitre">Estimate</span></div>
+      <h2 class="titre-section" data-reveal>Calculate <em>your price.</em></h2>
+      <p class="texte-section" data-reveal>Move your monthly volume to see the cheapest plan for the sending you actually do.</p>
+    </div>
+
+    <div class="calc" data-reveal>
+      <div class="calc__tete">
+        <label class="calc__label" for="volume">Monthly emails</label>
+        <output class="calc__valeur" id="calc-volume" for="volume">50,000</output>
+      </div>
+
+      <div class="calc__curseur">
+        <input type="range" id="volume" min="3" max="6" step="0.01" value="4.7"
+               aria-label="Monthly email volume" aria-describedby="calc-verdict" />
+      </div>
+
+      <div class="calc__reperes" aria-hidden="true">
+        <span style="left:0">1K</span>
+        <span style="left:15.9%">3K</span>
+        <span style="left:66.7%">100K</span>
+        <span style="left:100%">1M</span>
+      </div>
+
+      <div class="calc__verdict" id="calc-verdict" aria-live="polite">
+        <p class="calc__surtitre">Best fit</p>
+        <p class="calc__plan" id="calc-plan">Standard — $<span class="tab-num">33</span>/month</p>
+        <p class="calc__detail" id="calc-detail">25,000 included · then $0.60 per 1,000</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 15 ▸ FAQ — colonne gauche collante 0.8fr / 1.2fr [relevé] ═══ -->
+<section class="section" id="faq">
+  <div class="conteneur faq">
+    <div class="faq__tete" data-reveal>
+      <span class="surtitre">FAQ</span>
+      <h2 class="titre-section titre-section--serre">Questions <em>&amp; answers.</em></h2>
+    </div>
+
+    <div class="faq__liste" data-reveal>
+      <details class="accordeon" open>
+        <summary>What does terminal-first actually mean?<span class="accordeon__chevron" aria-hidden="true"></span></summary>
+        <div class="accordeon__corps">Sodium was drawn for the shell before it was drawn for a browser; 62 MCP tools let Claude, Cursor, Codex or any agent run your list directly. A web panel exists as well, but it is optional, never the path.</div>
+      </details>
+      <details class="accordeon">
+        <summary>How does the MCP integration work?<span class="accordeon__chevron" aria-hidden="true"></span></summary>
+        <div class="accordeon__corps">One guided command writes the server into your client config and stores a scoped token. From then on your agent sees campaigns, segments, workflows and analytics as ordinary tools, with organisation-level permissions applied on every call.</div>
+      </details>
+      <details class="accordeon">
+        <summary>Do I have to be a developer to use it?<span class="accordeon__chevron" aria-hidden="true"></span></summary>
+        <div class="accordeon__corps">No. If you can hold a conversation with an AI assistant, you can run a Sodium list: the agent handles the commands. The CLI and the SDK are there for the people who want them.</div>
+      </details>
+      <details class="accordeon">
+        <summary>What can I do with the 62 tools?<span class="accordeon__chevron" aria-hidden="true"></span></summary>
+        <div class="accordeon__corps">Draft and schedule campaigns, build and refresh segments, manage subscribers and custom fields, arm workflows, verify domains, and read every metric, each one callable in a sentence rather than a screen.</div>
+      </details>
+      <details class="accordeon">
+        <summary>Is the free plan really free?<span class="accordeon__chevron" aria-hidden="true"></span></summary>
+        <div class="accordeon__corps">Yes: 3,000 emails a month, unlimited subscribers, no card. It is not a trial that expires; it is the shape of the product for a small list.</div>
+      </details>
+      <details class="accordeon">
+        <summary>How is Sodium different from the usual platforms?<span class="accordeon__chevron" aria-hidden="true"></span></summary>
+        <div class="accordeon__corps">They price the audience and hide the work behind a panel. Sodium prices the sending, keeps every action scriptable, hosts in the EU, and never charges you for a subscriber who is simply on the list.</div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 16 ▸ CLÔTURE — bloc photographique, texte centré [relevé] ═══ -->
+<section class="section section--large">
+  <div class="conteneur" data-reveal>
+    <div class="cloture">
+      <div class="cloture__fond">
+        <img src="img/glow.webp" width="1920" height="1280" alt="A sodium-orange halo diffusing through night mist above a dark plain" loading="lazy" decoding="async" />
+      </div>
+      <div class="cloture__voile" aria-hidden="true"></div>
+      <div class="cloture__contenu">
+        <h2 class="cloture__titre">Turn the lamp on.</h2>
+        <p class="cloture__sous">Your first send is one sentence away.</p>
+        <a class="bouton bouton--blanc cloture__action" href="#tarifs">Start free</a>
+        <p class="cloture__note">No card. No subscriber tax. No panel required.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ═══ 17 ▸ PIED — 1.5fr + 3 colonnes, puis barre basse [relevé] ═══ -->
+<footer class="pied">
+  <div class="conteneur">
+    <div class="pied__grille">
+      <div class="pied__marque">
+        <span class="pied__nom">Sodium</span>
+        <span class="pied__phrase">The newsletter platform that lives in your shell — EU-hosted.</span>
+      </div>
+      <div class="pied__colonne">
+        <span class="pied__titre">Product</span>
+        <div class="pied__liens"><a href="#tarifs">Pricing</a><a href="#plateforme">Docs</a><a href="#demo">Changelog</a></div>
+      </div>
+      <div class="pied__colonne">
+        <span class="pied__titre">Company</span>
+        <div class="pied__liens"><a href="#faq">About</a><a href="#demo">Blog</a></div>
+      </div>
+      <div class="pied__colonne">
+        <span class="pied__titre">Legal</span>
+        <div class="pied__liens"><a href="#faq">Terms</a><a href="#faq">Privacy</a></div>
+      </div>
+    </div>
+    <div class="pied__barre">
+      <span>© 2026 Sodium</span>
+      <div class="pied__icones">
+        <a href="#haut" aria-label="Changelog feed"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11a9 9 0 0 1 9 9" /><path d="M4 4a16 16 0 0 1 16 16" /><circle cx="5" cy="19" r="1" /></svg></a>
+        <a href="#haut" aria-label="Source repository"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.4 5.4 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" /><path d="M9 18c-4.51 2-5-2-7-2" /></svg></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="motion.js"></script>
+</body>
+</html>

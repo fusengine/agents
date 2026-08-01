@@ -1,6 +1,6 @@
 ---
 name: design-inspiration-urls
-description: "Use when sourcing taste for a page or screen. Look in `refs-design/` first (ten hand-rebuilt production pages, each procedure documented with measured values), then real production sites in the client's sector. Do NOT use for structure — that comes from register + macrostructure-bank."
+description: "Use when sourcing taste for a page or screen. Look in `refs-design/` first (fifteen hand-rebuilt production pages, each procedure documented with measured values), then real production sites in the client's sector. Do NOT use for structure — that comes from register + macrostructure-bank."
 related: design-inspiration.md, ../../design-method/references/moves/generate.md
 ---
 
@@ -19,11 +19,12 @@ That rule has not changed. What changed is **where you look**.
 ./refs-design/README.md          (next to this file, inside the skill)
 ```
 
-Ten references, all of them public pages rebuilt by hand from their live source
+Fifteen references, all of them public pages rebuilt by hand from their live source
 and accepted by the owner. Each folder carries two files: `tokens-<name>.md` for how the
 page is made (procedures, measured values, traps) and `design-system.md` for what
-it decided and why (register, tone, signature element, section sequence). Roughly
-6 500 lines of tokens and 25 indexed procedures across the corpus.
+it decided and why (register, tone, signature element, section sequence), and the five
+most recent also carry an `img/` folder of local photographs. 38 indexed procedures across
+the corpus.
 
 **Open `README.md` first.** It holds the procedure index: which technique lives
 in which reference, and in which section of its `tokens-*.md`.
@@ -42,20 +43,24 @@ for resting and scrolled state, and why the pill needs more clearance than the
 bare bar.
 
 The corpus is frozen and measured — that is the whole advantage over a browsed
-site, which changes under you and gives you pixels only. It is **not** offline:
-all ten load images or video from the network and nine load their typefaces too —
-no folder here is self-contained — and two pages (`harness`,
-`reve`) fetch their woff2 from a third-party CDN that can purge it. Offline the
-renders degrade — fallback fonts, `alt` text
-in place of images — but the measured values stay readable in the markdown, which
-is what you came for. `README.md` has the per-folder count.
+site, which changes under you and gives you pixels only. Offline it now splits in two:
+the **first ten** load images or video from the network and nine load their typefaces too
+— no folder among them is self-contained — and two pages (`harness`, `reve`) fetch their
+woff2 from a third-party CDN that can purge it. The **five most recent** (`mosa`, `stash`,
+`parley`, `dispatch`, `stripe`) declare three URLs each, all Google Fonts, and **no remote
+image at all**: their 22 photographs are `.webp` files in their own `img/` folders, so
+offline you lose only the typeface. Everywhere else the renders degrade to fallback fonts
+and `alt` text — but the measured values stay readable in the markdown, which is what you
+came for. `README.md` has the per-folder count.
 
 ## Second source — real sites in the client's actual sector
 
-The corpus carries **one** register: dark tech product, all ten of them. It will
-not hand you the register for a driving school, a law practice, a bakery — and it
-holds no counter-example to show you what one would look like at this level of
-execution. **That comes from the subject**, and the
+The corpus carries **one sector**: tech product, all fifteen of them — and twelve of the
+fifteen are dark on top of that. It will not hand you the register for a driving school, a
+law practice, a bakery — and it holds no counter-example to show you what one would look
+like at this level of execution. The three light pages (`parley`, `stripe`, `cursor`) widen
+the *palette* on disk and change nothing about the sector. **That comes from the subject**,
+and the
 fastest way to see how a sector actually presents itself is to look at real
 companies in it — not at templates built to be interchangeable.
 

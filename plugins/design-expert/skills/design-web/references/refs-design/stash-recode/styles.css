@@ -1,0 +1,1486 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   Référence de design — procédés relevés sur https://saveit.now
+   Reproduction : structure, rythme, typographie, composants, mouvement.
+   Identité propre : marque « Trove.link », palette teal profond + corail,
+   photographies et textes réécrits.
+
+   Traçabilité : [relevé] = valeur lue dans la source · [arbitrage] = choix
+   ajouté ici · [estimé] = calcul dont la source ne donne pas la valeur.
+
+   Source HTML : saveit.now/index.html (45 483 octets, rendu SSR TanStack
+                 Start, classes utilitaires Tailwind v4 + bloc <style> inline)
+   Source CSS  : /assets/index-Bc6vz3Z7.css (252 518 octets, Tailwind v4
+                 compilé) — c'est de là que viennent --font-sans et le thème.
+   Couverture  : toutes les sections de la page source, dans l'ordre.
+
+   La source n'écrit presque aucune règle CSS : tout passe par des classes
+   utilitaires. Les valeurs ci-dessous sont donc la RÉSOLUTION de ces classes
+   par la table Tailwind v4 par défaut (text-4xl = 2.25rem/2.5rem, gap-4 = 1rem,
+   p-7 = 1.75rem, rounded-3xl = 1.5rem, sm = 40rem, lg = 64rem…). Les seules
+   valeurs littérales de la source sont ses arbitraires entre crochets :
+   rounded-[2rem], rounded-[2.5rem], rounded-[3rem], rounded-[2.4rem],
+   text-[13px], text-[15px], h-[420px], h-[520px], h-[560px], w-[280px],
+   w-[300px], min-h-[320px], min-h-[380px], leading-[1.05], tracking-[0.2em],
+   bg-white/[0.03], border-white/[0.06], border-white/[0.08], gap-px.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+
+/* ───────────────────────────────────────────────────────────────────────────
+   1 ▸ JETONS
+   Nommés par rôle. La page source est verrouillée en sombre : une seule
+   classe .landing-page bg-[#120a10] text-[#f7ede8] enveloppe tout le document
+   et le pied de page est repeint de force par une règle !important [relevé].
+   Ici le verrou est porté par :root, même effet, une seule maille.
+   ─────────────────────────────────────────────────────────────────────────── */
+:root {
+  color-scheme: dark;
+
+  /* -- Fonds --------------------------------------------------------------
+     La source construit son sombre sur une prune très désaturée : #120a10
+     (fond), #1a0e15 (carte), #160b12 (panneau), #251621 (élevé).
+     Ici la même ARCHITECTURE — quatre paliers, écarts de luminance identiques
+     à ±1 % — transposée sur un teal profond. [arbitrage] intégral sur les
+     teintes, [relevé] sur le nombre de paliers et sur leur rôle. */
+  --fond-page:       #05171a;   /* rôle de #120a10 — fond du document entier */
+  --fond-panneau:    #082024;   /* rôle de #160b12 — cellules d'étape, panneau agent */
+  --fond-carte:      #0a262a;   /* rôle de #1a0e15 — châssis du téléphone */
+  --fond-eleve:      #0e3034;   /* rôle de #251621 — surfaces secondaires */
+
+  /* Surfaces bâties en opacité, pas en teinte : trois valeurs, comme la source.
+     [relevé] bg-white/[0.03] (cartes), bg-white/10 (bouton verre),
+     bg-white/[0.06] (bouton pleine largeur). */
+  --voile-3:         rgb(255 255 255 / 0.03);
+  --voile-6:         rgb(255 255 255 / 0.06);
+  --voile-10:        rgb(255 255 255 / 0.10);
+  --voile-20:        rgb(255 255 255 / 0.20);
+
+  /* -- Traits -------------------------------------------------------------
+     Recopiés tels quels : la source n'a que trois filets et ils suffisent. */
+  --trait:           rgb(255 255 255 / 0.08);  /* [relevé] border-white/[0.08] — cadres, pilule d'en-tête */
+  --trait-doux:      rgb(255 255 255 / 0.06);  /* [relevé] border-white/[0.06] — cartes, séparateurs internes */
+  --trait-fort:      rgb(255 255 255 / 0.20);  /* [relevé] border-white/20 — pilules de requête, châssis */
+  --trait-pied:      rgb(255 255 255 / 0.07);  /* [relevé] littéral : border-top-color de .landing-page footer */
+
+  /* -- Texte --------------------------------------------------------------
+     Cinq niveaux, exactement comme la source : primaire, secondaire, sur-image,
+     étiquette de formule, placeholder. Les rapports de contraste sont mesurés
+     sur --fond-page. */
+  --texte:           #eaf6f3;   /* rôle de #f7ede8 — 15.9:1 sur --fond-page [estimé] */
+  --texte-doux:      #93b3b0;   /* rôle de #a89099 —  7.1:1 [estimé] */
+  --texte-image:     #dcefea;   /* rôle de #f3dfd6 — posé sur photo uniquement */
+  --texte-clair:     #ffd2c2;   /* rôle de #ffd9c2 — surtitres sur photo */
+  --texte-etiquette: #a4c4bd;   /* rôle de #c9a99b — nom de formule, notes */
+  --texte-faible:    #86aaa6;   /* rôle de #8a7078 — placeholder du champ de l'agent.
+                                   Mesuré 6.3:1 sur --fond-panneau. La valeur d'abord
+                                   posée (#6d8f8d) tombait à 4.43:1, sous le plancher
+                                   de 4.5 : relevée après mesure, pas au jugé. */
+
+  /* -- Accent -------------------------------------------------------------
+     La source a un accent unique, #ff8f70 (un corail orangé), et un dégradé
+     de titre à quatre arrêts. Le corail est CONSERVÉ dans son rôle ; il ne
+     change presque pas — c'est le fond qui bascule de la prune au teal, et
+     c'est ce qui déplace toute la page. [arbitrage] sur la valeur exacte. */
+  --accent:          #ff7a5c;   /* rôle de #ff8f70 — surtitres, numéros, coches, anneau */
+  --accent-chaud:    #ff9d70;   /* rôle de #ff8f50 — extrémité du dégradé de bouton */
+  --sur-accent:      #10231f;   /* [arbitrage] la source pose du blanc sur son dégradé
+                                   (≈3.0:1). Une encre teal très sombre y monte à 8.9:1
+                                   [estimé] sans toucher à la géométrie du bouton. */
+
+  /* Dégradé de titre — quatre arrêts, angle 100deg, exactement la mécanique
+     de .landing-gradient-text [relevé] ; les quatre teintes sont les miennes. */
+  --degrade-titre:   linear-gradient(100deg, #ffd2bd 0%, #ff7a5c 38%, #ffa981 62%, #58d3c2 100%);
+  /* Dégradé de bouton phare — from/to, comme from-[#ff8f50] to-[#f0648e] [relevé]. */
+  --degrade-bouton:  linear-gradient(90deg, #ff7a5c 0%, #ffb27f 100%);
+
+  /* -- Vert d'état --------------------------------------------------------
+     [relevé] la source pose #28c840 (le vert « Online » d'Apple) et les trois
+     pastilles de fenêtre #ff5f57 / #febc2e / #28c840. Ici le vert est ramené
+     dans la famille teal, les pastilles gardent leur code de couleur. */
+  --etat-vif:        #3ddba6;
+  --pastille-1:      #ff7a5c;
+  --pastille-2:      #ffc46b;
+  --pastille-3:      #3ddba6;
+
+  /* -- Rayons -------------------------------------------------------------
+     La source EMPILE les rayons au lieu d'en choisir un : cinq valeurs
+     distinctes, du plus grand cadre au plus petit champ. C'est un fait de
+     composition, recopié tel quel. [relevé] toutes les valeurs. */
+  --r-heros:         2rem;      /* rounded-[2rem]   — la carte du héros, la seule à 32px */
+  --r-cadre:         2.5rem;    /* rounded-[2.5rem] — les quatre grandes cartes photo */
+  --r-carte:         1.5rem;    /* rounded-3xl      — cartes de constat, formules, vignettes */
+  --r-fiche:         1rem;      /* rounded-2xl      — fiches dans le téléphone */
+  --r-champ:         0.75rem;   /* rounded-xl       — champ de saisie de l'agent */
+  --r-pilule:        999px;     /* rounded-full compilé par Tailwind en 3.4e38px */
+  --r-telephone:     3rem;      /* rounded-[3rem]   — châssis */
+  --r-ecran:         2.4rem;    /* rounded-[2.4rem] — écran, 0.6rem de moins que le châssis */
+
+  /* -- Échelle typographique ---------------------------------------------
+     Table Tailwind v4 par défaut, sauf les deux arbitraires de la source
+     (13px pour les surtitres et les pilules, 15px pour l'accordéon).
+     Le 13px est remonté à 14px ici, et c'est le SEUL écart typographique :
+     le plancher de lisibilité à 360px (pre-flight 17) fixe 14px de taille
+     RENDUE pour tout texte porteur d'information, étiquettes comprises.
+     [arbitrage] documenté. */
+  --t-micro:   0.875rem;  --t-micro-h: 1.25rem;   /* [arbitrage] source text-[13px] */
+  --t-s:       0.875rem;  --t-s-h:     1.5rem;    /* [relevé] text-sm + leading-relaxed */
+  --t-15:      0.9375rem; --t-15-h:    1.5rem;    /* [relevé] text-[15px], accordéon */
+  --t-base:    1rem;      --t-base-h:  1.625;     /* [relevé] text-base + leading-relaxed */
+  --t-lg:      1.125rem;  --t-lg-h:    1.75rem;   /* [relevé] text-lg, marque et numéros d'étape */
+  --t-xl:      1.25rem;   --t-xl-h:    1.75rem;   /* [relevé] text-xl, titres d'étape */
+  --t-2xl:     1.5rem;    --t-2xl-h:   2rem;      /* [relevé] text-2xl, titres de carte */
+  /* [relevé] text-4xl + leading-[1.05]. L'interlignage EST 1.05 dans la source ;
+     il est porté à 1.15 ici, et c'est un [arbitrage] mesuré, pas un goût : la
+     zone de contenu d'une grotesque vaut ~1.28em, donc à 1.05 l'encre d'une
+     ligne sort de 8px de sa boîte et mord la suivante. Le contrôle de rendu
+     (pre-flight 11) le relève comme débordement vertical aux six largeurs ;
+     1.15 est la plus petite valeur qui le lève. */
+  --t-4xl:     2.25rem;   --t-4xl-h:   1.20;
+  --t-5xl:     3rem;                              /* [relevé] text-5xl, h1 mobile et prix */
+  --t-6xl:     3.75rem;                           /* [relevé] text-6xl, h2 desktop */
+  --t-7xl:     4.5rem;                            /* [relevé] text-7xl, h1 au-delà de 1024px */
+
+  --graisse-moyenne: 500;   /* [relevé] navigation, boutons, titres d'étape */
+  --graisse-demi:    600;   /* [relevé] boutons pleins, badge, titre d'écran */
+  --serree:         -0.025em;  /* [relevé] tracking-tight */
+  --large:           0.025em;  /* [relevé] tracking-wide, surtitre du héros */
+  --tres-large:      0.2em;    /* [relevé] tracking-[0.2em], surtitres de section */
+
+  /* -- Rythme -------------------------------------------------------------
+     La source ne pose PAS un padding de section unique : chaque bande a sa
+     valeur, et sept valeurs distinctes coexistent. Recopiées telles quelles. */
+  --gouttiere:       1.5rem;   /* [relevé] px-6, identique de 360px à 1440px */
+  --contenance:      72rem;    /* [relevé] max-w-6xl */
+  --contenance-moy:  64rem;    /* [relevé] max-w-5xl — FAQ et pied de page seulement */
+  --bande:           6rem;     /* [relevé] py-24 / pb-24 */
+  --bande-large:     8rem;     /* [relevé] sm:py-32 / sm:pb-32 */
+
+  /* -- Mouvement ----------------------------------------------------------
+     La seule durée écrite dans la source est 150ms, sur .landing-press button
+     [relevé, littéral]. Tout le reste du mouvement vient du runtime Framer
+     Motion, illisible depuis le HTML livré : les états de départ y sont
+     lisibles (opacity:0 + translateY 16px ou 24px), les durées non.
+     [arbitrage] sur les trois durées de révélation et sur les courbes. */
+  --duree-presse:    150ms;    /* [relevé] transition-duration de .landing-press */
+  --duree-etat:      200ms;    /* [arbitrage] survol de lien et de bouton */
+  --duree-revele:    620ms;    /* [arbitrage] montée d'un bloc au défilement */
+  --pas-cascade:     90ms;     /* [arbitrage] décalage d'une cellule à la suivante */
+  --courbe-sortie:   cubic-bezier(0.16, 1, 0.3, 1);   /* [arbitrage] décélération franche */
+  --courbe-etat:     cubic-bezier(0.4, 0, 0.2, 1);    /* [relevé] courbe implicite de Tailwind */
+
+  /* Les deux distances de montée de la source, distinctes et pas
+     interchangeables : le héros monte de 16px, les blocs de section de 24px.
+     [relevé] littéral, lu dans les attributs style du HTML servi. */
+  --montee-heros:    16px;
+  --montee-bloc:     24px;
+}
+
+
+/* ───────────────────────────────────────────────────────────────────────────
+   2 ▸ SOCLE
+   ─────────────────────────────────────────────────────────────────────────── */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  /* La source ne pose pas de scroll-padding ; son en-tête fixe recouvre donc
+     le haut d'une ancre. Corrigé ici : 5rem = hauteur de pilule + marge. */
+  scroll-padding-top: 5rem;   /* [arbitrage] */
+}
+
+body {
+  margin: 0;
+  background: var(--fond-page);
+  color: var(--texte);
+  /* [relevé] --font-sans:"Geist Variable", sans-serif, lu dans le :root du
+     bundle CSS de la source. Repli système ajouté ici. */
+  font-family: "Geist", "Geist Variable", ui-sans-serif, system-ui, -apple-system,
+               "Segoe UI", Roboto, sans-serif;
+  font-size: var(--t-base);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+img { display: block; max-width: 100%; }
+h1, h2, h3 { margin: 0; font-weight: 400; }
+p, ul { margin: 0; }
+ul { padding: 0; list-style: none; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; }
+
+/* Anneau de focus unique, visible partout. La source pose focus-visible:ring-3
+   ring-ring/50 sur --ring:#ff8f70 [relevé] ; même principe, même couleur de
+   rôle, épaisseur portée à 2px + décalage pour rester lisible sur photo. */
+:where(a, button):focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* La famille serif, seul second caractère de la page.
+   [relevé] .landing-display { font-family:"Instrument Serif", Georgia, serif }
+   Elle n'apparaît QUE sur : la marque, les h1/h2 en italique, les titres de
+   carte de constat, les numéros d'étape, les chiffres-clés et les prix. */
+.serif {
+  font-family: "Instrument Serif", Georgia, "Times New Roman", serif;
+  font-weight: 400;
+}
+em.serif { font-style: italic; }
+
+/* Un serif d'affichage a une zone de contenu bien plus haute qu'une grotesque
+   (≈1.4em contre ≈1.28em). Posé en <em> DANS un titre, il gonfle la boîte de
+   ligne au-delà de l'interlignage demandé et pousse l'encre de la grotesque
+   hors de sa boîte — 3px mesurés à chaque largeur avant correction. Un
+   interlignage propre au fragment serif referme l'écart sans toucher au
+   rythme des titres. [arbitrage] */
+.titre-section em.serif,
+.hero__titre em { line-height: 0.86; }
+
+/* Titre en dégradé. [relevé] background-clip:text sur un linear-gradient
+   à 100deg et color:transparent — mécanique identique, teintes propres.
+   padding-bottom : les jambages des italiques sont sinon rognés par la boîte
+   de clip sur Blink. [arbitrage] */
+.degrade {
+  background: var(--degrade-titre);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  padding-bottom: 0.06em;
+}
+
+/* Grain. [relevé] .landing-noise : opacity .06, feTurbulence fractalNoise
+   baseFrequency .65 numOctaves 3, tuile de 250px, en pointer-events:none.
+   Recopié à l'identique — c'est ce qui empêche les dégradés de bander. */
+.grain {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.06;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 600'%3E%3Cfilter id='a'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23a)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 250px;
+}
+
+
+/* ───────────────────────────────────────────────────────────────────────────
+   3 ▸ CONTENANCE
+   Un seul plafond de largeur pour toute la page, une seule gouttière.
+   [relevé] mx-auto max-w-6xl à l'intérieur d'un section px-6 : la gouttière
+   est portée par la SECTION, le plafond par l'enfant. Deux sections seulement
+   descendent à max-w-5xl : la FAQ et le pied de page.
+   ─────────────────────────────────────────────────────────────────────────── */
+.contenance {
+  width: 100%;
+  max-width: var(--contenance);
+  margin-inline: auto;
+}
+.contenance--moyenne { max-width: var(--contenance-moy); }
+
+/* Les quatre grandes cartes photo : même cadre, même rognage, même filet. */
+.contenance--cadre {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--trait);
+  border-radius: var(--r-cadre);
+}
+
+/* Toutes les sections partagent la gouttière ; seul le rythme vertical change. */
+main > section { padding-inline: var(--gouttiere); }
+
+
+/* ───────────────────────────────────────────────────────────────────────────
+   4 ▸ EN-TÊTE — pilule flottante
+   [relevé] fixed inset-x-0 top-0 z-50 ; l'enfant est mx-4 mt-4 h-12 max-w-6xl
+   rounded-full border bg-…/70 backdrop-blur-xl px-5 sm:px-6, et passe en
+   lg:mx-auto au-delà de 1024px. Jamais de burger : sous 768px les trois liens
+   disparaissent purement et simplement, seul le bouton reste [relevé].
+   ─────────────────────────────────────────────────────────────────────────── */
+.entete {
+  position: fixed;
+  inset-inline: 0;
+  top: 0;
+  z-index: 50;
+}
+.entete__pilule {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  height: 3rem;                       /* [relevé] h-12 */
+  margin: 1rem;                       /* [relevé] mx-4 mt-4 */
+  max-width: var(--contenance);
+  padding-inline: 1.25rem;            /* [relevé] px-5 */
+  border: 1px solid var(--trait);
+  border-radius: var(--r-pilule);
+  background: color-mix(in srgb, var(--fond-panneau) 70%, transparent);  /* [relevé] bg-…/70 */
+  backdrop-filter: blur(24px);        /* [relevé] backdrop-blur-xl */
+  -webkit-backdrop-filter: blur(24px);
+}
+
+.marque {
+  font-family: "Instrument Serif", Georgia, serif;
+  font-size: var(--t-lg);             /* [relevé] text-lg */
+  letter-spacing: var(--serree);
+  color: var(--texte);
+  white-space: nowrap;
+}
+.marque__suffixe { color: var(--accent); }   /* [relevé] le suffixe seul prend l'accent */
+
+.nav {
+  display: none;                      /* [relevé] hidden md:flex */
+  align-items: center;
+  gap: 1.75rem;                       /* [relevé] gap-7 */
+  font-size: var(--t-micro);
+  color: var(--texte-doux);
+}
+.nav a { transition: color var(--duree-etat) var(--courbe-etat); }
+.nav a:hover { color: var(--texte); }
+
+
+/* ───────────────────────────────────────────────────────────────────────────
+   5 ▸ BOUTONS
+   Quatre variantes, exactement celles de la source : verre (bordé, translucide),
+   fantôme (bordé, transparent), plein (fond clair, encre sombre), accent
+   (dégradé). Hauteurs 2rem / 2.5rem / 2.75rem selon la place [relevé].
+   Le geste de pression est littéral : scale(0.96) en 150ms sur
+   transform, background-color, border-color, color, opacity [relevé].
+   ─────────────────────────────────────────────────────────────────────────── */
+.bouton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.375rem;
+  height: 2.75rem;                    /* [relevé] h-11, la hauteur la plus courante */
+  padding-inline: 1.75rem;            /* [relevé] px-7 */
+  border: 1px solid transparent;
+  border-radius: var(--r-pilule);
+  font-size: var(--t-s);
+  font-weight: var(--graisse-moyenne);
+  white-space: nowrap;
+  cursor: pointer;
+  transition-property: transform, background-color, border-color, color, opacity;
+  transition-duration: var(--duree-presse);
+  transition-timing-function: var(--courbe-etat);
+}
+.bouton:active { transform: scale(0.96); }   /* [relevé] littéral */
+.bouton__icone { width: 0.875rem; height: 0.875rem; }  /* [relevé] size-3.5 */
+
+.bouton--compact {
+  height: 2rem;                       /* [relevé] h-8, pilule d'en-tête */
+  padding-inline: 0.875rem;           /* [relevé] px-3.5 */
+  font-size: var(--t-micro);
+}
+.bouton--pleine-largeur { width: 100%; }
+
+.bouton--verre {
+  border-color: var(--voile-20);      /* [relevé] border-white/15 à /10 selon le lieu */
+  background: var(--voile-10);
+  color: var(--texte);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+.bouton--verre:hover { background: var(--voile-20); }
+
+.bouton--fantome {
+  border-color: var(--voile-10);
+  background: transparent;
+  color: var(--texte-clair);
+}
+.bouton--fantome:hover { background: var(--voile-6); color: #fff; }
+
+/* [relevé] la source fait grandir ce bouton de 3 % au survol et le seul
+   bouton à fond opaque de la page est celui-là. */
+.bouton--plein {
+  background: var(--texte);
+  color: var(--fond-page);
+  font-weight: var(--graisse-demi);
+  transition-property: transform, background-color, opacity;
+}
+.bouton--plein:hover { transform: scale(1.03); }
+.bouton--plein:active { transform: scale(0.96); }
+
+.bouton--accent {
+  background: var(--degrade-bouton);
+  color: var(--sur-accent);
+  font-weight: var(--graisse-demi);
+}
+.bouton--accent:hover { transform: scale(1.02); }   /* [relevé] hover:scale-[1.02], 1 % de moins que le blanc */
+.bouton--accent:active { transform: scale(0.96); }
+
+
+/* ───────────────────────────────────────────────────────────────────────────
+   6 ▸ BLOCS DE TEXTE PARTAGÉS
+   Un surtitre, un titre, un paragraphe : trois pièces réutilisées par sept
+   sections. Le surtitre est la signature typographique de la source — capitales,
+   0.2em d'interlettrage, accent corail sur fond nu, corail pâle sur photo.
+   ─────────────────────────────────────────────────────────────────────────── */
+.surtitre {
+  font-size: var(--t-micro);
+  line-height: var(--t-micro-h);
+  font-weight: var(--graisse-moyenne);
+  text-transform: uppercase;
+  letter-spacing: var(--tres-large);   /* [relevé] tracking-[0.2em] */
+}
+.surtitre--accent { color: var(--accent); }
+.surtitre--clair  { color: var(--texte-clair); }
+
+/* Le titre de section. Deux marches seulement : 2.25rem partout, 3.75rem au
+   delà de 640px. Les tarifs s'arrêtent une marche plus bas (3rem) [relevé] —
+   c'est le seul titre de la page qui ne monte pas jusqu'en haut. */
+.titre-section {
+  margin-top: 1rem;                    /* [relevé] mt-4 */
+  font-size: var(--t-4xl);
+  line-height: var(--t-4xl-h);
+  letter-spacing: var(--serree);
+  color: var(--texte);
+  text-wrap: balance;
+}
+.titre-section--large    { max-width: 48rem; }   /* [relevé] max-w-3xl / max-w-2xl / max-w-xl selon la section */
+.titre-section--compact  { margin-top: 0; }
+.titre-section--sur-image {
+  color: #fff;
+  /* [relevé] littéral : [text-shadow:0_2px_30px_rgba(18,10,16,0.6)] — l'ombre
+     de texte est le mécanisme de contraste de la source sur ses photos. */
+  text-shadow: 0 2px 30px rgb(5 23 26 / 0.75);
+}
+
+.paragraphe {
+  margin-top: 1.5rem;                  /* [relevé] mt-6 */
+  font-size: var(--t-base);
+  line-height: var(--t-base-h);
+  color: var(--texte-doux);
+  text-wrap: pretty;
+}
+.paragraphe--etroit { max-width: 36rem; }   /* [relevé] max-w-xl */
+.paragraphe--court  { max-width: 28rem; }   /* [relevé] max-w-md */
+.paragraphe--sur-image {
+  color: var(--texte-image);
+  text-shadow: 0 1px 20px rgb(5 23 26 / 0.85);
+}
+
+
+/* ───────────────────────────────────────────────────────────────────────────
+   7 ▸ HÉROS
+   ─────────────────────────────────────────────────────────────────────────── */
+.hero { padding-top: 6rem; }           /* [relevé] pt-24 */
+
+.hero__carte {
+  position: relative;
+  overflow: hidden;
+  max-width: var(--contenance);
+  margin-inline: auto;
+  border: 1px solid var(--trait);
+  border-radius: var(--r-heros);       /* [relevé] 2rem — la seule carte à ce rayon */
+}
+.hero__image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 30%;         /* [relevé] object-[center_30%] */
+}
+/* Deux voiles superposés, pas un seul : un dégradé vertical sur toute la carte
+   plus une bande basse de 10rem qui referme sur le fond de page. [relevé] */
+.hero__voile {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom,
+    rgb(5 23 26 / 0.50) 0%,
+    rgb(5 23 26 / 0.20) 50%,
+    rgb(5 23 26 / 0.90) 100%);
+}
+.hero__pied-voile {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  height: 10rem;                       /* [relevé] h-40 */
+  background: linear-gradient(to bottom, transparent, var(--fond-page));
+}
+
+.hero__contenu {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 4rem 1.5rem 5rem;           /* [relevé] pt-16 px-6 pb-20 */
+}
+.hero__surtitre {
+  font-size: var(--t-micro);
+  letter-spacing: var(--large);
+  color: var(--texte-clair);
+}
+.hero__titre {
+  margin-top: 1.5rem;                  /* [relevé] mt-6 */
+  font-size: var(--t-5xl);
+  line-height: 1.2;                    /* [arbitrage] la source laisse text-5xl à son
+                                          interlignage de 1 ; même raison chiffrée qu'en
+                                          §1 pour --t-4xl-h */
+  letter-spacing: var(--serree);
+  color: #fff;
+  text-shadow: 0 2px 40px rgb(5 23 26 / 0.7);   /* [relevé] même mécanique, opacité remontée */
+}
+.hero__accroche {
+  margin-top: 1.5rem;
+  max-width: 32rem;                    /* [relevé] max-w-lg */
+  font-size: var(--t-base);
+  line-height: var(--t-base-h);
+  color: var(--texte-image);
+  text-shadow: 0 1px 20px rgb(5 23 26 / 0.85);
+}
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;                        /* [relevé] gap-3 */
+  margin-top: 2rem;                    /* [relevé] mt-8 */
+}
+.hero__actions .bouton { height: 2.5rem; padding-inline: 1.5rem; }  /* [relevé] h-10 px-6 */
+
+/* La bande de preuves : quatre items séparés par un tiret posé en ::after,
+   jamais par un caractère dans le texte. [relevé] la source place un <span>
+   séparateur DANS chaque item sauf le dernier ; ici c'est un pseudo-élément,
+   ce qui évite qu'un lecteur d'écran lise le tiret. [arbitrage] */
+.hero__preuves {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 1rem;                    /* [relevé] mt-4 */
+  font-size: var(--t-micro);
+  color: color-mix(in srgb, var(--texte-image) 70%, transparent);
+}
+.hero__preuves li:not(:last-child)::after {
+  content: "";
+  display: inline-block;
+  width: 0.75rem;
+  margin-left: 0.75rem;
+  border-top: 1px solid currentColor;
+  vertical-align: middle;
+  opacity: 0.6;
+}
+
+
+/* ───────────────────────────────────────────────────────────────────────────
+   8 ▸ LE PROBLÈME — grille de trois cartes
+   ─────────────────────────────────────────────────────────────────────────── */
+.probleme { padding-block: var(--bande); }   /* [relevé] py-24 */
+
+.grille-trois {
+  display: grid;
+  gap: 1rem;                           /* [relevé] gap-4 — une seule gouttière de grille sur toute la page */
+  margin-top: 3.5rem;                  /* [relevé] mt-14 */
+}
+.grille-trois--collee { margin-top: 1rem; }  /* [relevé] mt-4 : sous la promesse, les stats collent à la carte */
+
+.carte {
+  height: 100%;
+  padding: 1.75rem;                    /* [relevé] p-7 */
+  border: 1px solid var(--trait-doux);
+  border-radius: var(--r-carte);
+  background: var(--voile-3);          /* [relevé] bg-white/[0.03] */
+  transition: background-color var(--duree-etat) var(--courbe-etat),
+              border-color var(--duree-etat) var(--courbe-etat);
+}
+.carte:hover { background: var(--voile-6); border-color: var(--trait); }
+
+.carte__titre {
+  font-size: var(--t-2xl);             /* [relevé] text-2xl, en serif */
+  line-height: var(--t-2xl-h);
+  color: var(--texte);
+}
+.carte__chiffre {
+  font-size: var(--t-4xl);             /* [relevé] text-4xl, en serif — les chiffres-clés */
+  line-height: 1.1;
+  letter-spacing: var(--serree);
+  color: var(--texte);
+}
+.carte__texte {
+  margin-top: 0.75rem;                 /* [relevé] mt-3 */
+  font-size: var(--t-s);
+  line-height: var(--t-s-h);
+  color: var(--texte-doux);
+}
+
+
+/* ───────────────────────────────────────────────────────────────────────────
+   9 ▸ LE REMÈDE — carte photo + bandeau d'étapes séparé par un filet de 1px
+   Le procédé le plus économe de la page : la grille elle-même porte la couleur
+   du filet et les cellules leur fond opaque, si bien qu'un seul `gap: 1px`
+   dessine les deux séparateurs. [relevé] gap-px bg-white/[0.06].
+   ─────────────────────────────────────────────────────────────────────────── */
+.remede { padding-bottom: var(--bande); }
+
+.remede__scene { position: relative; }
+.remede__image {
+  width: 100%;
+  height: 420px;                       /* [relevé] h-[420px] */
+  object-fit: cover;
+  /* Le monolithe entier dans le cadre, et la base rocheuse dans le tiers bas où
+     se pose la légende. C'est la place que la source donne à son propre portail
+     sur cette section, et c'est l'image signature de la référence. [arbitrage] */
+  object-position: center 45%;
+}
+.remede__voile {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, var(--fond-page) 0%, transparent 55%, transparent 100%);
+}
+.remede__legende {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  padding: 2rem;                       /* [relevé] p-8 */
+}
+.remede__legende .titre-section { margin-top: 0.75rem; max-width: 42rem; }  /* [relevé] mt-3 max-w-2xl */
+
+.remede__etapes {
+  display: grid;
+  gap: 1px;                            /* [relevé] gap-px */
+  background: var(--trait-doux);       /* le filet EST le fond de la grille */
+}
+.etape {
+  padding: 2rem;                       /* [relevé] p-8 */
+  background: var(--fond-panneau);
+}
+.etape__numero {
+  font-size: var(--t-lg);              /* [relevé] text-lg, en serif, couleur d'accent */
+  color: var(--accent);
+}
+.etape__titre {
+  margin-top: 1rem;                    /* [relevé] mt-4 */
+  font-size: var(--t-xl);
+  line-height: var(--t-xl-h);
+  font-weight: var(--graisse-moyenne);
+  color: var(--texte);
+}
+.etape__texte {
+  margin-top: 0.75rem;
+  font-size: var(--t-s);
+  line-height: var(--t-s-h);
+  color: var(--texte-doux);
+}
+
+
+/* ───────────────────────────────────────────────────────────────────────────
+   10 ▸ LE VERSANT AGENTIQUE — duo colonne / panneau
+   ─────────────────────────────────────────────────────────────────────────── */
+.agent { padding-block: var(--bande); }
+
+.duo {
+  display: grid;
+  align-items: center;
+  gap: 3rem;                           /* [relevé] gap-12 */
+}
+
+.agent__vignette {
+  margin: 2.5rem 0 0;                  /* [relevé] mt-10 */
+  overflow: hidden;
+  border: 1px solid var(--trait);
+  border-radius: var(--r-carte);
+}
+.agent__vignette img {
+  width: 100%;
+  height: 14rem;                       /* [relevé] h-56 */
+  object-fit: cover;
+  /* La trouée corail de `hills.webp` est à 36% de sa hauteur. Dans une bande
+     aussi basse, c'est le seul détail qui porte : on cadre dessus. [arbitrage] */
+  object-position: center 36%;
+}
+
+/* Le panneau d'agent : une fenêtre d'application recréée en HTML/CSS, jamais
+   une capture d'écran. [relevé] la source fait exactement cela — trois
+   pastilles, un nom, une pastille d'état, une zone de fil à hauteur minimale
+   imposée, un faux champ de saisie. */
+.panneau {
+  overflow: hidden;
+  border: 1px solid var(--trait);
+  border-radius: var(--r-carte);
+  background: var(--fond-panneau);
+  box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.4);   /* [relevé] shadow-2xl shadow-black/40 */
+}
+.panneau__barre {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.75rem 1.25rem;            /* [relevé] px-5 py-3 */
+  border-bottom: 1px solid var(--trait-doux);
+}
+.panneau__gauche { display: flex; align-items: center; gap: 0.75rem; }
+.pastilles { display: inline-flex; gap: 0.375rem; }   /* [relevé] gap-1.5 */
+.pastilles i {
+  width: 0.75rem; height: 0.75rem;     /* [relevé] size-3 */
+  border-radius: var(--r-pilule);
+}
+.pastilles i:nth-child(1) { background: var(--pastille-1); }
+.pastilles i:nth-child(2) { background: var(--pastille-2); }
+.pastilles i:nth-child(3) { background: var(--pastille-3); }
+
+.panneau__nom {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-size: var(--t-micro);
+  font-weight: var(--graisse-moyenne);
+  color: var(--texte);
+}
+.panneau__icone { width: 0.875rem; height: 0.875rem; color: var(--texte-clair); }
+
+.panneau__etat {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.125rem 0.5rem;            /* [relevé] px-2 py-0.5 */
+  border-radius: var(--r-pilule);
+  background: color-mix(in srgb, var(--etat-vif) 15%, transparent);   /* [relevé] bg-…/15 */
+  font-size: var(--t-micro);           /* [arbitrage] la source pose 10px ; plancher 14px */
+  font-weight: var(--graisse-moyenne);
+  color: var(--etat-vif);
+}
+.panneau__etat i {
+  width: 0.375rem; height: 0.375rem;   /* [relevé] size-1.5 */
+  border-radius: var(--r-pilule);
+  background: currentColor;
+}
+
+.panneau__fil {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;                           /* [relevé] space-y-4 */
+  min-height: 320px;                   /* [relevé] min-h-[320px] */
+  padding: 1.25rem;                    /* [relevé] p-5 */
+}
+
+.bulle {
+  max-width: 85%;
+  padding: 0.625rem 0.875rem;
+  border-radius: var(--r-champ);
+  font-size: var(--t-s);
+  line-height: var(--t-s-h);
+}
+.bulle--utilisateur {
+  align-self: flex-end;
+  background: var(--degrade-bouton);
+  color: var(--sur-accent);
+}
+.bulle--agent {
+  align-self: flex-start;
+  border: 1px solid var(--trait-doux);
+  background: var(--voile-3);
+  color: var(--texte);
+}
+
+/* Les deux résultats renvoyés par l'agent : une fiche à filet, pas une image. */
+.resultat {
+  padding: 0.75rem 0.875rem;
+  border: 1px solid var(--trait-doux);
+  border-radius: var(--r-champ);
+  background: var(--voile-3);
+}
+.resultat__entete {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  font-size: var(--t-micro);
+}
+.resultat__source { color: var(--texte-doux); }
+.resultat__marque {
+  padding: 0.0625rem 0.5rem;
+  border-radius: var(--r-pilule);
+  background: color-mix(in srgb, var(--accent) 16%, transparent);
+  color: var(--accent);
+  font-weight: var(--graisse-moyenne);
+}
+.resultat__titre {
+  margin-top: 0.375rem;
+  font-size: var(--t-s);
+  font-weight: var(--graisse-moyenne);
+  color: var(--texte);
+}
+
+.panneau__saisie {
+  padding: 0.75rem 1.25rem;
+  border-top: 1px solid var(--trait-doux);
+}
+.panneau__champ {
+  padding: 0.625rem 1rem;              /* [relevé] px-4 py-2.5 */
+  border: 1px solid var(--trait-doux);
+  border-radius: var(--r-champ);
+  background: var(--voile-3);
+  font-size: var(--t-s);
+  color: var(--texte-faible);
+}
+
+
+/* ───────────────────────────────────────────────────────────────────────────
+   11 ▸ LA PROMESSE — carte photo à voile horizontal + pilules de requête
+   ─────────────────────────────────────────────────────────────────────────── */
+.promesse { padding-bottom: var(--bande); }
+
+.promesse__scene { isolation: isolate; }
+.promesse__image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* `forest.webp` n'a aucun point focal : une canopée teal homogène, piquetée de
+     cimes corail. C'est précisément ce qu'il faut sous les cinq pilules de
+     requête et le paragraphe, qui occupent les deux tiers gauches de la carte —
+     une image à sujet fort s'y battrait avec le texte. Cadrage au centre,
+     n'importe quelle fenêtre de cette image se vaut. [arbitrage] */
+  object-position: center 50%;
+}
+/* [relevé] gradient-to-r from-…/95 via-…/60 to-…/10 : le voile est HORIZONTAL
+   ici, vertical ailleurs. C'est ce qui met le texte à gauche sans le centrer. */
+.promesse__voile {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right,
+    rgb(5 23 26 / 0.95) 0%,
+    rgb(5 23 26 / 0.62) 50%,
+    rgb(5 23 26 / 0.15) 100%);
+}
+.promesse__contenu {
+  position: relative;
+  z-index: 2;
+  padding: 5rem 2rem;                  /* [relevé] px-8 py-20 */
+}
+.promesse__contenu .titre-section { max-width: 36rem; }   /* [relevé] max-w-xl */
+
+/* Cinq pilules de requête, en verre dépoli sur la photo. [relevé] rounded-full
+   border-white/20 bg-…/50 px-4 py-2 backdrop-blur-md. */
+.requetes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.625rem;                       /* [relevé] gap-2.5 */
+  max-width: 42rem;                    /* [relevé] max-w-2xl */
+  margin-top: 2rem;                    /* [relevé] mt-8 */
+}
+.requetes li {
+  padding: 0.5rem 1rem;                /* [relevé] px-4 py-2 */
+  border: 1px solid var(--trait-fort);
+  border-radius: var(--r-pilule);
+  background: rgb(5 23 26 / 0.55);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  font-size: var(--t-micro);
+  color: var(--texte-clair);
+}
+
+
+/* ───────────────────────────────────────────────────────────────────────────
+   12 ▸ LE VERSANT iOS — carte photo + châssis de téléphone dessiné
+   ─────────────────────────────────────────────────────────────────────────── */
+.ios { padding-bottom: var(--bande); }
+
+.ios__image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* `arch.webp` est la seule image du lot à point focal fort ET décentré :
+     l'ouverture de l'arche occupe la moitié droite, la roche sombre toute la
+     gauche. C'est exactement la géométrie du voile de cette section (opaque à
+     gauche, dégagé à droite) : le texte se pose sur la roche, le téléphone se
+     détache sur la lueur. 55% sur l'axe Y centre l'ouverture. [arbitrage] */
+  object-position: center 55%;
+}
+/* [relevé] le voile est vertical sous 640px et horizontal au-dessus : la source
+   change la DIRECTION du dégradé au point de rupture, pas seulement son opacité. */
+.ios__voile {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom,
+    rgb(5 23 26 / 0.82) 0%,
+    rgb(5 23 26 / 0.42) 50%,
+    rgb(5 23 26 / 0.88) 100%);
+}
+.ios__contenu {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  align-items: center;
+  gap: 3rem;                           /* [relevé] gap-12 */
+  padding: 4rem 2rem;                  /* [relevé] px-8 py-16 */
+}
+.ios__contenu .titre-section { max-width: 28rem; }        /* [relevé] max-w-md */
+.ios__contenu .bouton { margin-top: 2.25rem; }            /* [relevé] mt-9 */
+
+.telephone-cadre { display: flex; justify-content: center; }
+
+/* Châssis : une bordure claire, un fond de carte, 0.625rem de marge intérieure.
+   Le rayon de l'écran vaut celui du châssis moins la marge — 3rem - 0.6rem =
+   2.4rem, ce qui est exactement le rounded-[2.4rem] de la source [relevé]. */
+.telephone {
+  position: relative;
+  width: 280px;                        /* [relevé] w-[280px] */
+  max-width: 100%;
+  padding: 0.625rem;                   /* [relevé] p-2.5 */
+  border: 1px solid var(--trait-fort);
+  border-radius: var(--r-telephone);
+  background: var(--fond-carte);
+  box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.5);
+}
+.telephone__encoche {
+  position: absolute;
+  left: 50%;
+  top: 1.25rem;                        /* [relevé] top-5 */
+  z-index: 10;
+  width: 6rem;                         /* [relevé] w-24 */
+  height: 1.5rem;                      /* [relevé] h-6 */
+  transform: translateX(-50%);
+  border-radius: var(--r-pilule);
+  background: #000;
+}
+/* Écran clair DANS un châssis sombre : ce n'est pas une inversion de thème,
+   c'est un objet représenté. Précédent du corpus : cursor-recode, dont les
+   seules surfaces sombres sont un châssis de téléphone dessiné en CSS. */
+.telephone__ecran {
+  display: flex;
+  flex-direction: column;
+  height: 560px;                       /* [relevé] h-[560px] */
+  overflow: hidden;
+  border-radius: var(--r-ecran);
+  background: #f1f5f3;
+  color: #16211f;
+}
+.ecran__entete {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 3.5rem 1.25rem 0.75rem;     /* [relevé] pt-14 px-5 pb-3 */
+}
+.ecran__titre {
+  font-size: 1.0625rem;                /* [relevé] text-[17px] */
+  font-weight: var(--graisse-demi);
+}
+.ecran__loupe { width: 1.125rem; height: 1.125rem; }   /* [relevé] size-4.5 */
+
+.ecran__liste {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;                        /* [relevé] space-y-3 */
+  overflow: hidden;
+  padding-inline: 1rem;                /* [relevé] px-4 */
+}
+.fiche {
+  overflow: hidden;
+  border-radius: var(--r-fiche);
+  background: #fff;
+  box-shadow: 0 1px 2px rgb(22 33 31 / 0.08);
+}
+/* Aperçu de page : aucune capture n'est fournie, donc il est DESSINÉ.
+   Ratio 16/9 conservé — c'est lui qui fixe la hauteur de la fiche. [relevé] */
+.fiche__apercu {
+  aspect-ratio: 16 / 9;
+  width: 100%;
+}
+.fiche__apercu--un {
+  background:
+    radial-gradient(120% 90% at 20% 0%, rgb(255 122 92 / 0.55), transparent 60%),
+    linear-gradient(135deg, #0a262a, #14494c);
+}
+.fiche__apercu--deux {
+  background:
+    radial-gradient(110% 100% at 80% 10%, rgb(88 211 194 / 0.5), transparent 62%),
+    linear-gradient(200deg, #082024, #123a44);
+}
+.fiche__corps { padding: 0.75rem 0.875rem; }   /* [relevé] px-3.5 py-3 */
+.fiche__source {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-size: var(--t-micro);           /* [arbitrage] la source pose 11px ; plancher 14px */
+  color: #5c6f6c;
+}
+.fiche__pastille {
+  width: 0.875rem; height: 0.875rem;   /* [relevé] size-3.5, le favicon */
+  border-radius: 3px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-chaud));
+}
+.fiche__titre {
+  margin-top: 0.25rem;
+  font-size: var(--t-s);
+  font-weight: var(--graisse-moyenne);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ecran__onglets {
+  display: flex;
+  justify-content: space-around;
+  padding: 0.75rem 2rem;               /* [relevé] px-8 py-3 */
+  border-top: 1px solid #dfe6e3;
+  background: #fff;
+}
+.onglet {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: var(--t-micro);           /* [arbitrage] la source pose 9px ; plancher 14px */
+  color: #566b68;                      /* mesuré 6.1:1 sur le blanc de l'écran ; #8b9c99,
+                                          posé d'abord, ne donnait que 2.87:1 */
+}
+.onglet svg { width: 1.125rem; height: 1.125rem; }
+.onglet--actif { color: #16211f; font-weight: var(--graisse-moyenne); }
+
+
+/* ───────────────────────────────────────────────────────────────────────────
+   13 ▸ TARIFS
+   ─────────────────────────────────────────────────────────────────────────── */
+.tarifs { padding-bottom: var(--bande); }
+
+.tarifs__chapeau {
+  max-width: 42rem;                    /* [relevé] max-w-2xl */
+  margin-inline: auto;
+  text-align: center;
+}
+/* Seul titre de la page qui n'atteint pas 3.75rem : il s'arrête à 3rem [relevé]. */
+.tarifs__chapeau .titre-section { max-width: none; }
+
+.tarifs__grille {
+  display: grid;
+  gap: 1rem;
+  max-width: 56rem;                    /* [relevé] max-w-4xl */
+  margin: 3.5rem auto 0;               /* [relevé] mt-14 */
+}
+
+.formule {
+  position: relative;
+  padding: 2rem;                       /* [relevé] p-8 */
+  border: 1px solid var(--trait-doux);
+  border-radius: var(--r-carte);
+  background: var(--voile-3);
+}
+/* La carte phare ne change ni de taille ni de rayon : elle change de bordure
+   et reçoit un dégradé vertical très faible. [relevé] */
+.formule--phare {
+  border-color: color-mix(in srgb, var(--accent) 30%, transparent);
+  background: linear-gradient(to bottom,
+    color-mix(in srgb, var(--accent-chaud) 8%, transparent),
+    var(--voile-3));
+}
+.formule__badge {
+  position: absolute;
+  top: -0.75rem;                       /* [relevé] -top-3 */
+  right: 2rem;                         /* [relevé] right-8 */
+  padding: 0.25rem 0.75rem;            /* [relevé] px-3 py-1 */
+  border-radius: var(--r-pilule);
+  background: var(--degrade-bouton);
+  font-size: var(--t-micro);           /* [arbitrage] la source pose 11px ; plancher 14px */
+  font-weight: var(--graisse-demi);
+  color: var(--sur-accent);
+}
+.formule__nom {
+  font-size: var(--t-s);
+  font-weight: var(--graisse-moyenne);
+  color: var(--texte-etiquette);
+}
+.formule__prix {
+  display: flex;
+  align-items: baseline;               /* [relevé] items-baseline : le prix et son unité
+                                          partagent la ligne de base, pas le centre */
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+.formule__prix .serif {
+  font-size: var(--t-5xl);             /* [relevé] text-5xl, en serif */
+  line-height: 1;
+  letter-spacing: var(--serree);
+}
+.formule__unite { font-size: var(--t-s); color: var(--texte-doux); }
+
+.formule__note {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  font-size: var(--t-s);
+  font-weight: var(--graisse-moyenne);
+  color: var(--texte-etiquette);
+}
+.formule__point {
+  width: 0.375rem; height: 0.375rem;
+  border-radius: var(--r-pilule);
+  background: var(--voile-20);
+}
+.formule__point--accent { background: var(--accent); }
+
+.formule__texte {
+  margin-top: 1rem;
+  font-size: var(--t-s);
+  line-height: var(--t-s-h);
+  color: var(--texte-doux);
+}
+.formule__liste {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;                        /* [relevé] space-y-3 */
+  margin-top: 1.75rem;                 /* [relevé] mt-7 */
+}
+.formule__liste li {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;                       /* [relevé] gap-2.5 */
+  font-size: var(--t-s);
+  color: var(--texte);
+}
+.formule__liste svg {
+  flex: none;
+  width: 1rem; height: 1rem;           /* [relevé] size-4 */
+  color: var(--accent);
+}
+.formule .bouton { margin-top: 2rem; } /* [relevé] mt-8 */
+
+
+/* ───────────────────────────────────────────────────────────────────────────
+   14 ▸ FAQ — colonne de titre + accordéon
+   Contrat sans JS : les panneaux sont OUVERTS par défaut. La classe .js-motion
+   n'est posée sur <html> que si le script a pu armer les déclencheurs ; un
+   script absent ou en échec laisse donc la totalité du texte visible.
+   Procédé repris de cursor-recode (état de repos jamais armé à l'aveugle).
+   ─────────────────────────────────────────────────────────────────────────── */
+.faq { padding-bottom: var(--bande); }
+
+.faq__disposition {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;                           /* [relevé] gap-12 */
+}
+.faq__colonne { flex: none; }
+.faq__colonne .surtitre { margin-bottom: 0.75rem; }   /* [relevé] mb-3 */
+.faq__liste { flex: 1; }
+
+.pli { border-bottom: 1px solid var(--trait); }        /* [relevé] not-last:border-b */
+.pli:last-child { border-bottom: 0; }
+.pli h3 { display: flex; }
+
+.pli__declencheur {
+  display: flex;
+  flex: 1;
+  align-items: flex-start;             /* [relevé] items-start : le chevron s'aligne
+                                          sur la PREMIÈRE ligne, pas sur le centre */
+  justify-content: space-between;
+  gap: 1.5rem;
+  width: 100%;
+  padding: 1.25rem 0;                  /* [relevé] py-5 */
+  border: 1px solid transparent;
+  border-radius: 0.5rem;
+  background: none;
+  font-size: var(--t-15);              /* [relevé] text-[15px] */
+  line-height: var(--t-15-h);
+  font-weight: var(--graisse-moyenne);
+  text-align: left;
+  color: var(--texte);
+  cursor: pointer;
+  transition: color var(--duree-etat) var(--courbe-etat);
+}
+.pli__declencheur:hover { color: #fff; }
+.pli__declencheur svg {
+  flex: none;
+  width: 1rem; height: 1rem;           /* [relevé] size-4 */
+  margin-top: 0.25rem;
+  color: var(--texte-doux);
+  transition: transform var(--duree-etat) var(--courbe-etat);
+}
+.pli__declencheur[aria-expanded="true"] svg { transform: rotate(180deg); }
+
+/* Ouverture par grid-template-rows 0fr → 1fr : la seule propriété de mise en
+   page que le repo autorise à animer (pre-flight 10, exception accordéon). */
+.pli__panneau {
+  display: grid;
+  grid-template-rows: 1fr;
+  transition: grid-template-rows var(--duree-etat) var(--courbe-etat);
+}
+/* `overflow: hidden` rogne le panneau replié mais son <p> garde une boîte, donc
+   une position : le contrôle de rendu le voyait chevaucher le déclencheur
+   suivant. `visibility: hidden` le retire de l'arbre d'accessibilité ET du
+   parcours au clavier, ce que le rognage seul ne fait pas. Le délai n'est posé
+   qu'à la fermeture : à l'ouverture le texte doit être visible immédiatement. */
+.pli__panneau > div {
+  overflow: hidden;
+  visibility: visible;
+  transition: visibility 0s;
+}
+.js-motion .pli__panneau[data-plie] > div {
+  visibility: hidden;
+  transition: visibility 0s linear var(--duree-etat);
+}
+.pli__panneau p {
+  padding-bottom: 1.25rem;
+  font-size: var(--t-s);
+  line-height: var(--t-s-h);
+  color: var(--texte-doux);
+}
+.js-motion .pli__panneau[data-plie] { grid-template-rows: 0fr; }
+
+
+/* ───────────────────────────────────────────────────────────────────────────
+   15 ▸ CLÔTURE
+   ─────────────────────────────────────────────────────────────────────────── */
+.cloture { padding-bottom: var(--bande); }
+
+.cloture__image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* `lake.webp` est symétrique haut/bas, ligne d'eau à 52% : l'axe Y y est le
+     plus sensible de tout le lot — 30% ne garderait que le ciel, 70% que le
+     reflet, et la symétrie EST le sujet. On la conserve. [arbitrage] */
+  object-position: center 50%;
+}
+/* [relevé] gradient-to-t from-…/90 via-…/40 to-…/30 : le seul voile de la page
+   dont l'arrêt le plus clair reste à 30 % — la photo n'est jamais dégagée. */
+.cloture__voile {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top,
+    rgb(5 23 26 / 0.90) 0%,
+    rgb(5 23 26 / 0.55) 50%,
+    rgb(5 23 26 / 0.45) 100%);
+}
+.cloture__contenu {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 6rem 2rem;                  /* [relevé] px-8 py-24 */
+}
+.cloture__contenu .titre-section { max-width: 42rem; }   /* [relevé] max-w-2xl */
+.cloture__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 2.25rem;                 /* [relevé] mt-9 */
+}
+
+
+/* ───────────────────────────────────────────────────────────────────────────
+   16 ▸ PIED DE PAGE
+   [relevé] la source livre un pied de page générique (bg-[#141414]) puis le
+   repeint de force au fond de la landing par .landing-page footer { … !important }.
+   Ici il n'y a qu'une couleur, écrite une fois.
+   ─────────────────────────────────────────────────────────────────────────── */
+.pied {
+  padding-inline: 1rem;                /* [relevé] px-4 — la seule gouttière de 1rem de la page */
+  padding-bottom: 2rem;                /* [relevé] pb-8 */
+  border-top: 1px solid var(--trait-pied);
+}
+.pied > .contenance { margin-block: 3.5rem; }   /* [relevé] my-14 */
+
+.pied__haut {
+  display: grid;
+  gap: 2rem;                           /* [relevé] gap-8 */
+  margin-bottom: 3rem;                 /* [relevé] gap-12 du conteneur */
+}
+.marque--pied { font-size: var(--t-lg); }
+.pied__accroche {
+  max-width: 20rem;                    /* [relevé] max-w-xs */
+  margin-top: 0.75rem;
+  font-size: var(--t-s);
+  line-height: var(--t-s-h);
+  color: var(--texte-doux);
+}
+
+.pied__colonnes {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));   /* [relevé] grid-cols-2 */
+  /* Gouttière dissociée : 2rem entre les rangées, 1rem entre les colonnes.
+     À 768px les quatre colonnes ne font que 93px chacune avec 2rem partout, et
+     un libellé d'un seul mot y déborde de 4px (mesuré). [arbitrage] */
+  gap: 2rem 1rem;
+}
+.pied__titre {
+  margin-bottom: 0.75rem;
+  font-size: var(--t-s);
+  font-weight: var(--graisse-moyenne);
+  color: var(--texte);
+}
+.pied__colonnes nav { display: flex; flex-direction: column; gap: 0.5rem; }
+.pied__colonnes a,
+.pied__bas a,
+.pied__bas p {
+  font-size: var(--t-s);
+  color: var(--texte-doux);
+}
+.pied__colonnes a,
+.pied__bas a { transition: color var(--duree-etat) var(--courbe-etat); }
+.pied__colonnes a:hover,
+.pied__bas a:hover { color: var(--texte); }
+
+.pied__bas {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding-top: 2rem;                   /* [relevé] pt-8 */
+}
+.pied__bas nav { display: flex; gap: 1.5rem; }   /* [relevé] gap-6 */
+
+
+/* ───────────────────────────────────────────────────────────────────────────
+   17 ▸ MOUVEMENT
+   Deux dispositifs, et deux seulement, exactement comme la source :
+   (a) le héros monte ses cinq enfants en cascade au chargement, de 16px ;
+   (b) chaque bloc de section monte de 24px quand il entre dans la fenêtre.
+   Aucun @keyframes : tout est une transition entre deux états, comme la source
+   dont le mouvement est entièrement porté par un runtime.
+
+   Contrat de sécurité : l'état de repos (opacity:0) n'est armé que sous
+   .js-motion, classe posée par motion.js APRÈS avoir vérifié qu'il saura la
+   lever. Sans JS, sans IntersectionObserver ou en mouvement réduit, rien
+   n'est caché.
+   ─────────────────────────────────────────────────────────────────────────── */
+.js-motion [data-monte],
+.js-motion [data-reveal] {
+  opacity: 0;
+  transition-property: opacity, transform;
+  transition-duration: var(--duree-revele);
+  transition-timing-function: var(--courbe-sortie);
+  transition-delay: calc(var(--i, 0) * var(--pas-cascade));
+  will-change: opacity, transform;
+}
+.js-motion [data-monte]  { transform: translateY(var(--montee-heros)); }
+.js-motion [data-reveal] { transform: translateY(var(--montee-bloc)); }
+
+.js-motion [data-monte].est-la,
+.js-motion [data-reveal].est-la {
+  opacity: 1;
+  transform: none;
+  will-change: auto;
+}
+
+/* Les messages du panneau d'agent se posent l'un après l'autre, jamais d'un
+   bloc. [relevé] la zone de fil est VIDE dans le HTML servi par la source :
+   son contenu est écrit par le runtime, donc mis en scène. Le procédé est
+   reproduit ; les durées sont un [arbitrage]. */
+.js-motion [data-fil] [data-message] {
+  opacity: 0;
+  transform: translateY(10px);
+  transition-property: opacity, transform;
+  transition-duration: var(--duree-revele);
+  transition-timing-function: var(--courbe-sortie);
+  transition-delay: calc(var(--i, 0) * 220ms);
+}
+.js-motion [data-fil].est-la [data-message] {
+  opacity: 1;
+  transform: none;
+}
+
+/* Neutralisation totale : les durées ET les états de repos. Un opacity:0
+   laissé en place viderait la page. */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+  }
+  .js-motion [data-monte],
+  .js-motion [data-reveal],
+  .js-motion [data-fil] [data-message] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .bouton:active,
+  .bouton--plein:hover,
+  .bouton--accent:hover { transform: none; }
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   18 ▸ POINTS DE RUPTURE
+   La source n'en a que deux qui comptent : 40rem (sm) et 64rem (lg).
+   40rem fait passer TOUTES les grilles de 1 à 3 colonnes d'un coup et
+   augmente chaque padding de bande ; 64rem ouvre les deux dispositions en
+   duo et libère la dernière marche du h1. Aucun palier intermédiaire [relevé].
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@media (min-width: 40rem) {
+  .hero { padding-top: 7rem; }                                   /* [relevé] sm:pt-28 */
+  .hero__contenu { padding: 6rem 3rem 7rem; }                    /* [relevé] sm:pt-24 sm:px-12 sm:pb-28 */
+  .hero__titre { font-size: var(--t-6xl); }
+
+  .probleme { padding-block: var(--bande-large); }               /* [relevé] sm:py-32 */
+  .remede,
+  .promesse,
+  .ios,
+  .tarifs,
+  .faq,
+  .cloture { padding-bottom: var(--bande-large); }               /* [relevé] sm:pb-32 */
+  .agent { padding-block: var(--bande-large); }
+
+  .titre-section { font-size: var(--t-6xl); }
+  .tarifs__chapeau .titre-section { font-size: var(--t-5xl); }   /* [relevé] sm:text-5xl, une marche plus bas */
+
+  .grille-trois { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .remede__etapes { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .tarifs__grille { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+  .remede__image { height: 520px; }                              /* [relevé] sm:h-[520px] */
+  .remede__legende { padding: 3rem; }                            /* [relevé] sm:p-12 */
+  .etape { padding: 2.5rem; }                                    /* [relevé] sm:p-10 */
+
+  .promesse__contenu { padding: 7rem 3.5rem; }                   /* [relevé] sm:px-14 sm:py-28 */
+  .ios__contenu { padding: 5rem 3.5rem; }                        /* [relevé] sm:px-14 sm:py-20 */
+  /* [relevé] sm:bg-gradient-to-r — la DIRECTION du voile change au point de rupture */
+  .ios__voile {
+    background: linear-gradient(to right,
+      rgb(5 23 26 / 0.92) 0%,
+      rgb(5 23 26 / 0.45) 55%,
+      rgb(5 23 26 / 0.22) 100%);
+  }
+  .cloture__contenu { padding-block: 8rem; }                     /* [relevé] sm:py-32 */
+
+  .agent__vignette img { height: 16rem; }                        /* [relevé] sm:h-64 */
+  .panneau__fil { min-height: 380px; }                           /* [relevé] sm:min-h-[380px] */
+  .telephone { width: 300px; }                                   /* [relevé] sm:w-[300px] */
+
+  .entete__pilule { padding-inline: 1.5rem; }                    /* [relevé] sm:px-6 */
+  .pied__colonnes { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .pied__bas {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+@media (min-width: 48rem) {
+  .nav { display: flex; }                                        /* [relevé] md:flex — pas de burger */
+  .pied__haut { grid-template-columns: 1fr 2fr; }                /* [relevé] md:grid-cols-[1fr_2fr] */
+}
+
+@media (min-width: 64rem) {
+  .entete__pilule { margin-inline: auto; }                       /* [relevé] lg:mx-auto */
+  .hero__contenu { padding-inline: 4rem; }                       /* [relevé] lg:px-16 */
+  .hero__titre { font-size: var(--t-7xl); }                      /* [relevé] lg:text-7xl */
+
+  .duo { grid-template-columns: repeat(2, minmax(0, 1fr)); }     /* [relevé] lg:grid-cols-2 */
+  .ios__contenu { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+  .faq__disposition { flex-direction: row; }                     /* [relevé] lg:flex-row */
+  .faq__colonne { width: 18rem; }                                /* [relevé] lg:w-72 */
+}
