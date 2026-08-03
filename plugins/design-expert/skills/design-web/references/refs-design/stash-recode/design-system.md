@@ -61,7 +61,7 @@ are the receipt. No two consecutive sections share a geometry.
 
 ## Design Reference
 
-Source: https://saveit.now (TanStack Start SSR, compiled Tailwind v4 sheet at
+Source: not published here (TanStack Start SSR, compiled Tailwind v4 sheet at
 `/assets/index-Bc6vz3Z7.css`, plus a 60-line inline `<style>` block that carries
 the two `@font-face` rules, the gradient-text class, the grain and the theme).
 

@@ -1,6 +1,6 @@
 /* ═══════════════════════════════════════════════════════════════════════════
    SODIUM — mouvement et interactions.  Vanilla, sans framework ni build.
-   TRAÇABILITÉ. lumail.io confie tout son mouvement à Framer Motion : le HTML
+   TRAÇABILITÉ. La source confie tout son mouvement à Framer Motion : le HTML
    livré n'expose QUE les états de repos inline. [relevé] = ces états et leurs
    déclencheurs ; [arbitrage] = durées, courbes, seuils. → tokens-dispatch.md
    ═══════════════════════════════════════════════════════════════════════════ */

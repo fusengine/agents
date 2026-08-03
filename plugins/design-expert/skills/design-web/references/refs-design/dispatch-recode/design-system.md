@@ -63,7 +63,7 @@ never argues twice in a row without a machine speaking in between.
 
 ## Design Reference
 
-Source: https://lumail.io (Next.js, compiled Tailwind v4 sheet, Framer Motion).
+Source: not published here (Next.js, compiled Tailwind v4 sheet, Framer Motion).
 
 The palette is sampled from nothing on the source and from the four local
 photographs here. The source is midnight blue with an electric-blue accent;

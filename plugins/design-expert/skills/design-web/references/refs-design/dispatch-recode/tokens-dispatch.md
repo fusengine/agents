@@ -1,17 +1,24 @@
 # Tokens — dispatch
 
-Reproduction of **https://lumail.io** under an identity of its own: the brand
+Reproduction of **the source** under an identity of its own: the brand
 **Sodium**, an anthracite + sodium orange palette, four local photographs.
 The product does not change: a newsletter platform driven from the command
 line and through MCP, billed per send.
 
+Every command below reads the source through `$SRC`, and the page fetched from
+it through `source.html`:
+
+```bash
+SRC="…"   # the source URL is not published in this corpus
+curl -sL "$SRC" -o source.html
+```
+
 Three markers are used throughout this document:
 
-- `[relevé]` — value read on the source. The HTML served by lumail.io is
+- `[relevé]` — value read on the source. The HTML it serves is
   compiled Tailwind v4: the utility classes **are** the values, so there is
   nothing to guess. Reference command:
-  `curl -sL https://lumail.io -o lumail.html` then
-  `perl -0777 -pe 's/></>\n</g' lumail.html | grep -nE '<(section|h1|h2|h3)[ >]'`
+  `perl -0777 -pe 's/></>\n</g' source.html | grep -nE '<(section|h1|h2|h3)[ >]'`
 - `[arbitrage]` — decision of this rebuild, not deducible from the source.
 - `[estimé]` — computed, not measured directly.
 
@@ -27,11 +34,11 @@ from the delivered HTML: **no** application `@keyframes`, **no** entrance
 `style` attributes by the server render. Counts:
 
 ```
-grep -o 'opacity:0;transform:translateY(24px)' lumail.html | wc -l
+grep -o 'opacity:0;transform:translateY(24px)' source.html | wc -l
 → 58
-grep -o 'translateY(110%)' lumail.html | wc -l
+grep -o 'translateY(110%)' source.html | wc -l
 → 2
-grep -o 'translateY(32px)' lumail.html | wc -l
+grep -o 'translateY(32px)' source.html | wc -l
 → 2
 ```
 
@@ -220,7 +227,7 @@ written there. Every token of the source that sat at `white/40` on readable text
 
 ### 3.1 The families, relevées
 
-`curl -s https://lumail.io/_next/static/chunks/3d9uy71yrg96g.css` yields four
+`curl -s "$SRC/_next/static/chunks/3d9uy71yrg96g.css"` yields four
 `@font-face`:
 
 | Family | Source variable | Role |
@@ -231,7 +238,7 @@ written there. Every token of the source that sat at `white/40` on readable text
 | Space Grotesk (300–700) | `--font-caption` | **never applied** |
 
 Space Grotesk is loaded by the source but no rule uses it:
-`grep -c 'font-caption' lumail.html` → 0 outside the module declaration. It is
+`grep -c 'font-caption' source.html` → 0 outside the module declaration. It is
 not loaded here. [relevé]
 
 The other three are taken over as they are from Google Fonts, with
@@ -273,7 +280,7 @@ into two clauses, the second wrapped in an `<em>` that is **both** italic
 (Instrument Serif has a genuinely drawn italic) and coloured.
 
 ```
-grep -o '<em class="text-\[#cfe4fa\]">' lumail.html | wc -l  → 9
+grep -o '<em class="text-\[#cfe4fa\]">' source.html | wc -l  → 9
 ```
 
 Nine headings out of twelve follow that pattern on the source. Here, eight out of
@@ -305,8 +312,8 @@ calculator label `.025em` · everything else at 0.
 One single inter-section interval across the whole page:
 
 ```
-grep -o 'pb-28 sm:pb-36' lumail.html | wc -l  → 9
-grep -o 'py-28 sm:py-36' lumail.html | wc -l  → 3
+grep -o 'pb-28 sm:pb-36' source.html | wc -l  → 9
+grep -o 'py-28 sm:py-36' source.html | wc -l  → 3
 ```
 
 Twelve sections out of twelve, **112px then 144px beyond 640px**. No section has

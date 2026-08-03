@@ -1,8 +1,8 @@
 # Tokens — parley
 
-Reproduction of `https://tchao.app/` under the brand **Salut**, in a pearl-grey and slate-blue palette with a single signal red.
+Reproduction of the source under the brand **Salut**, in a pearl-grey and slate-blue palette with a single signal red.
 
-Source captured 2026-08-01: full-page desktop `1365 × 10604` (`017b250dc4-desktop.png`), plus a live DOM read of `https://tchao.app/` and of its stylesheet `/assets/globals-DdnLrtTP.css` (308 345 bytes, a compiled Tailwind v4 bundle). Every value below marked `[relevé]` was read out of that markup or that stylesheet, not inferred from the capture. `[arbitrage]` marks a decision taken here. `[estimé]` marks a value the source does not expose.
+Source captured 2026-08-01: full-page desktop `1365 × 10604` (`017b250dc4-desktop.png`), plus a live DOM read of the source and of its stylesheet `/assets/globals-DdnLrtTP.css` (308 345 bytes, a compiled Tailwind v4 bundle). Every value below marked `[relevé]` was read out of that markup or that stylesheet, not inferred from the capture. `[arbitrage]` marks a decision taken here. `[estimé]` marks a value the source does not expose.
 
 This is the **first light page** in a corpus of ten dark ones. Section 11 exists because of that, and is the part of this file worth reading if you only read one.
 
