@@ -1,7 +1,7 @@
 /* ═══════════════════════════════════════════════════════════════════════════
    MOUVEMENT — référence de design. Vanilla, sans framework ni build.
 
-   TRAÇABILITÉ. La source (saveit.now) ne contient NI @keyframes, NI
+   TRAÇABILITÉ. La source ne contient NI @keyframes, NI
    animation-timeline, et une seule durée écrite en clair : les 150ms de
    `.landing-press button`. Tout son mouvement vient du runtime Framer Motion,
    illisible depuis le HTML livré. Ce qui EST lisible, et qui est donc [relevé] :

@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════════════════════════════
-   Référence de design — procédés relevés sur https://saveit.now
+   Référence de design — procédés relevés sur la source
    Reproduction : structure, rythme, typographie, composants, mouvement.
    Identité propre : marque « Trove.link », palette teal profond + corail,
    photographies et textes réécrits.
@@ -7,7 +7,7 @@
    Traçabilité : [relevé] = valeur lue dans la source · [arbitrage] = choix
    ajouté ici · [estimé] = calcul dont la source ne donne pas la valeur.
 
-   Source HTML : saveit.now/index.html (45 483 octets, rendu SSR TanStack
+   Source HTML : source.html (45 483 octets, rendu SSR TanStack
                  Start, classes utilitaires Tailwind v4 + bloc <style> inline)
    Source CSS  : /assets/index-Bc6vz3Z7.css (252 518 octets, Tailwind v4
                  compilé) — c'est de là que viennent --font-sans et le thème.

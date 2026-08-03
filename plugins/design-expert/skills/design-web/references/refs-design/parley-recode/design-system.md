@@ -2,7 +2,7 @@
 
 Register: `brand` — a marketing landing page for a live-chat agent that answers a site's visitors in place of a contact form.
 Scope: one page, one stylesheet, one script. No framework, no build step, no network asset except two Google font families.
-Design Read: reproduction of `https://tchao.app/` (captured 2026-08-01, full-page desktop 1365 × 10604). The macrostructure, the grids, the type scale, the spacing rhythm and the component inventory are the source's. Only the brand name, the palette, the photographs and the copy are ours.
+Design Read: reproduction of the source (captured 2026-08-01, full-page desktop 1365 × 10604). The macrostructure, the grids, the type scale, the spacing rhythm and the component inventory are the source's. Only the brand name, the palette, the photographs and the copy are ours.
 Dials: `DESIGN_VARIANCE 5` · `VISUAL_DENSITY 6` · `MOTION_INTENSITY 3`
 Tone (one extreme): **daylight**. This is the first light page in a corpus of ten dark ones. Every decision that would normally be resolved by a glow, a bloom or a luminous edge has to be resolved by a hairline, a shadow or a wash instead.
 Signature element: **the photographic band that cuts the page**. Four times, the text column stops dead and a full-bleed landscape takes the whole viewport width. Twice something floats on top of it — a white status card, a dark terminal — and once nothing does, which is what makes the other three read as deliberate.

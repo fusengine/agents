@@ -1,6 +1,6 @@
 # Tokens — stash
 
-Corpus of **techniques**, relevé on `https://saveit.now` and rebuilt under a
+Corpus of **techniques**, relevé on the source and rebuilt under a
 different brand. Structure, rhythm, typography, component anatomy and motion
 procedures are taken from the source. What changes: the brand name, the palette,
 the photographs, and the copy.
@@ -21,7 +21,7 @@ labels, pills and figures are therefore elements of **layout**, not editorial
 content.
 
 **Sources of the measurements** — page fetched locally on 2026-08-01:
-`saveit.now/index.html` (45,483 bytes, TanStack Start SSR payload) +
+`source.html` (45,483 bytes, TanStack Start SSR payload) +
 `/assets/index-Bc6vz3Z7.css` (252,518 bytes, compiled Tailwind v4). Values come
 from the utility classes set on the HTML, from the inline `style` attributes the
 server rendered, from the 60-line inline `<style>` block in the page head, and
