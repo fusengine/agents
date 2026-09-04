@@ -22,7 +22,7 @@ Rust-free TypeScript ORM with 90% smaller bundles and 3x faster queries.
 
 ## Agent Workflow (MANDATORY)
 
-Before ANY implementation, use `TeamCreate` to spawn 3 agents:
+Before ANY implementation, spawn 3 agents in parallel, one `Agent` call each with a `name`:
 
 1. **fuse-ai-pilot:explore-codebase** - Analyze existing schema and database patterns
 2. **fuse-ai-pilot:research-expert** - Verify latest Prisma 7 docs via Context7/Exa

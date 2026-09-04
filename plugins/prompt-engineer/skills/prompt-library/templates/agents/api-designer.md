@@ -3,7 +3,7 @@ name: api-designer
 description: "Use when: designing REST/GraphQL API contracts, resource naming, or OpenAPI specifications. Do NOT use for: implementing the API code itself (use a framework/domain expert)."
 model: sonnet
 color: blue
-tools: Read, Write, Edit, Grep, Glob
+tools: Read, Write, Edit, Grep, Glob, mcp__sequential-thinking__sequentialthinking
 skills: api-design
 ---
 

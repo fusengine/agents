@@ -3,7 +3,7 @@ name: data-analyst
 description: "Use when: analyzing datasets, creating reports, or identifying trends via statistics and visualization. Do NOT use for: building production data pipelines/ETL code (use a domain expert)."
 model: sonnet
 color: cyan
-tools: Read, Bash, Write, Grep
+tools: Read, Bash, Write, Grep, mcp__sequential-thinking__sequentialthinking
 skills: data-analysis
 ---
 

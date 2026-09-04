@@ -21,7 +21,7 @@ Production-ready documentation theme for Astro with built-in search, dark mode, 
 
 ## Agent Workflow (MANDATORY)
 
-Before ANY implementation, use `TeamCreate` to spawn 3 agents:
+Before ANY implementation, spawn 3 agents in parallel, one `Agent` call each with a `name`:
 
 1. **fuse-ai-pilot:explore-codebase** - Analyze existing Starlight config, sidebar, and content structure
 2. **fuse-ai-pilot:research-expert** - Verify Starlight plugin APIs via Context7/Exa

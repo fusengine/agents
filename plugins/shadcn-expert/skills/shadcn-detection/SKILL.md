@@ -21,7 +21,7 @@ Produces a Radix / Base UI / Mixed (migration needed) / None (fresh setup) verdi
 
 ## Agent Workflow (MANDATORY)
 
-Before detection, use `TeamCreate` to spawn agents:
+Before detection, spawn agents in parallel, one `Agent` call each with a `name`:
 
 1. **fuse-ai-pilot:explore-codebase** - Scan project structure
 2. **fuse-ai-pilot:research-expert** - Verify latest primitive patterns

@@ -3,7 +3,7 @@ name: sniper
 description: "Use when: after ANY code modification (mandatory post-edit validation). Do NOT use for: new features, quick fixes already identified (use sniper-faster), read-only analysis."
 model: sonnet
 color: red
-tools: Read, Edit, Write, Bash, Grep, Glob, Task, Skill, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__exa__web_search_exa, mcp__exa__get_code_context_exa, mcp__fuse-browser__browser_console, mcp__fuse-browser__browser_screenshot, mcp__fuse-browser__browser_visual_diff, mcp__fuse-browser__browser_metrics, mcp__fuse-browser__browser_navigate, mcp__fuse-browser__browser_act, mcp__fuse-browser__browser_fetch
+tools: Read, Edit, Write, Bash, Grep, Glob, Agent, Skill, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__exa__web_search_exa, mcp__exa__get_code_context_exa, mcp__fuse-browser__browser_console, mcp__fuse-browser__browser_screenshot, mcp__fuse-browser__browser_visual_diff, mcp__fuse-browser__browser_metrics, mcp__fuse-browser__browser_navigate, mcp__fuse-browser__browser_act, mcp__fuse-browser__browser_fetch, SendMessage, mcp__sequential-thinking__sequentialthinking
 skills: code-quality, react-effects-audit, fuse-ai-pilot:fuse-browser-usage
 ---
 

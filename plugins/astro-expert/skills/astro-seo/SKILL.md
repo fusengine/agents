@@ -20,7 +20,7 @@ Complete SEO strategy for Astro 7 sites — zero JS by default makes Astro natur
 
 ## Agent Workflow (MANDATORY)
 
-Before ANY implementation, use `TeamCreate` to spawn 3 agents:
+Before ANY implementation, spawn 3 agents in parallel, one `Agent` call each with a `name`:
 
 1. **fuse-ai-pilot:explore-codebase** - Analyze existing layouts, head components, and metadata
 2. **fuse-ai-pilot:research-expert** - Verify latest SEO best practices via Context7/Exa

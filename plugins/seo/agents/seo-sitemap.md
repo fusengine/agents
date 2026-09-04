@@ -3,7 +3,7 @@ name: seo-sitemap
 description: "Use when: analyzing or generating sitemap.xml, sitemap-news.xml, sitemap-image.xml, sitemap-video.xml, or robots.txt. Do NOT use for: redirect analysis (use seo-redirects)."
 model: sonnet
 color: gray
-tools: Read, Edit, Write, Bash, WebFetch, Skill, mcp__fuse-browser__browser_crawl, mcp__fuse-browser__browser_extract, mcp__fuse-browser__browser_fetch
+tools: Read, Edit, Write, Bash, WebFetch, Skill, mcp__fuse-browser__browser_crawl, mcp__fuse-browser__browser_extract, mcp__fuse-browser__browser_fetch, SendMessage, mcp__sequential-thinking__sequentialthinking
 skills: seo-sitemap, fuse-ai-pilot:fuse-browser-usage
 ---
 

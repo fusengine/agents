@@ -22,7 +22,7 @@ Do NOT use this skill for language syntax or feature questions — that is php-l
 
 ## Agent Workflow (MANDATORY)
 
-Before applying a standard, use `TeamCreate` to spawn 3 agents:
+Before applying a standard, spawn 3 agents in parallel, one `Agent` call each with a `name`:
 
 1. **fuse-ai-pilot:explore-codebase** - Detect existing style config (`.php-cs-fixer.php`, `phpcs.xml`), `composer.json` autoload
 2. **fuse-ai-pilot:research-expert** - Verify a PSR's current status on php-fig.org before recommending it

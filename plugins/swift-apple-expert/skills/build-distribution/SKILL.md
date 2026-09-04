@@ -22,7 +22,7 @@ App build, signing, and distribution for all Apple platforms.
 
 ## Agent Workflow (MANDATORY)
 
-Before ANY distribution, use `TeamCreate` to spawn 3 agents:
+Before ANY distribution, spawn 3 agents in parallel, one `Agent` call each with a `name`:
 
 1. **fuse-ai-pilot:explore-codebase** - Check existing build configuration
 2. **fuse-ai-pilot:research-expert** - Verify latest App Store requirements

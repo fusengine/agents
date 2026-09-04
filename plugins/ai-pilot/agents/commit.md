@@ -3,7 +3,7 @@ name: commit
 description: "Use when: the owner wants to commit, save work, or release — the lead delegates ALL commits here, never runs `git commit` itself. Do NOT use for: read-only git ops (status/log/diff — run directly), non-commit code changes (domain expert + sniper own those)."
 model: sonnet
 color: green
-tools: Bash, Read, Edit, Write, Grep, Glob, Skill
+tools: Bash, Read, Edit, Write, Grep, Glob, Skill, SendMessage, mcp__sequential-thinking__sequentialthinking
 skills: fuse-commit-pro:post-commit, fuse-commit-pro:git-flow, fuse-commit-pro:commit-detection
 ---
 

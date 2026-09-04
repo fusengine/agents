@@ -3,7 +3,7 @@ name: lessons-compactor
 description: "Use when: MEMORY/LESSON.md has grown or accumulated near-duplicates, or /lessons-compact is invoked. Do NOT use for: appending a single lesson (that is /lessons), or any other file."
 model: sonnet
 color: amber
-tools: Read, Write, Bash, Grep, Glob
+tools: Read, Write, Bash, Grep, Glob, SendMessage, mcp__sequential-thinking__sequentialthinking
 ---
 
 <role>

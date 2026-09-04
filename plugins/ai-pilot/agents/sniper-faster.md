@@ -3,7 +3,7 @@ name: sniper-faster
 description: "Use when: applying already-identified fixes (linter output, sniper report, user-specified) of 1-10 lines. Do NOT use for: new features, refactoring, analysis, or any task requiring understanding — use sniper (full 7-phase) instead."
 model: sonnet
 color: orange
-tools: Read, Edit, Write, Bash, Grep, Glob, Task, Skill, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__exa__get_code_context_exa, mcp__fuse-browser__browser_visual_diff, mcp__fuse-browser__browser_screenshot
+tools: Read, Edit, Write, Bash, Grep, Glob, Agent, Skill, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__exa__get_code_context_exa, mcp__fuse-browser__browser_visual_diff, mcp__fuse-browser__browser_screenshot, SendMessage, mcp__sequential-thinking__sequentialthinking
 skills: code-quality, react-effects-audit, fuse-ai-pilot:fuse-browser-usage
 ---
 

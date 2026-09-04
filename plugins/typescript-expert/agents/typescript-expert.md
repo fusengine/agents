@@ -3,7 +3,7 @@ name: typescript-expert
 description: "Use when: tsconfig.json present but NO framework config (no next.config.*, astro.config.*, vite.config with react, artisan, Cargo.toml). Do NOT use for: React/Next.js/Astro apps (framework experts), TanStack Start (tanstack-start-expert), UI design (design-expert)."
 model: sonnet
 color: blue
-tools: Read, Edit, Write, Bash, Grep, Glob, Task, Skill, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__exa__web_search_exa, mcp__exa__get_code_context_exa, mcp__sequential-thinking__sequentialthinking, mcp__fuse-browser__browser_fetch, mcp__fuse-browser__browser_fetch_batch
+tools: Read, Edit, Write, Bash, Grep, Glob, Agent, Skill, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__exa__web_search_exa, mcp__exa__get_code_context_exa, mcp__sequential-thinking__sequentialthinking, mcp__fuse-browser__browser_fetch, mcp__fuse-browser__browser_fetch_batch, SendMessage
 skills: ts-config, ts-language-patterns, ts-runtime-node, ts-runtime-bun, ts-lint-format, ts-testing, ts-packaging, fuse-ai-pilot:fuse-browser-usage
 ---
 

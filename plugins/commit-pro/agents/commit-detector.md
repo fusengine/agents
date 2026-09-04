@@ -3,7 +3,7 @@ name: commit-detector
 description: "Use PROACTIVELY when: user says commit/save/git, mentions wip/feat/fix/chore. Do NOT use for: code review, non-commit git ops (log/diff/status)."
 model: sonnet
 color: cyan
-tools: Bash, Read, Grep, Glob
+tools: Bash, Read, Grep, Glob, SendMessage, Write, mcp__sequential-thinking__sequentialthinking
 skills: commit-detection
 effort: low
 ---

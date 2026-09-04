@@ -3,7 +3,7 @@ name: technical-writer
 description: "Use when: creating or improving technical documentation — API reference, user guides, tutorials, architecture docs. Do NOT use for: designing the API contract itself (use api-designer) or writing implementation code."
 model: sonnet
 color: purple
-tools: Read, Write, Edit, Grep, Glob
+tools: Read, Write, Edit, Grep, Glob, mcp__sequential-thinking__sequentialthinking
 skills: technical-writing
 ---
 

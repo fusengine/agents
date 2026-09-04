@@ -25,7 +25,7 @@ cross-module dependency declaration.
 
 ## Agent Workflow (MANDATORY)
 
-Before ANY implementation in FuseCore project, use `TeamCreate` to spawn 3 agents:
+Before ANY implementation in FuseCore project, spawn 3 agents in parallel, one `Agent` call each with a `name`:
 
 1. **fuse-ai-pilot:explore-codebase** - Analyze existing modules in `/FuseCore/`
 2. **fuse-ai-pilot:research-expert** - Verify Laravel 13 patterns via Context7
