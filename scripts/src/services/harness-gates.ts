@@ -29,6 +29,15 @@ const GATES: readonly Gate[] = [
 		key: "FUSE_DESIGN_GEMINI",
 		message: "Enable Gemini design pipeline gates?",
 	},
+	{
+		key: "FUSE_PRD",
+		message: "Enable PRD multi-agent coordination (FUSE_PRD=1)? (one writer per file, Stop cross-check; inert without an apex/prd.json router)",
+	},
+	{
+		key: "FUSE_GUI_ENV",
+		message:
+			"Bridge ~/.claude/.env keys to macOS GUI apps via launchctl, fish loader only (FUSE_GUI_ENV=1)? Exposes every non-FUSE key to all GUI apps",
+	},
 ];
 
 /**

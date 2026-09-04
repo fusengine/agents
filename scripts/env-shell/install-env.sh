@@ -104,6 +104,49 @@ POSIX_LOADER
     echo -e "  ${GREEN}$shell: Installed ($rc_file)${NC}"
 }
 
+# Copy the FUSE_*-filtered loader shim to ~/.claude (idempotent: plain overwrite).
+# Sourced by non-interactive bash (BASH_ENV, fish) and zsh (~/.zshenv) so they
+# never source the raw .env, which would re-export the per-harness FUSE_* keys.
+install_env_shim() {
+    mkdir -p "$HOME/.claude"
+    cp "$SCRIPT_DIR/bash-env-loader.sh" "$HOME/.claude/bash-env-loader.sh"
+}
+
+# Non-interactive zsh (`zsh -c`, what Claude Code spawns) reads ONLY .zshenv,
+# never .zshrc — so the rc loader above is invisible to it. Point .zshenv at
+# the shim, whatever the user's default shell is. Append-only, exactly once.
+# $ZDOTDIR/.zshenv is read INSTEAD OF $HOME/.zshenv when $ZDOTDIR is set (zsh
+# manual, STARTUP/SHUTDOWN FILES) — a live convention (zimfw, prezto, chezmoi),
+# not a theoretical edge case; writing $HOME unconditionally would silently
+# never be sourced on those setups.
+ZSHENV_LOADER_LINE='[ -f "$HOME/.claude/bash-env-loader.sh" ] && . "$HOME/.claude/bash-env-loader.sh"'
+install_zshenv_shim() {
+    local zshenv="${ZDOTDIR:-$HOME}/.zshenv"
+
+    if ! command -v zsh >/dev/null 2>&1; then
+        echo -e "  ${YELLOW}zshenv: zsh not found, skipped${NC}"
+        return 0
+    fi
+
+    install_env_shim
+    touch "$zshenv" 2>/dev/null || true
+
+    # A hand-written `. ~/.claude/.env` / `source "$HOME/.claude/.env"` sources
+    # the RAW file and leaks FUSE_*; the installer never removes user lines.
+    if grep -Eq '(^|[[:space:]|&;])(\.|source)[[:space:]]+[^[:space:]]*\.claude/\.env' "$zshenv" 2>/dev/null; then
+        echo -e "  ${YELLOW}zshenv: WARNING $zshenv sources ~/.claude/.env directly (FUSE_* leak into every zsh) — remove that line${NC}"
+    fi
+
+    if grep -qF "$ZSHENV_LOADER_LINE" "$zshenv" 2>/dev/null; then
+        echo -e "  ${YELLOW}zshenv: Already installed${NC}"
+        return 0
+    fi
+
+    printf '\n# Claude Code - non-interactive zsh: load ~/.claude/.env (FUSE_* excluded: per-harness)\n%s\n' \
+        "$ZSHENV_LOADER_LINE" >> "$zshenv"
+    echo -e "  ${GREEN}zshenv: Installed ($zshenv)${NC}"
+}
+
 # Install for fish
 install_fish() {
     local conf_dir="$HOME/.config/fish/conf.d"
@@ -113,8 +156,7 @@ install_fish() {
 
     # BASH_ENV shim: non-interactive bash must load the filtered loader, never
     # the raw .env (which would re-export the FUSE_* the fish config skips).
-    mkdir -p "$HOME/.claude"
-    cp "$SCRIPT_DIR/bash-env-loader.sh" "$HOME/.claude/bash-env-loader.sh"
+    install_env_shim
 
     if [[ -f "$conf_file" ]]; then
         echo -e "  ${YELLOW}fish: Already installed${NC}"
@@ -230,6 +272,11 @@ case "$USER_SHELL" in
         ;;
 esac
 
+# Common step, every default shell: Claude Code spawns non-interactive zsh on
+# macOS regardless of the login shell, and that zsh reads only
+# ${ZDOTDIR:-~}/.zshenv.
+echo "Installing for non-interactive zsh (${ZDOTDIR:-$HOME}/.zshenv)..."
+install_zshenv_shim
 
 echo ""
 echo -e "${GREEN}Done!${NC}"
@@ -241,6 +288,9 @@ case "$USER_SHELL" in
     fish) echo "  - fish (~/.config/fish/conf.d/claude-env.fish)" ;;
     pwsh|powershell) echo "  - powershell" ;;
 esac
+if command -v zsh >/dev/null 2>&1; then
+    echo "  - zsh non-interactive (${ZDOTDIR:-$HOME}/.zshenv -> ~/.claude/bash-env-loader.sh)"
+fi
 echo ""
 echo "Next steps:"
 echo "  1. Ensure ~/.claude/.env exists with your API keys"

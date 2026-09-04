@@ -134,6 +134,17 @@
         ]
       },
       {
+        "_description": "Lead-Stop guards in scope core (PRD cross-check block-once + compact hint — FUSE_PRD=1 plus an apex/prd.json router in the project), reached because this entry reads stdin (hook #1 exits in maybePlaySound() before stdin is read, so it never reaches them). Sound is cut via `bun --env-file=harness-quiet.env`, which sets FUSE_HARNESS_SOUND=0 in process.env before the script runs — the harness dotenv loader preserves process.env, so ~/.claude/.env cannot re-enable it — muting the stopCore→notify(\"stop\") path that harness 0.1.94 calls unconditionally without --sound, so it does NOT double hook #1's --sound stop. The `bun …` form (no leading env var) is required by hooks-harness-exclusive.test.ts. Without FUSE_PRD this entry prints nothing and exits 0.",
+        "matcher": "",
+        "hooks": [
+          {
+            "_description": "Harness: lead-Stop guards, muted via --env-file (FUSE_HARNESS_SOUND=0, completion sound stays on hook #1)",
+            "type": "command",
+            "command": "bun --env-file=$HOME/.claude/plugins/marketplaces/fusengine-plugins/plugins/core-guards/hooks/harness-quiet.env $HOME/.claude/plugins/marketplaces/fusengine-plugins/plugins/node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code core"
+          }
+        ]
+      },
+      {
         "_description": "Verify APEX workflow completion before stopping. IMPORTANT: never convert this to a `hook claude-code core` command call without --sound — that path also triggers stopCore→notify(\"stop\"), which would double up with hook #1's --sound stop.",
         "matcher": "",
         "hooks": [

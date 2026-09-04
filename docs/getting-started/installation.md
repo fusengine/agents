@@ -43,6 +43,7 @@ This installs:
 - **API keys** (interactive prompts if missing)
 - **Shell config** (bash/zsh/fish/PowerShell)
 - **Statusline**
+- **PRD coordination** — asks `Enable PRD multi-agent coordination (FUSE_PRD=1)? [y/N]` (default **No**). `y` writes `FUSE_PRD=1` to `~/.claude/.env`: the harness then enforces one writer per file across sub-agents and cross-checks task PRDs on Stop (`harness prd status|validate|compact`). Inert until the project has an `apex/prd.json` router. Re-running setup never turns an existing `FUSE_PRD=1` off.
 - **MCP servers** (interactive selection of 23 servers)
 
 ## 4. MCP Server Selection
