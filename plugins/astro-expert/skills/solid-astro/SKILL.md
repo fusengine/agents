@@ -18,7 +18,7 @@ Provides ready-to-copy templates for components, layouts, services, and interfac
 
 ## Agent Workflow (MANDATORY)
 
-Before ANY implementation, use `TeamCreate` to spawn 3 agents:
+Before ANY implementation, spawn 3 agents in parallel, one `Agent` call each with a `name`:
 
 1. **fuse-ai-pilot:explore-codebase** - Analyze project structure, naming, and existing patterns
 2. **fuse-ai-pilot:research-expert** - Verify Astro 7 architecture best practices via Context7/Exa

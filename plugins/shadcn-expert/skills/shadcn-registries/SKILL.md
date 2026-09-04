@@ -20,7 +20,7 @@ Documents the `components.json` schema (style, Tailwind config paths, aliases) a
 
 ## Agent Workflow (MANDATORY)
 
-Before registry configuration, use `TeamCreate`:
+Before registry configuration, spawn agents in parallel, one `Agent` call each with a `name`:
 
 1. **fuse-ai-pilot:explore-codebase** - Find existing components.json
 2. **fuse-ai-pilot:research-expert** - Verify latest CLI options via Context7

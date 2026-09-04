@@ -3,7 +3,7 @@ name: explore-codebase
 description: "Use when: unknown project structure, mapping dependencies, finding existing patterns before coding, architectural analysis. Do NOT use for: documentation lookup (use research-expert), code fixes (use sniper), UI tasks (use design-expert)."
 model: sonnet
 color: yellow
-tools: Read, Glob, Grep, Bash
+tools: Read, Glob, Grep, Bash, SendMessage, Write, mcp__sequential-thinking__sequentialthinking
 skills: exploration
 ---
 

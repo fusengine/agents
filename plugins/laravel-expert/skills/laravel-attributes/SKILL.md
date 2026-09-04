@@ -24,7 +24,7 @@ Factories/Seeders (#[UseModel], #[Seed], #[Seeder]).
 
 ## Agent Workflow (MANDATORY)
 
-Before ANY implementation, use `TeamCreate` to spawn 3 agents:
+Before ANY implementation, spawn 3 agents in parallel, one `Agent` call each with a `name`:
 
 1. **fuse-ai-pilot:explore-codebase** - Scan existing models/jobs/controllers for legacy `protected $fillable / $hidden / $connection` properties to convert
 2. **fuse-ai-pilot:research-expert** - Verify Laravel 13 release notes for attribute coverage and edge cases

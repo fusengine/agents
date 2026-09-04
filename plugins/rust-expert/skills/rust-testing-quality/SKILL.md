@@ -29,7 +29,7 @@ test suites are not covered.
 
 ## Agent Workflow (MANDATORY)
 
-Before ANY test work, use `TeamCreate` to spawn 3 agents:
+Before ANY test work, spawn 3 agents in parallel, one `Agent` call each with a `name`:
 
 1. **fuse-ai-pilot:explore-codebase** - Map existing `tests/`, `#[cfg(test)]`, `benches/`
 2. **fuse-ai-pilot:research-expert** - Verify current nextest/proptest/criterion docs via Context7/Exa

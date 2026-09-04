@@ -21,7 +21,7 @@ Server Components are the default rendering model in Next.js 16 with React 19.
 
 ## Agent Workflow (MANDATORY)
 
-Before ANY implementation, use `TeamCreate` to spawn 3 agents:
+Before ANY implementation, spawn 3 agents in parallel, one `Agent` call each with a `name`:
 
 1. **fuse-ai-pilot:explore-codebase** - Analyze existing component boundaries
 2. **fuse-ai-pilot:research-expert** - Verify latest RSC docs via Context7/Exa

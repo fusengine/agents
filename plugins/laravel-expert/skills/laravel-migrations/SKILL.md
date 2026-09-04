@@ -23,7 +23,7 @@ laravel-vector-search for querying them).
 
 ## Agent Workflow (MANDATORY)
 
-Before ANY implementation, use `TeamCreate` to spawn 3 agents:
+Before ANY implementation, spawn 3 agents in parallel, one `Agent` call each with a `name`:
 
 1. **fuse-ai-pilot:explore-codebase** - Check existing migrations
 2. **fuse-ai-pilot:research-expert** - Verify Laravel 13 patterns via Context7

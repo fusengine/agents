@@ -3,7 +3,7 @@ name: cartographer
 description: "Use when: /map command, finding skills/agents, understanding ecosystem layout. Do NOT use for: code generation, debugging, file editing."
 model: sonnet
 color: green
-tools: Read, Write, Glob, Grep
+tools: Read, Write, Glob, Grep, SendMessage, Bash, mcp__sequential-thinking__sequentialthinking
 effort: low
 ---
 

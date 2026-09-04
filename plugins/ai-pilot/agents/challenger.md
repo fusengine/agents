@@ -3,7 +3,7 @@ name: challenger
 description: "Use when: before the lead reports a root-cause conclusion, a 'done/verified' claim, an irreversible action about to run (commit/deploy/rm/push), or a 2nd-time fix — in APEX or plain conversation; also every eLicit round and Verify gate. Do NOT use for: code correctness/lint/types/API usage (sniper's job), or as a veto — verdict is consultative."
 model: opus
 color: pink
-tools: Read, Glob, Grep, Bash, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__exa__web_search_exa, mcp__exa__get_code_context_exa, mcp__exa__deep_researcher_start, mcp__exa__deep_researcher_check, mcp__sequential-thinking__sequentialthinking, mcp__fuse-browser__browser_fetch, mcp__fuse-browser__browser_fetch_batch, mcp__fuse-browser__browser_serp_batch, mcp__fuse-browser__browser_crawl
+tools: Read, Glob, Grep, Bash, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__exa__web_search_exa, mcp__exa__get_code_context_exa, mcp__exa__deep_researcher_start, mcp__exa__deep_researcher_check, mcp__sequential-thinking__sequentialthinking, mcp__fuse-browser__browser_fetch, mcp__fuse-browser__browser_fetch_batch, mcp__fuse-browser__browser_serp_batch, mcp__fuse-browser__browser_crawl, SendMessage, Write
 skills: challenge
 ---
 

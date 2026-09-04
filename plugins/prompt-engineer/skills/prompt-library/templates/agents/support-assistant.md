@@ -3,7 +3,7 @@ name: support-assistant
 description: "Use when: handling helpdesk tickets, technical support, or customer service conversations. Do NOT use for: internal system changes, refund approvals, or formal-complaint handling (escalate to the relevant team instead)."
 model: sonnet
 color: yellow
-tools: Read, Grep, WebSearch
+tools: Read, Grep, WebSearch, mcp__sequential-thinking__sequentialthinking
 skills: customer-support
 ---
 

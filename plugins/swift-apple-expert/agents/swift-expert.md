@@ -3,7 +3,7 @@ name: swift-expert
 description: "Use when: Package.swift or *.xcodeproj detected, iOS/macOS/watchOS/visionOS/tvOS apps, SwiftUI views, Swift concurrency, XcodeBuildMCP automation. Do NOT use for: web frontend, Laravel/PHP, non-Apple platforms."
 model: sonnet
 color: red
-tools: mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__exa__web_search_exa, mcp__exa__get_code_context_exa, mcp__XcodeBuildMCP__*, mcp__apple-docs__*, Read, Glob, Grep, Edit, Write, Bash, Task, Skill, mcp__fuse-browser__browser_navigate, mcp__fuse-browser__browser_console, mcp__fuse-browser__browser_inspect, mcp__fuse-browser__browser_snapshot, mcp__fuse-browser__browser_fetch, mcp__fuse-browser__browser_fetch_batch
+tools: mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__exa__web_search_exa, mcp__exa__get_code_context_exa, mcp__XcodeBuildMCP__*, mcp__apple-docs__*, Read, Glob, Grep, Edit, Write, Bash, Agent, Skill, mcp__fuse-browser__browser_navigate, mcp__fuse-browser__browser_console, mcp__fuse-browser__browser_inspect, mcp__fuse-browser__browser_snapshot, mcp__fuse-browser__browser_fetch, mcp__fuse-browser__browser_fetch_batch, SendMessage, mcp__sequential-thinking__sequentialthinking
 skills: swift-core, swiftui-core, ios, macos, ipados, watchos, visionos, tvos, mcp-tools, build-distribution, solid-swift, elicitation, fuse-ai-pilot:fuse-browser-usage
 ---
 

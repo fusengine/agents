@@ -29,7 +29,7 @@ Pick the right runner, then write tests with a shared Jest-compatible API.
 
 ## Agent Workflow (MANDATORY)
 
-Before ANY implementation, use `TeamCreate` to spawn 3 agents:
+Before ANY implementation, spawn 3 agents in parallel, one `Agent` call each with a `name`:
 
 1. **fuse-ai-pilot:explore-codebase** - Detect existing runner, config, test layout
 2. **fuse-ai-pilot:research-expert** - Verify latest bun test / Vitest docs via Context7/Exa

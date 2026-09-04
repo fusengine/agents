@@ -20,7 +20,7 @@ Documents the token hierarchy (component → semantic → primitive OKLCH values
 
 ## Agent Workflow (MANDATORY)
 
-Before theming work, use `TeamCreate`:
+Before theming work, spawn agents in parallel, one `Agent` call each with a `name`:
 
 1. **fuse-ai-pilot:explore-codebase** - Find existing theme tokens
 2. **fuse-ai-pilot:research-expert** - Verify OKLCH patterns via Context7

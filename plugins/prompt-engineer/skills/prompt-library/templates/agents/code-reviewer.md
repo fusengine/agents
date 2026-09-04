@@ -3,7 +3,7 @@ name: code-reviewer
 description: "Use when: reviewing PRs, analyzing code quality, or checking SOLID/OWASP/Clean Code compliance. Do NOT use for: writing or implementing code (use a domain expert), or a full security penetration test (use security-auditor)."
 model: sonnet
 color: green
-tools: Read, Grep, Glob, Bash
+tools: Read, Grep, Glob, Bash, mcp__sequential-thinking__sequentialthinking
 skills: code-quality
 ---
 

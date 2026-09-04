@@ -65,11 +65,14 @@ Writing style (ALWAYS): clear, concise, precise. Lead with the answer, then only
 | Scope | Action | Why |
 |-------|--------|-----|
 | Trivial / read-only / 1 targeted file, bounded change | Direct edit (or 1 domain-expert) + sniper. NO team, NO mandatory ANALYZE trio. | Orchestration cost (spawn, briefs, FIFO cross-checks) exceeds the gain. |
-| Non-trivial mono-concern (1 domain, a few COUPLED files) | 1 domain-expert (+ targeted ANALYZE if it touches unknown code) + sniper/challenger. | One executor suffices; verification comes from sniper + challenger, not parallelism. |
-| Truly parallelizable: INDEPENDENT batches, multi-domain, or large multi-file with no cross-dependency | **Propose TeamCreate** — ask user first. A team is **MINIMUM 4 agents in parallel**, NEVER 1 (1 agent = not a team). | Parallelism only pays when the batches have no dependency between them. |
-| User says "team" / "crée une team" | **TeamCreate immediately** — team of min 4, no debate. | Owner's explicit call overrides the ladder. |
+| Non-trivial mono-concern, 1-2 files | 1 domain-expert (+ targeted ANALYZE if it touches unknown code) + sniper/challenger. | One executor suffices; verification comes from sniper + challenger, not parallelism. |
+| Multi-file (3+), SAME domain, even COUPLED | **2-3 agents by EXCLUSIVE FILE OWNERSHIP** — split the file set, one owner per subset, no two agents on the same file. Coupling is handled by the brief (shared contract stated up front) and by `SendMessage` between them, not by serializing everything onto one executor. | Coupling forbids concurrent edits to the SAME file, not concurrent work on the same feature. One executor on 6 files is a context bottleneck, not a safety measure. |
+| Truly parallelizable: INDEPENDENT batches, multi-domain, or large multi-file with no cross-dependency | **Spawn teammates** — `Agent` with a `name` per teammate (that is what makes a teammate; teams are already enabled). **MINIMUM 4 in parallel**, NEVER 1 (1 agent = not a team). Announce the split, don't ask. | Parallelism only pays when the batches have no dependency between them. |
+| User says "team" / "crée une team" | **Spawn immediately** — `Agent` with a `name`, min 4, no debate. | Owner's explicit call overrides the ladder. |
 
-**Key rule — the trigger is NOT the file count, it is the INDEPENDENCE of the batches.** 2 coupled files = 1 executor; 6 independent files = team.
+**Key rule — the trigger is the FILE SET, and coupling dictates the SPLIT, not the agent count.** 1-2 files = 1 executor; 3+ files = split by exclusive ownership; independent batches = full team. Never put 2 agents on the same file.
+
+**`TeamCreate`/`TeamDelete` no longer exist** (removed in Claude Code v2.1.178). A teammate is born from an `Agent` call carrying a `name` — nothing else to set up, and cleanup is automatic on session exit. Named agents can talk to each other via `SendMessage`; teammates cannot spawn their own teammates (no nested teams), so only the lead splits the work.
 
 **Parallel ownership — non-negotiable when several agents run at once.** Disjoint file lots, one owner per folder, never two agents on the same file. When a collision happens anyway, do not pick one side wholesale: each side usually holds something the other lacks. Name one owner AND order it to START FROM the on-disk state, preserving the other's contribution — never to rewrite from its own copy.
 

@@ -18,7 +18,7 @@ It generates the skill's structural and documentation content only, not the skil
 
 ## Agent Workflow (MANDATORY)
 
-Before ANY skill creation, use `TeamCreate` to spawn 3 agents:
+Before ANY skill creation, spawn 3 agents in parallel, one `Agent` call each with a `name`:
 
 1. **fuse-ai-pilot:explore-codebase** - Check existing skills, analyze structure
 2. **fuse-ai-pilot:research-expert** - Fetch latest official documentation online

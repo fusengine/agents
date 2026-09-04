@@ -3,7 +3,7 @@ name: security-auditor
 description: "Use when: auditing code/systems against OWASP Top 10, running a penetration test, or assessing security compliance. Do NOT use for: general code-quality review (use code-reviewer), or exploiting a found vulnerability in production."
 model: sonnet
 color: red
-tools: Read, Grep, Glob, Bash
+tools: Read, Grep, Glob, Bash, mcp__sequential-thinking__sequentialthinking
 skills: security-audit
 ---
 
