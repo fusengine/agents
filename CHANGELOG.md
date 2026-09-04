@@ -1,5 +1,9 @@
 # Release Notes
 
+## [1.39.26] - 04-09-2026
+
+- feat(env): bump `@fusengine/harness` `^0.1.89` -> `^0.1.94` (PRD module + compact hint); add a second core-guards Stop hook entry (`bun --env-file=harness-quiet.env … hook claude-code core`) to reach lead-Stop guards in scope `core` (PRD cross-check + compact hint) that the `--sound stop` entry can't, since it exits before stdin is read — `harness-quiet.env` mutes the duplicate sound; add an opt-in `FUSE_PRD` installer gate (default no, idempotent upsert); env-shell installers (`install-env.sh`, `shell-installers.ts`) now wire a filtered shim (`~/.claude/bash-env-loader.sh`) into `.zshenv` for non-interactive zsh instead of sourcing the raw `.env`; add an opt-in `FUSE_GUI_ENV=1` macOS GUI bridge (`launchctl setenv`) in `claude-env.fish`, fish-only; bump statusline deps `zod` `^4.5.4`, `@biomejs/biome` `^2.5.12`, `@types/bun` `^1.4.0`. (core-guards 1.1.37)
+
 ## [1.39.25] - 03-08-2026
 
 - chore(design-expert): anonymize three of the five sources added in 1.39.24 — their names no longer appear in `stash-recode`, `parley-recode`, or `dispatch-recode` (25 occurrences across `design-system.md`, `tokens-*.md`, `styles.css`, `motion.js`, plus this CHANGELOG). Owner's call, verbatim: no publicity for those three. Convention: prose URLs become "the source" / "la source"; `Source: <url>` becomes `Source: not published here (…)`, keeping the technical parenthesis; shell-command URLs move to a `$SRC` variable declared once per block with a `# the source URL is not published in this corpus` comment, so the commands stay executable and the token relevés stay replayable; the scraped working file becomes `source.html`. `mosa-ai` and `stripe.com/fr` are untouched — explicit owner decision, not an oversight. No measured value, `[relevé]`/`[arbitrage]`/`[estimé]` marker, or brand name moved. (fuse-design 2.2.7)
