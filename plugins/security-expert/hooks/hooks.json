@@ -1,10 +1,8 @@
 {
-  "_description": "Security Expert - skill-read advisory + research tracking (delegated to @fusengine/harness)",
-
+  "description": "Security Expert - skill-read advisory + research tracking (delegated to @fusengine/harness) | PreToolUse[0]: Harness: advisory (allow + additionalContext, NON-blocking) to read security skill before code edits when unread (ports check-security-skill.py) | PostToolUse[0]: Harness: track security-skill Reads + Context7/Exa research into ~/.claude/logs/00-security state (ports track-skill-read.py + track-mcp-research.py)",
   "hooks": {
     "PreToolUse": [
       {
-        "_description": "Harness: advisory (allow + additionalContext, NON-blocking) to read security skill before code edits when unread (ports check-security-skill.py)",
         "matcher": "Write|Edit",
         "hooks": [
           {
@@ -16,7 +14,6 @@
     ],
     "PostToolUse": [
       {
-        "_description": "Harness: track security-skill Reads + Context7/Exa research into ~/.claude/logs/00-security state (ports track-skill-read.py + track-mcp-research.py)",
         "matcher": "Read|mcp__.*context7|mcp__.*exa",
         "hooks": [
           {
