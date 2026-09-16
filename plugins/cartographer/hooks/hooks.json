@@ -1,11 +1,8 @@
 {
-  "_description": "Cartographer - Auto-generate ecosystem + project map (harness carto scope) + track enrichments",
-  "_version": "1.2.0",
-
+  "description": "Cartographer - Auto-generate ecosystem + project map (harness carto scope) + track enrichments | SessionStart[0]: Harness carto scope: project map (.cartographer/project) + plugin ecosystem map (.cartographer) + nav context. Ports generate_project_map.py + generate_map.py. | PostToolUse[0]: Harness: save descriptions from an edited .cartographer index.md to .enriched.json (ports track-enrichment.py)",
   "hooks": {
     "SessionStart": [
       {
-        "_description": "Harness carto scope: project map (.cartographer/project) + plugin ecosystem map (.cartographer) + nav context. Ports generate_project_map.py + generate_map.py.",
         "matcher": "",
         "hooks": [
           {
@@ -17,7 +14,6 @@
     ],
     "PostToolUse": [
       {
-        "_description": "Harness: save descriptions from an edited .cartographer index.md to .enriched.json (ports track-enrichment.py)",
         "matcher": "Edit|Write",
         "hooks": [
           {

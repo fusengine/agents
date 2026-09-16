@@ -1,9 +1,8 @@
 {
-  "_description": "ai-pilot - APEX context injection + caching, delegated to @fusengine/harness (scope 'aipilot'). Routing is by hook event + agent matcher; the harness dispatches internally. The UserPromptSubmit APEX injection is NOT duplicated here — core-guards already injects the APEX preamble + CLAUDE.md on UserPromptSubmit (the richer ai-pilot variant was merged into the harness's buildApexInstruction). Enforcement (bash-write, APEX gates, SOLID file-size, doc-consulted) is delegated to the harness via core-guards.",
+  "description": "ai-pilot - APEX context injection + caching, delegated to @fusengine/harness (scope 'aipilot'). Routing is by hook event + agent matcher; the harness dispatches internally. The UserPromptSubmit APEX injection is NOT duplicated here — core-guards already injects the APEX preamble + CLAUDE.md on UserPromptSubmit (the richer ai-pilot variant was merged into the harness's buildApexInstruction). Enforcement (bash-write, APEX gates, SOLID file-size, doc-consulted) is delegated to the harness via core-guards. | SubagentStart[0]: Single matcher-'' entry: the harness dispatcher (dispatch-aipilot.ts onSubagentStart) already combines apex + lessons + the agent-type-specific cache (explore/doc/test) in ONE call, routing by agent_type internally. Extra per-agent entries here would match ALONGSIDE this one and inject the same context twice. | PreToolUse[0]: Harness: inject APEX context into Task sub-agent prompts when .claude/apex/ exists. Resolves the harness binary from the root plugins/node_modules (single install). | SubagentStop[0]: Single matcher-'' entry (Python parity: check-solid-from-transcript ran with matcher '' for EVERY agent). The dispatcher (onSubagentStop) routes internally: research-expert -> doc cache, sniper -> lessons + test caches, then the universal SOLID transcript check for all agents. Per-agent entries here would both narrow the SOLID check AND double-fire the cache writers. | PostToolUse[0]: Write|Edit reaches checkSolidCompliance (Python parity: check-solid-compliance.py matcher 'Write|Edit'); TaskCreate|TaskUpdate reaches syncTaskTracking. Same dispatcher (aipilotPostToolUse) routes by tool_name.",
   "hooks": {
     "SubagentStart": [
       {
-        "_description": "Single matcher-'' entry: the harness dispatcher (dispatch-aipilot.ts onSubagentStart) already combines apex + lessons + the agent-type-specific cache (explore/doc/test) in ONE call, routing by agent_type internally. Extra per-agent entries here would match ALONGSIDE this one and inject the same context twice.",
         "matcher": "",
         "hooks": [
           {
@@ -15,7 +14,6 @@
     ],
     "PreToolUse": [
       {
-        "_description": "Harness: inject APEX context into Task sub-agent prompts when .claude/apex/ exists. Resolves the harness binary from the root plugins/node_modules (single install).",
         "matcher": "Task",
         "hooks": [
           {
@@ -27,7 +25,6 @@
     ],
     "SubagentStop": [
       {
-        "_description": "Single matcher-'' entry (Python parity: check-solid-from-transcript ran with matcher '' for EVERY agent). The dispatcher (onSubagentStop) routes internally: research-expert -> doc cache, sniper -> lessons + test caches, then the universal SOLID transcript check for all agents. Per-agent entries here would both narrow the SOLID check AND double-fire the cache writers.",
         "matcher": "",
         "hooks": [
           {
@@ -50,7 +47,6 @@
     ],
     "PostToolUse": [
       {
-        "_description": "Write|Edit reaches checkSolidCompliance (Python parity: check-solid-compliance.py matcher 'Write|Edit'); TaskCreate|TaskUpdate reaches syncTaskTracking. Same dispatcher (aipilotPostToolUse) routes by tool_name.",
         "matcher": "TaskCreate|TaskUpdate|Write|Edit",
         "hooks": [
           {

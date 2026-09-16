@@ -1,10 +1,8 @@
 {
-  "_description": "PHP Expert — SOLID/skill/DRY/file-size/interface enforcement via @fusengine/harness (framework-routed by applies-to)",
-  "_version": "2.0.0",
+  "description": "PHP Expert — SOLID/skill/DRY/file-size/interface enforcement via @fusengine/harness (framework-routed by applies-to) | PreToolUse[0]: Harness: framework-routed SOLID/skill/DRY/file-size/interface enforcement before Write/Edit | PostToolUse[0]: Harness: record doc/ref/agent activity feeding the APEX gates",
   "hooks": {
     "PreToolUse": [
       {
-        "_description": "Harness: framework-routed SOLID/skill/DRY/file-size/interface enforcement before Write/Edit",
         "matcher": "Write|Edit",
         "hooks": [
           {
@@ -16,7 +14,6 @@
     ],
     "PostToolUse": [
       {
-        "_description": "Harness: record doc/ref/agent activity feeding the APEX gates",
         "matcher": "",
         "hooks": [
           {

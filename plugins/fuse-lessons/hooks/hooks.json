@@ -1,5 +1,5 @@
 {
-  "_description": "fuse-lessons 5 events (harness lessons scope): SessionStart/SubagentStart/UserPromptSubmit inject MEMORY/LESSON.md (UserPromptSubmit re-injects on every prompt like rules/CLAUDE.md, with a 'lessons injected' notice), Stop reminds (5min throttle) to write a compact lesson, PostToolUse (Write|Edit|MultiEdit) marks the write to reset the throttle.",
+  "description": "fuse-lessons 5 events (harness lessons scope): SessionStart/SubagentStart/UserPromptSubmit inject MEMORY/LESSON.md (UserPromptSubmit re-injects on every prompt like rules/CLAUDE.md, with a 'lessons injected' notice), Stop reminds (5min throttle) to write a compact lesson, PostToolUse (Write|Edit|MultiEdit) marks the write to reset the throttle.",
   "hooks": {
     "UserPromptSubmit": [
       {

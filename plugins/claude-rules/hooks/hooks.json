@@ -1,15 +1,11 @@
 {
-  "_description": "Claude Rules - Global rules injection for all sessions (delegated to @fusengine/harness, scope 'rules'; reads ${CLAUDE_PLUGIN_ROOT}/rules/*.md)",
-  "_version": "1.0.0",
-
+  "description": "Claude Rules - Global rules injection for all sessions (delegated to @fusengine/harness, scope 'rules'; reads ${CLAUDE_PLUGIN_ROOT}/rules/*.md) | SessionStart[0]: Inject all rules into session context at startup | SessionStart[0].hooks[0]: Load and inject rules/*.md into additionalContext (harness reads CLAUDE_PLUGIN_ROOT) | SubagentStart[0]: Inject all rules into each subagent's context at spawn (requires @fusengine/harness >= 0.1.63 which routes scope 'rules' on SubagentStart) | SubagentStart[0].hooks[0]: Load and inject rules/*.md into additionalContext (harness reads CLAUDE_PLUGIN_ROOT) | UserPromptSubmit[0]: Re-inject rules at every user prompt for persistent context | UserPromptSubmit[0].hooks[0]: Reload rules/*.md into additionalContext on each prompt (harness reads CLAUDE_PLUGIN_ROOT)",
   "hooks": {
     "SessionStart": [
       {
-        "_description": "Inject all rules into session context at startup",
         "matcher": "",
         "hooks": [
           {
-            "_description": "Load and inject rules/*.md into additionalContext (harness reads CLAUDE_PLUGIN_ROOT)",
             "type": "command",
             "command": "bun $HOME/.claude/plugins/marketplaces/fusengine-plugins/plugins/node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code rules"
           }
@@ -18,11 +14,9 @@
     ],
     "SubagentStart": [
       {
-        "_description": "Inject all rules into each subagent's context at spawn (requires @fusengine/harness >= 0.1.63 which routes scope 'rules' on SubagentStart)",
         "matcher": "",
         "hooks": [
           {
-            "_description": "Load and inject rules/*.md into additionalContext (harness reads CLAUDE_PLUGIN_ROOT)",
             "type": "command",
             "command": "bun $HOME/.claude/plugins/marketplaces/fusengine-plugins/plugins/node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code rules"
           }
@@ -31,11 +25,9 @@
     ],
     "UserPromptSubmit": [
       {
-        "_description": "Re-inject rules at every user prompt for persistent context",
         "matcher": "",
         "hooks": [
           {
-            "_description": "Reload rules/*.md into additionalContext on each prompt (harness reads CLAUDE_PLUGIN_ROOT)",
             "type": "command",
             "command": "bun $HOME/.claude/plugins/marketplaces/fusengine-plugins/plugins/node_modules/@fusengine/harness/dist/cli/bin.mjs hook claude-code rules"
           }
