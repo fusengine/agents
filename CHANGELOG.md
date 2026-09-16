@@ -1,5 +1,9 @@
 # Release Notes
 
+## [1.39.29] - 16-09-2026
+
+- chore(deps): update `@fusengine/harness` `^0.1.94` -> `^0.1.97` in `plugins/package.json` (shared binary every plugin hook invokes); bump `@clack/prompts` `^1.7.0` -> `^1.8.1` and `@types/bun` -> `^1.4.2` in `scripts/package.json`; bump `fast-xml-parser` `^5.10.1` -> `^5.11.1` and `@types/bun` -> `^1.4.2` in `plugins/seo/package.json`; bump `@clack/prompts` -> `^1.8.1`, `zod` `^4.5.4` -> `^4.6.5`, `@biomejs/biome` `^2.5.12` -> `^2.5.14`, `@types/bun` -> `^1.4.2` in `plugins/core-guards/statusline/package.json`. All lockfiles regenerated via `bun update --latest`; `bun install --frozen-lockfile` and `scripts/` test suite (327 tests) verified green post-bump. (fuse-seo 1.0.11, core-guards 1.1.39)
+
 ## [1.39.28] - 16-09-2026
 
 - fix(hooks): align 19 plugins' `hooks.json` with the documented schema — Claude Code logged a startup `unknown keys "_description", "_version", "_author" … ignored` warning per plugin since only `description` is a documented optional root field. Fold every `_description` (root, matcher-group, hook-item) into one root `description` string, path-prefixed and joined with `" | "`; drop stray `_version`/`_author`. `.hooks` subtree (commands/matchers/events/types/timeouts) unchanged on every file — schema cleanup only, no behavior change. (fuse-ai-pilot 1.2.41, fuse-cartographer 1.0.12, fuse-changelog 1.0.15, claude-rules 1.0.22, core-guards 1.1.38, fuse-design 2.2.9, fuse-lessons 1.0.7, fuse-go 1.0.6, fuse-laravel 1.2.7, fuse-nextjs 1.1.23, fuse-php 1.0.6, fuse-react 1.0.20, fuse-rust 1.0.6, fuse-security 1.0.18, fuse-shadcn-ui 1.0.17, fuse-swift-apple-expert 1.1.19, fuse-tailwindcss 1.1.10, fuse-tanstack-start 1.0.5, fuse-typescript 1.0.6)
