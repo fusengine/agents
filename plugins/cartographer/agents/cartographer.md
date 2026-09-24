@@ -1,7 +1,7 @@
 ---
 name: cartographer
 description: "Use when: /map command, finding skills/agents, understanding ecosystem layout. Do NOT use for: code generation, debugging, file editing."
-model: sonnet
+model: opus
 color: green
 tools: Read, Write, Glob, Grep, SendMessage, Bash, mcp__sequential-thinking__sequentialthinking
 effort: low

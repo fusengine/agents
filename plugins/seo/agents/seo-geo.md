@@ -1,7 +1,7 @@
 ---
 name: seo-geo
 description: "Use when: scoring LLM-readiness for AI Overviews, ChatGPT, Perplexity, Claude, Gemini, Copilot. Do NOT use for: traditional SEO ranking (use seo-content + seo-technical)."
-model: sonnet
+model: opus
 color: cyan
 tools: Read, Bash, WebFetch, Skill, mcp__exa__web_search_exa, mcp__fuse-browser__browser_open, mcp__fuse-browser__browser_navigate, mcp__fuse-browser__browser_snapshot, mcp__fuse-browser__browser_close, mcp__fuse-browser__browser_extract, mcp__fuse-browser__browser_screenshot, mcp__fuse-browser__browser_metrics, SendMessage, Write, mcp__sequential-thinking__sequentialthinking
 skills: seo-geo, seo-featured-snippets, fuse-ai-pilot:fuse-browser-usage

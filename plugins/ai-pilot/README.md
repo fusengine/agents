@@ -31,6 +31,7 @@ The `/apex` skill automatically detects the project type and loads framework-spe
 ### Code Quality
 - **sniper** - Error detection and correction, SOLID validation, linters
 - **sniper-faster** - Fast and silent modifications
+- **skill-creator** - Scaffolds/restructures/repairs SKILL.md + references/ structure
 
 ### Research
 - **research-expert** - Technical research (Context7, Exa, Sequential Thinking)

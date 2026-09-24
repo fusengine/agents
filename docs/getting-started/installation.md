@@ -44,6 +44,7 @@ This installs:
 - **Shell config** (bash/zsh/fish/PowerShell)
 - **Statusline**
 - **PRD coordination** — asks `Enable PRD multi-agent coordination (FUSE_PRD=1)? [y/N]` (default **No**). `y` writes `FUSE_PRD=1` to `~/.claude/.env`: the harness then enforces one writer per file across sub-agents and cross-checks task PRDs on Stop (`harness prd status|validate|compact`). Inert until the project has an `apex/prd.json` router. Re-running setup never turns an existing `FUSE_PRD=1` off.
+- **Sub-agent default model** — asks `Default model for sub-agents without an explicit model (CLAUDE_CODE_SUBAGENT_MODEL)?` with `opus` (recommended, same model as the plugin agents), `sonnet`, `haiku` or `unset`. The choice is written to `~/.claude/settings.json` → `env`, which Claude Code reads for its own process. It only applies to agents that declare no `model:` in their frontmatter (e.g. `general-purpose`); an agent's own `model:` always wins, and the built-in Explore/Plan agents keep inheriting the session model. An existing value is shown with a keep/replace prompt; `unset` removes the key.
 - **MCP servers** (interactive selection of 23 servers)
 
 ## 4. MCP Server Selection

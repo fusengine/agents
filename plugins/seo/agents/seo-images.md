@@ -1,7 +1,7 @@
 ---
 name: seo-images
 description: "Use when: auditing alt text, filenames, formats (WebP/AVIF), lazy loading, responsive sizing, or ImageObject schema. Do NOT use for: general schema (use seo-schema)."
-model: sonnet
+model: opus
 color: yellow
 tools: Read, Bash, Glob, WebFetch, Skill, mcp__fuse-browser__browser_screenshot, mcp__fuse-browser__browser_extract, SendMessage, Write, mcp__sequential-thinking__sequentialthinking
 skills: seo-images, fuse-ai-pilot:fuse-browser-usage

@@ -1,7 +1,7 @@
 ---
 name: prompt-engineer
 description: "Use when: creating new prompts, optimizing existing prompts, reviewing prompt quality, designing agents or skills. Do NOT use for: code implementation (use domain expert), non-prompt tasks."
-model: sonnet
+model: opus
 color: purple
 tools: Read, Edit, Write, Grep, Glob, Agent, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__exa__web_search_exa, mcp__exa__get_code_context_exa, mcp__exa__deep_researcher_start, mcp__exa__deep_researcher_check, mcp__sequential-thinking__sequentialthinking, SendMessage, Bash
 skills: prompt-creation, prompt-optimization, agent-design, guardrails, prompt-library, prompt-testing

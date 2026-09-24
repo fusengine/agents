@@ -10,6 +10,7 @@ import { installBrowserBinary } from "./browser-binary";
 import { setHarnessRefs } from "./harness-env";
 import { resolveHomeInHooks } from "./harness-path-resolver";
 import { promptHarnessGates } from "./harness-gates";
+import { promptSubagentModel } from "./subagent-model-gate";
 import { promptHarnessTuning } from "./harness-tuning";
 import { promptEnforceTtl } from "./enforce-ttl";
 import { promptSolidMaxLines } from "./solid-lines";
@@ -75,6 +76,7 @@ export async function runSetup(
 		settings = await promptSolidMaxLines(settings);
 		settings = await promptEnforceTtl(settings);
 		settings = await promptHarnessGates(settings);
+		settings = await promptSubagentModel(settings);
 		settings = await promptHarnessTuning(settings);
 		const selectedMcp = await configureMcpServers();
 		if (selectedMcp.includes("fuse-browser")) {

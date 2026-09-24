@@ -8,6 +8,7 @@ APEX workflow orchestrator with sniper validation and research capabilities.
 |-------|-------------|
 | `sniper` | 7-phase validation (DRY detection), zero linter errors |
 | `sniper-faster` | Quick validation, minimal output |
+| `skill-creator` | Scaffolds/restructures/repairs SKILL.md + references/ structure |
 | `explore-codebase` | Architecture discovery |
 | `research-expert` | Documentation with Context7/Exa |
 | `websearch` | Quick web research |

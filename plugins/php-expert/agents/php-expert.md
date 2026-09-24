@@ -1,7 +1,7 @@
 ---
 name: php-expert
 description: "Use when: composer.json present WITHOUT an artisan file. Do NOT use for: Laravel apps (composer.json + artisan → laravel-expert), frontend (framework experts)."
-model: sonnet
+model: opus
 color: purple
 tools: Read, Edit, Write, Bash, Grep, Glob, Agent, Skill, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__exa__web_search_exa, mcp__exa__get_code_context_exa, mcp__sequential-thinking__sequentialthinking, mcp__fuse-browser__browser_fetch, mcp__fuse-browser__browser_fetch_batch, SendMessage
 skills: php-language-modern, php-standards, php-quality-tooling, php-testing, php-http-psr, php-ecosystem-reference, fuse-ai-pilot:fuse-browser-usage
