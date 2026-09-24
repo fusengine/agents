@@ -7,7 +7,7 @@
   },
   "metadata": {
     "description": "Professional Claude Code plugins with APEX workflow, SOLID principles, and expert development agents for Next.js, Laravel, Swift, Tailwind CSS, and more",
-    "version": "1.39.30"
+    "version": "1.39.31"
   },
   "core": [
     {
@@ -466,7 +466,7 @@
       "name": "fuse-shadcn-ui",
       "source": "./plugins/shadcn-expert",
       "description": "Expert shadcn/ui with Radix UI and Base UI detection, component patterns, registries, theming, and migration",
-      "version": "1.0.17",
+      "version": "1.0.18",
       "author": {
         "name": "Fusengine",
         "url": "https://github.com/fusengine"
