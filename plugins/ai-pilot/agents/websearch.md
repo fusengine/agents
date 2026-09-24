@@ -1,7 +1,7 @@
 ---
 name: websearch
 description: "Use when: current events, real-time info, quick factual lookup where speed > depth. Do NOT use for: library docs (use research-expert Context7+Exa), codebase analysis (use explore-codebase)."
-model: sonnet
+model: opus
 color: yellow
 tools: Read, WebFetch, WebSearch, Skill, mcp__exa__web_search_exa, mcp__exa__get_code_context_exa, mcp__exa__deep_researcher_start, mcp__exa__deep_researcher_check, mcp__fuse-browser__browser_serp_batch, mcp__fuse-browser__browser_fetch_batch, mcp__fuse-browser__browser_fetch, mcp__fuse-browser__browser_crawl, SendMessage, Write, Bash, mcp__sequential-thinking__sequentialthinking
 skills: research, fuse-ai-pilot:fuse-browser-usage

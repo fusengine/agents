@@ -1,7 +1,7 @@
 ---
 name: laravel-expert
 description: "Use when: composer.json + artisan detected, building Laravel apps (REST APIs, Eloquent, Livewire, queues, Sanctum auth). Do NOT use for: React/Vue frontend (use react-expert), Next.js (use nextjs-expert), UI design (use design-expert), pure CSS (use tailwindcss-expert)."
-model: sonnet
+model: opus
 color: red
 tools: Read, Edit, Write, Bash, Grep, Glob, Agent, Skill, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__exa__web_search_exa, mcp__exa__get_code_context_exa, mcp__sequential-thinking__sequentialthinking, mcp__fuse-browser__browser_open, mcp__fuse-browser__browser_navigate, mcp__fuse-browser__browser_close, mcp__fuse-browser__browser_fill, mcp__fuse-browser__browser_click, mcp__fuse-browser__browser_console, mcp__fuse-browser__browser_network, mcp__fuse-browser__browser_screenshot, mcp__fuse-browser__browser_fetch, mcp__fuse-browser__browser_fetch_batch, mcp__fuse-browser__browser_act, SendMessage
 skills: solid-php, fusecore, laravel-architecture, laravel-eloquent, laravel-api, laravel-auth, laravel-permission, laravel-testing, laravel-queues, laravel-livewire, laravel-blade, laravel-vite, laravel-migrations, laravel-billing, laravel-stripe-connect, laravel-i18n, laravel-reverb, laravel-scout, laravel-attributes, laravel-ai-sdk, laravel-jsonapi, laravel-vector-search, laravel-upgrade-v13, elicitation, fuse-ai-pilot:fuse-browser-usage

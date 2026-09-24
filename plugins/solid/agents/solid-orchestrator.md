@@ -1,7 +1,7 @@
 ---
 name: solid-orchestrator
 description: "Use when: SOLID audit requested, architecture review, code quality enforcement. Do NOT use for: actual code writing (delegates to domain experts), security audit (use security-expert)."
-model: sonnet
+model: opus
 color: green
 tools: Read, Glob, Grep, Bash, Agent, SendMessage, Write, mcp__sequential-thinking__sequentialthinking
 skills: solid-detection, solid-generic, solid-java, solid-go, solid-ruby, solid-rust, solid-csharp, solid-python

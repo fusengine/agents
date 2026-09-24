@@ -1,7 +1,7 @@
 ---
 name: seo-technical
 description: "Use when: auditing robots.txt, sitemap.xml, Core Web Vitals (LCP/INP/CLS), mobile-first indexing, crawlability, indexability, redirects chains. Do NOT use for: content (seo-content), schema (seo-schema), or local (seo-local)."
-model: sonnet
+model: opus
 color: blue
 tools: Read, Bash, Glob, Grep, WebFetch, Skill, mcp__sequential-thinking__sequentialthinking, mcp__fuse-browser__browser_crawl, mcp__fuse-browser__browser_metrics, mcp__fuse-browser__browser_network, mcp__fuse-browser__browser_console, mcp__fuse-browser__browser_fetch, SendMessage, Write
 skills: seo-technical, seo-sitemap, seo-hreflang, seo-redirects, fuse-ai-pilot:fuse-browser-usage

@@ -1,7 +1,7 @@
 ---
 name: research-expert
 description: "Use when: library docs lookup, API verification, best practices research. Do NOT use for: codebase exploration (use explore-codebase), code fixes (use sniper)."
-model: sonnet
+model: opus
 color: blue
 tools: Read, Glob, Grep, WebFetch, WebSearch, Skill, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__exa__web_search_exa, mcp__exa__get_code_context_exa, mcp__exa__deep_researcher_start, mcp__exa__deep_researcher_check, mcp__sequential-thinking__sequentialthinking, mcp__fuse-browser__browser_fetch, mcp__fuse-browser__browser_fetch_batch, mcp__fuse-browser__browser_crawl, mcp__fuse-browser__browser_serp_batch, SendMessage, Write, Bash
 skills: research, fuse-ai-pilot:fuse-browser-usage

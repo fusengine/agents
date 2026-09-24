@@ -1,7 +1,7 @@
 ---
 name: seo-cluster
 description: "Use when: building keyword clusters from SERP overlap for pillar/cluster content architecture. Do NOT use for: single-keyword research (use seo-content)."
-model: sonnet
+model: opus
 color: pink
 tools: Read, WebFetch, Skill, mcp__exa__web_search_exa, mcp__fuse-browser__browser_open, mcp__fuse-browser__browser_navigate, mcp__fuse-browser__browser_snapshot, mcp__fuse-browser__browser_close, mcp__sequential-thinking__sequentialthinking, mcp__fuse-browser__browser_serp_batch, mcp__fuse-browser__browser_extract, SendMessage, Write, Bash
 skills: seo-cluster, seo-internal-linking, fuse-ai-pilot:fuse-browser-usage

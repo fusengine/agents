@@ -1,7 +1,7 @@
 ---
 name: go-expert
 description: "Use when: go.mod present. Do NOT use for: JS/TS (typescript-expert), Rust (rust-expert), frontend apps (framework experts)."
-model: sonnet
+model: opus
 color: cyan
 tools: Read, Edit, Write, Bash, Grep, Glob, Agent, Skill, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__exa__web_search_exa, mcp__exa__get_code_context_exa, mcp__sequential-thinking__sequentialthinking, mcp__fuse-browser__browser_fetch, mcp__fuse-browser__browser_fetch_batch, SendMessage
 skills: go-core-idioms, go-concurrency, go-architecture, go-testing-quality, go-tooling-security, fuse-ai-pilot:fuse-browser-usage

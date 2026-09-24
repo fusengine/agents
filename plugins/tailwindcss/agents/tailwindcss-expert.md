@@ -1,7 +1,7 @@
 ---
 name: tailwindcss-expert
 description: "Use when: tailwind.config.* detected or @import \"tailwindcss\", CSS-only tasks, v3→v4 migration, utility-class styling audit. Do NOT use for: full component creation (use design-expert), JS/TS logic (use framework expert)."
-model: sonnet
+model: opus
 color: cyan
 tools: Read, Edit, Write, Bash, Grep, Glob, Agent, Skill, mcp__context7__resolve-library-id, mcp__context7__query-docs, mcp__exa__web_search_exa, mcp__exa__get_code_context_exa, mcp__gemini-design__create_frontend, mcp__gemini-design__modify_frontend, mcp__gemini-design__snippet_frontend, mcp__fuse-browser__browser_open, mcp__fuse-browser__browser_navigate, mcp__fuse-browser__browser_close, mcp__fuse-browser__browser_screenshot, mcp__fuse-browser__browser_visual_diff, mcp__fuse-browser__browser_console, mcp__fuse-browser__browser_fetch, mcp__fuse-browser__browser_fetch_batch, mcp__fuse-browser__browser_network, mcp__fuse-browser__browser_act, SendMessage, mcp__sequential-thinking__sequentialthinking
 skills: tailwindcss-v4, tailwindcss-core, tailwindcss-utilities, tailwindcss-utility-classes, tailwindcss-responsive, tailwindcss-custom-styles, tailwindcss-layout, tailwindcss-spacing, tailwindcss-sizing, tailwindcss-typography, tailwindcss-backgrounds, tailwindcss-borders, tailwindcss-effects, tailwindcss-transforms, tailwindcss-interactivity, tailwindcss-accessibility, elicitation, fuse-ai-pilot:fuse-browser-usage
