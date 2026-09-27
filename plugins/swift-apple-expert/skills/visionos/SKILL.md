@@ -2,7 +2,7 @@
 name: visionos
 description: Use when building Vision Pro apps — spatial computing, RealityKit 3D content, immersive spaces, or volumes.
 versions:
-  visionos: 26
+  visionos: 27
 user-invocable: false
 references: references/spatial-computing.md, references/realitykit.md, references/ornaments.md
 related-skills: swift-core, swiftui-core, mcp-tools

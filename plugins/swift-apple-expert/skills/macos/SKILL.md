@@ -2,8 +2,8 @@
 name: macos
 description: Use when building Mac apps — menu bar extras, window management, AppKit integration, or notarized distribution outside the App Store.
 versions:
-  macos: 26
-  xcode: 26
+  macos: 27
+  xcode: 27
 user-invocable: false
 references: references/app-structure.md, references/build-tools.md, references/appkit-integration.md, references/notarization.md
 related-skills: swift-core, swiftui-core, mcp-tools, build-distribution

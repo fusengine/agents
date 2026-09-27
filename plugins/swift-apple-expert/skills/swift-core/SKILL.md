@@ -2,8 +2,8 @@
 name: swift-core
 description: Use when implementing Swift 6 fundamentals — concurrency, architecture, testing, i18n, or performance — across any Apple platform.
 versions:
-  swift: 6.2
-  ios: 26
+  swift: 6.4
+  ios: 27
 user-invocable: false
 references: references/concurrency.md, references/architecture.md, references/testing.md, references/i18n.md, references/performance.md
 related-skills: swiftui-core, solid-swift, ios, macos, ipados, watchos, visionos

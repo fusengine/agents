@@ -2,8 +2,8 @@
 name: ios
 description: Use when building iPhone apps — simulator/device testing, UI automation, or debugging — with XcodeBuildMCP tools.
 versions:
-  ios: 26
-  xcode: 26
+  ios: 27
+  xcode: 27
 user-invocable: false
 references: references/simulator-tools.md, references/device-tools.md, references/ui-automation.md, references/debugging.md, references/uikit-integration.md
 related-skills: swift-core, swiftui-core, ipados, mcp-tools
