@@ -7,7 +7,7 @@
   },
   "metadata": {
     "description": "Professional Claude Code plugins with APEX workflow, SOLID principles, and expert development agents for Next.js, Laravel, Swift, Tailwind CSS, and more",
-    "version": "1.39.32"
+    "version": "1.39.33"
   },
   "core": [
     {
@@ -162,7 +162,7 @@
       "name": "fuse-swift-apple-expert",
       "source": "./plugins/swift-apple-expert",
       "description": "Expert Swift 6.4 + SwiftUI for iOS 27, macOS 27, iPadOS 27, watchOS 27, visionOS 27, tvOS 27 with Liquid Glass, @Observable, actors, SwiftData inheritance",
-      "version": "1.1.21",
+      "version": "1.1.22",
       "author": {
         "name": "Fusengine",
         "url": "https://github.com/fusengine"
