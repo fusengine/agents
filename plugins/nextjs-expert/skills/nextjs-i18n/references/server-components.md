@@ -1,7 +1,7 @@
 ---
 name: server-components
-description: Utilisation de getTranslations côté serveur, metadata SEO, Route Handlers
-when-to-use: pages, layouts, metadata, route handlers, server actions, zéro JS client
+description: Server-side getTranslations usage, SEO metadata, Route Handlers
+when-to-use: pages, layouts, metadata, route handlers, server actions, zero client JS
 keywords: getTranslations, getFormatter, getLocale, getMessages, async, metadata
 priority: high
 requires: installation.md, routing-setup.md
@@ -42,7 +42,7 @@ export default async function Page() {
 // Variants
 const t = await getTranslations('Namespace')      // With namespace
 const t = await getTranslations()                  // Without → t('Namespace.key')
-const t = await getTranslations({ locale: 'fr' }) // Override locale
+const t = await getTranslations({ locale: 'es' }) // Override locale
 ```
 
 ## getFormatter

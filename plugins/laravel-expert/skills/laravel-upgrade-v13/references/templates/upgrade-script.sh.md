@@ -79,7 +79,7 @@ echo ""
 echo "✅ Upgrade complete!"
 echo ""
 echo "Next steps:"
-echo "1. Review breaking changes manually (validateCsrfTokens → validateOrigin)"
+echo "1. Review breaking changes manually (validateCsrfTokens → preventRequestForgery)"
 echo "2. Commit: /fuse-commit-pro:commit"
 echo "3. Open PR: gh pr create"
 ```
@@ -88,7 +88,7 @@ echo "3. Open PR: gh pr create"
 
 The script automates ~70% of the upgrade. Manual steps still required:
 
-1. Rename `validateCsrfTokens` → `validateOrigin` in `bootstrap/app.php`
-2. Review Eloquent service providers for `new Model()` in `register()`
+1. Rename `validateCsrfTokens` → `preventRequestForgery` in `bootstrap/app.php`
+2. Review model `boot()` / trait `boot*()` methods for nested model instantiation (`new static()`)
 3. Audit third-party packages for L13 compatibility
 4. Optional: migrate Eloquent/Queue properties to PHP Attributes

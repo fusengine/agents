@@ -27,7 +27,7 @@ directions. Learn that one recipe and the rest of the page follows.
 
 Macrostructure: **Solo–Duet Cadence, Store Pivot.** The page alternates two modes.
 A *solo* band gives one object the full width; a *duet* section splits into two
-parallel tracks that never merge. Order [relevé] on `index.html`, read on content
+parallel tracks that never merge. Order [measured] on `index.html`, read on content
 because the classes repeat: fixed nav pill → hero band, centred, one line of
 title and three usage proofs (solo) → Umbrel Pro band, full-bleed photo with the
 text set left and a 160px gradient joint dissolving into black (solo) → duo,
@@ -64,22 +64,22 @@ saturated tints of the apps they advertise.
 
 ```css
 --surface-page:      #000;
---surface-profonde:  #131415;
---surface-elevee:    #222426;
---surface-carte:     rgba(255,255,255,.035);
---surface-verre:     rgba(18,18,20,.72);
---filet:             rgba(255,255,255,.09);
---filet-fort:        rgba(255,255,255,.16);
---texte-primaire:    #fff;
---texte-secondaire:  rgba(255,255,255,.62);
---texte-tertiaire:   #ababab;
---texte-eyebrow:     #e0e0e0;
---texte-inverse:     #1d1d1f;
---accent-chaud:      #e3a081;
---accent-froid:      #5351ea;
---accent-electrique: #1c1aff;
+--surface-deep:      #131415;
+--surface-raised:    #222426;
+--surface-card:      rgba(255,255,255,.035);
+--surface-glass:     rgba(18,18,20,.72);
+--rule:              rgba(255,255,255,.09);
+--rule-strong:       rgba(255,255,255,.16);
+--text-primary:      #fff;
+--text-secondary:    rgba(255,255,255,.62);
+--text-tertiary:     #ababab;
+--text-eyebrow:      #e0e0e0;
+--text-inverse:      #1d1d1f;
+--accent-warm:       #e3a081;
+--accent-cold:       #5351ea;
+--accent-electric:   #1c1aff;
 --accent-signal:     #e9c341;
---accent-bois:       #bd9366;
+--accent-wood:       #bd9366;
 ```
 
 Strategy: **pure black ground, alpha veils, four accents with one role each.**
@@ -89,7 +89,7 @@ veils doubled by a hairline at 9 %. The accents are never interchangeable: warm
 for the pivot word of the h1 and nothing else, cold for the primary action,
 electric for the superpowers gradient word, signal for the NEW pill.
 
-Contrast floors held [estimé] on `#000`: white 21:1, secondary white 62 % ≈ 7.8:1,
+Contrast floors held [estimated] on `#000`: white 21:1, secondary white 62 % ≈ 7.8:1,
 tertiary `#ababab` ≈ 9:1, warm accent ≈ 9.6:1. The lowest text value on the page
 is the carousel paragraph at `opacity:.8`, which sits on a saturated card rather
 than on black; the app pill carries a faint white text-shadow for the same reason.
@@ -97,11 +97,11 @@ than on black; the app pill carries a faint white text-shadow for the same reaso
 ### Typography
 
 ```css
---police: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+--font: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 ```
 
 One family, loaded from the Google Fonts CDN at 500/600/700. The source runs Inter
-Display on headings and Inter Variable on labels [relevé]; Inter alone covers both.
+Display on headings and Inter Variable on labels [measured]; Inter alone covers both.
 The scale is explicitly **not** modular — 48 / 43 / 32 / 27 / 24 / 20 / 18 / 14 /
 13 / 12, whose measured ratios are 1.12 · 1.59 · 1.13 · 1.20 · 1.11 · 1.29 · 1.08:
 two tight clusters (display ≈1.12, interface ≈1.08) separated by two hard jumps.
@@ -118,7 +118,7 @@ Never used: a serif, a mono, a second family, or any weight below 500.
 
 ### Spacing
 
-The step is **10, not 8** [relevé]: paddings run 60 / 50 / 40 / 30 / 20 / 10 in
+The step is **10, not 8** [measured]: paddings run 60 / 50 / 40 / 30 / 20 / 10 in
 that order of frequency, and only the micro gaps (4, 8, 12, 14, 25, 26) leave that
 rhythm. Containers: 960px for running text, 1044px for the photo bands, full bleed
 for photography and marquees; 20px gutter on mobile. Radii: 24 large cards, 22
@@ -137,7 +137,7 @@ keyframe marquees, one native `scroll-snap` rail, and `mask-image` fades at both
 ends of the rail and of each marquee. There is one 3D use in the page and it does
 not animate: a `perspective: 1200px` scene holding the tablet and phone at fixed
 `rotateX/rotateY`. Curves: `cubic-bezier(.44,0,.56,1)`, the only CSS transition the
-source carries [relevé], for hovers at .3s; `cubic-bezier(.16,1,.3,1)` for the .7s
+source carries [measured], for hovers at .3s; `cubic-bezier(.16,1,.3,1)` for the .7s
 reveals. Hover is colour or `brightness(1.15)`, nothing moves.
 
 What distinguishes the entrances is which variant a block carries and at what

@@ -7,17 +7,30 @@ description: Relationships, inclusion, and links
 
 ## Declaring relationships
 
+Simple form - the `$relationships` property (resource class auto-discovered, or given explicitly):
+
 ```php
-public function relationships(): array
+public $relationships = [
+    'author' => UserResource::class,
+    'comments',
+];
+```
+
+Full control - override `toRelationships()`:
+
+```php
+public function toRelationships(Request $request): array
 {
     return [
-        'author' => fn () => UserResource::make($this->whenLoaded('author')),
-        'comments' => fn () => CommentResource::collection($this->whenLoaded('comments')),
+        'author' => UserResource::class,
+        'comments' => fn () => CommentResource::collection(
+            $this->comments->where('is_public', true),
+        ),
     ];
 }
 ```
 
-Each closure is invoked only when the relationship is loaded AND included.
+Relationships are only serialized when the client requests them via `include`; closures are resolved only then. Limit nesting with `JsonApiResource::maxRelationshipDepth(3)` in a service provider.
 
 ## Client request
 
@@ -78,13 +91,15 @@ $post = Post::with(array_filter($includes))->findOrFail($id);
 
 A relationship `data` is always a resource identifier - `{id, type}` - NEVER the full object. Full objects live in `included`. The base class enforces this automatically.
 
+To include every already eager-loaded relation regardless of the query string: `$post->load('author')->toResource()->includePreviouslyLoadedRelationships()`.
+
 ## Links
 
 ```php
-public function toLinks($request): array
+public function toLinks(Request $request): array
 {
     return [
-        'self' => route('posts.show', $this->id),
+        'self' => route('posts.show', $this->resource),
     ];
 }
 ```

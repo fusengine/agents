@@ -1,7 +1,7 @@
 ---
 name: runtime-requirements
 description: Support Node.js, Edge, Cloudflare, Intl APIs, polyfills, timezone, memory
-when-to-use: edge deployment, vieux navigateurs, timezone-specific, optimisation mémoire
+when-to-use: edge deployment, old browsers, timezone-specific, memory optimization
 keywords: Node.js 18+, Edge Runtime, Intl APIs, polyfills, browser support, optimization
 priority: low
 requires: installation.md

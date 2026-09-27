@@ -93,21 +93,19 @@ New design language using light lensing (not blur).
 ### Manual API
 ```swift
 MyView()
-    .glassEffect(.regular)              // Default
-    .glassEffect(.prominent)            // Stronger
-    .glassEffect(.regular, in: .capsule) // Custom shape
+    .glassEffect()                          // .regular (default)
+    .glassEffect(.clear)                    // Variants: .regular, .clear, .identity
+    .glassEffect(.regular.interactive(), in: .capsule) // Custom shape
 ```
 
 ### TabBar iOS 26
 ```swift
 TabView {
-    ScrollView { }
-        .tabBarMinimizingBehavior(.automatic)
+    Tab("Home", systemImage: "house") { HomeView() }
+    Tab(role: .search) { SearchView() }     // Search tab replaces bar with field
 }
-.tabBarAccessory { HStack { Button("Action") { } } }
-.tabBarFloatingButton {
-    Button { } label: { Image(systemName: "magnifyingglass") }
-}
+.tabBarMinimizeBehavior(.onScrollDown)      // .automatic, .never, .onScrollDown, .onScrollUp
+.tabViewBottomAccessory { NowPlayingBar() }
 ```
 
 ### View Transitions
@@ -124,5 +122,23 @@ TabView {
 2. **Depth** - Visual hierarchy via translucency
 3. **Responsiveness** - Glass reacts to interactions
 4. **Adaptivity** - Automatic light/dark mode
+
+---
+
+## iOS 27 Additions (Xcode 27)
+
+| API | Purpose |
+|-----|---------|
+| `ContentBuilder` | Unified result builder replacing type-specific builders (`ToolbarContentBuilder`, `CommandsBuilder`) |
+| `.reorderable()` + `.reorderContainer(for:isEnabled:move:)` | Drag-to-reorder in lists, stacks, grids, custom layouts |
+| `.swipeActions(edge:allowsFullSwipe:content:onPresentationChanged:)` + `.swipeActionsContainer()` | Swipe actions outside `List` |
+| `.visibilityPriority(_:)` on `ToolbarContent` | Keep key toolbar items visible as space shrinks |
+| `ToolbarOverflowMenu` | Send secondary toolbar actions straight to overflow |
+| `.topBarPinnedTrailing` placement | Pin a toolbar item to the trailing top-bar edge |
+| `.toolbarMinimizationBehavior(_:for:)` | Control toolbar minimization on scroll |
+| `.asyncImageURLSession(_:)` | Custom `URLSession` (caching) for `AsyncImage` |
+| `Tab(role: .prominent)` | Separate trailing tab in the tab bar |
+
+Source: developer.apple.com/documentation/updates/swiftui (June 2026).
 
 → See `templates/view-structure.md` for code examples

@@ -8,180 +8,182 @@ requires: null
 related: configuration.md
 ---
 
-# shadcn/ui Installation
+# shadcn/ui Installation (Vite)
+
+Sources: https://ui.shadcn.com/docs/installation/vite, https://ui.shadcn.com/docs/cli,
+https://ui.shadcn.com/docs/changelog/2026-07-base-ui-default (CLI checked: `shadcn@4.21.0 init --help`).
 
 ## Prerequisites
 
-- **Node.js**: 18.17+ or 20+
-- **React**: 19.0+
-- **Tailwind CSS**: 4.0+ (no config file needed)
+- **React**: 19+
+- **Tailwind CSS**: 4+ via `@tailwindcss/vite` (no `tailwind.config.*` file)
+- **CLI package**: `shadcn` (v4.x). `shadcn-ui` is the old, deprecated package — never use it.
 
-## Step 1: Create React Project
+## Pick a Component Base FIRST
+
+`init` asks for a base (`-b, --base <base>`). Every component exists for each base, but the
+primitive API differs, so the choice drives all generated code.
+
+| Base | Flag | Primitive package | Composition | Status |
+|------|------|-------------------|-------------|--------|
+| **Base UI** | `-b base` | `@base-ui/react` | `render={<Button />}` | **Default for new projects since July 2026** |
+| Radix UI | `-b radix` | unified `radix-ui` | `asChild` | Fully supported, not deprecated |
+| React Aria | `-b aria` | React Aria Components | per React Aria docs | Added July 2026 |
+
+Existing projects keep their base. Detect it from `components.json` `style`
+(`base-*`, `radix-*`, `aria-*`; legacy `new-york`/`default` = Radix).
+
+## Option A: New Project (CLI scaffolds Vite)
 
 ```bash
-bun create vite@latest my-app --template react-ts
+# Base UI (default)
+bunx --bun shadcn@latest init -t vite
+# Radix — pass the flag explicitly in scripts/CI (the default changed to Base UI)
+bunx --bun shadcn@latest init -t vite -b radix
+# React Aria
+bunx --bun shadcn@latest init -t vite -b aria
+# Preset from https://ui.shadcn.com/create (packs style, colors, fonts, icons, radius)
+bunx --bun shadcn@latest init -t vite --preset <CODE>
+```
+
+Useful init flags (4.21.0): `-t, --template` (`next`, `start`, `vite`, `react-router`,
+`laravel`, `astro`), `-b, --base`, `-p, --preset`, `-n, --name`, `--monorepo`, `--rtl`,
+`--pointer`, `--no-css-variables`, `-d, --defaults` (= `--template=next --preset=base-nova`).
+`create` is an alias of `init`. There is no `--base-color` flag in v4 — base colors come from
+the preset (or `shadcn migrate base-color` afterwards).
+
+## Option B: Existing Vite Project
+
+```bash
+bun create vite@latest my-app   # choose React + TypeScript
 cd my-app
-bun install
+bun add tailwindcss @tailwindcss/vite
+bun add -d @types/node
 ```
 
-## Step 2: Install shadcn/ui CLI
+`src/index.css`:
 
-```bash
-bunx shadcn-ui@latest init
+```css
+@import "tailwindcss";
 ```
 
-### Configuration Prompts
-
-| Prompt | Answer | Reason |
-|--------|--------|--------|
-| **Which style?** | `New York` | Modern, minimal design |
-| **Which color?** | `slate` | Neutral, accessible |
-| **Use TypeScript?** | `yes` | Type safety required |
-| **CSS variables?** | `yes` | Theme customization |
-
-## Step 3: Verify Setup
-
-Check that `components.json` was created:
-
-```bash
-cat components.json
-```
-
-Expected structure:
-```json
-{
-  "$schema": "https://ui.shadcn.com/schema.json",
-  "style": "new-york",
-  "rsc": false,
-  "tsx": true,
-  "aliasPrefix": "@",
-  "aliases": {
-    "components": "@/modules/cores/shadcn/components",
-    "utils": "@/modules/cores/lib/utils"
-  }
-}
-```
-
-## Step 4: Install First Component
-
-```bash
-bunx shadcn-ui@latest add button
-```
-
-This installs:
-- Button component → `@/modules/cores/shadcn/components/ui/button.tsx`
-- Button utilities → `@/modules/cores/lib/utils.ts`
-- Required dependencies
-
-## Step 5: Verify Installation
-
-Create test file `src/test.tsx`:
-
-```typescript
-import { Button } from '@/modules/cores/shadcn/components/ui/button'
-
-export default function Test() {
-  return <Button>Click me</Button>
-}
-```
-
-Run dev server:
-
-```bash
-bun dev
-```
-
-Visit `http://localhost:5173/` and verify Button renders.
-
-## Post-Installation Setup
-
-### 1. Create SOLID Alias Structure
-
-```bash
-mkdir -p src/modules/cores/shadcn/components/ui
-mkdir -p src/modules/cores/lib
-```
-
-### 2. Update components.json with SOLID Paths
-
-See [configuration.md](configuration.md) for full example.
-
-### 3. Install Common Components
-
-```bash
-bunx shadcn-ui@latest add \
-  button \
-  input \
-  card \
-  label \
-  form \
-  dialog \
-  dropdown-menu \
-  toast \
-  select \
-  textarea
-```
-
-### 4. Setup Icon Library
-
-```bash
-bun add lucide-react
-```
-
-Usage:
-
-```typescript
-import { ChevronDown, Copy } from 'lucide-react'
-
-export function IconExample() {
-  return <ChevronDown className="w-4 h-4" />
-}
-```
-
-## Troubleshooting
-
-### Components not found?
-
-1. Check `components.json` exists
-2. Verify `aliasPrefix` is `@`
-3. Run `bunx shadcn-ui@latest add button` to reinstall
-
-### TypeScript errors?
-
-```bash
-bunx tsc --noEmit
-```
-
-Ensure `tsconfig.json` has:
+`tsconfig.json` **and** `tsconfig.app.json` — add under `compilerOptions`:
 
 ```json
 {
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./*"]
+      "@/*": ["./src/*"]
     }
   }
 }
 ```
 
-### Tailwind not applying?
+`vite.config.ts`:
 
-Check `src/index.css`:
+```typescript
+import path from "path"
+import tailwindcss from "@tailwindcss/vite"
+import react from "@vitejs/plugin-react"
+import { defineConfig } from "vite"
 
-```css
-@import "tailwindcss";
+export default defineConfig({
+  plugins: [react(), tailwindcss()],
+  resolve: {
+    alias: {
+      "@": path.resolve(__dirname, "./src"),
+    },
+  },
+})
+```
 
-@layer base {
-  * {
-    @apply border-border;
-  }
+Then initialize (add `-b radix` / `-b aria` if you do not want Base UI):
+
+```bash
+bunx --bun shadcn@latest init
+```
+
+`init` installs dependencies, writes `components.json`, creates `lib/utils.ts`
+(`export { cn } from "cn"`), and injects the theme into `src/index.css`
+(`@import "shadcn/tailwind.css"`, `@custom-variant dark`, `@theme inline`, `:root`/`.dark`
+tokens). See [configuration.md](configuration.md) and [theming.md](theming.md).
+
+## Step: Point Aliases at the SOLID Paths
+
+Edit `components.json` aliases so the CLI writes to `src/modules/cores/...` (see
+[configuration.md](configuration.md)); `@/*` already maps to `./src/*`, so
+`@/modules/cores/shadcn/components` resolves without extra `paths` entries.
+
+## Add Components
+
+```bash
+bunx --bun shadcn@latest add button
+bunx --bun shadcn@latest add button card dialog field input select textarea
+bunx --bun shadcn@latest add button --dry-run   # preview files/deps, write nothing
+bunx --bun shadcn@latest add button --diff      # compare local file with registry
+```
+
+Toasts depend on the base: Base UI projects use `add toast` (Base UI Toast);
+Radix and React Aria projects use `add sonner`. See [toast.md](toast.md).
+The old `form` component (React Hook Form wrapper) is not used — forms use `field`
+with TanStack Form ([field-patterns.md](field-patterns.md)).
+
+`add` flags (4.21.0): `-y`, `-o, --overwrite`, `-c, --cwd`, `-a, --all`, `-p, --path`,
+`-s, --silent`, `--dry-run`, `--diff [path]`, `--view [path]`.
+
+## Verify
+
+```tsx
+// src/App.tsx
+import { Button } from "@/modules/cores/shadcn/components/ui/button"
+
+/** Smoke-test app rendering a Button. */
+export default function App() {
+  return (
+    <div className="flex min-h-svh items-center justify-center">
+      <Button>Click me</Button>
+    </div>
+  )
 }
 ```
 
-## Step 6: Configure MCP Server (Claude Code)
+```bash
+bun dev   # http://localhost:5173
+```
 
-Create `.mcp.json` at project root for Claude Code integration:
+## Icons
+
+`init` records `iconLibrary` in `components.json` (Lucide by default). Switch later with
+`shadcn migrate icons --from lucide --to <tabler|hugeicons|phosphor|remixicon>`.
+
+```typescript
+import { ChevronDownIcon } from "lucide-react"
+
+/** Lucide icon sized with Tailwind. */
+export function IconExample() {
+  return <ChevronDownIcon className="size-4" />
+}
+```
+
+## Troubleshooting
+
+| Symptom | Fix |
+|---------|-----|
+| `Cannot find module '@/...'` | `@/*` must be in both `tsconfig.json` and `tsconfig.app.json`, plus `resolve.alias` in `vite.config.ts` |
+| Utilities not generated | `@tailwindcss/vite` missing from `plugins`, or `@import "tailwindcss"` missing |
+| `data-open:` / accordion animations missing | `@import "shadcn/tailwind.css"` removed from the CSS entry (restore it or run `shadcn eject` to inline it) |
+| Base UI component receives `asChild` | Project is on Base UI — use `render` (see component references) |
+| Legacy project on `@radix-ui/react-*` | `bunx --bun shadcn@latest migrate radix` (moves to the unified `radix-ui` package) |
+| Old `lib/utils.ts` with `clsx` + `tailwind-merge` | `bunx --bun shadcn@latest migrate cn` |
+
+## MCP Server (Claude Code)
+
+```bash
+bunx --bun shadcn@latest mcp init --client claude
+```
+
+Or write `.mcp.json` manually:
 
 ```json
 {
@@ -194,28 +196,13 @@ Create `.mcp.json` at project root for Claude Code integration:
 }
 ```
 
-This enables:
-- `mcp__shadcn__search_items_in_registries` - Search components
-- `mcp__shadcn__view_items_in_registries` - View component code
-- `mcp__shadcn__get_item_examples_from_registries` - Get usage examples
-- `mcp__shadcn__get_add_command_for_items` - Get install commands
-
-### Usage in Claude Code
-
-```bash
-# Search for a component
-mcp__shadcn__search_items_in_registries "button"
-
-# View component details
-mcp__shadcn__view_items_in_registries "button"
-
-# Get install command
-mcp__shadcn__get_add_command_for_items "button"
-```
+Tools exposed: `mcp__shadcn__search_items_in_registries`, `mcp__shadcn__view_items_in_registries`,
+`mcp__shadcn__get_item_examples_from_registries`, `mcp__shadcn__get_add_command_for_items`.
+Also useful for agents: `shadcn info` (framework, base, installed components) and
+`shadcn docs <component> -b <base|radix|aria>`.
 
 ## Next Steps
 
 - [Configuration Guide](configuration.md)
+- [Theming](theming.md)
 - [Button Component](button.md)
-- [Input Component](input.md)
-- [Card Component](card.md)

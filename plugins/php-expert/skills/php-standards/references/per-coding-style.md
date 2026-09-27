@@ -1,17 +1,17 @@
 ---
 name: per-coding-style
-description: PER Coding Style 3.0 rules and its relationship to PSR-12 and PSR-1
+description: PER Coding Style 3.1 rules and its relationship to PSR-12 and PSR-1
 when-to-use: Load when formatting PHP, configuring php-cs-fixer/phpcs, or explaining which style spec applies
-keywords: PER coding style, PSR-12, PSR-1, formatting, indentation, line length, compound types
+keywords: PER coding style, PSR-12, PSR-1, formatting, indentation, line length, compound types, pipe operator
 priority: high
 related: psr-catalog.md
 ---
 
-# PER Coding Style 3.0
+# PER Coding Style 3.1
 
 ## Overview
 
-PER Coding Style is the PHP-FIG's living style specification. Version 3.0 "extends, expands and replaces PSR-12" and requires adherence to PSR-1. Source: php-fig.org/per/coding-style/.
+PER Coding Style is the PHP-FIG's living style specification. Version 3.1 (tag `3.1.0`, Aug 2026; 3.0 was July 2025) "extends, expands and replaces PSR-12" and requires adherence to PSR-1. Source: php-fig.org/per/coding-style/ + github.com/php-fig/per-coding-style/blob/master/migration-3.1.md.
 
 ---
 
@@ -20,14 +20,14 @@ PER Coding Style is the PHP-FIG's living style specification. Version 3.0 "exten
 | Aspect | Reality |
 |--------|---------|
 | **PSR-12** | Still the officially *Accepted* PSR (accepted 2019). Not withdrawn. |
-| **PER-CS 3.0** | The actively maintained spec that supersedes PSR-12 for new syntax (enums, readonly, compound types) |
-| **In practice** | Target `@PER-CS` in tooling; PSR-12 remains valid but frozen |
+| **PER-CS 3.1** | The actively maintained spec that supersedes PSR-12 for new syntax (enums, readonly, compound types, hooks, pipe operator) |
+| **In practice** | Target `@PER-CS` in tooling; PSR-12 remains valid but frozen. PHP-CS-Fixer's newest set is still `@PER-CS3x0` (v3.95) — 3.1 additions are not auto-enforced yet |
 
 Do not tell users "PSR-12 was replaced/removed" — it was not. PER extends it and is where new rules land.
 
 ---
 
-## Core Rules (from PER-CS 3.0)
+## Core Rules (from PER-CS 3.1)
 
 | Rule | Requirement |
 |------|-------------|
@@ -89,6 +89,28 @@ enum Suit: string
 ```
 
 → See [composer-json.md](templates/composer-json.md) to wire php-cs-fixer `@PER-CS` in `scripts`
+
+---
+
+## What 3.1 Adds (PHP 8.5 syntax + clarifications)
+
+| Section | Rule |
+|---------|------|
+| **Pipe `\|>`** | Binary operator: at least one space on each side; in a multi-line chain `\|>` starts each line, indented once |
+| **`clone()`** | SHOULD always be called with parentheses, even without `$withProperties` |
+| **`switch`/`case`** | No `{}` around a case body; every non-empty case ends with `break`/`return`/…; a multi-line condition goes in parentheses |
+| **Empty closures** | Body abbreviated as `{}` on the same line; prefer `fn() => null` where possible |
+| **Anonymous classes** | Attributes start on the line after `new`, indented once |
+| **Enum constants** | Non-public enum constants use `private`, not `protected` |
+| **Multi-line arrays** | Opening `[` never on its own line, in every context |
+
+```php
+$result = '<foo>'
+    |> strtoupper(...)
+    |> htmlspecialchars(...);
+
+$copy = clone($original);
+```
 
 ---
 

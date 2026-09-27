@@ -1,12 +1,12 @@
 ---
 name: middleware
-description: Astro 6 middleware — request/response interception, auth, redirects, locals
+description: Astro 7 middleware — request/response interception, auth, redirects, locals
 when-to-use: auth guards, redirects, request logging, setting locals
 keywords: middleware, locals, auth, redirect, request, response
 priority: medium
 ---
 
-# Astro 6 Middleware
+# Astro 7 Middleware
 
 ## When to Use
 

@@ -186,7 +186,7 @@ export function DashboardClient() {
 // modules/profile/src/services/profile-better-auth.service.ts
 import { auth } from '@/modules/auth/src/services/better-auth.service'
 import { prisma } from '@/modules/cores/db/prisma'
-import type { User, Account } from '@prisma/client'
+import type { User, Account } from '@/modules/cores/db/generated/prisma/client'
 
 interface ProfileData {
   user: User

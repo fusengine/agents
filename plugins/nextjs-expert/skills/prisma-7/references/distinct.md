@@ -12,7 +12,7 @@ Retrieve unique values and remove duplicates using distinct queries.
 
 ```typescript
 // lib/types/distinct.ts
-import type { Prisma } from "@prisma/client";
+import type { Prisma } from "@/lib/generated/prisma/client";
 
 /**
  * Distinct query result
@@ -174,7 +174,7 @@ const uniqueCount = users.length;
 
 ```typescript
 // lib/types/distinctExamples.ts
-import type { Prisma } from "@prisma/client";
+import type { Prisma } from "@/lib/generated/prisma/client";
 
 /**
  * User location with distinct

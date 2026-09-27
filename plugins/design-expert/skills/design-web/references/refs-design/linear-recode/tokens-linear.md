@@ -4,8 +4,8 @@ Design reference for `design-expert`. Source: a Next.js page scraped
 locally (1 inline `<style>` block + 68 non-minified CSS files with readable
 names). This document describes **reusable techniques**, not a palette.
 
-`[relevé]` = read verbatim in the source, the file is cited.
-`[arbitrage]` = my choice, flagged everywhere it appears.
+`[measured]` = read verbatim in the source, the file is cited.
+`[decided]` = my choice, flagged everywhere it appears.
 
 ---
 
@@ -43,7 +43,7 @@ Each ramp has **exactly 4 steps**. A component picks one level per
 ramp, never a free value. This is what makes the light theme possible with
 a single attribute substitution.
 
-### 2.2 The grays aren't neutral [relevé `index.6-dOvMEf.css`]
+### 2.2 The grays aren't neutral [measured `index.6-dOvMEf.css`]
 
 Dark: `#08090a` (background) → `#0f1011` → `#141516` → `#191a1b`.
 The blue channel is **always ≥** red. The secondary text `#d0d6e0` and the
@@ -59,18 +59,18 @@ Light: `#fff` → `#f8f8f8` → `#f4f4f4` → `#f0f0f0`, text `#282a30` / `#3c41
 light version is more saturated to hold up on white. **Never reuse a brand
 hex value from one theme in the other.**
 
-### 2.4 Absolute accents (invariant) [relevé]
+### 2.4 Absolute accents (invariant) [measured]
 
-`--accent-bleu #4ea7fc` · `rouge #eb5757` · `vert #27a644` · `orange #fc7840` ·
-`jaune #f0bf00` · `indigo #5e6ad2` · `cyan #00b8cc`.
+`--accent-blue #4ea7fc` · `red #eb5757` · `green #27a644` · `orange #fc7840` ·
+`yellow #f0bf00` · `indigo #5e6ad2` · `cyan #00b8cc`.
 
 Blue switches to **P3 gamut** when the screen allows it:
 
 ```css
 @media (dynamic-range: high) or (color-gamut: p3) {
-  :root { --accent-bleu: #5eb0ff; }
+  :root { --accent-blue: #5eb0ff; }
   @supports (color: color(display-p3 0 0 0)) {
-    :root { --accent-bleu: color(display-p3 .431 .6816 .9988); }
+    :root { --accent-blue: color(display-p3 .431 .6816 .9988); }
   }
 }
 ```
@@ -78,7 +78,7 @@ Blue switches to **P3 gamut** when the screen allows it:
 Deliberate double guard: the media query gives a more vivid sRGB fallback, the
 `@supports` gives the true P3 color. A technique to copy verbatim.
 
-### 2.5 Shadows — stacking rather than depth [relevé]
+### 2.5 Shadows — stacking rather than depth [measured]
 
 `--shadow-stack-low` stacks **5 shadows** from 0 to 8px, each at 1–8%
 opacity (`#0000` · `#00000003` · `#0000000a` · `#00000012` · `#00000014`).
@@ -89,9 +89,9 @@ In light theme the stack gains a **6th layer, `inset` and first**:
 `0px -1px 1px 0px #0000001c inset`. It carves the top edge — on a
 white background, the drop shadow alone is no longer enough to lift the element.
 
-### 2.6 Text selection [relevé]
+### 2.6 Text selection [measured]
 
-`color-mix(in lch, var(--marque-fond), black 10%)` in dark,
+`color-mix(in lch, var(--brand-bg), black 10%)` in dark,
 `… transparent 64%` in light. The selection is **derived** from the brand color, never
 hardcoded.
 
@@ -99,7 +99,7 @@ hardcoded.
 
 ## 3. Type scale
 
-### 3.1 Non-round weights [relevé]
+### 3.1 Non-round weights [measured]
 
 `400 / 510 / 590 / 680`. Not `500 / 600 / 700`. A variable font exploited to get
 in-between notches. The standard title weight is **590**, not 600 or 700.
@@ -119,21 +119,21 @@ it's central: without it, Inter looks loose at this size.
 Second rule: **line-height goes down as size goes up** — 1.6 on the
 body, 1.0 on title 9. Large titles are tight to the point of touching.
 
-### 3.3 Title scale [relevé]
+### 3.3 Title scale [measured]
 
 `1.0625 · 1.25 · 1.5 · 2 · 2.5 · 3 · 3.5 · 4 · 4.5 rem`.
 Not a geometric ratio: chosen steps, with a constant 0.5rem jump
 from title 5 onward. The hero uses title 9 (4.5rem / 72px).
 
-Below 640px, **every large title falls back to 38px** [relevé `Hero.css`, `CTA.css`].
+Below 640px, **every large title falls back to 38px** [measured `Hero.css`, `CTA.css`].
 A single mobile value, no `clamp()` in the source.
 
-### 3.4 Measure in `ch`, not `px` [relevé `PageSection.css`]
+### 3.4 Measure in `ch`, not `px` [measured `PageSection.css`]
 
 `max-width: 38ch` on section descriptions. The measure follows the font
 size instead of being recalculated per breakpoint.
 
-### 3.5 A detail not to forget [relevé]
+### 3.5 A detail not to forget [measured]
 
 ```css
 font-feature-settings: "cv01", "ss03";
@@ -191,7 +191,7 @@ with visual weight (buttons, action links); **`.1s` for the header
 navigation**, which must feel instantaneous. Confusing the two makes
 the nav feel sluggish. The other durations: `.18s` (panels), `.4s`/`.5s` (reveals).
 
-### 4.2 bis — The header nav item [relevé `Header.css .TZTsQG_anchor`]
+### 4.2 bis — The header nav item [measured `Header.css .TZTsQG_anchor`]
 
 It's a **pill** (`border-radius: var(--radius-rounded)`), not a rounded
 rectangle — a classic trap. `height: 32px`, `padding: 0 12px`, `font-size: 13px`,
@@ -200,7 +200,7 @@ background ramp but a dedicated token, `--anchor-glass-bg`: `#ffffff14` in dark,
 `#00000014` in light. The exact same value as `--color-border-translucent-strong`
 — nav hover has the density of a border, not a surface.
 
-### 4.3 The 4 named speeds [relevé `index.css`]
+### 4.3 The 4 named speeds [measured `index.css`]
 
 ```
 --speed-highlightFadeIn:  0s     /* the highlight appears with no delay */
@@ -222,7 +222,7 @@ actually used:
 - `ease-out-quart` `cubic-bezier(.165,.84,.44,1)` — reveals
 - `ease-in-out-quad` `cubic-bezier(.455,.03,.515,.955)` — panels and dialogs
 
-### 4.5 Technique: the marquee without JS [relevé `Marquee.css`]
+### 4.5 Technique: the marquee without JS [measured `Marquee.css`]
 
 ```
 2 copies of the content → the 2nd in position:absolute, offset by +100%+gap
@@ -238,15 +238,15 @@ Three details that make the quality:
    visible duplicate.
 3. `animation-play-state: paused` on hover, under `@media (any-hover: hover)`.
 
-### 4.6 Technique: the dot matrix [relevé HTML inline]
+### 4.6 Technique: the dot matrix [measured HTML inline]
 
 The page's most distinctive pattern. A 5×5 grid set in
 isometric perspective, where each dot blinks on its own sequence.
 
 ```css
 .scene  { perspective: 1000px; }
-.grille { transform: rotateX(60deg) rotateY(3deg) scale(.85) rotate(43deg); }
-.point  { animation: <nom> 1600ms steps(1, end) infinite; }
+.grid   { transform: rotateX(60deg) rotateY(3deg) scale(.85) rotate(43deg); }
+.point  { animation: <name> 1600ms steps(1, end) infinite; }
 ```
 
 - **`steps(1, end)` is mandatory**: the dots switch, they don't fade.
@@ -255,23 +255,23 @@ isometric perspective, where each dot blinks on its own sequence.
   `upDown` 2800ms (14 steps of 7.14%), `agent` 3200ms (16 steps of 6.25%).
   **Duration = number of steps × 200ms** in all three cases.
 - Opacities: `0.3` (off) and `1` (on). Two values, never a gradient.
-- There's also `<nom>-empty-once` at `200ms steps(1,end) forwards`:
+- There's also `<name>-empty-once` at `200ms steps(1,end) forwards`:
   the initial extinguish, played once.
 - The rotation triplet `60/3/43°` is non-negotiable: it's what gives
   the isometric plane. The `rotateY(3deg)` is the detail that breaks the perfect
   symmetry and makes the render credible.
 
-> **[arbitrage]** The source declares **one keyframe per dot and per pattern**:
+> **[decided]** The source declares **one keyframe per dot and per pattern**:
 > 25 dots × 4 patterns (`upDown`, `pong`, `agent`, `empty-once`) = **100
 > server-generated declarations**. My reconstruction declares 5 (one per
 > phase), assigned via `data-p`. Grid, durations, timing function and opacities
 > are identical; only the phase distribution is reconstructed. For a
 > strictly identical render, all 100 must be generated.
 
-### 4.7 Technique: reveal via `clip-path` [relevé]
+### 4.7 Technique: reveal via `clip-path` [measured]
 
 ```css
-@keyframes revelation-points {
+@keyframes reveal-dots {
   0%      { clip-path: inset(0 100% 0 0); }
   15%     { clip-path: inset(0 66.6% 0 0); }
   30%     { clip-path: inset(0 33.3% 0 0); }
@@ -285,7 +285,7 @@ Three opening steps, an abrupt close at 65%, then a dead time
 until 100%. **The dead time lets the loop breathe** — without it, the effect
 is jittery. Applicable to any character-by-character reveal.
 
-### 4.8 Technique: text sweep [relevé]
+### 4.8 Technique: text sweep [measured]
 
 ```css
 background: linear-gradient(-.6turn, tertiaire 0%, quaternaire 60%,
@@ -301,7 +301,7 @@ The angle in `turn` and the `background-size: 300%` are linked: the
 than the base text (quaternary in the middle) — the sweep darkens,
 it doesn't lighten. Counterintuitive and much more subtle.
 
-### 4.9 Technique: loading image [relevé `Image.css`]
+### 4.9 Technique: loading image [measured `Image.css`]
 
 The image doesn't appear as an opacity fade: a **400% linear mask**
 sweeps from right to left while opacity rises, over `.8s`.
@@ -320,7 +320,7 @@ Two strategies coexist:
    the source's keyframes have no 100% marker**: the element is
    already in its final state at rest.
 
-> **[arbitrage]** If your elements start from `opacity: 0` in CSS (the classic
+> **[decided]** If your elements start from `opacity: 0` in CSS (the classic
 > case of a scroll reveal), `animation: none` leaves them **invisible for
 > good**. You then have to explicitly restore `opacity: 1`. This is trap
 > number one for this type of effect.
@@ -355,7 +355,7 @@ pre-footer       centered title + 2 buttons
 footer           6 columns
 ```
 
-### INTERNAL order of a section [relevé]
+### INTERNAL order of a section [measured]
 
 ```
 1. header     title (left) | description + numbered link (right)
@@ -387,7 +387,7 @@ The number of sub-links is **irregular**: 4 for Intake and Plan, **5** for
 Build, **none** for Diffs, 3 for Monitor. Content dictates it, not
 the grid.
 
-### The frame repeated six times [relevé]
+### The frame repeated six times [measured]
 
 `page.css`, `Plan.css`, `Build.css`, `Monitor.css`, `SlackIssue.css` all
 declare **exactly the same** pair `.MwJdiW_container` / `.MwJdiW_panel`:
@@ -405,7 +405,7 @@ The hero and the five sections use it. **It's this frame recurring six times
 that gives the page its rhythm** — far more than the colors or typography. The
 Diffs variant changes only two things: solid border and a -8px overflow.
 
-### The triple mask per section [relevé]
+### The triple mask per section [measured]
 
 Each illustration carries **three** mask gradients composited via
 `mask-composite: intersect` — toward the bottom, toward the right, toward the left —
@@ -421,14 +421,14 @@ No mockup has a sharp edge: it floats, framed by the fade. The
 irregular values (-57px, -120px, 110%) are eyeballed crops on
 each illustration — it's hand-tuned, not systematic.
 
-### Header: the nav isn't centered [relevé]
+### Header: the nav isn't centered [measured]
 
 `.TZTsQG_rightSideWrapper` (max-width 620px) groups **nav + rule + actions**
 and hugs the right edge. The logo stays alone on the left. Between the nav and the actions,
 a vertical rule of **only 16px** (`.TZTsQG_navDivider`, primary border,
 8px margins) — not the full header height.
 
-### Changelog timeline [relevé `Changelog.css`]
+### Changelog timeline [measured `Changelog.css`]
 
 The page's cleverest technique:
 
@@ -449,7 +449,7 @@ entry is `display:none` below 1280px, the second-to-last below 1024px — the gr
 always stays full, content is removed rather than accepting an orphan
 column.
 
-### Quote cards: the veiled brand color [relevé]
+### Quote cards: the veiled brand color [measured]
 
 Client cards are **the only colored spot on the entire page**. They
 carry the quoted client's color, as an inline style. Three measured values:
@@ -469,7 +469,7 @@ very different brands to be displayed side by side without the page falling apar
 
 The text there switches to `--color-bg-primary`: a local theme inversion.
 
-### "FIG" columns of the statement [relevé `Benefits.css`]
+### "FIG" columns of the statement [measured `Benefits.css`]
 
 After the logos, a **two-tone** sentence in a single paragraph (first
 sentence in primary text, the rest in tertiary — no other markup), then
@@ -484,7 +484,7 @@ block sits **flush** with the grid instead of floating in it.
 
 ## 5. Layout techniques
 
-### 5.1 Two independent margins [relevé]
+### 5.1 Two independent margins [measured]
 
 ```
 --homepage-outer-padding : 46px → 10px (≤1280) → 28px (≤1024) → 16px (≤640)
@@ -496,7 +496,7 @@ edge) are two distinct variables that don't change at the same breakpoints.
 The outer margin **shrinks then grows back** between 1280 and 1024: the grid
 resets, it doesn't compress linearly.
 
-### 5.2 Grid 12 → 8 → 4 [relevé `Grid.css`]
+### 5.2 Grid 12 → 8 → 4 [measured `Grid.css`]
 
 Gutter **constant at 32px** at every size; only the number of
 columns changes (12 / 8 / 4 at breakpoints 1024 / 768 / 640). The zones are
@@ -504,51 +504,51 @@ driven by `grid-template-areas` supplied as variables
 (`--grid-areas-default / -laptop / -tablet / -mobile`): the structure changes
 without touching the component's CSS.
 
-### 5.3 Section header at 1fr / 1fr [relevé `PageSection.css`]
+### 5.3 Section header at 1fr / 1fr [measured `PageSection.css`]
 
 Title on the left, description on the right, **never a centered title**. Centering
 is reserved for the pre-footer. `padding-bottom: 96px` below the header.
 
-### 5.4 Fixed-height columns [relevé `Benefits.css`]
+### 5.4 Fixed-height columns [measured `Benefits.css`]
 
 `height: 468px` (360px ≤1280), content anchored at the bottom via
 `justify-content: flex-end`. The first column loses its left padding,
 the last its right rule: the block sits **flush** with the grid instead of
 floating in it. A detail that distinguishes a disciplined grid from a sloppy one.
 
-### 5.5 Workshop labels [relevé]
+### 5.5 Workshop labels [measured]
 
 `FIG 0.1`, `FIG 0.2` in monospace, `opacity: .4`, anchored at the top left of
 each illustration. A technical-plate marker, never a title. A cheap
 technique that establishes an "engineering document" register.
 
-### 5.6 Ruled list [relevé `Pillar.css`]
+### 5.6 Ruled list [measured `Pillar.css`]
 
 Each entry carries a vertical rule of **28px** in `::before`, anchored at the
 bottom. The `+` is permanently present at `opacity: 0; transform: scale(0)` and
 unfolds on hover — **no node insertion**, hence no reflow.
 
-### 5.7 Doublet separator [relevé `HomepageSeparator.css`]
+### 5.7 Doublet separator [measured `HomepageSeparator.css`]
 
 1px of translucent border **plus** 1px black underneath. Two elements, not one.
 Result: an edge, not a line. A single `border-top` doesn't have this relief.
 
-### 5.8 Internal border instead of `border` [relevé `page.css`]
+### 5.8 Internal border instead of `border` [measured `page.css`]
 
 ```css
-box-shadow: inset 0 0 0 1px var(--bordure-primaire);
+box-shadow: inset 0 0 0 1px var(--border-primary);
 ```
 
 Doesn't eat into the box, doesn't shift the content, follows the `border-radius`.
 Used everywhere a frame must be added without changing the metrics.
 
-### 5.9 Fixed row height + truncation [relevé]
+### 5.9 Fixed row height + truncation [measured]
 
 Rows at `44px`, labels in `white-space: nowrap; text-overflow: ellipsis`.
 The row **cannot** grow. This is the condition for a dense list to
 stay readable at a glance.
 
-### 5.10 Guaranteed tap target [relevé `Layout.css`]
+### 5.10 Guaranteed tap target [measured `Layout.css`]
 
 `min-height: 28px` on footer links, `--min-tap-size: 44px` declared as a
 token. The clickable target is sized independently of the text.
@@ -557,7 +557,7 @@ token. The clickable target is sized independently of the text.
 
 ## 6. Masking and light techniques
 
-### 6.1 Dissolve toward the bottom [relevé `page.css`]
+### 6.1 Dissolve toward the bottom [measured `page.css`]
 
 ```css
 mask-image: linear-gradient(to bottom, black 0%, black 60%, transparent 100%);
@@ -566,7 +566,7 @@ mask-image: linear-gradient(to bottom, black 0%, black 60%, transparent 100%);
 The product panel doesn't end: it dissolves into the background starting at
 60% of its height. **No sharp cut exists on this page.**
 
-### 6.2 Set of named masks [relevé `index.css`]
+### 6.2 Set of named masks [measured `index.css`]
 
 ```
 --mask-visible / --mask-on   : black
@@ -577,7 +577,7 @@ The product panel doesn't end: it dissolves into the background starting at
 Mask gradients are never written with literal colors. A
 single set of tokens serves the panel, the marquee and the illustrations.
 
-### 6.3 Hairline that follows the pointer [relevé `page.css`]
+### 6.3 Hairline that follows the pointer [measured `page.css`]
 
 A solid 1px border, **masked** by a radial gradient centered on the
 cursor: only the segment near the pointer is visible.
@@ -590,34 +590,34 @@ mask-image: radial-gradient(ellipse 200px 200px at var(--x) var(--y),
 
 The JS only writes `--x` and `--y`. **No layout property is touched.**
 
-### 6.4 Background halo as SVG data-URI [relevé `page.css`]
+### 6.4 Background halo as SVG data-URI [measured `page.css`]
 
 The large halo is **not** a `filter: blur()`: it's an inline SVG as a
 data-URI containing a rectangle rotated 45° passed through
 `feGaussianBlur stdDeviation="64"`, served as `background-image`. The blur is
 computed once at rasterization; zero cost during scrolling.
 
-> **[arbitrage]** This SVG's color is hardcoded (`#1C1D1E`). It therefore only
+> **[decided]** This SVG's color is hardcoded (`#1C1D1E`). It therefore only
 > exists **for the dark theme** — in light it repaints the panel black.
 > It must be explicitly neutralized (`background-image: none`). General
 > trap with data-URIs: they escape the token system.
 
-### 6.5 Grain [relevé `Grain.css`]
+### 6.5 Grain [measured `Grain.css`]
 
 256×256 tile, `opacity: .9` (or `.6` in the subtle version),
 `mix-blend-mode: overlay`, plus a `#ffffff0f` sheet in `::after` — canceled
 under WebKit via `@supports (-webkit-hyphens: none)`. The page's only
 non-vector layer.
 
-> **[arbitrage]** `Grain.css` declares **no `background-image`**: the
+> **[decided]** `Grain.css` declares **no `background-image`**: the
 > texture comes from an external binary. The layer's mechanics are measured; the
 > pattern I substitute (`feTurbulence`) is invented.
 
-### 6.6 Header [relevé `Header.css`]
+### 6.6 Header [measured `Header.css`]
 
 ```css
-background: linear-gradient(to bottom, var(--fond-entete) 0%,
-            color-mix(in oklab, var(--fond-entete) 100%, transparent 5%) 100%);
+background: linear-gradient(to bottom, var(--bg-header) 0%,
+            color-mix(in oklab, var(--bg-header) 100%, transparent 5%) 100%);
 backdrop-filter: blur(20px);
 ```
 
@@ -627,7 +627,7 @@ hardcoded value.
 
 ---
 
-## 7. Buttons — architecture [relevé `Button.css`]
+## 7. Buttons — architecture [measured `Button.css`]
 
 **A single class carries all the geometry; size and variant only
 reassign variables.**
@@ -680,11 +680,11 @@ The JS lives in `motion.js` (196 lines, vanilla, no framework) and covers
 7 behaviors: scroll reveal, halo and hairline following the pointer,
 image-load fade, mobile menu, theme toggle, keyboard quote
 carousel, chart bar rise. Each block carries the same
-`[relevé]` / `[arbitrage]` markup as the CSS for its timing values.
+`[measured]` / `[decided]` markup as the CSS for its timing values.
 
 ## 10. Traceability check
 
-Values marked `[relevé]` were checked via `grep -rF` on
+Values marked `[measured]` were checked via `grep -rF` on
 `static.linear.app/web/_next/static/css/` + `linear.app/homepage.html`.
 **74 values checked, 74 / 74 present.** Second batch (structure):
 `linear-gradient(0deg, rgba(255, 255, 255, 0.4)`, `#e4f222`, `#1C85E8`,

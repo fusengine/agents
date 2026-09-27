@@ -55,7 +55,7 @@ Best for: blogs, marketing sites, portfolios, creative agencies
 | Input height | 48px |
 | Table row height | 56px |
 
-> **Hauteur des boutons** : voir [buttons-guide.md](../../design-web/references/buttons-guide.md) (échelle fixe 44-52px : sm 44 / default 44 / lg 48 / xl 52). La densité ne module QUE le padding horizontal et le gap, JAMAIS la hauteur du bouton.
+> **Button height**: see [buttons-guide.md](../../design-web/references/buttons-guide.md) (fixed 44-52px scale: sm 44 / default 44 / lg 48 / xl 52). Density modulates ONLY the horizontal padding and the gap, NEVER the button height.
 
 ---
 

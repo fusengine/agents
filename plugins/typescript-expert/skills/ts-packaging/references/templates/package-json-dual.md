@@ -40,14 +40,17 @@ Two complete manifests: dual ESM/CJS for broad reach, ESM-pure for modern-only.
     "prepublishOnly": "npm run build && npm run check:types"
   },
   "devDependencies": {
-    "@arethetypeswrong/cli": "^0.18.4",
+    "@arethetypeswrong/cli": "^0.18.5",
     "tsup": "^8.0.0",
-    "typescript": "^5.0.0"
+    "typescript": "npm:@typescript/typescript6@^6.0.2"
   }
 }
 ```
 
 Note: `main`/`module`/`types` are legacy fallbacks; `exports` is authoritative.
+`tsup --dts` calls the TypeScript compiler API (`createProgram`), which the TS 7.0 `typescript`
+package does not ship — keep `typescript` aliased to `@typescript/typescript6` (the 6.0 API)
+until a TS 7 API exists (devblogs.microsoft.com/typescript/announcing-typescript-7-0/).
 
 ---
 
@@ -74,11 +77,13 @@ Note: `main`/`module`/`types` are legacy fallbacks; `exports` is authoritative.
     "prepublishOnly": "npm run build && npm run check:types"
   },
   "devDependencies": {
-    "@arethetypeswrong/cli": "^0.18.4",
-    "typescript": "^5.0.0"
+    "@arethetypeswrong/cli": "^0.18.5",
+    "typescript": "^7.0.2"
   }
 }
 ```
+
+The ESM-pure build only runs the `tsc` CLI, so it can use TS 7.0 directly.
 
 ---
 

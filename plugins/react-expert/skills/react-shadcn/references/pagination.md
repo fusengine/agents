@@ -10,6 +10,9 @@ related: table.md, command.md
 
 # Pagination
 
+> **Base:** same API on Base UI, Radix and React Aria (verified against r/styles/{base,radix}-nova/pagination.json; Aria's `PaginationLink` is a RAC `LinkButton`, same props).
+> `PaginationLink size` defaults to `icon`; `PaginationPrevious` / `PaginationNext` accept `text`.
+
 Implements paginated content navigation with support for previous/next buttons, numbered pages, and ellipsis for long page ranges.
 
 ## Installation
@@ -21,8 +24,6 @@ bunx --bun shadcn@latest add pagination
 ## Basic Pagination
 
 ```tsx
-'use client'
-
 import { useState } from 'react'
 import {
   Pagination,
@@ -33,6 +34,7 @@ import {
   PaginationPrevious,
 } from '@/modules/cores/shadcn/components/ui/pagination'
 
+/** Static pagination links. */
 export function BasicPagination() {
   const [currentPage, setCurrentPage] = useState(1)
   const totalPages = 5
@@ -103,8 +105,6 @@ export function BasicPagination() {
 ## Pagination with Ellipsis
 
 ```tsx
-'use client'
-
 import { useState } from 'react'
 import {
   Pagination,
@@ -116,6 +116,7 @@ import {
   PaginationPrevious,
 } from '@/modules/cores/shadcn/components/ui/pagination'
 
+/** Pagination with an ellipsis for skipped pages. */
 export function PaginationWithEllipsis() {
   const [currentPage, setCurrentPage] = useState(1)
   const totalPages = 20
@@ -213,8 +214,6 @@ export function PaginationWithEllipsis() {
 ## Pagination with Data Display
 
 ```tsx
-'use client'
-
 import { useState } from 'react'
 import {
   Pagination,
@@ -240,6 +239,7 @@ const allItems: Item[] = Array.from({ length: 47 }, (_, i) => ({
   date: new Date(Date.now() - i * 86400000).toLocaleDateString(),
 }))
 
+/** Pagination over a local data set. */
 export function PaginationWithData() {
   const [currentPage, setCurrentPage] = useState(1)
   const itemsPerPage = 10
@@ -366,9 +366,7 @@ export function PaginationWithData() {
 ## Pagination with URL Search Params
 
 ```tsx
-'use client'
-
-import { useSearchParams, useRouter } from 'next/navigation'
+import { useNavigate } from '@tanstack/react-router'
 import {
   Pagination,
   PaginationContent,
@@ -384,17 +382,15 @@ interface PaginationUrlProps {
   currentPage: number
 }
 
+/** Pagination synced with the URL `page` param. */
 export function PaginationWithUrl({
   totalPages,
   currentPage,
 }: PaginationUrlProps) {
-  const router = useRouter()
-  const searchParams = useSearchParams()
+  const navigate = useNavigate()
 
   const handlePageChange = (page: number) => {
-    const params = new URLSearchParams(searchParams)
-    params.set('page', page.toString())
-    router.push(`?${params.toString()}`)
+    navigate({ to: '.', search: (prev) => ({ ...prev, page }) })
   }
 
   const getPageNumbers = () => {
@@ -485,8 +481,6 @@ export function PaginationWithUrl({
 ## Pagination with Items Per Page Selector
 
 ```tsx
-'use client'
-
 import { useState } from 'react'
 import {
   Pagination,
@@ -510,6 +504,7 @@ const allItems = Array.from({ length: 47 }, (_, i) => ({
   title: `Item ${i + 1}`,
 }))
 
+/** Pagination with an items-per-page selector. */
 export function PaginationWithItemsPerPage() {
   const [currentPage, setCurrentPage] = useState(1)
   const [itemsPerPage, setItemsPerPage] = useState(10)

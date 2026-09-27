@@ -230,48 +230,55 @@ $config = config('app.name');
 
 ## Laravel 13 Notes
 
-### Stack mis à jour
-- **Symfony 7.4 et 8.0** supportés en parallèle (HttpFoundation, Console, Mailer)
-- **PHP 8.3 minimum** (8.2 retiré)
-- **pda/pheanstalk 8.0+** requis si driver Beanstalk
+### Updated stack
+- **Symfony 7.4 and 8.0** supported side by side (HttpFoundation, Console, Mailer)
+- **PHP 8.3 minimum** (8.2 dropped)
+- **pda/pheanstalk 7.x / 8.x** required for the Beanstalk driver (5.x dropped)
+- Current stable version: **13.33** (September 2026)
 
 ### Cache::touch() API
-Nouvelle méthode pour rafraîchir le TTL sans recalculer la valeur.
+New method to refresh the TTL without recomputing the value.
 
 ```php
+Cache::touch('user:123', 3600);
 Cache::touch('user:123', now()->addHour());
-Cache::touch(['user:123', 'user:456'], 3600);
 ```
 
-### Queue::route() pour routing dynamique
-Voir [[laravel-queues]] pour le routing déclaratif par job (connexion/queue cible via configuration plutôt que sur chaque job).
+### Queue::route() for dynamic routing
+See [[laravel-queues]] for declarative routing per job class (`Queue::route(ProcessPodcast::class, connection: 'redis', queue: 'podcasts')`) and `Queue::forward()` (13.26+).
 
-### `new Model()` dans boot() → LogicException
-Laravel 13 jette une `LogicException` si vous instanciez un modèle Eloquent dans `register()` d'un ServiceProvider (container pas prêt). Utiliser `boot()` ou un listener.
+### Nested model boot → LogicException
+Laravel 13 throws a `LogicException` when a model is instantiated during its own boot (`new static()` inside the model's `boot()` or a trait's `boot*()`). Move that logic out of the boot cycle.
+
+### What's new in 13.x (13.1 → 13.33)
+- **`php artisan dev`** (13.16+): runs the server, `queue:listen`, Pail and Vite in a single terminal; customizable via `Illuminate\Foundation\DevCommands::artisan('horizon', 'horizon')` in `AppServiceProvider::boot()`, listed via `php artisan dev:list` (requires Node 22.13+)
+- **`#[BindWhen(Impl::class, static fn () => ...)]`** (13.22+): conditional binding declared on the interface — requires **PHP 8.5**
+- Enum (`UnitEnum`) support in most managers (`Cache::store()`, `Queue`, `Log`, `Mail`, `Auth::guard()`…) (13.3 → 13.7)
+- Guzzle 8 supported (13.26+)
 
 ## Migration Laravel 12 → 13
 
-| Sujet | Avant (12) | Après (13) |
+| Topic | Before (12) | After (13) |
 |-------|-----------|------------|
 | PHP minimum | 8.2 | **8.3** |
-| PHPUnit | 11 | **12** |
-| Pest | 3 | **4** |
-| CSRF | `VerifyCsrfToken` | **`PreventRequestForgery`** (origin-aware) |
-| Cache prefix | underscore | **hyphens par défaut** (configurer `CACHE_PREFIX`, `REDIS_PREFIX`, `SESSION_COOKIE` pour rétro-compat) |
-| Beanstalk | pheanstalk 7.x | **pheanstalk 8.0+** |
+| PHPUnit | 11 | **12** (13 supported) |
+| Pest | 3 | **4** (5 with PHP 8.4+) |
+| CSRF | `VerifyCsrfToken` | **`PreventRequestForgery`** (origin check via `Sec-Fetch-Site`) |
+| Cache prefix | underscore | **hyphens by default** (set `CACHE_PREFIX`, `REDIS_PREFIX`, `SESSION_COOKIE` for backward compatibility) |
+| Beanstalk | pheanstalk 5.x | **pheanstalk 7.x / 8.x** |
 | Symfony | 7.x | **7.4 / 8.0** |
-| Model boot | toléré | **`new Model()` → LogicException** |
-| Config | — | nouveau `serializable_classes` (allowlist hardening) |
+| Model boot | tolerated | **nested instantiation during the model's boot → LogicException** |
+| Config | — | new `cache.serializable_classes` (allowlist hardening, default `false`) |
 
 ```env
-# Rétro-compat cache prefixes pour upgrade depuis L12
+# Backward-compatible cache prefixes when upgrading from L12
 CACHE_PREFIX=laravel_cache_
 REDIS_PREFIX=laravel_database_
 SESSION_COOKIE=laravel_session
 ```
 
 ```php
-// config/app.php — durcissement deserialize
+// config/cache.php — deserialization hardening
 'serializable_classes' => [
     App\DTO\PaymentDto::class,
     App\DTO\OrderDto::class,
@@ -281,15 +288,15 @@ SESSION_COOKIE=laravel_session
 ## Best Practices
 
 ### DO
-- Utiliser `final readonly class` pour DTOs et Value Objects (PHP 8.3+)
-- Injecter via constructor promotion + `interface` (DI inversion)
-- Logger via `Context::add()` pour propager metadata entre jobs/requêtes
-- Configurer `serializable_classes` en production
-- Préférer `app(Contract::class)` sur `App::make()` (typage strict)
+- Use `final readonly class` for DTOs and Value Objects (PHP 8.3+)
+- Inject via constructor promotion + `interface` (dependency inversion)
+- Log via `Context::add()` to propagate metadata across jobs/requests
+- Configure `serializable_classes` in production
+- Prefer `app(Contract::class)` over `App::make()` (strict typing)
 
 ### DON'T
-- Instancier des modèles dans `register()` (→ LogicException L13)
-- Hardcoder des chemins absolus (utiliser `base_path()`, `storage_path()`)
-- Mélanger Repository et Service (un par responsabilité)
-- Bypasser le container avec `new ConcreteClass()`
-- Ignorer le bump du préfixe cache lors d'un upgrade depuis L12
+- Instantiate a model during its own boot (`new static()` inside `boot()` → LogicException in L13)
+- Hardcode absolute paths (use `base_path()`, `storage_path()`)
+- Mix Repository and Service (one per responsibility)
+- Bypass the container with `new ConcreteClass()`
+- Ignore the cache prefix change when upgrading from L12

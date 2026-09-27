@@ -33,7 +33,12 @@ coveragePathIgnorePatterns = ["**/*.spec.ts", "src/generated/**"]
 ```
 
 If the suite misses `coverageThreshold`, `bun test` exits non-zero — ideal as a CI
-gate. `--coverage` on the CLI overrides the `bunfig` value.
+gate. `--coverage` on the CLI overrides the `bunfig` value. Bun accepts a `statement` key
+but does not currently enforce it; outside `--parallel`, the threshold check only runs when
+the `text` reporter is enabled (bun.com/docs/test/code-coverage).
+
+Since Bun 1.4, `bunfig.toml` is parsed strictly: unquoted string values are a startup
+`SyntaxError` — always quote strings (`linker = "isolated"`).
 
 ## `[test.reporter]` — JUnit for CI
 
@@ -74,6 +79,11 @@ preload script.
 | `--concurrent` / `--max-concurrency N` | Parallel tests in a file (default cap 20) |
 | `--randomize` / `--seed N` | Randomized, reproducible order |
 | `--rerun-each N` / `--retry N` / `--bail[=N]` | Flake detection & CI early-exit |
+| `--parallel[=N]` | Run test files across N worker processes (default: CPU count); implies `--isolate` (1.3.13+) |
+| `--isolate` | Fresh global + module registry per file, same process (1.3.13+) |
+| `--shard=M/N` | Split files across CI machines (1.3.13+) |
+| `--timings=<file>` / `--update-timings` | Balance shards/workers by recorded durations (1.4.0) |
+| `--changed[=<ref>]` | Only tests whose import graph reaches changed files (1.3.13+) |
 
 Discovery matches `*.test.{ts,tsx,js,jsx}`, `*_test.*`, `*.spec.*`, `*_spec.*`.
 Also configurable in `bunfig`: `test.root`, `test.pathIgnorePatterns`,

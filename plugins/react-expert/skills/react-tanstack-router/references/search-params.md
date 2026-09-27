@@ -16,13 +16,14 @@ template: templates/search-filters.md
 ## Validation with Zod
 
 ```typescript
-validateSearch: zodValidator(z.object({
+validateSearch: z.object({
   page: z.number().min(1).default(1),
   sort: z.enum(['newest', 'oldest']).default('newest'),
-}))
+})
 ```
 
-**Packages**: `@tanstack/zod-adapter` + `zod`
+**Packages**: `zod` (v4 — pass the schema directly, use `.catch()` for fallbacks).
+Zod v3 only: wrap with `zodValidator()` and use `fallback()` from `@tanstack/zod-adapter` (`.catch()` would type the param as `unknown`).
 
 ---
 

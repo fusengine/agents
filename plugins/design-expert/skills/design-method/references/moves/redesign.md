@@ -1,8 +1,8 @@
 ---
 name: redesign
 description: "Total redesign of an EXISTING surface — replays generate's production pipeline to rethink structure/layout/typography/composition from scratch, while locking the existing color palette as a fixed anchor and forbidding any copy-paste of the old design."
-when-to-use: "Owner asks to redesign / refonte / rebuild / rework an existing page, screen, or app — a surface already exists and must be reconceived, not incrementally refined (that is critique/polish) and not built from nothing (that is generate FULL)."
-keywords: redesign, refonte, rebuild, rework, move, existing-surface, palette-lock, anti-copy, body-sequence, exploration
+when-to-use: "Owner asks to redesign / overhaul / rebuild / rework an existing page, screen, or app — a surface already exists and must be reconceived, not incrementally refined (that is critique/polish) and not built from nothing (that is generate FULL)."
+keywords: redesign, overhaul, rebuild, rework, move, existing-surface, palette-lock, anti-copy, body-sequence, exploration
 priority: critical
 related: ./generate.md, ../../SKILL.md, ../macrostructure-bank.md, ../body-sequence-bank.md, ../../../design-web/references/design-inspiration.md, ../../../design-web/SKILL.md, ../../../design-system/SKILL.md
 ---
@@ -18,7 +18,7 @@ to prevent is a "redesign" that is really a copy-paste of the old design lightly
 
 ### When to use
 
-- The owner asks to **redesign / refonte / rebuild / rework** a surface that **already
+- The owner asks to **redesign / overhaul / rebuild / rework** a surface that **already
   exists** (a live page/screen, existing HTML/CSS, or a running app view).
 - **Not for:** a brand-new surface with nothing built (→ `generate` FULL); an incremental
   fix or quality pass on a design you want to keep (→ `critique`/`audit`/`polish`); a tone

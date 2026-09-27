@@ -13,7 +13,7 @@ keywords: validate, rules, form object, error, real-time validation
 Form complexity?
 ├── Simple (few fields) → Inline #[Validate]
 ├── Reusable → Form Object class
-├── Real-time validation → wire:model.blur + rules
+├── Real-time validation → wire:model.live.blur + rules
 ├── File upload → WithFileUploads trait
 └── Complex logic → Form Object + methods
 ```
@@ -42,7 +42,7 @@ Form complexity?
 
 | Pattern | Triggers |
 |---------|----------|
-| `wire:model.blur` | On field blur |
+| `wire:model.live.blur` | Request on field blur (Livewire 4.1+; plain `.blur` only syncs client state) |
 | `wire:model.live` | On every change |
 | `#[Validate]` on property | Auto-validation |
 
@@ -84,7 +84,7 @@ Form complexity?
 | DO | DON'T |
 |----|-------|
 | Use Form Objects | Repeat validation logic |
-| wire:model.blur for fields | Live on all fields |
+| wire:model.live.blur for fields | Live on all fields |
 | Custom error messages | Generic messages |
 | Validate in action | Skip validation |
 

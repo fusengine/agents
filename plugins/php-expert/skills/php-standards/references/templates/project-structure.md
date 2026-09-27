@@ -16,7 +16,7 @@ The conventional layout for a Composer/PSR-4 library. Framework-agnostic.
 my-package/
 ├── composer.json           # PSR-4 autoload + scripts (root config)
 ├── composer.lock           # committed for apps, gitignored for libs
-├── .php-cs-fixer.dist.php   # PER-CS 3.0 ruleset
+├── .php-cs-fixer.dist.php   # @PER-CS ruleset
 ├── phpunit.xml.dist        # test config
 ├── phpstan.neon.dist       # static analysis config
 ├── .gitignore              # /vendor, /.php-cs-fixer.cache, ...

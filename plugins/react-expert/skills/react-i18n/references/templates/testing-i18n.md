@@ -35,23 +35,23 @@ const resources = {
       'errors.invalid': 'Invalid credentials',
     },
   },
-  fr: {
+  es: {
     common: {
-      'welcome.title': 'Bienvenue',
-      'welcome.greeting': 'Bonjour, {{name}} !',
-      'items.count_zero': 'Aucun élément',
-      'items.count_one': '{{count}} élément',
-      'items.count_other': '{{count}} éléments',
-      'actions.save': 'Enregistrer',
-      'actions.cancel': 'Annuler',
-      'actions.delete': 'Supprimer',
+      'welcome.title': 'Bienvenido',
+      'welcome.greeting': '¡Hola, {{name}}!',
+      'items.count_zero': 'Ningún elemento',
+      'items.count_one': '{{count}} elemento',
+      'items.count_other': '{{count}} elementos',
+      'actions.save': 'Guardar',
+      'actions.cancel': 'Cancelar',
+      'actions.delete': 'Eliminar',
     },
     auth: {
-      'login.title': 'Connexion',
-      'login.email': 'E-mail',
-      'login.password': 'Mot de passe',
-      'login.submit': 'Se connecter',
-      'errors.invalid': 'Identifiants invalides',
+      'login.title': 'Iniciar sesión',
+      'login.email': 'Correo electrónico',
+      'login.password': 'Contraseña',
+      'login.submit': 'Entrar',
+      'errors.invalid': 'Credenciales no válidas',
     },
   },
 }
@@ -87,7 +87,7 @@ import i18n from './i18n-mock'
 
 interface CustomRenderOptions extends Omit<RenderOptions, 'wrapper'> {
   /** Set initial language for test */
-  locale?: 'en' | 'fr'
+  locale?: 'en' | 'es'
 }
 
 /**
@@ -165,11 +165,11 @@ describe('Welcome', () => {
     expect(screen.getByText('Hello, Alice!')).toBeInTheDocument()
   })
 
-  it('renders in French when locale is fr', () => {
-    render(<Welcome name="Alice" />, { locale: 'fr' })
+  it('renders in Spanish when locale is es', () => {
+    render(<Welcome name="Alice" />, { locale: 'es' })
 
-    expect(screen.getByRole('heading')).toHaveTextContent('Bienvenue')
-    expect(screen.getByText('Bonjour, Alice !')).toBeInTheDocument()
+    expect(screen.getByRole('heading')).toHaveTextContent('Bienvenido')
+    expect(screen.getByText('¡Hola, Alice!')).toBeInTheDocument()
   })
 })
 ```
@@ -219,10 +219,10 @@ describe('ItemCount', () => {
     expect(screen.getByTestId('item-count')).toHaveTextContent('5 items')
   })
 
-  it('renders French pluralization', () => {
-    render(<ItemCount count={5} />, { locale: 'fr' })
+  it('renders Spanish pluralization', () => {
+    render(<ItemCount count={5} />, { locale: 'es' })
 
-    expect(screen.getByTestId('item-count')).toHaveTextContent('5 éléments')
+    expect(screen.getByTestId('item-count')).toHaveTextContent('5 elementos')
   })
 })
 ```
@@ -248,10 +248,10 @@ export function LanguageSwitcher() {
         EN
       </button>
       <button
-        onClick={() => i18n.changeLanguage('fr')}
-        aria-pressed={i18n.language === 'fr'}
+        onClick={() => i18n.changeLanguage('es')}
+        aria-pressed={i18n.language === 'es'}
       >
-        FR
+        ES
       </button>
     </div>
   )
@@ -274,13 +274,13 @@ describe('LanguageSwitcher', () => {
     expect(enButton).toHaveAttribute('aria-pressed', 'true')
   })
 
-  it('changes language when FR clicked', async () => {
+  it('changes language when ES clicked', async () => {
     const user = userEvent.setup()
     render(<LanguageSwitcher />)
 
-    await user.click(screen.getByRole('button', { name: 'FR' }))
+    await user.click(screen.getByRole('button', { name: 'ES' }))
 
-    expect(i18n.language).toBe('fr')
+    expect(i18n.language).toBe('es')
   })
 })
 ```
@@ -390,12 +390,12 @@ describe('LoginForm', () => {
     expect(screen.getByRole('button')).toHaveTextContent('Sign in')
   })
 
-  it('renders with French labels', () => {
-    render(<LoginForm onSubmit={jest.fn()} />, { locale: 'fr' })
+  it('renders with Spanish labels', () => {
+    render(<LoginForm onSubmit={jest.fn()} />, { locale: 'es' })
 
-    expect(screen.getByRole('heading')).toHaveTextContent('Connexion')
-    expect(screen.getByLabelText('E-mail')).toBeInTheDocument()
-    expect(screen.getByRole('button')).toHaveTextContent('Se connecter')
+    expect(screen.getByRole('heading')).toHaveTextContent('Iniciar sesión')
+    expect(screen.getByLabelText('Correo electrónico')).toBeInTheDocument()
+    expect(screen.getByRole('button')).toHaveTextContent('Entrar')
   })
 
   it('submits form with values', async () => {
@@ -429,8 +429,8 @@ describe('Welcome snapshots', () => {
     expect(container).toMatchSnapshot()
   })
 
-  it('matches French snapshot', () => {
-    const { container } = render(<Welcome name="Test" />, { locale: 'fr' })
+  it('matches Spanish snapshot', () => {
+    const { container } = render(<Welcome name="Test" />, { locale: 'es' })
     expect(container).toMatchSnapshot()
   })
 })
@@ -477,6 +477,6 @@ import './i18n-mock'
 |----------|-------------|
 | Centralized mock | Single i18n-mock.ts file |
 | Custom render | Always use test wrapper |
-| Test both locales | Verify EN and FR |
+| Test both locales | Verify EN and ES |
 | Minimal resources | Only include needed keys |
 | Snapshot per locale | Separate snapshots per language |

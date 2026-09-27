@@ -185,8 +185,8 @@ return PostResource::collection(Post::paginate(15));
 
 ## Laravel 13 Notes
 
-### Attributes pour API Resources
-Laravel 13 introduit `#[Collects]` et `#[PreserveKeys]` pour configurer les ResourceCollections via attributs PHP.
+### Attributes for API Resources
+Laravel 13 introduces `#[Collects]` and `#[PreserveKeys]` to configure ResourceCollections via PHP attributes.
 
 ```php
 use Illuminate\Http\Resources\Json\ResourceCollection;
@@ -199,20 +199,20 @@ final class PostCollection extends ResourceCollection {}
 ```
 
 ### JSON:API compliance
-Pour les APIs JSON:API (sparse fieldsets, inclusion, links), voir [[laravel-jsonapi]] qui couvre `?include=`, `?fields[type]=`, et la pagination conforme spec.
+For JSON:API APIs (sparse fieldsets, includes, links), see [[laravel-jsonapi]], which covers `?include=`, `?fields[type]=`, and spec-compliant pagination.
 
 ## Best Practices
 
 ### DO
-- Utiliser API Resources (`JsonResource`) pour toute réponse JSON publique
-- Versionner via URL (`/api/v1`) plutôt que via header (lisible, cacheable)
-- Rate-limiter par utilisateur ET par IP (`throttle:60,1` + custom limiter)
-- Documenter via OpenAPI/Scribe avant de coder l'endpoint
-- Préférer `cursor()` pagination pour grandes listes (stable, performant)
+- Use API Resources (`JsonResource`) for every public JSON response
+- Version via URL (`/api/v1`) rather than via header (readable, cacheable)
+- Rate-limit per user AND per IP (`throttle:60,1` + custom limiter)
+- Document via OpenAPI/Scribe before coding the endpoint
+- Prefer `cursor()` pagination for large lists (stable, performant)
 
 ### DON'T
-- Retourner directement un Model Eloquent (fuite de colonnes sensibles)
-- Mélanger statuts HTTP (toujours 422 pour validation, 401 vs 403)
-- Skip Form Request validation (jamais valider en controller)
-- Exposer les IDs auto-increment publiquement (préférer UUID/ULID)
-- Oublier `PreventRequestForgery` exemption pour les webhooks externes
+- Return an Eloquent Model directly (leaks sensitive columns)
+- Mix up HTTP statuses (always 422 for validation, 401 vs 403)
+- Skip Form Request validation (never validate in the controller)
+- Expose auto-increment IDs publicly (prefer UUID/ULID)
+- Forget the `PreventRequestForgery` exemption for external webhooks

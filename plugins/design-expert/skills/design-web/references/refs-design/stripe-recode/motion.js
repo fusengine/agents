@@ -1,42 +1,42 @@
-/* Solvo. Mouvement, socle : entete, menu, compteur, revelations, gerbe.
-   Aucune duree ni courbe ici : elles vivent dans styles.css. Ce fichier ne
-   fait que basculer des classes, armer des observateurs et les desarmer.
-   Les carrousels et l'accordeon sont dans motion-carrousel.js. */
+/* Solvo. Motion, base: header, menu, counter, reveals, burst.
+   No duration or curve here: they live in styles.css. This file only
+   toggles classes, arms observers and disarms them.
+   The carousels and the accordion are in motion-carrousel.js. */
 (function () {
   "use strict";
 
-  var reduit = window.matchMedia("(prefers-reduced-motion: reduce)");
-  var minuteries = [];
-  var observateurs = [];
+  var reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
+  var timers = [];
+  var observers = [];
 
-  function differe(fn, ms) {
+  function defer(fn, ms) {
     var id = window.setTimeout(fn, ms);
-    minuteries.push(id);
+    timers.push(id);
     return id;
   }
   function purge() {
-    minuteries.forEach(window.clearTimeout);
-    minuteries.length = 0;
+    timers.forEach(window.clearTimeout);
+    timers.length = 0;
   }
 
-  /* ---------------------------------------------- entete collee au scroll */
-  var entete = document.getElementById("entete");
-  if (entete) {
-    var sentinelle = function () {
-      entete.classList.toggle("est-collee", window.scrollY > 8);
+  /* ------------------------------------------- header stuck on scroll */
+  var masthead = document.getElementById("masthead");
+  if (masthead) {
+    var sentinel = function () {
+      masthead.classList.toggle("is-stuck", window.scrollY > 8);
     };
-    sentinelle();
-    window.addEventListener("scroll", sentinelle, { passive: true });
+    sentinel();
+    window.addEventListener("scroll", sentinel, { passive: true });
   }
 
-  /* ---------------------------------------------------------- menu mobile */
+  /* ---------------------------------------------------------- mobile menu */
   var burger = document.querySelector(".burger");
-  var menu = document.getElementById("menu-mobile");
+  var menu = document.getElementById("mobile-menu");
   if (burger && menu) {
     burger.addEventListener("click", function () {
-      var ouvert = burger.getAttribute("aria-expanded") === "true";
-      burger.setAttribute("aria-expanded", String(!ouvert));
-      menu.hidden = ouvert;
+      var open = burger.getAttribute("aria-expanded") === "true";
+      burger.setAttribute("aria-expanded", String(!open));
+      menu.hidden = open;
     });
     menu.addEventListener("click", function (e) {
       if (!e.target.closest("a")) return;
@@ -45,92 +45,92 @@
     });
   }
 
-  /* ------------------------------- compteur du sourcil, roulement chiffre */
-  var compteur = document.querySelector("[data-compteur]");
-  if (compteur) {
-    var cible = compteur.getAttribute("data-cible");
-    if (reduit.matches) {
-      compteur.textContent = cible;
+  /* ------------------------------------ eyebrow counter, digit scramble */
+  var counter = document.querySelector("[data-counter]");
+  if (counter) {
+    var target = counter.getAttribute("data-target");
+    if (reduced.matches) {
+      counter.textContent = target;
     } else {
-      var chiffres = cible.replace(/[^0-9]/g, "");
-      var pas = 0;
-      var roule = function () {
-        pas += 1;
-        compteur.textContent = cible.split("").map(function (c, i) {
+      var digits = target.replace(/[^0-9]/g, "");
+      var step = 0;
+      var roll = function () {
+        step += 1;
+        counter.textContent = target.split("").map(function (c, i) {
           if (!/[0-9]/.test(c)) return c;
-          var rang = cible.slice(0, i).replace(/[^0-9]/g, "").length;
-          return rang < pas ? c : String(Math.floor(Math.random() * 10));
+          var rank = target.slice(0, i).replace(/[^0-9]/g, "").length;
+          return rank < step ? c : String(Math.floor(Math.random() * 10));
         }).join("");
-        if (pas <= chiffres.length) differe(roule, 90);
+        if (step <= digits.length) defer(roll, 90);
       };
-      differe(roule, 400);
+      defer(roll, 400);
     }
   }
 
-  /* -------------------------------------- revelations, observateur unique */
-  var cibles = document.querySelectorAll("[data-reveal]");
-  if (cibles.length && "IntersectionObserver" in window) {
-    var vue = new IntersectionObserver(function (entrees, obs) {
-      entrees.forEach(function (entree) {
-        if (!entree.isIntersecting) return;
-        entree.target.classList.add("est-visible");
-        obs.unobserve(entree.target);
+  /* ---------------------------------------------- reveals, single observer */
+  var targets = document.querySelectorAll("[data-reveal]");
+  if (targets.length && "IntersectionObserver" in window) {
+    var view = new IntersectionObserver(function (entries, obs) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add("is-visible");
+        obs.unobserve(entry.target);
       });
     }, { rootMargin: "0px 0px -12% 0px", threshold: 0.12 });
-    cibles.forEach(function (el) { vue.observe(el); });
-    observateurs.push(vue);
+    targets.forEach(function (el) { view.observe(el); });
+    observers.push(view);
   } else {
-    cibles.forEach(function (el) { el.classList.add("est-visible"); });
+    targets.forEach(function (el) { el.classList.add("is-visible"); });
   }
 
-  /* ------------------------------------------------ gerbe : rayons en CSS */
-  var gerbe = document.querySelector("[data-gerbe]");
-  if (gerbe) {
+  /* ------------------------------------------------ burst: rays in CSS */
+  var burst = document.querySelector("[data-burst]");
+  if (burst) {
     var total = 46;
     for (var i = 0; i < total; i += 1) {
-      var rayon = document.createElement("i");
+      var ray = document.createElement("i");
       var angle = -74 + (148 * i) / (total - 1);
-      var longueur = 120 + Math.round(Math.abs(Math.cos((angle * Math.PI) / 180)) * 190);
-      var teinte = i % 3 === 0 ? "#ffa319" : i % 3 === 1 ? "#533afd" : "#7f7dfc";
-      rayon.style.height = longueur + "px";
-      rayon.style.color = teinte;
-      rayon.style.background = "linear-gradient(180deg, " + teinte + ", rgba(255,255,255,0))";
-      rayon.style.transform = "rotate(" + angle + "deg) scaleY(.25)";
-      rayon.setAttribute("data-angle", String(angle));
-      gerbe.appendChild(rayon);
+      var length = 120 + Math.round(Math.abs(Math.cos((angle * Math.PI) / 180)) * 190);
+      var hue = i % 3 === 0 ? "#ffa319" : i % 3 === 1 ? "#533afd" : "#7f7dfc";
+      ray.style.height = length + "px";
+      ray.style.color = hue;
+      ray.style.background = "linear-gradient(180deg, " + hue + ", rgba(255,255,255,0))";
+      ray.style.transform = "rotate(" + angle + "deg) scaleY(.25)";
+      ray.setAttribute("data-angle", String(angle));
+      burst.appendChild(ray);
     }
-    var deploie = function () {
-      Array.prototype.forEach.call(gerbe.children, function (r, k) {
+    var deploy = function () {
+      Array.prototype.forEach.call(burst.children, function (r, k) {
         var a = r.getAttribute("data-angle");
-        differe(function () {
+        defer(function () {
           r.style.transform = "rotate(" + a + "deg) scaleY(1)";
-        }, reduit.matches ? 0 : k * 18);
+        }, reduced.matches ? 0 : k * 18);
       });
     };
     if ("IntersectionObserver" in window) {
-      var vueGerbe = new IntersectionObserver(function (entrees, obs) {
-        entrees.forEach(function (entree) {
-          if (!entree.isIntersecting) return;
-          entree.target.classList.add("est-visible");
-          deploie();
-          obs.unobserve(entree.target);
+      var burstView = new IntersectionObserver(function (entries, obs) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add("is-visible");
+          deploy();
+          obs.unobserve(entry.target);
         });
       }, { threshold: 0.2 });
-      vueGerbe.observe(gerbe);
-      observateurs.push(vueGerbe);
+      burstView.observe(burst);
+      observers.push(burstView);
     } else {
-      gerbe.classList.add("est-visible");
-      deploie();
+      burst.classList.add("is-visible");
+      deploy();
     }
   }
 
-  /* ------------------- arret propre : onglet masque ou page quittee */
+  /* ------------------- clean shutdown: tab hidden or page left */
   document.addEventListener("visibilitychange", function () {
     if (document.visibilityState === "hidden") purge();
   });
   window.addEventListener("pagehide", function () {
     purge();
-    observateurs.forEach(function (o) { o.disconnect(); });
-    observateurs.length = 0;
+    observers.forEach(function (o) { o.disconnect(); });
+    observers.length = 0;
   });
 })();

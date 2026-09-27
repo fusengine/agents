@@ -10,13 +10,18 @@ related: select.md, checkbox.md
 
 # Dialog Component
 
-Accessible modal dialog built on Radix UI. Supports basic dialogs, alert dialogs, dialogs with forms, and custom layouts using DialogTrigger, DialogContent, DialogHeader, DialogFooter, DialogTitle, and DialogDescription.
+> **Base:** examples use **Base UI** (shadcn default since 2026-07); Radix delta in "Radix variant" below; React Aria: `DialogTrigger` wraps the button and the content, no `render`/`asChild`. Sources: https://ui.shadcn.com/r/styles/base-nova/dialog.json, https://ui.shadcn.com/r/styles/radix-nova/dialog.json
+
+`DialogContent` (Base UI `Dialog.Backdrop` + `Dialog.Popup` in a portal) shows an X close button
+unless `showCloseButton={false}`; `DialogFooter showCloseButton` adds an outline "Close" button.
+
+Accessible modal dialog. Supports basic dialogs, alert dialogs, dialogs with forms, and custom layouts using DialogTrigger, DialogContent, DialogHeader, DialogFooter, DialogTitle, and DialogDescription.
 
 ## Installation
 
 ```bash
-bunx --bun shadcn-ui@latest add dialog
-bunx --bun shadcn-ui@latest add alert-dialog
+bunx --bun shadcn@latest add dialog
+bunx --bun shadcn@latest add alert-dialog
 ```
 
 ## Basic Dialog
@@ -25,7 +30,6 @@ bunx --bun shadcn-ui@latest add alert-dialog
 // app/components/BasicDialog.tsx
 'use client'
 
-import { useState } from 'react'
 import { Button } from '@/modules/cores/shadcn/components/ui/button'
 import {
   Dialog,
@@ -42,8 +46,8 @@ import {
 export function BasicDialog() {
   return (
     <Dialog>
-      <DialogTrigger asChild>
-        <Button variant="outline">Open Dialog</Button>
+      <DialogTrigger render={<Button variant="outline" />}>
+        Open Dialog
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
@@ -87,9 +91,7 @@ import {
 export function DialogWithClose() {
   return (
     <Dialog>
-      <DialogTrigger asChild>
-        <Button>Open Settings</Button>
-      </DialogTrigger>
+      <DialogTrigger render={<Button />}>Open Settings</DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Settings</DialogTitle>
@@ -110,9 +112,7 @@ export function DialogWithClose() {
           </div>
         </div>
         <div className="flex justify-end gap-2">
-          <DialogClose asChild>
-            <Button variant="outline">Cancel</Button>
-          </DialogClose>
+          <DialogClose render={<Button variant="outline" />}>Cancel</DialogClose>
           <Button>Save Changes</Button>
         </div>
       </DialogContent>
@@ -129,8 +129,7 @@ export function DialogWithClose() {
 
 import { useState } from 'react'
 import { useForm } from '@tanstack/react-form'
-import { zodValidator } from '@tanstack/zod-form-adapter'
-import * as z from 'zod'
+import * as z from 'zod'  // TanStack Form v1: Standard Schema, no adapter
 import { Button } from '@/modules/cores/shadcn/components/ui/button'
 import {
   Dialog,
@@ -166,14 +165,14 @@ export function DialogWithForm() {
       setOpen(false)
     },
     validators: {
-      onSubmit: zodValidator(formSchema),
+      onSubmit: formSchema,
     },
   })
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <Button variant="outline">Invite User</Button>
+      <DialogTrigger render={<Button variant="outline" />}>
+        Invite User
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
@@ -204,7 +203,7 @@ export function DialogWithForm() {
                 />
                 {field.state.meta.errors.length > 0 && (
                   <p className="text-sm text-red-500">
-                    {field.state.meta.errors[0]}
+                    {field.state.meta.errors[0]?.message}
                   </p>
                 )}
               </div>
@@ -225,7 +224,7 @@ export function DialogWithForm() {
                 />
                 {field.state.meta.errors.length > 0 && (
                   <p className="text-sm text-red-500">
-                    {field.state.meta.errors[0]}
+                    {field.state.meta.errors[0]?.message}
                   </p>
                 )}
               </div>
@@ -273,23 +272,25 @@ import {
  * Alert dialog for confirming destructive actions
  */
 export function AlertDialogExample() {
+  const [open, setOpen] = useState(false)
   const [loading, setLoading] = useState(false)
 
+  // Base UI AlertDialogAction is a plain Button: close the dialog yourself
   const handleDelete = async () => {
     setLoading(true)
     try {
-      // Perform delete operation
+      // Perform delete operation (e.g. a Server Action)
       await new Promise(resolve => setTimeout(resolve, 1000))
-      console.log('Item deleted')
+      setOpen(false)
     } finally {
       setLoading(false)
     }
   }
 
   return (
-    <AlertDialog>
-      <AlertDialogTrigger asChild>
-        <Button variant="destructive">Delete Account</Button>
+    <AlertDialog open={open} onOpenChange={setOpen}>
+      <AlertDialogTrigger render={<Button variant="destructive" />}>
+        Delete Account
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
@@ -302,9 +303,9 @@ export function AlertDialogExample() {
         <div className="flex justify-end gap-2">
           <AlertDialogCancel>Cancel</AlertDialogCancel>
           <AlertDialogAction
+            variant="destructive"
             onClick={handleDelete}
             disabled={loading}
-            className="bg-red-600 hover:bg-red-700"
           >
             {loading ? 'Deleting...' : 'Delete'}
           </AlertDialogAction>
@@ -350,9 +351,7 @@ export function DialogControlled() {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <Button>Multi-Step Dialog</Button>
-      </DialogTrigger>
+      <DialogTrigger render={<Button />}>Multi-Step Dialog</DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Setup Wizard</DialogTitle>
@@ -413,8 +412,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/modules/cores/shadcn
 export function DialogWithTabs() {
   return (
     <Dialog>
-      <DialogTrigger asChild>
-        <Button variant="outline">Open Preferences</Button>
+      <DialogTrigger render={<Button variant="outline" />}>
+        Open Preferences
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
@@ -484,9 +483,7 @@ import { Label } from '@/modules/cores/shadcn/components/ui/label'
 export function DialogWithFooter() {
   return (
     <Dialog>
-      <DialogTrigger asChild>
-        <Button>Edit Profile</Button>
-      </DialogTrigger>
+      <DialogTrigger render={<Button />}>Edit Profile</DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>Edit Profile</DialogTitle>
@@ -521,6 +518,18 @@ export function DialogWithFooter() {
 }
 ```
 
+## Radix variant
+
+`style` `radix-*`: same parts and props; triggers/close compose with `asChild`, and
+`AlertDialogAction` closes the dialog by itself:
+
+```typescript
+<DialogTrigger asChild>
+  <Button variant="outline">Open Dialog</Button>
+</DialogTrigger>
+// DialogClose likewise: <DialogClose asChild><Button variant="outline">Cancel</Button></DialogClose>
+```
+
 ## Best Practices
 
 - Always include **DialogHeader** with title and description
@@ -533,4 +542,4 @@ export function DialogWithFooter() {
 - Test keyboard navigation (Escape to close, Tab to navigate)
 - Provide appropriate ARIA labels and descriptions
 - Show loading states during async operations
-- Prevent background scroll when dialog is open (automatic with Radix UI)
+- Prevent background scroll when dialog is open (automatic with modal dialogs on every base)

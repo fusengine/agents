@@ -1,199 +1,199 @@
 /* ═══════════════════════════════════════════════════════════════════════════
-   MOUVEMENT — référence de design.  Vanilla, sans framework ni build.
-   TRAÇABILITÉ. La source ne contient NI @keyframes, NI transition, NI
-   animation-timeline : 100 % de son mouvement vient du runtime Framer Motion,
-   illisible depuis le HTML livré. [relevé] = les DÉCLENCHEURS et les ÉTATS,
-   seuls faits disponibles. [arbitrage] = tout le reste — chaque durée, chaque
-   courbe, chaque seuil. Aucune durée n'est en dur ici : elles viennent des
-   variables CSS de :root. Raisonnement complet : tokens-supercommon.md §3.
+   MOTION — design reference.  Vanilla, no framework, no build.
+   TRACEABILITY. The source contains NO @keyframes, NO transition, NO
+   animation-timeline: 100 % of its motion comes from the Framer Motion runtime,
+   unreadable from the shipped HTML. [measured] = the TRIGGERS and the STATES,
+   the only facts available. [decided] = everything else — every duration, every
+   curve, every threshold. No duration is hard-coded here: they come from the
+   CSS variables in :root. Full reasoning: tokens-supercommon.md §3.
    ═══════════════════════════════════════════════════════════════════════════ */
 (function () {
   'use strict';
 
-  /* ─── 0 ▸ Préférence de mouvement ───────────────────────────────────────
-     `matches` pour le test instantané ; écoute par addEventListener('change')
-     — addListener() est déprécié. [arbitrage] */
-  var requeteCalme = matchMedia('(prefers-reduced-motion: reduce)');
-  var calme = requeteCalme.matches;
+  /* ─── 0 ▸ Motion preference ─────────────────────────────────────────────
+     `matches` for the instant test; listen via addEventListener('change')
+     — addListener() is deprecated. [decided] */
+  var reducedQuery = matchMedia('(prefers-reduced-motion: reduce)');
+  var reduced = reducedQuery.matches;
 
   var css = getComputedStyle(document.documentElement);
-  var dureeCourte = css.getPropertyValue('--duree-court').trim() || '180ms';
+  var durationShort = css.getPropertyValue('--duration-short').trim() || '180ms';
 
-  var reveles = Array.prototype.slice.call(document.querySelectorAll('[data-reveal]'));
-  function toutAfficher() { reveles.forEach(function (n) { n.classList.add('is-in'); }); }
+  var revealed = Array.prototype.slice.call(document.querySelectorAll('[data-reveal]'));
+  function showAll() { revealed.forEach(function (n) { n.classList.add('is-in'); }); }
 
-  requeteCalme.addEventListener('change', function (e) {
-    calme = e.matches;
-    if (calme) toutAfficher();  // ne jamais laisser un bloc caché derrière soi
+  reducedQuery.addEventListener('change', function (e) {
+    reduced = e.matches;
+    if (reduced) showAll();  // never leave a hidden block behind
   });
 
-  /* ─── 1 ▸ Apparition au défilement ── [arbitrage] intégral ──────────────
-     IntersectionObserver et NON `animation-timeline: view()` : non Baseline,
-     et une keyframe partant d'opacity:0 y laisserait les blocs DÉFINITIVEMENT
-     invisibles. Contrat : l'état de repos n'est armé (classe .js-motion) que
-     si l'on sait le lever — sans JS, sans observateur ou en mouvement réduit,
-     le CSS ne cache rien. Seuil 0.15 : révélé dès qu'un sixième est visible.
-     rootMargin -12% en bas : l'apparition finit pendant que l'œil arrive. */
-  if (reveles.length && !calme && 'IntersectionObserver' in window) {
+  /* ─── 1 ▸ Reveal on scroll ── [decided] entirely ────────────────────────
+     IntersectionObserver and NOT `animation-timeline: view()`: not Baseline,
+     and a keyframe starting from opacity:0 would leave blocks PERMANENTLY
+     invisible. Contract: the resting state is only armed (class .js-motion)
+     if we know how to lift it — without JS, without an observer or under
+     reduced motion, the CSS hides nothing. Threshold 0.15: revealed as soon
+     as a sixth is visible. rootMargin -12% at the bottom: the reveal ends as the eye arrives. */
+  if (revealed.length && !reduced && 'IntersectionObserver' in window) {
     document.documentElement.classList.add('js-motion');
-    var vigie = new IntersectionObserver(function (entrees) {
-      entrees.forEach(function (e) {
+    var watcher = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
         if (!e.isIntersecting) return;
         e.target.classList.add('is-in');
-        vigie.unobserve(e.target);   // une apparition ne se rejoue jamais
+        watcher.unobserve(e.target);   // a reveal never replays
       });
     }, { threshold: 0.15, rootMargin: '0px 0px -12% 0px' });
-    reveles.forEach(function (n) { vigie.observe(n); });
+    revealed.forEach(function (n) { watcher.observe(n); });
   } else {
-    toutAfficher();
+    showAll();
   }
 
-  /* ─── 1b ▸ Cascade ── [arbitrage] ───────────────────────────────────────
-     Décalage porté par une variable CSS (--i), pas par une transition : le CSS
-     reste maître du timing. Pas court (60 ms) — au-delà, neuf cellules mettent
-     plus d'une seconde à se poser et la cascade devient le sujet. */
-  document.querySelectorAll('[data-stagger]').forEach(function (groupe) {
-    Array.prototype.forEach.call(groupe.children, function (enfant, i) {
-      enfant.style.setProperty('--i', i);
+  /* ─── 1b ▸ Cascade ── [decided] ─────────────────────────────────────────
+     Offset carried by a CSS variable (--i), not by a transition: the CSS
+     stays in charge of timing. Short step (60 ms) — beyond that, nine cells
+     take more than a second to settle and the cascade becomes the subject. */
+  document.querySelectorAll('[data-stagger]').forEach(function (group) {
+    Array.prototype.forEach.call(group.children, function (child, i) {
+      child.style.setProperty('--i', i);
     });
   });
 
-  /* ─── 2 ▸ Contrôle segmenté (large / pill / slim) ───────────────────────
-     [relevé] fond rgb(0,0,0) + opacity:1 sur l'onglet actif, rgba(0,0,0,0) +
-     opacity:.5 sur les autres. Les états sont des faits ; la transition, non.
-     [arbitrage] Un pouce unique glisse au lieu de repeindre trois fonds : on
-     n'anime qu'un transform (composé par le GPU), et le déplacement RELIE les
-     deux états — trois fonds qui s'allument sont trois événements, un pouce
-     qui glisse est un seul geste. Position mesurée, jamais codée : les
-     largeurs changent avec la fonte et le point de rupture. */
-  var segmente = document.querySelector('.segmented');
-  if (segmente) {
-    var pouce = segmente.querySelector('.segmented__thumb');
-    var onglets = Array.prototype.slice.call(segmente.querySelectorAll('.segmented__tab'));
+  /* ─── 2 ▸ Segmented control (large / pill / slim) ───────────────────────
+     [measured] background rgb(0,0,0) + opacity:1 on the active tab, rgba(0,0,0,0) +
+     opacity:.5 on the others. The states are facts; the transition is not.
+     [decided] A single thumb slides instead of repainting three backgrounds:
+     only a transform is animated (GPU-composited), and the movement CONNECTS
+     the two states — three backgrounds lighting up are three events, a thumb
+     that slides is a single gesture. Position measured, never hard-coded: the
+     widths change with the font and the breakpoint. */
+  var segmented = document.querySelector('.segmented');
+  if (segmented) {
+    var thumb = segmented.querySelector('.segmented__thumb');
+    var tabs = Array.prototype.slice.call(segmented.querySelectorAll('.segmented__tab'));
 
-    var placerPouce = function (onglet) {
-      if (!onglet || !pouce) return;
-      pouce.style.width = onglet.offsetWidth + 'px';
-      pouce.style.transform = 'translateX(' + (onglet.offsetLeft - 2) + 'px)';
+    var placeThumb = function (tab) {
+      if (!tab || !thumb) return;
+      thumb.style.width = tab.offsetWidth + 'px';
+      thumb.style.transform = 'translateX(' + (tab.offsetLeft - 2) + 'px)';
     };
-    var activer = function (onglet) {
-      onglets.forEach(function (t) {
-        var actif = (t === onglet);
-        t.classList.toggle('is-on', actif);
-        t.setAttribute('aria-selected', actif ? 'true' : 'false');
-        t.setAttribute('tabindex', actif ? '0' : '-1');
+    var activate = function (tab) {
+      tabs.forEach(function (t) {
+        var active = (t === tab);
+        t.classList.toggle('is-on', active);
+        t.setAttribute('aria-selected', active ? 'true' : 'false');
+        t.setAttribute('tabindex', active ? '0' : '-1');
       });
-      placerPouce(onglet);
+      placeThumb(tab);
     };
-    onglets.forEach(function (o) {
-      o.addEventListener('click', function () { activer(o); });
+    tabs.forEach(function (o) {
+      o.addEventListener('click', function () { activate(o); });
     });
 
-    /* Navigation clavier, attendue de tout rôle `tablist`. [arbitrage] */
-    segmente.addEventListener('keydown', function (e) {
-      var i = onglets.indexOf(document.activeElement);
+    /* Keyboard navigation, expected of any `tablist` role. [decided] */
+    segmented.addEventListener('keydown', function (e) {
+      var i = tabs.indexOf(document.activeElement);
       if (i < 0) return;
       var j = e.key === 'ArrowRight' ? i + 1 : e.key === 'ArrowLeft' ? i - 1
-            : e.key === 'Home' ? 0 : e.key === 'End' ? onglets.length - 1 : null;
+            : e.key === 'Home' ? 0 : e.key === 'End' ? tabs.length - 1 : null;
       if (j === null) return;
       e.preventDefault();
-      var cible = onglets[(j + onglets.length) % onglets.length];
-      cible.focus();
-      activer(cible);
+      var target = tabs[(j + tabs.length) % tabs.length];
+      target.focus();
+      activate(target);
     });
 
-    /* Repose au chargement, au redimensionnement, et à la bascule de la fonte
-       de secours vers la fonte web — ce dernier cas est le plus oublié. */
-    var reposer = function () { placerPouce(segmente.querySelector('.is-on')); };
-    reposer();
-    addEventListener('resize', reposer, { passive: true });
-    if (document.fonts && document.fonts.ready) document.fonts.ready.then(reposer);
+    /* Reposition on load, on resize, and when the fallback font swaps to the
+       web font — that last case is the one most often forgotten. */
+    var reposition = function () { placeThumb(segmented.querySelector('.is-on')); };
+    reposition();
+    addEventListener('resize', reposition, { passive: true });
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(reposition);
   }
 
-  /* ─── 3 ▸ Vidéo en boucle ───────────────────────────────────────────────
-     [relevé] `loop muted playsinline preload="none"` + affiche : la source
-     décide qu'elle ne coûte rien tant qu'on ne la regarde pas.
-     [arbitrage] Le déclencheur : lecture à l'écran, pause à la sortie. En
-     mouvement réduit elle ne démarre jamais, l'affiche suffit. */
+  /* ─── 3 ▸ Looping video ─────────────────────────────────────────────────
+     [measured] `loop muted playsinline preload="none"` + poster: the source
+     decides it costs nothing as long as nobody is watching it.
+     [decided] The trigger: play when on screen, pause on exit. Under
+     reduced motion it never starts, the poster is enough. */
   var video = document.querySelector('.media__video');
   if (video && 'IntersectionObserver' in window) {
-    new IntersectionObserver(function (entrees) {
-      entrees.forEach(function (e) {
-        if (e.isIntersecting && !calme) {
+    new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting && !reduced) {
           var p = video.play();
-          if (p && p.catch) p.catch(function () { /* refusée : l'affiche reste */ });
+          if (p && p.catch) p.catch(function () { /* refused: the poster stays */ });
         } else { video.pause(); }
       });
     }, { threshold: 0.25 }).observe(video);
   }
 
-  /* ─── 4 ▸ Le bloc « 00:25:00 » ──────────────────────────────────────────
-     [relevé] SVG FIGÉ de 117 × 34 px, tracé entièrement dans l'accent
-     rgb(224,59,30), pictogramme de la cellule « reminder ». Framer ne l'anime
-     pas ; il est repris au caractère près dans styles.css (.picto--timer).
-     [arbitrage] Ce qui suit AJOUTE du mouvement là où la source n'en a pas —
-     assumé et délimité : on ne remplace pas le picto, on le fait respirer à la
-     cadence d'un deux-points d'afficheur. animationPlayState plutôt qu'un
-     retrait/remise de classe, qui repartirait de zéro et ferait un à-coup. En
-     mouvement réduit il n'est jamais posé : le picto reste à pleine opacité —
-     réduire le mouvement ne doit pas réduire l'information. */
-  var minuterie = document.querySelector('.picto--timer');
-  if (minuterie && !calme && 'IntersectionObserver' in window) {
-    var feuille = document.createElement('style');
-    feuille.textContent = '@keyframes battement{0%,49%{opacity:1}50%,99%{opacity:.55}}';
-    document.head.appendChild(feuille);
+  /* ─── 4 ▸ The "00:25:00" block ──────────────────────────────────────────
+     [measured] FROZEN SVG of 117 × 34 px, drawn entirely in the accent
+     rgb(224,59,30), pictogram of the "reminder" cell. Framer does not animate
+     it; it is reproduced character for character in styles.css (.picto--timer).
+     [decided] What follows ADDS motion where the source has none — owned and
+     bounded: the pictogram is not replaced, it is made to breathe at the pace
+     of a display's colon. animationPlayState rather than removing/re-adding a
+     class, which would restart from zero and cause a jolt. Under reduced
+     motion it is never set: the pictogram stays at full opacity —
+     reducing motion must not reduce information. */
+  var timer = document.querySelector('.picto--timer');
+  if (timer && !reduced && 'IntersectionObserver' in window) {
+    var sheet = document.createElement('style');
+    sheet.textContent = '@keyframes blink{0%,49%{opacity:1}50%,99%{opacity:.55}}';
+    document.head.appendChild(sheet);
 
-    minuterie.style.animation = 'battement 1s steps(1, end) infinite';
-    minuterie.style.animationPlayState = 'paused';
-    new IntersectionObserver(function (entrees) {
-      entrees.forEach(function (e) {
-        minuterie.style.animationPlayState = e.isIntersecting ? 'running' : 'paused';
+    timer.style.animation = 'blink 1s steps(1, end) infinite';
+    timer.style.animationPlayState = 'paused';
+    new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        timer.style.animationPlayState = e.isIntersecting ? 'running' : 'paused';
       });
-    }, { threshold: 0.4 }).observe(minuterie);
+    }, { threshold: 0.4 }).observe(timer);
   }
 
-  /* ─── 5 ▸ Progression de lecture ── [arbitrage] intégral ────────────────
-     Une page qui tient sur ~200 vh de vide a besoin d'un repère. Filet de 1 px
-     dans l'accent. Écoute {passive:true}, étranglée par requestAnimationFrame :
-     un calcul par image au plus. */
-  var jauge = document.createElement('div');
-  jauge.setAttribute('aria-hidden', 'true');
-  jauge.style.cssText =
+  /* ─── 5 ▸ Reading progress ── [decided] entirely ────────────────────────
+     A page that runs on ~200 vh of emptiness needs a landmark. A 1 px rule
+     in the accent. {passive:true} listener, throttled by requestAnimationFrame:
+     at most one computation per frame. */
+  var gauge = document.createElement('div');
+  gauge.setAttribute('aria-hidden', 'true');
+  gauge.style.cssText =
     'position:fixed;top:0;left:0;height:1px;width:100%;transform-origin:0 50%;' +
     'transform:scaleX(0);background:var(--accent);z-index:9;pointer-events:none;' +
-    'opacity:0;transition:opacity ' + dureeCourte + ' linear';
-  document.body.appendChild(jauge);
+    'opacity:0;transition:opacity ' + durationShort + ' linear';
+  document.body.appendChild(gauge);
 
-  var enAttente = false;
-  var mesurer = function () {
+  var pending = false;
+  var measure = function () {
     var h = document.documentElement.scrollHeight - innerHeight;
     var p = h > 0 ? Math.min(1, Math.max(0, scrollY / h)) : 0;
-    jauge.style.transform = 'scaleX(' + p + ')';
-    jauge.style.opacity = p > 0.002 ? '1' : '0';
-    enAttente = false;
+    gauge.style.transform = 'scaleX(' + p + ')';
+    gauge.style.opacity = p > 0.002 ? '1' : '0';
+    pending = false;
   };
   addEventListener('scroll', function () {
-    if (enAttente) return;
-    enAttente = true;
-    requestAnimationFrame(mesurer);
+    if (pending) return;
+    pending = true;
+    requestAnimationFrame(measure);
   }, { passive: true });
-  addEventListener('resize', mesurer, { passive: true });
-  mesurer();
+  addEventListener('resize', measure, { passive: true });
+  measure();
 
-  /* ─── 6 ▸ Défilement vers une ancre ─────────────────────────────────────
-     LE PIÈGE le plus courant de ce fichier : scrollTo / scrollBy /
-     scrollIntoView avec `behavior:'smooth'` NE CONSULTENT JAMAIS
-     prefers-reduced-motion. L'API de défilement JS ignore la préférence, à la
-     différence des transitions CSS : un 'smooth' codé en dur impose du
-     mouvement à exactement le public que la préférence protège.
-     Second piège : omettre `behavior` ne vaut pas « instantané » — le défaut
-     'auto' suit la scroll-behavior CSS. Être explicite dans les DEUX branches. */
-  document.querySelectorAll('a[href^="#"]:not([href="#"])').forEach(function (lien) {
-    lien.addEventListener('click', function (e) {
-      var cible = document.querySelector(lien.getAttribute('href'));
-      if (!cible) return;
+  /* ─── 6 ▸ Scrolling to an anchor ────────────────────────────────────────
+     THE most common TRAP in this file: scrollTo / scrollBy /
+     scrollIntoView with `behavior:'smooth'` NEVER CONSULT
+     prefers-reduced-motion. The JS scrolling API ignores the preference,
+     unlike CSS transitions: a hard-coded 'smooth' forces motion on exactly
+     the audience the preference protects.
+     Second trap: omitting `behavior` does not mean "instant" — the default
+     'auto' follows the CSS scroll-behavior. Be explicit in BOTH branches. */
+  document.querySelectorAll('a[href^="#"]:not([href="#"])').forEach(function (link) {
+    link.addEventListener('click', function (e) {
+      var target = document.querySelector(link.getAttribute('href'));
+      if (!target) return;
       e.preventDefault();
-      cible.scrollIntoView({ behavior: calme ? 'instant' : 'smooth', block: 'start' });
+      target.scrollIntoView({ behavior: reduced ? 'instant' : 'smooth', block: 'start' });
     });
   });
 })();

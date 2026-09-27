@@ -29,7 +29,7 @@ return new class extends Migration {
             $table->timestamp('embedded_at')->nullable();
             $table->timestamps();
 
-            $table->vectorIndex('embedding', algorithm: 'hnsw');
+            $table->vectorIndex('embedding'); // HNSW + cosine (no algorithm argument)
             $table->index(['user_id', 'created_at']);
         });
     }

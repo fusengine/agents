@@ -11,7 +11,7 @@ migrating `errors.As` call sites to `errors.AsType`.
 
 ## The explicit check is the idiom
 
-Go has **no** `try`/`catch` and, as of 1.26, still no syntactic sugar for error
+Go has **no** `try`/`catch` and, as of 1.27, still no syntactic sugar for error
 handling. The `if err != nil { return ... }` block is deliberate and correct.
 Never hide it behind a helper that panics, and never silence it:
 

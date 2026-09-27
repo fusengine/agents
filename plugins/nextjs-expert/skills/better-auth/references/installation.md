@@ -62,7 +62,7 @@ GITHUB_CLIENT_SECRET=xxx
 ## Generate DB Schema
 
 ```bash
-bunx @better-auth/cli generate
+bunx auth@latest generate
 bunx prisma migrate dev
 ```
 

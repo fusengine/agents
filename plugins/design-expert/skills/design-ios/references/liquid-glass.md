@@ -1,15 +1,18 @@
 ---
 name: liquid-glass
-description: "Canonical Liquid Glass facts (iOS 26) — the only source for this material in this plugin. No numeric corner-radius exists officially; do not invent one."
+description: "Canonical Liquid Glass facts (introduced iOS 26, current in iOS 27) — the only source for this material in this plugin. No numeric corner-radius exists officially; do not invent one."
 when-to-use: "Deciding whether and how to apply Liquid Glass to navigation, controls, or icons in an iOS mockup."
 keywords: ios, liquid-glass, ios26, material, navigation
 priority: high
 related: ../SKILL.md, semantic-colors.md
 ---
 
-# Liquid Glass (iOS 26)
+# Liquid Glass (introduced iOS 26, current in iOS 27)
 
 Source: developer.apple.com/documentation/technologyoverviews/liquid-glass. Status: verified official.
+Still the platform design language in iOS/iPadOS 27 (released 14 Sep 2026) — see
+developer.apple.com/ios ("Platform design and Liquid Glass") and
+developer.apple.com/design/whats-new (App icons: "Refined guidance for Liquid Glass").
 
 ## What it is
 A functional floating material layer for navigation and controls — not a static visual

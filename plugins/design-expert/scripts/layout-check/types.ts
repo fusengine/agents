@@ -1,9 +1,9 @@
 /**
- * types.ts — Contrat de sortie du contrôle de mise en page déterministe.
- * Aucune logique ici : uniquement les interfaces partagées (règle SOLID du dépôt).
+ * types.ts — Output contract of the deterministic layout check.
+ * No logic here: shared interfaces only (repo SOLID rule).
  */
 
-/** Familles de contrôles. Une famille = un module dans `checks/`. */
+/** Check families. One family = one module in `checks/`. */
 export type ViolationType =
   | "text-overflow"
   | "overlap"
@@ -11,23 +11,23 @@ export type ViolationType =
   | "contrast"
   | "document-overflow";
 
-/** Une violation mesurée, à une largeur de viewport donnée. */
+/** One measured violation, at a given viewport width. */
 export interface Violation {
-  /** Famille du contrôle qui a produit la violation. */
+  /** Family of the check that produced the violation. */
   type: ViolationType;
-  /** Sélecteur CSS de l'élément fautif (paire jointe par " ⟷ " pour `overlap`). */
+  /** CSS selector of the offending element (pair joined by " ⟷ " for `overlap`). */
   selector: string;
-  /** Largeur de viewport (px) à laquelle la mesure a été prise. */
+  /** Viewport width (px) at which the measurement was taken. */
   viewport: number;
-  /** Valeurs brutes mesurées dans la page (nombres uniquement, pas d'appréciation). */
+  /** Raw values measured in the page (numbers only, no judgment). */
   measured: Record<string, number | string | boolean>;
-  /** Écart au seuil, en px (ou en points de ratio pour le contraste). */
+  /** Distance to the threshold, in px (or in ratio points for contrast). */
   delta: number;
-  /** Résumé factuel d'une ligne, sans jugement. */
+  /** One-line factual summary, no judgment. */
   message: string;
 }
 
-/** Information non bloquante : mesure impossible, limite atteinte. */
+/** Non-blocking information: measurement impossible, limit reached. */
 export interface Warning {
   type: ViolationType | "probe";
   selector: string;
@@ -35,51 +35,51 @@ export interface Warning {
   reason: string;
 }
 
-/** Seuils numériques. Tout est réglable ; les défauts vivent dans `config.ts`. */
+/** Numeric thresholds. Everything is tunable; the defaults live in `config.ts`. */
 export interface Thresholds {
-  /** Tolérance px sur scrollWidth − clientWidth. */
+  /** px tolerance on scrollWidth − clientWidth. */
   overflowTolerance: number;
-  /** Tolérance px sur le débordement de l'encre du texte hors de sa boîte. */
+  /** px tolerance on the text ink overflowing its box. */
   inkTolerance: number;
-  /** Tolérance px sur documentElement.scrollWidth − viewport. */
+  /** px tolerance on documentElement.scrollWidth − viewport. */
   documentOverflowTolerance: number;
-  /** Largeur/hauteur minimale (px) d'une intersection pour être retenue. */
+  /** Minimum width/height (px) of an intersection for it to be kept. */
   overlapMinPx: number;
-  /** Part minimale de l'aire du plus petit élément couverte par l'intersection. */
+  /** Minimum share of the smaller element's area covered by the intersection. */
   overlapMinRatio: number;
-  /** Multiplicateur de line-height au-delà duquel un libellé est sur 2 lignes. */
+  /** line-height multiplier beyond which a label sits on 2 lines. */
   ctaLineFactor: number;
-  /** Ratio WCAG minimal pour le texte courant. */
+  /** Minimum WCAG ratio for body text. */
   contrastNormal: number;
-  /** Ratio WCAG minimal pour le grand texte (>= 24px, ou >= 18.66px en gras). */
+  /** Minimum WCAG ratio for large text (>= 24px, or >= 18.66px bold). */
   contrastLarge: number;
 }
 
-/** Configuration complète d'une exécution. */
+/** Full configuration of one run. */
 export interface LayoutCheckConfig {
-  /** Largeurs de viewport testées, en px. */
+  /** Viewport widths tested, in px. */
   widths: number[];
-  /** Hauteur de viewport, en px. */
+  /** Viewport height, in px. */
   height: number;
-  /** Sélecteurs exclus de TOUS les contrôles. */
+  /** Selectors excluded from ALL checks. */
   exclude: string[];
-  /** Sélecteurs considérés comme CTA pour le contrôle `cta-wrap`. */
+  /** Selectors treated as CTAs by the `cta-wrap` check. */
   ctaSelector: string;
-  /** Traiter les éléments positionnés/z-indexés comme des superpositions volontaires. */
+  /** Treat positioned/z-indexed elements as intentional overlaps. */
   ignoreIntentionalOverlap: boolean;
-  /** Nombre max d'éléments comparés deux à deux par le contrôle `overlap`. */
+  /** Max number of elements compared pairwise by the `overlap` check. */
   overlapMaxElements: number;
-  /** Émuler `prefers-reduced-motion: reduce` (neutralise les révélations au scroll). */
+  /** Emulate `prefers-reduced-motion: reduce` (neutralizes scroll reveals). */
   reducedMotion: boolean;
-  /** Parcourir la page de haut en bas avant de mesurer (déclenche les révélations JS). */
+  /** Scroll the page top to bottom before measuring (triggers JS reveals). */
   warmup: boolean;
-  /** Familles de contrôles activées. */
+  /** Enabled check families. */
   checks: ViolationType[];
-  /** Seuils numériques. */
+  /** Numeric thresholds. */
   thresholds: Thresholds;
 }
 
-/** Rapport final sérialisé en JSON sur stdout. */
+/** Final report serialized as JSON on stdout. */
 export interface LayoutCheckReport {
   target: string;
   generatedAt: string;
@@ -88,7 +88,7 @@ export interface LayoutCheckReport {
     total: number;
     byType: Record<string, number>;
     byWidth: Record<string, number>;
-    /** Violations de contraste regroupées par couple de couleurs résolues. */
+    /** Contrast violations grouped by resolved color pair. */
     contrastPairs: Record<string, number>;
     warnings: number;
     pass: boolean;

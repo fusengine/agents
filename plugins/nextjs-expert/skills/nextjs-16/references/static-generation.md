@@ -79,7 +79,7 @@ import { revalidatePath, revalidateTag } from 'next/cache'
 export async function POST(request: Request) {
   const { path, tag } = await request.json()
   if (path) revalidatePath(path)
-  if (tag) revalidateTag(tag)
+  if (tag) revalidateTag(tag, 'max')
   return Response.json({ revalidated: true })
 }
 ```

@@ -14,7 +14,7 @@ Aggregation and grouping patterns in Prisma 7.
 
 ```typescript
 // lib/types/aggregations.ts
-import type { Prisma } from "@prisma/client";
+import type { Prisma } from "@/lib/generated/prisma/client";
 
 /**
  * User count result
@@ -83,7 +83,7 @@ async function getSelectiveCounts(): Promise<SelectiveCountResult> {
 
 ```typescript
 // lib/types/productAggregations.ts
-import type { Prisma } from "@prisma/client";
+import type { Prisma } from "@/lib/generated/prisma/client";
 
 /**
  * Product aggregation statistics
@@ -140,7 +140,7 @@ async function getExpensiveProductStats(): Promise<ExpensiveProductStats> {
 
 ```typescript
 // lib/types/groupByAggregations.ts
-import type { Prisma } from "@prisma/client";
+import type { Prisma } from "@/lib/generated/prisma/client";
 
 /**
  * User count by role
@@ -235,7 +235,7 @@ async function getPopularRoles(): Promise<PopularRoleStats[]> {
 
 ```typescript
 // lib/types/relationCounts.ts
-import type { Prisma } from "@prisma/client";
+import type { Prisma } from "@/lib/generated/prisma/client";
 
 /**
  * User count metadata
@@ -312,7 +312,7 @@ async function getProlificAuthors(): Promise<ProlificAuthor[]> {
 
 ```typescript
 // lib/types/dateGrouping.ts
-import type { Prisma } from "@prisma/client";
+import type { Prisma } from "@/lib/generated/prisma/client";
 
 /**
  * Monthly statistics
@@ -347,7 +347,7 @@ async function getMonthlyUserStats(): Promise<MonthlyStats[]> {
 
 ```typescript
 // lib/types/distinctAggregations.ts
-import type { Prisma } from "@prisma/client";
+import type { Prisma } from "@/lib/generated/prisma/client";
 
 /**
  * Country result

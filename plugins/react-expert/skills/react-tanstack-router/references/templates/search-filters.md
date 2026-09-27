@@ -117,7 +117,6 @@ export type ProductSearchSchema = z.infer<typeof productSearchSchema>
 ```typescript
 // src/routes/products/index.tsx
 import { createFileRoute, Link, useNavigate } from '@tanstack/react-router'
-import { zodValidator } from '@tanstack/zod-adapter'
 import { stripSearchParams } from '@tanstack/react-router'
 import {
   productSearchSchema,
@@ -129,7 +128,7 @@ import {
 } from '@/modules/products'
 
 export const Route = createFileRoute('/products/')({
-  validateSearch: zodValidator(productSearchSchema),
+  validateSearch: productSearchSchema, // Zod v4 Standard Schema
   search: {
     middlewares: [
       // Strip default values from URL

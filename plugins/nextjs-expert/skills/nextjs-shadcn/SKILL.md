@@ -2,7 +2,7 @@
 name: nextjs-shadcn
 description: Use when building UI components in Next.js App Router with shadcn/ui — forms, dialogs, tables, toasts, accessible components.
 versions:
-  shadcn-ui: 3.8.0
+  shadcn-ui: 4.21.0
   nextjs: 16
   tailwindcss: 4
 user-invocable: true
@@ -11,14 +11,14 @@ related-skills: nextjs-16, nextjs-tanstack-form, tailwindcss-core, solid-nextjs
 ---
 
 <objective>
-Builds UI components for Next.js App Router with shadcn/ui 3.8.0 on Radix UI primitives (not Base UI) and Tailwind CSS v4: forms (Field/FieldLabel/FieldError pattern with TanStack Form, never React Hook Form), overlays (Dialog, Sheet, Drawer, Popover, Tooltip), feedback (Alert, Sonner toasts, Progress, Skeleton), data display (Table, Badge, Calendar, Chart), and navigation (Sidebar, Command, DropdownMenu).
+Builds UI components for Next.js App Router with shadcn/ui (CLI 4.21.0) and Tailwind CSS v4 on whichever component base the project uses — Base UI (default for new projects since July 2026), Radix UI (unified `radix-ui` package, fully supported) or React Aria (added July 2026): forms (Field/FieldLabel/FieldError pattern with TanStack Form, never React Hook Form), overlays (Dialog, Sheet, Drawer, Popover, Tooltip), feedback (Alert, Toast on Base UI / Sonner on Radix and Aria, Progress, Skeleton), data display (Table, Badge, Calendar, Chart), and navigation (Sidebar, Command, DropdownMenu).
 
-Requires installing components via `bunx --bun shadcn@latest add` (never hand-written) to `@/modules/cores/shadcn/components/ui/`, and covers MCP registry tools (`mcp__shadcn__*`) for discovering components before implementing. This is the Next.js App Router variant of shadcn/ui — for a plain React/Vite app see react-shadcn instead.
+Requires detecting the base from `components.json` before writing any component code, installing components via `bunx --bun shadcn@latest add` (never hand-written) to `@/modules/cores/shadcn/components/ui/`, and covers MCP registry tools (`mcp__shadcn__*`) for discovering components before implementing. This is the Next.js App Router variant of shadcn/ui — for a plain React/Vite app see react-shadcn instead.
 </objective>
 
 # shadcn/ui for Next.js
 
-Beautiful, accessible components built on Radix UI with Tailwind CSS styling.
+Accessible, copy-in components on Base UI, Radix UI or React Aria primitives, styled with Tailwind CSS v4.
 
 ## Agent Workflow (MANDATORY)
 
@@ -48,22 +48,41 @@ After implementation, run **fuse-ai-pilot:sniper** for validation.
 | Feature | Benefit |
 |---------|---------|
 | Copy/paste model | Components copied to your project, full ownership |
-| Radix UI foundation | Accessibility built-in, unstyled primitives |
-| Tailwind CSS styling | Utility-first, easy customization |
-| TanStack Form ready | Modern form library with Field pattern |
-| Server Components | RSC-compatible, optimal bundle size |
-| Lucide icons | Consistent, customizable icon set |
+| Choice of base | Base UI (default), Radix UI or React Aria — same component names |
+| Tailwind CSS v4 styling | CSS-first theme (`@theme inline`, OKLCH tokens) |
+| TanStack Form ready | Field + FieldError accept Standard Schema issues |
+| Server Components | `"rsc": true` — CLI adds `"use client"` only where needed |
+| Lucide icons (default) | `iconLibrary` in `components.json`, switchable via `migrate icons` |
 
 ---
 
 ## Critical Rules
 
-1. **NEVER create components manually** - Always install with `bunx --bun shadcn@latest add`
-2. **TanStack Form only** - NOT React Hook Form for all form implementations
-3. **Radix UI primitives** - Components built on Radix (NOT Base UI)
-4. **Lucide icons** - Default icon library, NOT Remix icons or others
-5. **Field pattern** - Use Field, FieldLabel, FieldError for form fields
+1. **Detect the base first** - Read `components.json` `style`: `base-*` = Base UI, `radix-*` / `new-york` = Radix, `aria-*` = React Aria. Never mix bases in one component
+2. **New projects default to Base UI** - `init` picks Base UI unless `-b radix` / `-b aria` is passed
+3. **Composition follows the base** - Base UI uses `render={<Button />}`; Radix uses `asChild`. Reference examples marked Radix must be translated on Base UI projects
+4. **NEVER create components manually** - Always install with `bunx --bun shadcn@latest add` (the registry serves the variant for the project's base)
+5. **TanStack Form only** - NOT React Hook Form; wire errors with `data-invalid` on `Field` + `aria-invalid` on the control
 6. **SOLID paths** - Components at `@/modules/cores/shadcn/components/ui/`
+
+---
+
+## Base Differences That Change Code
+
+| Concern | Base UI (default) | Radix UI |
+|---------|-------------------|----------|
+| Package | `@base-ui/react` | `radix-ui` (unified; `migrate radix` from `@radix-ui/react-*`) |
+| Trigger as custom element | `<DialogTrigger render={<Button />}>Open</DialogTrigger>` | `<DialogTrigger asChild><Button>Open</Button></DialogTrigger>` |
+| Select | `<Select items={items}>`, `SelectContent alignItemWithTrigger` | `SelectContent position="item-aligned" \| "popper"` |
+| Accordion | `multiple`, `defaultValue={["item-1"]}` | `type="single" collapsible` / `type="multiple"` |
+| Toggle group value | array (`defaultValue={["bold"]}`), `multiple` | `type="single" \| "multiple"` |
+| Checkbox indeterminate | `indeterminate` prop | `checked="indeterminate"` |
+| Drawer | Base UI Drawer (`swipeDirection`) | Vaul (`direction`) |
+| Toasts | `add toast` → `toast.add({ title })` | `add sonner` → `toast("…")` from `sonner` |
+| Open-state styling | `data-open` / `data-closed` | `data-state="open"` (both covered by `data-open:` variant from `shadcn/tailwind.css`) |
+
+Shared across bases: component names, `showCloseButton` on `DialogContent`/`SheetContent`,
+the `Field` family, theme tokens.
 
 ---
 
@@ -71,20 +90,20 @@ After implementation, run **fuse-ai-pilot:sniper** for validation.
 
 ### Component Foundation
 
-- **Radix UI** - Headless, accessible primitives (Dialog, Select, Popover, Tabs)
-- **Tailwind CSS v4** - Styling via utility classes, CSS-first config
+- **Primitives** - Base UI / Radix UI / React Aria (per `components.json`)
+- **Tailwind CSS v4** - CSS-first config: `@import "tailwindcss"`, `@import "shadcn/tailwind.css"`, `@custom-variant dark`, `@theme inline`
 - **class-variance-authority** - Variant management for component styles
-- **clsx + tailwind-merge** - Conditional class composition via `cn()` utility
+- **`cn` package** - Registry components `import { cn } from "cn"` (Sept 2026, drop-in for `twMerge(clsx(...))`); `lib/utils.ts` re-exports it; migrate old projects with `shadcn migrate cn`
 
 ### Project Structure
 
-Components installed to `@/modules/cores/shadcn/components/ui/` following SOLID architecture. Utils at `@/modules/cores/lib/utils.ts` with `cn()` helper function.
+Components installed to `@/modules/cores/shadcn/components/ui/` following SOLID architecture. Utils at `@/modules/cores/lib/utils.ts` (`export { cn } from "cn"`).
 
 ---
 
 ## MCP Server Integration
 
-Create `.mcp.json` at project root for Claude Code integration with shadcn registry.
+Run `bunx --bun shadcn@latest mcp init --client claude` (or create `.mcp.json`) for Claude Code integration with the shadcn registry.
 
 ### Available MCP Tools
 
@@ -93,7 +112,9 @@ Create `.mcp.json` at project root for Claude Code integration with shadcn regis
 - `mcp__shadcn__get_item_examples_from_registries` - Get usage examples
 - `mcp__shadcn__get_add_command_for_items` - Get installation commands
 
-See [installation.md](references/installation.md) for complete MCP setup.
+CLI helpers for agents: `shadcn info` (framework, base, installed components) and `shadcn docs <component> -b <base|radix|aria>`.
+
+See [installation.md](references/installation.md) for complete setup.
 
 ---
 
@@ -104,21 +125,24 @@ See [installation.md](references/installation.md) for complete MCP setup.
 | Setup | Init, configuration, theming, icons | [installation.md](references/installation.md) |
 | Forms | Button, Input, Field, Select, Checkbox, Switch, Slider | [field-patterns.md](references/field-patterns.md) |
 | Overlay | Dialog, Sheet, Drawer, Popover, Tooltip, HoverCard | [dialog.md](references/dialog.md) |
-| Feedback | Alert, Toast (Sonner), Progress, Skeleton, Spinner | [toast.md](references/toast.md) |
+| Feedback | Alert, Toast (Base UI) / Sonner (Radix, Aria), Progress, Skeleton, Spinner | [toast.md](references/toast.md) |
 | Data Display | Table, Badge, Avatar, Calendar, Chart, Carousel | [table.md](references/table.md) |
 | Navigation | Breadcrumb, DropdownMenu, Command, Sidebar, Tabs | [sidebar.md](references/sidebar.md) |
 | Layout | Card, Accordion, Separator, ScrollArea, Resizable | [card.md](references/card.md) |
+
+Component references show the Radix API unless marked otherwise; each one lists the Base UI
+differences at the top.
 
 ---
 
 ## Best Practices
 
-1. **Field components** - Use new Field pattern for consistent form field structure
-2. **Server Components default** - Add `'use client'` only when interactivity needed
-3. **Sonner for toasts** - Modern toast notifications over legacy toast
+1. **Field components** - `Field` + `FieldLabel` + `FieldError errors={field.state.meta.errors}`
+2. **Server Components default** - Add `"use client"` only when interactivity is needed; forms can also use Server Actions + `useActionState` with the same `Field` pattern
+3. **Toasts per base** - Base UI Toast on Base UI; Sonner on Radix/Aria (the Radix Toast is deprecated)
 4. **MCP tools first** - Use `mcp__shadcn__*` to explore before implementing
-5. **Theming via CSS variables** - Customize colors in `globals.css` `:root`
-6. **Accessibility** - Rely on Radix UI keyboard navigation and ARIA
+5. **Theming via CSS variables** - OKLCH tokens in `app/globals.css` `:root` / `.dark`, exposed with `@theme inline`
+6. **Accessibility** - Rely on the primitives' keyboard navigation and ARIA; keep `aria-invalid` on invalid controls
 
 ---
 

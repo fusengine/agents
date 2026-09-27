@@ -12,12 +12,12 @@ Tone (one extreme): **imperative caption.** Every heading is a command the tool
 obeys — "Directly edit anything", "Draw what you want to see", "Reshoot and change
 your layout". The copy never argues, never explains a mechanism, never names an
 internal feature. It carries no metric, no customer voice, no dated claim; the only
-superlative on the page is "the best 4K image model" in the hero subtitle [relevé].
+superlative on the page is "the best 4K image model" in the hero subtitle [measured].
 
 Signature element: **the twin-size heading pair.** Title and subtitle share family,
-weight and size; only the colour role separates them (`--texte-primaire` against
-`--texte-tertiaire`). The source's own comment calls it the page's typographic
-signature. It runs at `--taille-4xl` in the hero, at a literal 28px in all seven
+weight and size; only the colour role separates them (`--text-primary` against
+`--text-tertiary`). The source's own comment calls it the page's typographic
+signature. It runs at `--size-4xl` in the hero, at a literal 28px in all seven
 sections, and collapses to 24px under 1024px — the same device at three scales,
 never a smaller subtitle. Its layout counterpart is the panel that bleeds off one
 edge: every feature frame pulls `calc(-1 * var(--rail))` into the margin.
@@ -43,7 +43,7 @@ and 4 so the mirror rhythm never runs more than twice unbroken.
 
 ## Design Reference
 
-Source: https://app.reve.com/ — page "Reve Image - Model" [relevé].
+Source: https://app.reve.com/ — page "Reve Image - Model" [measured].
 
 The palette is not sampled from imagery. It is lifted intact from the editor's own
 token file — neutral ramp, a separate alpha ramp, a blue accent — so the marketing
@@ -52,48 +52,48 @@ page and the application are one surface.
 ### Colors
 
 ```css
---rampe-neutre-0:    light-dark(#fff,     #000);
---rampe-neutre-50:   light-dark(#fafafa,  #1a1a1a);
---rampe-neutre-100:  light-dark(#f0f0f0,  #2e2e2e);
---rampe-neutre-500:  light-dark(#757575,  #707070);
---rampe-neutre-900:  light-dark(#1a1a1a,  #ebebeb);
---rampe-alpha-800:   light-dark(#0006,     #fff6);
---rampe-alpha-850:   light-dark(#0000008a, #ffffff8a);
---rampe-alpha-1000:  light-dark(#000,      #fff);
---texte-primaire:    var(--rampe-alpha-1000);
---texte-secondaire:  var(--rampe-alpha-850);
---texte-tertiaire:   var(--rampe-alpha-800);
---surface-page:      var(--rampe-neutre-50);
---surface-panneau:   light-dark(var(--rampe-neutre-0), var(--rampe-neutre-50));
---bleu-600:          light-dark(#2463eb, #4c9dff);
---blanc-fixe: #fff;  --noir-fixe: #000;
+--ramp-neutral-0:    light-dark(#fff,     #000);
+--ramp-neutral-50:   light-dark(#fafafa,  #1a1a1a);
+--ramp-neutral-100:  light-dark(#f0f0f0,  #2e2e2e);
+--ramp-neutral-500:  light-dark(#757575,  #707070);
+--ramp-neutral-900:  light-dark(#1a1a1a,  #ebebeb);
+--ramp-alpha-800:    light-dark(#0006,     #fff6);
+--ramp-alpha-850:    light-dark(#0000008a, #ffffff8a);
+--ramp-alpha-1000:   light-dark(#000,      #fff);
+--text-primary:      var(--ramp-alpha-1000);
+--text-secondary:    var(--ramp-alpha-850);
+--text-tertiary:     var(--ramp-alpha-800);
+--surface-page:      var(--ramp-neutral-50);
+--surface-panel:     light-dark(var(--ramp-neutral-0), var(--ramp-neutral-50));
+--blue-600:          light-dark(#2463eb, #4c9dff);
+--fixed-white: #fff;  --fixed-black: #000;
 ```
 
 Strategy: **achromatic.** Two ramps carry the whole page — one opaque for surfaces,
 one alpha for text, so type sits on any surface without a matching grey. Blue is
 declared across eleven steps and instantiated exactly once, in the focus ring; the
-page has no accent. The page ground is `neutre-50`, never white: white is reserved
+page has no accent. The page ground is `neutral-50`, never white: white is reserved
 for panels laid on top, and that is where separation comes from, not from a shadow.
-Two colours escape the bi-theme system entirely (`--blanc-fixe`, `--noir-fixe`) and
-keep the template card white in dark mode [relevé].
+Two colours escape the bi-theme system entirely (`--fixed-white`, `--fixed-black`) and
+keep the template card white in dark mode [measured].
 
 Contrast floors held: primary text is full black or white (≈20:1 on the page ground);
-`--texte-secondaire` at 54% alpha lands ≈4.5:1. `--texte-tertiaire` is `#0006` — on
-`neutre-50` that is ≈2.8:1, below the 3:1 large-text floor; it is only ever applied at
-28px or larger. Recorded as-is [relevé], not corrected.
+`--text-secondary` at 54% alpha lands ≈4.5:1. `--text-tertiary` is `#0006` — on
+`neutral-50` that is ≈2.8:1, below the 3:1 large-text floor; it is only ever applied at
+28px or larger. Recorded as-is [measured], not corrected.
 
 ### Typography
 
 ```css
---police-texte: "ReveUI", Arial, ui-sans-serif, sans-serif, var(--police-emoji);
---police-titre: "ReveDisplay", system-ui, var(--police-emoji);
---police-mono:  "ReveSansMono", ui-monospace, monospace, var(--police-emoji);
+--font-text:  "ReveUI", Arial, ui-sans-serif, sans-serif, var(--font-emoji);
+--font-title: "ReveDisplay", system-ui, var(--font-emoji);
+--font-mono:  "ReveSansMono", ui-monospace, monospace, var(--font-emoji);
 ```
 
 Four `@font-face` rules, woff2 served remotely from `app.reve.com/assets`, each with
 the same `unicode-range` so an out-of-range glyph never triggers a download.
 ReveDisplay ships as **two files split by weight** (500–900 and 100–400), not one
-variable file: a 500 title and a 400 subtitle pull different binaries [relevé]. Note
+variable file: a 500 title and a 400 subtitle pull different binaries [measured]. Note
 the fallback order — `Arial` before `ui-sans-serif`, a metrically close substitute
 preferred over the OS face.
 
@@ -108,7 +108,7 @@ no system-first stack.
 
 ### Spacing
 
-One primitive: `--rythme: 8px`. Every space, control height, radius, panel width and
+One primitive: `--rhythm: 8px`. Every space, control height, radius, panel width and
 icon size is a `calc()` on it — 2 / 4 / 8 / 12 / 16 / 20 / 24 / 32 / 40 / 48. No
 literal px in the scale, so changing one value rescales the page. The gutter is not a
 centred container but a slope: `clamp(32px, calc(.42 * 100vw - 398px), 200px)`, flat
@@ -139,5 +139,5 @@ hover, and drops the crossfade delay to zero.
 No scroll-reveal and no `@keyframes`. No accent colour: nothing on the page is
 coloured to attract. No border marks selection — the active reference card is signalled
 by surface plus a low shadow only. No card grid of features. No glassmorphism outside
-the header veil. No status label takes the accent; the `Beta` tag stays on `neutre-500`.
+the header veil. No status label takes the accent; the `Beta` tag stays on `neutral-500`.
 No modal. No metric, no logo wall, no closing CTA band.

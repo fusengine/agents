@@ -5,12 +5,12 @@ user-invocable: false
 ---
 
 <objective>
-Complete reference for Tailwind CSS v4.1 visual-effects utilities: box shadows (`shadow-*`, custom shadow colors, the new `inset-shadow-*`), `opacity-*`, CSS filters (blur/brightness/contrast/grayscale/sepia/hue-rotate/invert/saturate), backdrop filters (`backdrop-blur-*`, `backdrop-brightness-*`, etc. — for glassmorphism/frosted-glass effects), and the new `mask-*` utilities (image, position, size, repeat).
+Complete reference for Tailwind CSS v4.3 visual-effects utilities: box shadows (`shadow-*`, custom shadow colors, the new `inset-shadow-*`), `opacity-*`, CSS filters (blur/brightness/contrast/grayscale/sepia/hue-rotate/invert/saturate), backdrop filters (`backdrop-blur-*`, `backdrop-brightness-*`, etc. — for glassmorphism/frosted-glass effects), and the new `mask-*` utilities (image, position, size, repeat).
 
 Includes combined-effect patterns (blur+brightness, backdrop blur+brightness for frosted glass), responsive/dark-mode variants, custom `@theme`/`@utility` extension, and browser-support notes per effect category.
 </objective>
 
-# Tailwind CSS v4.1 Effects
+# Tailwind CSS v4.3 Effects
 
 Effects utilities to add shadows, filters, masks and visual effects to elements.
 
@@ -30,7 +30,7 @@ Effects utilities to add shadows, filters, masks and visual effects to elements.
 <div class="shadow-2xl">2XL shadow</div>
 ```
 
-### Shadow Color (v4.1 NEW)
+### Shadow Color (since v3.0)
 
 ```html
 <!-- Custom shadow colors -->
@@ -39,14 +39,14 @@ Effects utilities to add shadows, filters, masks and visual effects to elements.
 <div class="shadow-lg shadow-purple-500/50">Purple shadow with opacity</div>
 ```
 
-### Inset Shadow (v4.1 NEW)
+### Inset Shadow (since v4.0)
 
 ```html
-<!-- Inner shadows -->
+<!-- Inner shadows (scale: 2xs, xs, sm) -->
+<div class="inset-shadow-2xs">Inset 2xs shadow</div>
+<div class="inset-shadow-xs">Inset xs shadow</div>
 <div class="inset-shadow-sm">Inset small shadow</div>
-<div class="inset-shadow">Inset base shadow</div>
-<div class="inset-shadow-lg">Inset large shadow</div>
-<div class="inset-shadow-lg inset-shadow-blue-500">Inset shadow with color</div>
+<div class="inset-shadow-sm inset-shadow-blue-500">Inset shadow with color</div>
 ```
 
 ### Arbitrary Shadow Values
@@ -234,48 +234,59 @@ Applies filters to the backdrop (element behind).
 <div class="backdrop-sepia">Full sepia (100%)</div>
 ```
 
-## Mask (v4.1 NEW)
+## Mask (since v4.1)
 
 ### Mask Image
 
 ```html
-<!-- Preset masks -->
+<!-- No mask -->
 <div class="mask-none">No mask applied</div>
-<div class="mask-linear">Linear gradient mask (top to bottom)</div>
-<div class="mask-radial">Radial gradient mask (center)</div>
+
+<!-- Edge (linear) masks: one side, or x/y for two sides -->
+<div class="mask-b-from-20% mask-b-to-80%">Fade out at the bottom</div>
+<div class="mask-x-from-70% mask-x-to-90%">Fade both horizontal edges</div>
+
+<!-- Angled linear mask -->
+<div class="mask-linear-50 mask-linear-from-60% mask-linear-to-80%">Angled mask</div>
+
+<!-- Radial mask -->
+<div class="mask-radial-from-75% mask-radial-at-left">Radial mask</div>
 
 <!-- Custom mask image -->
-<div class="mask-image-[url('/images/mask.svg')]">Custom mask</div>
+<div class="mask-[url(/images/mask.svg)]">Custom mask</div>
 ```
 
 ### Mask Position
 
 ```html
-<div class="mask-linear mask-position-center">Center mask</div>
-<div class="mask-linear mask-position-top">Top mask</div>
-<div class="mask-linear mask-position-bottom">Bottom mask</div>
-<div class="mask-linear mask-position-left">Left mask</div>
-<div class="mask-linear mask-position-right">Right mask</div>
+<div class="mask-[url(/img/circle.png)] mask-center">Center mask</div>
+<div class="mask-[url(/img/circle.png)] mask-top">Top mask</div>
+<div class="mask-[url(/img/circle.png)] mask-bottom">Bottom mask</div>
+<div class="mask-[url(/img/circle.png)] mask-left">Left mask</div>
+<div class="mask-[url(/img/circle.png)] mask-right">Right mask</div>
+
+<!-- Arbitrary -->
+<div class="mask-position-[center_top_1rem]">Custom position</div>
 ```
 
 ### Mask Size
 
 ```html
-<div class="mask-linear mask-size-contain">Contain mask</div>
-<div class="mask-linear mask-size-cover">Cover mask</div>
-<div class="mask-linear mask-size-auto">Auto mask size</div>
+<div class="mask-[url(/img/scribble.png)] mask-contain">Contain mask</div>
+<div class="mask-[url(/img/scribble.png)] mask-cover">Cover mask</div>
+<div class="mask-[url(/img/scribble.png)] mask-auto">Auto mask size</div>
 
 <!-- Arbitrary -->
-<div class="mask-linear mask-size-[200%_100%]">Custom size</div>
+<div class="mask-size-[200%_100%]">Custom size</div>
 ```
 
 ### Mask Repeat
 
 ```html
-<div class="mask-linear mask-repeat">Repeat mask</div>
-<div class="mask-linear mask-repeat-x">Repeat horizontally</div>
-<div class="mask-linear mask-repeat-y">Repeat vertically</div>
-<div class="mask-linear mask-no-repeat">No repeat</div>
+<div class="mask-[url(/img/circle.png)] mask-repeat">Repeat mask</div>
+<div class="mask-[url(/img/circle.png)] mask-repeat-x">Repeat horizontally</div>
+<div class="mask-[url(/img/circle.png)] mask-repeat-y">Repeat vertically</div>
+<div class="mask-[url(/img/circle.png)] mask-no-repeat">No repeat</div>
 ```
 
 ## Combined Effects
@@ -307,7 +318,7 @@ Applies filters to the backdrop (element behind).
 ### Inset Shadow + Grayscale
 
 ```html
-<div class="inset-shadow inset-shadow-black/20 grayscale-50">
+<div class="inset-shadow-sm inset-shadow-black/20 grayscale-50">
   Pressed effect with grayscale
 </div>
 ```
@@ -350,7 +361,7 @@ Applies filters to the backdrop (element behind).
 </div>
 ```
 
-## Configuration (v4.1)
+## Configuration (v4.3)
 
 ### CSS Theme Variables
 
@@ -393,7 +404,7 @@ Applies filters to the backdrop (element behind).
 
 ### Image with fade-out mask
 ```html
-<div class="mask-linear mask-position-bottom">
+<div class="mask-b-from-50%">
   <img src="image.jpg" alt="Fading image" />
 </div>
 ```

@@ -13,7 +13,7 @@ PHP 8.2 dropped. Use typed constants and `#[\Override]` attribute now available.
 
 ## 2. VerifyCsrfToken → PreventRequestForgery
 
-Middleware renamed. Origin-aware validation added.
+Middleware renamed. Request-origin verification added (via the `Sec-Fetch-Site` header), with CSRF-token fallback.
 
 ```php
 // Before (L12) — bootstrap/app.php
@@ -23,11 +23,12 @@ Middleware renamed. Origin-aware validation added.
 
 // After (L13)
 ->withMiddleware(function (Middleware $middleware) {
-    $middleware->validateOrigin(except: ['stripe/*']);
+    $middleware->preventRequestForgery(except: ['stripe/*']);
+    // options: preventRequestForgery(originOnly: true) / (allowSameSite: true)
 })
 ```
 
-Token-based CSRF still works (backward-compatible).
+`VerifyCsrfToken` / `ValidateCsrfToken` remain as deprecated aliases — update direct references (e.g. `->withoutMiddleware([PreventRequestForgery::class])` in tests/routes).
 
 ## 3. Cache prefixes hyphenated
 
@@ -51,21 +52,23 @@ New config in `config/cache.php`:
 'serializable_classes' => false,  // L13 default — hardens against gadget chains
 ```
 
-Set to `true` only if you need to cache complex objects (security risk).
+If you intentionally cache PHP objects, list the allowed classes explicitly (`'serializable_classes' => [App\Data\CachedStats::class]`) or cache arrays instead.
 
 ## 5. Eloquent boot LogicException
 
-```php
-// L12 — worked silently
-public function register(): void {
-    $model = new User(); // ❌ L13 throws LogicException
-}
+Creating a new instance of a model while that model is still booting now throws `LogicException`:
 
-// L13 — defer model instantiation
-public function boot(): void {
-    $model = new User(); // ✅ OK in boot()
+```php
+// Inside the MODEL (or a trait boot* method) — not a service provider
+protected static function boot()
+{
+    parent::boot();
+
+    (new static())->getTable(); // ❌ L13 throws LogicException
 }
 ```
+
+Move such logic outside the model boot cycle.
 
 ## 6. PHPUnit 11 → 12
 
@@ -73,11 +76,13 @@ Some mocks removed. Check release notes: https://github.com/sebastianbergmann/ph
 
 ## 7. Pest 3 → 4
 
-Architecture and pendingTests behavior changes. Migrate via:
+Bump `pestphp/pest` and every Pest plugin to `^4.0` (built on PHPUnit 12). Snapshot names changed:
 
 ```bash
-vendor/bin/pest --init  # regenerate phpunit.xml
+vendor/bin/pest --update-snapshots
 ```
+
+`pest-plugin-watch` / `pest-plugin-faker` are archived. (Pest 5 is also available but requires PHP 8.4+ and PHPUnit 13.)
 
 ## 8. Symfony 7.4 / 8.0
 
@@ -87,9 +92,9 @@ Symfony 7.3 dropped. Check `vendor/symfony/console/CHANGELOG.md`.
 
 v1 dropped — bump via `composer require laravel/serializable-closure:^2.0`.
 
-## 10. `pda/pheanstalk` 8.0+ required
+## 10. `pda/pheanstalk` 7.x / 8.x required
 
-For Beanstalkd: `composer require pda/pheanstalk:^8.0`.
+L13 supports `^7.0 || ^8.0` (5.x dropped). For Beanstalkd: `composer require pda/pheanstalk:^8.0`.
 
 ## 11. `QueueBusy` event property renamed
 

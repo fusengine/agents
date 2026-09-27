@@ -12,7 +12,7 @@ Sort query results by single or multiple fields with flexible null handling.
 
 ```typescript
 // lib/types/sorting.ts
-import type { Prisma } from "@prisma/client";
+import type { Prisma } from "@/generated/prisma/client";
 
 /**
  * Sort direction type
@@ -85,7 +85,7 @@ async function findMostLikedComments() {
 
 ```typescript
 // lib/types/multiSort.ts
-import type { Prisma } from "@prisma/client";
+import type { Prisma } from "@/generated/prisma/client";
 
 /**
  * Multi-column sort configuration
@@ -168,7 +168,7 @@ async function findPostsWithMultiSort(sort: MultiColumnSort) {
 
 ```typescript
 // lib/types/nullHandling.ts
-import type { Prisma } from "@prisma/client";
+import type { Prisma } from "@/generated/prisma/client";
 
 /**
  * Null position in sort order
@@ -256,7 +256,7 @@ async function findUsersWithNullHandling(config: SortWithNullHandling) {
 
 ```typescript
 // lib/types/advancedSorting.ts
-import type { Prisma } from "@prisma/client";
+import type { Prisma } from "@/generated/prisma/client";
 
 /**
  * Relation sorting configuration

@@ -16,6 +16,9 @@ Prisma 7 with Remix for full-stack React applications.
 
 ```typescript
 // app/interfaces/db.ts
+// generator output = "../app/generated/prisma" in prisma/schema.prisma (v7: output required)
+import type { PrismaClient } from '../generated/prisma/client'
+
 /**
  * Global Prisma singleton declaration
  * @see /app/utils/db.server.ts
@@ -25,21 +28,26 @@ declare global {
 }
 
 // app/utils/db.server.ts
-import { PrismaClient } from '@prisma/client'
-import type { Prisma } from '@prisma/client'
+import { PrismaPg } from '@prisma/adapter-pg'
+import { PrismaClient } from '../generated/prisma/client'  // v7: generated path
 
 /**
  * Singleton Prisma client instance
  * Uses global variable in development to prevent connection leaks
  * Creates new instance in production for proper cleanup
  */
+const createClient = () =>
+  new PrismaClient({
+    adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL! }),
+  })
+
 let prisma: PrismaClient
 
 if (process.env.NODE_ENV === 'production') {
-  prisma = new PrismaClient()
+  prisma = createClient()
 } else {
   if (!global.__db__) {
-    global.__db__ = new PrismaClient()
+    global.__db__ = createClient()
   }
   prisma = global.__db__
 }

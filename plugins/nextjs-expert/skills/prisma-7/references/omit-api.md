@@ -34,7 +34,11 @@ export const GLOBAL_OMIT_CONFIG = {
 
 ```typescript
 // modules/cores/db/src/prisma.ts
-import { GLOBAL_OMIT_CONFIG } from './src/interfaces/omitConfig'
+import { PrismaClient } from '../generated/prisma/client'  // v7: generated path
+import { PrismaPg } from '@prisma/adapter-pg'
+import { GLOBAL_OMIT_CONFIG } from './interfaces/omitConfig'
+
+const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL! })
 
 /**
  * Prisma client with global omit configuration
@@ -82,7 +86,7 @@ const user = await prisma.user.findUnique({
 })
 
 // Or use explicit select
-const user = await prisma.user.findUnique({
+const userWithPassword = await prisma.user.findUnique({
   where: { id: 'user_123' },
   select: {
     id: true,
@@ -98,7 +102,7 @@ const user = await prisma.user.findUnique({
 
 ```typescript
 // modules/cores/db/src/interfaces/omitTypes.ts
-import type { Prisma } from '@prisma/client'
+import type { Prisma } from '../../generated/prisma/client'  // v7: generated path
 
 /**
  * Omit configuration type for type-safe field exclusion
@@ -121,9 +125,11 @@ export const createOmitConfig = () => {
 
 ```typescript
 // modules/cores/db/src/prisma.ts
-import type { OmitConfig } from './src/interfaces/omitTypes'
-import { createOmitConfig } from './src/interfaces/omitTypes'
+import { PrismaClient } from '../generated/prisma/client'  // v7: generated path
+import { PrismaPg } from '@prisma/adapter-pg'
+import { createOmitConfig } from './interfaces/omitTypes'
 
+const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL! })
 const omitConfig = createOmitConfig()
 
 /**

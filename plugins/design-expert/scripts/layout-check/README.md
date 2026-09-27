@@ -1,119 +1,119 @@
-# layout-check — contrôle de mise en page déterministe
+# layout-check — deterministic layout check
 
-Charge une page dans Chrome headless, la mesure à plusieurs largeurs, rend un **JSON de
-violations** et un **code de sortie**. Aucune appréciation : que des nombres et des booléens.
+Loads a page in headless Chrome, measures it at several widths, returns a **JSON of
+violations** and an **exit code**. No judgment: only numbers and booleans.
 
-Il existe pour une raison précise : les instructions « regarde la capture », « le libellé
-tient sur une ligne » sont déjà écrites dans les skills, et un agent peut malgré tout
-déclarer une section vérifiée alors qu'un libellé passe à la ligne. Ce script tourne
-**hors du modèle** — son verdict ne se contourne pas en se déclarant conforme.
+It exists for one precise reason: the instructions "look at the screenshot", "the label
+fits on one line" are already written in the skills, and an agent can still
+declare a section verified while a label wraps. This script runs
+**outside the model** — its verdict cannot be bypassed by declaring oneself compliant.
 
 ## Invocation
 
 ```bash
 cd ${CLAUDE_PLUGIN_ROOT}/scripts/layout-check
-bun run layout-check.ts <url-ou-chemin> [options]
+bun run layout-check.ts <url-or-path> [options]
 ```
 
-La cible est **toujours le premier argument** (chemin local → converti en `file://`, ou URL `http(s)`).
+The target is **always the first argument** (local path → converted to `file://`, or `http(s)` URL).
 
-| Code de sortie | Sens |
+| Exit code | Meaning |
 |---|---|
-| `0` | conforme, `violations: []` |
-| `1` | au moins une violation |
-| `2` | erreur (cible introuvable, Playwright absent, page non chargée) |
+| `0` | pass, `violations: []` |
+| `1` | at least one violation |
+| `2` | error (target not found, Playwright missing, page not loaded) |
 
-Le JSON part sur **stdout**, le résumé lisible sur **stderr** — `--out rapport.json` écrit
-aussi le JSON dans un fichier, `--quiet` coupe le résumé.
+The JSON goes to **stdout**, the readable summary to **stderr** — `--out report.json` also
+writes the JSON to a file, `--quiet` turns the summary off.
 
-`summary.contrastPairs` regroupe les violations de contraste par couple de couleurs
-**résolues** : un même couple de jetons produit des dizaines de violations, la clé donne
-le nombre de corrections réellement distinctes (mesuré : 185 violations = 5 couples).
+`summary.contrastPairs` groups the contrast violations by **resolved** color pair: one
+token pair produces dozens of violations, the key gives the number of truly distinct
+fixes (measured: 185 violations = 5 pairs).
 
-Les avertissements identiques d'une largeur à l'autre sont fusionnés, les largeurs
-concernées reportées dans le motif : un fond en dégradé ne dépend pas de la largeur de
-viewport (mesuré : 60 lignes → 15 sur une page réelle). Un avertissement illisible est un
-avertissement ignoré, et un cas non mesurable ignoré est le trou qu'on cherche à fermer.
+Warnings that are identical from one width to the next are merged, the affected widths
+reported in the reason: a gradient background does not depend on the viewport
+width (measured: 60 lines → 15 on a real page). An unreadable warning is an
+ignored warning, and an ignored unmeasurable case is the hole we are trying to close.
 
 ### Options
 
-| Option | Défaut | Effet |
+| Option | Default | Effect |
 |---|---|---|
-| `--widths 360,768` | `360,390,768,1024,1280,1440` | largeurs mesurées |
-| `--height 900` | `900` | hauteur de viewport |
-| `--exclude "sel,sel"` | — | sélecteurs exclus de tous les contrôles |
-| `--checks "overlap,contrast"` | les 5 | familles activées |
-| `--cta "<sélecteur>"` | boutons + `a[class*=btn/button/cta]` | ce qui compte comme CTA |
-| `--allow-overlays false` | superpositions volontaires ignorées | désactive l'heuristique d'intentionnalité |
-| `--warmup` | off | parcourt la page avant de mesurer (révélations JS) |
-| `--motion no-preference` | `reduce` émulé | rétablit les animations |
-| `--contrast`, `--contrast-large`, `--cta-factor`, `--overlap-ratio`, `--ink` | 4.5 / 3 / 1.6 / 0.1 / 2 | seuils |
-| `--config fichier.json` | — | config partielle, écrasée par les drapeaux |
+| `--widths 360,768` | `360,390,768,1024,1280,1440` | measured widths |
+| `--height 900` | `900` | viewport height |
+| `--exclude "sel,sel"` | — | selectors excluded from every check |
+| `--checks "overlap,contrast"` | all 5 | enabled families |
+| `--cta "<selector>"` | buttons + `a[class*=btn/button/cta]` | what counts as a CTA |
+| `--allow-overlays false` | intentional overlaps ignored | disables the intentionality heuristic |
+| `--warmup` | off | scrolls through the page before measuring (JS reveals) |
+| `--motion no-preference` | `reduce` emulated | restores animations |
+| `--contrast`, `--contrast-large`, `--cta-factor`, `--overlap-ratio`, `--ink` | 4.5 / 3 / 1.6 / 0.1 / 2 | thresholds |
+| `--config file.json` | — | partial config, overridden by the flags |
 
-## Les cinq contrôles
+## The five checks
 
-| `type` | Prédicat | Mécanise |
+| `type` | Predicate | Mechanizes |
 |---|---|---|
-| `text-overflow` | `scrollWidth > clientWidth + tolérance` **OU** encre du texte hors de la boîte de contenu | texte tronqué / débordant |
-| `overlap` | intersection des `getBoundingClientRect()` de deux éléments sans lien ancêtre/descendant | libellé qui chevauche un bouton |
-| `cta-wrap` | hauteur > `1.6 × line-height` **ET** ≥ 2 boîtes de ligne de texte | `layout-discipline.md` §6 |
-| `contrast` | ratio WCAG sur couleurs résolues, 4.5:1 / 3:1 | `layout-discipline.md` §6, `ux-wcag.md` |
-| `document-overflow` | `documentElement.scrollWidth > viewport`, à chaque largeur | défilement horizontal parasite |
+| `text-overflow` | `scrollWidth > clientWidth + tolerance` **OR** text ink outside the content box | truncated / overflowing text |
+| `overlap` | intersection of the `getBoundingClientRect()` of two elements with no ancestor/descendant link | label overlapping a button |
+| `cta-wrap` | height > `1.6 × line-height` **AND** ≥ 2 text line boxes | `layout-discipline.md` §6 |
+| `contrast` | WCAG ratio on resolved colors, 4.5:1 / 3:1 | `layout-discipline.md` §6, `ux-wcag.md` |
+| `document-overflow` | `documentElement.scrollWidth > viewport`, at every width | stray horizontal scrolling |
 
-## Pages-témoins — vérifier que le gate est vivant
+## Fixture pages — check that the gate is alive
 
 ```bash
-bun run layout-check.ts fixtures/broken.html --widths 1280   # attendu : 10 violations, 1 avertissement, exit 1
-bun run layout-check.ts fixtures/clean.html                  # attendu : 0 violation, 0 avertissement, exit 0
+bun run layout-check.ts fixtures/broken.html --widths 1280   # expected: 12 violations, 1 warning, exit 1
+bun run layout-check.ts fixtures/clean.html                  # expected: 0 violations, 0 warnings, exit 0
 ```
 
-`fixtures/broken.html` porte **un cas franc par contrôle** : les six familles doivent lever.
-Ses couleurs fautives sont écrites en **OKLCH et `color-mix()`**, jamais en hex — c'est
-délibéré : `getComputedStyle().color` renvoie `oklch(...)` tel quel dans Chromium, donc un
-parseur qui présume `rgb()` rendrait **0 violation sur une page entièrement fautive**.
-Une page-témoin en hex validerait ce parseur cassé.
+`fixtures/broken.html` carries **one clear-cut case per check**: all six families must fire.
+Its failing colors are written in **OKLCH and `color-mix()`**, never in hex — this is
+deliberate: `getComputedStyle().color` returns `oklch(...)` as is in Chromium, so a
+parser that assumes `rgb()` would report **0 violations on an entirely failing page**.
+A hex fixture page would validate that broken parser.
 
-`fixtures/clean.html` reprend les mêmes composants, corrigés : elle distingue un détecteur
-qui marche d'un détecteur qui hurle sur tout. Faire tourner les deux après toute
-modification du script — un contrôle silencieux sur `broken.html` est un contrôle mort.
+`fixtures/clean.html` reuses the same components, fixed: it tells a detector
+that works from a detector that screams at everything. Run both after any
+change to the script — a check that stays silent on `broken.html` is a dead check.
 
-## Ce que le script ne sait pas faire (lire avant de conclure)
+## What the script cannot do (read before concluding)
 
-1. **Contraste sur dégradé ou image.** Si un `background-image` intervient dans la chaîne
-   des ancêtres, le ratio ne porte que sur la couche couleur : le cas sort en
-   `warnings`, **jamais** en violation. Idem pour un texte peint par un dégradé
-   (`background-clip: text`, couleur transparente). Ces cas se tranchent à l'œil, sur capture.
-2. **Superposition volontaire vs accidentelle.** Sont réputés volontaires : un élément
-   (ou un de ses 6 premiers ancêtres) en `position: absolute/fixed/sticky`, avec un
-   `z-index` explicite non nul, en `pointer-events: none`, ou portant un `transform`.
-   Une superposition obtenue par marge négative reste signalée — c'est le motif
-   accidentel le plus fréquent. `--allow-overlays false` retire toutes ces excuses.
-3. **Bavure de boîte de ligne.** Deux boîtes empilées qui mordent l'une sur l'autre de
-   moins d'une demi-ligne sont ignorées (jambages d'un titre à `line-height` serré).
-4. **Pourquoi deux prédicats pour un seul contrôle.** `scrollWidth − clientWidth` est la
-   région de débordement *défilable*, pas le débordement *visible*. Mesuré dans Chromium :
-   il vaut **13** quand l'encre sort de **21px**, et **0** quand elle sort de **40px vers
-   le start** (`text-indent` négatif, `direction: rtl`) — ce côté-là n'entre pas dans la
-   région défilable. D'où la seconde mesure : l'union des rectangles du texte *propre* de
-   l'élément comparée à sa boîte de contenu, des deux côtés (`--ink`, défaut 2px). Elle ne
-   regarde que les nœuds texte **enfants directs** — le texte d'un descendant positionné
-   sort légitimement de la boîte de son ancêtre. Sur une boîte `display: inline`,
-   `scrollWidth`/`clientWidth` valent 0 : seule l'encre tranche alors.
-   Non couvert par l'une comme par l'autre : le contenu généré `::before`/`::after`, qui
-   est peint mais n'est pas un nœud texte du DOM.
-5. **Contenu révélé au défilement.** `prefers-reduced-motion: reduce` est émulé par
-   défaut, ce qui suffit sur une page qui l'honore. Sinon, tout ce qui attend un
-   IntersectionObserver reste à opacité 0 et **n'est pas mesuré** : le contrôle
-   `hidden-text` compte alors ces éléments et le remonte en `warnings`. Un rapport avec
-   ce warning se relance avec `--warmup`.
-6. **États.** Une seule passe, sans interaction : ni `:hover`, ni `:focus`, ni menu ouvert,
-   ni onglet inactif (`display: none` est ignoré, pas signalé).
-7. **Plafond.** Le contrôle `overlap` compare au plus 400 éléments deux à deux
-   (`--max-elements`) ; au-delà, le reste de la page n'est pas comparé.
+1. **Contrast on a gradient or an image.** If a `background-image` is part of the
+   ancestor chain, the ratio only covers the color layer: the case comes out in
+   `warnings`, **never** as a violation. Same for text painted by a gradient
+   (`background-clip: text`, transparent color). These cases are decided by eye, on a screenshot.
+2. **Intentional vs accidental overlap.** Deemed intentional: an element
+   (or one of its first 6 ancestors) in `position: absolute/fixed/sticky`, with an
+   explicit non-zero `z-index`, in `pointer-events: none`, or carrying a `transform`.
+   An overlap produced by a negative margin is still reported — it is the most frequent
+   accidental pattern. `--allow-overlays false` removes all these excuses.
+3. **Line-box bleed.** Two stacked boxes that bite into each other by
+   less than half a line are ignored (descenders of a tight `line-height` heading).
+4. **Why two predicates for a single check.** `scrollWidth − clientWidth` is the
+   *scrollable* overflow region, not the *visible* overflow. Measured in Chromium:
+   it is **13** when the ink leaves by **21px**, and **0** when it leaves by **40px toward
+   the start** (negative `text-indent`, `direction: rtl`) — that side is not part of the
+   scrollable region. Hence the second measurement: the union of the rectangles of the element's
+   *own* text compared with its content box, on both sides (`--ink`, default 2px). It only
+   looks at **direct child** text nodes — the text of a positioned descendant
+   legitimately leaves its ancestor's box. On a `display: inline` box,
+   `scrollWidth`/`clientWidth` are 0: only the ink decides then.
+   Covered by neither: generated content `::before`/`::after`, which
+   is painted but is not a DOM text node.
+5. **Content revealed on scroll.** `prefers-reduced-motion: reduce` is emulated by
+   default, which is enough on a page that honors it. Otherwise, everything waiting for an
+   IntersectionObserver stays at opacity 0 and **is not measured**: the
+   `hidden-text` check then counts these elements and reports it in `warnings`. A report with
+   this warning is rerun with `--warmup`.
+6. **States.** A single pass, no interaction: no `:hover`, no `:focus`, no open menu,
+   no inactive tab (`display: none` is ignored, not reported).
+7. **Cap.** The `overlap` check compares at most 400 elements pairwise
+   (`--max-elements`); beyond that, the rest of the page is not compared.
 
-## Prérequis
+## Prerequisites
 
-Aucune dépendance ajoutée au dépôt. Le script résout, dans l'ordre : `LAYOUT_CHECK_PLAYWRIGHT`,
-`playwright`, `playwright-core`, puis le `playwright-core` embarqué par `@playwright/mcp`
-installé globalement. Il lance le **Chrome du système** (`channel: "chrome"`) et retombe sur
-le Chromium de Playwright si absent — donc aucun `playwright install` requis.
+No dependency added to the repo. The script resolves, in order: `LAYOUT_CHECK_PLAYWRIGHT`,
+`playwright`, `playwright-core`, then the `playwright-core` bundled by a globally installed
+`@playwright/mcp`. It launches the **system Chrome** (`channel: "chrome"`) and falls back on
+Playwright's Chromium if absent — so no `playwright install` required.

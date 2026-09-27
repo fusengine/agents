@@ -1,7 +1,7 @@
 ---
 name: solid-python-patterns
 applies-to: "**/*.py"
-description: Python 3.12+ patterns - directory structure, typing.Protocol, dataclasses, pytest, docstrings
+description: Python 3.14+ patterns - directory structure, typing.Protocol, dataclasses, pytest, docstrings
 when-to-use: project structure, testing, typing, Python-specific SOLID
 keywords: Python, Protocol, dataclasses, pytest, directory, docstrings
 priority: high

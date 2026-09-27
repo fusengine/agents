@@ -24,15 +24,21 @@ class User extends Model
 
 // After (L13)
 use Illuminate\Database\Eloquent\Attributes\{
-    Table, Connection, Fillable, Hidden, Casts
+    Table, Connection, Fillable, Hidden
 };
 
 #[Table('users')]
 #[Connection('pgsql')]
 #[Fillable(['name', 'email'])]
 #[Hidden(['password'])]
-#[Casts(['email_verified_at' => 'datetime'])]
-class User extends Model {}
+class User extends Model
+{
+    // No #[Casts] attribute exists — casts stay in the casts() method
+    protected function casts(): array
+    {
+        return ['email_verified_at' => 'datetime'];
+    }
+}
 ```
 
 → See `laravel-eloquent` skill for full attribute list.
@@ -88,14 +94,17 @@ class SendMailCommand extends Command {}
 ## Controllers
 
 ```php
-use Illuminate\Routing\Attributes\{Middleware, Authorize};
+use Illuminate\Routing\Attributes\Controllers\{Middleware, Authorize};
 
 #[Middleware('auth')]
-#[Authorize('update-post')]
-class PostController extends Controller {}
+class PostController extends Controller
+{
+    #[Authorize('update', 'post')]
+    public function update(Post $post) { /* ... */ }
+}
 ```
 
-Method-level also supported.
+`#[Middleware]` works at class or method level; `#[WithoutMiddleware]` (13.20+) excludes one.
 
 ## Form Requests
 
@@ -120,11 +129,11 @@ class UserCollection extends ResourceCollection {}
 ## Test Seeders
 
 ```php
-use Illuminate\Database\Seeder\Attributes\{Seed, Seeder};
+use Illuminate\Foundation\Testing\Attributes\{Seed, Seeder};
 
-#[Seed]
-#[Seeder(UsersTableSeeder::class)]
-class DatabaseSeeder {}
+// On a test class using RefreshDatabase — not on the seeder itself
+#[Seeder(UsersTableSeeder::class)]   // or #[Seed] to run DatabaseSeeder
+class UserTest extends TestCase {}
 ```
 
 ## Migration Recipe

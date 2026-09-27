@@ -27,9 +27,9 @@ starlight({
       label: 'English',
       lang: 'en',
     },
-    fr: {
-      label: 'Français',
-      lang: 'fr',
+    it: {
+      label: 'Italiano',
+      lang: 'it',
     },
     es: {
       label: 'Español',
@@ -46,18 +46,18 @@ src/content/docs/
 ├── index.mdx          # English (root locale)
 ├── guides/
 │   └── intro.md       # English
-├── fr/
-│   ├── index.mdx      # French
+├── it/
+│   ├── index.mdx      # Italian
 │   └── guides/
-│       └── intro.md   # French
+│       └── intro.md   # Italian
 └── es/
     └── index.mdx      # Spanish
 ```
 
-## Content Collections Setup (Astro 6)
+## Content Collections Setup (Astro 7)
 
 ```ts
-// src/content/config.ts
+// src/content.config.ts
 import { defineCollection } from 'astro:content';
 import { docsLoader, i18nLoader } from '@astrojs/starlight/loaders';
 import { docsSchema, i18nSchema } from '@astrojs/starlight/schema';
@@ -71,12 +71,12 @@ export const collections = {
 ## Custom UI Translations
 
 ```json
-// src/content/i18n/fr.json
+// src/content/i18n/es.json
 {
-  "search.label": "Rechercher",
-  "tableOfContents.onThisPage": "Sur cette page",
-  "page.editLink": "Modifier cette page",
-  "404.text": "Page non trouvée."
+  "search.label": "Buscar",
+  "tableOfContents.onThisPage": "En esta página",
+  "page.editLink": "Editar esta página",
+  "404.text": "Página no encontrada."
 }
 ```
 

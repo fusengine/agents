@@ -15,7 +15,7 @@ related: app-router.md
 - Route-level error boundaries
 - Global error handling
 - Custom 404 pages
-- Error recovery with reset
+- Error recovery with retry
 
 ## Why File-Based Errors
 
@@ -30,15 +30,36 @@ related: app-router.md
 // app/dashboard/error.tsx
 'use client'
 
-export default function Error({ error, reset }: { error: Error; reset: () => void }) {
+export default function Error({ error, retry }: { error: Error & { digest?: string }; retry: () => void }) {
   return (
     <div>
       <h2>Something went wrong!</h2>
       <p>{error.message}</p>
-      <button onClick={reset}>Try again</button>
+      {/* retry() re-fetches + re-renders the segment (stable in 16.3; unstable_retry in 16.2) */}
+      <button onClick={() => retry()}>Try again</button>
     </div>
   )
 }
+```
+`reset()` is still passed but only clears the error state without re-fetching — prefer `retry()`.
+
+## catchError (Component-Level Boundary, 16.3)
+```typescript
+// app/custom-error-boundary.tsx
+'use client'
+import { catchError, type ErrorInfo } from 'next/error'
+
+function ErrorFallback(props: { title: string }, { error, retry }: ErrorInfo) {
+  return (
+    <div>
+      <h2>{props.title}</h2>
+      <p>{error.message}</p>
+      <button onClick={() => retry()}>Try again</button>
+    </div>
+  )
+}
+
+export default catchError(ErrorFallback)  // does not swallow notFound()/redirect()
 ```
 
 ## global-error.tsx (Root Error Boundary)

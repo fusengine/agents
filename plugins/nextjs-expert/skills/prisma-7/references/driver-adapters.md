@@ -37,7 +37,7 @@ export function createPgAdapter(): PrismaPg {
 
 ```typescript
 // modules/cores/db/src/prisma.ts
-import { PrismaClient } from '@prisma/client'
+import { PrismaClient } from '../generated/prisma/client'  // v7: generated path, not @prisma/client
 import { createPgAdapter } from './adapters/pgAdapter'
 
 const adapter = createPgAdapter()
@@ -81,12 +81,13 @@ export function createPgPoolAdapter(
   }
 ): PrismaPg {
   const pool = new Pool(config)
-  return new PrismaPg({ pool })
+  return new PrismaPg(pool) // accepts a pg.Pool, a PoolConfig, or a connection string
 }
 ```
 
 ```typescript
 // modules/cores/db/src/prisma.ts
+import { PrismaClient } from '../generated/prisma/client'
 import type { PoolConfig } from './adapters/pgPoolAdapter'
 import { createPgPoolAdapter } from './adapters/pgPoolAdapter'
 
@@ -109,7 +110,6 @@ bun add @prisma/adapter-neon @neondatabase/serverless
 
 ```typescript
 // modules/cores/db/src/adapters/neonAdapter.ts
-import { neon } from '@neondatabase/serverless'
 import { PrismaNeon } from '@prisma/adapter-neon'
 
 /**
@@ -119,13 +119,14 @@ import { PrismaNeon } from '@prisma/adapter-neon'
  * @returns PrismaNeon adapter instance
  */
 export function createNeonAdapter(): PrismaNeon {
-  const sql = neon(process.env.DATABASE_URL!)
-  return new PrismaNeon(sql)
+  // v7: pass the Neon pool config directly (HTTP-only variant: PrismaNeonHttp)
+  return new PrismaNeon({ connectionString: process.env.DATABASE_URL! })
 }
 ```
 
 ```typescript
 // modules/cores/db/src/prisma.ts
+import { PrismaClient } from '../generated/prisma/client'
 import { createNeonAdapter } from './adapters/neonAdapter'
 
 const adapter = createNeonAdapter()
@@ -166,6 +167,7 @@ export function createPlanetScaleAdapter(): PrismaPlanetScale {
 
 ```typescript
 // modules/cores/db/src/prisma.ts
+import { PrismaClient } from '../generated/prisma/client'
 import { createPlanetScaleAdapter } from './adapters/planetscaleAdapter'
 
 const adapter = createPlanetScaleAdapter()
@@ -187,24 +189,24 @@ bun add @prisma/adapter-better-sqlite3 better-sqlite3
 
 ```typescript
 // modules/cores/db/src/adapters/sqliteAdapter.ts
-import Database from 'better-sqlite3'
 import { PrismaBetterSqlite3 } from '@prisma/adapter-better-sqlite3'
 
 /**
  * Create SQLite adapter with better-sqlite3 driver
  * Suitable for development and small-scale applications
  * @module modules/cores/db/src/adapters
- * @param dbPath Path to SQLite database file
+ * @param url SQLite URL (`file:./app.db` or `:memory:`)
  * @returns PrismaBetterSqlite3 adapter instance
  */
-export function createSqliteAdapter(dbPath: string = 'app.db'): PrismaBetterSqlite3 {
-  const database = new Database(dbPath)
-  return new PrismaBetterSqlite3(database)
+export function createSqliteAdapter(url: string = 'file:./app.db'): PrismaBetterSqlite3 {
+  // v7: the adapter opens the database itself from `{ url, ...better-sqlite3 Options }`
+  return new PrismaBetterSqlite3({ url })
 }
 ```
 
 ```typescript
 // modules/cores/db/src/prisma.ts
+import { PrismaClient } from '../generated/prisma/client'
 import { createSqliteAdapter } from './adapters/sqliteAdapter'
 
 const adapter = createSqliteAdapter()
@@ -226,8 +228,7 @@ bun add @prisma/adapter-libsql @libsql/client
 
 ```typescript
 // modules/cores/db/src/adapters/libsqlAdapter.ts
-import { createClient } from '@libsql/client'
-import { PrismaLibSQL } from '@prisma/adapter-libsql'
+import { PrismaLibSql } from '@prisma/adapter-libsql' // v7 export name: PrismaLibSql
 
 /**
  * Turso/LibSQL configuration interface
@@ -248,14 +249,15 @@ export function createLibSQLAdapter(
     url: process.env.TURSO_DATABASE_URL!,
     authToken: process.env.TURSO_AUTH_TOKEN,
   }
-): PrismaLibSQL {
-  const client = createClient(config)
-  return new PrismaLibSQL(client)
+): PrismaLibSql {
+  // v7: pass the libSQL client config directly (no manual createClient)
+  return new PrismaLibSql(config)
 }
 ```
 
 ```typescript
 // modules/cores/db/src/prisma.ts
+import { PrismaClient } from '../generated/prisma/client'
 import type { LibSQLConfig } from './adapters/libsqlAdapter'
 import { createLibSQLAdapter } from './adapters/libsqlAdapter'
 
@@ -296,7 +298,7 @@ export function createD1Adapter(db: D1Database): PrismaD1 {
 
 ```typescript
 // modules/cores/db/src/edge-d1.ts
-import { PrismaClient } from '@prisma/client'
+import { PrismaClient } from '../generated/prisma/client' // generator: runtime = "cloudflare"
 import { createD1Adapter } from './adapters/d1Adapter'
 import type { D1Env } from './adapters/d1Adapter'
 
@@ -329,9 +331,9 @@ export default {
 | PostgreSQL | `PrismaPg` | `@prisma/adapter-pg` |
 | Neon | `PrismaNeon` | `@prisma/adapter-neon` |
 | PlanetScale | `PrismaPlanetScale` | `@prisma/adapter-planetscale` |
-| MySQL | `PrismaMariaDB` | `@prisma/adapter-mariadb` |
+| MySQL / MariaDB | `PrismaMariaDb` | `@prisma/adapter-mariadb` |
 | SQLite | `PrismaBetterSqlite3` | `@prisma/adapter-better-sqlite3` |
-| Turso | `PrismaLibSQL` | `@prisma/adapter-libsql` |
+| Turso | `PrismaLibSql` | `@prisma/adapter-libsql` |
 | D1 | `PrismaD1` | `@prisma/adapter-d1` |
 
 ---

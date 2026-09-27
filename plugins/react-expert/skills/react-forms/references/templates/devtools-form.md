@@ -12,7 +12,7 @@ Complete working example of integrating TanStack Form Devtools for advanced form
 ## Installation
 
 ```bash
-npm install @tanstack/react-form @tanstack/form-devtools
+npm install @tanstack/react-form @tanstack/react-devtools @tanstack/react-form-devtools
 npm install --save-dev @types/react
 ```
 
@@ -23,9 +23,9 @@ npm install --save-dev @types/react
 
 import React, { useState, useMemo } from 'react';
 import { useForm } from '@tanstack/react-form';
-import { zodValidator } from '@tanstack/zod-form-adapter';
 import { z } from 'zod';
-import { FormDevtools } from '@tanstack/form-devtools';
+import { TanStackDevtools } from '@tanstack/react-devtools';
+import { formDevtoolsPlugin } from '@tanstack/react-form-devtools';
 
 /**
  * Zod validation schema for the form
@@ -58,8 +58,8 @@ type FormData = z.infer<typeof formSchema>;
 interface DevtoolsFormProps {
   /** Callback fired on successful form submission */
   onSubmit: (data: FormData) => Promise<void>;
-  /** Custom devtools panel position: 'bottom' | 'top' | 'left' | 'right' */
-  devtoolsPosition?: 'bottom' | 'top' | 'left' | 'right';
+  /** Devtools panel location: 'bottom' | 'top' */
+  devtoolsPosition?: 'bottom' | 'top';
   /** Enable detailed logging to console */
   enableLogging?: boolean;
 }
@@ -168,7 +168,6 @@ export function DevtoolsForm({
         setIsLoading(false);
       }
     },
-    validatorAdapter: zodValidator(),
     validators: {
       onChange: formSchema,
       onBlur: formSchema,
@@ -497,7 +496,10 @@ export function DevtoolsForm({
 
       {/* TanStack Form Devtools Panel (Dev Only) */}
       {isDevEnvironment && typeof window !== 'undefined' && (
-        <FormDevtools position={devtoolsPosition} />
+        <TanStackDevtools
+          config={{ panelLocation: devtoolsPosition }}
+          plugins={[formDevtoolsPlugin()]}
+        />
       )}
     </div>
   );
@@ -552,11 +554,9 @@ export function DevtoolsForm({
 
 **Devtools Position Options**
 ```typescript
-// Position in viewport
-<FormDevtools position="bottom" />   // Default, fixed at bottom
-<FormDevtools position="top" />      // Fixed at top
-<FormDevtools position="left" />     // Fixed at left side
-<FormDevtools position="right" />    // Fixed at right side
+// Form devtools are a plugin of the TanStack Devtools shell
+<TanStackDevtools config={{ panelLocation: 'bottom' }} plugins={[formDevtoolsPlugin()]} /> // Default
+<TanStackDevtools config={{ panelLocation: 'top' }} plugins={[formDevtoolsPlugin()]} />
 ```
 
 ### Debug Logging
@@ -729,7 +729,7 @@ console.log('Email touched:', emailField?.isTouched);
 ```typescript
 const FormDevtoolsWrapper = ({ isEnabled }: { isEnabled: boolean }) => {
   if (!isEnabled) return null;
-  return <FormDevtools position="bottom" />;
+  return <TanStackDevtools plugins={[formDevtoolsPlugin()]} />;
 };
 
 // Usage

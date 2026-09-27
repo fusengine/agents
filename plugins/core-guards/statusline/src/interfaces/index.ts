@@ -1,5 +1,5 @@
 /**
- * Interfaces Index - Exporte toutes les interfaces
+ * Interfaces Index - Exports all interfaces
  */
 
 export type { SegmentContext } from "./context.interface";

@@ -1,7 +1,7 @@
 /**
- * Time Segment - Affiche la date et l'heure
+ * Time Segment - Displays the date and time
  *
- * @description SRP: Affichage date/heure uniquement
+ * @description SRP: Date/time display only
  */
 
 import type { StatuslineConfig } from "../config/schema";
@@ -9,7 +9,7 @@ import type { ISegment, SegmentContext } from "../interfaces";
 import { colors } from "../utils";
 
 /**
- * Formate la date au format DD.M.YY
+ * Formats the date as DD.M.YY
  */
 function formatDate(date: Date): string {
 	const day = date.getDate().toString().padStart(2, "0");
@@ -19,7 +19,7 @@ function formatDate(date: Date): string {
 }
 
 /**
- * Formate l'heure au format HH:MM
+ * Formats the time as HH:MM
  */
 function formatTime(date: Date): string {
 	const hours = date.getHours().toString().padStart(2, "0");
@@ -29,7 +29,7 @@ function formatTime(date: Date): string {
 
 export class TimeSegment implements ISegment {
 	readonly name = "time";
-	readonly priority = 5; // En premier
+	readonly priority = 5; // First
 
 	isEnabled(config: StatuslineConfig): boolean {
 		return config.time.enabled;

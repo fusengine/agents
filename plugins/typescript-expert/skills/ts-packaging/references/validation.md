@@ -15,7 +15,7 @@ related: exports-map.md, npm-publishing.md
 resolve correctly across module systems and resolution modes (ESM, CJS,
 `node16`, `bundler`). It catches broken `exports` maps before consumers do.
 
-Latest: `@arethetypeswrong/cli` 0.18.4 (bin `attw`, requires Node >=20).
+Latest: `@arethetypeswrong/cli` 0.18.5 (bin `attw`, requires Node >=20).
 
 ---
 

@@ -17,12 +17,12 @@ const currentLocale = Astro.currentLocale ?? 'en';
 
 const locales = [
   { code: 'en', label: 'English', flag: '🇬🇧' },
-  { code: 'fr', label: 'Français', flag: '🇫🇷' },
+  { code: 'it', label: 'Italiano', flag: '🇮🇹' },
   { code: 'es', label: 'Español', flag: '🇪🇸' }
 ];
 
 // Strip locale prefix from current path for cross-locale linking
-const cleanPath = currentPath.replace(/^\/(en|fr|es)\//, '/');
+const cleanPath = currentPath.replace(/^\/(en|it|es)\//, '/');
 ---
 
 <nav aria-label="Language switcher">

@@ -54,3 +54,23 @@ Add `ref?: React.Ref<ElementType>` to your props interface.
 `forwardRef` still works but is deprecated. Will be removed in future version.
 
 **Recommendation:** Remove `forwardRef` in new code, migrate existing code gradually.
+
+---
+
+## Fragment Refs (React 19.3)
+
+`<Fragment ref={ref}>` gives a `FragmentInstance` — attach behaviour to a group of children without a wrapper `<div>`. The `<>...</>` shorthand cannot take a `ref`.
+
+```tsx
+import { Fragment, useRef, type FragmentInstance } from 'react'
+
+const group = useRef<FragmentInstance>(null)
+// <Fragment ref={group}><Item /><Item /></Fragment>
+```
+
+| Methods | Scope |
+|---------|-------|
+| `addEventListener` / `removeEventListener` / `dispatchEvent` | First-level host children |
+| `focus` / `focusLast` / `blur` | Depth-first focus |
+| `observeUsing` / `unobserveUsing` | `IntersectionObserver` / `ResizeObserver` |
+| `getClientRects` / `getRootNode` / `compareDocumentPosition` / `scrollIntoView` | Measure and scroll |

@@ -78,3 +78,4 @@ GET /api/posts/1?include=author&fields[posts]=title&fields[users]=name
 - Fields ARE applied to `included` resources too (per JSON:API spec)
 - `id` and `type` are always returned regardless of the fields parameter
 - Invalid field names are silently ignored - validate at the controller if strictness is needed
+- Disable query-string filtering for one response with `->ignoreFieldsAndIncludesInQueryString()`

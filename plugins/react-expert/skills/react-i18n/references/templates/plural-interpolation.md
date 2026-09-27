@@ -64,60 +64,60 @@ Complete examples of plural forms and variable interpolation.
 }
 ```
 
-### public/locales/fr/common.json
+### public/locales/es/common.json
 
 ```json
 {
   "items": {
-    "count_zero": "Aucun élément",
-    "count_one": "{{count}} élément",
-    "count_other": "{{count}} éléments"
+    "count_zero": "Ningún elemento",
+    "count_one": "{{count}} elemento",
+    "count_other": "{{count}} elementos"
   },
   "notifications": {
-    "unread_zero": "Aucun message non lu",
-    "unread_one": "Vous avez {{count}} message non lu",
-    "unread_other": "Vous avez {{count}} messages non lus"
+    "unread_zero": "No hay mensajes sin leer",
+    "unread_one": "Tienes {{count}} mensaje sin leer",
+    "unread_other": "Tienes {{count}} mensajes sin leer"
   },
   "cart": {
-    "empty": "Votre panier est vide",
-    "items_one": "{{count}} article dans le panier",
-    "items_other": "{{count}} articles dans le panier",
-    "total": "Total : {{price}}"
+    "empty": "Tu carrito está vacío",
+    "items_one": "{{count}} artículo en el carrito",
+    "items_other": "{{count}} artículos en el carrito",
+    "total": "Total: {{price}}"
   },
   "comments": {
-    "count_zero": "Aucun commentaire",
-    "count_one": "{{count}} commentaire",
-    "count_other": "{{count}} commentaires"
+    "count_zero": "Aún no hay comentarios",
+    "count_one": "{{count}} comentario",
+    "count_other": "{{count}} comentarios"
   },
   "files": {
-    "selected_zero": "Aucun fichier sélectionné",
-    "selected_one": "{{count}} fichier sélectionné ({{size}})",
-    "selected_other": "{{count}} fichiers sélectionnés ({{size}} au total)"
+    "selected_zero": "Ningún archivo seleccionado",
+    "selected_one": "{{count}} archivo seleccionado ({{size}})",
+    "selected_other": "{{count}} archivos seleccionados ({{size}} en total)"
   },
   "users": {
-    "online_zero": "Aucun utilisateur en ligne",
-    "online_one": "{{count}} utilisateur en ligne",
-    "online_other": "{{count}} utilisateurs en ligne",
-    "typing_one": "{{name}} est en train d'écrire...",
-    "typing_two": "{{name}} et {{other}} sont en train d'écrire...",
-    "typing_other": "{{count}} personnes sont en train d'écrire..."
+    "online_zero": "Ningún usuario en línea",
+    "online_one": "{{count}} usuario en línea",
+    "online_other": "{{count}} usuarios en línea",
+    "typing_one": "{{name}} está escribiendo...",
+    "typing_two": "{{name}} y {{other}} están escribiendo...",
+    "typing_other": "{{count}} personas están escribiendo..."
   },
   "time": {
-    "minutes_one": "il y a {{count}} minute",
-    "minutes_other": "il y a {{count}} minutes",
-    "hours_one": "il y a {{count}} heure",
-    "hours_other": "il y a {{count}} heures",
-    "days_one": "il y a {{count}} jour",
-    "days_other": "il y a {{count}} jours"
+    "minutes_one": "hace {{count}} minuto",
+    "minutes_other": "hace {{count}} minutos",
+    "hours_one": "hace {{count}} hora",
+    "hours_other": "hace {{count}} horas",
+    "days_one": "hace {{count}} día",
+    "days_other": "hace {{count}} días"
   },
   "greeting": {
-    "morning": "Bonjour, {{name}} !",
-    "afternoon": "Bon après-midi, {{name}} !",
-    "evening": "Bonsoir, {{name}} !"
+    "morning": "¡Buenos días, {{name}}!",
+    "afternoon": "¡Buenas tardes, {{name}}!",
+    "evening": "¡Buenas noches, {{name}}!"
   },
   "welcome": {
-    "new": "Bienvenue, {{name}} ! C'est votre première visite.",
-    "returning": "Bon retour, {{name}} ! Dernière visite : {{lastVisit}}"
+    "new": "¡Bienvenido, {{name}}! Esta es tu primera visita.",
+    "returning": "¡Bienvenido de nuevo, {{name}}! Última visita: {{lastVisit}}"
   }
 }
 ```
@@ -137,9 +137,9 @@ function ItemCount({ count }: { count: number }) {
   return <span>{t('items.count', { count })}</span>
 }
 
-// count=0: "No items" / "Aucun élément"
-// count=1: "1 item" / "1 élément"
-// count=5: "5 items" / "5 éléments"
+// count=0: "No items" / "Ningún elemento"
+// count=1: "1 item" / "1 elemento"
+// count=5: "5 items" / "5 elementos"
 ```
 
 ### Notifications Badge

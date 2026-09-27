@@ -8,497 +8,338 @@ requires: installation.md
 related: installation.md
 ---
 
-# Theming
+# Theming (Vite)
 
-Shadcn uses CSS variables for theming, allowing easy customization and dark mode support.
+Sources: https://ui.shadcn.com/docs/theming, https://ui.shadcn.com/docs/dark-mode/vite,
+https://ui.shadcn.com/docs/components-json, https://ui.shadcn.com/docs/cli#eject.
 
-## CSS Variables Approach
+shadcn/ui themes with semantic CSS variables in **OKLCH**, mapped to Tailwind v4 utilities with
+`@theme inline`. There is no `tailwind.config.*`, no `hsl(var(--x))` wrapper and no
+`tailwindcss-animate` plugin — those are Tailwind v3-era patterns.
 
-Shadcn components use CSS custom properties (variables) defined in your stylesheet:
+Build a theme visually on https://ui.shadcn.com/create, then apply it with
+`bunx --bun shadcn@latest init --preset <CODE>` (new) or `shadcn apply <CODE>` (existing;
+`--only theme` or `--only font` to apply part of it).
+
+## Default Theme (`neutral`) — `src/index.css`
 
 ```css
-/* app/globals.css */
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@custom-variant dark (&:is(.dark *));
 
-/* Light mode variables */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+:root {
+  --radius: 0.625rem;
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.205 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
+}
+
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.922 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.556 0 0);
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.556 0 0);
+}
+
 @layer base {
-  :root {
-    --background: 0 0% 100%;
-    --foreground: 0 0% 3.6%;
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 3.6%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 3.6%;
-    --muted: 0 0% 96.1%;
-    --muted-foreground: 0 0% 45.1%;
-    --accent: 0 0% 9.0%;
-    --accent-foreground: 0 0% 98%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 89.8%;
-    --input: 0 0% 89.8%;
-    --ring: 0 0% 3.6%;
-    --radius: 0.5rem;
+  * {
+    @apply border-border outline-ring/50;
   }
 
-  /* Dark mode variables */
-  .dark {
-    --background: 0 0% 3.6%;
-    --foreground: 0 0% 98%;
-    --card: 0 0% 3.6%;
-    --card-foreground: 0 0% 98%;
-    --popover: 0 0% 3.6%;
-    --popover-foreground: 0 0% 98%;
-    --muted: 0 0% 14.9%;
-    --muted-foreground: 0 0% 63.9%;
-    --accent: 0 0% 98%;
-    --accent-foreground: 0 0% 9.0%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 9.0%;
-    --border: 0 0% 14.9%;
-    --input: 0 0% 14.9%;
-    --ring: 0 0% 83.1%;
+  body {
+    @apply bg-background text-foreground;
   }
 }
 ```
 
-## Dark Mode Setup
+Notes:
+- `@import "shadcn/tailwind.css"` supplies the `data-open:` / `data-closed:` custom variants
+  (matching both Radix `data-state="open"` and Base UI `data-open`) and the accordion keyframes.
+- There is no `--destructive-foreground` token in the current theme.
+- `tailwind.baseColor` values: `neutral`, `stone`, `zinc`, `mauve`, `olive`, `mist`, `taupe`.
+  Switch later with `bunx --bun shadcn@latest migrate base-color --to zinc`.
 
-### React Configuration
+## Token Convention
 
-```typescript
-// vite.config.ts
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-import path from 'path'
+Surface/foreground pairs: `primary` pairs with `primary-foreground`, etc.
 
-export default defineConfig({
-  plugins: [react()],
-  resolve: {
-    alias: {
-      '@': path.resolve(__dirname, './src'),
-    },
-  },
-})
-```
+| Token | Controls |
+|-------|----------|
+| `background` / `foreground` | App background and default text |
+| `card` / `card-foreground` | Elevated surfaces (`Card`, panels) |
+| `popover` / `popover-foreground` | Floating surfaces (`Popover`, menus, overlays) |
+| `primary` / `primary-foreground` | High-emphasis actions (default `Button`) |
+| `secondary` / `secondary-foreground` | Lower-emphasis filled actions |
+| `muted` / `muted-foreground` | Subtle surfaces, descriptions, placeholders |
+| `accent` / `accent-foreground` | Hover/focus/active surfaces (ghost buttons, menu highlight) |
+| `destructive` | Destructive actions and invalid states |
+| `border`, `input`, `ring` | Borders, form-control borders, focus rings |
+| `chart-1` … `chart-5` | Chart palette |
+| `sidebar*` | Sidebar surface, primary, accent, border, ring |
+| `radius` | Base of the radius scale (`radius-sm` … `radius-4xl` derived in `@theme inline`) |
 
-### Tailwind Configuration
+## Adding a Token
 
-```typescript
-// tailwind.config.ts
-import type { Config } from 'tailwindcss'
+Define it in `:root` and `.dark`, then expose it with `@theme inline`:
 
-const config = {
-  darkMode: ['class'], // or 'media'
-  content: [
-    './app/**/*.{js,ts,jsx,tsx}',
-    './components/**/*.{js,ts,jsx,tsx}',
-  ],
-  theme: {
-    extend: {
-      colors: {
-        background: 'hsl(var(--background))',
-        foreground: 'hsl(var(--foreground))',
-        card: {
-          DEFAULT: 'hsl(var(--card))',
-          foreground: 'hsl(var(--card-foreground))',
-        },
-        popover: {
-          DEFAULT: 'hsl(var(--popover))',
-          foreground: 'hsl(var(--popover-foreground))',
-        },
-        muted: {
-          DEFAULT: 'hsl(var(--muted))',
-          foreground: 'hsl(var(--muted-foreground))',
-        },
-        accent: {
-          DEFAULT: 'hsl(var(--accent))',
-          foreground: 'hsl(var(--accent-foreground))',
-        },
-        destructive: {
-          DEFAULT: 'hsl(var(--destructive))',
-          foreground: 'hsl(var(--destructive-foreground))',
-        },
-        border: 'hsl(var(--border))',
-        input: 'hsl(var(--input))',
-        ring: 'hsl(var(--ring))',
-      },
-      borderRadius: {
-        lg: 'calc(var(--radius) + 0.5rem)',
-        md: 'calc(var(--radius) + 0.25rem)',
-        sm: 'calc(var(--radius) - 0.125rem)',
-      },
-    },
-  },
-  plugins: [require('tailwindcss-animate')],
-} satisfies Config
+```css
+:root {
+  --warning: oklch(0.84 0.16 84);
+  --warning-foreground: oklch(0.28 0.07 46);
+}
 
-export default config
-```
+.dark {
+  --warning: oklch(0.41 0.11 46);
+  --warning-foreground: oklch(0.99 0.02 95);
+}
 
-## Dark Mode Provider
-
-```tsx
-// app/providers.tsx
-'use client'
-
-import { ThemeProvider } from 'next-themes'
-import type { ReactNode } from 'react'
-
-export function Providers({ children }: { children: ReactNode }) {
-  return (
-    <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-      {children}
-    </ThemeProvider>
-  )
+@theme inline {
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
 }
 ```
 
 ```tsx
-// app/layout.tsx
-import type { Metadata } from 'next'
-import { Providers } from './providers'
-import './globals.css'
+<div className="bg-warning text-warning-foreground" />
+```
 
-export const metadata: Metadata = {
-  title: 'My App',
-}
+## Dark Mode (Vite)
 
-export default function RootLayout({
-  children,
-}: {
+Vite apps use a small context provider (no `next-themes`). It toggles `light`/`dark` on
+`<html>`, which drives `@custom-variant dark (&:is(.dark *))`.
+
+```tsx
+// src/modules/cores/shadcn/components/theme-provider.tsx
+import { createContext, useContext, useEffect, useState } from "react"
+
+type Theme = "dark" | "light" | "system"
+
+type ThemeProviderProps = {
   children: React.ReactNode
-}) {
-  return (
-    <html lang="en" suppressHydrationWarning>
-      <body>
-        <Providers>{children}</Providers>
-      </body>
-    </html>
-  )
+  defaultTheme?: Theme
+  storageKey?: string
 }
-```
 
-## Theme Toggle Component
+type ThemeProviderState = {
+  theme: Theme
+  setTheme: (theme: Theme) => void
+}
 
-```tsx
-'use client'
+const ThemeProviderContext = createContext<ThemeProviderState>({
+  theme: "system",
+  setTheme: () => null,
+})
 
-import { useTheme } from 'next-themes'
-import { useEffect, useState } from 'react'
-import { Moon, Sun } from 'lucide-react'
-import { Button } from '@/modules/cores/shadcn/components/ui/button'
-import {
-  DropdownMenu,
-  DropdownMenuTrigger,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuCheckboxItem,
-} from '@/modules/cores/shadcn/components/ui/dropdown-menu'
-
-export function ThemeToggle() {
-  const { theme, setTheme } = useTheme()
-  const [mounted, setMounted] = useState(false)
+/**
+ * Persists the theme in localStorage and applies the matching class on <html>.
+ */
+export function ThemeProvider({
+  children,
+  defaultTheme = "system",
+  storageKey = "vite-ui-theme",
+  ...props
+}: ThemeProviderProps) {
+  const [theme, setTheme] = useState<Theme>(
+    () => (localStorage.getItem(storageKey) as Theme) || defaultTheme
+  )
 
   useEffect(() => {
-    setMounted(true)
-  }, [])
+    const root = window.document.documentElement
+    root.classList.remove("light", "dark")
 
-  if (!mounted) return null
+    if (theme === "system") {
+      const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches
+        ? "dark"
+        : "light"
+      root.classList.add(systemTheme)
+      return
+    }
+
+    root.classList.add(theme)
+  }, [theme])
+
+  const value = {
+    theme,
+    setTheme: (next: Theme) => {
+      localStorage.setItem(storageKey, next)
+      setTheme(next)
+    },
+  }
+
+  return (
+    <ThemeProviderContext.Provider {...props} value={value}>
+      {children}
+    </ThemeProviderContext.Provider>
+  )
+}
+
+/**
+ * Reads the current theme and setter. Must be used inside ThemeProvider.
+ */
+export const useTheme = () => {
+  const context = useContext(ThemeProviderContext)
+  if (context === undefined) throw new Error("useTheme must be used within a ThemeProvider")
+  return context
+}
+```
+
+Wrap the app in `src/main.tsx` (see [configuration.md](configuration.md#dark-mode-vite)).
+
+### Mode Toggle — Base UI project (`render`)
+
+```tsx
+import { MoonIcon, SunIcon } from "lucide-react"
+import { Button } from "@/modules/cores/shadcn/components/ui/button"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/modules/cores/shadcn/components/ui/dropdown-menu"
+import { useTheme } from "@/modules/cores/shadcn/components/theme-provider"
+
+/** Dropdown switching between light, dark and system themes. */
+export function ModeToggle() {
+  const { setTheme } = useTheme()
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="icon">
-          <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-          <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-          <span className="sr-only">Toggle theme</span>
-        </Button>
+      <DropdownMenuTrigger render={<Button variant="outline" size="icon" />}>
+        <SunIcon className="size-[1.2rem] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
+        <MoonIcon className="absolute size-[1.2rem] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
+        <span className="sr-only">Toggle theme</span>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuCheckboxItem
-          checked={theme === 'light'}
-          onCheckedChange={() => setTheme('light')}
-        >
-          Light
-        </DropdownMenuCheckboxItem>
-        <DropdownMenuCheckboxItem
-          checked={theme === 'dark'}
-          onCheckedChange={() => setTheme('dark')}
-        >
-          Dark
-        </DropdownMenuCheckboxItem>
-        <DropdownMenuCheckboxItem
-          checked={theme === 'system'}
-          onCheckedChange={() => setTheme('system')}
-        >
-          System
-        </DropdownMenuCheckboxItem>
+        <DropdownMenuItem onClick={() => setTheme("light")}>Light</DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setTheme("dark")}>Dark</DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setTheme("system")}>System</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   )
 }
 ```
 
-## Custom Color Palette
+### Mode Toggle — Radix project (`asChild`)
 
-### Creating a Custom Theme
-
-```css
-/* app/globals.css - Custom Blue Theme */
-
-@layer base {
-  :root {
-    /* Primary brand colors */
-    --primary: 221 83% 53%;
-    --primary-foreground: 210 40% 98%;
-
-    /* Accent colors */
-    --accent: 166 76% 40%;
-    --accent-foreground: 210 40% 98%;
-
-    /* Background & foreground */
-    --background: 0 0% 100%;
-    --foreground: 221 83% 11%;
-
-    /* Card colors */
-    --card: 0 0% 100%;
-    --card-foreground: 221 83% 11%;
-
-    /* Semantic colors */
-    --destructive: 0 84.2% 60.2%;
-    --success: 142 76% 36%;
-    --warning: 38 92% 50%;
-    --info: 221 83% 53%;
-
-    /* Neutral grays */
-    --muted: 221 12% 92%;
-    --muted-foreground: 221 9% 38%;
-    --border: 221 12% 88%;
-    --input: 221 12% 88%;
-    --ring: 221 83% 53%;
-  }
-
-  .dark {
-    --primary: 221 83% 64%;
-    --primary-foreground: 221 83% 11%;
-
-    --accent: 166 100% 50%;
-    --accent-foreground: 221 83% 11%;
-
-    --background: 221 25% 10%;
-    --foreground: 0 0% 98%;
-
-    --card: 221 24% 15%;
-    --card-foreground: 0 0% 98%;
-
-    --destructive: 0 84.2% 60.2%;
-    --success: 142 76% 50%;
-    --warning: 38 92% 60%;
-    --info: 221 83% 64%;
-
-    --muted: 221 24% 28%;
-    --muted-foreground: 221 12% 70%;
-    --border: 221 24% 24%;
-    --input: 221 24% 24%;
-    --ring: 221 83% 64%;
-  }
-}
-
-* {
-  @apply border-border;
-}
-
-body {
-  @apply bg-background text-foreground;
-}
-```
-
-### Multiple Theme Variants
+Identical except the trigger:
 
 ```tsx
-// lib/themes.ts
-export const themes = {
-  light: {
-    name: 'Light',
-    colors: {
-      primary: '221 83% 53%',
-      accent: '166 76% 40%',
-      background: '0 0% 100%',
-      foreground: '221 83% 11%',
-    },
-  },
-  dark: {
-    name: 'Dark',
-    colors: {
-      primary: '221 83% 64%',
-      accent: '166 100% 50%',
-      background: '221 25% 10%',
-      foreground: '0 0% 98%',
-    },
-  },
-  ocean: {
-    name: 'Ocean',
-    colors: {
-      primary: '200 100% 50%',
-      accent: '180 100% 40%',
-      background: '210 30% 10%',
-      foreground: '0 0% 98%',
-    },
-  },
-  forest: {
-    name: 'Forest',
-    colors: {
-      primary: '120 50% 40%',
-      accent: '80 60% 50%',
-      background: '120 30% 15%',
-      foreground: '0 0% 98%',
-    },
-  },
-}
+<DropdownMenuTrigger asChild>
+  <Button variant="outline" size="icon">
+    {/* same icons + sr-only label */}
+  </Button>
+</DropdownMenuTrigger>
 ```
 
-## Component Customization with Theme Variables
+## Without CSS Variables
 
-```tsx
-// components/ui/custom-button.tsx
-import { cn } from '@/modules/cores/lib/utils'
-
-interface CustomButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'secondary' | 'success' | 'warning' | 'danger'
-  size?: 'sm' | 'md' | 'lg'
-}
-
-export function CustomButton({
-  variant = 'primary',
-  size = 'md',
-  className,
-  ...props
-}: CustomButtonProps) {
-  const baseStyles = 'font-medium rounded-md transition-colors'
-
-  const variantStyles = {
-    primary:
-      'bg-primary text-primary-foreground hover:bg-primary/90',
-    secondary:
-      'bg-secondary text-secondary-foreground hover:bg-secondary/90',
-    success: 'bg-success text-white hover:bg-success/90',
-    warning: 'bg-warning text-white hover:bg-warning/90',
-    danger: 'bg-destructive text-destructive-foreground hover:bg-destructive/90',
-  }
-
-  const sizeStyles = {
-    sm: 'px-2 py-1 text-xs',
-    md: 'px-4 py-2 text-sm',
-    lg: 'px-6 py-3 text-base',
-  }
-
-  return (
-    <button
-      className={cn(
-        baseStyles,
-        variantStyles[variant],
-        sizeStyles[size],
-        className
-      )}
-      {...props}
-    />
-  )
-}
-```
-
-## CSS Variable Reference
-
-| Variable | Purpose | Light Value | Dark Value |
-|----------|---------|------------|-----------|
-| `--background` | Page background | `0 0% 100%` | `0 0% 3.6%` |
-| `--foreground` | Text color | `0 0% 3.6%` | `0 0% 98%` |
-| `--primary` | Primary brand color | `0 0% 9%` | `0 0% 98%` |
-| `--accent` | Accent/highlight color | `0 0% 9%` | `0 0% 98%` |
-| `--muted` | Muted/secondary background | `0 0% 96.1%` | `0 0% 14.9%` |
-| `--destructive` | Danger/error color | `0 84.2% 60.2%` | `0 84.2% 60.2%` |
-| `--border` | Border color | `0 0% 89.8%` | `0 0% 14.9%` |
-| `--ring` | Focus ring color | `0 0% 3.6%` | `0 0% 83.1%` |
-
-## Installing next-themes
-
-```bash
-npm install next-themes
-```
+`init --no-css-variables` sets `tailwind.cssVariables: false` and generates inline utilities
+(`bg-zinc-950 dark:bg-white`). Installation-time choice: switching means deleting and
+re-installing components.
 
 ## Best Practices
 
-1. **HSL Format**: Use HSL for easier manipulation and variations
-2. **Semantic Colors**: Use color names that describe purpose (primary, danger, success)
-3. **System Default**: Set `enableSystem={true}` to respect OS preferences
-4. **No Flash**: Use `suppressHydrationWarning` on html element
-5. **Accessible**: Ensure sufficient contrast between foreground and background
-6. **Consistency**: Keep color palette consistent across light and dark modes
-
-## Common Color Palettes
-
-### Modern Blue
-```css
---primary: 221 83% 53%;
---accent: 166 76% 40%;
---success: 142 76% 36%;
---warning: 38 92% 50%;
---destructive: 0 84.2% 60.2%;
-```
-
-### Pastel
-```css
---primary: 260 100% 68%;
---accent: 345 100% 68%;
---success: 140 100% 68%;
---warning: 45 100% 68%;
---destructive: 0 100% 68%;
-```
-
-### High Contrast
-```css
---primary: 0 0% 0%;
---accent: 0 0% 100%;
---success: 120 100% 25%;
---warning: 40 100% 40%;
---destructive: 0 100% 50%;
-```
-
-## Testing Themes
-
-```tsx
-// components/__tests__/theme.test.tsx
-import { render, screen } from '@testing-library/react'
-import { ThemeProvider } from 'next-themes'
-
-describe('Theme Provider', () => {
-  it('should render with light theme', () => {
-    render(
-      <ThemeProvider attribute="class" defaultTheme="light">
-        <div className="bg-background text-foreground">
-          Themed Content
-        </div>
-      </ThemeProvider>
-    )
-
-    const element = screen.getByText('Themed Content')
-    expect(element).toHaveClass('text-foreground')
-  })
-
-  it('should apply dark theme', () => {
-    render(
-      <ThemeProvider attribute="class" defaultTheme="dark" forcedTheme="dark">
-        <div className="bg-background text-foreground dark:bg-slate-950">
-          Themed Content
-        </div>
-      </ThemeProvider>
-    )
-
-    expect(document.documentElement).toHaveClass('dark')
-  })
-})
-```
+1. **OKLCH only** — the CLI, presets and `migrate base-color` all emit OKLCH.
+2. **Tokens, not raw colors** — components use `bg-primary`, never hex values.
+3. **Every new token in `:root`, `.dark` and `@theme inline`** — otherwise no utility is generated.
+4. **Change `--radius`, not per-component radii** — the whole `radius-*` scale derives from it.
+5. **Keep `shadcn/tailwind.css` imported** unless you deliberately `shadcn eject`.

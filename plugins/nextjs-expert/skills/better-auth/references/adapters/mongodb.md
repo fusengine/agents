@@ -85,11 +85,14 @@ Better Auth creates these collections:
 - `accounts` - OAuth accounts
 - `verifications` - Email verifications
 
-## Experimental Joins (v1.4.0+)
+## Database Joins (stable since v1.7)
+
+Joins moved out of `experimental` in 1.7 — configure them on `betterAuth`, not on the adapter:
 
 ```typescript
-mongodbAdapter(db, {
-  experimentalJoins: true  // Enable for better query performance
+betterAuth({
+  database: mongodbAdapter(db),
+  advanced: { database: { joins: true } },  // was experimental: { joins: true } before 1.7
 })
 ```
 

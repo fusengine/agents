@@ -85,6 +85,16 @@ starlight({
 })
 ```
 
+## Mobile Menu Selectors (Starlight 0.42+)
+
+The mobile menu now uses the Popover API: `<starlight-menu-button>`, its `aria-expanded` state and the `data-mobile-menu-expanded` body attribute are gone. Update custom styles/overrides of `MobileMenuToggle` / `PageFrame`:
+
+```css
+.sl-menu-button { color: var(--sl-color-text); }
+.sl-menu-button:has(~ :popover-open) { color: var(--sl-color-text-accent-high); }
+body:has(sl-sidebar-pane:popover-open) header { background-color: var(--sl-color-bg); }
+```
+
 ## Key CSS Variables
 
 | Variable | Controls |

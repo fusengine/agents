@@ -26,7 +26,7 @@ export default defineConfig({
         defaultLocale: 'en',
         locales: {
           en: 'en-US',  // Path key → language attribute
-          fr: 'fr-FR',
+          it: 'it-IT',
           es: 'es-ES',
           de: 'de-DE'
         }
@@ -36,7 +36,7 @@ export default defineConfig({
 
   i18n: {
     defaultLocale: 'en',
-    locales: ['en', 'fr', 'es', 'de']
+    locales: ['en', 'it', 'es', 'de']
   }
 });
 ```
@@ -47,7 +47,7 @@ export default defineConfig({
 <url>
   <loc>https://example.com/about</loc>
   <xhtml:link rel="alternate" hreflang="en-US" href="https://example.com/about"/>
-  <xhtml:link rel="alternate" hreflang="fr-FR" href="https://example.com/fr/about"/>
+  <xhtml:link rel="alternate" hreflang="it-IT" href="https://example.com/it/about"/>
   <xhtml:link rel="alternate" hreflang="es-ES" href="https://example.com/es/about"/>
   <xhtml:link rel="alternate" hreflang="x-default" href="https://example.com/about"/>
 </url>
@@ -69,7 +69,7 @@ const { path } = Astro.props;
 
 const localeMap = {
   en: 'en-US',
-  fr: 'fr-FR',
+  it: 'it-IT',
   es: 'es-ES'
 };
 

@@ -1,6 +1,6 @@
 ---
 name: image-setup-template
-description: Complete image optimization setup for Astro 6 with sharp, responsive images, and fonts
+description: Complete image optimization setup for Astro 7 with sharp, responsive images, and fonts
 type: template
 ---
 
@@ -9,7 +9,7 @@ type: template
 ## astro.config.mjs
 
 ```js
-import { defineConfig } from 'astro/config';
+import { defineConfig, fontProviders } from 'astro/config';
 
 export default defineConfig({
   image: {
@@ -17,15 +17,14 @@ export default defineConfig({
     domains: ['images.unsplash.com', 'cdn.example.com'],
     remotePatterns: [{ protocol: 'https', hostname: '*.cloudinary.com' }],
   },
-  experimental: {
-    fonts: [
-      {
-        provider: 'google',
-        name: 'Inter',
-        cssVariable: '--font-sans',
-      },
-    ],
-  },
+  // Stable top-level option since Astro 6.0 (no experimental wrapper)
+  fonts: [
+    {
+      provider: fontProviders.google(),
+      name: 'Inter',
+      cssVariable: '--font-sans',
+    },
+  ],
 });
 ```
 

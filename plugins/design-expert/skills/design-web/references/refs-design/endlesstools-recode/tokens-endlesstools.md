@@ -2,8 +2,8 @@
 
 Measured on `endlesstools.io` (Next.js, a single external CSS sheet:
 `_next/static/chunks/7cbd7ac42dbd96bf.css`, no inline `<style>`).
-`[relevé]` = value read verbatim in this sheet, in an attribute of the served HTML,
-or in the hydrated DOM of the live page. `[arbitrage]` = a choice made by this reference.
+`[measured]` = value read verbatim in this sheet, in an attribute of the served HTML,
+or in the hydrated DOM of the live page. `[decided]` = a choice made by this reference.
 
 **Two sources of measurement, not to be confused.** The HTML served by the server contains
 only part of the page: the opening mosaic is an empty container there, mounted
@@ -32,13 +32,13 @@ of such a page rests entirely on four decisions, all of which can be measured.
 
 | Attribute | Effect | Why it's there |
 |---|---|---|
-| `preload="none"` | **[relevé]** no byte requested when the document loads | eight preloaded videos would ruin the LCP; here the page loads as if they didn't exist |
-| `muted` | **[relevé]** | *sine qua non* condition for autoplay across all browsers |
-| `autoplay` | **[relevé]** | starts as soon as the resource is ready |
-| `loop` | **[relevé]** | short loops, no visible end, no controls |
-| `playsinline` | **[relevé]** | prevents forced fullscreen on iOS |
-| *(no `poster`)* | **[relevé]** | the absence is a choice: the box's black background acts as the placeholder image |
-| *(no `controls`)* | **[relevé]** | the video is decor, not a player |
+| `preload="none"` | **[measured]** no byte requested when the document loads | eight preloaded videos would ruin the LCP; here the page loads as if they didn't exist |
+| `muted` | **[measured]** | *sine qua non* condition for autoplay across all browsers |
+| `autoplay` | **[measured]** | starts as soon as the resource is ready |
+| `loop` | **[measured]** | short loops, no visible end, no controls |
+| `playsinline` | **[measured]** | prevents forced fullscreen on iOS |
+| *(no `poster`)* | **[measured]** | the absence is a choice: the box's black background acts as the placeholder image |
+| *(no `controls`)* | **[measured]** | the video is decor, not a player |
 
 ### 1.2 The box is reserved before any loading
 
@@ -68,7 +68,7 @@ loads — the box keeps its place, black. This is the point to reuse first.
 
 A corollary worth noting on its own: **no `object-fit` on these
 media items**. The inline style is limited to `position:absolute; width:100%; height:100%;
-inset:0` **[relevé]** — since the frame's ratio is exactly that of the file, stretching
+inset:0` **[measured]** — since the frame's ratio is exactly that of the file, stretching
 to 100% distorts nothing. `object-fit` is only useful when the ratio isn't controlled.
 
 The `.object-cover` rule exists in the sheet and **is used elsewhere**: on the mosaic's
@@ -77,7 +77,7 @@ overlay a cover image. Two treatments, two needs: controlled ratio
 → no `object-fit`; imposed ratio → `cover`. That's the rule to remember, not the absence.
 
 The only exception is the opening scene: **fixed** height (`1200px`, `760px` above
-`48rem`) **[relevé]** with `object-fit: cover`. Here the media is cropped, never distorted, and
+`48rem`) **[measured]** with `object-fit: cover`. Here the media is cropped, never distorted, and
 the block's height depends on no file. Note that the height *increases* on small screens
 (1200 > 760): the scene becomes a portrait there, and the cropping is blunt — this is deliberate, the
 source does the same with `overflow-hidden` on content much wider than the viewport.
@@ -85,15 +85,15 @@ source does the same with `overflow-hidden` on content much wider than the viewp
 ### 1.3 What the source doesn't do — and what is added here
 
 The source starts all eight playbacks and lets them run, regardless of position in the
-page, and without any `prefers-reduced-motion` anywhere in the sheet. **[arbitrage]**:
+page, and without any `prefers-reduced-motion` anywhere in the sheet. **[decided]**:
 
 ```js
-const activer = (v) => {
+const activate = (v) => {
   if (!v.src) { v.src = v.dataset.src; v.preload = 'metadata'; }
-  if (!calme.matches) v.play().catch(() => {});
+  if (!reducedMotion.matches) v.play().catch(() => {});
 };
-new IntersectionObserver(entrees => entrees.forEach(e => {
-  if (e.isIntersecting) activer(e.target);
+new IntersectionObserver(entries => entries.forEach(e => {
+  if (e.isIntersecting) activate(e.target);
   else if (e.target.src && !e.target.paused) e.target.pause();
 }), { rootMargin: '200px 0px', threshold: 0.1 });
 ```
@@ -121,14 +121,14 @@ DOM.
               grid-template-columns:repeat(6, minmax(0,1fr))">
     <div style="display:grid; row-gap:8px; grid-template-columns:minmax(0,1fr)">…</div>
 ```
-**[relevé]** — six columns, each a grid of a **single** column. The images keep
+**[measured]** — six columns, each a grid of a **single** column. The images keep
 their natural ratio, so the columns desynchronize on their own: not one pixel of
 height calculation, not one absolute position. `align-items:start` prevents stretching.
 
 The number of columns changes with width — **two** on small screens, **six** above —
 and the source recalculates it in JS. The delivered output achieves the same masonry with
 `columns: 2` / `columns: 6` in pure CSS: gutters and column count measured,
-distribution redone. **[arbitrage de mécanisme]**
+distribution redone. **[decided mechanism]**
 
 The scene containing all this has a **fixed height** with `overflow:hidden`: the mosaic
 is cut mid-image, and the 340px bottom veil blends the cut into black. You never
@@ -164,7 +164,7 @@ Three techniques worth remembering:
 <video preload="auto" loop playsinline
        class="w-full h-full opacity-0 group-hover:opacity-100 absolute inset-0 object-cover">
 ```
-**[relevé]**. Compared to the eight content videos (§1):
+**[measured]**. Compared to the eight content videos (§1):
 
 | | Content videos | Hover videos |
 |---|---|---|
@@ -185,12 +185,12 @@ wired to `focusin`/`focusout`, without which the technique would only exist for 
 ## 2. Measured transitions
 
 A single duration and a single curve carry almost everything: `--default-transition-duration: .15s`
-and `--default-transition-timing-function: cubic-bezier(.4, 0, .2, 1)` **[relevé]**.
+and `--default-transition-timing-function: cubic-bezier(.4, 0, .2, 1)` **[measured]**.
 Zero `@keyframes` in the HTML, one in the sheet.
 
 | # | Trigger | Property | Start → end | Duration | Curve |
 |---|---|---|---|---|---|
-| 1 | entering the viewport (JS) | `opacity`, `transform` | `0 → 1`, `translateY(5px) → 0` **[relevé, état de départ inline]** | `.5s` **[arbitrage]** | `cubic-bezier(.16,1,.3,1)` **[arbitrage]** |
+| 1 | entering the viewport (JS) | `opacity`, `transform` | `0 → 1`, `translateY(5px) → 0` **[measured, inline start state]** | `.5s` **[decided]** | `cubic-bezier(.16,1,.3,1)` **[decided]** |
 | 2 | `:hover` top-bar pill | `background-color`, `color` | `secondary/80 → secondary`, `grey-4 → white` | `.15s` | `cubic-bezier(.4,0,.2,1)` |
 | 3 | `:hover` solid button | `opacity` | `1 → .85` | `.15s` | same |
 | 4 | `:hover` toggle option | `color` | `white/30 → white/75` | `.15s` | same |
@@ -212,7 +212,7 @@ Row 12 is the only self-running animation on the page:
 }
 @keyframes move-gradient{0%{background-position:0%}to{background-position:100%}}
 ```
-**[relevé intégralement]**. A single point of saturated color on an otherwise monochrome page, placed
+**[measured in full]**. A single point of saturated color on an otherwise monochrome page, placed
 on the one button meant to be seen. This is the page's most effective hierarchy technique.
 
 Constraint upheld here: `animation-timeline: view()/scroll()` is **ruled out** (not *widely
@@ -229,7 +229,7 @@ is often only dead in the served HTML. Only `.text-sm` is truly dead: the sheet
 contains no rule by that name.
 
 The only color value that appears nowhere else is
-`.et-tweet-content a{color:#1d9bf0}` **[relevé]** — the blue of mentions in reviews,
+`.et-tweet-content a{color:#1d9bf0}` **[measured]** — the blue of mentions in reviews,
 the only color not controlled by the system because it comes from an external convention.
 
 ---
@@ -240,17 +240,17 @@ The system fits in seven values. None is colored, except the promotional accent.
 
 | Role | Value | Source |
 |---|---|---|
-| `--fond-page` | `#000` | **[relevé]** class `bg-[#000]` on `<body>` |
-| `--fond-scene` | `#0a0a0a` | **[relevé]** `--color-black` |
-| `--fond-carte` | `#080808` | **[relevé]** testimonial cards |
-| `--fond-champ` | `#1e1e1e` | **[relevé]** `--color-secondary` |
-| `--fond-action` | `#373737` | **[relevé]** `--color-grey-1` |
-| `--texte-primaire` | `#fff` | **[relevé]** |
-| `--texte-secondaire` | `#959595` | **[relevé]** `--color-grey-4` |
-| `--texte-tertiaire` | `#555` | **[relevé]** `--color-grey-3` |
-| `--trait-discret` | `#373737` | **[relevé]** `ring-grey-1` |
-| `--trait-carte` | `#505050` | **[relevé]** `ring-[#505050]` |
-| `--accent-promo` | `#ff3dae` | **[relevé]** discount badge |
+| `--bg-page` | `#000` | **[measured]** class `bg-[#000]` on `<body>` |
+| `--bg-scene` | `#0a0a0a` | **[measured]** `--color-black` |
+| `--bg-card` | `#080808` | **[measured]** testimonial cards |
+| `--bg-field` | `#1e1e1e` | **[measured]** `--color-secondary` |
+| `--bg-action` | `#373737` | **[measured]** `--color-grey-1` |
+| `--text-primary` | `#fff` | **[measured]** |
+| `--text-secondary` | `#959595` | **[measured]** `--color-grey-4` |
+| `--text-tertiary` | `#555` | **[measured]** `--color-grey-3` |
+| `--line-subtle` | `#373737` | **[measured]** `ring-grey-1` |
+| `--line-card` | `#505050` | **[measured]** `ring-[#505050]` |
+| `--accent-promo` | `#ff3dae` | **[measured]** discount badge |
 
 Three reusable observations:
 
@@ -258,7 +258,7 @@ Three reusable observations:
    are therefore *lighter* than the background, never the reverse. The testimonial card
    (`#080808`) is nearly indistinguishable from the background: it's the **hairline** that draws it, not
    its fill.
-2. **Borders are `box-shadow`, not `border`**: `ring-1 …` **[relevé]**. The
+2. **Borders are `box-shadow`, not `border`**: `ring-1 …` **[measured]**. The
    line never modifies the box. And the inset/outset distinction isn't
    decorative, it follows a rule:
    - `ring-1 … ring-inset` → **surfaces**: review cards, pricing cards, top-bar
@@ -267,17 +267,17 @@ Three reusable observations:
      doesn't eat into a single pixel row of the image or video.
 
    When no color class accompanies `ring-1`, the color falls back to
-   `currentColor` **[relevé**: `--tw-ring-color, currentColor` in the `.ring-1` rule**]** —
+   `currentColor` **[measured**: `--tw-ring-color, currentColor` in the `.ring-1` rule**]** —
    this is the case for the offer token and the login pill, whose hairline lightens
    **along with their text** on hover, with no rule declaring it.
-3. **Opacity states go through `color-mix(in oklab, …)`** **[relevé]** — `white/85`,
+3. **Opacity states go through `color-mix(in oklab, …)`** **[measured]** — `white/85`,
    `secondary/80`, etc. A single base color, all states derived.
 
 Two masking gradients, never decorative:
 
 ```css
-.nav-gradient       { background: linear-gradient(#000 14.73%, #000a0a00 100%); } /* [relevé] */
-.ui-overlay-gradient{ background: linear-gradient(#0000 0%, #000 85.27%); }       /* [relevé] */
+.nav-gradient       { background: linear-gradient(#000 14.73%, #000a0a00 100%); } /* [measured] */
+.ui-overlay-gradient{ background: linear-gradient(#0000 0%, #000 85.27%); }       /* [measured] */
 ```
 The first makes the top bar legible without an opaque background; the second (340px tall,
 `pointer-events:none`) blends the bottom of the scene into the page. The non-round percentages
@@ -287,7 +287,7 @@ The first makes the top bar legible without an opaque background; the second (34
 
 ## 4. Typography
 
-Inter. Five tiers, not one more, all **[relevés]**:
+Inter. Five tiers, not one more, all **[measured]**:
 
 | Role | Size / line-height | Weight | Tracking |
 |---|---|---|---|
@@ -302,13 +302,13 @@ The notable point: **there is no intermediate tier**. A title is `24px` below
 fluid scaling. The ratio `42/24 = 1.75` is the page's only jump.
 
 The only declared weight is `500` (`--font-weight-medium`): the sheet contains no
-`font-bold`/`font-semibold` class **[relevé]**, the only other `font-weight` is the
+`font-bold`/`font-semibold` class **[measured]**, the only other `font-weight` is the
 `bolder` from the reset on `b`/`strong`. The hierarchy rests on size and negative
 tracking, not on boldness.
 
 Line widths: titles and taglines are bounded by very short `max-width`
 (`180px`, `215px`, `270px`, `280px`, `370px`, `460px`, `540px`, `620px`, `820px`,
-`900px`) **[relevés]**, chosen to force a precise line-wrap point. This is a
+`900px`) **[measured]**, chosen to force a precise line-wrap point. This is a
 composition setting, not a legibility one — and they go **in pairs** across breakpoints:
 `270 → 620`, `280 → 460`, `540 → 900`. The composition is reframed at each breakpoint, it
 is never left to the chance of available width.
@@ -318,7 +318,7 @@ the HTML, but the sheet **contains no `.text-sm` rule** (the theme doesn't decla
 `--text-sm`): the class produces nothing and the size falls back to the body's, `14px`.
 The delivered output reproduces the size actually obtained, not the displayed class — this is flagged
 in a CSS comment. `tracking-tight` on this same block, however, is well defined
-and equals `-.025em` **[relevé]**, not to be confused with the `-.03em` of the titles.
+and equals `-.025em` **[measured]**, not to be confused with the `-.03em` of the titles.
 
 ---
 
@@ -360,16 +360,16 @@ Worth noting, in the same spirit: the source writes `Digital Atrifact` — a typ
 occupies. Correcting the spelling in a layout reference would be one more
 error, not one less.
 
-- Vertical spacing: `150px` between sections **[relevé]**, `100px` around internal blocks.
-- Edge margins: `20px`, `40px` above `48rem` **[relevé]**.
-- Breakpoints: `40rem` and `48rem` **[relevés]** (`sm` and `md`). The sheet also contains
+- Vertical spacing: `150px` between sections **[measured]**, `100px` around internal blocks.
+- Edge margins: `20px`, `40px` above `48rem` **[measured]**.
+- Breakpoints: `40rem` and `48rem` **[measured]** (`sm` and `md`). The sheet also contains
   `480px`, `720px`, `980px`, `1240px`, unused on the blocks measured here.
 - Radii: `10px` (opening button), `12px` (cards, field, submit button), `7px`
-  (card buttons, media frames) **[relevés]**. Three radii for three object scales.
-- The testimonial rail aligns cards **at the bottom** (`items-end` **[relevé]**), which
+  (card buttons, media frames) **[measured]**. Three radii for three object scales.
+- The testimonial rail aligns cards **at the bottom** (`items-end` **[measured]**), which
   deliberately leaves empty space above short cards. Media of different ratios
   are therefore never cropped to align: it's the grid that yields.
-- Rail cell widths: `85%` → `45%` (sm) → `1/3` (md) **[relevées]**. The `85%`
+- Rail cell widths: `85%` → `45%` (sm) → `1/3` (md) **[measured]**. The `85%`
   on small screens lets the next card poke through: the hint says there's more to come,
   with no indicator or text.
 
@@ -377,7 +377,7 @@ error, not one less.
 `snap-*`, nor `translate-x`, nor `transition-transform` (0 occurrences each): the rails
 are moved **entirely in JS**, with styles set at runtime. The mechanism is
 therefore **not observable** in the scraped source. The delivered output uses native scrolling
-with `scroll-snap`, flagged `[arbitrage]` in the CSS — the widths, the alignment, the
+with `scroll-snap`, flagged `[decided]` in the CSS — the widths, the alignment, the
 container's `overflow-hidden` and the controls (40 × 40 arrows at `opacity .65`, a
 50 × 6 gauge on `#333`) are, however, measured.
 
@@ -393,7 +393,7 @@ container's `overflow-hidden` and the controls (40 × 40 arrows at `opacity .65`
 | Starting state of reveals written as inline `style` (`opacity:0`) | set in CSS; without JS the content would stay invisible in the source, here it's revealed by the same observer which, under `reduce`, reveals everything immediately |
 | Email field: `outline:none` with no replacement | visible focus ring on `:focus-visible` |
 | Consent checkbox: no visible focus | `outline` on `:focus-visible` |
-| Placeholder in the browser's default gray, illegible on `#1e1e1e` | raised to `--texte-secondaire` |
+| Placeholder in the browser's default gray, illegible on `#1e1e1e` | raised to `--text-secondary` |
 
 ---
 
@@ -416,7 +416,7 @@ order that worked here:
 
 Animation durations and curves, however, are **in none of the four**: they
 live in the component's code. Every reveal-timing value in this corpus is
-therefore an `[arbitrage]`, never a measured value.
+therefore an `[decided]`, never a measured value.
 
 ---
 
@@ -440,7 +440,7 @@ are injected client-side and were found in
 (`/tweets/Sang - 1986115678320099499 - 1848x1080.mp4`) and must be encoded as `%20`.
 
 The `dpl=…` parameter of the local URLs is optional (verified: they respond without it);
-it was removed to lighten the file — **[arbitrage]**.
+it was removed to lighten the file — **[decided]**.
 
 **No media is unreproducible**: the 20 tiles, the 8 icons, the 14 avatars,
 the 12 badges, the 7 card images and the 20 videos all respond over HTTP from
@@ -465,5 +465,5 @@ flagged at their line:
 | `object-fit: cover` on card media frames | a safeguard; the source only sets it on hover videos |
 | Background `#0a0a0a` on media frames | the source leaves them transparent |
 | Edge inset on pricing cards via `padding` | the source uses `first-of-type:ml-[20px]`; identical value, different form |
-| `--duree-lente` used on the rail gauge | `.duration-300` exists in the sheet but is used nowhere on the page |
+| `--duration-slow` used on the rail gauge | `.duration-300` exists in the sheet but is used nowhere on the page |
 | Focus rings, placeholder, `prefers-reduced-motion`, a single `<h1>` | defect fixes, listed in §6 |

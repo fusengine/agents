@@ -1,8 +1,8 @@
 ---
 name: validation-zod
-description: Zod schema validation with TanStack Form using zodValidator adapter
+description: Zod schema validation with TanStack Form v1 via native Standard Schema support
 when-to-use: Adding schema-based validation with type inference
-keywords: zodValidator, z.object, safeParse, schema, validation
+keywords: Standard Schema, z.object, safeParse, schema, validation
 priority: high
 requires: installation.md
 related: async-validation.md, server-actions.md
@@ -13,7 +13,7 @@ related: async-validation.md, server-actions.md
 ## Installation
 
 ```bash
-npm install @tanstack/zod-form-adapter zod
+npm install zod  # no adapter: TanStack Form v1 supports Standard Schema (Zod, Valibot, ArkType) natively
 ```
 
 ## Form-Level Schema
@@ -31,14 +31,13 @@ export const userSchema = z.object({
 export type UserFormData = z.infer<typeof userSchema>
 ```
 
-## zodValidator Integration
+## Schema Integration (Standard Schema)
 
 ```typescript
 // components/UserForm.tsx
 'use client'
 
 import { useForm } from '@tanstack/react-form'
-import { zodValidator } from '@tanstack/zod-form-adapter'
 import { userSchema } from '@/lib/schemas'
 
 export function UserForm() {
@@ -49,7 +48,7 @@ export function UserForm() {
       age: undefined,
     },
     validators: {
-      onChange: zodValidator({ schema: userSchema }),
+      onChange: userSchema,  // pass the schema directly
     },
     onSubmit: async ({ value }) => {
       console.log('Valid:', value)
@@ -69,7 +68,7 @@ export function UserForm() {
             onBlur={field.handleBlur}
           />
           {field.state.meta.errors[0] && (
-            <span>{field.state.meta.errors[0]}</span>
+            <span>{field.state.meta.errors[0]?.message /* Standard Schema issue */}</span>
           )}
         </div>
       )} />
@@ -85,20 +84,17 @@ export function UserForm() {
 const form = useForm({
   defaultValues: { email: '', password: '' },
   validators: {
-    onChange: zodValidator({
-      schema: z.object({
-        email: z.string().email(),
-      }),
+    onChange: z.object({
+      email: z.string().email(),
     }),
   },
 })
 
+// Field-level: <form.Field name="password" validators={{ onChange: z.string().min(8) }} />
 form.Field({
   name: 'password',
   validators: {
-    onChange: zodValidator({
-      schema: z.string().min(8),
-    }),
+    onChange: z.string().min(8),
   },
 })
 ```

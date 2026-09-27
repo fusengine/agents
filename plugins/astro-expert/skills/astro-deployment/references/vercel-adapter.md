@@ -32,7 +32,7 @@ export default defineConfig({
     imageService: true,       // Use Vercel Image CDN
     isr: true,                // Enable ISR
     skewProtection: true,     // Prevent asset mismatches on deploy
-    edgeMiddleware: false,    // Run middleware at edge (optional)
+    // middlewareMode: 'edge', // Run middleware as an edge function (replaces edgeMiddleware)
   }),
 });
 ```

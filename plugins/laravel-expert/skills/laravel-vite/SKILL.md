@@ -3,7 +3,7 @@ name: laravel-vite
 description: Complete Vite bundling for Laravel - assets, HMR, SSR, frameworks, optimization. Use when configuring frontend build pipeline.
 versions:
   laravel: "13.0"
-  vite: "6.x"
+  vite: "8.x"
   php: "8.3"
 user-invocable: true
 references: references/setup.md, references/entry-points.md, references/preprocessors.md, references/assets.md, references/environment.md, references/dev-server.md, references/build-optimization.md, references/ssr.md, references/inertia.md, references/frameworks.md, references/security.md, references/deployment.md, references/templates/ViteConfig.js.md, references/templates/ViteConfigAdvanced.js.md, references/templates/InertiaSetup.md, references/templates/SSRSetup.md
@@ -174,9 +174,11 @@ export default defineConfig({
 
 ## Laravel 13 Notes
 
-`laravel/vite-plugin` reste compatible **Laravel 13 + Vite 6**. Adaptations :
+The Laravel 13 skeleton ships **`laravel-vite-plugin` ^3.1** (current 3.2, peer `vite` ^8) + **Vite 8** + `@tailwindcss/vite` ^4. Adjustments:
 
-- Le helper `@vite()` Blade fonctionne sans changement
-- Pour Inertia 2 + React 19 : utiliser le preset `@vitejs/plugin-react` v4+
-- HMR via WebSocket : Reverb 1.4 et Vite peuvent cohabiter sur des ports distincts en dev
-- Build production : ajouter `build.target: 'es2023'` pour profiter de PHP 8.3 côté serveur
+- The `@vite()` Blade helper works unchanged
+- For Inertia 3 + React 19: use `@vitejs/plugin-react` (current 6.x)
+- Self-hosted fonts (13.7+): the plugin's `fonts` option (`import { google, bunny, fontsource, local } from 'laravel-vite-plugin/fonts'`) + the `@fonts` Blade directive
+- `Vite::devServerUrl()` (13.31+) to get the dev server URL
+- HMR over WebSocket: Reverb and Vite can coexist on separate ports in dev
+- `build.target` is a browser (JS) target, independent of the server's PHP version

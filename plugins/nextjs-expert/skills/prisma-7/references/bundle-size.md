@@ -18,14 +18,15 @@ Bundle optimization with SOLID Next.js principles.
  * @description This imports Prisma in client component (~5MB!)
  */
 'use client'
-import { PrismaClient } from '@prisma/client' // ❌ ~5MB in bundle!
+import { PrismaClient } from '@/lib/generated/prisma/client' // ❌ server-only client in bundle!
+import { PrismaPg } from '@prisma/adapter-pg' // ❌ Node driver in bundle!
 
 /**
  * @returns Promise<User[]>
  */
 export async function getData() {
   // This bundles Prisma in client code - VERY BAD!
-  const prisma = new PrismaClient()
+  const prisma = new PrismaClient({ adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL! }) })
   return await prisma.user.findMany()
 }
 ```
@@ -39,7 +40,7 @@ export async function getData() {
 'use server'
 
 import { prisma } from '@/lib/db/client'
-import type { User } from '@prisma/client'
+import type { User } from '@/lib/generated/prisma/client'
 
 /**
  * @description Server action fetches users (stays on server)
@@ -110,7 +111,7 @@ export default async function UsersPage() {
 ```typescript
 // app/api/users/route.ts
 import { prisma } from '@/lib/db/client'
-import type { User } from '@prisma/client'
+import type { User } from '@/lib/generated/prisma/client'
 
 /**
  * @description GET /api/users - Fetches all users
@@ -158,7 +159,7 @@ export async function POST(request: Request): Promise<Response> {
 'use client'
 
 import { useEffect, useState } from 'react'
-import type { User } from '@prisma/client'
+import type { User } from '@/lib/generated/prisma/browser' // v7: browser-safe types entry
 
 /**
  * @description Client component fetches from API endpoint

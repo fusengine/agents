@@ -1,8 +1,8 @@
 ---
 name: diy-dictionaries
-description: Approche minimaliste sans dépendance, contrôle complet chargement messages
-when-to-use: zéro dépendances, projets simples, contrôle complet, server components only
-keywords: DIY i18n, dictionaries, getDictionary, minimaliste, zéro deps
+description: Minimalist dependency-free approach, full control over message loading
+when-to-use: zero dependencies, simple projects, full control, server components only
+keywords: DIY i18n, dictionaries, getDictionary, minimalist, zero deps
 priority: low
 requires:
 related: diy-locale-detection.md, core-library.md
@@ -32,7 +32,7 @@ related: diy-locale-detection.md, core-library.md
 modules/cores/i18n/
 ├── dictionaries/
 │   ├── en.json
-│   └── fr.json
+│   └── es.json
 ├── src/
 │   ├── config/locales.ts
 │   ├── interfaces/i18n.interface.ts
@@ -43,7 +43,7 @@ modules/cores/i18n/
 
 ```typescript
 // modules/cores/i18n/src/config/locales.ts
-export const locales = ['en', 'fr', 'de'] as const
+export const locales = ['en', 'es', 'de'] as const
 export const defaultLocale = 'en'
 export type Locale = (typeof locales)[number]
 ```
@@ -74,7 +74,7 @@ import type { Dictionary } from '../interfaces/i18n.interface'
 
 const dictionaries: Record<Locale, () => Promise<Dictionary>> = {
   en: () => import('../../dictionaries/en.json').then((m) => m.default),
-  fr: () => import('../../dictionaries/fr.json').then((m) => m.default),
+  es: () => import('../../dictionaries/es.json').then((m) => m.default),
   de: () => import('../../dictionaries/de.json').then((m) => m.default),
 }
 

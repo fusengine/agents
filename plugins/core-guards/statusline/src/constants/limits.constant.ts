@@ -1,5 +1,5 @@
 /**
- * Limits Constants - Limites et intervalles
+ * Limits Constants - Limits and intervals
  */
 
 export const TIME_INTERVALS = {
@@ -28,6 +28,6 @@ export const OVERHEAD_ESTIMATION = {
 	MCP_PER_SERVER: 3_500,
 	SYSTEM_PROMPT: 3_500,
 	MEMORY_FILES: 500,
-	AUTOCOMPACT_BUFFER: 33_000, // 16.5% de context_window
+	AUTOCOMPACT_BUFFER: 33_000, // 16.5% of context_window
 	DEFAULT_MCP_SERVERS: 5,
 } as const;

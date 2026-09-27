@@ -20,13 +20,13 @@ Format type?
 
 ## Carbon Date Formatting
 
-| Method | Output (fr) |
+| Method | Output (es) |
 |--------|-------------|
-| `$date->isoFormat('LLLL')` | lundi 3 février 2026 10:30 |
-| `$date->translatedFormat('l d F Y')` | lundi 03 février 2026 |
-| `$date->diffForHumans()` | il y a 2 heures |
-| `$date->monthName` | février |
-| `$date->dayName` | lundi |
+| `$date->isoFormat('LLLL')` | martes, 3 de febrero de 2026 10:30 |
+| `$date->translatedFormat('l d F Y')` | martes 03 febrero 2026 |
+| `$date->diffForHumans()` | hace 2 horas |
+| `$date->monthName` | febrero |
+| `$date->dayName` | martes |
 
 ## Carbon Setup
 
@@ -37,20 +37,20 @@ Format type?
 
 ## NumberFormatter Types
 
-| Constant | Purpose | Example (fr) |
+| Constant | Purpose | Example (es) |
 |----------|---------|--------------|
-| `DECIMAL` | Numbers | 1 234 567,89 |
-| `CURRENCY` | Money | 1 234,56 € |
+| `DECIMAL` | Numbers | 1.234.567,89 |
+| `CURRENCY` | Money | 1.234,56 € |
 | `PERCENT` | Percentages | 16 % |
-| `SPELLOUT` | Words | mille deux cent |
-| `ORDINAL` | Ordinals | 1er, 2e |
+| `SPELLOUT` | Words | mil doscientos |
+| `ORDINAL` | Ordinals | 1.º, 2.º |
 
 ## Number Formatting
 
 | Locale | 1234567.89 |
 |--------|------------|
 | en | 1,234,567.89 |
-| fr | 1 234 567,89 |
+| es | 1.234.567,89 |
 | de | 1.234.567,89 |
 
 ## Currency Formatting
@@ -58,7 +58,7 @@ Format type?
 | Locale | €1234.56 |
 |--------|----------|
 | en | €1,234.56 |
-| fr | 1 234,56 € |
+| es | 1.234,56 € |
 | de | 1.234,56 € |
 
 ## Percentage Formatting
@@ -66,7 +66,7 @@ Format type?
 | Locale | 0.156 |
 |--------|-------|
 | en | 16% |
-| fr | 16 % |
+| es | 16 % |
 | de | 16 % |
 
 ## Helper Functions

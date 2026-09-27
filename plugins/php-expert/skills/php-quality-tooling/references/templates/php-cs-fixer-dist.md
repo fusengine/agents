@@ -1,6 +1,6 @@
 ---
 name: php-cs-fixer-dist
-description: Complete .php-cs-fixer.dist.php using the @PER-CS3.0 rule set
+description: Complete .php-cs-fixer.dist.php using the @PER-CS3x0 rule set
 keywords: php-cs-fixer, per-cs, config, finder, template
 ---
 
@@ -24,7 +24,7 @@ $finder = PhpCsFixer\Finder::create()
 return (new PhpCsFixer\Config())
     ->setRiskyAllowed(true)
     ->setRules([
-        '@PER-CS3.0' => true,          // pinned PER Coding Style 3.x
+        '@PER-CS3x0' => true,          // pinned PER Coding Style 3.0 (@PER-CS3.0 is deprecated)
         // '@PER-CS' => true,          // alternative: always-latest alias
         'declare_strict_types' => true, // risky: adds strict_types to every file
         'ordered_imports' => ['sort_algorithm' => 'alpha'],
@@ -51,7 +51,8 @@ vendor/bin/php-cs-fixer fix     # apply fixes locally
 
 ## Notes
 
-- `@PER-CS3.0` pins the standard; swap to `@PER-CS` to always track the newest revision.
+- `@PER-CS3x0` pins the standard; swap to `@PER-CS` to always track the newest revision
+  the installed PHP-CS-Fixer ships (still 3.0 as of v3.95 — no PER-CS 3.1 set yet).
 - `setRiskyAllowed(true)` is required for `declare_strict_types`; review risky diffs.
 - Prefer `@Symfony` if the team follows Symfony house style, `@PhpCsFixer` for the
   strictest opinionated set.

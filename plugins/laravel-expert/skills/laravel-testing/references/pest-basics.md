@@ -1,6 +1,6 @@
 ---
 name: pest-basics
-description: Pest 3 syntax - it(), test(), describe(), expect()
+description: Pest 5 syntax - it(), test(), describe(), expect()
 file-type: markdown
 ---
 

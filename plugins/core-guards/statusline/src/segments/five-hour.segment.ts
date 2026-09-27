@@ -1,7 +1,7 @@
 /**
- * Five Hour Segment - Affiche l'usage 5h
+ * Five Hour Segment - Displays 5h usage
  *
- * @description SRP: Affichage limite 5h uniquement
+ * @description SRP: 5h limit display only
  */
 
 import type { StatuslineConfig } from "../config/schema";

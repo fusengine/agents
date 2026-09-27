@@ -31,6 +31,8 @@ related: ["vs-typeorm", "vs-sequelize", "mongodb"]
 ```prisma
 // Module: prisma/schema.prisma
 // Purpose: MongoDB schema definition (SOLID: SRP - schema only)
+// Prisma 6.19: MongoDB is NOT supported in any Prisma 7.x release (through 7.10),
+// so this comparison uses the v6 `prisma-client-js` setup (url in schema, @prisma/client)
 datasource db {
   provider = "mongodb"
   url      = env("DATABASE_URL")
@@ -92,14 +94,14 @@ export const User = model<IUser>("User", userSchema);
 ```typescript
 // Module: src/queries/user.ts
 // Purpose: Type-safe user queries (SOLID: SRP - query logic only)
-import type { Prisma } from "@prisma/client";
+import type { PrismaClient } from "@prisma/client"; // Prisma 6.19 (MongoDB unsupported in 7.x)
 
 /**
  * Find user by email with posts
  * Type safety guaranteed: Return shape is validated by compiler
  */
 async function findUserWithPosts(
-  prisma: Prisma.PrismaClient,
+  prisma: PrismaClient,
   email: string
 ) {
   return prisma.user.findUnique({

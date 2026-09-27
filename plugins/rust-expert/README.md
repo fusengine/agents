@@ -1,12 +1,12 @@
 # fuse-rust
 
-Expert **safe, idiomatic Rust** development — libraries, CLI tools, async services, and web backends. Targets Rust 1.96+ on the **2024 edition**, with an ownership-first mindset, `clippy`-clean code, and SOLID principles.
+Expert **safe, idiomatic Rust** development — libraries, CLI tools, async services, and web backends. Targets Rust 1.98+ on the **2024 edition**, with an ownership-first mindset, `clippy`-clean code, and SOLID principles.
 
 ## Agent
 
 | Agent | Description |
 |-------|-------------|
-| **rust-expert** | Expert Rust developer (Rust 1.96+, 2024 edition, tokio / axum) |
+| **rust-expert** | Expert Rust developer (Rust 1.98+, 2024 edition, tokio / axum) |
 
 ## Skills
 

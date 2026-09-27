@@ -11,8 +11,11 @@ keywords: vitest, config, coverage, v8, setup, github actions, browser
 Install Vitest plus a coverage provider, then add `vitest.config.ts`.
 
 ```bash
-npm install -D vitest @vitest/coverage-v8
+npm install -D vitest @vitest/coverage-v8   # Vitest 5: vite is a peer dep (npm/pnpm/bun auto-install it)
 ```
+
+Vitest 5 defaults `clearMocks: true` and writes reports to `.vitest/` — add `.vitest` to
+`.gitignore`.
 
 ---
 
@@ -115,10 +118,17 @@ npm install -D @vitest/browser-playwright playwright
 ```
 
 ```ts
-// vitest.config.ts (test block)
-browser: {
-  enabled: true,
-  provider: "playwright",
-  instances: [{ browser: "chromium" }],
-}
+// vitest.config.ts
+import { defineConfig } from "vitest/config";
+import { playwright } from "@vitest/browser-playwright";
+
+export default defineConfig({
+  test: {
+    browser: {
+      enabled: true,
+      provider: playwright(),          // factory call, not a string
+      instances: [{ browser: "chromium" }],
+    },
+  },
+});
 ```

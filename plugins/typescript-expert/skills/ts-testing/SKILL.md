@@ -2,8 +2,8 @@
 name: ts-testing
 description: Use when writing or configuring TypeScript tests and choosing between bun test and Vitest. Not for framework-specific testing (React → react-testing).
 versions:
-  bun: "1.3.14"
-  vitest: "4.1.9"
+  bun: "1.4.2"
+  vitest: "5.0.2"
 user-invocable: true
 references: references/choosing-runner.md, references/bun-test.md, references/vitest.md, references/common-patterns.md, references/templates/bun-setup.md, references/templates/vitest-setup.md
 related-skills: solid-generic, ts-packaging
@@ -46,8 +46,8 @@ snapshots, mocks). They differ on speed, coverage maturity, and CI scaling.
 
 | Runner | Strength | Weakness |
 |--------|----------|----------|
-| `bun test` | Fastest cold start, zero-config TS/JSX, built-in | Single process, experimental coverage, mock limits |
-| Vitest | V8/Istanbul coverage, multi-worker CI scaling, ~Jest parity, browser mode | Needs Vite + config, slower cold start |
+| `bun test` | Fastest cold start, zero-config TS/JSX, built-in; `--parallel` workers + `--shard` (1.3.13+) | Single process unless `--parallel`, experimental coverage, mock limits |
+| Vitest | V8/Istanbul coverage, multi-worker CI scaling, ~Jest parity, browser mode | Needs Vite (peer dep in 5.x) + config, slower cold start |
 
 ---
 

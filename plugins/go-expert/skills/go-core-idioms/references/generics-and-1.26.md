@@ -1,13 +1,14 @@
 ---
 name: generics-and-1.26
-description: Mature Go generics plus Go 1.26 language changes — self-referential type params, new(expr), go fix modernizers
-keywords: generics, type parameters, constraints, self-referential, new expression, go fix, modernizers
+description: Mature Go generics plus Go 1.26–1.27 language changes — generic methods (1.27), field-selector struct literal keys (1.27), self-referential type params, new(expr), go fix modernizers
+keywords: generics, type parameters, generic methods, constraints, self-referential, new expression, struct literal, go fix, modernizers
 ---
 
-# Generics & Go 1.26 Language Changes
+# Generics & Go 1.26–1.27 Language Changes
 
-**Load when:** writing generic code, using type constraints, or adopting Go 1.26
-language/tooling features. Source: https://go.dev/doc/go1.26.
+**Load when:** writing generic code, using type constraints, or adopting Go 1.26 /
+1.27 language/tooling features. Sources: https://go.dev/doc/go1.27,
+https://go.dev/doc/go1.26.
 
 ## Generics: use them, don't overuse them
 
@@ -28,6 +29,48 @@ func Map[T, U any](in []T, f func(T) U) []U {
 
 Constrain to behavior, not to concrete types. Define constraint interfaces where
 they are consumed, same as ordinary interfaces.
+
+## Generic methods (1.27)
+
+Go 1.27 lets a **concrete method declare its own type parameters** — generic
+helpers can now live in a type's namespace instead of at package scope. The
+stdlib example: `math/rand/v2` adds `(*Rand) N[Int intType](Int) Int` next to
+the top-level `N`. Source: https://go.dev/doc/go1.27 (Changes to the language),
+proposal https://go.dev/issue/77273.
+
+```go
+type Set[K comparable] struct{ m map[K]struct{} }
+
+// Method-level type parameter V, independent of the receiver's K.
+func (s *Set[K]) MapTo[V any](f func(K) V) []V {
+    out := make([]V, 0, len(s.m))
+    for k := range s.m {
+        out = append(out, f(k))
+    }
+    return out
+}
+```
+
+Limit: **interface methods may not declare type parameters**, and a generic
+method never satisfies an interface method. Use generic methods for namespacing
+and left-to-right chaining, not for polymorphism.
+
+## Struct literal keys may be field selectors (1.27)
+
+A key in a struct literal may now be any valid field selector — including a
+field promoted from an embedded struct. Source: https://go.dev/doc/go1.27,
+https://go.dev/issue/9859.
+
+```go
+type E struct{ A int }
+type T struct{ E }
+
+t := T{A: 1} // 1.27+; before: T{E: E{A: 1}}
+```
+
+Go 1.27 also generalizes function type inference to every context where a
+generic function is assigned or converted to a matching function type
+(https://go.dev/issue/77245).
 
 ## Self-referential type parameters (1.26)
 
@@ -77,9 +120,14 @@ go vet ./...   # still run vet for correctness checks
 
 Treat `go fix` as routine maintenance: run it, review the diff, commit.
 
+Go 1.27 adds the `atomictypes`, `embedlit`, `slicesbackward`, and `unsafefuncs`
+modernizers, removes `fmtappendf`, and renames `waitgroup` to `waitgroupgo`.
+Source: https://go.dev/doc/go1.27 (go fix).
+
 ## Anti-patterns
 
 - Adding type parameters to a function that only ever handles one type
 - Over-abstract constraints that no caller can satisfy cleanly
 - Hand-rolling migrations that `go fix` modernizers already perform
 - Keeping a throwaway local just to take its address, now that `new(expr)` exists
+- Adding a type parameter to an interface method — still illegal in 1.27

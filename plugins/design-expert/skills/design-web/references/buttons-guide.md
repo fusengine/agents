@@ -16,9 +16,9 @@ related: forms-guide.md, ../../design-motion/references/interactive-states-ref.m
 │  [Icon]  Label Text  [Icon]         │
 │          ↑                          │
 │    padding-x: 16-32px               │
-│    height: 44-52px (valeur FIXE de  │
-│    la table sizing ci-dessous —     │
-│    jamais en dehors)                │
+│    height: 44-52px (FIXED value     │
+│    from the sizing table below —    │
+│    never outside it)                │
 └─────────────────────────────────────┘
 ```
 
@@ -74,7 +74,7 @@ related: forms-guide.md, ../../design-motion/references/interactive-states-ref.m
 | **lg** | 48px | 24px | 18px | Primary CTAs |
 | **xl** | 52px | 32px | 18px | Hero sections |
 
-> **RÈGLE** : la hauteur du bouton est une valeur FIXE de cette table (`min-height`), JAMAIS obtenue en additionnant `padding-y` + `line-height`. Plancher tactile 44×44px (WCAG 2.5.5) — aucune taille en dessous. Seul le padding HORIZONTAL varie entre tailles.
+> **RULE**: the button height is a FIXED value from this table (`min-height`), NEVER obtained by adding `padding-y` + `line-height`. 44×44px touch floor (WCAG 2.5.5) — no size below it. Only the HORIZONTAL padding varies between sizes.
 
 ```tsx
 <Button size="sm">Small</Button>

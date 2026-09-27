@@ -10,7 +10,9 @@ related: navigation-menu.md, dropdown.md, context-menu.md
 
 # Menubar
 
-Implements desktop application menu bars with keyboard shortcuts, proper menu hierarchy, and accessibility features. Built on Radix UI's Menu primitive.
+> **Base:** same API on Base UI and Radix (verified against r/styles/{base,radix}-nova/menubar.json) — same part names, `inset`, `variant="destructive"`, `checked`/`onCheckedChange`, `value`/`onValueChange`. Only differences: custom elements compose with `render` on Base UI (Radix: child-slot composition, as in [popover.md](popover.md) "Radix variant"), and on Base UI a `MenubarLabel` must sit inside a `MenubarGroup` (it is a `Menu.GroupLabel`). React Aria: no Menubar (`aria-nova/menubar.json` → 404).
+
+Implements desktop application menu bars with keyboard shortcuts, proper menu hierarchy, and accessibility features. Built on Base UI `Menubar` + `Menu` (Radix projects: the Radix `Menubar` primitive).
 
 ## Installation
 
@@ -39,6 +41,7 @@ import {
   MenubarSubTrigger,
 } from '@/modules/cores/shadcn/components/ui/menubar'
 
+/** Basic menubar with menus and items. */
 export function BasicMenubar() {
   return (
     <Menubar>
@@ -134,6 +137,7 @@ import {
   MenubarSubTrigger,
 } from '@/modules/cores/shadcn/components/ui/menubar'
 
+/** Menubar with nested submenus. */
 export function MenubarWithSubmenus() {
   return (
     <Menubar>
@@ -230,6 +234,7 @@ import {
   MenubarShortcut,
 } from '@/modules/cores/shadcn/components/ui/menubar'
 
+/** Menubar with checkbox and radio items. */
 export function MenubarWithCheckboxesAndRadios() {
   const [showSidebar, setShowSidebar] = useState(true)
   const [showStatusBar, setShowStatusBar] = useState(true)
@@ -298,6 +303,7 @@ import {
   MenubarSubTrigger,
 } from '@/modules/cores/shadcn/components/ui/menubar'
 
+/** Desktop-style application menubar with view state. */
 export function ApplicationMenubar() {
   const [showGrid, setShowGrid] = useState(false)
   const [showRulers, setShowRulers] = useState(true)
@@ -496,7 +502,7 @@ export function ApplicationMenubar() {
 
 ## Accessibility
 
-- Built on Radix UI's Menu primitive
+- Built on accessible menu primitives (Base UI `Menu` / Radix `Menubar`)
 - Full keyboard navigation (arrow keys)
 - Arrow keys move between menu items
 - Enter/Space to activate items

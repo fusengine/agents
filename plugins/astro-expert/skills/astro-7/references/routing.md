@@ -1,12 +1,12 @@
 ---
 name: routing
-description: Astro 6 file-based routing, dynamic routes, catch-all routes, endpoints
+description: Astro 7 file-based routing, dynamic routes, catch-all routes, endpoints
 when-to-use: creating pages, dynamic routes, API endpoints
 keywords: routing, pages, dynamic, slug, catch-all, endpoint
 priority: high
 ---
 
-# Astro 6 Routing
+# Astro 7 Routing
 
 ## When to Use
 
@@ -43,11 +43,26 @@ const { slug } = Astro.params;
 ---
 ```
 
+## Pagination URL Format (7.1+)
+
+`paginate()` accepts a `format` function to rewrite the generated `next`/`prev`/`first`/`last` URLs (e.g. for `build.format: 'file'` hosts without rewrites):
+
+```astro
+---
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths({ paginate }) {
+  const posts = await getCollection('blog');
+  return paginate(posts, { pageSize: 10, format: (url) => `${url}.html` });
+}
+---
+```
+
 ## Per-Route Prerender Override
 
 ```astro
 ---
-// In hybrid/server mode: opt out of prerendering
+// In static mode (with an adapter): render this route on demand
 export const prerender = false;
 ---
 
@@ -71,3 +86,15 @@ export function GET({ request }) {
 ## `src/fetch.ts` (Advanced Routing)
 
 Reserved file, structured like `src/middleware.ts`, for advanced routing scenarios. Its resolution is controlled by the `fetchFile` config option, which can override the path or be set to `null` to disable it.
+
+```ts
+// src/fetch.ts
+import { astro, FetchState } from 'astro/fetch';
+
+export default {
+  fetch(request: Request) {
+    const state = new FetchState(request);
+    return astro(state); // or compose astro/hono handlers: actions(), middleware(), pages(), i18n()
+  },
+};
+```

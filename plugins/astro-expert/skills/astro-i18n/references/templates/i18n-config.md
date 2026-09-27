@@ -17,7 +17,7 @@ export default defineConfig({
         defaultLocale: 'en',
         locales: {
           en: 'en-US',
-          fr: 'fr-FR',
+          it: 'it-IT',
           es: 'es-ES'
         }
       }
@@ -26,12 +26,12 @@ export default defineConfig({
 
   i18n: {
     defaultLocale: 'en',
-    locales: ['en', 'fr', 'es'],
+    locales: ['en', 'it', 'es'],
     routing: {
       prefixDefaultLocale: false
     },
     fallback: {
-      fr: 'en',
+      it: 'en',
       es: 'en'
     }
   }
@@ -49,9 +49,9 @@ const translations = {
     nav: { home: 'Home', about: 'About', blog: 'Blog' },
     footer: { copyright: '© 2026 Example. All rights reserved.' }
   },
-  fr: {
-    nav: { home: 'Accueil', about: 'À propos', blog: 'Blog' },
-    footer: { copyright: '© 2026 Example. Tous droits réservés.' }
+  it: {
+    nav: { home: 'Home', about: 'Chi siamo', blog: 'Blog' },
+    footer: { copyright: '© 2026 Example. Tutti i diritti riservati.' }
   },
   es: {
     nav: { home: 'Inicio', about: 'Acerca de', blog: 'Blog' },
@@ -72,7 +72,7 @@ export function useTranslations(locale: string): Translations {
 }
 ```
 
-## src/content/config.ts
+## src/content.config.ts
 
 ```typescript
 import { defineCollection, z } from 'astro:content';

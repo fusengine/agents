@@ -2,7 +2,7 @@
 name: glassmorphism-advanced
 description: Use when creating frosted glass effects, transparent overlays, or modern glass UI. Covers blur, layering, colored shadows.
 versions:
-  tailwindcss: "4.1"
+  tailwindcss: "4.3"
 user-invocable: true
 allowed-tools: Read, Write, Edit, Glob, Grep
 related-skills: designing-systems, generating-components

@@ -21,12 +21,15 @@ TanStack Start builds with **Vite** (or Rsbuild). It is designed to deploy anywh
 | Target | Plugin / preset | Start command |
 |--------|-----------------|---------------|
 | **Node / Docker** | `nitro/vite` | `node .output/server/index.mjs` |
-| **Vercel** | `nitro/vite` (one-click deploy) | handled by Vercel |
+| **Vercel** ⭐ | `nitro/vite` (framework auto-detected; CLI adds `vercel.json` with `"framework": "tanstack-start"`) | handled by Vercel |
+| **Render** ⭐ | `nitro/vite` + `render.yaml` Blueprint (`NITRO_PRESET=render-com`) | `node .output/server/index.mjs` |
 | **Bun** | `nitro({ preset: 'bun' })` | `node .output/server/index.mjs` or custom `server.ts` |
 | **Railway** ⭐ | `nitro/vite` (auto-detected) | auto |
 | **Netlify** ⭐ | `@netlify/vite-plugin-tanstack-start` | `netlify deploy` |
 
-Official hosting partners: **Cloudflare, Netlify, Railway**.
+Official hosting partners (Gold): **Netlify, Render, Cloudflare, Vercel, Railway, Lovable**
+(Lovable = AI app builder with built-in hosting, not a build target).
+`npx @tanstack/cli@latest create my-app --deployment vercel|render` scaffolds the host setup.
 
 ---
 
@@ -36,7 +39,8 @@ Official hosting partners: **Cloudflare, Netlify, Railway**.
 Where are you deploying?
 ├── Cloudflare Workers → dedicated plugin → see cloudflare.md
 ├── Netlify           → @netlify/vite-plugin-tanstack-start
-├── Vercel            → Nitro, one-click deploy
+├── Vercel            → Nitro, framework auto-detected (vercel.json)
+├── Render            → Nitro, render.yaml Blueprint (preset render-com)
 ├── Bun runtime       → Nitro preset 'bun' (+ react/react-dom >= 19)
 ├── Node / Docker     → Nitro, node .output/server/index.mjs
 └── Railway           → Nitro, connect repo (auto-detect)

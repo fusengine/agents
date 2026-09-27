@@ -10,6 +10,8 @@ related: null
 
 # AspectRatio Component
 
+> **Base:** same API on Base UI, Radix and React Aria (verified against r/styles/{base,radix}-nova/aspect-ratio.json). Base UI/Aria: a plain `div` where `ratio` is required; Radix: `AspectRatio.Root`.
+
 The AspectRatio component maintains a consistent aspect ratio for its content, preventing layout shift when media loads. It's essential for responsive image and video containers.
 
 ## Installation
@@ -30,6 +32,7 @@ Use AspectRatio to maintain consistent image dimensions:
 import Image from "next/image"
 import { AspectRatio } from "@/modules/cores/shadcn/components/ui/aspect-ratio"
 
+/** 16:9 image container. */
 export function AspectRatioImageExample() {
   return (
     <AspectRatio ratio={16 / 9} className="bg-muted">
@@ -54,6 +57,7 @@ Perfect for profile images and thumbnails:
 import Image from "next/image"
 import { AspectRatio } from "@/modules/cores/shadcn/components/ui/aspect-ratio"
 
+/** 1:1 square image. */
 export function SquareAspectRatioExample() {
   return (
     <AspectRatio ratio={1 / 1} className="bg-muted">
@@ -76,6 +80,7 @@ Common for traditional video:
 import Image from "next/image"
 import { AspectRatio } from "@/modules/cores/shadcn/components/ui/aspect-ratio"
 
+/** 4:3 image. */
 export function StandardAspectRatioExample() {
   return (
     <AspectRatio ratio={4 / 3} className="bg-muted">
@@ -98,6 +103,7 @@ Most common for modern video and web content:
 import Image from "next/image"
 import { AspectRatio } from "@/modules/cores/shadcn/components/ui/aspect-ratio"
 
+/** 16:9 widescreen image. */
 export function WidescreenAspectRatioExample() {
   return (
     <AspectRatio ratio={16 / 9} className="bg-muted">
@@ -120,6 +126,7 @@ For panoramic images:
 import Image from "next/image"
 import { AspectRatio } from "@/modules/cores/shadcn/components/ui/aspect-ratio"
 
+/** 21:9 panoramic image. */
 export function UltrawideAspectRatioExample() {
   return (
     <AspectRatio ratio={21 / 9} className="bg-muted">
@@ -143,6 +150,7 @@ Maintain aspect ratio for responsive video embeds:
 ```tsx
 import { AspectRatio } from "@/modules/cores/shadcn/components/ui/aspect-ratio"
 
+/** Responsive YouTube embed. */
 export function EmbeddedVideoExample() {
   return (
     <AspectRatio ratio={16 / 9} className="bg-black">
@@ -162,6 +170,7 @@ export function EmbeddedVideoExample() {
 ```tsx
 import { AspectRatio } from "@/modules/cores/shadcn/components/ui/aspect-ratio"
 
+/** Responsive Vimeo embed. */
 export function VimeoVideoExample() {
   return (
     <AspectRatio ratio={16 / 9} className="bg-black">
@@ -180,7 +189,7 @@ export function VimeoVideoExample() {
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `ratio` | `number` | `1 / 1` | Aspect ratio as width/height |
+| `ratio` | `number` | required on Base UI/Aria (Radix: `1`) | Aspect ratio as width/height |
 | `className` | `string` | - | Container CSS classes |
 | `children` | `ReactNode` | - | Content to display |
 
@@ -194,6 +203,7 @@ Gallery with consistent aspect ratios:
 import Image from "next/image"
 import { AspectRatio } from "@/modules/cores/shadcn/components/ui/aspect-ratio"
 
+/** Grid of square thumbnails. */
 export function ImageGalleryExample() {
   const images = [
     "https://images.unsplash.com/photo-1465869185982-5a1a7522cbcb?w=300&q=80",
@@ -233,6 +243,7 @@ interface MediaProps {
   alt: string
 }
 
+/** Ratio computed from the media's intrinsic width/height. */
 export function DynamicAspectRatioExample({ src, width, height, alt }: MediaProps) {
   const ratio = width / height
 
@@ -280,7 +291,7 @@ export function DynamicAspectRatioExample({ src, width, height, alt }: MediaProp
 
 ## Best Practices
 
-1. **Always specify ratio** - Never rely on default 1:1 ratio
+1. **Always specify ratio** - Required on Base UI/Aria; never rely on the Radix default of 1
 2. **Use with Next.js Image** - Combine with `fill` prop for optimization
 3. **Set object-fit** - Use `object-cover` or `object-contain` for proper scaling
 4. **Prevent layout shift** - AspectRatio prevents CLS (Cumulative Layout Shift)

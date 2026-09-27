@@ -14,7 +14,7 @@ changelog.** Headings name an operation, never a feeling: "Make product operatio
 self-driving", "Review PRs and agent output", "Understand progress at scale". The
 copy never addresses the reader as "you" in a heading, and never uses a number as a
 hook — the single figure on the page is the customer count, and it appears in the
-proof block, not in the hero [relevé].
+proof block, not in the hero [measured].
 
 Signature element: **the numbered section marker, set with a slashed zero.** Each
 section carries `1.0` … `5.0` and lists its modules as `1.1`, `1.2`; the same
@@ -53,7 +53,7 @@ sets it, not the grid.
 
 ## Design Reference
 
-Source: https://linear.app/homepage [relevé].
+Source: https://linear.app/homepage [measured].
 
 The palette is drawn from the product's own theme file rather than from imagery: four
 parallel ramps (background, text, border, line) of four steps each, plus one brand
@@ -63,17 +63,17 @@ makes a whole light theme possible through one attribute substitution.
 ### Colors
 
 ```css
---fond-primaire: #08090a;   --fond-niveau-1: #0f1011;
---fond-niveau-2: #141516;   --fond-niveau-3: #191a1b;
---bordure-primaire: #23252a;      --bordure-translucide-forte: #ffffff14;
---ligne-primaire: #37393a;        --fond-translucide: #ffffff0d;
---texte-primaire: #f7f8f8;        --texte-secondaire: #d0d6e0;
---texte-tertiaire: #8a8f98;       --texte-quaternaire: #62666d;
---marque-fond: #5e6ad2;           /* light theme: #7070ff */
---accent: #7170ff;                --accent-survol: #828fff;
---accent-bleu: #4ea7fc;  --accent-rouge: #eb5757;  --accent-vert: #27a644;
---accent-orange: #fc7840; --accent-jaune: #f0bf00; --accent-cyan: #00b8cc;
---ombre-empilee: 0px 8px 2px 0px #0000, 0px 5px 2px 0px #00000003,
+--bg-primary: #08090a;   --bg-level-1: #0f1011;
+--bg-level-2: #141516;   --bg-level-3: #191a1b;
+--border-primary: #23252a;      --border-translucent-strong: #ffffff14;
+--line-primary: #37393a;        --bg-translucent: #ffffff0d;
+--text-primary: #f7f8f8;        --text-secondary: #d0d6e0;
+--text-tertiary: #8a8f98;       --text-quaternary: #62666d;
+--brand-bg: #5e6ad2;           /* light theme: #7070ff */
+--accent: #7170ff;                --accent-hover: #828fff;
+--accent-blue: #4ea7fc;  --accent-red: #eb5757;  --accent-green: #27a644;
+--accent-orange: #fc7840; --accent-yellow: #f0bf00; --accent-cyan: #00b8cc;
+--shadow-stacked: 0px 8px 2px 0px #0000, 0px 5px 2px 0px #00000003,
   0px 3px 2px 0px #0000000a, 0px 1px 1px 0px #00000012, 0px 0px 1px 0px #00000014;
 ```
 
@@ -85,22 +85,22 @@ links), which is why the sheet holds no hover colour tokens at all. Depth is sta
 not deep: five shadows of 0–8px, each invisible alone, with a sixth inset layer added
 in the light theme because a drop shadow stops detaching anything on white. The brand
 colour itself is swapped between themes (`#5e6ad2` → `#7070ff`): it is a different
-colour, more saturated, chosen to hold on white [relevé].
+colour, more saturated, chosen to hold on white [measured].
 
-Contrast floors held: `--texte-primaire` ≈18.7:1 on `--fond-primaire`, secondary
-≈13.6:1, tertiary ≈6.1:1. `--texte-quaternaire` is ≈3.4:1 and is confined to icons,
+Contrast floors held: `--text-primary` ≈18.7:1 on `--bg-primary`, secondary
+≈13.6:1, tertiary ≈6.1:1. `--text-quaternary` is ≈3.4:1 and is confined to icons,
 micro dates and priority glyphs — never body copy.
 
 ### Typography
 
 ```css
---police-texte: "Inter", "Inter Variable", "SF Pro Display", -apple-system, …
---police-mono:  ui-monospace, "SF Mono", Menlo, monospace;
+--font-text: "Inter", "Inter Variable", "SF Pro Display", -apple-system, …
+--font-mono:  ui-monospace, "SF Mono", Menlo, monospace;
 ```
 
 One family for the whole page. Inter is expected from the system or a local install,
 not fetched from a CDN; the source's Berkeley Mono is proprietary and falls back to a
-system mono stack here [relevé]. `font-feature-settings: "cv01", "ss03"` is set on
+system mono stack here [measured]. `font-feature-settings: "cv01", "ss03"` is set on
 `html, body` — it redraws the `a` and the numerals, and is most of what makes the text
 recognisable without changing the face.
 
@@ -138,7 +138,7 @@ Eighteen curves are declared and **not one bounces**. Edges are never cut: anyth
 leaving a frame dissolves through `mask-image`.
 
 Entrances differ by role: the general reveal is a `.4s` ease-out-quart fade plus a 4px
-rise, staggered 60ms through a `--rang` custom property and triggered by
+rise, staggered 60ms through a `--index` custom property and triggered by
 `IntersectionObserver`; the bar chart instead raises its two segments from `0%` with a
 40ms sweep, reading its final heights from the inline style so the rest state stays
 what the HTML says. Two texts use a clipped swept gradient, both greyscale.

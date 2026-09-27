@@ -1,7 +1,7 @@
 /**
- * Context Segment - Affiche le pourcentage de contexte
+ * Context Segment - Displays the context percentage
  *
- * @description SRP: Affichage contexte uniquement
+ * @description SRP: Context display only
  */
 
 import type { StatuslineConfig } from "../config/schema";
@@ -10,17 +10,17 @@ import type { ISegment, SegmentContext } from "../interfaces";
 import { colors, generateProgressBar, progressiveColor } from "../utils";
 
 /**
- * Calcule le pourcentage d'ALERTE (utilise uniquement pour la couleur) a partir
- * du pourcentage reel de contexte utilise et de la VRAIE taille de fenetre.
- * Le buffer autocompact est ABSOLU (33K tokens, pas proportionnel a la fenetre)
+ * Computes the ALERT percentage (used for the color only) from the real
+ * percentage of context used and the REAL window size.
+ * The autocompact buffer is ABSOLUTE (33K tokens, not proportional to the window)
  * @see https://github.com/anthropics/claude-code/issues/27037 - autoCompact.ts /
- * getAutocompactBufferTokens. Recalibre l'echelle pour que 100% d'alerte
- * corresponde au point estime d'autocompact, quelle que soit la taille de
- * fenetre (200K, 1M, ...). N'affecte jamais le pourcentage AFFICHE ni la barre.
+ * getAutocompactBufferTokens. Rescales so that 100% alert matches the
+ * estimated autocompact point, whatever the window size (200K, 1M, ...).
+ * Never affects the DISPLAYED percentage or the bar.
  */
 function calculateAlertPercentage(realPercentage: number, windowSize: number): number {
-	// Clamp defensif : une fenetre <= buffer (absurde) ne doit jamais produire
-	// une division par zero ou negative.
+	// Defensive clamp: a window <= buffer (absurd) must never produce a
+	// division by zero or by a negative number.
 	const usableWindow = Math.max(windowSize - OVERHEAD_ESTIMATION.AUTOCOMPACT_BUFFER, 1);
 	return Math.min((realPercentage * windowSize) / usableWindow, 100);
 }

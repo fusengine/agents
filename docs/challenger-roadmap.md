@@ -28,7 +28,7 @@ A challenger given only the claim + evidence (never the reasoning) would have su
 
 Trigger scope covers BOTH: the 3 APEX-internal artefact gates above, AND the 4 conversational claim types (root-cause / done-verified / irreversible action / 2nd-time fix) that must trigger the challenger even outside any APEX task — see `CLAUDE.md.template` Critical Rules and the `challenge` skill's Trigger Conditions section.
 
-## Phase B — PLUS TARD (à valider, hors périmètre de ce chantier)
+## Phase B — LATER (to be validated, out of scope for this workstream)
 
 Harness-level enforcement: `fuse-harness` blocks a "done" / root-cause claim from reaching the owner until a `challenge-{task-slug}.md` verdict artifact exists on disk (same mechanical pattern as the current `elicit-*.json` / `verify-*.md` gate in `04-validation.md`).
 

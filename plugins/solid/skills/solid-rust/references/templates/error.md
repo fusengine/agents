@@ -234,7 +234,7 @@ pub enum UserErrorWithBacktrace {
 impl UserErrorWithBacktrace {
     /// Get backtrace if available
     pub fn backtrace(&self) -> Option<&Backtrace> {
-        // In Rust 1.75+, errors can capture backtraces
+        // std::backtrace::Backtrace is stable since Rust 1.65
         None
     }
 }

@@ -51,9 +51,12 @@ netlify init
  * @see /src/lib/prisma.ts
  */
 import type { Handler } from '@netlify/functions'
-import { PrismaClient } from '@prisma/client'
+import { PrismaPg } from '@prisma/adapter-pg'
+import { PrismaClient } from '../../src/generated/prisma/client'  // v7: generated path
 
-const prisma = new PrismaClient()
+const prisma = new PrismaClient({
+  adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL! }),
+})
 
 /**
  * Handler for users endpoint.
@@ -127,10 +130,12 @@ Runs with local database emulation.
  * @see /src/lib/prisma.ts
  */
 import type { Handler } from '@netlify/functions'
-import type { User } from '@prisma/client'
-import { PrismaClient } from '@prisma/client'
+import { PrismaPg } from '@prisma/adapter-pg'
+import { PrismaClient, type User } from '../../src/generated/prisma/client'
 
-const prisma = new PrismaClient()
+const prisma = new PrismaClient({
+  adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL! }),
+})
 
 /**
  * Pagination response interface.

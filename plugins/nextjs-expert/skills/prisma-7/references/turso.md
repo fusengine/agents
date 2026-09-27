@@ -34,20 +34,18 @@ turso db show [database] --json
 Turso requires the libSQL driver adapter:
 
 ```bash
-npm install @libsql/client
+# bundles @libsql/client
+npm install @prisma/adapter-libsql
 ```
 
 ```prisma
 datasource db {
-  provider  = "sqlite"
-  url       = "file:./dev.db"
-  shadowDatabaseUrl = "file:./dev-shadow.db"
+  provider = "sqlite" // v7: url/shadowDatabaseUrl live in prisma.config.ts
 }
 
 generator client {
   provider = "prisma-client"
-  // Enable for Turso/libSQL
-  previewFeatures = ["driverAdapters"]
+  output   = "../src/generated/prisma" // REQUIRED in v7 (driverAdapters is GA, no preview flag)
 }
 ```
 
@@ -56,31 +54,20 @@ generator client {
  * Turso/libSQL Prisma client initialization with driver adapter.
  * @module modules/database/src/client
  */
-import { PrismaClient } from '@prisma/client'
-import { createClient } from '@libsql/client'
-import { PrismaLibSQL } from '@prisma/adapter-libsql'
-import type { Client as LibSQLClient } from '@libsql/client'
-
-/**
- * Initialize Turso database client.
- * Creates libSQL client for edge-distributed SQLite.
- * @returns {LibSQLClient} LibSQL client instance
- * @module modules/database/src/client
- */
-function initLibSQL(): LibSQLClient {
-  return createClient({
-    url: process.env.TURSO_CONNECTION_URL!,
-    authToken: process.env.TURSO_AUTH_TOKEN,
-  })
-}
+import { PrismaLibSql } from '@prisma/adapter-libsql'
+import { PrismaClient } from '@/generated/prisma/client'  // v7: generated path
 
 /**
  * Prisma client configured with Turso adapter.
+ * v7: the adapter takes the libSQL config directly (no createClient()).
+ * Export name is `PrismaLibSql` in 7.x (`PrismaLibSQL` was the v6 name).
  * @returns {PrismaClient} Prisma client with libSQL adapter
  * @module modules/database/src/client
  */
-const libsql = initLibSQL()
-const adapter = new PrismaLibSQL(libsql)
+const adapter = new PrismaLibSql({
+  url: process.env.TURSO_CONNECTION_URL!,
+  authToken: process.env.TURSO_AUTH_TOKEN,
+})
 
 export const prisma = new PrismaClient({ adapter })
 ```

@@ -5,12 +5,12 @@ user-invocable: false
 ---
 
 <objective>
-Complete reference for Tailwind CSS v4.1 typography utilities: font family (`font-sans`/`font-serif`/`font-mono`), font size and weight, text color/alignment, text wrapping including the v4.1 `balance`/`pretty` values, the new `text-shadow` utility, letter spacing (`tracking-*`), line height (`leading-*`), text decoration, and text transform (`uppercase`/`lowercase`/`capitalize`).
+Complete reference for Tailwind CSS v4.3 typography utilities: font family (`font-sans`/`font-serif`/`font-mono`), font size and weight, `font-features-*` (since v4.2), text color/alignment, text wrapping including the `balance`/`pretty` values (since v3.4), the `text-shadow` utility (since v4.1), `tab-*` tab size (since v4.3), letter spacing (`tracking-*`), line height (`leading-*`), text decoration, and text transform (`uppercase`/`lowercase`/`capitalize`).
 </objective>
 
-# Tailwind CSS Typography v4.1
+# Tailwind CSS Typography v4.3
 
-Typography utilities for controlling font families, sizes, weights, text styling, spacing, and decoration in Tailwind CSS v4.1.
+Typography utilities for controlling font families, sizes, weights, text styling, spacing, and decoration in Tailwind CSS v4.3.
 
 ## Core Features
 
@@ -19,8 +19,10 @@ Typography utilities for controlling font families, sizes, weights, text styling
 - **Font Weight**: thin, extralight, light, normal, medium, semibold, bold, extrabold, black
 - **Text Color**: Full color palette support
 - **Text Alignment**: left, center, right, justify
-- **Text Wrapping**: wrap, nowrap, balance, pretty (NEW in v4.1)
-- **Text Shadow**: New utility for text-shadow effects
+- **Font Features**: `font-features-[…]` for `font-feature-settings` (since v4.2)
+- **Text Wrapping**: wrap, nowrap, balance, pretty (since v3.4)
+- **Text Shadow**: text-shadow effects (since v4.1)
+- **Tab Size**: `tab-<number>` for `tab-size` (since v4.3)
 - **Letter Spacing**: tracking values
 - **Line Height**: leading values
 - **Text Decoration**: decoration styles and colors
@@ -28,6 +30,6 @@ Typography utilities for controlling font families, sizes, weights, text styling
 
 ## Detailed References
 
-- [fonts.md](references/fonts.md) - Load when picking font-family/size/weight values, italics, numeric variants, or font smoothing
-- [text.md](references/text.md) - Load when styling text color, alignment, wrapping (balance/pretty), text-shadow, decoration, transform, or whitespace
+- [fonts.md](references/fonts.md) - Load when picking font-family/size/weight values, italics, numeric variants, font-feature-settings, or font smoothing
+- [text.md](references/text.md) - Load when styling text color, alignment, wrapping (balance/pretty), text-shadow, decoration, transform, whitespace, or tab size
 - [spacing.md](references/spacing.md) - Load when tuning letter-spacing (tracking) or line-height (leading)

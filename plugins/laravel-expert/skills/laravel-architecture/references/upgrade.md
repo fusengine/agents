@@ -13,6 +13,8 @@ related: installation.md, configuration.md
 
 Laravel follows semantic versioning with annual major releases. Upgrading requires updating dependencies and addressing breaking changes. The upgrade from 11.x to 12.0 is typically straightforward.
 
+> This page documents the historical **11.x → 12.0** upgrade. For the current **12.x → 13.x** upgrade, use the `laravel-upgrade-v13` skill.
+
 ## Upgrade Process
 
 ### 1. Update Dependencies

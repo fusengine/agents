@@ -1,191 +1,191 @@
-/* Sylva AI — comportements de page. IIFE unique, chargée en fin de body.
-   Toute durée et toute courbe vivent dans styles.css ; ce fichier ne pose que
-   des classes, des attributs et des positions de défilement. */
+/* Sylva AI — page behaviours. A single IIFE, loaded at the end of body.
+   Every duration and every curve lives in styles.css; this file only sets
+   classes, attributes and scroll positions. */
 (function () {
   "use strict";
 
-  var requeteMouvement = window.matchMedia("(prefers-reduced-motion: reduce)");
-  var mouvementReduit = requeteMouvement.matches;
-  var observateurs = [];
-  var cadre = 0;
+  var motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+  var reducedMotion = motionQuery.matches;
+  var observers = [];
+  var frame = 0;
 
-  /* 1. En-tête : surface opaque dès que la page a défilé. */
-  var entete = document.querySelector("[data-entete]");
+  /* 1. Header: opaque surface as soon as the page has scrolled. */
+  var header = document.querySelector("[data-header]");
 
-  function majEntete() {
-    cadre = 0;
-    if (entete) entete.classList.toggle("est-collee", window.scrollY > 24);
+  function updateHeader() {
+    frame = 0;
+    if (header) header.classList.toggle("is-stuck", window.scrollY > 24);
   }
 
-  function surDefilement() {
-    if (cadre) return;
-    cadre = window.requestAnimationFrame(majEntete);
+  function onScroll() {
+    if (frame) return;
+    frame = window.requestAnimationFrame(updateHeader);
   }
 
-  window.addEventListener("scroll", surDefilement, { passive: true });
-  majEntete();
+  window.addEventListener("scroll", onScroll, { passive: true });
+  updateHeader();
 
-  /* 2. Révélation au défilement. L'état de repos est posé par JS seulement,
-     donc un script en échec laisse toute la page visible. */
-  if (!mouvementReduit && "IntersectionObserver" in window) {
-    document.documentElement.classList.add("js-mouvement");
+  /* 2. Reveal on scroll. The resting state is set by JS only,
+     so a failing script leaves the whole page visible. */
+  if (!reducedMotion && "IntersectionObserver" in window) {
+    document.documentElement.classList.add("js-motion");
 
-    var revelables = document.querySelectorAll("[data-reveler]");
-    var observateurRevele = new IntersectionObserver(function (entrees, observateur) {
-      for (var i = 0; i < entrees.length; i++) {
-        if (!entrees[i].isIntersecting) continue;
-        entrees[i].target.classList.add("est-visible");
-        observateur.unobserve(entrees[i].target);
+    var revealables = document.querySelectorAll("[data-reveal]");
+    var revealObserver = new IntersectionObserver(function (entries, observer) {
+      for (var i = 0; i < entries.length; i++) {
+        if (!entries[i].isIntersecting) continue;
+        entries[i].target.classList.add("is-visible");
+        observer.unobserve(entries[i].target);
       }
     }, { rootMargin: "0px 0px -8% 0px", threshold: 0.08 });
 
-    for (var r = 0; r < revelables.length; r++) {
-      var cible = revelables[r];
-      var groupe = cible.closest("[data-reveler-groupe]");
-      if (groupe) {
-        var freres = groupe.querySelectorAll("[data-reveler]");
-        var rang = Array.prototype.indexOf.call(freres, cible);
-        cible.style.transitionDelay = Math.min(rang, 5) * 60 + "ms";
+    for (var r = 0; r < revealables.length; r++) {
+      var item = revealables[r];
+      var group = item.closest("[data-reveal-group]");
+      if (group) {
+        var siblings = group.querySelectorAll("[data-reveal]");
+        var rank = Array.prototype.indexOf.call(siblings, item);
+        item.style.transitionDelay = Math.min(rank, 5) * 60 + "ms";
       }
-      observateurRevele.observe(cible);
+      revealObserver.observe(item);
     }
-    observateurs.push(observateurRevele);
+    observers.push(revealObserver);
   }
 
-  /* 3. Étapes : la borne active suit l'étape au centre du cadre. */
-  var etapes = document.querySelectorAll(".etape");
-  if (etapes.length && "IntersectionObserver" in window) {
-    var observateurEtapes = new IntersectionObserver(function (entrees) {
-      for (var j = 0; j < entrees.length; j++) {
-        if (!entrees[j].isIntersecting) continue;
-        for (var k = 0; k < etapes.length; k++) {
-          etapes[k].classList.toggle("etape--active", etapes[k] === entrees[j].target);
+  /* 3. Steps: the active marker follows the step at the centre of the viewport. */
+  var steps = document.querySelectorAll(".step");
+  if (steps.length && "IntersectionObserver" in window) {
+    var stepObserver = new IntersectionObserver(function (entries) {
+      for (var j = 0; j < entries.length; j++) {
+        if (!entries[j].isIntersecting) continue;
+        for (var k = 0; k < steps.length; k++) {
+          steps[k].classList.toggle("step--active", steps[k] === entries[j].target);
         }
       }
     }, { rootMargin: "-45% 0px -45% 0px", threshold: 0 });
 
-    for (var e = 0; e < etapes.length; e++) observateurEtapes.observe(etapes[e]);
-    observateurs.push(observateurEtapes);
+    for (var e = 0; e < steps.length; e++) stepObserver.observe(steps[e]);
+    observers.push(stepObserver);
   }
 
-  /* 4. Onglets des cas d'usage. */
-  var onglets = Array.prototype.slice.call(document.querySelectorAll(".onglet"));
+  /* 4. Use-case tabs. */
+  var tabs = Array.prototype.slice.call(document.querySelectorAll(".tab"));
 
-  function choisirOnglet(onglet) {
-    for (var i = 0; i < onglets.length; i++) {
-      var actif = onglets[i] === onglet;
-      onglets[i].setAttribute("aria-selected", actif ? "true" : "false");
-      onglets[i].tabIndex = actif ? 0 : -1;
-      var panneau = document.getElementById(onglets[i].getAttribute("aria-controls"));
-      if (panneau) panneau.hidden = !actif;
+  function selectTab(tab) {
+    for (var i = 0; i < tabs.length; i++) {
+      var active = tabs[i] === tab;
+      tabs[i].setAttribute("aria-selected", active ? "true" : "false");
+      tabs[i].tabIndex = active ? 0 : -1;
+      var panel = document.getElementById(tabs[i].getAttribute("aria-controls"));
+      if (panel) panel.hidden = !active;
     }
   }
 
-  onglets.forEach(function (onglet, index) {
-    onglet.addEventListener("click", function () { choisirOnglet(onglet); });
-    onglet.addEventListener("keydown", function (evenement) {
-      var pas = evenement.key === "ArrowRight" ? 1 : evenement.key === "ArrowLeft" ? -1 : 0;
-      if (!pas) return;
-      evenement.preventDefault();
-      var suivant = onglets[(index + pas + onglets.length) % onglets.length];
-      choisirOnglet(suivant);
-      suivant.focus();
+  tabs.forEach(function (tab, index) {
+    tab.addEventListener("click", function () { selectTab(tab); });
+    tab.addEventListener("keydown", function (evt) {
+      var offset = evt.key === "ArrowRight" ? 1 : evt.key === "ArrowLeft" ? -1 : 0;
+      if (!offset) return;
+      evt.preventDefault();
+      var next = tabs[(index + offset + tabs.length) % tabs.length];
+      selectTab(next);
+      next.focus();
     });
   });
 
-  /* 5. FAQ : un seul volet ouvert à la fois. */
-  var accordeons = Array.prototype.slice.call(document.querySelectorAll(".accordeon"));
-  accordeons.forEach(function (volet) {
-    volet.addEventListener("toggle", function () {
-      if (!volet.open) return;
-      accordeons.forEach(function (autre) { if (autre !== volet) autre.open = false; });
+  /* 5. FAQ: only one item open at a time. */
+  var accordions = Array.prototype.slice.call(document.querySelectorAll(".accordion"));
+  accordions.forEach(function (details) {
+    details.addEventListener("toggle", function () {
+      if (!details.open) return;
+      accordions.forEach(function (other) { if (other !== details) other.open = false; });
     });
   });
 
-  /* 6. Bascule mensuel / annuel. */
-  var interrupteur = document.querySelector("[data-bascule-periode]");
-  if (interrupteur) {
-    interrupteur.addEventListener("click", function () {
-      var annuel = interrupteur.getAttribute("aria-checked") !== "true";
-      interrupteur.setAttribute("aria-checked", annuel ? "true" : "false");
+  /* 6. Monthly / yearly toggle. */
+  var periodSwitch = document.querySelector("[data-period-toggle]");
+  if (periodSwitch) {
+    periodSwitch.addEventListener("click", function () {
+      var yearly = periodSwitch.getAttribute("aria-checked") !== "true";
+      periodSwitch.setAttribute("aria-checked", yearly ? "true" : "false");
 
-      var motMois = document.querySelector("[data-periode-mois]");
-      var motAn = document.querySelector("[data-periode-an]");
-      if (motMois) motMois.classList.toggle("bascule-tarifs__mot--eteint", annuel);
-      if (motAn) motAn.classList.toggle("bascule-tarifs__mot--eteint", !annuel);
+      var monthWord = document.querySelector("[data-period-month]");
+      var yearWord = document.querySelector("[data-period-year]");
+      if (monthWord) monthWord.classList.toggle("pricing-toggle__word--off", yearly);
+      if (yearWord) yearWord.classList.toggle("pricing-toggle__word--off", !yearly);
 
-      var prix = document.querySelectorAll("[data-prix]");
-      for (var p = 0; p < prix.length; p++) {
-        prix[p].textContent = prix[p].getAttribute(annuel ? "data-an" : "data-mois");
+      var prices = document.querySelectorAll("[data-price]");
+      for (var p = 0; p < prices.length; p++) {
+        prices[p].textContent = prices[p].getAttribute(yearly ? "data-year" : "data-month");
       }
     });
   }
 
-  /* 7. Rail des témoignages. */
-  var piste = document.querySelector("[data-rail-piste]");
-  var precedent = document.querySelector("[data-rail-prec]");
-  var suivant = document.querySelector("[data-rail-suiv]");
+  /* 7. Testimonials rail. */
+  var track = document.querySelector("[data-rail-track]");
+  var previous = document.querySelector("[data-rail-prev]");
+  var next = document.querySelector("[data-rail-next]");
 
-  function majCommandes() {
-    if (!piste || !precedent || !suivant) return;
-    var reste = piste.scrollWidth - piste.clientWidth;
-    precedent.disabled = piste.scrollLeft <= 2;
-    suivant.disabled = piste.scrollLeft >= reste - 2;
+  function updateControls() {
+    if (!track || !previous || !next) return;
+    var remaining = track.scrollWidth - track.clientWidth;
+    previous.disabled = track.scrollLeft <= 2;
+    next.disabled = track.scrollLeft >= remaining - 2;
   }
 
-  function glisser(sens) {
-    if (!piste) return;
-    var carte = piste.querySelector(".carte-avis");
-    var pas = carte ? carte.getBoundingClientRect().width + 12 : piste.clientWidth * 0.8;
-    piste.scrollBy({ left: sens * pas, behavior: mouvementReduit ? "auto" : "smooth" });
+  function slide(direction) {
+    if (!track) return;
+    var card = track.querySelector(".review-card");
+    var offset = card ? card.getBoundingClientRect().width + 12 : track.clientWidth * 0.8;
+    track.scrollBy({ left: direction * offset, behavior: reducedMotion ? "auto" : "smooth" });
   }
 
-  if (piste) {
-    if (precedent) precedent.addEventListener("click", function () { glisser(-1); });
-    if (suivant) suivant.addEventListener("click", function () { glisser(1); });
-    piste.addEventListener("scroll", majCommandes, { passive: true });
-    window.addEventListener("resize", majCommandes);
-    majCommandes();
+  if (track) {
+    if (previous) previous.addEventListener("click", function () { slide(-1); });
+    if (next) next.addEventListener("click", function () { slide(1); });
+    track.addEventListener("scroll", updateControls, { passive: true });
+    window.addEventListener("resize", updateControls);
+    updateControls();
   }
 
-  /* 8. Menu mobile. */
-  var bascule = document.querySelector("[data-bascule-menu]");
-  var menu = document.querySelector("[data-menu-mobile]");
-  if (bascule && menu) {
-    bascule.addEventListener("click", function () {
-      var ouvert = bascule.getAttribute("aria-expanded") !== "true";
-      bascule.setAttribute("aria-expanded", ouvert ? "true" : "false");
-      menu.hidden = !ouvert;
+  /* 8. Mobile menu. */
+  var toggle = document.querySelector("[data-menu-toggle]");
+  var menu = document.querySelector("[data-mobile-menu]");
+  if (toggle && menu) {
+    toggle.addEventListener("click", function () {
+      var open = toggle.getAttribute("aria-expanded") !== "true";
+      toggle.setAttribute("aria-expanded", open ? "true" : "false");
+      menu.hidden = !open;
     });
-    menu.addEventListener("click", function (evenement) {
-      if (evenement.target.tagName !== "A") return;
-      bascule.setAttribute("aria-expanded", "false");
+    menu.addEventListener("click", function (evt) {
+      if (evt.target.tagName !== "A") return;
+      toggle.setAttribute("aria-expanded", "false");
       menu.hidden = true;
     });
   }
 
-  /* 9. Infolettre : accusé local, aucune requête réseau. */
-  var lettre = document.querySelector("[data-lettre]");
-  if (lettre) {
-    lettre.addEventListener("submit", function (evenement) {
-      evenement.preventDefault();
-      var etat = lettre.querySelector("[data-lettre-etat]");
-      if (etat) etat.textContent = "Thank you, you are on the list.";
-      lettre.reset();
+  /* 9. Newsletter: local acknowledgement, no network request. */
+  var newsletter = document.querySelector("[data-newsletter]");
+  if (newsletter) {
+    newsletter.addEventListener("submit", function (evt) {
+      evt.preventDefault();
+      var status = newsletter.querySelector("[data-newsletter-status]");
+      if (status) status.textContent = "Thank you, you are on the list.";
+      newsletter.reset();
     });
   }
 
-  /* 10. Désarmement. visibilitychange plutôt que unload, qui casse le
-     bfcache ; pagehide sert de repli pour la seule frame en attente. */
-  function desarmer() {
+  /* 10. Disarming. visibilitychange rather than unload, which breaks the
+     bfcache; pagehide is the fallback for the single pending frame. */
+  function disarm() {
     if (document.visibilityState !== "hidden") return;
-    if (cadre) { window.cancelAnimationFrame(cadre); cadre = 0; }
-    while (observateurs.length) observateurs.pop().disconnect();
-    window.removeEventListener("scroll", surDefilement);
+    if (frame) { window.cancelAnimationFrame(frame); frame = 0; }
+    while (observers.length) observers.pop().disconnect();
+    window.removeEventListener("scroll", onScroll);
   }
 
-  document.addEventListener("visibilitychange", desarmer);
+  document.addEventListener("visibilitychange", disarm);
   window.addEventListener("pagehide", function () {
-    if (cadre) { window.cancelAnimationFrame(cadre); cadre = 0; }
+    if (frame) { window.cancelAnimationFrame(frame); frame = 0; }
   });
 })();

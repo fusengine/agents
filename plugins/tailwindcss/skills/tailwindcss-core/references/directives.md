@@ -1,9 +1,9 @@
 ---
 name: directives
-description: Directives for Tailwind CSS v4.1
+description: Directives for Tailwind CSS v4.3
 ---
 
-# Tailwind CSS v4.1 Directives
+# Tailwind CSS v4.3 Directives
 
 ## @import "tailwindcss"
 
@@ -174,79 +174,59 @@ Usage:
 }
 ```
 
+### Functional Utilities with a Default (since v4.3)
+
+`--value(…)` / `--modifier(…)` accept `--default(…)` so the bare utility resolves too:
+
+```css
+@utility tab-* {
+  tab-size: --value(integer, --default(4));
+}
+/* .tab → tab-size: 4;  .tab-2 → tab-size: 2; */
+```
+
 ---
 
 ## @variant
 
-**Purpose**: Create custom variants (generalized selectors).
+**Purpose**: Apply an existing variant (`hover`, `dark`, `md`, …) to styles written in CSS. To *define* a new variant, use `@custom-variant` (below).
 
-### Class Variant
+### Basic
 
 ```css
-@variant group-hover {
-  .group:hover &
-}
+.card {
+  background: white;
 
-@variant group-focus {
-  .group:focus-within &
+  @variant dark {
+    background: black;
+  }
 }
 ```
 
-Usage:
+### Stacked and Compound (since v4.3)
+
+```css
+.button {
+  background: var(--color-sky-500);
+
+  /* Stacked: hover AND focus */
+  @variant hover:focus {
+    background: var(--color-sky-600);
+  }
+
+  /* Compound: same block for hover OR focus */
+  @variant hover, focus {
+    color: white;
+  }
+}
+```
+
+Note: `group-hover`, `data-*`, `aria-*`, `open`, `valid`, `required`, `dark` etc. are built-in variants — no definition needed:
 ```html
 <div class="group">
   <p class="text-gray-900 group-hover:text-blue-500">Text</p>
 </div>
-```
-
-### Attribute Variant
-
-```css
-@variant data-active {
-  &[data-active="true"]
-}
-
-@variant aria-disabled {
-  &[aria-disabled="true"]
-}
-```
-
-Usage:
-```html
-<button data-active="true" class="bg-white data-active:bg-blue-500">
-  Button
-</button>
-```
-
-### Pseudo-class Variant
-
-```css
-@variant open {
-  &[open]
-}
-
-@variant valid {
-  &:valid
-}
-
-@variant required {
-  &:required
-}
-```
-
-### Dark Mode
-
-```css
-@variant dark {
-  @media (prefers-color-scheme: dark) {
-    &
-  }
-}
-
-/* Or with manual class */
-@variant dark {
-  .dark &
-}
+<button data-active class="bg-white data-active:bg-blue-500">Button</button>
 ```
 
 ---
@@ -385,23 +365,32 @@ Usage:
 @config "./tailwind.config.js";
 ```
 
-**Note**: In Tailwind CSS v4.1, this is generally optional if you use `@theme`.
+**Note**: In Tailwind CSS v4, this is generally optional if you use `@theme`.
 
 ---
 
-## @custom-variant (Deprecated)
+## @custom-variant
 
-Replaced by `@variant` in v4.1:
+**Purpose**: Define a new variant (or override a built-in one such as `dark`). Current, non-deprecated v4 API.
 
 ```css
-/* Old syntax (v3) */
-@custom-variant dark (&:is(.dark *));
+/* Shorthand (no nesting needed) */
+@custom-variant theme-midnight (&:where([data-theme="midnight"] *));
 
-/* New syntax (v4.1) */
-@variant dark {
-  &:is(.dark *)
+/* Block form with @slot */
+@custom-variant any-hover {
+  @media (any-hover: hover) {
+    &:hover {
+      @slot;
+    }
+  }
 }
+
+/* Class-based dark mode (overrides the default prefers-color-scheme) */
+@custom-variant dark (&:where(.dark, .dark *));
 ```
+
+Usage: `theme-midnight:bg-black`, `any-hover:underline`, `dark:bg-black`.
 
 ---
 
@@ -453,11 +442,8 @@ Replaced by `@variant` in v4.1:
   }
 }
 
-@variant dark {
-  @media (prefers-color-scheme: dark) {
-    &
-  }
-}
+/* Class-based dark mode (omit to keep prefers-color-scheme default) */
+@custom-variant dark (&:where(.dark, .dark *));
 ```
 
 ### With Tailwind Plugins
@@ -484,5 +470,5 @@ Replaced by `@variant` in v4.1:
 
 ## References
 
-- [Tailwind CSS v4.1 Functions & Directives](https://tailwindcss.com/docs/functions-and-directives)
+- [Tailwind CSS v4.3 Functions & Directives](https://tailwindcss.com/docs/functions-and-directives)
 - [Custom Properties Documentation](https://tailwindcss.com/docs/theme)

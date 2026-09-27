@@ -10,6 +10,8 @@ related: progress.md, spinner.md
 
 # Skeleton Component
 
+> **Base:** same API on Base UI, Radix and React Aria (verified against r/styles/{base,radix}-nova/skeleton.json) — plain `div` with `animate-pulse`.
+
 Import Skeleton from `@/modules/cores/shadcn/components/ui/skeleton`:
 
 ```typescript
@@ -29,6 +31,7 @@ Simple animated placeholder:
 ```tsx
 import { Skeleton } from "@/modules/cores/shadcn/components/ui/skeleton"
 
+/** Basic skeleton placeholder. */
 export function SkeletonBasic() {
   return <Skeleton className="h-12 w-12 rounded-full" />
 }
@@ -42,6 +45,7 @@ Common pattern for loading card content:
 import { Skeleton } from "@/modules/cores/shadcn/components/ui/skeleton"
 import { Card, CardContent, CardHeader } from "@/modules/cores/shadcn/components/ui/card"
 
+/** Card loading placeholder. */
 export function SkeletonCard() {
   return (
     <Card className="w-full max-w-md">
@@ -66,6 +70,7 @@ Loading state for list of items:
 ```tsx
 import { Skeleton } from "@/modules/cores/shadcn/components/ui/skeleton"
 
+/** List loading placeholder. */
 export function SkeletonList() {
   return (
     <div className="space-y-3">
@@ -90,6 +95,7 @@ Loading state for table rows:
 ```tsx
 import { Skeleton } from "@/modules/cores/shadcn/components/ui/skeleton"
 
+/** Table loading placeholder. */
 export function SkeletonTable() {
   return (
     <div className="space-y-2">
@@ -112,6 +118,7 @@ Loading state for user avatars:
 ```tsx
 import { Skeleton } from "@/modules/cores/shadcn/components/ui/skeleton"
 
+/** Avatar loading placeholder. */
 export function SkeletonAvatar() {
   return (
     <div className="flex items-center space-x-4">
@@ -132,6 +139,7 @@ Loading placeholder for images:
 ```tsx
 import { Skeleton } from "@/modules/cores/shadcn/components/ui/skeleton"
 
+/** Image loading placeholder. */
 export function SkeletonImage() {
   return <Skeleton className="h-[125px] w-[250px] rounded-xl" />
 }
@@ -144,6 +152,7 @@ Loading state for blog post:
 ```tsx
 import { Skeleton } from "@/modules/cores/shadcn/components/ui/skeleton"
 
+/** Blog post loading placeholder. */
 export function SkeletonBlogPost() {
   return (
     <div className="space-y-3">
@@ -171,6 +180,7 @@ interface SkeletonRowsProps {
   rows?: number
 }
 
+/** Configurable number of skeleton rows. */
 export function SkeletonRows({ rows = 5 }: SkeletonRowsProps) {
   return (
     <>
@@ -225,6 +235,7 @@ Default animation is `animate-pulse`. For custom animation:
 ### Stats Card Loading
 
 ```tsx
+/** Stats card loading placeholder. */
 export function StatsLoadingCard() {
   return (
     <div className="rounded-lg border p-4">
@@ -238,6 +249,7 @@ export function StatsLoadingCard() {
 ### Dashboard Grid Loading
 
 ```tsx
+/** Dashboard loading placeholder. */
 export function DashboardLoading() {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -252,6 +264,7 @@ export function DashboardLoading() {
 ### Form Loading
 
 ```tsx
+/** Form fields loading placeholder. */
 export function FormLoading() {
   return (
     <div className="space-y-4">

@@ -27,15 +27,30 @@ related: react-19.md
 | Clean code | Remove boilerplate |
 
 ## Enable in Next.js 16
+```bash
+bun add -D babel-plugin-react-compiler  # required for the default (Babel) compiler
+```
+
 ```typescript
 // next.config.ts
 import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
-  reactCompiler: true,  // Built-in in v16
+  reactCompiler: true,  // stable top-level option in v16
+  // reactCompiler: { compilationMode: 'annotation' },  // opt-in per component with 'use memo'
 }
 
 export default nextConfig
+```
+
+### Rust React Compiler (16.3, experimental)
+```typescript
+const nextConfig: NextConfig = {
+  reactCompiler: true,
+  experimental: {
+    turbopackRustReactCompiler: true,  // native port inside Turbopack, no babel plugin needed
+  },
+}
 ```
 
 ## What It Does
@@ -86,20 +101,10 @@ function MyComponent() {
 ```
 
 ## ESLint Plugin (Optional)
+The compiler lint rules now ship in `eslint-plugin-react-hooks` (v7+),
+in its `recommended-latest` preset — the standalone `eslint-plugin-react-compiler` is no longer the documented path.
 ```bash
-bun add -D eslint-plugin-react-compiler
-```
-
-```js
-// eslint.config.js
-import reactCompiler from 'eslint-plugin-react-compiler'
-
-export default [
-  {
-    plugins: { 'react-compiler': reactCompiler },
-    rules: { 'react-compiler/react-compiler': 'error' },
-  },
-]
+bun add -D eslint-plugin-react-hooks@latest
 ```
 
 ## Requirements

@@ -10,6 +10,8 @@ related: alert.md
 
 # AlertDialog Component
 
+> **Base:** examples use **Base UI** (shadcn default since 2026-07); Radix delta in "Radix variant" below; React Aria: the trigger wraps the button and the content (see there). Sources: https://ui.shadcn.com/r/styles/base-nova/alert-dialog.json, https://ui.shadcn.com/r/styles/radix-nova/alert-dialog.json
+
 Import AlertDialog components from `@/modules/cores/shadcn/components/ui/alert-dialog`:
 
 ```typescript
@@ -50,11 +52,12 @@ import {
 } from "@/modules/cores/shadcn/components/ui/alert-dialog"
 import { Button } from "@/modules/cores/shadcn/components/ui/button"
 
+/** Confirmation dialog opened from an outline button. */
 export function AlertDialogDemo() {
   return (
     <AlertDialog>
-      <AlertDialogTrigger asChild>
-        <Button variant="outline">Show Dialog</Button>
+      <AlertDialogTrigger render={<Button variant="outline" />}>
+        Show Dialog
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
@@ -93,11 +96,12 @@ import {
 import { Button } from "@/modules/cores/shadcn/components/ui/button"
 import { Trash2 } from "lucide-react"
 
+/** Destructive confirmation with a destructive action button. */
 export function AlertDialogDestructive() {
   return (
     <AlertDialog>
-      <AlertDialogTrigger asChild>
-        <Button variant="destructive">Delete Chat</Button>
+      <AlertDialogTrigger render={<Button variant="destructive" />}>
+        Delete Chat
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
@@ -122,7 +126,7 @@ export function AlertDialogDestructive() {
 
 ## Dialog with Custom Trigger
 
-Custom element as trigger using `asChild`:
+Custom element as trigger using `render` (add `nativeButton={false}` when the rendered element is not a `<button>`):
 
 ```tsx
 import {
@@ -137,13 +141,15 @@ import {
   AlertDialogCancel,
 } from "@/modules/cores/shadcn/components/ui/alert-dialog"
 
+/** Non-button trigger via `render` + `nativeButton={false}`. */
 export function AlertDialogCustomTrigger() {
   return (
     <AlertDialog>
-      <AlertDialogTrigger asChild>
-        <div className="cursor-pointer text-blue-600 hover:underline">
-          Click here to confirm
-        </div>
+      <AlertDialogTrigger
+        nativeButton={false}
+        render={<div className="cursor-pointer text-blue-600 hover:underline" />}
+      >
+        Click here to confirm
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
@@ -167,8 +173,6 @@ export function AlertDialogCustomTrigger() {
 Control dialog visibility with state:
 
 ```tsx
-"use client"
-
 import { useState } from "react"
 import {
   AlertDialog,
@@ -183,6 +187,7 @@ import {
 } from "@/modules/cores/shadcn/components/ui/alert-dialog"
 import { Button } from "@/modules/cores/shadcn/components/ui/button"
 
+/** Controlled dialog; the action closes it explicitly. */
 export function AlertDialogControlled() {
   const [open, setOpen] = useState(false)
 
@@ -193,9 +198,7 @@ export function AlertDialogControlled() {
 
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
-      <AlertDialogTrigger asChild>
-        <Button>Open Dialog</Button>
-      </AlertDialogTrigger>
+      <AlertDialogTrigger render={<Button />}>Open Dialog</AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Confirm action</AlertDialogTitle>
@@ -223,11 +226,15 @@ Root wrapper that manages dialog state. Accepts `open` and `onOpenChange` for co
 
 ### AlertDialogTrigger
 
-Trigger element that opens the dialog. Use `asChild` prop to apply dialog trigger to custom elements.
+Trigger element that opens the dialog. Use the `render` prop to apply the trigger to another element (`nativeButton={false}` if it is not a `<button>`).
 
 ### AlertDialogContent
 
-Modal content wrapper. Handles stacking, animation, and backdrop.
+Modal content wrapper (Base UI `AlertDialog.Popup` + `Backdrop` in a portal). Handles stacking, animation, and backdrop. Takes `size="default" | "sm"`.
+
+### AlertDialogMedia
+
+Optional icon/image slot inside `AlertDialogHeader`.
 
 ### AlertDialogHeader
 
@@ -247,26 +254,40 @@ Descriptive text explaining the action being confirmed.
 
 ### AlertDialogAction
 
-Primary action button. Can accept `variant="destructive"` for delete operations.
+Primary action button. Can accept `variant="destructive"` for delete operations. On Base UI it is a plain shadcn `Button` — it does **not** close the dialog by itself: control `open` (see "Programmatic Dialog Control") or close in your handler.
 
 ### AlertDialogCancel
 
-Cancel button that closes dialog without action.
+Cancel button that closes dialog without action (Base UI `AlertDialog.Close` rendering a `Button`).
 
 ## Props
 
 ```typescript
-// AlertDialog
+// AlertDialog (Base UI AlertDialog.Root)
 interface AlertDialogProps {
   open?: boolean
-  onOpenChange?: (open: boolean) => void
+  onOpenChange?: (
+    open: boolean,
+    eventDetails: AlertDialogPrimitive.Root.ChangeEventDetails,
+  ) => void
 }
 
-// AlertDialogAction
-interface AlertDialogActionProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: "default" | "destructive"
-}
+// AlertDialogAction — all shadcn Button props
+type AlertDialogActionProps = React.ComponentProps<typeof Button>
 ```
+
+## Radix variant
+
+Only the trigger composition and the action behaviour change (`style` `radix-*`):
+
+```tsx
+<AlertDialogTrigger asChild>
+  <Button variant="outline">Show Dialog</Button>
+</AlertDialogTrigger>
+// AlertDialogAction wraps AlertDialogPrimitive.Action: it closes the dialog on click.
+```
+
+React Aria (`aria-*`): no Trigger `render`/`asChild` — `<AlertDialogTrigger>` wraps the `<Button>` **and** the `<AlertDialog>` content; `AlertDialogAction` closes via `slot="close"`. See `shadcn docs alert-dialog --base aria`.
 
 ## Accessibility
 

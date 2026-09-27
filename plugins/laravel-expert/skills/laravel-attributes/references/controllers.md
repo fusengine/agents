@@ -5,12 +5,12 @@ description: Controller class attributes shipped in Laravel 13
 
 # Controller Attributes (Laravel 13)
 
-Namespace: `Illuminate\Routing\Attributes\*`
+Namespace: `Illuminate\Routing\Attributes\Controllers\*` (`Middleware`, `WithoutMiddleware`, `Authorize`)
 
 ## Middleware
 
 ```php
-use Illuminate\Routing\Attributes\Middleware;
+use Illuminate\Routing\Attributes\Controllers\Middleware;
 
 #[Middleware(['auth', 'verified'])]
 class PostController extends Controller
@@ -31,29 +31,59 @@ public function __construct()
 
 ### Method-specific middleware
 
-When middleware applies to a subset of actions, keep using route group syntax in `routes/web.php` or `routes/api.php`. `#[Middleware]` is class-wide only.
+`#[Middleware]` works at class level (optionally scoped with `only:` / `except:`) and at method level:
+
+```php
+#[Middleware('auth')]
+#[Middleware('log', only: ['index'])]
+#[Middleware('subscribed', except: ['store'])]
+class PostController extends Controller
+{
+    #[Middleware('throttle:60,1')]
+    public function store() { /* ... */ }
+}
+```
+
+Attribute middleware is merged with route/group middleware (13.8+) and inherited by child controllers (13.5+).
+
+### Excluding middleware (13.20+)
+
+```php
+use Illuminate\Routing\Attributes\Controllers\WithoutMiddleware;
+
+#[WithoutMiddleware('subscribed', except: ['index'])]
+class BillingController extends Controller {}
+```
 
 ## Authorization
 
 ```php
-use Illuminate\Routing\Attributes\Authorize;
+use Illuminate\Routing\Attributes\Controllers\Authorize;
 
-#[Authorize('viewAny', Post::class)]
-class PostController extends Controller {}
+class CommentController extends Controller
+{
+    #[Authorize('create', [Comment::class, 'post'])]
+    public function store(Post $post) { /* ... */ }
+
+    #[Authorize('delete', 'comment')]
+    public function destroy(Comment $comment) { /* ... */ }
+}
 ```
 
-`#[Authorize(ability, model)]` runs the ability against the bound Policy before any action is invoked. Requires the Policy to be registered.
+`#[Authorize(ability, ...)]` is a shortcut for the `can` middleware: the first argument is the ability, the second the model class, route parameter name, or array of parameters passed to the policy.
 
 ## Combining
 
 ```php
-#[Middleware(['auth'])]
-#[Authorize('manage-posts')]
-class PostController extends Controller {}
+#[Middleware('auth')]
+class PostController extends Controller
+{
+    #[Authorize('update', 'post')]
+    public function update(Post $post) { /* ... */ }
+}
 ```
 
 ## Notes
 
 - Attributes run BEFORE controller method execution
-- For per-action middleware, prefer route-level definitions over attributes
-- `#[Authorize]` throws `AuthorizationException` (403) on failure - handle in exception handler if you need custom UX
+- `#[Authorize]` fails with a 403 (`AuthorizationException`) - handle in the exception handler if you need custom UX

@@ -1,7 +1,7 @@
 /**
- * Progress Bar Module - Generation de barres de progression
+ * Progress Bar Module - Progress bar generation
  *
- * @description SRP: Responsabilite unique de generation de barres
+ * @description SRP: Single responsibility of bar generation
  */
 
 import { GRADIENT_BLOCKS, PROGRESS_BAR_DEFAULTS, PROGRESS_CHARS } from "../constants";

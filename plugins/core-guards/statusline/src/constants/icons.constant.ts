@@ -1,5 +1,5 @@
 /**
- * Icon Constants - Icones Unicode pour le statusline
+ * Icon Constants - Unicode icons for the statusline
  */
 
 export const ICONS = {

@@ -1,6 +1,6 @@
 ---
 name: astro-7
-description: Use when building Astro 7 sites, choosing an output mode (static/server/hybrid), configuring middleware, or upgrading from Astro 5/6.
+description: Use when building Astro 7 sites, choosing an output mode (static/server, hybrid via per-route prerender), configuring middleware, or upgrading from Astro 5/6.
 versions:
   astro: "7"
   node: "22.12+"
@@ -11,7 +11,7 @@ related-skills: astro-content, astro-actions, astro-islands, astro-integrations,
 ---
 
 <objective>
-Configures and explains Astro 7 (stable, 7.0.9) core framework mechanics: file-based routing, the three output modes (static/server/hybrid) and per-route `prerender`, middleware for auth/redirects/headers, the Vite Environment API, the single Rust compiler (Go compiler removed, strict HTML parsing), stable Content Security Policy, Live Content Collections, and the built-in Fonts API.
+Configures and explains Astro 7 (stable, 7.3.5) core framework mechanics: file-based routing, the two output modes (`static`/`server`) plus hybrid rendering via per-route `prerender`, middleware for auth/redirects/headers, the Vite Environment API, the single Rust compiler (Go compiler removed, strict HTML parsing), stable Content Security Policy, Live Content Collections, and the built-in Fonts API.
 
 Covers initial project setup and migration from Astro 5/6, including breaking changes and Node 22.12+ requirements. Does not cover Content Layer API details (astro-content), Server Actions (astro-actions), Islands hydration directives (astro-islands), UI framework integrations (astro-integrations), or deployment adapters (astro-deployment) — those live in their own skills.
 </objective>
@@ -38,7 +38,7 @@ After implementation, run **fuse-ai-pilot:sniper** for validation.
 
 - Building new content-driven websites or blogs
 - Migrating from Astro 6 to version 7
-- Configuring static, server, or hybrid output modes
+- Configuring static or server output (hybrid = per-route `prerender`)
 - Setting up middleware for auth or redirects
 - Leveraging the new Rust compiler for large sites
 - Implementing Content Security Policy (CSP) headers
@@ -54,6 +54,8 @@ After implementation, run **fuse-ai-pilot:sniper** for validation.
 | Built-in Fonts API (stable) | Zero-config font loading with performance optimization |
 | CSP Support (stable) | Built-in Content Security Policy nonce management |
 | Cloudflare Workers | First-class support with workerd runtime in dev |
+| Route caching (stable in 7.0) | Top-level `cache` + `routeRules`, `Astro.cache.set({ maxAge, swr, tags })` |
+| Advanced Routing (7.0) | Optional `src/fetch.ts` entrypoint (`astro/fetch`, `astro/hono`) |
 
 ---
 
@@ -65,7 +67,7 @@ After implementation, run **fuse-ai-pilot:sniper** for validation.
 |------|-------------|----------|
 | `static` (default) | All pages prerendered at build | Blogs, docs, marketing |
 | `server` | All pages rendered on demand | Apps, dashboards, auth |
-| `hybrid` | Mix static + on-demand | Most production sites |
+| Hybrid (not an `output` value) | `static` or `server` + per-route `export const prerender` | Most production sites |
 
 ### Routing
 
@@ -94,8 +96,8 @@ After implementation, run **fuse-ai-pilot:sniper** for validation.
 ## Best Practices
 
 1. **Use `output: 'static'` by default** — Add server only when needed
-2. **Per-route `prerender`** — Fine-grained control in hybrid mode
+2. **Per-route `prerender`** — Fine-grained hybrid control (`output` only accepts `'static' | 'server'`; there is no `'hybrid'` value)
 3. **Middleware for cross-cutting concerns** — Auth, redirects, headers
 4. **No compiler flag needed** — the Rust compiler is the only compiler now (Go removed); watch for strict HTML parsing errors on unclosed tags
-5. **CSP nonces** — Use built-in stable support instead of custom headers
+5. **CSP hashes** — Use built-in stable `security.csp` (hash-based, plus the `Astro.csp` runtime API) instead of custom headers
 6. **Node 22.12+ required** — odd-numbered Node versions are unsupported; stay on stable TypeScript tooling, the native `tsgo` compiler can make `astro check`/typecheck fail opaquely (see installation.md)

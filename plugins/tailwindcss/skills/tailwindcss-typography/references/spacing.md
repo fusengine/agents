@@ -1,9 +1,9 @@
 ---
 name: spacing
-description: Spacing utilities for Tailwind CSS v4.1
+description: Spacing utilities for Tailwind CSS v4.3
 ---
 
-# Spacing Utilities - Tailwind CSS v4.1
+# Spacing Utilities - Tailwind CSS v4.3
 
 ## Letter Spacing (Tracking)
 

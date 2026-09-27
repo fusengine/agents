@@ -11,7 +11,9 @@ related: baseui-components.md
 
 ## Overview
 
-Radix UI components use namespace imports, `asChild` composition, and Portal-based rendering. Each primitive has a consistent part-based API.
+Radix UI components use namespace imports from the unified `radix-ui` package, `asChild` composition, and Portal-based rendering. Each primitive has a consistent part-based API. Radix is no longer the default base for new projects (Base UI is, since July 2026) but stays fully supported: `init -b radix`, `radix-*` styles, docs `/docs/components/radix/<name>`.
+
+Exceptions in `radix-*` styles: Combobox is built on `@base-ui/react` (no Radix Combobox), Toast is Base UI-only (use Sonner), Questionnaire/MessageScroller use `@shadcn/react`.
 
 ---
 
@@ -21,7 +23,7 @@ Radix UI components use namespace imports, `asChild` composition, and Portal-bas
 |---------|-------------|
 | **Portal** | Required for Overlay/Content to escape DOM stacking |
 | **asChild** | Merges props onto single child element |
-| **forwardRef** | All parts forward refs for animation libraries |
+| **Refs** | Radix parts accept refs; shadcn wrappers no longer use `forwardRef` (React 19: `ref` is a regular prop) |
 | **Controlled** | Use `open`/`onOpenChange` for controlled state |
 
 ---
@@ -30,10 +32,12 @@ Radix UI components use namespace imports, `asChild` composition, and Portal-bas
 
 | Component | Key Parts | Import |
 |-----------|-----------|--------|
-| **Dialog** | Root, Trigger, Portal, Overlay, Content, Title, Description, Close | `@radix-ui/react-dialog` |
-| **Select** | Root, Trigger, Value, Portal, Content, Viewport, Item, ItemText | `@radix-ui/react-select` |
-| **Accordion** | Root, Item, Header, Trigger, Content | `@radix-ui/react-accordion` |
-| **Tooltip** | Provider, Root, Trigger, Portal, Content, Arrow | `@radix-ui/react-tooltip` |
+| **Dialog** | Root, Trigger, Portal, Overlay, Content, Title, Description, Close | `import { Dialog } from "radix-ui"` |
+| **Select** | Root, Trigger, Value, Portal, Content, Viewport, Item, ItemText | `import { Select } from "radix-ui"` |
+| **Accordion** | Root, Item, Header, Trigger, Content | `import { Accordion } from "radix-ui"` |
+| **Tooltip** | Provider, Root, Trigger, Portal, Content, Arrow | `import { Tooltip } from "radix-ui"` |
+
+Legacy per-component packages (`@radix-ui/react-dialog`, ...) still work; `{runner} shadcn@latest migrate radix` rewrites their imports to `radix-ui`.
 
 -> See [dialog-example.md](templates/dialog-example.md) for complete implementation
 
@@ -44,7 +48,7 @@ Radix UI components use namespace imports, `asChild` composition, and Portal-bas
 ### Dialog (minimal)
 
 ```tsx
-import * as Dialog from "@radix-ui/react-dialog"
+import { Dialog } from "radix-ui"
 
 <Dialog.Root>
   <Dialog.Trigger asChild><Button>Open</Button></Dialog.Trigger>
@@ -60,7 +64,7 @@ import * as Dialog from "@radix-ui/react-dialog"
 ### Accordion (minimal)
 
 ```tsx
-import * as Accordion from "@radix-ui/react-accordion"
+import { Accordion } from "radix-ui"
 
 <Accordion.Root type="single" collapsible>
   <Accordion.Item value="item-1">

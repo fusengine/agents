@@ -151,6 +151,62 @@ Completely disable overscroll effects:
 </div>
 ```
 
+## Logical Scroll Margin & Padding (since v4.2)
+
+Block-axis counterparts of `scroll-mt-*`/`scroll-pt-*`, following the writing mode:
+
+| Utility | CSS |
+|---------|-----|
+| scroll-mbs-* | scroll-margin-block-start |
+| scroll-mbe-* | scroll-margin-block-end |
+| scroll-pbs-* | scroll-padding-block-start |
+| scroll-pbe-* | scroll-padding-block-end |
+
+```html
+<div class="scroll-mbs-4 scroll-mbe-4 scroll-pbs-12 scroll-pbe-12">
+  <!-- Snap/anchor offsets along the block axis -->
+</div>
+```
+
+## Scrollbar Styling (since v4.3)
+
+### Scrollbar Width
+
+| Utility | CSS |
+|---------|-----|
+| scrollbar-auto | scrollbar-width: auto; |
+| scrollbar-thin | scrollbar-width: thin; |
+| scrollbar-none | scrollbar-width: none; |
+
+### Scrollbar Color
+
+`scrollbar-thumb-<color>` and `scrollbar-track-<color>` set `scrollbar-color`; opacity modifiers work.
+
+```html
+<div class="scrollbar-thin scrollbar-thumb-sky-700 scrollbar-track-sky-100 overflow-auto">
+  <!-- Thin, sky-colored scrollbar -->
+</div>
+
+<div class="scrollbar-thumb-slate-900/60 scrollbar-track-slate-900/10 overflow-auto">
+  <!-- Translucent thumb and track -->
+</div>
+```
+
+### Scrollbar Gutter
+
+| Utility | CSS |
+|---------|-----|
+| scrollbar-gutter-auto | scrollbar-gutter: auto; |
+| scrollbar-gutter-stable | scrollbar-gutter: stable; |
+| scrollbar-gutter-both | scrollbar-gutter: stable both-edges; |
+
+```html
+<!-- Reserve scrollbar space so content doesn't shift when it overflows -->
+<div class="scrollbar-gutter-stable overflow-auto">
+  <!-- Content -->
+</div>
+```
+
 ## Responsive Design
 
 Apply scroll utilities responsively:

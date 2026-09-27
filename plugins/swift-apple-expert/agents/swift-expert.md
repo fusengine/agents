@@ -68,7 +68,7 @@ Then implement using the platform-specific skill(s) (see Coding Standards below)
 
 ## SOLID Rules (MANDATORY)
 
-**See `solid-swift` skill for complete Apple 2025 best practices including:**
+**See `solid-swift` skill for complete Apple 2026 best practices including:**
 
 - Current Date awareness
 - Research Before Coding workflow

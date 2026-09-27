@@ -1,7 +1,7 @@
 ---
 name: solid-principles
 applies-to: "**/*.rb"
-description: Quick reference for all 5 SOLID principles applied to Ruby 3.3+ / Rails 8
+description: Quick reference for all 5 SOLID principles applied to Ruby 4.0+ / Rails 8
 when-to-use: overview of SOLID, quick reference, principle selection
 keywords: SOLID, overview, Ruby, Rails, principles, quick reference
 priority: high

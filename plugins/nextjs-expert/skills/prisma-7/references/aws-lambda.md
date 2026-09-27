@@ -13,8 +13,8 @@ related: [vercel, netlify, cloudflare-workers]
 ## Setup
 
 ```bash
-npm install -D serverless serverless-offline
-npm install @prisma/client
+npm install -D serverless serverless-offline prisma@7
+npm install @prisma/client@7 @prisma/adapter-pg
 ```
 
 ## Serverless Configuration
@@ -71,8 +71,9 @@ plugins:
  * @see /src/lib/prisma-lambda.ts
  */
 import type { APIGatewayProxyHandler } from 'aws-lambda'
-import type { User } from '@prisma/client'
-import { PrismaClient } from '@prisma/client'
+import type { User } from '../generated/prisma/client'
+import { PrismaClient } from '../generated/prisma/client' // v7: generated path
+import { PrismaPg } from '@prisma/adapter-pg'
 
 declare global {
   var prisma: PrismaClient | undefined
@@ -87,7 +88,8 @@ declare global {
  */
 function getPrismaClient(): PrismaClient {
   if (!globalThis.prisma) {
-    globalThis.prisma = new PrismaClient()
+    const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL! })
+    globalThis.prisma = new PrismaClient({ adapter })
   }
   return globalThis.prisma
 }
@@ -127,7 +129,8 @@ Use PgBouncer or RDS Proxy:
  * Prisma Client factory for Lambda with RDS Proxy.
  * @see /src/interfaces/lambda-config.ts
  */
-import { PrismaClient } from '@prisma/client'
+import { PrismaClient } from '../generated/prisma/client' // v7: generated path
+import { PrismaPg } from '@prisma/adapter-pg'
 
 /**
  * Create Prisma Client instance with RDS Proxy connection string.
@@ -137,13 +140,13 @@ import { PrismaClient } from '@prisma/client'
  * @see /src/handlers/users.ts
  */
 export function getPrismaClient(): PrismaClient {
-  const url = process.env.DATABASE_URL
-
-  return new PrismaClient({
-    datasources: {
-      db: { url }
-    }
+  // v7: `datasources` option removed — pass the URL to the driver adapter
+  const adapter = new PrismaPg({
+    connectionString: process.env.DATABASE_URL!,
+    max: 1 // one connection per Lambda instance; RDS Proxy pools
   })
+
+  return new PrismaClient({ adapter })
 }
 
 /**
@@ -193,7 +196,8 @@ Lambda needs RDS access:
  * Base handler utilities for cold start optimization.
  * @see /src/lib/prisma-lambda.ts
  */
-import { PrismaClient } from '@prisma/client'
+import { PrismaClient } from '../generated/prisma/client' // v7: generated path
+import { PrismaPg } from '@prisma/adapter-pg'
 
 declare global {
   var prisma: PrismaClient | undefined
@@ -208,7 +212,8 @@ declare global {
  */
 export function getPrisma(): PrismaClient {
   if (!globalThis.prisma) {
-    globalThis.prisma = new PrismaClient()
+    const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL! })
+    globalThis.prisma = new PrismaClient({ adapter })
   }
   return globalThis.prisma
 }

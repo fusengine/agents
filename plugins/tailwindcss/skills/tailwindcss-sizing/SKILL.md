@@ -5,14 +5,14 @@ user-invocable: false
 ---
 
 <objective>
-Complete reference for Tailwind CSS v4.1 sizing utilities: width (`w-*`, `w-screen`, `w-full`, `w-auto`, `w-min`/`w-max`/`w-fit`), height (`h-*`, `h-screen`, `h-full`, and the new `h-dvh` dynamic viewport height that accounts for browser UI), min/max constraints (`min-w-*`/`max-w-*`/`min-h-*`/`max-h-*`), and aspect-ratio (`aspect-square`, `aspect-video`, arbitrary ratios).
+Complete reference for Tailwind CSS v4.3 sizing utilities: width (`w-*`, `w-screen`, `w-full`, `w-auto`, `w-min`/`w-max`/`w-fit`), height (`h-*`, `h-screen`, `h-full`, and the `h-dvh` dynamic viewport height that accounts for browser UI), min/max constraints (`min-w-*`/`max-w-*`/`min-h-*`/`max-h-*`), logical sizing (`inline-*`/`block-*` and their min/max forms, since v4.2), and aspect-ratio (`aspect-square`, `aspect-video`, arbitrary ratios).
 
 Includes common composition patterns: full-screen containers, constrained content width, image/video wrappers, and sidebar layouts.
 </objective>
 
 # Tailwind CSS Sizing Utilities
 
-Comprehensive guide to sizing utilities in Tailwind CSS v4.1, including width, height, constraints, and aspect ratio controls.
+Comprehensive guide to sizing utilities in Tailwind CSS v4.3, including width, height, constraints, and aspect ratio controls.
 
 ## Width Utilities
 
@@ -43,13 +43,23 @@ Apply different widths at different breakpoints:
 - `h-min` - min-content
 - `h-max` - max-content
 - `h-fit` - fit-content
-- `h-dvh` - Dynamic viewport height (NEW in v4.1)
+- `h-dvh` - Dynamic viewport height (since v3.4)
 
 ### Dynamic Viewport Height (h-dvh)
 The `h-dvh` utility uses the dynamic viewport height, which accounts for browser UI elements:
 ```html
 <div class="h-dvh">
   Full dynamic viewport height
+</div>
+```
+
+## Logical Sizing (since v4.2)
+
+Writing-mode-aware sizes: `inline-*` (`inline-size`) and `block-*` (`block-size`), plus `min-inline-*`, `max-inline-*`, `min-block-*`, `max-block-*`. They accept the spacing scale, fractions, `full`, `screen`, `auto`, and (for `inline-*`) the container scale (`inline-sm`, `inline-xl`, …).
+
+```html
+<div class="block-64 inline-full max-block-screen max-inline-lg min-block-24 min-inline-0">
+  Sized along the inline/block axes
 </div>
 ```
 

@@ -3,7 +3,7 @@ name: laravel-permission
 description: Use when implementing RBAC, role-based access control, or user authorization with Spatie Laravel Permission.
 versions:
   laravel: "13.0"
-  spatie-permission: "6.24"
+  spatie-permission: "8.3"
   php: "8.3"
 user-invocable: false
 references: references/spatie-permission.md, references/middleware.md, references/blade-directives.md, references/teams.md, references/wildcard-permissions.md, references/super-admin.md, references/cache.md, references/direct-permissions.md, references/artisan-commands.md, references/custom-models.md, references/events.md, references/query-scopes.md, references/policies.md, references/api-usage.md, references/testing.md, references/performance.md
@@ -252,30 +252,31 @@ beforeEach(fn () => app(PermissionRegistrar::class)->forgetCachedPermissions());
 
 ## Laravel 13 Notes
 
-Spatie Permission 6.24 est **compatible Laravel 13**. Intégrations L13 :
+Spatie Permission **8.x** (current 8.3, requires PHP 8.3+ and Laravel 12/13) is **Laravel 13 compatible**. L13 integrations:
 
-- **Cache prefix hyphens** : `spatie.permission.cache` devient `spatie-permission-cache` ; configurer `permission.cache.key` si rétro-compat requise
-- **Attributes Controllers** : combiner `#[Authorize]` (policy) et `#[Middleware('role:admin')]` (RBAC) — voir [[laravel-blade]]
-- **PHP 8.3** : `final readonly class` pour Role/Permission DTOs custom
+- **Upgrade v6 → v7 → v8**: event classes suffixed `Event` (`RoleAttachedEvent`…), commands suffixed `Command`, `clearClassPermissions()` removed, `findByName()` / `findOrCreate()` accept `BackedEnum|string` (v8) — see [events.md](references/events.md)
+- **Cache**: the `permission.cache.key` key stays explicit (`spatie.permission.cache`) in `config/permission.php` → unaffected by L13's switch to hyphenated prefixes
+- **Controller attributes**: combine `#[Authorize]` (policy) and `#[Middleware('role:admin')]` (RBAC), namespace `Illuminate\Routing\Attributes\Controllers` — see [[laravel-blade]]
+- **PHP 8.3**: `final readonly class` for custom Role/Permission DTOs
 
 ```php
 #[Middleware(['auth', 'role:admin|editor'])]
-#[Authorize('update', Post::class)]
+#[Authorize('update', 'post')]
 public function update(UpdatePostRequest $request, Post $post) { /* ... */ }
 ```
 
 ## Best Practices
 
 ### DO
-- Définir une seule source de vérité : Policy OU Permission (pas les deux pour la même action)
-- Utiliser `permission:create-post` (verb-noun) pour clarté
-- Activer `teams` uniquement si réel multi-tenant
-- Cacher les permissions par utilisateur (`Cache::remember('user.permissions.'.$id, ...)`)
-- Super admin via `Gate::before()` (jamais via permission wildcard `*`)
+- Define a single source of truth: Policy OR Permission (never both for the same action)
+- Use `permission:create-post` (verb-noun) for clarity
+- Enable `teams` only for genuine multi-tenancy
+- Cache permissions per user (`Cache::remember('user.permissions.'.$id, ...)`)
+- Super admin via `Gate::before()` (never via a `*` wildcard permission)
 
 ### DON'T
-- Stocker permissions en session (utiliser le cache Spatie)
-- Mixer `hasRole()` et `hasPermissionTo()` sans cohérence d'architecture
-- Hardcoder noms de rôles dans le code (utiliser enum `RoleEnum`)
-- Oublier de purger le cache après `assignRole()` en seeder
-- Donner `*` à un super admin (préférer `Gate::before()` ciblé)
+- Store permissions in the session (use the Spatie cache)
+- Mix `hasRole()` and `hasPermissionTo()` without a consistent architecture
+- Hardcode role names in code (use a `RoleEnum` enum)
+- Forget to flush the cache after `assignRole()` in a seeder
+- Grant `*` to a super admin (prefer a targeted `Gate::before()`)

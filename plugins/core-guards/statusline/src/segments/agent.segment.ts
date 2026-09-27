@@ -1,7 +1,7 @@
 /**
- * Agent Segment - Affiche l'agent actif
+ * Agent Segment - Displays the active agent
  *
- * @description SRP: Affichage agent actif uniquement
+ * @description SRP: Active agent display only
  */
 
 import type { StatuslineConfig } from "../config/schema";

@@ -10,13 +10,17 @@ related:
 
 # Table Component
 
+> **Base:** same API on Base UI and Radix (plain `<table>` markup, verified against r/styles/{base,radix}-nova/table.json); TanStack Table is headless.
+> React Aria differs: `aria-nova/table.json` wraps react-aria-components `Table`/`Column`/`Row`/`Cell` — `TableHead` goes directly in `TableHeader` (no `TableRow`), one `TableHead isRowHeader`, `TableCaption` after `</Table>` (`shadcn docs table --base aria`).
+> Overlay pieces in data-table recipes (`DropdownMenuTrigger`, `Checkbox` header) follow the base rules — see [dropdown.md](dropdown.md) and [checkbox.md](checkbox.md).
+
 Fully-featured data table component built with [@tanstack/react-table](https://tanstack.com/table/latest) and shadcn/ui primitives.
 
 ## Installation
 
 ```bash
 npm install @tanstack/react-table
-bunx --bun shadcn-ui@latest add table
+bunx --bun shadcn@latest add table
 ```
 
 ## Basic Table Structure
@@ -32,6 +36,7 @@ import {
   TableRow,
 } from "@/modules/cores/shadcn/components/ui/table"
 
+/** Static table. */
 export function BasicTable() {
   const invoices = [
     {
@@ -147,6 +152,7 @@ interface DataTableProps<TData> {
   data: TData[]
 }
 
+/** Generic data table built on TanStack Table. */
 export function DataTable<TData>({ columns, data }: DataTableProps<TData>) {
   const [sorting, setSorting] = useState<SortingState>([])
 
@@ -260,6 +266,7 @@ async function getInvoices() {
   return response.json()
 }
 
+/** Page rendering invoices in the data table. */
 export default async function InvoicesPage() {
   const data = await getInvoices()
 
@@ -280,6 +287,7 @@ export default async function InvoicesPage() {
 import { Input } from "@/modules/cores/shadcn/components/ui/input"
 import { getFilteredRowModel } from "@tanstack/react-table"
 
+/** Data table with a global search filter. */
 export function DataTableWithFilter<TData>({
   columns,
   data,

@@ -10,16 +10,17 @@ related: popover.md, input.md
 
 # Calendar
 
+> **Base:** examples use **Base UI** (shadcn default since 2026-07). `Calendar` itself is the same React DayPicker wrapper on Base UI and Radix; only the date-picker `PopoverTrigger` differs — Radix delta in "Radix variant" below. Sources: https://ui.shadcn.com/r/styles/base-nova/calendar.json, https://ui.shadcn.com/r/styles/radix-nova/calendar.json
+
 Calendar component provides date selection functionality with support for single dates and date ranges.
 
 ## Basic Calendar
 
 ```tsx
-'use client'
-
 import { useState } from 'react'
 import { Calendar } from '@/modules/cores/shadcn/components/ui/calendar'
 
+/** Single-date calendar with local state. */
 export function BasicCalendar() {
   const [date, setDate] = useState<Date | undefined>(new Date())
 
@@ -37,8 +38,6 @@ export function BasicCalendar() {
 ## Calendar with Popover (Date Picker)
 
 ```tsx
-'use client'
-
 import { useState } from 'react'
 import { format } from 'date-fns'
 import { Calendar as CalendarIcon } from 'lucide-react'
@@ -51,22 +50,25 @@ import {
 import { Button } from '@/modules/cores/shadcn/components/ui/button'
 import { cn } from '@/modules/cores/lib/utils'
 
+/** Date picker: Popover (Base UI trigger `render`) + Calendar. */
 export function DatePicker() {
   const [date, setDate] = useState<Date | undefined>()
 
   return (
     <Popover>
-      <PopoverTrigger asChild>
-        <Button
-          variant="outline"
-          className={cn(
-            'w-[240px] justify-start text-left font-normal',
-            !date && 'text-muted-foreground'
-          )}
-        >
-          <CalendarIcon className="mr-2 h-4 w-4" />
-          {date ? format(date, 'PPP') : 'Pick a date'}
-        </Button>
+      <PopoverTrigger
+        render={
+          <Button
+            variant="outline"
+            className={cn(
+              'w-[240px] justify-start text-left font-normal',
+              !date && 'text-muted-foreground'
+            )}
+          />
+        }
+      >
+        <CalendarIcon data-icon="inline-start" />
+        {date ? format(date, 'PPP') : 'Pick a date'}
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0" align="start">
         <Calendar
@@ -76,7 +78,7 @@ export function DatePicker() {
           disabled={(date) =>
             date > new Date() || date < new Date('1900-01-01')
           }
-          initialFocus
+          autoFocus
         />
       </PopoverContent>
     </Popover>
@@ -87,8 +89,6 @@ export function DatePicker() {
 ## Date Range Picker
 
 ```tsx
-'use client'
-
 import { useState } from 'react'
 import { format } from 'date-fns'
 import { Calendar as CalendarIcon } from 'lucide-react'
@@ -106,37 +106,40 @@ interface DateRange {
   to?: Date
 }
 
+/** Two-month range picker in a popover. */
 export function DateRangePicker() {
   const [dateRange, setDateRange] = useState<DateRange | undefined>()
 
   return (
     <Popover>
-      <PopoverTrigger asChild>
-        <Button
-          variant="outline"
-          className={cn(
-            'w-[300px] justify-start text-left font-normal',
-            !dateRange && 'text-muted-foreground'
-          )}
-        >
-          <CalendarIcon className="mr-2 h-4 w-4" />
-          {dateRange?.from ? (
-            dateRange.to ? (
-              <>
-                {format(dateRange.from, 'LLL dd, y')} -{' '}
-                {format(dateRange.to, 'LLL dd, y')}
-              </>
-            ) : (
-              format(dateRange.from, 'LLL dd, y')
-            )
+      <PopoverTrigger
+        render={
+          <Button
+            variant="outline"
+            className={cn(
+              'w-[300px] justify-start text-left font-normal',
+              !dateRange && 'text-muted-foreground'
+            )}
+          />
+        }
+      >
+        <CalendarIcon data-icon="inline-start" />
+        {dateRange?.from ? (
+          dateRange.to ? (
+            <>
+              {format(dateRange.from, 'LLL dd, y')} -{' '}
+              {format(dateRange.to, 'LLL dd, y')}
+            </>
           ) : (
-            'Pick a date range'
-          )}
-        </Button>
+            format(dateRange.from, 'LLL dd, y')
+          )
+        ) : (
+          'Pick a date range'
+        )}
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0" align="start">
         <Calendar
-          initialFocus
+          autoFocus
           mode="range"
           defaultMonth={dateRange?.from}
           selected={dateRange}
@@ -152,8 +155,6 @@ export function DateRangePicker() {
 ## Calendar with Disabled Dates
 
 ```tsx
-'use client'
-
 import { useState } from 'react'
 import { format, isBefore, startOfToday } from 'date-fns'
 import { Calendar } from '@/modules/cores/shadcn/components/ui/calendar'
@@ -164,6 +165,7 @@ import {
 } from '@/modules/cores/shadcn/components/ui/popover'
 import { Button } from '@/modules/cores/shadcn/components/ui/button'
 
+/** Picker that disables past dates. */
 export function CalendarWithDisabledDates() {
   const [date, setDate] = useState<Date | undefined>()
 
@@ -174,10 +176,8 @@ export function CalendarWithDisabledDates() {
 
   return (
     <Popover>
-      <PopoverTrigger asChild>
-        <Button variant="outline">
-          {date ? format(date, 'PPP') : 'Select date'}
-        </Button>
+      <PopoverTrigger render={<Button variant="outline" />}>
+        {date ? format(date, 'PPP') : 'Select date'}
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0" align="start">
         <Calendar
@@ -185,7 +185,7 @@ export function CalendarWithDisabledDates() {
           selected={date}
           onSelect={setDate}
           disabled={disabledDates}
-          initialFocus
+          autoFocus
         />
       </PopoverContent>
     </Popover>
@@ -196,11 +196,10 @@ export function CalendarWithDisabledDates() {
 ## Multiple Date Selection
 
 ```tsx
-'use client'
-
 import { useState } from 'react'
 import { Calendar } from '@/modules/cores/shadcn/components/ui/calendar'
 
+/** Toggles several dates and lists them. */
 export function MultiDatePicker() {
   const [dates, setDates] = useState<Date[]>([])
 
@@ -258,12 +257,11 @@ export function MultiDatePicker() {
 ## Month and Year Picker
 
 ```tsx
-'use client'
-
 import { useState } from 'react'
 import { format } from 'date-fns'
 import { Calendar } from '@/modules/cores/shadcn/components/ui/calendar'
 
+/** Switches between day, month and year pickers. */
 export function MonthYearPicker() {
   const [date, setDate] = useState<Date | undefined>(new Date())
   const [mode, setMode] = useState<'days' | 'months' | 'years'>('days')
@@ -351,8 +349,6 @@ export function MonthYearPicker() {
 ## Calendar in Form
 
 ```tsx
-'use client'
-
 import { useState } from 'react'
 import { format } from 'date-fns'
 import { Calendar } from '@/modules/cores/shadcn/components/ui/calendar'
@@ -371,6 +367,7 @@ interface FormData {
   eventDate?: Date
 }
 
+/** Form with two popover date pickers. */
 export function CalendarForm() {
   const [formData, setFormData] = useState<FormData>({
     name: '',
@@ -398,12 +395,10 @@ export function CalendarForm() {
       <div className="space-y-2">
         <Label>Birth Date</Label>
         <Popover>
-          <PopoverTrigger asChild>
-            <Button variant="outline">
-              {formData.birthDate
-                ? format(formData.birthDate, 'PPP')
-                : 'Pick a date'}
-            </Button>
+          <PopoverTrigger render={<Button variant="outline" />}>
+            {formData.birthDate
+              ? format(formData.birthDate, 'PPP')
+              : 'Pick a date'}
           </PopoverTrigger>
           <PopoverContent className="w-auto p-0" align="start">
             <Calendar
@@ -413,7 +408,7 @@ export function CalendarForm() {
                 setFormData({ ...formData, birthDate: date })
               }
               disabled={(date) => date > new Date()}
-              initialFocus
+              autoFocus
             />
           </PopoverContent>
         </Popover>
@@ -422,12 +417,10 @@ export function CalendarForm() {
       <div className="space-y-2">
         <Label>Event Date</Label>
         <Popover>
-          <PopoverTrigger asChild>
-            <Button variant="outline">
-              {formData.eventDate
-                ? format(formData.eventDate, 'PPP')
-                : 'Pick a date'}
-            </Button>
+          <PopoverTrigger render={<Button variant="outline" />}>
+            {formData.eventDate
+              ? format(formData.eventDate, 'PPP')
+              : 'Pick a date'}
           </PopoverTrigger>
           <PopoverContent className="w-auto p-0" align="start">
             <Calendar
@@ -436,7 +429,7 @@ export function CalendarForm() {
               onSelect={(date) =>
                 setFormData({ ...formData, eventDate: date })
               }
-              initialFocus
+              autoFocus
             />
           </PopoverContent>
         </Popover>
@@ -457,8 +450,24 @@ export function CalendarForm() {
 | `onSelect` | `(date) => void` | Callback when date is selected |
 | `disabled` | `(date: Date) => boolean` | Function to disable specific dates |
 | `numberOfMonths` | `number` | Show multiple months (for range) |
-| `initialFocus` | `boolean` | Auto focus calendar on mount |
+| `autoFocus` | `boolean` | Auto focus calendar on mount (replaces the removed `initialFocus`) |
 | `defaultMonth` | `Date` | Initial month to display |
+
+## Radix variant
+
+`Calendar` props are identical on `radix-*`; only the date-picker trigger changes:
+
+```tsx
+<PopoverTrigger asChild>
+  <Button variant="outline">
+    {date ? format(date, 'PPP') : 'Pick a date'}
+  </Button>
+</PopoverTrigger>
+```
+
+React Aria (`aria-*`) ships a different Calendar (React Aria `Calendar`, `@internationalized/date`):
+`value`/`onChange` with `CalendarDate` instead of `mode`/`selected`/`onSelect` — see
+`shadcn docs calendar --base aria` and its `date-picker` page.
 
 ## Dependencies
 
@@ -470,7 +479,7 @@ npm install date-fns
 
 The calendar uses:
 - `date-fns` for date manipulation
-- `react-day-picker` for the calendar UI (included in shadcn)
+- `react-day-picker` for the calendar UI (installed by `shadcn add calendar` as `react-day-picker@latest`, v10 at time of writing)
 
 ## Common Patterns
 

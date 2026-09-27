@@ -17,7 +17,8 @@ extension: enabling the extension via Schema::ensureVectorExtensionExists(),
 the vector column type and HNSW/IVFFlat indexing, the embedding generation
 and persistence workflow, and the query builder's vector methods
 (whereVectorSimilarTo, selectVectorDistance, whereVectorDistanceLessThan,
-orderByVectorDistance). PostgreSQL-only — no MySQL/SQLite fallback. For
+orderByVectorDistance). PostgreSQL (pgvector) or MariaDB 11.7+ (13.27+) —
+no MySQL/SQLite fallback. For
 full-text/keyword search, see laravel-scout instead (the two can be
 combined for hybrid search).
 </objective>
@@ -40,7 +41,7 @@ After implementation, run **fuse-ai-pilot:sniper** for validation.
 
 | Feature | Description |
 |---------|-------------|
-| **PostgreSQL only** | Requires `pgvector` extension; not available on MySQL/SQLite |
+| **PostgreSQL / MariaDB** | PostgreSQL + `pgvector`, or MariaDB 11.7+ (vector queries since 13.27); not available on MySQL/SQLite |
 | **Schema helper** | `Schema::ensureVectorExtensionExists()` enables the extension |
 | **Query builder** | `whereVectorSimilarTo()`, `selectVectorDistance()`, `whereVectorDistanceLessThan()`, `orderByVectorDistance()` |
 | **Auto-embedding** | Pass a raw string and Laravel generates the embedding via AI SDK |
@@ -50,7 +51,7 @@ After implementation, run **fuse-ai-pilot:sniper** for validation.
 
 ## Critical Rules
 
-1. **Use PostgreSQL** - Vector clauses ONLY work on `pgsql` connections - no fallback to MySQL/SQLite
+1. **Use PostgreSQL (pgvector) or MariaDB 11.7+** - Vector clauses do not work on MySQL/SQLite - no fallback
 2. **Create an HNSW index** - Without an index, queries do full table scans; > 10k rows means seconds-to-minutes latency
 3. **Match dimensions exactly** - Insert-time and query-time embedding models MUST share the same dimensions
 4. **Cache embeddings** - Regenerating embeddings on every request is the #1 cost driver; persist them
@@ -102,9 +103,8 @@ Schema::ensureVectorExtensionExists();
 Schema::create('documents', function (Blueprint $table) {
     $table->id();
     $table->text('content');
-    $table->vector('embedding', 1536);
+    $table->vector('embedding', dimensions: 1536)->index(); // HNSW cosine index
     $table->timestamps();
-    $table->vectorIndex('embedding', algorithm: 'hnsw');
 });
 ```
 

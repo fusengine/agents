@@ -5,7 +5,7 @@
  * @see https://code.claude.com/docs/en/hooks
  */
 
-/** Types de hooks supportés (Claude Code v2.1.70 + custom Setup) */
+/** Supported hook types (Claude Code v2.1.70 + custom Setup) */
 export type HookType =
 	| "UserPromptSubmit"
 	| "PreToolUse"

@@ -5,7 +5,7 @@ versions:
   laravel: "13.0"
   php: "8.3"
   react: "19"
-  typescript: "5.8"
+  typescript: "7.0"
 user-invocable: true
 references: references/architecture.md, references/module-structure.md, references/module-discovery.md, references/module-json.md, references/contracts.md, references/traits.md, references/service-provider.md, references/react-integration.md, references/routes.md, references/migrations.md, references/i18n.md, references/creating-module.md
 related-skills: solid-php, laravel-permission, laravel-api
@@ -246,18 +246,17 @@ Route::middleware(['api', 'auth:sanctum'])->group(function () {
 ## Laravel 13 Notes
 
 ### Stack FuseCore L13
-- **Laravel 13.0** + **PHP 8.3** minimum
-- **React 19** + **TypeScript 5.8** (côté frontend module)
-- **Inertia 2** pour le bridge React ↔ modules
+- **Laravel 13** (stable 13.33) + **PHP 8.3** minimum
+- **React 19** + **TypeScript 7** (module frontend side) — TS 7.0 has no compiler API: typescript-eslint (peer `typescript <6.1.0`) requires the alias `"typescript": "npm:@typescript/typescript6@^6.0.2"` + `"@typescript/native": "npm:typescript@^7.0.2"` (`npx tsc` = 7.0)
+- **Inertia 3** (`inertiajs/inertia-laravel` ^3.0) for the React ↔ modules bridge
 
-### Module ServiceProvider et L13
-`new Model()` dans `register()` est désormais interdit (LogicException). Toute instanciation Eloquent doit migrer dans `boot()`.
+### Module ServiceProvider and L13
+Bindings in `register()`, observers/hooks in `boot()`. L13 reminder: instantiating a model **during its own boot** (`new static()` inside the model's `boot()` or a trait's `boot*()`) throws a `LogicException`.
 
 ```php
 public function register(): void
 {
     $this->app->bind(PostRepositoryContract::class, EloquentPostRepository::class);
-    // NE PAS faire : $defaults = new Post(); ← LogicException en L13
 }
 
 public function boot(): void
@@ -266,8 +265,8 @@ public function boot(): void
 }
 ```
 
-### Cache prefixes par module
-L13 utilise hyphens par défaut. Pour FuseCore, configurer le préfixe par module via `module.json` reste compatible :
+### Per-module cache prefixes
+L13 uses hyphens by default. For FuseCore, configuring the prefix per module via `module.json` remains compatible:
 
 ```json
 {
@@ -279,15 +278,15 @@ L13 utilise hyphens par défaut. Pour FuseCore, configurer le préfixe par modul
 ## Best Practices
 
 ### DO
-- Créer un module = un dossier `FuseCore/<Module>/` complet (Contracts/, Services/, Http/, Models/)
-- Déclarer toutes les dépendances inter-modules via Contracts (jamais classes concrètes)
-- Utiliser `final readonly class` pour DTOs de module (PHP 8.3+)
-- Migrer toute logique Model du `register()` vers `boot()`
-- Préférer Inertia 2 + React 19 pour les modules avec UI
+- One module = one complete `FuseCore/<Module>/` folder (Contracts/, Services/, Http/, Models/)
+- Declare every inter-module dependency via Contracts (never concrete classes)
+- Use `final readonly class` for module DTOs (PHP 8.3+)
+- Move all Model logic from `register()` to `boot()`
+- Prefer Inertia 3 + React 19 for modules with a UI
 
 ### DON'T
-- Importer une classe d'un autre module sans passer par son Contract
-- Mettre la logique métier dans Controllers (extraire en Service du module)
-- Instancier un modèle Eloquent dans `register()` (LogicException L13)
-- Dépasser 100 lignes par fichier (splitter en sous-modules ou Services)
-- Partager des migrations entre modules (chaque module possède ses tables)
+- Import a class from another module without going through its Contract
+- Put business logic in Controllers (extract it into a module Service)
+- Instantiate a model during its own boot (`new static()` inside `boot()` → LogicException in L13)
+- Exceed 100 lines per file (split into sub-modules or Services)
+- Share migrations between modules (each module owns its tables)

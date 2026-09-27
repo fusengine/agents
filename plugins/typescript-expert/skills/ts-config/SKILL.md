@@ -1,31 +1,32 @@
 ---
 name: ts-config
-description: "Use when creating or migrating a tsconfig.json, choosing module/moduleResolution, or fixing TS 6.0 deprecation errors. Not for language syntax (ts-language-patterns)."
+description: "Use when creating or migrating a tsconfig.json, choosing module/moduleResolution, or fixing TS 6.0 deprecations that are hard errors in TS 7.0. Not for language syntax (ts-language-patterns)."
 versions:
-  typescript: "6.0"
+  typescript: "7.0"
   node: "24"
-  bun: "1.3"
+  bun: "1.4"
 user-invocable: false
 references: references/bundler-track.md, references/node-track.md, references/deprecations-6.md, references/templates/tsconfig.bundler.md, references/templates/tsconfig.node.md
 related-skills: ts-language-patterns, solid-generic
 ---
 
 <objective>
-This skill covers the two supported TypeScript 6.0 config tracks for 2026 — bundler (Bun,
+This skill covers the two supported TypeScript 7.0 config tracks for 2026 — bundler (Bun,
 Vite, esbuild, webpack: module Preserve + moduleResolution bundler) and Node (pure Node.js
 native type stripping: module nodenext + moduleResolution nodenext) — and how to pick
 between them by runtime.
 
-It also covers the TS 6.0 deprecation cleanup ahead of 7.0: dropping moduleResolution
-node/node10, setting verbatimModuleSyntax, strict + noUncheckedIndexedAccess, explicit
-types, and explicit rootDir now that 6.0 no longer infers it.
+It also covers the TS 6.0 deprecation cleanup that TS 7.0 (native Go compiler) enforces as
+hard errors: dropping moduleResolution node/node10, setting verbatimModuleSyntax, strict +
+noUncheckedIndexedAccess, explicit types, and explicit rootDir now that it is no longer
+inferred.
 
 Out of scope: TypeScript language syntax and idioms belong to ts-language-patterns;
 framework configs that ship their own tsconfig base (Next.js/Astro/Vite plugin skills) and
 non-TS build tooling are not covered.
 </objective>
 
-# TypeScript Config (TS 6.0)
+# TypeScript Config (TS 7.0)
 
 ## Agent Workflow (MANDATORY)
 
@@ -52,11 +53,11 @@ There are exactly **two supported config trajectories** in 2026. Pick by runtime
 
 ## Critical Rules
 
-1. **Never `moduleResolution: node` / `node10`** - deprecated in 6.0, removed in 7.0. Use `bundler` or `nodenext`.
+1. **Never `moduleResolution: node` / `node10`** - deprecated in 6.0, hard error in 7.0. Use `bundler` or `nodenext`.
 2. **Always `verbatimModuleSyntax: true`** - both tracks. Forces explicit `import type`, matches Node's type stripping.
-3. **`strict` + `noUncheckedIndexedAccess`** - strict is the 6.0 default; add `noUncheckedIndexedAccess` explicitly.
-4. **Set `types` explicitly** - 6.0 defaults `types` to `[]`. Add `["node"]`, `["bun"]`, etc. or you lose globals.
-5. **Set `rootDir` when sources are nested** - 6.0 defaults `rootDir` to the tsconfig dir, no longer inferred.
+3. **`strict` + `noUncheckedIndexedAccess`** - strict is the default since 6.0 (kept in 7.0); add `noUncheckedIndexedAccess` explicitly.
+4. **Set `types` explicitly** - since 6.0 (kept in 7.0) `types` defaults to `[]`. Add `["node"]`, `["bun"]`, etc. or you lose globals.
+5. **Set `rootDir` when sources are nested** - since 6.0 (kept in 7.0) `rootDir` defaults to the tsconfig dir, no longer inferred.
 
 ---
 
@@ -83,7 +84,7 @@ Migrating an existing 5.x config / seeing deprecation errors?
 |-------|-----------|-----------------|
 | **Bundler track** | [bundler-track.md](references/bundler-track.md) | Load when configuring a Bun or bundler (Vite/esbuild/webpack) project |
 | **Node track** | [node-track.md](references/node-track.md) | Load when configuring a pure Node.js project with native type stripping |
-| **6.0 deprecations** | [deprecations-6.md](references/deprecations-6.md) | Load when migrating from TS 5.x or fixing deprecation errors |
+| **6.0 deprecations / 7.0 errors** | [deprecations-6.md](references/deprecations-6.md) | Load when migrating from TS 5.x/6.0, fixing deprecation errors, or adopting the TS 7.0 `tsc` |
 
 ### Templates
 
@@ -132,7 +133,8 @@ Migrating an existing 5.x config / seeing deprecation errors?
 ## Best Practices
 
 ### DO
-- Add `"ignoreDeprecations": "6.0"` **temporarily** while migrating, then remove it before adopting TS 7.0
+- Add `"ignoreDeprecations": "6.0"` **temporarily** on TS 6.0 while migrating, then remove it — TS 7.0 does not honour it (deprecated options are hard errors)
+- Keep tools that need the compiler API (e.g. typescript-eslint) on TS 6 via the `@typescript/typescript6` alias while `tsc` runs TS 7.0 — see [deprecations-6.md](references/deprecations-6.md)
 - Use subpath imports `"#/*": "./src/*"` in `package.json` `imports` (supported under `nodenext` and `bundler`)
 - Fold any `baseUrl` prefix into each `paths` entry (`baseUrl` is deprecated)
 

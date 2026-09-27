@@ -15,9 +15,9 @@ export default defineConfig({
 
   i18n: {
     defaultLocale: 'en',
-    locales: ['en', 'fr', 'es', 'de'],
+    locales: ['en', 'it', 'es', 'de'],
     routing: {
-      prefixDefaultLocale: false  // /about (en), /fr/about, /es/about
+      prefixDefaultLocale: false  // /about (en), /it/about, /es/about
     }
   }
 });
@@ -31,9 +31,9 @@ With `prefixDefaultLocale: false`:
 src/pages/
 ├── index.astro           # / → English (default)
 ├── about.astro           # /about → English
-├── fr/
-│   ├── index.astro       # /fr/ → French
-│   └── about.astro       # /fr/about → French
+├── it/
+│   ├── index.astro       # /it/ → Italian
+│   └── about.astro       # /it/about → Italian
 └── es/
     ├── index.astro       # /es/ → Spanish
     └── about.astro       # /es/about → Spanish
@@ -44,7 +44,7 @@ src/pages/
 ```astro
 ---
 // Available in any .astro page or component
-const currentLocale = Astro.currentLocale;  // 'en' | 'fr' | 'es'
+const currentLocale = Astro.currentLocale;  // 'en' | 'it' | 'es'
 ---
 
 <html lang={currentLocale}>
@@ -55,9 +55,9 @@ const currentLocale = Astro.currentLocale;  // 'en' | 'fr' | 'es'
 ```javascript
 i18n: {
   defaultLocale: 'en',
-  locales: ['en', 'fr', 'es'],
+  locales: ['en', 'it', 'es'],
   fallback: {
-    fr: 'en',  // Missing French pages fall back to English
+    it: 'en',  // Missing Italian pages fall back to English
     es: 'en'
   }
 }

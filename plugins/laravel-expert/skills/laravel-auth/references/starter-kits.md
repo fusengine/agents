@@ -27,11 +27,12 @@ Starter kits provide complete authentication scaffolding:
 
 | Kit | Frontend | UI Components |
 |-----|----------|--------------|
-| **React** | Inertia + React 19 | shadcn/ui |
-| **Vue** | Inertia + Vue 3 | shadcn-vue |
-| **Livewire** | Livewire 3 | Flux UI |
+| **React** | Inertia 3 + React 19 | shadcn/ui |
+| **Vue** | Inertia 3 + Vue 3 | shadcn-vue |
+| **Svelte** | Inertia 3 + Svelte 5 | shadcn-svelte |
+| **Livewire** | Livewire 4 | Flux UI |
 
-All include TypeScript and Tailwind CSS.
+All use Tailwind CSS; the Inertia kits use TypeScript. A WorkOS AuthKit variant is also available.
 
 ---
 

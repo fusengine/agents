@@ -8,6 +8,8 @@ requires: button.md
 related: tooltip.md, popover.md
 ---
 
+> **Base:** examples use **Base UI** (shadcn default since 2026-07) — wraps Base UI `PreviewCard`; Radix delta in "Radix variant" below; React Aria: `<HoverCardTrigger delay closeDelay>` wraps the trigger element **and** `<HoverCard>` (the card itself). Sources: https://ui.shadcn.com/r/styles/base-nova/hover-card.json, https://ui.shadcn.com/r/styles/radix-nova/hover-card.json
+
 ## Installation
 
 ```bash
@@ -25,15 +27,12 @@ import {
   HoverCardTrigger,
 } from '@/modules/cores/shadcn/components/ui/hover-card'
 
+/** Default trigger renders an `<a>`; pass `href` for a real link. */
 export default function HoverCardBasic() {
   return (
     <HoverCard>
-      <HoverCardTrigger>
-        Hover over me
-      </HoverCardTrigger>
-      <HoverCardContent>
-        This is preview content shown on hover
-      </HoverCardContent>
+      <HoverCardTrigger href="/profile">Hover over me</HoverCardTrigger>
+      <HoverCardContent>This is preview content shown on hover</HoverCardContent>
     </HoverCard>
   )
 }
@@ -42,18 +41,19 @@ export default function HoverCardBasic() {
 ## Components
 
 ### HoverCard
-Root component wrapping trigger and content.
-- `openDelay`: Delay before showing (default: 200ms)
-- `closeDelay`: Delay before closing (default: 300ms)
+Root component (Base UI `PreviewCard.Root`): `open`, `defaultOpen`, `onOpenChange`.
 
 ### HoverCardTrigger
-Element that shows card on hover.
+Element that shows the card on hover; renders an `<a>` by default.
+- `delay`: Delay before opening (Base UI default: 600ms)
+- `closeDelay`: Delay before closing (Base UI default: 300ms)
+- `render`: Render as another element (e.g. `render={<Link href="/u/jane" />}` with `next/link`)
 
 ### HoverCardContent
-Rich content container.
-- `side`: "top" | "bottom" | "left" | "right"
-- `align`: "start" | "center" | "end"
-- `sideOffset`: Distance from trigger
+Rich content container (Portal + Positioner + Popup).
+- `side`: "top" | "bottom" | "left" | "right" (default "bottom")
+- `align`: "start" | "center" | "end" (default "center")
+- `sideOffset` / `alignOffset`: Distance from trigger (default `sideOffset={4}`)
 
 ## User Profile Preview Pattern
 
@@ -76,37 +76,26 @@ interface UserProfile {
   followers: number
 }
 
+/** Profile preview on a link-styled button trigger. */
 const UserHoverCard = ({ user }: { user: UserProfile }) => {
   return (
     <HoverCard>
-      <HoverCardTrigger asChild>
-        <Button variant="link" className="p-0 h-auto font-normal">
-          {user.name}
-        </Button>
+      <HoverCardTrigger render={<Button variant="link" className="p-0 h-auto font-normal" />}>
+        {user.name}
       </HoverCardTrigger>
       <HoverCardContent className="w-80">
         <div className="flex justify-between space-x-4">
           <Avatar>
             <AvatarImage src={user.avatar} />
-            <AvatarFallback>
-              {user.name.slice(0, 2).toUpperCase()}
-            </AvatarFallback>
+            <AvatarFallback>{user.name.slice(0, 2).toUpperCase()}</AvatarFallback>
           </Avatar>
           <div className="space-y-1 flex-1">
-            <h4 className="text-sm font-semibold">
-              {user.name}
-            </h4>
-            <p className="text-xs text-muted-foreground">
-              @{user.username}
+            <h4 className="text-sm font-semibold">{user.name}</h4>
+            <p className="text-xs text-muted-foreground">@{user.username}</p>
+            <p className="text-sm text-muted-foreground pt-2">{user.bio}</p>
+            <p className="pt-2 text-xs text-muted-foreground">
+              {user.followers.toLocaleString()} followers
             </p>
-            <p className="text-sm text-muted-foreground pt-2">
-              {user.bio}
-            </p>
-            <div className="pt-2">
-              <p className="text-xs text-muted-foreground">
-                {user.followers.toLocaleString()} followers
-              </p>
-            </div>
           </div>
         </div>
       </HoverCardContent>
@@ -136,10 +125,11 @@ interface LinkPreview {
   image?: string
 }
 
+/** The trigger is already an `<a>`: pass `href` and classes directly. */
 const PreviewLink = ({
   href,
   children,
-  preview
+  preview,
 }: {
   href: string
   children: React.ReactNode
@@ -147,14 +137,12 @@ const PreviewLink = ({
 }) => {
   return (
     <HoverCard>
-      <HoverCardTrigger asChild>
-        <a
-          href={href}
-          className="text-blue-500 hover:underline inline-flex items-center gap-1"
-        >
-          {children}
-          <ExternalLink className="h-3 w-3" />
-        </a>
+      <HoverCardTrigger
+        href={href}
+        className="text-blue-500 hover:underline inline-flex items-center gap-1"
+      >
+        {children}
+        <ExternalLink className="h-3 w-3" />
       </HoverCardTrigger>
       {preview && (
         <HoverCardContent className="w-80">
@@ -165,15 +153,9 @@ const PreviewLink = ({
               className="w-full h-40 object-cover rounded-md mb-3"
             />
           )}
-          <h4 className="font-semibold text-sm">
-            {preview.title}
-          </h4>
-          <p className="text-xs text-muted-foreground mt-2">
-            {preview.description}
-          </p>
-          <p className="text-xs text-muted-foreground mt-3">
-            {new URL(href).hostname}
-          </p>
+          <h4 className="font-semibold text-sm">{preview.title}</h4>
+          <p className="text-xs text-muted-foreground mt-2">{preview.description}</p>
+          <p className="text-xs text-muted-foreground mt-3">{new URL(href).hostname}</p>
         </HoverCardContent>
       )}
     </HoverCard>
@@ -189,7 +171,7 @@ export default PreviewLink
 'use client'
 
 import { Mail, Globe } from 'lucide-react'
-import { Button } from '@/modules/cores/shadcn/components/ui/button'
+import { Button, buttonVariants } from '@/modules/cores/shadcn/components/ui/button'
 import {
   HoverCard,
   HoverCardContent,
@@ -204,53 +186,34 @@ interface Author {
   email?: string
 }
 
+/** Author preview; links inside use `buttonVariants` (Base UI Button has no `asChild`). */
 const AuthorCard = ({ author }: { author: Author }) => {
+  const linkClass = buttonVariants({ variant: 'outline', size: 'sm' })
+
   return (
     <HoverCard>
-      <HoverCardTrigger asChild>
-        <Button variant="link" className="p-0 h-auto">
-          {author.name}
-        </Button>
+      <HoverCardTrigger render={<Button variant="link" className="p-0 h-auto" />}>
+        {author.name}
       </HoverCardTrigger>
       <HoverCardContent className="w-72">
         <div className="space-y-4">
           <div>
-            <h4 className="font-semibold text-sm">
-              {author.name}
-            </h4>
-            <p className="text-xs text-muted-foreground">
-              {author.role}
-            </p>
+            <h4 className="font-semibold text-sm">{author.name}</h4>
+            <p className="text-xs text-muted-foreground">{author.role}</p>
           </div>
-          <p className="text-sm text-muted-foreground">
-            {author.bio}
-          </p>
+          <p className="text-sm text-muted-foreground">{author.bio}</p>
           <div className="flex gap-2">
             {author.website && (
-              <Button
-                variant="outline"
-                size="sm"
-                className="text-xs"
-                asChild
-              >
-                <a href={author.website}>
-                  <Globe className="h-3 w-3 mr-1" />
-                  Website
-                </a>
-              </Button>
+              <a href={author.website} className={linkClass}>
+                <Globe data-icon="inline-start" />
+                Website
+              </a>
             )}
             {author.email && (
-              <Button
-                variant="outline"
-                size="sm"
-                className="text-xs"
-                asChild
-              >
-                <a href={`mailto:${author.email}`}>
-                  <Mail className="h-3 w-3 mr-1" />
-                  Contact
-                </a>
-              </Button>
+              <a href={`mailto:${author.email}`} className={linkClass}>
+                <Mail data-icon="inline-start" />
+                Contact
+              </a>
             )}
           </div>
         </div>
@@ -282,33 +245,20 @@ interface ContentPreview {
   readTime: number
 }
 
-const ContentCard = ({
-  title,
-  content
-}: {
-  title: string
-  content: ContentPreview
-}) => {
+/** Article summary on a `<span>` trigger. */
+const ContentCard = ({ title, content }: { title: string; content: ContentPreview }) => {
   return (
     <HoverCard>
-      <HoverCardTrigger asChild>
-        <span className="cursor-pointer underline">
-          {title}
-        </span>
+      <HoverCardTrigger render={<span className="cursor-pointer underline" />}>
+        {title}
       </HoverCardTrigger>
       <HoverCardContent className="w-80">
         <div className="space-y-3">
-          <h4 className="font-semibold text-sm">
-            {content.title}
-          </h4>
-          <p className="text-sm text-muted-foreground">
-            {content.summary}
-          </p>
+          <h4 className="font-semibold text-sm">{content.title}</h4>
+          <p className="text-sm text-muted-foreground">{content.summary}</p>
           <div className="flex flex-wrap gap-1">
             {content.tags.map(tag => (
-              <Badge key={tag} variant="secondary">
-                {tag}
-              </Badge>
+              <Badge key={tag} variant="secondary">{tag}</Badge>
             ))}
           </div>
           <div className="flex justify-between text-xs text-muted-foreground">
@@ -326,14 +276,26 @@ export default ContentCard
 
 ## Delay Configuration
 
+Delays live on the **trigger** in Base UI:
+
+```tsx
+<HoverCard>
+  <HoverCardTrigger delay={100} closeDelay={200}>Quick preview</HoverCardTrigger>
+  <HoverCardContent>Shows quickly on hover</HoverCardContent>
+</HoverCard>
+```
+
+## Radix variant
+
+`style` `radix-*`: delays move to the root (`openDelay`/`closeDelay`) and custom triggers use
+`asChild`; the default trigger is also an `<a>`:
+
 ```tsx
 <HoverCard openDelay={100} closeDelay={200}>
-  <HoverCardTrigger>
-    Quick preview
+  <HoverCardTrigger asChild>
+    <Button variant="link">Hover Here</Button>
   </HoverCardTrigger>
-  <HoverCardContent>
-    Shows quickly on hover
-  </HoverCardContent>
+  <HoverCardContent>Shows quickly on hover</HoverCardContent>
 </HoverCard>
 ```
 

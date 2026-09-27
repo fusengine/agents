@@ -84,14 +84,14 @@ export const User = sequelize.define<
 ```typescript
 // Module: src/queries/user.ts
 // Purpose: User queries with type safety (SOLID: SRP - query layer)
-import type { Prisma } from "@prisma/client";
+import type { PrismaClient } from "@/generated/prisma/client"; // v7: generated path
 
 /**
  * Find user by email with posts
  * Type-safe by default - compiler validates response shape
  */
 async function findUserWithPosts(
-  prisma: Prisma.PrismaClient,
+  prisma: PrismaClient,
   email: string
 ) {
   return prisma.user.findUnique({

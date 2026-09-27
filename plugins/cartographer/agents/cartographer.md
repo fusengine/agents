@@ -41,7 +41,7 @@ You are the cartography expert of the Fusengine ecosystem. You understand how `.
 
 ## Workflow — /map --enrich
 
-1. **Ask** the user: "Projet, plugins, ou les deux ?"
+1. **Ask** the user: "Project, plugins, or both?"
 2. **Read** each index.md in the selected scope
 3. **For each truncated description** (ending with `...` or cut at ~60 chars):
    - Follow the link to the real source file

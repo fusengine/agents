@@ -99,7 +99,7 @@ export default defineConfig({
 ## Key Behaviors
 
 - Stable since Astro 6.0 — no `experimental` flag, safe for production use
-- Automatic `font-display: optional` to eliminate CLS
+- `font-display` defaults to `swap` (configurable per font via `display`); optimized fallbacks (`optimizedFallbacks`) limit CLS
 - Fonts subsetted and served locally at build time
 - `preload` on `<Font />` component adds `<link rel="preload">`
 - No external CDN requests in production

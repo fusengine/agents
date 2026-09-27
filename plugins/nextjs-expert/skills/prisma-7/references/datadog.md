@@ -112,14 +112,17 @@ export async function executePrismaWithDatadog<T>(
 ```typescript
 // modules/cores/db/prisma-with-datadog.ts
 import 'dd-trace/init'
-import { PrismaClient } from '@prisma/client'
+import { PrismaClient } from './generated/prisma/client' // v7: generated path
+import { PrismaPg } from '@prisma/adapter-pg'
 import { executePrismaWithDatadog } from '@/modules/observability/src/services/datadog-tracing.service'
 import type { DatadogPrismaEvent } from '@/modules/observability/src/interfaces/datadog.interface'
+
+const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL! })
 
 /**
  * Prisma client with Datadog APM extension
  */
-export const prisma = new PrismaClient().$extends({
+export const prisma = new PrismaClient({ adapter }).$extends({
   query: {
     async $allOperations({ operation, model, args, query }) {
       const event: DatadogPrismaEvent = {

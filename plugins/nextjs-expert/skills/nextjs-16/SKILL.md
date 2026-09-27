@@ -10,9 +10,9 @@ related-skills: nextjs-i18n, better-auth, tailwindcss-core, solid-nextjs, nextjs
 ---
 
 <objective>
-Covers Next.js 16 core framework mechanics: Turbopack (default bundler, Webpack fully removed), the App Router (nested layouts, parallel/intercepting routes, file conventions like page.tsx/layout.tsx/loading.tsx/error.tsx/not-found.tsx), Cache Components (`use cache`, `cacheTag()`, `cacheLife()`, `revalidateTag()`), `proxy.ts` (full Node.js runtime, replaces Edge middleware), and React 19 integration (View Transitions, new hooks).
+Covers Next.js 16 core framework mechanics (current stable: 16.3): Turbopack (default bundler; Webpack remains available via the `--webpack` opt-out flag), the App Router (nested layouts, parallel/intercepting routes, file conventions like page.tsx/layout.tsx/loading.tsx/error.tsx/not-found.tsx), Cache Components (`use cache`, `cacheTag()`, `cacheLife()`, `revalidateTag()`), `proxy.ts` (full Node.js runtime, replaces Edge middleware), and React 19 integration (View Transitions, new hooks).
 
-Documents the critical v15→v16 breaking changes: proxy.ts replacing middleware.ts, Turbopack-only builds, `use cache` replacing Partial Prerendering, required React 19, and async `params`/`searchParams`. This skill covers core framework APIs only — for assembling a full production stack (Prisma, Better Auth, shadcn/ui, Zustand together) use nextjs-stack instead; for a pure React SPA without `next.config.*` use the react-expert skills instead.
+Documents the critical v15→v16 breaking changes: proxy.ts replacing middleware.ts, Turbopack as the default for `next dev`/`next build`, `cacheComponents` replacing the removed `experimental.ppr` flag, required React 19, and async `params`/`searchParams`. This skill covers core framework APIs only — for assembling a full production stack (Prisma, Better Auth, shadcn/ui, Zustand together) use nextjs-stack instead; for a pure React SPA without `next.config.*` use the react-expert skills instead.
 </objective>
 
 # Next.js 16 Expert
@@ -46,7 +46,7 @@ After implementation, run **fuse-ai-pilot:sniper** for validation.
 
 | Feature | Benefit |
 |---------|---------|
-| Turbopack default | 2-5x faster builds, 10x faster HMR, Webpack deprecated |
+| Turbopack default | 2-5x faster builds, 10x faster HMR; Webpack only via `--webpack` opt-out |
 | Cache Components | Explicit caching with `use cache` directive |
 | proxy.ts | Full Node.js runtime, replaces Edge middleware |
 | React Compiler | Automatic memoization, no manual useMemo/useCallback |
@@ -60,10 +60,16 @@ After implementation, run **fuse-ai-pilot:sniper** for validation.
 ### Critical Migration Points
 
 1. **proxy.ts replaces middleware.ts** - Full Node.js runtime, not Edge
-2. **Turbopack ONLY** - Webpack completely deprecated and removed
-3. **`use cache` directive** - Replaces Partial Prerendering (PPR)
+2. **Turbopack by default** - `next dev`/`next build` use Turbopack; a custom `webpack` config fails the build unless you migrate it or opt out with `--webpack`
+3. **`cacheComponents` + `use cache`** - Replaces `experimental.ppr` / `experimental_ppr` (removed); PPR is the default behavior under `cacheComponents`
 4. **React 19 required** - New hooks and View Transitions API
 5. **Async params/searchParams** - Must await dynamic route params
+
+### New in 16.1 – 16.3 (see [upgrade.md](references/upgrade.md))
+
+- **16.1** - Turbopack filesystem cache on by default for `next dev`; `next dev --inspect`
+- **16.2** - `transitionTypes` prop on `<Link>`, `next start --inspect`, Adapters API stable
+- **16.3** - `catchError` + `retry()` error recovery (stable), `next/root-params`, `import.meta.glob`, Turbopack build cache on by default, opt-in Instant Navigations (`partialPrefetching` with `cacheComponents`)
 
 ---
 

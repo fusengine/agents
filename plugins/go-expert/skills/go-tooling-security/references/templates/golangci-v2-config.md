@@ -8,7 +8,7 @@ keywords: golangci-lint, v2, config, formatters, exclusions, template
 
 ## Usage
 
-Drop this at the repo root. Requires golangci-lint v2. Adjust the `run.go` line to your module's minimum Go version. Structure and keys follow the official v2 migration guide (https://golangci-lint.run/docs/product/migration-guide/).
+Drop this at the repo root. Requires golangci-lint v2 (v2.13.0+ for Go 1.27 support; latest v2.14.0 — https://golangci-lint.run/docs/product/changelog/). Adjust the `run.go` line to your module's minimum Go version. Structure and keys follow the official v2 migration guide (https://golangci-lint.run/docs/product/migration-guide/).
 
 ---
 
@@ -19,7 +19,7 @@ version: "2"
 
 run:
   # Minimum Go version to target; keep in sync with go.mod.
-  go: "1.26"
+  go: "1.27"
   timeout: 5m
   concurrency: 4
   # Fail the run if the config itself is invalid.

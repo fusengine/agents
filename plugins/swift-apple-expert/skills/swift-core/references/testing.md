@@ -123,6 +123,8 @@ func testMultiple(value: Int) {
 }
 ```
 
+**Swift 6.4 / Xcode 27 migration:** `XCTAssert` works inside Swift Testing tests and `#expect` inside XCTests (ST-0021); a failed cross-framework assertion surfaces as a runtime warning, controlled by the test plan's "Swift Testing and XCTest Interoperability" setting.
+
 ---
 
 ## Best Practices

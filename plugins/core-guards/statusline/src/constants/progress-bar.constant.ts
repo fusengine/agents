@@ -1,5 +1,5 @@
 /**
- * Progress Bar Constants - Caracteres pour les barres de progression
+ * Progress Bar Constants - Characters for progress bars
  */
 
 export const PROGRESS_CHARS = {

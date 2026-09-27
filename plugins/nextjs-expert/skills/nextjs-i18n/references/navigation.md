@@ -1,7 +1,7 @@
 ---
 name: navigation
-description: Link preservant locale, useRouter, usePathname, redirect, language switcher
-when-to-use: navigation entre pages, préservation locale, sélecteur langue, navigation client
+description: Locale-preserving Link, useRouter, usePathname, redirect, language switcher
+when-to-use: navigation between pages, locale preservation, language selector, client navigation
 keywords: Link, useRouter, usePathname, redirect, locale switcher, programmatic nav
 priority: high
 requires: routing-setup.md
@@ -33,7 +33,7 @@ import { defineRouting } from 'next-intl/routing'
 import { createNavigation } from 'next-intl/navigation'
 
 export const routing = defineRouting({
-  locales: ['en', 'fr', 'de'],
+  locales: ['en', 'es', 'de'],
   defaultLocale: 'en'
 })
 
@@ -47,7 +47,7 @@ export const { Link, redirect, usePathname, useRouter, getPathname } =
 import { Link } from '@/modules/cores/i18n/src/config/routing'
 
 <Link href="/about">About</Link>                    // Preserves locale
-<Link href="/about" locale="fr">À propos</Link>     // Explicit locale
+<Link href="/about" locale="es">Acerca de</Link>    // Explicit locale
 ```
 
 ## useRouter Hook
@@ -59,7 +59,7 @@ import { useRouter } from '@/modules/cores/i18n/src/config/routing'
 function Component() {
   const router = useRouter()
   router.push('/about')                    // Preserves locale
-  router.push('/about', { locale: 'fr' }) // Change locale
+  router.push('/about', { locale: 'es' }) // Change locale
 }
 ```
 
@@ -99,7 +99,7 @@ export function LocaleSwitcher() {
   return (
     <select value={locale} onChange={(e) => router.replace(pathname, { locale: e.target.value })}>
       <option value="en">English</option>
-      <option value="fr">Français</option>
+      <option value="es">Español</option>
     </select>
   )
 }

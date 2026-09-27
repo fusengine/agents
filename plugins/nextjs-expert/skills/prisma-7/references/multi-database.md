@@ -19,18 +19,14 @@ generator client {
   output   = "../src/generated/prisma"
 }
 
-// Primary transactional database
-datasource primary {
+// v7: ONE datasource per schema, no `url` here — the CLI URL lives in
+// prisma.config.ts, runtime URLs are passed to one driver adapter per database
+datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_PRIMARY_URL")
-}
-
-// Separate analytics database
-datasource analytics {
-  provider = "postgresql"
-  url      = env("DATABASE_ANALYTICS_URL")
 }
 ```
+
+Both databases share this schema; each `PrismaClient` gets its own adapter/connection string. For databases with *different* models, use one schema file per database, each with its own generator `output` (e.g. `../src/generated/analytics`) and its own `prisma.config.ts`.
 
 ---
 
@@ -38,7 +34,7 @@ datasource analytics {
 
 ```typescript
 // modules/cores/db/src/interfaces/databaseManager.ts
-import type { PrismaClient } from '@prisma/client'
+import type { PrismaClient } from '@/generated/prisma/client'  // v7: generated path
 
 /**
  * Database manager interface for multiple database connections
@@ -53,7 +49,8 @@ export interface IDatabaseManager {
 
 ```typescript
 // modules/cores/db/src/manager.ts
-import { PrismaClient } from '@prisma/client'
+import { PrismaPg } from '@prisma/adapter-pg'
+import { PrismaClient } from '@/generated/prisma/client'
 import type { IDatabaseManager } from './src/interfaces/databaseManager'
 
 /**
@@ -70,14 +67,14 @@ class DatabaseManager implements IDatabaseManager {
      * Primary transactional database
      */
     this.primaryDb = new PrismaClient({
-      datasources: { db: { url: process.env.DATABASE_PRIMARY_URL } },
+      adapter: new PrismaPg({ connectionString: process.env.DATABASE_PRIMARY_URL! }),
     })
 
     /**
      * Separate analytics database for reporting
      */
     this.analyticsDb = new PrismaClient({
-      datasources: { db: { url: process.env.DATABASE_ANALYTICS_URL } },
+      adapter: new PrismaPg({ connectionString: process.env.DATABASE_ANALYTICS_URL! }),
     })
   }
 
@@ -225,7 +222,7 @@ export async function syncToAnalytics(userId: string) {
 ```typescript
 // modules/cores/middleware/src/databaseRouting.ts
 import { dbManager } from '@/modules/cores/db/src/manager'
-import type { PrismaClient } from '@prisma/client'
+import type { PrismaClient } from '@/generated/prisma/client'
 
 /**
  * Route incoming request to appropriate database

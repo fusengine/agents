@@ -11,7 +11,8 @@ related-skills: laravel-api, laravel-eloquent
 
 <objective>
 Covers Laravel 13's JsonApiResource base class for JSON:API v1.1-compliant
-responses: the toAttributes() method, resource $type declaration, sparse
+responses: $attributes / toAttributes(), $relationships / toRelationships(),
+toType() / toId() overrides, sparse
 fieldsets (?fields[type]=a,b), relationship inclusion (?include=) with the
 included array, resource identifiers, self/related links, and the
 application/vnd.api+json content type. For general (non-JSON:API-spec) REST
@@ -41,16 +42,16 @@ After implementation, run **fuse-ai-pilot:sniper** for validation.
 | **Sparse fieldsets** | `?fields[posts]=title,created_at` |
 | **Inclusion** | `?include=author,comments` with `included` array |
 | **Resource identifiers** | `{"id":"1","type":"posts"}` in relationships |
-| **Links** | `self`, `related` links auto-generated |
+| **Links / meta** | `toLinks()` / `toMeta()` overrides |
 
 ---
 
 ## Critical Rules
 
 1. **Extend `JsonApiResource`** - Never roll your own JSON:API serializer; the base class handles spec edge cases
-2. **Declare `$type`** - Each resource MUST set a string `$type` (e.g., `posts`, `users`)
-3. **Use `toAttributes()` not `toArray()`** - JSON:API splits attributes from identifiers; mixing them breaks compliance
-4. **Whitelist relationships** - Implement `relationships()` returning only the relations clients may include
+2. **Type is derived from the class name** (`PostResource` → `posts`) - override `toType()` only when it must differ
+3. **Use `$attributes` / `toAttributes()` not `toArray()`** - JSON:API splits attributes from identifiers; mixing them breaks compliance
+4. **Whitelist relationships** - Declare `$relationships` (or `toRelationships()`) with only the relations clients may include
 5. **Respect Content-Type** - Clients sending JSON:API requests MUST use `Accept: application/vnd.api+json`
 
 ---
@@ -59,9 +60,9 @@ After implementation, run **fuse-ai-pilot:sniper** for validation.
 
 ```
 app/Http/Resources/
-├── PostResource.php           # extends JsonApiResource, $type = 'posts'
-├── UserResource.php           # extends JsonApiResource, $type = 'users'
-└── CommentResource.php        # extends JsonApiResource, $type = 'comments'
+├── PostResource.php           # extends JsonApiResource → type "posts"
+├── UserResource.php           # extends JsonApiResource → type "users"
+└── CommentResource.php        # extends JsonApiResource → type "comments"
 
 app/Http/Controllers/
 └── Api/PostController.php     # returns PostResource::collection($posts)
@@ -93,16 +94,14 @@ app/Http/Controllers/
 ### Minimal resource
 
 ```php
-use Illuminate\Http\Resources\Json\JsonApiResource;
+// php artisan make:resource PostResource --json-api
+use Illuminate\Http\Resources\JsonApi\JsonApiResource;
 
 class PostResource extends JsonApiResource
 {
-    public string $type = 'posts';
+    public $attributes = ['title', 'body'];
 
-    public function toAttributes($request): array
-    {
-        return ['title' => $this->title, 'body' => $this->body];
-    }
+    public $relationships = ['author', 'comments'];
 }
 ```
 
@@ -121,11 +120,11 @@ return PostResource::collection(Post::with('author')->get());
 ### DO
 - Eager-load relationships used in `include` to avoid N+1 (`?include=author` → `with('author')`)
 - Document supported `include` and `fields` parameters in your OpenAPI spec
-- Set explicit `$type` matching the URL segment (e.g., `/api/posts` → `'posts'`)
-- Use `toLinks()` to expose `self`, `related`, pagination links
+- Override `toType()` only when the derived type must differ from the class name (e.g. `AuthorResource` wrapping `User`)
+- Use `toLinks()` to expose `self` / `related` links
 
 ### DON'T
 - Don't return a JSON:API response without the `JsonApiResource` base class - manual JSON breaks subtle spec rules (e.g., null vs empty data)
-- Don't include relationships not whitelisted in `relationships()` - silent ignoring keeps APIs predictable
+- Don't include relationships not whitelisted in `$relationships` / `toRelationships()` - silent ignoring keeps APIs predictable
 - Don't mix `toArray()` and `toAttributes()` - the JSON:API base class expects the latter
 - Don't forget to set the response Content-Type when bypassing resources (e.g., custom errors) - clients may reject the response

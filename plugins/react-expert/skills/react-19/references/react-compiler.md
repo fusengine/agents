@@ -13,7 +13,7 @@ related: virtualization.md, lazy-loading.md, profiling.md
 
 Build-time optimization that automatically adds memoization where needed.
 
-**Status:** Stable since October 2025 (React 19.1+)
+**Status:** Stable — `babel-plugin-react-compiler` 1.0.0 (October 7, 2025, still `latest`). Works best with React 19, supports React 17/18 via the `target` option. Compiler lint rules ship in `eslint-plugin-react-hooks` (7.1.1) `recommended` / `recommended-latest`.
 
 ---
 
@@ -39,10 +39,10 @@ Just write normal code - Compiler handles optimization.
 ## Installation
 
 ### Vite
-Install `babel-plugin-react-compiler` and add to Vite config.
+Install `babel-plugin-react-compiler`. With `@vitejs/plugin-react` ≥ 6.0.0 the inline `babel` option was removed: use `reactCompilerPreset()` through `@rolldown/plugin-babel`. Older plugin versions: `react({ babel: { plugins: ['babel-plugin-react-compiler'] } })`.
 
-### Next.js 15+
-Enable `reactCompiler: true` in experimental config.
+### Next.js 16
+Enable top-level `reactCompiler: true` in `next.config.ts` (no longer under `experimental`).
 
 ---
 

@@ -10,6 +10,8 @@ related: dropdown.md, dialog.md
 
 # Command
 
+> **Base:** examples use **Base UI** (shadcn default since 2026-07). `Command*` wraps `cmdk` identically on Base UI and Radix; `CommandDialog` sits on the project's `Dialog` (`title`, `description`, `showCloseButton` default `false`) and passes `children` straight into `DialogContent` — always wrap the body in `<Command>`. Only the combobox `PopoverTrigger` differs — Radix delta in "Radix variant" below; React Aria: built on `Autocomplete` + `Menu` (`CommandItem textValue`, `isDisabled`). Sources: https://ui.shadcn.com/r/styles/base-nova/command.json, https://ui.shadcn.com/r/styles/radix-nova/command.json
+
 Command menu provides a searchable interface for executing commands with keyboard shortcuts.
 
 ## Basic Command Menu
@@ -29,6 +31,7 @@ import {
   CommandSeparator,
 } from '@/modules/cores/shadcn/components/ui/command'
 
+/** Command dialog opened from a button. */
 export function BasicCommand() {
   const [open, setOpen] = useState(false)
 
@@ -39,21 +42,23 @@ export function BasicCommand() {
       </button>
 
       <CommandDialog open={open} onOpenChange={setOpen}>
-        <CommandInput placeholder="Type a command or search..." />
-        <CommandList>
-          <CommandEmpty>No results found.</CommandEmpty>
-          <CommandGroup heading="Suggestions">
-            <CommandItem onSelect={() => setOpen(false)}>
-              Calendar
-            </CommandItem>
-            <CommandItem onSelect={() => setOpen(false)}>
-              Search Emoji
-            </CommandItem>
-            <CommandItem onSelect={() => setOpen(false)}>
-              Calculator
-            </CommandItem>
-          </CommandGroup>
-        </CommandList>
+        <Command>
+          <CommandInput placeholder="Type a command or search..." />
+          <CommandList>
+            <CommandEmpty>No results found.</CommandEmpty>
+            <CommandGroup heading="Suggestions">
+              <CommandItem onSelect={() => setOpen(false)}>
+                Calendar
+              </CommandItem>
+              <CommandItem onSelect={() => setOpen(false)}>
+                Search Emoji
+              </CommandItem>
+              <CommandItem onSelect={() => setOpen(false)}>
+                Calculator
+              </CommandItem>
+            </CommandGroup>
+          </CommandList>
+        </Command>
       </CommandDialog>
     </>
   )
@@ -67,6 +72,7 @@ export function BasicCommand() {
 
 import { useEffect, useState } from 'react'
 import {
+  Command,
   CommandDialog,
   CommandInput,
   CommandList,
@@ -76,6 +82,7 @@ import {
   CommandSeparator,
 } from '@/modules/cores/shadcn/components/ui/command'
 
+/** Global palette toggled with Cmd/Ctrl+K. */
 export function CommandPalette() {
   const [open, setOpen] = useState(false)
 
@@ -93,18 +100,20 @@ export function CommandPalette() {
 
   return (
     <CommandDialog open={open} onOpenChange={setOpen}>
-      <CommandInput placeholder="Search commands..." />
-      <CommandList>
-        <CommandEmpty>No commands found.</CommandEmpty>
-        <CommandGroup heading="Actions">
-          <CommandItem onSelect={() => setOpen(false)}>
-            Create New Project
-          </CommandItem>
-          <CommandItem onSelect={() => setOpen(false)}>
-            Open Settings
-          </CommandItem>
-        </CommandGroup>
-      </CommandList>
+      <Command>
+        <CommandInput placeholder="Search commands..." />
+        <CommandList>
+          <CommandEmpty>No commands found.</CommandEmpty>
+          <CommandGroup heading="Actions">
+            <CommandItem onSelect={() => setOpen(false)}>
+              Create New Project
+            </CommandItem>
+            <CommandItem onSelect={() => setOpen(false)}>
+              Open Settings
+            </CommandItem>
+          </CommandGroup>
+        </CommandList>
+      </Command>
     </CommandDialog>
   )
 }
@@ -133,6 +142,7 @@ import {
   Search,
 } from 'lucide-react'
 
+/** Inline command menu with icon items and groups. */
 export function CommandWithIcons() {
   return (
     <Command>
@@ -180,6 +190,7 @@ export function CommandWithIcons() {
 
 import { useState } from 'react'
 import {
+  Command,
   CommandDialog,
   CommandInput,
   CommandList,
@@ -190,7 +201,7 @@ import {
 import { Button } from '@/modules/cores/shadcn/components/ui/button'
 import { useRouter } from 'next/navigation'
 
-interface Command {
+interface CommandAction {
   id: string
   label: string
   description: string
@@ -198,11 +209,12 @@ interface Command {
   group: string
 }
 
+/** Command dialog whose items run navigation or custom actions. */
 export function ActionCommand() {
   const [open, setOpen] = useState(false)
   const router = useRouter()
 
-  const commands: Command[] = [
+  const commands: CommandAction[] = [
     {
       id: '1',
       label: 'Go to Dashboard',
@@ -229,7 +241,7 @@ export function ActionCommand() {
     },
   ]
 
-  const handleSelect = (command: Command) => {
+  const handleSelect = (command: CommandAction) => {
     command.action()
     setOpen(false)
   }
@@ -243,29 +255,31 @@ export function ActionCommand() {
       </Button>
 
       <CommandDialog open={open} onOpenChange={setOpen}>
-        <CommandInput placeholder="Search commands..." />
-        <CommandList>
-          <CommandEmpty>No commands found.</CommandEmpty>
-          {groups.map((group) => (
-            <CommandGroup key={group} heading={group}>
-              {commands
-                .filter((cmd) => cmd.group === group)
-                .map((command) => (
-                  <CommandItem
-                    key={command.id}
-                    onSelect={() => handleSelect(command)}
-                  >
-                    <div className="flex flex-col">
-                      <span>{command.label}</span>
-                      <span className="text-xs text-muted-foreground">
-                        {command.description}
-                      </span>
-                    </div>
-                  </CommandItem>
-                ))}
-            </CommandGroup>
-          ))}
-        </CommandList>
+        <Command>
+          <CommandInput placeholder="Search commands..." />
+          <CommandList>
+            <CommandEmpty>No commands found.</CommandEmpty>
+            {groups.map((group) => (
+              <CommandGroup key={group} heading={group}>
+                {commands
+                  .filter((cmd) => cmd.group === group)
+                  .map((command) => (
+                    <CommandItem
+                      key={command.id}
+                      onSelect={() => handleSelect(command)}
+                    >
+                      <div className="flex flex-col">
+                        <span>{command.label}</span>
+                        <span className="text-xs text-muted-foreground">
+                          {command.description}
+                        </span>
+                      </div>
+                    </CommandItem>
+                  ))}
+              </CommandGroup>
+            ))}
+          </CommandList>
+        </Command>
       </CommandDialog>
     </>
   )
@@ -307,24 +321,27 @@ const OPTIONS: Option[] = [
   { value: 'nuxt', label: 'Nuxt.js' },
 ]
 
+/** Searchable select built from Popover + Command (or use the `Combobox` component). */
 export function CommandCombobox() {
   const [open, setOpen] = useState(false)
   const [value, setValue] = useState('')
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger asChild>
-        <Button
-          variant="outline"
-          role="combobox"
-          aria-expanded={open}
-          className="w-[200px] justify-between"
-        >
-          {value
-            ? OPTIONS.find((option) => option.value === value)?.label
-            : 'Select framework...'}
-          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-        </Button>
+      <PopoverTrigger
+        render={
+          <Button
+            variant="outline"
+            role="combobox"
+            aria-expanded={open}
+            className="w-[200px] justify-between"
+          />
+        }
+      >
+        {value
+          ? OPTIONS.find((option) => option.value === value)?.label
+          : 'Select framework...'}
+        <ChevronsUpDown data-icon="inline-end" className="opacity-50" />
       </PopoverTrigger>
       <PopoverContent className="w-[200px] p-0">
         <Command>
@@ -365,6 +382,7 @@ export function CommandCombobox() {
 'use client'
 
 import {
+  Command,
   CommandDialog,
   CommandInput,
   CommandList,
@@ -401,31 +419,34 @@ const COMMANDS: CommandWithShortcut[] = [
   },
 ]
 
+/** Command dialog listing keyboard shortcuts. */
 export function CommandWithShortcuts() {
   const [open, setOpen] = useState(false)
 
   return (
     <CommandDialog open={open} onOpenChange={setOpen}>
-      <CommandInput placeholder="Search commands..." />
-      <CommandList>
-        <CommandGroup heading="Commands">
-          {COMMANDS.map((command) => (
-            <CommandItem
-              key={command.id}
-              onSelect={() => {
-                command.action()
-                setOpen(false)
-              }}
-              className="flex justify-between"
-            >
-              <span>{command.label}</span>
-              <span className="text-xs text-muted-foreground">
-                {command.shortcut}
-              </span>
-            </CommandItem>
-          ))}
-        </CommandGroup>
-      </CommandList>
+      <Command>
+        <CommandInput placeholder="Search commands..." />
+        <CommandList>
+          <CommandGroup heading="Commands">
+            {COMMANDS.map((command) => (
+              <CommandItem
+                key={command.id}
+                onSelect={() => {
+                  command.action()
+                  setOpen(false)
+                }}
+                className="flex justify-between"
+              >
+                <span>{command.label}</span>
+                <span className="text-xs text-muted-foreground">
+                  {command.shortcut}
+                </span>
+              </CommandItem>
+            ))}
+          </CommandGroup>
+        </CommandList>
+      </Command>
     </CommandDialog>
   )
 }
@@ -443,6 +464,19 @@ export function CommandWithShortcuts() {
 | `CommandGroup` | Groups related commands with heading |
 | `CommandItem` | Individual command entry |
 | `CommandSeparator` | Visual divider between groups |
+
+## Radix variant
+
+`style` `radix-*`: all `Command*` code above is unchanged; only the combobox trigger composes
+with `asChild`:
+
+```tsx
+<PopoverTrigger asChild>
+  <Button variant="outline" role="combobox" aria-expanded={open}>
+    Select framework...
+  </Button>
+</PopoverTrigger>
+```
 
 ## Common Patterns
 
@@ -479,4 +513,4 @@ The Command component is built on top of `cmdk` library, which provides:
 - Group management
 - Accessibility features
 
-Install: `npm install cmdk`
+Install: `bunx --bun shadcn@latest add command` (the CLI adds the `cmdk` dependency)

@@ -8,6 +8,8 @@ requires: button.md
 related: accordion.md
 ---
 
+> **Base:** examples use **Base UI** (shadcn default since 2026-07); Radix delta in "Radix variant" below; React Aria: `isExpanded`/`onExpandedChange`, trigger is a `Button slot="trigger"`. Sources: https://ui.shadcn.com/r/styles/base-nova/collapsible.json, https://ui.shadcn.com/r/styles/radix-nova/collapsible.json
+
 ## Installation
 
 ```bash
@@ -17,8 +19,6 @@ bunx --bun shadcn@latest add collapsible
 ## Basic Usage
 
 ```tsx
-'use client'
-
 import { ChevronsUpDown } from 'lucide-react'
 import { Button } from '@/modules/cores/shadcn/components/ui/button'
 import {
@@ -27,14 +27,13 @@ import {
   CollapsibleTrigger,
 } from '@/modules/cores/shadcn/components/ui/collapsible'
 
+/** Uncontrolled collapsible with a ghost-button trigger. */
 export default function CollapsibleBasic() {
   return (
     <Collapsible>
-      <CollapsibleTrigger asChild>
-        <Button variant="ghost">
-          Toggle Content
-          <ChevronsUpDown className="h-4 w-4 ml-2" />
-        </Button>
+      <CollapsibleTrigger render={<Button variant="ghost" />}>
+        Toggle Content
+        <ChevronsUpDown data-icon="inline-end" />
       </CollapsibleTrigger>
       <CollapsibleContent>
         This content can be expanded and collapsed
@@ -47,22 +46,21 @@ export default function CollapsibleBasic() {
 ## Components
 
 ### Collapsible
-Root component with open state management.
-- `open`: Controlled open state (optional)
-- `onOpenChange`: Callback when toggling
+Root component with open state management (Base UI `Collapsible.Root`).
+- `open` / `defaultOpen`: Controlled / initial open state (optional)
+- `onOpenChange`: `(open, eventDetails) => void`
 
 ### CollapsibleTrigger
-Button or element that toggles the content.
-- `asChild`: Render as child component
+Button that toggles the content; `data-panel-open` when open.
+- `render`: Render as another element (e.g. `render={<Button variant="ghost" />}`)
 
 ### CollapsibleContent
-Content that shows/hides with animation.
+Content that shows/hides (Base UI `Collapsible.Panel`): `data-open`/`data-closed`,
+`data-starting-style`/`data-ending-style`, CSS var `--collapsible-panel-height`.
 
 ## Controlled State
 
 ```tsx
-'use client'
-
 import { useState } from 'react'
 import { ChevronDown } from 'lucide-react'
 import { Button } from '@/modules/cores/shadcn/components/ui/button'
@@ -72,20 +70,21 @@ import {
   CollapsibleTrigger,
 } from '@/modules/cores/shadcn/components/ui/collapsible'
 
+/** Controlled collapsible driven by local state. */
 export default function CollapsibleControlled() {
   const [open, setOpen] = useState(false)
 
   return (
     <Collapsible open={open} onOpenChange={setOpen}>
-      <CollapsibleTrigger asChild>
-        <Button variant="ghost" className="w-full justify-between">
-          Advanced Options
-          <ChevronDown
-            className={`h-4 w-4 transition-transform ${
-              open ? 'rotate-180' : ''
-            }`}
-          />
-        </Button>
+      <CollapsibleTrigger
+        render={<Button variant="ghost" className="w-full justify-between" />}
+      >
+        Advanced Options
+        <ChevronDown
+          className={`h-4 w-4 transition-transform ${
+            open ? 'rotate-180' : ''
+          }`}
+        />
       </CollapsibleTrigger>
       <CollapsibleContent className="space-y-2 pt-2">
         <div className="text-sm text-muted-foreground">
@@ -103,8 +102,6 @@ export default function CollapsibleControlled() {
 ## FAQ Pattern
 
 ```tsx
-'use client'
-
 import { useState } from 'react'
 import { ChevronDown } from 'lucide-react'
 import {
@@ -141,6 +138,7 @@ const faqs: FAQItem[] = [
   },
 ]
 
+/** FAQ list where each question toggles independently. */
 export default function FAQCollapsible() {
   const [openItems, setOpenItems] = useState<number[]>([])
 
@@ -180,8 +178,6 @@ export default function FAQCollapsible() {
 ## Settings Group Collapsible
 
 ```tsx
-'use client'
-
 import { useState } from 'react'
 import { ChevronDown } from 'lucide-react'
 import { Label } from '@/modules/cores/shadcn/components/ui/label'
@@ -202,6 +198,7 @@ interface SettingGroup {
   }>
 }
 
+/** Settings grouped in collapsible sections with switches. */
 export default function SettingsGroups() {
   const [groups, setGroups] = useState<SettingGroup[]>([
     {
@@ -279,8 +276,6 @@ export default function SettingsGroups() {
 ## Nested Collapsible
 
 ```tsx
-'use client'
-
 import { ChevronDown } from 'lucide-react'
 import {
   Collapsible,
@@ -288,6 +283,7 @@ import {
   CollapsibleTrigger,
 } from '@/modules/cores/shadcn/components/ui/collapsible'
 
+/** Collapsible nested inside another collapsible panel. */
 export default function NestedCollapsible() {
   return (
     <div className="w-full max-w-md space-y-2">
@@ -318,8 +314,6 @@ export default function NestedCollapsible() {
 ## Code Example Collapsible
 
 ```tsx
-'use client'
-
 import { Copy, ChevronDown } from 'lucide-react'
 import { Button } from '@/modules/cores/shadcn/components/ui/button'
 import {
@@ -328,6 +322,7 @@ import {
   CollapsibleTrigger,
 } from '@/modules/cores/shadcn/components/ui/collapsible'
 
+/** Collapsible code sample with a copy button. */
 export default function CodeExampleCollapsible() {
   const code = `function hello() {
   console.log('Hello, World!')
@@ -366,8 +361,6 @@ export default function CodeExampleCollapsible() {
 ## Animation Customization
 
 ```tsx
-'use client'
-
 import { ChevronDown } from 'lucide-react'
 import {
   Collapsible,
@@ -375,14 +368,15 @@ import {
   CollapsibleTrigger,
 } from '@/modules/cores/shadcn/components/ui/collapsible'
 
+/** Height animation driven by Base UI panel data attributes and CSS variable. */
 export default function AnimatedCollapsible() {
   return (
     <Collapsible>
-      <CollapsibleTrigger className="flex w-full items-center justify-between rounded-lg border p-4 hover:bg-muted">
+      <CollapsibleTrigger className="group flex w-full items-center justify-between rounded-lg border p-4 hover:bg-muted">
         <span>Animated Content</span>
-        <ChevronDown className="h-4 w-4 transition-transform duration-200 data-[state=open]:rotate-180" />
+        <ChevronDown className="h-4 w-4 transition-transform duration-200 group-data-panel-open:rotate-180" />
       </CollapsibleTrigger>
-      <CollapsibleContent className="overflow-hidden data-[state=closed]:animate-collapse data-[state=open]:animate-expand">
+      <CollapsibleContent className="h-(--collapsible-panel-height) overflow-hidden transition-[height] duration-200 data-starting-style:h-0 data-ending-style:h-0">
         <div className="pt-4 pb-2 text-sm text-muted-foreground">
           This content animates smoothly when toggled
         </div>
@@ -392,10 +386,21 @@ export default function AnimatedCollapsible() {
 }
 ```
 
+## Radix variant
+
+`style` `radix-*`: trigger composes with `asChild`, open state is `data-state="open" | "closed"`:
+
+```tsx
+<CollapsibleTrigger asChild>
+  <Button variant="ghost">Toggle Content</Button>
+</CollapsibleTrigger>
+// State styling: group-data-[state=open]:rotate-180 (instead of group-data-panel-open:)
+```
+
 ## Best Practices
 
 1. **Visual feedback**: Change icon rotation/color on toggle
-2. **Single click to toggle**: Use `asChild` for button trigger
+2. **Single click to toggle**: Use `render` for a button trigger
 3. **Scroll into view**: Keep user context when expanding
 4. **Keyboard accessible**: Built-in Space/Enter support
 5. **Loading states**: Show spinner for async content

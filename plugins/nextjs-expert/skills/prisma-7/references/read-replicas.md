@@ -12,20 +12,12 @@ related: connection-pooling.md, deployment.md
 
 ## Configuration
 
+Replicas are NOT declared in the schema. The schema keeps a single URL-less datasource (the CLI URL lives in `prisma.config.ts`); replicas are wired at runtime with the `@prisma/extension-read-replicas` extension (v0.5+, requires `@prisma/client` ^7), one `PrismaClient` + driver adapter per database:
+
 ```prisma
 // prisma/schema.prisma
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
-
-  // Primary database
-  primaryUrl = env("DATABASE_PRIMARY_URL")
-
-  // Read replicas
-  replicaUrls = [
-    env("DATABASE_REPLICA_1_URL"),
-    env("DATABASE_REPLICA_2_URL"),
-  ]
 }
 ```
 
@@ -53,16 +45,27 @@ export type OperationType = 'read' | 'write'
 
 ```typescript
 // modules/cores/db/src/prisma.ts
-import { PrismaClient } from '@prisma/client'
+import { PrismaPg } from '@prisma/adapter-pg'
+import { readReplicas } from '@prisma/extension-read-replicas'
+import { PrismaClient } from '../generated/prisma/client'  // v7: generated path
 import type { ReplicaConfig } from './src/interfaces/replicaConfig'
 
-const prisma = new PrismaClient({
-  log: ['warn', 'error'],
-})
+const config: ReplicaConfig = {
+  primaryUrl: process.env.DATABASE_PRIMARY_URL!,
+  replicaUrls: [process.env.DATABASE_REPLICA_1_URL!, process.env.DATABASE_REPLICA_2_URL!],
+}
+
+/** One client (and adapter) per database */
+const createClient = (connectionString: string) =>
+  new PrismaClient({ adapter: new PrismaPg({ connectionString }), log: ['warn', 'error'] })
+
+export const prisma = createClient(config.primaryUrl).$extends(
+  readReplicas({ replicas: config.replicaUrls.map(createClient) })
+)
 
 /**
- * Execute read operation (routed to replica)
- * Automatic replica selection via query extension
+ * Execute read operation (routed to a random replica)
+ * Force the primary with prisma.$primary().user.findMany()
  * @module modules/cores/db/src
  */
 export async function readOperation() {

@@ -1,7 +1,7 @@
 ---
 name: error-files
-description: Fichiers d'erreur localisés (not-found, error, loading) avec traductions
-when-to-use: pages 404, pages d'erreur, états loading, fallbacks non trouvés, UX localisée
+description: Localized error files (not-found, error, loading) with translations
+when-to-use: 404 pages, error pages, loading states, not-found fallbacks, localized UX
 keywords: not-found.tsx, error.tsx, loading.tsx, error boundaries, custom errors
 priority: medium
 requires: client-components.md, server-components.md

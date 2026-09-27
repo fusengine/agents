@@ -10,12 +10,14 @@ related: tabs.md
 
 # Accordion Component
 
-Accessible accordion component for creating collapsible content sections using Radix UI primitives.
+> **Base:** examples use **Base UI** (shadcn default since 2026-07); Radix delta in "Radix variant" below. Sources: https://ui.shadcn.com/r/styles/base-nova/accordion.json, https://ui.shadcn.com/r/styles/radix-nova/accordion.json
+
+Accessible accordion component for creating collapsible content sections (Base UI `Accordion` by default; Radix or React Aria when `components.json` says so).
 
 ## Installation
 
 ```bash
-bunx --bun shadcn-ui@latest add accordion
+bunx --bun shadcn@latest add accordion
 ```
 
 ## Basic Accordion
@@ -28,9 +30,10 @@ import {
   AccordionContent,
 } from "@/modules/cores/shadcn/components/ui/accordion"
 
+/** Single-open accordion with the first item expanded. */
 export function BasicAccordion() {
   return (
-    <Accordion type="single" collapsible>
+    <Accordion defaultValue={["item-1"]}>
       <AccordionItem value="item-1">
         <AccordionTrigger>Is it accessible?</AccordionTrigger>
         <AccordionContent>
@@ -58,6 +61,8 @@ export function BasicAccordion() {
 
 ### Single Mode (one item open at a time)
 
+Default on Base UI — no `type`/`collapsible` prop; clicking the open trigger closes it.
+
 ```tsx
 import {
   Accordion,
@@ -66,9 +71,10 @@ import {
   AccordionContent,
 } from "@/modules/cores/shadcn/components/ui/accordion"
 
+/** Default mode: one item open at a time. */
 export function SingleModeAccordion() {
   return (
-    <Accordion type="single" collapsible>
+    <Accordion>
       <AccordionItem value="section-1">
         <AccordionTrigger>Section 1</AccordionTrigger>
         <AccordionContent>Content for section 1</AccordionContent>
@@ -92,9 +98,10 @@ import {
   AccordionContent,
 } from "@/modules/cores/shadcn/components/ui/accordion"
 
+/** `multiple` lets several items stay open. */
 export function MultipleModeAccordion() {
   return (
-    <Accordion type="multiple">
+    <Accordion multiple>
       <AccordionItem value="item-1">
         <AccordionTrigger>Item 1</AccordionTrigger>
         <AccordionContent>Content for item 1</AccordionContent>
@@ -143,11 +150,12 @@ const faqs = [
   },
 ]
 
+/** FAQ list rendered from data. */
 export function FAQAccordion() {
   return (
     <div className="w-full max-w-2xl">
       <h2 className="mb-6 text-2xl font-bold">Frequently Asked Questions</h2>
-      <Accordion type="single" collapsible>
+      <Accordion>
         {faqs.map((faq) => (
           <AccordionItem key={faq.id} value={faq.id}>
             <AccordionTrigger className="text-left">
@@ -175,9 +183,10 @@ import {
 } from "@/modules/cores/shadcn/components/ui/accordion"
 import { HelpCircle, Zap, Lock } from "lucide-react"
 
+/** Triggers with leading icons. */
 export function AccordionWithIcons() {
   return (
-    <Accordion type="single" collapsible>
+    <Accordion>
       <AccordionItem value="help">
         <AccordionTrigger className="gap-2">
           <HelpCircle className="h-5 w-5" />
@@ -215,8 +224,6 @@ export function AccordionWithIcons() {
 Manage accordion state programmatically:
 
 ```tsx
-"use client"
-
 import { useState } from "react"
 import {
   Accordion,
@@ -226,6 +233,7 @@ import {
 } from "@/modules/cores/shadcn/components/ui/accordion"
 import { Button } from "@/modules/cores/shadcn/components/ui/button"
 
+/** Controlled `value` array with expand/collapse-all buttons. */
 export function ControlledAccordion() {
   const [openItems, setOpenItems] = useState<string[]>([])
 
@@ -256,7 +264,7 @@ export function ControlledAccordion() {
         </Button>
       </div>
       <Accordion
-        type="multiple"
+        multiple
         value={openItems}
         onValueChange={setOpenItems}
       >
@@ -291,9 +299,10 @@ import {
 } from "@/modules/cores/shadcn/components/ui/accordion"
 import { Button } from "@/modules/cores/shadcn/components/ui/button"
 
+/** Panels holding code, lists and actions. */
 export function AccordionWithRichContent() {
   return (
-    <Accordion type="single" collapsible>
+    <Accordion>
       <AccordionItem value="code-example">
         <AccordionTrigger>Code Example</AccordionTrigger>
         <AccordionContent>
@@ -337,9 +346,10 @@ import {
   AccordionContent,
 } from "@/modules/cores/shadcn/components/ui/accordion"
 
+/** Custom item, trigger and panel classes. */
 export function StyledAccordion() {
   return (
-    <Accordion type="single" collapsible className="w-full">
+    <Accordion className="w-full">
       <AccordionItem
         value="item-1"
         className="border-l-4 border-l-blue-500"
@@ -369,15 +379,29 @@ export function StyledAccordion() {
 
 ## API Reference
 
-- `Accordion` - Root component
-  - `type` - `"single"` (one open) or `"multiple"` (multiple open)
-  - `collapsible` - Allow closing open item (single mode only)
-  - `value` - Controlled open items
-  - `onValueChange` - Callback when open items change
+- `Accordion` - Root component (Base UI `Accordion.Root`)
+  - `multiple` - Allow several open items (default `false`)
+  - `defaultValue` / `value` - Open items, always an array (`string[]`)
+  - `onValueChange` - `(value, eventDetails) => void`
 - `AccordionItem` - Individual accordion section
-  - `value` - Unique identifier
+  - `value` - Unique identifier; `disabled` - Disable the item
 - `AccordionTrigger` - Clickable header
-- `AccordionContent` - Expandable content panel
+- `AccordionContent` - Expandable panel (Base UI `Accordion.Panel`; `className` goes to the inner div)
+
+## Radix variant
+
+Same part names; only the root props change (`components.json` `style` `radix-*`):
+
+```tsx
+<>
+  {/* Single, closable — Radix needs type + collapsible, string value */}
+  <Accordion type="single" collapsible defaultValue="item-1">…</Accordion>
+  {/* Multiple — array value */}
+  <Accordion type="multiple" value={openItems} onValueChange={setOpenItems}>…</Accordion>
+</>
+```
+
+React Aria (`aria-*`): `AccordionItem id=` instead of `value`, `defaultExpandedKeys` / `allowsMultipleExpanded` — see `shadcn docs accordion --base aria`.
 
 ## Keyboard Navigation
 

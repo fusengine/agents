@@ -2,10 +2,10 @@
 name: nextjs-tanstack-form
 description: Use when building forms in Next.js 16 with TanStack Form v1 — Server Actions, Zod validation, multi-step wizards, field arrays.
 versions:
-  tanstack-form: 1.0
+  tanstack-form: 1.33
   nextjs: 16
   react: 19
-  zod: 3.24
+  zod: 4.6
 user-invocable: true
 references: references/installation.md, references/basic-usage.md, references/field-api.md, references/form-state.md, references/validation-zod.md, references/server-actions.md, references/array-fields.md, references/async-validation.md, references/shadcn-integration.md, references/typescript.md, references/multi-step-form.md, references/performance.md, references/testing.md, references/migration-rhf.md
 related-skills: nextjs-16, nextjs-shadcn, solid-nextjs
@@ -50,7 +50,7 @@ After implementation, run **fuse-ai-pilot:sniper** for validation.
 | Signal-based state | Minimal re-renders, optimal performance |
 | Full TypeScript | DeepKeys, DeepValue inference |
 | Server Actions native | Built-in Next.js 16 integration |
-| Zod adapter | Schema-first validation |
+| Standard Schema (Zod, Valibot…) | Schema-first validation, no adapter needed |
 | Framework agnostic | Same API for React, Vue, Solid |
 | Headless | Works with any UI library (shadcn/ui) |
 

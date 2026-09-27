@@ -23,12 +23,14 @@ Applies to **Jobs, Listeners, Notifications, Mailables, Broadcast Events**.
 | Max exceptions | `public int $maxExceptions = 3;` | `#[MaxExceptions(3)]` |
 | Timeout | `public int $timeout = 120;` | `#[Timeout(120)]` |
 | Backoff (uniform) | `public int $backoff = 60;` | `#[Backoff(60)]` |
-| Backoff (progressive) | `public array $backoff = [10, 30, 60];` | `#[Backoff([10, 30, 60])]` |
-| Retry until | `public function retryUntil(): \DateTime` | `#[RetryUntil('+1 hour')]` |
+| Backoff (progressive) | `public array $backoff = [10, 30, 60];` | `#[Backoff([10, 30, 60])]` or variadic `#[Backoff(10, 30, 60)]` (13.2+) |
+| Retry until | `public function retryUntil(): \DateTime` | no attribute — keep the method |
 | Fail on timeout | `public bool $failOnTimeout = true;` | `#[FailOnTimeout]` |
 | Unique for | `public int $uniqueFor = 3600;` | `#[UniqueFor(3600)]` |
-| After commit | `public bool $afterCommit = true;` | `#[AfterCommit]` |
+| After commit | `public bool $afterCommit = true;` | no attribute — `->afterCommit()` at dispatch, or `ShouldQueueAfterCommit` (listeners) |
 | Delete when missing | `public $deleteWhenMissingModels = true;` | `#[DeleteWhenMissingModels]` |
+| Delay | `public $delay = 60;` | `#[Delay(60)]` (13.4+) |
+| Debounce (13.6+) | — | `#[DebounceFor(30, maxWait: 120)]` + `debounceId()` |
 
 ---
 
@@ -78,10 +80,10 @@ final class ProcessPodcast implements ShouldQueue
 
 ## Migration recipe (per queueable)
 
-1. Add `use Illuminate\Queue\Attributes\{Connection, Queue, Tries, Timeout, Backoff, MaxExceptions, FailOnTimeout, UniqueFor, AfterCommit};`
+1. Add `use Illuminate\Queue\Attributes\{Connection, Queue, Tries, Timeout, Backoff, MaxExceptions, FailOnTimeout, UniqueFor};`
 2. Replace each public property with its attribute counterpart on the class declaration.
 3. **Delete** the legacy property — keeping both is forbidden.
-4. If the job dispatches inside a transaction, switch to `#[AfterCommit]`.
+4. If the job dispatches inside a transaction, keep `$afterCommit` or dispatch with `->afterCommit()` (there is no `#[AfterCommit]` attribute).
 5. Move per-job connection/queue defaults to centralised `Queue::route()` if applicable.
 6. Run `fuse-ai-pilot:sniper`.
 
@@ -94,11 +96,15 @@ For environment-driven routing, prefer centralised configuration in `AppServiceP
 ```php
 use Illuminate\Support\Facades\Queue;
 
-Queue::route('podcasts', connection: 'redis',    queue: 'media');
-Queue::route('mail',     connection: 'database', queue: 'transactional');
+// First argument = job class, or an interface / trait / parent class it uses
+Queue::route(ProcessPodcast::class, connection: 'redis', queue: 'media');
+Queue::route(RequiresVideo::class, queue: 'video'); // App\Concerns\RequiresVideo trait
+
+// Forward a whole queue to another queue and/or connection (13.26+)
+Queue::forward('reports', 'reports.fifo', 'sqs');
 ```
 
-Then drop `#[Connection]` / `#[Queue]` from jobs that should follow the route. Per-job attributes still win when present.
+Then drop `#[Connection]` / `#[Queue]` from jobs that should follow the route. Routing can still be overridden per job.
 
 ---
 

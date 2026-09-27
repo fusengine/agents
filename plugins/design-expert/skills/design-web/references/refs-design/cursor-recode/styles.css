@@ -1,181 +1,182 @@
 /* =============================================================================
-   RÉFÉRENCE DE DESIGN — procédés relevés sur cursor.com (juillet 2026)
-   Source : index.html (647 707 o) + 4 feuilles CSS Next.js compilées.
+   DESIGN REFERENCE — techniques measured on cursor.com (July 2026)
+   Source: index.html (647,707 b) + 4 compiled Next.js CSS sheets.
 
-   [relevé]    = valeur lue textuellement dans la source (fichier indiqué)
-   [arbitrage] = choix de l'auteur de cette référence, absent de la source
+   [measured] = value read verbatim in the source (file indicated)
+   [decided]  = choice made by the author of this reference, absent from the source
 
-   Sources abrégées :  M = 15--1yty4lgos.css (313 018 o, feuille principale)
-                       B = 0n3w.msyn~5aj.css (68 334 o, CSS d'une démo)
-                       I = blocs <style> inline de index.html
-                       H = balisage de index.html
+   Abbreviated sources:  M = 15--1yty4lgos.css (313,018 b, main sheet)
+                         B = 0n3w.msyn~5aj.css (68,334 b, CSS of a demo)
+                         I = inline <style> blocks of index.html
+                         H = markup of index.html
    ========================================================================== */
 
 /* -----------------------------------------------------------------------------
-   1. JETONS
+   1. TOKENS
 -------------------------------------------------------------------------------*/
 :root {
   color-scheme: light dark;
 
-  /* — POINTS DE BASCULE —
-     Le projet REDÉFINIT les paliers de Tailwind. Vérifié en isolant chaque bloc
-     @media de M et en cherchant quel préfixe y est compilé :
+  /* — BREAKPOINTS —
+     The project REDEFINES Tailwind's steps. Verified by isolating each @media
+     block of M and looking up which prefix is compiled in it:
        sm: → 420px · md: → 660px · lg: → 900px · xl: → 1140px
-     (`--breakpoint-md:660px` est le seul déclaré en clair. L'échelle du
-     conteneur confirme la série : 420 / 660 / 900 / 1140 / 1380 / 1470.)
-     Ne jamais présumer les 640/768/1024/1280 de Tailwind ici.     [relevé] M */
+     (`--breakpoint-md:660px` is the only one declared in clear. The container
+     scale confirms the series: 420 / 660 / 900 / 1140 / 1380 / 1470.)
+     Never assume Tailwind's 640/768/1024/1280 here.              [measured] M */
 
-  /* — Couleur, thème clair — [relevé] M, @layer theme :root */
-  --fond-page:         #f7f7f4;
-  --texte-primaire:    #26251e;
-  --texte-primaire-02: #3b3a33;   /* --color-theme-fg-02 */
+  /* — Color, light theme — [measured] M, @layer theme :root */
+  --page-bg:         #f7f7f4;
+  --text-primary:    #26251e;
+  --text-primary-02: #3b3a33;   /* --color-theme-fg-02 */
   --accent:            #f54e00;   /* --color-theme-accent */
 
-  /* Rampe de surfaces : 5 marches, toutes des hex OPAQUES — pas des alpha
-     empilés. Une carte survolée sur une carte reste exacte.       [relevé] M */
-  --surface-01: #f2f1ed;   /* carte au repos            --color-theme-card-hex */
-  --surface-02: #f0efeb;   /* survol de carte claire    --…-card-01-hex        */
-  --surface-03: #ebeae5;   /* survol de carte           --…-card-02-hex        */
-  --surface-04: #e6e5e0;   /* bouton secondaire         --…-card-03-hex        */
-  --surface-05: #e1e0db;   /* survol bouton secondaire  --…-card-04-hex        */
-  --surface-chaude: #f3ede6;                        /* --…-card-warm-hex       */
+  /* Surface ramp: 5 steps, all OPAQUE hex — not stacked alphas. A card
+     hovered on top of a card stays exact.                        [measured] M */
+  --surface-01: #f2f1ed;   /* card at rest              --color-theme-card-hex */
+  --surface-02: #f0efeb;   /* light card hover          --…-card-01-hex        */
+  --surface-03: #ebeae5;   /* card hover                --…-card-02-hex        */
+  --surface-04: #e6e5e0;   /* secondary button          --…-card-03-hex        */
+  --surface-05: #e1e0db;   /* secondary button hover    --…-card-04-hex        */
+  --surface-warm: #f3ede6;                        /* --…-card-warm-hex       */
 
-  /* Dérivés : TOUS calculés en color-mix oklab depuis le texte primaire,
-     jamais en gris indépendants. Changer --texte-primaire refait la
-     hiérarchie entière.                                           [relevé] M */
-  --texte-secondaire: color-mix(in oklab, var(--texte-primaire) 60%, transparent);
-  --texte-median:     color-mix(in oklab, var(--texte-primaire) 50%, transparent);
-  --texte-tertiaire:  color-mix(in oklab, var(--texte-primaire) 40%, transparent);
-  --filet-discret:    color-mix(in oklab, var(--texte-primaire) 2.5%, transparent);
-  --filet-faible:     color-mix(in oklab, var(--texte-primaire) 5%,  transparent);
-  --filet-moyen:      color-mix(in oklab, var(--texte-primaire) 10%, transparent);
-  --filet-marque:     color-mix(in oklab, var(--texte-primaire) 20%, transparent);
-  --filet-fort:       color-mix(in oklab, var(--texte-primaire) 60%, transparent);
+  /* Derived: ALL computed with oklab color-mix from the primary text, never
+     as independent greys. Changing --text-primary rebuilds the whole
+     hierarchy.                                                   [measured] M */
+  --text-secondary: color-mix(in oklab, var(--text-primary) 60%, transparent);
+  --text-mid:     color-mix(in oklab, var(--text-primary) 50%, transparent);
+  --text-tertiary:  color-mix(in oklab, var(--text-primary) 40%, transparent);
+  --rule-subtle:    color-mix(in oklab, var(--text-primary) 2.5%, transparent);
+  --rule-faint:     color-mix(in oklab, var(--text-primary) 5%,  transparent);
+  --rule-medium:      color-mix(in oklab, var(--text-primary) 10%, transparent);
+  --rule-marked:     color-mix(in oklab, var(--text-primary) 20%, transparent);
+  --rule-strong:       color-mix(in oklab, var(--text-primary) 60%, transparent);
 
-  /* Couleurs de diff du produit — [relevé] M --color-theme-product-ansi-* */
-  --diff-ajout:   #1f8a65;
-  --diff-retrait: #cf2d56;
+  /* Product diff colors — [measured] M --color-theme-product-ansi-* */
+  --diff-added:   #1f8a65;
+  --diff-removed: #cf2d56;
 
-  /* Fonds des médias en couches : trois paires relevées dans H, attribut style
-     `--layered-media-bg-light` / `--layered-media-bg-dark`.       [relevé] H */
-  --media-fond-a: #D9D5CF;
-  --media-fond-b: #CAC6BE;
-  --media-fond-c: #B6B9BE;
+  /* Layered media backgrounds: three pairs measured in H, style attribute
+     `--layered-media-bg-light` / `--layered-media-bg-dark`.      [measured] H */
+  --media-bg-a: #D9D5CF;
+  --media-bg-b: #CAC6BE;
+  --media-bg-c: #B6B9BE;
 
-  /* — SURFACES EN DÉGRADÉ —
-     Piège de lecture : les jetons `--color-theme-card*` SANS suffixe `-hex` ne
-     sont pas des couleurs mais des **images de fond empilées**. La rampe existe
-     donc en deux versions, et elles ne sont pas interchangeables :
-       · `--color-theme-card-03-hex` = #e6e5e0, couleur opaque, pour `background-color`
-       · `--color-theme-card-03`     = deux dégradés superposés, pour `background-image`
-     [relevé] M :
+  /* — GRADIENT SURFACES —
+     Reading trap: the `--color-theme-card*` tokens WITHOUT the `-hex` suffix
+     are not colors but **stacked background images**. The ramp therefore
+     exists in two versions, and they are not interchangeable:
+       · `--color-theme-card-03-hex` = #e6e5e0, opaque color, for `background-color`
+       · `--color-theme-card-03`     = two stacked gradients, for `background-image`
+     [measured] M:
        --color-theme-card:    linear-gradient(var(--color-theme-card-hex) 0% 100%)
        --color-theme-card-02: linear-gradient(var(--color-theme-fg-02-5) 0% 100%),
                               linear-gradient(var(--color-theme-card-hex) 0% 100%)
        --color-theme-card-03: linear-gradient(var(--color-theme-fg-05) 0% 100%),
                               linear-gradient(var(--color-theme-card-hex) 0% 100%)
-     Un dégradé d'une seule couleur « 0% 100% » n'est pas une coquetterie : il
-     permet d'EMPILER un voile (2,5 % ou 5 % du texte primaire) au-dessus du
-     fond de carte en une seule propriété, sans élément supplémentaire ni alpha
-     appliqué à l'élément entier. Le voile suit le thème, puisqu'il dérive du
-     texte primaire. Aplatir ces jetons en une couleur unie fait perdre
-     exactement la nuance qui sépare une scène de média de sa carte.
-     `bg-[image:var(--color-theme-card-03)]` apparaît 5 fois dans la page. */
-  --surface-carte:    linear-gradient(var(--surface-01) 0% 100%);
-  --surface-carte-02: linear-gradient(color-mix(in oklab, var(--texte-primaire) 2.5%, transparent) 0% 100%),
+     A single-color "0% 100%" gradient is not an affectation: it makes it
+     possible to STACK a veil (2.5% or 5% of the primary text) on top of the
+     card background in a single property, with no extra element and no
+     alpha applied to the whole element. The veil follows the theme, since it
+     derives from the primary text. Flattening these tokens into a plain
+     color loses exactly the nuance that separates a media scene from its card.
+     `bg-[image:var(--color-theme-card-03)]` appears 5 times in the page. */
+  --surface-tile:    linear-gradient(var(--surface-01) 0% 100%);
+  --surface-tile-02: linear-gradient(color-mix(in oklab, var(--text-primary) 2.5%, transparent) 0% 100%),
                       linear-gradient(var(--surface-01) 0% 100%);
-  --surface-carte-03: linear-gradient(color-mix(in oklab, var(--texte-primaire) 5%, transparent) 0% 100%),
+  --surface-tile-03: linear-gradient(color-mix(in oklab, var(--text-primary) 5%, transparent) 0% 100%),
                       linear-gradient(var(--surface-01) 0% 100%);
-  /* Masque de fondu latéral d'un défilement continu — le contenu s'efface dans
-     le fond de page plutôt que d'être coupé net.
-     [relevé] M : linear-gradient(90deg,transparent 0%,var(--color-theme-bg) 88%) */
-  --masque-lateral: linear-gradient(90deg, transparent 0%, var(--fond-page) 88%);
+  /* Side fade mask of a continuous scroll — the content fades into the page
+     background instead of being cut sharply.
+     [measured] M: linear-gradient(90deg,transparent 0%,var(--color-theme-bg) 88%) */
+  --mask-side: linear-gradient(90deg, transparent 0%, var(--page-bg) 88%);
 
-  /* — RYTHME —
-     Deux pas INDÉPENDANTS : l'horizontal et le vertical ne partagent aucune
-     unité. Il n'y a pas de « grille 8pt » ici.                    [relevé] M */
-  --pas-h:     calc(10rem / 16);   /* --g         = 0.625rem */
-  --pas-v:     calc(1rem * 1.4);   /* --v         = 1.4rem   */
-  --gouttiere: calc(12rem / 15);   /* --grid-gap  = 0.8rem   */
-  --largeur-max:    1300px;        /* --max-width-container   */
-  --hauteur-entete: 56px;          /* --site-header-height    */
+  /* — RHYTHM —
+     Two INDEPENDENT steps: horizontal and vertical share no unit. There is
+     no "8pt grid" here.                                          [measured] M */
+  --step-h:     calc(10rem / 16);   /* --g         = 0.625rem */
+  --step-v:     calc(1rem * 1.4);   /* --v         = 1.4rem   */
+  --gutter: calc(12rem / 15);   /* --grid-gap  = 0.8rem   */
+  --max-width:    1300px;        /* --max-width-container   */
+  --header-height: 56px;          /* --site-header-height    */
 
-  /* — TYPOGRAPHIE —
-     Pile système pure. AUCUNE webfont de texte sur la page : le seul fichier
-     de fonte chargé est une fonte d'icônes.                       [relevé] M */
-  --police: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+  /* — TYPOGRAPHY —
+     Pure system stack. NO text webfont on the page: the only font file
+     loaded is an icon font.                                      [measured] M */
+  --font: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
             "Helvetica Neue", Arial, sans-serif;
-  --police-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
             "Liberation Mono", "Courier New", monospace;
 
-  /* Échelle : 9 marches. Noter le saut vide entre 1.625 et 2.25rem. [relevé] M */
+  /* Scale: 9 steps. Note the empty jump between 1.625 and 2.25rem. [measured] M */
   --t-xs: .75rem;      --t-sm: .875rem;   --t-base: 1rem;
   --t-md-sm: 1.125rem; --t-md: 1.375rem;  --t-md-lg: 1.625rem;
   --t-lg: 2.25rem;     --t-xl: 3.25rem;   --t-2xl: 4.5rem;
-  /* Échelle « produit », pour les interfaces reconstituées        [relevé] M */
+  /* "Product" scale, for the reconstructed interfaces            [measured] M */
   --t-prod-sm: .6875rem; --t-prod: .75rem; --t-prod-lg: .8125rem;
 
-  /* Interlignes — 7 valeurs, resserrées quand la taille monte.    [relevé] M */
-  --int-serre: 1.1;  --int-2xserre: 1.15; --int-xserre: 1.2;
-  --int-mi: 1.25;    --int-mi-plus: 1.3;  --int-ample: 1.4;  --int-normal: 1.5;
-  --int-prod: 1.33333;
+  /* Line heights — 7 values, tightened as the size goes up.      [measured] M */
+  --leading-tight: 1.1;  --leading-2xtight: 1.15; --leading-xtight: 1.2;
+  --leading-mid: 1.25;    --leading-mid-plus: 1.3;  --leading-loose: 1.4;  --leading-normal: 1.5;
+  --leading-prod: 1.33333;
 
-  /* Approches — négatives dès qu'on dépasse le corps de texte.    [relevé] M */
-  --ap-sm: .01em;       --ap-base: .005em; --ap-md: -.005em;
-  --ap-md-lg: -.0125em; --ap-lg: -.02em;   --ap-xl: -.025em; --ap-2xl: -.03em;
+  /* Tracking — negative as soon as it goes past body text.       [measured] M */
+  --tracking-sm: .01em;       --tracking-base: .005em; --tracking-md: -.005em;
+  --tracking-md-lg: -.0125em; --tracking-lg: -.02em;   --tracking-xl: -.025em; --tracking-2xl: -.03em;
 
-  /* — RAYONS — [relevé] M --radius-* ; `rounded-full` est compilé par
-     lightningcss en 3.40282e38px (borne d'un float 32 bits) : on écrit 999px. */
-  --r-2xs: 2px; --r-xs: 4px; --r-md: 8px; --r-lg: .5rem; --r-plein: 999px;
+  /* — RADII — [measured] M --radius-* ; `rounded-full` is compiled by
+     lightningcss to 3.40282e38px (the bound of a 32-bit float): we write 999px. */
+  --r-2xs: 2px; --r-xs: 4px; --r-md: 8px; --r-lg: .5rem; --r-full: 999px;
 
-  /* — MOUVEMENT — 3 durées de système + 3 courbes.                [relevé] M */
-  --duree-instant: .14s;  /* --duration      : états d'interface       */
-  --duree-lente:   .25s;  /* --duration-slow : panneaux, items de nav  */
-  --duree-ui:      .15s;  /* --default-transition-duration            */
-  --duree-longue:  .2s;   /* utilitaire .duration-200                 */
-  --duree-revele:  1s;    /* --animate-gallery-marquee-item-slide-up  */
+  /* — MOTION — 3 system durations + 3 curves.                    [measured] M */
+  --time-instant: .14s;  /* --duration      : interface states        */
+  --time-slow:   .25s;  /* --duration-slow : panels, nav items       */
+  --time-ui:      .15s;  /* --default-transition-duration            */
+  --time-long:  .2s;   /* utility .duration-200                    */
+  --time-reveal:  1s;    /* --animate-gallery-marquee-item-slide-up  */
 
-  --courbe-ressort: cubic-bezier(.25, 1, .5, 1);  /* --ease-out-spring */
-  --courbe-sortie:  cubic-bezier(0, 0, .2, 1);    /* --ease-out        */
-  --courbe-douce:   cubic-bezier(.4, 0, .2, 1);   /* --ease-in-out     */
+  --curve-spring: cubic-bezier(.25, 1, .5, 1);  /* --ease-out-spring */
+  --curve-exit:  cubic-bezier(0, 0, .2, 1);    /* --ease-out        */
+  --curve-soft:   cubic-bezier(.4, 0, .2, 1);   /* --ease-in-out     */
 
-  /* Décalage de cascade des révélations : posé en JS dans la source, donc
-     illisible dans le CSS livré.                                [arbitrage] */
+  /* Stagger offset of the reveals: set in JS in the source, hence
+     unreadable in the shipped CSS.                                [decided] */
   --cascade: 60ms;
 
-  /* — OMBRES — [relevé] M --shadow-flyout, --shadow-outline-theme ; l'ombre de
-     fenêtre est relevée dans H, attribut style des `#demo-window-*`. */
-  --ombre-flyout:  0 0 1rem #00000005, 0 0 .5rem #00000002;
-  --contour-theme: 0 0 0 1px var(--filet-moyen);
-  --ombre-fenetre: 0 28px 70px rgba(0,0,0,.14), 0 14px 32px rgba(0,0,0,.1),
-                   0 0 0 1px var(--filet-moyen);
+  /* — SHADOWS — [measured] M --shadow-flyout, --shadow-outline-theme ; the
+     window shadow is measured in H, style attribute of the `#demo-window-*`. */
+  --flyout-shadow:  0 0 1rem #00000005, 0 0 .5rem #00000002;
+  --outline-theme: 0 0 0 1px var(--rule-medium);
+  --window-shadow: 0 28px 70px rgba(0,0,0,.14), 0 14px 32px rgba(0,0,0,.1),
+                   0 0 0 1px var(--rule-medium);
 }
 
 @media (min-width: 900px) {
-  :root { --hauteur-entete: 52px; }   /* [relevé] M @media (min-width:900px) */
+  :root { --header-height: 52px; }   /* [measured] M @media (min-width:900px) */
 }
 
-/* — Thème sombre —
-   Deux relevés combinés :
+/* — Dark theme —
+   Two measurements combined:
    · `[data-theme=dark]{--color-theme-bg:#14120b;--color-theme-fg:#edecec;
-      --color-theme-fg-02:#d7d6d5}` existe littéralement dans M ;
-   · le bloc inline (I) ajoute le motif
+      --color-theme-fg-02:#d7d6d5}` exists literally in M;
+   · the inline block (I) adds the pattern
      `@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]) … }`.
-   C'est ce `:not([data-theme="light"])` À L'INTÉRIEUR du media query qui permet
-   de revenir au clair sur un appareil sombre. Sans lui, bascule à sens unique. */
+   It is this `:not([data-theme="light"])` INSIDE the media query that makes it
+   possible to go back to light on a dark device. Without it, the switch is
+   one-way. */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --fond-page: #14120b;  --texte-primaire: #edecec;  --texte-primaire-02: #d7d6d5;
+    --page-bg: #14120b;  --text-primary: #edecec;  --text-primary-02: #d7d6d5;
     --surface-01: #1b1913; --surface-02: #1d1b15; --surface-03: #201e18;
-    --surface-04: #26241e; --surface-05: #2b2923; --surface-chaude: #1c1713;
-    --media-fond-a: #4A443B; --media-fond-b: #47433C; --media-fond-c: #3C3935;
+    --surface-04: #26241e; --surface-05: #2b2923; --surface-warm: #1c1713;
+    --media-bg-a: #4A443B; --media-bg-b: #47433C; --media-bg-c: #3C3935;
   }
 }
 :root[data-theme="dark"] {
-  --fond-page: #14120b;  --texte-primaire: #edecec;  --texte-primaire-02: #d7d6d5;
+  --page-bg: #14120b;  --text-primary: #edecec;  --text-primary-02: #d7d6d5;
   --surface-01: #1b1913; --surface-02: #1d1b15; --surface-03: #201e18;
-  --surface-04: #26241e; --surface-05: #2b2923; --surface-chaude: #1c1713;
-  --media-fond-a: #4A443B; --media-fond-b: #47433C; --media-fond-c: #3C3935;
+  --surface-04: #26241e; --surface-05: #2b2923; --surface-warm: #1c1713;
+  --media-bg-a: #4A443B; --media-bg-b: #47433C; --media-bg-c: #3C3935;
 }
 
 /* -----------------------------------------------------------------------------
@@ -185,476 +186,476 @@
 html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
 body {
   margin: 0;
-  background-color: var(--fond-page);
-  color: var(--texte-primaire);
-  font-family: var(--police);
+  background-color: var(--page-bg);
+  color: var(--text-primary);
+  font-family: var(--font);
   font-size: var(--t-base);
-  line-height: var(--int-normal);
-  letter-spacing: var(--ap-base);
+  line-height: var(--leading-normal);
+  letter-spacing: var(--tracking-base);
   -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;                  /* garde-fou anti-débordement [arbitrage] */
+  overflow-x: hidden;                  /* anti-overflow safeguard [decided] */
 }
 h1, h2, h3, p, figure, blockquote, ul, figcaption { margin: 0; }
-h1, h2, h3 { font-weight: 400; }       /* [relevé] M : --font-weight-normal partout */
+h1, h2, h3 { font-weight: 400; }       /* [measured] M: --font-weight-normal everywhere */
 ul { padding: 0; list-style: none; }
 img, svg { display: block; max-width: 100%; }
 a { color: inherit; text-decoration: none; }
 button { font: inherit; color: inherit; }
 
-/* Anneau de focus unique pour TOUTE la page — offset en `ch`, pas en px : il
-   suit la taille de police du composant.
-   [relevé] M : outline:2px solid var(--color-theme-fg); outline-offset:.3ch */
+/* A single focus ring for the WHOLE page — offset in `ch`, not px: it
+   follows the font size of the component.
+   [measured] M: outline:2px solid var(--color-theme-fg); outline-offset:.3ch */
 :where(a, button, [tabindex]):focus-visible {
-  outline: 2px solid var(--texte-primaire);
+  outline: 2px solid var(--text-primary);
   outline-offset: .3ch;
 }
 
 /* -----------------------------------------------------------------------------
-   3. GABARIT
+   3. LAYOUT
 -------------------------------------------------------------------------------*/
-.conteneur {                      /* [relevé] M .container, règle finale l.3678 */
-  width: 100%; max-width: var(--largeur-max); margin-inline: auto;
+.wrapper {                      /* [measured] M .container, final rule l.3678 */
+  width: 100%; max-width: var(--max-width); margin-inline: auto;
 }
 
-/* Une seule classe porte TOUT le rythme vertical du site.
-   [relevé] M : .section{padding:var(--spacing-v3) var(--spacing-g2)}
-   → 3 pas verticaux (4.2rem) en bloc, 2 pas horizontaux (1.25rem) en ligne. */
-.section { padding: calc(var(--pas-v) * 3) calc(var(--pas-h) * 2); }
-.section--sans-y   { padding-block: 0; }                       /* [relevé] M */
-.section--sans-x   { padding-inline: 0; }                      /* [relevé] M */
-.section--compacte { padding-block: calc(var(--pas-v) * 2); }  /* [relevé] M */
-.section--titre    { padding-block: calc(var(--pas-v) * 3); }  /* [relevé] M */
-.section--coupee   { overflow: hidden; }                       /* [relevé] H */
+/* A single class carries ALL the vertical rhythm of the site.
+   [measured] M: .section{padding:var(--spacing-v3) var(--spacing-g2)}
+   → 3 vertical steps (4.2rem) block-wise, 2 horizontal steps (1.25rem) inline. */
+.section { padding: calc(var(--step-v) * 3) calc(var(--step-h) * 2); }
+.section--no-y   { padding-block: 0; }                       /* [measured] M */
+.section--no-x   { padding-inline: 0; }                      /* [measured] M */
+.section--compact { padding-block: calc(var(--step-v) * 2); }  /* [measured] M */
+.section--title    { padding-block: calc(var(--step-v) * 3); }  /* [measured] M */
+.section--clipped   { overflow: hidden; }                       /* [measured] H */
 
-/* La première section d'un `main` prend 5 pas en haut sans qu'aucune classe ne
-   soit posée : le sélecteur est STRUCTUREL.
-   [relevé] M : main>.section:first-child,.section--first-child{…v5} */
-main > .section:first-child { padding-block-start: calc(var(--pas-v) * 5); }
+/* The first section of a `main` takes 5 steps at the top without any class
+   being set: the selector is STRUCTURAL.
+   [measured] M: main>.section:first-child,.section--first-child{…v5} */
+main > .section:first-child { padding-block-start: calc(var(--step-v) * 5); }
 
-/* Le jardin de logos remonte contre le héros : `pt-0 pb-v1.5`.   [relevé] H */
-.section--logos { padding-block: 0 calc(var(--pas-v) * 1.5); }
+/* The logo garden moves up against the hero: `pt-0 pb-v1.5`.   [measured] H */
+.section--logos { padding-block: 0 calc(var(--step-v) * 1.5); }
 
-/* Grille de composition : 24 colonnes, gouttière = 1 pas horizontal.
-   [relevé] M .grid-cursor{gap:var(--spacing-g1);grid-template-columns:repeat(24,1fr)}
-   Jamais appliquée à la page entière — seulement DANS les grandes cartes. */
-.grille-24 { display: grid; grid-template-columns: repeat(24, 1fr); gap: var(--pas-h); }
+/* Composition grid: 24 columns, gutter = 1 horizontal step.
+   [measured] M .grid-cursor{gap:var(--spacing-g1);grid-template-columns:repeat(24,1fr)}
+   Never applied to the whole page — only INSIDE the large cards. */
+.grid-24 { display: grid; grid-template-columns: repeat(24, 1fr); gap: var(--step-h); }
 
 /* -----------------------------------------------------------------------------
-   4. TYPOGRAPHIE
-   Procédé : chaque classe fixe SIMULTANÉMENT taille, interligne et approche.
-   Aucune ne règle une seule des trois.                    [relevé] M .type-*
+   4. TYPOGRAPHY
+   Technique: each class sets size, line height and tracking SIMULTANEOUSLY.
+   None of them sets only one of the three.               [measured] M .type-*
 -------------------------------------------------------------------------------*/
-.t-xs    { font-size: var(--t-xs);    line-height: var(--int-normal);  letter-spacing: var(--ap-sm); }
-.t-sm    { font-size: var(--t-sm);    line-height: var(--int-normal);  letter-spacing: var(--ap-sm); }
-.t-base  { font-size: var(--t-base);  line-height: var(--int-normal);  letter-spacing: var(--ap-base); }
-.t-md-sm { font-size: var(--t-md-sm); line-height: var(--int-ample); }
-.t-md    { font-size: var(--t-md);    line-height: var(--int-mi-plus); letter-spacing: var(--ap-md); }
-.t-md-lg { font-size: var(--t-md-lg); line-height: var(--int-mi);      letter-spacing: var(--ap-md-lg); }
-.t-lg    { font-size: var(--t-lg);    line-height: var(--int-xserre);  letter-spacing: var(--ap-lg); }
-.t-xl    { font-size: var(--t-xl);    line-height: var(--int-2xserre); letter-spacing: var(--ap-xl); }
-.t-2xl   { font-size: var(--t-2xl);   line-height: var(--int-serre);   letter-spacing: var(--ap-2xl); }
-/* Échelle des interfaces reconstituées.        [relevé] M .type-product-* */
-.t-prod    { font-size: var(--t-prod);    line-height: var(--int-prod); }
+.t-xs    { font-size: var(--t-xs);    line-height: var(--leading-normal);  letter-spacing: var(--tracking-sm); }
+.t-sm    { font-size: var(--t-sm);    line-height: var(--leading-normal);  letter-spacing: var(--tracking-sm); }
+.t-base  { font-size: var(--t-base);  line-height: var(--leading-normal);  letter-spacing: var(--tracking-base); }
+.t-md-sm { font-size: var(--t-md-sm); line-height: var(--leading-loose); }
+.t-md    { font-size: var(--t-md);    line-height: var(--leading-mid-plus); letter-spacing: var(--tracking-md); }
+.t-md-lg { font-size: var(--t-md-lg); line-height: var(--leading-mid);      letter-spacing: var(--tracking-md-lg); }
+.t-lg    { font-size: var(--t-lg);    line-height: var(--leading-xtight);  letter-spacing: var(--tracking-lg); }
+.t-xl    { font-size: var(--t-xl);    line-height: var(--leading-2xtight); letter-spacing: var(--tracking-xl); }
+.t-2xl   { font-size: var(--t-2xl);   line-height: var(--leading-tight);   letter-spacing: var(--tracking-2xl); }
+/* Scale of the reconstructed interfaces.     [measured] M .type-product-* */
+.t-prod    { font-size: var(--t-prod);    line-height: var(--leading-prod); }
 .t-prod-sm { font-size: var(--t-prod-sm); line-height: 1.27273; letter-spacing: .0044em; }
-.t-prod-lg { font-size: var(--t-prod-lg); line-height: var(--int-prod); }
-.mono      { font-family: var(--police-mono); }
+.t-prod-lg { font-size: var(--t-prod-lg); line-height: var(--leading-prod); }
+.mono      { font-family: var(--font-mono); }
 
-/* `type-base md:type-md` : la seule bascule de taille des blocs.  [relevé] H */
+/* `type-base md:type-md`: the only size switch of the blocks.  [measured] H */
 @media (min-width: 660px) {
-  .md-t-md { font-size: var(--t-md); line-height: var(--int-mi-plus);
-             letter-spacing: var(--ap-md); }
+  .md-t-md { font-size: var(--t-md); line-height: var(--leading-mid-plus);
+             letter-spacing: var(--tracking-md); }
 }
-/* `type-xl sm:type-2xl` — et `sm:` vaut 420px ici : la bascule arrive dès le
-   petit mobile, pas à 640.                                       [relevé] H */
+/* `type-xl sm:type-2xl` — and `sm:` means 420px here: the switch happens as
+   early as small mobile, not at 640.                            [measured] H */
 @media (min-width: 420px) {
-  .sm-t-2xl { font-size: var(--t-2xl); line-height: var(--int-serre);
-              letter-spacing: var(--ap-2xl); }
+  .sm-t-2xl { font-size: var(--t-2xl); line-height: var(--leading-tight);
+              letter-spacing: var(--tracking-2xl); }
 }
 
-.secondaire { color: var(--texte-secondaire); }
-.median     { color: var(--texte-median); }
-.tertiaire  { color: var(--texte-tertiaire); }
-.equilibre  { text-wrap: balance; }        /* [relevé] H text-balance */
-.souple     { text-wrap: pretty; }         /* [relevé] H text-pretty  */
-.centre     { text-align: center; }
+.secondary { color: var(--text-secondary); }
+.median     { color: var(--text-mid); }
+.tertiary  { color: var(--text-tertiary); }
+.balance  { text-wrap: balance; }        /* [measured] H text-balance */
+.pretty     { text-wrap: pretty; }         /* [measured] H text-pretty  */
+.center     { text-align: center; }
 
-/* Quatre mesures nommées, jamais de largeur en pixels.            [relevé] M */
-.mesure             { max-width: 65ch; }  /* .max-w-prose                */
-.mesure--etroite    { max-width: 48ch; }  /* --spacing-prose-narrow      */
-.mesure--large      { max-width: 80ch; }  /* --spacing-prose-medium-wide */
-.mesure--tres-large { max-width: 96ch; }  /* --spacing-prose-wide        */
-.centrer-bloc { margin-inline: auto; }
+/* Four named measures, never a width in pixels.                  [measured] M */
+.measure             { max-width: 65ch; }  /* .max-w-prose                */
+.measure--narrow    { max-width: 48ch; }  /* --spacing-prose-narrow      */
+.measure--large      { max-width: 80ch; }  /* --spacing-prose-medium-wide */
+.measure--xwide { max-width: 96ch; }  /* --spacing-prose-wide        */
+.center-block { margin-inline: auto; }
 
-.invisible-lecteur {
+.sr-only {
   position: absolute; width: 1px; height: 1px;
   clip-path: inset(50%); white-space: nowrap; overflow: hidden;
 }
 
 /* -----------------------------------------------------------------------------
-   5. ENTÊTE ET NAVIGATION
+   5. HEADER AND NAVIGATION
 -------------------------------------------------------------------------------*/
-.entete {
+.header {
   position: fixed; inset: 0 0 auto 0; z-index: 50;
-  background-color: var(--fond-page);
-  padding-inline: calc(var(--pas-h) * 2);
+  background-color: var(--page-bg);
+  padding-inline: calc(var(--step-h) * 2);
 }
-/* [relevé] H : grid-cols-[1fr_auto_auto] lg:grid-cols-[auto_1fr_auto] — la
-   marque occupe la colonne souple en petit écran et devient auto au-delà, ce
-   qui recentre la navigation sans la déplacer. */
-.entete__grille {
+/* [measured] H: grid-cols-[1fr_auto_auto] lg:grid-cols-[auto_1fr_auto] — the
+   brand takes the flexible column on small screens and becomes auto beyond,
+   which re-centres the navigation without moving it. */
+.header__grid {
   display: grid; align-items: center; position: relative;
-  height: var(--hauteur-entete);
+  height: var(--header-height);
   grid-template-columns: 1fr auto auto;
 }
-@media (min-width: 900px) { .entete__grille { grid-template-columns: auto 1fr auto; } }
-.marque { display: inline-flex; align-items: center; gap: .45rem; font-size: var(--t-md-sm); }
-.marque svg { width: 20px; height: 20px; }
+@media (min-width: 900px) { .header__grid { grid-template-columns: auto 1fr auto; } }
+.brand { display: inline-flex; align-items: center; gap: .45rem; font-size: var(--t-md-sm); }
+.brand svg { width: 20px; height: 20px; }
 
-/* Lien d'évitement : caché par clip-path, jamais par display — il reste
-   focusable. [relevé] M .skipnav / .skipnav:not(:focus-visible):not(:active) */
-.evitement { position: absolute; top: .82rem; left: -.2rem; z-index: 50;
-             border-radius: var(--r-plein); }
-.evitement:not(:focus-visible):not(:active) {
+/* Skip link: hidden by clip-path, never by display — it stays focusable.
+   [measured] M .skipnav / .skipnav:not(:focus-visible):not(:active) */
+.skip-link { position: absolute; top: .82rem; left: -.2rem; z-index: 50;
+             border-radius: var(--r-full); }
+.skip-link:not(:focus-visible):not(:active) {
   width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap;
 }
 
-/* La nav est centrée en ABSOLU sur la largeur de l'entête, pas par la grille :
-   elle reste au milieu quelle que soit la largeur des blocs latéraux.
-   [relevé] H : nav class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" */
-.nav-centre { display: none; }
+/* The nav is centred ABSOLUTELY across the header width, not by the grid:
+   it stays in the middle whatever the width of the side blocks.
+   [measured] H: nav class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" */
+.nav-center { display: none; }
 @media (min-width: 900px) {
-  .nav-centre { display: block; position: absolute; top: 50%; left: 50%;
+  .nav-center { display: block; position: absolute; top: 50%; left: 50%;
                 transform: translate(-50%, -50%); }
 }
-.nav-centre > ul { display: flex; align-items: center; }
+.nav-center > ul { display: flex; align-items: center; }
 
-/* Le padding est asymétrique — 1,5 pas horizontal contre 3/12 de pas vertical.
-   La bordure transparente réserve la place du focus.             [relevé] M */
-.nav__lien, .nav__btn {
+/* The padding is asymmetric — 1.5 horizontal steps against 3/12 of a
+   vertical step. The transparent border reserves room for focus. [measured] M */
+.nav__link, .nav__btn {
   display: inline-flex; cursor: pointer;
   font-size: var(--t-sm);
-  padding-inline: calc(var(--pas-h) * 1.5);
-  padding-block: calc(var(--pas-v) * 3 / 12);
+  padding-inline: calc(var(--step-h) * 1.5);
+  padding-block: calc(var(--step-v) * 3 / 12);
   background-color: transparent; border: 1px solid transparent;
 }
-/* Survol : PAS de fond, seulement une désaturation du texte par color-mix vers
-   transparent. Le survol ATTÉNUE, il ne renforce pas.            [relevé] M */
-.nav__lien:hover, .nav__btn:hover, .nav__btn[aria-expanded="true"] {
-  color: color-mix(in oklab, var(--texte-primaire) 75%, transparent);
+/* Hover: NO background, only a desaturation of the text by color-mix towards
+   transparent. Hover MUTES, it does not intensify.              [measured] M */
+.nav__link:hover, .nav__btn:hover, .nav__btn[aria-expanded="true"] {
+  color: color-mix(in oklab, var(--text-primary) 75%, transparent);
 }
 
-.nav__groupe { position: relative; }
+.nav__group { position: relative; }
 
-/* ANIMATION 1 — chevron du menu.
-   [relevé] M : .nav__btn-caret{opacity:0;transition:opacity var(--duration)
+/* ANIMATION 1 — menu chevron.
+   [measured] M: .nav__btn-caret{opacity:0;transition:opacity var(--duration)
                 var(--ease-out-spring);align-items:center;display:flex}
                 .nav__btn-caret--sm{…position:absolute;inset:0 0 0 auto}
                 .nav__btn-caret:focus-visible{opacity:1;outline:0}
-   ATTENTION — la source n'a AUCUNE règle `:hover` sur ce chevron : il est
-   révélé par `:focus-visible` et par une classe `.is-active` posée en JS.
-   La révélation au survol ci-dessous est un                   [arbitrage]. */
+   WARNING — the source has NO `:hover` rule on this chevron: it is revealed
+   by `:focus-visible` and by an `.is-active` class set in JS.
+   The hover reveal below is                                     [decided]. */
 .nav__chevron {
   display: flex; align-items: center;
   position: absolute; inset: 0 0 0 auto;
   border: 0; background: none; cursor: pointer; font-size: var(--t-sm);
   opacity: 0;
-  transition: opacity var(--duree-instant) var(--courbe-ressort);
+  transition: opacity var(--time-instant) var(--curve-spring);
 }
-.nav__chevron:focus-visible { opacity: 1; outline: 0; }            /* [relevé] M */
-.nav__groupe:hover .nav__chevron,
-.nav__groupe:focus-within .nav__chevron { opacity: 1; }            /* [arbitrage] */
+.nav__chevron:focus-visible { opacity: 1; outline: 0; }            /* [measured] M */
+.nav__group:hover .nav__chevron,
+.nav__group:focus-within .nav__chevron { opacity: 1; }            /* [decided] */
 
-/* ANIMATION 2 — rotation du chevron. `transform` seul, même durée, même courbe.
-   Le glyphe pivoté n'est pas un chevron mais la flèche « ↓ », rendue par un jeu
-   stylistique de la fonte maison (font-feature-settings:"ss09").
-   [relevé] M .nav__btn-caret.is-active .nav__btn-caret__icon{transform:rotate(180deg)} */
+/* ANIMATION 2 — chevron rotation. `transform` only, same duration, same curve.
+   The rotated glyph is not a chevron but the "↓" arrow, rendered by a
+   stylistic set of the in-house font (font-feature-settings:"ss09").
+   [measured] M .nav__btn-caret.is-active .nav__btn-caret__icon{transform:rotate(180deg)} */
 .nav__chevron span {
   display: inline-flex;
-  transition: transform var(--duree-instant) var(--courbe-ressort);
+  transition: transform var(--time-instant) var(--curve-spring);
 }
-.nav__groupe:hover .nav__chevron span,
-.nav__groupe:focus-within .nav__chevron span { transform: rotate(180deg); }
+.nav__group:hover .nav__chevron span,
+.nav__group:focus-within .nav__chevron span { transform: rotate(180deg); }
 
-/* ANIMATION 3 — LE procédé le plus réutilisable de la page.
-   Un panneau qui doit sortir de l'arbre d'accessibilité SANS couper son fondu :
-   `visibility` est transitionnée avec une durée 0 et un DÉLAI égal à la durée
-   du fondu ; à l'ouverture, `transition-delay:0s` annule ce délai.
-   Entrée immédiate, sortie qui laisse le fondu finir avant de masquer. Aucun
-   setTimeout, aucun animationend, aucun état applicatif.
-   [relevé] M : .nav__sub-nav{opacity:0;visibility:hidden;transition:opacity
+/* ANIMATION 3 — THE most reusable technique of the page.
+   A panel that must leave the accessibility tree WITHOUT cutting its fade:
+   `visibility` is transitioned with a 0 duration and a DELAY equal to the
+   fade duration; on opening, `transition-delay:0s` cancels that delay.
+   Immediate entrance, an exit that lets the fade finish before hiding. No
+   setTimeout, no animationend, no application state.
+   [measured] M: .nav__sub-nav{opacity:0;visibility:hidden;transition:opacity
      var(--duration) var(--ease-out-spring), transform var(--duration)
      var(--ease-out-spring), visibility 0s linear var(--duration);
      transform:translateY(-.4rem)} */
-.nav__panneau {
+.nav__panel {
   position: absolute; top: 100%; left: 0;
-  padding-top: calc(var(--pas-v) * 3 / 12);
+  padding-top: calc(var(--step-v) * 3 / 12);
   opacity: 0; visibility: hidden;
   transform: translateY(-.4rem);
-  transition: opacity    var(--duree-instant) var(--courbe-ressort),
-              transform  var(--duree-instant) var(--courbe-ressort),
-              visibility 0s linear var(--duree-instant);
+  transition: opacity    var(--time-instant) var(--curve-spring),
+              transform  var(--time-instant) var(--curve-spring),
+              visibility 0s linear var(--time-instant);
 }
-.nav__groupe:hover .nav__panneau,
-.nav__groupe:focus-within .nav__panneau {
+.nav__group:hover .nav__panel,
+.nav__group:focus-within .nav__panel {
   opacity: 1; visibility: visible; transform: translateY(0); transition-delay: 0s;
 }
-/* La source pilote ce panneau en JS via aria-expanded ; ici c'est du CSS pur
-   (:hover / :focus-within) — même rendu.                        [arbitrage] */
+/* The source drives this panel in JS through aria-expanded; here it is pure
+   CSS (:hover / :focus-within) — same rendering.                [decided] */
 
-/* [relevé] M .card--sub-nav : padding vertical asymétrique, -.15em en haut. */
-.nav__panneau .carte {
-  padding: calc(var(--pas-h) - .15em) calc(var(--pas-h) * 1.5) calc(var(--pas-h) + .2em);
+/* [measured] M .card--sub-nav: asymmetric vertical padding, -.15em at the top. */
+.nav__panel .tile {
+  padding: calc(var(--step-h) - .15em) calc(var(--step-h) * 1.5) calc(var(--step-h) + .2em);
 }
-.nav__panneau ul { display: flex; flex-direction: column; }
-.nav__panneau li { min-width: 8rem; }                             /* [relevé] H */
-/* Le panneau « Resources » est sur 2 colonnes.
-   [relevé] H : grid-cols-[repeat(2,auto)] gap-x-g1 */
-.nav__panneau--double ul { display: grid; grid-template-columns: repeat(2, auto);
-                           column-gap: var(--pas-h); }
-.nav__sous-lien { display: flex; font-size: var(--t-sm);
-                  padding-block: calc(var(--pas-v) * 2.5 / 12); }
-.nav__sous-lien:hover { color: color-mix(in oklab, var(--texte-primaire) 75%, transparent); }
+.nav__panel ul { display: flex; flex-direction: column; }
+.nav__panel li { min-width: 8rem; }                             /* [measured] H */
+/* The "Resources" panel spans 2 columns.
+   [measured] H: grid-cols-[repeat(2,auto)] gap-x-g1 */
+.nav__panel--double ul { display: grid; grid-template-columns: repeat(2, auto);
+                           column-gap: var(--step-h); }
+.nav__sub-link { display: flex; font-size: var(--t-sm);
+                  padding-block: calc(var(--step-v) * 2.5 / 12); }
+.nav__sub-link:hover { color: color-mix(in oklab, var(--text-primary) 75%, transparent); }
 
-/* ANIMATION 4 — flèche « lien externe », et son garde-fou tactile.
-   Elle occupe sa place en permanence : le libellé ne bouge pas au survol.
-   [relevé] M .nav__sub-nav__link__icon{transition:opacity var(--duration) var(--ease-out-spring)}
+/* ANIMATION 4 — "external link" arrow, and its touch safeguard.
+   It occupies its space permanently: the label does not move on hover.
+   [measured] M .nav__sub-nav__link__icon{transition:opacity var(--duration) var(--ease-out-spring)}
 
-   LE point à copier : la visibilité au repos dépend de la CAPACITÉ DE SURVOL du
-   pointeur, pas de la largeur d'écran. Sur un appareil tactile la flèche est
-   affichée en permanence — sinon elle resterait invisible à jamais, faute de
-   survol pour la révéler. Trois règles relevées telles quelles dans M, valables
-   pour `.nav__sub-nav__link__icon` comme pour `.footer-link__icon`. */
-.fleche-externe { display: inline-block;
-                  transition: opacity var(--duree-instant) var(--courbe-ressort); }
-@media (hover: none)  { .fleche-externe { opacity: 1; } }          /* [relevé] M */
+   THE point to copy: visibility at rest depends on the pointer's HOVER
+   CAPABILITY, not on the screen width. On a touch device the arrow is shown
+   permanently — otherwise it would stay invisible forever, for lack of a
+   hover to reveal it. Three rules measured as-is in M, valid for
+   `.nav__sub-nav__link__icon` as for `.footer-link__icon`. */
+.arrow-external { display: inline-block;
+                  transition: opacity var(--time-instant) var(--curve-spring); }
+@media (hover: none)  { .arrow-external { opacity: 1; } }          /* [measured] M */
 @media (hover: hover) {
-  .fleche-externe { opacity: 0; }                                  /* [relevé] M */
-  .nav__sous-lien:hover .fleche-externe,
-  .nav__sous-lien:focus-visible .fleche-externe,
-  .pied__lien:hover .fleche-externe,
-  .pied__lien:focus-visible .fleche-externe { opacity: 1; }        /* [relevé] M */
+  .arrow-external { opacity: 0; }                                  /* [measured] M */
+  .nav__sub-link:hover .arrow-external,
+  .nav__sub-link:focus-visible .arrow-external,
+  .footer__link:hover .arrow-external,
+  .footer__link:focus-visible .arrow-external { opacity: 1; }        /* [measured] M */
 }
 
-.entete__actions { display: flex; align-items: center; gap: var(--pas-h); justify-self: end; }
-.entete__actions .nav__lien { display: none; }
-@media (min-width: 900px) { .entete__actions .nav__lien { display: inline-flex; } }
-/* [relevé] H : w-v1.5 h-v1.5 ml-g1 -mr-[0.3rem] */
+.header__actions { display: flex; align-items: center; gap: var(--step-h); justify-self: end; }
+.header__actions .nav__link { display: none; }
+@media (min-width: 900px) { .header__actions .nav__link { display: inline-flex; } }
+/* [measured] H: w-v1.5 h-v1.5 ml-g1 -mr-[0.3rem] */
 .burger {
   display: inline-flex; align-items: center; justify-content: center;
-  width: calc(var(--pas-v) * 1.5); height: calc(var(--pas-v) * 1.5);
+  width: calc(var(--step-v) * 1.5); height: calc(var(--step-v) * 1.5);
   background: none; border: 0; cursor: pointer;
-  margin-left: var(--pas-h); margin-right: -.3rem;
+  margin-left: var(--step-h); margin-right: -.3rem;
 }
 @media (min-width: 900px) { .burger { display: none; } }
 
-/* ANIMATION 5 — panneau de nav mobile plein écran. Un seul canal animé
-   (opacity) + bascule de pointer-events, exactement comme la source, qui le
-   déclare en style inline sur l'élément.
-   [relevé] H : style="transition:opacity var(--duration) var(--ease-out-spring)"
+/* ANIMATION 5 — full-screen mobile nav panel. A single animated channel
+   (opacity) + a pointer-events switch, exactly like the source, which
+   declares it as an inline style on the element.
+   [measured] H: style="transition:opacity var(--duration) var(--ease-out-spring)"
                 class="… fixed inset-0 z-50 … pointer-events-none opacity-0" */
 .nav-mobile {
   position: fixed; inset: 0; z-index: 60;
   display: flex; flex-direction: column;
-  background-color: var(--fond-page);
-  padding-inline: calc(var(--pas-h) * 2);
+  background-color: var(--page-bg);
+  padding-inline: calc(var(--step-h) * 2);
   overscroll-behavior: contain; overflow-y: auto;
   opacity: 0; pointer-events: none;
-  transition: opacity var(--duree-instant) var(--courbe-ressort);
+  transition: opacity var(--time-instant) var(--curve-spring);
 }
-.nav-mobile[data-ouvert="true"] { opacity: 1; pointer-events: auto; }
-/* [relevé] H : type-lg mb-v3 flex h-[var(--site-header-height)] shrink-0
+.nav-mobile[data-open="true"] { opacity: 1; pointer-events: auto; }
+/* [measured] H: type-lg mb-v3 flex h-[var(--site-header-height)] shrink-0
                 items-center justify-end */
-.nav-mobile__entete {
+.nav-mobile__header {
   display: flex; align-items: center; justify-content: flex-end;
-  height: var(--hauteur-entete); flex-shrink: 0;
-  margin-bottom: calc(var(--pas-v) * 3);
+  height: var(--header-height); flex-shrink: 0;
+  margin-bottom: calc(var(--step-v) * 3);
   font-size: var(--t-lg);
 }
-.nav-mobile a { display: block; padding-block: calc(var(--pas-v) * 4 / 12);
+.nav-mobile a { display: block; padding-block: calc(var(--step-v) * 4 / 12);
                 font-size: var(--t-md); }
-.nav-mobile__titre { color: var(--texte-secondaire); font-size: var(--t-sm);
-                     margin-top: var(--pas-v); }
+.nav-mobile__title { color: var(--text-secondary); font-size: var(--t-sm);
+                     margin-top: var(--step-v); }
 
-/* ANIMATION 6 — entrée en cascade des items du menu mobile.
-   [relevé] M : .nav-item-animate{animation:navItemSlideIn .25s var(--ease-out-spring)
+/* ANIMATION 6 — staggered entrance of the mobile menu items.
+   [measured] M: .nav-item-animate{animation:navItemSlideIn .25s var(--ease-out-spring)
                 forwards;opacity:0;transform:translateY(-4px)}
                 @keyframes navItemSlideIn{0%{opacity:0;transform:translateY(-4px)}
                                           to{opacity:1;transform:translateY(0)}}
-   Amplitude : 4px. Le décalage entre items est posé en JS.       [arbitrage] */
+   Amplitude: 4px. The delay between items is set in JS.          [decided] */
 @keyframes navItemSlideIn { 0% { opacity: 0; transform: translateY(-4px); }
                             to { opacity: 1; transform: translateY(0); } }
-.nav-mobile[data-ouvert="true"] .nav-item-animate {
-  animation: navItemSlideIn var(--duree-lente) var(--courbe-ressort) forwards;
+.nav-mobile[data-open="true"] .nav-item-animate {
+  animation: navItemSlideIn var(--time-slow) var(--curve-spring) forwards;
   opacity: 0; transform: translateY(-4px);
-  animation-delay: calc(var(--rang, 0) * 30ms);                   /* [arbitrage] */
+  animation-delay: calc(var(--index, 0) * 30ms);                   /* [decided] */
 }
 
 /* -----------------------------------------------------------------------------
-   6. BOUTONS
-   Constat de relevé, contre-intuitif et volontaire : AUCUNE règle `.btn*` ni
-   `.card*` de la source ne déclare `transition`. Les changements d'état des
-   boutons et des cartes sont INSTANTANÉS. Le temps est réservé à ce qui
-   apparaît ou disparaît, jamais à ce qui change de teinte. Ne pas « corriger »
-   ce point en ajoutant une transition : c'est le procédé.  [relevé] M .btn
+   6. BUTTONS
+   Measured finding, counter-intuitive and deliberate: NO `.btn*` or `.card*`
+   rule of the source declares `transition`. The state changes of buttons and
+   cards are INSTANT. Time is reserved for what appears or disappears, never
+   for what changes hue. Do not "fix" this by adding a transition: it is the
+   technique.                                            [measured] M .btn
 -------------------------------------------------------------------------------*/
 .btn {
   display: inline-flex; align-items: center; justify-content: center;
   cursor: pointer; line-height: 1;
   font-size: var(--t-base); font-weight: 400;
   padding: .89em 1.45em .91em;                    /* --button-padding-default */
-  border-radius: var(--r-plein);
-  background-color: var(--texte-primaire);
-  border: 1px solid var(--texte-primaire);
-  color: var(--fond-page);
+  border-radius: var(--r-full);
+  background-color: var(--text-primary);
+  border: 1px solid var(--text-primary);
+  color: var(--page-bg);
 }
-@media (min-width: 900px) { .btn { padding: .78em 1.35em .8em; } } /* [relevé] M */
-/* Le survol ne se calcule pas : c'est une couleur nommée du thème.
-   [relevé] M --color-theme-button-hover-bg: var(--color-theme-fg-02) */
-.btn:hover  { background-color: var(--texte-primaire-02);
-              border-color: var(--texte-primaire-02); color: var(--fond-page); }
-.btn:active { background-color: var(--texte-primaire); }
+@media (min-width: 900px) { .btn { padding: .78em 1.35em .8em; } } /* [measured] M */
+/* Hover is not computed: it is a named theme color.
+   [measured] M --color-theme-button-hover-bg: var(--color-theme-fg-02) */
+.btn:hover  { background-color: var(--text-primary-02);
+              border-color: var(--text-primary-02); color: var(--page-bg); }
+.btn:active { background-color: var(--text-primary); }
 
-.btn--secondaire { background-color: var(--surface-04);
-                   border-color: var(--filet-discret); color: var(--texte-primaire); }
-.btn--secondaire:hover { background-color: var(--surface-05);
-                         border-color: var(--filet-discret); }
+.btn--secondary { background-color: var(--surface-04);
+                   border-color: var(--rule-subtle); color: var(--text-primary); }
+.btn--secondary:hover { background-color: var(--surface-05);
+                         border-color: var(--rule-subtle); }
 
-.btn--fantome { background-color: transparent; border-color: var(--filet-marque);
-                color: var(--texte-primaire); }
-.btn--fantome:hover  { background-color: var(--surface-01); }
-.btn--fantome:active { background-color: var(--surface-04); }
+.btn--ghost { background-color: transparent; border-color: var(--rule-marked);
+                color: var(--text-primary); }
+.btn--ghost:hover  { background-color: var(--surface-01); }
+.btn--ghost:active { background-color: var(--surface-04); }
 
 .btn--sm { font-size: var(--t-sm); padding: .45em .8em .46em; }
 @media (min-width: 900px) { .btn--sm { padding: .4em .75em .42em; } }
 .btn--md-sm { font-size: var(--t-base); padding: .64em 1.2em .66em; }
 @media (min-width: 900px) { .btn--md-sm { padding: .6em 1.25em .62em; } }
 
-/* Lien tertiaire : le SEUL endroit où l'accent orange sert de couleur de texte.
-   Il n'est jamais employé en fond.        [relevé] M .btn-tertiary / .btn-text */
-.lien-accent { display: inline-flex; align-items: center;
+/* Tertiary link: the ONLY place where the orange accent is used as a text
+   color. It is never used as a background. [measured] M .btn-tertiary / .btn-text */
+.link-accent { display: inline-flex; align-items: center;
                color: var(--accent); background: none; border: 0; padding: 0; }
-.lien-accent:hover { color: color-mix(in oklab, var(--accent) 75%, transparent); }
+.link-accent:hover { color: color-mix(in oklab, var(--accent) 75%, transparent); }
 
-.btn__icone { display: inline-flex; padding-inline-start: .25em; }  /* [relevé] M */
+.btn__icon { display: inline-flex; padding-inline-start: .25em; }  /* [measured] M */
 
-/* Deux réglages OpenType relevés, appliqués à des rôles précis :
-   · `"case" 1` — ponctuation et symboles recentrés sur la hauteur des capitales,
-     pour les coches et signes isolés. [relevé] M .font-feature-case
-   · `"tnum"` — chiffres tabulaires sur les étiquettes de version, pour que
-     « 3.9 » et « 3.12 » aient la même largeur. [relevé] M .label
-   La source rend aussi ses flèches par des jeux stylistiques de sa fonte maison
-   (`"ss08"` pour ⤓, `"ss09"` pour ↓) — non reproductible sans la fonte. */
-.majuscule-alignee { font-feature-settings: "case" 1; }
+/* Two measured OpenType settings, applied to precise roles:
+   · `"case" 1` — punctuation and symbols re-centred on the cap height, for
+     check marks and isolated signs. [measured] M .font-feature-case
+   · `"tnum"` — tabular figures on the version tags, so that "3.9" and
+     "3.12" have the same width. [measured] M .label
+   The source also renders its arrows through stylistic sets of its in-house
+   font (`"ss08"` for ⤓, `"ss09"` for ↓) — not reproducible without the font. */
+.cap-aligned { font-feature-settings: "case" 1; }
 
-/* Étiquette de version — bordure héritée de la couleur du parent, chiffres
-   tabulaires, décalage optique de .03125rem.               [relevé] M .label */
-.etiquette {
+/* Version tag — border inherited from the parent's color, tabular figures,
+   optical offset of .03125rem.                          [measured] M .label */
+.tag {
   display: inline-flex; line-height: 1; position: relative; top: .03125rem;
-  font-size: var(--t-sm); letter-spacing: var(--ap-sm);
+  font-size: var(--t-sm); letter-spacing: var(--tracking-sm);
   border: 1px solid; border-color: inherit; color: inherit;
   font-feature-settings: "tnum";
-  border-radius: var(--r-plein); padding: .28em .65em .29em;
+  border-radius: var(--r-full); padding: .28em .65em .29em;
 }
 
 /* -----------------------------------------------------------------------------
-   7. CARTES ET MÉDIAS — le filet en pseudo-élément
-   Procédé central : la bordure d'1px n'est JAMAIS posée sur l'élément. Elle est
-   dessinée par un ::before absolu, inset 0, z-index 30, pointer-events none.
-   Conséquences voulues :
-     · elle n'entre pas dans le calcul de taille (pas de décalage d'1px) ;
-     · elle passe AU-DESSUS d'une image en overflow:hidden, donc reste nette
-       dans les angles arrondis ;
-     · elle n'intercepte aucun clic.
-   [relevé] M .card:before / .media-border-container:after / .avatar-…:after
+   7. CARDS AND MEDIA — the hairline as a pseudo-element
+   Central technique: the 1px border is NEVER set on the element. It is drawn
+   by an absolute ::before, inset 0, z-index 30, pointer-events none.
+   Intended consequences:
+     · it does not enter the size calculation (no 1px offset);
+     · it passes ABOVE an image under overflow:hidden, so it stays crisp in
+       the rounded corners;
+     · it intercepts no click.
+   [measured] M .card:before / .media-border-container:after / .avatar-…:after
 -------------------------------------------------------------------------------*/
-.carte {
+.tile {
   position: relative;
   background-color: var(--surface-01);
   border-radius: var(--r-xs);
-  padding-inline: calc(var(--pas-h) * 1.75);
-  padding-top: calc(var(--pas-h) * 1.75 - .1rem);   /* -.1rem : correction  */
-  padding-bottom: calc(var(--pas-h) * 1.75);        /*          optique     */
+  padding-inline: calc(var(--step-h) * 1.75);
+  padding-top: calc(var(--step-h) * 1.75 - .1rem);   /* -.1rem: optical  */
+  padding-bottom: calc(var(--step-h) * 1.75);        /*   correction      */
 }
-.carte::before {
+.tile::before {
   content: ""; position: absolute; inset: 0; z-index: 30; pointer-events: none;
-  border: 1px solid var(--filet-discret); border-radius: var(--r-xs);
+  border: 1px solid var(--rule-subtle); border-radius: var(--r-xs);
 }
-.carte--filet { background-color: transparent; padding: 0; }      /* .card-border */
-a.carte:hover  { background-color: var(--surface-03); }           /* [relevé] M */
-a.carte--claire:hover { background-color: var(--surface-02); }    /* .card--feature */
-a.carte:active { background-color: var(--surface-01); }
-.carte--flyout::before { border-color: var(--filet-faible); }     /* [relevé] M */
-.carte--flyout { box-shadow: var(--ombre-flyout); }
-/* [relevé] M : .card--large{padding-inline:g1.5;…} puis, au-delà de 900px,
-   `padding:var(--spacing-g1.75)` uniforme. */
-.carte--large { padding: calc(var(--pas-h) * 1.5); }
-@media (min-width: 900px) { .carte--large { padding: calc(var(--pas-h) * 1.75); } }
-/* [relevé] M .card--text */
-.carte--texte {
-  padding-inline: calc(var(--pas-h) * 1.5);
-  padding-top: calc(var(--pas-h) * 1.5 - .1rem);
-  padding-bottom: calc(var(--pas-h) * 1.5);
+.tile--rule { background-color: transparent; padding: 0; }      /* .card-border */
+a.tile:hover  { background-color: var(--surface-03); }           /* [measured] M */
+a.tile--light:hover { background-color: var(--surface-02); }    /* .card--feature */
+a.tile:active { background-color: var(--surface-01); }
+.tile--flyout::before { border-color: var(--rule-faint); }     /* [measured] M */
+.tile--flyout { box-shadow: var(--flyout-shadow); }
+/* [measured] M: .card--large{padding-inline:g1.5;…} then, beyond 900px,
+   a uniform `padding:var(--spacing-g1.75)`. */
+.tile--large { padding: calc(var(--step-h) * 1.5); }
+@media (min-width: 900px) { .tile--large { padding: calc(var(--step-h) * 1.75); } }
+/* [measured] M .card--text */
+.tile--text {
+  padding-inline: calc(var(--step-h) * 1.5);
+  padding-top: calc(var(--step-h) * 1.5 - .1rem);
+  padding-bottom: calc(var(--step-h) * 1.5);
 }
 
 .media { position: relative; z-index: 1; overflow: hidden; border-radius: var(--r-xs); }
 .media::after {
   content: ""; position: absolute; inset: 0; z-index: 30; pointer-events: none;
-  border: 1px solid var(--filet-discret); border-radius: var(--r-xs);
+  border: 1px solid var(--rule-subtle); border-radius: var(--r-xs);
 }
-.avatar { position: relative; z-index: 1; overflow: hidden; border-radius: var(--r-plein); }
+.avatar { position: relative; z-index: 1; overflow: hidden; border-radius: var(--r-full); }
 .avatar::after {
   content: ""; position: absolute; inset: 0; z-index: 30; pointer-events: none;
-  border: 1px solid var(--filet-discret); border-radius: var(--r-plein);
+  border: 1px solid var(--rule-subtle); border-radius: var(--r-full);
 }
 .avatar img { width: 100%; height: 100%; object-fit: cover; }
 
 /* -----------------------------------------------------------------------------
-   8. FENÊTRES FLOTTANTES — un système, cinq instances
-   Toutes les démos de la page posent une fausse fenêtre applicative dans une
-   scène, avec la MÊME formule de position :
-     left: clamp(marge + demi-largeur, ancre, 100% - marge - demi-largeur)
-   Le clamp garantit qu'elle ne colle jamais aux bords ; l'ancre décide où elle
-   se pose. Instances relevées dans H, attribut style des #demo-window-* :
-     cursor-ide          1080×620  ancre 50%/50%    z 10
-     cursor-agent-cli     480×360  ancre 100%/100%  z 15
-     agent-react-hooks    920×600  ancre 50%/50%    z 10
-     slack                540×340  ancre 42%/30%    z 10
-     automation-config    540×420  ancre 50%/50%    z 10
-   Toutes partagent la même ombre à 3 couches et le même rayon de 10px.
+   8. FLOATING WINDOWS — one system, five instances
+   Every demo of the page sets a fake application window inside a scene, with
+   the SAME position formula:
+     left: clamp(margin + half-width, anchor, 100% - margin - half-width)
+   The clamp guarantees it never sticks to the edges; the anchor decides where
+   it lands. Instances measured in H, style attribute of the #demo-window-*:
+     cursor-ide          1080×620  anchor 50%/50%    z 10
+     cursor-agent-cli     480×360  anchor 100%/100%  z 15
+     agent-react-hooks    920×600  anchor 50%/50%    z 10
+     slack                540×340  anchor 42%/30%    z 10
+     automation-config    540×420  anchor 50%/50%    z 10
+   They all share the same 3-layer shadow and the same 10px radius.
 -------------------------------------------------------------------------------*/
 .scene {
   position: relative; overflow: hidden;
-  --marge: 32px;                                   /* [relevé] I --demo-pad */
-  height: min(780px, 70vh); min-height: 420px;     /* [relevé] H            */
+  --margin: 32px;                                   /* [measured] I --demo-pad */
+  height: min(780px, 70vh); min-height: 420px;     /* [measured] H            */
 }
-@media (max-width: 767px) { .scene { --marge: 16px; } }   /* [relevé] I */
-/* Hauteur des scènes des blocs de fonctionnalité. Mesurée sur la source à
-   ~640px à 1440px de large ; la fenêtre qu'elle contient est plus grande que
-   la scène et se retrouve donc ROGNÉE en haut et en bas, ce qui est voulu :
-   `max-height:calc(100% - 2*var(--demo-pad))` la contraint.       [relevé] H */
-.scene--moyenne { height: 640px; min-height: 360px; }
-@media (max-width: 659px) { .scene--moyenne { height: 420px; } }  /* [arbitrage] */
-/* Fond de scène : l'image empilée, PAS une couleur unie.
-   [relevé] H : class="… bg-[image:var(--color-theme-card-03)]" */
-.scene--surface { background-image: var(--surface-carte-03); }
-.scene__fond { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-/* L'image de fond du héros est ASSOMBRIE de 10 % en thème sombre, pour que le
-   châssis clair des fenêtres garde son contraste par-dessus.
-   [relevé] M : .wallpaper-brightness-dark{filter:brightness()}
+@media (max-width: 767px) { .scene { --margin: 16px; } }   /* [measured] I */
+/* Height of the feature block scenes. Measured on the source at ~640px for a
+   1440px width; the window it contains is taller than the scene and ends up
+   CLIPPED at the top and bottom, which is intended:
+   `max-height:calc(100% - 2*var(--demo-pad))` constrains it.     [measured] H */
+.scene--medium { height: 640px; min-height: 360px; }
+@media (max-width: 659px) { .scene--medium { height: 420px; } }  /* [decided] */
+/* Scene background: the stacked image, NOT a plain color.
+   [measured] H: class="… bg-[image:var(--color-theme-card-03)]" */
+.scene--surface { background-image: var(--surface-tile-03); }
+.scene__bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+/* The hero background image is DARKENED by 10% in the dark theme, so that the
+   light chassis of the windows keeps its contrast on top of it.
+   [measured] M: .wallpaper-brightness-dark{filter:brightness()}
                 [data-theme=dark] .wallpaper-brightness-dark{filter:brightness(.9)}
-   (le `brightness()` sans argument du thème clair est une coquille de la
-   source, sans effet — on ne la reproduit pas.) */
-:root[data-theme="dark"] .scene__fond { filter: brightness(.9); }
+   (the argument-less `brightness()` of the light theme is a typo in the
+   source, with no effect — we do not reproduce it.) */
+:root[data-theme="dark"] .scene__bg { filter: brightness(.9); }
 @media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .scene__fond { filter: brightness(.9); }
+  :root:not([data-theme="light"]) .scene__bg { filter: brightness(.9); }
 }
 
-/* Boîte à ratio d'aspect — procédé de la source, et il n'utilise PAS
-   `aspect-ratio`. Une grille 1×1, plus un `::after` vide qui occupe la même
-   cellule et impose la hauteur par `padding-top` en pourcentage (75 % = 4/3,
-   100 % = 1/1). Le contenu se superpose dans la même cellule sans avoir besoin
-   d'être en position absolue.
-   [relevé] M : .aspect-4\/3-box{grid-template-rows:repeat(1,minmax(0,1fr));
+/* Aspect-ratio box — the source's technique, and it does NOT use
+   `aspect-ratio`. A 1×1 grid, plus an empty `::after` that occupies the same
+   cell and imposes the height through a percentage `padding-top` (75% = 4/3,
+   100% = 1/1). The content overlaps in the same cell without needing to be
+   absolutely positioned.
+   [measured] M: .aspect-4\/3-box{grid-template-rows:repeat(1,minmax(0,1fr));
                 grid-template-columns:repeat(1,minmax(0,1fr));display:grid}
                 .aspect-4\/3-box:after{content:"";pointer-events:none;
                 grid-area:1/1/-1/-1;padding-top:75%} */
@@ -665,1063 +666,1065 @@ a.carte:active { background-color: var(--surface-01); }
 .ratio--4-3::after { padding-top: 75%; }
 .ratio--1-1::after { padding-top: 100%; }
 
-.fenetre {
+.window {
   position: absolute; z-index: var(--z, 10);
-  /* La source fige la demi-largeur en dur dans le clamp (540px pour 1080) ;
-     on la dérive de la largeur réelle pour que le centrage tienne aussi sous
-     1144px, largeur en dessous de laquelle le clamp d'origine décale la
-     fenêtre vers la droite.                                    [arbitrage] */
-  --l: min(var(--largeur-fenetre, 1080px), calc(100% - 2 * var(--marge)));
-  --h: min(var(--hauteur-fenetre, 620px), calc(100% - 2 * var(--marge)));
-  left: clamp(calc(var(--marge) + var(--l) / 2), var(--ancre-x, 50%),
-              calc(100% - var(--marge) - var(--l) / 2));
-  top:  clamp(calc(var(--marge) + var(--h) / 2), var(--ancre-y, 50%),
-              calc(100% - var(--marge) - var(--h) / 2));
+  /* The source hard-codes the half-width in the clamp (540px for 1080);
+     we derive it from the actual width so that centring also holds below
+     1144px, the width under which the original clamp shifts the window to
+     the right.                                                  [decided] */
+  --l: min(var(--window-width, 1080px), calc(100% - 2 * var(--margin)));
+  --h: min(var(--window-height, 620px), calc(100% - 2 * var(--margin)));
+  left: clamp(calc(var(--margin) + var(--l) / 2), var(--anchor-x, 50%),
+              calc(100% - var(--margin) - var(--l) / 2));
+  top:  clamp(calc(var(--margin) + var(--h) / 2), var(--anchor-y, 50%),
+              calc(100% - var(--margin) - var(--h) / 2));
   width: var(--l); height: var(--h);
   transform: translate(-50%, -50%);
-  transform-origin: center center;                                /* [relevé] H */
+  transform-origin: center center;                                /* [measured] H */
   display: flex; flex-direction: column; overflow: hidden;
-  border-radius: 10px;                                            /* [relevé] H */
-  background-color: var(--fond-page);
-  box-shadow: var(--ombre-fenetre);                               /* [relevé] H */
+  border-radius: 10px;                                            /* [measured] H */
+  background-color: var(--page-bg);
+  box-shadow: var(--window-shadow);                               /* [measured] H */
 }
-/* [relevé] H : h-7 px-2 border-b border-theme-border-02 */
-.fenetre__barre {
+/* [measured] H: h-7 px-2 border-b border-theme-border-02 */
+.window__bar {
   position: relative; display: flex; align-items: center; justify-content: space-between;
   height: 1.75rem; padding-inline: .5rem; flex-shrink: 0;
-  border-bottom: 1px solid var(--filet-moyen);
+  border-bottom: 1px solid var(--rule-medium);
 }
-.fenetre__pastilles { display: flex; gap: .375rem; }              /* gap-1.5 */
-.fenetre__pastilles span {
-  width: .625rem; height: .625rem; border-radius: var(--r-plein);  /* h-2.5 w-2.5 */
-  background-color: var(--filet-moyen);
+.window__dots { display: flex; gap: .375rem; }              /* gap-1.5 */
+.window__dots span {
+  width: .625rem; height: .625rem; border-radius: var(--r-full);  /* h-2.5 w-2.5 */
+  background-color: var(--rule-medium);
 }
-.fenetre__titre {
+.window__title {
   position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
-  font-size: var(--t-prod); opacity: .7; pointer-events: none;     /* [relevé] H */
+  font-size: var(--t-prod); opacity: .7; pointer-events: none;     /* [measured] H */
   white-space: nowrap;
 }
-/* ANIMATION 7 — commandes de fenêtre révélées au survol du conteneur.
-   [relevé] H : "transition-opacity duration-200 … opacity-0 group-hover:opacity-100"
-   La courbe n'est PAS choisie : aucune classe `ease-*` n'accompagne
-   `duration-200`, donc `.transition-opacity` retombe sur
-   `var(--tw-ease, var(--default-transition-timing-function))`, soit
-   cubic-bezier(.4,0,.2,1). C'est le seul effet de la page qui n'emploie pas la
-   courbe ressort — par omission, pas par intention.               [relevé] M */
-.fenetre__cmd {
+/* ANIMATION 7 — window controls revealed on hover of the container.
+   [measured] H: "transition-opacity duration-200 … opacity-0 group-hover:opacity-100"
+   The curve is NOT chosen: no `ease-*` class accompanies `duration-200`, so
+   `.transition-opacity` falls back on
+   `var(--tw-ease, var(--default-transition-timing-function))`, i.e.
+   cubic-bezier(.4,0,.2,1). It is the only effect of the page that does not
+   use the spring curve — by omission, not by intent.            [measured] M */
+.window__cmd {
   background: none; border: 0; cursor: pointer;
-  font-size: var(--t-prod); color: var(--texte-secondaire);
+  font-size: var(--t-prod); color: var(--text-secondary);
   padding: .25rem .5rem; border-radius: var(--r-xs);
   opacity: 0;
-  transition: opacity var(--duree-longue) var(--courbe-douce);
+  transition: opacity var(--time-long) var(--curve-soft);
 }
-.fenetre:hover .fenetre__cmd, .fenetre:focus-within .fenetre__cmd { opacity: 1; }
+.window:hover .window__cmd, .window:focus-within .window__cmd { opacity: 1; }
 
-.fenetre__corps { flex: 1; min-height: 0; display: flex; }
-/* [relevé] H : style="flex-grow:2;flex-basis:0" + max-w-[320px] min-w-[220px] */
-.fenetre__flanc {
+.window__body { flex: 1; min-height: 0; display: flex; }
+/* [measured] H: style="flex-grow:2;flex-basis:0" + max-w-[320px] min-w-[220px] */
+.window__side {
   flex: 2 1 0; max-width: 320px; min-width: 220px;
-  border-right: 1px solid var(--filet-moyen);
+  border-right: 1px solid var(--rule-medium);
   background-color: var(--surface-01);
   padding: .6rem .55rem; overflow: hidden;
 }
-/* Le flanc a un `min-w-[220px]` relevé, qui déborde sous 660px. La source
-   laisse déborder sous overflow:hidden ; le masquer est un    [arbitrage]. */
-@media (max-width: 659px) { .fenetre__flanc { display: none; } }
-.fenetre__flanc li { padding: .18rem .35rem; border-radius: var(--r-2xs);
-                     color: var(--texte-secondaire); font-size: var(--t-prod); }
-.fenetre__flanc li[aria-current] { background-color: var(--surface-03);
-                                   color: var(--texte-primaire); }
-.fenetre__scene { flex: 5 1 0; min-width: 0; padding: .6rem .7rem; overflow: hidden;
+/* The side panel has a measured `min-w-[220px]`, which overflows below 660px.
+   The source lets it overflow under overflow:hidden; hiding it is [decided]. */
+@media (max-width: 659px) { .window__side { display: none; } }
+.window__side li { padding: .18rem .35rem; border-radius: var(--r-2xs);
+                     color: var(--text-secondary); font-size: var(--t-prod); }
+.window__side li[aria-current] { background-color: var(--surface-03);
+                                   color: var(--text-primary); }
+.window__scene { flex: 5 1 0; min-width: 0; padding: .6rem .7rem; overflow: hidden;
                   background-color: var(--surface-01); }
-/* Troisième panneau : la fenêtre principale de la source est un TRIPTYQUE —
-   liste à gauche, édition au centre, conversation à droite. C'est cette
-   densité à trois colonnes qui donne au héros son poids visuel. [relevé] H */
-.fenetre__aside {
+/* Third panel: the source's main window is a TRIPTYCH — list on the left,
+   editing in the centre, conversation on the right. It is this three-column
+   density that gives the hero its visual weight.                [measured] H */
+.window__aside {
   flex: 3 1 0; min-width: 0; max-width: 300px;
-  border-left: 1px solid var(--filet-moyen);
+  border-left: 1px solid var(--rule-medium);
   background-color: var(--surface-01);
   padding: .6rem .55rem; overflow: hidden;
 }
-@media (max-width: 899px) { .fenetre__aside { display: none; } }  /* [arbitrage] */
-.bulle { background-color: var(--surface-03); border-radius: var(--r-md);
+@media (max-width: 899px) { .window__aside { display: none; } }  /* [decided] */
+.bubble { background-color: var(--surface-03); border-radius: var(--r-md);
          padding: .35rem .5rem; margin-bottom: .4rem; font-size: var(--t-prod); }
-.bulle--sortante { background-color: var(--surface-04); }
-.champ { border: 1px solid var(--filet-moyen); border-radius: var(--r-md);
-         padding: .35rem .5rem; font-size: var(--t-prod); color: var(--texte-tertiaire); }
-.fenetre__ligne { font-family: var(--police-mono); font-size: var(--t-prod);
-                  padding-block: .08rem; color: var(--texte-secondaire); white-space: pre; }
-.fenetre__ligne--ajout   { color: var(--diff-ajout);
-  background-color: color-mix(in srgb, var(--diff-ajout) 8%, transparent); }   /* [relevé] M */
-.fenetre__ligne--retrait { color: var(--diff-retrait);
-  background-color: color-mix(in srgb, var(--diff-retrait) 6%, transparent); } /* [relevé] M */
+.bubble--outgoing { background-color: var(--surface-04); }
+.field { border: 1px solid var(--rule-medium); border-radius: var(--r-md);
+         padding: .35rem .5rem; font-size: var(--t-prod); color: var(--text-tertiary); }
+.window__line { font-family: var(--font-mono); font-size: var(--t-prod);
+                  padding-block: .08rem; color: var(--text-secondary); white-space: pre; }
+.window__line--added   { color: var(--diff-added);
+  background-color: color-mix(in srgb, var(--diff-added) 8%, transparent); }   /* [measured] M */
+.window__line--removed { color: var(--diff-removed);
+  background-color: color-mix(in srgb, var(--diff-removed) 6%, transparent); } /* [measured] M */
 
-/* Terminal — même châssis, corps monospace sans flanc. */
-.fenetre--terminal .fenetre__corps {
+/* Terminal — same chassis, monospace body without a side panel. */
+.window--terminal .window__body {
   display: block; padding: .6rem .7rem; background-color: var(--surface-01);
-  font-family: var(--police-mono); font-size: var(--t-prod); overflow: hidden;
+  font-family: var(--font-mono); font-size: var(--t-prod); overflow: hidden;
 }
-.terminal__ligne { padding-block: .12rem; color: var(--texte-secondaire);
+.terminal__line { padding-block: .12rem; color: var(--text-secondary);
                    white-space: pre-wrap; }
-.terminal__invite { color: var(--accent); }
+.terminal__cue { color: var(--accent); }
 
 /* -----------------------------------------------------------------------------
-   9. JARDIN DE LOGOS
-   Les trois paliers ne bougent PAS ensemble — chacun a le sien :
-     base   4 colonnes × 2 rangées, gouttière g0.75, cellule 4rem
-     ≥420   gouttière g1, cellule 4.5rem
-     ≥660   cellule 6.25rem
-     ≥900   8 colonnes × 1 rangée
-   [relevé] M .logo-garden-responsive-8 (3 blocs @media) + H
+   9. LOGO GARDEN
+   The three steps do NOT move together — each has its own:
+     base   4 columns × 2 rows, gutter g0.75, cell 4rem
+     ≥420   gutter g1, cell 4.5rem
+     ≥660   cell 6.25rem
+     ≥900   8 columns × 1 row
+   [measured] M .logo-garden-responsive-8 (3 @media blocks) + H
 -------------------------------------------------------------------------------*/
-.logos { display: grid; gap: calc(var(--pas-h) * .75);
+.logos { display: grid; gap: calc(var(--step-h) * .75);
          grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(2, 1fr); }
-@media (min-width: 420px) { .logos { gap: var(--pas-h); } }
+@media (min-width: 420px) { .logos { gap: var(--step-h); } }
 @media (min-width: 900px) { .logos { grid-template-columns: repeat(8, 1fr);
                                      grid-template-rows: 1fr; } }
-.logos > * { width: 100%; min-width: 0; }                         /* [relevé] M */
-/* Cellule = carte à FILET (`bg-theme-card-hex card-border rounded-xs`) : le fond
-   et le filet, sans le padding de `.card`.                       [relevé] H */
-.logos__cellule {
+.logos > * { width: 100%; min-width: 0; }                         /* [measured] M */
+/* Cell = HAIRLINE card (`bg-theme-card-hex card-border rounded-xs`): the
+   background and the hairline, without the padding of `.card`. [measured] H */
+.logos__cell {
   position: relative;
   display: flex; align-items: center; justify-content: center;
-  height: 4rem; padding-inline: calc(var(--pas-h) * .75);
+  height: 4rem; padding-inline: calc(var(--step-h) * .75);
   background-color: var(--surface-01); border-radius: var(--r-xs);
   font-size: var(--t-sm);
 }
-.logos__cellule::before {
+.logos__cell::before {
   content: ""; position: absolute; inset: 0; z-index: 30; pointer-events: none;
-  border: 1px solid var(--filet-discret); border-radius: var(--r-xs);
+  border: 1px solid var(--rule-subtle); border-radius: var(--r-xs);
 }
-@media (min-width: 420px) { .logos__cellule { height: 4.5rem; } }
-@media (min-width: 660px) { .logos__cellule { height: 6.25rem; } }
+@media (min-width: 420px) { .logos__cell { height: 4.5rem; } }
+@media (min-width: 660px) { .logos__cell { height: 6.25rem; } }
 
 /* -----------------------------------------------------------------------------
-   10. BLOCS DE FONCTIONNALITÉ — le procédé structurel le plus subtil
-   Chaque bloc est fait de DEUX COUCHES superposées dans une même
-   `grid grid-rows-[auto_1fr]`, toutes deux en `col-span-full row-span-full` :
-     · couche 1 : un <a class="card card--feature grid-cursor"> qui porte le
-       TEXTE et le fond cliquable, avec un emplacement média VIDE ;
-     · couche 2 : un <div class="grid-cursor p-g1.75"> superposé qui porte le
-       MÉDIA, avec un emplacement texte VIDE.
-   Pourquoi : le média sort ainsi du <a>. La carte reste cliquable par son
-   texte, mais le média — qui porte `cursor-default` et des éléments
-   interactifs — n'hérite ni du curseur ni du comportement de lien. Un seul
-   rectangle à l'écran, deux natures.                             [relevé] H
-   Le découpage sur la grille 24 ALTERNE d'un bloc à l'autre :
-     blocs 1 et 3 : texte colonnes 1→9,   média 9→25
-     blocs 2 et 4 : texte colonnes 17→25, média 1→17
+   10. FEATURE BLOCKS — the subtlest structural technique
+   Each block is made of TWO LAYERS stacked in the same
+   `grid grid-rows-[auto_1fr]`, both in `col-span-full row-span-full`:
+     · layer 1: an <a class="card card--feature grid-cursor"> that carries the
+       TEXT and the clickable background, with an EMPTY media slot;
+     · layer 2: an overlaid <div class="grid-cursor p-g1.75"> that carries the
+       MEDIA, with an EMPTY text slot.
+   Why: the media thus sits outside the <a>. The card stays clickable through
+   its text, but the media — which carries `cursor-default` and interactive
+   elements — inherits neither the cursor nor the link behaviour. A single
+   rectangle on screen, two natures.                             [measured] H
+   The split on the 24-column grid ALTERNATES from one block to the next:
+     blocks 1 and 3: text columns 1→9,   media 9→25
+     blocks 2 and 4: text columns 17→25, media 1→17
 -------------------------------------------------------------------------------*/
-.bloc { display: grid; grid-template-rows: auto 1fr; }
-.bloc__couche { grid-column: 1 / -1; grid-row: 1 / -1; row-gap: 0; }
+.block { display: grid; grid-template-rows: auto 1fr; }
+.block__layer { grid-column: 1 / -1; grid-row: 1 / -1; row-gap: 0; }
 
-/* LE point qui fait tenir le procédé en petit écran, et qu'il est facile de
-   rater : `max-lg:grid-rows-subgrid` sur les DEUX couches.        [relevé] H
-   Sans lui, chaque couche a ses propres rangées, calculées sur son seul
-   contenu : la rangée « texte » de la couche média est vide donc haute de 0,
-   et le média remonte se superposer au texte de l'autre couche. Le texte
-   disparaît derrière la démo. Avec `subgrid`, les deux couches empruntent les
-   rangées du PARENT : la rangée 1 fait la hauteur du texte, la rangée 2 celle
-   du média, et les deux couches s'alignent dessus.
-   Au-delà de 900px le problème ne se pose pas — texte et média occupent des
-   colonnes différentes. */
+/* THE point that makes the technique hold on small screens, and that is easy
+   to miss: `max-lg:grid-rows-subgrid` on BOTH layers.            [measured] H
+   Without it, each layer has its own rows, computed on its own content only:
+   the "text" row of the media layer is empty hence 0 high, and the media
+   moves up to overlap the text of the other layer. The text disappears
+   behind the demo. With `subgrid`, both layers borrow the PARENT's rows:
+   row 1 is the height of the text, row 2 that of the media, and both layers
+   align on them.
+   Beyond 900px the problem does not arise — text and media occupy different
+   columns. */
 @media (max-width: 899px) {
-  .bloc__couche { grid-template-rows: subgrid; }
+  .block__layer { grid-template-rows: subgrid; }
 }
-/* Repli là où `subgrid` manque : on renonce à la superposition et on empile en
-   flux. Le texte reste lisible, la carte de fond n'englobe plus le média.
-   Dégradation acceptable, jamais de contenu masqué.            [arbitrage] */
+/* Fallback where `subgrid` is missing: we give up the overlap and stack in
+   flow. The text stays readable, the background card no longer wraps the
+   media. Acceptable degradation, never hidden content.          [decided] */
 @supports not (grid-template-rows: subgrid) {
   @media (max-width: 899px) {
-    .bloc, .bloc__couche { display: block; }
-    .bloc__couche--media { padding: 0; margin-top: calc(var(--pas-h) * 1.75); }
-    .bloc__couche .bloc__media,
-    .bloc__couche--media .bloc__media { margin-top: 0; padding-top: 0; }
+    .block, .block__layer { display: block; }
+    .block__layer--media { padding: 0; margin-top: calc(var(--step-h) * 1.75); }
+    .block__layer .block__media,
+    .block__layer--media .block__media { margin-top: 0; padding-top: 0; }
   }
 }
-.bloc__couche--media { padding: calc(var(--pas-h) * 1.75); }   /* [relevé] H p-g1.75 */
-.bloc__texte, .bloc__media { grid-column: 1 / -1; }
-.bloc__texte { grid-row: 1 / 2; display: grid; align-items: center; }
-.bloc__media { grid-row: 2 / 3; display: grid; align-items: end; cursor: default; }
-.bloc__couche .bloc__media { margin-top: calc(var(--pas-h) * 1.75); }  /* max-lg:mt-g1.75 */
-.bloc__couche--media .bloc__media { margin-top: 0; padding-top: var(--pas-v); } /* max-lg:pt-v1 */
+.block__layer--media { padding: calc(var(--step-h) * 1.75); }   /* [measured] H p-g1.75 */
+.block__text, .block__media { grid-column: 1 / -1; }
+.block__text { grid-row: 1 / 2; display: grid; align-items: center; }
+.block__media { grid-row: 2 / 3; display: grid; align-items: end; cursor: default; }
+.block__layer .block__media { margin-top: calc(var(--step-h) * 1.75); }  /* max-lg:mt-g1.75 */
+.block__layer--media .block__media { margin-top: 0; padding-top: var(--step-v); } /* max-lg:pt-v1 */
 
 @media (min-width: 900px) {
-  .bloc__texte { grid-row: 1 / 3; grid-column: 1 / 9;
-                 padding-left: calc(var(--pas-h) * .25);
-                 padding-right: calc(var(--pas-h) * 3); }
-  .bloc__media { grid-row: 1 / 3; grid-column: 9 / 25; align-items: center; margin-top: 0; }
-  .bloc__couche--media .bloc__texte { grid-row: 1 / 2; }
-  .bloc__couche--media .bloc__media { grid-row: 2 / 3; padding-top: 0; }
-  /* Bloc inversé : texte à droite (17→25), média à gauche (1→17). [relevé] H */
-  .bloc--inverse .bloc__texte { grid-column: 17 / 25;
-                 padding-right: calc(var(--pas-h) * .25);
-                 padding-left: calc(var(--pas-h) * 3); }
-  .bloc--inverse .bloc__media { grid-column: 1 / 17; }
-  .bloc--inverse .bloc__texte > * { justify-self: end; }          /* lg:justify-self-end */
+  .block__text { grid-row: 1 / 3; grid-column: 1 / 9;
+                 padding-left: calc(var(--step-h) * .25);
+                 padding-right: calc(var(--step-h) * 3); }
+  .block__media { grid-row: 1 / 3; grid-column: 9 / 25; align-items: center; margin-top: 0; }
+  .block__layer--media .block__text { grid-row: 1 / 2; }
+  .block__layer--media .block__media { grid-row: 2 / 3; padding-top: 0; }
+  /* Inverted block: text on the right (17→25), media on the left (1→17). [measured] H */
+  .block--inverse .block__text { grid-column: 17 / 25;
+                 padding-right: calc(var(--step-h) * .25);
+                 padding-left: calc(var(--step-h) * 3); }
+  .block--inverse .block__media { grid-column: 1 / 17; }
+  .block--inverse .block__text > * { justify-self: end; }          /* lg:justify-self-end */
 }
-.bloc__lien  { margin-top: calc(var(--pas-v) * 8 / 12); }         /* [relevé] H mt-v8/12 */
-.bloc-espace { margin-bottom: calc(var(--pas-v) * 4); }           /* [relevé] H mb-v4 */
+.block__link  { margin-top: calc(var(--step-v) * 8 / 12); }         /* [measured] H mt-v8/12 */
+.block-space { margin-bottom: calc(var(--step-v) * 4); }           /* [measured] H mb-v4 */
 
-/* Média en couches : DEUX div superposées, une par thème, commutées par
-   `display:none!important` — pas par opacité.
-   [relevé] M : .media-dark,[data-theme=light] .media-dark{display:none!important}
-                .media-light{display:none!important} (sous prefers-color-scheme:dark) */
-.media-couche { position: absolute; inset: 0; z-index: 0; }
-.media-clair  { display: block; }
-.media-sombre { display: none; }
+/* Layered media: TWO stacked divs, one per theme, switched by
+   `display:none!important` — not by opacity.
+   [measured] M: .media-dark,[data-theme=light] .media-dark{display:none!important}
+                .media-light{display:none!important} (under prefers-color-scheme:dark) */
+.media-layer { position: absolute; inset: 0; z-index: 0; }
+.media-on-light  { display: block; }
+.media-on-dark { display: none; }
 @media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .media-clair  { display: none; }
-  :root:not([data-theme="light"]) .media-sombre { display: block; }
+  :root:not([data-theme="light"]) .media-on-light  { display: none; }
+  :root:not([data-theme="light"]) .media-on-dark { display: block; }
 }
-:root[data-theme="dark"] .media-clair  { display: none; }
-:root[data-theme="dark"] .media-sombre { display: block; }
+:root[data-theme="dark"] .media-on-light  { display: none; }
+:root[data-theme="dark"] .media-on-dark { display: block; }
 
 /* -----------------------------------------------------------------------------
-   11. DÉMOS RECONSTITUÉES
-   La source implémente ces panneaux en React. Ils sont reconstitués ici en HTML
-   statique, au châssis et aux jetons relevés ; la disposition interne est un
-   [arbitrage], les tailles de texte et les couleurs sont relevées.
+   11. RECONSTRUCTED DEMOS
+   The source implements these panels in React. They are rebuilt here in
+   static HTML, with the measured chassis and tokens; the internal layout is
+   [decided], the text sizes and colors are measured.
 -------------------------------------------------------------------------------*/
-/* Panneau « mission control » : liste à gauche, détail à droite. */
+/* "Mission control" panel: list on the left, detail on the right. */
 .mission { display: grid; grid-template-columns: 1fr; height: 100%; min-height: 0; }
 @media (min-width: 660px) { .mission { grid-template-columns: 13rem 1fr; } }
-.mission__liste { border-right: 1px solid var(--filet-moyen);
+.mission__list { border-right: 1px solid var(--rule-medium);
                   background-color: var(--surface-01); padding: .5rem; overflow: hidden; }
 .mission__item { display: flex; align-items: center; gap: .4rem;
                  padding: .3rem .4rem; border-radius: var(--r-2xs);
-                 font-size: var(--t-prod); color: var(--texte-secondaire); }
+                 font-size: var(--t-prod); color: var(--text-secondary); }
 .mission__item[aria-current] { background-color: var(--surface-03);
-                               color: var(--texte-primaire); }
+                               color: var(--text-primary); }
 .mission__detail { padding: .75rem .9rem; overflow: hidden;
                    background-color: var(--surface-01); }
-/* [relevé] H : text-[20px] font-bold / text-[14px] font-semibold — les seules
-   tailles en pixels de toute la page, parce qu'elles imitent une interface. */
-.mission__titre { font-size: 20px; font-weight: 700; line-height: var(--int-serre);
+/* [measured] H: text-[20px] font-bold / text-[14px] font-semibold — the only
+   pixel sizes of the whole page, because they imitate an interface. */
+.mission__title { font-size: 20px; font-weight: 700; line-height: var(--leading-tight);
                   margin-bottom: .25rem; }
-.mission__sous  { font-size: 14px; font-weight: 600;
+.mission__sub  { font-size: 14px; font-weight: 600;
                   margin-top: .5rem; margin-bottom: .125rem; }
 
-/* Pastille d'état + halo pulsé.
-   [relevé] M @keyframes mobile-workspace-interaction-pulse
+/* Status dot + pulsing halo.
+   [measured] M @keyframes mobile-workspace-interaction-pulse
      {0%,to{box-shadow:0 0 0 1px rgb(var(--c)/.24);transform:scale(1)}
       50%{box-shadow:0 0 0 6px rgb(var(--c)/0);transform:scale(1.24)}}
-   employé en `animation:2.8s ease-in-out infinite`. */
-@keyframes pulse-etat {
-  0%, to { box-shadow: 0 0 0 1px color-mix(in srgb, var(--diff-ajout) 24%, transparent);
+   used as `animation:2.8s ease-in-out infinite`. */
+@keyframes status-pulse {
+  0%, to { box-shadow: 0 0 0 1px color-mix(in srgb, var(--diff-added) 24%, transparent);
            transform: scale(1); }
   50%    { box-shadow: 0 0 0 6px transparent; transform: scale(1.24); }
 }
-.pastille { width: .4rem; height: .4rem; border-radius: var(--r-plein);
-            background-color: var(--diff-ajout); flex-shrink: 0;
-            animation: pulse-etat 2.8s ease-in-out infinite; }    /* [relevé] M */
-.pastille--attente { background-color: var(--texte-tertiaire); animation: none; }
+.dot { width: .4rem; height: .4rem; border-radius: var(--r-full);
+            background-color: var(--diff-added); flex-shrink: 0;
+            animation: status-pulse 2.8s ease-in-out infinite; }    /* [measured] M */
+.dot--pending { background-color: var(--text-tertiary); animation: none; }
 
-/* Barres d'activité — oscillations d'opacité décalées entre elles.
-   [relevé] M @keyframes mobileWorkingVerticalOpacity
+/* Activity bars — opacity oscillations offset from one another.
+   [measured] M @keyframes mobileWorkingVerticalOpacity
      {0%,to{opacity:.72}20%{opacity:.28}40%{opacity:.72}60%,80%{opacity:.28}} */
-@keyframes activite { 0%, to { opacity: .72 } 20% { opacity: .28 }
+@keyframes activity { 0%, to { opacity: .72 } 20% { opacity: .28 }
                       40% { opacity: .72 } 60%, 80% { opacity: .28 } }
-.barres { display: flex; gap: 3px; align-items: flex-end; height: 12px; }
-.barres i { width: 3px; background-color: var(--texte-median); border-radius: 1px;
-            animation: activite 2.8s ease-in-out infinite; }
+.bars { display: flex; gap: 3px; align-items: flex-end; height: 12px; }
+.bars i { width: 3px; background-color: var(--text-mid); border-radius: 1px;
+            animation: activity 2.8s ease-in-out infinite; }
 
-/* Conversation type Slack. [relevé] M --text-slack-sm/base/lg = .75/.875/1rem */
-.fil { padding: .6rem .7rem; overflow: hidden; background-color: var(--surface-01); }
-.fil__entete { display: flex; align-items: center; gap: .35rem;
+/* Slack-style conversation. [measured] M --text-slack-sm/base/lg = .75/.875/1rem */
+.thread { padding: .6rem .7rem; overflow: hidden; background-color: var(--surface-01); }
+.thread__header { display: flex; align-items: center; gap: .35rem;
                padding-bottom: .4rem; margin-bottom: .5rem;
-               border-bottom: 1px solid var(--filet-moyen); }
-.fil__salon { font-size: 1rem; font-weight: 600; }                /* --text-slack-lg */
-.fil__msg { display: flex; gap: .5rem; margin-bottom: .55rem; }
-.fil__msg .avatar { width: 1.4rem; height: 1.4rem; flex-shrink: 0;
+               border-bottom: 1px solid var(--rule-medium); }
+.thread__channel { font-size: 1rem; font-weight: 600; }                /* --text-slack-lg */
+.thread__msg { display: flex; gap: .5rem; margin-bottom: .55rem; }
+.thread__msg .avatar { width: 1.4rem; height: 1.4rem; flex-shrink: 0;
                     background-color: var(--surface-04); }
-.fil__nom    { font-size: .875rem; font-weight: 600; }            /* --text-slack-base */
-.fil__texte  { font-size: .875rem; color: var(--texte-secondaire); }
-.fil__mention { color: #2268ff; }                          /* [relevé] M --theme-blue-primary */
+.thread__name    { font-size: .875rem; font-weight: 600; }            /* --text-slack-base */
+.thread__text  { font-size: .875rem; color: var(--text-secondary); }
+.thread__mention { color: #2268ff; }                          /* [measured] M --theme-blue-primary */
 
-/* ANIMATION 8 — chatoiement d'un texte en cours de génération.
-   [relevé] M : @keyframes shimmer{0%{background-position:200% 0}
+/* ANIMATION 8 — shimmer of a text being generated.
+   [measured] M: @keyframes shimmer{0%{background-position:200% 0}
                                    to{background-position:-200% 0}}
                 animation:shimmer var(--shimmer-duration,2.5s) linear infinite
                 --shimmer-highlight-color: color-mix(in srgb,
                   var(--color-theme-text) var(--shimmer-intensity,70%), …) */
 @keyframes shimmer { 0% { background-position: 200% 0 } to { background-position: -200% 0 } }
-.chatoie {
+.shimmer {
   background-image: linear-gradient(90deg,
-    var(--texte-secondaire) 0%,
-    color-mix(in srgb, var(--texte-primaire) 70%, var(--texte-secondaire)) 50%,
-    var(--texte-secondaire) 100%);
+    var(--text-secondary) 0%,
+    color-mix(in srgb, var(--text-primary) 70%, var(--text-secondary)) 50%,
+    var(--text-secondary) 100%);
   background-size: 200% 100%;
   -webkit-background-clip: text; background-clip: text; color: transparent;
   animation: shimmer 2.5s linear infinite;
 }
 
-/* Panneau de configuration d'automatisation. */
-.config__ligne { display: flex; justify-content: space-between; align-items: center;
-                 padding: .4rem 0; border-bottom: 1px solid var(--filet-moyen);
+/* Automation configuration panel. */
+.config__line { display: flex; justify-content: space-between; align-items: center;
+                 padding: .4rem 0; border-bottom: 1px solid var(--rule-medium);
                  font-size: var(--t-prod); }
-.config__ligne:last-child { border-bottom: 0; }
-.config__val { color: var(--texte-secondaire); font-family: var(--police-mono); }
-.puce { display: inline-flex; align-items: center; gap: .25rem;
-        background-color: var(--surface-03); color: var(--texte-secondaire);
-        border-radius: var(--r-plein); padding: .1rem .45rem; font-size: var(--t-prod-sm); }
+.config__line:last-child { border-bottom: 0; }
+.config__val { color: var(--text-secondary); font-family: var(--font-mono); }
+.bullet { display: inline-flex; align-items: center; gap: .25rem;
+        background-color: var(--surface-03); color: var(--text-secondary);
+        border-radius: var(--r-full); padding: .1rem .45rem; font-size: var(--t-prod-sm); }
 
-/* Téléphone — la source dessine un vrai châssis d'appareil.
-   [relevé] M --mobile-phone-bg:#f8f8f6 (clair) / #1f1e1b (sombre)
+/* Phone — the source draws a real device chassis.
+   [measured] M --mobile-phone-bg:#f8f8f6 (light) / #1f1e1b (dark)
              --mobile-phone-text:#1f211d / #f4f0e8 */
-.telephone { width: 240px; margin-inline: auto;
+.phone { width: 240px; margin-inline: auto;
              border-radius: 28px; padding: 8px;
-             background-color: var(--surface-04); box-shadow: var(--ombre-fenetre); }
-.telephone__ecran { border-radius: 22px; overflow: hidden;
+             background-color: var(--surface-04); box-shadow: var(--window-shadow); }
+.phone__screen { border-radius: 22px; overflow: hidden;
                     background-color: #f8f8f6; color: #1f211d;
                     padding: .7rem .6rem; min-height: 260px; font-size: var(--t-prod); }
-:root[data-theme="dark"] .telephone__ecran { background-color: #1f1e1b; color: #f4f0e8; }
+:root[data-theme="dark"] .phone__screen { background-color: #1f1e1b; color: #f4f0e8; }
 @media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .telephone__ecran { background-color: #1f1e1b;
+  :root:not([data-theme="light"]) .phone__screen { background-color: #1f1e1b;
                                                       color: #f4f0e8; }
 }
-/* [relevé] H : text-[19px] leading-tight font-[510] tracking-[-0.26px] */
-.telephone__titre { font-size: 19px; line-height: var(--int-serre); font-weight: 510;
+/* [measured] H: text-[19px] leading-tight font-[510] tracking-[-0.26px] */
+.phone__title { font-size: 19px; line-height: var(--leading-tight); font-weight: 510;
                     letter-spacing: -.26px; margin-bottom: 1rem; }
-.telephone__depot { display: flex; align-items: center; justify-content: space-between;
+.phone__repo { display: flex; align-items: center; justify-content: space-between;
                     padding: .45rem 0; border-bottom: 1px solid #0000000e; }
-.telephone__depot:last-child { border-bottom: 0; }
+.phone__repo:last-child { border-bottom: 0; }
 
 /* -----------------------------------------------------------------------------
-   12. GRILLES DE CARTES
-   Deux grilles coexistent, avec des paliers DIFFÉRENTS. Les confondre est une
-   erreur : elles ne se réorganisent pas au même moment.
+   12. CARD GRIDS
+   Two grids coexist, with DIFFERENT steps. Confusing them is a mistake: they
+   do not reorganise at the same moment.
 -------------------------------------------------------------------------------*/
-/* `.trio` — fonctionnalités : `grid gap-g1 grid-cols-1 xl:grid-cols-3`, UN seul
-   palier, à 1140px. De 320 à 1139px la colonne reste unique.     [relevé] H */
-.trio { display: grid; gap: var(--pas-h); grid-template-columns: 1fr; align-items: stretch; }
+/* `.trio` — features: `grid gap-g1 grid-cols-1 xl:grid-cols-3`, ONE single
+   step, at 1140px. From 320 to 1139px the column stays single. [measured] H */
+.trio { display: grid; gap: var(--step-h); grid-template-columns: 1fr; align-items: stretch; }
 @media (min-width: 1140px) { .trio { grid-template-columns: repeat(3, 1fr); } }
 
-/* `.citations` — `grid-cols-1 md:grid-cols-2 lg:grid-cols-3`, deux paliers,
-   à 660 puis 900px.                                              [relevé] H */
-.citations { display: grid; gap: var(--pas-h); grid-template-columns: 1fr;
+/* `.quotes` — `grid-cols-1 md:grid-cols-2 lg:grid-cols-3`, two steps, at
+   660 then 900px.                                                [measured] H */
+.quotes { display: grid; gap: var(--step-h); grid-template-columns: 1fr;
              align-items: stretch; }
-@media (min-width: 660px) { .citations { grid-template-columns: repeat(2, 1fr); } }
-@media (min-width: 900px) { .citations { grid-template-columns: repeat(3, 1fr); } }
-.trio .carte, .citations .carte { display: flex; flex-direction: column; height: 100%; }
+@media (min-width: 660px) { .quotes { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 900px) { .quotes { grid-template-columns: repeat(3, 1fr); } }
+.trio .tile, .quotes .tile { display: flex; flex-direction: column; height: 100%; }
 
-/* La source publie 6 citations dont 3 en `hidden md:block` : trois seulement
-   sous 660px, six au-delà.                                       [relevé] H
-   Déclaré APRÈS `.citations .carte{display:flex}` et avec la même spécificité
-   de classe — sinon la règle d'affichage l'emporte et les six restent visibles. */
-.citations .citation--secondaire { display: none; }
+/* The source publishes 6 quotes of which 3 are `hidden md:block`: only three
+   below 660px, six beyond.                                       [measured] H
+   Declared AFTER `.quotes .tile{display:flex}` and with the same class
+   specificity — otherwise the display rule wins and all six stay visible. */
+.quotes .quote--secondary { display: none; }
 @media (min-width: 660px) {
-  .citations .citation--secondaire { display: flex; }
+  .quotes .quote--secondary { display: flex; }
 }
-/* Le h3 des cartes est une balise NUE dans un parent `.type-base` : il hérite,
-   ne porte aucune classe de taille et ne change pas avec la largeur.
-   [relevé] H : <div class="type-base max-w-prose …"><h3>…</h3> */
+/* The cards' h3 is a BARE tag inside a `.type-base` parent: it inherits,
+   carries no size class and does not change with the width.
+   [measured] H: <div class="type-base max-w-prose …"><h3>…</h3> */
 .trio h3 { font-size: inherit; }
-.trio__corps  { display: flex; flex-direction: column; flex: 1; }  /* flex grow flex-col */
-.trio__pied   { margin-top: auto; padding-top: calc(var(--pas-v) * 8 / 12); }
-.trio__figure { padding-top: calc(var(--pas-h) * 1.75); }          /* [relevé] H pt-g1.75 */
+.trio__body  { display: flex; flex-direction: column; flex: 1; }  /* flex grow flex-col */
+.trio__footer   { margin-top: auto; padding-top: calc(var(--step-v) * 8 / 12); }
+.trio__figure { padding-top: calc(var(--step-h) * 1.75); }          /* [measured] H pt-g1.75 */
 
-/* `min-h-[180px]` + `line-clamp-4 md:line-clamp-5` : plancher de hauteur ET
-   plafond de lignes, donc toutes les citations d'une rangée s'alignent quelle
-   que soit la longueur du texte.                                 [relevé] H */
-.citation { min-height: 180px; }
-.citation figure { display: flex; flex-direction: column; height: 100%; }
-.citation blockquote { flex: 1; overflow: hidden; }
-.citation p { display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden;
+/* `min-h-[180px]` + `line-clamp-4 md:line-clamp-5`: a height floor AND a line
+   ceiling, so all the quotes of a row line up whatever the length of the
+   text.                                                          [measured] H */
+.quote { min-height: 180px; }
+.quote figure { display: flex; flex-direction: column; height: 100%; }
+.quote blockquote { flex: 1; overflow: hidden; }
+.quote p { display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden;
               -webkit-line-clamp: 4; line-clamp: 4; }
-@media (min-width: 660px) { .citation p { -webkit-line-clamp: 5; line-clamp: 5; } }
-/* `mt-v2 space-x-(--grid-gap)` : l'écart avatar/légende est la gouttière de
-   texte, pas le pas horizontal.                                  [relevé] H */
-.citation figcaption { display: flex; align-items: center; gap: var(--gouttiere);
-                       margin-top: calc(var(--pas-v) * 2); }
-.citation .avatar { width: 2.5rem; height: 2.5rem; flex-shrink: 0;
+@media (min-width: 660px) { .quote p { -webkit-line-clamp: 5; line-clamp: 5; } }
+/* `mt-v2 space-x-(--grid-gap)`: the avatar/caption gap is the text gutter,
+   not the horizontal step.                                       [measured] H */
+.quote figcaption { display: flex; align-items: center; gap: var(--gutter);
+                       margin-top: calc(var(--step-v) * 2); }
+.quote .avatar { width: 2.5rem; height: 2.5rem; flex-shrink: 0;
                     background-color: var(--surface-04); }
 
 /* -----------------------------------------------------------------------------
-   13. CARROUSEL À ANCRAGE
-   Le procédé le plus technique de la page : sur petit écran la liste défile
-   horizontalement et la largeur d'une carte est calculée SUR LA GRILLE 24, pas
-   en pourcentage. La formule dit « 18 colonnes sur 24, gouttières comprises » :
-     ((100vw − 2·marge − 23·gouttière) / 24) × 18 + 17·gouttière
-   Une carte s'aligne donc exactement sur la grille du reste de la page, et la
-   suivante dépasse juste assez pour signaler qu'on peut défiler.
-   [relevé] H, classe w-[calc(…)] des cartes de changelog.
-   Paliers, avec les points de bascule réels du projet :
-     base 18 col · ≥420 16 col · ≥660 14 col · ≥900 grille 3 col · ≥1140 4 col
+   13. SNAP CAROUSEL
+   The most technical technique of the page: on small screens the list scrolls
+   horizontally and the width of a card is computed ON THE 24-COLUMN GRID, not
+   as a percentage. The formula says "18 columns out of 24, gutters included":
+     ((100vw − 2·margin − 23·gutter) / 24) × 18 + 17·gutter
+   A card therefore aligns exactly on the grid of the rest of the page, and
+   the next one sticks out just enough to signal that you can scroll.
+   [measured] H, w-[calc(…)] class of the changelog cards.
+   Steps, with the project's real breakpoints:
+     base 18 col · ≥420 16 col · ≥660 14 col · ≥900 3-col grid · ≥1140 4 col
 -------------------------------------------------------------------------------*/
-.piste {
-  margin-inline: calc(var(--pas-h) * -2);
-  padding-inline: calc(var(--pas-h) * 2);
+.track {
+  margin-inline: calc(var(--step-h) * -2);
+  padding-inline: calc(var(--step-h) * 2);
   overflow-x: auto;
   scroll-snap-type: x mandatory;
-  scroll-padding-inline: calc(var(--pas-h) * 2);
+  scroll-padding-inline: calc(var(--step-h) * 2);
   scrollbar-width: none; -ms-overflow-style: none;
 }
-.piste::-webkit-scrollbar { display: none; }                      /* [relevé] M */
-.piste__rail { display: flex; width: max-content; gap: var(--pas-h); }
-.piste__item {
+.track::-webkit-scrollbar { display: none; }                      /* [measured] M */
+.track__rail { display: flex; width: max-content; gap: var(--step-h); }
+.track__item {
   flex-shrink: 0; scroll-snap-align: start;
-  --colonnes: 18;
+  --columns: 18;
   width: calc(
-    ((100vw - 2 * var(--pas-h) * 2 - 23 * var(--pas-h)) / 24) * var(--colonnes)
-    + (var(--colonnes) - 1) * var(--pas-h)
+    ((100vw - 2 * var(--step-h) * 2 - 23 * var(--step-h)) / 24) * var(--columns)
+    + (var(--columns) - 1) * var(--step-h)
   );
 }
-@media (min-width: 420px) { .piste__item { --colonnes: 16; } }    /* sm: */
-@media (min-width: 660px) { .piste__item { --colonnes: 14; } }    /* md: */
+@media (min-width: 420px) { .track__item { --columns: 16; } }    /* sm: */
+@media (min-width: 660px) { .track__item { --columns: 14; } }    /* md: */
 @media (min-width: 900px) {                                       /* lg: */
-  .piste { margin-inline: 0; padding-inline: 0; overflow: visible;
+  .track { margin-inline: 0; padding-inline: 0; overflow: visible;
            scroll-snap-type: none; scroll-padding-inline: 0; }
-  .piste__rail { display: grid; width: 100%; grid-template-columns: repeat(3, 1fr); }
-  .piste__item { width: auto; }
+  .track__rail { display: grid; width: 100%; grid-template-columns: repeat(3, 1fr); }
+  .track__item { width: auto; }
 }
-@media (min-width: 1140px) { .piste__rail { grid-template-columns: repeat(4, 1fr); } }
-/* La 4e carte porte `lg:hidden xl:block` : elle disparaît entre 900 et 1140px,
-   exactement sur la plage où la grille n'a que 3 colonnes. Sans ça, elle
-   retomberait seule sur une deuxième ligne.                      [relevé] H */
+@media (min-width: 1140px) { .track__rail { grid-template-columns: repeat(4, 1fr); } }
+/* The 4th card carries `lg:hidden xl:block`: it disappears between 900 and
+   1140px, exactly over the range where the grid has only 3 columns. Without
+   that, it would drop alone onto a second row.                   [measured] H */
 @media (min-width: 900px) and (max-width: 1139px) {
-  .piste__item--surnumeraire { display: none; }
+  .track__item--overflow { display: none; }
 }
-.piste__item article { height: 100%; }
-.piste__item .carte { display: flex; flex-direction: column; height: 100%; }
-/* [relevé] H : text-theme-text-mid + left-[-1px] + gap-x-(--grid-gap) */
-.piste__entete { display: flex; align-items: center; gap: var(--gouttiere);
-                 color: var(--texte-median); position: relative; left: -1px;
+.track__item article { height: 100%; }
+.track__item .tile { display: flex; flex-direction: column; height: 100%; }
+/* [measured] H: text-theme-text-mid + left-[-1px] + gap-x-(--grid-gap) */
+.track__header { display: flex; align-items: center; gap: var(--gutter);
+                 color: var(--text-mid); position: relative; left: -1px;
                  flex-wrap: wrap; }
-.piste__titre { margin-top: calc(var(--pas-v) * .5); }
-.piste__pied  { margin-top: calc(var(--pas-v) * 9 / 12); }        /* [relevé] H mt-v9/12 */
+.track__title { margin-top: calc(var(--step-v) * .5); }
+.track__footer  { margin-top: calc(var(--step-v) * 9 / 12); }        /* [measured] H mt-v9/12 */
 
-/* Carte de « faits marquants » : deux colonnes, texte souple + avatar fixe.
-   [relevé] H : card card--text grow-1 grid-cursor-v1 grid-cols-[1fr_auto] */
-.fait { display: grid; grid-template-columns: 1fr auto; gap: var(--gouttiere);
+/* "Highlights" card: two columns, flexible text + fixed avatar.
+   [measured] H: card card--text grow-1 grid-cursor-v1 grid-cols-[1fr_auto] */
+.entry { display: grid; grid-template-columns: 1fr auto; gap: var(--gutter);
         align-items: start; }
-.fait__meta { display: flex; flex-wrap: wrap; align-items: center;
-              gap: calc(var(--pas-v) * 2 / 12) calc(var(--pas-v) * 1 / 12);
-              color: var(--texte-median); }
-.fait .avatar { width: 1.5rem; height: 1.5rem; flex-shrink: 0;    /* h-6 w-6 */
+.entry__meta { display: flex; flex-wrap: wrap; align-items: center;
+              gap: calc(var(--step-v) * 2 / 12) calc(var(--step-v) * 1 / 12);
+              color: var(--text-mid); }
+.entry .avatar { width: 1.5rem; height: 1.5rem; flex-shrink: 0;    /* h-6 w-6 */
                 background-color: var(--surface-04); }
 
-/* Boutons de défilement du carrousel — absents de la source, ajoutés pour
-   rendre le défilement pilotable au clavier et à la souris.   [arbitrage] */
-.piste-cadre { position: relative; }
-.piste-nav { display: none; }
+/* Carousel scroll buttons — absent from the source, added to make scrolling
+   drivable with the keyboard and the mouse.                     [decided] */
+.track-frame { position: relative; }
+.track-nav { display: none; }
 @media (min-width: 420px) and (max-width: 899px) {
-  .piste-nav {
+  .track-nav {
     display: inline-flex; align-items: center; justify-content: center;
-    width: 2rem; height: 2rem; border-radius: var(--r-plein);
-    background-color: var(--surface-04); border: 1px solid var(--filet-discret);
+    width: 2rem; height: 2rem; border-radius: var(--r-full);
+    background-color: var(--surface-04); border: 1px solid var(--rule-subtle);
     cursor: pointer; position: absolute; top: -2.7rem; right: 0;
   }
-  .piste-nav--prec { right: 2.4rem; }
-  .piste-nav:hover { background-color: var(--surface-05); }
-  .piste-nav[disabled] { opacity: .4; cursor: default; }
+  .track-nav--prev { right: 2.4rem; }
+  .track-nav:hover { background-color: var(--surface-05); }
+  .track-nav[disabled] { opacity: .4; cursor: default; }
 }
 
 /* -----------------------------------------------------------------------------
-   14. RÉVÉLATION AU SCROLL
-   La seule apparition au défilement du site.
-   [relevé] M : @keyframes gallery-marquee-item-slide-up
+   14. REVEAL ON SCROLL
+   The site's only on-scroll entrance.
+   [measured] M: @keyframes gallery-marquee-item-slide-up
                 {0%{opacity:0;transform:translateY(25%)}
                  to{opacity:1;transform:translate(0)}}
-   [relevé] M : --animate-… = « … 1s var(--ease-out-spring) both »
+   [measured] M: --animate-… = "… 1s var(--ease-out-spring) both"
 
-   Trois décisions à copier :
-   1. le déplacement est en POURCENTAGE (25%), pas en pixels : il est
-      proportionnel à la hauteur de l'élément, donc la cascade paraît homogène
-      sans réglage par taille ;
-   2. `both` conserve l'image de départ avant déclenchement et celle d'arrivée
-      après — sans lui, l'élément clignoterait au retour à l'état natif ;
-   3. 1 seconde, sept fois la durée des états d'interface : « entrer en scène »
-      et « réagir à un geste » ne sont pas la même chose.
+   Three decisions to copy:
+   1. the displacement is a PERCENTAGE (25%), not pixels: it is proportional
+      to the element's height, so the stagger looks even without per-size
+      tuning;
+   2. `both` keeps the starting frame before triggering and the final one
+      after — without it, the element would flicker when returning to its
+      native state;
+   3. 1 second, seven times the duration of interface states: "entering the
+      stage" and "reacting to a gesture" are not the same thing.
 
-   Déclencheur : IntersectionObserver (voir motion.js). Surtout PAS
-   `animation-timeline: view()` — pas « widely available » : là où il manque,
-   une keyframe démarrant à opacity:0 laisse l'élément invisible pour de bon.
+   Trigger: IntersectionObserver (see motion.js). Above all NOT
+   `animation-timeline: view()` — not "widely available": where it is missing,
+   a keyframe starting at opacity:0 leaves the element invisible for good.
 -------------------------------------------------------------------------------*/
-@keyframes revele-vers-haut {
+@keyframes reveal-up {
   from { opacity: 0; transform: translateY(25%); }
   to   { opacity: 1; transform: translate(0); }
 }
-/* LE mécanisme exact de la source, en quatre règles — plus fin qu'il n'y paraît.
-   L'animation est TOUJOURS déclarée, mais **mise en pause** : `both` fige donc
-   l'élément sur son image de départ (opacity 0). Le JS ne masque rien, ne pose
-   aucun `opacity:0` ; il se contente de lever la pause.
-     [relevé] M : .animate-gallery-marquee-item-slide-up{animation-play-state:paused}
+/* THE exact mechanism of the source, in four rules — subtler than it looks.
+   The animation is ALWAYS declared, but **paused**: `both` therefore freezes
+   the element on its starting frame (opacity 0). The JS hides nothing, sets
+   no `opacity:0`; it merely lifts the pause.
+     [measured] M: .animate-gallery-marquee-item-slide-up{animation-play-state:paused}
                   [data-intro=true] .animate-…{animation-play-state:running}
                   @media (scripting:none){.animate-…{animation-play-state:running}}
                   @media (prefers-reduced-motion:reduce){.animate-…{animation:none}}
 
-   La troisième règle est le garde-fou que tout le monde oublie : si le
-   JavaScript est DÉSACTIVÉ, `scripting:none` remet l'animation en marche.
+   The third rule is the safeguard everybody forgets: if JavaScript is
+   DISABLED, `scripting:none` restarts the animation.
 
-   MAIS ce garde-fou a un trou, vérifié en test : `scripting:none` ne matche que
-   si le scripting est désactivé, PAS si le script est simplement absent, bloqué
-   par le réseau ou en erreur. Dans ces cas-là, la page de la source reste
-   figée sur l'image de départ — c'est-à-dire vide. Reproduit ici en servant la
-   page sans le `<script>` : toutes les sections révélées ont disparu.
+   BUT this safeguard has a hole, verified in testing: `scripting:none` only
+   matches when scripting is disabled, NOT when the script is merely missing,
+   blocked by the network or throwing. In those cases, the source page stays
+   frozen on the starting frame — that is, blank. Reproduced here by serving
+   the page without the `<script>`: every revealed section disappeared.
 
-   Correction : on INVERSE la condition. L'animation joue par défaut ; la pause
-   n'est armée que si le script a effectivement installé son observateur, ce
-   qu'il signale par `data-js` sur <html>. Aucun script → aucune pause → la page
-   se révèle seule, quelle que soit la RAISON de l'absence du script.
-   Le procédé de la source est conservé (pause / reprise, jamais d'`opacity:0`
-   posé en JS) ; seule la polarité du déclencheur change.        [arbitrage] */
-[data-revele] {
-  animation: revele-vers-haut var(--duree-revele) var(--courbe-ressort) both;
-  animation-delay: calc(var(--rang, 0) * var(--cascade));
+   Fix: we INVERT the condition. The animation plays by default; the pause is
+   only armed if the script has actually installed its observer, which it
+   signals with `data-js` on <html>. No script → no pause → the page reveals
+   itself, whatever the REASON the script is missing.
+   The source's technique is kept (pause / resume, never an `opacity:0` set
+   in JS); only the polarity of the trigger changes.              [decided] */
+[data-reveal] {
+  animation: reveal-up var(--time-reveal) var(--curve-spring) both;
+  animation-delay: calc(var(--index, 0) * var(--cascade));
 }
-html[data-js] [data-revele] { animation-play-state: paused; }
-html[data-js] [data-revele].est-visible { animation-play-state: running; }
-/* Ceinture et bretelles : les deux garde-fous de la source restent en place. */
-@media (scripting: none) { [data-revele] { animation-play-state: running; } }
-[data-intro="true"] [data-revele] { animation-play-state: running; }
+html[data-js] [data-reveal] { animation-play-state: paused; }
+html[data-js] [data-reveal].is-visible { animation-play-state: running; }
+/* Belt and braces: the source's two safeguards stay in place. */
+@media (scripting: none) { [data-reveal] { animation-play-state: running; } }
+[data-intro="true"] [data-reveal] { animation-play-state: running; }
 
 /* -----------------------------------------------------------------------------
-   15. PIED DE PAGE
+   15. FOOTER
 -------------------------------------------------------------------------------*/
-/* [relevé] H : pt-v3 pb-v3 md:pb-g3 px-g2 bg-theme-card-hex relative */
-.pied { position: relative; background-color: var(--surface-01);
-        padding: calc(var(--pas-v) * 3) calc(var(--pas-h) * 2); }
-@media (min-width: 660px) { .pied { padding-bottom: calc(var(--pas-h) * 3); } }
-/* [relevé] H : mb-v4.5 sur le conteneur, gap-x-g1 gap-y-v2 grid-cols-2 md:grid-cols-5 */
-.pied__colonnes { display: grid; grid-template-columns: repeat(2, 1fr);
-                  column-gap: var(--pas-h); row-gap: calc(var(--pas-v) * 2);
-                  margin-bottom: calc(var(--pas-v) * 4.5); }
-@media (min-width: 660px) { .pied__colonnes { grid-template-columns: repeat(5, 1fr); } }
-/* Le titre de colonne est secondaire…             [relevé] H text-theme-text-sec */
-.pied h3 { font-size: var(--t-base); color: var(--texte-secondaire);
-           padding-bottom: calc(var(--pas-v) * 2.5 / 12); }
-/* …mais les LIENS ne portent aucune couleur au repos : ils héritent du texte
-   primaire. `.footer-link` n'a qu'une règle `:hover`, et cette règle les
-   ÉCLAIRCIT. Le survol atténue au lieu de renforcer, comme en nav.
-   Ne pas inverser : primaire au repos, 75 % au survol.   [relevé] M .footer-link */
-.pied__lien { display: inline-block; font-size: var(--t-base);
-              padding-block: calc(var(--pas-v) * 2.5 / 12); }
-@media (min-width: 660px) { .pied h3, .pied__lien { font-size: var(--t-sm); } }
-.pied__lien:hover { color: color-mix(in oklab, var(--texte-primaire) 75%, transparent); }
-.pied__bas { display: flex; flex-wrap: wrap; align-items: center;
-             justify-content: space-between; gap: var(--pas-h);
-             font-size: var(--t-base); color: var(--texte-tertiaire); }
-@media (min-width: 660px) { .pied__bas { font-size: var(--t-sm); } }
-/* La mention de copyright hérite du gris tertiaire de `.pied__bas` : la classe
-   ne sert qu'à l'identifier, elle ne redéclare rien.              [arbitrage] */
-.pied__copyright { color: inherit; }
+/* [measured] H: pt-v3 pb-v3 md:pb-g3 px-g2 bg-theme-card-hex relative */
+.footer { position: relative; background-color: var(--surface-01);
+        padding: calc(var(--step-v) * 3) calc(var(--step-h) * 2); }
+@media (min-width: 660px) { .footer { padding-bottom: calc(var(--step-h) * 3); } }
+/* [measured] H: mb-v4.5 on the container, gap-x-g1 gap-y-v2 grid-cols-2 md:grid-cols-5 */
+.footer__columns { display: grid; grid-template-columns: repeat(2, 1fr);
+                  column-gap: var(--step-h); row-gap: calc(var(--step-v) * 2);
+                  margin-bottom: calc(var(--step-v) * 4.5); }
+@media (min-width: 660px) { .footer__columns { grid-template-columns: repeat(5, 1fr); } }
+/* The column title is secondary…          [measured] H text-theme-text-sec */
+.footer h3 { font-size: var(--t-base); color: var(--text-secondary);
+           padding-bottom: calc(var(--step-v) * 2.5 / 12); }
+/* …but the LINKS carry no color at rest: they inherit the primary text.
+   `.footer-link` has only a `:hover` rule, and that rule LIGHTENS them.
+   Hover mutes instead of intensifying, as in the nav.
+   Do not invert: primary at rest, 75% on hover.  [measured] M .footer-link */
+.footer__link { display: inline-block; font-size: var(--t-base);
+              padding-block: calc(var(--step-v) * 2.5 / 12); }
+@media (min-width: 660px) { .footer h3, .footer__link { font-size: var(--t-sm); } }
+.footer__link:hover { color: color-mix(in oklab, var(--text-primary) 75%, transparent); }
+.footer__bottom { display: flex; flex-wrap: wrap; align-items: center;
+             justify-content: space-between; gap: var(--step-h);
+             font-size: var(--t-base); color: var(--text-tertiary); }
+@media (min-width: 660px) { .footer__bottom { font-size: var(--t-sm); } }
+/* The copyright notice inherits the tertiary grey of `.footer__bottom`: the
+   class only identifies it, it redeclares nothing.               [decided] */
+.footer__copyright { color: inherit; }
 
-/* Sélecteur de langue : même procédé de menu qu'en nav, mais ouvert vers le
-   HAUT — `bottom-full` au lieu de `top-full`, et le décalage initial est donc
-   inversé (+.4rem au lieu de −.4rem).
-   [relevé] H : nav__sub-nav pt-v3/12 absolute bottom-full left-0 md:left-auto
+/* Language selector: same menu technique as in the nav, but opened UPWARDS —
+   `bottom-full` instead of `top-full`, so the initial offset is inverted
+   (+.4rem instead of −.4rem).
+   [measured] H: nav__sub-nav pt-v3/12 absolute bottom-full left-0 md:left-auto
                 md:right-0 z-50 mb-v6/12 privacy-dropdown-upward */
-.langue { position: relative; }
-.langue__panneau {
+.language { position: relative; }
+.language__panel {
   position: absolute; bottom: 100%; left: 0; z-index: 50;
-  margin-bottom: calc(var(--pas-v) * 6 / 12);
+  margin-bottom: calc(var(--step-v) * 6 / 12);
   opacity: 0; visibility: hidden;
   transform: translateY(.4rem);
-  transition: opacity    var(--duree-instant) var(--courbe-ressort),
-              transform  var(--duree-instant) var(--courbe-ressort),
-              visibility 0s linear var(--duree-instant);
+  transition: opacity    var(--time-instant) var(--curve-spring),
+              transform  var(--time-instant) var(--curve-spring),
+              visibility 0s linear var(--time-instant);
 }
-@media (min-width: 660px) { .langue__panneau { left: auto; right: 0; } }
-.langue:hover .langue__panneau, .langue:focus-within .langue__panneau {
+@media (min-width: 660px) { .language__panel { left: auto; right: 0; } }
+.language:hover .language__panel, .language:focus-within .language__panel {
   opacity: 1; visibility: visible; transform: translateY(0); transition-delay: 0s;
 }
-/* [relevé] H : card card--flyout px-0 py-g0.75 min-w-[10rem] bg-theme-card-02-hex */
-.langue__panneau .carte { padding: calc(var(--pas-h) * .75) 0; min-width: 10rem;
+/* [measured] H: card card--flyout px-0 py-g0.75 min-w-[10rem] bg-theme-card-02-hex */
+.language__panel .tile { padding: calc(var(--step-h) * .75) 0; min-width: 10rem;
                           background-color: var(--surface-03); }
-.langue__option {
+.language__option {
   display: flex; width: 100%; align-items: center; justify-content: space-between;
-  padding: calc(var(--pas-v) * 2.5 / 12) calc(var(--pas-h) * 1.5);
+  padding: calc(var(--step-v) * 2.5 / 12) calc(var(--step-h) * 1.5);
   background: none; border: 0; cursor: pointer; font-size: var(--t-sm);
   position: relative;
 }
-.langue__option:hover { color: color-mix(in oklab, var(--texte-primaire) 75%, transparent); }
+.language__option:hover { color: color-mix(in oklab, var(--text-primary) 75%, transparent); }
 
 /* -----------------------------------------------------------------------------
-   16. UTILITAIRES DE PALIER
-   La source masque et démasque des libellés ENTIERS selon la largeur — ce ne
-   sont pas des variantes de style, ce sont des textes différents. Trois cas
-   relevés :
-     · héros : `hidden md:flex` sur « Download for macOS » et « Request a demo »,
-       et le bouton « Get started » les remplace sous 660px ;                 H
-     · entête : `<span class="xl:hidden">Contact</span>` +
-       `<span class="hidden xl:inline">Contact sales</span>` — le libellé change
-       à 1140px, la largeur du bouton avec ;                                  H
-     · `max-sm:hidden` sur « Download » : il disparaît sous 420px.            H
+   16. BREAKPOINT UTILITIES
+   The source hides and shows WHOLE labels depending on the width — these are
+   not style variants, they are different texts. Three measured cases:
+     · hero: `hidden md:flex` on "Download for macOS" and "Request a demo",
+       and the "Get started" button replaces them below 660px;             H
+     · header: `<span class="xl:hidden">Contact</span>` +
+       `<span class="hidden xl:inline">Contact sales</span>` — the label
+       changes at 1140px, and the button width with it;                    H
+     · `max-sm:hidden` on "Download": it disappears below 420px.           H
 -------------------------------------------------------------------------------*/
-.jusqu-md { display: inline-flex; }
-.des-md   { display: none; }
+.until-md { display: inline-flex; }
+.from-md   { display: none; }
 @media (min-width: 660px) {
-  .jusqu-md { display: none; }
-  .des-md   { display: inline-flex; }
+  .until-md { display: none; }
+  .from-md   { display: inline-flex; }
 }
-.des-xl   { display: none; }
-.jusqu-xl { display: inline; }
+.from-xl   { display: none; }
+.until-xl { display: inline; }
 @media (min-width: 1140px) {
-  .des-xl   { display: inline; }
-  .jusqu-xl { display: none; }
+  .from-xl   { display: inline; }
+  .until-xl { display: none; }
 }
 
 /* -----------------------------------------------------------------------------
-   17. ENTÊTE — compléments
+   17. HEADER — additions
 -------------------------------------------------------------------------------*/
-/* Wordmark : largeur FIXE en px, jamais en em — 95.37px, puis 95.75px au-delà
-   de 900px. Le décalage `top:.2rem left:-2px` est dans la source.  [relevé] H */
-.marque { position: relative; top: .2rem; left: -2px; }
-.marque svg { width: 95.37px; height: auto; }
-@media (min-width: 900px) { .marque svg { width: 95.75px; } }
+/* Wordmark: FIXED width in px, never in em — 95.37px, then 95.75px beyond
+   900px. The `top:.2rem left:-2px` offset is in the source.      [measured] H */
+.brand { position: relative; top: .2rem; left: -2px; }
+.brand svg { width: 95.37px; height: auto; }
+@media (min-width: 900px) { .brand svg { width: 95.75px; } }
 
-/* Le lien « Sign in » n'est pas un bouton : c'est `btn--quinary`, un lien nu
-   qui n'a qu'un état de survol atténué.                            [relevé] M */
-.btn--quinaire { display: inline-flex; align-items: center;
+/* The "Sign in" link is not a button: it is `btn--quinary`, a bare link that
+   only has a muted hover state.                                  [measured] M */
+.btn--quinary { display: inline-flex; align-items: center;
                  font-size: var(--t-sm); padding: .4em .5em; }
-.btn--quinaire:hover { color: color-mix(in oklab, var(--texte-primaire) 75%, transparent); }
-/* `gap-g0.75` entre les actions d'entête — trois quarts de pas, pas un pas
-   entier comme ailleurs.                                           [relevé] H */
-.entete__actions { gap: calc(var(--pas-h) * .75); }
-.entete__contact { display: none; }
-@media (min-width: 900px) { .entete__contact { display: inline-flex; } }
-.entete__telecharger { display: none; }
-@media (min-width: 420px) { .entete__telecharger { display: inline-flex; } }
+.btn--quinary:hover { color: color-mix(in oklab, var(--text-primary) 75%, transparent); }
+/* `gap-g0.75` between the header actions — three quarters of a step, not a
+   whole step as elsewhere.                                       [measured] H */
+.header__actions { gap: calc(var(--step-h) * .75); }
+.header__contact { display: none; }
+@media (min-width: 900px) { .header__contact { display: inline-flex; } }
+.header__download { display: none; }
+@media (min-width: 420px) { .header__download { display: inline-flex; } }
 
 /* -----------------------------------------------------------------------------
-   18. NAVIGATION MOBILE — panneaux poussés
-   La source rend ses sous-menus mobiles CÔTÉ CLIENT : ils sont absents du HTML
-   aspiré, seuls les boutons `aria-expanded="false"` et leur caret « → »
-   subsistent. Le caret dit tout du procédé : ce n'est pas un dépliage vers le
-   bas, c'est un panneau qui arrive par la droite.       [relevé] H + [arbitrage]
+   18. MOBILE NAVIGATION — pushed panels
+   The source renders its mobile submenus CLIENT-SIDE: they are missing from
+   the scraped HTML, only the `aria-expanded="false"` buttons and their "→"
+   caret remain. The caret says everything about the technique: it is not a
+   downward unfold, it is a panel that arrives from the right.
+                                                     [measured] H + [decided]
 -------------------------------------------------------------------------------*/
-.nav-mobile__corps { position: relative; flex: 1; min-height: 0; overflow: hidden; }
-.nav-mobile__corps > ul { overflow-y: auto; height: 100%; }
+.nav-mobile__body { position: relative; flex: 1; min-height: 0; overflow: hidden; }
+.nav-mobile__body > ul { overflow-y: auto; height: 100%; }
 .nav-mobile__item {
   display: flex; width: 100%; align-items: center;
-  padding-block: calc(var(--pas-v) * 3 / 12);
-  font-size: var(--t-lg); line-height: var(--int-xserre);
-  letter-spacing: var(--ap-lg);
+  padding-block: calc(var(--step-v) * 3 / 12);
+  font-size: var(--t-lg); line-height: var(--leading-xtight);
+  letter-spacing: var(--tracking-lg);
   background: none; border: 0; cursor: pointer; text-align: left;
 }
-.nav-mobile__caret { color: var(--texte-tertiaire); }
-.nav-mobile__pousse {
+.nav-mobile__caret { color: var(--text-tertiary); }
+.nav-mobile__pushed {
   position: absolute; inset: 0; z-index: 2;
-  background-color: var(--fond-page);
+  background-color: var(--page-bg);
   overflow-y: auto;
   transform: translateX(100%);
   opacity: 0; pointer-events: none;
-  transition: transform var(--duree-lente) var(--courbe-ressort),
-              opacity   var(--duree-lente) var(--courbe-ressort);
+  transition: transform var(--time-slow) var(--curve-spring),
+              opacity   var(--time-slow) var(--curve-spring);
 }
-.nav-mobile__pousse[data-ouvert="true"] {
+.nav-mobile__pushed[data-open="true"] {
   transform: translateX(0); opacity: 1; pointer-events: auto;
 }
-.nav-mobile__retour {
+.nav-mobile__back {
   display: inline-flex; align-items: center; gap: .3rem;
   background: none; border: 0; cursor: pointer;
-  color: var(--texte-secondaire); font-size: var(--t-base);
-  padding-block: calc(var(--pas-v) * 3 / 12);
+  color: var(--text-secondary); font-size: var(--t-base);
+  padding-block: calc(var(--step-v) * 3 / 12);
 }
 
 /* -----------------------------------------------------------------------------
-   19. HÉROS — rythme du bloc de texte
-   `mb-v1` sous le h1, `mb-v2.5` sous le bloc entier, `gap-x-g1` entre boutons.
-   [relevé] H
+   19. HERO — rhythm of the text block
+   `mb-v1` under the h1, `mb-v2.5` under the whole block, `gap-x-g1` between
+   buttons.
+   [measured] H
 -------------------------------------------------------------------------------*/
-.hero__texte   { margin-bottom: calc(var(--pas-v) * 2.5); }
-.hero__texte h1 { margin-bottom: var(--pas-v); }
-.hero__actions { display: flex; align-items: center; gap: var(--pas-h); }
+.hero__text   { margin-bottom: calc(var(--step-v) * 2.5); }
+.hero__text h1 { margin-bottom: var(--step-v); }
+.hero__actions { display: flex; align-items: center; gap: var(--step-h); }
 .cta__actions  { display: flex; align-items: center; justify-content: center;
-                 gap: var(--pas-h); flex-wrap: wrap; }
-/* La scène du héros a sa propre hauteur, plus haute que les autres : la source
-   pose `height:min(780px,70vh);min-height:720px`.                  [relevé] H */
+                 gap: var(--step-h); flex-wrap: wrap; }
+/* The hero scene has its own height, taller than the others: the source sets
+   `height:min(780px,70vh);min-height:720px`.                     [measured] H */
 .scene--hero { height: min(780px, 70vh); min-height: 720px; }
 @media (max-width: 659px) { .scene--hero { min-height: 420px; height: 460px; } }
 
 /* -----------------------------------------------------------------------------
-   20. CHÂSSIS DE FENÊTRE — outils de barre de titre
+   20. WINDOW CHASSIS — title bar tools
 -------------------------------------------------------------------------------*/
-.fenetre__outils { display: flex; align-items: center; margin-right: -.25rem; }
-.fenetre__icone {
+.window__tools { display: flex; align-items: center; margin-right: -.25rem; }
+.window__icon {
   display: inline-flex; align-items: center; justify-content: center;
   width: 1.75rem; height: 1.75rem; border: 0; background: none; cursor: pointer;
-  border-radius: var(--r-xs); color: var(--texte-secondaire);
-  opacity: 0; transition: opacity var(--duree-longue) var(--courbe-sortie);
+  border-radius: var(--r-xs); color: var(--text-secondary);
+  opacity: 0; transition: opacity var(--time-long) var(--curve-exit);
 }
-.fenetre:hover .fenetre__icone, .fenetre:focus-within .fenetre__icone { opacity: 1; }
-.fenetre__icone:hover { background-color: var(--surface-03); }
+.window:hover .window__icon, .window:focus-within .window__icon { opacity: 1; }
+.window__icon:hover { background-color: var(--surface-03); }
 
 /* -----------------------------------------------------------------------------
-   21. FLANC D'AGENTS — la liste de tâches des démos
-   Deux groupes titrés en CAPITALES, chacun avec un compteur à 50 % d'opacité.
-   La ligne active se distingue par un FOND, jamais par une barre latérale.
-   [relevé] H : uppercase type-product-sm-medium · text-theme-text/50 ·
+   21. AGENT SIDE PANEL — the task list of the demos
+   Two groups titled in CAPITALS, each with a counter at 50% opacity.
+   The active row stands out through a BACKGROUND, never a side bar.
+   [measured] H: uppercase type-product-sm-medium · text-theme-text/50 ·
                 background-color:var(--color-theme-card-hover-hex) ·
-                padding-left:calc(0.75rem + 2px) — 2px de compensation optique
-                pour la ligne sélectionnée, à reproduire tel quel.
+                padding-left:calc(0.75rem + 2px) — 2px of optical compensation
+                for the selected row, to reproduce as-is.
 -------------------------------------------------------------------------------*/
-.flanc-agent {
+.side-agent {
   flex: 2 1 0; min-width: 220px; max-width: 320px;
-  border-right: 1px solid var(--filet-moyen);
+  border-right: 1px solid var(--rule-medium);
   background-color: var(--surface-01);
   overflow: hidden; padding-block: .3rem;
 }
-@media (max-width: 899px) { .flanc-agent { display: none; } }
-.flanc-agent__groupe { padding-block: .3125rem; }   /* py-1.25 */
-.flanc-agent__titre {
+@media (max-width: 899px) { .side-agent { display: none; } }
+.side-agent__group { padding-block: .3125rem; }   /* py-1.25 */
+.side-agent__title {
   padding: .25rem .75rem; text-transform: uppercase;
   font-size: var(--t-prod-sm); font-weight: 500; letter-spacing: .04em;
-  color: var(--texte-secondaire);
+  color: var(--text-secondary);
 }
-.flanc-agent__compte { color: color-mix(in oklab, var(--texte-primaire) 50%, transparent); }
-.flanc-agent__item {
+.side-agent__count { color: color-mix(in oklab, var(--text-primary) 50%, transparent); }
+.side-agent__item {
   display: flex; width: 100%; align-items: flex-start; gap: .5rem;
   border: 0; background: none; cursor: pointer; text-align: left;
   padding: .625rem .75rem .625rem calc(.75rem + 2px);
-  font-size: var(--t-prod); line-height: var(--int-prod);
-  transition: background-color var(--duree-instant) var(--courbe-sortie);
+  font-size: var(--t-prod); line-height: var(--leading-prod);
+  transition: background-color var(--time-instant) var(--curve-exit);
 }
-.flanc-agent__item:hover { background-color: var(--surface-02); }
-.flanc-agent__item[aria-current] { background-color: var(--surface-03); }
-.flanc-agent__glyphe { display: flex; width: 1rem; height: 1rem; flex-shrink: 0;
+.side-agent__item:hover { background-color: var(--surface-02); }
+.side-agent__item[aria-current] { background-color: var(--surface-03); }
+.side-agent__glyph { display: flex; width: 1rem; height: 1rem; flex-shrink: 0;
                        align-items: center; justify-content: center;
-                       color: var(--texte-secondaire); }
-.flanc-agent__glyphe svg { width: 100%; height: 100%; }
-.flanc-agent__corps { display: flex; min-width: 0; flex: 1; flex-direction: column; gap: 1px; }
-.flanc-agent__nom { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.flanc-agent__nom--attenue { color: var(--texte-secondaire); }
-.flanc-agent__etat { font-size: var(--t-prod-sm); color: var(--texte-secondaire);
+                       color: var(--text-secondary); }
+.side-agent__glyph svg { width: 100%; height: 100%; }
+.side-agent__body { display: flex; min-width: 0; flex: 1; flex-direction: column; gap: 1px; }
+.side-agent__name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.side-agent__name--muted { color: var(--text-secondary); }
+.side-agent__state { font-size: var(--t-prod-sm); color: var(--text-secondary);
                      overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.flanc-agent__etat--tertiaire { color: var(--texte-tertiaire); }
-.diff-plus  { color: var(--diff-ajout); }
-.diff-moins { color: var(--diff-retrait); }
+.side-agent__state--tertiary { color: var(--text-tertiary); }
+.diff-plus  { color: var(--diff-added); }
+.diff-minus { color: var(--diff-removed); }
 
 /* -----------------------------------------------------------------------------
-   22. APERÇU DE NAVIGATEUR — la seule zone SÉRIF de la page
-   Détail à ne pas rater : la page rendue dans l'aperçu bascule sur
-   `var(--font-serif)` et pose `font-feature-settings:"cswh" 1` sur le nom de
-   marque (paraphes calligraphiques), plus un `text-indent:-0.1rem` sur le
-   PREMIER alinéa seulement — un débord optique de guillemet.       [relevé] H
+   22. BROWSER PREVIEW — the only SERIF zone of the page
+   Detail not to miss: the page rendered in the preview switches to
+   `var(--font-serif)` and sets `font-feature-settings:"cswh" 1` on the brand
+   name (calligraphic swashes), plus a `text-indent:-0.1rem` on the FIRST
+   paragraph only — an optical overhang for a quotation mark.     [measured] H
 -------------------------------------------------------------------------------*/
-.navigateur { flex: 3 1 0; min-width: 0; display: flex; flex-direction: column;
-              border-right: 1px solid var(--filet-moyen); overflow: hidden; }
-.navigateur__barre { display: flex; align-items: center; gap: .5rem;
+.browser { flex: 3 1 0; min-width: 0; display: flex; flex-direction: column;
+              border-right: 1px solid var(--rule-medium); overflow: hidden; }
+.browser__bar { display: flex; align-items: center; gap: .5rem;
                      height: 1.75rem; flex-shrink: 0; padding-inline: .35rem;
-                     border-bottom: 1px solid var(--filet-moyen); }
-.navigateur__bouton { display: inline-flex; align-items: center; justify-content: center;
+                     border-bottom: 1px solid var(--rule-medium); }
+.browser__button { display: inline-flex; align-items: center; justify-content: center;
                       width: 1.75rem; height: 1.75rem; flex-shrink: 0;
                       border: 0; background: none; cursor: pointer;
-                      border-radius: var(--r-xs); color: var(--texte-secondaire); }
-.navigateur__bouton:hover { background-color: var(--surface-03); }
-.navigateur__url { flex: 1; min-width: 0; font-size: var(--t-prod);
+                      border-radius: var(--r-xs); color: var(--text-secondary); }
+.browser__button:hover { background-color: var(--surface-03); }
+.browser__url { flex: 1; min-width: 0; font-size: var(--t-prod);
                    overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.apercu {
+.preview {
   flex: 1; min-height: 0; overflow: hidden;
-  background-color: var(--fond-page);
+  background-color: var(--page-bg);
   padding: 2rem 1.5rem;                                       /* px-6 py-8 */
   font-family: "Iowan Old Style", "Palatino Linotype", "URW Palladio L", P052,
                ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
 }
-.apercu__entete { margin-bottom: 2rem; }
-.apercu__marque { font-weight: 500; font-style: italic; font-size: 1.2rem;
+.preview__header { margin-bottom: 2rem; }
+.preview__brand { font-weight: 500; font-style: italic; font-size: 1.2rem;
                   font-feature-settings: "cswh" 1; }
-.apercu__corps  { max-width: 48ch; font-size: 1.08rem; line-height: 1.35; }
-.apercu__alinea { text-indent: -.1rem; }
-.apercu__para   { margin-top: 1rem; }
-.apercu__actions { margin-top: 1.25rem; display: flex; align-items: center; gap: 1rem; }
-.apercu__cta   { padding: .375rem .75rem; background-color: var(--texte-primaire);
-                 color: var(--fond-page); border-radius: var(--r-2xs); font-size: .95rem; }
-.apercu__lien  { text-decoration: underline; text-underline-offset: .125em; font-size: .95rem; }
-.apercu__table { margin-top: 2rem; width: 100%; border-collapse: collapse; font-size: .95rem; }
-.apercu__table td { padding-block: .5rem; }
-.apercu__annee { padding-right: 1rem; opacity: .7; }
-.apercu__sujet { padding-right: 1rem; }
-.apercu__etat  { opacity: .7; }
+.preview__body  { max-width: 48ch; font-size: 1.08rem; line-height: 1.35; }
+.preview__indent { text-indent: -.1rem; }
+.preview__para   { margin-top: 1rem; }
+.preview__actions { margin-top: 1.25rem; display: flex; align-items: center; gap: 1rem; }
+.preview__cta   { padding: .375rem .75rem; background-color: var(--text-primary);
+                 color: var(--page-bg); border-radius: var(--r-2xs); font-size: .95rem; }
+.preview__link  { text-decoration: underline; text-underline-offset: .125em; font-size: .95rem; }
+.preview__table { margin-top: 2rem; width: 100%; border-collapse: collapse; font-size: .95rem; }
+.preview__table td { padding-block: .5rem; }
+.preview__year { padding-right: 1rem; opacity: .7; }
+.preview__subject { padding-right: 1rem; }
+.preview__state  { opacity: .7; }
 
 /* -----------------------------------------------------------------------------
-   23. PANNEAU DE CONVERSATION
-   `flex-grow:2.5` contre `2` pour le flanc : la conversation est la colonne la
-   plus large des trois.                                            [relevé] H
+   23. CONVERSATION PANEL
+   `flex-grow:2.5` against `2` for the side panel: the conversation is the
+   widest of the three columns.                                   [measured] H
 -------------------------------------------------------------------------------*/
 .conversation { flex: 2.5 1 0; min-width: 0; display: flex; flex-direction: column;
                 background-color: var(--surface-01); overflow: hidden;
                 padding: .6rem .7rem; }
-@media (max-width: 1139px) { .fenetre .conversation:not(.conversation--large) { display: none; } }
+@media (max-width: 1139px) { .window .conversation:not(.conversation--large) { display: none; } }
 .conversation--large { flex: 3 1 0; }
-.conversation__titre { font-size: var(--t-prod-lg); margin-bottom: .5rem;
-                       text-align: center; color: var(--texte-secondaire); }
-.conversation__flux  { flex: 1; min-height: 0; overflow: hidden;
+.conversation__title { font-size: var(--t-prod-lg); margin-bottom: .5rem;
+                       text-align: center; color: var(--text-secondary); }
+.conversation__feed  { flex: 1; min-height: 0; overflow: hidden;
                        display: flex; flex-direction: column; gap: .4rem; }
-.conversation__etape { font-size: var(--t-prod-sm); color: var(--texte-tertiaire);
+.conversation__step { font-size: var(--t-prod-sm); color: var(--text-tertiary);
                        padding-left: .2rem; }
-.conversation__apercu { position: relative; height: 3.4rem; border-radius: var(--r-xs);
+.conversation__preview { position: relative; height: 3.4rem; border-radius: var(--r-xs);
                         background-color: var(--surface-03); overflow: hidden;
                         display: flex; align-items: flex-end; gap: .5rem;
                         padding: .4rem .5rem; }
-.conversation__marque { position: absolute; top: .35rem; left: .5rem;
+.conversation__brand { position: absolute; top: .35rem; left: .5rem;
                         font-size: 6px; font-weight: 500; font-style: italic;
                         line-height: 1; opacity: .4; }
 
 /* -----------------------------------------------------------------------------
-   24. COMPOSITEUR — le champ de saisie des démos
-   Motif constant de la source : un champ, puis un pied qui aligne un JETON de
-   mode (« Agent », « Plan », « Build ») et le NOM DU MODÈLE. Le modèle est en
-   texte secondaire, jamais mis en avant.                           [relevé] H
+   24. COMPOSER — the input field of the demos
+   Constant pattern of the source: a field, then a footer that lines up a mode
+   CHIP ("Agent", "Plan", "Build") and the MODEL NAME. The model is in
+   secondary text, never emphasised.                              [measured] H
 -------------------------------------------------------------------------------*/
 .compo { margin-top: auto; padding-top: .5rem; }
-.compo__champ { border: 1px solid var(--filet-moyen); border-radius: var(--r-md);
+.compo__field { border: 1px solid var(--rule-medium); border-radius: var(--r-md);
                 padding: .45rem .55rem; font-size: var(--t-prod);
-                color: var(--texte-tertiaire); }
-/* `type-product-lg` + `line-height:1.8` + `opacity-60` — un champ volontairement
-   aéré, presque une invite d'accueil.                              [relevé] H */
-.compo__champ--grand { border: 0; padding: .625rem .75rem .5rem;
+                color: var(--text-tertiary); }
+/* `type-product-lg` + `line-height:1.8` + `opacity-60` — a deliberately airy
+   field, almost a welcome prompt.                                [measured] H */
+.compo__field--tall { border: 0; padding: .625rem .75rem .5rem;
                        font-size: var(--t-prod-lg); line-height: 1.8; opacity: .6; }
-.compo__pied { display: flex; align-items: center; gap: .5rem;
+.compo__footer { display: flex; align-items: center; gap: .5rem;
                margin-top: .4rem; font-size: var(--t-prod-sm); }
-.compo__modele { color: var(--texte-secondaire); }
-.compo__auto   { color: var(--texte-secondaire); display: inline-flex;
+.compo__model { color: var(--text-secondary); }
+.compo__auto   { color: var(--text-secondary); display: inline-flex;
                  align-items: center; gap: .15rem; }
-.compo__envoi  { margin-left: auto; display: inline-flex; align-items: center;
+.compo__send  { margin-left: auto; display: inline-flex; align-items: center;
                  justify-content: center; width: 1.25rem; height: 1.25rem;
-                 border-radius: var(--r-plein);
-                 background-color: var(--texte-primaire); color: var(--fond-page);
+                 border-radius: var(--r-full);
+                 background-color: var(--text-primary); color: var(--page-bg);
                  font-size: .7rem; }
-/* Le compositeur du trio flotte AU-DESSUS d'une boîte à ratio, à 12 % du haut,
-   sur 88 % de large plafonné à 360px.                              [relevé] H */
-.compo--flottant { position: absolute; top: 12%; left: 50%; transform: translateX(-50%);
+/* The trio's composer floats ABOVE a ratio box, at 12% from the top, 88% wide
+   capped at 360px.                                               [measured] H */
+.compo--floating { position: absolute; top: 12%; left: 50%; transform: translateX(-50%);
                    width: 88%; max-width: 360px; margin: 0; padding: 0;
-                   border: 1px solid var(--filet-moyen); border-radius: var(--r-lg);
+                   border: 1px solid var(--rule-medium); border-radius: var(--r-lg);
                    background-color: var(--surface-01);
                    box-shadow: 0 10px 22px -14px rgba(0,0,0,.3); }
-.compo--flottant .compo__pied { padding: 0 .5rem .5rem; margin-top: 0; }
+.compo--floating .compo__footer { padding: 0 .5rem .5rem; margin-top: 0; }
 
-.jeton { display: inline-flex; align-items: center; gap: .25rem;
+.chip { display: inline-flex; align-items: center; gap: .25rem;
          padding: .1rem .4rem; border-radius: var(--r-2xs);
-         background-color: var(--surface-04); color: var(--texte-secondaire);
+         background-color: var(--surface-04); color: var(--text-secondary);
          font-size: var(--t-prod-sm); }
-.jeton--discret { background-color: transparent; border: 1px solid var(--filet-moyen); }
-.jeton--rond    { border-radius: var(--r-plein); padding: .1rem .5rem; }
+.chip--subtle { background-color: transparent; border: 1px solid var(--rule-medium); }
+.chip--round    { border-radius: var(--r-full); padding: .1rem .5rem; }
 
-/* Menu de modèles — rendu OUVERT dans la source (`opacity-100 scale-100
-   translate-y-0`), posé 8px sous son bouton, largeur mini 180px, avec une ombre
-   à DEUX couches dont l'une est le contour de thème.               [relevé] H */
-.modeles {
+/* Model menu — rendered OPEN in the source (`opacity-100 scale-100
+   translate-y-0`), set 8px under its button, min width 180px, with a
+   TWO-layer shadow one of which is the theme outline.            [measured] H */
+.models {
   position: absolute; top: calc(100% + 8px); left: .5rem; z-index: 5;
   min-width: 180px; padding: .25rem;
   border-radius: var(--r-md); overflow: hidden;
   background-color: var(--surface-01);
-  box-shadow: var(--contour-theme), 0 18px 36px -18px rgba(0,0,0,.28);
+  box-shadow: var(--outline-theme), 0 18px 36px -18px rgba(0,0,0,.28);
 }
-.modeles__item { display: flex; width: 100%; align-items: baseline; gap: .5rem;
-                 padding: calc(var(--pas-v) * 3 / 12) calc(var(--pas-h) * .75);
+.models__item { display: flex; width: 100%; align-items: baseline; gap: .5rem;
+                 padding: calc(var(--step-v) * 3 / 12) calc(var(--step-h) * .75);
                  border: 0; background: none; cursor: pointer; text-align: left;
                  border-radius: var(--r-xs); font-size: var(--t-prod-lg); }
-.modeles__item--actif { background-color: var(--surface-03); }
-.modeles__item:hover  { background-color: var(--surface-02); }
-.modeles__nom  { flex: 1; }
-.modeles__sug  { color: var(--texte-tertiaire); font-size: var(--t-prod-sm); }
-.modeles__coche { margin-left: .5rem; }
+.models__item--active { background-color: var(--surface-03); }
+.models__item:hover  { background-color: var(--surface-02); }
+.models__name  { flex: 1; }
+.models__sug  { color: var(--text-tertiary); font-size: var(--t-prod-sm); }
+.models__check { margin-left: .5rem; }
 
 /* -----------------------------------------------------------------------------
-   25. ÉDITEUR — onglets, document, liste de tâches
+   25. EDITOR — tabs, document, task list
 -------------------------------------------------------------------------------*/
-.editeur { flex: 4 1 0; min-width: 0; display: flex; flex-direction: column;
-           overflow: hidden; background-color: var(--fond-page); }
-.onglets { display: flex; align-items: center; gap: .4rem; flex-shrink: 0;
-           padding: .3rem .5rem; border-bottom: 1px solid var(--filet-moyen);
+.editor { flex: 4 1 0; min-width: 0; display: flex; flex-direction: column;
+           overflow: hidden; background-color: var(--page-bg); }
+.tabs { display: flex; align-items: center; gap: .4rem; flex-shrink: 0;
+           padding: .3rem .5rem; border-bottom: 1px solid var(--rule-medium);
            font-size: var(--t-prod-sm); }
-.onglets__item { padding: .1rem .35rem; border-radius: var(--r-2xs);
-                 color: var(--texte-secondaire); }
-.onglets__item--actif { background-color: var(--surface-03); color: var(--texte-primaire); }
-.onglets .jeton { margin-left: auto; }
-/* Le document rendu dans l'éditeur a sa PROPRE échelle typographique, en px
-   absolus et en graisses fortes — la seule zone de la page à sortir de
-   l'échelle du site. [relevé] H : text-[20px] font-bold puis text-[14px]
-   font-semibold, marges mt-0/mb-1 puis mt-2/mb-0.5. */
+.tabs__item { padding: .1rem .35rem; border-radius: var(--r-2xs);
+                 color: var(--text-secondary); }
+.tabs__item--active { background-color: var(--surface-03); color: var(--text-primary); }
+.tabs .chip { margin-left: auto; }
+/* The document rendered in the editor has its OWN type scale, in absolute px
+   and heavy weights — the only zone of the page that leaves the site's
+   scale. [measured] H: text-[20px] font-bold then text-[14px]
+   font-semibold, margins mt-0/mb-1 then mt-2/mb-0.5. */
 .doc { padding: .75rem .9rem; overflow: hidden; flex: 1; min-height: 0; }
-.doc__titre { font-size: 20px; font-weight: 700; line-height: var(--int-serre);
+.doc__title { font-size: 20px; font-weight: 700; line-height: var(--leading-tight);
               margin: 0 0 .25rem; }
-.doc__sous  { font-size: 14px; font-weight: 600; margin: .5rem 0 .125rem; }
-.doc__para  { font-size: var(--t-prod); line-height: var(--int-prod);
-              color: var(--texte-secondaire); }
-.taches { border-top: 1px solid var(--filet-moyen); padding: .55rem .9rem;
+.doc__sub  { font-size: 14px; font-weight: 600; margin: .5rem 0 .125rem; }
+.doc__para  { font-size: var(--t-prod); line-height: var(--leading-prod);
+              color: var(--text-secondary); }
+.tasks { border-top: 1px solid var(--rule-medium); padding: .55rem .9rem;
           flex-shrink: 0; }
-.taches__titre { font-size: var(--t-prod-sm); color: var(--texte-secondaire);
+.tasks__title { font-size: var(--t-prod-sm); color: var(--text-secondary);
                  margin-bottom: .35rem; }
-.taches__item  { display: flex; align-items: center; gap: .45rem;
+.tasks__item  { display: flex; align-items: center; gap: .45rem;
                  font-size: var(--t-prod); padding-block: .18rem; }
-.taches__champ { margin-top: .4rem; font-size: var(--t-prod);
-                 color: var(--texte-tertiaire); }
-.case { width: .7rem; height: .7rem; flex-shrink: 0; border-radius: var(--r-2xs);
-        border: 1px solid var(--filet-marque); }
+.tasks__field { margin-top: .4rem; font-size: var(--t-prod);
+                 color: var(--text-tertiary); }
+.checkbox { width: .7rem; height: .7rem; flex-shrink: 0; border-radius: var(--r-2xs);
+        border: 1px solid var(--rule-marked); }
 
 /* -----------------------------------------------------------------------------
-   26. FIL SLACK — compléments
+   26. SLACK THREAD — additions
 -------------------------------------------------------------------------------*/
-.fil__membres { font-size: var(--t-prod-sm); color: var(--texte-tertiaire);
+.thread__members { font-size: var(--t-prod-sm); color: var(--text-tertiary);
                 margin-left: .4rem; }
-.fil__heure   { font-size: var(--t-prod-sm); color: var(--texte-tertiaire);
+.thread__time   { font-size: var(--t-prod-sm); color: var(--text-tertiary);
                 font-weight: 400; margin-left: .25rem; }
-/* Le badge « APP » de Slack : capitales minuscules sur fond atténué.  [relevé] H */
-.fil__app { display: inline-block; padding: 0 .25rem; border-radius: 2px;
-            background-color: var(--surface-04); color: var(--texte-secondaire);
+/* Slack's "APP" badge: small capitals on a muted background.     [measured] H */
+.thread__app { display: inline-block; padding: 0 .25rem; border-radius: 2px;
+            background-color: var(--surface-04); color: var(--text-secondary);
             font-size: 9px; font-weight: 700; letter-spacing: .04em;
             vertical-align: middle; }
-.fil__actions { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: .4rem; }
-.fil__action  { padding: .15rem .45rem; border-radius: var(--r-2xs);
-                border: 1px solid var(--filet-moyen);
-                font-size: var(--t-prod-sm); color: var(--texte-secondaire); }
-.avatar--carre { border-radius: var(--r-2xs); }
-.avatar--carre::after { border-radius: var(--r-2xs); }
+.thread__actions { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: .4rem; }
+.thread__action  { padding: .15rem .45rem; border-radius: var(--r-2xs);
+                border: 1px solid var(--rule-medium);
+                font-size: var(--t-prod-sm); color: var(--text-secondary); }
+.avatar--square { border-radius: var(--r-2xs); }
+.avatar--square::after { border-radius: var(--r-2xs); }
 .avatar--sm { width: 1.25rem; height: 1.25rem; flex-shrink: 0;
               background-color: var(--surface-04); }
 
 /* -----------------------------------------------------------------------------
-   27. TERMINAL — compléments
+   27. TERMINAL — additions
 -------------------------------------------------------------------------------*/
-.terminal__titre  { color: var(--texte-primaire); }
-.terminal__chemin { color: var(--texte-tertiaire); }
-.terminal__sujet  { color: var(--texte-primaire); margin-top: .35rem; }
-.terminal__envoi  { margin-top: .45rem; }
-.terminal__modele { margin-top: .35rem; color: var(--texte-secondaire); }
-.terminal__astuce { margin-top: .2rem; color: var(--texte-tertiaire);
+.terminal__title  { color: var(--text-primary); }
+.terminal__path { color: var(--text-tertiary); }
+.terminal__subject  { color: var(--text-primary); margin-top: .35rem; }
+.terminal__send  { margin-top: .45rem; }
+.terminal__model { margin-top: .35rem; color: var(--text-secondary); }
+.terminal__tip { margin-top: .2rem; color: var(--text-tertiary);
                     font-size: var(--t-prod-sm); }
-/* La commande d'installation est posée dans le TEXTE du bloc, pas dans le
-   média : elle est sélectionnable et colorée par segment.          [relevé] H */
-.install { margin-top: calc(var(--pas-v) * 8 / 12); font-size: var(--t-prod-lg);
-           color: var(--texte-secondaire); }
+/* The install command sits in the block's TEXT, not in the media: it is
+   selectable and colored per segment.                            [measured] H */
+.install { margin-top: calc(var(--step-v) * 8 / 12); font-size: var(--t-prod-lg);
+           color: var(--text-secondary); }
 .install__cmd  { color: var(--accent); }
-.install__opt  { color: var(--texte-tertiaire); }
-.install__pipe { color: var(--texte-tertiaire); }
+.install__opt  { color: var(--text-tertiary); }
+.install__pipe { color: var(--text-tertiary); }
 
 /* -----------------------------------------------------------------------------
-   28. PANNEAU D'AUTOMATISATION
+   28. AUTOMATION PANEL
 -------------------------------------------------------------------------------*/
 .auto { flex: 1; min-height: 0; overflow: hidden; padding: .75rem .9rem;
         display: flex; flex-direction: column; gap: .45rem;
         font-size: var(--t-prod); }
-.auto__entete { font-size: var(--t-prod-lg); color: var(--texte-secondaire); }
-.auto__ligne  { display: flex; align-items: center; justify-content: space-between;
+.auto__header { font-size: var(--t-prod-lg); color: var(--text-secondary); }
+.auto__line  { display: flex; align-items: center; justify-content: space-between;
                 gap: .5rem; padding-block: .3rem;
-                border-bottom: 1px solid var(--filet-faible); }
-.auto__ligne--titre { border-bottom: 0; }
-.auto__nom { font-size: var(--t-prod-lg); }
-.auto__cle { color: var(--texte-secondaire); }
-.auto__val { color: var(--texte-primaire); }
-.auto__ajout { color: var(--accent); font-size: var(--t-prod-sm); }
-.auto__bloc { border: 1px solid var(--filet-moyen); border-radius: var(--r-md);
+                border-bottom: 1px solid var(--rule-faint); }
+.auto__line--title { border-bottom: 0; }
+.auto__name { font-size: var(--t-prod-lg); }
+.auto__key { color: var(--text-secondary); }
+.auto__val { color: var(--text-primary); }
+.auto__added { color: var(--accent); font-size: var(--t-prod-sm); }
+.auto__block { border: 1px solid var(--rule-medium); border-radius: var(--r-md);
               padding: .45rem .55rem; }
-.auto__invite { color: var(--texte-tertiaire); margin-block: .3rem; }
-.auto__prompt { color: var(--texte-primaire); line-height: var(--int-prod); }
-.auto__pied { display: flex; align-items: center; gap: .6rem; margin-top: auto;
+.auto__cue { color: var(--text-tertiary); margin-block: .3rem; }
+.auto__prompt { color: var(--text-primary); line-height: var(--leading-prod); }
+.auto__footer { display: flex; align-items: center; gap: .6rem; margin-top: auto;
               padding-top: .45rem; font-size: var(--t-prod-sm); }
 
 /* -----------------------------------------------------------------------------
-   29. TÉLÉPHONE — châssis relevé au pixel
-   Le gabarit exact de la source : 300×650, rayon extérieur 44px, padding 4px,
-   écran à rayon 40px, encoche 96×28 posée à 8px du haut, et QUATRE touches
-   latérales aux positions relevées. `clip-path:inset(0 round …)` double le
-   rayon pour que rien ne dépasse du coin en Safari.                [relevé] H
+   29. PHONE — chassis measured to the pixel
+   The source's exact template: 300×650, outer radius 44px, padding 4px,
+   screen with a 40px radius, 96×28 notch set 8px from the top, and FOUR side
+   buttons at the measured positions. `clip-path:inset(0 round …)` doubles the
+   radius so that nothing sticks out of the corner in Safari.     [measured] H
 -------------------------------------------------------------------------------*/
-/* Le cadre de rognage : 378px de haut, `overflow:hidden`. C'est LUI qui coupe
-   l'appareil de 650px, pas un `max-height` sur le téléphone — la différence
-   compte, car le châssis garde ses proportions réelles et seule sa partie basse
-   disparaît.                                                       [relevé] H */
-.telephone-cadre { position: relative; width: 100%; height: 378px;
+/* The cropping frame: 378px high, `overflow:hidden`. IT is what cuts the
+   650px device, not a `max-height` on the phone — the difference matters,
+   because the chassis keeps its real proportions and only its lower part
+   disappears.                                                    [measured] H */
+.phone-frame { position: relative; width: 100%; height: 378px;
                    overflow: hidden; border-radius: var(--r-xs); }
-.telephone { position: absolute; left: 50%; top: 1.5rem; transform: translateX(-50%);
+.phone { position: absolute; left: 50%; top: 1.5rem; transform: translateX(-50%);
              width: 300px; height: 650px; margin: 0; }
-.telephone__touche { position: absolute; width: 4px; border-radius: 2px; }
-.telephone__touche--droite { right: -3px; top: 120px; height: 42px;
+.phone__key { position: absolute; width: 4px; border-radius: 2px; }
+.phone__key--right { right: -3px; top: 120px; height: 42px;
                              background: linear-gradient(to right, #1c1c1e, #2c2c2e); }
-.telephone__touche--gauche { left: -3px;
+.phone__key--left { left: -3px;
                              background: linear-gradient(to left, #1c1c1e, #2c2c2e); }
-.telephone__touche--g1 { top: 75px;  height: 20px; }
-.telephone__touche--g2 { top: 105px; height: 36px; }
-.telephone__touche--g3 { top: 150px; height: 36px; }
-.telephone__ecran { position: relative; width: 300px; height: 650px;
+.phone__key--g1 { top: 75px;  height: 20px; }
+.phone__key--g2 { top: 105px; height: 36px; }
+.phone__key--g3 { top: 150px; height: 36px; }
+.phone__screen { position: relative; width: 300px; height: 650px;
                     border-radius: 44px; padding: 4px; background-color: #3a3a3c;
                     overflow: hidden; clip-path: inset(0 round 44px); contain: paint;
                     background-color: #3a3a3c; }
-.telephone__contenu { position: relative; height: 100%; width: 100%;
+.phone__content { position: relative; height: 100%; width: 100%;
                       border-radius: 40px; clip-path: inset(0 round 40px);
                       contain: paint; overflow: hidden;
                       background-color: #faf9f6; color: #26251e;
                       padding: 3.5rem 1.25rem 0; }
-:root[data-theme="dark"] .telephone__contenu { background-color: #1f1e1b; color: #f4f0e8; }
+:root[data-theme="dark"] .phone__content { background-color: #1f1e1b; color: #f4f0e8; }
 @media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .telephone__contenu { background-color: #1f1e1b; color: #f4f0e8; }
+  :root:not([data-theme="light"]) .phone__content { background-color: #1f1e1b; color: #f4f0e8; }
 }
-.telephone__encoche { position: absolute; left: 50%; top: 8px; z-index: 50;
+.phone__notch { position: absolute; left: 50%; top: 8px; z-index: 50;
                       transform: translateX(-50%); width: 96px; height: 28px;
-                      border-radius: var(--r-plein); background-color: #000; }
-/* `text-[19px] font-[510] tracking-[-0.26px]` — une graisse variable de 510,
-   valeur qu'aucune échelle standard ne propose.                    [relevé] H */
-.telephone__titre { font-size: 19px; line-height: var(--int-serre); font-weight: 510;
+                      border-radius: var(--r-full); background-color: #000; }
+/* `text-[19px] font-[510] tracking-[-0.26px]` — a variable weight of 510, a
+   value no standard scale offers.                                [measured] H */
+.phone__title { font-size: 19px; line-height: var(--leading-tight); font-weight: 510;
                     letter-spacing: -.26px; margin-bottom: 1rem; }
-.telephone__section { font-size: 12px; color: currentColor; opacity: .5;
+.phone__section { font-size: 12px; color: currentColor; opacity: .5;
                       margin-bottom: .35rem; }
-.telephone__depot { display: flex; flex-direction: column; gap: .1rem;
+.phone__repo { display: flex; flex-direction: column; gap: .1rem;
                     padding-block: .5rem;
                     border-bottom: 1px solid rgba(128,128,128,.18); }
-.telephone__depot:last-child { border-bottom: 0; }
-.telephone__nom  { font-size: 13px; line-height: 1.25; }
-.telephone__meta { display: flex; align-items: center; gap: .3rem;
+.phone__repo:last-child { border-bottom: 0; }
+.phone__name  { font-size: 13px; line-height: 1.25; }
+.phone__meta { display: flex; align-items: center; gap: .3rem;
                    font-size: 11px; opacity: .55; }
-.telephone__sep  { opacity: .6; }
+.phone__sep  { opacity: .6; }
 
 /* -----------------------------------------------------------------------------
-   30. MÉDIAS DU TRIO, PHOTOS, LOGOS
+   30. TRIO MEDIA, PHOTOS, LOGOS
 -------------------------------------------------------------------------------*/
-/* `max-h-mobile:420px` : les médias du trio sont plafonnés en hauteur sur
-   petit écran, jamais en ratio.                                    [relevé] H */
+/* `max-h-mobile:420px`: the trio media are capped in height on small
+   screens, never by ratio.                                       [measured] H */
 .trio__media { position: relative; max-height: 420px; aspect-ratio: 4 / 3;
                overflow: hidden; }
 @media (min-width: 660px) { .trio__media { aspect-ratio: 1 / 1; } }
 @media (min-width: 1140px) { .trio__media { overflow: visible; } }
 .trio__photo  { width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; }
-.equipe__photo { width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; }
-/* Les logos sont dimensionnés en HAUTEUR, jamais en largeur : `h-[2rem] w-auto
-   object-contain`, puis 2.25rem à 420px et 2.5rem à 660px. Des mots-symboles de
-   ratios très différents (Stripe 130×83, Nvidia 213×84) s'alignent ainsi sur
-   une même ligne optique.                                          [relevé] H */
+.team__photo { width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; }
+/* Logos are sized by HEIGHT, never by width: `h-[2rem] w-auto
+   object-contain`, then 2.25rem at 420px and 2.5rem at 660px. Wordmarks of
+   very different ratios (Stripe 130×83, Nvidia 213×84) thus line up on the
+   same optical line.                                             [measured] H */
 .logos__svg { height: 2rem; width: auto; object-fit: contain; }
 @media (min-width: 420px) { .logos__svg { height: 2.25rem; } }
 @media (min-width: 660px) { .logos__svg { height: 2.5rem; } }
-/* `class="contents"` : le span disparaît de la boîte de mise en page et le SVG
-   devient enfant direct du flex de la cellule.                     [relevé] H */
-.logos__cellule .contents { display: contents; }
+/* `class="contents"`: the span disappears from the layout box and the SVG
+   becomes a direct child of the cell's flex.                     [measured] H */
+.logos__cell .contents { display: contents; }
 
 /* -----------------------------------------------------------------------------
-   31. FAITS MARQUANTS ET PIED — compléments
+   31. HIGHLIGHTS AND FOOTER — additions
 -------------------------------------------------------------------------------*/
-.fait { grid-template-columns: 1fr; }
-.fait__pied { display: flex; align-items: center; gap: .4rem;
-              margin-top: calc(var(--pas-v) * 8 / 12); }
-.fait__sep  { margin-inline: .35rem; opacity: .6; }
-.pied__titre { font-size: var(--t-base); color: var(--texte-secondaire);
-               padding-bottom: calc(var(--pas-v) * 2.5 / 12); }
-@media (min-width: 660px) { .pied__titre { font-size: var(--t-sm); } }
+.entry { grid-template-columns: 1fr; }
+.entry__footer { display: flex; align-items: center; gap: .4rem;
+              margin-top: calc(var(--step-v) * 8 / 12); }
+.entry__sep  { margin-inline: .35rem; opacity: .6; }
+.footer__title { font-size: var(--t-base); color: var(--text-secondary);
+               padding-bottom: calc(var(--step-v) * 2.5 / 12); }
+@media (min-width: 660px) { .footer__title { font-size: var(--t-sm); } }
 /* `flex-col items-start justify-between md:flex-row md:items-center gap-v2`.
-   L'empilement à gauche sous 660px n'est pas cosmétique : c'est LUI qui garde le
-   panneau de langue (`left:0`, min-width 10rem) à l'intérieur du viewport. Le
-   passer en `flex-wrap` avec un groupe droit collé au bord fait déborder la page
-   de 33px sur un écran de 500px — mesuré.                        [relevé] H */
-.pied__bas { flex-direction: column; align-items: flex-start; flex-wrap: nowrap;
-             gap: calc(var(--pas-v) * 2); }
-@media (min-width: 660px) { .pied__bas { flex-direction: row; align-items: center; } }
-.pied__gauche { display: flex; align-items: center;
-                gap: calc(var(--pas-h) * 1.5); color: var(--texte-secondaire); }
-.pied__droite { display: flex; align-items: center; gap: calc(var(--pas-h) * 1.5); }
-.pied__copyright, .pied__badge { font-size: inherit; }
-.pied__badge { display: inline-flex; align-items: center; gap: .3rem; }
-.pied__gauche a:hover { color: var(--texte-primaire); }
+   The left-aligned stacking below 660px is not cosmetic: IT is what keeps the
+   language panel (`left:0`, min-width 10rem) inside the viewport. Switching
+   it to `flex-wrap` with a right group stuck to the edge makes the page
+   overflow by 33px on a 500px screen — measured.                 [measured] H */
+.footer__bottom { flex-direction: column; align-items: flex-start; flex-wrap: nowrap;
+             gap: calc(var(--step-v) * 2); }
+@media (min-width: 660px) { .footer__bottom { flex-direction: row; align-items: center; } }
+.footer__left { display: flex; align-items: center;
+                gap: calc(var(--step-h) * 1.5); color: var(--text-secondary); }
+.footer__right { display: flex; align-items: center; gap: calc(var(--step-h) * 1.5); }
+.footer__copyright, .footer__badge { font-size: inherit; }
+.footer__badge { display: inline-flex; align-items: center; gap: .3rem; }
+.footer__left a:hover { color: var(--text-primary); }
 
 /* -----------------------------------------------------------------------------
-   32. MOUVEMENT RÉDUIT — obligatoire, sans exception
-   La source coupe ses animations une par une (`.animate-…{animation:none}`,
+   32. REDUCED MOTION — mandatory, no exception
+   The source switches its animations off one by one (`.animate-…{animation:none}`,
    `.logo-flip-card-inner{transition:none}`, `.mobile-interaction-pulse…
-   {opacity:.15;animation:none}`). On applique la même règle globalement : plus
-   rien ne bouge, MAIS tout reste visible.
-   Côté JS, `scrollBy({behavior:'smooth'})` n'écoute PAS cette préférence tout
-   seul — motion.js la lit et bascule sur 'instant'.
+   {opacity:.15;animation:none}`). We apply the same rule globally: nothing
+   moves any more, BUT everything stays visible.
+   On the JS side, `scrollBy({behavior:'smooth'})` does NOT listen to this
+   preference on its own — motion.js reads it and switches to 'instant'.
 -------------------------------------------------------------------------------*/
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
@@ -1732,16 +1735,17 @@ html[data-js] [data-revele].est-visible { animation-play-state: running; }
     transition-duration: 1ms !important;
     transition-delay: 0ms !important;
   }
-  /* `animation:none` seul suffit : sans animation, plus de `both`, donc plus
-     d'image de départ figée — l'élément revient à son état natif, visible.
-     [relevé] M : @media (prefers-reduced-motion:reduce){.animate-…{animation:none}} */
-  [data-revele], [data-revele].est-visible { animation: none; }
-  .nav__panneau, .langue__panneau { transition: none; }
-  /* Les boucles d'ambiance s'arrêtent sur une image LISIBLE, pas invisible —
-     exactement ce que fait la source pour ses pulsations.        [relevé] M */
-  .pastille { animation: none; }
-  .barres i { animation: none; opacity: .72; }
-  .chatoie  { animation: none; background: none;
+  /* `animation:none` alone is enough: without an animation, no more `both`,
+     so no more frozen starting frame — the element returns to its native,
+     visible state.
+     [measured] M: @media (prefers-reduced-motion:reduce){.animate-…{animation:none}} */
+  [data-reveal], [data-reveal].is-visible { animation: none; }
+  .nav__panel, .language__panel { transition: none; }
+  /* The ambient loops stop on a LEGIBLE frame, not an invisible one —
+     exactly what the source does for its pulses.                 [measured] M */
+  .dot { animation: none; }
+  .bars i { animation: none; opacity: .72; }
+  .shimmer  { animation: none; background: none;
               -webkit-background-clip: border-box; background-clip: border-box;
-              color: var(--texte-secondaire); }
+              color: var(--text-secondary); }
 }

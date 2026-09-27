@@ -60,7 +60,7 @@ The last step before reporting the deliverable done.
    `--surface-page: #000`, `fora` `rgba(0,0,0,.85)`, `supercommon` `rgb(24, 25, 28)`,
    `mainframe` `#ffffff14`) — those are inputs.
    **Convert the measured value to OKLCH and keep it**; never drop a corpus value because
-   it arrived as hex or rgb, and never paste one through unconverted. A `[relevé]` comment
+   it arrived as hex or rgb, and never paste one through unconverted. A `[measured]` comment
    citing the source value next to the converted token is expected, not a violation.
 4. **Em-dash discipline** — grep for `—`; en-dashes (`–`) for numeric ranges are fine.
    Not a hard-fail on a single occurrence — flags when it reads as a repeated crutch/tic

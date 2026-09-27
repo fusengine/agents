@@ -14,17 +14,27 @@ Connection pool management with SOLID Next.js principles.
 
 ```bash
 # .env or .env.local
-# Default Prisma pool size: 2 per CPU core
-# Adjust based on environment
+# v7: the pool belongs to the driver adapter — URL params like
+# connection_limit / pool_timeout / connect_timeout are NOT read by Prisma anymore.
+# `pg` adapter defaults: max = 10, connectionTimeoutMillis = 0, idleTimeoutMillis = 10s
 
-# Monolithic server (10+ connections)
-DATABASE_URL="postgresql://user:password@localhost:5432/mydb?schema=public&connection_limit=20"
+# Runtime (pooled) connection, used by the driver adapter
+DATABASE_URL="postgresql://user:password@localhost:5432/mydb?schema=public"
 
-# Serverless/Edge (1-5 connections)
-DATABASE_URL="postgresql://user:password@localhost:5432/mydb?connection_limit=3"
+# Direct connection for the CLI (migrations), referenced from prisma.config.ts
+DIRECT_URL="postgresql://user:password@localhost:5432/mydb"
+```
 
-# With timeout configuration
-DATABASE_URL="postgresql://user:password@localhost:5432/mydb?connect_timeout=10&statement_timeout=30000"
+```typescript
+// Pool sizing is set on the adapter (per process / function instance)
+import { PrismaPg } from '@prisma/adapter-pg'
+
+const adapter = new PrismaPg({
+  connectionString: process.env.DATABASE_URL!,
+  max: 20,                        // monolith: 10-20, serverless: 1-3
+  connectionTimeoutMillis: 5_000, // v6 connect_timeout default was 5s
+  idleTimeoutMillis: 30_000,
+})
 ```
 
 ### Schema Configuration
@@ -32,10 +42,9 @@ DATABASE_URL="postgresql://user:password@localhost:5432/mydb?connect_timeout=10&
 ```prisma
 // prisma/schema.prisma
 datasource db {
-  provider  = "postgresql"
-  url       = env("DATABASE_URL")
-  // directUrl for migrations (bypass pooler)
-  directUrl = env("DIRECT_URL")
+  provider = "postgresql"
+  // v7: no url/directUrl here — set datasource.url: env("DIRECT_URL") in prisma.config.ts
+  // (the CLI uses that URL for migrations, bypassing the pooler)
 }
 
 model User {
@@ -50,9 +59,8 @@ model User {
 
 ```typescript
 // lib/db/serverless-adapter.ts
-import { Pool } from '@neondatabase/serverless'
 import { PrismaNeon } from '@prisma/adapter-neon'
-import type { PrismaClient } from '@prisma/client'
+import { PrismaClient } from '../generated/prisma/client' // v7: generated path
 
 /**
  * @description Creates optimized Prisma client for serverless environments
@@ -61,14 +69,12 @@ import type { PrismaClient } from '@prisma/client'
  * const prisma = createServerlessClient()
  */
 export function createServerlessClient(): PrismaClient {
-  // ✅ GOOD: Serverless adapter with minimal connections
-  const neon = new Pool({
-    connectionString: process.env.DATABASE_URL,
+  // ✅ GOOD: Serverless adapter with minimal connections (v7: pass the Neon pool config)
+  const adapter = new PrismaNeon({
+    connectionString: process.env.DATABASE_URL!,
     max: 1, // Single connection per function instance
     idleTimeoutMillis: 10000, // Close idle connections quickly
   })
-
-  const adapter = new PrismaNeon(neon)
 
   return new PrismaClient({
     adapter,
@@ -87,7 +93,7 @@ export const prisma = createServerlessClient()
 
 ```typescript
 // lib/db/health.ts
-import type { PrismaClient } from '@prisma/client'
+import type { PrismaClient } from '../generated/prisma/client'
 
 interface ConnectionHealth {
   status: 'healthy' | 'degraded' | 'unhealthy'
@@ -155,7 +161,7 @@ export async function closeConnections(): Promise<void> {
 
 ```typescript
 // lib/db/error-handler.ts
-import type { Prisma } from '@prisma/client'
+import type { Prisma } from '../generated/prisma/client'
 
 /**
  * @description Prisma error codes and recovery strategies
@@ -217,7 +223,7 @@ export async function executeWithRetry<T>(
 
 ```typescript
 // lib/db/batch-processor.ts
-import type { User } from '@prisma/client'
+import type { User } from '../generated/prisma/client'
 
 interface BatchProcessOptions {
   batchSize?: number
@@ -271,10 +277,14 @@ export async function processLargeDatasetInBatches(
 
 ```typescript
 // lib/db/client.ts
-import { PrismaClient } from '@prisma/client'
+import { PrismaClient } from '../generated/prisma/client' // v7: generated path
+import { PrismaPg } from '@prisma/adapter-pg'
 
 // ✅ GOOD: Global singleton prevents connection leaks
 const globalForPrisma = global as unknown as { prisma: PrismaClient }
+
+// v7: pool size lives on the driver adapter
+const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL!, max: 10 })
 
 /**
  * @description Gets singleton Prisma instance
@@ -283,6 +293,7 @@ const globalForPrisma = global as unknown as { prisma: PrismaClient }
 export const prisma =
   globalForPrisma.prisma ||
   new PrismaClient({
+    adapter,
     log:
       process.env.NODE_ENV === 'development'
         ? [

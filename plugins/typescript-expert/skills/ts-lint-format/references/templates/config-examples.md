@@ -1,6 +1,6 @@
 ---
 name: config-examples
-description: Complete copy-paste configs for both stacks — Biome 2.x and ESLint 9 + typescript-eslint
+description: Complete copy-paste configs for both stacks — Biome 2.x and ESLint 10 + typescript-eslint
 keywords: template, biome.json, eslint.config.mjs, prettier, package.json, ci
 ---
 
@@ -16,7 +16,7 @@ Pick ONE stack. Do not run Biome and Prettier on the same files.
 
 ```json
 {
-  "$schema": "https://biomejs.dev/schemas/2.0.0/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.5.14/schema.json",
   "vcs": { "enabled": true, "clientKind": "git", "useIgnoreFile": true },
   "files": { "includes": ["src/**", "test/**"] },
   "formatter": {
@@ -62,7 +62,7 @@ Pick ONE stack. Do not run Biome and Prettier on the same files.
 
 ---
 
-## Stack B — ESLint 9 flat config + typescript-eslint + Prettier
+## Stack B — ESLint 10 flat config + typescript-eslint + Prettier
 
 ### `eslint.config.mjs`
 
@@ -109,14 +109,18 @@ export default defineConfig([
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
-    "eslint": "^9.0.0",
-    "@eslint/js": "^9.0.0",
+    "eslint": "^10.0.0",
+    "@eslint/js": "^10.0.0",
     "typescript-eslint": "^8.0.0",
     "prettier": "^3.0.0",
-    "typescript": "^6.0.0"
+    "@typescript/native": "npm:typescript@^7.0.2",
+    "typescript": "npm:@typescript/typescript6@^6.0.2"
   }
 }
 ```
+
+`typescript` is aliased to the TS 6.0 API because typescript-eslint 8.x peers on
+`typescript <6.1.0`; `npx tsc` still runs TS 7.0 via the `@typescript/native` alias.
 
 ### CI step
 

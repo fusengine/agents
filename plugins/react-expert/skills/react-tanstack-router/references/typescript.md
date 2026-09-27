@@ -99,5 +99,5 @@ const { postId } = postRoute.useParams() // Type-safe
 | Register router types | Skip `declare module` |
 | `Route.useParams()` | Global `useParams()` without `from` |
 | `getRouteApi` outside route files | Cast with `any` |
-| `zodValidator` for search | Manual validation |
+| Zod v4 schema in `validateSearch` (`zodValidator` for Zod v3) | Manual validation |
 | Separate context types | Inline types |

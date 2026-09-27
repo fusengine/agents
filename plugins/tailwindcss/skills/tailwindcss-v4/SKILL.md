@@ -5,12 +5,14 @@ user-invocable: false
 ---
 
 <objective>
-Documents Tailwind CSS v4.1 core features relevant to a v3→v4 migration: the `@theme` namespace-to-generated-utility mapping (`--color-*`→`bg-*`/`text-*`, `--spacing-*`→`p-*`/`m-*`/`gap-*`, etc.), the v3→v4 breaking changes (removed `@tailwind` directives, renamed utilities like `shadow-sm`→`shadow-xs`, removed `bg-opacity-*`/`flex-shrink-*`, the `@utility` custom-utility syntax change, arbitrary-value variable syntax, important-modifier position), and the `@tailwindcss/upgrade` CLI tool.
+Documents Tailwind CSS v4 (current stable v4.3) core features relevant to a v3→v4 migration: the `@theme` namespace-to-generated-utility mapping (`--color-*`→`bg-*`/`text-*`, `--spacing-*`→`p-*`/`m-*`/`gap-*`, etc.), the v3→v4 breaking changes (removed `@tailwind` directives, renamed utilities like `shadow-sm`→`shadow-xs`, removed `bg-opacity-*`/`flex-shrink-*`, the `@utility` custom-utility syntax change, arbitrary-value variable syntax, important-modifier position), and the `@tailwindcss/upgrade` CLI tool.
 
 Not the day-to-day CSS-first configuration reference (`tailwindcss-core` owns `@theme`/`@utility`/`@variant` usage) and not a utility-class lookup (the category skills own that).
 </objective>
 
-# Tailwind CSS v4.1 Core
+# Tailwind CSS v4.3 Core
+
+Current stable: `tailwindcss` 4.3.3 (July 2026). Minor releases since v4.0: v4.1 (text shadows, masks), v4.2 (mauve/olive/mist/taupe palettes, `@tailwindcss/webpack`, logical `pbs`/`mbs`/`inline-*`/`block-*`/`inset-s|e|bs|be` utilities, `font-features-*`; `start-*`/`end-*` deprecated), v4.3 (scrollbar utilities, `@container-size`, `zoom-*`, `tab-*`, stacked/compound `@variant`, `--default()` in functional `@utility`).
 
 ## Documentation
 
@@ -114,4 +116,4 @@ Requires Node.js 20+
 
 - [configuration.md](references/configuration.md) - Load when writing CSS-first `@theme` config or using `@utility`/`@variant`/`@custom-variant` directives
 - [api-functions.md](references/api-functions.md) - Load when using the `--alpha()`/`--spacing()` CSS functions or `@apply`
-- [installation-support.md](references/installation-support.md) - Load when installing Tailwind v4 (npm/Vite/CLI) or checking browser support
+- [installation-support.md](references/installation-support.md) - Load when installing Tailwind v4 (npm/Vite/CLI/webpack) or checking browser support

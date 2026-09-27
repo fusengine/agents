@@ -16,7 +16,7 @@ composer require laravel/boost --dev
 php artisan boost:install
 ```
 
-The installer registers an MCP server for Claude Code / Cursor / Windsurf.
+The installer registers an MCP server for your AI assistant. The `/upgrade-laravel-v13` command requires Laravel Boost `^2.0` (current: 2.10) and works in Claude Code, Cursor, OpenCode, Gemini and VS Code.
 
 ## Usage in Claude Code
 

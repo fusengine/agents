@@ -10,6 +10,10 @@ related: scroll-area.md
 
 # Resizable Component
 
+> **Base:** same API on Base UI, Radix and React Aria (verified against r/styles/{base,radix}-nova/resizable.json).
+> Built on **react-resizable-panels v4** (4.14.x): `orientation` (not `direction`), sizes as numbers or
+> strings (`defaultSize="50%"`), `onLayoutChanged` to persist (fires after the drag ends), `panelRef`.
+
 The Resizable component provides drag-to-resize functionality for creating flexible panel layouts. Built on top of react-resizable-panels library, it enables split-pane interfaces.
 
 ## Installation
@@ -33,25 +37,26 @@ import {
   ResizablePanelGroup,
 } from "@/modules/cores/shadcn/components/ui/resizable"
 
+/** Three horizontal panels (25% / 50% / 25%). */
 export function HorizontalResizableExample() {
   return (
     <ResizablePanelGroup
-      direction="horizontal"
+      orientation="horizontal"
       className="min-h-[200px] max-w-md rounded-lg border"
     >
-      <ResizablePanel defaultSize={25}>
+      <ResizablePanel defaultSize="25%">
         <div className="flex h-full items-center justify-center p-6">
           One
         </div>
       </ResizablePanel>
       <ResizableHandle />
-      <ResizablePanel defaultSize={75}>
+      <ResizablePanel defaultSize="50%">
         <div className="flex h-full items-center justify-center p-6">
           Two
         </div>
       </ResizablePanel>
       <ResizableHandle />
-      <ResizablePanel defaultSize={50}>
+      <ResizablePanel defaultSize="25%">
         <div className="flex h-full items-center justify-center p-6">
           Three
         </div>
@@ -72,19 +77,20 @@ import {
   ResizablePanelGroup,
 } from "@/modules/cores/shadcn/components/ui/resizable"
 
+/** Vertically stacked resizable panels. */
 export function VerticalResizableExample() {
   return (
     <ResizablePanelGroup
-      direction="vertical"
+      orientation="vertical"
       className="min-h-[200px] max-w-md rounded-lg border"
     >
-      <ResizablePanel defaultSize={50}>
+      <ResizablePanel defaultSize="50%">
         <div className="flex h-full items-center justify-center p-6">
           Header
         </div>
       </ResizablePanel>
       <ResizableHandle />
-      <ResizablePanel defaultSize={50}>
+      <ResizablePanel defaultSize="50%">
         <div className="flex h-full items-center justify-center p-6">
           Content
         </div>
@@ -104,10 +110,10 @@ Container for resizable panels.
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `direction` | `"horizontal" \| "vertical"` | - | Layout direction |
+| `orientation` | `"horizontal" \| "vertical"` | - | Layout orientation (v4; was `direction` in v3) |
 | `className` | `string` | - | Container CSS classes |
-| `autoSave` | `boolean` | - | Auto-save panel sizes to localStorage |
-| `id` | `string` | - | Unique ID for auto-saving state |
+| `defaultLayout` / `onLayoutChanged` | layout map / callback | - | Persist sizes: spread `useDefaultLayout({ id, storage: localStorage })` → `{ defaultLayout, onLayoutChanged }` (v4 replaces `autoSaveId`; `groupId` and the hook's returned `onLayoutChange` are deprecated). `onLayoutChange` still exists but fires on every pointer move |
+| `id` | `string` | - | Group id |
 
 ### ResizablePanel
 
@@ -117,9 +123,9 @@ Individual panel within the group.
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `defaultSize` | `number` | - | Initial size percentage (0-100) |
-| `minSize` | `number` | - | Minimum size percentage |
-| `maxSize` | `number` | - | Maximum size percentage |
+| `defaultSize` | `string \| number` | - | Initial size — use `"25%"` strings (v4 supports px, %, rem units) |
+| `minSize` | `string \| number` | - | Minimum size (e.g. `"15%"`) |
+| `maxSize` | `string \| number` | - | Maximum size (e.g. `"30%"`) |
 | `collapsible` | `boolean` | `false` | Allow collapsing panel |
 | `collapsedSize` | `number` | - | Size when collapsed |
 | `onResize` | `(size: number) => void` | - | Callback on resize |
@@ -148,13 +154,14 @@ import {
   ResizablePanelGroup,
 } from "@/modules/cores/shadcn/components/ui/resizable"
 
+/** Sidebar + main content resizable layout. */
 export function SidebarLayoutExample() {
   return (
     <ResizablePanelGroup
-      direction="horizontal"
+      orientation="horizontal"
       className="min-h-screen w-full rounded-lg border"
     >
-      <ResizablePanel defaultSize={20} minSize={15} maxSize={30}>
+      <ResizablePanel defaultSize="20%" minSize="15%" maxSize="30%">
         <div className="flex flex-col h-full p-4">
           <h2 className="font-bold mb-4">Sidebar</h2>
           <nav className="space-y-2 flex-1">
@@ -165,7 +172,7 @@ export function SidebarLayoutExample() {
         </div>
       </ResizablePanel>
       <ResizableHandle withHandle />
-      <ResizablePanel defaultSize={80}>
+      <ResizablePanel defaultSize="80%">
         <div className="flex items-center justify-center h-full p-6">
           Main Content Area
         </div>
@@ -186,11 +193,12 @@ import {
   ResizablePanelGroup,
 } from "@/modules/cores/shadcn/components/ui/resizable"
 
+/** Resizable dashboard layout. */
 export function DashboardLayoutExample() {
   return (
-    <ResizablePanelGroup direction="horizontal" className="w-full min-h-screen border">
+    <ResizablePanelGroup orientation="horizontal" className="w-full min-h-screen border">
       {/* Left Sidebar */}
-      <ResizablePanel defaultSize={20} minSize={15}>
+      <ResizablePanel defaultSize="20%" minSize="15%">
         <div className="p-4 border-r">
           <h3 className="font-bold mb-4">Navigation</h3>
           <div className="space-y-2">
@@ -203,10 +211,10 @@ export function DashboardLayoutExample() {
       <ResizableHandle />
 
       {/* Main Content Area */}
-      <ResizablePanel defaultSize={80}>
-        <ResizablePanelGroup direction="vertical">
+      <ResizablePanel defaultSize="80%">
+        <ResizablePanelGroup orientation="vertical">
           {/* Header Section */}
-          <ResizablePanel defaultSize={30} minSize={20}>
+          <ResizablePanel defaultSize="30%" minSize="20%">
             <div className="p-4 border-b flex items-center justify-center">
               <h2 className="font-bold text-lg">Header</h2>
             </div>
@@ -214,7 +222,7 @@ export function DashboardLayoutExample() {
           <ResizableHandle />
 
           {/* Content Section */}
-          <ResizablePanel defaultSize={70}>
+          <ResizablePanel defaultSize="70%">
             <div className="p-4 flex items-center justify-center">
               <div>Main Content Area</div>
             </div>
@@ -241,15 +249,16 @@ import {
 } from "@/modules/cores/shadcn/components/ui/resizable"
 import { Button } from "@/modules/cores/shadcn/components/ui/button"
 
+/** Resizable layout with a collapsible sidebar. */
 export function CollapsibleSidebarExample() {
   const [isCollapsed, setIsCollapsed] = useState(false)
 
   return (
-    <ResizablePanelGroup direction="horizontal" className="w-full min-h-screen">
+    <ResizablePanelGroup orientation="horizontal" className="w-full min-h-screen">
       <ResizablePanel
-        defaultSize={20}
-        minSize={0}
-        maxSize={30}
+        defaultSize="20%"
+        minSize="0%"
+        maxSize="30%"
         collapsible
         onResize={(size) => setIsCollapsed(size < 5)}
       >
@@ -265,7 +274,7 @@ export function CollapsibleSidebarExample() {
         )}
       </ResizablePanel>
       <ResizableHandle />
-      <ResizablePanel defaultSize={80}>
+      <ResizablePanel defaultSize="80%">
         <div className="p-6">
           <Button onClick={() => setIsCollapsed(!isCollapsed)}>
             Toggle Sidebar
@@ -288,10 +297,11 @@ import {
   ResizablePanelGroup,
 } from "@/modules/cores/shadcn/components/ui/resizable"
 
+/** Panels constrained by `minSize` / `maxSize`. */
 export function ConstrainedResizableExample() {
   return (
-    <ResizablePanelGroup direction="horizontal" className="w-full h-96 border rounded-lg">
-      <ResizablePanel defaultSize={30} minSize={20} maxSize={50}>
+    <ResizablePanelGroup orientation="horizontal" className="w-full h-96 border rounded-lg">
+      <ResizablePanel defaultSize="30%" minSize="20%" maxSize="50%">
         <div className="flex items-center justify-center h-full">
           <div className="text-center">
             <p className="font-semibold">Left Panel</p>
@@ -300,7 +310,7 @@ export function ConstrainedResizableExample() {
         </div>
       </ResizablePanel>
       <ResizableHandle />
-      <ResizablePanel defaultSize={70} minSize={50} maxSize={80}>
+      <ResizablePanel defaultSize="70%" minSize="50%" maxSize="80%">
         <div className="flex items-center justify-center h-full">
           <div className="text-center">
             <p className="font-semibold">Right Panel</p>
@@ -326,19 +336,20 @@ import {
   ResizablePanelGroup,
 } from "@/modules/cores/shadcn/components/ui/resizable"
 
+/** Panel layout persisted with `autoSave`. */
 export function PersistentResizableExample() {
   return (
     <ResizablePanelGroup
-      direction="horizontal"
+      orientation="horizontal"
       className="w-full min-h-screen"
       id="dashboard-layout"
       autoSave={true}
     >
-      <ResizablePanel defaultSize={20}>
+      <ResizablePanel defaultSize="20%">
         <div className="p-4">Sidebar (auto-saved)</div>
       </ResizablePanel>
       <ResizableHandle />
-      <ResizablePanel defaultSize={80}>
+      <ResizablePanel defaultSize="80%">
         <div className="p-4">Main Content (size persisted)</div>
       </ResizablePanel>
     </ResizablePanelGroup>

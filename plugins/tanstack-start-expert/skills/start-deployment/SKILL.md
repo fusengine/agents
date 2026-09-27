@@ -39,8 +39,8 @@ After implementation, run **fuse-ai-pilot:sniper**.
 |--------|-------|
 | **Cloudflare Workers** ⭐ | `@cloudflare/vite-plugin` (`viteEnvironment: { name: 'ssr' }`) + `wrangler.jsonc` |
 | **Netlify** ⭐ | `@netlify/vite-plugin-tanstack-start` |
-| **Vercel / Node / Docker / Bun / Railway** | Nitro layer (`nitro/vite`), `.output/server/index.mjs` |
-| **Static** | `tanstackStart({ prerender: { routes, crawlLinks } })` |
+| **Vercel / Render / Node / Docker / Bun / Railway** | Nitro layer (`nitro/vite`), `.output/server/index.mjs` |
+| **Static** | `tanstackStart({ prerender: { enabled: true, crawlLinks }, pages: [{ path }] })` |
 
 Start builds with **Vite** (or Rsbuild). Most hosts go through **Nitro**, an agnostic deploy layer; Cloudflare and Netlify have dedicated Vite plugins.
 
@@ -92,7 +92,7 @@ package.json          # scripts differ per target (deploy vs start)
 ## Best Practices
 
 ### DO
-- Confirm the official partner list (Cloudflare, Netlify, Railway) before hand-rolling config
+- Confirm the official partner list (Netlify, Render, Cloudflare, Vercel, Railway, Lovable) before hand-rolling config
 - Keep secrets in the host's env store; read them per request
 - Prerender marketing/blog routes; keep dynamic/auth routes SSR
 

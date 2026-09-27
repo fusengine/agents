@@ -19,12 +19,12 @@ export { handleReset } from "./reset-handler";
  */
 export async function showActionMenu(): Promise<ConfigAction | symbol> {
 	return await p.select({
-		message: "Que souhaitez-vous faire ?",
+		message: "What would you like to do?",
 		options: [
-			{ value: "continue", label: "✓ Voir la preview", hint: "Afficher les changements" },
-			{ value: "save", label: "💾 Sauvegarder & Quitter", hint: "Enregistrer la configuration" },
-			{ value: "reset", label: "🔄 Réinitialiser", hint: "Retour aux valeurs par défaut" },
-			{ value: "cancel", label: "❌ Annuler", hint: "Quitter sans sauvegarder" },
+			{ value: "continue", label: "✓ View preview", hint: "Show the changes" },
+			{ value: "save", label: "💾 Save & Quit", hint: "Save the configuration" },
+			{ value: "reset", label: "🔄 Reset", hint: "Restore default values" },
+			{ value: "cancel", label: "❌ Cancel", hint: "Quit without saving" },
 		],
 	});
 }
@@ -37,17 +37,15 @@ export async function handleSave(
 	config: StatuslineConfig,
 ): Promise<ActionResult> {
 	const spinner = p.spinner();
-	spinner.start("Sauvegarde de la configuration...");
+	spinner.start("Saving configuration...");
 	try {
 		await manager.save(config);
-		spinner.stop("✓ Configuration sauvegardée");
-		p.log.success("Toutes les options ont été mises à jour !");
+		spinner.stop("✓ Configuration saved");
+		p.log.success("All options have been updated!");
 		return { shouldContinue: false, config };
 	} catch (error) {
-		spinner.stop("✗ Erreur lors de la sauvegarde");
-		p.log.error(
-			`Impossible de sauvegarder: ${error instanceof Error ? error.message : String(error)}`,
-		);
+		spinner.stop("✗ Error while saving");
+		p.log.error(`Unable to save: ${error instanceof Error ? error.message : String(error)}`);
 		return { shouldContinue: true, config };
 	}
 }
@@ -56,6 +54,6 @@ export async function handleSave(
  * Handle cancel action
  */
 export function handleCancel(): ActionResult {
-	p.log.warn("Configuration non sauvegardée");
+	p.log.warn("Configuration not saved");
 	return { shouldContinue: false, config: {} as StatuslineConfig };
 }

@@ -1,7 +1,7 @@
 ---
 name: translations
-description: Utilisation des messages ICU, interpolation, pluralisation et texte enrichi
-when-to-use: afficher texte traduit, pluralisation, variables dans texte, composants React
+description: Using ICU messages, interpolation, pluralization and rich text
+when-to-use: display translated text, pluralization, variables in text, React components
 keywords: useTranslations, ICU format, t.rich, t.markup, messages, namespaces
 priority: high
 requires: installation.md, translations.md

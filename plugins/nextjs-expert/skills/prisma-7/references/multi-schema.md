@@ -21,7 +21,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  // v7: URL configured in prisma.config.ts, not here
 }
 
 // Shared schema (public tenants)
@@ -49,7 +49,7 @@ model User {
 
 ```typescript
 // modules/cores/db/src/interfaces/tenantContext.ts
-import type { PrismaClient } from '@prisma/client'
+import type { PrismaClient } from '@/generated/prisma/client'  // v7: generated path
 
 /**
  * Tenant context with schema and Prisma client
@@ -64,7 +64,8 @@ export interface TenantContext {
 
 ```typescript
 // modules/cores/db/src/tenant.ts
-import { PrismaClient } from '@prisma/client'
+import { PrismaPg } from '@prisma/adapter-pg'
+import { PrismaClient } from '@/generated/prisma/client'
 import type { TenantContext } from './src/interfaces/tenantContext'
 
 /**
@@ -74,18 +75,13 @@ import type { TenantContext } from './src/interfaces/tenantContext'
  * @param tenantSchema Schema name (e.g., 'tenant_org_123')
  */
 export function getTenantPrisma(tenantSchema: string): PrismaClient {
-  const databaseUrl = new URL(process.env.DATABASE_URL!)
+  // v7: route queries to the tenant schema via the adapter's `schema` option
+  const adapter = new PrismaPg(
+    { connectionString: process.env.DATABASE_URL! },
+    { schema: tenantSchema }
+  )
 
-  // Route queries to tenant-specific schema
-  databaseUrl.searchParams.set('schema', tenantSchema)
-
-  return new PrismaClient({
-    datasources: {
-      db: {
-        url: databaseUrl.toString(),
-      },
-    },
-  })
+  return new PrismaClient({ adapter })
 }
 
 /**
@@ -241,7 +237,7 @@ export async function GET() {
 
 ```typescript
 // modules/cores/db/src/utils/schemaConfig.ts
-import type { PrismaClient } from '@prisma/client'
+import type { PrismaClient } from '@/generated/prisma/client'
 
 /**
  * Configure PostgreSQL search_path for schema resolution

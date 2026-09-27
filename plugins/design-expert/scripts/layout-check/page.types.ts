@@ -1,9 +1,9 @@
 /**
- * page.types.ts — Abstractions du navigateur et formes de données renvoyées par la page.
- * Le script dépend de ces contrats, pas du type concret de Playwright (inversion de dépendance).
+ * page.types.ts — Browser abstractions and the data shapes returned by the page.
+ * The script depends on these contracts, not on Playwright's concrete type (dependency inversion).
  */
 
-/** Sous-ensemble de l'API `Page` de Playwright réellement utilisé ici. */
+/** Subset of Playwright's `Page` API actually used here. */
 export interface PageLike {
   goto(url: string, options?: { waitUntil?: string; timeout?: number }): Promise<unknown>;
   setViewportSize(size: { width: number; height: number }): Promise<void>;
@@ -12,13 +12,13 @@ export interface PageLike {
   waitForTimeout(ms: number): Promise<void>;
 }
 
-/** Sous-ensemble de l'API `Browser` de Playwright réellement utilisé ici. */
+/** Subset of Playwright's `Browser` API actually used here. */
 export interface BrowserLike {
   newPage(options?: { reducedMotion?: string }): Promise<PageLike>;
   close(): Promise<void>;
 }
 
-/** Débordement de l'encre du texte hors de sa boîte, les 4 côtés + le compte de lignes. */
+/** Text ink overflowing its box, on all 4 sides + the line count. */
 export interface InkBox {
   start: number;
   end: number;
@@ -27,26 +27,26 @@ export interface InkBox {
   lines: number;
 }
 
-/** Ligne brute du contrôle `text-overflow`, mesurée dans la page. */
+/** Raw row of the `text-overflow` check, measured in the page. */
 export interface OverflowRow {
   selector: string;
   scrollWidth: number;
   clientWidth: number;
   delta: number;
-  /** Encre sortant du côté start (gauche en LTR), en px ; négatif = marge restante. */
+  /** Ink overflowing on the start side (left in LTR), in px; negative = remaining margin. */
   inkStart: number;
-  /** Encre sortant du côté end (droite en LTR), en px ; négatif = marge restante. */
+  /** Ink overflowing on the end side (right in LTR), in px; negative = remaining margin. */
   inkEnd: number;
-  /** Nombre de lignes occupées par le texte propre de l'élément. */
+  /** Number of lines taken by the element's own text. */
   lines: number;
-  /** Hauteur de texte en trop par rapport à la hauteur allouée, en px. */
+  /** Text height in excess of the allotted height, in px. */
   vertOverflow: number;
   clipped: boolean;
   ellipsis: boolean;
   text: string;
 }
 
-/** Ligne brute du contrôle `overlap` (une paire d'éléments). */
+/** Raw row of the `overlap` check (one pair of elements). */
 export interface OverlapRow {
   selectorA: string;
   selectorB: string;
@@ -59,7 +59,7 @@ export interface OverlapRow {
   textB: string;
 }
 
-/** Ligne brute du contrôle `cta-wrap`. */
+/** Raw row of the `cta-wrap` check. */
 export interface CtaRow {
   selector: string;
   contentHeight: number;
@@ -69,7 +69,7 @@ export interface CtaRow {
   label: string;
 }
 
-/** Ligne brute du contrôle `contrast` (violation ou fond non résolu). */
+/** Raw row of the `contrast` check (violation or unresolved background). */
 export interface ContrastRow {
   selector: string;
   ratio: number;
@@ -83,12 +83,12 @@ export interface ContrastRow {
   text: string;
 }
 
-/** Résultat brut du contrôle transverse `document-overflow`. */
+/** Raw result of the cross-cutting `document-overflow` check. */
 export interface DocumentOverflowRow {
   scrollWidth: number;
   clientWidth: number;
   delta: number;
-  /** Décalage horizontal réellement atteint après un `scrollTo` vers la droite. */
+  /** Horizontal offset actually reached after a `scrollTo` to the right. */
   scrollXReached: number;
   offenders: { selector: string; right: number; width: number }[];
 }

@@ -1,13 +1,13 @@
 ---
 name: tsconfig.node
-description: Complete pure-Node.js tsconfig.json with native type stripping (Node 24 LTS, TS 6.0)
+description: Complete pure-Node.js tsconfig.json with native type stripping (Node 24 LTS / 26, TS 7.0)
 keywords: tsconfig, node, nodenext, type stripping, template, erasableSyntaxOnly
 ---
 
 # Complete Pure-Node `tsconfig.json`
 
 For code executed directly by Node (`node file.ts`) or emitted to `.js` for Node.
-Mirrors the settings recommended at nodejs.org/api/typescript.html, 6.0-ready.
+Mirrors the settings recommended at nodejs.org/api/typescript.html, TS 6.0/7.0-ready.
 
 ```jsonc
 {
@@ -46,7 +46,7 @@ Replace the `noEmit` block with:
 {
   "compilerOptions": {
     "outDir": "./dist",
-    "rootDir": "./src",          // required in 6.0 when sources are nested
+    "rootDir": "./src",          // required since 6.0 (and in 7.0) when sources are nested
     "declaration": true,
     "sourceMap": true
   }

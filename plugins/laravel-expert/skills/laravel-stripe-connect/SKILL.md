@@ -3,7 +3,7 @@ name: laravel-stripe-connect
 description: Use when implementing multi-vendor marketplace payments, seller onboarding, commissions, payouts, or split payments with Stripe Connect.
 versions:
   laravel: "13.0"
-  stripe-php: "16.x"
+  stripe-php: "21.x"
   php: "8.3"
 user-invocable: true
 references: references/overview.md, references/account-types.md, references/payment-flows.md, references/onboarding.md, references/fees-commissions.md, references/payouts.md, references/refunds-disputes.md, references/compliance.md, references/templates/Seller.php.md, references/templates/SellerOnboardingController.php.md, references/templates/MarketplacePaymentController.php.md, references/templates/PayoutController.php.md, references/templates/ConnectWebhookHandler.php.md, references/templates/ConnectRoutes.php.md
@@ -238,8 +238,8 @@ $needsInfo = !empty($account->requirements->currently_due);
 
 ## Laravel 13 Notes
 
-Stripe Connect (`stripe/stripe-php` 16.x) est **compatible Laravel 13**. Adaptations :
+Stripe Connect (`stripe/stripe-php` 21.x, current 21.3) is **Laravel 13 compatible**; the static methods used here (`\Stripe\Account::create()`, `AccountLink::create()`) still exist. Adjustments:
 
-- Webhook Connect : exclure `connect/webhook` de `PreventRequestForgery` (voir [[laravel-auth]])
-- `account.updated` handler : utiliser `Context::add('stripe_account', $accountId)` pour propager dans la queue
-- PHP 8.3 : `final readonly class` pour `Seller` DTO et `PayoutResult`
+- Connect webhook: exclude `connect/webhook` from `PreventRequestForgery` (see [[laravel-auth]])
+- `account.updated` handler: use `Context::add('stripe_account', $accountId)` to propagate into the queue
+- PHP 8.3: `final readonly class` for the `Seller` DTO and `PayoutResult`

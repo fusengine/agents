@@ -99,13 +99,19 @@ export const config = {
 
 ## Connection Pooling
 
-```prisma
-// prisma/schema.prisma
-datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL")
-}
+Prisma 7 has no `url`/`directUrl` in the schema: the CLI (migrations) reads the **direct** URL from `prisma.config.ts`, the app passes the **pooled** `DATABASE_URL` to the driver adapter (see `src/lib/prisma.ts` below).
+
+```typescript
+// prisma.config.ts
+import 'dotenv/config'
+import { defineConfig, env } from 'prisma/config'
+
+export default defineConfig({
+  schema: 'prisma/schema.prisma',
+  datasource: {
+    url: env('DIRECT_URL'), // direct (non-pooled) URL for prisma migrate
+  },
+})
 ```
 
 Use Vercel Postgres with built-in pooling.
@@ -123,11 +129,18 @@ Use Vercel Postgres with built-in pooling.
  * Reuses connection across serverless invocations.
  * @see /src/interfaces/prisma-config.ts
  */
-import { PrismaClient } from '@prisma/client'
+import { PrismaPg } from '@prisma/adapter-pg'
+import { PrismaClient } from '@/generated/prisma/client'  // v7: generated path
 
 declare global {
   var prisma: PrismaClient | undefined
 }
+
+/** v7: driver adapter required — pooled URL at runtime */
+const createPrismaClient = () =>
+  new PrismaClient({
+    adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL! }),
+  })
 
 /**
  * Get or create Prisma Client instance.
@@ -139,9 +152,8 @@ declare global {
  */
 const prisma =
   process.env.NODE_ENV === 'production'
-    ? new PrismaClient()
-    : ((globalThis.prisma as PrismaClient) ||
-        (globalThis.prisma = new PrismaClient()))
+    ? createPrismaClient()
+    : (globalThis.prisma ??= createPrismaClient())
 
 export { prisma }
 ```

@@ -1,7 +1,7 @@
 ---
 name: goroutine-leaks
-description: The #1 documented Go concurrency pitfall — unbuffered channel + early return leaks goroutines — plus the Go 1.26 goroutineleak pprof profile
-keywords: goroutine leak, unbuffered channel, early return, pprof, goroutineleakprofile, GOEXPERIMENT
+description: The #1 documented Go concurrency pitfall — unbuffered channel + early return leaks goroutines — plus the goroutineleak pprof profile (experiment in Go 1.26, GA in Go 1.27)
+keywords: goroutine leak, unbuffered channel, early return, pprof, goroutineleak, goroutineleakprofile, GOEXPERIMENT
 ---
 
 # Goroutine Leaks
@@ -72,23 +72,26 @@ if err := g.Wait(); err != nil {
 }
 ```
 
-## Detecting leaks: the Go 1.26 goroutineleak profile
+## Detecting leaks: the goroutineleak profile (GA in Go 1.27)
 
-Go 1.26 adds an **experimental** profile that reports leaked goroutines — those
+Go 1.26 introduced an experimental profile that reports leaked goroutines — those
 blocked on a concurrency primitive that can never become unblocked (the runtime
-proves it via GC reachability). Source: https://go.dev/doc/go1.26.
+proves it via GC reachability). **Go 1.27 makes it generally available** and
+deletes the `goroutineleakprofile` GOEXPERIMENT. Sources: https://go.dev/doc/go1.27
+(Runtime → Goroutine leak profile), https://go.dev/doc/go1.26.
 
-```bash
-# Enable at build time:
-GOEXPERIMENT=goroutineleakprofile go build ./...
-GOEXPERIMENT=goroutineleakprofile go test -run TestFanOut ./...
+```go
+// No build flag needed on Go 1.27+. Predefined profile in runtime/pprof:
+if err := pprof.Lookup("goroutineleak").WriteTo(os.Stderr, 1); err != nil {
+    return fmt.Errorf("write goroutineleak profile: %w", err)
+}
 ```
 
-- Profile name `goroutineleak` in `runtime/pprof`.
+- Profile name `goroutineleak` in `runtime/pprof` (predefined, like `goroutine`).
 - Also exposed via `net/http/pprof` at **`/debug/pprof/goroutineleak`**.
-- No runtime overhead unless actively in use.
+- On Go 1.26 only: `GOEXPERIMENT=goroutineleakprofile go test ./...` (flag removed in 1.27).
 - Caveat: leaks reachable only through globals or runnable goroutines' locals may
-  be missed. Expected to be enabled by default in Go 1.27.
+  be missed.
 
 Run it in tests, CI, and production to catch this class of bug before users do.
 

@@ -25,7 +25,8 @@ Each row is Large / Medium / Small.
 
 ## Expressive variants
 Material 3 Expressive (shipped May 2025 — see `color-roles.md` for the shipping source)
-adds 30 Emphasized type styles layered on top of the baseline scale above for stronger
+adds 15 Emphasized type styles (one per baseline role, e.g. `displayLargeEmphasized` …
+`labelSmallEmphasized` — 30 styles total) layered on top of the baseline scale above for stronger
 visual rhythm. Use the baseline scale by default; reach for Emphasized styles when the
 tone from `design-method` calls for a bolder, more expressive type rhythm.
 

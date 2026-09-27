@@ -49,7 +49,7 @@ Source: proptest-rs.github.io/proptest — getting-started.
 
 ## criterion essentials
 
-Criterion benches live in `benches/*.rs` and require `harness = false` in `Cargo.toml`. Wrap inputs in `black_box()` so the optimizer cannot constant-fold the work away. `cargo bench` prints a time range and, across runs, a "Performance has improved/regressed" verdict.
+Criterion benches live in `benches/*.rs` and require `harness = false` in `Cargo.toml`. Wrap inputs in `std::hint::black_box()` (criterion's own `black_box` is deprecated since 0.6) so the optimizer cannot constant-fold the work away. `cargo bench` prints a time range and, across runs, a "Performance has improved/regressed" verdict.
 
 Source: bheisler.github.io/criterion.rs — getting_started.
 

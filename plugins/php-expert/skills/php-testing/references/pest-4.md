@@ -1,20 +1,22 @@
 ---
 name: pest-4
-description: Pest 4 basics, browser testing, and framework-agnostic setup
-when-to-use: Load when writing or configuring Pest 4 tests
-keywords: pest, expect, it, describe, browser-testing, arch-testing, drift, php83
+description: Pest 5 basics, browser testing, and framework-agnostic setup
+when-to-use: Load when writing or configuring Pest 5 tests
+keywords: pest, expect, it, describe, browser-testing, arch-testing, drift, tia, php84
 priority: high
 related: choosing-framework.md, templates/pest-setup.md
 ---
 
-# Pest 4
+# Pest 5
 
 ## Overview
 
-Pest 4 is an expressive testing framework built on the PHPUnit engine. It
-requires **PHP 8.3+** and is framework-agnostic (works without Laravel).
+Pest 5 (current 5.2) is an expressive testing framework built on the PHPUnit 13 engine. It
+requires **PHP 8.4+** and is framework-agnostic (works without Laravel). Upgrading from
+Pest 4 is `"pestphp/pest": "^5.0"` plus `^5.0` for every Pest plugin; PHPUnit 13's
+breaking changes apply (see [phpunit-12.md](phpunit-12.md)).
 
-Source: https://pestphp.com/docs/installation + /docs/pest-v4-is-here-now-with-browser-testing
+Source: https://pestphp.com/docs/installation + /docs/pest5-now-available + /docs/upgrade-guide
 
 ## Install
 
@@ -42,7 +44,7 @@ describe('Greeter', function () {
 `expect()` chains readable matchers (`toBe`, `toBeTrue`, `toThrow`, ...). PHPUnit
 assertions remain available via `$this->assert*` inside closures.
 
-## What Pest 4 adds beyond assertions
+## What Pest adds beyond assertions
 
 | Capability | Doc |
 |------------|-----|
@@ -51,6 +53,17 @@ assertions remain available via `$this->assert*` inside closures.
 | Mutation testing | `/docs/mutation-testing` |
 | Type + test coverage | `/docs/type-coverage`, `/docs/test-coverage` |
 | Stress testing | Stressless (`/docs/stress-testing`) |
+
+## New in Pest 5
+
+| Capability | How | Doc |
+|------------|-----|-----|
+| Test Impact Analysis (Tia) | `./vendor/bin/pest --parallel --tia` — reruns only affected tests (needs PCOV/Xdebug; keep it out of CI) | `/docs/tia` |
+| First-party PHPStan plugin | `pestphp/pest-plugin-phpstan` — types `it()`/`expect()`/`$this` | `/docs/phpstan` |
+| Rector rules | `pestphp/pest-plugin-rector` + `PestSetList::CODING_STYLE` | `/docs/rector` |
+| Time-balanced sharding | `--update-shards` once, commit `tests/.pest/shards.json`, then `--shard=1/4` | `/docs/optimizing-tests` |
+| Agent / Evals plugins | `pestphp/pest-plugin-agent` (`--agent='…'`), `pestphp/pest-plugin-evals` (`--evals`) | `/docs/agent`, `/docs/evals` |
+| New expectations | `toBeEmail()`, `toBeUlid()`, `toBeIpAddress()`, `toBeHostname()`, `toBeDomain()`, … | `/docs/expectations` |
 
 ## Migrating from PHPUnit
 
@@ -76,4 +89,5 @@ it('validates emails', function (string $email, bool $valid) {
 |---------|-----|
 | Keeping `phpunit/phpunit` as the runner | `composer remove` it; Pest brings its own |
 | Rewriting PHPUnit suites by hand | Use `pest-plugin-drift` |
-| Assuming PHP 8.2 works | Pest 4 needs PHP 8.3+ |
+| Assuming PHP 8.3 works | Pest 5 needs PHP 8.4+ (stay on Pest 4 for 8.3) |
+| Bumping only `pestphp/pest` | Bump every `pestphp/pest-plugin-*` to `^5.0` too |

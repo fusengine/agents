@@ -58,18 +58,20 @@ export default async function BlogPage() {
 ```
 
 ## Partial Pre-rendering (PPR)
+In Next.js 16, PPR is the default behavior once `cacheComponents` is enabled.
+`experimental.ppr` and the `experimental_ppr` segment export were removed
+(codemod: `remove-experimental-ppr`).
+
 ```typescript
 // next.config.ts
 const nextConfig = {
-  experimental: { ppr: 'incremental' }
+  cacheComponents: true
 }
 ```
 
 ```typescript
 // app/page.tsx
 import { Suspense } from 'react'
-
-export const experimental_ppr = true
 
 export default function Page() {
   return (

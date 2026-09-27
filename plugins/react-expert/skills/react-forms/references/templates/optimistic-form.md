@@ -340,7 +340,6 @@ export async function deleteTodoAction(id: string): Promise<TodoActionResponse> 
 
 import React, { useState, useOptimistic, useCallback } from 'react';
 import { useForm } from '@tanstack/react-form';
-import { zodValidator } from '@tanstack/zod-form-adapter';
 import {
   addTodoAction,
   updateTodoAction,
@@ -468,7 +467,6 @@ export function OptimisticTodoForm({
         );
       }
     },
-    validatorAdapter: zodValidator(),
     validators: {
       onChange: todoSchema,
       onBlur: todoSchema,

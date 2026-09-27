@@ -8,6 +8,11 @@ requires: button.md
 related: popover.md, hover-card.md
 ---
 
+> **Base:** examples use **Base UI** (shadcn default since 2026-07); Radix delta in "Radix variant" below; React Aria: no provider — `<TooltipTrigger><Button /><Tooltip>…</Tooltip></TooltipTrigger>` (`Tooltip` is the content), `placement`/`offset` (`shadcn docs tooltip --base aria`). Sources: https://ui.shadcn.com/r/styles/base-nova/tooltip.json, https://ui.shadcn.com/r/styles/radix-nova/tooltip.json
+
+Mount one `TooltipProvider` at the app root (docs install step). To show a tooltip on a
+disabled button, wrap the button in a `span`.
+
 ## Installation
 
 ```bash
@@ -17,8 +22,6 @@ bunx --bun shadcn@latest add tooltip
 ## Basic Usage
 
 ```tsx
-'use client'
-
 import { Button } from '@/modules/cores/shadcn/components/ui/button'
 import {
   Tooltip,
@@ -27,12 +30,13 @@ import {
   TooltipTrigger,
 } from '@/modules/cores/shadcn/components/ui/tooltip'
 
+/** Tooltip on a Button trigger composed with `render`. */
 export default function TooltipBasic() {
   return (
     <TooltipProvider>
       <Tooltip>
-        <TooltipTrigger asChild>
-          <Button variant="outline">Hover me</Button>
+        <TooltipTrigger render={<Button variant="outline" />}>
+          Hover me
         </TooltipTrigger>
         <TooltipContent>
           <p>This is helpful information</p>
@@ -46,28 +50,29 @@ export default function TooltipBasic() {
 ## Components
 
 ### TooltipProvider
-Wraps your entire app or section. Sets default delays and options.
-- `delayDuration`: Hover delay in milliseconds (default: 200)
-- `skipDelayDuration`: Duration before delay applies again (default: 300)
+Wraps your entire app or section; shares delays between tooltips.
+- `delay`: Hover delay in ms (shadcn wrapper default: 0)
+- `closeDelay`: Delay before closing in ms
+- `timeout`: Window in which the next tooltip opens instantly (default: 400)
 
 ### Tooltip
-Container for trigger and content.
+Container for trigger and content (`open`, `defaultOpen`, `onOpenChange`).
 
 ### TooltipTrigger
-Element that shows tooltip on hover.
-- `asChild`: Render as child component
+Element that shows the tooltip on hover/focus (renders a `<button>` by default).
+- `render`: compose with your own element, e.g. `render={<Button variant="ghost" />}`
+- `delay` / `closeDelay`: per-trigger override (Base UI default 600 / 0 without provider)
 
 ### TooltipContent
-Floating hint text.
-- `side`: "top" | "bottom" | "left" | "right"
+Floating hint text (Base UI `Positioner` + `Popup`, portalled).
+- `side`: "top" | "bottom" | "left" | "right" (default "top")
 - `align`: "start" | "center" | "end"
-- `sideOffset`: Distance from trigger
+- `sideOffset`: Distance from trigger (default: 4)
+- `alignOffset`: Alignment offset (default: 0)
 
 ## Icon Tooltip Pattern
 
 ```tsx
-'use client'
-
 import { Info, AlertCircle, HelpCircle } from 'lucide-react'
 import {
   Tooltip,
@@ -76,13 +81,14 @@ import {
   TooltipTrigger,
 } from '@/modules/cores/shadcn/components/ui/tooltip'
 
+/** Icon-only triggers labelled with `aria-label`. */
 export default function IconTooltips() {
   return (
     <TooltipProvider>
       <div className="flex gap-4">
         <Tooltip>
-          <TooltipTrigger asChild>
-            <Info className="h-4 w-4 cursor-help" />
+          <TooltipTrigger aria-label="Field information" className="cursor-help">
+            <Info className="h-4 w-4" />
           </TooltipTrigger>
           <TooltipContent>
             Information about this field
@@ -90,8 +96,8 @@ export default function IconTooltips() {
         </Tooltip>
 
         <Tooltip>
-          <TooltipTrigger asChild>
-            <AlertCircle className="h-4 w-4 cursor-help text-yellow-500" />
+          <TooltipTrigger aria-label="Warning" className="cursor-help">
+            <AlertCircle className="h-4 w-4 text-yellow-500" />
           </TooltipTrigger>
           <TooltipContent>
             Warning: This action cannot be undone
@@ -99,8 +105,8 @@ export default function IconTooltips() {
         </Tooltip>
 
         <Tooltip>
-          <TooltipTrigger asChild>
-            <HelpCircle className="h-4 w-4 cursor-help" />
+          <TooltipTrigger aria-label="Help" className="cursor-help">
+            <HelpCircle className="h-4 w-4" />
           </TooltipTrigger>
           <TooltipContent>
             Click here for more help
@@ -122,18 +128,19 @@ import {
   TooltipTrigger,
 } from '@/modules/cores/shadcn/components/ui/tooltip'
 
+/** Provider-level delay with a per-trigger override. */
 export default function TooltipDelays() {
   return (
-    <TooltipProvider delayDuration={100}>
+    <TooltipProvider delay={100}>
       <div className="space-y-2">
         <Tooltip>
           <TooltipTrigger>Fast tooltip</TooltipTrigger>
-          <TooltipContent>Shows quickly on hover</TooltipContent>
+          <TooltipContent>Shows after the provider delay (100ms)</TooltipContent>
         </Tooltip>
 
         <Tooltip>
-          <TooltipTrigger>Normal tooltip</TooltipTrigger>
-          <TooltipContent>200ms delay (default)</TooltipContent>
+          <TooltipTrigger delay={500}>Slow tooltip</TooltipTrigger>
+          <TooltipContent>Per-trigger override (500ms)</TooltipContent>
         </Tooltip>
       </div>
     </TooltipProvider>
@@ -144,8 +151,6 @@ export default function TooltipDelays() {
 ## Rich Content Tooltip
 
 ```tsx
-'use client'
-
 import { Code } from 'lucide-react'
 import {
   Tooltip,
@@ -154,12 +159,13 @@ import {
   TooltipTrigger,
 } from '@/modules/cores/shadcn/components/ui/tooltip'
 
+/** Tooltip with structured content (title, kbd, hint). */
 export default function RichTooltip() {
   return (
     <TooltipProvider>
       <Tooltip>
-        <TooltipTrigger asChild>
-          <Code className="h-4 w-4 cursor-help" />
+        <TooltipTrigger aria-label="Command palette shortcut" className="cursor-help">
+          <Code className="h-4 w-4" />
         </TooltipTrigger>
         <TooltipContent className="max-w-xs">
           <div className="space-y-2">
@@ -181,8 +187,6 @@ export default function RichTooltip() {
 ## Keyboard Shortcut Tooltips
 
 ```tsx
-'use client'
-
 import { Button } from '@/modules/cores/shadcn/components/ui/button'
 import {
   Tooltip,
@@ -200,8 +204,8 @@ const ActionButton = ({
 }) => {
   return (
     <Tooltip>
-      <TooltipTrigger asChild>
-        <Button variant="ghost">{label}</Button>
+      <TooltipTrigger render={<Button variant="ghost" />}>
+        {label}
       </TooltipTrigger>
       <TooltipContent>
         <p className="text-xs">Shortcut: {shortcut}</p>
@@ -210,6 +214,7 @@ const ActionButton = ({
   )
 }
 
+/** Toolbar whose buttons show their keyboard shortcut. */
 export default function ToolbarWithTooltips() {
   return (
     <TooltipProvider>
@@ -262,27 +267,44 @@ export default function ToolbarWithTooltips() {
 ## Setup with Provider Wrapping
 
 ```tsx
-// app/layout.tsx
+// src/main.tsx
+import { StrictMode } from 'react'
+import { createRoot } from 'react-dom/client'
 import { TooltipProvider } from '@/modules/cores/shadcn/components/ui/tooltip'
+import App from './App'
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
-  return (
+createRoot(document.getElementById('root')!).render(
+  <StrictMode>
     <TooltipProvider>
-      {children}
+      <App />
     </TooltipProvider>
-  )
-}
+  </StrictMode>
+)
 ```
+
+## Radix variant
+
+Trigger composition and delay prop names change; `TooltipProvider` is **required** (Radix
+throws without it), `TooltipContent` defaults to `sideOffset={0}`.
+
+```tsx
+<TooltipProvider delayDuration={100} skipDelayDuration={300}>
+  <Tooltip>
+    <TooltipTrigger asChild>
+      <Button variant="outline">Hover me</Button>
+    </TooltipTrigger>
+    <TooltipContent>This is helpful information</TooltipContent>
+  </Tooltip>
+</TooltipProvider>
+```
+
+Per-tooltip delay is `<Tooltip delayDuration={500}>` (on the root, not the trigger).
 
 ## Best Practices
 
 1. **Provider at app root**: Wrap entire app in `TooltipProvider`
 2. **Short text**: Keep tooltips concise (1-2 sentences)
-3. **Never critical info**: Tooltips hide on touch devices
+3. **Never critical info**: Tooltips hide on touch devices — use a Popover with `openOnHover` for infotips
 4. **Use for hints**: Help text, not essential information
 5. **Keyboard shortcuts**: Show common shortcuts in tooltips
-6. **Accessible icons**: Always add aria-labels to icon triggers
+6. **Accessible icons**: Always add `aria-label` to icon triggers

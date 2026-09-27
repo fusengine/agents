@@ -50,6 +50,10 @@ function or a schema library.
 .validator(z.object({ name: z.string().min(1), age: z.number().min(0) }))
 ```
 
+> `.validator()` is the canonical method for server functions and middleware
+> since `@tanstack/react-start` 1.168.25 (PR #7566). `.inputValidator()` is
+> deprecated and the compiler warns on remaining uses — migrate it to `.validator()`.
+
 `FormData` is only valid as POST input — validate its shape manually:
 
 ```tsx
@@ -114,6 +118,7 @@ createServerFn({ strict: { output: false } })
 |---------|-----|
 | Awaiting `getItems` without `()` | Call it: `await getItems()` |
 | `FormData` on a GET function | Use `method: 'POST'` |
+| `.inputValidator()` (deprecated) | Rename to `.validator()` |
 | Secrets read at module scope | Read `process.env` inside the handler |
 
 ---

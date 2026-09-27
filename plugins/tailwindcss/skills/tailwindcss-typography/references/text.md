@@ -1,9 +1,9 @@
 ---
 name: text
-description: Text utilities for Tailwind CSS v4.1
+description: Text utilities for Tailwind CSS v4.3
 ---
 
-# Text Utilities - Tailwind CSS v4.1
+# Text Utilities - Tailwind CSS v4.3
 
 ## Text Color
 
@@ -25,7 +25,7 @@ description: Text utilities for Tailwind CSS v4.1
 
 ### All Colors Available
 
-Colors from slate, gray, zinc, neutral, stone, red, orange, amber, yellow, lime, green, emerald, teal, cyan, sky, blue, indigo, violet, purple, fuchsia, pink, rose.
+Colors from slate, gray, zinc, neutral, stone, mauve, olive, mist, taupe (the last four since v4.2), red, orange, amber, yellow, lime, green, emerald, teal, cyan, sky, blue, indigo, violet, purple, fuchsia, pink, rose.
 
 Each color has: 50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950
 
@@ -100,12 +100,12 @@ export default {
   This text will not wrap and might overflow container.
 </p>
 
-<!-- Balance wrapping (NEW v4.1) -->
+<!-- Balance wrapping (since v3.4) -->
 <p class="text-balance">
   Balanced text wrapping looks better for headlines and keeps lines even.
 </p>
 
-<!-- Pretty wrapping (NEW v4.1) -->
+<!-- Pretty wrapping (since v3.4) -->
 <p class="text-pretty">
   Pretty text wrapping prevents orphan words from appearing alone on the last line.
 </p>
@@ -118,25 +118,27 @@ export default {
 - `text-nowrap`: Status badges, inline data
 - `text-wrap`: Default paragraph behavior
 
-## Text Shadow (NEW in v4.1)
+## Text Shadow (since v4.1)
 
 ### Built-in Shadows
+
+Default scale: `text-shadow-2xs`, `text-shadow-xs`, `text-shadow-sm`, `text-shadow-md`, `text-shadow-lg`.
 
 ```html
 <!-- Small shadow -->
 <p class="text-shadow-sm">Subtle text shadow</p>
 
-<!-- Base shadow -->
-<p class="text-shadow">Default text shadow</p>
+<!-- Medium shadow -->
+<p class="text-shadow-md">Medium text shadow</p>
 
 <!-- Large shadow -->
 <p class="text-shadow-lg">Larger text shadow</p>
 
-<!-- Extra large shadow -->
-<p class="text-shadow-xl">Extra large text shadow</p>
-
 <!-- Custom color shadow -->
-<p class="text-shadow text-shadow-red">Red shadow</p>
+<p class="text-shadow-2xs text-shadow-sky-300">Sky-tinted shadow</p>
+
+<!-- Opacity modifier on the size utility -->
+<p class="text-shadow-lg/30">Large shadow at 30% opacity</p>
 ```
 
 ### Arbitrary Values
@@ -314,4 +316,20 @@ export default {
 
 <!-- Pre line -->
 <p class="whitespace-pre-line">  Spaces collapsed  but newlines kept</p>
+```
+
+## Tab Size (since v4.3)
+
+`tab-*` sets `tab-size` — useful for `<pre>`, code samples and editors rendering real tab characters.
+
+```html
+<pre class="tab-2">Two-column tabs</pre>
+<pre class="tab-8">Eight-column tabs</pre>
+
+<!-- Arbitrary value / CSS variable -->
+<pre class="tab-[12px]">Tabs 12px wide</pre>
+<pre class="tab-(--tab-size)">Tab size from a variable</pre>
+
+<!-- Responsive -->
+<pre class="tab-4 md:tab-8">Wider tabs on larger screens</pre>
 ```

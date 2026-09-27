@@ -12,10 +12,15 @@ related: build-compile.md
 
 Bun supports npm-style `workspaces` in the root `package.json` for developing several
 independent packages in one monorepo. Bun installs local packages into `node_modules`
-instead of downloading them, hoists shared dependencies to the root, and installs
-fast even on large monorepos.
+instead of downloading them and installs fast even on large monorepos.
 
-Source: https://bun.sh/docs/install/workspaces
+Since Bun 1.3.2, **new** monorepos (projects with `workspaces`) default to the **isolated
+linker** (symlinked `node_modules`, no phantom dependencies); existing lockfiles keep the
+hoisted layout. Pin `[install] linker = "hoisted"` in `bunfig.toml` to opt out. In 1.4 the
+isolated linker also uses a shared global virtual store (up to 7× faster warm installs) and
+new lockfiles are `lockfileVersion: 2`.
+
+Source: https://bun.com/docs/install/workspaces + https://bun.com/blog/bun-v1.4
 
 ## Layout
 

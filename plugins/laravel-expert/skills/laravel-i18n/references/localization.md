@@ -20,11 +20,11 @@ lang/
 ├── en/
 │   ├── messages.php      # Short keys (namespaced)
 │   └── validation.php    # Validation messages
-├── fr/
+├── es/
 │   ├── messages.php
 │   └── validation.php
 ├── en.json               # Full text keys (JSON)
-└── fr.json
+└── es.json
 ```
 
 ## Configuration
@@ -68,9 +68,9 @@ Creates `lang/` directory with default language files.
 ```php
 use Illuminate\Support\Facades\App;
 
-App::setLocale('fr');           // Set locale
+App::setLocale('es');           // Set locale
 $locale = App::currentLocale(); // Get current
-App::isLocale('fr');            // Check locale
+App::isLocale('es');            // Check locale
 ```
 
 See templates for complete implementation examples.

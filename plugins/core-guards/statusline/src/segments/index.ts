@@ -1,7 +1,7 @@
 /**
- * Segments Index - Registre des segments
+ * Segments Index - Segment registry
  *
- * @description OCP: Ajout de segments sans modification du code existant
+ * @description OCP: Add segments without modifying existing code
  */
 
 import type { ISegment } from "../interfaces";

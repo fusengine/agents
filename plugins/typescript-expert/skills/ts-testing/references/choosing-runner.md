@@ -19,11 +19,11 @@ parallelism, and mocking needs.
 
 ## Comparison
 
-| Criterion | `bun test` (1.3.x) | Vitest (4.x) |
+| Criterion | `bun test` (1.4.x) | Vitest (5.x) |
 |-----------|--------------------|--------------|
 | Cold start | Fastest (native runtime) | Slower (Vite pipeline) |
-| Setup | Zero-config TS/JSX | Needs Vite + config |
-| Execution model | Single process, sequential by default | Multi-worker (forks/threads) |
+| Setup | Zero-config TS/JSX | Needs Vite (peer dep) + config |
+| Execution model | Single process by default; `--parallel` workers, `--shard`, `--isolate` opt-in | Multi-worker (forks/threads) |
 | Coverage | Experimental (`--coverage`, text/lcov) | Mature: V8 + Istanbul, thresholds |
 | Jest parity | High, not complete (tracked upstream) | ~Full, drop-in for most suites |
 | Browser/DOM | Via happy-dom / Testing Library | Native browser mode (Playwright) |
@@ -50,7 +50,7 @@ parallelism, and mocking needs.
 | Limitation | Impact |
 |------------|--------|
 | Experimental coverage | Numbers can shift across releases; weak sole gate on huge suites |
-| Single process | No worker-level isolation; heavy suites don't scale across cores the same way |
+| Single process by default | Files share one global unless you pass `--isolate`; use `--parallel` (1.3.13+) to spread files across cores |
 | `mock.module` edge cases | Re-exports and dynamic `import()` may not always intercept as expected |
 
 → For a large or migrating suite, prefer Vitest. → See `vitest.md`

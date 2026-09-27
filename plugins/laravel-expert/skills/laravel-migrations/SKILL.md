@@ -183,7 +183,7 @@ php artisan migrate:fresh --seed
 ## Laravel 13 Notes
 
 ### Schema::ensureVectorExtensionExists() (pgvector)
-Laravel 13 expose une helper pour activer l'extension `pgvector` sur PostgreSQL depuis une migration. Utile pour embeddings et recherche sémantique.
+Laravel 13 exposes a helper to enable the `pgvector` extension on PostgreSQL from a migration. Useful for embeddings and semantic search.
 
 ```php
 use Illuminate\Support\Facades\Schema;
@@ -196,13 +196,17 @@ return new class extends Migration {
         Schema::create('documents', function (Blueprint $table) {
             $table->id();
             $table->text('content');
-            $table->vector('embedding', dimensions: 1536); // OpenAI ada-002
+            $table->vector('embedding', dimensions: 1536)->index(); // OpenAI text-embedding-3-small; HNSW cosine vector index
             $table->timestamps();
-
-            $table->index('embedding', 'documents_embedding_idx', 'hnsw');
+            // equivalent: $table->vectorIndex('embedding'); — removal: dropVectorIndex() (13.30+)
         });
     }
 };
 ```
 
-Voir [[laravel-vector-search]] pour les requêtes `whereVectorSimilarTo()`.
+`vector` columns/indexes also work on **MariaDB 11.7+** (no extension needed). See [[laravel-vector-search]] for `whereVectorSimilarTo()` queries.
+
+### What's new in Schema Builder 13.x
+- `$table->foreignUuidFor(User::class)` (13.9+) and `foreignUlidFor()` (13.25+)
+- Lock-free indexes: `$table->string('email')->unique()->online();` (PostgreSQL / SQL Server)
+- `->inplace()` (13.33+, MySQL) on an index or foreign key for the `INPLACE` DDL algorithm

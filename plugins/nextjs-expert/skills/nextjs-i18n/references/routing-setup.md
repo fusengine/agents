@@ -1,7 +1,7 @@
 ---
 name: routing-setup
-description: Configuration de routing avec locales et création de navigation type-safe
-when-to-use: setup routage, définir locales, créer composants navigation, interfaces i18n
+description: Routing configuration with locales and type-safe navigation creation
+when-to-use: routing setup, define locales, create navigation components, i18n interfaces
 keywords: defineRouting, createNavigation, routing config, navigation components
 priority: high
 requires: installation.md
@@ -34,7 +34,7 @@ import { defineRouting } from 'next-intl/routing'
 import { createNavigation } from 'next-intl/navigation'
 
 export const routing = defineRouting({
-  locales: ['en', 'fr', 'de'],
+  locales: ['en', 'es', 'de'],
   defaultLocale: 'en'
 })
 
@@ -70,7 +70,7 @@ import { routing } from '@/modules/cores/i18n/src/config/routing'
 export default createMiddleware(routing)
 
 export const config = {
-  matcher: ['/', '/(fr|en|de)/:path*']
+  matcher: ['/', '/(es|en|de)/:path*']
 }
 ```
 

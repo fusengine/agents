@@ -12,10 +12,12 @@ related: schema.md
 
 Configuration file for Prisma 7 CLI.
 
+**File name**: `prisma init` on 7.10+ creates `prisma7.config.ts` (7.0–7.9: `prisma.config.ts`). Lookup on 7.10+ without `--config`: `prisma7.config.*` → `.config/prisma7.*` → `prisma.config.*` fallback — so when `prisma7.config.ts` exists, a `prisma.config.ts` is ignored. Edit the file `init` created; only the file name differs, the API is the same.
+
 ## prisma.config.ts
 
 ```typescript
-// prisma.config.ts (project root)
+// prisma7.config.ts (7.10+) or prisma.config.ts (7.0–7.9) — project root
 import { defineConfig } from 'prisma/config'
 
 /**
@@ -29,22 +31,13 @@ export default defineConfig({
   },
 
   // Schema location relative to project root
+  // (generated client `output` is set in the schema's generator block, not here)
   schema: './prisma/schema.prisma',
 
-  // Generated client output path
-  // Module path: modules/cores/db/generated
-  generator: {
-    output: './src/generated/prisma',
-  },
-
-  // Migrations history directory
+  // Migrations history directory + seed command (`prisma db seed`)
   migrations: {
-    directory: './prisma/migrations',
-  },
-
-  // Seed script configuration
-  seed: {
-    command: 'bun run prisma/seed.ts',
+    path: './prisma/migrations',
+    seed: 'bun run prisma/seed.ts',
   },
 })
 ```
@@ -70,10 +63,7 @@ export default defineConfig({
       ? process.env.DATABASE_URL  // Production database
       : process.env.DATABASE_URL_DEV,  // Development database
   },
-
-  studio: {
-    port: isProduction ? 5555 : 5556,  // Different ports
-  },
+  // No `studio` key in v7 (removed): Studio reuses `datasource`; port via `prisma studio --port`
 })
 ```
 
@@ -86,15 +76,12 @@ export default defineConfig({
 import { defineConfig } from 'prisma/config'
 
 /**
- * Multi-schema configuration for modular database design
- * Separates concerns into different schema files
+ * Multi-file schema for modular database design
+ * `schema` is a single string: a folder is searched recursively for *.prisma
+ * (e.g. prisma/schema/base.prisma, user.prisma, post.prisma)
  */
 export default defineConfig({
-  schema: [
-    './prisma/schema/base.prisma',  // Base models
-    './prisma/schema/user.prisma',  // User models
-    './prisma/schema/post.prisma',  // Post models
-  ],
+  schema: './prisma/schema',
 })
 ```
 

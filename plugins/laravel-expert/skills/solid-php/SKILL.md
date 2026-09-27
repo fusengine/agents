@@ -180,13 +180,13 @@ public function create(CreateUserDTO $dto): User
 ## Laravel 13 Notes
 
 ### PHP 8.3 minimum
-Laravel 13 exige PHP 8.3 (était 8.2 sur L12). Fonctionnalités SOLID-friendly :
+Laravel 13 requires PHP 8.3 (was 8.2 on L12). SOLID-friendly features:
 
-- **`readonly` classes** : `final readonly class UserDto` (immutabilité totale)
-- **Typed class constants** : `const int MAX_RETRIES = 3;`
-- **`#[\Override]` attribute** : déclare explicitement une override de méthode parente (catch typos)
-- **`json_validate()`** natif (plus rapide que `json_decode` + try/catch)
-- **Dynamic class constant fetch** : `$class::{$name}`
+- **`readonly` classes**: `final readonly class UserDto` (full immutability)
+- **Typed class constants**: `const int MAX_RETRIES = 3;`
+- **`#[\Override]` attribute**: explicitly declares an override of a parent method (catches typos)
+- Native **`json_validate()`** (faster than `json_decode` + try/catch)
+- **Dynamic class constant fetch**: `$class::{$name}`
 
 ```php
 use Override;
@@ -208,7 +208,7 @@ final readonly class PaymentService implements PaymentContract
 }
 ```
 
-### Règles SOLID renforcées L13
-- Préférer `final readonly class` pour tous les DTO/Value Objects
-- Utiliser `#[\Override]` sur toute méthode héritée (CI catch)
-- Typer les constantes (`const string ROLE = 'admin';`)
+### Stricter SOLID rules for L13
+- Prefer `final readonly class` for all DTOs/Value Objects
+- Use `#[\Override]` on every inherited method (caught in CI)
+- Type constants (`const string ROLE = 'admin';`)

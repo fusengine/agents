@@ -10,6 +10,12 @@ related: input.md
 
 # Slider Component
 
+> **Base:** examples use **Base UI** (shadcn default since 2026-07); Radix delta in "Radix variant" below; React Aria: RAC `Slider` — `minValue`/`maxValue`, `onChange`/`onChangeEnd`, `isDisabled` (`shadcn docs slider --base aria`). Sources: https://ui.shadcn.com/r/styles/base-nova/slider.json, https://ui.shadcn.com/r/styles/radix-nova/slider.json
+
+Always pass **arrays** (`[50]`, `[20, 80]`): the wrapper renders one thumb per array entry and
+falls back to two thumbs (`[min, max]`) when it gets no array. Base UI types
+`onValueChange(value: number | number[], eventDetails)`, hence the `as number[]` casts.
+
 ## Overview
 
 The Slider component provides a range input control for selecting numeric values. It supports single value selection and range selection with keyboard navigation and touch support.
@@ -25,6 +31,7 @@ bunx --bun shadcn@latest add slider
 ```tsx
 import { Slider } from "@/modules/cores/shadcn/components/ui/slider"
 
+/** Single-value slider. */
 export function BasicSlider() {
   return <Slider defaultValue={[50]} max={100} step={1} />
 }
@@ -39,6 +46,7 @@ import { useState } from "react"
 import { Slider } from "@/modules/cores/shadcn/components/ui/slider"
 import { Label } from "@/modules/cores/shadcn/components/ui/label"
 
+/** Controlled slider displaying its current value. */
 export function SliderWithValue() {
   const [value, setValue] = useState([50])
 
@@ -54,7 +62,7 @@ export function SliderWithValue() {
         max={100}
         step={1}
         value={value}
-        onValueChange={setValue}
+        onValueChange={(v) => setValue(v as number[])}
         className="w-full"
       />
     </div>
@@ -71,6 +79,7 @@ import { useState } from "react"
 import { Slider } from "@/modules/cores/shadcn/components/ui/slider"
 import { Label } from "@/modules/cores/shadcn/components/ui/label"
 
+/** Two-thumb range slider. */
 export function RangeSlider() {
   const [range, setRange] = useState([20, 80])
 
@@ -87,7 +96,7 @@ export function RangeSlider() {
         max={1000}
         step={1}
         value={range}
-        onValueChange={setRange}
+        onValueChange={(v) => setRange(v as number[])}
         className="w-full"
       />
     </div>
@@ -104,6 +113,7 @@ import { useState } from "react"
 import { Slider } from "@/modules/cores/shadcn/components/ui/slider"
 import { Label } from "@/modules/cores/shadcn/components/ui/label"
 
+/** Discrete slider mapped to named sizes. */
 export function SliderSteps() {
   const [value, setValue] = useState([3])
 
@@ -121,7 +131,7 @@ export function SliderSteps() {
         max={sizes.length - 1}
         step={1}
         value={value}
-        onValueChange={setValue}
+        onValueChange={(v) => setValue(v as number[])}
         className="w-full"
       />
     </div>
@@ -137,6 +147,7 @@ export function SliderSteps() {
 import { useState } from "react"
 import { Slider } from "@/modules/cores/shadcn/components/ui/slider"
 
+/** Slider framed by min/max labels. */
 export function SliderWithLabels() {
   const [value, setValue] = useState([50])
 
@@ -152,7 +163,7 @@ export function SliderWithLabels() {
         max={100}
         step={1}
         value={value}
-        onValueChange={setValue}
+        onValueChange={(v) => setValue(v as number[])}
         className="w-full"
       />
     </div>
@@ -166,6 +177,7 @@ export function SliderWithLabels() {
 import { Slider } from "@/modules/cores/shadcn/components/ui/slider"
 import { Label } from "@/modules/cores/shadcn/components/ui/label"
 
+/** Disabled slider. */
 export function DisabledSlider() {
   return (
     <div className="space-y-4">
@@ -213,6 +225,7 @@ interface Colors {
   blue: number
 }
 
+/** Three RGB sliders driving a color preview. */
 export function ColorSliders() {
   const [colors, setColors] = useState<Colors>({
     red: 100,
@@ -222,8 +235,8 @@ export function ColorSliders() {
 
   const rgb = `rgb(${colors.red}, ${colors.green}, ${colors.blue})`
 
-  const updateColor = (key: keyof Colors, value: number[]) => {
-    setColors({ ...colors, [key]: value[0] })
+  const updateColor = (key: keyof Colors, value: number | readonly number[]) => {
+    setColors({ ...colors, [key]: typeof value === "number" ? value : value[0] })
   }
 
   return (
@@ -297,6 +310,7 @@ import { useState } from "react"
 import { Slider } from "@/modules/cores/shadcn/components/ui/slider"
 import { Label } from "@/modules/cores/shadcn/components/ui/label"
 
+/** Sliders held in form state and submitted together. */
 export function SliderForm() {
   const [formData, setFormData] = useState({
     budget: [500],
@@ -328,7 +342,7 @@ export function SliderForm() {
             step={100}
             value={formData.budget}
             onValueChange={(val) =>
-              setFormData({ ...formData, budget: val })
+              setFormData({ ...formData, budget: val as number[] })
             }
           />
         </div>
@@ -347,7 +361,7 @@ export function SliderForm() {
             step={1}
             value={formData.experience}
             onValueChange={(val) =>
-              setFormData({ ...formData, experience: val })
+              setFormData({ ...formData, experience: val as number[] })
             }
           />
         </div>
@@ -364,17 +378,40 @@ export function SliderForm() {
 }
 ```
 
+## Radix variant
+
+Radix values are always `number[]`, so the setter is passed directly; the commit callback is
+`onValueCommit` (Base UI: `onValueCommitted`).
+
+```tsx
+/** Radix: controlled slider with a commit callback. */
+export function RadixSlider() {
+  const [value, setValue] = useState([50])
+  return (
+    <Slider
+      value={value}
+      onValueChange={setValue}
+      onValueCommit={(v) => console.log("committed", v)}
+      max={100}
+      step={1}
+    />
+  )
+}
+```
+
 ## Props
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `value` | `number[]` | - | Current value(s) (controlled) |
-| `defaultValue` | `number[]` | - | Initial value(s) (uncontrolled) |
+| `value` | `number[]` (Base UI also `number`) | - | Current value(s) (controlled) — pass an array with this wrapper |
+| `defaultValue` | `number[]` (Base UI also `number`) | - | Initial value(s) (uncontrolled) |
 | `min` | `number` | 0 | Minimum value |
 | `max` | `number` | 100 | Maximum value |
 | `step` | `number` | 1 | Step increment |
+| `orientation` | `"horizontal" \| "vertical"` | `"horizontal"` | Layout direction |
 | `disabled` | `boolean` | false | Disable the slider |
-| `onValueChange` | `function` | - | Callback on value change |
+| `onValueChange` | `(value: number \| number[], eventDetails) => void` | - | Called on every change (Radix: `(value: number[]) => void`) |
+| `onValueCommitted` | `(value: number \| number[], eventDetails) => void` | - | Called on pointer up / key commit (Radix: `onValueCommit`) |
 | `className` | `string` | - | Additional CSS classes |
 | `aria-label` | `string` | - | Accessible label for screen readers |
 

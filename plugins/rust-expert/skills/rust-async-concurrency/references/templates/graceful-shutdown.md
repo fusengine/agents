@@ -92,7 +92,7 @@ token.cancel();
 
 ```toml
 [dependencies]
-tokio = { version = "1.52", features = ["full"] }
+tokio = { version = "1.53", features = ["full"] }
 tokio-util = "0.7"   # only for the CancellationToken variant
 ```
 

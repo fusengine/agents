@@ -2,7 +2,7 @@
 name: nextjs-i18n
 description: Use when implementing i18n in Next.js 16 — next-intl or DIY dictionaries, locale routing, language switch, or formatters.
 versions:
-  next-intl: 4.0
+  next-intl: 4.14
   nextjs: 16
 user-invocable: true
 references: references/installation.md, references/pages-router.md, references/routing-setup.md, references/routing-config.md, references/translations.md, references/formatting.md, references/navigation.md, references/server-components.md, references/client-components.md, references/middleware-proxy.md, references/error-files.md, references/configuration.md, references/plugin.md, references/extraction.md, references/messages-validation.md, references/typescript.md, references/testing.md, references/integrations.md, references/seo.md, references/core-library.md, references/runtime-requirements.md, references/diy-dictionaries.md, references/diy-locale-detection.md
@@ -82,7 +82,7 @@ All i18n code organized in `modules/cores/i18n/`:
 
 - `src/modules/cores/i18n/src/config/routing.ts` - Locale routing config
 - `src/modules/cores/i18n/messages/en.json` - English translations
-- `src/modules/cores/i18n/messages/fr.json` - French translations
+- `src/modules/cores/i18n/messages/es.json` - Spanish translations
 - `proxy.ts` - Locale detection and redirect logic
 
 ---
@@ -94,7 +94,7 @@ All i18n code organized in `modules/cores/i18n/`:
 All routes prefixed with `[locale]` dynamic segment:
 
 - `/en/about` → English about page
-- `/fr/about` → French about page
+- `/es/about` → Spanish about page
 - `/` → Redirects to default locale
 
 ### Navigation Components

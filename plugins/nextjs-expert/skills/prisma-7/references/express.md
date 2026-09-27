@@ -16,6 +16,8 @@ Prisma 7 with Express.js for building REST APIs and server applications.
 
 ```typescript
 // src/interfaces/db.ts
+import type { PrismaClient } from '../generated/prisma/client'
+
 /**
  * Global Prisma singleton type definition
  * @see /src/db.ts
@@ -25,7 +27,9 @@ export interface PrismaGlobal {
 }
 
 // src/db.ts
-import { PrismaClient } from '@prisma/client'
+import 'dotenv/config'
+import { PrismaClient } from './generated/prisma/client' // v7: generated path (output = src/generated/prisma)
+import { PrismaPg } from '@prisma/adapter-pg'
 import type { PrismaGlobal } from './interfaces/db'
 
 /**
@@ -34,8 +38,10 @@ import type { PrismaGlobal } from './interfaces/db'
  */
 const globalForPrisma = globalThis as unknown as PrismaGlobal
 
+const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL! })
+
 export const prisma =
-  globalForPrisma.prisma ?? new PrismaClient()
+  globalForPrisma.prisma ?? new PrismaClient({ adapter })
 
 if (process.env.NODE_ENV !== 'production') {
   globalForPrisma.prisma = prisma

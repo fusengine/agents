@@ -43,39 +43,39 @@ Translated form error messages using TanStack Form and Zod.
 }
 ```
 
-### public/locales/fr/validation.json
+### public/locales/es/validation.json
 
 ```json
 {
-  "required": "Ce champ est requis",
+  "required": "Este campo es obligatorio",
   "email": {
-    "invalid": "Veuillez entrer une adresse email valide",
-    "taken": "Cette adresse email est déjà utilisée"
+    "invalid": "Introduce una dirección de correo electrónico válida",
+    "taken": "Esta dirección de correo electrónico ya está registrada"
   },
   "password": {
-    "min": "Le mot de passe doit contenir au moins {{min}} caractères",
-    "max": "Le mot de passe doit contenir au maximum {{max}} caractères",
-    "weak": "Le mot de passe doit contenir au moins une majuscule, une minuscule et un chiffre",
-    "mismatch": "Les mots de passe ne correspondent pas"
+    "min": "La contraseña debe tener al menos {{min}} caracteres",
+    "max": "La contraseña debe tener como máximo {{max}} caracteres",
+    "weak": "La contraseña debe contener al menos una mayúscula, una minúscula y un número",
+    "mismatch": "Las contraseñas no coinciden"
   },
   "username": {
-    "min": "Le nom d'utilisateur doit contenir au moins {{min}} caractères",
-    "max": "Le nom d'utilisateur doit contenir au maximum {{max}} caractères",
-    "invalid": "Le nom d'utilisateur ne peut contenir que des lettres, chiffres et underscores",
-    "taken": "Ce nom d'utilisateur est déjà pris"
+    "min": "El nombre de usuario debe tener al menos {{min}} caracteres",
+    "max": "El nombre de usuario debe tener como máximo {{max}} caracteres",
+    "invalid": "El nombre de usuario solo puede contener letras, números y guiones bajos",
+    "taken": "Este nombre de usuario ya está en uso"
   },
   "phone": {
-    "invalid": "Veuillez entrer un numéro de téléphone valide"
+    "invalid": "Introduce un número de teléfono válido"
   },
   "date": {
-    "invalid": "Veuillez entrer une date valide",
-    "future": "La date doit être dans le futur",
-    "past": "La date doit être dans le passé"
+    "invalid": "Introduce una fecha válida",
+    "future": "La fecha debe estar en el futuro",
+    "past": "La fecha debe estar en el pasado"
   },
   "file": {
-    "required": "Veuillez sélectionner un fichier",
-    "maxSize": "La taille du fichier doit être inférieure à {{max}}",
-    "type": "Le type de fichier doit être: {{types}}"
+    "required": "Selecciona un archivo",
+    "maxSize": "El tamaño del archivo debe ser inferior a {{max}}",
+    "type": "El tipo de archivo debe ser: {{types}}"
   }
 }
 ```
@@ -142,7 +142,6 @@ export type RegistrationData = z.infer<ReturnType<typeof createRegistrationSchem
 
 ```typescript
 import { useForm } from '@tanstack/react-form'
-import { zodValidator } from '@tanstack/zod-form-adapter'
 import { useTranslation } from 'react-i18next'
 import { useMemo } from 'react'
 import { createRegistrationSchema } from '@/schemas/registration'
@@ -169,7 +168,6 @@ export function RegistrationForm() {
     onSubmit: async ({ value }) => {
       console.log('Submit:', value)
     },
-    validatorAdapter: zodValidator(),
     validators: {
       onChange: schema,
     },

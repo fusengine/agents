@@ -75,7 +75,7 @@ Some routes shouldn't have CSRF protection (webhooks, external APIs):
 ```php
 // bootstrap/app.php
 ->withMiddleware(function (Middleware $middleware): void {
-    $middleware->validateCsrfTokens(except: [
+    $middleware->preventRequestForgery(except: [   // L13 (was validateCsrfTokens in L11/L12)
         'stripe/*',
         'webhook/*',
     ]);

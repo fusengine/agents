@@ -13,7 +13,7 @@ Filter queries to find specific records with various operators and conditions.
 ### Equality
 ```typescript
 // lib/types/user.ts
-import type { Prisma } from "@prisma/client";
+import type { Prisma } from "@/lib/generated/prisma/client";
 
 /**
  * User filter by email or status
@@ -53,7 +53,7 @@ async function findUsersByStatus(status: string) {
 
 ```typescript
 // lib/types/filters.ts
-import type { Prisma } from "@prisma/client";
+import type { Prisma } from "@/lib/generated/prisma/client";
 
 /**
  * Numeric range filter operators
@@ -115,7 +115,7 @@ async function findUsersBeforeDate(beforeDate: Date) {
 ### Contains (Case-Sensitive)
 ```typescript
 // lib/types/stringFilters.ts
-import type { Prisma } from "@prisma/client";
+import type { Prisma } from "@/lib/generated/prisma/client";
 
 /**
  * String search filter with case sensitivity option
@@ -186,7 +186,7 @@ async function searchUsers(filter: StringSearchFilter) {
 ### In / Not In
 ```typescript
 // lib/types/advancedFilters.ts
-import type { Prisma } from "@prisma/client";
+import type { Prisma } from "@/lib/generated/prisma/client";
 
 /**
  * Array-based filter for inclusion/exclusion
@@ -282,7 +282,7 @@ async function findUsersWithoutPhone() {
 ### AND (implicit)
 ```typescript
 // lib/types/compositeFilters.ts
-import type { Prisma } from "@prisma/client";
+import type { Prisma } from "@/lib/generated/prisma/client";
 
 /**
  * Composite filter combining multiple conditions
@@ -375,7 +375,7 @@ async function searchPosts(filter: PostSearchFilter) {
 ### Some (at least one)
 ```typescript
 // lib/types/relationFilters.ts
-import type { Prisma } from "@prisma/client";
+import type { Prisma } from "@/lib/generated/prisma/client";
 
 /**
  * Relation existence filter

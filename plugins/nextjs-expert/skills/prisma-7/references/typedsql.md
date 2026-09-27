@@ -130,7 +130,6 @@ export async function getUserStatsByRole(
   }))
 }
 ```
-```
 
 ---
 
@@ -259,7 +258,7 @@ export async function updateUserLastLogin(
 
 ```typescript
 // modules/cores/db/repositories/user-repository.ts
-import { Prisma } from '@prisma/client'
+import { Prisma } from '../generated/prisma/client'  // v7: generated path
 import type { UserQueryResult } from '../interfaces/user-query-result'
 
 /**

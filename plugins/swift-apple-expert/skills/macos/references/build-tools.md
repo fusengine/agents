@@ -114,3 +114,5 @@ Terminate running app.
 - ✅ Use build_run_macos for iteration
 - ❌ Don't skip macOS-specific tests
 - ❌ Don't distribute Debug builds
+
+**Xcode 27 notes:** Xcode 27 runs only on Apple silicon Macs (macOS Tahoe 26.6+). With a macOS 27.0 deployment target, `ARCHS_STANDARD` no longer includes `x86_64` — add it to `ARCHS` explicitly if you still ship Universal. The macOS 27 SDK back-deploys Universal apps to macOS 12+.

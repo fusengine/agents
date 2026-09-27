@@ -1,12 +1,12 @@
 ---
 name: phpunit-xml
-description: Complete phpunit.xml and a first PHPUnit 12 TestCase
+description: Complete phpunit.xml and a first PHPUnit 13 TestCase
 keywords: phpunit, xml, config, coverage, testcase, template
 ---
 
 # phpunit.xml + First Test Template
 
-Complete PHPUnit 12 configuration for a framework-agnostic project.
+Complete PHPUnit 13 configuration for a framework-agnostic project (PHP 8.4+).
 
 ## phpunit.xml
 
@@ -87,3 +87,5 @@ vendor/bin/phpunit --coverage-text       # requires Xdebug or PCOV
 - `requireCoverageMetadata="true"` forces every test to declare `#[CoversClass]`.
 - `failOnWarning` / `failOnRisky` turn latent issues into CI failures.
 - `displayDetailsOnPhpunitDeprecations` surfaces anything that will break in the next major.
+- Optional (PHPUnit 13+): `requireSealedMockObjects="true"` turns any unsealed mock object into a failure.
+- `cacheResult` is hard-deprecated since 13.3 — use `recordTestRunHistory` if you set it.

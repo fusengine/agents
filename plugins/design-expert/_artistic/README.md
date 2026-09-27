@@ -1,6 +1,6 @@
 # Out of corpus — artistic pages
 
-`elysian/` — a fictional neoclassical maison built from supplied plates: eight images,
+`elysian/` — a fictional neoclassical fashion house built from supplied plates: eight images,
 four photographic transformations (slat shear, arch aperture, torn counter-pan,
 letterform plate), dials 9 · 4 · 8. Self-contained, fonts and images in `assets/`.
 

@@ -7,7 +7,7 @@ references: references/tanstack-form-basics.md, references/zod-validation.md, re
 ---
 
 <objective>
-Implements TanStack Form v1 in React: core hooks (`useForm()`, `useField()`, `form.Field`, `form.Subscribe`), validation adapters (Zod ~12KB, Yup ~40KB, Valibot ~6KB, plus Standard Schema support for ArkType/Effect Schema), debounced async validation, and React 19 Server Actions integration via `useActionState`.
+Implements TanStack Form v1 in React: core hooks (`useForm()`, `useField()`, `form.Field`, `form.Subscribe`), native Standard Schema validation (Zod ~12KB, Yup ~40KB, Valibot ~6KB, ArkType, Effect Schema — no adapter package), debounced async validation, and React 19 Server Actions integration via `useActionState`.
 
 Also covers array/nested fields with dot notation, listeners for side effects (onMount/onChange/onBlur with debouncing), linked/cross-field validation, reactivity via `useStore` selectors, the Reset API, SSR/hydration (TanStack Start), devtools, and React Native patterns. This is the React skill for TanStack Form — for the Next.js Server Actions-specific variant see nextjs-tanstack-form, and for SOLID file-organization rules see solid-react.
 </objective>
@@ -55,11 +55,13 @@ After implementation, run **fuse-ai-pilot:sniper** for validation.
 
 ## Validation Adapters
 
-| Library | Adapter | Bundle Size |
-|---------|---------|-------------|
-| **Zod** | `zodValidator()` | ~12KB |
-| **Yup** | `yupValidator()` | ~40KB |
-| **Valibot** | `valibotValidator()` | ~6KB |
+TanStack Form v1 (`@tanstack/react-form` 1.33.x) supports **Standard Schema natively** — pass the schema itself to `validators` (`onChange: userSchema`). No adapter: `validatorAdapter` and `@tanstack/zod-form-adapter` (last release 0.42.1, pre-v1, Zod 3 only) are removed/obsolete.
+
+| Library | Usage | Min version | Bundle Size |
+|---------|-------|-------------|-------------|
+| **Zod** | `validators: { onChange: schema }` | 3.24.0 | ~12KB |
+| **Yup** | `validators: { onChange: schema }` | 1.7.0 | ~40KB |
+| **Valibot** | `validators: { onChange: schema }` | 1.0.0 | ~6KB |
 
 → See `references/zod-validation.md` for Zod patterns
 → See `references/yup-valibot.md` for alternatives

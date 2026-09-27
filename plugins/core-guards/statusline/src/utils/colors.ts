@@ -6,7 +6,7 @@ import { COLOR_THRESHOLDS } from "../constants";
 
 export type ColorFn = (text: string) => string;
 
-// FORCE ANSI codes - toujours actif!
+// FORCE ANSI codes - always on!
 const ansi = (code: string) => (text: string) => `\x1b[${code}m${text}\x1b[0m`;
 const ansi256 = (code: number) => (text: string) => `\x1b[38;5;${code}m${text}\x1b[0m`;
 

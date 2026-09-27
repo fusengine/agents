@@ -2,14 +2,14 @@
 name: solid-python
 description: "Use when writing or refactoring Python code, structuring modules/[feature]/ layers, or defining Protocol-based interfaces (SOLID, files < 100 lines)."
 versions:
-  python: "3.12"
+  python: "3.14"
 user-invocable: true
 references: references/principles.md, references/patterns.md
 related-skills: solid-detection
 ---
 
 <objective>
-SOLID Python enforces a modular architecture for Python 3.12+: every feature lives under `modules/[feature]/` (routes, services, repositories, interfaces, models) with shared code in `core/`, interfaces are defined with `typing.Protocol` and live only in `interfaces/` directories, type hints are mandatory on every signature, and every public function carries a docstring.
+SOLID Python enforces a modular architecture for Python 3.14+: every feature lives under `modules/[feature]/` (routes, services, repositories, interfaces, models) with shared code in `core/`, interfaces are defined with `typing.Protocol` and live only in `interfaces/` directories, type hints are mandatory on every signature, and every public function carries a docstring.
 
 Before writing any new code it requires a DRY check against `core/services` and `core/interfaces`. See `principles.md` for the 5 SOLID principles and `patterns.md` for directory layout, testing, and typing conventions.
 </objective>

@@ -41,6 +41,25 @@ export default defineConfig({
 });
 ```
 
+## Scoped Entries (Astro 7.1+)
+
+Each `hashes` / `resources` entry can be a string or an object with `kind`:
+
+| `kind` | Target directive |
+|--------|------------------|
+| `'default'` (same as a bare string) | `script-src` / `style-src` |
+| `'element'` | `script-src-elem` / `style-src-elem` |
+| `'attribute'` | `script-src-attr` / `style-src-attr` |
+
+```javascript
+scriptDirective: {
+  hashes: [{ hash: 'sha256-scriptHash', kind: 'element' }],
+  resources: ["'self'", { resource: 'https://elements.cdn.example.com', kind: 'element' }]
+}
+```
+
+`'attribute'` resources must be one of `'none'`, `'unsafe-hashes'`, `'unsafe-inline'`, `'report-sample'`. Per page, the `Astro.csp` runtime API (`insertScriptHash`, `insertScriptResource`, `insertStyleHash`, …) accepts the same `{ …, kind }` objects since 7.1.
+
 ## Algorithm Comparison
 
 | Algorithm | Value | Speed | Security |
@@ -54,7 +73,7 @@ export default defineConfig({
 ```javascript
 export default defineConfig({
   security: {
-    csp: true  // Uses defaults (SHA-384 algorithm)
+    csp: true  // Uses defaults (SHA-256 algorithm)
   }
 });
 ```

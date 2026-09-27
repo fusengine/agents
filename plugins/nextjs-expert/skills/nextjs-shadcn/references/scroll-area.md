@@ -10,7 +10,9 @@ related: carousel.md
 
 # ScrollArea Component
 
-The ScrollArea component provides a customizable scrolling experience with styled scrollbars. It's built on Radix UI and supports both vertical and horizontal scrolling directions.
+> **Base:** same API on Base UI and Radix (verified against r/styles/{base,radix}-nova/scroll-area.json). React Aria differs: `aria-nova/scroll-area.json` exports only `ScrollArea` (a native-scrolling `div`, no `ScrollBar`) — style it with `scrollbar-width` / `scrollbar-color`.
+
+The ScrollArea component provides a customizable scrolling experience with styled scrollbars. It wraps `@base-ui/react/scroll-area` (Base UI) or the Radix ScrollArea primitive and supports both vertical and horizontal scrolling directions.
 
 ## Installation
 
@@ -29,6 +31,7 @@ Create a vertical scrollable container:
 ```tsx
 import { ScrollArea } from "@/modules/cores/shadcn/components/ui/scroll-area"
 
+/** Vertical scroll area. */
 export function ScrollAreaExample() {
   return (
     <ScrollArea className="h-48 w-48 rounded-md border p-4">
@@ -80,6 +83,7 @@ export const works: Artwork[] = [
   }
 ]
 
+/** Horizontal scroll area. */
 export function ScrollAreaHorizontalExample() {
   return (
     <ScrollArea className="w-96 whitespace-nowrap rounded-md border">
@@ -116,6 +120,7 @@ Customize scrollbar appearance:
 ```tsx
 import { ScrollArea, ScrollBar } from "@/modules/cores/shadcn/components/ui/scroll-area"
 
+/** Scroll area with custom styling. */
 export function StyledScrollAreaExample() {
   return (
     <ScrollArea className="h-72 w-48 rounded-md border">
@@ -167,6 +172,7 @@ Handle different screen sizes:
 ```tsx
 import { ScrollArea, ScrollBar } from "@/modules/cores/shadcn/components/ui/scroll-area"
 
+/** Scroll area whose height grows on larger screens. */
 export function ResponsiveScrollExample() {
   return (
     <ScrollArea className="h-64 w-full rounded-md border md:h-96">
@@ -190,6 +196,7 @@ Scrollable table with headers:
 ```tsx
 import { ScrollArea } from "@/modules/cores/shadcn/components/ui/scroll-area"
 
+/** Table inside a scroll area. */
 export function ScrollableTableExample() {
   return (
     <ScrollArea className="h-80 w-full rounded-md border">

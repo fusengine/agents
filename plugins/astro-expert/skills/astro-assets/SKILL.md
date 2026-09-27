@@ -24,7 +24,7 @@ Before ANY implementation, spawn 3 agents in parallel, one `Agent` call each wit
 
 1. **fuse-ai-pilot:explore-codebase** - Analyze existing image usage and asset patterns
 2. **fuse-ai-pilot:research-expert** - Verify astro:assets API via Context7/Exa
-3. **mcp__context7__query-docs** - Check Astro 6 Fonts API and image component docs
+3. **mcp__context7__query-docs** - Check Astro 7 Fonts API and image component docs
 
 After implementation, run **fuse-ai-pilot:sniper** for validation.
 

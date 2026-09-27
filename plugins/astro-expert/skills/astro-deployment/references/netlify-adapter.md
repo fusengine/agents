@@ -29,7 +29,7 @@ import netlify from '@astrojs/netlify';
 export default defineConfig({
   output: 'server',
   adapter: netlify({
-    edgeMiddleware: true, // Run middleware at edge
+    middlewareMode: 'edge', // Run middleware on Edge Functions (replaces edgeMiddleware)
     imageCDN: true,       // Use Netlify Image CDN
   }),
 });

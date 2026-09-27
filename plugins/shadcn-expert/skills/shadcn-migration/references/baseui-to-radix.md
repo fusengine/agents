@@ -18,7 +18,7 @@ Migrating from Base UI to Radix UI involves 7 steps: package changes, import tra
 
 | Concept | Description |
 |---------|-------------|
-| **Package split** | Replace single `@base-ui/react` with multiple `@radix-ui/*` packages |
+| **Package swap** | Replace `@base-ui/react` with the unified `radix-ui` package (or legacy per-component `@radix-ui/*`) |
 | **render -> asChild** | Composition pattern change: `render` prop becomes `asChild` |
 | **Backdrop -> Overlay** | Base UI Backdrop is renamed to Radix Overlay |
 | **Portal required** | Radix requires explicit `Portal` wrapper for overlay components |
@@ -27,24 +27,26 @@ Migrating from Base UI to Radix UI involves 7 steps: package changes, import tra
 
 ## Step 1: Package Changes
 
+Keep `@base-ui/react` if the project uses Combobox or Toast: Radix has no Combobox primitive (the `radix-*` Combobox imports `@base-ui/react`), and Toast only exists for Base UI (Radix projects use Sonner).
+
 ```bash
-# Remove Base UI
+# Remove Base UI (unless Combobox/Toast still need it)
 npm uninstall @base-ui/react
-# Add Radix packages (one per component)
-npm install @radix-ui/react-dialog @radix-ui/react-select \
-  @radix-ui/react-accordion @radix-ui/react-tooltip \
-  @radix-ui/react-popover @radix-ui/react-dropdown-menu
-# Update components.json: change style from "base-vega" to "new-york"
+# Add Radix (unified package, used by current shadcn/ui registry)
+npm install radix-ui
+# Legacy alternative: one package per component (@radix-ui/react-dialog, ...)
+# Update components.json: change style from "base-*" to the matching "radix-*" (e.g. "base-nova" -> "radix-nova")
 ```
 
 ## Step 2: Import Transformation
 
 ```tsx
 // BEFORE (Base UI)
-import { Dialog } from "@base-ui/react/Dialog"
+import { Dialog } from "@base-ui/react/dialog"
 
 // AFTER (Radix)
-import * as Dialog from "@radix-ui/react-dialog"
+import { Dialog } from "radix-ui"
+// legacy: import * as Dialog from "@radix-ui/react-dialog"
 ```
 
 ## Step 3: Composition Pattern
@@ -52,7 +54,9 @@ import * as Dialog from "@radix-ui/react-dialog"
 ```tsx
 // BEFORE (Base UI - render)
 <Dialog.Trigger render={<Button />}>Open</Dialog.Trigger>
+```
 
+```tsx
 // AFTER (Radix - asChild)
 <Dialog.Trigger asChild><Button>Open</Button></Dialog.Trigger>
 ```
@@ -79,6 +83,8 @@ import * as Dialog from "@radix-ui/react-dialog"
 [data-state="open"] { opacity: 1; }
 [data-state="closed"] { opacity: 0; }
 ```
+
+Tailwind `data-open:` / `data-closed:` variants from `shadcn/tailwind.css` match both conventions and need no change. Wrapper call sites: `Accordion defaultValue={["a"]}` -> `type="single" collapsible defaultValue="a"`, `multiple` -> `type="multiple"`.
 
 ## Step 6: Remove Positioners
 
@@ -121,7 +127,7 @@ Radix requires explicit Portal wrapping for overlay components:
 |---------|-----|
 | Forgetting Portal wrappers | Radix requires Portal for Overlay+Content |
 | Not removing Positioners | Radix has built-in positioning |
-| Installing wrong packages | Each Radix primitive is a separate package |
+| Installing wrong packages | Use unified `radix-ui` (legacy: one `@radix-ui/react-*` per primitive) |
 
 ---
 

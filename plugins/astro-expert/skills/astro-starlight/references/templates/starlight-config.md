@@ -25,11 +25,11 @@ export default defineConfig({
         dark: './src/assets/logo-dark.svg',
         replacesTitle: true,
       },
-      social: {
-        github: 'https://github.com/my/project',
-        discord: 'https://discord.gg/...',
-        twitter: 'https://twitter.com/myproject',
-      },
+      social: [
+        { icon: 'github', label: 'GitHub', href: 'https://github.com/my/project' },
+        { icon: 'discord', label: 'Discord', href: 'https://discord.gg/...' },
+        { icon: 'x.com', label: 'X', href: 'https://x.com/myproject' },
+      ],
       editLink: {
         baseUrl: 'https://github.com/my/project/edit/main/docs/',
       },
@@ -38,7 +38,7 @@ export default defineConfig({
       defaultLocale: 'root',
       locales: {
         root: { label: 'English', lang: 'en' },
-        fr: { label: 'Français', lang: 'fr' },
+        es: { label: 'Español', lang: 'es' },
       },
       sidebar: [
         { slug: 'getting-started' },
@@ -75,7 +75,7 @@ export default defineConfig({
 });
 ```
 
-## src/content/config.ts
+## src/content.config.ts
 
 ```ts
 import { defineCollection } from 'astro:content';

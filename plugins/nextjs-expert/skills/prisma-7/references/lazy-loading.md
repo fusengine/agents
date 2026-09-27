@@ -14,7 +14,7 @@ Loading strategies with SOLID Next.js principles.
 
 ```typescript
 // lib/db/eager-loading.ts
-import type { User, Post, UserProfile } from '@prisma/client'
+import type { User, Post, UserProfile } from '@/lib/generated/prisma/client'
 
 /**
  * @description Loads user with all related data eagerly
@@ -65,7 +65,7 @@ export async function getUserWithRecentRelations(
 
 ```typescript
 // lib/db/queries/selective-load.ts
-import type { Prisma } from '@prisma/client'
+import type { Prisma } from '@/lib/generated/prisma/client'
 
 /** @description User with post titles and counts only */
 export const userWithPostsSummarySelect = {
@@ -133,7 +133,7 @@ export async function getUserWithPublishedPostsOnly(userId: string) {
 
 ```typescript
 // lib/db/lazy-loading.ts
-import type { User, Post } from '@prisma/client'
+import type { User, Post } from '@/lib/generated/prisma/client'
 
 /**
  * @description Loads user without relations
@@ -257,7 +257,7 @@ export async function getUserWithOptionalAdminData(userId: string) {
 
 ```typescript
 // lib/db/hybrid-loading.ts
-import type { Prisma, User, Post, UserProfile } from '@prisma/client'
+import type { Prisma, User, Post, UserProfile } from '@/lib/generated/prisma/client'
 
 /**
  * @description Loads user with some eager and some lazy relations

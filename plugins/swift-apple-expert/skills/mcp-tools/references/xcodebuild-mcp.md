@@ -215,7 +215,7 @@ Add to your MCP configuration:
 
 ## Version
 
-Latest: **1.12.3** (as of January 2026)
+Latest: **2.7.0** (npm, as of September 2026)
 
 ---
 

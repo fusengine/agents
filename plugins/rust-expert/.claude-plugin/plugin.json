@@ -1,7 +1,7 @@
 {
   "name": "fuse-rust",
-  "version": "1.0.7",
-  "description": "Expert Rust 1.96+ (2024 edition) — ownership, error handling, async/tokio, axum backends, cargo tooling, with SOLID principles",
+  "version": "1.0.8",
+  "description": "Expert Rust 1.98+ (2024 edition) — ownership, error handling, async/tokio, axum backends, cargo tooling, with SOLID principles",
   "author": {
     "name": "Fusengine",
     "email": "hello@fusengine.ch",
@@ -12,7 +12,7 @@
   "license": "MIT",
   "keywords": [
     "rust",
-    "rust-1-96",
+    "rust-1-98",
     "edition-2024",
     "tokio",
     "axum",

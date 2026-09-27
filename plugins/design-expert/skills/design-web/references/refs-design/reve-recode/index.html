@@ -1,161 +1,161 @@
 <!doctype html>
-<!-- [relevé] lang="en-US" : les libellés d'interface sont repris tels quels de
-     la source. Sur une page où les titres n'ont pas de largeur imposée, leur
-     longueur exacte commande les coupes de ligne et donc le rythme vertical —
-     paraphraser un libellé déplace toute la mise en page. -->
+<!-- [measured] lang="en-US": the interface labels are taken verbatim from
+     the source. On a page where headings have no imposed width, their exact
+     length drives the line breaks and therefore the vertical rhythm —
+     paraphrasing a label shifts the whole layout. -->
 <html lang="en-US">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Référence de design — app.reve.com</title>
-<meta name="description" content="Relevé de procédés : structure, surfaces, typographie et animations d'état de la page modèle app.reve.com.">
+<title>Design reference — app.reve.com</title>
+<meta name="description" content="Recorded procedures: structure, surfaces, typography and state animations of the app.reve.com model page.">
 <meta name="robots" content="noindex">
 <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
 <link rel="stylesheet" href="styles.css">
-<!-- L'ordre des `defer` est garanti : motion-bande.js expose window.RevBande,
-     que motion.js consomme pour le carrousel du hero et pour la galerie. -->
+<!-- The `defer` order is guaranteed: motion-bande.js exposes window.RevStrip,
+     which motion.js consumes for the hero carousel and for the gallery. -->
 <script src="motion-bande.js" defer></script>
 <script src="motion.js" defer></script>
 </head>
 <body>
 
 <!-- =============================================================================
-     EN-TÊTE FIXE + VOILE PROGRESSIF
-     [relevé] <rv-marketing-header redirect="/home"> est le premier enfant du
-     <body>, en position:fixed, z-index 3. Il est VIDE dans le HTML : son
-     contenu est rendu par le composant en JS.
-     [arbitrage] Marque, navigation et action sont donc reconstruites ici.
+     FIXED HEADER + PROGRESSIVE VEIL
+     [measured] <rv-marketing-header redirect="/home"> is the first child of
+     <body>, position:fixed, z-index 3. It is EMPTY in the HTML: its content
+     is rendered by the component in JS.
+     [decided] Brand, navigation and action are therefore rebuilt here.
 
-     [relevé] Dessous, DEUX couches distinctes : .header-veil (3 <i> de flou
-     croissant) et .header-veil-tint. Le commentaire de la source explicite la
-     séparation : « a persistent progressive blur under the fixed header (never
+     [measured] Below it, TWO distinct layers: .header-veil (3 <i> of
+     increasing blur) and .header-veil-tint. The source's comment spells out
+     the split: « a persistent progressive blur under the fixed header (never
      toggles, so its backdrop layers never re-rasterize), plus a light scrim
      tint above it that fades in below the fold (app.ts wireHeaderVeil) ».
      ========================================================================= -->
-<header class="entete">
-  <span class="entete-marque">Brand</span>
-  <!-- [arbitrage] La source ne fournit AUCUN libellé d'en-tête : le composant
-       est vide. Les intitulés reprennent ceux des sections de la page, et
-       l'action reprend « Get started », le seul libellé d'action de la source. -->
-  <nav class="entete-nav" aria-label="Main">
-    <a href="#edition">Edit</a>
+<header class="header">
+  <span class="header-brand">Brand</span>
+  <!-- [decided] The source provides NO header label: the component is empty.
+       The items reuse the page's section names, and the action reuses
+       « Get started », the source's only action label. -->
+  <nav class="header-nav" aria-label="Main">
+    <a href="#edit">Edit</a>
     <a href="#references">References</a>
-    <a href="#gabarits">Templates</a>
-    <a href="#calques">Layers</a>
+    <a href="#templates">Templates</a>
+    <a href="#layers">Layers</a>
   </nav>
-  <a class="entete-cta" href="#invite">Get started</a>
+  <a class="header-cta" href="#prompt">Get started</a>
 </header>
-<div class="voile" aria-hidden="true"><i></i><i></i><i></i></div>
-<div class="voile-teinte" aria-hidden="true"></div>
+<div class="veil" aria-hidden="true"><i></i><i></i><i></i></div>
+<div class="veil-tint" aria-hidden="true"></div>
 
 <!-- =============================================================================
-     HERO — bloc, scène collante, bande d'exemples
-     [relevé] Commentaire de la source : « a marquee carousel of curated
+     HERO — block, sticky stage, strip of examples
+     [measured] The source's comment: « a marquee carousel of curated
      examples. The strip drifts on its own and loops seamlessly (app.ts
      wireHeroMarquee clones the card set once); visitors can grab it directly
      at any width, and the page scrolls past it like any other section. »
-     La dérive et le clonage sont implémentés dans motion.js.
+     The drift and the cloning are implemented in motion.js.
 
-     [relevé] Les attributs width/height donnent leur taille intrinsèque aux
-     cartes avant l'arrivée des octets : « without them the cards lay out at
-     zero width until load ». Les 13 cartes de la source sont toutes présentes.
+     [measured] The width/height attributes give the cards their intrinsic
+     size before the bytes arrive: « without them the cards lay out at
+     zero width until load ». All 13 of the source's cards are present.
      ========================================================================= -->
-<div class="hero-bloc" id="hero" data-zone="image">
-  <div class="hero-scene">
-    <div class="hero-texte">
-      <h1 class="hero-titre">See your ideas</h1>
-      <!-- [relevé] Même corps, même famille, même graisse que le titre : seule
-           la couleur sépare les deux lignes (primaire vs tertiaire). Le
-           sous-titre passe sur deux lignes par `max-width: 34ch`. -->
-      <p class="hero-sous-titre">Create, edit and design with the best 4K image model.</p>
-      <!-- [relevé] `hero-copy-actions` SEULE : la source ne met pas
-           `intro-actions` ici. Les deux règles ont des marges différentes
-           (32px contre 28px−espace-l = 8px) et `intro-actions`, plus
-           spécifique, l'emporterait — remontant tout le bloc de 24px. -->
+<div class="hero-block" id="hero" data-zone="image">
+  <div class="hero-stage">
+    <div class="hero-text">
+      <h1 class="hero-title">See your ideas</h1>
+      <!-- [measured] Same size, same family, same weight as the title: only
+           color separates the two lines (primary vs tertiary). The
+           subtitle wraps onto two lines via `max-width: 34ch`. -->
+      <p class="hero-subtitle">Create, edit and design with the best 4K image model.</p>
+      <!-- [measured] `hero-copy-actions` ALONE: the source does not put
+           `intro-actions` here. The two rules have different margins
+           (32px versus 28px−space-l = 8px) and `intro-actions`, more
+           specific, would win — raising the whole block by 24px. -->
       <div class="hero-actions">
-        <a class="intro-cta intro-cta--primaire" href="#invite">Get started</a>
-        <!-- [relevé] Le suffixe masqué rend le libellé du lien descriptif pour
-             l'audit sans changer le rendu visuel. -->
-        <a class="intro-cta intro-cta--secondaire" href="#edition">Learn more<span class="invisible-lecteur"> about the model</span></a>
+        <a class="intro-cta intro-cta--primary" href="#prompt">Get started</a>
+        <!-- [measured] The hidden suffix makes the link label descriptive
+             for the audit without changing the visual rendering. -->
+        <a class="intro-cta intro-cta--secondary" href="#edit">Learn more<span class="visually-hidden"> about the model</span></a>
       </div>
     </div>
 
-    <!-- [relevé] role=list / role=listitem rétablis à la main : display:flex
-         supprime la sémantique de liste. -->
-    <div class="hero-bande" role="list" data-marquee data-vitesse="18">
-      <figure class="hero-carte" role="listitem">
-        <!-- [relevé] La première carte visible est la candidate LCP : elle est
-             chargée en priorité, les suivantes en différé. -->
+    <!-- [measured] role=list / role=listitem restored by hand: display:flex
+         removes list semantics. -->
+    <div class="hero-strip" role="list" data-marquee data-speed="18">
+      <figure class="hero-card" role="listitem">
+        <!-- [measured] The first visible card is the LCP candidate: it is
+             loaded with priority, the following ones deferred. -->
         <img class="hero-image" src="https://app.reve.com/model-landing/hero-carousel-1.png"
              srcset="https://app.reve.com/model-landing/hero-carousel-1-800.png 578w,
                      https://app.reve.com/model-landing/hero-carousel-1-1200.png 867w,
                      https://app.reve.com/model-landing/hero-carousel-1.png 1156w"
              sizes="(max-width:750px) 55vw,(max-width:1024px) 85vw,45vw"
              width="1156" height="1600" fetchpriority="high" alt="">
-        <figcaption class="hero-legende">Graphic design</figcaption>
+        <figcaption class="hero-caption">Graphic design</figcaption>
       </figure>
-      <figure class="hero-carte" role="listitem">
+      <figure class="hero-card" role="listitem">
         <img class="hero-image" src="https://app.reve.com/model-landing/hero-carousel-2.png"
              srcset="https://app.reve.com/model-landing/hero-carousel-2-800.png 613w,
                      https://app.reve.com/model-landing/hero-carousel-2-1200.png 919w,
                      https://app.reve.com/model-landing/hero-carousel-2.png 1226w"
              sizes="(max-width:750px) 55vw,(max-width:1024px) 85vw,45vw"
              width="1226" height="1600" alt="">
-        <figcaption class="hero-legende">Art direction</figcaption>
+        <figcaption class="hero-caption">Art direction</figcaption>
       </figure>
-      <figure class="hero-carte" role="listitem">
+      <figure class="hero-card" role="listitem">
         <img class="hero-image" src="https://app.reve.com/model-landing/hero-carousel-7.png"
              srcset="https://app.reve.com/model-landing/hero-carousel-7-800.png 597w,
                      https://app.reve.com/model-landing/hero-carousel-7-1200.png 895w,
                      https://app.reve.com/model-landing/hero-carousel-7.png 1194w"
              sizes="(max-width:750px) 55vw,(max-width:1024px) 85vw,45vw"
              width="1194" height="1600" alt="" loading="lazy">
-        <figcaption class="hero-legende">Product photography</figcaption>
+        <figcaption class="hero-caption">Product photography</figcaption>
       </figure>
-      <!-- [relevé] À partir d'ici la source diffère le chargement par
-           data-deferred-src / data-deferred-srcset, résolus en JS. -->
-      <figure class="hero-carte" role="listitem">
+      <!-- [measured] From here on the source defers loading through
+           data-deferred-src / data-deferred-srcset, resolved in JS. -->
+      <figure class="hero-card" role="listitem">
         <img class="hero-image" data-src="https://app.reve.com/model-landing/hero-carousel-4.png"
              data-srcset="https://app.reve.com/model-landing/hero-carousel-4-800.png 577w,
                           https://app.reve.com/model-landing/hero-carousel-4-1200.png 866w,
                           https://app.reve.com/model-landing/hero-carousel-4.png 1155w"
              sizes="(max-width:750px) 55vw,(max-width:1024px) 85vw,45vw"
              width="1155" height="1600" alt="" loading="lazy">
-        <figcaption class="hero-legende">3D Rendering</figcaption>
+        <figcaption class="hero-caption">3D Rendering</figcaption>
       </figure>
-      <figure class="hero-carte" role="listitem">
+      <figure class="hero-card" role="listitem">
         <img class="hero-image" data-src="https://app.reve.com/model-landing/hero-carousel-3.png"
              data-srcset="https://app.reve.com/model-landing/hero-carousel-3-800.png 800w,
                           https://app.reve.com/model-landing/hero-carousel-3-1200.png 1200w,
                           https://app.reve.com/model-landing/hero-carousel-3.png 1600w"
              sizes="(max-width:750px) 55vw,(max-width:1024px) 85vw,45vw"
              width="1600" height="1600" alt="" loading="lazy">
-        <figcaption class="hero-legende">Portraits</figcaption>
+        <figcaption class="hero-caption">Portraits</figcaption>
       </figure>
-      <figure class="hero-carte" role="listitem">
+      <figure class="hero-card" role="listitem">
         <img class="hero-image" data-src="https://app.reve.com/model-landing/hero-carousel-6.png"
              data-srcset="https://app.reve.com/model-landing/hero-carousel-6-800.png 547w,
                           https://app.reve.com/model-landing/hero-carousel-6-1200.png 821w,
                           https://app.reve.com/model-landing/hero-carousel-6.png 1095w"
              sizes="(max-width:750px) 55vw,(max-width:1024px) 85vw,45vw"
              width="1095" height="1600" alt="" loading="lazy">
-        <figcaption class="hero-legende">Interior Design</figcaption>
+        <figcaption class="hero-caption">Interior Design</figcaption>
       </figure>
-      <figure class="hero-carte" role="listitem">
+      <figure class="hero-card" role="listitem">
         <img class="hero-image" data-src="https://app.reve.com/model-landing/hero-carousel-5.png"
              data-srcset="https://app.reve.com/model-landing/hero-carousel-5-800.png 533w,
                           https://app.reve.com/model-landing/hero-carousel-5-1200.png 799w,
                           https://app.reve.com/model-landing/hero-carousel-5.png 1066w"
              sizes="(max-width:750px) 55vw,(max-width:1024px) 85vw,45vw"
              width="1066" height="1600" alt="" loading="lazy">
-        <figcaption class="hero-legende">Fashion</figcaption>
+        <figcaption class="hero-caption">Fashion</figcaption>
       </figure>
-      <!-- [relevé] Carte vidéo. Commentaire de la source : « Poster by default;
+      <!-- [measured] Video card. The source's comment: « Poster by default;
            hovering plays the silent 6s loop, which fades in only once frames
            are actually rendering — so a slow-loading video just leaves the
            poster in place (app.ts wireHeroVideoHover). » -->
-      <figure class="hero-carte" role="listitem">
+      <figure class="hero-card" role="listitem">
         <div class="hero-media" tabindex="0" data-video-hover>
           <img class="hero-image" data-src="https://app.reve.com/model-landing/hero-carousel-8-poster.png"
                width="1600" height="900" alt="" loading="lazy">
@@ -165,18 +165,18 @@
             <source src="https://app.reve.com/model-landing/hero-carousel-8.mp4" type="video/mp4">
           </video>
         </div>
-        <figcaption class="hero-legende">Filmmaking</figcaption>
+        <figcaption class="hero-caption">Filmmaking</figcaption>
       </figure>
-      <figure class="hero-carte" role="listitem">
+      <figure class="hero-card" role="listitem">
         <img class="hero-image" data-src="https://app.reve.com/model-landing/hero-carousel-9.png"
              data-srcset="https://app.reve.com/model-landing/hero-carousel-9-800.png 637w,
                           https://app.reve.com/model-landing/hero-carousel-9-1200.png 956w,
                           https://app.reve.com/model-landing/hero-carousel-9.png 1275w"
              sizes="(max-width:750px) 55vw,(max-width:1024px) 85vw,45vw"
              width="1275" height="1600" alt="" loading="lazy">
-        <figcaption class="hero-legende">Architecture</figcaption>
+        <figcaption class="hero-caption">Architecture</figcaption>
       </figure>
-      <figure class="hero-carte" role="listitem">
+      <figure class="hero-card" role="listitem">
         <div class="hero-media" tabindex="0" data-video-hover>
           <img class="hero-image" data-src="https://app.reve.com/model-landing/hero-carousel-10.png"
                data-srcset="https://app.reve.com/model-landing/hero-carousel-10-800.png 577w,
@@ -190,64 +190,64 @@
             <source src="https://app.reve.com/model-landing/hero-carousel-10.mp4" type="video/mp4">
           </video>
         </div>
-        <figcaption class="hero-legende">Concept Development</figcaption>
+        <figcaption class="hero-caption">Concept Development</figcaption>
       </figure>
-      <figure class="hero-carte" role="listitem">
+      <figure class="hero-card" role="listitem">
         <img class="hero-image" data-src="https://app.reve.com/model-landing/hero-carousel-11.png"
              data-srcset="https://app.reve.com/model-landing/hero-carousel-11-800.png 577w,
                           https://app.reve.com/model-landing/hero-carousel-11-1200.png 866w,
                           https://app.reve.com/model-landing/hero-carousel-11.png 1155w"
              sizes="(max-width:750px) 55vw,(max-width:1024px) 85vw,45vw"
              width="1155" height="1600" alt="" loading="lazy">
-        <figcaption class="hero-legende">Graphics &amp; Illustration</figcaption>
+        <figcaption class="hero-caption">Graphics &amp; Illustration</figcaption>
       </figure>
-      <figure class="hero-carte" role="listitem">
+      <figure class="hero-card" role="listitem">
         <img class="hero-image" data-src="https://app.reve.com/model-landing/hero-carousel-12.png"
              data-srcset="https://app.reve.com/model-landing/hero-carousel-12-800.png 547w,
                           https://app.reve.com/model-landing/hero-carousel-12-1200.png 821w,
                           https://app.reve.com/model-landing/hero-carousel-12.png 1095w"
              sizes="(max-width:750px) 55vw,(max-width:1024px) 85vw,45vw"
              width="1095" height="1600" alt="" loading="lazy">
-        <figcaption class="hero-legende">Post-Production</figcaption>
+        <figcaption class="hero-caption">Post-Production</figcaption>
       </figure>
-      <figure class="hero-carte" role="listitem">
+      <figure class="hero-card" role="listitem">
         <img class="hero-image" data-src="https://app.reve.com/model-landing/hero-carousel-13.png"
              data-srcset="https://app.reve.com/model-landing/hero-carousel-13-800.png 545w,
                           https://app.reve.com/model-landing/hero-carousel-13-1200.png 818w,
                           https://app.reve.com/model-landing/hero-carousel-13.png 1091w"
              sizes="(max-width:750px) 55vw,(max-width:1024px) 85vw,45vw"
              width="1091" height="1600" alt="" loading="lazy">
-        <figcaption class="hero-legende">Product Rendering</figcaption>
+        <figcaption class="hero-caption">Product Rendering</figcaption>
       </figure>
     </div>
   </div>
 </div>
 
-<div class="page-modele">
+<div class="page-model">
 <main class="sections">
 
   <!-- ===========================================================================
-       1 / 7 — SECTION « ÉDITION DIRECTE » (featureleft, avec éditeur embarqué)
-       [relevé] Commentaire de la source : « Live-embed section in the feature
+       1 / 7 — « DIRECT EDIT » SECTION (featureleft, with embedded editor)
+       [measured] The source's comment: « Live-embed section in the feature
        arrangement: while the editor is up (wide viewports, boot OK) the CSS
        lays the copy out as a header row over the embed; when the embed yields
        to its static pair (narrow viewports or a failed boot) the plain
        featureleft side-by-side takes over — panel on the left, copy on the
-       right. » Les deux présentations coexistent dans le DOM.
+       right. » Both presentations coexist in the DOM.
        ======================================================================== -->
-  <!-- [relevé] data-zone : nature de la zone pour l'inversion de thème de
-       l'en-tête. Le hero est la seule zone « image » (fond noir) ; toutes les
-       sections de contenu sont des zones « text » (fond neutre-50), ce qui fait
-       basculer l'en-tête en clair et la teinte du voile sur neutre-50. -->
-  <section class="section section-gauche" id="edition" data-section="edition-directe" data-zone="text">
-    <div class="feature-agencement">
-      <div class="cadre-duo embed-statique">
-        <img class="fond-flou" src="https://app.reve.com/model-landing/directly-edit-1.png"
+  <!-- [measured] data-zone: nature of the zone for the header's theme
+       inversion. The hero is the only « image » zone (black background); all
+       content sections are « text » zones (neutral-50 background), which
+       switches the header to light and the veil tint to neutral-50. -->
+  <section class="section section-left" id="edit" data-section="direct-edit" data-zone="text">
+    <div class="feature-layout">
+      <div class="duo-frame embed-static">
+        <img class="blurred-bg" src="https://app.reve.com/model-landing/directly-edit-1.png"
              srcset="https://app.reve.com/model-landing/directly-edit-1-800.png 800w,
                      https://app.reve.com/model-landing/directly-edit-1-1200.png 1200w,
                      https://app.reve.com/model-landing/directly-edit-1.png 1600w"
              sizes="(max-width:750px) 66vw,44vw" width="1600" height="1600" alt="" loading="lazy">
-        <div class="duo-piste">
+        <div class="duo-track">
           <img src="https://app.reve.com/model-landing/directly-edit-2.png"
                srcset="https://app.reve.com/model-landing/directly-edit-2-800.png 800w,
                        https://app.reve.com/model-landing/directly-edit-2-1200.png 1200w,
@@ -262,53 +262,53 @@
                alt="Directly edit demo — poster scene with the radio selected" loading="lazy">
         </div>
       </div>
-      <div class="feature-copie">
-        <div class="intro-copie">
-          <h2 class="intro-titre">Directly edit anything</h2>
-          <p class="intro-sous">Move, resize or recolor any object</p>
+      <div class="feature-copy">
+        <div class="intro-copy">
+          <h2 class="intro-title">Directly edit anything</h2>
+          <p class="intro-sub">Move, resize or recolor any object</p>
         </div>
         <div class="intro-actions">
-          <a class="intro-cta intro-cta--primaire" href="#invite">Get started</a>
+          <a class="intro-cta intro-cta--primary" href="#prompt">Get started</a>
         </div>
       </div>
     </div>
-    <!-- [arbitrage] Emplacement de <rv-landing-explore-frame> : éditeur
-         interactif monté en JS, non reproductible. Signalé, pas approximé. -->
-    <div class="embed-corps" role="note">
-      <!-- [relevé] L'affiche est celle que la source passe au composant :
-           poster="/model-landing/directly-edit-base.png". C'est ce que
-           l'éditeur montre avant son amorçage. -->
-      <img class="embed-affiche" src="https://app.reve.com/model-landing/directly-edit-base.png"
-           alt="Affiche de l'éditeur avant amorçage" loading="lazy">
-      <span class="embed-note">Emplacement de <code>&lt;rv-landing-explore-frame&gt;</code> —
-      éditeur interactif monté en JS, hors du CSS relevable</span>
+    <!-- [decided] Slot of <rv-landing-explore-frame>: interactive editor
+         mounted in JS, not reproducible. Flagged, not approximated. -->
+    <div class="embed-body" role="note">
+      <!-- [measured] The poster is the one the source passes to the component:
+           poster="/model-landing/directly-edit-base.png". It is what the
+           editor shows before it boots. -->
+      <img class="embed-poster" src="https://app.reve.com/model-landing/directly-edit-base.png"
+           alt="Editor poster before boot" loading="lazy">
+      <span class="embed-note">Slot for <code>&lt;rv-landing-explore-frame&gt;</code> —
+      interactive editor mounted in JS, outside the recordable CSS</span>
     </div>
   </section>
 
   <!-- ===========================================================================
-       2 / 7 — SECTION « ANNOTATION » (featureright, sans embed)
-       [relevé] Arrangement miroir : copie à gauche, panneau à droite, saignée
-       de l'autre côté. Deux boutons d'action ici, un seul dans la précédente.
+       2 / 7 — « ANNOTATION » SECTION (featureright, no embed)
+       [measured] Mirror arrangement: copy on the left, panel on the right,
+       bleed on the other side. Two action buttons here, only one in the previous.
        ======================================================================== -->
-  <section class="section section-droite" id="annotation" data-section="annotation" data-zone="text">
-    <div class="feature-agencement">
-      <div class="feature-copie">
-        <div class="intro-copie">
-          <h2 class="intro-titre">Draw what you want to see</h2>
-          <p class="intro-sous">Add a sketch, bring your vision to life</p>
+  <section class="section section-right" id="annotation" data-section="annotation" data-zone="text">
+    <div class="feature-layout">
+      <div class="feature-copy">
+        <div class="intro-copy">
+          <h2 class="intro-title">Draw what you want to see</h2>
+          <p class="intro-sub">Add a sketch, bring your vision to life</p>
         </div>
         <div class="intro-actions">
-          <a class="intro-cta intro-cta--primaire" href="#invite">Get started</a>
-          <a class="intro-cta intro-cta--secondaire" href="#references">Learn more<span class="invisible-lecteur"> about annotations</span></a>
+          <a class="intro-cta intro-cta--primary" href="#prompt">Get started</a>
+          <a class="intro-cta intro-cta--secondary" href="#references">Learn more<span class="visually-hidden"> about annotations</span></a>
         </div>
       </div>
-      <div class="cadre-duo">
-        <img class="fond-flou" src="https://app.reve.com/model-landing/draw-2.png"
+      <div class="duo-frame">
+        <img class="blurred-bg" src="https://app.reve.com/model-landing/draw-2.png"
              srcset="https://app.reve.com/model-landing/draw-2-800.png 604w,
                      https://app.reve.com/model-landing/draw-2-1200.png 906w,
                      https://app.reve.com/model-landing/draw-2.png 1208w"
              sizes="(max-width:750px) 66vw,44vw" width="1208" height="1600" alt="" loading="lazy">
-        <div class="duo-piste">
+        <div class="duo-track">
           <img src="https://app.reve.com/model-landing/draw-1.png"
                srcset="https://app.reve.com/model-landing/draw-1-800.png 604w,
                        https://app.reve.com/model-landing/draw-1-1200.png 906w,
@@ -327,78 +327,78 @@
   </section>
 
   <!-- ===========================================================================
-       3 / 7 — SECTION « ÉLÉMENTS DE RÉFÉRENCE »
-       Le pattern d'UI applicative le plus net de la page : une grille de cartes
-       sélectionnables dont l'état actif se signale par la SURFACE et une ombre
-       basse, jamais par une bordure d'accent.
-       [relevé] Les cartes sont de vrais <button> portant l'image cible en
-       data-card ; la sélection et l'échange d'image sont pilotés en JS.
+       3 / 7 — « REFERENCE ELEMENTS » SECTION
+       The page's clearest application UI pattern: a grid of selectable cards
+       whose active state is signalled by SURFACE and a low shadow, never by
+       an accent border.
+       [measured] The cards are real <button>s carrying the target image in
+       data-card; selection and image swap are driven in JS.
        ======================================================================== -->
   <section class="section section-references" id="references" data-section="references" data-zone="text">
-    <div class="references-agencement">
-      <div class="references-cadre">
-        <img class="fond-flou" src="https://app.reve.com/model-landing/reference-default.png"
+    <div class="references-layout">
+      <div class="references-frame">
+        <img class="blurred-bg" src="https://app.reve.com/model-landing/reference-default.png"
              srcset="https://app.reve.com/model-landing/reference-default-800.png 800w,
                      https://app.reve.com/model-landing/reference-default-1200.png 1200w,
                      https://app.reve.com/model-landing/reference-default.png 1240w"
              sizes="(max-width:750px) 55vw,(max-width:900px) 88vw,40vw"
-             width="1240" height="1240" alt="" data-fond-flou>
-        <!-- [arbitrage] Deux couches empilées pour enchaîner sans clignotement
-             (la source remplace le src en place). -->
-        <div class="references-pile">
+             width="1240" height="1240" alt="" data-blurred-bg>
+        <!-- [decided] Two stacked layers to chain without flicker
+             (the source replaces the src in place). -->
+        <div class="references-stack">
           <img class="references-image" src="https://app.reve.com/model-landing/reference-default.png"
                srcset="https://app.reve.com/model-landing/reference-default-800.png 800w,
                        https://app.reve.com/model-landing/reference-default-1200.png 1200w,
                        https://app.reve.com/model-landing/reference-default.png 1240w"
                sizes="(max-width:750px) 55vw,(max-width:900px) 88vw,40vw"
-               width="1240" height="1240" alt="Aperçu de l'élément sélectionné" data-ref-base>
-          <img class="references-image" alt="" aria-hidden="true" width="1240" height="1240" data-ref-couche>
+               width="1240" height="1240" alt="Preview of the selected element" data-ref-base>
+          <img class="references-image" alt="" aria-hidden="true" width="1240" height="1240" data-ref-layer>
         </div>
       </div>
-      <div class="references-copie">
-        <div class="intro-copie">
-          <h2 class="intro-titre">Reference anything</h2>
-          <p class="intro-sous">Apply styles, swap people, change locations</p>
+      <div class="references-copy">
+        <div class="intro-copy">
+          <h2 class="intro-title">Reference anything</h2>
+          <p class="intro-sub">Apply styles, swap people, change locations</p>
         </div>
         <div class="intro-actions">
-          <a class="intro-cta intro-cta--primaire" href="#invite">Get started</a>
-          <a class="intro-cta intro-cta--secondaire" href="#gabarits">Learn more<span class="invisible-lecteur"> about references</span></a>
+          <a class="intro-cta intro-cta--primary" href="#prompt">Get started</a>
+          <a class="intro-cta intro-cta--secondary" href="#templates">Learn more<span class="visually-hidden"> about references</span></a>
         </div>
-        <div class="references-vignettes" role="group" aria-label="Choose a reference">
-          <button class="reference-carte est-active" type="button" aria-pressed="true"
+        <div class="references-thumbs" role="group" aria-label="Choose a reference">
+          <button class="reference-card is-active" type="button" aria-pressed="true"
                   data-card="https://app.reve.com/model-landing/reference-beach.png">
-            <img class="reference-carte-img" src="https://app.reve.com/model-landing/ref-beach.png"
+            <img class="reference-card-img" src="https://app.reve.com/model-landing/ref-beach.png"
                  width="385" height="385" alt="" loading="lazy">
-            <span class="reference-carte-libelle">
-              <span class="reference-carte-nom">@Beach</span>
-              <span class="reference-carte-meta">Style · 2 items</span>
+            <span class="reference-card-label">
+              <span class="reference-card-name">@Beach</span>
+              <span class="reference-card-meta">Style · 2 items</span>
             </span>
           </button>
-          <button class="reference-carte" type="button" aria-pressed="false"
+          <button class="reference-card" type="button" aria-pressed="false"
                   data-card="https://app.reve.com/model-landing/reference-gorp.png">
-            <img class="reference-carte-img" src="https://app.reve.com/model-landing/ref-gorp.png"
+            <img class="reference-card-img" src="https://app.reve.com/model-landing/ref-gorp.png"
                  width="385" height="385" alt="" loading="lazy">
-            <span class="reference-carte-libelle">
-              <span class="reference-carte-nom">@Brian-gorp</span>
-              <span class="reference-carte-meta">Person · 2 items</span>
+            <span class="reference-card-label">
+              <span class="reference-card-name">@Brian-gorp</span>
+              <span class="reference-card-meta">Person · 2 items</span>
             </span>
           </button>
-          <button class="reference-carte" type="button" aria-pressed="false"
+          <button class="reference-card" type="button" aria-pressed="false"
                   data-card="https://app.reve.com/model-landing/reference-wabi.png">
-            <img class="reference-carte-img" src="https://app.reve.com/model-landing/ref-wabi.png"
+            <img class="reference-card-img" src="https://app.reve.com/model-landing/ref-wabi.png"
                  width="385" height="385" alt="" loading="lazy">
-            <span class="reference-carte-libelle">
-              <span class="reference-carte-nom">@Wabi-studio</span>
-              <span class="reference-carte-meta">Style · 4 items</span>
+            <span class="reference-card-label">
+              <span class="reference-card-name">@Wabi-studio</span>
+              <span class="reference-card-meta">Style · 4 items</span>
             </span>
           </button>
-          <button class="reference-carte" type="button" aria-pressed="false"
+          <button class="reference-card" type="button" aria-pressed="false"
                   data-card="https://app.reve.com/model-landing/reference-yosemite.png">
-            <img class="reference-carte-img" src="https://app.reve.com/model-landing/ref-yosemite.png"
+            <img class="reference-card-img" src="https://app.reve.com/model-landing/ref-yosemite.png"
                  width="385" height="385" alt="" loading="lazy">
-            <span class="reference-carte-libelle">
-              <span class="reference-carte-nom">@Yosemite</span>
-              <span class="reference-carte-meta">Place · 3 items</span>
+            <span class="reference-card-label">
+              <span class="reference-card-name">@Yosemite</span>
+              <span class="reference-card-meta">Place · 3 items</span>
             </span>
           </button>
         </div>
@@ -407,32 +407,32 @@
   </section>
 
   <!-- ===========================================================================
-       4 / 7 — SECTION « GABARITS »
-       [relevé] Commentaire de la source : « centered head, then a two-pane demo
+       4 / 7 — « TEMPLATES » SECTION
+       [measured] The source's comment: « centered head, then a two-pane demo
        — a mock template-editor card (label + input + product thumbnail) with
        prev/next arrows below it, and the rendered template on the right. The
        arrows cycle all three in lockstep (app.ts wires it). »
-       Recette de surface « carte posée » : blanc, rayon 16, bordure à 4 % de
-       noir, ombre très basse. La bordure ne sert qu'à détacher le blanc du
-       blanc, l'ombre à donner l'altitude.
+       « Resting card » surface recipe: white, radius 16, border at 4 % black,
+       very low shadow. The border only serves to detach white from white,
+       the shadow to give altitude.
        ======================================================================== -->
-  <section class="section section-gabarits" id="gabarits" data-section="gabarits" data-zone="text">
-    <div class="produit-entete">
-      <h2 class="produit-titre">Create with Templates</h2>
-      <p class="produit-sous">Change what matters, AI does the rest</p>
+  <section class="section section-templates" id="templates" data-section="templates" data-zone="text">
+    <div class="product-header">
+      <h2 class="product-title">Create with Templates</h2>
+      <p class="product-sub">Change what matters, AI does the rest</p>
       <div class="intro-actions">
-        <a class="intro-cta intro-cta--primaire" href="#invite">Get started</a>
-        <a class="intro-cta intro-cta--secondaire" href="#calques">Learn more<span class="invisible-lecteur"> about templates</span></a>
+        <a class="intro-cta intro-cta--primary" href="#prompt">Get started</a>
+        <a class="intro-cta intro-cta--secondary" href="#layers">Learn more<span class="visually-hidden"> about templates</span></a>
       </div>
     </div>
-    <div class="gabarits-demo">
-      <div class="gabarits-rendu" data-gabarits-rendu>
-        <img class="est-active" src="https://app.reve.com/model-landing/template-1.png"
+    <div class="templates-demo">
+      <div class="templates-render" data-templates-render>
+        <img class="is-active" src="https://app.reve.com/model-landing/template-1.png"
              srcset="https://app.reve.com/model-landing/template-1-800.png 800w,
                      https://app.reve.com/model-landing/template-1-1200.png 1200w,
                      https://app.reve.com/model-landing/template-1.png 1600w"
              sizes="(max-width:600px) 62vw,42vw" width="1600" height="1368"
-             alt="Rendu du gabarit sélectionné">
+             alt="Render of the selected template">
         <img src="https://app.reve.com/model-landing/template-2.png"
              srcset="https://app.reve.com/model-landing/template-2-800.png 796w,
                      https://app.reve.com/model-landing/template-2-1200.png 1194w,
@@ -449,25 +449,25 @@
                      https://app.reve.com/model-landing/template-4.png 1600w"
              sizes="(max-width:600px) 62vw,42vw" width="1600" height="1066" alt="" loading="lazy">
 
-        <div class="gabarits-cote">
-          <div class="gabarits-carte">
-            <label class="gabarits-libelle" for="gabarits-nom">Company name</label>
-            <input class="gabarits-champ" id="gabarits-nom" value="Willow &amp; Co" readonly>
-            <span class="gabarits-libelle">Product</span>
-            <div class="gabarits-vignette" data-gabarits-vignette>
-              <img class="est-active" src="https://app.reve.com/model-landing/template-1b.png"
-                   width="800" height="684" alt="" data-nom="Willow &amp; Co">
+        <div class="templates-side">
+          <div class="templates-card">
+            <label class="templates-label" for="templates-name">Company name</label>
+            <input class="templates-input" id="templates-name" value="Willow &amp; Co" readonly>
+            <span class="templates-label">Product</span>
+            <div class="templates-thumb" data-templates-thumb>
+              <img class="is-active" src="https://app.reve.com/model-landing/template-1b.png"
+                   width="800" height="684" alt="" data-name="Willow &amp; Co">
               <img src="https://app.reve.com/model-landing/template-2b.png"
-                   width="796" height="800" alt="" loading="lazy" data-nom="Northwood">
+                   width="796" height="800" alt="" loading="lazy" data-name="Northwood">
               <img src="https://app.reve.com/model-landing/template-3b.png"
-                   width="800" height="745" alt="" loading="lazy" data-nom="Matcha &amp; Co">
+                   width="800" height="745" alt="" loading="lazy" data-name="Matcha &amp; Co">
               <img src="https://app.reve.com/model-landing/template-4b.png"
-                   width="800" height="684" alt="" loading="lazy" data-nom="Fern and Root">
+                   width="800" height="684" alt="" loading="lazy" data-name="Fern and Root">
             </div>
           </div>
-          <div class="gabarits-fleches">
-            <button class="gabarits-fleche" type="button" data-dir="-1" aria-label="Previous template">‹</button>
-            <button class="gabarits-fleche" type="button" data-dir="1" aria-label="Next template">›</button>
+          <div class="templates-arrows">
+            <button class="templates-arrow" type="button" data-dir="-1" aria-label="Previous template">‹</button>
+            <button class="templates-arrow" type="button" data-dir="1" aria-label="Next template">›</button>
           </div>
         </div>
       </div>
@@ -475,28 +475,28 @@
   </section>
 
   <!-- ===========================================================================
-       5 / 7 — SECTION « EFFETS » (featureright, avec éditeur embarqué)
-       [relevé] Même bascule embarqué/statique que la section 1, arrangement
-       inversé : copie à gauche, panneau à droite.
+       5 / 7 — « EFFECTS » SECTION (featureright, with embedded editor)
+       [measured] Same embedded/static switch as section 1, reversed
+       arrangement: copy on the left, panel on the right.
        ======================================================================== -->
-  <section class="section section-droite" id="effets" data-section="effets" data-zone="text">
-    <div class="feature-agencement">
-      <div class="feature-copie">
-        <div class="intro-copie">
-          <h2 class="intro-titre">Create any visual effect</h2>
-          <p class="intro-sous">Apply presets or create custom shaders</p>
+  <section class="section section-right" id="effects" data-section="effects" data-zone="text">
+    <div class="feature-layout">
+      <div class="feature-copy">
+        <div class="intro-copy">
+          <h2 class="intro-title">Create any visual effect</h2>
+          <p class="intro-sub">Apply presets or create custom shaders</p>
         </div>
         <div class="intro-actions">
-          <a class="intro-cta intro-cta--primaire" href="#invite">Get started</a>
+          <a class="intro-cta intro-cta--primary" href="#prompt">Get started</a>
         </div>
       </div>
-      <div class="cadre-duo embed-statique">
-        <img class="fond-flou" src="https://app.reve.com/model-landing/effect-1.png"
+      <div class="duo-frame embed-static">
+        <img class="blurred-bg" src="https://app.reve.com/model-landing/effect-1.png"
              srcset="https://app.reve.com/model-landing/effect-1-800.png 652w,
                      https://app.reve.com/model-landing/effect-1-1200.png 978w,
                      https://app.reve.com/model-landing/effect-1.png 1304w"
              sizes="(max-width:750px) 66vw,44vw" width="1304" height="1600" alt="" loading="lazy">
-        <div class="duo-piste">
+        <div class="duo-track">
           <img src="https://app.reve.com/model-landing/effect-1.png"
                srcset="https://app.reve.com/model-landing/effect-1-800.png 652w,
                        https://app.reve.com/model-landing/effect-1-1200.png 978w,
@@ -512,30 +512,30 @@
         </div>
       </div>
     </div>
-    <div class="embed-corps" role="note">
-      <!-- [relevé] poster="/model-landing/add-effects-base.png" -->
-      <img class="embed-affiche" src="https://app.reve.com/model-landing/add-effects-base.png"
-           alt="Affiche de l'éditeur avant amorçage" loading="lazy">
-      <span class="embed-note">Second emplacement de <code>&lt;rv-landing-explore-frame&gt;</code>
-      — même composant, non reproductible</span>
+    <div class="embed-body" role="note">
+      <!-- [measured] poster="/model-landing/add-effects-base.png" -->
+      <img class="embed-poster" src="https://app.reve.com/model-landing/add-effects-base.png"
+           alt="Editor poster before boot" loading="lazy">
+      <span class="embed-note">Second slot for <code>&lt;rv-landing-explore-frame&gt;</code>
+      — same component, not reproducible</span>
     </div>
   </section>
 
   <!-- ===========================================================================
-       6 / 7 — SECTION « CALQUES » (featureleft, statique)
-       [relevé] Commentaire de la source : « Static section (embed retired per
+       6 / 7 — « LAYERS » SECTION (featureleft, static)
+       [measured] The source's comment: « Static section (embed retired per
        the static-by-default direction): the references arrangement with the
        panel on the left. »
        ======================================================================== -->
-  <section class="section section-gauche" id="calques" data-section="calques" data-zone="text">
-    <div class="feature-agencement">
-      <div class="cadre-duo">
-        <img class="fond-flou" src="https://app.reve.com/model-landing/live-layers-1.png"
+  <section class="section section-left" id="layers" data-section="layers" data-zone="text">
+    <div class="feature-layout">
+      <div class="duo-frame">
+        <img class="blurred-bg" src="https://app.reve.com/model-landing/live-layers-1.png"
              srcset="https://app.reve.com/model-landing/live-layers-1-800.png 594w,
                      https://app.reve.com/model-landing/live-layers-1-1200.png 891w,
                      https://app.reve.com/model-landing/live-layers-1.png 1189w"
              sizes="(max-width:750px) 66vw,44vw" width="1189" height="1600" alt="" loading="lazy">
-        <div class="duo-piste">
+        <div class="duo-track">
           <img src="https://app.reve.com/model-landing/live-layers-2.png"
                srcset="https://app.reve.com/model-landing/live-layers-2-800.png 594w,
                        https://app.reve.com/model-landing/live-layers-2-1200.png 891w,
@@ -550,44 +550,44 @@
                alt="The same picnic poster in a pastel halftone print on crumpled paper" loading="lazy">
         </div>
       </div>
-      <div class="feature-copie">
-        <div class="intro-copie">
-          <h2 class="intro-titre">Compose with text and images</h2>
-          <p class="intro-sous">Use live layers to create polished graphics</p>
+      <div class="feature-copy">
+        <div class="intro-copy">
+          <h2 class="intro-title">Compose with text and images</h2>
+          <p class="intro-sub">Use live layers to create polished graphics</p>
         </div>
         <div class="intro-actions">
-          <a class="intro-cta intro-cta--primaire" href="#invite">Get started</a>
-          <a class="intro-cta intro-cta--secondaire" href="#cadrage">Learn more<span class="invisible-lecteur"> about live layers</span></a>
+          <a class="intro-cta intro-cta--primary" href="#prompt">Get started</a>
+          <a class="intro-cta intro-cta--secondary" href="#reframe">Learn more<span class="visually-hidden"> about live layers</span></a>
         </div>
       </div>
     </div>
   </section>
 
   <!-- ===========================================================================
-       7 / 7 — SECTION « CADRAGE » (featureright, statique)
-       [relevé] Commentaire de la source : « the references arrangement flipped
+       7 / 7 — « REFRAME » SECTION (featureright, static)
+       [measured] The source's comment: « the references arrangement flipped
        — copy left, panel right. Before/after pair: the annotated cove on its
        extended blank canvas, then the reframed result with the sailboat added. »
        ======================================================================== -->
-  <section class="section section-droite" id="cadrage" data-section="cadrage" data-zone="text">
-    <div class="feature-agencement">
-      <div class="feature-copie">
-        <div class="intro-copie">
-          <h2 class="intro-titre">Reshoot and change your layout</h2>
-          <p class="intro-sous">Reframe your scene in any aspect ratio</p>
+  <section class="section section-right" id="reframe" data-section="reframe" data-zone="text">
+    <div class="feature-layout">
+      <div class="feature-copy">
+        <div class="intro-copy">
+          <h2 class="intro-title">Reshoot and change your layout</h2>
+          <p class="intro-sub">Reframe your scene in any aspect ratio</p>
         </div>
         <div class="intro-actions">
-          <a class="intro-cta intro-cta--primaire" href="#invite">Get started</a>
-          <a class="intro-cta intro-cta--secondaire" href="#invite">Learn more<span class="invisible-lecteur"> about reframe</span></a>
+          <a class="intro-cta intro-cta--primary" href="#prompt">Get started</a>
+          <a class="intro-cta intro-cta--secondary" href="#prompt">Learn more<span class="visually-hidden"> about reframe</span></a>
         </div>
       </div>
-      <div class="cadre-duo">
-        <img class="fond-flou" src="https://app.reve.com/model-landing/reframe-2.png"
+      <div class="duo-frame">
+        <img class="blurred-bg" src="https://app.reve.com/model-landing/reframe-2.png"
              srcset="https://app.reve.com/model-landing/reframe-2-800.png 800w,
                      https://app.reve.com/model-landing/reframe-2-1200.png 1200w,
                      https://app.reve.com/model-landing/reframe-2.png 1600w"
              sizes="(max-width:750px) 66vw,44vw" width="1600" height="1600" alt="" loading="lazy">
-        <div class="duo-piste">
+        <div class="duo-track">
           <img src="https://app.reve.com/model-landing/reframe-1.png"
                srcset="https://app.reve.com/model-landing/reframe-1-800.png 800w,
                        https://app.reve.com/model-landing/reframe-1-1200.png 1200w,
@@ -609,85 +609,85 @@
 </div>
 
 <!-- =============================================================================
-     ZONE FINALE — invite, galerie, pied
-     [relevé] Un marqueur de hauteur nulle déclenche le chargement différé de
-     cette zone : « 0-height marker that lazy-loads the footer (rv-footer /
+     CLOSING ZONE — prompt, gallery, footer
+     [measured] A zero-height marker triggers the deferred loading of this
+     zone: « 0-height marker that lazy-loads the footer (rv-footer /
      composer / gallery) as it nears the viewport ».
-     [arbitrage] <rv-logged-out-composer>, <rv-horizontal-gallery> et
-     <rv-footer> sont vides dans le HTML et rendus en JS : leur contenu est
-     reconstruit ici avec les jetons relevés. Seules les dimensions du CSS
-     inline (58×rythme pour l'invite, 26svh/30svh pour la galerie, z-index 10,
-     hauteur de page 100svh − image − 108px) sont relevées.
+     [decided] <rv-logged-out-composer>, <rv-horizontal-gallery> and
+     <rv-footer> are empty in the HTML and rendered in JS: their content is
+     rebuilt here with the measured tokens. Only the dimensions from the
+     inline CSS (58×rhythm for the prompt, 26svh/30svh for the gallery,
+     z-index 10, page height 100svh − image − 108px) are measured.
      ========================================================================= -->
-<div class="lazy-trigger" aria-hidden="true" data-lazy-pied></div>
+<div class="lazy-trigger" aria-hidden="true" data-lazy-footer></div>
 
-<div class="zone-pied" data-zone="text">
-  <section class="section section-lache section-texte page" id="invite">
-    <!-- [relevé] « What will you make? » — seul <h2> de la zone finale. -->
+<div class="footer-zone" data-zone="text">
+  <section class="section section-loose section-text page" id="prompt">
+    <!-- [measured] « What will you make? » — the only <h2> of the closing zone. -->
     <h2>What will you make?</h2>
-    <form class="invite" onsubmit="return false">
-      <label class="invisible-lecteur" for="invite-zone">Describe what you want to make</label>
-      <textarea class="invite-zone" id="invite-zone" rows="2"
+    <form class="prompt" onsubmit="return false">
+      <label class="visually-hidden" for="prompt-input">Describe what you want to make</label>
+      <textarea class="prompt-input" id="prompt-input" rows="2"
                 placeholder="Describe an image, or drop one in to edit"></textarea>
-      <div class="invite-barre">
-        <button class="invite-outil" type="button" aria-label="Attach an image">+</button>
-        <button class="invite-outil" type="button" aria-label="Choose a style">◒</button>
-        <button class="invite-outil" type="button" aria-label="Choose an aspect ratio">▭</button>
-        <button class="invite-envoi" type="submit" aria-label="Submit">↑</button>
+      <div class="prompt-bar">
+        <button class="prompt-tool" type="button" aria-label="Attach an image">+</button>
+        <button class="prompt-tool" type="button" aria-label="Choose a style">◒</button>
+        <button class="prompt-tool" type="button" aria-label="Choose an aspect ratio">▭</button>
+        <button class="prompt-send" type="submit" aria-label="Submit">↑</button>
       </div>
     </form>
   </section>
 
-  <!-- [arbitrage] <rv-horizontal-gallery> est vide dans la source : les
-       légendes reprennent les intitulés de catégorie du carrousel, seuls
-       libellés de ce registre que la source fournit. -->
-  <div class="galerie" role="list" aria-label="Recent creations" data-marquee data-vitesse="12">
-    <figure class="galerie-vignette" role="listitem" tabindex="0">
+  <!-- [decided] <rv-horizontal-gallery> is empty in the source: the
+       captions reuse the carousel's category names, the only labels of
+       this register the source provides. -->
+  <div class="gallery" role="list" aria-label="Recent creations" data-marquee data-speed="12">
+    <figure class="gallery-thumb" role="listitem" tabindex="0">
       <img src="https://app.reve.com/model-landing/hero-carousel-2.png" width="1226" height="1600" alt="" loading="lazy">
       <figcaption>Art direction</figcaption>
     </figure>
-    <figure class="galerie-vignette" role="listitem" tabindex="0">
+    <figure class="gallery-thumb" role="listitem" tabindex="0">
       <img src="https://app.reve.com/model-landing/hero-carousel-7.png" width="1194" height="1600" alt="" loading="lazy">
       <figcaption>Product photography</figcaption>
     </figure>
-    <figure class="galerie-vignette" role="listitem" tabindex="0">
+    <figure class="gallery-thumb" role="listitem" tabindex="0">
       <img src="https://app.reve.com/model-landing/hero-carousel-9.png" width="1275" height="1600" alt="" loading="lazy">
       <figcaption>Architecture</figcaption>
     </figure>
-    <figure class="galerie-vignette" role="listitem" tabindex="0">
+    <figure class="gallery-thumb" role="listitem" tabindex="0">
       <img src="https://app.reve.com/model-landing/hero-carousel-11.png" width="1155" height="1600" alt="" loading="lazy">
       <figcaption>Graphics &amp; Illustration</figcaption>
     </figure>
-    <figure class="galerie-vignette" role="listitem" tabindex="0">
+    <figure class="gallery-thumb" role="listitem" tabindex="0">
       <img src="https://app.reve.com/model-landing/hero-carousel-13.png" width="1091" height="1600" alt="" loading="lazy">
       <figcaption>Product Rendering</figcaption>
     </figure>
-    <figure class="galerie-vignette" role="listitem" tabindex="0">
+    <figure class="gallery-thumb" role="listitem" tabindex="0">
       <img src="https://app.reve.com/model-landing/hero-carousel-1.png" width="1156" height="1600" alt="" loading="lazy">
       <figcaption>Graphic design</figcaption>
     </figure>
   </div>
 
-  <footer class="pied">
-    <!-- [relevé] Le reset ne retire les puces que sur `nav ul` : les colonnes de
-         liens sont donc de vraies zones de navigation, pas des <div>. -->
-    <!-- [arbitrage] <rv-footer> est vide dans la source : intitulés reconstruits
-         à partir des sections et des libellés d'action qu'elle fournit. -->
-    <nav class="pied-colonnes" aria-label="Footer">
+  <footer class="footer">
+    <!-- [measured] The reset only removes bullets on `nav ul`: the link
+         columns are therefore real navigation zones, not <div>s. -->
+    <!-- [decided] <rv-footer> is empty in the source: labels rebuilt
+         from the sections and the action labels it provides. -->
+    <nav class="footer-columns" aria-label="Footer">
       <div>
         <h3>Product</h3>
         <ul>
-          <li><a href="#edition">Directly edit anything</a></li>
+          <li><a href="#edit">Directly edit anything</a></li>
           <li><a href="#references">Reference anything</a></li>
-          <li><a href="#gabarits">Create with Templates</a></li>
+          <li><a href="#templates">Create with Templates</a></li>
         </ul>
       </div>
       <div>
         <h3>Capabilities</h3>
         <ul>
-          <li><a href="#calques">Compose with text and images</a></li>
-          <li><a href="#cadrage">Reshoot and change your layout</a></li>
-          <li><a href="#effets">Create any visual effect</a></li>
+          <li><a href="#layers">Compose with text and images</a></li>
+          <li><a href="#reframe">Reshoot and change your layout</a></li>
+          <li><a href="#effects">Create any visual effect</a></li>
         </ul>
       </div>
       <div>
@@ -698,21 +698,21 @@
         </ul>
       </div>
     </nav>
-    <div class="pied-raccourcis">
+    <div class="footer-shortcuts">
       <h3>Shortcuts</h3>
       <ul>
-        <li><span class="rangee">Search <kbd><kbd>⌘</kbd><kbd>K</kbd></kbd></span></li>
-        <li><span class="rangee">New image <kbd><kbd>⌘</kbd><kbd>N</kbd></kbd></span></li>
+        <li><span class="row">Search <kbd><kbd>⌘</kbd><kbd>K</kbd></kbd></span></li>
+        <li><span class="row">New image <kbd><kbd>⌘</kbd><kbd>N</kbd></kbd></span></li>
       </ul>
     </div>
-    <div class="pied-bas">
+    <div class="footer-bottom">
       <span>Design reference — procedure survey, unaffiliated.</span>
-      <span class="rangee">
+      <span class="row">
         <span class="article-info">
-          <span class="article-nom">Item name</span>
+          <span class="article-name">Item name</span>
           <span class="article-desc">Secondary description truncated to one line</span>
         </span>
-        <span class="etiquette">Beta</span>
+        <span class="tag">Beta</span>
       </span>
     </div>
   </footer>

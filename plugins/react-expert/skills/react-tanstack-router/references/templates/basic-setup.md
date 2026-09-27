@@ -151,7 +151,7 @@ export const queryClient = new QueryClient({
 ```typescript
 // src/routes/__root.tsx
 import { createRootRouteWithContext, Outlet } from '@tanstack/react-router'
-import { TanStackRouterDevtools } from '@tanstack/router-devtools'
+import { TanStackRouterDevtools } from '@tanstack/react-router-devtools'
 import type { RouterContext } from '@/modules/cores/interfaces/router.interface'
 import { RootLayout } from '@/modules/cores/components/layouts/RootLayout'
 
@@ -256,12 +256,15 @@ createRoot(document.getElementById('root')!).render(
 // vite.config.ts
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-import { TanStackRouterVite } from '@tanstack/router-plugin/vite'
+import { tanstackRouter } from '@tanstack/router-plugin/vite'
 import path from 'path'
 
 export default defineConfig({
   plugins: [
-    TanStackRouterVite({
+    // Must be placed before react()
+    tanstackRouter({
+      target: 'react',
+      autoCodeSplitting: true,
       routesDirectory: './src/routes',
       generatedRouteTree: './src/routeTree.gen.ts',
     }),
@@ -281,10 +284,10 @@ export default defineConfig({
 
 ```bash
 # Core
-bun add @tanstack/react-router @tanstack/react-query @tanstack/zod-adapter zod
+bun add @tanstack/react-router @tanstack/react-query zod
 
 # Dev
-bun add -D @tanstack/router-plugin @tanstack/router-devtools @tanstack/react-query-devtools
+bun add -D @tanstack/router-plugin @tanstack/react-router-devtools @tanstack/react-query-devtools
 ```
 
 ---

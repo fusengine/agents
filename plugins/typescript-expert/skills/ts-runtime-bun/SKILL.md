@@ -2,14 +2,14 @@
 name: ts-runtime-bun
 description: Use when running TypeScript on Bun — bunfig.toml, bun test, Bun.build/--compile, or Bun workspaces. Not for Node.js runtime setup (ts-runtime-node).
 versions:
-  bun: "1.3.x"
-  typescript: "5.8+ (latest stable 6.0)"
+  bun: "1.4.x"
+  typescript: "5.8+ (latest stable 7.0)"
 references: references/bunfig-test.md, references/build-compile.md, references/workspaces.md, references/bun-vs-node.md, references/templates/bun-project-setup.md
 related-skills: ts-runtime-node, ts-lint-format, solid-generic
 ---
 
 <objective>
-This skill covers running TypeScript natively on Bun 1.3.x: configuring bunfig.toml (test
+This skill covers running TypeScript natively on Bun 1.4.x: configuring bunfig.toml (test
 coverage thresholds, JUnit reporter, preload), running bun test (Jest-compatible API via
 bun:test), bundling with Bun.build or producing a single-file executable with bun build
 --compile --target=, and structuring a Bun workspaces monorepo.
@@ -29,7 +29,7 @@ ts-runtime-node; tsconfig details belong to ts-config.
 Before ANY implementation, spawn 3 agents in parallel, one `Agent` call each with a `name`:
 
 1. **fuse-ai-pilot:explore-codebase** - Inspect `package.json`, `bunfig.toml`, `tsconfig.json`
-2. **fuse-ai-pilot:research-expert** - Verify Bun 1.3.x behavior via Context7/Exa
+2. **fuse-ai-pilot:research-expert** - Verify Bun 1.4.x behavior via Context7/Exa
 3. **mcp__context7__query-docs** - Check Bun runtime, test, and bundler docs
 
 After implementation, run **fuse-ai-pilot:sniper** for validation.

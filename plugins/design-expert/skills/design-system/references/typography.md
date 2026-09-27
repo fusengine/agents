@@ -120,7 +120,7 @@ Caption/meta     → text-sm text-muted-foreground (14px)
 
 | Platform | Minimum Body Size | Recommendation |
 |----------|------------------|----------------|
-| **WCAG 2.0** | 18pt | Accessibility standard |
+| **WCAG 2.2** | none mandated | 18pt (14pt bold) = "large text" threshold for the 3:1 contrast floor, not a body minimum |
 | **iOS** | 17pt | San Francisco system font |
 | **Android** | 16pt | Roboto (if using Material) |
 

@@ -10,12 +10,14 @@ related: card.md
 
 # Tabs Component
 
-Accessible tab component for organizing content into separate panels using Radix UI primitives.
+> **Base:** same API on Base UI and Radix (verified against r/styles/{base,radix}-nova/tabs.json) — `Tabs defaultValue` / `value` / `onValueChange`, `TabsList variant="default" | "line"`, `TabsTrigger value`, `TabsContent value`, `Tabs orientation="vertical"`. Only raw data attributes differ (Base UI `data-active`, Radix `data-state="active"`). React Aria differs: `Tabs defaultSelectedKey` / `selectedKey` / `onSelectionChange`, `TabsTrigger id`, `TabsContent id`.
+
+Accessible tab component for organizing content into separate panels, built on Base UI (or Radix) primitives.
 
 ## Installation
 
 ```bash
-bunx --bun shadcn-ui@latest add tabs
+bunx --bun shadcn@latest add tabs
 ```
 
 ## Basic Tabs
@@ -28,6 +30,7 @@ import {
   TabsTrigger,
 } from "@/modules/cores/shadcn/components/ui/tabs"
 
+/** Basic tabs. */
 export function BasicTabs() {
   return (
     <Tabs defaultValue="tab1" className="w-[400px]">
@@ -63,6 +66,7 @@ import {
   CardTitle,
 } from "@/modules/cores/shadcn/components/ui/card"
 
+/** Tabs whose panels contain cards. */
 export function TabsWithCards() {
   return (
     <Tabs defaultValue="account" className="w-[400px]">
@@ -106,8 +110,6 @@ export function TabsWithCards() {
 Use state to control active tab programmatically:
 
 ```tsx
-"use client"
-
 import { useState } from "react"
 import {
   Tabs,
@@ -117,6 +119,7 @@ import {
 } from "@/modules/cores/shadcn/components/ui/tabs"
 import { Button } from "@/modules/cores/shadcn/components/ui/button"
 
+/** Tabs bound to state. */
 export function ControlledTabs() {
   const [activeTab, setActiveTab] = useState("overview")
 
@@ -159,6 +162,7 @@ import {
 } from "@/modules/cores/shadcn/components/ui/tabs"
 import { Home, Settings, Bell } from "lucide-react"
 
+/** Tab triggers with icons. */
 export function TabsWithIcons() {
   return (
     <Tabs defaultValue="home">
@@ -196,6 +200,7 @@ import {
   TabsTrigger,
 } from "@/modules/cores/shadcn/components/ui/tabs"
 
+/** Vertically oriented tabs. */
 export function VerticalTabs() {
   return (
     <Tabs defaultValue="tab1" className="flex gap-4">
@@ -232,6 +237,7 @@ import {
   TabsTrigger,
 } from "@/modules/cores/shadcn/components/ui/tabs"
 
+/** Tabs with a disabled trigger. */
 export function DisabledTabs() {
   return (
     <Tabs defaultValue="active">
@@ -255,8 +261,6 @@ export function DisabledTabs() {
 Combine tabs with form inputs:
 
 ```tsx
-"use client"
-
 import { useState } from "react"
 import {
   Tabs,
@@ -268,6 +272,7 @@ import { Button } from "@/modules/cores/shadcn/components/ui/button"
 import { Input } from "@/modules/cores/shadcn/components/ui/input"
 import { Label } from "@/modules/cores/shadcn/components/ui/label"
 
+/** Tabs containing form sections. */
 export function TabsWithForm() {
   const [formData, setFormData] = useState({ name: "", email: "" })
 

@@ -1,8 +1,9 @@
 # Tokens — stripe
 
-Survey and rebuild of `https://stripe.com/fr` under the invented brand **Solvo**.
-Markers: `[relevé]` measured on the source or on the rebuilt page, `[arbitrage]`
-decided here, `[estimé]` computed without direct measurement.
+Survey and rebuild of `https://stripe.com/fr` under the invented brand **Solvo**; the visible
+copy is taken from the English `https://stripe.com`.
+Markers: `[measured]` measured on the source or on the rebuilt page, `[decided]`
+decided here, `[estimated]` computed without direct measurement.
 
 The source's values come from two places, both cited wherever they are used:
 
@@ -34,7 +35,7 @@ cat css_*.css | grep -oE 'transition[^;}]*' | grep -oE 'cubic-bezier\([^)]*\)' \
      2  cubic-bezier(0.65,0,0.35,1)
      2  cubic-bezier(0,0,.2,1)
 
-`cubic-bezier(.25, 1, .5, 1)` covers 45 % of the declared curves [relevé]. Not one has a
+`cubic-bezier(.25, 1, .5, 1)` covers 45 % of the declared curves [measured]. Not one has a
 vertical control point above 1: **not a single bounce in 465 KB of CSS**.
 
 ```bash
@@ -50,17 +51,17 @@ cat css_*.css | grep -oE 'transition:[^;}]*' | grep -oE '[0-9]*\.?[0-9]+m?s' \
      5  .4s
      4  .25s
 
-Three values carry 58 of the 86 durations: **.15s / .3s / .5s** [relevé].
+Three values carry 58 of the 86 durations: **.15s / .3s / .5s** [measured].
 
 ### 1.2 What the rebuild keeps
 
 ```css
---courbe:        cubic-bezier(.25, 1, .5, 1);   /* [relevé], the dominant one */
---courbe-sortie: cubic-bezier(.16, 1, .3, 1);   /* [relevé], reveals */
---d-court: .15s;  --d-moyen: .3s;  --d-long: .5s;
+--ease:     cubic-bezier(.25, 1, .5, 1);   /* [measured], the dominant one */
+--ease-out: cubic-bezier(.16, 1, .3, 1);   /* [measured], reveals */
+--dur-short: .15s;  --dur-medium: .3s;  --dur-long: .5s;
 ```
 
-Two curves only, against seven in the source [arbitrage]: the other five carry components
+Two curves only, against seven in the source [decided]: the other five carry components
 absent from this page (dropdown menus, video player, drawers).
 
 Counts on the rebuild:
@@ -74,8 +75,8 @@ grep -c 'prefers-reduced-motion' styles.css          # 1
 ```
 
 The 20 transitions are all bound to a state, never to an entrance. The 6 `@keyframes`:
-`derive-a`, `derive-b`, `derive-c` (the hero's sails), `monte` (scroll reveal),
-`apparait` (testimonial switch), `remplit` (tab progress bar).
+`breath-a`, `breath-b`, `breath-c` (the hero's sails), `rise` (scroll reveal),
+`appear` (testimonial switch), `fill-bar` (tab progress bar).
 
 ### 1.3 The hero animation: what the source does
 
@@ -95,21 +96,21 @@ A `<canvas>` animates the ribbons; a static image is layered at `opacity: 0` and
 over if the canvas has not started. The `left: 250px; width: 110%` offset is what pushes
 the burst out of the container to the right.
 
-**Reproduction [arbitrage]**: seven `<div class="ruban">`. Each one is a very elongated
+**Reproduction [decided]**: seven `<div class="ribbon">`. Each one is a very elongated
 **ellipse** (`border-radius: 50%`), pivoted around its top, blurred, and positioned on a
 shared anchor point outside the frame:
 
 ```css
-.ruban {
+.ribbon {
   position: absolute;
   top: -24%; left: 20%; width: 30%; height: 250%;
   margin-left: -15%;
   border-radius: 50%;
   transform-origin: 50% 0;
 }
-.ruban--1 { rotate: -46deg; filter: blur(54px); }  /* lavender, the palest */
-.ruban--3 { rotate: -72deg; filter: blur(34px); }  /* orange */
-.ruban--7 { rotate: -99deg; filter: blur(46px); }  /* mauve of the right edge */
+.ribbon--1 { rotate: -46deg; filter: blur(54px); }  /* lavender, the palest */
+.ribbon--3 { rotate: -72deg; filter: blur(34px); }  /* orange */
+.ribbon--7 { rotate: -99deg; filter: blur(46px); }  /* mauve of the right edge */
 ```
 
 Seven angles from -46° to -99° open the fan to the right. **The sign matters**: in CSS a
@@ -126,7 +127,7 @@ Three differences from the first attempt, all of them corrections:
    ```
 2. **The angle lives in the individual `rotate` property, the breath in `scale`.**
    With `transform: rotate()` plus a keyframe that writes `transform`, the keyframe
-   overwrites the angle and the fan comes loose. The three `@keyframes souffle-*`
+   overwrites the angle and the fan comes loose. The three `@keyframes breath-*`
    therefore write nothing but `scale`.
 3. **A radial mask confines the fan to the top-right quarter** (§2.6).
 
@@ -134,8 +135,8 @@ No canvas, no JS: the only thing JS touches in the hero is the eyebrow counter.
 
 ### 1.4 The eyebrow counter
 
-The source displays "Part du PIB mondial traitée sur Stripe 1,69089628 %", and the number
-rolls. The mechanism is in the CSS:
+The source displays "Global GDP running on Stripe" followed by a percentage (1.69089628 %
+when surveyed), and the number rolls. The mechanism is in the CSS:
 
     .hero-section__eyebrow-value{display:inline-block;position:relative;min-width:12ch}
     .hero-section__eyebrow-value{-webkit-mask-image:linear-gradient(180deg,#000,#fff 20%,#fff 80%,#000);mask-image:...}
@@ -146,18 +147,18 @@ A vertical mask fades the top and the bottom, and two layers (`incoming`, `outgo
 slide vertically toward each other: an odometer. `min-width: 12ch` reserves the space so
 that the `%` does not move.
 
-**Reproduction [arbitrage]**: the mask and the `min-width: 12ch` are taken over as they
-are [relevé]; the two-layer vertical roll is replaced by a digit scramble that settles
+**Reproduction [decided]**: the mask and the `min-width: 12ch` are taken over as they
+are [measured]; the two-layer vertical roll is replaced by a digit scramble that settles
 left to right, every 90ms (`motion.js`). Same reading, a tenth of the code.
 
 ### 1.5 Clean shutdown
 
 All the JS machinery on this page is instrumented to stop:
 
-- `observer.unobserve(entree.target)` inside the callback of both `IntersectionObserver`
+- `obs.unobserve(entry.target)` inside the callback of both `IntersectionObserver`
   (`motion.js`, reveals and burst);
-- `observateurs.forEach(function (o) { o.disconnect(); })` on `pagehide`;
-- every `setTimeout` goes through `differe()`, which stacks the identifier, and `purge()`
+- `observers.forEach(function (o) { o.disconnect(); })` on `pagehide`;
+- every `setTimeout` goes through `defer()`, which stacks the identifier, and `purge()`
   cancels them on `visibilitychange` (`hidden` state) and on `pagehide`.
 
 Verified on MDN for this project: `unobserve(target)` targets one element, `disconnect()`
@@ -173,21 +174,21 @@ stops them all; the second parameter of the callback **is** the observer.
 cat css_*.css | grep -oE '\-\-hds-color-core-(brand|neutral)-[0-9]+A?:\s*#[0-9a-fA-F]+' | sort -u
 ```
 
-Brand, 14 steps [relevé]:
+Brand, 14 steps [measured]:
 
     brand-25  #f5f5ff    brand-50  #e8e9ff    brand-75  #e2e4ff    brand-100 #d6d9fc
     brand-200 #b9b9f9    brand-300 #9a9afe    brand-400 #7f7dfc    brand-500 #665efd
     brand-600 #533afd    brand-700 #4032c8    brand-800 #2e2b8c    brand-900 #1c1e54
     brand-950 #161741    brand-975 #0f1137
 
-Light neutrals, 14 steps [relevé]:
+Light neutrals, 14 steps [measured]:
 
     neutral-0   #ffffff  neutral-25  #f8fafd  neutral-50  #e5edf5  neutral-100 #d4dee9
     neutral-200 #bac8da  neutral-300 #95a4ba  neutral-400 #7d8ba4  neutral-500 #64748d
     neutral-600 #50617a  neutral-700 #3c4f69  neutral-800 #273951  neutral-900 #1a2c44
     neutral-950 #11273e  neutral-990 #061b31
 
-Dark neutrals, for the middle block [relevé]:
+Dark neutrals, for the middle block [measured]:
 
     neutralDark-990 #0d1738  neutralDark-975 #101d4e  neutralDark-950 #122054
     neutralDark-900 #182659  neutralDark-800 #23356e  neutralDark-700 #273f73
@@ -197,15 +198,15 @@ Notable point: **the neutrals are not grey.** `#64748d`, `#50617a`, `#061b31` al
 blue component higher than their red one. The page looks cold even where it carries no
 colour at all.
 
-### 2.2 The roles, relevés in the browser
+### 2.2 The roles, measured in the browser
 
 ```
-browser_inspect(ref: "13")   → "Démarrer maintenant" button
+browser_inspect(ref: "13")   → "Get started" button
   background rgb(83, 58, 253)   = #533afd
   color      rgb(255, 255, 255)
   contrast   6.19:1  (AA true, AAA false)
   padding    15.5px 24px 16.5px   /  box 214 × 48
-browser_inspect(ref: "5")    → "Tarifs" nav entry
+browser_inspect(ref: "5")    → "Pricing" nav entry
   color      rgb(6, 27, 49)      = #061b31
   contrast   17.37:1  (AA true, AAA true)
   font       14px / 14px / 400
@@ -224,7 +225,7 @@ gradient with more than two hues.
 cat css_*.css | grep -oE 'linear-gradient\([^;)]*(\)[^;)]*)*\)' | sort -u
 ```
 
-Twenty-nine distinct gradients. The eight that carry the identity [relevé]:
+Twenty-nine distinct gradients. The eight that carry the identity [measured]:
 
 ```css
 /* A. the hero sail, three hues, 68deg angle */
@@ -294,27 +295,27 @@ Eleven named gradient hues are enough to compose the 58 `linear-gradient`:
 
 ```css
 --g-indigo:#533afd  --g-violet:#7500fb  --g-magenta:#ee30fb  --g-rose:#ff39db
---g-peche:#ff8c6c   --g-orange:#ffa319  --g-corail:#fd6252   --g-jaune:#ffd601
---g-mauve:#da4bfe   --g-bleuet:#715cff  --g-cyan:#7fd7ff
+--g-peach:#ff8c6c   --g-orange:#ffa319  --g-coral:#fd6252    --g-yellow:#ffd601
+--g-mauve:#da4bfe   --g-cornflower:#715cff  --g-cyan:#7fd7ff
 ```
 
-### 2.4 The promotional band: a seven-stop gradient [arbitrage]
+### 2.4 The promotional band: a seven-stop gradient [decided]
 
 The one place where this page exceeds the three-hue rule, because the source puts a stage
 photograph there with coloured ribbons running across it:
 
 ```css
-.promo__nappe {
+.promo__sheet {
   background: linear-gradient(101deg,
     #1b1046 0%, #3a1a86 18%, #6b2fd0 36%,
     #b13ac0 54%, #e2557a 70%, #f5872f 86%, #ffb43a 100%);
 }
-.promo__nappe::before {         /* the striations, masked into an ellipse */
+.promo__sheet::before {         /* the striations, masked into an ellipse */
   background: repeating-linear-gradient(99deg,
     rgba(255,255,255,.16) 0 1px, rgba(255,255,255,0) 1px 7px);
   mask-image: radial-gradient(90% 70% at 62% 46%, #000 10%, transparent 82%);
 }
-.promo__nappe::after {          /* the dark veil that makes the title legible */
+.promo__sheet::after {          /* the dark veil that makes the title legible */
   background: linear-gradient(101deg,
     rgba(16,12,48,.88) 4%, rgba(16,12,48,.12) 46%, rgba(16,12,48,0) 64%);
 }
@@ -329,12 +330,12 @@ on the veil — which is what allows the sheet to be changed without re-checking
 The `scripts/layout-check/layout-check.ts` script initially returned 30 contrast
 violations. Two causes, two corrections:
 
-- **inactive `.onglet` at `#95a4ba` on white: 2.53:1** for 14px/600. Corrected to
-  `#64748d` (neutral-500) → 5.4:1 [estimé]. A real defect, not a false positive.
+- **inactive `.tab` at `#95a4ba` on white: 2.53:1** for 14px/600. Corrected to
+  `#64748d` (neutral-500) → 5.4:1 [estimated]. A real defect, not a false positive.
 - **six "white on white" occurrences**: the script cannot resolve a background set in
   `background-image`, so it falls back to the `background-color` layer, which was absent.
   Corrected by placing a solid colour under each gradient: `#1b1046` on
-  `.promo__cadre` and `.lame`, `var(--d-990)` on `.infra`. The render does not move by a
+  `.promo__frame` and `.blade`, `var(--d-990)` on `.infra`. The render does not move by a
   pixel, and the background becomes resolvable.
 
 After correction: `contrast: 0` across the seven widths.
@@ -351,18 +352,18 @@ Three layered devices hold it here:
 
 ```css
 /* 1. the mask: extinguishes every ribbon outside the top-right quarter */
-.heros__fond {
+.hero__bg {
   mask-image: radial-gradient(132% 158% at 102% -10%,
     #000 36%, rgba(0,0,0,.9) 52%, rgba(0,0,0,.42) 66%, rgba(0,0,0,0) 80%);
 }
 /* 2. the white veil: brings the text column back to near-white */
-.heros__blanc {
+.hero__white {
   background: linear-gradient(100deg,
     #fff 0%, #fff 42%, rgba(255,255,255,.88) 55%,
     rgba(255,255,255,.58) 68%, rgba(255,255,255,.18) 78%, rgba(255,255,255,0) 86%);
 }
 /* 3. the measure: 36ch, so the 2nd line does not reach the warm band */
-.heros__titre { max-width: 36ch; }
+.hero__title { max-width: 36ch; }
 ```
 
 **Verification, at the pixel on the rendered capture** — background sampled just below the
@@ -389,7 +390,7 @@ Three intermediate measurements are worth keeping, because they say where the tr
 - mask alone, without the white veil: **2.71:1**;
 - measure at 42ch (the widest value the source gives): line 2 reaches
   x≈1140 and lands on the orange band, `rgb(224,184,158)`, **2.56:1**. That is what made
-  36ch the choice, and it is also relevé.
+  36ch the choice, and it is also measured.
 
 ---
 
@@ -403,17 +404,17 @@ cat css_*.css | grep -oE '\-\-hds-font-family:[^;}]+' | sort -u
 
     --hds-font-family:"sohne-var","SF Pro Display",sans-serif
 
-`sohne-var` is not freely distributable. This page takes **Inter** [arbitrage],
+`sohne-var` is not freely distributable. This page takes **Inter** [decided],
 the free grotesque whose proportions and x-height are the closest. One measurable
 consequence is documented in §3.3.
 
-### 3.2 The scale, relevée from the tokens
+### 3.2 The scale, measured from the tokens
 
 ```bash
 cat css_*.css | grep -oE '\-\-hds-font-(heading|text)-[a-z]+-[a-zA-Z]+:[^;}]+' | sort -u
 ```
 
-Headings, three viewport tiers (mobile / tablet / desktop) [relevé]:
+Headings, three viewport tiers (mobile / tablet / desktop) [measured]:
 
 | tier | sizes | line height | tracking | weight |
 |---|---|---|---|---|
@@ -425,7 +426,7 @@ Headings, three viewport tiers (mobile / tablet / desktop) [relevé]:
 | xs  | 16 px | 1.2 | 0 | 400 |
 | xxs | 14 px | 1.2 | 0 | 400 |
 
-Text [relevé]: xxl 28/34/48, xl 18/20, lg 16/18, md 16, sm 14, xs 12/14, xxs 12.
+Text [measured]: xxl 28/34/48, xl 18/20, lg 16/18, md 16, sm 14, xs 12/14, xxs 12.
 Body line heights: 1.4 everywhere, 1.45 on the xs.
 
 Two facts that matter more than the numbers:
@@ -441,17 +442,17 @@ Two facts that matter more than the numbers:
 The source sets `line-height: 1.03` on the hero title. Under Inter, whose natural line box
 is around 1.21em against a shorter value for sohne, the descenders overflow the box:
 
-    #titre-heros — 4 line(s) of text for the allocated height (4px too many)
-    #titre-pilier — 2 line(s) of text for the allocated height (3px too many)
+    #hero-title — 4 line(s) of text for the allocated height (4px too many)
+    #pillar-title — 2 line(s) of text for the allocated height (3px too many)
 
 Tested at 1.07 (the other value of the same tier on the source): still 2 to 3px too many.
-Kept: **1.15** on those two headings [arbitrage]. It is the only place where the rebuild
-departs from a typographic value that was relevée, and the cause is the font substitution,
+Kept: **1.15** on those two headings [decided]. It is the only place where the rebuild
+departs from a typographic value that was measured, and the cause is the font substitution,
 not a compositional choice.
 
 ### 3.4 The hero title: two layers and a blend
 
-The most interesting procedure on the page. Relevé:
+The most interesting procedure on the page. Measured:
 
     .hero-section__title{font-size:max(min(var(--lang-font-flex),var(--lang-font-max)),var(--lang-font-min));line-height:1.03;max-width:36ch}
     .hero-section__title{color:#ddd600}
@@ -528,24 +529,24 @@ grep -o 'mix-blend-mode' styles.css | wc -l   # 3, only one of them in the hero
 
 ### 3.5 The container's two vertical rules
 
-Relevé on the capture, not in the CSS: two 1px rules run the full height of the hero at
+Measured on the capture, not in the CSS: two 1px rules run the full height of the hero at
 x≈50 and x≈1315 for a 1365 viewport, and **continue under the logo band**. They are the
 container's edges, made visible. 1365 - 1264 = 101, that is 50.5 on each side: the rules
-fall exactly on the container relevé in §4.1.
+fall exactly on the container measured in §4.1.
 
 ```css
-.heros::before, .heros::after, .logos::before, .logos::after {
+.hero::before, .hero::after, .logos::before, .logos::after {
   content: ""; position: absolute; top: 0; bottom: 0; width: 1px;
-  background: var(--trait); z-index: 4;
+  background: var(--rule); z-index: 4;
 }
-.heros::before, .logos::before { left:  max(0px, calc(50% - 632px)); }
-.heros::after,  .logos::after  { right: max(0px, calc(50% - 632px)); }
+.hero::before, .logos::before { left:  max(0px, calc(50% - 632px)); }
+.hero::after,  .logos::after  { right: max(0px, calc(50% - 632px)); }
 ```
 
 The `max(0px, …)` sticks them to the edges when the viewport drops below 1264px; they are
 hidden below 1024px, where the source does not show them either. A third rule, this one
-horizontal and full width, closes the navigation: `border-top: 1px solid var(--trait)`
-on `.heros`.
+horizontal and full width, closes the navigation: `border-top: 1px solid var(--rule)`
+on `.hero`.
 
 ---
 
@@ -564,14 +565,14 @@ cat css_*.css | grep -oE '\-\-navigation-height:[^;}]+' | sort -u
     --hds-space-layout-columns:4 | 8 | 12
     --navigation-height:76px
 
-Taken over as they are [relevé]. The side margin goes to 24px beyond 768px
-[arbitrage]: the source keeps it at 16px, which sticks the content to the edge on an
+Taken over as they are [measured]. The side margin goes to 24px beyond 768px
+[decided]: the source keeps it at 16px, which sticks the content to the edge on an
 intermediate screen.
 
 The header shares the content gutter exactly:
 
 ```css
-.piste, .entete__piste { max-width: 1264px; margin-inline: auto; padding-inline: var(--marge); }
+.track, .masthead__track { max-width: 1264px; margin-inline: auto; padding-inline: var(--gutter); }
 ```
 
 Verified at 1440 and 1920 by `layout-check --widths 360,390,768,1024,1280,1440,1920`:
@@ -584,7 +585,7 @@ cat css_*.css | grep -oE '\-\-hds-space-core-[0-9]+:[^;}]+' | sort -u | head -40
 ```
 
 4px base, 30 steps from 0 to 200px. Kept here: 4 / 8 / 12 / 16 / 20 / 24 / 28 / 32 /
-36 / 40 / 48 / 56 / 64 / 72 / 80 / 88 / 96 / 104 / 112 / 120 / 128 / 144 [relevé].
+36 / 40 / 48 / 56 / 64 / 72 / 80 / 88 / 96 / 104 / 112 / 120 / 128 / 144 [measured].
 
 ### 4.3 The vertical rhythm
 
@@ -592,17 +593,17 @@ cat css_*.css | grep -oE '\-\-hds-space-core-[0-9]+:[^;}]+' | sort -u | head -40
 grep -oE '^\.[a-z-]+ \{ padding-block: [^;]*' styles.css | sort -u | wc -l   # 13
 ```
 
-Thirteen distinct `padding-block` values across the sections, from `var(--e-10)` (40px) to
-`var(--e-36)` (144px). No section shares its exact pair with another.
+Thirteen distinct `padding-block` values across the sections, from `var(--sp-10)` (40px) to
+`var(--sp-36)` (144px). No section shares its exact pair with another.
 
 The rhythm is not regular and must not be: two sections are deliberate breathing spaces
-(`tailles`, a single title/subtitle pair; `pilier`, a centred title and
+(`sizes`, a single title/subtitle pair; `pillar`, a centred title and
 a burst), and they separate the three demonstration blocks.
 
 ### 4.4 The bento: one tile dominates
 
 ```bash
-grep -o 'class="tuile' index.html | wc -l   # 31 occurrences of tuile* classes
+grep -o 'class="tile' index.html | wc -l   # 31 occurrences of tile* classes
 ```
 
 Six tiles on a six-column grid:
@@ -629,14 +630,14 @@ cat css_*.css | grep -oE 'border-radius:[0-9.]+px' | sort -u
 
     1px  2px  3px  4px  4.51px  5px  8px  10px  16px  20px  30px  100px  999999px
 
-Kept: 4 / 8 / 10 / 16 / 20 / 30 / pill [relevé]. An implicit rule emerges:
+Kept: 4 / 8 / 10 / 16 / 20 / 30 / pill [measured]. An implicit rule emerges:
 **the radius follows the size of the object**, 4px on a button, 8px on a floating card,
 16px on a bento tile, 30px on a full-width panel.
 
 ### 4.6 The hairlines
 
 `--hds-color-surface-border-quiet: var(--hds-color-core-neutral-50)` → `#e5edf5`
-[relevé]. One single hairline for the whole page: tile border, table separator,
+[measured]. One single hairline for the whole page: tile border, table separator,
 accordion line, figures column, brand band. Never a shadow in place of a hairline, never a
 darker hairline to "press the point".
 
@@ -657,13 +658,13 @@ grep -c '<svg'  index.html   # 0
 
 | mockup | class | what builds it |
 |---|---|---|
-| mobile terminal | `.tel` | a box at `border-radius: 22px 22px 0 0`, a `box-shadow: 0 0 0 8px #e9e3f5` that makes the chassis, a three-row `<dl>` |
-| browser checkout | `.fenetre` | a bar with three 7px dots and a URL pill, two columns separated by a hairline, a field `<label>`, two wallet buttons |
-| billing panels | `.carte-flottante` | two stacked cards, a 4px `.jauge`, a `.sparkline` of ten `<i>` in `flex` whose height is written inline |
-| agentic thread | `.fil` | two bubbles, two product cards with a gradient thumbnail, a buy button |
-| payment card | `.carte-bancaire` | an `aspect-ratio: 1.586` (the ISO/IEC 7810 ID-1 format), the chip and the wave as pseudo-elements, gradient E |
+| mobile terminal | `.phone` | a box at `border-radius: 22px 22px 0 0`, a `box-shadow: 0 0 0 8px #e9e3f5` that makes the chassis, a three-row `<dl>` |
+| browser checkout | `.window` | a bar with three 7px dots and a URL pill, two columns separated by a hairline, a field `<label>`, two wallet buttons |
+| billing panels | `.floating-card` | two stacked cards, a 4px `.gauge`, a `.sparkline` of ten `<i>` in `flex` whose height is written inline |
+| agentic thread | `.thread` | two bubbles, two product cards with a gradient thumbnail, a buy button |
+| payment card | `.bank-card` | an `aspect-ratio: 1.586` (the ISO/IEC 7810 ID-1 format), the chip and the wave as pseudo-elements, gradient E |
 | corridor globe | `.globe` | three rings, each two `radial-gradient` in a dot screen, masked by an ellipse |
-| dashboard | `.tableau-bord` | a 13-row `<table>`, four columns of which two are hidden below 768px |
+| dashboard | `.dashboard` | a 13-row `<table>`, four columns of which two are hidden below 768px |
 
 ```bash
 grep -o '<tr>' index.html | wc -l        # 13
@@ -678,12 +679,12 @@ grep -o '<dl' index.html | wc -l          # 8
    align when a value is longer, and it does not read on a screen reader.
 2. **The chassis is made with `box-shadow`, not `border`.** `0 0 0 8px #e9e3f5` on the
    phone: the border does not eat into the box, and the content does not shift.
-3. **The mockup overflows its frame.** `.tableau-bord { margin-left: calc(-1 * var(--e-8)) }`
+3. **The mockup overflows its frame.** `.dashboard { margin-left: calc(-1 * var(--sp-8)) }`
    and `border-radius: 8px 8px 0 0`: the screen exits to the right and to the bottom of the
    tile. A fully contained mockup reads as an illustration; a cropped mockup reads as a
    window.
 4. **A gradient background under the mockup, never behind an image.** Each
-   `.tuile__scene` carries a "white veil + relevé gradient" stack:
+   `.tile__scene` carries a "white veil + measured gradient" stack:
 
    ```css
    background: linear-gradient(180deg, #fff 41.35%, hsla(0,0%,100%,0)),
@@ -693,10 +694,10 @@ grep -o '<dl' index.html | wc -l          # 8
    ```
 
    The white veil at 41.35 % comes from the source (`linear-gradient(180deg,#fff 41.35%,hsla(0,0%,100%,0))`)
-   [relevé]: it extinguishes the gradient under the title text and lets it live under the
+   [measured]: it extinguishes the gradient under the title text and lets it live under the
    mockup.
-5. **The data is plausible and internally consistent.** 7 513,00 € of balance for
-   64 406,68 € of volume: a plausible ratio. Three round values in a row kill a mockup's
+5. **The data is plausible and internally consistent.** €7,513.00 of balance for
+   €64,406.68 of volume: a plausible ratio. Three round values in a row kill a mockup's
    credibility faster than a misalignment does.
 6. **Everything decorative is `aria-hidden`, everything carrying information is not.**
    Each mockup carries a `role="img"` and an `aria-label` describing it in one sentence.
@@ -718,7 +719,7 @@ dependency.
 
 ### 5.4 The dark block's orchestration diagram
 
-Five rows of `<span class="noeud">` on a dot screen:
+Five rows of `<span class="node">` on a dot screen:
 
 ```css
 .schema::before {
@@ -729,7 +730,7 @@ Five rows of `<span class="noeud">` on a dot screen:
 ```
 
 The elliptical mask is what stops the screen from reading as a square: it fades toward the
-edges. Procedure relevé on the source's equivalent section, which paints it in an
+edges. Procedure measured on the source's equivalent section, which paints it in an
 image; here two CSS properties are enough.
 
 ---
@@ -746,7 +747,7 @@ image; here two CSS properties are enough.
 | `img/desk.webp` | 1920 × 1280 | 88 KB | customer case 3, work surface |
 | `img/city.webp` | 1920 × 1081 | 50 KB | customer case 4, skyline at dusk |
 
-Dimensions relevées with: `magick identify -format "%wx%h %b\n" img/*.webp`.
+Dimensions measured with: `magick identify -format "%wx%h %b\n" img/*.webp`.
 
 Rules applied:
 
@@ -755,7 +756,7 @@ Rules applied:
 - `loading="lazy"` on three of them; the first, the only one visible when the accordion
   opens, does not carry it;
 - `object-fit: cover` on a shared `aspect-ratio: 2.02`, which is the format of the
-  source's customer-case thumbnails [relevé];
+  source's customer-case thumbnails [measured];
 - a descriptive `alt` on each one, never the client's name alone;
 - a `background: var(--n-50)` under each `<img>`, so that the frame exists before
   loading.
@@ -776,10 +777,10 @@ Mandatory section of the corpus. Nine owned deviations, from the most to the lea
    `<canvas>` with a static image fallback. Here, seven blurred CSS ellipses, masked and
    animated in `scale` (§1.3). The movement is slower and less organic.
 1 bis. **The two-layer hero title.** The source's `mix-blend-mode: hard-light`
-   mechanism is relevé and documented (§3.4), but rendered with its two opaque
+   mechanism is measured and documented (§3.4), but rendered with its two opaque
    colours rather than with its blend, for a measurable contrast.
-2. **The navigation's dropdown menus.** The four entries "Produits",
-   "Solutions", "Développeurs", "Ressources" open wide column panels on the source. Here,
+2. **The navigation's dropdown menus.** The four entries "Products",
+   "Solutions", "Developers", "Resources" open wide column panels on the source. Here,
    inert `<button aria-expanded="false">`: this is a reference page, not a site.
 3. **The seven product captures as images.** Deliberately replaced with HTML/CSS,
    which is this reference's contribution (§5).
@@ -789,8 +790,8 @@ Mandatory section of the corpus. Nine owned deviations, from the most to the lea
    768px wide there. Here, 46 rays generated by `motion.js` and deployed in an 18ms cascade.
 6. **Real logos.** The seven brand marks in the band and the four in the testimonial
    block are compound words, not existing brands.
-7. **The "S'inscrire avec Google" button.** Replaced by "Parler à un expert"
-   [arbitrage]: reproducing a third party's brand and logo in a reference page
+7. **The "Sign up with Google" button.** Replaced by "Talk to an expert"
+   [decided]: reproducing a third party's brand and logo in a reference page
    adds nothing and raises a question that has no business being raised here.
 8. **The country selector, the cookie banner, the region suggestion banner.**
    Three overlays present on the source's capture, absent here.
@@ -811,7 +812,7 @@ What was measured, and by how much the rebuild departs from it.
 | header height | 76px | 76px (64px below 768px) | 0 |
 | family | sohne-var | Inter | substitution |
 | h1 size (French) | 44px | 44px | 0 |
-| h1 measure | 32 to 42ch depending on tier | 36ch | within the range relevée (§2.6) |
+| h1 measure | 32 to 42ch depending on tier | 36ch | within the range measured (§2.6) |
 | h1 line height | 1.03 | 1.15 | +0.12, forced by Inter (§3.3) |
 | h1 contrast, worst line | not measurable (blend) | 3.30:1 | 3:1 floor held |
 | action colour | #533afd | #533afd | 0 |
@@ -857,10 +858,10 @@ violations : 9
 by width: 360px=4  390px=4  768px=1  1024px=0  1280px=0  1440px=0  1920px=0
 ```
 
-All nine concern `.pli__bouton`, the row label of the customer-case accordion,
-for example:
+All nine concern `.fold__button`, the row label of the customer-case accordion,
+for example (measured before the page copy was switched to English, on the equivalent label):
 
-    label "UR Urbane centralise 4 milliards d'euros de chiffre d'affaires..." :
+    label "UR Urbane consolidates €4 billion in online and in-store revenue..." :
     height 67.17px > 35.84px (22.4px × 1.6), 4 lines of text measured
 
 Analysis: `config.ts:12` defines `ctaSelector` as `"button, [role='button'], …"`,
@@ -888,7 +889,7 @@ none corresponding to a visible defect on the capture at 360px.
 ### 8.3 The 5 warnings
 
 Five "background not resolvable" contrast warnings remain on the three gradient figures
-of the dark block (`.chiffres__valeur--degrade`): the text is painted by
+of the dark block (`.figures__value--gradient`): the text is painted by
 `background-clip: text`, and by construction it has no resolvable colour. Verified by
 eye on the capture: `#7232f1 → #fb76fa → #ffcf5e` on `#101d4e`, at 40px, comfortably
 above the 3:1 floor for large text.
@@ -904,8 +905,8 @@ for y in 16300 16400; do magick capture.png -crop 360x100+0+$y +repage \
   -format "%[fx:mean]" info:; done      # 0.94 then 1 (pure white)
 ```
 
-Verification done at 768px, where the page measures less than 16,384px: `livre`, `cloture`
-and `pied` render normally there. `layout-check` also evaluates them at 360 and 390 with no
+Verification done at 768px, where the page measures less than 16,384px: `book`, `closing`
+and `footer` render normally there. `layout-check` also evaluates them at 360 and 390 with no
 violation, on the live DOM rather than on a capture.
 
 ---
@@ -918,7 +919,7 @@ violation, on the live DOM rather than on a capture.
 | `styles.css` | 1414 |
 | `motion.js` | 136 |
 | `motion-carrousel.js` | 135 |
-| `design-system.md` | 158 |
+| `design-system.md` | 159 |
 | `tokens-stripe.md` | this file |
 
 `motion.js` was split in two: the base (header, menu, counter, reveals,

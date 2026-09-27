@@ -1,5 +1,5 @@
 /**
- * Color Constants - Codes ANSI pour les couleurs
+ * Color Constants - ANSI color codes
  */
 
 export const ANSI_COLORS = {

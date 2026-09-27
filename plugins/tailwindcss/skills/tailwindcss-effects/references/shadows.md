@@ -1,11 +1,11 @@
 ---
 name: shadows
-description: Shadows reference for Tailwind CSS v4.1
+description: Shadows reference for Tailwind CSS v4.3
 ---
 
-# Shadows Reference - Tailwind CSS v4.1
+# Shadows Reference - Tailwind CSS v4.3
 
-Comprehensive guide for shadow utilities in Tailwind CSS v4.1.
+Comprehensive guide for shadow utilities in Tailwind CSS v4.3.
 
 ## Box Shadow Preset Values
 
@@ -30,7 +30,7 @@ Comprehensive guide for shadow utilities in Tailwind CSS v4.1.
 | `shadow` | `shadow-sm` | Renamed (sm now is base) |
 | No base | `shadow` | New base shadow value |
 
-## Shadow Color (v4.1 NEW)
+## Shadow Color (since v3.0)
 
 Apply color tints to shadows.
 
@@ -66,7 +66,7 @@ All theme colors supported:
 
 Each with opacity variants: `/10`, `/20`, `/30`, `/40`, `/50`, `/60`, `/70`, `/80`, `/90`
 
-## Inset Shadow (v4.1 NEW)
+## Inset Shadow (since v4.0)
 
 Create inner shadows for pressed/carved effects.
 
@@ -75,28 +75,27 @@ Create inner shadows for pressed/carved effects.
 | Class | CSS Value |
 |-------|-----------|
 | `inset-shadow-none` | `none` |
-| `inset-shadow-xs` | `inset 0 1px 1px 0 rgba(0, 0, 0, 0.05)` |
-| `inset-shadow-sm` | `inset 0 1px 2px 0 rgba(0, 0, 0, 0.05)` |
-| `inset-shadow` | `inset 0 1px 3px 0 rgba(0, 0, 0, 0.1)` |
-| `inset-shadow-md` | `inset 0 4px 6px -1px rgba(0, 0, 0, 0.1)` |
-| `inset-shadow-lg` | `inset 0 10px 15px -3px rgba(0, 0, 0, 0.1)` |
-| `inset-shadow-xl` | `inset 0 20px 25px -5px rgba(0, 0, 0, 0.1)` |
+| `inset-shadow-2xs` | `inset 0 1px rgb(0 0 0 / 0.05)` |
+| `inset-shadow-xs` | `inset 0 1px 1px rgb(0 0 0 / 0.05)` |
+| `inset-shadow-sm` | `inset 0 2px 4px rgb(0 0 0 / 0.05)` |
+
+The default scale stops at `sm`; add larger steps via `--inset-shadow-*` in `@theme` or use the `inset-shadow-[<value>]` arbitrary syntax.
 
 ### Examples
 
 ```html
 <!-- Basic inset shadow -->
-<div class="inset-shadow-sm">Subtle inner shadow</div>
-<div class="inset-shadow-lg">Strong inner shadow</div>
+<div class="inset-shadow-xs">Subtle inner shadow</div>
+<div class="inset-shadow-sm">Stronger inner shadow</div>
 
 <!-- With color -->
-<div class="inset-shadow inset-shadow-blue-500">Blue inner shadow</div>
-<div class="inset-shadow-lg inset-shadow-red-500/30">
-  Large red inner shadow at 30% opacity
+<div class="inset-shadow-sm inset-shadow-blue-500">Blue inner shadow</div>
+<div class="inset-shadow-sm inset-shadow-red-500/30">
+  Red inner shadow at 30% opacity
 </div>
 
 <!-- Pressed button effect -->
-<button class="bg-blue-500 hover:inset-shadow-md active:inset-shadow-lg">
+<button class="bg-blue-500 hover:inset-shadow-xs active:inset-shadow-sm">
   Press to see effect
 </button>
 
@@ -124,7 +123,7 @@ Create inner shadows for pressed/carved effects.
 
 ```html
 <!-- Neumorphic style -->
-<div class="shadow-lg shadow-gray-400 inset-shadow-md inset-shadow-white/50">
+<div class="shadow-lg shadow-gray-400 inset-shadow-sm inset-shadow-white/50">
   Neumorphic card
 </div>
 
@@ -174,7 +173,7 @@ Create inner shadows for pressed/carved effects.
 </div>
 
 <!-- Inset on interaction -->
-<div class="shadow-lg hover:inset-shadow-md hover:shadow-none">
+<div class="shadow-lg hover:inset-shadow-sm hover:shadow-none">
   Toggle effect on hover
 </div>
 ```
@@ -193,7 +192,7 @@ Create inner shadows for pressed/carved effects.
 </div>
 
 <!-- Remove shadow in dark -->
-<div class="shadow-xl dark:shadow-none dark:inset-shadow-md">
+<div class="shadow-xl dark:shadow-none dark:inset-shadow-sm">
   Elevation becomes carved
 </div>
 ```
@@ -226,7 +225,7 @@ Create inner shadows for pressed/carved effects.
 <button class="shadow-md hover:shadow-lg">Hover button</button>
 
 <!-- Active: inset shadow -->
-<button class="shadow-md active:inset-shadow-md active:shadow-none">
+<button class="shadow-md active:inset-shadow-sm active:shadow-none">
   Active button
 </button>
 
@@ -299,6 +298,6 @@ Usage:
 ## Browser Support
 
 - **Box Shadow**: All browsers (IE8+)
-- **Shadow Color (v4.1)**: Modern browsers (Chrome 88+, Firefox 87+, Safari 14+)
-- **Inset Shadow (v4.1)**: Modern browsers
+- **Shadow Color (since v3.0)**: Modern browsers (Chrome 88+, Firefox 87+, Safari 14+)
+- **Inset Shadow (since v4.0)**: Modern browsers
 - **Arbitrary Values**: Modern browsers with CSS variable support

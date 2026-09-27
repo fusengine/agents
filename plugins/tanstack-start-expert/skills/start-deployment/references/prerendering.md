@@ -2,7 +2,7 @@
 name: prerendering
 description: Static prerendering in Start via the tanstackStart prerender option
 when-to-use: Generating static HTML at build time for performance or static hosting
-keywords: prerender, tanstackStart, routes, crawlLinks, autoStaticPathsDiscovery, static
+keywords: prerender, tanstackStart, pages, crawlLinks, autoStaticPathsDiscovery, static
 priority: high
 related: build-and-adapters.md
 source: https://tanstack.com/start/latest/docs/framework/react/guide/static-prerendering
@@ -12,7 +12,7 @@ source: https://tanstack.com/start/latest/docs/framework/react/guide/static-prer
 
 ## Overview
 
-TanStack Start can render routes to static HTML at build time via the `prerender` option on the `tanstackStart` plugin. Use it for performance (serve pre-rendered HTML) or to deploy fully static sites. Two shapes exist: an explicit `routes` list, or automatic discovery of static paths.
+TanStack Start can render routes to static HTML at build time via the `prerender` option on the `tanstackStart` plugin. Use it for performance (serve pre-rendered HTML) or to deploy fully static sites. Paths come from automatic discovery of static routes, merged with an explicit top-level `pages: [{ path }]` list (concrete paths, no globs). There is no `prerender.routes` option — unknown keys are silently dropped by the plugin's schema.
 
 ---
 
@@ -20,9 +20,10 @@ TanStack Start can render routes to static HTML at build time via the `prerender
 
 | Option | Meaning |
 |--------|---------|
-| **`routes: [...]`** | Explicit paths to prerender (supports globs like `/blog/posts/*`) |
+| **`pages: [{ path }]`** | Top-level `tanstackStart` option: explicit concrete paths to prerender (per-page `prerender` overrides) |
 | **`crawlLinks`** | Extract links from rendered HTML and prerender them too (default `true`) |
-| **`enabled`** | Master switch (default `false` in the full-options form) |
+| **`enabled`** | Master switch — off unless `true`, or unless a `pages[]` entry sets `prerender.enabled: true` |
+| **`maxRedirects`** | Max redirects followed per prerender request |
 | **`autoStaticPathsDiscovery`** | Auto-collect static routes and merge with `pages` (default `true`) |
 | **`filter` / `pages`** | Exclude paths / per-page overrides (e.g. `outputPath`) |
 
@@ -46,9 +47,10 @@ Route type → prerendered by discovery?
 ```ts
 tanstackStart({
   prerender: {
-    routes: ['/blog', '/blog/posts/*'],
+    enabled: true, // required — nothing prerenders without it
     crawlLinks: true,
   },
+  pages: [{ path: '/blog' }, { path: '/blog/posts/hello-world' }],
 })
 ```
 
@@ -65,7 +67,7 @@ tanstackStart({
 
 ### DON'T
 - Prerender authenticated or per-user routes (they need runtime SSR)
-- Expect `$param` routes to appear without a link + `crawlLinks`, or an explicit `routes` glob
+- Expect `$param` routes to appear without a link + `crawlLinks`, or an explicit `pages[]` entry
 
 ---
 
@@ -73,8 +75,9 @@ tanstackStart({
 
 | Mistake | Fix |
 |---------|-----|
-| Dynamic route not generated | Add it to `routes` (glob) or link it with `crawlLinks` on |
-| Nothing prerenders in full-options form | Set `enabled: true` |
+| Dynamic route not generated | Add a concrete `pages: [{ path }]` entry or link it with `crawlLinks` on |
+| Nothing prerenders | Set `prerender.enabled: true` |
+| `prerender.routes` ignored | Not an option — use top-level `pages` |
 | Wrong file layout | Toggle `autoSubfolderIndex` / set `outputPath` |
 
 ---

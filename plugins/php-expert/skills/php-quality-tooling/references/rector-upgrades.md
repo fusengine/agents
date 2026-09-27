@@ -11,8 +11,8 @@ related: phpstan-levels.md, templates/rector-php.md
 
 ## Overview
 
-Rector rewrites source from a `rector.php` config. It requires PHP 7.2+ but can
-target 5.x-8.x code. Always preview with `--dry-run`, then apply.
+Rector rewrites source from a `rector.php` config. It requires PHP 7.4+ to run (Rector 2.x,
+`"php": "^7.4|^8.0"` on Packagist) but can target 5.x-8.x code. Always preview with `--dry-run`, then apply.
 
 Source: https://getrector.com/documentation/set-lists + /documentation/levels
 

@@ -118,6 +118,7 @@ export default defineConfig({
         filter: ({ path }) => !path.startsWith('/do-not-render-me'),
         retryCount: 2,
         retryDelay: 1000,
+        maxRedirects: 5, // redirects followed per prerender request
         failOnError: true,
         onSuccess: ({ page }) => console.log(`Rendered ${page.path}!`),
       },
@@ -130,11 +131,13 @@ export default defineConfig({
 })
 ```
 
-Simpler explicit-routes form:
+Simpler explicit-pages form (there is no `prerender.routes` option; explicit
+paths go in the top-level `pages` array, concrete paths only):
 
 ```ts
 tanstackStart({
-  prerender: { routes: ['/blog', '/blog/posts/*'], crawlLinks: true },
+  prerender: { enabled: true, crawlLinks: true },
+  pages: [{ path: '/blog' }],
 })
 ```
 
@@ -144,5 +147,5 @@ tanstackStart({
 
 - Cloudflare plugin MUST precede `tanstackStart()`; other adapters are order-tolerant.
 - The Nitro `nitro/vite` plugin is under active development — pin versions and report repros.
-- For Vercel, follow the Nitro setup then use Vercel's one-click deploy.
+- For Vercel, follow the Nitro setup; Vercel auto-detects the framework (`vercel.json` with `"framework": "tanstack-start"` makes it explicit). Render uses the same Nitro setup plus a `render.yaml` Blueprint with `NITRO_PRESET=render-com`.
 - Prerendering also works with the Rsbuild plugin (`@tanstack/react-start/plugin/rsbuild`) using the same `prerender` shape.

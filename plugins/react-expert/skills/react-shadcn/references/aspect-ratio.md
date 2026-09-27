@@ -10,6 +10,8 @@ related: null
 
 # AspectRatio Component
 
+> **Base:** same API on Base UI, Radix and React Aria (verified against r/styles/{base,radix}-nova/aspect-ratio.json). Base UI/Aria: a plain `div` where `ratio` is required; Radix: `AspectRatio.Root`.
+
 The AspectRatio component maintains a consistent aspect ratio for its content, preventing layout shift when media loads. It's essential for responsive image and video containers.
 
 ## Installation
@@ -27,17 +29,17 @@ bunx --bun shadcn@latest add aspect-ratio
 Use AspectRatio to maintain consistent image dimensions:
 
 ```tsx
-import Image from "next/image"
 import { AspectRatio } from "@/modules/cores/shadcn/components/ui/aspect-ratio"
 
+/** 16:9 image container. */
 export function AspectRatioImageExample() {
   return (
     <AspectRatio ratio={16 / 9} className="bg-muted">
-      <Image
+      <img
         src="https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80"
         alt="Photo by Drew Beamer"
-        fill
-        className="rounded-md object-cover"
+        loading="lazy"
+        className="absolute inset-0 size-full rounded-md object-cover"
       />
     </AspectRatio>
   )
@@ -51,17 +53,17 @@ export function AspectRatioImageExample() {
 Perfect for profile images and thumbnails:
 
 ```tsx
-import Image from "next/image"
 import { AspectRatio } from "@/modules/cores/shadcn/components/ui/aspect-ratio"
 
+/** 1:1 square image. */
 export function SquareAspectRatioExample() {
   return (
     <AspectRatio ratio={1 / 1} className="bg-muted">
-      <Image
+      <img
         src="https://images.unsplash.com/photo-1569163139394-de4798aa62b2?w=400&q=80"
         alt="Profile"
-        fill
-        className="object-cover rounded-lg"
+        loading="lazy"
+        className="absolute inset-0 size-full object-cover rounded-lg"
       />
     </AspectRatio>
   )
@@ -73,17 +75,17 @@ export function SquareAspectRatioExample() {
 Common for traditional video:
 
 ```tsx
-import Image from "next/image"
 import { AspectRatio } from "@/modules/cores/shadcn/components/ui/aspect-ratio"
 
+/** 4:3 image. */
 export function StandardAspectRatioExample() {
   return (
     <AspectRatio ratio={4 / 3} className="bg-muted">
-      <Image
+      <img
         src="https://images.unsplash.com/photo-1634128221889-82ed6efcc547?w=600&q=80"
         alt="Standard format"
-        fill
-        className="object-cover rounded-md"
+        loading="lazy"
+        className="absolute inset-0 size-full object-cover rounded-md"
       />
     </AspectRatio>
   )
@@ -95,17 +97,17 @@ export function StandardAspectRatioExample() {
 Most common for modern video and web content:
 
 ```tsx
-import Image from "next/image"
 import { AspectRatio } from "@/modules/cores/shadcn/components/ui/aspect-ratio"
 
+/** 16:9 widescreen image. */
 export function WidescreenAspectRatioExample() {
   return (
     <AspectRatio ratio={16 / 9} className="bg-muted">
-      <Image
+      <img
         src="https://images.unsplash.com/photo-1611339555312-e607c249352d?w=800&q=80"
         alt="Widescreen content"
-        fill
-        className="object-cover rounded-md"
+        loading="lazy"
+        className="absolute inset-0 size-full object-cover rounded-md"
       />
     </AspectRatio>
   )
@@ -117,17 +119,17 @@ export function WidescreenAspectRatioExample() {
 For panoramic images:
 
 ```tsx
-import Image from "next/image"
 import { AspectRatio } from "@/modules/cores/shadcn/components/ui/aspect-ratio"
 
+/** 21:9 panoramic image. */
 export function UltrawideAspectRatioExample() {
   return (
     <AspectRatio ratio={21 / 9} className="bg-muted">
-      <Image
+      <img
         src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1000&q=80"
         alt="Panoramic view"
-        fill
-        className="object-cover rounded-md"
+        loading="lazy"
+        className="absolute inset-0 size-full object-cover rounded-md"
       />
     </AspectRatio>
   )
@@ -143,6 +145,7 @@ Maintain aspect ratio for responsive video embeds:
 ```tsx
 import { AspectRatio } from "@/modules/cores/shadcn/components/ui/aspect-ratio"
 
+/** Responsive YouTube embed. */
 export function EmbeddedVideoExample() {
   return (
     <AspectRatio ratio={16 / 9} className="bg-black">
@@ -162,6 +165,7 @@ export function EmbeddedVideoExample() {
 ```tsx
 import { AspectRatio } from "@/modules/cores/shadcn/components/ui/aspect-ratio"
 
+/** Responsive Vimeo embed. */
 export function VimeoVideoExample() {
   return (
     <AspectRatio ratio={16 / 9} className="bg-black">
@@ -180,7 +184,7 @@ export function VimeoVideoExample() {
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `ratio` | `number` | `1 / 1` | Aspect ratio as width/height |
+| `ratio` | `number` | required on Base UI/Aria (Radix: `1`) | Aspect ratio as width/height |
 | `className` | `string` | - | Container CSS classes |
 | `children` | `ReactNode` | - | Content to display |
 
@@ -191,9 +195,9 @@ export function VimeoVideoExample() {
 Gallery with consistent aspect ratios:
 
 ```tsx
-import Image from "next/image"
 import { AspectRatio } from "@/modules/cores/shadcn/components/ui/aspect-ratio"
 
+/** Grid of square thumbnails. */
 export function ImageGalleryExample() {
   const images = [
     "https://images.unsplash.com/photo-1465869185982-5a1a7522cbcb?w=300&q=80",
@@ -205,11 +209,11 @@ export function ImageGalleryExample() {
     <div className="grid gap-4 grid-cols-3">
       {images.map((src, i) => (
         <AspectRatio key={i} ratio={1 / 1} className="bg-muted">
-          <Image
+          <img
             src={src}
             alt={`Gallery image ${i + 1}`}
-            fill
-            className="object-cover rounded-md"
+            loading="lazy"
+            className="absolute inset-0 size-full object-cover rounded-md"
           />
         </AspectRatio>
       ))}
@@ -223,7 +227,6 @@ export function ImageGalleryExample() {
 Calculate aspect ratio dynamically:
 
 ```tsx
-import Image from "next/image"
 import { AspectRatio } from "@/modules/cores/shadcn/components/ui/aspect-ratio"
 
 interface MediaProps {
@@ -233,16 +236,19 @@ interface MediaProps {
   alt: string
 }
 
+/** Ratio computed from the media's intrinsic width/height. */
 export function DynamicAspectRatioExample({ src, width, height, alt }: MediaProps) {
   const ratio = width / height
 
   return (
     <AspectRatio ratio={ratio} className="bg-muted">
-      <Image
+      <img
         src={src}
         alt={alt}
-        fill
-        className="object-cover rounded-md"
+        width={width}
+        height={height}
+        loading="lazy"
+        className="absolute inset-0 size-full object-cover rounded-md"
       />
     </AspectRatio>
   )
@@ -256,7 +262,7 @@ export function DynamicAspectRatioExample({ src, width, height, alt }: MediaProp
 ```tsx
 // With rounded corners
 <AspectRatio ratio={16 / 9} className="overflow-hidden rounded-lg">
-  <Image src="..." fill className="object-cover" />
+  <img src="..." alt="" className="absolute inset-0 size-full object-cover" />
 </AspectRatio>
 ```
 
@@ -265,7 +271,7 @@ export function DynamicAspectRatioExample({ src, width, height, alt }: MediaProp
 ```tsx
 // With border
 <AspectRatio ratio={16 / 9} className="border-2 border-primary rounded-md">
-  <Image src="..." fill className="object-cover" />
+  <img src="..." alt="" className="absolute inset-0 size-full object-cover" />
 </AspectRatio>
 ```
 
@@ -274,14 +280,14 @@ export function DynamicAspectRatioExample({ src, width, height, alt }: MediaProp
 ```tsx
 // With shadow
 <AspectRatio ratio={16 / 9} className="shadow-lg rounded-md overflow-hidden">
-  <Image src="..." fill className="object-cover" />
+  <img src="..." alt="" className="absolute inset-0 size-full object-cover" />
 </AspectRatio>
 ```
 
 ## Best Practices
 
-1. **Always specify ratio** - Never rely on default 1:1 ratio
-2. **Use with React Image** - Combine with `fill` prop for optimization
+1. **Always specify ratio** - Required on Base UI/Aria; never rely on the Radix default of 1
+2. **Fill the box** - Native `<img>` with `absolute inset-0 size-full` (the container is `relative`)
 3. **Set object-fit** - Use `object-cover` or `object-contain` for proper scaling
 4. **Prevent layout shift** - AspectRatio prevents CLS (Cumulative Layout Shift)
 5. **Responsive sizes** - Combine with responsive image srcset

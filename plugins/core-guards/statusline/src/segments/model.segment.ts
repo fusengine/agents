@@ -1,7 +1,7 @@
 /**
- * Model Segment - Affiche le modele et tokens
+ * Model Segment - Displays the model and tokens
  *
- * @description SRP: Affichage modele uniquement
+ * @description SRP: Model display only
  */
 
 import type { StatuslineConfig } from "../config/schema";

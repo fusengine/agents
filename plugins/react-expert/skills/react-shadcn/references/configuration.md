@@ -8,313 +8,230 @@ requires: installation.md
 related: button.md, input.md, card.md
 ---
 
-# shadcn/ui Configuration
+# shadcn/ui Configuration (Vite)
+
+Sources: https://ui.shadcn.com/docs/components-json, https://ui.shadcn.com/schema.json,
+https://ui.shadcn.com/docs/changelog/2026-09-cn, https://ui.shadcn.com/docs/dark-mode/vite,
+https://ui.shadcn.com/docs/rtl/vite.
 
 ## components.json (SOLID Paths)
 
-Place at project root: `/components.json`
+Place at project root. Base UI project (the default since July 2026):
 
 ```json
 {
   "$schema": "https://ui.shadcn.com/schema.json",
-  "style": "new-york",
-  "rsc: false,
+  "style": "base-nova",
+  "rsc": false,
   "tsx": true,
-  "aliasPrefix": "@",
+  "tailwind": {
+    "config": "",
+    "css": "src/index.css",
+    "baseColor": "neutral",
+    "cssVariables": true,
+    "prefix": ""
+  },
+  "iconLibrary": "lucide",
   "aliases": {
     "components": "@/modules/cores/shadcn/components",
-    "utils": "@/modules/cores/lib/utils"
+    "ui": "@/modules/cores/shadcn/components/ui",
+    "utils": "@/modules/cores/lib/utils",
+    "lib": "@/modules/cores/lib",
+    "hooks": "@/modules/cores/hooks"
   }
 }
 ```
 
+For Radix use `"style": "radix-nova"`; for React Aria `"style": "aria-nova"` (the suffix is the
+visual style picked at init: `vega`, `nova`, `maia`, `lyra`, `mira`, `luma`, `sera`, `rhea`).
+Projects created before CLI v4 have `"new-york"` (Radix); `"default"` is deprecated.
+
 ### What Each Field Does
 
-| Field | Value | Purpose |
-|-------|-------|---------|
-| `$schema` | URL | Schema validation |
-| `style` | `new-york` \| `default` | Component design system |
-| `rsc: false` | React Server Components support |
-| `tsx` | `true` | Use TypeScript |
-| `aliasPrefix` | `@` | Path alias prefix |
-| `aliases.components` | SOLID path | Where UI components live |
-| `aliases.utils` | SOLID path | Where `cn()` util lives |
+| Field | Value | Notes |
+|-------|-------|-------|
+| `style` | `base-*` \| `radix-*` \| `aria-*` \| `new-york` | Encodes the base + visual style. **Cannot be changed after init** |
+| `rsc` | `false` | Vite SPA: no React Server Components, so no `"use client"` is injected |
+| `tsx` | `true` | `false` generates `.jsx` |
+| `tailwind.config` | `""` | **Leave empty for Tailwind v4** (CSS-first config) |
+| `tailwind.css` | `src/index.css` | File that imports Tailwind; the CLI writes theme tokens here |
+| `tailwind.baseColor` | `neutral` \| `stone` \| `zinc` \| `mauve` \| `olive` \| `mist` \| `taupe` | Cannot be changed after init — use `shadcn migrate base-color` |
+| `tailwind.cssVariables` | `true` | Semantic tokens (`bg-background`). Cannot be changed after init |
+| `iconLibrary` | `lucide` (default) | Updated by `shadcn migrate icons` |
+| `rtl` | `true` (optional) | CLI converts physical classes to logical ones at install time |
+| `aliases.components` / `ui` / `utils` / `lib` / `hooks` | SOLID paths | `components` + `utils` are required |
+| `registries` | `{ "@acme": "https://…/{name}.json" }` | Namespaced third-party/private registries |
+
+There is no `aliasPrefix` key in the schema. Aliases may also be `package.json#imports`
+specifiers (`#components`, `#lib/utils`) since `shadcn@4.7.0` — requires
+`moduleResolution: "bundler"` and `resolvePackageJsonImports: true` in `tsconfig.json`.
 
 ## Directory Structure
 
-After installation, your project should have:
-
 ```
 project/
-├── app/
-│   ├── layout.tsx
-│   ├── page.tsx
-│   └── globals.css
 ├── src/
+│   ├── main.tsx
+│   ├── App.tsx
+│   ├── index.css                  # @import "tailwindcss" + shadcn theme
 │   └── modules/
 │       └── cores/
 │           ├── shadcn/
 │           │   └── components/
-│           │       ├── ui/
-│           │       │   ├── button.tsx
-│           │       │   ├── input.tsx
-│           │       │   ├── card.tsx
-│           │       │   ├── label.tsx
-│           │       │   └── ... (other components)
-│           │       └── index.ts
+│           │       └── ui/        # button.tsx, input.tsx, field.tsx, ...
+│           ├── hooks/             # use-mobile.ts (sidebar), ...
 │           └── lib/
-│               └── utils.ts
+│               └── utils.ts       # export { cn } from "cn"
 ├── components.json
-├── tsconfig.json
-└── tailwind.config.ts
+├── tsconfig.json / tsconfig.app.json   # "@/*": ["./src/*"]
+└── vite.config.ts                      # react() + tailwindcss() + "@" alias
 ```
 
-## Tailwind CSS v4 Integration
+No `tailwind.config.ts` with Tailwind v4.
 
-### tsconfig.json
+## The `cn` Utility
 
-```json
-{
-  "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["./*"],
-      "@/modules/cores/shadcn/*": ["./src/modules/cores/shadcn/*"],
-      "@/modules/cores/lib/*": ["./src/modules/cores/lib/*"]
-    }
-  }
-}
+Since September 2026, `init` installs the [`cn`](https://github.com/shadcn-ui/cn) package
+(drop-in for `twMerge(clsx(...))`) and every registry component imports it directly:
+
+```typescript
+// src/modules/cores/lib/utils.ts — generated by init, kept for your own code
+export { cn } from "cn"
 ```
 
-### app/globals.css (Tailwind v4)
+```tsx
+import { cn } from "cn" // what registry components use
+;<div className={cn("flex items-center", className)} />
+```
 
-With Tailwind v4, NO config file is needed. Only manage CSS:
+Older projects keep working. To drop `clsx` + `tailwind-merge`:
+
+```bash
+bunx --bun shadcn@latest migrate cn
+```
+
+`cn` targets Tailwind v4 (like `tailwind-merge` v3); Tailwind v3 projects stay on
+`tailwind-merge` v2.
+
+## CSS Entry (Tailwind v4)
+
+`src/index.css` after `init` (tokens abbreviated — full default theme in [theming.md](theming.md)):
 
 ```css
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 
-/* Base layer for default element styles */
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  /* ...one --color-* per token... */
+  --radius-lg: var(--radius);
+}
+
+:root {
+  --radius: 0.625rem;
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  /* ... */
+}
+
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  /* ... */
+}
+
 @layer base {
   * {
-    @apply border-border;
+    @apply border-border outline-ring/50;
   }
-
   body {
     @apply bg-background text-foreground;
   }
 }
-
-/* Component layer for custom component styles */
-@layer components {
-  .btn-primary {
-    @apply px-4 py-2 bg-primary text-primary-foreground rounded-md;
-  }
-}
 ```
 
-### CSS Variables (Theme Colors)
+`shadcn/tailwind.css` provides the shared variants (`data-open:`, `data-closed:`, …) and
+accordion keyframes used by both Base UI and Radix components. `shadcn eject` inlines it and
+removes the `shadcn` dependency (irreversible).
 
-shadcn/ui uses CSS variables in `app/globals.css`:
-
-```css
-@import "tailwindcss";
-
-@layer base {
-  :root {
-    --background: 0 0% 100%;
-    --foreground: 0 0% 3.6%;
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 3.6%;
-    --primary: 0 0% 9%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 0 0% 96.1%;
-    --secondary-foreground: 0 0% 9%;
-    --muted: 0 0% 89.5%;
-    --muted-foreground: 0 0% 45.1%;
-    --accent: 0 0% 9%;
-    --accent-foreground: 0 0% 100%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 100%;
-    --border: 0 0% 89.5%;
-    --input: 0 0% 89.5%;
-    --ring: 0 0% 9%;
-  }
-
-  .dark {
-    --background: 0 0% 3.6%;
-    --foreground: 0 0% 98%;
-    --primary: 0 0% 98%;
-    --primary-foreground: 0 0% 9%;
-    /* ... dark mode vars ... */
-  }
-}
-```
-
-## Icon Library Setup
-
-### Install lucide-react
+## Icon Library
 
 ```bash
-bun add lucide-react
+bun add lucide-react   # installed by init when iconLibrary is "lucide"
 ```
 
-### Create Icon Wrapper (Optional)
-
-Create `src/modules/cores/shadcn/components/icons.tsx`:
+Optional centralized re-export — `src/modules/cores/shadcn/components/icons.tsx`:
 
 ```typescript
 /**
- * Icon components from lucide-react
- * Centralized import for consistency
+ * Icon components from lucide-react — centralized import for consistency.
  */
-
 export {
-  AlertCircle,
-  ChevronDown,
-  ChevronUp,
-  Copy,
-  Eye,
-  EyeOff,
-  Loader,
-  Trash2,
-  Plus,
-  Minus,
-  Check,
-  X,
-  Menu,
-  Home,
-  Settings,
-  LogOut,
+  AlertCircleIcon,
+  CheckIcon,
+  ChevronDownIcon,
+  CopyIcon,
+  LoaderIcon,
+  PlusIcon,
+  Trash2Icon,
+  XIcon,
   type LucideProps,
-} from 'lucide-react'
+} from "lucide-react"
 ```
 
-### Usage
+## Dark Mode (Vite)
 
-```typescript
-import { AlertCircle, Copy } from '@/modules/cores/shadcn/components/icons'
+Vite has no `next-themes`; the documented approach is a small provider that toggles the
+`.dark` class on `<html>` (matches `@custom-variant dark (&:is(.dark *))`). Full provider and
+mode toggle: [theming.md](theming.md#dark-mode-vite).
 
-export function HeaderWithIcon() {
-  return (
-    <div className="flex items-center gap-2">
-      <AlertCircle className="w-5 h-5 text-red-500" />
-      <button aria-label="Copy">
-        <Copy className="w-4 h-4" />
-      </button>
-    </div>
-  )
-}
+```tsx
+// src/main.tsx
+import { StrictMode } from "react"
+import { createRoot } from "react-dom/client"
+import { ThemeProvider } from "@/modules/cores/shadcn/components/theme-provider"
+import App from "./App"
+import "./index.css"
+
+createRoot(document.getElementById("root")!).render(
+  <StrictMode>
+    <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
+      <App />
+    </ThemeProvider>
+  </StrictMode>
+)
 ```
 
-## Component Registration
+## RTL (optional)
 
-When you run:
-
-```bash
-bunx shadcn-ui@latest add button
-```
-
-The CLI automatically:
-1. Creates `@/modules/cores/shadcn/components/ui/button.tsx`
-2. Adds dependency to `package.json`
-3. Updates TypeScript paths
-
-### Manual Component Install
-
-If CLI doesn't work, manually add to `components.json`:
-
-```json
-{
-  "aliases": {
-    "components": "@/modules/cores/shadcn/components"
-  }
-}
-```
-
-Then copy the component file from [shadcn/ui registry](https://ui.shadcn.com/).
-
-## Customization: Dark Mode
-
-Enable dark mode in `app/layout.tsx`:
-
-```typescript
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
-  return (
-    <html lang="en" suppressHydrationWarning>
-      <body>{children}</body>
-    </html>
-  )
-}
-```
-
-Or use `next-themes`:
-
-```bash
-bun add next-themes
-```
-
-```typescript
-'use client'
-
-import { ThemeProvider } from 'next-themes'
-
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
-  return (
-    <html lang="en" suppressHydrationWarning>
-      <body>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          {children}
-        </ThemeProvider>
-      </body>
-    </html>
-  )
-}
-```
+`init --rtl` (new) or `migrate rtl` (existing) sets `"rtl": true`. Then add
+`<html lang="ar" dir="rtl">` in `index.html` and wrap the app in
+`<DirectionProvider direction="rtl">` from the `direction` component.
 
 ## Verification Checklist
 
-- [ ] `components.json` in project root
-- [ ] Aliases point to `@/modules/cores/shadcn/*`
-- [ ] `tsconfig.json` has path mapping for `@/*`
-- [ ] `app/globals.css` imports tailwindcss
-- [ ] CSS variables defined for theme colors
-- [ ] At least one component installed (e.g., button)
-- [ ] `lucide-react` installed for icons
-- [ ] Components render without errors
+- [ ] `components.json` validates against `https://ui.shadcn.com/schema.json`
+- [ ] `style` prefix matches the installed primitive (`@base-ui/react` ↔ `base-*`, `radix-ui` ↔ `radix-*`)
+- [ ] `tailwind.config` is `""` and `tailwind.css` points to `src/index.css`
+- [ ] Aliases point to `@/modules/cores/...` and resolve through `@/*` → `./src/*`
+- [ ] `src/index.css` imports `tailwindcss` and `shadcn/tailwind.css`, defines `@theme inline`
+- [ ] `cn` package installed; `lib/utils.ts` re-exports it
 
 ## Common Issues
 
-### Issue: "Cannot find module '@/modules/cores/shadcn/components/ui/button'"
-
-**Solution**: Check that:
-1. Directory structure matches `components.json` aliases
-2. Component file exists at path
-3. Run `bunx shadcn-ui@latest add button` to reinstall
-
-### Issue: Tailwind classes not applying
-
-**Solution**:
-1. Verify `app/globals.css` has `@import "tailwindcss"`
-2. Check CSS variables are set in `:root`
-3. Clear `.next` cache: `rm -rf .next && bun dev`
-
-### Issue: Icons not found
-
-**Solution**:
-1. Install lucide: `bun add lucide-react`
-2. Check import path: `import { IconName } from 'lucide-react'`
-3. Verify icon exists: [lucide-react icons](https://lucide.dev/)
+| Issue | Solution |
+|-------|----------|
+| `Cannot find module '@/modules/cores/shadcn/components/ui/button'` | Aliases must match `tsconfig` paths; re-run `bunx --bun shadcn@latest add button` |
+| Classes like `bg-background` do nothing | Missing `@theme inline` mapping or `:root` tokens in `src/index.css` |
+| `dark:` variants ignored | Missing `@custom-variant dark (&:is(.dark *));` or `.dark` class never set on `<html>` |
+| Components from two bases mixed | One base per project; migrate component by component (`pnpm dlx skills add shadcn/ui`, then ask the agent to migrate) |
 
 ## Next Steps
 
-- [Button Component](button.md) - All variants and patterns
-- [Input Component](input.md) - Forms and validation
-- [Card Component](card.md) - Layout patterns
+- [Theming](theming.md)
+- [Button Component](button.md)
+- [Field Patterns](field-patterns.md)

@@ -12,6 +12,11 @@ related: deployment.md, optimization.md
 
 Global database cache and connection pooling with SOLID principles.
 
+> **Retirement notice (Prisma docs):** standalone Prisma Accelerate and hosted Prisma Postgres
+> `prisma+postgres://accelerate.prisma-data.net` connections are retired on **December 1, 2026**.
+> For Prisma Postgres, switch to pooled TCP or the Prisma Postgres serverless driver; for other
+> databases, keep the database and remove Accelerate. Do not start new projects on Accelerate.
+
 ## Setup
 
 ```bash
@@ -23,7 +28,7 @@ npm install @prisma/extension-accelerate
 
 ```typescript
 // lib/db/accelerate.ts
-import type { PrismaClient } from '@prisma/client'
+import { PrismaClient } from '../generated/prisma/client'  // v7: generated path, not @prisma/client
 import { withAccelerate } from '@prisma/extension-accelerate'
 
 /**
@@ -32,9 +37,9 @@ import { withAccelerate } from '@prisma/extension-accelerate'
  * @example
  * const prisma = createAcceleratedClient()
  */
-export function createAcceleratedClient(): PrismaClient {
-  // ✅ GOOD: Enable Accelerate for production deployments
-  const prisma = new PrismaClient()
+export function createAcceleratedClient() {
+  // v7: pass the Accelerate URL via `accelerateUrl` (no driver adapter)
+  const prisma = new PrismaClient({ accelerateUrl: process.env.DATABASE_URL! })
   return prisma.$extends(withAccelerate())
 }
 
@@ -47,7 +52,7 @@ export const prisma = createAcceleratedClient()
 
 ```typescript
 // lib/db/cache-strategies.ts
-import type { Prisma } from '@prisma/client'
+import type { Prisma } from '../generated/prisma/client'
 
 interface CacheConfig {
   ttl: number // Time to live in seconds
@@ -127,7 +132,7 @@ export async function getRealTimeUsers() {
 
 ```typescript
 // lib/db/cache-invalidation.ts
-import type { User } from '@prisma/client'
+import type { User } from '../generated/prisma/client'
 
 /**
  * @description Fetches user with cache tags for invalidation
@@ -207,12 +212,21 @@ DATABASE_URL="prisma://accelerate.prisma-data.net/?api_key=YOUR_ACCELERATE_KEY"
 DIRECT_URL="postgresql://user:pass@host:5432/database"
 ```
 
+```typescript
+// prisma.config.ts — v7: CLI URL lives here (direct URL for migrations, bypassing Accelerate)
+import 'dotenv/config'
+import { defineConfig, env } from 'prisma/config'
+
+export default defineConfig({
+  schema: 'prisma/schema.prisma',
+  datasource: { url: env('DIRECT_URL') },
+})
+```
+
 ```prisma
-// prisma/schema.prisma
+// prisma/schema.prisma — no url/directUrl in v7; the Accelerate URL goes to `accelerateUrl`
 datasource db {
-  provider  = "postgresql"
-  url       = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL") // For migrations
+  provider = "postgresql"
 }
 
 model User {
@@ -229,7 +243,7 @@ model User {
 
 ```typescript
 // lib/db/cache-monitoring.ts
-import type { Prisma } from '@prisma/client'
+import type { Prisma } from '../generated/prisma/client'
 
 interface CacheInfo {
   status: 'hit' | 'miss' | 'stale'
@@ -286,7 +300,7 @@ export function logCacheMetrics(
 ```typescript
 // app/api/users/route.ts
 import { withAccelerate } from '@prisma/extension-accelerate'
-import { PrismaClient } from '@prisma/client'
+import { PrismaClient } from '@/lib/generated/prisma/client'  // v7: generated path
 
 export const runtime = 'edge'
 
@@ -296,7 +310,7 @@ export const runtime = 'edge'
  */
 export async function GET(): Promise<Response> {
   // ✅ GOOD: Create instance per request on edge
-  const prisma = new PrismaClient().$extends(withAccelerate())
+  const prisma = new PrismaClient({ accelerateUrl: process.env.DATABASE_URL! }).$extends(withAccelerate())
 
   try {
     // ✅ GOOD: Edge uses global Accelerate cache

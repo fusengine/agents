@@ -1,25 +1,25 @@
 /**
- * contrast.ts — Contrôle 4 : ratio de contraste WCAG sur couleurs RÉSOLUES.
- * Les couleurs viennent de `getComputedStyle`, puis sont converties en sRGB par le
- * navigateur lui-même (canvas 1×1) : `oklch()`, `color-mix()`, variables CSS et alpha
- * sont donc gérés. Le fond effectif est reconstitué en remontant les ancêtres tant
- * qu'il est transparent (voir probe-color.ts).
+ * contrast.ts — Check 4: WCAG contrast ratio on RESOLVED colors.
+ * Colors come from `getComputedStyle`, then are converted to sRGB by the
+ * browser itself (1×1 canvas): `oklch()`, `color-mix()`, CSS variables and alpha
+ * are therefore handled. The effective background is rebuilt by walking up the ancestors
+ * while it is transparent (see probe-color.ts).
  *
- * Limite assumée : si un `background-image` (dégradé, photo) intervient dans la
- * chaîne, le ratio ne porte que sur la couche couleur — le cas est reporté en
- * AVERTISSEMENT, jamais en violation, et doit être tranché à l'œil sur capture.
+ * Accepted limit: if a `background-image` (gradient, photo) is part of the
+ * chain, the ratio only covers the color layer — the case is reported as a
+ * WARNING, never as a violation, and must be decided by eye on a screenshot.
  */
 import type { LayoutCheckConfig, Violation, Warning } from "../types";
 import type { PageLike } from "../page.types";
 import { contrastProbe } from "./contrast.probe";
 
 /**
- * Mesure les contrastes texte/fond à la largeur de viewport courante.
+ * Measures text/background contrasts at the current viewport width.
  *
- * @param page - Page déjà chargée et redimensionnée
- * @param config - Configuration active (seuils WCAG, exclusions)
- * @param viewport - Largeur de viewport courante, en px
- * @returns Les violations franches et les mesures non fiables
+ * @param page - Page already loaded and resized
+ * @param config - Active configuration (WCAG thresholds, exclusions)
+ * @param viewport - Current viewport width, in px
+ * @returns The clear-cut violations and the unreliable measurements
  */
 export async function checkContrast(
   page: PageLike,
@@ -47,7 +47,7 @@ export async function checkContrast(
       text: row.text,
     },
     delta: Math.round((row.required - row.ratio) * 100) / 100,
-    message: `contraste ${row.ratio}:1 < ${row.required}:1 requis (${row.foreground} sur ${row.background}, ${row.fontSize}px/${row.fontWeight})`,
+    message: `contrast ${row.ratio}:1 < ${row.required}:1 required (${row.foreground} on ${row.background}, ${row.fontSize}px/${row.fontWeight})`,
   }));
 
   const warnings = result.unresolved.map((row) => ({
@@ -55,8 +55,8 @@ export async function checkContrast(
     selector: row.selector,
     viewport,
     reason: row.unresolvedImageAt
-      ? `fond non résoluble (background-image sur ${row.unresolvedImageAt}) — ratio couche couleur ${row.ratio}:1 < ${row.required}:1, à vérifier sur capture`
-      : `couleur de texte transparente (probable background-clip: text) — ratio non mesurable`,
+      ? `background not resolvable (background-image on ${row.unresolvedImageAt}) — color-layer ratio ${row.ratio}:1 < ${row.required}:1, check on a screenshot`
+      : `transparent text color (likely background-clip: text) — ratio not measurable`,
   }));
 
   return { violations, warnings };

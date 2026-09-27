@@ -101,14 +101,14 @@ export type Post = InferSelectModel<typeof posts>;
 ```typescript
 // Module: src/services/user.service.ts
 // Purpose: User queries (SOLID: SRP - query logic only)
-import type { Prisma } from "@prisma/client";
+import type { PrismaClient } from "@/generated/prisma/client"; // v7: generated path
 
 /**
  * Fetch user with all posts
  * Type-safe: Return type guaranteed by Prisma
  */
 async function getUserWithPosts(
-  prisma: Prisma.PrismaClient,
+  prisma: PrismaClient,
   email: string
 ) {
   return prisma.user.findUnique({

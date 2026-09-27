@@ -1,25 +1,25 @@
 /**
- * cta-wrap.ts — Contrôle 3 : libellé de CTA passé à la ligne.
- * Mécanise `design-web/references/layout-discipline.md` §6 (« Label fits on one line
- * at desktop… is a pre-flight fail »).
+ * cta-wrap.ts — Check 3: CTA label wrapped onto a second line.
+ * Mechanizes `design-web/references/layout-discipline.md` §6 ("Label fits on one line
+ * at desktop… is a pre-flight fail").
  *
- * Prédicat : hauteur du contenu > `ctaLineFactor × line-height` calculé (défaut 1,6)
- * ET au moins 2 boîtes de ligne occupées par le TEXTE (`Range.getClientRects()` sur
- * les seuls nœuds texte). Les deux conditions sont nécessaires :
- *  - la hauteur seule accuse tout bouton à hauteur fixe (`height: 42px` + flex centré)
- *    dont le libellé tient sur une ligne — 25 faux positifs sur 31 sur une page réelle ;
- *  - compter les lignes sur TOUT le contenu accuse un bouton « icône au-dessus du mot ».
+ * Predicate: content height > `ctaLineFactor × computed line-height` (default 1.6)
+ * AND at least 2 line boxes taken by the TEXT (`Range.getClientRects()` on
+ * text nodes only). Both conditions are necessary:
+ *  - height alone flags every fixed-height button (`height: 42px` + centered flex)
+ *    whose label fits on one line — 25 false positives out of 31 on a real page;
+ *  - counting lines over ALL the content flags an "icon above the word" button.
  */
 import type { LayoutCheckConfig, Violation } from "../types";
 import type { CtaRow, PageLike } from "../page.types";
 
 /**
- * Mesure les libellés de CTA qui occupent plus d'une ligne.
+ * Measures the CTA labels that take more than one line.
  *
- * @param page - Page déjà chargée et redimensionnée
- * @param config - Configuration active (sélecteur CTA, facteur de ligne)
- * @param viewport - Largeur de viewport courante, en px
- * @returns Une violation par CTA dont le libellé dépasse une ligne
+ * @param page - Page already loaded and resized
+ * @param config - Active configuration (CTA selector, line factor)
+ * @param viewport - Current viewport width, in px
+ * @returns One violation per CTA whose label exceeds one line
  */
 export async function checkCtaWrap(
   page: PageLike,
@@ -71,7 +71,7 @@ export async function checkCtaWrap(
     },
     delta: Math.round((row.contentHeight - row.limit) * 100) / 100,
     message:
-      `libellé « ${row.label} » : hauteur ${row.contentHeight}px > ${row.limit}px ` +
-      `(${row.lineHeight}px × ${config.thresholds.ctaLineFactor}), ${row.lineBoxes} lignes de texte mesurées`,
+      `label "${row.label}": height ${row.contentHeight}px > ${row.limit}px ` +
+      `(${row.lineHeight}px × ${config.thresholds.ctaLineFactor}), ${row.lineBoxes} text lines measured`,
   }));
 }

@@ -97,3 +97,21 @@ npm install -D eslint-plugin-react-hooks@latest
 3. **Phase 3:** Migrate forms to Actions
 4. **Phase 4:** Replace useEffect data fetching with use()
 5. **Phase 5:** Add React Compiler
+
+---
+
+## Upgrading 19.2 → 19.3
+
+No breaking change, deprecation or codemod announced (react/react-dom 19.3.0, 2026-09-09). Watch for:
+
+- `react-dom@19.3.0` peers `react@^19.3.0`; `@types/react@19.3` / `@types/react-dom@19.3` need **TypeScript ≥ 5.6**
+- **StrictMode** now double-invokes effects during hydration (like client-rendered roots) and after Fast Refresh — may surface effect bugs
+- **Transitions** are no longer entangled — timing assumptions between unrelated Transitions can change
+- DEV warning when a component appears unblocked by a conditional `use()`
+- Canary imports: `ViewTransition` / `addTransitionType` are now exported unprefixed from `react`
+- Trusted Types: `TrustedHTML` / `TrustedScript` / `TrustedScriptURL` now reach sinks like `innerHTML` without coercion
+- RSC: `<Context>` from a `'use client'` module can be rendered directly by a Server Component; `react-server-dom-webpack/*.unbundled` moved to `react-server-dom-unbundled` (since 19.2.2)
+
+### RSC Security Floor
+
+`react-server-dom-webpack` / `-parcel` / `-turbopack` must be **≥ 19.2.4** (CVE-2025-55182 RCE, CVE-2025-55183/55184, CVE-2025-67779, CVE-2026-23864). Prefer **≥ 19.2.7** (fixes the 19.2.6 `FormData` regression) or **19.3.0**.

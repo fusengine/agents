@@ -37,6 +37,16 @@ resources: [
 ]
 ```
 
+### Scoping with `kind` (Astro 7.1+)
+
+Entries can be `{ hash, kind }` / `{ resource, kind }` with `kind: 'element'` (→ `style-src-elem`), `'attribute'` (→ `style-src-attr`) or `'default'` (→ `style-src`). The documented use case — allowing inline `style=""` attributes (e.g. `define:vars`, Shiki) without weakening `<style>`/`<link>` — is a deliberate, scoped exception to the "no `unsafe-inline`" rule:
+
+```javascript
+styleDirective: {
+  resources: ["'self'", { resource: "'unsafe-inline'", kind: 'attribute' }]
+}
+```
+
 ## Google Fonts Example
 
 ```javascript

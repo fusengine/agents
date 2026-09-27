@@ -10,22 +10,22 @@ related: select.md, dialog.md
 
 # Checkbox Component
 
-Accessible checkbox built on Radix UI. Includes checkbox with label, switch toggle component, and radio group for mutually exclusive options.
+Accessible checkbox. Includes checkbox with label, switch toggle component, and radio group for mutually exclusive options.
+
+> **Base:** examples use **Base UI** (shadcn default since 2026-07); Radix delta in "Radix variant" below; React Aria: `isSelected`/`onChange` (Checkbox, Switch). Sources: https://ui.shadcn.com/r/styles/base-nova/checkbox.json, https://ui.shadcn.com/r/styles/radix-nova/checkbox.json
 
 ## Installation
 
 ```bash
-bunx --bun shadcn-ui@latest add checkbox
-bunx --bun shadcn-ui@latest add switch
-bunx --bun shadcn-ui@latest add radio-group
+bunx --bun shadcn@latest add checkbox
+bunx --bun shadcn@latest add switch
+bunx --bun shadcn@latest add radio-group
 ```
 
 ## Basic Checkbox
 
 ```typescript
 // app/components/BasicCheckbox.tsx
-'use client'
-
 import { useState } from 'react'
 import { Checkbox } from '@/modules/cores/shadcn/components/ui/checkbox'
 
@@ -57,8 +57,6 @@ export function BasicCheckbox() {
 
 ```typescript
 // app/components/CheckboxWithLabel.tsx
-'use client'
-
 import { useState } from 'react'
 import { Checkbox } from '@/modules/cores/shadcn/components/ui/checkbox'
 import { Label } from '@/modules/cores/shadcn/components/ui/label'
@@ -103,8 +101,6 @@ Toggle component for on/off states. More intuitive for binary choices than check
 
 ```typescript
 // app/components/BasicSwitch.tsx
-'use client'
-
 import { useState } from 'react'
 import { Switch } from '@/modules/cores/shadcn/components/ui/switch'
 import { Label } from '@/modules/cores/shadcn/components/ui/label'
@@ -143,8 +139,6 @@ export function BasicSwitch() {
 
 ```typescript
 // app/components/SwitchWithDescription.tsx
-'use client'
-
 import { useState } from 'react'
 import { Switch } from '@/modules/cores/shadcn/components/ui/switch'
 import { Label } from '@/modules/cores/shadcn/components/ui/label'
@@ -195,8 +189,6 @@ Mutually exclusive options selection.
 
 ```typescript
 // app/components/BasicRadioGroup.tsx
-'use client'
-
 import { useState } from 'react'
 import { RadioGroup, RadioGroupItem } from '@/modules/cores/shadcn/components/ui/radio-group'
 import { Label } from '@/modules/cores/shadcn/components/ui/label'
@@ -236,8 +228,6 @@ export function BasicRadioGroup() {
 
 ```typescript
 // app/components/RadioGroupWithDescription.tsx
-'use client'
-
 import { useState } from 'react'
 import { RadioGroup, RadioGroupItem } from '@/modules/cores/shadcn/components/ui/radio-group'
 import { Label } from '@/modules/cores/shadcn/components/ui/label'
@@ -292,8 +282,6 @@ export function RadioGroupWithDescription() {
 
 ```typescript
 // app/components/CheckboxGroup.tsx
-'use client'
-
 import { useState } from 'react'
 import { Checkbox } from '@/modules/cores/shadcn/components/ui/checkbox'
 import { Label } from '@/modules/cores/shadcn/components/ui/label'
@@ -335,7 +323,7 @@ export function CheckboxGroup({
           <Checkbox
             id={item.id}
             checked={selected.includes(item.id)}
-            onCheckedChange={checked => handleChange(item.id, checked as boolean)}
+            onCheckedChange={checked => handleChange(item.id, checked)}
             className="mt-1"
           />
           <div className="flex-1">
@@ -359,10 +347,7 @@ export function CheckboxGroup({
 
 ```typescript
 // app/components/CheckboxFormExample.tsx
-'use client'
-
 import { useForm } from '@tanstack/react-form'
-import { zodValidator } from '@tanstack/zod-form-adapter'
 import * as z from 'zod'
 import { Button } from '@/modules/cores/shadcn/components/ui/button'
 import { Checkbox } from '@/modules/cores/shadcn/components/ui/checkbox'
@@ -407,7 +392,7 @@ export function CheckboxFormExample() {
       <form.Field
         name="newsletter"
         validators={{
-          onChange: zodValidator(formSchema.pick({ newsletter: true })),
+          onChange: formSchema.shape.newsletter,
         }}
       >
         {(field) => (
@@ -418,7 +403,7 @@ export function CheckboxFormExample() {
             <Checkbox
               id={field.name}
               checked={field.state.value}
-              onCheckedChange={(checked) => field.handleChange(checked as boolean)}
+              onCheckedChange={(checked) => field.handleChange(checked)}
             />
           </div>
         )}
@@ -428,7 +413,7 @@ export function CheckboxFormExample() {
       <form.Field
         name="notifications"
         validators={{
-          onChange: zodValidator(formSchema.pick({ notifications: true })),
+          onChange: formSchema.shape.notifications,
         }}
       >
         {(field) => (
@@ -449,7 +434,7 @@ export function CheckboxFormExample() {
       <form.Field
         name="frequency"
         validators={{
-          onChange: zodValidator(formSchema.pick({ frequency: true })),
+          onChange: formSchema.shape.frequency,
         }}
       >
         {(field) => (
@@ -457,7 +442,7 @@ export function CheckboxFormExample() {
             <Label>Email frequency</Label>
             <RadioGroup
               value={field.state.value}
-              onValueChange={(value) => field.handleChange(value as any)}
+              onValueChange={(value) => field.handleChange(value as FormValues['frequency'])}
               className="flex flex-col space-y-1"
             >
               <div className="flex items-center space-x-3">
@@ -480,7 +465,7 @@ export function CheckboxFormExample() {
               </div>
             </RadioGroup>
             {field.state.meta.errors[0] && (
-              <span className="text-sm text-red-500">{field.state.meta.errors[0]}</span>
+              <span className="text-sm text-red-500">{field.state.meta.errors[0]?.message}</span>
             )}
           </div>
         )}
@@ -490,7 +475,7 @@ export function CheckboxFormExample() {
       <form.Field
         name="interests"
         validators={{
-          onChange: zodValidator(formSchema.pick({ interests: true })),
+          onChange: formSchema.shape.interests,
         }}
       >
         {(field) => (
@@ -516,7 +501,7 @@ export function CheckboxFormExample() {
               ))}
             </div>
             {field.state.meta.errors[0] && (
-              <span className="text-sm text-red-500">{field.state.meta.errors[0]}</span>
+              <span className="text-sm text-red-500">{field.state.meta.errors[0]?.message}</span>
             )}
           </div>
         )}
@@ -534,6 +519,25 @@ export function CheckboxFormExample() {
     </form>
   )
 }
+```
+
+## Base UI API Notes
+
+- `onCheckedChange(checked: boolean, eventDetails)` — always a boolean, no cast needed
+- Mixed state: separate `indeterminate` prop; the root renders a `<span>` plus a hidden `<input>`
+- `RadioGroup` `onValueChange(value: Value, eventDetails)` — generic `Value`; narrow it for literal unions
+- Errors: `aria-invalid` on the control, `data-invalid` on the wrapping `Field`
+
+## Radix variant
+
+`style` `radix-*`: same names and props, but `onCheckedChange` receives `boolean | "indeterminate"`
+and mixed state is `checked="indeterminate"`:
+
+```typescript
+<Checkbox
+  checked={checked}
+  onCheckedChange={(value) => setChecked(value === true)}
+/>
 ```
 
 ## Best Practices

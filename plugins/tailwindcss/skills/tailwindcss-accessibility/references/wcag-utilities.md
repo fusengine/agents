@@ -52,7 +52,7 @@ Define `--color-foreground` and `--color-background` in `@theme` with sufficient
 
 ## Touch Targets (44x44px minimum)
 
-WCAG 2.2 Success Criterion 2.5.8 — minimum 44x44 CSS pixels:
+WCAG 2.2 SC 2.5.5 Target Size (Enhanced, AAA) — 44x44 CSS pixels (recommended default). The AA floor is SC 2.5.8 Target Size (Minimum) — 24x24 CSS pixels (`min-h-6 min-w-6`), with spacing/inline exceptions:
 
 ```html
 <!-- Minimum touch target -->

@@ -5,12 +5,12 @@ user-invocable: false
 ---
 
 <objective>
-Layout utilities for Tailwind CSS v4.1: Flexbox (`flex`, direction, `justify-*`, `items-*`, `gap`), Grid (`grid-cols-*`, `grid-rows-*`, `place-*`), Position (`absolute`/`relative`/`fixed`/`sticky`, `inset-*`, `z-*`), Display (`block`/`inline`/`flex`/`grid`/`hidden`), and Container Queries (`@container`, `@md`/`@lg` container-relative breakpoints).
+Layout utilities for Tailwind CSS v4.3: Flexbox (`flex`, direction, `justify-*`, `items-*`, `gap`), Grid (`grid-cols-*`, `grid-rows-*`, `place-*`), Position (`absolute`/`relative`/`fixed`/`sticky`, `inset-*`, `z-*`), Display (`block`/`inline`/`flex`/`grid`/`hidden`), and Container Queries (`@container`, `@md`/`@lg` container-relative breakpoints).
 
 Also covers multi-directional spacing (`gap`, `space-x`/`space-y`) and multi-axis alignment utilities.
 </objective>
 
-# Tailwind CSS Layout Utilities (v4.1)
+# Tailwind CSS Layout Utilities (v4.3)
 
 Layout utilities for building responsive layouts with Flexbox, Grid, Positioning, and Container Queries.
 
@@ -20,10 +20,10 @@ Layout utilities for building responsive layouts with Flexbox, Grid, Positioning
 - **Grid**: `grid`, `grid-template-columns`, `grid-template-rows`, `place-items`, `place-content`
 - **Position**: `absolute`, `relative`, `fixed`, `sticky`, `inset`, `z-index`
 - **Display**: `block`, `inline`, `inline-block`, `flex`, `grid`, `hidden`
-- **Container Queries**: `@container`, `@md`, `@lg`, responsive container sizing
+- **Container Queries**: `@container`, `@container-size` (since v4.3, size container for `cqb`/`cqh` units), `@md`, `@lg`, responsive container sizing
 - **Spacing**: `gap`, `space-x`, `space-y`, multi-directional spacing
 - **Alignment**: `justify-start`, `items-center`, `place-content`, multi-axis alignment
-- **Inset**: `inset`, `inset-x`, `inset-y`, `top`, `right`, `bottom`, `left`
+- **Inset**: `inset`, `inset-x`, `inset-y`, `top`, `right`, `bottom`, `left`, logical `inset-s`/`inset-e`/`inset-bs`/`inset-be` (since v4.2; `start-*`/`end-*` deprecated)
 
 ## Display
 

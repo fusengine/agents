@@ -161,14 +161,14 @@ git remote -v
   In this mode, tag right away (see Step 8, LOCAL/DEGRADED branch): local `git tag` only, never pushed automatically.
   Output explicitly:
   ```text
-  📍 Pas de remote configuré — rituel distant sauté (push/PR/merge).
-  Commandes manuelles pour plus tard :
+  📍 No remote configured — remote ritual skipped (push/PR/merge).
+  Manual commands for later:
     git remote add origin <url>
     git push -u origin <current-branch>
     gh pr create --base main --title "<subject>" --body-file - <<'EOF'
     <body>
     EOF
-    (après merge) git tag vX.Y.Z && git push origin vX.Y.Z
+    (after merge) git tag vX.Y.Z && git push origin vX.Y.Z
   ```
 
 - **Non-empty output → a remote exists.** Check tooling next:

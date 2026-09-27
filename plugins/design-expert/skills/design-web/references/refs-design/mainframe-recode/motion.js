@@ -1,200 +1,200 @@
 /* =====
-   motion.js — comportements d'interface de la référence mainframe.app
-   JS vanilla, aucun framework, aucun build.
+   motion.js — interface behaviours of the mainframe.app reference
+   Vanilla JS, no framework, no build.
 
-   PRINCIPE DIRECTEUR, et c'est tout l'intérêt de cette référence : le JS ne fait
-   QUE basculer une classe ou écrire une hauteur. Il ne cadence rien, il ne dessine
-   aucune courbe. Toutes les durées et toutes les courbes vivent dans styles.css.
-   C'est ce qui permet à la source de n'avoir aucune @keyframes tout en paraissant
-   vivante.
+   GUIDING PRINCIPLE, and the whole point of this reference: the JS does
+   NOTHING but toggle a class or write a height. It times nothing, it draws
+   no curve. Every duration and every curve lives in styles.css.
+   That is what lets the source have no @keyframes at all while still feeling
+   alive.
 
-   Marquage identique au CSS : [relevé] = lu dans la source, [arbitrage] = ajouté.
-   IntersectionObserver : Baseline widely available (mars 2019).
-   `animation-timeline: view()/scroll()` n'est PAS utilisé (pas widely available).
+   Same marking as the CSS: [measured] = read in the source, [decided] = added.
+   IntersectionObserver: Baseline widely available (March 2019).
+   `animation-timeline: view()/scroll()` is NOT used (not widely available).
    ===== */
 
 (function () {
   'use strict';
 
-  var sobre = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var observable = 'IntersectionObserver' in window;
 
-  /* Défilement animé, sauf réglage système contraire. */
-  function amener(el, inline) {
+  /* Animated scroll, unless the system setting says otherwise. */
+  function bringIntoView(el, inline) {
     if (!el) return;
-    el.scrollIntoView({ behavior: sobre ? 'auto' : 'smooth',
+    el.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth',
       block: inline ? 'nearest' : 'center', inline: inline || 'nearest' });
   }
 
-  /* Place une piste horizontale sur un de ses enfants, sans animation. */
-  function centrerSur(piste, el) {
-    if (el) piste.scrollLeft = el.offsetLeft - (piste.clientWidth - el.offsetWidth) / 2;
+  /* Positions a horizontal track on one of its children, without animation. */
+  function centerOn(track, el) {
+    if (el) track.scrollLeft = el.offsetLeft - (track.clientWidth - el.offsetWidth) / 2;
   }
 
-  /* Index de l'élément dont le centre est le plus proche du centre de la piste. */
-  function indexCentre(piste, elements) {
-    var centre = piste.getBoundingClientRect().left + piste.clientWidth / 2;
-    var meilleur = 0, ecartMin = Infinity;
+  /* Index of the element whose centre is closest to the track's centre. */
+  function centerIndex(track, elements) {
+    var center = track.getBoundingClientRect().left + track.clientWidth / 2;
+    var best = 0, minGap = Infinity;
     elements.forEach(function (el, i) {
       var b = el.getBoundingClientRect();
-      var d = Math.abs(b.left + b.width / 2 - centre);
-      if (d < ecartMin) { ecartMin = d; meilleur = i; }
+      var d = Math.abs(b.left + b.width / 2 - center);
+      if (d < minGap) { minGap = d; best = i; }
     });
-    return meilleur;
+    return best;
   }
 
   /* ----- 1. HALOS
-     [relevé] transition-opacity duration-[800ms] ease-out, repos opacity-0.
-     Déclencheur : le chargement de l'image, pas le défilement. ----- */
+     [measured] transition-opacity duration-[800ms] ease-out, rest opacity-0.
+     Trigger: the image load, not the scroll. ----- */
   function halos() {
     document.querySelectorAll('.halo__img').forEach(function (img) {
-      if (img.complete) img.classList.add('est-chargee');
-      else img.addEventListener('load', function () { img.classList.add('est-chargee'); });
+      if (img.complete) img.classList.add('is-loaded');
+      else img.addEventListener('load', function () { img.classList.add('is-loaded'); });
     });
   }
 
-  /* ----- 2. RÉVÉLATIONS AU DÉFILEMENT
-     Le CSS porte l'état de repos (opacité 0 + flou), le JS ajoute `est-visible`
-     puis cesse d'observer : [relevé] une révélation ne se rejoue jamais.
-     [arbitrage] les deux seuils ; la source les pilote côté applicatif. ----- */
-  function revelations() {
-    var blocs = document.querySelectorAll('[data-reveler]');
-    if (sobre || !observable) {
-      blocs.forEach(function (el) { el.classList.add('est-visible'); });
+  /* ----- 2. REVEALS ON SCROLL
+     The CSS holds the rest state (opacity 0 + blur), the JS adds `is-visible`
+     then stops observing: [measured] a reveal never replays.
+     [decided] both thresholds; the source drives them application-side. ----- */
+  function reveals() {
+    var blocks = document.querySelectorAll('[data-reveal]');
+    if (reduced || !observable) {
+      blocks.forEach(function (el) { el.classList.add('is-visible'); });
       return;
     }
-    var vue = new IntersectionObserver(function (entrees) {
-      entrees.forEach(function (e) {
+    var view = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
         if (!e.isIntersecting) return;
-        e.target.classList.add('est-visible');
-        vue.unobserve(e.target);
+        e.target.classList.add('is-visible');
+        view.unobserve(e.target);
       });
     }, { rootMargin: '0px 0px -12% 0px', threshold: 0.15 });
-    blocs.forEach(function (el) { vue.observe(el); });
+    blocks.forEach(function (el) { view.observe(el); });
   }
 
-  /* ----- 3. CARROUSEL PLEINE LARGEUR
-     Rappel de relevé : les volets n'ont AUCUN état actif/inactif — les
-     `opacity:1` / `opacity:0.4` inline de la source appartiennent à la vitrine,
-     pas ici. Rien à synchroniser : le JS ne sert qu'à recentrer.
-     [arbitrage] intégral — la source utilise une bibliothèque de carrousel. ----- */
-  function carrousel() {
-    var piste = document.querySelector('[data-carrousel]');
-    if (!piste) return;
-    var cases = piste.querySelectorAll('.carrousel__case');
-    if (!cases.length) return;
-    function allerVers(i) {
-      amener(cases[Math.max(0, Math.min(i, cases.length - 1))], 'center');
+  /* ----- 3. FULL-WIDTH CAROUSEL
+     Measurement reminder: the panels have NO active/inactive state — the
+     inline `opacity:1` / `opacity:0.4` of the source belong to the showcase,
+     not here. Nothing to sync: the JS only re-centres.
+     [decided] entirely — the source uses a carousel library. ----- */
+  function carousel() {
+    var track = document.querySelector('[data-carousel]');
+    if (!track) return;
+    var cells = track.querySelectorAll('.carousel__cell');
+    if (!cells.length) return;
+    function goTo(i) {
+      bringIntoView(cells[Math.max(0, Math.min(i, cells.length - 1))], 'center');
     }
-    piste.addEventListener('keydown', function (ev) {
-      if (ev.key === 'ArrowRight') { ev.preventDefault(); allerVers(indexCentre(piste, cases) + 1); }
-      if (ev.key === 'ArrowLeft')  { ev.preventDefault(); allerVers(indexCentre(piste, cases) - 1); }
+    track.addEventListener('keydown', function (ev) {
+      if (ev.key === 'ArrowRight') { ev.preventDefault(); goTo(centerIndex(track, cells) + 1); }
+      if (ev.key === 'ArrowLeft')  { ev.preventDefault(); goTo(centerIndex(track, cells) - 1); }
     });
-    cases.forEach(function (c, i) {
-      var bouton = c.querySelector('.vignette__lecture');
-      if (bouton) bouton.addEventListener('click', function () { allerVers(i); });
+    cells.forEach(function (c, i) {
+      var button = c.querySelector('.thumb__play');
+      if (button) button.addEventListener('click', function () { goTo(i); });
     });
-    /* [relevé] à l'ouverture la source centre un volet et laisse voir ses voisins. */
-    centrerSur(piste, cases[1] || cases[0]);
+    /* [measured] on open the source centres one panel and shows its neighbours. */
+    centerOn(track, cells[1] || cells[0]);
   }
 
-  /* ----- 4. VITRINE — ACCORDÉON + SOMMAIRE COLLANT
-     a) l'entrée active déplie son paragraphe. [relevé] la source déclare
-        `transition-property: height, opacity` SANS durée explicite : c'est donc la
-        durée par défaut du framework (150 ms) et la courbe par défaut. Une hauteur
-        ne s'anime pas depuis `auto` — le JS écrit la hauteur mesurée en pixels.
-     b) le sommaire suit l'image centrée ; un clic défile jusqu'à elle. ----- */
-  function vitrine() {
-    var sommaire = document.querySelector('[data-sommaire]');
-    var pile = document.querySelector('[data-pile]');
-    if (!sommaire || !pile) return;
-    var entrees = sommaire.querySelectorAll('.vitrine__entree');
-    var onglets = sommaire.querySelectorAll('.vitrine__onglet');
+  /* ----- 4. SHOWCASE — ACCORDION + STICKY TABLE OF CONTENTS
+     a) the active entry unfolds its paragraph. [measured] the source declares
+        `transition-property: height, opacity` WITHOUT an explicit duration: so it is
+        the framework default duration (150 ms) and the default curve. A height
+        does not animate from `auto` — the JS writes the measured height in pixels.
+     b) the table of contents follows the centred image; a click scrolls to it. ----- */
+  function showcase() {
+    var toc = document.querySelector('[data-toc]');
+    var stack = document.querySelector('[data-stack]');
+    if (!toc || !stack) return;
+    var entries = toc.querySelectorAll('.showcase__entry');
+    var tabs = toc.querySelectorAll('.showcase__tab');
 
-    function ouvrir(cible) {
-      entrees.forEach(function (entree) {
-        var onglet = entree.querySelector('.vitrine__onglet');
-        var repli = entree.querySelector('.vitrine__repli');
-        var actif = onglet.dataset.cible === cible;
-        entree.classList.toggle('est-active', actif);
-        onglet.setAttribute('aria-expanded', actif ? 'true' : 'false');
-        /* scrollHeight = hauteur naturelle du contenu replié ; écrite en pixels
-           pour que la transition ait deux bornes chiffrées. */
-        repli.style.height = actif ? repli.scrollHeight + 'px' : '0px';
+    function open(target) {
+      entries.forEach(function (entry) {
+        var tab = entry.querySelector('.showcase__tab');
+        var fold = entry.querySelector('.showcase__fold');
+        var active = tab.dataset.target === target;
+        entry.classList.toggle('is-active', active);
+        tab.setAttribute('aria-expanded', active ? 'true' : 'false');
+        /* scrollHeight = natural height of the folded content; written in pixels
+           so the transition has two numeric bounds. */
+        fold.style.height = active ? fold.scrollHeight + 'px' : '0px';
       });
     }
-    onglets.forEach(function (onglet) {
-      onglet.addEventListener('click', function () {
-        ouvrir(onglet.dataset.cible);
-        amener(document.getElementById(onglet.dataset.cible));
+    tabs.forEach(function (tab) {
+      tab.addEventListener('click', function () {
+        open(tab.dataset.target);
+        bringIntoView(document.getElementById(tab.dataset.target));
       });
     });
-    var premiere = sommaire.querySelector('.vitrine__entree.est-active .vitrine__onglet');
-    if (premiere) ouvrir(premiere.dataset.cible);
+    var first = toc.querySelector('.showcase__entry.is-active .showcase__tab');
+    if (first) open(first.dataset.target);
 
-    /* [arbitrage] bande morte de 45 % : l'entrée bascule quand l'image occupe le
-       milieu du champ, pas dès qu'elle y entre. */
+    /* [decided] 45 % dead band: the entry switches when the image fills the
+       middle of the viewport, not as soon as it enters it. */
     if (observable) {
-      var suivi = new IntersectionObserver(function (obs) {
-        obs.forEach(function (e) { if (e.isIntersecting) ouvrir(e.target.id); });
+      var follow = new IntersectionObserver(function (obs) {
+        obs.forEach(function (e) { if (e.isIntersecting) open(e.target.id); });
       }, { rootMargin: '-45% 0px -45% 0px' });
-      pile.querySelectorAll('[id]').forEach(function (el) { suivi.observe(el); });
+      stack.querySelectorAll('[id]').forEach(function (el) { follow.observe(el); });
     }
-    /* Une hauteur figée en pixels devient fausse si la ligne se recompose. */
+    /* A height frozen in pixels becomes wrong if the line reflows. */
     window.addEventListener('resize', function () {
-      var actif = sommaire.querySelector('.vitrine__entree.est-active .vitrine__onglet');
-      if (actif) ouvrir(actif.dataset.cible);
+      var active = toc.querySelector('.showcase__entry.is-active .showcase__tab');
+      if (active) open(active.dataset.target);
     });
   }
 
-  /* ----- 5. DISQUES
-     [relevé] géométrie et clip-path uniquement : le contenu de ces disques est un
-     composant client livré VIDE dans le HTML source. À l'écran, la source y affiche
-     des PORTRAITS photographiques ronds — donc ni aplat, ni transition de couleur.
-     [arbitrage] INTÉGRAL — n'ayant aucune URL de portrait dans la source aspirée,
-     on pose des aplats sombres et peu saturés, calés sur la valeur des photos
-     d'origine pour ne pas déséquilibrer la composition. Cadence déclarée en CSS. */
-  function disques() {
-    var groupe = document.querySelector('[data-disques]');
-    if (!groupe) return;
-    var teintes = ['hsl(28 18% 42%)', 'hsl(220 12% 38%)', 'hsl(240 20% 40%)',
-                   'hsl(150 12% 34%)', 'hsl(0 0% 30%)'];
-    var pastilles = groupe.querySelectorAll('.disque');
-    var rang = 0;
-    function peindre() {
-      pastilles.forEach(function (d, i) {
-        d.style.backgroundColor = teintes[(rang + i) % teintes.length];
+  /* ----- 5. DISCS
+     [measured] geometry and clip-path only: the content of these discs is a
+     client component shipped EMPTY in the source HTML. On screen, the source shows
+     round photographic PORTRAITS in them — so neither flat fill nor colour transition.
+     [decided] ENTIRELY — having no portrait URL in the scraped source,
+     we lay dark, low-saturation flat fills, matched to the value of the original
+     photos so as not to unbalance the composition. Cadence declared in CSS. */
+  function discs() {
+    var group = document.querySelector('[data-discs]');
+    if (!group) return;
+    var tints = ['hsl(28 18% 42%)', 'hsl(220 12% 38%)', 'hsl(240 20% 40%)',
+                 'hsl(150 12% 34%)', 'hsl(0 0% 30%)'];
+    var chips = group.querySelectorAll('.disc');
+    var index = 0;
+    function paint() {
+      chips.forEach(function (d, i) {
+        d.style.backgroundColor = tints[(index + i) % tints.length];
       });
-      rang += 1;
+      index += 1;
     }
-    peindre();
-    /* [arbitrage] 2,6 s : la transition d'1 s a le temps de se poser. */
-    /* [arbitrage] intervalle coupé/relancé sur visibilitychange pour ne pas tourner en arrière-plan. */
-    if (!sobre) { var id = window.setInterval(peindre, 2600); document.addEventListener('visibilitychange', function () { if (document.hidden) { window.clearInterval(id); } else { id = window.setInterval(peindre, 2600); } }); }
+    paint();
+    /* [decided] 2.6 s: the 1 s transition has time to settle. */
+    /* [decided] interval stopped/restarted on visibilitychange so it does not run in the background. */
+    if (!reduced) { var id = window.setInterval(paint, 2600); document.addEventListener('visibilitychange', function () { if (document.hidden) { window.clearInterval(id); } else { id = window.setInterval(paint, 2600); } }); }
   }
 
-  /* ----- 6. RAIL DE MARQUES — le SEUL système actif/inactif de la page.
-     [relevé] carte centrée à opacity-100, les autres à opacity-25, en 400 ms
-     courbe de sortie. Le JS désigne la carte centrée ; le CSS fait le fondu.
-     Cliquer une carte la ramène au centre — c'est ce que dit son aria-label dans
-     la source (« Center … brand card »). ----- */
+  /* ----- 6. BRAND RAIL — the ONLY active/inactive system on the page.
+     [measured] centred card at opacity-100, the others at opacity-25, in 400 ms
+     ease-out curve. The JS designates the centred card; the CSS does the fade.
+     Clicking a card brings it back to the centre — that is what its aria-label says
+     in the source ("Center … brand card"). ----- */
   function rail() {
-    var piste = document.querySelector('[data-rail]');
-    if (!piste) return;
-    var cartes = piste.querySelectorAll('.rail__carte');
-    if (!cartes.length) return;
-    function recadrer() {
-      var actif = indexCentre(piste, cartes);
-      cartes.forEach(function (c, i) { c.classList.toggle('est-active', i === actif); });
+    var track = document.querySelector('[data-rail]');
+    if (!track) return;
+    var cards = track.querySelectorAll('.rail__card');
+    if (!cards.length) return;
+    function reframe() {
+      var active = centerIndex(track, cards);
+      cards.forEach(function (c, i) { c.classList.toggle('is-active', i === active); });
     }
-    cartes.forEach(function (c) {
-      c.addEventListener('click', function () { amener(c, 'center'); });
+    cards.forEach(function (c) {
+      c.addEventListener('click', function () { bringIntoView(c, 'center'); });
     });
-    piste.addEventListener('scroll', function () { window.requestAnimationFrame(recadrer); }, { passive: true });
-    window.addEventListener('resize', recadrer);
-    centrerSur(piste, cartes[1] || cartes[0]); /* [relevé] le rail ouvre sur sa 2e carte */
-    recadrer();
+    track.addEventListener('scroll', function () { window.requestAnimationFrame(reframe); }, { passive: true });
+    window.addEventListener('resize', reframe);
+    centerOn(track, cards[1] || cards[0]); /* [measured] the rail opens on its 2nd card */
+    reframe();
   }
 
-  halos(); revelations(); carrousel(); vitrine(); disques(); rail();
+  halos(); reveals(); carousel(); showcase(); discs(); rail();
 })();

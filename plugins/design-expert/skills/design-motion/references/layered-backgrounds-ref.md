@@ -2,7 +2,7 @@
 name: layered-backgrounds
 description: Use when creating hero sections, landing pages, or premium visual effects. Covers gradient orbs, blur layers, noise textures.
 versions:
-  tailwindcss: "4.1"
+  tailwindcss: "4.3"
   framer-motion: "11"
 user-invocable: true
 allowed-tools: Read, Write, Edit, Glob, Grep

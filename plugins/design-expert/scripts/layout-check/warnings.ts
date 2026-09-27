@@ -1,20 +1,20 @@
 /**
- * warnings.ts — Traitement des avertissements avant restitution.
- * Un avertissement n'est pas une violation : c'est ce que le script ne sait pas
- * trancher. Il doit donc rester LISIBLE, sinon il sera ignoré — et un cas non
- * mesurable ignoré est exactement le trou qu'on cherche à fermer.
+ * warnings.ts — Processing of warnings before they are reported.
+ * A warning is not a violation: it is what the script cannot decide.
+ * It must therefore stay READABLE, or it will be ignored — and an ignored
+ * unmeasurable case is exactly the hole we are trying to close.
  */
 import type { Warning } from "./types";
 
 /**
- * Fusionne les avertissements identiques d'une largeur à l'autre.
- * Un fond en dégradé ou un texte masqué ne dépend pas de la largeur de viewport :
- * le répéter à chaque largeur multiplie par six une sortie déjà non actionnable
- * (mesuré : 60 lignes sur une page réelle, 15 après fusion). Les largeurs
- * concernées sont conservées dans le motif.
+ * Merges identical warnings across widths.
+ * A gradient background or hidden text does not depend on the viewport width:
+ * repeating it at every width multiplies an already non-actionable output by six
+ * (measured: 60 lines on a real page, 15 after merging). The affected widths
+ * are kept in the reason.
  *
- * @param warnings - Avertissements bruts, toutes largeurs confondues
- * @returns Un avertissement par couple (type, sélecteur, motif)
+ * @param warnings - Raw warnings, all widths combined
+ * @returns One warning per (type, selector, reason) tuple
  */
 export function dedupeWarnings(warnings: Warning[]): Warning[] {
   const groups = new Map<string, { warning: Warning; widths: number[] }>();
@@ -26,6 +26,6 @@ export function dedupeWarnings(warnings: Warning[]): Warning[] {
   }
   return [...groups.values()].map(({ warning, widths }) => ({
     ...warning,
-    reason: widths.length > 1 ? `${warning.reason} [largeurs : ${widths.join(", ")}]` : warning.reason,
+    reason: widths.length > 1 ? `${warning.reason} [widths: ${widths.join(", ")}]` : warning.reason,
   }));
 }

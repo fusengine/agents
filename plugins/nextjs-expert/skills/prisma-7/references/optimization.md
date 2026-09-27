@@ -16,7 +16,7 @@ Performance patterns for Prisma 7 following SOLID principles.
 
 ```typescript
 // lib/db/users.service.ts
-import type { User, Post } from '@prisma/client'
+import type { User, Post } from '@/generated/prisma/client'
 
 /**
  * @description Fetches users with all related posts in a single query
@@ -56,7 +56,7 @@ export async function getUserPostsMap(userIds: string[]): Promise<Record<string,
 
 ```typescript
 // lib/db/queries/user-queries.ts
-import type { Prisma } from '@prisma/client'
+import type { Prisma } from '@/generated/prisma/client'
 
 /** @description Minimal user projection for list views */
 export const userListSelect = {
@@ -103,7 +103,7 @@ export async function getUserProfile(userId: string) {
 
 ```typescript
 // lib/db/pagination.ts
-import type { Post } from '@prisma/client'
+import type { Post } from '@/generated/prisma/client'
 
 interface PaginationOptions {
   cursor?: string
@@ -139,7 +139,7 @@ export async function paginatePosts(
 
 ```typescript
 // lib/db/batch-operations.ts
-import type { User } from '@prisma/client'
+import type { User } from '@/generated/prisma/client'
 
 /**
  * @description Batch verifies multiple users efficiently
@@ -179,7 +179,7 @@ export async function createUsersInBatch(
 
 ```typescript
 // lib/db/relation-strategies.ts
-import type { User, Post } from '@prisma/client'
+import type { User, Post } from '@/generated/prisma/client'
 
 /**
  * @description Uses JOIN strategy (single query, suitable for small result sets)
@@ -242,7 +242,7 @@ model Post {
 
 ```typescript
 // lib/db/logging.ts
-import type { PrismaClient } from '@prisma/client'
+import type { PrismaClient } from '@/generated/prisma/client'
 
 /**
  * @description Enables slow query monitoring for performance debugging

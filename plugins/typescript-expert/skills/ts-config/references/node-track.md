@@ -1,13 +1,13 @@
 ---
 name: node-track
-description: Pure Node.js tsconfig track with native type stripping (Node 24 LTS)
+description: Pure Node.js tsconfig track with native type stripping (Node 24 LTS / Node 26)
 keywords: nodenext, type stripping, erasableSyntaxOnly, rewriteRelativeImportExtensions, node
 ---
 
 # Node Track (native type stripping)
 
 Load when code runs directly on Node.js (`node file.ts`) or emits `.js` for Node.
-Source of truth: nodejs.org/api/typescript.html + typescriptlang.org TS 6.0 notes.
+Source of truth: nodejs.org/api/typescript.html + TypeScript 6.0 / 7.0 release notes.
 
 Node.js runs TypeScript by **stripping types** — it replaces type syntax with whitespace
 and performs NO type checking and NO JS code generation. `tsc` remains your checker.

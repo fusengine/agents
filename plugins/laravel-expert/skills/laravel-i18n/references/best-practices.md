@@ -71,7 +71,7 @@ lang/
 
 | Benefit | Implementation |
 |---------|----------------|
-| Type safety | `Locale::FR` instead of `'fr'` |
+| Type safety | `Locale::ES` instead of `'es'` |
 | Autocomplete | IDE support |
 | Validation | `Locale::tryFrom($value)` |
 | Labels | `$locale->label()` |

@@ -6,7 +6,7 @@ keywords: event, listener, roleattached, audit, notification
 
 # Permission Event Listeners
 
-Listeners for Spatie Permission events.
+Listeners for Spatie Permission events (v7+ class names with `Event` suffix; enable with `'events_enabled' => true` in `config/permission.php`).
 
 ## File: app/Listeners/LogRoleChanges.php
 
@@ -18,8 +18,8 @@ declare(strict_types=1);
 namespace App\Listeners;
 
 use Illuminate\Support\Facades\Log;
-use Spatie\Permission\Events\RoleAttached;
-use Spatie\Permission\Events\RoleDetached;
+use Spatie\Permission\Events\RoleAttachedEvent;
+use Spatie\Permission\Events\RoleDetachedEvent;
 
 /**
  * Log role assignment changes.
@@ -29,7 +29,7 @@ final class LogRoleChanges
     /**
      * Handle role attached event.
      */
-    public function handleRoleAttached(RoleAttached $event): void
+    public function handleRoleAttached(RoleAttachedEvent $event): void
     {
         Log::info('Role assigned', [
             'role' => $event->role->name,
@@ -43,7 +43,7 @@ final class LogRoleChanges
     /**
      * Handle role detached event.
      */
-    public function handleRoleDetached(RoleDetached $event): void
+    public function handleRoleDetached(RoleDetachedEvent $event): void
     {
         Log::info('Role removed', [
             'role' => $event->role->name,
@@ -66,8 +66,8 @@ declare(strict_types=1);
 namespace App\Listeners;
 
 use Illuminate\Support\Facades\Log;
-use Spatie\Permission\Events\PermissionAttached;
-use Spatie\Permission\Events\PermissionDetached;
+use Spatie\Permission\Events\PermissionAttachedEvent;
+use Spatie\Permission\Events\PermissionDetachedEvent;
 
 /**
  * Log permission assignment changes.
@@ -77,7 +77,7 @@ final class LogPermissionChanges
     /**
      * Handle permission attached event.
      */
-    public function handlePermissionAttached(PermissionAttached $event): void
+    public function handlePermissionAttached(PermissionAttachedEvent $event): void
     {
         Log::info('Permission granted', [
             'permission' => $event->permission->name,
@@ -90,7 +90,7 @@ final class LogPermissionChanges
     /**
      * Handle permission detached event.
      */
-    public function handlePermissionDetached(PermissionDetached $event): void
+    public function handlePermissionDetached(PermissionDetachedEvent $event): void
     {
         Log::info('Permission revoked', [
             'permission' => $event->permission->name,
@@ -114,10 +114,10 @@ namespace App\Providers;
 use App\Listeners\LogPermissionChanges;
 use App\Listeners\LogRoleChanges;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
-use Spatie\Permission\Events\PermissionAttached;
-use Spatie\Permission\Events\PermissionDetached;
-use Spatie\Permission\Events\RoleAttached;
-use Spatie\Permission\Events\RoleDetached;
+use Spatie\Permission\Events\PermissionAttachedEvent;
+use Spatie\Permission\Events\PermissionDetachedEvent;
+use Spatie\Permission\Events\RoleAttachedEvent;
+use Spatie\Permission\Events\RoleDetachedEvent;
 
 /**
  * Event service provider.
@@ -130,23 +130,25 @@ final class EventServiceProvider extends ServiceProvider
      * @var array<class-string, array<int, class-string>>
      */
     protected $listen = [
-        RoleAttached::class => [
+        RoleAttachedEvent::class => [
             [LogRoleChanges::class, 'handleRoleAttached'],
         ],
-        RoleDetached::class => [
+        RoleDetachedEvent::class => [
             [LogRoleChanges::class, 'handleRoleDetached'],
         ],
-        PermissionAttached::class => [
+        PermissionAttachedEvent::class => [
             [LogPermissionChanges::class, 'handlePermissionAttached'],
         ],
-        PermissionDetached::class => [
+        PermissionDetachedEvent::class => [
             [LogPermissionChanges::class, 'handlePermissionDetached'],
         ],
     ];
 }
 ```
 
-## Laravel 11+ Attribute-Based Listener
+## Laravel 11+ Auto-Discovered Listener
+
+Laravel discovers listeners in `app/Listeners` automatically from the type-hinted `handle()` argument — no attribute or registration needed.
 
 ```php
 <?php
@@ -156,13 +158,11 @@ declare(strict_types=1);
 namespace App\Listeners;
 
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Events\Attribute\AsEventListener;
-use Spatie\Permission\Events\RoleAttached;
+use Spatie\Permission\Events\RoleAttachedEvent;
 
-#[AsEventListener]
 final class NotifySecurityTeam implements ShouldQueue
 {
-    public function handle(RoleAttached $event): void
+    public function handle(RoleAttachedEvent $event): void
     {
         if ($event->role->name === 'Super-Admin') {
             // Send notification to security team

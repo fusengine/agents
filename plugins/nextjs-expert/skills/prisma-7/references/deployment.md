@@ -20,9 +20,9 @@ Prisma 7 deployment patterns for production environments.
  * Prisma Client singleton for Node.js environment.
  * @see /modules/database/src/interfaces/prisma-config.ts
  */
-import type { PrismaClient } from '@prisma/client'
+import type { PrismaClient } from '../generated/prisma/client'
 import { PrismaPg } from '@prisma/adapter-pg'
-import { PrismaClient as PC } from '@prisma/client'
+import { PrismaClient as PC } from '../generated/prisma/client' // v7: generated path (output = src/generated/prisma)
 
 const adapter = new PrismaPg({
   connectionString: process.env.DATABASE_URL!,
@@ -68,9 +68,8 @@ if (process.env.NODE_ENV !== 'production') {
  * @see /src/lib/prisma-edge.ts
  */
 import type { NextRequest } from 'next/server'
-import { neon } from '@neondatabase/serverless'
 import { PrismaNeon } from '@prisma/adapter-neon'
-import { PrismaClient } from '@prisma/client'
+import { PrismaClient } from '@/generated/prisma/client' // v7: generated path
 
 export const runtime = 'edge'
 
@@ -82,8 +81,7 @@ export const runtime = 'edge'
  * @see /src/repositories/user-repository.ts
  */
 export async function GET(_request: NextRequest) {
-  const sql = neon(process.env.DATABASE_URL!)
-  const adapter = new PrismaNeon(sql)
+  const adapter = new PrismaNeon({ connectionString: process.env.DATABASE_URL! })
   const prisma = new PrismaClient({ adapter })
 
   const users = await prisma.user.findMany()
@@ -103,7 +101,7 @@ export async function GET(_request: NextRequest) {
  */
 import type { D1Database } from '@cloudflare/workers-types'
 import { PrismaD1 } from '@prisma/adapter-d1'
-import { PrismaClient } from '@prisma/client'
+import { PrismaClient } from './generated/prisma/client' // v7: generated path (runtime = "cloudflare")
 
 /**
  * Environment variables available in Cloudflare Workers.
@@ -144,8 +142,10 @@ export default {
 FROM oven/bun:1 AS builder
 WORKDIR /app
 
-COPY package.json bun.lockb ./
+COPY package.json bun.lock ./
 COPY prisma ./prisma
+# Config created by `prisma init`: prisma7.config.ts on 7.10+ (prisma.config.ts on 7.0–7.9)
+COPY prisma7.config.ts ./
 
 RUN bun install
 RUN bunx prisma generate
@@ -222,11 +222,10 @@ import { PrismaPg } from '@prisma/adapter-pg'
  * @see /src/lib/prisma.ts
  */
 export function getServerlessAdapter() {
+  // v7: PrismaPg takes pg PoolConfig fields directly (no nested `pool` key)
   return new PrismaPg({
     connectionString: process.env.DATABASE_URL!,
-    pool: {
-      max: 1, // Minimize for serverless
-    },
+    max: 1, // Minimize for serverless
   })
 }
 
@@ -240,10 +239,8 @@ export function getServerlessAdapter() {
 export function getServerAdapter() {
   return new PrismaPg({
     connectionString: process.env.DATABASE_URL!,
-    pool: {
-      max: 20,
-      idleTimeoutMillis: 30000,
-    },
+    max: 20,
+    idleTimeoutMillis: 30000,
   })
 }
 ```

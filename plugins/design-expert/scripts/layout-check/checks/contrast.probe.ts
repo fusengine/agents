@@ -1,28 +1,28 @@
 /**
- * contrast.probe.ts — Fonction exécutée DANS la page pour le contrôle `contrast`.
- * Sérialisée par Playwright : aucune référence à une variable de module, uniquement
- * l'argument et `window.__lc`.
+ * contrast.probe.ts — Function executed IN the page for the `contrast` check.
+ * Serialized by Playwright: no reference to any module variable, only
+ * the argument and `window.__lc`.
  */
 import type { ContrastRow } from "../page.types";
 
-/** Argument sérialisable passé à la sonde. */
+/** Serializable argument passed to the probe. */
 export interface ContrastProbeArgs {
   exclude: string[];
   normal: number;
   large: number;
 }
 
-/** Résultat : violations franches d'un côté, mesures non fiables de l'autre. */
+/** Result: clear-cut violations on one side, unreliable measurements on the other. */
 export interface ContrastProbeResult {
   failed: ContrastRow[];
   unresolved: ContrastRow[];
 }
 
 /**
- * Calcule le ratio WCAG de chaque élément portant du texte, sur couleurs résolues.
+ * Computes the WCAG ratio of every text-bearing element, on resolved colors.
  *
- * @param args - Seuils et exclusions, sérialisés depuis Node
- * @returns Les échecs de contraste et les cas dont le fond n'est pas résoluble
+ * @param args - Thresholds and exclusions, serialized from Node
+ * @returns The contrast failures and the cases whose background cannot be resolved
  */
 export function contrastProbe(args: ContrastProbeArgs): ContrastProbeResult {
   const failed: ContrastRow[] = [];
@@ -36,7 +36,7 @@ export function contrastProbe(args: ContrastProbeArgs): ContrastProbeResult {
     const fg = (rawFg[3] as number) < 0.999 ? (window.__lc.blend(rawFg, bg.rgb) as number[]) : rawFg;
     const fontSize = parseFloat(style.fontSize);
     const fontWeight = Number(style.fontWeight) || 400;
-    // WCAG « large text » : >= 24px, ou >= 18.66px en gras (>= 700).
+    // WCAG "large text": >= 24px, or >= 18.66px bold (>= 700).
     const largeText = fontSize >= 24 || (fontSize >= 18.66 && fontWeight >= 700);
     const required = largeText ? args.large : args.normal;
     const ratio = Number((window.__lc.contrastRatio(fg, bg.rgb) as number).toFixed(2));
@@ -52,12 +52,12 @@ export function contrastProbe(args: ContrastProbeArgs): ContrastProbeResult {
       unresolvedImageAt: bg.image,
       text: text.slice(0, 60),
     };
-    // Texte peint par un dégradé (background-clip: text) : couleur non mesurable.
+    // Text painted by a gradient (background-clip: text): color not measurable.
     if ((rawFg[3] as number) === 0) {
       unresolved.push(row);
       continue;
     }
-    // Fond porté par une image/un dégradé : le ratio calculé n'engage que la couche couleur.
+    // Background carried by an image/a gradient: the computed ratio only covers the color layer.
     if (bg.image) {
       if (ratio < required) unresolved.push(row);
       continue;

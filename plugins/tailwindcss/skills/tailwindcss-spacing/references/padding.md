@@ -224,38 +224,45 @@ module.exports = {
 
 ## CSS Generation
 
-Tailwind generates padding utilities as follows:
+Tailwind generates padding utilities as follows (v4.3 output):
 
 ```css
 @layer utilities {
   .p-4 {
-    padding: calc(var(--spacing) * 16);
+    padding: calc(var(--spacing) * 4);
   }
 
   .px-4 {
-    padding-left: calc(var(--spacing) * 16);
-    padding-right: calc(var(--spacing) * 16);
+    padding-inline: calc(var(--spacing) * 4);
   }
 
   .py-4 {
-    padding-top: calc(var(--spacing) * 16);
-    padding-bottom: calc(var(--spacing) * 16);
+    padding-block: calc(var(--spacing) * 4);
   }
 
   .pt-4 {
-    padding-top: calc(var(--spacing) * 16);
+    padding-top: calc(var(--spacing) * 4);
   }
 
   .pr-4 {
-    padding-right: calc(var(--spacing) * 16);
+    padding-right: calc(var(--spacing) * 4);
   }
 
   .pb-4 {
-    padding-bottom: calc(var(--spacing) * 16);
+    padding-bottom: calc(var(--spacing) * 4);
   }
 
   .pl-4 {
-    padding-left: calc(var(--spacing) * 16);
+    padding-left: calc(var(--spacing) * 4);
+  }
+
+  /* Logical block-axis padding (since v4.2) */
+  .pbs-4 {
+    padding-block-start: calc(var(--spacing) * 4);
+  }
+
+  .pbe-4 {
+    padding-block-end: calc(var(--spacing) * 4);
   }
 }
 ```

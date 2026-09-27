@@ -29,12 +29,12 @@ Use this as a copy-paste TODO in your branch description or PR.
 
 ## Phase 3: Breaking changes (1-3 h)
 
-- [ ] **Middleware rename**: `validateCsrfTokens` → `validateOrigin` in `bootstrap/app.php`
+- [ ] **Middleware rename**: `validateCsrfTokens` → `preventRequestForgery` in `bootstrap/app.php`; `VerifyCsrfToken::class` → `PreventRequestForgery::class`
 - [ ] **Cache prefix preservation**: set `CACHE_PREFIX`, `REDIS_PREFIX`, `SESSION_COOKIE` in `.env`
 - [ ] **Serializable classes config**: review `config/cache.php` → `serializable_classes`
-- [ ] **Eloquent boot**: ensure no `new Model()` calls in service provider `register()`
+- [ ] **Eloquent boot**: ensure no `new static()` / model instantiation inside model `boot()` or trait `boot*()` methods
 - [ ] **PHPUnit 12 mocks**: refactor removed mock methods (check test errors)
-- [ ] **Pest 4 config**: `vendor/bin/pest --init` if needed
+- [ ] **Pest 4 snapshots**: `vendor/bin/pest --update-snapshots` if you use `toMatchSnapshot`
 - [ ] **QueueBusy event**: update listeners if used
 - [ ] **Dispatcher contract**: add `dispatchAfterResponse()` if custom implementation
 - [ ] **Str factories**: review tests with global Str overrides

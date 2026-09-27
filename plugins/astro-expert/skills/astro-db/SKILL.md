@@ -11,14 +11,14 @@ related-skills: astro-7, astro-actions, astro-deployment
 <objective>
 Implements Astro DB (`@astrojs/db`): schema definition with `defineDb`/`defineTable` in `db/config.ts`, column types (`text`, `number`, `boolean`, `date`, `json`), type-safe CRUD via `db.select/insert/update/delete`, development seeding in `db/seed.ts`, and production deployment to Turso (libSQL) with `ASTRO_DB_REMOTE_URL`/`ASTRO_DB_APP_TOKEN` and `astro db push`.
 
-Also covers integration with Astro Actions for end-to-end type-safe form-to-database flows. `@astrojs/db` is deprecated and no longer actively maintained (still published, v0.21.3, not removed from Astro 7) — for new projects this skill recommends Drizzle, Kysely, or a direct libSQL client instead; existing projects can keep using it but should plan a migration.
+Also covers integration with Astro Actions for end-to-end type-safe form-to-database flows. `@astrojs/db` is deprecated on npm (last release v0.21.3, June 2026) and listed as **Removed** in the official Astro v7 upgrade guide — for new projects this skill recommends Drizzle, Kysely, `node:sqlite`, or a direct libSQL client instead; existing Astro 6 projects must migrate off it before upgrading to Astro 7.
 </objective>
 
 # Astro DB
 
 Type-safe SQL database built into Astro, powered by libSQL/Turso. Use for structured data without external backend services.
 
-> **⚠️ Deprecation notice**: `@astrojs/db` is **deprecated and no longer actively maintained** (still published on npm, currently v0.21.3 — it has not been removed from Astro 7). For new projects, prefer **Drizzle**, **Kysely**, or a direct **libSQL** client instead. Existing projects can keep using it, but should plan a migration.
+> **⚠️ Removal notice**: `@astrojs/db` is **deprecated on npm** ("Use a database client (Drizzle, Kysely, etc.) directly instead"; last release v0.21.3) and the **official Astro v7 upgrade guide lists it under "Removed"** — remove it from dependencies when upgrading. Replacements: Node's built-in **`node:sqlite`** (Node adapter), **Drizzle** directly, **Kysely**, or a **libSQL/Turso** client. The content below documents the legacy Astro 6 API for maintaining/migrating existing projects.
 
 ## Agent Workflow (MANDATORY)
 
@@ -100,4 +100,4 @@ Combine with `astro:actions` for end-to-end type safety: Zod input validation �
 3. **`.returning()` after insert** - Get back inserted rows
 4. **Push before deploy** - Run `astro db push` in CI/CD
 5. **Turso free tier** - 500 databases, generous for production
-6. **New projects: consider Drizzle/Kysely/libSQL instead** - `@astrojs/db` is deprecated and unmaintained; still usable for existing projects, but not recommended as a starting point
+6. **New projects: use Drizzle/Kysely/`node:sqlite`/libSQL instead** - `@astrojs/db` is deprecated and listed as removed in the Astro v7 upgrade guide; migrate existing projects before upgrading to Astro 7

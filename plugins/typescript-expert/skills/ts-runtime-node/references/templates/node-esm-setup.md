@@ -25,7 +25,7 @@ tests with `node:test`. No bundler, no `ts-node`.
     "test:watch": "node --test --watch"
   },
   "devDependencies": {
-    "typescript": "^6.0.0",
+    "typescript": "^7.0.2",
     "@types/node": "^24.0.0"
   }
 }
@@ -40,6 +40,7 @@ tests with `node:test`. No bundler, no `ts-node`.
     "target": "esnext",
     "module": "nodenext",
     "moduleResolution": "nodenext",
+    "types": ["node"],
     "rewriteRelativeImportExtensions": true,
     "erasableSyntaxOnly": true,
     "verbatimModuleSyntax": true,

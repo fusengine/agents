@@ -13,9 +13,10 @@ related: ["migrate-from-typeorm", "migrate-from-drizzle"]
 ## Step 1: Setup Prisma
 
 ```bash
-npm install @prisma/client
-npm install -D prisma
-npx prisma init
+npm install @prisma/client@7 @prisma/adapter-pg dotenv   # MySQL: @prisma/adapter-mariadb
+npm install -D prisma@7
+npx prisma init   # creates a `prisma-client` generator with `output` + the config file:
+                  # 7.10+ → prisma7.config.ts (7.0–7.9 → prisma.config.ts) — edit THAT file
 ```
 
 ## Step 2: Database Introspection
@@ -107,7 +108,7 @@ model Tag {
 // Module: src/services/user.service.ts
 // Purpose: User queries (SOLID: SRP - query logic only)
 import { Op } from "sequelize";
-import type { Prisma } from "@prisma/client";
+import type { Prisma } from "../generated/prisma/client"; // v7: generated path
 
 /**
  * Find by primary key
@@ -232,19 +233,23 @@ User.beforeCreate(async (user) => {
   user.email = user.email.toLowerCase();
 });
 
-// Prisma: Use middleware or application logic
+// Prisma: Use a Client Extension or application logic
 const user = await prisma.user.create({
   data: {
     email: email.toLowerCase()
   }
 });
 
-// Or use Prisma middleware
-prisma.$use(async (params, next) => {
-  if (params.action === 'create' && params.model === 'User') {
-    params.args.data.email = params.args.data.email.toLowerCase();
+// Or use a query extension (`$use` middleware was removed in Prisma 7)
+const xprisma = prisma.$extends({
+  query: {
+    user: {
+      async create({ args, query }) {
+        args.data.email = args.data.email.toLowerCase();
+        return query(args);
+      }
+    }
   }
-  return next(params);
 });
 ```
 
@@ -253,7 +258,7 @@ prisma.$use(async (params, next) => {
 ```typescript
 // Module: src/services/transaction.service.ts
 // Purpose: Database transactions (SOLID: SRP - transactional operations)
-import type { Prisma } from "@prisma/client";
+import type { Prisma } from "../generated/prisma/client"; // v7: generated path
 
 /**
  * Sequelize: Manual transaction management

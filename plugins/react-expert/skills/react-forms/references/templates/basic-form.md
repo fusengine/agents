@@ -23,7 +23,6 @@ npm install --save-dev @types/react
 
 import React, { useState } from 'react';
 import { useForm } from '@tanstack/react-form';
-import { zodValidator } from '@tanstack/zod-form-adapter';
 import { z } from 'zod';
 
 /**
@@ -108,7 +107,6 @@ export function BasicForm({ isSignup = false, onSubmit }: BasicFormProps) {
         setIsLoading(false);
       }
     },
-    validatorAdapter: zodValidator(),
     validators: {
       onChange: formSchema,
       onBlur: formSchema,

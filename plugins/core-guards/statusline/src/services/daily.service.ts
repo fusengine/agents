@@ -1,7 +1,7 @@
 /**
- * Daily Service - Tracking des depenses quotidiennes
+ * Daily Service - Daily spend tracking
  *
- * @description SRP: Tracking daily uniquement
+ * @description SRP: Daily tracking only
  */
 
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";

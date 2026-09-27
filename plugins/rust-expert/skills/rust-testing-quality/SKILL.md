@@ -4,7 +4,7 @@ description: Use when writing, organizing, or running Rust tests — unit, integ
 versions:
   cargo-nextest: "0.9"
   proptest: "1"
-  criterion: "0.5"
+  criterion: "0.8"
 user-invocable: false
 references: references/test-organization.md, references/property-and-mutation.md, references/templates/test-suite.md, references/templates/criterion-bench.md
 related-skills: solid-rust, rust-tooling-cicd

@@ -94,6 +94,37 @@ Creating new promise every render.
 
 ---
 
+## Animating Transitions and Suspense Reveals (React 19.3)
+
+`<ViewTransition>` and `addTransitionType` are stable in 19.3 (`import { ViewTransition, addTransitionType } from 'react'`).
+
+- **Triggers:** `enter` (added), `exit` (removed), `update` (children change), `share` (named element moves)
+- **Only** updates in a Transition (`startTransition`), a `<Suspense>` reveal, or `useDeferredValue` animate — urgent updates never do
+- **Props:** `name` (shared-element only); class props `enter`/`exit`/`update`/`share`/`default` = `"auto" | "none" | className | { [type]: value, default }`; events `onEnter`/`onExit`/`onShare`/`onUpdate` = `(instance, types) => cleanup`
+- **Suspense:** wrap the boundary to animate fallback → content
+
+```tsx
+<ViewTransition update="auto" default="none">
+  <Suspense fallback={<Skeleton />}>
+    <Content />
+  </Suspense>
+</ViewTransition>
+```
+
+```tsx
+startTransition(() => {
+  addTransitionType('next') // reset after each commit; also exposed to CSS :active-view-transition-type(next)
+  setCurrentSlide((c) => c + 1)
+})
+// <ViewTransition enter={{ next: 'from-right', previous: 'from-left' }}>
+```
+
+**Caveats:** DOM only; React calls `startViewTransition` itself (never call it); respect `prefers-reduced-motion` yourself; `default="none"` disables every trigger not listed.
+
+**19.3 behaviour:** Transitions render independently — a slow Transition no longer holds up unrelated ones.
+
+---
+
 ## Best Practices
 
 1. **Create promises outside component** or in loader

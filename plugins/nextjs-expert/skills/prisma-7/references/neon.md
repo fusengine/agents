@@ -40,14 +40,19 @@ DATABASE_URL="postgresql://...@[project]-pooler.neon.tech/db?sslmode=require"
 DATABASE_URL="postgresql://...@[project].neon.tech/db?sslmode=require"
 ```
 
-Prisma configuration with Neon pooling:
+Prisma 7 configuration with Neon pooling — `directUrl` no longer exists: the CLI (migrations) uses the **direct** URL from `prisma.config.ts`, while the app passes the **pooled** URL to the driver adapter (see Production Setup):
 
-```prisma
-datasource db {
-  provider  = "postgresql"
-  url       = env("DATABASE_URL")
-  directUrl = env("DIRECT_DATABASE_URL")
-}
+```typescript
+// prisma.config.ts
+import 'dotenv/config'
+import { defineConfig, env } from 'prisma/config'
+
+export default defineConfig({
+  schema: 'prisma/schema.prisma',
+  datasource: {
+    url: env('DIRECT_DATABASE_URL'), // direct TCP for migrate/DDL
+  },
+})
 ```
 
 Set separate env vars:
@@ -231,11 +236,8 @@ DIRECT_DATABASE_URL="postgresql://...@[project]/feature-branch" \
  * Handles connection reuse across Lambda/Function invocations.
  * @module modules/database/src/client
  */
-import { PrismaClient } from '@prisma/client'
-
-declare global {
-  var prisma: PrismaClient | undefined;
-}
+import { PrismaNeon } from '@prisma/adapter-neon'
+import { PrismaClient } from '@/generated/prisma/client'  // v7: generated path
 
 /**
  * Get or create Prisma client (singleton pattern).
@@ -243,11 +245,15 @@ declare global {
  * @returns {PrismaClient} Prisma client instance
  * @module modules/database/src/client
  */
-const globalForPrisma = global as unknown as { prisma: PrismaClient | undefined }
+const globalForPrisma = globalThis as unknown as { prisma: PrismaClient | undefined }
+
+// v7: driver adapter required — pooled Neon URL at runtime
+const adapter = new PrismaNeon({ connectionString: process.env.DATABASE_URL! })
 
 export const prisma =
   globalForPrisma.prisma ||
   new PrismaClient({
+    adapter,
     log: process.env.NODE_ENV === 'development' ? ['query'] : ['error'],
   })
 

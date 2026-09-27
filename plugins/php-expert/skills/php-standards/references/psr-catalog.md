@@ -25,7 +25,7 @@ PSRs are PHP-FIG interoperability standards. Depend on their interface packages 
 | **6** | Caching Interface | `psr/cache` — `CacheItemPoolInterface` |
 | **7** | HTTP Message Interface | `psr/http-message` — `RequestInterface`, `ResponseInterface` |
 | **11** | Container Interface | `psr/container` — `ContainerInterface` |
-| **12** | Extended Coding Style | (see PER-CS 3.0) |
+| **12** | Extended Coding Style | (see PER-CS 3.1) |
 | **13** | Hypermedia Links | `psr/link` |
 | **14** | Event Dispatcher | `psr/event-dispatcher` |
 | **15** | HTTP Server Handlers | `psr/http-server-handler`, `...-middleware` |

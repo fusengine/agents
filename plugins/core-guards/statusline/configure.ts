@@ -1,7 +1,7 @@
 #!/usr/bin/env bun
 /**
  * Statusline Configurator - Terminal-Kit entry point
- * Preview en temps réel + Navigation clavier
+ * Real-time preview + keyboard navigation
  */
 
 import termkit from "terminal-kit";
@@ -45,7 +45,7 @@ async function main() {
 		} else if (numKey === "s") {
 			await manager.save(config);
 			term.clear();
-			term.green("\n✓ Configuration sauvegardée!\n\n");
+			term.green("\n✓ Configuration saved!\n\n");
 			process.exit(0);
 		} else if (numKey === "q" || key === "ESCAPE" || key === "CTRL_C") {
 			term.clear();

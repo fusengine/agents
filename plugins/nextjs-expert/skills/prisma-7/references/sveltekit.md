@@ -16,6 +16,9 @@ Prisma 7 with SvelteKit for full-stack applications.
 
 ```typescript
 // src/lib/server/interfaces/prisma.ts
+// generator output = "../src/generated/prisma" in prisma/schema.prisma (v7: output required)
+import type { PrismaClient } from '../../../generated/prisma/client'
+
 /**
  * Global Prisma singleton type
  * @see /src/lib/server/prisma.ts
@@ -25,7 +28,9 @@ export interface PrismaGlobal {
 }
 
 // src/lib/server/prisma.ts
-import { PrismaClient } from '@prisma/client'
+import { DATABASE_URL } from '$env/static/private'
+import { PrismaPg } from '@prisma/adapter-pg'
+import { PrismaClient } from '../../generated/prisma/client'  // v7: generated path
 import type { PrismaGlobal } from './interfaces/prisma'
 
 /**
@@ -34,8 +39,10 @@ import type { PrismaGlobal } from './interfaces/prisma'
  */
 const globalForPrisma = globalThis as unknown as PrismaGlobal
 
+const adapter = new PrismaPg({ connectionString: DATABASE_URL })
+
 export const prisma =
-  globalForPrisma.prisma ?? new PrismaClient()
+  globalForPrisma.prisma ?? new PrismaClient({ adapter })
 
 if (process.env.NODE_ENV !== 'production') {
   globalForPrisma.prisma = prisma

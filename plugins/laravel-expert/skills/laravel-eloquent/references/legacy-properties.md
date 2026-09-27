@@ -17,7 +17,8 @@ In Laravel 13, **PHP Attributes are the recommended style**. The legacy property
 |---------|-------------------|---------------------------|
 | Table | `protected $table = 'users';` | `#[Table('users')]` |
 | Connection | `protected $connection = 'mysql';` | `#[Connection('mysql')]` |
-| Primary key | `protected $primaryKey = 'uuid';` | `#[PrimaryKey('uuid')]` |
+| Primary key | `protected $primaryKey = 'uuid';` | `#[Table(key: 'uuid', keyType: 'string', incrementing: false)]` |
+| Non-incrementing | `public $incrementing = false;` | `#[WithoutIncrementing]` |
 | Fillable | `protected $fillable = ['name'];` | `#[Fillable(['name'])]` |
 | Guarded | `protected $guarded = ['id'];` | `#[Guarded(['id'])]` |
 | Unguarded | `protected $guarded = [];` | `#[Unguarded]` |
@@ -25,9 +26,11 @@ In Laravel 13, **PHP Attributes are the recommended style**. The legacy property
 | Visible | `protected $visible = ['name'];` | `#[Visible(['name'])]` |
 | Appends | `protected $appends = ['full_name'];` | `#[Appends(['full_name'])]` |
 | Touches | `protected $touches = ['author'];` | `#[Touches(['author'])]` |
-| Casts | `casts(): array { return [...]; }` | `#[Casts([...])]` |
-| Dates | `protected $dates = ['archived_at'];` | `#[Casts(['archived_at' => 'datetime'])]` |
-| Timestamps OFF | `public $timestamps = false;` | `#[NoTimestamps]` |
+| Casts | `protected $casts = [...];` | no attribute — keep the `casts(): array` method (L13 docs) |
+| Dates | `protected $dates = ['archived_at'];` | `'archived_at' => 'datetime'` in `casts()` |
+| Timestamps OFF | `public $timestamps = false;` | `#[WithoutTimestamps]` |
+| Date format | `protected $dateFormat = 'U';` | `#[DateFormat('U')]` |
+| Refresh after write (13.33+) | — | `#[Refreshes(['slug'])]` (generated columns) |
 
 ---
 
@@ -75,7 +78,7 @@ final class Post extends Model
 
 ## Migration recipe (per model)
 
-1. Add `use Illuminate\Database\Eloquent\Attributes\{Table, Fillable, Hidden, Casts, Appends, Touches};`
+1. Add `use Illuminate\Database\Eloquent\Attributes\{Table, Fillable, Hidden, Appends, Touches};` (casts stay in the `casts()` method)
 2. Convert each property to its attribute counterpart on the class.
 3. **Delete** the legacy property — keeping both is forbidden.
 4. Run the test suite + `php artisan model:show <Model>` to verify resolved metadata.

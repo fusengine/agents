@@ -10,10 +10,12 @@ related: button.md, input.md
 
 # Card Component
 
+> **Base:** same API on Base UI, Radix and React Aria (verified against r/styles/{base,radix}-nova/card.json).
+
 ## Installation
 
 ```bash
-bunx shadcn-ui@latest add card
+bunx shadcn@latest add card
 ```
 
 Creates: `@/modules/cores/shadcn/components/ui/card.tsx`
@@ -29,6 +31,7 @@ import {
   CardTitle,
 } from '@/modules/cores/shadcn/components/ui/card'
 
+/** Card with a header and content. */
 export function BasicCard() {
   return (
     <Card>
@@ -127,6 +130,7 @@ import { Input } from '@/modules/cores/shadcn/components/ui/input'
 import { Label } from '@/modules/cores/shadcn/components/ui/label'
 import { Button } from '@/modules/cores/shadcn/components/ui/button'
 
+/** Profile edit form inside a card. */
 export function ProfileCard() {
   return (
     <Card className="w-full max-w-md">
@@ -165,6 +169,7 @@ export function ProfileCard() {
 Multiple cards in responsive grid:
 
 ```typescript
+/** Responsive grid of cards. */
 export function CardGrid() {
   const items = [
     { id: 1, title: 'Item 1', description: 'Description 1' },
@@ -203,6 +208,7 @@ Add button or icon to header:
 import { MoreVertical } from '@/modules/cores/shadcn/components/icons'
 import { Button } from '@/modules/cores/shadcn/components/ui/button'
 
+/** Card with an action in the header. */
 export function CardWithAction() {
   return (
     <Card>
@@ -233,6 +239,7 @@ export function CardWithAction() {
 Card for individual list items:
 
 ```typescript
+/** List of compact item cards. */
 export function CardListItem() {
   const items = [
     { id: 1, name: 'Alice', role: 'Developer' },
@@ -266,6 +273,7 @@ Card for metrics or statistics:
 ```typescript
 import { TrendingUp } from '@/modules/cores/shadcn/components/icons'
 
+/** Dashboard metric card. */
 export function DashboardCard() {
   return (
     <Card>
@@ -289,17 +297,16 @@ export function DashboardCard() {
 Card with image header:
 
 ```typescript
-import Image from 'next/image'
-
+/** Card with a cover image clipped by `overflow-hidden`. */
 export function CardWithImage() {
   return (
     <Card className="overflow-hidden">
       <div className="relative w-full h-48">
-        <Image
+        <img
           src="/hero.jpg"
           alt="Card image"
-          fill
-          className="object-cover"
+          loading="lazy"
+          className="absolute inset-0 size-full object-cover"
         />
       </div>
       <CardHeader>
@@ -319,14 +326,15 @@ export function CardWithImage() {
 **Image pattern**:
 - Use `overflow-hidden` on Card to clip image
 - Image with `relative`, `w-full`, `h-48`
-- Use React Image component for optimization
-- `fill` and `object-cover` for proper sizing
+- Native `<img loading="lazy">` (no framework image component in a Vite app)
+- `absolute inset-0 size-full` and `object-cover` for proper sizing
 
 ### Nested Cards (Section Groups)
 
 Group related cards:
 
 ```typescript
+/** Card containing nested section cards. */
 export function NestedCardGroup() {
   return (
     <Card>
@@ -362,6 +370,7 @@ export function NestedCardGroup() {
 Separate sections inside card:
 
 ```typescript
+/** Card with separated content rows. */
 export function CardWithDivider() {
   return (
     <Card>
@@ -520,6 +529,7 @@ interface CustomCardProps extends HTMLAttributes<HTMLDivElement> {
   description?: string
 }
 
+/** Card wrapper taking `title` and `description` props. */
 export function CustomCard({
   title,
   description,

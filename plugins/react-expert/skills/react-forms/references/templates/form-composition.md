@@ -47,7 +47,6 @@ Create a factory function to generate form-specific hooks with type safety.
  * ```
  */
 import { useForm as useFormCore } from '@tanstack/react-form'
-import { zodValidator } from '@tanstack/zod-form-adapter'
 import { z } from 'zod'
 import { useState } from 'react'
 
@@ -83,7 +82,6 @@ export function createFormHook<T extends FormValues>(
           setIsSubmitting(false)
         }
       },
-      validatorAdapter: zodValidator(),
       validators: {
         onChange: schema,
         onBlur: schema,

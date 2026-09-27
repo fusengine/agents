@@ -1,7 +1,7 @@
 # Elysian — Design System
 
 Register: **brand**. Scope: FULL (single-page experience).
-Design Read: cinematic catalogue page for a fictional maison of imagined geography;
+Design Read: cinematic catalogue page for a fictional fashion house of imagined geography;
 vibe = surreal, inscriptional, sun-bleached, exact; assets = four supplied riso-style
 neoclassical plates; constraints = static HTML/CSS/JS, offline, desktop + mobile.
 Dials: `DESIGN_VARIANCE 9` · `VISUAL_DENSITY 4` · `MOTION_INTENSITY 8`.
@@ -22,7 +22,7 @@ and the two halves pan in opposite directions while colour wipes back over the l
 half), **letterform plate** (the word ELYSIAN is filled with the temple, then zooms and
 defocuses until the plate itself is all that is left).
 
-Macrostructure: **Vitrine Descent** (not the canonical nav/hero/features/testimonials/
+Macrostructure: **Shop-Window Descent** (not the canonical nav/hero/features/testimonials/
 pricing/faq/cta/footer skeleton). Order: Aperture → Ledger → four Plate chambers, each
 with a different image transformation → Seal → Colophon. Dropped outright: feature grid,
 testimonials, pricing, FAQ, CTA band. Navigation is the ledger itself plus a fixed

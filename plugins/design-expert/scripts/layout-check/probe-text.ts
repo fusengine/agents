@@ -1,21 +1,21 @@
 /**
- * probe-text.ts — Mesure de l'ENCRE du texte, injectée dans la page (`window.__lc`).
+ * probe-text.ts — Measures the text INK, injected into the page (`window.__lc`).
  *
- * Pourquoi ne pas se contenter de `scrollWidth` : mesuré dans Chromium, sur une
- * boîte `width:90px; white-space:nowrap; overflow:visible`, `scrollWidth −
- * clientWidth` vaut **13** alors que l'encre sort de **21px** ; et sur un
- * débordement vers le START (`direction:rtl`, `text-indent` négatif) il vaut
- * **0** alors que l'encre sort de **40px**. La région de débordement défilable
- * ignore le côté start — un texte qui sort par la gauche lui est invisible.
+ * Why `scrollWidth` alone is not enough: measured in Chromium, on a
+ * `width:90px; white-space:nowrap; overflow:visible` box, `scrollWidth −
+ * clientWidth` is **13** while the ink overflows by **21px**; and on an
+ * overflow toward the START (`direction:rtl`, negative `text-indent`) it is
+ * **0** while the ink overflows by **40px**. The scrollable overflow region
+ * ignores the start side — text leaving on the left is invisible to it.
  */
 
 /**
- * Ordonnées distinctes des boîtes de ligne occupées par le TEXTE de l'élément.
- * Seuls les nœuds texte sont mesurés : une icône placée au-dessus du libellé
- * (bouton hamburger « barres + Menu ») ne compte donc pas comme une seconde ligne.
+ * Distinct y-coordinates of the line boxes taken by the element's TEXT.
+ * Only text nodes are measured: an icon placed above the label
+ * (hamburger button "bars + Menu") therefore does not count as a second line.
  *
- * @param el - Élément dont on compte les lignes de texte
- * @returns Les `top` arrondis, un par ligne réellement occupée
+ * @param el - Element whose text lines are counted
+ * @returns The rounded `top` values, one per line actually taken
  */
 function textLineTops(el: Element): number[] {
   const tops: number[] = [];
@@ -37,12 +37,12 @@ function textLineTops(el: Element): number[] {
 }
 
 /**
- * Débordement de l'encre du texte PROPRE de l'élément hors de sa boîte de contenu.
- * Seuls les nœuds texte enfants DIRECTS sont mesurés : le texte d'un descendant
- * positionné sort légitimement de la boîte de son ancêtre, ce n'est pas un défaut.
+ * Overflow of the element's OWN text ink outside its content box.
+ * Only DIRECT child text nodes are measured: the text of a positioned
+ * descendant legitimately leaves its ancestor's box, that is not a defect.
  *
- * @param el - Élément porteur de texte
- * @returns Débordement en px de chaque côté (négatif = marge restante), ou `null`
+ * @param el - Text-bearing element
+ * @returns Overflow in px on each side (negative = remaining margin), or `null`
  */
 function ownTextInk(
   el: Element,
@@ -85,7 +85,7 @@ function ownTextInk(
   };
 }
 
-/** Source JS à injecter avant le chargement de la page. */
+/** JS source to inject before the page loads. */
 export const TEXT_PROBE_SOURCE = `window.__lc = Object.assign(window.__lc || {}, {
   textLineTops: ${textLineTops},
   ownTextInk: ${ownTextInk}

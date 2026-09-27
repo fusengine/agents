@@ -85,12 +85,14 @@ let app = Router::new()
 ## Middleware (tower-http)
 
 ```rust
+use axum::http::StatusCode;
 use tower_http::{trace::TraceLayer, timeout::TimeoutLayer, cors::CorsLayer};
 use std::time::Duration;
 
 let app = router
     .layer(TraceLayer::new_for_http())          // request/response spans
-    .layer(TimeoutLayer::new(Duration::from_secs(30)))
+    // `TimeoutLayer::new` is deprecated since tower-http 0.6.7
+    .layer(TimeoutLayer::with_status_code(StatusCode::REQUEST_TIMEOUT, Duration::from_secs(30)))
     .layer(CorsLayer::permissive());
 ```
 

@@ -1,22 +1,22 @@
 /**
- * report.ts — Agrégation du rapport final (résumé + tri stable).
- * Aucune appréciation : uniquement des compteurs.
+ * report.ts — Aggregation of the final report (summary + stable sort).
+ * No judgment: counters only.
  */
 import type { LayoutCheckConfig, LayoutCheckReport, Violation, Warning } from "./types";
 import { dedupeWarnings } from "./warnings";
 
-/** Ordre de tri stable des familles, pour un JSON diffable d'une exécution à l'autre. */
+/** Stable sort order of the families, for a JSON that diffs cleanly from one run to the next. */
 const TYPE_ORDER = ["document-overflow", "overlap", "text-overflow", "cta-wrap", "contrast"];
 
 
 /**
- * Construit le rapport JSON final à partir des violations collectées.
+ * Builds the final JSON report from the collected violations.
  *
- * @param target - URL absolue effectivement chargée
- * @param config - Configuration effective de l'exécution
- * @param violations - Violations de toutes les largeurs
- * @param warnings - Mesures non fiables (contraste sur dégradé, plafonds atteints)
- * @returns Rapport sérialisable, `summary.pass` à `true` si zéro violation
+ * @param target - Absolute URL actually loaded
+ * @param config - Effective configuration of the run
+ * @param violations - Violations from every width
+ * @param warnings - Unreliable measurements (contrast on a gradient, caps reached)
+ * @returns Serializable report, `summary.pass` set to `true` if zero violations
  */
 export function buildReport(
   target: string,
@@ -37,10 +37,10 @@ export function buildReport(
   for (const violation of sorted) {
     byType[violation.type] = (byType[violation.type] ?? 0) + 1;
     byWidth[String(violation.viewport)] = (byWidth[String(violation.viewport)] ?? 0) + 1;
-    // Un même couple de jetons colorés produit des dizaines de violations : le
-    // regroupement transforme « 185 violations » en « 5 couples à corriger ».
+    // One color-token pair produces dozens of violations: grouping turns
+    // "185 violations" into "5 pairs to fix".
     if (violation.type === "contrast") {
-      const key = `${violation.measured.foreground} sur ${violation.measured.background} (min ${violation.measured.required}:1)`;
+      const key = `${violation.measured.foreground} on ${violation.measured.background} (min ${violation.measured.required}:1)`;
       contrastPairs[key] = (contrastPairs[key] ?? 0) + 1;
     }
   }
@@ -62,27 +62,27 @@ export function buildReport(
 }
 
 /**
- * Résumé lisible en une poignée de lignes, destiné à stderr.
+ * Readable summary in a handful of lines, meant for stderr.
  *
- * @param report - Rapport déjà construit
- * @returns Texte multi-lignes, sans couleur ni emoji
+ * @param report - Already built report
+ * @returns Multi-line text, no color or emoji
  */
 export function formatSummary(report: LayoutCheckReport): string {
   const lines = [
-    `cible      : ${report.target}`,
-    `largeurs   : ${report.config.widths.join(", ")}`,
+    `target     : ${report.target}`,
+    `widths     : ${report.config.widths.join(", ")}`,
     `violations : ${report.summary.total}`,
   ];
   for (const [type, count] of Object.entries(report.summary.byType)) lines.push(`  - ${type}: ${count}`);
   if (Object.keys(report.summary.byWidth).length > 0) {
-    lines.push(`par largeur: ${Object.entries(report.summary.byWidth).map(([w, c]) => `${w}px=${c}`).join(" ")}`);
+    lines.push(`by width   : ${Object.entries(report.summary.byWidth).map(([w, c]) => `${w}px=${c}`).join(" ")}`);
   }
   const pairs = Object.entries(report.summary.contrastPairs);
   if (pairs.length > 0) {
-    lines.push(`couples de contraste (${pairs.length}) :`);
+    lines.push(`contrast pairs (${pairs.length}):`);
     for (const [pair, count] of pairs.sort((a, b) => b[1] - a[1])) lines.push(`  - ${pair} × ${count}`);
   }
-  lines.push(`avertissements : ${report.summary.warnings}`);
-  lines.push(`verdict    : ${report.summary.pass ? "CONFORME (exit 0)" : "VIOLATIONS (exit 1)"}`);
+  lines.push(`warnings   : ${report.summary.warnings}`);
+  lines.push(`verdict    : ${report.summary.pass ? "PASS (exit 0)" : "VIOLATIONS (exit 1)"}`);
   return lines.join("\n");
 }

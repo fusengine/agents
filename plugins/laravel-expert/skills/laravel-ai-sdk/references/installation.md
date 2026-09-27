@@ -11,13 +11,14 @@ description: Install and configure laravel/ai for Laravel 13
 composer require laravel/ai
 ```
 
-## Publish config
+## Publish config + migrations
 
 ```shell
-php artisan vendor:publish --tag=ai-config
+php artisan vendor:publish --provider="Laravel\Ai\AiServiceProvider"
+php artisan migrate
 ```
 
-Creates `config/ai.php`.
+Creates `config/ai.php` and the `agent_conversations` / `agent_conversation_messages` tables used for conversation storage.
 
 ## Environment variables
 
@@ -33,40 +34,49 @@ JINA_API_KEY=
 MISTRAL_API_KEY=
 OLLAMA_API_KEY=
 OPENAI_API_KEY=
+OPENAI_COMPATIBLE_API_KEY=
+OPENAI_COMPATIBLE_URL=
 OPENROUTER_API_KEY=
+TYPESAFE_API_KEY=
 VOYAGEAI_API_KEY=
 XAI_API_KEY=
 ```
 
-## config/ai.php
+## config/ai.php (excerpt of the published file)
 
 ```php
 return [
-    'default' => env('AI_DEFAULT_PROVIDER', 'openai'),
+    'default' => 'openai',
+    'default_for_images' => 'gemini',
+    'default_for_audio' => 'openai',
+    'default_for_transcription' => 'openai',
+    'default_for_embeddings' => 'openai',
+    'default_for_reranking' => 'cohere',
+    'default_for_classification' => 'typesafe',
+
+    'caching' => [
+        'embeddings' => [
+            'cache' => false,
+            'store' => env('CACHE_STORE', 'database'),
+            'individually' => true,
+        ],
+    ],
 
     'providers' => [
-        'openai' => [
-            'driver' => 'openai',
-            'key' => env('OPENAI_API_KEY'),
-            'url' => env('OPENAI_BASE_URL'),
-        ],
-
         'anthropic' => [
             'driver' => 'anthropic',
             'key' => env('ANTHROPIC_API_KEY'),
-            'url' => env('ANTHROPIC_BASE_URL'),
+            'url' => env('ANTHROPIC_URL', 'https://api.anthropic.com/v1'),
         ],
 
-        // ... gemini, azure, groq, deepseek, ollama, mistral,
-        //     xai, cohere, elevenlabs, jina, voyageai, openrouter
-    ],
+        'openai' => [
+            'driver' => 'openai',
+            'key' => env('OPENAI_API_KEY'),
+            'url' => env('OPENAI_URL', 'https://api.openai.com/v1'),
+        ],
 
-    'defaults' => [
-        'text' => ['provider' => 'anthropic', 'model' => 'claude-haiku-4-5-20251001'],
-        'embeddings' => ['provider' => 'openai', 'model' => 'text-embedding-3-small'],
-        'image' => ['provider' => 'openai', 'model' => 'dall-e-3'],
-        'audio' => ['provider' => 'openai', 'model' => 'tts-1'],
-        'transcription' => ['provider' => 'openai', 'model' => 'whisper-1'],
+        // ... azure, bedrock, cohere, deepseek, eleven, gemini, groq, jina,
+        //     mistral, ollama, openai-compatible, openrouter, typesafe, voyageai, xai
     ],
 ];
 ```
@@ -76,20 +86,23 @@ return [
 | Provider | `Lab` enum | Env var |
 |----------|-----------|---------|
 | OpenAI | `Lab::OpenAI` | `OPENAI_API_KEY` |
+| OpenAI-compatible | `Lab::OpenAICompatible` | `OPENAI_COMPATIBLE_API_KEY` |
 | Anthropic | `Lab::Anthropic` | `ANTHROPIC_API_KEY` |
 | Google Gemini | `Lab::Gemini` | `GEMINI_API_KEY` |
 | Azure OpenAI | `Lab::Azure` | `AZURE_OPENAI_API_KEY` |
+| AWS Bedrock | `Lab::Bedrock` | `AWS_BEARER_TOKEN_BEDROCK` |
 | Groq | `Lab::Groq` | `GROQ_API_KEY` |
 | DeepSeek | `Lab::DeepSeek` | `DEEPSEEK_API_KEY` |
 | Ollama (local) | `Lab::Ollama` | `OLLAMA_API_KEY` |
 | Mistral | `Lab::Mistral` | `MISTRAL_API_KEY` |
-| xAI | `Lab::XAI` | `XAI_API_KEY` |
+| xAI | `Lab::xAI` | `XAI_API_KEY` |
 | Cohere | `Lab::Cohere` | `COHERE_API_KEY` |
 | ElevenLabs | `Lab::ElevenLabs` | `ELEVENLABS_API_KEY` |
 | Jina | `Lab::Jina` | `JINA_API_KEY` |
+| TypeSafe | `Lab::TypeSafe` | `TYPESAFE_API_KEY` |
 | VoyageAI | `Lab::VoyageAI` | `VOYAGEAI_API_KEY` |
 | OpenRouter | `Lab::OpenRouter` | `OPENROUTER_API_KEY` |
 
 ## Custom base URLs
 
-For proxies, OpenAI-compatible self-hosted endpoints, or alternative regions, set `*_BASE_URL` env vars - already wired in `config/ai.php`.
+For proxies (LiteLLM, corporate gateways) set the provider's `url` key in `config/ai.php` (e.g. `OPENAI_URL`, `ANTHROPIC_URL`). Supported for OpenAI, Anthropic, Gemini, Groq, Cohere, DeepSeek, xAI and OpenRouter.

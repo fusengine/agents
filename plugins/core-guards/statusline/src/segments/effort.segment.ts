@@ -1,7 +1,7 @@
 /**
- * Effort Segment - Affiche effort/thinking/fast_mode
+ * Effort Segment - Displays effort/thinking/fast_mode
  *
- * @description SRP: Affichage effort de raisonnement uniquement
+ * @description SRP: Reasoning effort display only
  */
 
 import type { StatuslineConfig } from "../config/schema";

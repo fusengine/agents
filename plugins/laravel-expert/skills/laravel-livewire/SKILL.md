@@ -3,7 +3,7 @@ name: laravel-livewire
 description: Livewire 4 reactive components on Laravel 13 - wire:model, actions, events, Volt, Folio. Use when building reactive UI without JavaScript.
 versions:
   laravel: "13.0"
-  livewire: "4.x"
+  livewire: "4.4"
   php: "8.3"
 user-invocable: true
 references: references/components.md, references/wire-directives.md, references/lifecycle.md, references/forms-validation.md, references/events.md, references/alpine-integration.md, references/file-uploads.md, references/nesting.md, references/loading-states.md, references/navigation.md, references/testing.md, references/security.md, references/volt.md, references/folio.md, references/precognition.md, references/reverb.md, references/templates/BasicComponent.php.md, references/templates/FormComponent.php.md, references/templates/VoltComponent.blade.md, references/templates/DataTableComponent.php.md, references/templates/FileUploadComponent.php.md, references/templates/NestedComponents.php.md, references/templates/ComponentTest.php.md
@@ -28,7 +28,7 @@ and Reverb WebSocket integration.
 Before ANY implementation, spawn 3 agents in parallel, one `Agent` call each with a `name`:
 
 1. **fuse-ai-pilot:explore-codebase** - Check existing Livewire components
-2. **fuse-ai-pilot:research-expert** - Verify Livewire 3 patterns via Context7
+2. **fuse-ai-pilot:research-expert** - Verify Livewire 4 patterns via Context7
 3. **mcp__context7__query-docs** - Check specific Livewire features
 
 After implementation, run **fuse-ai-pilot:sniper** for validation.
@@ -51,7 +51,7 @@ After implementation, run **fuse-ai-pilot:sniper** for validation.
 ## Critical Rules
 
 1. **Always use wire:key** in loops
-2. **Use wire:model.blur** for validation, not .live everywhere
+2. **Use wire:model.live.blur** for live validation (Livewire 4.1+: plain `.blur` only syncs client state), not .live everywhere
 3. **Debounce search inputs** with .debounce.300ms
 4. **#[Locked]** for sensitive IDs
 5. **authorize()** in destructive actions
@@ -76,7 +76,7 @@ Component choice?
 
 ```
 Binding type?
-├── Form fields → wire:model.blur
+├── Form fields (live validation) → wire:model.live.blur
 ├── Search input → wire:model.live.debounce.300ms
 ├── Checkbox/toggle → wire:model.live
 ├── Select → wire:model
@@ -165,7 +165,7 @@ $increment = fn() => $this->count++;
 ### Wire Directives
 
 ```blade
-<input wire:model.blur="email">
+<input wire:model.live.blur="email">
 <input wire:model.live.debounce.300ms="search">
 <button wire:click="save" wire:loading.attr="disabled">Save</button>
 ```
@@ -192,16 +192,21 @@ $increment = fn() => $this->count++;
 
 ## Laravel 13 Notes
 
-### Livewire 4 sur Laravel 13
-Livewire 4 est la version compatible Laravel 13. Changements clés :
+### Livewire 4 on Laravel 13
+Livewire 4 (current 4.4) is the current major, used by the L13 Livewire starter kit. Key points:
 
-- **PHP 8.3 minimum** (était 8.2 sur Livewire 3)
-- `wire:model.live` rate-limited par défaut (300ms debounce implicite)
-- `#[Locked]`, `#[Computed]`, `#[On]` toujours supportés
-- Volt et Folio : versions majeures alignées (Volt 2, Folio 2)
-- **PreventRequestForgery** : routes `/livewire/update` gérées automatiquement, pas de config requise
+- Livewire 4 requirements: PHP 8.1+ / Laravel 10+ (Laravel 13 requires PHP 8.3 anyway)
+- `#[Locked]`, `#[Computed]`, `#[On]` still supported
+- Native single-file / multi-file components (`make_command.type` = `sfc` by default); Volt stays on 1.x (current 1.11), Folio on 1.x (current 1.2)
+- Pages: `Route::livewire('/dashboard', Dashboard::class)` is now the recommended method (mandatory for single/multi-file components)
+- Hashed endpoints: `/livewire-{hash}/update` (derived from `APP_KEY`) instead of `/livewire/update` — update firewall/CDN/middleware rules that target `/livewire/`
+- `wire:model.live`: parallel requests; `wire:poll` is non-blocking
 
-### Migration depuis Livewire 3
-- `wire:poll.5s` → toujours valide
-- `$this->dispatch('event')` → toujours valide
-- Form Objects (`#[\Livewire\Attributes\Validate]`) → API stable
+### Migrating from Livewire 3
+- `composer require livewire/livewire:^4.0` then `php artisan optimize:clear`
+- Renamed config: `layout` → `component_layout` (`layouts::app`), `lazy_placeholder` → `component_placeholder`; `smart_wire_keys` = `true` by default
+- **4.1+**: `.blur` / `.change` also control client-side sync → for the old behavior (network request on blur) write `wire:model.live.blur`
+- `wire:model` ignores events from children (add `.deep` if needed); `<livewire:x />` tags must be closed
+- `wire:transition` uses the View Transitions API (modifiers removed); `wire:scroll` → `wire:navigate:scroll`
+- `$this->stream()`: `to:` renamed `el:`; `$wire.$js('name', fn)` deprecated → `$wire.$js.name = fn`
+- `wire:poll.5s`, `$this->dispatch('event')`, Form Objects (`#[\Livewire\Attributes\Validate]`) → unchanged

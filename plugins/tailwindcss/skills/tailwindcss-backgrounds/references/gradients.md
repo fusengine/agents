@@ -7,7 +7,7 @@ description: Gradients reference for Tailwind CSS
 
 ## Overview
 
-Tailwind CSS v4.1 provides three types of gradients: linear, radial, and conic. Each gradient type combines directional utilities with color stop utilities (`from-*`, `via-*`, `to-*`).
+Tailwind CSS v4.3 provides three types of gradients: linear, radial, and conic. Each gradient type combines directional utilities with color stop utilities (`from-*`, `via-*`, `to-*`).
 
 ## Linear Gradients
 
@@ -117,7 +117,7 @@ Radial gradients create transitions radiating from a center point.
 <div class="bg-radial-[ellipse_at_top_right] from-yellow-300 to-purple-900"></div>
 ```
 
-## Conic Gradients (NEW in v4.1)
+## Conic Gradients (since v4.0)
 
 Conic gradients rotate around a center point, perfect for color wheels and circular patterns.
 

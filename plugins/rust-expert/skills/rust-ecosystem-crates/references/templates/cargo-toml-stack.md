@@ -19,7 +19,7 @@ A production-shaped `Cargo.toml` for an async HTTP service. **Every version belo
 name = "my-service"
 version = "0.1.0"
 edition = "2024"
-rust-version = "1.85"
+rust-version = "1.94"   # sqlx 0.9 requires Rust >= 1.94
 
 [dependencies]
 # --- Async runtime (enable only needed features) ---
@@ -28,17 +28,17 @@ tokio = { version = "1", features = ["rt-multi-thread", "macros", "net", "signal
 # --- Web server (inbound) ---
 axum = "0.8"
 tower = "0.5"
-tower-http = { version = "0.6", features = ["trace"] }
+tower-http = { version = "0.7", features = ["trace"] }
 
 # --- HTTP client (outbound), rustls + JSON only ---
-reqwest = { version = "0.12", default-features = false, features = ["json", "rustls-tls"] }
+reqwest = { version = "0.13", default-features = false, features = ["json", "rustls"] }   # 0.13 renamed `rustls-tls` -> `rustls`
 
 # --- Serialization ---
 serde = { version = "1", features = ["derive"] }   # NOTE: 2.0 is NOT released
 serde_json = "1"
 
 # --- Database: sqlx (async, compile-time-checked SQL) ---
-sqlx = { version = "0.8", default-features = false, features = ["runtime-tokio", "tls-rustls", "postgres", "macros"] }
+sqlx = { version = "0.9", default-features = false, features = ["runtime-tokio", "tls-rustls", "postgres", "macros"] }
 
 # --- Errors: anyhow because this is an application binary ---
 anyhow = "1"
@@ -87,8 +87,8 @@ async fn health() -> &'static str {
 
 ## Notes
 
-- **Verify versions**: the numbers here (axum 0.8, sqlx 0.8, reqwest 0.12, …) drift quickly. Check crates.io before use.
+- **Verify versions**: the numbers here (axum 0.8, sqlx 0.9, reqwest 0.13, tower-http 0.7, …) drift quickly. Check crates.io before use.
 - `serde = "1"` — `2.0` is under discussion, not published.
-- `default-features = false` on `reqwest` and `sqlx` avoids pulling native-tls/OpenSSL; explicit `rustls` keeps the build pure-Rust.
+- `default-features = false` on `reqwest` and `sqlx` avoids pulling native-tls/OpenSSL. Note: reqwest 0.13's `rustls` uses the `aws-lc-rs` crypto provider (C code, needs a C toolchain); sqlx's `tls-rustls` maps to `ring`.
 - Enable one sqlx database driver (`postgres` here); adding all drivers bloats compile time.
 - This is a binary, so errors use `anyhow`. A reusable library crate would define `thiserror` enums instead.

@@ -59,7 +59,7 @@ TanStack Router is the recommended choice for React SPAs requiring type-safe rou
 ## Critical Rules
 
 1. **ALWAYS use file-based routing** - Auto-generated type safety → [file-based-routing.md](references/file-based-routing.md)
-2. **ALWAYS validate search params** - Use Zod schemas with `zodValidator` → [search-params.md](references/search-params.md)
+2. **ALWAYS validate search params** - Pass the Zod v4 schema directly to `validateSearch` (`zodValidator` only for Zod v3) → [search-params.md](references/search-params.md)
 3. **ALWAYS use Route.useLoaderData()** - Not global useLoaderData → [hooks.md](references/hooks.md)
 4. **ALWAYS register router types** - `declare module '@tanstack/react-router'` → [typescript.md](references/typescript.md)
 5. **PREFER loaders over useEffect** - Data fetching before render → [loaders.md](references/loaders.md)
@@ -202,7 +202,7 @@ const searchSchema = z.object({
 })
 
 export const Route = createFileRoute('/posts/')({
-  validateSearch: zodValidator(searchSchema),
+  validateSearch: searchSchema, // Zod v4 = Standard Schema, no adapter
 })
 ```
 

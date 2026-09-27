@@ -43,7 +43,7 @@ manifesto and the feature grid, the two blocks the page most wants read.
 ## Design Reference
 
 Rebuild of the supercommon systems product page (`resources.supercommon.systems`
-serves its video `[relevé]`; the marketing host is `supercommon.systems` `[estimé]`).
+serves its video `[measured]`; the marketing host is `supercommon.systems` `[estimated]`).
 The source is a Framer export. The palette is not sampled from an image: it is a black
 page plus one accent lifted from the app's own display, and all remaining hierarchy is
 opacity.
@@ -52,17 +52,17 @@ opacity.
 
 ```css
 --surface-page:      #000;
---surface-inversee:  #fff;
---surface-controle:  rgb(24, 25, 28);
---texte-primaire:    #eee;
---texte-accentue:    #fff;
---texte-secondaire:  #888;
---texte-liste:       rgb(128, 128, 128);
---texte-sur-inverse: #000;
---trait-discret:     rgb(34, 34, 34);
+--surface-inverse:   #fff;
+--surface-control:   rgb(24, 25, 28);
+--text-primary:      #eee;
+--text-emphasis:     #fff;
+--text-secondary:    #888;
+--text-list:         rgb(128, 128, 128);
+--text-on-inverse:   #000;
+--rule-subtle:       rgb(34, 34, 34);
 --accent:            rgb(224, 59, 30);
---attenuation-moyenne: .5;
---attenuation-forte:   .25;
+--dim-medium:        .5;
+--dim-strong:        .25;
 --metal: linear-gradient(#000 19%, #1f2021 35%, #525755 50%, #bfc6c1 75%, #000 90%);
 ```
 
@@ -72,21 +72,21 @@ Strategy: **dimming, not palette.** There are three opacity notches — `1`, `.5
 state: no red link, no red button, no red hover. It designates one object, the app's
 display, in exactly two places. All other colour on the page lives inside the nine
 pictograms, where it is the information rather than decoration.
-Contrast floors: `#eee` on `#000` ≈ 17.9:1 `[estimé]`; `#888` ≈ 5.9:1 and
-`rgb(128,128,128)` ≈ 5.3:1 `[estimé]`; `#eee` at `.5` ≈ 4.7:1 `[estimé]`. The `.25`
-notch, used once for the screenshot caption, lands near 1.9:1 `[estimé]` — recorded as
+Contrast floors: `#eee` on `#000` ≈ 17.9:1 `[estimated]`; `#888` ≈ 5.9:1 and
+`rgb(128,128,128)` ≈ 5.3:1 `[estimated]`; `#eee` at `.5` ≈ 4.7:1 `[estimated]`. The `.25`
+notch, used once for the screenshot caption, lands near 1.9:1 `[estimated]` — recorded as
 the source has it, not corrected.
 
 ### Typography
 
 ```css
---police: Inter, "Helvetica Neue", Arial, sans-serif;
---graisse-fine:  200;
---graisse-texte: 300;
+--font: Inter, "Helvetica Neue", Arial, sans-serif;
+--weight-thin:  200;
+--weight-text:  300;
 ```
 
 One family, loaded from the Google Fonts CDN at weights 100/200/300/400, substituting
-the source's commercial Akt Variable Thin and Akt Light. Six steps, all `[relevé]`,
+the source's commercial Akt Variable Thin and Akt Light. Six steps, all `[measured]`,
 switched at one breakpoint (`max-width: 1439.98px`), never fluid: display 56/60 → 37/42,
 title 30/36 → 26/32, lede 32/40 → 28/34, kicker 26/26 → 24/26, label 20/24 → 19/24,
 body 18/22 → 17/22. Tracking is inversely correlated to size, `-.06em` at 56 px down to
@@ -105,7 +105,7 @@ neutralises bold — the source's own preset sets bold to the same value as norm
 ### Spacing
 
 There is no 8pt grid on the vertical axis. All rhythm comes from sixteen empty blocks
-measured in `vh`, `[relevé]`: 6 · 7 · 32 · 8 · 5 · 25/1 · 4/1 · 1 · 6 · 5 · 15 · 12 ·
+measured in `vh`, `[measured]`: 6 · 7 · 32 · 8 · 5 · 25/1 · 4/1 · 1 · 6 · 5 · 15 · 12 ·
 15/12 · 40 · 15/8 · 15 — roughly 200 vh of black, two full screens of it, and the
 second figure in each pair is the value below 1440 px, where the long silences are cut
 because they cost thumb-scrolls. Horizontal is fixed: 40 px edge margin (20 px below

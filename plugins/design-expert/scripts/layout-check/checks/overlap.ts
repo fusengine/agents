@@ -1,32 +1,32 @@
 /**
- * overlap.ts — Contrôle 2 : deux éléments visibles se recouvrent.
- * Playwright n'expose aucune API de chevauchement (microsoft/playwright#34778) et
- * `isVisible()` reste `true` sur un élément entièrement recouvert (#9923) : on
- * calcule l'intersection des `getBoundingClientRect()` à la main (voir overlap.probe.ts).
+ * overlap.ts — Check 2: two visible elements overlap.
+ * Playwright exposes no overlap API (microsoft/playwright#34778) and
+ * `isVisible()` stays `true` on a fully covered element (#9923): we
+ * compute the intersection of the `getBoundingClientRect()` by hand (see overlap.probe.ts).
  *
- * Superposition VOLONTAIRE vs ACCIDENTELLE — un chevauchement est ignoré quand l'un
- * des deux éléments (ou un de ses 6 premiers ancêtres) est positionné
- * `absolute`/`fixed`/`sticky`, porte un `z-index` explicite non nul, ou est en
- * `pointer-events: none` : signature d'un halo, d'un badge ou d'un calque décoratif.
- * Désactivable avec `--allow-overlays false`.
+ * INTENTIONAL vs ACCIDENTAL overlap — an overlap is ignored when one
+ * of the two elements (or one of its first 6 ancestors) is positioned
+ * `absolute`/`fixed`/`sticky`, carries an explicit non-zero `z-index`, or is
+ * `pointer-events: none`: the signature of a halo, a badge or a decorative layer.
+ * Can be disabled with `--allow-overlays false`.
  */
 import type { LayoutCheckConfig, Violation } from "../types";
 import type { PageLike } from "../page.types";
 import { overlapProbe } from "./overlap.probe";
 
 /**
- * Balises retenues MÊME sans texte propre : contrôles de formulaire et images.
- * Tout élément portant son propre texte est retenu quelle que soit sa balise.
+ * Tags kept EVEN without their own text: form controls and images.
+ * Every element carrying its own text is kept whatever its tag.
  */
 const TAGS = "A,BUTTON,INPUT,SELECT,TEXTAREA,IMG";
 
 /**
- * Mesure les paires d'éléments qui se recouvrent à la largeur courante.
+ * Measures the pairs of elements that overlap at the current width.
  *
- * @param page - Page déjà chargée et redimensionnée
- * @param config - Configuration active (seuils, exclusions, plafond d'éléments)
- * @param viewport - Largeur de viewport courante, en px
- * @returns Une violation par paire dont l'intersection dépasse les deux seuils
+ * @param page - Page already loaded and resized
+ * @param config - Active configuration (thresholds, exclusions, element cap)
+ * @param viewport - Current viewport width, in px
+ * @returns One violation per pair whose intersection exceeds both thresholds
  */
 export async function checkOverlap(
   page: PageLike,
@@ -58,6 +58,6 @@ export async function checkOverlap(
     delta: row.intersectArea,
     message:
       `intersection ${row.intersectWidth}×${row.intersectHeight}px = ${row.intersectArea}px² ` +
-      `(${Math.round(row.ratio * 100)}% de l'aire du plus petit élément)`,
+      `(${Math.round(row.ratio * 100)}% of the smaller element's area)`,
   }));
 }

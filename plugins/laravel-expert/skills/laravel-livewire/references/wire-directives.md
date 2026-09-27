@@ -26,7 +26,9 @@ What to bind?
 |----------|----------|
 | `wire:model` | Deferred (on action) |
 | `wire:model.live` | Real-time sync |
-| `wire:model.blur` | Sync on blur |
+| `wire:model.blur` | Client state syncs on blur, no request (Livewire 4.1+) |
+| `wire:model.live.blur` | Syncs + sends request on blur (v3 `.blur` behavior) |
+| `wire:model.deep` | Also listen to child element events (v4 default is self only) |
 | `wire:model.live.debounce.500ms` | Debounced real-time |
 | `wire:model.live.throttle.1s` | Throttled sync |
 | `wire:model.fill` | Ignore initial value |

@@ -357,7 +357,6 @@ export { PostSkeleton, PostListSkeleton } from './src/components/PostSkeleton'
 ```typescript
 // src/routes/posts/index.tsx
 import { createFileRoute, Link } from '@tanstack/react-router'
-import { zodValidator } from '@tanstack/zod-adapter'
 import { z } from 'zod'
 import { postsQueryOptions, PostList, PostListSkeleton } from '@/modules/posts'
 
@@ -369,7 +368,7 @@ const searchSchema = z.object({
 })
 
 export const Route = createFileRoute('/posts/')({
-  validateSearch: zodValidator(searchSchema),
+  validateSearch: searchSchema, // Zod v4 Standard Schema
   loaderDeps: ({ search }) => ({ search }),
   loader: ({ context: { queryClient }, deps: { search } }) =>
     queryClient.ensureQueryData(postsQueryOptions(search)),

@@ -1,9 +1,9 @@
 ---
 name: position
-description: Position utilities for Tailwind CSS v4.1
+description: Position utilities for Tailwind CSS v4.3
 ---
 
-# Position Utilities - Tailwind CSS v4.1
+# Position Utilities - Tailwind CSS v4.3
 
 ## Position Types
 
@@ -108,6 +108,22 @@ Individual side positioning.
   </div>
 </div>
 ```
+
+### Logical insets (since v4.2)
+Writing-mode/direction-aware insets: `inset-s-*` / `inset-e-*` (`inset-inline-start` / `-end`) and `inset-bs-*` / `inset-be-*` (`inset-block-start` / `-end`).
+
+```html
+<div class="relative h-48 bg-gray-200">
+  <div class="absolute inset-s-0 inset-bs-2 bg-blue-500 w-20 h-20">
+    Start edge (left in LTR, right in RTL)
+  </div>
+  <div class="absolute inset-e-4 inset-be-8 bg-red-500 w-20 h-20">
+    End edge, block-end offset
+  </div>
+</div>
+```
+
+`start-*` / `end-*` still work but are **deprecated since v4.2** in favor of `inset-s-*` / `inset-e-*`.
 
 ## Z-Index (Stacking)
 

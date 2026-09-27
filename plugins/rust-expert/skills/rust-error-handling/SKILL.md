@@ -2,7 +2,7 @@
 name: rust-error-handling
 description: Use when designing Rust error handling — thiserror vs anyhow, typed error enums, #[from] conversions, or recoverable errors vs panics. Not for ownership/borrowing (rust-core-language).
 versions:
-  rust: "1.96.1"
+  rust: "1.98.1"
   thiserror: "2"
   anyhow: "1"
 references: references/thiserror-libraries.md, references/anyhow-applications.md, references/error-design.md, references/templates/library-error.md, references/templates/application-error.md

@@ -16,6 +16,8 @@ Prisma 7 with Astro framework for static site generation and server-side renderi
 
 ```typescript
 // src/lib/interfaces/prisma.ts
+import type { PrismaClient } from '../../../prisma/generated/client'  // v7: generated path
+
 /**
  * Global Prisma instance type definition
  * @see /src/lib/prisma.ts
@@ -25,7 +27,9 @@ export interface PrismaGlobal {
 }
 
 // src/lib/prisma.ts
-import { PrismaClient } from '@prisma/client'
+// schema.prisma: generator client { provider = "prisma-client", output = "../prisma/generated" }
+import { PrismaClient } from '../../prisma/generated/client'  // v7: generated path, not @prisma/client
+import { PrismaPg } from '@prisma/adapter-pg'
 import type { PrismaGlobal } from './interfaces/prisma'
 
 /**
@@ -35,8 +39,11 @@ import type { PrismaGlobal } from './interfaces/prisma'
  */
 const globalForPrisma = globalThis as unknown as PrismaGlobal
 
+// v7: a driver adapter is required (Astro exposes env via import.meta.env)
+const adapter = new PrismaPg({ connectionString: import.meta.env.DATABASE_URL })
+
 export const prisma =
-  globalForPrisma.prisma ?? new PrismaClient()
+  globalForPrisma.prisma ?? new PrismaClient({ adapter })
 
 if (process.env.NODE_ENV !== 'production') {
   globalForPrisma.prisma = prisma
@@ -146,10 +153,15 @@ export const POST: APIRoute = async ({ request }) => {
 ## Dynamic Route with SSR
 
 ```typescript
-// astro.config.mjs
+// astro.config.mjs — `output` is 'static' | 'server' ('hybrid' is gone): keep the
+// 'static' default and opt routes out with `export const prerender = false`
+// (on-demand routes also need an adapter, e.g. @astrojs/node, set via `adapter`).
+import { defineConfig } from 'astro/config'
+import tailwindcss from '@tailwindcss/vite' // Tailwind 4: Vite plugin, not @astrojs/tailwind
+
 export default defineConfig({
-  output: 'hybrid',
-  integrations: [tailwind()],
+  output: 'static',
+  vite: { plugins: [tailwindcss()] },
 })
 
 // src/pages/api/posts/[id].ts

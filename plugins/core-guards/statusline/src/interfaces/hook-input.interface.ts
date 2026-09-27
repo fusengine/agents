@@ -1,5 +1,5 @@
 /**
- * Hook Input Interface - Structure JSON de Claude Code
+ * Hook Input Interface - Claude Code JSON structure
  *
  * @see https://code.claude.com/docs/en/statusline
  */

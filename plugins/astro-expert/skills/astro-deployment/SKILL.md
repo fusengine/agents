@@ -9,9 +9,9 @@ related-skills: astro-7, astro-db, astro-islands
 ---
 
 <objective>
-Configures Astro 7 deployment across the four major adapters: `@astrojs/cloudflare` (Workers runtime, D1/KV/R2 bindings, workerd local dev via `platformProxy`, v13+ required), `@astrojs/vercel` (Serverless/Edge, built-in Image CDN, skew protection), `@astrojs/netlify` (Deno-based Edge Functions), and `@astrojs/node` (standalone server).
+Configures Astro 7 deployment across the four major adapters: `@astrojs/cloudflare` v14 (Workers runtime, D1/KV/R2 bindings via `cloudflare:workers`, `astro dev` on workerd through the Cloudflare Vite plugin), `@astrojs/vercel` v11 (Serverless/Edge, built-in Image CDN, skew protection), `@astrojs/netlify` v8 (Deno-based Edge Functions), and `@astrojs/node` v11 (standalone server).
 
-Also covers output-mode selection (`static`/`server`, per-page `prerender`), ISR patterns implemented via platform caching (Cloudflare KV or Vercel `stale-while-revalidate`, since Astro has no native ISR), and edge middleware for auth/redirects/A-B testing. Does not cover Astro DB setup itself (astro-db) or Islands hydration directives (astro-islands) beyond what's needed to pick a server adapter.
+Also covers output-mode selection (`static`/`server`, per-page `prerender`), Astro 7's stable route caching (`cache` provider + `routeRules`, experimental CDN providers per adapter) alongside platform ISR (Vercel `isr`, Cloudflare KV, `stale-while-revalidate` headers), and edge middleware for auth/redirects/A-B testing. Does not cover Astro DB setup itself (astro-db) or Islands hydration directives (astro-islands) beyond what's needed to pick a server adapter.
 </objective>
 
 # Astro Deployment
@@ -45,10 +45,10 @@ After implementation, run **fuse-ai-pilot:sniper** for validation.
 
 | Platform | Package | Runtime | Notes |
 |----------|---------|---------|-------|
-| Cloudflare | `@astrojs/cloudflare` v13+ | workerd | Astro 6: `astro dev` runs on workerd |
-| Vercel | `@astrojs/vercel` | Node/Edge | Image CDN built-in |
-| Netlify | `@astrojs/netlify` | Edge | Deno-based edge functions |
-| Node.js | `@astrojs/node` | Node | Standalone server mode |
+| Cloudflare | `@astrojs/cloudflare` v14 (Astro 7) | workerd | `astro dev` runs on workerd since Astro 6 (v13) |
+| Vercel | `@astrojs/vercel` v11 | Node/Edge | Image CDN built-in |
+| Netlify | `@astrojs/netlify` v8 | Edge | Deno-based edge functions |
+| Node.js | `@astrojs/node` v11 | Node | Standalone server mode |
 
 ---
 
@@ -62,11 +62,11 @@ After implementation, run **fuse-ai-pilot:sniper** for validation.
 
 ### Cloudflare Astro
 
-Astro 6 runs `astro dev` on workerd — same runtime as production. Enables D1, KV, R2 bindings in local dev via `platformProxy`. No more simulation gaps. Requires `@astrojs/cloudflare` v13+ and Node.js 22+.
+Since Astro 6, `astro dev` and `astro preview` run on workerd via the Cloudflare Vite plugin — same runtime as production, so D1, KV, R2 bindings work locally without `platformProxy` (no longer a documented adapter option). Access bindings with `import { env } from 'cloudflare:workers'` (`Astro.locals.runtime` was removed). Astro 7 requires `@astrojs/cloudflare` v14 (v13 peers `astro ^6`) and Node.js 22.12+.
 
 ### ISR Pattern
 
-Astro has no native ISR. Implement with platform caching: Cloudflare KV as cache layer, or Vercel's `Cache-Control` with `stale-while-revalidate`.
+Astro 7 ships stable route caching: set a `cache.provider` (`memoryCache()`, or the experimental `cacheVercel()` / `cacheNetlify()` / `cacheCloudflare()` CDN providers) and call `Astro.cache.set({ maxAge, swr, tags })` or declare `routeRules`. Platform alternatives remain: Vercel `isr`, Cloudflare KV as cache layer, or `Cache-Control` with `stale-while-revalidate`.
 
 ### Skew Protection
 
@@ -99,7 +99,7 @@ On Vercel, enable skew protection to prevent asset mismatches between old client
 ## Best Practices
 
 1. **Match adapter to platform early** - Switching adapters mid-project is painful
-2. **Cloudflare: use v13+ for Astro 7** - Required for workerd local dev
-3. **Node.js 22+ for Astro 7** - Drops Node 18/20 support
+2. **Cloudflare: use v14 for Astro 7** - v13 targets Astro 6; workerd local dev since v13
+3. **Node.js 22.12+ for Astro 7** - `engines.node >=22.12.0`; Node 18/20 unsupported
 4. **Per-page prerender** - Mix static and SSR for optimal performance
-5. **Test bindings locally** - Cloudflare platformProxy enables local D1/KV/R2
+5. **Test bindings locally** - `astro dev` on workerd exposes local D1/KV/R2 (no `platformProxy` needed)

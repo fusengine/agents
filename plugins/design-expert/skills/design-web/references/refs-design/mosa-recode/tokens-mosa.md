@@ -2,12 +2,12 @@
 
 Reproduction of https://mosa-ai.nextjsshop-preview.workers.dev under a new brand
 (**Sylva AI**) and a new palette (forest green + brass). Every figure below is either
-`[relevé]` — read off the source's DOM or off the rebuilt files with the command quoted —
-`[arbitrage]` — decided here, with the reason — or `[estimé]` — computed, not measured.
+`[measured]` — read off the source's DOM or off the rebuilt files with the command quoted —
+`[decided]` — decided here, with the reason — or `[estimated]` — computed, not measured.
 
 Source snapshot used throughout: `curl -sL https://mosa-ai.nextjsshop-preview.workers.dev
 -o mosa.html` → **150,777 bytes**, a Next.js server render carrying a compiled Tailwind v4
-sheet. Every `[relevé]` marked "source" was greped on that file.
+sheet. Every `[measured]` marked "source" was greped on that file.
 
 ---
 
@@ -25,14 +25,14 @@ snapshot (`grep -oE 'duration-\[?[0-9]+m?s?\]?' mosa.html | sort | uniq -c | sor
 | `duration-700` | 6 | reveals |
 | `duration-500` | 5 | reveals, second tier |
 
-`[relevé, source]`. The rebuild keeps three of the four and drops `500ms`
-`[arbitrage]`: two reveal tiers 200ms apart are not distinguishable at 700ms, and dropping
+`[measured, source]`. The rebuild keeps three of the four and drops `500ms`
+`[decided]`: two reveal tiers 200ms apart are not distinguishable at 700ms, and dropping
 one removes a value nobody could name. So `styles.css` ships:
 
 ```css
---duree-reponse: 200ms;   /* the user acted */
---duree-etat:    300ms;   /* a state settles */
---duree-revele:  700ms;   /* nobody asked */
+--duration-response: 200ms;   /* the user acted */
+--duration-state:    300ms;   /* a state settles */
+--duration-reveal:   700ms;   /* nobody asked */
 ```
 
 Counted on the rebuild (`grep -oE '(200|300|700)ms' styles.css | sort | uniq -c`): each
@@ -43,14 +43,14 @@ no literal duration anywhere below line 50 of the sheet.
 
 The source ships one named easing: `ease-out`, 8 occurrences
 (`grep -oE 'ease-[a-z-]+|cubic-bezier\([^)]*\)' mosa.html | sort | uniq -c` → `8 ease-out`,
-zero `cubic-bezier`) `[relevé, source]`. Everything else rides Tailwind's implicit
+zero `cubic-bezier`) `[measured, source]`. Everything else rides Tailwind's implicit
 `cubic-bezier(.4, 0, .2, 1)`.
 
-The rebuild names two `[arbitrage]`:
+The rebuild names two `[decided]`:
 
 ```css
---courbe:        cubic-bezier(0.16, 1, 0.3, 1);   /* anything that travels */
---courbe-sortie: cubic-bezier(0, 0, 0.2, 1);      /* anything that only changes colour */
+--curve:     cubic-bezier(0.16, 1, 0.3, 1);   /* anything that travels */
+--curve-out: cubic-bezier(0, 0, 0.2, 1);      /* anything that only changes colour */
 ```
 
 `cubic-bezier(.16, 1, .3, 1)` is the corpus's standard travelling curve; it is quoted from
@@ -67,13 +67,13 @@ interactive element rather than 14 duplicated ones:
 
 ```css
 :focus-visible {
-  outline: 2px solid var(--laiton-clair);
+  outline: 2px solid var(--brass-light);
   outline-offset: 3px;
   border-radius: 2px;
 }
 ```
 
-`[arbitrage]`: one rule, not per-component. The source suppresses its focus ring entirely
+`[decided]`: one rule, not per-component. The source suppresses its focus ring entirely
 on several controls; that is not reproduced — an invisible focus ring is a defect, not a
 design decision.
 
@@ -81,28 +81,28 @@ design decision.
 
 `grep -c '@keyframes' styles.css` → **0**. Nothing on this page is *played*. Every visible
 movement is a transition between two states, which is also true of the source: its
-compiled sheet ships Tailwind's `spin` and `pulse` and applies neither `[relevé, source]`.
+compiled sheet ships Tailwind's `spin` and `pulse` and applies neither `[measured, source]`.
 
 ### 1.5 The reveal, and why it cannot leave the page blank
 
-The reveal is a 14px rise at 700ms on `--courbe`, staggered 60ms inside a group and capped
-at six steps (`Math.min(rang, 5) * 60`). It is armed on 41 elements
-(`grep -c 'data-reveler' index.html` → **41**, of which 3 are `data-reveler-groupe`
+The reveal is a 14px rise at 700ms on `--curve`, staggered 60ms inside a group and capped
+at six steps (`Math.min(rank, 5) * 60`). It is armed on 41 elements
+(`grep -c 'data-reveal' index.html` → **41**, of which 3 are `data-reveal-group`
 containers, so **38** animated targets).
 
 The resting state is **not** in the base sheet. It lives behind a class that JS adds:
 
 ```css
-[data-reveler]            { opacity: 1; transform: none; }
-.js-mouvement [data-reveler] { opacity: 0; transform: translateY(14px); }
+[data-reveal]            { opacity: 1; transform: none; }
+.js-motion [data-reveal] { opacity: 0; transform: translateY(14px); }
 ```
 
-`motion.js` adds `.js-mouvement` on `<html>` only inside
-`if (!mouvementReduit && "IntersectionObserver" in window)`. Three consequences, all
+`motion.js` adds `.js-motion` on `<html>` only inside
+`if (!reducedMotion && "IntersectionObserver" in window)`. Three consequences, all
 intended: a browser without `IntersectionObserver` shows everything; a user with
 `prefers-reduced-motion: reduce` shows everything; a script that throws before that line
 shows everything. This is the `cursor-recode` guarantee restated with a class instead of a
-paused keyframe `[arbitrage]`.
+paused keyframe `[decided]`.
 
 ### 1.6 Observers are disarmed, both of them
 
@@ -110,8 +110,8 @@ Two `IntersectionObserver` are created. The reveal observer unobserves each targ
 moment it fires — a reveal that has played must never cost another callback:
 
 ```js
-entrees[i].target.classList.add("est-visible");
-observateur.unobserve(entrees[i].target);
+entries[i].target.classList.add("is-visible");
+observer.unobserve(entries[i].target);
 ```
 
 The second parameter of the callback **is** the observer instance, which is why no outer
@@ -121,13 +121,13 @@ tracks which of the three steps is centred, so it must fire on every crossing.
 Both are pushed onto one array and disconnected together:
 
 ```js
-function desarmer() {
+function disarm() {
   if (document.visibilityState !== "hidden") return;
-  if (cadre) { window.cancelAnimationFrame(cadre); cadre = 0; }
-  while (observateurs.length) observateurs.pop().disconnect();
-  window.removeEventListener("scroll", surDefilement);
+  if (frame) { window.cancelAnimationFrame(frame); frame = 0; }
+  while (observers.length) observers.pop().disconnect();
+  window.removeEventListener("scroll", onScroll);
 }
-document.addEventListener("visibilitychange", desarmer);
+document.addEventListener("visibilitychange", disarm);
 ```
 
 `visibilitychange`, not `unload`: `unload` and `beforeunload` disqualify a page from the
@@ -137,13 +137,13 @@ animation frame only.
 ### 1.7 The scroll handler is a single frame, never a queue
 
 ```js
-function surDefilement() {
-  if (cadre) return;
-  cadre = window.requestAnimationFrame(majEntete);
+function onScroll() {
+  if (frame) return;
+  frame = window.requestAnimationFrame(updateHeader);
 }
 ```
 
-`cadre` is set to `0` as the first statement of `majEntete`, so at most one frame is ever
+`frame` is set to `0` as the first statement of `updateHeader`, so at most one frame is ever
 outstanding no matter how fast the wheel turns. The listener is `{ passive: true }`.
 
 ### 1.8 What moves, materially
@@ -172,7 +172,7 @@ No `width`, no `height`, no `top`, no `left`, no `margin`, no `padding` is anima
 The source is achromatic: pure `#000` page, white at eleven opacities, one blue-grey haze
 arriving only inside photographs. Counted
 (`grep -oE 'border-white/[0-9]+|bg-white/\[?0?\.?[0-9]+\]?|text-white/[0-9]+' mosa.html |
-sort | uniq -c | sort -rn | head -30`) `[relevé, source]`:
+sort | uniq -c | sort -rn | head -30`) `[measured, source]`:
 
 | token | occurrences |
 |---|---|
@@ -198,24 +198,24 @@ green-tinted white instead of white.
 ### 2.2 The ladder as shipped
 
 ```css
---fond-page:      #061009;
---surface-basse:  rgba(158, 224, 179, 0.030);
+--bg-page:        #061009;
+--surface-low:    rgba(158, 224, 179, 0.030);
 --surface:        rgba(158, 224, 179, 0.055);
---surface-haute:  rgba(158, 224, 179, 0.090);
---surface-champ:  rgba(158, 224, 179, 0.060);
---trait-faible:   rgba(170, 220, 186, 0.11);
---trait:          rgba(170, 220, 186, 0.17);
---trait-fort:     rgba(170, 220, 186, 0.30);
---texte:          #f1f7ef;
---texte-2:        rgba(228, 240, 226, 0.74);
---texte-3:        rgba(228, 240, 226, 0.56);
---texte-4:        rgba(228, 240, 226, 0.42);
---laiton:         #c29a33;
---laiton-clair:   #e0c36b;
---laiton-sourd:   rgba(194, 154, 51, 0.16);
---laiton-trait:   rgba(194, 154, 51, 0.44);
---vert-mousse:    #10261a;
---texte-sur-laiton: #0b1408;
+--surface-high:   rgba(158, 224, 179, 0.090);
+--surface-field:  rgba(158, 224, 179, 0.060);
+--line-faint:     rgba(170, 220, 186, 0.11);
+--line:           rgba(170, 220, 186, 0.17);
+--line-strong:    rgba(170, 220, 186, 0.30);
+--text:           #f1f7ef;
+--text-2:         rgba(228, 240, 226, 0.74);
+--text-3:         rgba(228, 240, 226, 0.56);
+--text-4:         rgba(228, 240, 226, 0.42);
+--brass:          #c29a33;
+--brass-light:    #e0c36b;
+--brass-muted:    rgba(194, 154, 51, 0.16);
+--brass-line:     rgba(194, 154, 51, 0.44);
+--moss-green:     #10261a;
+--text-on-brass:  #0b1408;
 ```
 
 `grep -cE '^  --[a-z-]+:' styles.css` → **28** custom properties in `:root`, colour and
@@ -225,7 +225,7 @@ non-colour combined.
 
 Brass never builds a surface. It appears in exactly seven roles, and the list is closed:
 
-1. the eyebrow dot (5px disc, `.surtitre__point`)
+1. the eyebrow dot (5px disc, `.eyebrow__dot`)
 2. the active tab underline
 3. the active step rail and the step icons
 4. the check discs in the plan feature lists
@@ -240,17 +240,17 @@ Nothing else is brass. The consequence is that on a full-page capture the accent
 
 | pair | ratio | verdict |
 |---|---|---|
-| `--texte` on `--fond-page` | ≈ 17.6:1 `[estimé]` | AAA |
-| `--texte-2` on `--fond-page` | ≈ 10.4:1 `[estimé]` | AAA |
-| `--texte-3` on `--fond-page` | ≈ 6.1:1 `[estimé]` | AA |
-| `--texte-4` on `--fond-page` | ≈ 3.9:1 `[estimé]` | below 4.5 |
-| `--laiton` on `--fond-page` | ≈ 7.6:1 `[estimé]` | AAA |
-| `--texte-sur-laiton` on `--laiton` | ≈ 7.9:1 `[estimé]` | AAA |
+| `--text` on `--bg-page` | ≈ 17.6:1 `[estimated]` | AAA |
+| `--text-2` on `--bg-page` | ≈ 10.4:1 `[estimated]` | AAA |
+| `--text-3` on `--bg-page` | ≈ 6.1:1 `[estimated]` | AA |
+| `--text-4` on `--bg-page` | ≈ 3.9:1 `[estimated]` | below 4.5 |
+| `--brass` on `--bg-page` | ≈ 7.6:1 `[estimated]` | AAA |
+| `--text-on-brass` on `--brass` | ≈ 7.9:1 `[estimated]` | AAA |
 
-`--texte-4` sits below the floor and carries **only** non-informational matter: the `1/6`
+`--text-4` sits below the floor and carries **only** non-informational matter: the `1/6`
 rank on a testimonial, the `/month` unit next to a price it repeats, an inactive tab label
 whose active twin is at full contrast, the input placeholder, the `/` separators in the
-backers strip. No sentence, no heading, no link label is ever at that level `[arbitrage]`,
+backers strip. No sentence, no heading, no link label is ever at that level `[decided]`,
 and this is a tighter rule than the source's, which puts body copy at `text-white/45`.
 
 ### 2.5 Text over photographs
@@ -260,8 +260,8 @@ the closing band. All four carry a gradient veil between the image and the type,
 image itself is filtered:
 
 ```css
-.scene__fond { filter: saturate(0.85) brightness(0.55); }
-.bande-cloture__image { filter: saturate(0.9) brightness(0.5); }
+.scene__bg { filter: saturate(0.85) brightness(0.55); }
+.closing-band__image { filter: saturate(0.9) brightness(0.5); }
 ```
 
 The hero adds two stacked gradients, one vertical and one horizontal, so the headline sits
@@ -271,8 +271,8 @@ over ≥ 68% black regardless of what the photograph does at that point.
 
 `grep -niE 'background(-color)?:\s*(#(f|e)|255, *255, *255|white)' styles.css` returns
 nothing. There is no light band, no inverted section, no `prefers-color-scheme` branch. The
-only near-white fills on the page are `--texte` used as a chip background inside the fake
-interfaces (`.jeton--clair`, `.jeton__action`, `.compositeur__envoi`) — three chips, all
+only near-white fills on the page are `--text` used as a chip background inside the fake
+interfaces (`.chip--light`, `.chip__action`, `.composer__send`) — three chips, all
 inside a photograph, all reproducing the source's white pills verbatim.
 
 ### 2.7 The banned palette is absent
@@ -299,10 +299,10 @@ names, the price when it is a word rather than a number, footer column heads, th
 the status line, the logo wall, the fake interface chips. Sans is: h1, h2, h3 in the
 use-case block, every paragraph, every list item, every accordion answer.
 
-### 3.2 The scale, relevé on the source
+### 3.2 The scale, measured on the source
 
 `grep -oE 'text-\[[0-9]+px\]|text-(xs|sm|base|lg|xl|2xl|3xl|4xl|5xl|6xl|7xl)' mosa.html |
-sort | uniq -c | sort -rn` `[relevé, source]`:
+sort | uniq -c | sort -rn` `[measured, source]`:
 
 | size | occurrences | role |
 |---|---|---|
@@ -321,7 +321,7 @@ sort | uniq -c | sort -rn` `[relevé, source]`:
 
 Reproduced verbatim, with one exception documented in §3.4.
 
-Headings, relevé from the source's class attributes:
+Headings, measured from the source's class attributes:
 
 ```
 h1        42 → 48 (sm) → 56 (md) → 64 (lg)   w400  lh 1.05  ls -0.02em
@@ -331,7 +331,7 @@ h3 usage  20 → 22 (sm) → 24 (lg)             w500  lh 1.35  ls -0.01em
 h3 step   18 mono                            w600
 h3 card   17 mono                            w500  ls +0.01em
 h3 gain   15 mono                            w600  ls -0.01em
-h3 pied   11 mono                            w600  ls +0.10em
+h3 footer 11 mono                            w600  ls +0.10em
 ```
 
 **Weight 400 on every large heading.** Not 600, not 700, at any breakpoint. This is the
@@ -356,8 +356,8 @@ restored only above 640px.**
 
 ```css
 @media (min-width: 640px) {
-  .surtitre, .etiquette, .jeton, .panneau-chat__corps, … { font-size: 13px; }
-  .pied__lettre-titre, .pied__colonne h3, .etiquette-remise { font-size: 11px; }
+  .eyebrow, .label, .chip, .chat-panel__body, … { font-size: 13px; }
+  .footer__newsletter-title, .footer__column h3, .discount-label { font-size: 11px; }
 }
 ```
 
@@ -368,20 +368,20 @@ awk '/@media \(min-width: 640px\)/{inmq=1} {print NR"\t"(inmq?"[>=640]":"[base]"
   | grep -E 'font-size: ([0-9]|1[0-3])px' | grep '\[base\]'
 ```
 
-→ one hit, `10px`, on the `::before` check glyph of `.liste-atouts li`. That is a
+→ one hit, `10px`, on the `::before` check glyph of `.feature-list li`. That is a
 decorative mark drawn inside a 15px bordered disc, not text: it has no text node, carries
 no information, and is reachable by no accessibility tree. Recorded, not corrected
-`[arbitrage]`.
+`[decided]`.
 
 ### 3.5 The two-tone heading
 
 Every `h2` on the page is one sentence split mid-phrase into two colours: the first half at
-`--texte`, the second at `--texte-3`. `[relevé, source]` — it is the source's most
+`--text`, the second at `--text-3`. `[measured, source]` — it is the source's most
 repeated typographic gesture, present on all six of its `h2` and on the closing heading.
 Reproduced on all seven headings here. Structurally it is one `<span>`:
 
 ```html
-<h2 class="titre-section">Experience the calm of <span>a grounded assistant.</span></h2>
+<h2 class="section-title">Experience the calm of <span>a grounded assistant.</span></h2>
 ```
 
 The rule that makes it read: the **softer half always finishes the sentence**. The page
@@ -394,7 +394,7 @@ subtitle, 40ch on overview bodies, 38ch on step bodies, 34ch on benefit bodies a
 note, 44ch on the use-case aside, 62ch on accordion answers, 20ch on section headings,
 22ch on the closing heading. The one exception is the hero h1, capped in **px** (700px)
 rather than `ch`, because its break point had to be forced to two lines to match the
-source's silhouette `[arbitrage]`.
+source's silhouette `[decided]`.
 
 ---
 
@@ -403,7 +403,7 @@ source's silhouette `[arbitrage]`.
 ### 4.1 Section count
 
 `grep -c '<section' index.html` → **10**, the same count as the source
-(`grep -oE '<section[^>]*>' mosa.html | wc -l` → 10) `[relevé, both]`, in the same order.
+(`grep -oE '<section[^>]*>' mosa.html | wc -l` → 10) `[measured, both]`, in the same order.
 
 ### 4.2 The vertical rhythm is not one value
 
@@ -417,7 +417,7 @@ source's silhouette `[arbitrage]`.
 Of these, the section rules alone carry six: `64` / `80` / `96` for the ordinary sections,
 `48` / `56` / `72` for the logo wall, plus the asymmetric `64px 88px` → `80px 96px` →
 `96px 112px` of the closing band. The source's own rhythm is
-`py-16 sm:py-20 lg:py-24` with two exceptions `[relevé, source]`; the exceptions are what
+`py-16 sm:py-20 lg:py-24` with two exceptions `[measured, source]`; the exceptions are what
 keep the page from stamping one value on everything.
 
 `pre-flight-checklist.md` §13 fails a sheet returning exactly one distinct value. Thirteen
@@ -428,15 +428,15 @@ before the footer.
 ### 4.3 Container and gutter
 
 ```css
---largeur-page: 1380px;
---gouttiere: 24px;          /* 32px from 1024 */
+--page-width: 1380px;
+--gutter: 24px;          /* 32px from 1024 */
 
-.cadre-page { max-width: var(--largeur-page); margin-inline: auto; }
-.conteneur  { max-width: var(--largeur-page); margin-inline: auto; padding-inline: var(--gouttiere); }
+.page-frame { max-width: var(--page-width); margin-inline: auto; }
+.container  { max-width: var(--page-width); margin-inline: auto; padding-inline: var(--gutter); }
 ```
 
-`1380px` is the source's, verbatim (`max-w-[1380px]`, 2 occurrences) `[relevé, source]`,
-as is the `px-6 lg:px-8` gutter. **The header uses `.conteneur`, the same class, so the nav
+`1380px` is the source's, verbatim (`max-w-[1380px]`, 2 occurrences) `[measured, source]`,
+as is the `px-6 lg:px-8` gutter. **The header uses `.container`, the same class, so the nav
 and the content share one gutter by construction** — `pre-flight-checklist.md` §14 asks for
 equality of value; here there is a single value. No section overrides the container width.
 
@@ -456,8 +456,8 @@ equality of value; here there is a single value. No section overrides the contai
 The source's own grid classes (`grep -oE 'grid-cols-[0-9]+|(sm|md|lg|xl):grid-cols-[0-9]+'
 mosa.html | sort | uniq -c`) give `9 × grid-cols-1`, `2 × grid-cols-2`, `5 × lg:grid-cols-3`,
 `3 × md:grid-cols-2`, `2 × sm:grid-cols-2`, `1 × sm:grid-cols-3`, `1 × sm:grid-cols-4`,
-`1 × lg:grid-cols-2`, `1 × lg:grid-cols-5` `[relevé, source]`. The counts per block match;
-the FAQ's `5fr 7fr` is this page's `[arbitrage]` in place of a bare 2-column split, taken
+`1 × lg:grid-cols-2`, `1 × lg:grid-cols-5` `[measured, source]`. The counts per block match;
+the FAQ's `5fr 7fr` is this page's `[decided]` in place of a bare 2-column split, taken
 from the source's rendered proportions rather than from its class.
 
 `grep -c '@media' styles.css` → **5** blocks: 640, 768, 1024, a second 640 block for the
@@ -468,18 +468,18 @@ type floor, and `prefers-reduced-motion`.
 `grep -oE 'border-radius: [^;]*' styles.css | sort | uniq -c | sort -rn`:
 
 ```
-16  border-radius: var(--rayon)        /* 4px */
+16  border-radius: var(--radius)        /* 4px */
  9  border-radius: 50%
  4  border-radius: 999px
- 1  border-radius: var(--rayon-large)  /* 6px, closing band only */
+ 1  border-radius: var(--radius-large)  /* 6px, closing band only */
  1  border-radius: 3px
- 1  border-radius: 2px                 /* the focus ring */
+ 1  border-radius: 2px                  /* the focus ring */
 ```
 
-`--rayon: 4px` is the source's `rounded-sm`, which it uses **69 times**
+`--radius: 4px` is the source's `rounded-sm`, which it uses **69 times**
 (`grep -oE 'rounded-(\[[0-9]+px\]|full|none|sm|md|lg|xl|2xl|3xl)' mosa.html | sort |
 uniq -c | sort -rn` → `69 rounded-sm`, `63 rounded-full`, `2 rounded-lg`)
-`[relevé, source]`. A 4px radius on a 1380px page is nearly a square corner, and that
+`[measured, source]`. A 4px radius on a 1380px page is nearly a square corner, and that
 near-squareness is the page's structural signature: everything is a rectangle, and only
 the round things — avatars, the send pill, the toggle, the accordion sign, the prev/next
 discs — escape.
@@ -488,7 +488,7 @@ discs — escape.
 
 Full-page render at 1365px wide: **8,264px** (`browser_autoscroll` reports `height: 8264`).
 The source at the same width: **8,830px** (the reference capture
-`e61dba203f-desktop.png` is 1365 × 8830) `[relevé, both]`. A **6.4% deficit**, and its
+`e61dba203f-desktop.png` is 1365 × 8830) `[measured, both]`. A **6.4% deficit**, and its
 cause is known: the source's testimonial cards are taller because its quotes run one line
 longer, and its logo cells are 96px against 84px here. No section is missing.
 
@@ -496,7 +496,7 @@ longer, and its logo cells are 96px against 84px here. No section is missing.
 
 Ten sections, 3 overview cards, 4 tabs, 3 steps, 6 benefit cards, 6 testimonials, 10 logo
 cells, 3 plans with 13 feature rows between them, 7 accordions, 26 footer links. Counted:
-`grep -c 'class="bouton' index.html` → **13** buttons. This is a **high-density** page by
+`grep -c 'class="button' index.html` → **13** buttons. This is a **high-density** page by
 `spacing-density.md`'s profiles, and the card padding floors of the Enterprise Dense
 profile (16px) are cleared everywhere: 22px on testimonials, 24px on benefits, 26px on
 plans, 20px on accordion summaries.
@@ -508,17 +508,17 @@ plans, 20px on accordion summaries.
 ### 5.1 The segmented nav
 
 Four links inside one bordered box, separated by `border-left` on every child but the
-first — not by a gap. Hover lifts the cell's background to `--surface-haute` and the label
-to `--texte`. The box disappears entirely below 1024px and is replaced by a hamburger that
+first — not by a gap. Hover lifts the cell's background to `--surface-high` and the label
+to `--text`. The box disappears entirely below 1024px and is replaced by a hamburger that
 toggles a bordered panel; the two bars rotate 45° into a cross on `aria-expanded="true"`,
 in CSS, driven by the attribute.
 
 ### 5.2 Buttons
 
-Two variants and nothing else. `--plein` is a brass fill with `--texte-sur-laiton` type at
-weight 600; `--contour` is `--surface` behind a `--trait-fort` border. Both are mono, both
+Two variants and nothing else. `--solid` is a brass fill with `--text-on-brass` type at
+weight 600; `--outline` is `--surface` behind a `--line-strong` border. Both are mono, both
 44px minimum height, both carry a `›` chevron at 70% opacity when they sit in a hero or
-closing row. Hover on `--plein` goes **lighter** (`--laiton-clair`); hover on `--contour`
+closing row. Hover on `--solid` goes **lighter** (`--brass-light`); hover on `--outline`
 raises the surface and turns the border brass.
 
 ### 5.3 The fake interfaces
@@ -551,21 +551,21 @@ does not swap a label over one image.
 Native `<details>`/`<summary>`, so the page works with JS disabled and the content is
 findable by in-page search. `motion.js` adds exactly one behaviour: opening one closes the
 others. The `+` / `−` sign is two 1px bars, one rotated 90°, the rotated one fading to
-`opacity: 0` when the volet opens.
+`opacity: 0` when the item opens.
 
 ### 5.6 The testimonial rail
 
 `overflow-x: auto` with `scroll-snap-type: x mandatory` and
-`scroll-padding-inline: var(--gouttiere)` so a snapped card lands on the content gutter,
+`scroll-padding-inline: var(--gutter)` so a snapped card lands on the content gutter,
 not on the viewport edge. The two round buttons scroll by exactly one card width plus the
-12px gap, read off the live DOM (`carte.getBoundingClientRect().width + 12`) rather than
+12px gap, read off the live DOM (`card.getBoundingClientRect().width + 12`) rather than
 assumed, and disable themselves at each end. Reduced motion swaps `behavior: "smooth"` for
 `"auto"` and drops the snap.
 
 ### 5.7 The pricing switch
 
 `role="switch"` with `aria-checked`, a 42 × 24px track and a 16px knob translated 18px.
-Switching rewrites the two prices from `data-mois` / `data-an` attributes on the elements
+Switching rewrites the two prices from `data-month` / `data-year` attributes on the elements
 themselves — no price table in JS, no second DOM to keep in sync.
 
 ### 5.8 Accessibility inventory
@@ -605,12 +605,12 @@ arrive.
 `grep -c '<img' index.html` → **10** tags for **4** files: `ridge` appears four times and
 `valley` three, always cropped differently by `object-fit: cover` inside a different aspect
 ratio (4/3 for the overview cards, 5/4 for the panels and the steps scene). Reusing one
-photograph across four boxes is the source's own economy `[relevé, source]`.
+photograph across four boxes is the source's own economy `[measured, source]`.
 
 ### 6.1 Framing, decided after looking at the four files
 
 The four photographs were opened and read before any framing was set — a crop chosen from
-a filename is a guess. Three decisions came out of that, all `[arbitrage]`, none of them
+a filename is a guess. Three decisions came out of that, all `[decided]`, none of them
 touching the layout:
 
 **`object-position: 50% 76%` on every scene.** `ridge.webp` carries a pale grey overcast
@@ -628,10 +628,10 @@ a light column behind centred text, so the composition is kept; only the veil ch
 `rgba(6, 16, 9, 0.42)` → `0.58` at the centre stop. Contrast is a blocking item, framing
 is not, so the fix goes on the veil rather than on the crop.
 
-**A dedicated value for the connector hairlines.** The 1px filets linking the chips in the
-first scene sit on a photograph, not on the page background; at `--trait-fort`
+**A dedicated value for the connector hairlines.** The 1px hairlines linking the chips in the
+first scene sit on a photograph, not on the page background; at `--line-strong`
 (`rgba(170, 220, 186, .30)`) they vanished. They carry their own
-`rgba(200, 232, 210, 0.55)` — the one place a line does not come from the trait ladder,
+`rgba(200, 232, 210, 0.55)` — the one place a line does not come from the line ladder,
 because the surface under it is not the page.
 
 The hero needed nothing: its gold horizon sits at ≈ 18% of the image height and lands just
@@ -709,7 +709,7 @@ Two further composition items are noted rather than fixed, for the same reason:
   satisfied several times over — the hero image is ~9× the next media, the closing band
   ~3× a scene.
 - **§2, eyebrow count.** Seven eyebrows over ten sections against a cap of four. The
-  source has eight `[relevé, source]`. Note that the mechanical grep
+  source has eight `[measured, source]`. Note that the mechanical grep
   (`uppercase[^"]*tracking`) returns **0** here, because these eyebrows are mono mixed-case,
   not uppercase-tracked — the check passes mechanically and fails in spirit, and both facts
   are recorded.

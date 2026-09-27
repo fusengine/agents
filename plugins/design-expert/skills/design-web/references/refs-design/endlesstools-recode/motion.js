@@ -1,194 +1,194 @@
-/* Référence de design — comportements d'interface. JS vanilla, aucune dépendance.
-   [relevé] = lu dans la source (HTML statique ou feuille CSS)
-   [arbitrage] = choix de cette référence, non observable dans la source.
+/* Design reference — interface behaviors. Vanilla JS, no dependency.
+   [measured] = read in the source (static HTML or CSS sheet)
+   [decided] = a choice made by this reference, not observable in the source.
 
-   La source est une application Next.js : le HTML aspiré ne garde des comportements que
-   les traces déposées avant hydratation — un état de départ en style inline, les
-   attributs de lecture des <video>, les classes de mise en page. Durées, courbes et
-   mécanique de défilement vivent dans le bundle et sont signalées comme non relevables. */
+   The source is a Next.js application: of its behaviors, the scraped HTML keeps only
+   the traces left before hydration — a start state as inline style, the playback
+   attributes of the <video> elements, the layout classes. Durations, curves and
+   scrolling mechanics live in the bundle and are flagged as not measurable. */
 
 (() => {
   'use strict';
 
-  /* Relue à chaque décision plutôt que capturée une fois : la préférence peut changer en
-     cours de session, et une page à huit vidéos doit s'y plier tout de suite.
-     [arbitrage] — la source ne consulte cette préférence nulle part. */
-  const calme = window.matchMedia('(prefers-reduced-motion: reduce)');
-  const observable = 'IntersectionObserver' in window;
+  /* Re-read at every decision rather than captured once: the preference can change
+     mid-session, and a page with eight videos must comply right away.
+     [decided] — the source consults this preference nowhere. */
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const canObserve = 'IntersectionObserver' in window;
 
-  /* ==== 1. Apparition au défilement ====================================
-     Procédé relevé : ~18 conteneurs portent, dans le HTML servi,
-     `style="opacity:0;transform:translateY(5px)"` [relevé] — l'état de DÉPART, écrit en
-     dur avant hydratation. Durée et courbe n'apparaissent nulle part dans la feuille :
-     celles employées ici sont [arbitrage] et vivent dans styles.css.
-     Deux écarts volontaires : l'état de départ est posé en CSS (pas inline), et sous
-     `reduce` tout est révélé immédiatement, sans transition. */
-  const cibles = document.querySelectorAll('[data-apparition]');
-  const revelerTout = () => cibles.forEach((el) => el.classList.add('est-visible'));
+  /* ==== 1. Reveal on scroll ============================================
+     Measured technique: ~18 containers carry, in the served HTML,
+     `style="opacity:0;transform:translateY(5px)"` [measured] — the START state, hard-coded
+     before hydration. Duration and curve appear nowhere in the sheet: the ones used
+     here are [decided] and live in styles.css.
+     Two deliberate deviations: the start state is set in CSS (not inline), and under
+     `reduce` everything is revealed immediately, with no transition. */
+  const targets = document.querySelectorAll('[data-reveal]');
+  const revealAll = () => targets.forEach((el) => el.classList.add('is-visible'));
 
-  if (calme.matches || !observable) {
-    revelerTout(); /* jamais de contenu laissé à opacity 0 */
+  if (reducedMotion.matches || !canObserve) {
+    revealAll(); /* never leave content at opacity 0 */
   } else {
-    const vigie = new IntersectionObserver((entrees) => {
-      entrees.forEach((e) => {
+    const watcher = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
         if (!e.isIntersecting) return;
-        e.target.classList.add('est-visible');
-        vigie.unobserve(e.target); /* une seule fois : pas de ré-animation au retour */
+        e.target.classList.add('is-visible');
+        watcher.unobserve(e.target); /* once only: no re-animation on the way back */
       });
     }, {
-      rootMargin: '0px 0px -10% 0px', /* [arbitrage] déclenche quand l'élément est franchement entré */
+      rootMargin: '0px 0px -10% 0px', /* [decided] fires once the element is clearly inside */
       threshold: 0.01
     });
-    cibles.forEach((el) => vigie.observe(el));
+    targets.forEach((el) => watcher.observe(el));
   }
 
-  /* ==== 2. Lecture des vidéos ==========================================
-     Attributs relevés sur les 8 <video>, identiques pour toutes :
-     `preload="none" loop muted autoplay playsinline` [relevé] — ni poster, ni <source>,
-     ni controls.
+  /* ==== 2. Video playback ==============================================
+     Attributes measured on the 8 <video> elements, identical for all of them:
+     `preload="none" loop muted autoplay playsinline` [measured] — no poster, no <source>,
+     no controls.
 
-     `preload="none"` empêche le préchargement, pas la lecture automatique : dès que le
-     navigateur démarre, il télécharge. Sur huit vidéos, cela fait huit téléchargements
-     concurrents au chargement.
+     `preload="none"` prevents preloading, not autoplay: as soon as the browser starts
+     playback, it downloads. With eight videos, that makes eight concurrent downloads
+     on load.
 
-     Ce que ce bloc ajoute [arbitrage] : `src` posé seulement à l'approche du viewport
-     (les <video> portent data-src), lecture arrêtée à la sortie d'écran donc un seul
-     décodage à la fois, et sous `reduce` la source est chargée pour afficher la première
-     image mais play() n'est jamais appelé. */
-  const videos = document.querySelectorAll('[data-video-differee]');
+     What this block adds [decided]: `src` set only when approaching the viewport
+     (the <video> elements carry data-src), playback stopped when leaving the screen so
+     only one decode at a time, and under `reduce` the source is loaded to show the first
+     frame but play() is never called. */
+  const videos = document.querySelectorAll('[data-video-deferred]');
 
-  const activerVideo = (v) => {
-    /* [arbitrage] garde `&& v.dataset.src` : sans elle, un data-src absent (undefined) est
-       coercé par l'IDL en "undefined" — le navigateur chargerait cette URL relative littérale. */
+  const activateVideo = (v) => {
+    /* [decided] `&& v.dataset.src` guard: without it, a missing data-src (undefined) is
+       coerced by the IDL into "undefined" — the browser would load that literal relative URL. */
     if (!v.src && v.dataset.src) {
       v.src = v.dataset.src;
-      v.preload = 'metadata'; /* [arbitrage] de quoi afficher la 1re image, la suite vient de la lecture */
+      v.preload = 'metadata'; /* [decided] enough to show the 1st frame, the rest comes with playback */
     }
-    if (calme.matches) return;
+    if (reducedMotion.matches) return;
     const p = v.play();
-    if (p && typeof p.catch === 'function') p.catch(() => {}); /* refus d'autoplay = cas normal */
+    if (p && typeof p.catch === 'function') p.catch(() => {}); /* autoplay refusal = normal case */
   };
 
-  if (observable) {
-    const veilleuse = new IntersectionObserver((entrees) => {
-      entrees.forEach((e) => {
+  if (canObserve) {
+    const videoWatcher = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
         const v = e.target;
-        if (e.isIntersecting) activerVideo(v);
+        if (e.isIntersecting) activateVideo(v);
         else if (v.src && !v.paused) v.pause();
       });
     }, {
-      rootMargin: '200px 0px', /* [arbitrage] la vidéo se prépare avant d'être vue, sans charger de loin */
+      rootMargin: '200px 0px', /* [decided] the video gets ready before being seen, without loading from afar */
       threshold: 0.1
     });
-    videos.forEach((v) => veilleuse.observe(v));
+    videos.forEach((v) => videoWatcher.observe(v));
   } else {
-    videos.forEach(activerVideo);
+    videos.forEach(activateVideo);
   }
 
-  /* Préférence changée en cours de session : mise en conformité immédiate, dans les deux
-     sens. [arbitrage] */
-  if (typeof calme.addEventListener === 'function') {
-    calme.addEventListener('change', () => {
-      if (calme.matches) {
+  /* Preference changed mid-session: immediate compliance, in both
+     directions. [decided] */
+  if (typeof reducedMotion.addEventListener === 'function') {
+    reducedMotion.addEventListener('change', () => {
+      if (reducedMotion.matches) {
         videos.forEach((v) => { if (v.src && !v.paused) v.pause(); });
-        revelerTout();
+        revealAll();
         return;
       }
       videos.forEach((v) => {
         const r = v.getBoundingClientRect();
-        if (r.top < window.innerHeight && r.bottom > 0) activerVideo(v);
+        if (r.top < window.innerHeight && r.bottom > 0) activateVideo(v);
       });
     });
   }
 
-  /* ==== 3. Vidéos de survol de la mosaïque =============================
-     DEUXIÈME traitement vidéo de la page, opposé au premier. Relevé sur les vignettes :
-     `preload="auto" loop playsinline`, superposée en `absolute inset-0 object-cover`,
-     `opacity-0` au repos et `group-hover:opacity-100` au survol.
+  /* ==== 3. Mosaic hover videos =========================================
+     SECOND video treatment on the page, opposite to the first. Measured on the tiles:
+     `preload="auto" loop playsinline`, overlaid as `absolute inset-0 object-cover`,
+     `opacity-0` at rest and `group-hover:opacity-100` on hover.
 
-     Deux défauts corrigés ici :
-     - `preload="auto"` sur douze vidéos les fait toutes télécharger au chargement, pour
-       un contenu que personne ne verra sans survoler. Remplacé par un chargement au
-       premier survol. [arbitrage]
-     - la source omet `muted` : sans lui, un navigateur refuse la lecture programmée.
-       L'attribut est ajouté dans le HTML. [arbitrage]
+     Two defects fixed here:
+     - `preload="auto"` on twelve videos makes them all download on load, for
+       content nobody will see without hovering. Replaced by a load on
+       first hover. [decided]
+     - the source omits `muted`: without it, a browser refuses programmatic playback.
+       The attribute is added in the HTML. [decided]
 
-     Sous `reduce`, aucune lecture : la vignette garde son image de couverture. */
-  document.querySelectorAll('[data-video-survol]').forEach((v) => {
-    const vignette = v.closest('.vignette');
-    if (!vignette) return;
+     Under `reduce`, no playback: the tile keeps its cover image. */
+  document.querySelectorAll('[data-video-hover]').forEach((v) => {
+    const tile = v.closest('.tile');
+    if (!tile) return;
 
-    const demarrer = () => {
-      if (calme.matches) return;
-      /* [arbitrage] même garde qu'en §2 : dataset.src absent → éviter la coercion "undefined". */
-      if (!v.src && v.dataset.src) v.src = v.dataset.src; /* chargé au premier survol, jamais avant */
+    const start = () => {
+      if (reducedMotion.matches) return;
+      /* [decided] same guard as in §2: missing dataset.src → avoid the "undefined" coercion. */
+      if (!v.src && v.dataset.src) v.src = v.dataset.src; /* loaded on first hover, never before */
       const p = v.play();
       if (p && typeof p.catch === 'function') p.catch(() => {});
     };
-    const arreter = () => { if (v.src && !v.paused) v.pause(); };
+    const stop = () => { if (v.src && !v.paused) v.pause(); };
 
-    vignette.addEventListener('mouseenter', demarrer);
-    vignette.addEventListener('mouseleave', arreter);
-    /* Au clavier : le focus vaut le survol, sinon le procédé n'existe que pour la souris. */
-    vignette.addEventListener('focusin', demarrer);
-    vignette.addEventListener('focusout', arreter);
+    tile.addEventListener('mouseenter', start);
+    tile.addEventListener('mouseleave', stop);
+    /* With the keyboard: focus counts as hover, otherwise the technique exists only for the mouse. */
+    tile.addEventListener('focusin', start);
+    tile.addEventListener('focusout', stop);
   });
 
-  /* ==== 4. Rails horizontaux (offres, témoignages) =====================
-     Relevé : conteneur `overflow-hidden relative`, piste `flex items-end`, largeurs de
-     cellule `w-[85%] sm:w-[45%] md:w-1/3`, commandes (deux flèches 40 × 40 à opacity .65,
-     jauge 50 × 6 sur #333).
+  /* ==== 4. Horizontal rails (offers, testimonials) =====================
+     Measured: container `overflow-hidden relative`, track `flex items-end`, cell
+     widths `w-[85%] sm:w-[45%] md:w-1/3`, controls (two 40 × 40 arrows at opacity .65,
+     a 50 × 6 gauge on #333).
 
-     NON relevable : la mécanique de déplacement. Le HTML statique ne contient ni
-     `overflow-x-auto`, ni `snap-*`, ni `translate-x`, ni `transition-transform`
-     (0 occurrence de chacun) — la source déplace ses rails en JS, styles posés au
-     runtime. Le défilement natif retenu ici est un [arbitrage] : même geste (glisser,
-     bouton suivant, position visible) sans inventer une implémentation invérifiable. */
+     NOT measurable: the movement mechanics. The static HTML contains neither
+     `overflow-x-auto`, nor `snap-*`, nor `translate-x`, nor `transition-transform`
+     (0 occurrences of each) — the source moves its rails in JS, with styles set at
+     runtime. The native scrolling chosen here is [decided]: same gesture (swipe,
+     next button, visible position) without inventing an unverifiable implementation. */
   document.querySelectorAll('[data-rail]').forEach((rail) => {
-    const piste = rail.querySelector('.rail__piste');
-    if (!piste) return;
+    const track = rail.querySelector('.rail__track');
+    if (!track) return;
 
-    /* Les commandes sont sous le rail, pas dedans : on les cherche dans le parent. Leur
-       absence est un cas normal — le rail des offres n'en a pas. */
+    /* The controls sit below the rail, not inside it: we look for them in the parent.
+       Their absence is a normal case — the offers rail has none. */
     const zone = rail.parentElement;
-    const jauge = zone && zone.querySelector('[data-rail-jauge]');
+    const gauge = zone && zone.querySelector('[data-rail-gauge]');
 
-    const majJauge = () => {
-      if (!jauge) return;
-      const course = piste.scrollWidth - piste.clientWidth;
-      const part = course <= 0 ? 1 : piste.scrollLeft / course;
-      jauge.style.width = (part * 100).toFixed(2) + '%';
+    const updateGauge = () => {
+      if (!gauge) return;
+      const travel = track.scrollWidth - track.clientWidth;
+      const ratio = travel <= 0 ? 1 : track.scrollLeft / travel;
+      gauge.style.width = (ratio * 100).toFixed(2) + '%';
     };
 
-    piste.addEventListener('scroll', majJauge, { passive: true });
-    window.addEventListener('resize', majJauge);
-    majJauge();
+    track.addEventListener('scroll', updateGauge, { passive: true });
+    window.addEventListener('resize', updateGauge);
+    updateGauge();
 
     if (!zone) return;
-    zone.querySelectorAll('[data-rail-pas]').forEach((bouton) => {
-      bouton.addEventListener('click', () => {
-        const cellule = piste.firstElementChild;
-        const largeur = cellule ? cellule.offsetWidth : piste.clientWidth;
-        piste.scrollBy({
-          left: largeur * Number(bouton.dataset.railPas),
-          /* Sous `reduce`, saut instantané : un défilement animé de plusieurs centaines
-             de pixels est exactement ce que cette préférence écarte. */
-          behavior: calme.matches ? 'auto' : 'smooth'
+    zone.querySelectorAll('[data-rail-step]').forEach((button) => {
+      button.addEventListener('click', () => {
+        const cell = track.firstElementChild;
+        const width = cell ? cell.offsetWidth : track.clientWidth;
+        track.scrollBy({
+          left: width * Number(button.dataset.railStep),
+          /* Under `reduce`, instant jump: an animated scroll of several hundred
+             pixels is exactly what this preference rules out. */
+          behavior: reducedMotion.matches ? 'auto' : 'smooth'
         });
       });
     });
   });
 
-  /* ==== 5. Sélecteur de facturation ====================================
-     Procédé relevé, contre-intuitif et réutilisable : l'option ACTIVE est celle qui porte
-     `disabled`. La feuille ne définit aucune classe d'état sélectionné — c'est
-     `disabled:text-white` qui allume l'option courante, pendant que l'autre reste à
-     `text-white/30` avec un survol à `text-white/75`. [relevé]
+  /* ==== 5. Billing selector ============================================
+     Measured technique, counter-intuitive and reusable: the ACTIVE option is the one that
+     carries `disabled`. The sheet defines no selected-state class — it is
+     `disabled:text-white` that lights up the current option, while the other stays at
+     `text-white/30` with a hover at `text-white/75`. [measured]
 
-     Basculer se réduit donc à déplacer l'attribut : aucun état en JS, aucune classe à
-     synchroniser, et l'option active sort naturellement de l'ordre de tabulation. */
-  document.querySelectorAll('.bascule').forEach((bascule) => {
-    const options = bascule.querySelectorAll('.bascule__option');
+     Toggling therefore comes down to moving the attribute: no state in JS, no class to
+     keep in sync, and the active option naturally leaves the tab order. */
+  document.querySelectorAll('.toggle').forEach((toggle) => {
+    const options = toggle.querySelectorAll('.toggle__option');
     options.forEach((option) => {
       option.addEventListener('click', () => {
         options.forEach((o) => { o.disabled = (o === option); });

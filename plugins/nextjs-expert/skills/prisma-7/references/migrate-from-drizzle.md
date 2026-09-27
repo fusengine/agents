@@ -13,9 +13,10 @@ related: ["migrate-from-typeorm", "migrate-from-sequelize"]
 ## Step 1: Install Prisma
 
 ```bash
-npm install @prisma/client
-npm install -D prisma
-npx prisma init
+npm install @prisma/client@7 @prisma/adapter-pg dotenv
+npm install -D prisma@7
+npx prisma init   # creates a `prisma-client` generator with `output` + the config file:
+                  # 7.10+ → prisma7.config.ts (7.0–7.9 → prisma.config.ts) — edit THAT file
 ```
 
 ## Step 2: Database Introspection or Manual Schema
@@ -83,7 +84,7 @@ model Post {
 // Module: src/services/user.service.ts
 // Purpose: Query patterns migration (SOLID: SRP - query abstraction)
 import { eq, or } from "drizzle-orm";
-import type { Prisma } from "@prisma/client";
+import type { Prisma } from "../generated/prisma/client"; // v7: generated path
 
 /**
  * Find by ID
@@ -207,7 +208,7 @@ const result = await prisma.$queryRaw`SELECT * FROM users`;
 npx prisma migrate dev --name initial
 
 # For existing database, mark migration as applied
-npx prisma migrate resolve --rolled-back migration_name
+npx prisma migrate resolve --applied migration_name
 ```
 
 ## Step 6: Update Environment

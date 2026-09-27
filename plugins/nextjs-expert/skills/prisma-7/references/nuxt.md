@@ -16,6 +16,9 @@ Prisma 7 with Nuxt 3 for server-side rendering and API routes.
 
 ```typescript
 // server/utils/interfaces/prisma.ts
+// generator output = "./generated" in prisma/schema.prisma (v7: output required)
+import type { PrismaClient } from '../../../prisma/generated/client'
+
 /**
  * Global Prisma singleton type definition
  * @see /server/utils/prisma.ts
@@ -25,7 +28,8 @@ export interface PrismaGlobal {
 }
 
 // server/utils/prisma.ts
-import { PrismaClient } from '@prisma/client'
+import { PrismaPg } from '@prisma/adapter-pg'
+import { PrismaClient } from '../../prisma/generated/client'  // v7: generated path
 import type { PrismaGlobal } from './interfaces/prisma'
 
 /**
@@ -36,8 +40,9 @@ import type { PrismaGlobal } from './interfaces/prisma'
 const globalForPrisma = globalThis as unknown as PrismaGlobal
 
 export const usePrisma = () =>
-  (globalForPrisma.prisma ??=
-    new PrismaClient())
+  (globalForPrisma.prisma ??= new PrismaClient({
+    adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL! }),
+  }))
 ```
 
 ---
@@ -59,6 +64,7 @@ export default defineEventHandler(async () => {
 // server/api/users/[id].get.ts
 export default defineEventHandler(async (event) => {
   const id = getRouterParam(event, 'id')
+  const prisma = usePrisma()
 
   const user = await prisma.user.findUnique({
     where: { id },
@@ -77,6 +83,7 @@ export default defineEventHandler(async (event) => {
 // server/api/users.post.ts
 export default defineEventHandler(async (event) => {
   const body = await readBody(event)
+  const prisma = usePrisma()
 
   const user = await prisma.user.create({
     data: body,

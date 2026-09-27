@@ -12,7 +12,7 @@ Efficient batch operations with SOLID Next.js principles.
 
 ```typescript
 // lib/db/batch-inserts.ts
-import type { Prisma, User } from '@prisma/client'
+import type { Prisma, User } from '@/lib/generated/prisma/client'
 
 interface CreateUserData {
   email: string
@@ -82,7 +82,7 @@ export async function createUsersBatchWithTransaction(
 
 ```typescript
 // lib/db/batch-updates.ts
-import type { User } from '@prisma/client'
+import type { User } from '@/lib/generated/prisma/client'
 
 interface BatchUpdateOptions {
   userIds?: string[]
@@ -155,7 +155,7 @@ export async function verifyUsersByIds(userIds: string[]) {
 
 ```typescript
 // lib/db/batch-deletes.ts
-import type { Prisma } from '@prisma/client'
+import type { Prisma } from '@/lib/generated/prisma/client'
 
 /**
  * @description Batch deletes archived posts by author
@@ -228,7 +228,7 @@ export async function deleteInactiveUsers(inactiveSinceDays: number) {
 
 ```typescript
 // lib/db/transactions.ts
-import type { Prisma, User, Post } from '@prisma/client'
+import type { Prisma, User, Post } from '@/lib/generated/prisma/client'
 
 interface UserCreationBatch {
   email: string

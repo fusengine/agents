@@ -6,12 +6,14 @@ keywords: migration, dialog, example, before-after, radix, base-ui
 
 # Dialog Migration Example
 
+The examples below are primitive-level (inside `components/ui/dialog.tsx`). Call sites that import the shadcn wrapper (`@/components/ui/dialog`) keep `Dialog`, `DialogTrigger`, `DialogContent`, `DialogHeader`, `DialogTitle` unchanged between Radix and Base UI; only `asChild` becomes `render` (e.g. `<DialogTrigger render={<Button variant="outline" />}>Share</DialogTrigger>`). Source: ui.shadcn.com/docs/components/base/dialog vs /radix/dialog.
+
 ## Radix -> Base UI
 
 ### Before (Radix)
 
 ```tsx
-import * as Dialog from "@radix-ui/react-dialog"
+import { Dialog } from "radix-ui" // legacy: import * as Dialog from "@radix-ui/react-dialog"
 
 <Dialog.Root>
   <Dialog.Trigger asChild>
@@ -36,7 +38,7 @@ import * as Dialog from "@radix-ui/react-dialog"
 ### After (Base UI)
 
 ```tsx
-import { Dialog } from "@base-ui/react/Dialog"
+import { Dialog } from "@base-ui/react/dialog"
 
 <Dialog.Root>
   <Dialog.Trigger render={<Button />}>Open</Dialog.Trigger>
@@ -71,7 +73,7 @@ import { Dialog } from "@base-ui/react/Dialog"
 ### Before (Base UI)
 
 ```tsx
-import { Select } from "@base-ui/react/Select"
+import { Select } from "@base-ui/react/select"
 
 <Select.Root>
   <Select.Trigger>
@@ -91,7 +93,7 @@ import { Select } from "@base-ui/react/Select"
 ### After (Radix)
 
 ```tsx
-import * as Select from "@radix-ui/react-select"
+import { Select } from "radix-ui"
 
 <Select.Root>
   <Select.Trigger>

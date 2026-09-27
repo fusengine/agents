@@ -12,14 +12,17 @@ related: field-patterns.md
 
 Complete form examples with shadcn/ui and TanStack Form.
 
+Follows https://ui.shadcn.com/docs/forms/tanstack-form. The form markup (`Field`, `Input`,
+`Button`, `Card`) is identical on every base; only the toast import changes — `sonner` on
+Radix/React Aria projects, `@/modules/cores/shadcn/components/ui/toast` on Base UI projects
+(see [toast.md](toast.md)).
+
 ## Profile Form (Complete Example)
 
 ```typescript
-// components/ProfileForm.tsx
-'use client'
-
+// src/modules/profile/components/ProfileForm.tsx
 import { useForm } from '@tanstack/react-form'
-import { toast } from 'sonner'
+import { toast } from 'sonner' // Base UI project: import { toast } from '@/modules/cores/shadcn/components/ui/toast'
 import { z } from 'zod'
 import { Button } from '@/modules/cores/shadcn/components/ui/button'
 import {
@@ -47,12 +50,14 @@ const formSchema = z.object({
     .regex(/^[a-zA-Z0-9_]+$/, 'Letters, numbers, underscores only.'),
 })
 
+/** TanStack Form profile form validated by a Zod schema. */
 export function ProfileForm() {
   const form = useForm({
     defaultValues: { username: '' },
     validators: { onSubmit: formSchema },
     onSubmit: async ({ value }) => {
       toast('Saved!', { description: JSON.stringify(value) })
+      // Base UI Toast: toast.add({ title: 'Saved!', description: JSON.stringify(value) })
     },
   })
 
@@ -115,16 +120,18 @@ export function ProfileForm() {
 
 ---
 
-## Server Component Display
+## Data Display (no form state)
 
 ```typescript
-// app/users/page.tsx (Server Component)
+// src/modules/users/components/UserList.tsx
 import { Card, CardContent, CardHeader, CardTitle } from '@/modules/cores/shadcn/components/ui/card'
 import { Badge } from '@/modules/cores/shadcn/components/ui/badge'
+import type { User } from '@/modules/users/interfaces/user'
 
-export default async function UsersPage() {
-  const users = await getUsers()
-
+/**
+ * Renders users as cards; data comes from the caller (e.g. a TanStack Query hook).
+ */
+export function UserList({ users }: { users: User[] }) {
   return (
     <div className="grid gap-4 md:grid-cols-2">
       {users.map((user) => (
@@ -151,24 +158,47 @@ export default async function UsersPage() {
 
 ## Toast Notifications Setup
 
-```typescript
-// app/layout.tsx
-import { Toaster } from '@/modules/cores/shadcn/components/ui/sonner'
+Mount the toaster once, next to `<App />` in `src/main.tsx`.
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
-  return (
-    <html lang="en">
-      <body>
-        {children}
-        <Toaster />
-      </body>
-    </html>
-  )
-}
+### Radix / React Aria project — Sonner (`bunx --bun shadcn@latest add sonner`)
+
+```typescript
+// src/main.tsx
+import { Toaster } from '@/modules/cores/shadcn/components/ui/sonner'
+// ...
+root.render(
+  <StrictMode>
+    <App />
+    <Toaster />
+  </StrictMode>
+)
 
 // Usage in components
 import { toast } from 'sonner'
 
 toast('Success!', { description: 'Your changes have been saved.' })
 toast.error('Error', { description: 'Something went wrong.' })
+```
+
+The registry `sonner.tsx` reads the theme through `next-themes` (added as a dependency); in a
+Vite app without its provider it falls back to `"system"`.
+
+### Base UI project — Toast (`bunx --bun shadcn@latest add toast`)
+
+```typescript
+// src/main.tsx
+import { Toaster } from '@/modules/cores/shadcn/components/ui/toast'
+// ...
+root.render(
+  <StrictMode>
+    <App />
+    <Toaster />
+  </StrictMode>
+)
+
+// Usage in components
+import { toast } from '@/modules/cores/shadcn/components/ui/toast'
+
+toast.add({ title: 'Success!', description: 'Your changes have been saved.' })
+toast.add({ title: 'Error', description: 'Something went wrong.', type: 'error' })
 ```

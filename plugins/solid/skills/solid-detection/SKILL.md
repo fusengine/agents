@@ -30,7 +30,7 @@ Detect project type from configuration files:
 
 # Generic TypeScript (no react/next, has .ts files)
 [ -f "package.json" ] && ! grep -q '"react"' package.json && ! grep -q '"next"' package.json
-[ -f "tsconfig.json" ] || [ -f "bun.lockb" ] || [ -f "bunfig.toml" ]
+[ -f "tsconfig.json" ] || [ -f "bun.lock" ] || [ -f "bun.lockb" ] || [ -f "bunfig.toml" ]
 
 # Laravel
 [ -f "composer.json" ] && grep -q '"laravel' composer.json

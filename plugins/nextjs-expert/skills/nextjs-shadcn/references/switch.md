@@ -10,9 +10,12 @@ related: radio-group.md, checkbox.md
 
 # Switch Component
 
+> **Base:** same API on Base UI and Radix (verified against r/styles/{base,radix}-nova/switch.json) — `checked` / `defaultChecked` / `onCheckedChange` / `disabled` / `size="sm" | "default"`; Base UI adds an `eventDetails` 2nd arg to `onCheckedChange`. React Aria differs: RAC `Switch` — `isSelected` / `defaultSelected` / `onChange` / `isDisabled`.
+> Invalid: `aria-invalid` on `Switch` + `data-invalid` on `Field`; disabled styling: `data-disabled` on `Field`.
+
 ## Overview
 
-The Switch component is a controlled toggle control for boolean values. It provides an accessible alternative to checkboxes for on/off states with built-in Radix UI primitives.
+The Switch component is a controlled toggle control for boolean values. It provides an accessible alternative to checkboxes for on/off states, built on Base UI (or Radix) primitives.
 
 ## Installation
 
@@ -25,6 +28,7 @@ bunx --bun shadcn@latest add switch
 ```tsx
 import { Switch } from "@/modules/cores/shadcn/components/ui/switch"
 
+/** Standalone switch. */
 export function BasicSwitch() {
   return <Switch />
 }
@@ -36,6 +40,7 @@ export function BasicSwitch() {
 import { Label } from "@/modules/cores/shadcn/components/ui/label"
 import { Switch } from "@/modules/cores/shadcn/components/ui/switch"
 
+/** Switch with a label. */
 export function SwitchWithLabel() {
   return (
     <div className="flex items-center space-x-2">
@@ -55,6 +60,7 @@ import { useState } from "react"
 import { Label } from "@/modules/cores/shadcn/components/ui/label"
 import { Switch } from "@/modules/cores/shadcn/components/ui/switch"
 
+/** Switch bound to state. */
 export function ControlledSwitch() {
   const [enabled, setEnabled] = useState(false)
 
@@ -98,6 +104,7 @@ interface Settings {
   autoSave: boolean
 }
 
+/** Settings list driven by switches. */
 export function MultipleSettings() {
   const [settings, setSettings] = useState<Settings>({
     notifications: true,
@@ -213,6 +220,7 @@ export function MultipleSettings() {
 import { Label } from "@/modules/cores/shadcn/components/ui/label"
 import { Switch } from "@/modules/cores/shadcn/components/ui/switch"
 
+/** Disabled switches. */
 export function DisabledSwitch() {
   return (
     <div className="space-y-4">
@@ -241,6 +249,7 @@ import { useState } from "react"
 import { Label } from "@/modules/cores/shadcn/components/ui/label"
 import { Switch } from "@/modules/cores/shadcn/components/ui/switch"
 
+/** Switches inside a form. */
 export function SwitchForm() {
   const [formData, setFormData] = useState({
     subscribe: false,
@@ -322,6 +331,7 @@ import { Label } from "@/modules/cores/shadcn/components/ui/label"
 import { Switch } from "@/modules/cores/shadcn/components/ui/switch"
 import { Input } from "@/modules/cores/shadcn/components/ui/input"
 
+/** Switch toggling an advanced mode. */
 export function ConditionalSwitch() {
   const [advancedMode, setAdvancedMode] = useState(false)
 

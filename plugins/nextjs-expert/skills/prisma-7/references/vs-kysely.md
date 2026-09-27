@@ -32,7 +32,7 @@ related: ["vs-drizzle", "vs-typeorm"]
 ```typescript
 // Module: src/services/user.service.ts
 // Purpose: User service with ORM abstraction (SOLID: SRP - business logic)
-import type { Prisma } from "@prisma/client";
+import type { PrismaClient } from "@/generated/prisma/client"; // v7: generated path
 
 /**
  * Get user with posts
@@ -40,7 +40,7 @@ import type { Prisma } from "@prisma/client";
  * Module path: src/services/user.service.ts
  */
 async function getUserWithPosts(
-  prisma: Prisma.PrismaClient,
+  prisma: PrismaClient,
   id: number
 ) {
   return prisma.user.findUnique({

@@ -331,7 +331,7 @@ export interface IndexCreationResult {
 
 ```typescript
 // modules/cores/db/repositories/index-creation.ts
-import { Prisma } from '@prisma/client'
+import { Prisma } from '../generated/prisma/client' // v7: generated path (modules/cores/db/generated)
 import type { IndexDefinition, IndexCreationResult } from '../interfaces/index-definition'
 
 /**

@@ -35,12 +35,12 @@ related: templates/language-switcher.md, i18next-basics.md
 
 | Source | Description | Best For |
 |--------|-------------|----------|
-| `querystring` | URL param `?lng=fr` | Testing, sharing |
+| `querystring` | URL param `?lng=es` | Testing, sharing |
 | `cookie` | Browser cookie | Server sync |
 | `localStorage` | Web Storage | SPA persistence |
 | `navigator` | Browser language | First visit |
-| `path` | URL path `/fr/about` | SEO, URLs |
-| `subdomain` | `fr.example.com` | Multi-domain |
+| `path` | URL path `/es/about` | SEO, URLs |
+| `subdomain` | `es.example.com` | Multi-domain |
 
 ---
 

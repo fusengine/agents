@@ -80,8 +80,8 @@ function AnimatedComponent() {
 | Platform | Minimum Size | Recommended |
 |----------|--------------|-------------|
 | Material Design | 48×48 dp | 56×56 dp for primary |
-| Apple HIG | 44×44 pt | 44×44 pt |
-| WCAG 2.2 | 24×24 px | 44×44 px |
+| Apple HIG (iOS/iPadOS) | 28×28 pt | 44×44 pt (default) |
+| WCAG 2.2 | 24×24 CSS px (SC 2.5.8, AA) | 44×44 CSS px (SC 2.5.5, AAA) |
 
 ```tsx
 // CORRECT - 48px touch target

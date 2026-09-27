@@ -1,6 +1,6 @@
 ---
 name: detection-algorithm
-description: 5-step weighted detection algorithm for Radix vs Base UI identification
+description: 5-step weighted detection algorithm for Base UI vs Radix vs React Aria identification
 when-to-use: When understanding scoring logic and edge cases
 keywords: algorithm, score, confidence, detection, weight, decision
 priority: high
@@ -11,7 +11,7 @@ related: radix-patterns.md, baseui-patterns.md
 
 ## Overview
 
-The detection algorithm uses a weighted scoring system across 5 signals to determine which primitive library a project uses. Higher confidence means more signals agree.
+The detection algorithm uses a weighted scoring system across 5 signals, scored separately for each base (Base UI, Radix, React Aria), to determine which primitive library a project uses. Higher confidence means more signals agree.
 
 ---
 
@@ -21,7 +21,7 @@ The detection algorithm uses a weighted scoring system across 5 signals to deter
 |---------|-------------|
 | **Weighted scoring** | Each signal contributes a fixed percentage to the final score |
 | **Confidence level** | Total score 0-100 indicating certainty of detection |
-| **Mixed state** | Both Radix and Base UI signals detected simultaneously |
+| **Mixed state** | Signals from two or more bases (Base UI, Radix, React Aria) detected simultaneously |
 | **Package manager** | Detected separately via lockfile, not scored |
 
 ---
@@ -31,21 +31,31 @@ The detection algorithm uses a weighted scoring system across 5 signals to deter
 ```
 START
   |
+  +- Step 0: components.json present?
+  |  +- `{runner} shadcn@latest info --json` -> .config.base = base|radix|aria
+  |     (authoritative; the scan below confirms it and detects mixed state)
+  |
   +- Step 1: package.json (40%)
-  |  +- @radix-ui/react-* found? -> +40 Radix
-  |  +- @base-ui/react found?    -> +40 Base UI
+  |  +- radix-ui or @radix-ui/react-* found? -> +40 Radix
+  |  +- @base-ui/react found?                -> +40 Base UI (ignore if only a radix-* Combobox needs it)
+  |  +- react-aria-components found?         -> +40 React Aria
   |
   +- Step 2: components.json (20%)
-  |  +- style: "new-york"|"default" -> +20 Radix
-  |  +- style: "base-vega"          -> +20 Base UI
+  |  +- style: "radix-*"|"new-york"|"default" -> +20 Radix
+  |  +- style: "base-*" (e.g. "base-nova")    -> +20 Base UI
+  |  +- style: "aria-*" (e.g. "aria-nova")    -> +20 React Aria
   |
   +- Step 3: Import analysis (25%)
-  |  +- @radix-ui imports found?     -> +25 Radix
-  |  +- @base-ui/react imports?      -> +25 Base UI
+  |  +- "radix-ui" or @radix-ui imports?  -> +25 Radix
+  |  +- @base-ui/react imports?           -> +25 Base UI
+  |  +- react-aria-components imports?    -> +25 React Aria
   |
   +- Step 4: Data attributes (15%)
-  |  +- data-state= found?           -> +15 Radix
-  |  +- data-[open] found?           -> +15 Base UI
+  |  +- data-[state=...] found?                      -> +15 Radix
+  |  +- data-[open] / data-starting-style found?     -> +15 Base UI
+  |  +- data-entering / data-exiting / data-[placement=...] -> +15 React Aria
+  |  (the `data-open:` Tailwind variant from shadcn/tailwind.css matches
+  |   both Radix and Base UI: do not score it)
   |
   +- Step 5: Package manager
   |  +- bun.lockb/bun.lock → bun (bunx)
@@ -67,17 +77,27 @@ START
 
 ## Decision Matrix
 
-| Radix > 0 | Base UI > 0 | Result |
-|------------|-------------|--------|
-| Yes | No | `radix` |
-| No | Yes | `base-ui` |
-| Yes | Yes | `mixed` |
-| No | No | `none` |
+| Radix > 0 | Base UI > 0 | React Aria > 0 | Result |
+|-----------|-------------|----------------|--------|
+| Yes | No | No | `radix` |
+| No | Yes | No | `base-ui` |
+| No | No | Yes | `react-aria` |
+| two or more Yes | | | `mixed` |
+| No | No | No | `none` |
 
 ## Edge Cases
 
+### Radix Combobox pulls Base UI
+The `radix-*` Combobox is built on `@base-ui/react` (Radix has no Combobox primitive; registry `radix-nova/combobox.json` depends on `@base-ui/react`). A Radix project with only `components/ui/combobox.tsx` importing Base UI is `radix`, not `mixed`.
+
+### Base-agnostic packages
+`@shadcn/react` (headless Questionnaire, MessageScroller) and the `cn` package are used by all three bases: never score them.
+
+### Base-only components
+Toast (`@base-ui/react/toast`) exists only for Base UI; Radix and React Aria projects use Sonner.
+
 ### Migration in Progress
-Both Radix and Base UI detected -> `mixed` result.
+Two or more bases detected (typically Radix + Base UI during a progressive migration, where both coexist by design) -> `mixed` result.
 Action: Check which components use which, plan migration.
 
 ### Third-party Libraries
@@ -86,8 +106,8 @@ Check: `@radix-ui` in `node_modules` transitive deps.
 Mitigation: Prioritize direct `dependencies` over transitive.
 
 ### Custom Primitives
-Project uses neither Radix nor Base UI -> `none` result.
-Action: Recommend fresh shadcn/ui setup with preferred primitive.
+Project uses none of the three bases -> `none` result.
+Action: Recommend fresh shadcn/ui setup; `init` defaults to Base UI since July 2026 (`-b radix` / `-b aria` to choose another base).
 
 ### Partial Adoption
 Only some components use shadcn/ui.
@@ -97,8 +117,8 @@ Check: Count affected files vs total component count.
 
 ```json
 {
-  "primitive": "radix|base-ui|mixed|none",
-  "confidence": 0-100,
+  "primitive": "radix|base-ui|react-aria|mixed|none",
+  "confidence": 85,
   "pm": "bun|npm|pnpm|yarn",
   "runner": "bunx|npx|pnpm dlx|yarn dlx",
   "signals": ["pkg:radix-ui", "style:new-york", "import:radix", "attr:data-state", "pm:bun"]

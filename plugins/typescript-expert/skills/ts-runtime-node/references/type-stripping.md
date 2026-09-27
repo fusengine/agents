@@ -10,11 +10,13 @@ related: tsx-when-needed.md, node24-features.md
 
 ## Overview
 
-Since Node 23.6 (stable and unflagged in **Node 24 LTS**), Node runs TypeScript by
+Enabled by default since Node 23.6 / 22.18 and marked **stable** since v24.12.0 / v25.2.0
+(so on current **Node 24 LTS** and **Node 26**), Node runs TypeScript by
 **erasing** inline types — replacing them with whitespace — and executing the
 result. No type checking, no code generation, no source maps needed (line numbers
-stay intact). The legacy `--experimental-transform-types` flag has been **removed**;
-stripping is the only built-in mode. Disable it with `--no-strip-types`.
+stay intact). The experimental `--experimental-transform-types` flag still exists on
+Node 24 but was **removed in Node 26.0.0**; stripping is then the only built-in mode.
+Disable it with `--no-strip-types`.
 
 Source: https://nodejs.org/api/typescript.html
 
@@ -57,7 +59,7 @@ For any of these, use a full loader → [tsx-when-needed.md](tsx-when-needed.md)
 
 ## Recommended tsconfig
 
-Node docs recommend TypeScript **5.8 or newer** (latest stable is 6.0):
+Node docs recommend TypeScript **5.8 or newer** (latest stable is 7.0):
 
 ```json
 {

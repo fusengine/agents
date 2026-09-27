@@ -1,8 +1,8 @@
 ---
 name: installation
-description: TanStack Form v1 installation for Next.js 16 with Zod adapter
+description: TanStack Form v1 installation for Next.js 16 with Zod (Standard Schema)
 when-to-use: Setting up TanStack Form in a new or existing Next.js project
-keywords: install, setup, bun, npm, zod-adapter, react-form-nextjs
+keywords: install, setup, bun, npm, standard-schema, react-form-nextjs
 priority: high
 requires: null
 related: basic-usage.md, client-form.md
@@ -31,13 +31,11 @@ Or with npm:
 npm install @tanstack/react-form @tanstack/react-form-nextjs zod
 ```
 
-### Step 2: Install Zod Adapter (Optional)
+### Step 2: No Zod Adapter Needed
 
-For schema validation with Zod:
-
-```bash
-bun add @tanstack/zod-form-adapter
-```
+TanStack Form v1 natively supports Standard Schema libraries (Zod, Valibot, ArkType, Effect/Schema):
+pass the schema directly to `validators`. `@tanstack/zod-form-adapter` / `validatorAdapter`
+belong to the pre-1.0 API — do not install them.
 
 ### Step 3: SOLID Module Structure
 
@@ -93,7 +91,6 @@ export type UserFormInput = z.infer<typeof userFormSchema>
 'use client'
 
 import { useForm } from '@tanstack/react-form'
-import { zodValidator } from '@tanstack/zod-form-adapter'
 import { userFormSchema } from '../services/form-validator'
 
 /**
@@ -109,7 +106,9 @@ export function useFormHandler(onSubmit: (data: any) => void) {
     onSubmit: async ({ value }) => {
       await onSubmit(value)
     },
-    validatorAdapter: zodValidator(),
+    validators: {
+      onChange: userFormSchema,  // Standard Schema, no adapter
+    },
   })
 
   return form

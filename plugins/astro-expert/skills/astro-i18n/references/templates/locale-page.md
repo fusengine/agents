@@ -12,7 +12,7 @@ import { useTranslations } from '../../lib/i18n/translations';
 
 export function getStaticPaths() {
   return [
-    { params: { locale: 'fr' } },
+    { params: { locale: 'it' } },
     { params: { locale: 'es' } }
   ];
 }
@@ -64,9 +64,9 @@ interface Props {
 }
 
 const { title, locale, path = Astro.url.pathname } = Astro.props;
-const locales = ['en', 'fr', 'es'];
+const locales = ['en', 'it', 'es'];
 const localeMap: Record<string, string> = {
-  en: 'en-US', fr: 'fr-FR', es: 'es-ES'
+  en: 'en-US', it: 'it-IT', es: 'es-ES'
 };
 ---
 
