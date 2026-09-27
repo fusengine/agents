@@ -1,13 +1,13 @@
 /**
- * OAuth Constants - Configuration API OAuth Claude Code
+ * OAuth Constants - Claude Code OAuth API configuration
  *
- * @description Constantes pour l'accès à l'API OAuth
+ * @description Constants for accessing the OAuth API
  */
 
-/** URL de l'API OAuth pour les limites d'usage */
+/** OAuth API URL for usage limits */
 export const OAUTH_API_URL = "https://api.anthropic.com/api/oauth/usage";
 
-/** Nom du service dans le Keychain macOS */
+/** Service name in the macOS Keychain */
 export const KEYCHAIN_SERVICE = "Claude Code-credentials";
 
 /** Detect Claude Code version dynamically */
@@ -22,7 +22,7 @@ function getClaudeVersion(): string {
 	}
 }
 
-/** Headers requis pour l'API OAuth */
+/** Headers required by the OAuth API */
 export const OAUTH_HEADERS = {
 	"anthropic-beta": "oauth-2025-04-20",
 	Accept: "application/json",
@@ -37,8 +37,8 @@ export const OAUTH_HEADERS = {
 const _ttlSec = Number(process.env.FUSE_ENFORCE_TTL_SEC);
 const ENFORCE_TTL_MS = (Number.isFinite(_ttlSec) && _ttlSec > 0 ? _ttlSec : 120) * 1000;
 
-/** TTL du cache succes en millisecondes (defaut 2 minutes) */
+/** Success cache TTL in milliseconds (default 2 minutes) */
 export const CACHE_TTL_MS = ENFORCE_TTL_MS;
 
-/** TTL du cache erreur en millisecondes (defaut 2 minutes) */
+/** Error cache TTL in milliseconds (default 2 minutes) */
 export const ERROR_CACHE_TTL_MS = ENFORCE_TTL_MS;

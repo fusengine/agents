@@ -86,7 +86,7 @@ Or connect GitHub:
  * @see /src/lib/prisma.ts
  */
 import type { NextApiRequest, NextApiResponse } from 'next'
-import type { User } from '@prisma/client'
+import type { User } from '@/generated/prisma/client' // v7: generated path
 import { prisma } from '@/lib/prisma'
 
 /**
@@ -156,11 +156,19 @@ heroku run npm run migrate
  * Manages connection reuse in production environment.
  * @see /src/interfaces/prisma-config.ts
  */
-import { PrismaClient } from '@prisma/client'
+import { PrismaClient } from '../generated/prisma/client' // v7: generated path (output = src/generated/prisma)
+import { PrismaPg } from '@prisma/adapter-pg'
 
 declare global {
   var prisma: PrismaClient | undefined
 }
+
+// v7: driver adapter required. If Heroku's certificate fails validation (P1010),
+// see the v7 upgrade guide: pass `ssl: { rejectUnauthorized: false }` or configure CA certs.
+const createClient = () =>
+  new PrismaClient({
+    adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL! }),
+  })
 
 /**
  * Get or create Prisma Client instance.
@@ -172,9 +180,9 @@ declare global {
  */
 const prisma =
   process.env.NODE_ENV === 'production'
-    ? new PrismaClient()
+    ? createClient()
     : ((globalThis.prisma as PrismaClient) ||
-        (globalThis.prisma = new PrismaClient()))
+        (globalThis.prisma = createClient()))
 
 export { prisma }
 ```

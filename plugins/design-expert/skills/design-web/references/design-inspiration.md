@@ -172,9 +172,9 @@ Marker convention inside those files:
 
 | Marker | Meaning |
 |---|---|
-| `[relevé]` | value read in the source or measured on the render |
-| `[arbitrage]` | judgment call by the rebuilder, justified on the line |
-| `[estimé]` | reconstructed — the source does not carry it explicitly |
+| `[measured]` | value read in the source or measured on the render |
+| `[decided]` | judgment call by the rebuilder, justified on the line |
+| `[estimated]` | reconstructed — the source does not carry it explicitly |
 
 Each file also has a section on what it deliberately did **not** reproduce. Read it before
 assuming a gap is an oversight.

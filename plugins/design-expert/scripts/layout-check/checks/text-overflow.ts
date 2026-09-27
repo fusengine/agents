@@ -1,26 +1,26 @@
 /**
- * text-overflow.ts — Contrôle 1 : texte qui déborde de sa boîte.
+ * text-overflow.ts — Check 1: text overflowing its box.
  *
- * DEUX prédicats, parce qu'un seul ne suffit pas (mesuré dans Chromium) :
- *  1. `scrollWidth > clientWidth + tolérance` — la région de débordement défilable.
- *     Elle ignore le côté START : sur un `text-indent` négatif ou en `direction: rtl`,
- *     elle vaut 0 alors que l'encre sort de 40px. Elle sous-estime aussi l'ampleur
- *     (13px rapportés pour 21px d'encre réellement hors boîte).
- *  2. Débordement de l'ENCRE : union des rectangles du texte propre de l'élément
- *     comparée à sa boîte de contenu, des deux côtés. C'est ce que l'œil voit.
+ * TWO predicates, because one is not enough (measured in Chromium):
+ *  1. `scrollWidth > clientWidth + tolerance` — the scrollable overflow region.
+ *     It ignores the START side: on a negative `text-indent` or with `direction: rtl`,
+ *     it is 0 while the ink overflows by 40px. It also underestimates the extent
+ *     (13px reported for 21px of ink actually outside the box).
+ *  2. INK overflow: union of the rectangles of the element's own text
+ *     compared with its content box, on both sides. That is what the eye sees.
  *
- * Une violation suffit sur l'un des deux ; les deux mesures sont toujours reportées.
+ * A violation on either one is enough; both measurements are always reported.
  */
 import type { LayoutCheckConfig, Violation } from "../types";
 import type { InkBox, OverflowRow, PageLike } from "../page.types";
 
 /**
- * Mesure les débordements de texte à la largeur de viewport courante.
+ * Measures text overflows at the current viewport width.
  *
- * @param page - Page déjà chargée et redimensionnée
- * @param config - Configuration active (exclusions, tolérances)
- * @param viewport - Largeur de viewport courante, en px
- * @returns Une violation par élément dont le contenu sort de sa boîte
+ * @param page - Page already loaded and resized
+ * @param config - Active configuration (exclusions, tolerances)
+ * @param viewport - Current viewport width, in px
+ * @returns One violation per element whose content leaves its box
  */
 export async function checkTextOverflow(
   page: PageLike,
@@ -34,30 +34,30 @@ export async function checkTextOverflow(
         const text = window.__lc.ownText(el) as string;
         if (!text) continue;
         const style = getComputedStyle(el);
-        // Un conteneur défilable déborde par conception : hors périmètre.
+        // A scrollable container overflows by design: out of scope.
         if (style.overflowX === "auto" || style.overflowX === "scroll") continue;
-        // scrollWidth/clientWidth valent 0 sur une boîte inline : seule l'encre compte.
+        // scrollWidth/clientWidth are 0 on an inline box: only the ink counts.
         const isInline = style.display === "inline";
         const scrollDelta = isInline ? 0 : el.scrollWidth - el.clientWidth;
         const ink = window.__lc.ownTextInk(el) as InkBox | null;
         const inkDelta = ink ? Math.max(ink.start, ink.end) : 0;
-        // Débordement VERTICAL : le texte sort par le haut ou par le bas de la
-        // hauteur qui lui est allouée. Ni `scrollWidth` ni `scrollHeight` ne le
-        // voient en `overflow: visible` (mesuré : 0 et 0 pour 6px d'encre hors
-        // boîte de chaque côté). `clientHeight` inclut les paddings : on les ôte.
+        // VERTICAL overflow: the text leaves through the top or the bottom of the
+        // height allotted to it. Neither `scrollWidth` nor `scrollHeight`
+        // sees it with `overflow: visible` (measured: 0 and 0 for 6px of ink outside the
+        // box on each side). `clientHeight` includes the paddings: we subtract them.
         //
-        // Tolérance : une boîte de ligne est plus haute que le `line-height` quand
-        // celui-ci est serré (< 1) — l'encre déborde alors NATURELLEMENT d'un
-        // demi-débord de chaque côté. On ne compte que ce qui excède ce demi-débord,
-        // sinon tout titre à line-height serré serait accusé à tort.
+        // Tolerance: a line box is taller than the `line-height` when
+        // the latter is tight (< 1) — the ink then NATURALLY overflows by
+        // half the excess on each side. Only what exceeds that half-excess is counted,
+        // otherwise every tight line-height heading would be wrongly flagged.
         const contentHeight =
           el.clientHeight - parseFloat(style.paddingTop) - parseFloat(style.paddingBottom);
         let vertDelta = 0;
         if (ink && !isInline && contentHeight > 0 && ink.lines > 0) {
           const inkHeight = contentHeight + ink.top + ink.bottom;
           const lineBox = inkHeight / ink.lines;
-          const naturel = Math.max(0, (lineBox - (window.__lc.lineHeightOf(el) as number)) / 2);
-          vertDelta = Math.max(ink.top, ink.bottom) - naturel;
+          const natural = Math.max(0, (lineBox - (window.__lc.lineHeightOf(el) as number)) / 2);
+          vertDelta = Math.max(ink.top, ink.bottom) - natural;
         }
         if (scrollDelta <= args.tol && inkDelta <= args.inkTol && vertDelta <= args.inkTol) continue;
         out.push({
@@ -101,7 +101,7 @@ export async function checkTextOverflow(
     delta: row.delta,
     message:
       `scrollWidth ${row.scrollWidth}px / clientWidth ${row.clientWidth}px — ` +
-      `encre hors boîte : ${row.inkEnd}px à droite, ${row.inkStart}px à gauche ; ` +
-      `${row.lines} ligne(s) de texte pour la hauteur allouée (${row.vertOverflow}px de trop)`,
+      `ink outside the box: ${row.inkEnd}px on the right, ${row.inkStart}px on the left; ` +
+      `${row.lines} text line(s) for the allotted height (${row.vertOverflow}px too many)`,
   }));
 }

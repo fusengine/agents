@@ -1,9 +1,9 @@
 ---
 name: animation
-description: Animation utilities for Tailwind CSS v4.1
+description: Animation utilities for Tailwind CSS v4.3
 ---
 
-# Animation Utilities - Tailwind CSS v4.1
+# Animation Utilities - Tailwind CSS v4.3
 
 Complete reference for CSS animations: built-in animations and custom @keyframes.
 

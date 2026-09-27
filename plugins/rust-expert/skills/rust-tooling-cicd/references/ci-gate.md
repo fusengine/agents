@@ -39,6 +39,8 @@ cargo test --doc                                             # 6. doc-tests (nex
 cargo llvm-cov --all-features --workspace                    # 7. coverage (slowest)
 ```
 
+Since Rust 1.97, `CARGO_BUILD_WARNINGS=deny` (Cargo `build.warnings`) denies lint warnings of local packages without invalidating the build cache the way `RUSTFLAGS=-D warnings` does — see doc.rust-lang.org/cargo/reference/config.html#buildwarnings.
+
 Steps 1–2 catch the majority of PR problems in seconds. Steps 3–4 protect the supply chain. Steps 5–6 are the test gate (see rust-testing-quality). Step 7 runs last because instrumentation is the slowest.
 
 ---

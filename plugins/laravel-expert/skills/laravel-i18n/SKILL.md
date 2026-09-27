@@ -104,8 +104,8 @@ __('Hello :name', ['name' => 'John'])
 trans_choice('messages.items', $count)
 
 // Runtime locale
-App::setLocale('fr');
-App::currentLocale();  // 'fr'
+App::setLocale('es');
+App::currentLocale();  // 'es'
 ```
 
 ---
@@ -129,11 +129,11 @@ App::currentLocale();  // 'fr'
 
 ## Laravel 13 Notes
 
-L'API de localisation (`__()`, `trans_choice()`, `App::setLocale()`) reste **inchangée en Laravel 13**. Points spécifiques :
+The localization API (`__()`, `trans_choice()`, `App::setLocale()`) is **unchanged in Laravel 13**. Specific points:
 
-- `Context::add('locale', $locale)` propage la locale dans les jobs queue (résout le bug L12 où la locale était perdue dans les ShouldQueue)
-- `serializable_classes` : whitelister vos `Locale` enums si utilisés en queue
-- Middleware `SetLocale` : compatible avec le nouveau `validateOrigin()` de [[laravel-auth]]
+- `Context::add('locale', $locale)` propagates the locale into queued jobs (fixes the L12 bug where the locale was lost in ShouldQueue jobs)
+- `cache.serializable_classes` (default `false` in L13): list your `Locale` objects if you cache them
+- `SetLocale` middleware: compatible with the new `PreventRequestForgery` middleware from [[laravel-auth]]
 
 ```php
 // app/Jobs/SendNotification.php

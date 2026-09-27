@@ -12,7 +12,7 @@ export default defineConfig({
   site: 'https://example.com',
 
   adapter: vercel({
-    experimentalStaticHeaders: true  // CSP via HTTP headers (not meta tag)
+    staticHeaders: true  // CSP via HTTP headers (not meta tag); formerly experimentalStaticHeaders
   }),
 
   security: {
@@ -56,14 +56,17 @@ curl -s https://cdn.example.com/script.min.js \
 # Use: sha384-oqVuAfXRKap7fdgcCY5uykM6+...
 ```
 
-## For Large Sites (Vercel)
+## Scoped Directives (Astro 7.1+)
 
 ```javascript
-adapter: vercel({
-  experimentalStaticHeaders: {
-    globalCsp: true  // Prevents "Body exceeded 3300kb limit" error
+security: {
+  csp: {
+    scriptDirective: {
+      // Scope a CDN to <script> elements only (script-src-elem); Astro's hashes move there too
+      resources: ["'self'", { resource: 'https://elements.cdn.example.com', kind: 'element' }]
+    }
   }
-})
+}
 ```
 
 ## Testing Checklist

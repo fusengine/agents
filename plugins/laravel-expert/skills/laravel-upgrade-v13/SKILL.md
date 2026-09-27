@@ -13,7 +13,7 @@ related-skills: laravel-architecture, laravel-eloquent, laravel-queues, laravel-
 Covers the full Laravel 12 → 13.0 upgrade path: the PHP 8.3 minimum
 requirement, composer commands to bump Laravel/PHPUnit 12/Pest 4/Tinker,
 mandatory breaking changes (VerifyCsrfToken → PreventRequestForgery, cache
-prefix hyphens, serializable_classes hardening, pheanstalk 8.0+ for
+prefix hyphens, serializable_classes hardening, pheanstalk 7.x/8.x for
 Beanstalkd, Symfony 7.4/8.0 support), the optional Eloquent + Queue
 Attributes migration, and the Laravel Boost MCP automated
 `/upgrade-laravel-v13` path. Provides a phased checklist (pre-upgrade audit
@@ -23,7 +23,7 @@ validation).
 
 # Laravel 12 → 13 Upgrade Guide
 
-Centralized upgrade path from Laravel 12.46 to Laravel 13.0 (released March 17, 2026).
+Centralized upgrade path from Laravel 12.x (latest 12.69) to Laravel 13 (13.0 released March 17, 2026; current stable 13.33).
 
 ## Agent Workflow (MANDATORY)
 
@@ -54,7 +54,7 @@ Most projects: **< 1 day total**.
 ## Critical Rules
 
 1. **PHP 8.3 minimum** — Drop PHP 8.2 support before upgrading composer.
-2. **PHPUnit 12 + Pest 4 required** — bump dev dependencies first to catch test failures early.
+2. **PHPUnit 12 + Pest 4 (official upgrade target)** — bump dev dependencies first to catch test failures early. Pest 5 / PHPUnit 13 are available later but require PHP 8.4+.
 3. **VerifyCsrfToken → PreventRequestForgery** — rename middleware references in `bootstrap/app.php` and aliases.
 4. **Cache prefix breaking change** — hyphens replace underscores by default. Set `CACHE_PREFIX`, `REDIS_PREFIX`, `SESSION_COOKIE` to preserve old behavior if cache invalidation is unacceptable.
 5. **Never mix Attributes + properties** on the same Eloquent/Queue class — pick one source of truth per model/job.
@@ -104,7 +104,7 @@ composer update
 ```php
 // bootstrap/app.php
 ->withMiddleware(function (Middleware $middleware) {
-    $middleware->validateOrigin(except: [
+    $middleware->preventRequestForgery(except: [
         'stripe/*',
         'webhook/*',
     ]);
@@ -117,7 +117,7 @@ composer update
 
 ```env
 # .env — preserve L12 underscore behavior
-CACHE_PREFIX=laravel_cache
+CACHE_PREFIX=laravel_cache_
 REDIS_PREFIX=laravel_database_
 SESSION_COOKIE=laravel_session
 ```
@@ -139,5 +139,5 @@ SESSION_COOKIE=laravel_session
 - ❌ Skip the cache prefix env vars if you have warm caches in prod
 - ❌ Upgrade composer directly on `main` without CI verification
 - ❌ Mix `#[Fillable]` and `$fillable` on the same model
-- ❌ Forget `pheanstalk/pheanstalk: ^8.0` if you use Beanstalkd
-- ❌ Leave `new Model()` calls inside service provider `register()` — throws `LogicException` in L13
+- ❌ Forget `pda/pheanstalk: ^8.0` (or `^7.0`) if you use Beanstalkd
+- ❌ Leave nested model instantiation (`new static()`) inside a model's `boot()` / trait `boot*()` — throws `LogicException` in L13

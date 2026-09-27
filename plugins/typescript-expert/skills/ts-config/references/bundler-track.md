@@ -1,13 +1,13 @@
 ---
 name: bundler-track
-description: Bundler/Bun tsconfig track for TypeScript 6.0
+description: Bundler/Bun tsconfig track for TypeScript 7.0 (6.0-compatible)
 keywords: bundler, bun, vite, esbuild, module preserve, moduleResolution bundler
 ---
 
 # Bundler Track (Bun / Vite / esbuild / webpack)
 
 Load when the code is executed by Bun or its imports are resolved by a bundler.
-Source of truth: bun.sh/docs/typescript + typescriptlang.org release notes for TS 6.0.
+Source of truth: bun.com/docs/typescript + TypeScript 6.0 / 7.0 release notes.
 
 ## Why these flags
 
@@ -19,11 +19,11 @@ Source of truth: bun.sh/docs/typescript + typescriptlang.org release notes for T
 | `allowImportingTsExtensions` | `true` | Lets you write `import './x.ts'`; safe here because the bundler (not `tsc`) emits. Requires `noEmit` (or `emitDeclarationOnly`). |
 | `noEmit` | `true` | `tsc` is the type-checker only; the bundler produces JS. |
 | `moduleDetection` | `"force"` | Treats every file as a module — avoids accidental global-script scope. |
-| `types` | e.g. `["bun"]` | 6.0 defaults `types` to `[]`; you must list global-affecting packages explicitly. |
+| `types` | e.g. `["bun"]` | Since 6.0 (kept in 7.0) `types` defaults to `[]`; you must list global-affecting packages explicitly. |
 
 ## Strictness (add on top of `strict: true`)
 
-`strict` is already the 6.0 default. Layer on:
+`strict` is already the default (6.0 and 7.0). Layer on:
 
 - `noUncheckedIndexedAccess: true` — indexed access yields `T | undefined`
 - `noFallthroughCasesInSwitch: true`
@@ -34,10 +34,10 @@ Source of truth: bun.sh/docs/typescript + typescriptlang.org release notes for T
 
 Add `"jsx": "react-jsx"` only when the project renders JSX. Omit for plain libraries/CLIs.
 
-## Migration path: bundler + commonjs (new in 6.0)
+## Migration path: bundler + commonjs (since 6.0)
 
 Before 6.0, `moduleResolution: bundler` required `module` `esnext` or `preserve`.
-TS 6.0 now **also allows `moduleResolution: bundler` with `module: commonjs`**. This is the
+TS 6.0+ **also allows `moduleResolution: bundler` with `module: commonjs`**. This is the
 recommended intermediate step when moving a CommonJS project off the deprecated
 `moduleResolution: node` before committing to `module: Preserve` or `nodenext`.
 

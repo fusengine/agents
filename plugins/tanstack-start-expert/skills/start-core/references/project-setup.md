@@ -11,7 +11,8 @@ related: project-anatomy.md, common-mistakes.md, templates/minimal-project.md
 # Project Setup — TanStack Start
 
 Load when installing Start or configuring the build tool. Targets
-`@tanstack/react-start` v1.166.2.
+`@tanstack/react-start` v1.168.58 (peer deps: `vite >=7`, `react >=18 || >=19`;
+engines `node >=22.12.0`).
 
 ## 1. Install Dependencies
 
@@ -73,9 +74,13 @@ import { pluginReact } from '@rsbuild/plugin-react'
 import { tanstackStart } from '@tanstack/react-start/plugin/rsbuild'
 
 export default defineConfig({
-  plugins: [tanstackStart(), pluginReact()],
+  server: { port: 3000 },
+  plugins: [pluginReact(), tanstackStart()], // order as in the official Rsbuild setup
 })
 ```
+
+Install with `npm i -D @rsbuild/core @rsbuild/plugin-react`; scripts become
+`rsbuild dev` / `rsbuild build`.
 
 > With Rsbuild, the public env prefix is `PUBLIC_` (not `VITE_`). See the
 > `start-execution-model` skill for env-variable rules.

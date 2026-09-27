@@ -3,7 +3,7 @@ name: laravel-queues
 description: Use when implementing Laravel 13 background jobs — queue attributes, workers, batching, chaining, middleware, or Queue::route() routing.
 versions:
   laravel: "13.0"
-  horizon: "5.43"
+  horizon: "5.50"
   php: "8.3"
 user-invocable: false
 references: references/legacy-properties.md, references/jobs.md, references/dispatching.md, references/workers.md, references/batching.md, references/chaining.md, references/middleware.md, references/failed-jobs.md, references/horizon.md, references/testing.md, references/troubleshooting.md, references/templates/QueueableJob.php.md, references/templates/BatchJob.php.md, references/templates/ChainedJobs.php.md, references/templates/JobMiddleware.php.md, references/templates/JobTest.php.md
@@ -14,7 +14,7 @@ related-skills: laravel-attributes, laravel-architecture, laravel-eloquent
 Covers Laravel 13 queues with PHP Attributes as the primary configuration
 mechanism on Jobs, Listeners, Notifications, Mailables, and Broadcast Events
 (#[Connection], #[Queue], #[Tries], #[Timeout], #[Backoff],
-#[MaxExceptions], #[FailOnTimeout], #[UniqueFor], #[AfterCommit]) alongside
+#[MaxExceptions], #[FailOnTimeout], #[UniqueFor], #[Delay], #[DebounceFor]) alongside
 legacy property equivalents. Includes job lifecycle, dispatching, workers,
 batching, chaining, custom middleware, failed-job handling, Horizon
 monitoring, testing, troubleshooting, and centralised queue routing via
@@ -44,7 +44,9 @@ Laravel 13 introduces **PHP Attributes** on Queueables (Jobs, Listeners, Notific
 | `#[Connection('redis')]` · `#[Queue('podcasts')]` | `public $connection` · `public $queue` |
 | `#[Tries(5)]` · `#[Timeout(120)]` · `#[MaxExceptions(3)]` | `public int $tries / $timeout / $maxExceptions` |
 | `#[Backoff([10, 30, 60])]` · `#[FailOnTimeout]` | `public $backoff` · `public bool $failOnTimeout` |
-| `#[UniqueFor(3600)]` · `#[AfterCommit]` · `#[DeleteWhenMissingModels]` | `public $uniqueFor / $afterCommit / $deleteWhenMissingModels` |
+| `#[UniqueFor(3600)]` · `#[DeleteWhenMissingModels]` · `#[Delay(60)]` | `public $uniqueFor / $deleteWhenMissingModels / $delay` |
+| `#[DebounceFor(30, maxWait: 120)]` (13.6+, with `debounceId()`) | — |
+| no attribute — `->afterCommit()` / `ShouldQueueAfterCommit` | `public $afterCommit` |
 
 > Applies to **Jobs, Listeners, Notifications, Mailables, and Broadcast Events**.
 
@@ -55,7 +57,7 @@ Laravel 13 introduces **PHP Attributes** on Queueables (Jobs, Listeners, Notific
 1. **Declare queue metadata with Attributes** - `#[Queue]`, `#[Tries]`, `#[Backoff]`
 2. **Centralise routing with `Queue::route()`** in `AppServiceProvider::boot()`
 3. **Implement `failed(Throwable $e)`** for every production job
-4. **Use `#[AfterCommit]`** when dispatching inside DB transactions
+4. **Use `->afterCommit()`** (or `after_commit` connection config) when dispatching inside DB transactions
 5. **Monitor Redis queues with Horizon** in production
 
 ---
@@ -67,7 +69,7 @@ app/
 ├── Jobs/
 │   └── ProcessPodcast.php       # #[Connection, Queue, Tries, Backoff]
 ├── Providers/
-│   └── AppServiceProvider.php   # Queue::route('podcasts', 'redis')
+│   └── AppServiceProvider.php   # Queue::route(ProcessPodcast::class, 'redis')
 └── Listeners/
     └── SendShipmentNotification.php  # #[Queue('mail')]
 ```
@@ -134,10 +136,21 @@ use Illuminate\Support\Facades\Queue;
 
 public function boot(): void
 {
-    Queue::route('podcasts', connection: 'redis', queue: 'media');
-    Queue::route('mail',     connection: 'redis', queue: 'transactional');
+    // First argument = job class, or an interface / trait / parent class
+    Queue::route(ProcessPodcast::class, connection: 'redis', queue: 'media');
+    Queue::route(ShouldBroadcast::class, queue: 'events');
+    Queue::route([ProcessVideo::class => ['redis', 'videos']]);
+
+    // Forward a queue to another queue / connection (13.26+)
+    Queue::forward('reports', 'reports.fifo', 'sqs');
 }
 ```
+
+### Other 13.x additions
+
+- `Bus::bulk($jobs)` (13.13+) — push many independent jobs grouped by connection/queue, no batch tracking
+- `PreparesForDispatch` interface (13.9+) — `prepareForDispatch()` returning `false` skips dispatch
+- `Illuminate\Queue\Middleware\Release` job middleware (13.18+) — `Release::when($condition, releaseAfter: 60)`
 
 → Legacy `public int $tries = 5` style — see [legacy-properties.md](references/legacy-properties.md)
 
@@ -148,11 +161,11 @@ public function boot(): void
 ### DO
 - Use **Attributes** on Jobs, Listeners, Notifications, Mailables, Broadcast Events
 - Centralise routing via `Queue::route()` in `AppServiceProvider::boot()`
-- Use `#[AfterCommit]` when dispatching inside a transaction
+- Use `->afterCommit()` when dispatching inside a transaction
 - `final` job classes, implement `failed()`, monitor Redis with Horizon
 
 ### DON'T
 - Mix `#[Tries]` and `public int $tries` (single source of truth)
-- Dispatch in a transaction without `#[AfterCommit]`
+- Dispatch in a transaction without `->afterCommit()` (or `after_commit => true`)
 - Store large objects/closures in job constructor properties
 - Use `sync` driver in production

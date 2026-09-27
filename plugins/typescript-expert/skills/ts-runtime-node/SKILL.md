@@ -2,15 +2,15 @@
 name: ts-runtime-node
 description: Use when running TypeScript directly on Node.js without a build step — native type stripping, its limits, or when to reach for tsx. Not for Bun (ts-runtime-bun).
 versions:
-  node: "24 LTS"
-  typescript: "5.8+ (latest stable 6.0)"
+  node: "24 LTS (26 Current, LTS from 2026-10-28)"
+  typescript: "5.8+ (latest stable 7.0)"
   tsx: "4.x"
 references: references/type-stripping.md, references/tsx-when-needed.md, references/node24-features.md, references/templates/node-esm-setup.md
 related-skills: ts-runtime-bun, ts-lint-format, solid-generic
 ---
 
 <objective>
-This skill covers running .ts/.mts/.cts files directly on Node 24 LTS via native type
+This skill covers running .ts/.mts/.cts files directly on Node 24 LTS (or Node 26) via native type
 stripping: what erases cleanly versus what throws ERR_UNSUPPORTED_TYPESCRIPT_SYNTAX (enum,
 namespace with runtime code, parameter properties, import aliases), why tsconfig.json
 paths/downleveling are ignored at runtime, and mandatory explicit file extensions and import
@@ -81,7 +81,7 @@ project/
 |-------|-----------|-----------------|
 | **Type Stripping** | [type-stripping.md](references/type-stripping.md) | Running `.ts` natively, understanding what erases and what errors |
 | **When tsx** | [tsx-when-needed.md](references/tsx-when-needed.md) | Native stripping is insufficient (paths, enums, decorators, `.tsx`) |
-| **Node 24 features** | [references/node24-features.md](references/node24-features.md) | Watch mode, `node:test`, ESM resolution, relevant built-ins |
+| **Node 24 / 26 features** | [references/node24-features.md](references/node24-features.md) | Watch mode, `node:test`, ESM resolution, relevant built-ins, Node 26 changes |
 
 ### Templates
 

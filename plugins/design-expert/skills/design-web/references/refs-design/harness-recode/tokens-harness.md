@@ -16,14 +16,14 @@ testimonial quotes are rewritten (they are attributed to real people).
 
 Four files: `index.html` · `styles.css` · `motion.js` · this document.
 
-Sources of the `[relevé]` entries, cited throughout the CSS and JS:
+Sources of the `[measured]` entries, cited throughout the CSS and JS:
 
 - **(A)** `cdn.prod.website-files.com/6222ca42ea87e1bd1aa1d10c/css/harnessio.webflow.68751cfc31184e27debae3cb.fcb0aa6f4.opt.css` — 790 KB, unminified, indented. This is the mother lode.
 - **(B)** the **53 inline `<style>` blocks** of `index.html`. Line numbers given.
 - **(C)** `harnessio.webflow.shared.6154f9264.css` — the 39 `@font-face` rules.
 
-Convention: `[relevé]` = value read verbatim · `[arbitrage]` = a decision made
-on my part. Anything not marked `[relevé]` is an assumed arbitration.
+Convention: `[measured]` = value read verbatim · `[decided]` = a decision made
+on my part. Anything not marked `[measured]` is an assumed decision.
 
 ---
 
@@ -88,7 +88,7 @@ keyframes.
 
 | # | Effect | Trigger | Property | Start → End | Duration | Curve | Cascade | Original engine |
 |---|---|---|---|---|---|---|---|---|
-| 1 | Scroll reveal | `IntersectionObserver`, `threshold: 0.2` → `.is-revealed` | `opacity`, `transform` | `0 / translateY(12px)` → `1 / none` | `.65s` | `cubic-bezier(.22,.61,.36,1)` | [arbitrage] `rootMargin -12%` | vanilla JS (B l.71-81, 3210-3241) |
+| 1 | Scroll reveal | `IntersectionObserver`, `threshold: 0.2` → `.is-revealed` | `opacity`, `transform` | `0 / translateY(12px)` → `1 / none` | `.65s` | `cubic-bezier(.22,.61,.36,1)` | [decided] `rootMargin -12%` | vanilla JS (B l.71-81, 3210-3241) |
 | 2 | Panel media entry | tab change → `.is-media-entering` | `opacity`, `scale()` | `0 / .965` → `1 / 1` | `700ms` | `ease`, `both` | delay `.12s` | vanilla JS (B l.88-97, 109-113) |
 | 3 | Blurred halo entry | same change → `.is-blur-bg-entering` | `opacity`, `scale()` | `0 / .99` → `1 / 1` | `700ms` | `ease`, `both` | delay `.42s` — **300 ms after** | vanilla JS (B l.98-107, 114-118) |
 | 4 | Active card toggle | `.w--current` (here `.is-active`) | `background-color`, `transform` | transparent → `#ffffff12` | `600ms` | `ease` | — | pure CSS (B l.83-86) |
@@ -98,10 +98,10 @@ keyframes.
 | 8 | Logo marquee | permanent | `translateX()` | `0` → `-100%` | `24s` | `linear`, `infinite` | pause on hover | pure CSS (B l.376-386) |
 | 9 | Button shadow | `:hover` | `box-shadow` | `2px 2px #0000000d` → `2px 4px #0000000d` | — (not transitioned) | — | — | pure CSS (A) |
 | 10 | Logo opacity | `:hover` | `opacity` | `.8` → `1` | — (not transitioned) | — | — | pure CSS (A) |
-| 11 | Carousel rotation | timer + IO | active slide | — | `7000ms` [arbitrage] | — | permanent stop on interaction | Webflow `w-slider` |
-| 12 | Giant block counter | IO, `threshold: 0.6` [arbitrage] | `textContent` | `0` → `100` | `1400ms` [arbitrage] | `easeOutCubic` [arbitrage] | — | GSAP TextPlugin (registered, not called in the delivered HTML) |
-| 13 | Hero media parallax | passive `scroll` + rAF throttle | `translate3d` | `0` → `min(scrollY×.12, 90px)` [arbitrage] | continuous | linear | — | GSAP ScrollSmoother (registered) |
-| 14 | Mega-menu opening | hover + click | `hidden`, chevron `rotate` | — | `.3s` on the chevron [arbitrage] | `ease-out curve` | — | Webflow `w-dropdown` |
+| 11 | Carousel rotation | timer + IO | active slide | — | `7000ms` [decided] | — | permanent stop on interaction | Webflow `w-slider` |
+| 12 | Giant block counter | IO, `threshold: 0.6` [decided] | `textContent` | `0` → `100` | `1400ms` [decided] | `easeOutCubic` [decided] | — | GSAP TextPlugin (registered, not called in the delivered HTML) |
+| 13 | Hero media parallax | passive `scroll` + rAF throttle | `translate3d` | `0` → `min(scrollY×.12, 90px)` [decided] | continuous | linear | — | GSAP ScrollSmoother (registered) |
+| 14 | Mega-menu opening | hover + click | `hidden`, chevron `rotate` | — | `.3s` on the chevron [decided] | `ease-out curve` | — | Webflow `w-dropdown` |
 
 Detail verified on effects 9 and 10: the source declares
 `transition: background-color .3s` on the button — **the background only**.
@@ -212,8 +212,8 @@ produce. The `max-height` prevents it from following a very tall media.
 ### 3.5 The tab card with conditional content
 
 ```css
-.carte__desc, .carte__lien    { display: none; }
-.carte.is-active .carte__desc { display: block; }
+.card__desc, .card__link    { display: none; }
+.card.is-active .card__desc { display: block; }
 ```
 
 The description and the link exist **only** on the active card. The layout
@@ -246,9 +246,9 @@ picked a tab doesn't get it snatched away · the delay depends on the panel's
 
 ```css
 .marquee        { width: 100vw; height: 5rem; overflow: hidden; }
-.marquee__piste { display: flex; flex: none; animation: defilement 24s linear infinite; }
-.marquee:hover .marquee__piste { animation-play-state: paused; }
-@keyframes defilement { from { transform: translateX(0); } to { transform: translateX(-100%); } }
+.marquee__track { display: flex; flex: none; animation: marquee-scroll 24s linear infinite; }
+.marquee:hover .marquee__track { animation-play-state: paused; }
+@keyframes marquee-scroll { from { transform: translateX(0); } to { transform: translateX(-100%); } }
 ```
 
 `-100%` = the width of **the track**, not of the container. Seamless loop as
@@ -421,7 +421,7 @@ markup. The probe confirms `color: rgb(0,173,228)` but
 
 ### 3.18 Offset anchor without `scroll-margin-top`
 
-`.vd__ancre { margin-top: -100px; padding-top: 100px }` — negative margin
+`.vd__anchor { margin-top: -100px; padding-top: 100px }` — negative margin
 cancelled by an equal padding: the box doesn't move, but its **top edge**,
 the one an `#id` anchor targets, moves up by 100px. Identical effect to
 `scroll-margin-top`, with full compatibility.
@@ -433,12 +433,12 @@ the one an `#id` anchor targets, moves up by 100px. Identical effect to
 ### Surfaces
 | Token | Value | Origin |
 |---|---|---|
-| `--surface-page` | `#070707` | `[relevé]` A, `--dark-mode-bg` — confirmed by probe |
-| `--surface-nav` | `#000` | `[relevé]` A, `.nav_section` |
-| `--surface-bottom-gradient` | `#050505` | `[relevé]` A |
-| `--surface-active` | `#ffffff12` | `[relevé]` A, active card |
-| `--surface-ghost` | `#ffffff0d` | `[relevé]` A, secondary button |
-| `--surface-veil` | `#0b0b0d9c` | `[relevé]` A, footer's blurred veil |
+| `--surface-page` | `#070707` | `[measured]` A, `--dark-mode-bg` — confirmed by probe |
+| `--surface-nav` | `#000` | `[measured]` A, `.nav_section` |
+| `--surface-gradient-end` | `#050505` | `[measured]` A |
+| `--surface-active` | `#ffffff12` | `[measured]` A, active card |
+| `--surface-ghost` | `#ffffff0d` | `[measured]` A, secondary button |
+| `--surface-veil` | `#0b0b0d9c` | `[measured]` A, footer's blurred veil |
 
 The lower sections aren't a flat black:
 `linear-gradient(#070707, #050505 88%)`. Two luminance points over 88% of the
@@ -447,22 +447,22 @@ height — just enough for the bottom to look deeper without it being obvious wh
 ### Text
 | Token | Value | Origin |
 |---|---|---|
-| `--text-primary` | `#fff` | `[relevé]` A, `--gray--100` |
-| `--text-secondary` | `#c8cad0` | `[relevé]` A, `--gray--80` — confirmed by probe |
-| `--text-tertiary` | `#9195a1` | `[relevé]` A, `--gray--60` |
-| `--text-link` | `#b0b1c3` | `[relevé]` A, `--gray--300`, color of `.body-small` |
-| `--text-light` | `#e4e5e8` | `[relevé]` A, `--gray--90` |
-| `--text-nav` | `#efeff1` | `[relevé]` A, `--white--94`, nav button |
-| `--text-name` | `#d9dae5` | `[relevé]` A, `--gray--scale-200`, name below a testimonial |
-| `--text-accent` | `#00ade4` | `[relevé]` A, `--primary-5` — confirmed (`rgb(0,173,228)`) |
+| `--text-primary` | `#fff` | `[measured]` A, `--gray--100` |
+| `--text-secondary` | `#c8cad0` | `[measured]` A, `--gray--80` — confirmed by probe |
+| `--text-tertiary` | `#9195a1` | `[measured]` A, `--gray--60` |
+| `--text-link` | `#b0b1c3` | `[measured]` A, `--gray--300`, color of `.body-small` |
+| `--text-light` | `#e4e5e8` | `[measured]` A, `--gray--90` |
+| `--text-nav` | `#efeff1` | `[measured]` A, `--white--94`, nav button |
+| `--text-name` | `#d9dae5` | `[measured]` A, `--gray--scale-200`, name below a testimonial |
+| `--text-accent` | `#00ade4` | `[measured]` A, `--primary-5` — confirmed (`rgb(0,173,228)`) |
 
 ### Action
 | Token | Value | Origin |
 |---|---|---|
-| `--action-bg` | white | `[relevé]` A, `btn-cta_bg` = `--gray--100` in dark theme |
-| `--action-text` | `#070707` | `[relevé]` A, `btn-cta_text` = `--dark-mode-bg` |
-| `--border-nav` | `#303036` | `[relevé]` A, `--gray--20` |
-| `--border-footer` | `#484851` | `[relevé]` A, `--gray--30` |
+| `--action-bg` | white | `[measured]` A, `btn-cta_bg` = `--gray--100` in dark theme |
+| `--action-text` | `#070707` | `[measured]` A, `btn-cta_text` = `--dark-mode-bg` |
+| `--border-nav` | `#303036` | `[measured]` A, `--gray--20` |
+| `--border-footer` | `#484851` | `[measured]` A, `--gray--30` |
 
 The page's main button is **solid white on black**; the navigation bar's
 button is **light on a black bar** with dark text. The cyan accent is
@@ -471,8 +471,8 @@ That's what keeps it legible: it only appears once or twice per screen.
 
 ### Halo, gold, border
 `--halo-top: #52cbf2` · `--halo-bottom: #005ad0` · `--gold-light: #ffeec3` ·
-`--gold-mid: #efdcb7` · `--gold-dark: #938b87` · `--border-promo: #6cccff99` —
-all `[relevé]` A.
+`--gold-mid: #efdcb7` · `--gold-dark: #938b87` · `--promo-edge: #6cccff99` —
+all `[measured]` A.
 
 ---
 
@@ -531,24 +531,24 @@ it back to `.75px`: the same element changes function depending on context.
 
 | Measure | Value | Origin |
 |---|---|---|
-| Section frame | `max-width: 1440px` | `[relevé]` A |
-| Content container | `max-width: 1200px` | `[relevé]` A |
-| Hero media container | `max-width: 1400px` | `[relevé]` B |
-| Promo banner | `max-width: 1350px` | `[relevé]` A |
-| Side margin | `2rem` | `[relevé]` A |
-| Hero padding | `100px … 0` | `[relevé]` A (`.new-home_hero` overrides the base `60px 2rem`) |
-| Bottom of hero grid | `100px` | `[relevé]` A (`.bmargin` overrides the base `60px`) |
-| Module top padding | `150px` (→ `40px` ≤767) | `[relevé]` A |
-| Lower sections padding | `100px 2rem` | `[relevé]` A |
-| Testimonial header bottom | `64px` | `[relevé]` A |
-| Carousel bottom | `96px` | `[relevé]` A |
-| Heading group bottom | `2.5rem` (→ `1.5rem` ≤479) | `[relevé]` A |
-| Tab row bottom | `40px` | `[relevé]` A |
-| Card gap | `16px` / `8px` | `[relevé]` A |
-| Marquee gap | `36px` | `[relevé]` A |
-| Footer columns gap | `32px` / `64px` | `[relevé]` A |
-| Subscription block gap | `80px` | `[relevé]` A |
-| Promo banner padding | `60px` | `[relevé]` A |
+| Section frame | `max-width: 1440px` | `[measured]` A |
+| Content container | `max-width: 1200px` | `[measured]` A |
+| Hero media container | `max-width: 1400px` | `[measured]` B |
+| Promo banner | `max-width: 1350px` | `[measured]` A |
+| Side margin | `2rem` | `[measured]` A |
+| Hero padding | `100px … 0` | `[measured]` A (`.new-home_hero` overrides the base `60px 2rem`) |
+| Bottom of hero grid | `100px` | `[measured]` A (`.bmargin` overrides the base `60px`) |
+| Module top padding | `150px` (→ `40px` ≤767) | `[measured]` A |
+| Lower sections padding | `100px 2rem` | `[measured]` A |
+| Testimonial header bottom | `64px` | `[measured]` A |
+| Carousel bottom | `96px` | `[measured]` A |
+| Heading group bottom | `2.5rem` (→ `1.5rem` ≤479) | `[measured]` A |
+| Tab row bottom | `40px` | `[measured]` A |
+| Card gap | `16px` / `8px` | `[measured]` A |
+| Marquee gap | `36px` | `[measured]` A |
+| Footer columns gap | `32px` / `64px` | `[measured]` A |
+| Subscription block gap | `80px` | `[measured]` A |
+| Promo banner padding | `60px` | `[measured]` A |
 
 **Three widths, not one.** 1440 for the frame, 1200 for the text, 1400 for
 the media: this offset is what makes the page breathe.
@@ -601,7 +601,7 @@ folder.
 
 ### Measurement mistakes found and corrected
 
-Six values had been marked `[relevé]` while being wrong. The **type of
+Six values had been marked `[measured]` while being wrong. The **type of
 error** recurs, hence the list:
 
 | What was written | What the source actually says | Cause |
@@ -623,9 +623,9 @@ looking up the rule, and grep every combination.
 
 Two techniques had been **missed** and were then added: the golden gradient
 CTA heading (§3.9) and the self-hosted fonts with Calsans reserved for the
-`h1` (§5). And several values marked `[arbitrage]` were actually in the
+`h1` (§5). And several values marked `[decided]` were actually in the
 source (`padding: 16px` and `border-radius: 16px` of the card, `gap: .75rem`,
-`padding-top: 2rem`): reclassified as `[relevé]`.
+`padding-top: 2rem`): reclassified as `[measured]`.
 
 ### Two bugs found at render time, not deduced
 
@@ -719,7 +719,7 @@ The other nine tab media are images (`.png`, `.avif`, `.webp`).
 
 The corpus's rule is simple: **no local binaries, media by remote URL.** A
 remote image respects that and, above all, it **fails gracefully** — the
-`alt` attribute remains, the `.pane__cadre` frame keeps its height, the panel
+`alt` attribute remains, the `.pane__frame` frame keeps its height, the panel
 still tells you something.
 
 Lottie doesn't behave that way. It's not a media, it's a **library**:
@@ -807,8 +807,8 @@ arbitrate between the two constants, is removed: nothing called it anymore.
 Merging `motion-nav.js` into `motion.js` was tried and then **abandoned**.
 The merged file comes to **264 lines**, beyond the per-file ceiling applied
 on this workstation (blocked at ~190-200). Fitting within it would have
-required removing **~65 lines of comments** — nearly the entire `[relevé]` /
-`[arbitrage]` layer of a file the owner has already approved.
+required removing **~65 lines of comments** — nearly the entire `[measured]` /
+`[decided]` layer of a file the owner has already approved.
 
 The motive for the merge was aligning with a "four files" format. But this
 format **isn't the corpus's own**; measured across the ten folders:
@@ -842,7 +842,7 @@ split, and it's written down here rather than left unsaid.
 `<link rel="stylesheet" href="https://fonts.googleapis.com/…Newsreader…">` is
 removed, along with the two `preconnect` tags that served it. A remote
 stylesheet is not a media asset: it **blocks rendering** until it has
-failed. Its only use was `--police-serif`, two rules for the footer's light
+failed. Its only use was `--font-serif`, two rules for the footer's light
 thumbnail, which fall back to **Georgia** — already declared second in the
 token, so with no effect beyond a serif variation on a secondary element.
 

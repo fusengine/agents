@@ -6,8 +6,8 @@ reproduced is the **structure, the rhythm, the typography, and the
 procedures**.
 
 **Reading convention.** In `styles.css`, every non-trivial value carries
-`[relevé]` (read textually from the source, with the original class in a
-comment) or `[arbitrage]` (a documented choice). The distinction is not
+`[measured]` (read textually from the source, with the original class in a
+comment) or `[decided]` (a documented choice). The distinction is not
 cosmetic: it tells you what you can reuse as a fact and what you need to
 re-arbitrate yourself.
 
@@ -211,17 +211,17 @@ what lets you swap a palette without rewriting the components.
 
 | Token | Value | Provenance |
 |---|---|---|
-| `--surface-page` | `#000` | `[relevé]` `html body { background: rgb(0,0,0) }` |
-| `--surface-inversee` | `#fff` | `[relevé]` the page's only two buttons |
-| `--surface-controle` | `rgb(24,25,28)` | `[relevé]` background of the segmented control |
-| `--surface-active` | `#000` | `[relevé]` active tab |
-| `--texte-primaire` | `#eee` | `[relevé]` default value of 4 presets out of 6 |
-| `--texte-accentue` | `#fff` | `[relevé]` inline overrides (banner, tabs) |
-| `--texte-secondaire` | `#888` | `[relevé]` preset `1bm514q`, the manifesto paragraph |
-| `--texte-liste` | `rgb(128,128,128)` | `[relevé]` inline, `capabilities` list |
-| `--texte-sur-inverse` | `#000` | `[relevé]` button text |
-| `--trait-discret` | `rgb(34,34,34)` | `[relevé]` only neutral rule color |
-| `--accent` | `#e03b1e` | `[relevé]` 2 occurrences, see §1.4 |
+| `--surface-page` | `#000` | `[measured]` `html body { background: rgb(0,0,0) }` |
+| `--surface-inverse` | `#fff` | `[measured]` the page's only two buttons |
+| `--surface-control` | `rgb(24,25,28)` | `[measured]` background of the segmented control |
+| `--surface-active` | `#000` | `[measured]` active tab |
+| `--text-primary` | `#eee` | `[measured]` default value of 4 presets out of 6 |
+| `--text-emphasis` | `#fff` | `[measured]` inline overrides (banner, tabs) |
+| `--text-secondary` | `#888` | `[measured]` preset `1bm514q`, the manifesto paragraph |
+| `--text-list` | `rgb(128,128,128)` | `[measured]` inline, `capabilities` list |
+| `--text-on-inverse` | `#000` | `[measured]` button text |
+| `--rule-subtle` | `rgb(34,34,34)` | `[measured]` only neutral rule color |
+| `--accent` | `#e03b1e` | `[measured]` 2 occurrences, see §1.4 |
 
 Note what **doesn't exist**: no intermediate grey between `#808080` and
 `#222`, no semantic color (success, error, warning), no "card" surface, no
@@ -282,13 +282,13 @@ No tablet tier. The source literally draws two viewports, **1440 and
 | Role | ≥ 1440 px | < 1440 px | Tracking |
 |---|---|---|---|
 | `--t-display` | 56 / 60 | 37 / 42 | `-.06em` |
-| `--t-titre` | 30 / 36 | 26 / 32 | `-.04em` |
-| `--t-secondes` | 32 / 40 | 28 / 34 | `-.04em` |
-| `--t-chapeau` | 26 / 26 | 24 / 26 | `-.04em` |
-| `--t-etiquette` | 20 / 24 | 19 / 24 | `-.01em` |
-| `--t-courant` | 18 / 22 | 17 / 22 | `-.01em` |
+| `--t-title` | 30 / 36 | 26 / 32 | `-.04em` |
+| `--t-secondary` | 32 / 40 | 28 / 34 | `-.04em` |
+| `--t-kicker` | 26 / 26 | 24 / 26 | `-.04em` |
+| `--t-label` | 20 / 24 | 19 / 24 | `-.01em` |
+| `--t-body` | 18 / 22 | 17 / 22 | `-.01em` |
 
-All these values are `[relevé]`.
+All these values are `[measured]`.
 
 Two points to remember:
 
@@ -304,9 +304,9 @@ Two points to remember:
 
 | Token | Value | Provenance |
 |---|---|---|
-| `--largeur-max` | `1440px` | `[relevé]` top bar and footer |
-| `--largeur-grille` | `800px` | `[relevé]` `max-width` of the capability grid |
-| `--marge-bord` | `40px` | `[relevé]` recurring `padding: 0 40px` |
+| `--width-max` | `1440px` | `[measured]` top bar and footer |
+| `--width-grid` | `800px` | `[measured]` `max-width` of the capability grid |
+| `--edge-margin` | `40px` | `[measured]` recurring `padding: 0 40px` |
 
 Capability grid: `repeat(3, minmax(50px, 1fr))`, gutters `80px 40px`. Below
 1,440 px: **a single column**, gutters `56px 40px`, `padding: 0 40px`. No
@@ -360,7 +360,7 @@ Three things to remember:
 > no `animation-timeline`, not even a single inline `transition`: all its
 > motion is produced by the Framer Motion JS runtime, invisible from the
 > shipped HTML. **Every duration and every curve below is an
-> `[arbitrage]`.** What was recorded are the *triggers* and the *states* —
+> `[decided]`.** What was recorded are the *triggers* and the *states* —
 > `cursor: pointer`, `data-highlight`, `opacity: .5` on inactive tabs,
 > `loop`/`muted`/`preload="none"` on the video — that is, proof that an
 > animation exists and which property it acts on, never its actual setting.
@@ -373,12 +373,12 @@ makes a set of animations coherent rather than a collection of effects.
 
 | Token | Value | Use |
 |---|---|---|
-| `--duree-court` | `180ms` | pointer reactions — hover, press |
-| `--duree-moyen` | `420ms` | state changes — tab, ring |
-| `--duree-long` | `900ms` | scroll-triggered reveals |
-| `--courbe-sortie` | `cubic-bezier(.2,.8,.25,1)` | sharp deceleration: what **enters** |
-| `--courbe-standard` | `cubic-bezier(.4,0,.2,1)` | symmetric: what is **reversible** |
-| `--decalage-cascade` | `60ms` | grid cascade step |
+| `--duration-short` | `180ms` | pointer reactions — hover, press |
+| `--duration-medium` | `420ms` | state changes — tab, ring |
+| `--duration-long` | `900ms` | scroll-triggered reveals |
+| `--ease-out` | `cubic-bezier(.2,.8,.25,1)` | sharp deceleration: what **enters** |
+| `--ease-standard` | `cubic-bezier(.4,0,.2,1)` | symmetric: what is **reversible** |
+| `--stagger-step` | `60ms` | grid cascade step |
 
 Reasoning behind the 180 / 420 / 900 ratio: a hover should feel instant
 and reversible; a state change should be *seen* to change, so it must
@@ -399,13 +399,13 @@ Everything is in `motion.js`, commented block by block.
 
 | # | Effect | Trigger | Animated property | Start → end | Duration | Curve |
 |---|---|---|---|---|---|---|
-| 1 | Block reveal | `IntersectionObserver` — threshold `0.15`, `rootMargin` `-12%` at bottom | `opacity`, `transform` | `0 / translateY(12px)` → `1 / none` | `--duree-long` | `--courbe-sortie` |
+| 1 | Block reveal | `IntersectionObserver` — threshold `0.15`, `rootMargin` `-12%` at bottom | `opacity`, `transform` | `0 / translateY(12px)` → `1 / none` | `--duration-long` | `--ease-out` |
 | 1b | Cascade | `--i` variable set on the children of a `[data-stagger]` | `transition-delay` | `0` → `n × 60 ms` | — | — |
-| 2 | Segmented control thumb | click, arrows, Home/End | `transform`, `width` | previous tab → new tab | `--duree-moyen` | `--courbe-sortie` |
-| 3 | Tab opacity | same | `opacity` | `.5` → `1` — **both states are `[relevé]`** | `--duree-moyen` | `--courbe-standard` |
-| 4 | `focus.` / `flow.` pair | `:hover`, `:focus-visible` | `opacity` | `.5` → `1` — **resting state `[relevé]`** | `--duree-court` | `--courbe-standard` |
-| 5 | Button hover | `:hover` | `background-color`, `color` | `#fff/#000` → accent/`#fff` | `--duree-court` | `--courbe-standard` |
-| 6 | Link, logotype hover | `:hover` | `opacity` | `1` → `.6` / `.7` | `--duree-court` | `--courbe-standard` |
+| 2 | Segmented control thumb | click, arrows, Home/End | `transform`, `width` | previous tab → new tab | `--duration-medium` | `--ease-out` |
+| 3 | Tab opacity | same | `opacity` | `.5` → `1` — **both states are `[measured]`** | `--duration-medium` | `--ease-standard` |
+| 4 | `focus.` / `flow.` pair | `:hover`, `:focus-visible` | `opacity` | `.5` → `1` — **resting state `[measured]`** | `--duration-short` | `--ease-standard` |
+| 5 | Button hover | `:hover` | `background-color`, `color` | `#fff/#000` → accent/`#fff` | `--duration-short` | `--ease-standard` |
+| 6 | Link, logotype hover | `:hover` | `opacity` | `1` → `.6` / `.7` | `--duration-short` | `--ease-standard` |
 | 7 | Looping video | `IntersectionObserver`, threshold `0.25` | play / pause | — | — | — |
 | 8 | "25:00" pictogram pulse | `IntersectionObserver`, threshold `0.4` | `opacity` | `1` ⇄ `.55` | `1 s`, `steps(1, end)` | — |
 | 9 | Playback progress | `scroll` `{passive:true}`, throttled by rAF | `transform: scaleX()` | `0` → `1` | follows the finger | — |
@@ -416,7 +416,7 @@ Three points worth pausing on.
 **#4 is not an invented hover.** `opacity:.5` on "motion." is *in* the
 source, along with `cursor:pointer`, `data-highlight` and `tabindex="0"`.
 The resting state and the interactivity are therefore facts; only the
-toggle to `1` is an arbitrage. That's the difference between reproducing a
+toggle to `1` is a decision. That's the difference between reproducing a
 procedure and inventing one.
 
 **#8 breathes, it doesn't count.** The source's `00:25:00` pictogram is a
@@ -453,7 +453,7 @@ if you want the bare source.
   the preference is meant to protect. A second, subtler trap: *omitting*
   `behavior` does not mean "instant" — the default `'auto'` silently
   follows the page's CSS `scroll-behavior`. You must be explicit in
-  **both** branches: `behavior: calme ? 'instant' : 'smooth'`.
+  **both** branches: `behavior: reduced ? 'instant' : 'smooth'`.
 - **`addListener()`** — dropped in favor of `addEventListener('change', …)`
   on the `MediaQueryList`: the former form is deprecated.
 
@@ -523,7 +523,7 @@ block carrying overlaid content.
 | The 9 pictograms | inline SVG + data URI | **recorded character for character** | they're in the source, nothing to download |
 | Hero | `min-width: 1280px` | removed | caused horizontal overflow at 390 px |
 | Contextual screenshot | `min-width: 768px` | removed | same reason |
-| Accent | 16 uses, 2 places | + focus, button hover, ring stroke | 3 uses added, all marked `[arbitrage]` |
+| Accent | 16 uses, 2 places | + focus, button hover, ring stroke | 3 uses added, all marked `[decided]` |
 | Playback progress | absent | 1 px rule at top | §3.2 #10 — remove for the bare source |
 | 25:00 pictogram pulse | frozen | 1 s opacity pulse | §3.2 #8 — a deliberate, bounded addition |
 | Between 390 and 1440 px | not handled, overflows | guardrails added | a reference must not scroll horizontally |
@@ -563,7 +563,7 @@ CDN and will keep showing if the video fails to load.
 ## 7. Traceability audit — what verification corrected
 
 A first draft of this file carried **eight false values**, all marked
-`[relevé]`. They were found by re-checking every marker via literal `grep`
+`[measured]`. They were found by re-checking every marker via literal `grep`
 against the source. They are listed here because they share three causes
 that will recur for anyone stripping down a Framer export.
 
@@ -574,7 +574,7 @@ that will recur for anyone stripping down a Framer export.
 | Grid cell icon box | `48px` | `60px` | A + icon/box confusion |
 | Spacing inside the cell | `20px`/`8px` margins | `gap:20px` + `gap:10px` | A |
 | `capabilities` list color | `#eee` / `#888`, left-aligned | `rgb(128,128,128)` for both, centered | A |
-| Spacer before `capabilities` | `20vh` "arbitrage" | `15vh` | A |
+| Spacer before `capabilities` | `20vh` "decided" | `15vh` | A |
 | Spacers before the grid / the button | `12vh` and `8vh` at base | `15vh` at base, `12vh` and `8vh` below 1440 | B |
 | Contextual screenshot below 1440 | `529px` | *(no override)* | C |
 
@@ -588,9 +588,9 @@ its rules with the component's class, and groups them:
 .framer-c9gaO .framer-128e0f1,.framer-c9gaO …{…}    /* grouped  */
 ```
 
-A pattern anchored on `.classe{` misses both forms and **returns nothing**
+A pattern anchored on `.class{` misses both forms and **returns nothing**
 — which looks exactly like "the source doesn't provide this value". Several
-`[arbitrage]` entries were in fact values that were present, just never
+`[decided]` entries were in fact values that were present, just never
 read.
 
 > **Rule.** On a Framer export, never conclude "absent from the source"

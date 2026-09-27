@@ -21,12 +21,15 @@ Source: https://cs.symfony.com/ + /doc/ruleSets/PER-CS.html
 | Rule set | Standard | Use when |
 |----------|----------|----------|
 | `@PER-CS` | PHP-FIG PER Coding Style, latest revision | Default modern choice, always in sync |
-| `@PER-CS3.0` | Pinned PER-CS 3.x revision | Deterministic across versions |
+| `@PER-CS3x0` | Pinned PER-CS 3.0 revision | Deterministic across versions |
 | `@Symfony` | Symfony conventions (superset of PER) | Symfony apps / that house style |
 | `@PhpCsFixer` | Maintainers' opinionated set | Strictest, most rules |
 
-`@PER-CS` is an alias that always resolves to the newest PER-CS revision (3.x as
-of 2026). Pin `@PER-CS3.0` when you want CI to be immune to a rule-set bump.
+`@PER-CS` is an alias for the newest PER-CS revision the tool ships — `@PER-CS3x0`
+as of PHP-CS-Fixer 3.95 (the PER-CS 3.1 spec, published Aug 2026, has no dedicated
+set yet). Pin `@PER-CS3x0` when you want CI to be immune to a rule-set bump. The
+dotted names (`@PER-CS3.0`, `@PER-CS2.0`, …) are deprecated in favour of the `x`
+form and will be removed in PHP-CS-Fixer 4.0.
 
 ## Modernization rule sets
 

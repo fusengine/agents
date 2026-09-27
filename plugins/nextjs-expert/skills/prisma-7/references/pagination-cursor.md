@@ -12,7 +12,7 @@ Implement efficient cursor-based pagination for large datasets and infinite scro
 
 ```typescript
 // lib/types/cursor.ts
-import type { Prisma } from "@prisma/client";
+import type { Prisma } from "@/generated/prisma/client";
 
 /**
  * Post data for pagination response
@@ -95,7 +95,7 @@ async function getPosts(cursor?: string): Promise<CursorPaginatedResponse<Post>>
 
 ```typescript
 // lib/types/multiColumnCursor.ts
-import type { Prisma } from "@prisma/client";
+import type { Prisma } from "@/generated/prisma/client";
 
 /**
  * Multi-column cursor for tie-breaking
@@ -175,7 +175,7 @@ async function getPaginatedResults(
 
 ```typescript
 // lib/types/bidirectionalCursor.ts
-import type { Prisma } from "@prisma/client";
+import type { Prisma } from "@/generated/prisma/client";
 
 /**
  * Pagination direction

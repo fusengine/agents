@@ -137,7 +137,7 @@ FuseCore/
 - [ ] Billing code in `/FuseCore/Billing/` module
 - [ ] Billable trait on User model in `/FuseCore/User/`
 - [ ] Webhook routes in `/FuseCore/Billing/Routes/web.php`
-- [ ] Exclude webhook from CSRF in `VerifyCsrfToken`
+- [ ] Exclude webhook from CSRF via `preventRequestForgery(except: [...])` (L13 `PreventRequestForgery`)
 - [ ] Declare `"User"` dependency in `module.json`
 
 → See [fusecore skill](../fusecore/SKILL.md) for complete module patterns.
@@ -307,16 +307,16 @@ $url = $user->billingPortalUrl(route('dashboard'));
 
 ## Laravel 13 Notes
 
-Cashier Stripe 16.x et Cashier Paddle 2.x sont **compatibles Laravel 13**. Points d'attention :
+Cashier Stripe 16.x (current 16.8) and Cashier Paddle 2.x (current 2.8) are **Laravel 13 compatible**. Points to watch:
 
-- Webhooks : la nouvelle protection CSRF [[laravel-auth]] `PreventRequestForgery` doit exclure les routes webhook (`stripe/webhook`, `paddle/webhook`) via `validateOrigin(except: [...])`
-- `serializable_classes` : whitelister les DTOs Cashier si vous serialize des subscriptions (queue)
-- PHP 8.3 minimum : Cashier 16.x supporte 8.3+ uniquement
+- Webhooks: the new [[laravel-auth]] `PreventRequestForgery` CSRF protection must exclude webhook routes (`stripe/webhook`, `paddle/webhook`) via `preventRequestForgery(except: [...])`
+- `cache.serializable_classes` (default `false` in L13): list the classes explicitly if you cache Cashier objects
+- PHP: Cashier accepts PHP 8.1+, but Laravel 13 requires PHP 8.3 minimum
 
 ```php
 // bootstrap/app.php
 ->withMiddleware(function (Middleware $middleware) {
-    $middleware->validateOrigin(except: [
+    $middleware->preventRequestForgery(except: [
         'stripe/*', 'paddle/*',
     ]);
 })

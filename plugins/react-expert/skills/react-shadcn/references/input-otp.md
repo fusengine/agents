@@ -10,6 +10,8 @@ related: input.md
 
 # Input OTP Component
 
+> **Base:** same API on Base UI, Radix and React Aria — `input-otp` library (verified against r/styles/{base,radix}-nova/input-otp.json).
+
 ## Overview
 
 The Input OTP (One-Time Password) component provides a specialized input field for entering verification codes, authentication codes, and similar numeric sequences. It supports customizable length, patterns, and visual layouts.
@@ -25,6 +27,7 @@ bunx --bun shadcn@latest add input-otp
 ```tsx
 import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/modules/cores/shadcn/components/ui/input-otp"
 
+/** 6-slot OTP input. */
 export function BasicInputOTP() {
   return (
     <InputOTP maxLength={6}>
@@ -47,6 +50,7 @@ export function BasicInputOTP() {
 import { Label } from "@/modules/cores/shadcn/components/ui/label"
 import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/modules/cores/shadcn/components/ui/input-otp"
 
+/** OTP input with an associated label. */
 export function InputOTPWithLabel() {
   return (
     <div className="grid w-full gap-2">
@@ -72,12 +76,11 @@ export function InputOTPWithLabel() {
 ## 4-Digit OTP Pattern
 
 ```tsx
-"use client"
-
 import { useState } from "react"
 import { REGEXP_ONLY_DIGITS } from "input-otp"
 import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/modules/cores/shadcn/components/ui/input-otp"
 
+/** 4-digit numeric OTP. */
 export function FourDigitOTP() {
   const [otp, setOtp] = useState("")
 
@@ -105,8 +108,6 @@ export function FourDigitOTP() {
 ## 6-Digit OTP with Separator
 
 ```tsx
-"use client"
-
 import { useState } from "react"
 import { REGEXP_ONLY_DIGITS } from "input-otp"
 import {
@@ -116,6 +117,7 @@ import {
   InputOTPSlot
 } from "@/modules/cores/shadcn/components/ui/input-otp"
 
+/** 6-digit numeric OTP split by a separator. */
 export function SixDigitOTPWithSeparator() {
   const [otp, setOtp] = useState("")
 
@@ -152,8 +154,6 @@ export function SixDigitOTPWithSeparator() {
 ## Alphanumeric Pattern
 
 ```tsx
-"use client"
-
 import { useState } from "react"
 import {
   InputOTP,
@@ -161,6 +161,7 @@ import {
   InputOTPSlot
 } from "@/modules/cores/shadcn/components/ui/input-otp"
 
+/** 6-character alphanumeric OTP. */
 export function AlphanumericOTP() {
   const [otp, setOtp] = useState("")
 
@@ -192,8 +193,6 @@ export function AlphanumericOTP() {
 ## Two-Factor Authentication Form
 
 ```tsx
-"use client"
-
 import { useState } from "react"
 import { REGEXP_ONLY_DIGITS } from "input-otp"
 import { Label } from "@/modules/cores/shadcn/components/ui/label"
@@ -204,6 +203,7 @@ import {
   InputOTPSlot
 } from "@/modules/cores/shadcn/components/ui/input-otp"
 
+/** Two-factor authentication form with an OTP field. */
 export function TwoFactorForm() {
   const [otp, setOtp] = useState("")
   const [error, setError] = useState("")
@@ -298,8 +298,6 @@ export function TwoFactorForm() {
 ## Email Verification
 
 ```tsx
-"use client"
-
 import { useState } from "react"
 import { REGEXP_ONLY_DIGITS } from "input-otp"
 import {
@@ -308,6 +306,7 @@ import {
   InputOTPSlot
 } from "@/modules/cores/shadcn/components/ui/input-otp"
 
+/** Email verification code form. */
 export function EmailVerification() {
   const [otp, setOtp] = useState("")
   const [isVerifying, setIsVerifying] = useState(false)
@@ -368,8 +367,6 @@ export function EmailVerification() {
 ## Resendable Code
 
 ```tsx
-"use client"
-
 import { useState, useEffect } from "react"
 import { REGEXP_ONLY_DIGITS } from "input-otp"
 import {
@@ -378,6 +375,7 @@ import {
   InputOTPSlot
 } from "@/modules/cores/shadcn/components/ui/input-otp"
 
+/** OTP with a delayed "resend code" action. */
 export function ResendableOTP() {
   const [otp, setOtp] = useState("")
   const [timeLeft, setTimeLeft] = useState(60)

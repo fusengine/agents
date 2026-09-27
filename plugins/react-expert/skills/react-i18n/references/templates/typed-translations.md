@@ -18,7 +18,7 @@ src/
     ├── en/
     │   ├── common.json
     │   └── auth.json
-    └── fr/
+    └── es/
         ├── common.json
         └── auth.json
 ```
@@ -161,7 +161,7 @@ i18n
   .use(LanguageDetector)
   .use(initReactI18next)
   .init({
-    supportedLngs: ['en', 'fr'],
+    supportedLngs: ['en', 'es'],
     fallbackLng: 'en',
     defaultNS: 'common',
     ns: ['common', 'auth'],

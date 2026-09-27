@@ -1,8 +1,8 @@
 ---
 name: php-standards
-description: Use when setting up PHP-package autoloading, coding style, or PSR interfaces — PSR-4, PER Coding Style 3.0, composer.json. Do NOT use for syntax or Laravel.
+description: Use when setting up PHP-package autoloading, coding style, or PSR interfaces — PSR-4, PER Coding Style 3.1, composer.json. Do NOT use for syntax or Laravel.
 versions:
-  per-coding-style: "3.0"
+  per-coding-style: "3.1"
   psr-4: "accepted"
   composer: "2"
 user-invocable: false
@@ -11,7 +11,7 @@ related-skills: php-language-modern
 ---
 
 <objective>
-Covers the standards that shape a framework-agnostic PHP package: PSR-4 autoloading (and why PSR-0 is deprecated), PER Coding Style 3.0 versus the still-Accepted PSR-12, and the current PSR catalog to depend on for logging (PSR-3), caching (PSR-6/16), HTTP (PSR-7/15/17/18), DI containers (PSR-11), events (PSR-14), and time (PSR-20).
+Covers the standards that shape a framework-agnostic PHP package: PSR-4 autoloading (and why PSR-0 is deprecated), PER Coding Style 3.1 versus the still-Accepted PSR-12, and the current PSR catalog to depend on for logging (PSR-3), caching (PSR-6/16), HTTP (PSR-7/15/17/18), DI containers (PSR-11), events (PSR-14), and time (PSR-20).
 
 Includes composer.json and project-structure templates (src/ for library code, tests/ wired via autoload-dev, PSR-4 namespace mapping), and the core PER/PSR-1 file rules (4 spaces, LF endings, no closing ?>).
 
@@ -37,7 +37,7 @@ After changes, run **fuse-ai-pilot:sniper** for validation.
 | Concern | Standard | Notes |
 |---------|----------|-------|
 | **Autoloading** | PSR-4 | Recommended; PSR-0 is deprecated |
-| **Coding style** | PER Coding Style 3.0 | "Extends, expands and replaces PSR-12"; PSR-12 remains the *Accepted* PSR |
+| **Coding style** | PER Coding Style 3.1 | "Extends, expands and replaces PSR-12"; PSR-12 remains the *Accepted* PSR |
 | **Logging** | PSR-3 | `LoggerInterface` |
 | **Caching** | PSR-6 / PSR-16 | Pool vs Simple Cache |
 | **HTTP** | PSR-7 / 15 / 17 / 18 | Message / Handlers / Factories / Client |
@@ -50,7 +50,7 @@ After changes, run **fuse-ai-pilot:sniper** for validation.
 ## Critical Rules
 
 1. **PSR-4 for autoloading, never PSR-0** - PSR-0 and `target-dir` are deprecated. See [psr4-autoloading.md](references/psr4-autoloading.md).
-2. **PER Coding Style 3.0 is the current style spec** - It supersedes PSR-12 in practice while requiring PSR-1. PSR-12 is still the officially *Accepted* PSR — document the nuance, don't pretend PSR-12 was withdrawn. See [per-coding-style.md](references/per-coding-style.md).
+2. **PER Coding Style 3.1 is the current style spec** - It supersedes PSR-12 in practice while requiring PSR-1. PSR-12 is still the officially *Accepted* PSR — document the nuance, don't pretend PSR-12 was withdrawn. See [per-coding-style.md](references/per-coding-style.md).
 3. **Depend on PSR interfaces, not implementations** - Type-hint `Psr\Log\LoggerInterface`, not a concrete logger.
 4. **4 spaces, no tabs; LF line endings; omit closing `?>`** - Core PER/PSR-1 file rules.
 5. **`src/` for library code, `tests/` for tests** - Wire `tests/` via `autoload-dev`, never `autoload`.
@@ -96,7 +96,7 @@ my-package/
 
 ### DO
 - Use PSR-4 with `src/` mapped to the vendor namespace
-- Follow PER Coding Style 3.0 (run php-cs-fixer with the `@PER-CS` ruleset)
+- Follow PER Coding Style 3.1 (run php-cs-fixer with the `@PER-CS` ruleset — it currently enforces the 3.0 rules; apply the 3.1 additions by review)
 - Depend on PSR interface packages (`psr/log`, `psr/http-message`, …)
 - Put test-only classes under `autoload-dev`
 

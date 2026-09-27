@@ -47,36 +47,42 @@ function decryptField(encrypted: string, key: string): string {
 }
 ```
 
-### Using Prisma Hooks
+### Using Prisma Client Extensions
+
+`$use` middleware was removed in Prisma 7 — use a `query` extension:
 
 ```typescript
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from './generated/prisma/client'; // v7: generated path
+import { PrismaPg } from '@prisma/adapter-pg';
 
-const prisma = new PrismaClient();
+const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL! });
+const key = process.env.ENCRYPTION_KEY!;
 
-// Encrypt before create
-prisma.$use(async (params, next) => {
-  if (params.model === 'User' && params.action === 'create') {
-    params.args.data.ssn = encryptField(
-      params.args.data.ssn,
-      process.env.ENCRYPTION_KEY!
-    );
-  }
-  return next(params);
-});
-
-// Decrypt after read
-prisma.$use(async (params, next) => {
-  const result = await next(params);
-  if (params.model === 'User' && ['findUnique', 'findMany'].includes(params.action)) {
-    const users = Array.isArray(result) ? result : [result];
-    users.forEach(user => {
-      if (user.ssn) {
-        user.ssn = decryptField(user.ssn, process.env.ENCRYPTION_KEY!);
-      }
-    });
-  }
-  return result;
+export const prisma = new PrismaClient({ adapter }).$extends({
+  query: {
+    user: {
+      // Encrypt before create
+      async create({ args, query }) {
+        if (args.data.ssn) {
+          args.data.ssn = encryptField(args.data.ssn, key);
+        }
+        return query(args);
+      },
+      // Decrypt after read
+      async findUnique({ args, query }) {
+        const user = await query(args);
+        if (user?.ssn) user.ssn = decryptField(user.ssn, key);
+        return user;
+      },
+      async findMany({ args, query }) {
+        const users = await query(args);
+        for (const user of users) {
+          if (user.ssn) user.ssn = decryptField(user.ssn, key);
+        }
+        return users;
+      },
+    },
+  },
 });
 ```
 
@@ -200,6 +206,7 @@ export type CryptoResult<T> = {
  */
 
 import crypto from 'crypto';
+import { Prisma } from '@/lib/generated/prisma/client'; // v7: generated path
 import type { EncryptedData, CryptoResult } from './types';
 
 /**
@@ -265,16 +272,17 @@ export function decryptField(
 }
 
 /**
- * Prisma middleware for automatic encryption/decryption
- * @module app/lib/database/encryption-middleware
+ * Prisma Client extension for automatic encryption
+ * (v7: `$use` middleware removed — use `$extends` query extensions)
+ * @module app/lib/database/encryption-extension
  */
 
 /**
  * Encrypts sensitive fields before database write
  * @param sensitiveFields - Field names to encrypt
- * @returns {Function} Prisma middleware
+ * @returns Prisma Client extension, apply with `prisma.$extends(createEncryptionExtension([...]))`
  */
-export function createEncryptionMiddleware(
+export function createEncryptionExtension(
   sensitiveFields: string[]
 ) {
   const key = process.env.ENCRYPTION_KEY;
@@ -283,23 +291,24 @@ export function createEncryptionMiddleware(
     throw new Error('ENCRYPTION_KEY environment variable required');
   }
 
-  return async (
-    params: any,
-    next: (params: any) => Promise<any>
-  ) => {
-    if (params.action === 'create' || params.action === 'update') {
-      for (const field of sensitiveFields) {
-        if (params.args.data[field]) {
-          params.args.data[field] = encryptField(
-            params.args.data[field],
-            key
-          ).encrypted;
+  return Prisma.defineExtension({
+    name: 'field-encryption',
+    query: {
+      $allModels: {
+        async $allOperations({ operation, args, query }) {
+          if (operation === 'create' || operation === 'update') {
+            const data = (args as { data?: Record<string, unknown> }).data;
+            for (const field of sensitiveFields) {
+              if (data && typeof data[field] === 'string') {
+                data[field] = encryptField(data[field] as string, key).encrypted;
+              }
+            }
+          }
+
+          return query(args);
         }
       }
     }
-
-    const result = await next(params);
-    return result;
-  };
+  });
 }
 ```

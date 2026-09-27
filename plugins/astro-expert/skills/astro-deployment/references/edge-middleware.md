@@ -42,8 +42,8 @@ export const onRequest = defineMiddleware(async (context, next) => {
 import { defineMiddleware } from 'astro:middleware';
 
 export const onRequest = defineMiddleware(async (context, next) => {
-  const runtime = context.locals.runtime;
-  const country = runtime?.cf?.country ?? 'US';
+  // Astro.locals.runtime was removed in @astrojs/cloudflare v13 — read cf from the request
+  const country = context.request.cf?.country ?? 'US';
 
   // Redirect to locale-specific page
   if (context.url.pathname === '/' && country === 'FR') {

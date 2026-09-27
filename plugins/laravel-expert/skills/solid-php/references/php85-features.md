@@ -16,9 +16,9 @@ related: solid-principles.md, laravel12-structure.md
 // ❌ Old style
 $result = array_sum(array_filter(array_map(fn($x) => $x * 2, $data)));
 
-// ✅ PHP 8.5 - Pipe operator
+// ✅ PHP 8.5 - Pipe operator (each step must be a single-argument callable)
 $result = $data
-    |> array_map(fn($x) => $x * 2, ...)
+    |> (fn($xs) => array_map(fn($x) => $x * 2, $xs))
     |> array_filter(...)
     |> array_sum(...);
 ```
@@ -32,10 +32,16 @@ readonly class UserDTO
         public string $name,
         public string $email,
     ) {}
+
+    // PHP 8.5 - clone with (associative array of properties to override).
+    // Must run inside the class: readonly properties are protected(set).
+    public function withEmail(string $email): static
+    {
+        return clone($this, ['email' => $email]);
+    }
 }
 
-// PHP 8.5 - clone with
-$updated = clone($dto, email: 'new@email.com');
+$updated = $dto->withEmail('new@email.com');
 ```
 
 ## #[\NoDiscard] Attribute

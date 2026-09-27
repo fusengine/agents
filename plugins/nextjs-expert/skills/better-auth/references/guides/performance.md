@@ -56,9 +56,9 @@ export const auth = betterAuth({
 ## Database Optimization
 
 ```typescript
-// Connection pooling
-const prisma = new PrismaClient()
-// Pool in URL: postgresql://...?pool_size=10
+// Connection pooling — Prisma 7: the driver adapter owns the pool (pg.Pool options)
+const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL!, max: 10 })
+const prisma = new PrismaClient({ adapter })
 ```
 
 ```sql

@@ -10,6 +10,9 @@ related: progress.md, skeleton.md
 
 # Spinner Component
 
+> **Base:** same API on Base UI, Radix and React Aria (verified against r/styles/{base,radix}-nova/spinner.json) — icon-based, no primitive.
+> Inside `Button`/`Badge` add `data-icon="inline-start" | "inline-end"` for spacing.
+
 Import Spinner from `@/modules/cores/shadcn/components/ui/spinner`:
 
 ```typescript
@@ -29,6 +32,7 @@ Simple loading spinner:
 ```tsx
 import { Spinner } from "@/modules/cores/shadcn/components/ui/spinner"
 
+/** Basic spinner. */
 export function SpinnerBasic() {
   return <Spinner />
 }
@@ -41,6 +45,7 @@ Loading spinner with accompanying text:
 ```tsx
 import { Spinner } from "@/modules/cores/shadcn/components/ui/spinner"
 
+/** Spinner with a loading label. */
 export function SpinnerWithText() {
   return (
     <div className="flex items-center gap-3">
@@ -62,6 +67,7 @@ import { useState } from "react"
 import { Spinner } from "@/modules/cores/shadcn/components/ui/spinner"
 import { Button } from "@/modules/cores/shadcn/components/ui/button"
 
+/** Button showing a spinner while loading. */
 export function LoadingButton() {
   const [isLoading, setIsLoading] = useState(false)
 
@@ -94,6 +100,7 @@ Full-screen loading overlay:
 import { useState } from "react"
 import { Spinner } from "@/modules/cores/shadcn/components/ui/spinner"
 
+/** Full-page loading overlay. */
 export function FullPageLoading({ isVisible = true }) {
   if (!isVisible) return null
 
@@ -115,6 +122,7 @@ Spinner centered on page:
 ```tsx
 import { Spinner } from "@/modules/cores/shadcn/components/ui/spinner"
 
+/** Centered spinner. */
 export function CenteredLoading() {
   return (
     <div className="flex h-screen items-center justify-center">
@@ -134,6 +142,7 @@ Different spinner sizes for various use cases:
 ```tsx
 import { Spinner } from "@/modules/cores/shadcn/components/ui/spinner"
 
+/** Spinner size variations. */
 export function SpinnerSizes() {
   return (
     <div className="flex items-center gap-6">
@@ -153,6 +162,7 @@ Styled spinner with custom colors:
 ```tsx
 import { Spinner } from "@/modules/cores/shadcn/components/ui/spinner"
 
+/** Spinners with custom colors. */
 export function SpinnerCustomColors() {
   return (
     <div className="space-y-4">
@@ -185,6 +195,7 @@ import { Spinner } from "@/modules/cores/shadcn/components/ui/spinner"
 import { Input } from "@/modules/cores/shadcn/components/ui/input"
 import { Search } from "lucide-react"
 
+/** Search input showing a spinner while searching. */
 export function SearchLoading() {
   const [isSearching, setIsSearching] = useState(false)
   const [query, setQuery] = useState("")
@@ -226,6 +237,7 @@ Combine skeleton with spinner for loading states:
 import { Spinner } from "@/modules/cores/shadcn/components/ui/spinner"
 import { Skeleton } from "@/modules/cores/shadcn/components/ui/skeleton"
 
+/** Spinner shown while content loads. */
 export function SkeletonWithSpinner({ isLoading = true }) {
   if (isLoading) {
     return (
@@ -307,6 +319,7 @@ import { useState } from "react"
 import { Spinner } from "@/modules/cores/shadcn/components/ui/spinner"
 import { Button } from "@/modules/cores/shadcn/components/ui/button"
 
+/** Form whose submit button shows a spinner. */
 export function FormSubmission() {
   const [isSubmitting, setIsSubmitting] = useState(false)
 
@@ -340,6 +353,7 @@ export function FormSubmission() {
 import { useEffect, useState } from "react"
 import { Spinner } from "@/modules/cores/shadcn/components/ui/spinner"
 
+/** Spinner shown while fetching data. */
 export function DataFetching() {
   const [isLoading, setIsLoading] = useState(true)
   const [data, setData] = useState(null)

@@ -1,12 +1,12 @@
 ---
 name: pest-setup
-description: Complete Pest.php config and first Pest 4 tests
+description: Complete Pest.php config and first Pest 5 tests
 keywords: pest, config, expectations, datasets, hooks, template
 ---
 
 # Pest.php + First Tests Template
 
-Complete Pest 4 setup for a framework-agnostic project (no Laravel).
+Complete Pest 5 setup for a framework-agnostic project (no Laravel). Requires PHP 8.4+.
 
 ## Pest.php
 
@@ -16,8 +16,9 @@ Complete Pest 4 setup for a framework-agnostic project (no Laravel).
 // tests/Pest.php  (created by ./vendor/bin/pest --init)
 declare(strict_types=1);
 
-// Bind a base TestCase to a directory (optional; default is PHPUnit\TestCase)
-uses(PHPUnit\Framework\TestCase::class)->in('Unit', 'Feature');
+// Bind a base TestCase to a directory (optional; default is PHPUnit\Framework\TestCase).
+// pest()->extend() is the documented form; the older uses() still works.
+pest()->extend(PHPUnit\Framework\TestCase::class)->in('Unit', 'Feature');
 
 // Shared expectations
 expect()->extend('toBeSlug', function () {
@@ -35,7 +36,7 @@ beforeEach(function () {
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="vendor/pestphp/pest/vendor/phpunit/phpunit/phpunit.xsd"
+         xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
          bootstrap="vendor/autoload.php"
          colors="true">
     <testsuites>

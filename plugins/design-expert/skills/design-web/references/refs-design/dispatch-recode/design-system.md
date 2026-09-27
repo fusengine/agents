@@ -17,7 +17,7 @@ clicking your newsletter. Pipe it.* / *Three steps. Then you just talk.* /
 *Describe a page. Watch it exist.* The copy never asks a question outside the
 FAQ, never quantifies a benefit it cannot print in a terminal, and every number
 on the page (62, 3,104, 9s, $18) appears at least twice — once as prose, once as
-machine output [relevé, procédé de la source].
+machine output [measured, a technique of the source].
 
 Signature element: **the shell as the argument.** Two full terminal chassis —
 a title bar with three dots, a mono tab strip, a monospaced body — plus a chat
@@ -27,27 +27,27 @@ the first of them **overlaps the hero by 96px** so the proof reaches into the
 photograph. Second-order signature: the sodium accent never touches a paragraph
 — it lives only in code tokens, numerals, ticks and the italic serif of headings.
 
-Macrostructure: **Claim, then Proof, repeated.** Order relevé on the source and
+Macrostructure: **Claim, then Proof, repeated.** Order measured on the source and
 reproduced 1:1 on `index.html`:
 
-- `header.entete` — 48rem pill, fixed at 16px, backdrop-blurred; burger below 640px
-- `section.heros` — a 32px photographic frame, 88svh, eyebrow / h1 in two masked
+- `header.header` — 48rem pill, fixed at 16px, backdrop-blurred; burger below 640px
+- `section.hero` — a 32px photographic frame, 88svh, eyebrow / h1 in two masked
   lines / subtitle / two actions / four mono chips / a SCROLL tick
-- `section.zone-terminal` — the terminal, `margin-top: -6rem`, three tabs
-- `section.manifeste` — 42rem centred, the only block with no component in it
+- `section.terminal-zone` — the terminal, `margin-top: -6rem`, three tabs
+- `section.manifesto` — 42rem centred, the only block with no component in it
 - `section` ×2 — *How it works* (3 numbered cards), *The platform* (6 cards)
 - `section#integrations` — the code block, four tabs, plus a mono footer link
 - `section` — four application cards, icon + arrow
 - `section` — page builder: text column + photograph with a chat overlay
 - `section#demo` — the source's empty video frame, **filled here** with a timed
   four-step track inside a browser chassis
-- `section.bandeau` — four counters, the page's only bordered band
+- `section.band` — four counters, the page's only bordered band
 - `section` — the maker column: image, three paragraphs, a signature
-- `section#tarifs` — three plans, the middle one badged
+- `section#pricing` — three plans, the middle one badged
 - `section` — the calculator: one range on a log10 scale, one live verdict
 - `section#faq` — sticky 0.8fr heading beside 1.2fr of accordions
 - `section` — the closing photographic block
-- `footer.pied` — 1.5fr + three link columns, then a bottom bar
+- `footer.footer` — 1.5fr + three link columns, then a bottom bar
 
 Absent from the canonical skeleton: **testimonials in any form** — no quote, no
 customer name, no logo wall of clients; comparison table; newsletter capture;
@@ -73,44 +73,44 @@ to that palette rather than tinted afterwards.
 ### Colors
 
 ```css
---fond-page:     #0b0b0e;
---fond-terminal: #131216;
+--bg-page:     #0b0b0e;
+--bg-terminal: #131216;
 --surface:       rgb(255 255 255 / .03);
---surface-forte: rgb(255 255 255 / .05);
---trait:         rgb(255 255 255 / .08);
---trait-cadre:   rgb(255 255 255 / .10);
---trait-fort:    rgb(255 255 255 / .15);
+--surface-strong: rgb(255 255 255 / .05);
+--stroke:         rgb(255 255 255 / .08);
+--stroke-frame:   rgb(255 255 255 / .10);
+--stroke-strong:    rgb(255 255 255 / .15);
 --sodium:        #ff8c2b;
---sodium-clair:  #ffb066;
---ambre:         #ffcf9b;
---ambre-sourd:   #c99a6a;
---or-pale:       #f0d08a;
---terre:         #c98f5a;
+--sodium-light:  #ffb066;
+--amber:         #ffcf9b;
+--amber-muted:   #c99a6a;
+--gold-pale:       #f0d08a;
+--earth:         #c98f5a;
 ```
 
 Strategy: **one hue, five values, opacity everywhere else.** There is exactly one
 chromatic family on the page — sodium, from `#c98f5a` to `#ffcf9b` — and every
 surface, every rule and every muted text is a white opacity over anthracite, as
-on the source [relevé: `bg-white/[0.03]`, `border-white/8`, `text-white/55`].
+on the source [measured: `bg-white/[0.03]`, `border-white/8`, `text-white/55`].
 The accent is rationed: prompt carets, tool bullets, step numbers, ticks,
 counters, the slider fill, the italic half of each heading. No paragraph, no
 button label and no card body is ever coloured.
 
-Contrast floors: primary 18.6:1, `--texte-55` ≈6.6:1, `--texte-50` ≈5.9:1
-[estimé]. The source's `text-white/40` (≈4.3:1) on footer links and micro-labels
+Contrast floors: primary 18.6:1, `--text-55` ≈6.6:1, `--text-50` ≈5.9:1
+[estimated]. The source's `text-white/40` (≈4.3:1) on footer links and micro-labels
 sat under the floor; those are raised to 50 % here, the one colour departure from
-the source. `--sodium` on `--fond-page` ≈8.7:1, `--ambre` ≈13:1 [estimé].
+the source. `--sodium` on `--bg-page` ≈8.7:1, `--amber` ≈13:1 [estimated].
 
 ### Typography
 
-Three families, all from the source [relevé, `3d9uy71yrg96g.css`]. **Instrument
+Three families, all from the source [measured, `3d9uy71yrg96g.css`]. **Instrument
 Serif** carries every heading, every price, every counter and the signature —
 regular for the first clause, *italic* for the second. **Geist** carries body
 copy and buttons only. **Geist Mono** carries eyebrows, chips, code, tabs,
 captions, tick labels and the footer. Space Grotesk ships on the source under
 `--font-caption` but is never applied; it is not loaded here.
 
-Scale, all relevé: h1 48 → 72 → 96px at 1.04/-0.01em; h2 36 → 48px at 1.25;
+Scale, all measured: h1 48 → 72 → 96px at 1.04/-0.01em; h2 36 → 48px at 1.25;
 manifesto h2 30 → 36px at 1.375; card titles 20px; plan names 24px; counters and
 prices 48 → 60px; body 16px at 1.625; card body and list rows 14px; code 13px;
 eyebrows 11px at .35em. Weights: 400 everywhere except 600 on the primary button
@@ -123,11 +123,11 @@ an underline outside `:focus-visible`.
 
 A 4px grid used almost only at 8px multiples: 8 / 12 / 16 / 24 / 28 / 32 / 40 /
 56 / 80. One inter-section value repeated 11 times — **112px, 144px above 640px**
-[relevé, `pb-28 sm:pb-36`]. Side margin 24px, identical on mobile and desktop.
+[measured, `pb-28 sm:pb-36`]. Side margin 24px, identical on mobile and desktop.
 Container ceiling 72rem, prose ceiling 42rem, terminal ceiling 48rem. Grid gutter
 16px everywhere, card padding 28px everywhere.
 
-Density profile: high. Seventeen blocks over 10,622px at 1365 [relevé], against
+Density profile: high. Seventeen blocks over 10,622px at 1365 [measured], against
 10,718px for the source — a 0.9 % difference in total length, obtained without
 copying a single measurement of copy. The page is long because it holds many
 things, not because it is padded.
@@ -135,12 +135,12 @@ things, not because it is padded.
 ### Motion
 
 `MOTION_INTENSITY 7` — total coverage, low amplitude, one exception. Every block
-enters on `opacity 0 → 1` plus a 24px rise over 700ms [relevé: the source ships
+enters on `opacity 0 → 1` plus a 24px rise over 700ms [measured: the source ships
 those exact resting states inline]. The two h1 lines are the only elements with a
 different entrance: a 110 % translate inside an `overflow: hidden` mask, 900ms,
 cascaded 110ms apart. Hover is 200ms and subtracts nothing: a card lifts 2px,
 gains 2 % of surface, and lights a 240px radial spot that follows the pointer
-[relevé, `--spot-x` / `--spot-y`].
+[measured, `--spot-x` / `--spot-y`].
 
 Three periodic animations, all gated on `.js-motion`: the SCROLL tick (2.2s), the
 terminal caret (1.1s, `steps(1)`), the demo gauge (1.6s, once). Four scripted

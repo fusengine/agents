@@ -85,8 +85,8 @@ interface Adapter {
 ## Auto Migration
 
 ```bash
-bunx @better-auth/cli generate  # Generate SQL
-bunx @better-auth/cli migrate   # Apply to DB
+bunx auth@latest generate  # Generate SQL
+bunx auth@latest migrate   # Apply to DB
 ```
 
 ## Plugin Tables

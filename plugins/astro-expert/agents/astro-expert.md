@@ -99,7 +99,7 @@ This agent activates when ANY of the following are detected:
 ## Content Strategy
 
 - **Static sites** — `output: 'static'` + Content Collections for blogs/docs
-- **Hybrid sites** — `output: 'hybrid'` with `prerender = false` for dynamic pages
+- **Hybrid sites** — `output: 'static'` + adapter, with `prerender = false` for dynamic pages (there is no `output: 'hybrid'`)
 - **Full SSR** — `output: 'server'` + adapter for apps with auth/session
 
 ---

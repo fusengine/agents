@@ -31,15 +31,21 @@ SCIM 2.0 provisioning for enterprise identity providers (Okta, Azure AD, etc.).
 
 ## Installation
 
+> Better Auth 1.7 decoupled SCIM from the organization plugin and replaced its configuration,
+> client APIs, schema and Group model — follow the SCIM cutover in the 1.7 upgrade guide
+> (full directory reprovision) when upgrading. Options below may predate 1.7; verify against the docs.
+
+```bash
+bun add @better-auth/scim
+```
+
 ```typescript
 import { betterAuth } from "better-auth"
-import { scim } from "better-auth/plugins"
-import { organization } from "better-auth/plugins"
+import { scim } from "@better-auth/scim"
 
 export const auth = betterAuth({
   plugins: [
-    organization(),  // Required
-    scim()
+    scim()  // organization() no longer required since 1.7
   ]
 })
 ```

@@ -16,11 +16,11 @@ MongoDB support status and migration guidance for Prisma 7.
 
 ## Support Status
 
-**MongoDB is NOT supported in Prisma 7.0 - 7.3**
+**MongoDB is NOT supported in any Prisma 7.x release (7.0 - 7.10)**
 
-- Prisma v6 and earlier: Full MongoDB support ✅
-- Prisma v7.0 - v7.3: Removed ❌
-- Future versions: Under evaluation
+- Prisma v6 and earlier: Full MongoDB support ✅ (use v6.19, the latest v6 line)
+- Prisma v7.0 - v7.10: Not supported ❌
+- Future versions: Prisma docs state MongoDB support is coming; a MongoDB upgrade guide exists for Prisma 8, which is still a release candidate (not stable)
 
 ---
 
@@ -159,7 +159,9 @@ async function exportMongoCollection(collectionName: string): Promise<void> {
  * @module modules/database/src/scripts/migrate-to-postgres
  */
 async function migrateToPostgres(): Promise<void> {
-  // npm install prisma@latest @prisma/client@latest
+  // Target is PostgreSQL, so Prisma 7 applies (MongoDB itself stays on prisma@6 = 6.19.x).
+  // Pin @7: npm `latest` of `prisma` is the 8.0 RC.
+  // npm install -D prisma@7 && npm install @prisma/client@7 @prisma/adapter-pg@7 pg
   // npx prisma migrate dev --name init
   console.log('Migration complete')
 }
@@ -209,8 +211,8 @@ async function getUsers() {
 ## Timeline
 
 - **Prisma v6**: MongoDB fully supported
-- **Prisma v7.0** (2024): MongoDB removed
-- **Future**: Under evaluation
+- **Prisma v7.0** (November 2025): MongoDB not supported (still unsupported in 7.10, August 2026)
+- **Future**: Support announced as coming; Prisma 8 (RC) ships a MongoDB upgrade guide
 
 Check [Prisma Roadmap](https://github.com/prisma/prisma/discussions) for updates.
 

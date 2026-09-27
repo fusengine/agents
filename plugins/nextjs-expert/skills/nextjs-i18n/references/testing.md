@@ -1,7 +1,7 @@
 ---
 name: testing
-description: Render avec provider, mock server functions, navigation, Vitest setup
-when-to-use: unit tests, composants traduites, navigation tests, mock i18n
+description: Render with provider, mock server functions, navigation, Vitest setup
+when-to-use: unit tests, translated components, navigation tests, mock i18n
 keywords: renderWithIntl, testing-library, Vitest, mocking, NextIntlClientProvider
 priority: medium
 requires: client-components.md, server-components.md
@@ -57,9 +57,9 @@ test('renders translated text', () => {
   expect(getByText('Welcome')).toBeInTheDocument()
 })
 
-test('renders in French', () => {
-  const { getByText } = renderWithIntl(<MyComponent />, 'fr')
-  expect(getByText('Bienvenue')).toBeInTheDocument()
+test('renders in Spanish', () => {
+  const { getByText } = renderWithIntl(<MyComponent />, 'es')
+  expect(getByText('Bienvenido')).toBeInTheDocument()
 })
 ```
 

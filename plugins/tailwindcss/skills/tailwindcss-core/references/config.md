@@ -1,13 +1,13 @@
 ---
 name: config
-description: Advanced configuration for Tailwind CSS v4.1
+description: Advanced configuration for Tailwind CSS v4.3
 ---
 
-# Advanced Tailwind CSS v4.1 Configuration
+# Advanced Tailwind CSS v4.3 Configuration
 
 ## CSS-first Configuration Architecture
 
-Tailwind v4.1 configuration relies on a single CSS file (`input.css`) without needing a JavaScript config file.
+Tailwind v4.3 configuration relies on a single CSS file (`input.css`) without needing a JavaScript config file.
 
 ### Basic Structure
 
@@ -443,31 +443,15 @@ export default {
    8. CUSTOM VARIANTS
    ======================== */
 
-/* Dark mode */
-@variant dark {
-  @media (prefers-color-scheme: dark) {
-    &
-  }
-}
+/* New variants are defined with @custom-variant (not @variant).
+   dark, group-hover, group-focus, data-* are built in — no definition needed. */
 
-/* Group hover */
-@variant group-hover {
-  .group:hover &
-}
+/* Dark mode driven by a class instead of prefers-color-scheme */
+@custom-variant dark (&:where(.dark, .dark *));
 
-/* Group focus */
-@variant group-focus {
-  .group:focus-within &
-}
-
-/* Data attributes */
-@variant data-active {
-  &[data-active="true"]
-}
-
-@variant data-disabled {
-  &[data-disabled="true"]
-}
+/* Named data-attribute variants */
+@custom-variant active-state (&[data-active="true"]);
+@custom-variant disabled-state (&[data-disabled="true"]);
 
 /* ========================
    9. DARK MODE OVERRIDES
@@ -635,6 +619,6 @@ export default {
 
 ## References
 
-- [Tailwind CSS v4.1 Configuration](https://tailwindcss.com/docs/configuration)
+- [Tailwind CSS v4.3 Configuration](https://tailwindcss.com/docs/configuration)
 - [PostCSS Configuration](https://postcss.org/docs/postcss-load-config)
 - [CSS Custom Properties](https://developer.mozilla.org/en-US/docs/Web/CSS/--*)

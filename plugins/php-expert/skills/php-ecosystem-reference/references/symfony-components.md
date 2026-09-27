@@ -41,9 +41,11 @@ Each component works on its own. A CLI tool, a WordPress plugin, or a Laravel ap
 use Symfony\Component\Console\Application;
 
 $app = new Application('my-tool', '1.0.0');
-$app->add(new MyCommand());
+$app->addCommand(new MyCommand());   // add() was deprecated in 7.4 and removed in Symfony 8.0
 $app->run();
 ```
+
+Current line: Symfony **8.1** (components require PHP `>=8.4.1`); **7.4** is the LTS for PHP 8.2+.
 
 ## Relationship to PSR
 

@@ -1,10 +1,10 @@
 ---
 name: bun-project-setup
-description: Complete Bun 1.3 TypeScript project — bunfig test/coverage, build, compile, workspace
+description: Complete Bun 1.4 TypeScript project — bunfig test/coverage, build, compile, workspace
 keywords: template, bun, bunfig, bun-test, coverage, junit, workspace, compile
 ---
 
-# Template: Bun 1.3 TypeScript Project
+# Template: Bun 1.4 TypeScript Project
 
 Copy-paste ready. Runs `.ts`/`.tsx` natively, tests with `bun:test` + coverage gate,
 builds and compiles a CLI. Works standalone or as a workspace member.
@@ -28,7 +28,7 @@ builds and compiles a CLI. Works standalone or as a workspace member.
     "compile": "bun build ./src/cli.ts --compile --outfile ./bin/mycli"
   },
   "devDependencies": {
-    "typescript": "^6.0.0",
+    "typescript": "^7.0.2",
     "@types/bun": "latest"
   }
 }

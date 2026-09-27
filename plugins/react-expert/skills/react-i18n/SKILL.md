@@ -146,7 +146,7 @@ src/
 │   └── locales/
 │       ├── en/
 │       │   └── translation.json
-│       └── fr/
+│       └── es/
 │           └── translation.json
 └── main.tsx
 ```

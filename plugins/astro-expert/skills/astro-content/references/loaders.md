@@ -31,6 +31,14 @@ const blog = defineCollection({
 
 Supports: `.md`, `.mdx`, `.json`, `.yaml`, `.yml`, `.toml`
 
+### `deferRender` (Astro 7.1+)
+
+By default `glob()` renders Markdown during sync and caches the HTML. For large collections, `deferRender: true` stores entries unrendered and renders on demand (like `.mdx`), lowering sync memory at the cost of cross-build HTML caching:
+
+```typescript
+loader: glob({ pattern: '**/*.md', base: './src/content/docs', deferRender: true }),
+```
+
 ## file() Loader
 
 ```typescript

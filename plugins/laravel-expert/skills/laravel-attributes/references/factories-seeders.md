@@ -5,7 +5,7 @@ description: Factory and Seeder attributes shipped in Laravel 13
 
 # Factory / Seeder Attributes (Laravel 13)
 
-Namespace: `Illuminate\Database\Eloquent\Factories\Attributes\*` and `Illuminate\Database\Seeders\Attributes\*`
+Namespace: `Illuminate\Database\Eloquent\Factories\Attributes\*` (factories) and `Illuminate\Foundation\Testing\Attributes\*` (`Seed`, `Seeder` — test classes)
 
 ## Factory model binding
 
@@ -25,31 +25,34 @@ class UserFactory extends Factory
 
 Replaces `protected $model = User::class;`. Useful when the factory's class name does not follow the `{Model}Factory` convention.
 
-## Seeder discovery
+## Seeding in tests
+
+`#[Seed]` and `#[Seeder]` go on **test classes** that use `RefreshDatabase` — they replace `protected $seed = true;` / `protected $seeder = ...;`. They do not mark seeder classes for discovery.
 
 ```php
-use Illuminate\Database\Seeders\Attributes\Seed;
-use Illuminate\Database\Seeder;
+use Illuminate\Foundation\Testing\Attributes\Seed;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
-#[Seed]
-class ProductionSeeder extends Seeder
+#[Seed] // run DatabaseSeeder before each test
+class OrderTest extends TestCase
 {
-    public function run(): void { /* ... */ }
+    use RefreshDatabase;
 }
 ```
 
-`#[Seed]` marks a seeder for auto-discovery by `db:seed` without needing to register in `DatabaseSeeder::run()`.
-
 ```php
-use Illuminate\Database\Seeders\Attributes\Seeder as SeederAttribute;
+use Database\Seeders\OrderStatusSeeder;
+use Illuminate\Foundation\Testing\Attributes\Seeder;
 
-#[SeederAttribute(environment: 'production')]
-class CriticalDataSeeder extends Seeder {}
+#[Seeder(OrderStatusSeeder::class)] // run a specific seeder
+class OrderStatusTest extends TestCase
+{
+    use RefreshDatabase;
+}
 ```
-
-Optional `#[Seeder(environment: ...)]` restricts execution to a specific environment.
 
 ## Notes
 
-- `#[Seed]` and `#[Seeder]` work together: `#[Seed]` enables discovery, `#[Seeder]` adds metadata
-- Use the legacy `DatabaseSeeder` pattern when ordering matters across seeders
+- Seeder classes themselves have no attribute: register them in `DatabaseSeeder::run()` via `$this->call([...])`
+- Related testing attribute: `#[UnitTest]` on a test method skips booting the application

@@ -23,7 +23,7 @@ src/
 ├── locales/
 │   ├── en/
 │   │   └── common.json
-│   └── fr/
+│   └── es/
 │       └── common.json
 └── main.tsx
 ```
@@ -51,7 +51,7 @@ i18n
   .use(initReactI18next)
   .init({
     // Supported languages
-    supportedLngs: ['en', 'fr', 'de', 'es'],
+    supportedLngs: ['en', 'es', 'de', 'it'],
     fallbackLng: 'en',
 
     // Namespaces
@@ -134,37 +134,37 @@ export { default } from './config'
 }
 ```
 
-### public/locales/fr/common.json
+### public/locales/es/common.json
 
 ```json
 {
   "app": {
-    "name": "Mon Application",
-    "tagline": "Créez des choses incroyables"
+    "name": "Mi Aplicación",
+    "tagline": "Crea cosas increíbles"
   },
   "nav": {
-    "home": "Accueil",
-    "about": "À propos",
-    "contact": "Contact",
-    "settings": "Paramètres"
+    "home": "Inicio",
+    "about": "Acerca de",
+    "contact": "Contacto",
+    "settings": "Configuración"
   },
   "actions": {
-    "save": "Enregistrer",
-    "cancel": "Annuler",
-    "delete": "Supprimer",
-    "edit": "Modifier",
-    "submit": "Soumettre",
-    "loading": "Chargement..."
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "submit": "Enviar",
+    "loading": "Cargando..."
   },
   "messages": {
-    "welcome": "Bienvenue, {{name}} !",
-    "success": "Opération réussie",
-    "error": "Une erreur est survenue. Veuillez réessayer."
+    "welcome": "¡Bienvenido, {{name}}!",
+    "success": "Operación completada con éxito",
+    "error": "Se produjo un error. Inténtalo de nuevo."
   },
   "items": {
-    "count_one": "{{count}} élément",
-    "count_other": "{{count}} éléments",
-    "count_zero": "Aucun élément"
+    "count_one": "{{count}} elemento",
+    "count_other": "{{count}} elementos",
+    "count_zero": "Ningún elemento"
   }
 }
 ```

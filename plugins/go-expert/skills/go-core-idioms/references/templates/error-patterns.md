@@ -6,7 +6,7 @@ keywords: template, error, sentinel, errors.Join, errors.AsType, wrapping
 
 # Template: Package Error Strategy
 
-Complete example for Go 1.26. Sentinels for identity, typed errors for data,
+Complete example for Go 1.26+ (`errors.AsType` requires 1.26). Sentinels for identity, typed errors for data,
 `%w` wrapping on the way up, `errors.Join` for aggregation, `errors.AsType` for
 type-safe inspection.
 

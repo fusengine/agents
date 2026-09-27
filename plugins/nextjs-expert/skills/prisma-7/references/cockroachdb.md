@@ -21,12 +21,12 @@ CockroachDB integration and distributed database features in Prisma 7.
 DATABASE_URL="postgresql://user:password@localhost:26257/myapp?sslmode=require&schema=public"
 ```
 
-CockroachDB is PostgreSQL-compatible, so Prisma treats it as PostgreSQL:
+CockroachDB is PostgreSQL-compatible; use the dedicated `cockroachdb` provider and connect at runtime through the `pg` driver adapter (`@prisma/adapter-pg`):
 
 ```prisma
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider = "cockroachdb"
+  // v7: the CLI connection URL lives in prisma.config.ts (datasource.url: env("DATABASE_URL"))
 }
 ```
 
@@ -219,7 +219,10 @@ function getCockroachDbUrl(): string {
  * CockroachDB Prisma client initialization.
  * @module modules/database/src/client
  */
-import { PrismaClient } from '@prisma/client'
+import { PrismaClient } from '../generated/prisma/client' // v7: generated path
+import { PrismaPg } from '@prisma/adapter-pg'
+
+const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL! })
 
 /**
  * Initialize Prisma client with logging.
@@ -228,6 +231,7 @@ import { PrismaClient } from '@prisma/client'
  * @module modules/database/src/client
  */
 export const prisma = new PrismaClient({
+  adapter,
   log: ['query', 'error', 'warn'],
 })
 

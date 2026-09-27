@@ -5,18 +5,18 @@ user-invocable: false
 ---
 
 <objective>
-Complete reference for Tailwind CSS v4.1 border-related utilities: border width/color/style and per-side variants, `rounded-*` border-radius (including per-corner), `outline-*` with `outline-offset`, box-shadow-based `ring-*` with `ring-offset`, and `divide-*` separators between children.
+Complete reference for Tailwind CSS v4.3 border-related utilities: border width/color/style and per-side variants (including logical `border-bs`/`border-be`, since v4.2), `rounded-*` border-radius (including per-corner), `outline-*` with `outline-offset`, box-shadow-based `ring-*` with `ring-offset`, and `divide-*` separators between children.
 
-Flags the v4.1 default `ring` width change (3px → 1px, use `ring-3` for v3 behavior) and per-corner border-radius improvements.
+Flags the v4.0 default `ring` width change (3px → 1px, use `ring-3` for v3 behavior) and per-corner border-radius improvements.
 </objective>
 
 # Tailwind CSS Borders Skill
 
-Complete reference for border-related utilities in Tailwind CSS v4.1.
+Complete reference for border-related utilities in Tailwind CSS v4.3.
 
 ## Contents
 
-- **Border Width** - `border`, `border-x`, `border-y`, `border-t`, `border-r`, `border-b`, `border-l`
+- **Border Width** - `border`, `border-x`, `border-y`, `border-t`, `border-r`, `border-b`, `border-l`, logical `border-s`, `border-e`, `border-bs`, `border-be` (block-start/end since v4.2)
 - **Border Color** - `border-{color}`, per-side border colors
 - **Border Style** - `border-solid`, `border-dashed`, `border-dotted`, `border-double`
 - **Border Radius** - `rounded`, `rounded-t`, `rounded-r`, `rounded-b`, `rounded-l`, `rounded-tl`, `rounded-tr`, `rounded-bl`, `rounded-br`, `rounded-full`
@@ -33,9 +33,10 @@ Complete reference for border-related utilities in Tailwind CSS v4.1.
 - Full color palette support via design tokens
 - Responsive and state variants support
 
-## v4.1 Updates
+## v4 Updates
 
-- Default `ring` width changed from `3px` to `1px` (use `ring-3` for v3 behavior)
+- Default `ring` width changed from `3px` to `1px` in v4.0 (use `ring-3` for v3 behavior)
+- Logical block-axis borders `border-bs-*` / `border-be-*` (`border-block-start` / `border-block-end`) added in v4.2
 - Enhanced outline customization with `outline-offset`
 - Improved border radius with corner-specific classes
 - Better type safety with CSS variables in arbitrary values

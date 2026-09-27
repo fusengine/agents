@@ -3,7 +3,7 @@ name: laravel-scout
 description: Implement full-text search with Laravel Scout. Use when adding search to Eloquent models with Meilisearch, Algolia, or database driver.
 versions:
   laravel: "13.0"
-  scout: "10.12"
+  scout: "11.8"
   php: "8.3"
 user-invocable: false
 references: references/searchable.md, references/drivers.md
@@ -110,11 +110,16 @@ $results = Article::search('laravel tutorial')->paginate(15);
 
 ## Laravel 13 Notes
 
-### Vector search natif pgvector
-Pour la recherche sémantique (embeddings) sur PostgreSQL, Laravel 13 expose `Schema::ensureVectorExtensionExists()` et `whereVectorSimilarTo()` via la skill dédiée [[laravel-vector-search]]. Scout reste pertinent pour le full-text (Meilisearch/Algolia) ; pour la similarité vectorielle, utiliser pgvector directement sans driver Scout.
+### Native pgvector vector search
+For semantic search (embeddings) on PostgreSQL, Laravel 13 exposes `Schema::ensureVectorExtensionExists()` and `whereVectorSimilarTo()`, covered by the dedicated [[laravel-vector-search]] skill. Scout remains relevant for full-text (Meilisearch/Algolia); for vector similarity, use pgvector directly without a Scout driver.
 
 ```php
-// Hybride : Scout pour full-text, pgvector pour similarité
+// Hybrid: Scout for full-text, pgvector for similarity
 $keyword = Post::search($query)->get();
-$semantic = Post::whereVectorSimilarTo('embedding', $embedding, limit: 10)->get();
+$semantic = Post::whereVectorSimilarTo('embedding', $embedding, minSimilarity: 0.4)->limit(10)->get();
 ```
+
+### Scout 11 (current 11.8, L13 compatible)
+- `where()` accepts comparison operators: `User::search('*')->where('age', '>', 30)->get()`
+- Custom engines: `$builder->wheres` becomes a list of `['field', 'operator', 'value']`
+- Algolia uses `filters` (instead of `numericFilters`); `scout:delete-all-indexes` (Meilisearch) only deletes indexes with the `SCOUT_PREFIX` prefix

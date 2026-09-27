@@ -16,12 +16,12 @@ either way.
 
 ## Transpiler behavior
 
-| Aspect | Node 24 (native) | Bun 1.3 |
+| Aspect | Node 24 / 26 (native) | Bun 1.4 |
 |--------|------------------|---------|
 | Mechanism | **Type stripping** — erases types only | **Full transpile** via Bun's transpiler |
 | `.tsx` / JSX | Unsupported natively | Supported |
 | `enum`, `namespace` w/ runtime | `ERR_UNSUPPORTED_TYPESCRIPT_SYNTAX` | Supported |
-| Decorators | Parser error | Supported |
+| Decorators | Parser error | Supported (standard TC39 decorators since 1.3.10/1.4) |
 | Reads `tsconfig.json` at runtime | No (ignored) | Yes (`paths`, jsx, etc.) |
 | Down-convert syntax | No | No (bundler keeps modern syntax as-is) |
 | Extra dependency for full TS | Needs `tsx` | None |
@@ -47,4 +47,6 @@ model is a full transpiler that behaves closer to how `tsc` would emit.
 
 Bun aims for Node API compatibility but is not 100% — verify native addons,
 niche `node:` APIs, and any C++ bindings before switching a production service.
+Bun 1.4 reports Node.js 26 compatibility (`process.versions.modules` = 147), so prebuilt
+native addons need a build for NODE_MODULE_VERSION 147 (bun.com/blog/bun-v1.4).
 For the Node path, see [ts-runtime-node](../../ts-runtime-node/SKILL.md).

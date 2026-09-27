@@ -44,17 +44,17 @@ export function withAuth(handler: Handler): Handler {
 }
 ```
 
-# Next.js Middleware
+# Next.js Proxy (formerly Middleware)
 
 ```typescript
-// middleware.ts
+// proxy.ts — Next.js 16 renamed middleware.ts → proxy.ts (middleware is deprecated)
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
 const protectedRoutes = ['/dashboard', '/settings', '/profile']
 const authRoutes = ['/login', '/signup']
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const token = request.cookies.get('auth-token')?.value
   const { pathname } = request.nextUrl
 

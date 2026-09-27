@@ -3,7 +3,7 @@ name: rust-tooling-cicd
 description: Use when structuring a Cargo workspace or building a Rust CI pipeline — fmt, clippy, cargo-deny/audit, nextest, coverage, MSRV. Not for writing the tests themselves (rust-testing-quality).
 versions:
   cargo: "1.9x (edition 2024)"
-  cargo-deny: "0.16"
+  cargo-deny: "0.20"
   cargo-nextest: "0.9"
 user-invocable: false
 references: references/workspaces-features.md, references/ci-gate.md, references/templates/ci-workflow.md, references/templates/deny-toml.md

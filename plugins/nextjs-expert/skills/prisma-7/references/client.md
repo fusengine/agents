@@ -32,7 +32,7 @@ export interface GlobalPrismaType {
 ```typescript
 // modules/cores/db/prisma.ts
 import 'dotenv/config'
-import type { PrismaClient } from '../../generated/prisma/client'
+import { PrismaClient } from '../../generated/prisma/client'  // value import: the class is instantiated below
 import { PrismaPg } from '@prisma/adapter-pg'
 import type { GlobalPrismaType } from './interfaces/global.interface'
 
@@ -93,19 +93,17 @@ import type { Prisma } from '../../generated/prisma/client'
  *
  * @see modules/cores/db/prisma.ts
  */
-export const PRISMA_GLOBAL_OMIT: NonNullable<
-  ConstructorParameters<typeof Prisma.PrismaClientKnownRequestError>[3]
-> = {
+export const PRISMA_GLOBAL_OMIT = {
   user: {
     password: true, // Always exclude password hash
     token: true,    // Always exclude sensitive tokens
   },
-}
+} satisfies Prisma.GlobalOmitConfig
 ```
 
 ```typescript
 // modules/cores/db/prisma.ts
-import type { PrismaClient } from '../../generated/prisma/client'
+import { PrismaClient } from '../../generated/prisma/client'
 import { PrismaPg } from '@prisma/adapter-pg'
 import { PRISMA_GLOBAL_OMIT } from './interfaces/prisma-config.interface'
 
@@ -151,7 +149,7 @@ export const PRISMA_LOG_CONFIG: PrismaLogConfig[] = [
 
 ```typescript
 // modules/cores/db/prisma.ts
-import type { PrismaClient } from '../../generated/prisma/client'
+import { PrismaClient } from '../../generated/prisma/client'
 import { PrismaPg } from '@prisma/adapter-pg'
 import { PRISMA_LOG_CONFIG } from './interfaces/prisma-logging.interface'
 

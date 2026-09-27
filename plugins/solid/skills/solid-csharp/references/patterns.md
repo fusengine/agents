@@ -1,7 +1,7 @@
 ---
 name: solid-csharp-patterns
 applies-to: "**/*.cs"
-description: C# 12/.NET 9 patterns - project structure, Contracts, records, XML docs, xUnit
+description: C# 14/.NET 10 patterns - project structure, Contracts, records, XML docs, xUnit
 when-to-use: project structure, testing, C#-specific SOLID implementation
 keywords: C#, .NET, Contracts, records, xUnit, XML docs
 priority: high

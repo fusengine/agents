@@ -68,7 +68,8 @@ export function Enable2FA() {
   const [backupCodes, setBackupCodes] = useState([])
 
   async function enable() {
-    const { data } = await authClient.twoFactor.enable()
+    const { data } = await authClient.twoFactor.enable({ method: "totp" })
+    if (data?.method !== "totp") return  // 1.7+: discriminated response
     setTotpURI(data.totpURI)
     setBackupCodes(data.backupCodes)
   }

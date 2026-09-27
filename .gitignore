@@ -40,7 +40,7 @@ scripts/.claude/*
 plugins/ai-pilot/scripts/node_modules
 plugins/ai-pilot/scripts/bun.lock
 
-# WIP - en développement, ne pas commiter
+# WIP - in development, do not commit
 Neuronal-Project/
 plugins/memory-neural/
 docs/plugins/memory.md

@@ -55,11 +55,11 @@ jobs:
   gate:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-go@v5
+      - uses: actions/setup-go@v7
         with:
-          go-version: "1.26"
+          go-version: "1.27"
           check-latest: true
 
       # Do not let a committed go.work force unexpected versions in CI.
@@ -74,9 +74,9 @@ jobs:
         run: go vet ./...
 
       - name: Lint (golangci-lint v2)
-        uses: golangci/golangci-lint-action@v6
+        uses: golangci/golangci-lint-action@v9  # action v7+ is required for golangci-lint v2
         with:
-          version: v2.1  # pin a v2 release
+          version: v2.14  # pin a v2 release (v2.13+ supports Go 1.27)
 
       - name: Vulnerability scan (reachability)
         run: |

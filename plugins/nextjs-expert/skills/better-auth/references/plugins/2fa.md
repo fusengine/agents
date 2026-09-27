@@ -63,11 +63,15 @@ export const authClient = createAuthClient({
 ```typescript
 // Step 1: Generate TOTP secret
 const { data } = await authClient.twoFactor.enable({
-  password: "user-password"
+  password: "user-password",
+  method: "totp"  // default; "otp" enables email/SMS codes (needs otpOptions.sendOTP)
 })
 
-// data.totpURI - Use to generate QR code
-// data.backupCodes - Save these for recovery
+// Since 1.7 the response is discriminated on `method` — narrow before reading fields
+if (data?.method === "totp") {
+  // data.totpURI - Use to generate QR code
+  // data.backupCodes - Save these for recovery
+}
 ```
 
 ## Verify TOTP

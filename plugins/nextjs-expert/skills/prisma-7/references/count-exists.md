@@ -12,7 +12,7 @@ Query record counts, check existence, and calculate aggregates efficiently.
 
 ```typescript
 // lib/types/count.ts
-import type { Prisma } from "@prisma/client";
+import type { Prisma } from "@/lib/generated/prisma/client";
 
 /**
  * Count result wrapper
@@ -75,7 +75,7 @@ async function countUniqueVerifiedEmails(): Promise<number> {
 
 ```typescript
 // lib/types/exists.ts
-import type { Prisma } from "@prisma/client";
+import type { Prisma } from "@/lib/generated/prisma/client";
 
 /**
  * Existence check result
@@ -148,7 +148,7 @@ async function userExists(where: Prisma.UserWhereInput): Promise<boolean> {
 
 ```typescript
 // lib/types/countResponse.ts
-import type { Prisma } from "@prisma/client";
+import type { Prisma } from "@/lib/generated/prisma/client";
 
 /**
  * Count metadata for relations
@@ -229,7 +229,7 @@ async function getUsersWithCounts(): Promise<UserSummaryWithCounts[]> {
 
 ```typescript
 // lib/types/aggregates.ts
-import type { Prisma } from "@prisma/client";
+import type { Prisma } from "@/lib/generated/prisma/client";
 
 /**
  * Post aggregation statistics

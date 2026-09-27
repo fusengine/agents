@@ -7,8 +7,8 @@ keywords: enum, namespace, import type, any, legacy, migration, anti-pattern
 # LLM / Legacy TypeScript Pitfalls
 
 Load when reviewing or migrating TypeScript that was written from stale training data —
-these patterns compile on old configs but break under TS 6.0 defaults, `verbatimModuleSyntax`,
-or Node's native type stripping. Source: typescriptlang.org 6.0 notes + nodejs.org type stripping.
+these patterns compile on old configs but break under TS 6.0/7.0 defaults, `verbatimModuleSyntax`,
+or Node's native type stripping. Source: TypeScript 6.0 / 7.0 release notes + nodejs.org type stripping.
 
 ## 1. `enum` → `const` object `as const`
 
@@ -37,7 +37,7 @@ export function greet() {}
 ```
 
 Type-only `namespace` (only `type`/`interface` inside) is fine. The `module Foo {}` keyword
-form is a hard error in 6.0 — use `namespace` if you must, ESM otherwise.
+form is a hard error since 6.0 (and in 7.0) — use `namespace` if you must, ESM otherwise.
 
 ## 3. Value import for a type → `import type`
 
@@ -55,7 +55,7 @@ import { createUser, type CreateUserInput } from "./user.ts"; // inline type mar
 
 ## 4. Implicit `any` → annotate or infer
 
-`strict` (hence `noImplicitAny`) is the 6.0 default. Untyped parameters error. Prefer real
+`strict` (hence `noImplicitAny`) is the default since 6.0 (kept in 7.0). Untyped parameters error. Prefer real
 types or `unknown` + narrowing over `any`.
 
 ## 5. Import assertions `asserts` → `with`
@@ -70,7 +70,7 @@ import data from "./d.json" with { type: "json" };
 ## 6. Deprecated compiler options in generated configs
 
 LLMs often emit `moduleResolution: "node"`, `target: "es5"`, or `esModuleInterop: false`.
-All are deprecated/removed in 6.0 — see the ts-config skill's `deprecations-6.md`.
+All are deprecated/removed in 6.0 and hard errors in 7.0 — see the ts-config skill's `deprecations-6.md`.
 
 ## Review checklist
 

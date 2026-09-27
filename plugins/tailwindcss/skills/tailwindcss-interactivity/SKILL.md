@@ -5,14 +5,14 @@ user-invocable: false
 ---
 
 <objective>
-Complete reference for Tailwind CSS v4.1 interactivity utilities: `cursor-*` (standard, resize, zoom, grab, and special cursors), scroll behavior and snap (`scroll-smooth`, `scroll-snap-type`/`-align`/`-stop`, `overscroll-*`), `select-*` for text-selection control, `pointer-events-*`, `touch-*` action utilities, `resize-*`, `caret-*` color for input cursors, and `accent-*` color for checkboxes/radios/range inputs.
+Complete reference for Tailwind CSS v4.3 interactivity utilities: `cursor-*` (standard, resize, zoom, grab, and special cursors), scroll behavior and snap (`scroll-smooth`, `scroll-snap-type`/`-align`/`-stop`, `overscroll-*`, logical `scroll-mbs-*`/`scroll-pbs-*` since v4.2), scrollbar styling (`scrollbar-*`, `scrollbar-thumb-*`/`scrollbar-track-*`, `scrollbar-gutter-*`, since v4.3), `select-*` for text-selection control, `pointer-events-*`, `touch-*` action utilities, `resize-*`, `caret-*` color for input cursors, and `accent-*` color for checkboxes/radios/range inputs.
 
 Also documents the pseudo-class state variants (`hover:`, `focus:`, `active:`, `disabled:`) and their chaining with responsive/dark-mode prefixes.
 </objective>
 
 # Tailwind CSS Interactivity Utilities
 
-Comprehensive utilities for controlling user interaction behaviors and cursor styles in Tailwind CSS v4.1.
+Comprehensive utilities for controlling user interaction behaviors and cursor styles in Tailwind CSS v4.3.
 
 ## Categories
 
@@ -32,6 +32,12 @@ Manage scrolling and snap behavior
 - `scroll-snap-stop` - Force snap stops (snap-always, snap-normal)
 - `overscroll-behavior` - Control overscroll area (overscroll-auto, overscroll-contain, overscroll-none)
 - Support for axis-specific variants (x, y)
+- Logical block-axis scroll margin/padding (since v4.2): `scroll-mbs-*`, `scroll-mbe-*`, `scroll-pbs-*`, `scroll-pbe-*`
+
+### Scrollbar Styling (since v4.3)
+- `scrollbar-auto`, `scrollbar-thin`, `scrollbar-none` - `scrollbar-width`
+- `scrollbar-thumb-*`, `scrollbar-track-*` - `scrollbar-color` (supports opacity modifiers, e.g. `scrollbar-thumb-slate-900/60`)
+- `scrollbar-gutter-auto`, `scrollbar-gutter-stable`, `scrollbar-gutter-both` - reserve scrollbar space to avoid layout shift
 
 ### User Selection
 Control text selection behavior
@@ -95,6 +101,7 @@ Style elements based on interaction state with `hover:`, `focus:`, `active:`, an
 - [Cursor Documentation](https://tailwindcss.com/docs/cursor)
 - [Scroll Behavior Documentation](https://tailwindcss.com/docs/scroll-behavior)
 - [Scroll Snap Documentation](https://tailwindcss.com/docs/scroll-snap)
+- [Scrollbar Width](https://tailwindcss.com/docs/scrollbar-width), [Scrollbar Color](https://tailwindcss.com/docs/scrollbar-color), [Scrollbar Gutter](https://tailwindcss.com/docs/scrollbar-gutter)
 - [User Select Documentation](https://tailwindcss.com/docs/user-select)
 - [Pointer Events Documentation](https://tailwindcss.com/docs/pointer-events)
 - [Touch Action Documentation](https://tailwindcss.com/docs/touch-action)
@@ -105,5 +112,5 @@ Style elements based on interaction state with `hover:`, `focus:`, `active:`, an
 ## Detailed References
 
 - [cursor.md](references/cursor.md) - Load when picking a specific cursor value (resize, zoom, grab, special cursors)
-- [scroll.md](references/scroll.md) - Load when configuring scroll-snap, smooth scrolling, or overscroll containment
+- [scroll.md](references/scroll.md) - Load when configuring scroll-snap, smooth scrolling, overscroll containment, or scrollbar styling
 - [states.md](references/states.md) - Load when styling user-select, pointer-events, touch-action, resize, caret-color, or accent-color on form controls

@@ -71,10 +71,27 @@ public function boot(): void
 {
     Queue::route(ProcessPodcast::class, connection: 'redis', queue: 'podcasts');
     Queue::route([
-        ProcessVideo::class => ['videos', 'redis'],
-        SendEmail::class => 'mail',
+        ProcessVideo::class => ['redis', 'videos'], // [connection, queue]
+        SendEmail::class => 'mail',                 // queue only
     ]);
 }
 ```
 
 Use attributes when routing is intrinsic to the job; use `Queue::route()` when routing depends on environment.
+
+## Delay & debounce (13.4+ / 13.6+)
+
+```php
+use Illuminate\Queue\Attributes\{Delay, DebounceFor};
+
+#[Delay(60)]                         // replaces public $delay
+class SendReminder implements ShouldQueue {}
+
+#[DebounceFor(30, maxWait: 120)]     // only the latest dispatch within 30s runs
+class UpdateSearchIndex implements ShouldQueue
+{
+    public function debounceId(): string { return (string) $this->productId; }
+}
+```
+
+`#[DebounceFor]` and `ShouldBeUnique` are mutually exclusive. Since 13.2, `#[Queue]` / `#[Connection]` accept enums and `#[Backoff]` is variadic (`#[Backoff(10, 30, 60)]`); since 13.16 queue attributes may be declared on traits.

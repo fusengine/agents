@@ -10,7 +10,18 @@ related: navigation-menu.md, sheet.md, collapsible.md
 
 # Sidebar
 
-Responsive sidebar navigation component with collapse functionality, icons, and mobile support. Perfect for dashboard and application layouts.
+> **Base:** examples use **Base UI** (shadcn default since 2026-07); Radix delta in "Radix variant" below; React Aria: same layout parts, but composed children follow the Aria rules (`onPress`, trigger wrappers) — `shadcn docs sidebar --base aria`. Sources: https://ui.shadcn.com/r/styles/base-nova/sidebar.json, https://ui.shadcn.com/r/styles/radix-nova/sidebar.json
+
+`SidebarMenuButton`, `SidebarMenuSubButton`, `SidebarGroupLabel`, `SidebarGroupAction` and
+`SidebarMenuAction` compose with `render` (e.g. `render={<Link href="/" />}` with `next/link`).
+`SidebarProvider` / `useSidebar` / `collapsible="offcanvas" | "icon" | "none"` /
+`variant="sidebar" | "floating" | "inset"` are identical on every base; `Sidebar dir="rtl"` for
+RTL. Theme tokens are `--sidebar*` in OKLCH ([theming.md](theming.md)).
+
+Every example assumes a `SidebarProvider` higher in the tree (`useSidebar` throws without it);
+`SidebarMenuButton tooltip` also needs a `TooltipProvider` at the app root ([tooltip.md](tooltip.md)).
+The `sidebar.tsx` wrapper is a Client Component, so a Server Component layout can render it
+directly; files calling `useSidebar` / `usePathname` need `'use client'`.
 
 ## Installation
 
@@ -21,63 +32,52 @@ bunx --bun shadcn@latest add sidebar
 ## Basic Sidebar
 
 ```tsx
-'use client'
-
+// app/(app)/layout.tsx
+import Link from 'next/link'
 import {
   Sidebar,
   SidebarContent,
-  SidebarHeader,
-  SidebarFooter,
-  SidebarTrigger,
+  SidebarInset,
   SidebarMenu,
-  SidebarMenuItem,
   SidebarMenuButton,
-  SidebarMenuSub,
-  SidebarMenuSubItem,
+  SidebarMenuItem,
+  SidebarProvider,
+  SidebarTrigger,
 } from '@/modules/cores/shadcn/components/ui/sidebar'
 import { LayoutDashboard, Users, Settings } from 'lucide-react'
 
-export function BasicSidebar() {
+const items = [
+  { href: '/', label: 'Dashboard', icon: LayoutDashboard },
+  { href: '/users', label: 'Users', icon: Users },
+  { href: '/settings', label: 'Settings', icon: Settings },
+]
+
+/** App layout: provider + sidebar + inset main area with a toggle. */
+export default function AppLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex h-screen">
-      <Sidebar>
+    <SidebarProvider>
+      <Sidebar collapsible="icon">
         <SidebarContent>
           <SidebarMenu>
-            <SidebarMenuItem>
-              <SidebarMenuButton asChild>
-                <a href="/" className="flex items-center gap-2">
-                  <LayoutDashboard className="h-5 w-5" />
-                  <span>Dashboard</span>
-                </a>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-            <SidebarMenuItem>
-              <SidebarMenuButton asChild>
-                <a href="/users" className="flex items-center gap-2">
-                  <Users className="h-5 w-5" />
-                  <span>Users</span>
-                </a>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-            <SidebarMenuItem>
-              <SidebarMenuButton asChild>
-                <a href="/settings" className="flex items-center gap-2">
-                  <Settings className="h-5 w-5" />
-                  <span>Settings</span>
-                </a>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
+            {items.map(({ href, label, icon: Icon }) => (
+              <SidebarMenuItem key={href}>
+                <SidebarMenuButton render={<Link href={href} />} tooltip={label}>
+                  <Icon />
+                  <span>{label}</span>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            ))}
           </SidebarMenu>
         </SidebarContent>
       </Sidebar>
 
-      <main className="flex-1">
+      <SidebarInset>
         <header className="border-b p-4">
           <SidebarTrigger />
         </header>
-        {/* Main content */}
-      </main>
-    </div>
+        {children}
+      </SidebarInset>
+    </SidebarProvider>
   )
 }
 ```
@@ -87,15 +87,15 @@ export function BasicSidebar() {
 ```tsx
 'use client'
 
+import Link from 'next/link'
 import {
   Sidebar,
   SidebarContent,
-  SidebarHeader,
   SidebarFooter,
-  SidebarTrigger,
+  SidebarHeader,
   SidebarMenu,
-  SidebarMenuItem,
   SidebarMenuButton,
+  SidebarMenuItem,
   useSidebar,
 } from '@/modules/cores/shadcn/components/ui/sidebar'
 import {
@@ -104,91 +104,53 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/modules/cores/shadcn/components/ui/dropdown-menu'
-import {
-  LayoutDashboard,
-  Users,
-  Settings,
-  LogOut,
-  User,
-  Zap,
-} from 'lucide-react'
+import { LayoutDashboard, LogOut, User, Zap } from 'lucide-react'
 
+/** Sidebar with a brand header and a user dropdown in the footer. */
 export function SidebarWithHeaderFooter() {
   const { state } = useSidebar()
 
   return (
-    <div className="flex h-screen">
-      <Sidebar>
-        <SidebarHeader className="border-b p-4">
-          <div className="flex items-center gap-2 font-semibold">
-            <Zap className="h-5 w-5" />
-            {state === 'expanded' && <span>MyApp</span>}
-          </div>
-        </SidebarHeader>
+    <Sidebar collapsible="icon">
+      <SidebarHeader className="border-b p-4">
+        <div className="flex items-center gap-2 font-semibold">
+          <Zap className="h-5 w-5" />
+          {state === 'expanded' && <span>MyApp</span>}
+        </div>
+      </SidebarHeader>
 
-        <SidebarContent>
-          <SidebarMenu>
-            <SidebarMenuItem>
-              <SidebarMenuButton asChild>
-                <a href="/" className="flex items-center gap-2">
-                  <LayoutDashboard className="h-5 w-5" />
-                  <span>Dashboard</span>
-                </a>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-            <SidebarMenuItem>
-              <SidebarMenuButton asChild>
-                <a href="/users" className="flex items-center gap-2">
-                  <Users className="h-5 w-5" />
-                  <span>Users</span>
-                </a>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-            <SidebarMenuItem>
-              <SidebarMenuButton asChild>
-                <a href="/settings" className="flex items-center gap-2">
-                  <Settings className="h-5 w-5" />
-                  <span>Settings</span>
-                </a>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-          </SidebarMenu>
-        </SidebarContent>
+      <SidebarContent>
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton render={<Link href="/" />}>
+              <LayoutDashboard />
+              <span>Dashboard</span>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarContent>
 
-        <SidebarFooter className="border-t p-4">
-          <div className="flex items-center justify-between gap-2">
-            {state === 'expanded' && (
-              <div className="text-sm">
-                <p className="font-medium">John Doe</p>
-                <p className="text-xs text-muted-foreground">john@example.com</p>
-              </div>
-            )}
+      <SidebarFooter className="border-t">
+        <SidebarMenu>
+          <SidebarMenuItem>
             <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <button className="rounded-full p-2 hover:bg-accent">
-                  <User className="h-5 w-5" />
-                </button>
+              <DropdownMenuTrigger render={<SidebarMenuButton size="lg" />}>
+                <User />
+                <span>John Doe</span>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
+              <DropdownMenuContent side="top" align="end">
                 <DropdownMenuItem>Profile</DropdownMenuItem>
                 <DropdownMenuItem>Settings</DropdownMenuItem>
-                <DropdownMenuItem>
-                  <LogOut className="mr-2 h-4 w-4" />
+                <DropdownMenuItem variant="destructive">
+                  <LogOut />
                   Logout
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
-          </div>
-        </SidebarFooter>
-      </Sidebar>
-
-      <main className="flex-1">
-        <header className="border-b p-4">
-          <SidebarTrigger />
-        </header>
-        {/* Main content */}
-      </main>
-    </div>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarFooter>
+    </Sidebar>
   )
 }
 ```
@@ -198,309 +160,114 @@ export function SidebarWithHeaderFooter() {
 ```tsx
 'use client'
 
+import Link from 'next/link'
 import {
   Sidebar,
   SidebarContent,
   SidebarMenu,
-  SidebarMenuItem,
   SidebarMenuButton,
+  SidebarMenuItem,
   SidebarMenuSub,
   SidebarMenuSubButton,
   SidebarMenuSubItem,
-  SidebarTrigger,
-  useSidebar,
 } from '@/modules/cores/shadcn/components/ui/sidebar'
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
 } from '@/modules/cores/shadcn/components/ui/collapsible'
-import {
-  LayoutDashboard,
-  FileText,
-  BarChart3,
-  Settings,
-  ChevronDown,
-} from 'lucide-react'
+import { FileText, BarChart3, ChevronDown } from 'lucide-react'
 
+const sections = [
+  {
+    label: 'Documents',
+    icon: FileText,
+    defaultOpen: true,
+    links: [
+      { href: '/docs/recent', label: 'Recent' },
+      { href: '/docs/shared', label: 'Shared' },
+    ],
+  },
+  {
+    label: 'Reports',
+    icon: BarChart3,
+    defaultOpen: false,
+    links: [
+      { href: '/reports/sales', label: 'Sales' },
+      { href: '/reports/analytics', label: 'Analytics' },
+    ],
+  },
+]
+
+/** Menu items that expand into submenus via Collapsible. */
 export function CollapsibleSidebarWithSubmenus() {
-  const { state } = useSidebar()
-
   return (
-    <div className="flex h-screen">
-      <Sidebar>
-        <SidebarContent>
-          <SidebarMenu>
-            {/* Dashboard */}
-            <SidebarMenuItem>
-              <SidebarMenuButton asChild>
-                <a href="/" className="flex items-center gap-2">
-                  <LayoutDashboard className="h-5 w-5" />
-                  <span>Dashboard</span>
-                </a>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-
-            {/* Documents with submenu */}
-            <SidebarMenuItem>
-              <Collapsible defaultOpen className="w-full">
-                <CollapsibleTrigger asChild>
-                  <SidebarMenuButton className="flex items-center gap-2 justify-between">
-                    <div className="flex items-center gap-2">
-                      <FileText className="h-5 w-5" />
-                      <span>Documents</span>
-                    </div>
-                    <ChevronDown className="h-4 w-4 transition-transform" />
-                  </SidebarMenuButton>
-                </CollapsibleTrigger>
-                <CollapsibleContent>
-                  <SidebarMenuSub>
-                    <SidebarMenuSubItem>
-                      <SidebarMenuSubButton asChild>
-                        <a href="/docs/recent">Recent</a>
+    <Sidebar>
+      <SidebarContent>
+        <SidebarMenu>
+          {sections.map(({ label, icon: Icon, defaultOpen, links }) => (
+            <Collapsible
+              key={label}
+              defaultOpen={defaultOpen}
+              className="group/collapsible"
+              render={<SidebarMenuItem />}
+            >
+              <CollapsibleTrigger render={<SidebarMenuButton tooltip={label} />}>
+                <Icon />
+                <span>{label}</span>
+                <ChevronDown className="ml-auto transition-transform group-data-open/collapsible:rotate-180" />
+              </CollapsibleTrigger>
+              <CollapsibleContent>
+                <SidebarMenuSub>
+                  {links.map((link) => (
+                    <SidebarMenuSubItem key={link.href}>
+                      <SidebarMenuSubButton render={<Link href={link.href} />}>
+                        {link.label}
                       </SidebarMenuSubButton>
                     </SidebarMenuSubItem>
-                    <SidebarMenuSubItem>
-                      <SidebarMenuSubButton asChild>
-                        <a href="/docs/shared">Shared</a>
-                      </SidebarMenuSubButton>
-                    </SidebarMenuSubItem>
-                    <SidebarMenuSubItem>
-                      <SidebarMenuSubButton asChild>
-                        <a href="/docs/archived">Archived</a>
-                      </SidebarMenuSubButton>
-                    </SidebarMenuSubItem>
-                  </SidebarMenuSub>
-                </CollapsibleContent>
-              </Collapsible>
-            </SidebarMenuItem>
-
-            {/* Reports with submenu */}
-            <SidebarMenuItem>
-              <Collapsible className="w-full">
-                <CollapsibleTrigger asChild>
-                  <SidebarMenuButton className="flex items-center gap-2 justify-between">
-                    <div className="flex items-center gap-2">
-                      <BarChart3 className="h-5 w-5" />
-                      <span>Reports</span>
-                    </div>
-                    <ChevronDown className="h-4 w-4 transition-transform" />
-                  </SidebarMenuButton>
-                </CollapsibleTrigger>
-                <CollapsibleContent>
-                  <SidebarMenuSub>
-                    <SidebarMenuSubItem>
-                      <SidebarMenuSubButton asChild>
-                        <a href="/reports/sales">Sales</a>
-                      </SidebarMenuSubButton>
-                    </SidebarMenuSubItem>
-                    <SidebarMenuSubItem>
-                      <SidebarMenuSubButton asChild>
-                        <a href="/reports/analytics">Analytics</a>
-                      </SidebarMenuSubButton>
-                    </SidebarMenuSubItem>
-                    <SidebarMenuSubItem>
-                      <SidebarMenuSubButton asChild>
-                        <a href="/reports/inventory">Inventory</a>
-                      </SidebarMenuSubButton>
-                    </SidebarMenuSubItem>
-                  </SidebarMenuSub>
-                </CollapsibleContent>
-              </Collapsible>
-            </SidebarMenuItem>
-
-            {/* Settings */}
-            <SidebarMenuItem>
-              <SidebarMenuButton asChild>
-                <a href="/settings" className="flex items-center gap-2">
-                  <Settings className="h-5 w-5" />
-                  <span>Settings</span>
-                </a>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-          </SidebarMenu>
-        </SidebarContent>
-      </Sidebar>
-
-      <main className="flex-1">
-        <header className="border-b p-4">
-          <SidebarTrigger />
-        </header>
-        {/* Main content */}
-      </main>
-    </div>
+                  ))}
+                </SidebarMenuSub>
+              </CollapsibleContent>
+            </Collapsible>
+          ))}
+        </SidebarMenu>
+      </SidebarContent>
+    </Sidebar>
   )
 }
 ```
 
-## Mobile Responsive Sidebar
+## Mobile Behaviour
 
-```tsx
-'use client'
-
-import { useEffect, useState } from 'react'
-import {
-  Sidebar,
-  SidebarContent,
-  SidebarMenu,
-  SidebarMenuItem,
-  SidebarMenuButton,
-  SidebarTrigger,
-  useSidebar,
-} from '@/modules/cores/shadcn/components/ui/sidebar'
-import {
-  Sheet,
-  SheetContent,
-  SheetTrigger,
-} from '@/modules/cores/shadcn/components/ui/sheet'
-import { LayoutDashboard, Users, Settings, Menu } from 'lucide-react'
-
-export function ResponsiveSidebar() {
-  const { state, toggleSidebar } = useSidebar()
-  const [isMobile, setIsMobile] = useState(false)
-
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768)
-    checkMobile()
-    window.addEventListener('resize', checkMobile)
-    return () => window.removeEventListener('resize', checkMobile)
-  }, [])
-
-  if (isMobile) {
-    return (
-      <div className="flex h-screen flex-col">
-        <header className="border-b p-4 flex items-center justify-between">
-          <h1 className="text-xl font-semibold">MyApp</h1>
-          <Sheet>
-            <SheetTrigger asChild>
-              <button className="p-2">
-                <Menu className="h-6 w-6" />
-              </button>
-            </SheetTrigger>
-            <SheetContent side="left" className="w-64 p-0">
-              <div className="p-4 border-b font-semibold">MyApp</div>
-              <SidebarMenu className="p-4 space-y-2">
-                <SidebarMenuItem>
-                  <SidebarMenuButton asChild>
-                    <a href="/" className="flex items-center gap-2">
-                      <LayoutDashboard className="h-5 w-5" />
-                      <span>Dashboard</span>
-                    </a>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-                <SidebarMenuItem>
-                  <SidebarMenuButton asChild>
-                    <a href="/users" className="flex items-center gap-2">
-                      <Users className="h-5 w-5" />
-                      <span>Users</span>
-                    </a>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-                <SidebarMenuItem>
-                  <SidebarMenuButton asChild>
-                    <a href="/settings" className="flex items-center gap-2">
-                      <Settings className="h-5 w-5" />
-                      <span>Settings</span>
-                    </a>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              </SidebarMenu>
-            </SheetContent>
-          </Sheet>
-        </header>
-        <main className="flex-1">Content goes here</main>
-      </div>
-    )
-  }
-
-  return (
-    <div className="flex h-screen">
-      <Sidebar>
-        <SidebarContent>
-          <SidebarMenu>
-            <SidebarMenuItem>
-              <SidebarMenuButton asChild>
-                <a href="/" className="flex items-center gap-2">
-                  <LayoutDashboard className="h-5 w-5" />
-                  {state === 'expanded' && <span>Dashboard</span>}
-                </a>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-            <SidebarMenuItem>
-              <SidebarMenuButton asChild>
-                <a href="/users" className="flex items-center gap-2">
-                  <Users className="h-5 w-5" />
-                  {state === 'expanded' && <span>Users</span>}
-                </a>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-            <SidebarMenuItem>
-              <SidebarMenuButton asChild>
-                <a href="/settings" className="flex items-center gap-2">
-                  <Settings className="h-5 w-5" />
-                  {state === 'expanded' && <span>Settings</span>}
-                </a>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-          </SidebarMenu>
-        </SidebarContent>
-      </Sidebar>
-
-      <main className="flex-1">
-        <header className="border-b p-4">
-          <SidebarTrigger />
-        </header>
-        {/* Main content */}
-      </main>
-    </div>
-  )
-}
-```
+No separate mobile component is needed: below the `md` breakpoint `Sidebar` renders itself inside
+a `Sheet` (`useSidebar()` exposes `isMobile`, `openMobile`, `setOpenMobile`), and
+`SidebarTrigger` / `toggleSidebar()` toggle the sheet. Close it after navigation with
+`setOpenMobile(false)` in the link `onClick` when needed.
 
 ## Sidebar with Navigation Context
 
 ```tsx
 'use client'
 
+import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import {
   Sidebar,
   SidebarContent,
   SidebarMenu,
-  SidebarMenuItem,
   SidebarMenuButton,
+  SidebarMenuItem,
 } from '@/modules/cores/shadcn/components/ui/sidebar'
 import { LayoutDashboard, Users, Settings, BarChart3 } from 'lucide-react'
 
-interface NavItem {
-  href: string
-  label: string
-  icon: React.ReactNode
-}
-
-const navItems: NavItem[] = [
-  {
-    href: '/',
-    label: 'Dashboard',
-    icon: <LayoutDashboard className="h-5 w-5" />,
-  },
-  {
-    href: '/users',
-    label: 'Users',
-    icon: <Users className="h-5 w-5" />,
-  },
-  {
-    href: '/analytics',
-    label: 'Analytics',
-    icon: <BarChart3 className="h-5 w-5" />,
-  },
-  {
-    href: '/settings',
-    label: 'Settings',
-    icon: <Settings className="h-5 w-5" />,
-  },
+const navItems = [
+  { href: '/', label: 'Dashboard', icon: LayoutDashboard },
+  { href: '/users', label: 'Users', icon: Users },
+  { href: '/analytics', label: 'Analytics', icon: BarChart3 },
+  { href: '/settings', label: 'Settings', icon: Settings },
 ]
 
+/** Highlights the item matching the current App Router pathname. */
 export function SidebarWithNavContext() {
   const pathname = usePathname()
 
@@ -508,21 +275,11 @@ export function SidebarWithNavContext() {
     <Sidebar>
       <SidebarContent>
         <SidebarMenu>
-          {navItems.map((item) => (
-            <SidebarMenuItem key={item.href}>
-              <SidebarMenuButton
-                asChild
-                isActive={pathname === item.href}
-                className={
-                  pathname === item.href
-                    ? 'bg-accent text-accent-foreground'
-                    : ''
-                }
-              >
-                <a href={item.href} className="flex items-center gap-2">
-                  {item.icon}
-                  <span>{item.label}</span>
-                </a>
+          {navItems.map(({ href, label, icon: Icon }) => (
+            <SidebarMenuItem key={href}>
+              <SidebarMenuButton render={<Link href={href} />} isActive={pathname === href}>
+                <Icon />
+                <span>{label}</span>
               </SidebarMenuButton>
             </SidebarMenuItem>
           ))}
@@ -533,74 +290,53 @@ export function SidebarWithNavContext() {
 }
 ```
 
+## Radix variant
+
+Same parts and props; only composition changes (`asChild` + child element):
+
+```tsx
+<SidebarMenuButton asChild isActive={pathname === '/'}>
+  <Link href="/">
+    <LayoutDashboard />
+    <span>Dashboard</span>
+  </Link>
+</SidebarMenuButton>
+```
+
+`<Collapsible asChild><SidebarMenuItem>…</SidebarMenuItem></Collapsible>`,
+`<CollapsibleTrigger asChild><SidebarMenuButton>…</SidebarMenuButton></CollapsibleTrigger>`,
+`<DropdownMenuTrigger asChild><SidebarMenuButton size="lg">…</SidebarMenuButton></DropdownMenuTrigger>`,
+and `<SidebarGroupLabel asChild><CollapsibleTrigger>…</CollapsibleTrigger></SidebarGroupLabel>`
+follow the same rule.
+
 ## Key Components
 
 | Component | Purpose |
 |-----------|---------|
-| `Sidebar` | Root container for sidebar |
-| `SidebarHeader` | Top section (logo, title) |
-| `SidebarContent` | Main navigation content |
-| `SidebarFooter` | Bottom section (user profile, actions) |
-| `SidebarTrigger` | Button to toggle sidebar |
-| `SidebarMenu` | Container for navigation items |
-| `SidebarMenuItem` | Individual navigation item |
-| `SidebarMenuButton` | Clickable item button |
-| `SidebarMenuSub` | Submenu container |
-| `SidebarMenuSubItem` | Submenu item |
-| `SidebarMenuSubButton` | Submenu button |
-| `useSidebar` | Hook to access sidebar state |
+| `SidebarProvider` | State provider (required; `defaultOpen`, `open`, `onOpenChange`) |
+| `Sidebar` | Root container (`side`, `variant`, `collapsible`) |
+| `SidebarHeader` / `SidebarFooter` | Top / bottom sections |
+| `SidebarContent` | Scrollable navigation content |
+| `SidebarGroup` / `SidebarGroupLabel` / `SidebarGroupContent` | Sections |
+| `SidebarTrigger` / `SidebarRail` | Toggle button / edge rail |
+| `SidebarInset` | Main area next to an `inset` sidebar |
+| `SidebarMenu` / `SidebarMenuItem` | Navigation list and items |
+| `SidebarMenuButton` | Item button (`isActive`, `tooltip`, `size`, `render`) |
+| `SidebarMenuSub` / `SidebarMenuSubItem` / `SidebarMenuSubButton` | Submenu |
+| `useSidebar` | `state`, `open`, `setOpen`, `isMobile`, `openMobile`, `setOpenMobile`, `toggleSidebar` |
 
 ## Common Patterns
 
-### Pattern: Application Layout
-- Header with toggle button
-- Collapsible sidebar with navigation
-- Main content area
-- Optional footer in sidebar
-
-### Pattern: Nested Navigation
-- Main menu items with icons
-- Collapsible submenus for categories
-- Active state styling
-- Visual hierarchy
-
-### Pattern: Mobile Responsive
-- Desktop: Full sidebar
-- Mobile: Sheet/modal sidebar
-- Toggle button in header
-- Conditional rendering based on screen size
-
-### Pattern: User Section
-- Profile info in footer
-- Dropdown for user actions
-- Logout button
-- Settings access
-
-## Accessibility
-
-- Semantic HTML with nav elements
-- Keyboard navigation support
-- ARIA labels for toggle button
-- Active state indicators
-- High contrast for active items
-- Focus indicators visible
+- **Application layout**: `SidebarProvider` > `Sidebar` + `SidebarInset` with a `SidebarTrigger` header
+- **Nested navigation**: `Collapsible` per section, `SidebarMenuSub` for children, `isActive` for the current page
+- **User section**: `SidebarFooter` with a `DropdownMenu` whose trigger renders a `SidebarMenuButton`
+- **Icon rail**: `collapsible="icon"` + `tooltip` on `SidebarMenuButton`
 
 ## Best Practices
 
 1. **Icons**: Use consistent icon library (Lucide)
-2. **Active State**: Show current page with visual feedback
-3. **Grouping**: Organize items logically with sections
-4. **Responsive**: Provide mobile-friendly alternative
-5. **Labels**: Show/hide labels based on collapse state
-6. **Performance**: Use Next.js Link for routing
-7. **Accessibility**: Use semantic HTML and ARIA labels
-8. **Simplicity**: Keep first level items limited (5-8 items)
-
-## Styling Tips
-
-- Use `hover:bg-accent` for interactive feedback
-- Apply `bg-accent text-accent-foreground` for active state
-- Keep consistent gap with flex gap utilities
-- Use `rounded-md` for softer corners
-- Apply `transition-all` for smooth animations
-- Use `h-screen` for full height layout
+2. **Active State**: Drive `isActive` from `usePathname()`
+3. **Grouping**: Organize items logically with `SidebarGroup`
+4. **Labels**: Provide `tooltip` so collapsed icon mode stays usable
+5. **Routing**: Compose `next/link` through `render`, never nest `<a>` inside the button
+6. **Simplicity**: Keep first level items limited (5-8 items)

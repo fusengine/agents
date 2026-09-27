@@ -1,7 +1,7 @@
 ---
 name: diy-locale-detection
-description: Détection manuelle locale, Accept-Language header, Negotiator, logique custom
-when-to-use: contrôle détection, combo avec auth, sans next-intl middleware, règles custom
+description: Manual locale detection, Accept-Language header, Negotiator, custom logic
+when-to-use: detection control, combined with auth, without next-intl middleware, custom rules
 keywords: DIY detection, Accept-Language, Negotiator, intl-localematcher, custom rules
 priority: low
 requires: diy-dictionaries.md

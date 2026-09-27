@@ -10,14 +10,16 @@ related: dialog.md, dropdown.md
 
 # Sheet
 
+> **Base:** examples use **Base UI** (shadcn default since 2026-07; Sheet is built on Base UI `Dialog`); Radix delta in "Radix variant" below; React Aria: `<SheetTrigger><Button /><Sheet>…</Sheet></SheetTrigger>` — no `SheetContent` (`shadcn docs sheet --base aria`). Sources: https://ui.shadcn.com/r/styles/base-nova/sheet.json, https://ui.shadcn.com/r/styles/radix-nova/sheet.json
+
 Sheet is a side panel that slides in from the edge of the screen, useful for navigation, filters, or detailed content.
+`SheetContent side="top" | "right" | "bottom" | "left"` (default `right`); `showCloseButton={false}` hides the X.
 
 ## Basic Sheet
 
 ```tsx
 'use client'
 
-import { useState } from 'react'
 import {
   Sheet,
   SheetTrigger,
@@ -25,16 +27,14 @@ import {
   SheetHeader,
   SheetTitle,
   SheetDescription,
-  SheetClose,
 } from '@/modules/cores/shadcn/components/ui/sheet'
 import { Button } from '@/modules/cores/shadcn/components/ui/button'
 
+/** Sheet opened by a Button trigger. */
 export function BasicSheet() {
   return (
     <Sheet>
-      <SheetTrigger asChild>
-        <Button>Open Sheet</Button>
-      </SheetTrigger>
+      <SheetTrigger render={<Button />}>Open Sheet</SheetTrigger>
       <SheetContent>
         <SheetHeader>
           <SheetTitle>Sheet Title</SheetTitle>
@@ -65,56 +65,24 @@ import {
 } from '@/modules/cores/shadcn/components/ui/sheet'
 import { Button } from '@/modules/cores/shadcn/components/ui/button'
 
+const SIDES = ['top', 'right', 'bottom', 'left'] as const
+
+/** One sheet per `side` value. */
 export function SheetVariants() {
   return (
     <div className="flex gap-4">
-      {/* Top Sheet */}
-      <Sheet>
-        <SheetTrigger asChild>
-          <Button variant="outline">From Top</Button>
-        </SheetTrigger>
-        <SheetContent side="top">
-          <SheetHeader>
-            <SheetTitle>Top Sheet</SheetTitle>
-          </SheetHeader>
-        </SheetContent>
-      </Sheet>
-
-      {/* Right Sheet (Default) */}
-      <Sheet>
-        <SheetTrigger asChild>
-          <Button variant="outline">From Right</Button>
-        </SheetTrigger>
-        <SheetContent side="right">
-          <SheetHeader>
-            <SheetTitle>Right Sheet</SheetTitle>
-          </SheetHeader>
-        </SheetContent>
-      </Sheet>
-
-      {/* Bottom Sheet */}
-      <Sheet>
-        <SheetTrigger asChild>
-          <Button variant="outline">From Bottom</Button>
-        </SheetTrigger>
-        <SheetContent side="bottom">
-          <SheetHeader>
-            <SheetTitle>Bottom Sheet</SheetTitle>
-          </SheetHeader>
-        </SheetContent>
-      </Sheet>
-
-      {/* Left Sheet */}
-      <Sheet>
-        <SheetTrigger asChild>
-          <Button variant="outline">From Left</Button>
-        </SheetTrigger>
-        <SheetContent side="left">
-          <SheetHeader>
-            <SheetTitle>Left Sheet</SheetTitle>
-          </SheetHeader>
-        </SheetContent>
-      </Sheet>
+      {SIDES.map((side) => (
+        <Sheet key={side}>
+          <SheetTrigger render={<Button variant="outline" className="capitalize" />}>
+            From {side}
+          </SheetTrigger>
+          <SheetContent side={side}>
+            <SheetHeader>
+              <SheetTitle className="capitalize">{side} Sheet</SheetTitle>
+            </SheetHeader>
+          </SheetContent>
+        </Sheet>
+      ))}
     </div>
   )
 }
@@ -122,9 +90,14 @@ export function SheetVariants() {
 
 ## Navigation Sidebar Sheet
 
+Links keep link semantics: never render a `<Link>` through `SheetClose` (Base UI forbids rendering
+`<a>` as a button). Control `open` and close the sheet from the link's `onClick`; `SheetClose` stays
+for real buttons.
+
 ```tsx
 'use client'
 
+import { useState } from 'react'
 import {
   Sheet,
   SheetTrigger,
@@ -135,38 +108,31 @@ import { Button } from '@/modules/cores/shadcn/components/ui/button'
 import { Menu, Home, Settings, LogOut } from 'lucide-react'
 import Link from 'next/link'
 
+const linkClass = 'flex items-center gap-2 px-4 py-2 hover:bg-accent rounded'
+
+/** Mobile navigation drawer whose links close the sheet. */
 export function NavigationSheet() {
+  const [open, setOpen] = useState(false)
+
   return (
-    <Sheet>
-      <SheetTrigger asChild>
-        <Button variant="ghost" size="icon">
-          <Menu className="h-6 w-6" />
-        </Button>
+    <Sheet open={open} onOpenChange={setOpen}>
+      <SheetTrigger render={<Button variant="ghost" size="icon" aria-label="Open menu" />}>
+        <Menu className="h-6 w-6" />
       </SheetTrigger>
       <SheetContent side="left">
         <nav className="flex flex-col gap-2 mt-8">
-          <SheetClose asChild>
-            <Link href="/">
-              <div className="flex items-center gap-2 px-4 py-2 hover:bg-accent rounded">
-                <Home className="h-5 w-5" />
-                Home
-              </div>
-            </Link>
-          </SheetClose>
-          <SheetClose asChild>
-            <Link href="/settings">
-              <div className="flex items-center gap-2 px-4 py-2 hover:bg-accent rounded">
-                <Settings className="h-5 w-5" />
-                Settings
-              </div>
-            </Link>
-          </SheetClose>
+          <Link href="/" className={linkClass} onClick={() => setOpen(false)}>
+            <Home className="h-5 w-5" />
+            Home
+          </Link>
+          <Link href="/settings" className={linkClass} onClick={() => setOpen(false)}>
+            <Settings className="h-5 w-5" />
+            Settings
+          </Link>
           <div className="border-t my-4" />
-          <SheetClose asChild>
-            <button className="flex items-center gap-2 px-4 py-2 hover:bg-accent rounded text-red-600">
-              <LogOut className="h-5 w-5" />
-              Sign Out
-            </button>
+          <SheetClose className={`${linkClass} text-red-600`}>
+            <LogOut className="h-5 w-5" />
+            Sign Out
           </SheetClose>
         </nav>
       </SheetContent>
@@ -194,6 +160,7 @@ import { Button } from '@/modules/cores/shadcn/components/ui/button'
 import { Input } from '@/modules/cores/shadcn/components/ui/input'
 import { Label } from '@/modules/cores/shadcn/components/ui/label'
 
+/** Sheet hosting a create-user form. */
 export function SheetWithForm() {
   const [formData, setFormData] = useState({
     name: '',
@@ -208,9 +175,7 @@ export function SheetWithForm() {
 
   return (
     <Sheet>
-      <SheetTrigger asChild>
-        <Button>New User</Button>
-      </SheetTrigger>
+      <SheetTrigger render={<Button />}>New User</SheetTrigger>
       <SheetContent>
         <SheetHeader>
           <SheetTitle>Create New User</SheetTitle>
@@ -274,6 +239,7 @@ import { Checkbox } from '@/modules/cores/shadcn/components/ui/checkbox'
 import { Slider } from '@/modules/cores/shadcn/components/ui/slider'
 import { Filter } from 'lucide-react'
 
+/** Left filter panel with a price range and category checkboxes. */
 export function FilterSheet() {
   const [priceRange, setPriceRange] = useState([50, 500])
   const [categories, setCategories] = useState({
@@ -291,11 +257,9 @@ export function FilterSheet() {
 
   return (
     <Sheet>
-      <SheetTrigger asChild>
-        <Button variant="outline" className="gap-2">
-          <Filter className="h-4 w-4" />
-          Filters
-        </Button>
+      <SheetTrigger render={<Button variant="outline" className="gap-2" />}>
+        <Filter className="h-4 w-4" />
+        Filters
       </SheetTrigger>
       <SheetContent side="left" className="w-80">
         <SheetHeader>
@@ -308,7 +272,7 @@ export function FilterSheet() {
             <h3 className="font-semibold">Price Range</h3>
             <Slider
               value={priceRange}
-              onValueChange={setPriceRange}
+              onValueChange={(v) => setPriceRange(v as number[])}
               min={0}
               max={1000}
               step={10}
@@ -342,10 +306,8 @@ export function FilterSheet() {
 
           {/* Action Buttons */}
           <div className="flex gap-2">
-            <SheetClose asChild>
-              <Button variant="outline" className="flex-1">
-                Cancel
-              </Button>
+            <SheetClose render={<Button variant="outline" className="flex-1" />}>
+              Cancel
             </SheetClose>
             <Button className="flex-1">Apply Filters</Button>
           </div>
@@ -364,7 +326,6 @@ export function FilterSheet() {
 import { useState } from 'react'
 import {
   Sheet,
-  SheetTrigger,
   SheetContent,
   SheetHeader,
   SheetTitle,
@@ -373,18 +334,15 @@ import {
 } from '@/modules/cores/shadcn/components/ui/sheet'
 import { Button } from '@/modules/cores/shadcn/components/ui/button'
 
+/** Sheet controlled by external state (no SheetTrigger). */
 export function ManagedSheet() {
   const [open, setOpen] = useState(false)
-
-  const handleOpenChange = (newOpen: boolean) => {
-    setOpen(newOpen)
-  }
 
   return (
     <>
       <Button onClick={() => setOpen(true)}>Controlled Sheet</Button>
 
-      <Sheet open={open} onOpenChange={handleOpenChange}>
+      <Sheet open={open} onOpenChange={setOpen}>
         <SheetContent>
           <SheetHeader>
             <SheetTitle>Controlled Sheet</SheetTitle>
@@ -395,14 +353,7 @@ export function ManagedSheet() {
           <div className="py-4">
             <p>Sheet content here</p>
           </div>
-          <SheetClose asChild>
-            <Button
-              onClick={() => setOpen(false)}
-              className="w-full"
-            >
-              Close Sheet
-            </Button>
-          </SheetClose>
+          <SheetClose render={<Button className="w-full" />}>Close Sheet</SheetClose>
         </SheetContent>
       </Sheet>
     </>
@@ -410,62 +361,55 @@ export function ManagedSheet() {
 }
 ```
 
+## Radix variant
+
+Only trigger/close composition changes (`asChild` + child element); Radix `SheetClose asChild`
+accepts any element, no `nativeButton` needed.
+
+```tsx
+<Sheet>
+  <SheetTrigger asChild>
+    <Button>Open Sheet</Button>
+  </SheetTrigger>
+  <SheetContent side="left">
+    <SheetClose asChild>
+      <Link href="/">Home</Link>
+    </SheetClose>
+  </SheetContent>
+</Sheet>
+```
+
 ## Key Components
 
 | Component | Purpose |
 |-----------|---------|
-| `Sheet` | Root container |
-| `SheetTrigger` | Button that opens the sheet |
-| `SheetContent` | Main content area |
+| `Sheet` | Root container (`open`, `defaultOpen`, `onOpenChange`) |
+| `SheetTrigger` | Button that opens the sheet (`render` to compose) |
+| `SheetContent` | Main content area (`side`, `showCloseButton`) |
 | `SheetHeader` | Top section with title/description |
 | `SheetTitle` | Heading |
 | `SheetDescription` | Subtitle or description |
 | `SheetFooter` | Bottom section for actions |
-| `SheetClose` | Closes the sheet (can wrap any element) |
-
-## Side Variants
-
-```tsx
-side="top"    // Slides down from top
-side="right"  // Slides in from right (default)
-side="bottom" // Slides up from bottom
-side="left"   // Slides in from left
-```
+| `SheetClose` | Closes the sheet (`render={<Button />}`; never a link — use controlled `open` for links) |
 
 ## Common Patterns
 
-### Pattern: Navigation Drawer
-- Place navigation links in SheetContent
-- Wrap links with SheetClose for auto-close
-- Use MenuIcon as trigger
-
-### Pattern: Filter Panel
-- Use checkboxes and sliders for filtering
-- Apply/Reset button pattern
-- Keep filters grouped logically
-
-### Pattern: Form Sheet
-- SheetHeader with title
-- Form inputs in middle
-- SheetFooter with submit button
-
-### Pattern: Detail Panel
-- Read-only information display
-- Related actions in SheetFooter
-- Close button for dismissal
+- **Navigation drawer**: controlled `open`, links call `setOpen(false)` on click, menu icon trigger
+- **Filter panel**: checkboxes and sliders, Apply/Cancel buttons
+- **Form sheet**: `SheetHeader` title, inputs, `SheetFooter` submit
+- **Detail panel**: read-only info, actions in `SheetFooter`
 
 ## Accessibility
 
 - Keyboard: Escape closes sheet
 - Focus trap within sheet
 - Backdrop click closes (customizable)
-- Smooth animations
 - Screen reader support for modality
 
 ## Best Practices
 
 1. **Mobile-First**: Sheets work better on mobile than modals
 2. **Scrollable Content**: Content inside SheetContent scrolls
-3. **Trigger Clarity**: Make trigger button purpose clear
+3. **Trigger Clarity**: Make trigger button purpose clear (`aria-label` on icon triggers)
 4. **Close Options**: Provide multiple ways to close (button, escape, backdrop)
 5. **Side Consistency**: Stick to one side for predictable UX

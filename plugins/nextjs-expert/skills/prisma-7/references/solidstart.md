@@ -16,6 +16,9 @@ Prisma 7 with SolidStart for full-stack Solid.js applications.
 
 ```typescript
 // src/server/interfaces/prisma.ts
+// generator output = "../src/generated/prisma" in prisma/schema.prisma (v7: output required)
+import type { PrismaClient } from '../../generated/prisma/client'
+
 /**
  * Global Prisma singleton type definition
  * @see /src/server/db.ts
@@ -25,7 +28,8 @@ export interface PrismaGlobal {
 }
 
 // src/server/db.ts
-import { PrismaClient } from '@prisma/client'
+import { PrismaPg } from '@prisma/adapter-pg'
+import { PrismaClient } from '../generated/prisma/client'  // v7: generated path
 import type { PrismaGlobal } from './interfaces/prisma'
 
 /**
@@ -34,8 +38,10 @@ import type { PrismaGlobal } from './interfaces/prisma'
  */
 const globalForPrisma = globalThis as unknown as PrismaGlobal
 
+const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL! })
+
 export const prisma =
-  globalForPrisma.prisma ?? new PrismaClient()
+  globalForPrisma.prisma ?? new PrismaClient({ adapter })
 
 if (process.env.NODE_ENV !== 'production') {
   globalForPrisma.prisma = prisma

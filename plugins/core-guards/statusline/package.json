@@ -1,7 +1,7 @@
 {
 	"name": "claude-statusline",
 	"version": "1.0.0",
-	"description": "Statusline modulaire pour Claude Code - Architecture SOLID",
+	"description": "Modular statusline for Claude Code - SOLID architecture",
 	"type": "module",
 	"main": "src/index.ts",
 	"scripts": {

@@ -61,7 +61,7 @@ model Comment {
 
 ```typescript
 // modules/cores/db/src/extensions/softDeleteExtension.ts
-import { Prisma } from '@prisma/client'
+import { Prisma } from '../../generated/prisma/client'  // v7: generated path
 
 const SOFT_DELETE_MODELS = ['User', 'Post', 'Comment']
 
@@ -131,7 +131,11 @@ export const softDeleteExtension = Prisma.defineExtension({
 
 ```typescript
 // modules/cores/db/src/prisma.ts
+import { PrismaClient } from '../generated/prisma/client'  // v7: generated path
+import { PrismaPg } from '@prisma/adapter-pg'
 import { softDeleteExtension } from './extensions/softDeleteExtension'
+
+const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL! })
 
 /**
  * Prisma client with soft delete extension
@@ -148,7 +152,8 @@ export const prisma = new PrismaClient({ adapter }).$extends(
 
 ```typescript
 // modules/cores/db/src/extensions/softDeleteFullExtension.ts
-import { Prisma } from '@prisma/client'
+import { PrismaPg } from '@prisma/adapter-pg'
+import { Prisma, PrismaClient } from '../../generated/prisma/client'  // v7: generated path
 
 /**
  * Complete soft delete extension covering all query types
@@ -234,8 +239,8 @@ export const softDeleteFullExtension = Prisma.defineExtension({
  * @module modules/cores/db/src
  */
 export function createPrismaWithSoftDelete() {
-  return new (require('@prisma/client').PrismaClient)({
-    adapter: new (require('@prisma/adapter-pg').PrismaPg)({
+  return new PrismaClient({
+    adapter: new PrismaPg({
       connectionString: process.env.DATABASE_URL!,
     }),
   }).$extends(softDeleteFullExtension)

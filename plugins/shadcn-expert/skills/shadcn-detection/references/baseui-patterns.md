@@ -11,7 +11,7 @@ related: radix-patterns.md, detection-algorithm.md
 
 ## Overview
 
-Base UI is the newer primitive option for shadcn/ui (since late 2025). Uses a single package with subpath imports and a different composition model.
+Base UI has been selectable since `npx shadcn create` (December 2025), got full docs in January 2026 and became the **default base for new projects on July 2, 2026** (`npx shadcn init` picks it; Radix remains fully supported). Uses a single package with subpath imports and a different composition model. Styles: `base-{vega,nova,maia,lyra,mira,luma,sera,rhea}`; docs at `/docs/components/base/<name>`.
 
 ---
 
@@ -35,12 +35,15 @@ Base UI is the newer primitive option for shadcn/ui (since late 2025). Uses a si
 ## Import Patterns
 
 ```tsx
-// Subpath import (required pattern)
-import { Dialog } from "@base-ui/react/Dialog"
-import { Select } from "@base-ui/react/Select"
-import { Menu } from "@base-ui/react/Menu"
+// Subpath import (lowercase kebab-case, used by shadcn registry)
+import { Dialog } from "@base-ui/react/dialog"
+import { Select } from "@base-ui/react/select"
+import { Menu } from "@base-ui/react/menu"
 
-// NOT: import { Dialog } from "@base-ui/react" (wrong)
+// Root import is also valid (package re-exports every component)
+import { Dialog } from "@base-ui/react"
+
+// NOT: "@base-ui/react/Dialog" (PascalCase subpath does not exist)
 ```
 
 ## Composition: `render` Prop
@@ -50,7 +53,9 @@ import { Menu } from "@base-ui/react/Menu"
 <Dialog.Trigger render={<Button />}>
   Open
 </Dialog.Trigger>
+```
 
+```tsx
 // With render function for more control
 <Dialog.Trigger render={(props) => <Button {...props}>Open</Button>} />
 ```
@@ -61,17 +66,20 @@ import { Menu } from "@base-ui/react/Menu"
 |-----------|--------|-------|
 | `data-[open]` | present/absent | Dialog, Menu, Popover |
 | `data-[closed]` | present/absent | Closing state |
-| `data-[side]` | attribute present | Positioned elements |
+| `data-side` | `"top"`, `"bottom"`, `"left"`, `"right"`, ... | Positioned elements |
 | `data-[disabled]` | present/absent | Disabled state |
-| `data-[checked]` | present/absent | Checkbox, Switch |
-| `data-[popup]` | present/absent | Popup elements |
+| `data-[checked]` / `data-[unchecked]` | present/absent | Checkbox, Switch |
+| `data-[popup-open]` | present/absent | Trigger while its popup is open |
+| `data-[starting-style]` / `data-[ending-style]` | present/absent | Enter/exit animation frames |
+
+`data-[open]` above is Tailwind arbitrary-variant notation; the DOM attribute is a bare `data-open`. Registry code uses the `data-open:` / `data-closed:` variants from `shadcn/tailwind.css`, which match both `[data-open]` and Radix's `[data-state="open"]`, so they are not a Base UI signal on their own. Base UI-only signals: `data-starting-style`, `data-ending-style`, `data-popup-open`, `data-side=inline-start|inline-end`.
 
 ## CSS Targeting
 
 ```css
 [data-open] { animation: slideDown 200ms; }
 [data-closed] { animation: slideUp 200ms; }
-[data-popup] { z-index: 50; }
+[data-starting-style], [data-ending-style] { opacity: 0; }
 ```
 
 ## Component Naming
@@ -81,7 +89,7 @@ import { Menu } from "@base-ui/react/Menu"
 | Dialog | Root, Trigger, Portal, Backdrop, Popup, Close, Title, Description |
 | Select | Root, Trigger, Value, Positioner, Popup, Item, Group, GroupLabel |
 | Accordion | Root, Item, Trigger, Panel, Header |
-| Tooltip | Root (Provider), Trigger, Positioner, Popup, Arrow |
+| Tooltip | Root (Provider), Trigger, Portal, Positioner, Popup, Arrow |
 
 ## Key Differences from Radix
 
@@ -99,7 +107,9 @@ import { Menu } from "@base-ui/react/Menu"
 
 | Mistake | Fix |
 |---------|-----|
-| Missing subpath import check | Base UI uses `@base-ui/react/Dialog` not `@base-ui/react` |
+| Missing subpath import check | Match both `@base-ui/react/<component>` and root `@base-ui/react` imports |
+| Treating `@base-ui/react` as proof of a Base UI project | `radix-*` Combobox also imports it (`import { Combobox as ComboboxPrimitive } from "@base-ui/react"`); confirm with the style prefix |
+| Confusing with React Aria | `aria-*` styles import `react-aria-components`, use `data-entering`/`data-exiting` and no `render` prop |
 | Confusing render prop with React render | It's Base UI composition, not React pattern |
 | Ignoring Positioner components | Key signal for Base UI detection |
 

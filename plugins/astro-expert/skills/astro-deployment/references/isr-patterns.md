@@ -14,7 +14,36 @@ priority: medium
 - Avoiding full site rebuilds for content updates
 - High-traffic pages needing both freshness and performance
 
-## Astro Has No Native ISR
+## Route Caching (Astro 7, stable)
+
+Astro has no Vercel-style ISR, but since 7.0 it ships a stable, platform-agnostic route cache for on-demand routes:
+
+```js
+// astro.config.mjs
+import { defineConfig, memoryCache } from 'astro/config';
+import node from '@astrojs/node';
+
+export default defineConfig({
+  adapter: node({ mode: 'standalone' }),
+  cache: { provider: memoryCache() }, // or cacheVercel() / cacheNetlify() / cacheCloudflare() (experimental CDN providers)
+  routeRules: {
+    '/blog/[...path]': { maxAge: 300, swr: 60 },
+  },
+});
+```
+
+```astro
+---
+export const prerender = false;
+if (Astro.cache.enabled) {
+  Astro.cache.set({ maxAge: 120, swr: 60, tags: ['home'] }); // context.cache in endpoints/middleware
+}
+---
+```
+
+Invalidate with `cache.invalidate({ path })` or by tag. CDN providers: `@astrojs/vercel/cache` (v11+), `@astrojs/netlify/cache` (v8+), `@astrojs/cloudflare/cache` (v14+).
+
+## Platform Caching Alternatives
 
 Implement ISR-like behavior using platform caching:
 
@@ -49,9 +78,10 @@ export async function GET() {
 ```ts
 // src/pages/api/blog/[slug].ts
 import type { APIRoute } from 'astro';
+import { env } from 'cloudflare:workers';
 
-export const GET: APIRoute = async ({ params, locals }) => {
-  const { KV } = locals.runtime.env;
+export const GET: APIRoute = async ({ params }) => {
+  const { KV } = env;
   const cacheKey = `post:${params.slug}`;
 
   // Check cache first
@@ -88,6 +118,7 @@ return new Response(html, {
 
 | Need | Solution |
 |------|----------|
+| Any adapter, Astro 7 | `cache` provider + `Astro.cache.set()` / `routeRules` |
 | Vercel + simple TTL | Vercel ISR adapter option |
 | Cloudflare + fine control | KV cache with manual invalidation |
 | Any platform + headers | `Cache-Control: s-maxage + stale-while-revalidate` |

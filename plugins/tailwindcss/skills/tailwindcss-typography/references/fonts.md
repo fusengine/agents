@@ -1,23 +1,23 @@
 ---
 name: fonts
-description: Font utilities for Tailwind CSS v4.1
+description: Font utilities for Tailwind CSS v4.3
 ---
 
-# Font Utilities - Tailwind CSS v4.1
+# Font Utilities - Tailwind CSS v4.3
 
 ## Font Family
 
 ### Available Font Families
 
 ```css
-/* font-sans (default) */
-.font-sans { font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"; }
+/* font-sans (default) — explicit platform fonts since v4.3.3 (was ui-sans-serif, system-ui) */
+.font-sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"; }
 
 /* font-serif */
-.font-serif { font-family: ui-serif, Georgia, "Times New Roman", "Times", serif; }
+.font-serif { font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif; }
 
 /* font-mono */
-.font-mono { font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", Courier, monospace; }
+.font-mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
 ```
 
 ### Usage
@@ -188,6 +188,21 @@ export default {
 
 <!-- Small caps -->
 <span class="small-caps">Small Caps Text</span>
+```
+
+## Font Feature Settings (since v4.2)
+
+`font-features-*` sets `font-feature-settings` for OpenType features without a dedicated utility. Prefer higher-level utilities (e.g. `tabular-nums`) when one exists.
+
+```html
+<!-- Single feature -->
+<p class="font-features-['smcp']">Small caps via OpenType</p>
+
+<!-- Multiple features, comma-separated -->
+<p class="font-features-['smcp','onum']">Small caps + oldstyle numbers</p>
+
+<!-- From a CSS variable -->
+<p class="font-features-(--my-features)">Features from a variable</p>
 ```
 
 ## Smoothing

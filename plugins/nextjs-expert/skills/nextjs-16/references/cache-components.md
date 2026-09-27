@@ -31,6 +31,7 @@ related: rendering.md
 // next.config.ts
 const nextConfig = {
   cacheComponents: true,
+  partialPrefetching: true,  // 16.3+, optional: Instant Navigations (prefetch one App Shell per route)
 }
 ```
 
@@ -81,7 +82,7 @@ import { revalidateTag, updateTag } from 'next/cache'
 
 // Background refresh (stale-while-revalidate)
 export async function refreshProducts() {
-  revalidateTag('products')
+  revalidateTag('products', 'max')  // single-arg form is deprecated in v16
 }
 
 // Immediate refresh (read-your-writes)

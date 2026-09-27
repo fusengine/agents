@@ -1,8 +1,8 @@
 /**
- * Statusline Renderer - Generateur principal du statusline
+ * Statusline Renderer - Main statusline generator
  *
- * @description SRP: Orchestration du rendu des segments
- * DIP: Depend de l'abstraction ISegment
+ * @description SRP: Orchestrates segment rendering
+ * DIP: Depends on the ISegment abstraction
  *
  * @see https://deepwiki.com/starship/starship/2.2-prompt-generation-process
  */
@@ -13,7 +13,7 @@ import { createDefaultSegments } from "../segments";
 import { colors } from "../utils";
 
 /**
- * Interface du renderer - DIP
+ * Renderer interface - DIP
  */
 export interface IStatuslineRenderer {
 	render(context: SegmentContext, config: StatuslineConfig): Promise<string>;
@@ -22,8 +22,8 @@ export interface IStatuslineRenderer {
 }
 
 /**
- * Renderer du statusline
- * Orchestre le rendu de tous les segments actifs
+ * Statusline renderer
+ * Orchestrates the rendering of all active segments
  */
 export class StatuslineRenderer implements IStatuslineRenderer {
 	private segments: ISegment[];
@@ -34,7 +34,7 @@ export class StatuslineRenderer implements IStatuslineRenderer {
 	}
 
 	/**
-	 * Ajoute un segment - OCP
+	 * Adds a segment - OCP
 	 */
 	addSegment(segment: ISegment): void {
 		this.segments.push(segment);
@@ -42,21 +42,21 @@ export class StatuslineRenderer implements IStatuslineRenderer {
 	}
 
 	/**
-	 * Supprime un segment par nom
+	 * Removes a segment by name
 	 */
 	removeSegment(name: string): void {
 		this.segments = this.segments.filter((s) => s.name !== name);
 	}
 
 	/**
-	 * Tri les segments par priorite
+	 * Sorts segments by priority
 	 */
 	private sortSegments(): void {
 		this.segments.sort((a, b) => a.priority - b.priority);
 	}
 
 	/**
-	 * Rend le statusline complet (1 ou 2 lignes)
+	 * Renders the full statusline (1 or 2 lines)
 	 */
 	async render(context: SegmentContext, config: StatuslineConfig): Promise<string> {
 		const sep = colors.gray(config.global.separator);

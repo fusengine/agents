@@ -201,8 +201,8 @@ class MoneyHelper
 @enddisk
 
 {{-- @locale --}}
-@locale('fr')
-    <p>Bienvenue sur notre site</p>
+@locale('es')
+    <p>Bienvenido a nuestro sitio</p>
 @endlocale
 
 @locale('en')

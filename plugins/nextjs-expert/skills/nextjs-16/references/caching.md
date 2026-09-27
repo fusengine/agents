@@ -62,7 +62,7 @@ import { revalidateTag, updateTag, revalidatePath } from 'next/cache'
 
 export async function updateProduct(id: string) {
   await db.product.update(...)
-  revalidateTag('products')  // Background refresh
+  revalidateTag('products', 'max')  // Background refresh (single-arg form deprecated in v16)
 }
 
 export async function updateProfile(userId: string) {
@@ -78,7 +78,8 @@ export async function createPost() {
 
 ## Fetch Caching
 ```typescript
-const cached = await fetch(url)                              // Cached
+const plain = await fetch(url)                               // Default `auto no cache` — caching is opt-in
+const cached = await fetch(url, { cache: 'force-cache' })    // Cached
 const dynamic = await fetch(url, { cache: 'no-store' })      // No cache
 const timed = await fetch(url, { next: { revalidate: 60 } }) // Revalidate 60s
 const tagged = await fetch(url, { next: { tags: ['posts'] }})// Tagged
@@ -86,10 +87,10 @@ const tagged = await fetch(url, { next: { tags: ['posts'] }})// Tagged
 
 ## Dynamic Rendering
 ```typescript
-import { unstable_noStore as noStore } from 'next/cache'
+import { connection } from 'next/server'  // replaces legacy unstable_noStore (deprecated since v15)
 
 export default async function Page() {
-  noStore()  // Opt out of caching
+  await connection()  // Opt out of prerendering, render at request time
   return <div>{await fetchDynamicData()}</div>
 }
 ```

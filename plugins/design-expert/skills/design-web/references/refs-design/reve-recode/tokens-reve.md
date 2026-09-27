@@ -6,7 +6,7 @@ external stylesheet. Five `@layer`s (`reset, theme, component, utilities,
 overrides`), **0 `@keyframes`**, **4 `transition` declarations**, **1
 `:hover` rule**.
 
-`[relevé]` = read textually from the source · `[arbitrage]` = a choice made
+`[measured]` = read textually from the source · `[decided]` = a choice made
 by the author of this reference.
 
 Files: `index.html` · `styles.css` · `motion-bande.js` · `motion.js` ·
@@ -63,7 +63,7 @@ page consumes: it comes from the app (`--rv-sidebar-*`,
 scrollbar theming, `kbd`, status labels, list item rows). These rules are
 **defined but not instantiated** in this document; the reference
 instantiates them in its footer, which is flagged as an assembly
-`[arbitrage]`.
+`[decided]`.
 
 ---
 
@@ -142,7 +142,7 @@ The spring is a **`linear()` sampled over 20 points**, not a
 The source's HTML comments name each entry point. They're quoted here
 *verbatim* because they describe the intent better than any paraphrase.
 
-**`wireHeroMarquee`** → `bandeDerivante()`
+**`wireHeroMarquee`** → `driftStrip()`
 
 > "a marquee carousel of curated examples. The strip drifts on its own and
 > loops seamlessly (app.ts wireHeroMarquee clones the card set once);
@@ -160,10 +160,10 @@ never gets stuck in a grabbed state); the drift **never confiscates
 control** (pointer, wheel, keyboard and focus all suspend it); it stops
 entirely under reduced motion.
 The drift acts on `scrollLeft`, so on the same axis as the gesture: no
-conflict between the animation and native scrolling. `[arbitrage]` the
-speed (px/s, `data-vitesse` attribute): the source doesn't expose it.
+conflict between the animation and native scrolling. `[decided]` the
+speed (px/s, `data-speed` attribute): the source doesn't expose it.
 
-**`wireHeroVideoHover`** → `videoSurvol()`
+**`wireHeroVideoHover`** → `videoHover()`
 
 > "Poster by default; hovering plays the silent 6s loop, which fades in
 > only once frames are actually rendering — so a slow-loading video just
@@ -174,17 +174,17 @@ isn't set on the intent to play, but on the **proof** that a frame has
 actually been painted. `requestVideoFrameCallback` gives exactly this
 proof; the `playing` event serves as a fallback.
 
-**`wireHeaderVeil`** → `voileEntete()`
+**`wireHeaderVeil`** → `headerVeil()`
 
 > "a persistent progressive blur under the fixed header (never toggles, so
 > its backdrop layers never re-rasterize), plus a light scrim tint above
 > it that fades in below the fold."
 
-The comment dictates the implementation: you never touch `.voile` itself —
+The comment dictates the implementation: you never touch `.veil` itself —
 its three `backdrop-filter` layers would re-rasterize on every frame — and
-you only toggle the opacity of `.voile-teinte`, which is just a gradient.
+you only toggle the opacity of `.veil-tint`, which is just a gradient.
 
-**`.color-scheme-text` / `.color-scheme-image`** → `themeEntete()`
+**`.color-scheme-text` / `.color-scheme-image`** → `headerTheme()`
 
 The sheet contains three rules with no CSS trigger at all:
 
@@ -197,23 +197,23 @@ The sheet contains three rules with no CSS trigger at all:
 These classes are therefore set in JS on an ancestor depending on the
 nature of the zone the header sits above. The exact procedure: a header
 that **inverts**, not a header that changes color — and a single variable
-that changes the veil's tint. `[arbitrage]` each zone declares its nature
+that changes the veil's tint. `[decided]` each zone declares its nature
 via `data-zone="image|text"`.
 
-**`data-deferred-src`** → `imagesDifferees()`
+**`data-deferred-src`** → `deferredImages()`
 
 Beyond the first three cards, the URL isn't in `src` but in
 `data-deferred-src` / `-srcset`, resolved in JS: thirteen images must not
 compete with the LCP candidate on first render.
 
-**`.lazy-trigger`** → `zonePiedDifferee()`
+**`.lazy-trigger`** → `deferredFooterZone()`
 
 > "0-height marker that lazy-loads the footer (rv-footer / composer /
 > gallery) as it nears the viewport. The visible 'Reve is a team of
 > researchers…' section was removed; this keeps the lazy-load trigger that
 > app.ts observes."
 
-**Reference cards** → `references()` · **template arrows** → `gabarits()`
+**Reference cards** → `references()` · **template arrows** → `templates()`
 
 For the latter, the source is explicit: "The arrows cycle all three in
 lockstep (app.ts wires it)" — the render, the thumbnail, and the field
@@ -233,7 +233,7 @@ than approximated.
 Same situation, at a smaller scale, for `<rv-marketing-header>`,
 `<rv-logged-out-composer>`, `<rv-horizontal-gallery>` and `<rv-footer>`:
 empty in the HTML, rendered in JS. Their content is rebuilt using the
-recorded tokens and flagged `[arbitrage]`. Only their dimensions as
+recorded tokens and flagged `[decided]`. Only their dimensions as
 declared in the inline CSS are recorded: a prompt of `58 × rhythm`
 (464 px) capped at 75 vw, `z-index: 10`, gallery thumbnails at 26 svh at
 rest and 30 svh on hover, page height
@@ -627,7 +627,7 @@ strip therefore lives in its own module, `motion-bande.js`: it's the only
 behavior big enough to justify one, and the only one that **two** blocks
 depend on (the hero carousel and the footer gallery). It's loaded before
 `motion.js` — the `defer` order is guaranteed — and exposes itself on
-`window.RevBande` rather than as an ES module, which doesn't load from a
+`window.RevStrip` rather than as an ES module, which doesn't load from a
 `file://` URL.
 
 The split follows responsibility, not just the constraint: `motion.js`
@@ -637,7 +637,7 @@ room to comment it properly.
 ### No element can stay invisible
 
 The CSS's six `opacity: 0` rules each have their own trigger, and the two
-that would depend on the script carry `est-active` **hard-coded in the
+that would depend on the script carry `is-active` **hard-coded in the
 HTML** (the first image of the template render and its thumbnail). No
 `js` class is ever set on `<html>`: nothing depends on the script to be
 visible. If `motion.js` fails to run, the page stays fully readable — the

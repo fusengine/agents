@@ -1,95 +1,94 @@
 /* =============================================================================
-   motion.js — noyau des comportements d'interface de la référence cursor.com
-   JS vanilla : aucun framework, aucun CDN, aucune étape de build.
+   motion.js — core of the interface behaviours of the cursor.com reference
+   Vanilla JS: no framework, no CDN, no build step.
 
-   [relevé] = lu dans la source · [arbitrage] = choix de cette référence
+   [measured] = read in the source · [decided] = choice made by this reference
 
-   La source n'embarque AUCUNE bibliothèque d'animation : tout son mouvement est
-   en CSS natif, son JS ne fait que poser des classes et des attributs. Ces
-   fichiers suivent la même règle — ils ne calculent aucune position,
-   n'interpolent aucune valeur, ne touchent à aucun style de mouvement. Ils
-   commutent des états ; le CSS anime.
+   The source ships NO animation library: all of its motion is native CSS, its
+   JS only sets classes and attributes. These files follow the same rule —
+   they compute no position, interpolate no value, touch no motion style. They
+   toggle states; the CSS animates.
 
-   CHARGEMENT — trois scripts `defer`, dans cet ordre :
+   LOADING — three `defer` scripts, in this order:
      motion.js  →  motion-nav.js  →  motion-scroll.js
-   `defer` s'exécute après le parse complet du DOM, avant DOMContentLoaded, et
-   GARANTIT l'ordre entre scripts différés : aucun écouteur d'attente n'est
-   requis, et les deux modules trouvent toujours ce noyau déjà en place.
-   Le partage se fait par un objet global unique plutôt que par des modules ES :
-   sur `file://`, l'origine est opaque et tout `import` échoue.   [arbitrage]
+   `defer` runs after the DOM is fully parsed, before DOMContentLoaded, and
+   GUARANTEES the order between deferred scripts: no waiting listener is
+   required, and both modules always find this core already in place.
+   Sharing goes through a single global object rather than ES modules:
+   on `file://`, the origin is opaque and every `import` fails.   [decided]
    ========================================================================== */
 
 (function () {
   'use strict';
 
   /* --------------------------------------------------------------------------
-     PRÉFÉRENCE DE MOUVEMENT
-     Piège central : `scrollBy({behavior:'smooth'})` ne consulte JAMAIS
-     `prefers-reduced-motion` tout seul. Contrairement aux animations CSS,
-     l'API de défilement JS ignore la préférence — il faut la lire soi-même et
-     forcer 'instant'. On garde une MediaQueryList vivante et on écoute
-     'change' : `addListener()` est déprécié.                    [arbitrage]
+     MOTION PREFERENCE
+     Central trap: `scrollBy({behavior:'smooth'})` NEVER consults
+     `prefers-reduced-motion` on its own. Unlike CSS animations, the JS
+     scrolling API ignores the preference — you have to read it yourself and
+     force 'instant'. We keep a live MediaQueryList and listen to 'change':
+     `addListener()` is deprecated.                              [decided]
   ---------------------------------------------------------------------------*/
-  var mqMouvement = window.matchMedia('(prefers-reduced-motion: reduce)');
-  var mouvementReduit = mqMouvement.matches;
-  mqMouvement.addEventListener('change', function (e) { mouvementReduit = e.matches; });
+  var mqMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  var reducedMotion = mqMotion.matches;
+  mqMotion.addEventListener('change', function (e) { reducedMotion = e.matches; });
 
   /* --------------------------------------------------------------------------
-     REGISTRE DE FERMETURE
-     Tous les panneaux de la page (flyouts d'entête, sélecteur de langue)
-     s'enregistrent ici. Un seul écouteur Échap et un seul écouteur de clic
-     extérieur suffisent alors pour l'ensemble, au lieu d'un par composant.
+     CLOSE REGISTRY
+     Every panel of the page (header flyouts, language selector) registers
+     here. A single Escape listener and a single outside-click listener then
+     cover all of them, instead of one per component.
   ---------------------------------------------------------------------------*/
-  var fermetures = [];
+  var closers = [];
 
   /**
-   * Ferme tous les panneaux enregistrés.
-   * @param {Function|null} sauf Fermeture à ne PAS déclencher (le panneau
-   *        qu'on est en train d'ouvrir), ou null pour tout fermer.
+   * Closes every registered panel.
+   * @param {Function|null} except Closer NOT to trigger (the panel being
+   *        opened right now), or null to close everything.
    */
-  function toutFermer(sauf) {
-    fermetures.forEach(function (f) { if (f !== sauf) f(); });
+  function closeAll(except) {
+    closers.forEach(function (f) { if (f !== except) f(); });
   }
 
   document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape') toutFermer(null);
+    if (e.key === 'Escape') closeAll(null);
   });
   document.addEventListener('click', function (e) {
-    // Un clic hors de tout groupe à panneau referme l'ensemble.
-    if (!e.target.closest('[data-flyout], .nav__panneau, [data-langue]')) {
-      toutFermer(null);
+    // A click outside every panel group closes them all.
+    if (!e.target.closest('[data-flyout], .nav__panel, [data-language]')) {
+      closeAll(null);
     }
   });
 
   /* --------------------------------------------------------------------------
-     SURFACE PARTAGÉE
+     SHARED SURFACE
   ---------------------------------------------------------------------------*/
   window.CursorMotion = {
     /**
-     * Préférence de mouvement, LUE À CHAQUE APPEL — jamais mise en cache par
-     * l'appelant : l'utilisateur peut la changer en cours de session.
-     * @returns {boolean} true si le mouvement doit être réduit.
+     * Motion preference, READ ON EVERY CALL — never cached by the caller:
+     * the user can change it mid-session.
+     * @returns {boolean} true if motion must be reduced.
      */
-    mouvementReduit: function () { return mouvementReduit; },
+    reducedMotion: function () { return reducedMotion; },
 
     /**
-     * Comportement de défilement à passer à `scrollBy`/`scrollTo`. Toujours
-     * explicite : omis, `behavior` vaut 'auto' et suivrait la
-     * `scroll-behavior` CSS sans jamais passer par ce test.
+     * Scroll behaviour to pass to `scrollBy`/`scrollTo`. Always explicit:
+     * when omitted, `behavior` is 'auto' and would follow the CSS
+     * `scroll-behavior` without ever going through this test.
      * @returns {'instant'|'smooth'}
      */
-    comportementScroll: function () { return mouvementReduit ? 'instant' : 'smooth'; },
+    scrollBehavior: function () { return reducedMotion ? 'instant' : 'smooth'; },
 
     /**
-     * Enregistre une fonction de fermeture de panneau.
-     * @param {Function} fn Ferme le panneau et remet son état ARIA à false.
+     * Registers a panel-closing function.
+     * @param {Function} fn Closes the panel and resets its ARIA state to false.
      */
-    enregistrerFermeture: function (fn) { fermetures.push(fn); },
+    registerCloser: function (fn) { closers.push(fn); },
 
     /**
-     * Ferme tous les panneaux sauf celui passé en argument.
-     * @param {Function|null} sauf
+     * Closes every panel except the one passed as argument.
+     * @param {Function|null} except
      */
-    toutFermer: toutFermer
+    closeAll: closeAll
   };
 })();

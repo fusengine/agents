@@ -19,7 +19,8 @@ Create scripts in `prisma/migrations/[name]/migration.ts`:
 ```typescript
 // Module: prisma/migrations/[timestamp]_migrate_user_roles/migration.ts
 // Purpose: Data transformation during schema evolution (SOLID: SRP - single data operation)
-import type { PrismaClient } from "@prisma/client";
+import { PrismaClient } from "../../../generated/prisma/client"; // v7: generated path (match your generator `output`)
+import { PrismaPg } from "@prisma/adapter-pg";
 
 /**
  * Legacy status to modern role mapping
@@ -67,15 +68,13 @@ async function main(prisma: PrismaClient) {
   console.log("✓ Migration complete");
 }
 
-// Execution (when run directly)
-if (require.main === module) {
-  const { PrismaClient } = require("@prisma/client");
-  const prisma = new PrismaClient();
+// Execution (ESM script — Prisma 7 ships as ES modules; v7: driver adapter required)
+const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL! });
+const prisma = new PrismaClient({ adapter });
 
-  main(prisma)
-    .catch(console.error)
-    .finally(() => prisma.$disconnect());
-}
+main(prisma)
+  .catch(console.error)
+  .finally(() => prisma.$disconnect());
 ```
 
 ## Running Data Migrations
@@ -85,7 +84,7 @@ if (require.main === module) {
 bunx prisma migrate dev --name migrate_user_roles
 
 # 2. Run data migration
-ts-node prisma/migrations/20240131120000_migrate_user_roles/migration.ts
+bunx tsx prisma/migrations/20240131120000_migrate_user_roles/migration.ts
 ```
 
 ## Batch Processing
@@ -95,7 +94,7 @@ Process in batches to avoid memory issues:
 ```typescript
 // Module: lib/migrations/batch-processor.ts
 // Purpose: Memory-efficient batch data transformation (SOLID: SRP - batch operation)
-import type { PrismaClient } from "@prisma/client";
+import type { PrismaClient } from "@/lib/generated/prisma/client";
 
 /**
  * Configuration for batch processing

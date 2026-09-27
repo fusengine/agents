@@ -11,7 +11,7 @@ related: baseui-patterns.md, detection-algorithm.md
 
 ## Overview
 
-Radix UI is the original primitive library for shadcn/ui (since 2021). Detection relies on 4 key signals: package names, import style, composition API, and data attributes.
+Radix UI is the original primitive library for shadcn/ui (launched January 2023). Since July 2, 2026 it is no longer the default for new projects (Base UI is), but it is **not deprecated**: every update and new component still ships for Radix unless it only exists in Base UI (e.g. Toast; Combobox is built on `@base-ui/react` even in `radix-*` styles). New Radix projects: `init -b radix`. Detection relies on 4 key signals: package names, import style, composition API, and data attributes.
 
 ---
 
@@ -19,17 +19,19 @@ Radix UI is the original primitive library for shadcn/ui (since 2021). Detection
 
 | Concept | Description |
 |---------|-------------|
-| **Namespace imports** | `import * as X from "@radix-ui/react-*"` |
+| **Unified package** | `radix-ui` — used by current shadcn/ui registry (`import { Dialog as DialogPrimitive } from "radix-ui"`) |
+| **Namespace imports** | `import * as X from "@radix-ui/react-*"` (legacy per-component packages) |
 | **asChild composition** | Merges props onto single child element |
 | **data-state attrs** | `data-state="open"`, `data-state="closed"` |
-| **Per-component packages** | Each primitive is a separate npm package |
+| **Per-component packages** | Legacy: each primitive is a separate npm package (`shadcn migrate radix` moves to `radix-ui`) |
 
 ---
 
 ## Package Signatures
 
 ```
-@radix-ui/react-dialog
+radix-ui                  (unified package, current shadcn default for Radix styles)
+@radix-ui/react-dialog    (legacy per-component packages below)
 @radix-ui/react-select
 @radix-ui/react-dropdown-menu
 @radix-ui/react-accordion
@@ -45,7 +47,10 @@ Radix UI is the original primitive library for shadcn/ui (since 2021). Detection
 ## Import Patterns
 
 ```tsx
-// Namespace import (most common)
+// Unified package (current shadcn/ui registry)
+import { Dialog as DialogPrimitive } from "radix-ui"
+
+// Namespace import (legacy per-component packages)
 import * as Dialog from "@radix-ui/react-dialog"
 import * as Select from "@radix-ui/react-select"
 
@@ -70,6 +75,8 @@ import { Root, Trigger, Content } from "@radix-ui/react-dialog"
 | `data-side` | `"top"`, `"bottom"`, `"left"`, `"right"` | Popover, Tooltip |
 | `data-orientation` | `"horizontal"`, `"vertical"` | Tabs, Separator |
 | `data-disabled` | `""` | Any disabled element |
+
+Current `radix-*` registry code mostly uses the shared `data-open:` / `data-closed:` Tailwind variants (they also match Base UI's `data-open`), so only raw `data-[state=...]` selectors are a Radix-specific signal.
 
 ## CSS Targeting
 

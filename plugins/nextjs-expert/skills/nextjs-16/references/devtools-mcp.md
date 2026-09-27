@@ -80,11 +80,8 @@ MCP provides context for:
 ```typescript
 // Enable in next.config.ts
 const nextConfig = {
-  experimental: {
-    devIndicators: {
-      buildActivity: true,
-      buildActivityPosition: 'bottom-right',
-    },
+  devIndicators: {
+    position: 'bottom-right',  // buildActivity/buildActivityPosition removed in v16
   },
 }
 ```

@@ -10,7 +10,11 @@ related: dropdown.md, navigation.md
 
 # Breadcrumb
 
+> **Base:** examples use **Base UI** (shadcn default since 2026-07); Radix delta in "Radix variant" below; React Aria: `BreadcrumbLink` is a React Aria `Link` (`href`, `render`). Sources: https://ui.shadcn.com/r/styles/base-nova/breadcrumb.json, https://ui.shadcn.com/r/styles/radix-nova/breadcrumb.json
+
 Breadcrumbs display the navigation hierarchy and current location within a site structure.
+`BreadcrumbLink` renders an `<a>` by default (so `href` works on every base); pass a router link
+through `render`: `<BreadcrumbLink render={<Link to="/products" />}>Products</BreadcrumbLink>`.
 
 ## Basic Breadcrumb
 
@@ -24,6 +28,7 @@ import {
   BreadcrumbPage,
 } from '@/modules/cores/shadcn/components/ui/breadcrumb'
 
+/** Basic breadcrumb trail. */
 export function BasicBreadcrumb() {
   return (
     <Breadcrumb>
@@ -58,6 +63,7 @@ import {
 } from '@/modules/cores/shadcn/components/ui/breadcrumb'
 import { ChevronRight, Slash } from 'lucide-react'
 
+/** Breadcrumb with a custom separator icon. */
 export function BreadcrumbCustomSeparator() {
   return (
     <div className="space-y-4">
@@ -110,8 +116,6 @@ export function BreadcrumbCustomSeparator() {
 ## Breadcrumb with Dropdown Menu
 
 ```tsx
-'use client'
-
 import {
   Breadcrumb,
   BreadcrumbList,
@@ -129,6 +133,7 @@ import {
 import { Button } from '@/modules/cores/shadcn/components/ui/button'
 import { ChevronDown } from 'lucide-react'
 
+/** Breadcrumb item that opens a dropdown of sibling pages. */
 export function BreadcrumbWithDropdown() {
   return (
     <Breadcrumb>
@@ -139,24 +144,24 @@ export function BreadcrumbWithDropdown() {
         <BreadcrumbSeparator />
         <BreadcrumbItem>
           <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="h-8 px-2 gap-1">
-                Components
-                <ChevronDown className="h-4 w-4" />
-              </Button>
+            <DropdownMenuTrigger
+              render={<Button variant="ghost" className="h-8 px-2 gap-1" />}
+            >
+              Components
+              <ChevronDown data-icon="inline-end" />
             </DropdownMenuTrigger>
             <DropdownMenuContent align="start">
-              <DropdownMenuItem>
-                <a href="/components/alerts">Alerts</a>
+              <DropdownMenuItem render={<a href="/components/alerts" />}>
+                Alerts
               </DropdownMenuItem>
-              <DropdownMenuItem>
-                <a href="/components/buttons">Buttons</a>
+              <DropdownMenuItem render={<a href="/components/buttons" />}>
+                Buttons
               </DropdownMenuItem>
-              <DropdownMenuItem>
-                <a href="/components/cards">Cards</a>
+              <DropdownMenuItem render={<a href="/components/cards" />}>
+                Cards
               </DropdownMenuItem>
-              <DropdownMenuItem>
-                <a href="/components/dropdowns">Dropdowns</a>
+              <DropdownMenuItem render={<a href="/components/dropdowns" />}>
+                Dropdowns
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -184,6 +189,7 @@ import {
 } from '@/modules/cores/shadcn/components/ui/breadcrumb'
 import { Home, FileText, Code } from 'lucide-react'
 
+/** Breadcrumb items with leading icons. */
 export function BreadcrumbWithIcons() {
   return (
     <Breadcrumb>
@@ -217,9 +223,7 @@ export function BreadcrumbWithIcons() {
 ## Dynamic Breadcrumb from Route
 
 ```tsx
-'use client'
-
-import { usePathname } from 'next/navigation'
+import { Link, useLocation } from '@tanstack/react-router'
 import {
   Breadcrumb,
   BreadcrumbList,
@@ -252,8 +256,9 @@ function generateBreadcrumbs(pathname: string): BreadcrumbItem[] {
   return breadcrumbs
 }
 
+/** Breadcrumb generated from the current router pathname. */
 export function DynamicBreadcrumb() {
-  const pathname = usePathname()
+  const pathname = useLocation({ select: (location) => location.pathname })
   const breadcrumbs = generateBreadcrumbs(pathname)
   const lastBreadcrumb = breadcrumbs[breadcrumbs.length - 1]
 
@@ -267,7 +272,7 @@ export function DynamicBreadcrumb() {
               {item === lastBreadcrumb ? (
                 <BreadcrumbPage>{item.label}</BreadcrumbPage>
               ) : (
-                <BreadcrumbLink href={item.href}>
+                <BreadcrumbLink render={<Link to={item.href} />}>
                   {item.label}
                 </BreadcrumbLink>
               )}
@@ -283,8 +288,6 @@ export function DynamicBreadcrumb() {
 ## Collapsible Breadcrumb (for long paths)
 
 ```tsx
-'use client'
-
 import {
   Breadcrumb,
   BreadcrumbList,
@@ -298,10 +301,11 @@ import {
   DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
-} from '@/modules/cores/shadcn/components/ui/breadcrumb'
+} from '@/modules/cores/shadcn/components/ui/dropdown-menu'
 import { Button } from '@/modules/cores/shadcn/components/ui/button'
 import { MoreHorizontal } from 'lucide-react'
 
+/** Long path with middle levels collapsed into a menu. */
 export function CollapsibleBreadcrumb() {
   const breadcrumbs = [
     { href: '/', label: 'Home' },
@@ -333,17 +337,20 @@ export function CollapsibleBreadcrumb() {
               {showEllipsis && (
                 <>
                   <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button variant="ghost" className="h-8 w-8 p-0">
-                        <MoreHorizontal className="h-4 w-4" />
-                      </Button>
+                    <DropdownMenuTrigger
+                      render={
+                        <Button variant="ghost" size="icon-sm" aria-label="Show hidden pages" />
+                      }
+                    >
+                      <MoreHorizontal />
                     </DropdownMenuTrigger>
                     <DropdownMenuContent>
                       {hiddenItems.map((hiddenItem) => (
-                        <DropdownMenuItem key={hiddenItem.href} asChild>
-                          <a href={hiddenItem.href}>
-                            {hiddenItem.label}
-                          </a>
+                        <DropdownMenuItem
+                          key={hiddenItem.href}
+                          render={<a href={hiddenItem.href} />}
+                        >
+                          {hiddenItem.label}
                         </DropdownMenuItem>
                       ))}
                     </DropdownMenuContent>
@@ -381,6 +388,7 @@ import {
   BreadcrumbPage,
 } from '@/modules/cores/shadcn/components/ui/breadcrumb'
 
+/** Breadcrumb with BreadcrumbList JSON-LD. */
 export function BreadcrumbWithSchema() {
   return (
     <>
@@ -444,6 +452,24 @@ export function BreadcrumbWithSchema() {
 | `BreadcrumbLink` | Clickable navigation link |
 | `BreadcrumbSeparator` | Visual divider between items |
 | `BreadcrumbPage` | Current/last page (not clickable) |
+
+## Radix variant
+
+`style` `radix-*`: links and menu triggers compose with `asChild` instead of `render`:
+
+```tsx
+<>
+  <BreadcrumbLink asChild>
+    <Link to="/products">Products</Link>
+  </BreadcrumbLink>
+  <DropdownMenuTrigger asChild>
+    <Button variant="ghost" size="icon-sm"><MoreHorizontal /></Button>
+  </DropdownMenuTrigger>
+  <DropdownMenuItem asChild>
+    <a href="/projects/acme">Acme Corp</a>
+  </DropdownMenuItem>
+</>
+```
 
 ## Common Patterns
 

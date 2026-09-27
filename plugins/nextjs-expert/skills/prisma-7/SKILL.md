@@ -2,18 +2,18 @@
 name: prisma-7
 description: Use when working with database schema, migrations, queries, or relations via Prisma 7 (Rust-free client, TypedSQL, Omit API).
 versions:
-  prisma: 7.3
+  prisma: 7.10.0
   nodejs: 20.19
-  typescript: 5.4
+  typescript: 6.0.3
 user-invocable: true
 references: references/installation.md, references/client.md, references/client-api.md, references/prisma-config.md, references/cli-reference.md, references/editor-setup.md, references/schema.md, references/schema-reference.md, references/data-modeling.md, references/field-attributes.md, references/model-attributes.md, references/enums.md, references/default-values.md, references/composite-types.md, references/scalar-lists.md, references/referential-actions.md, references/queries.md, references/relations.md, references/filtering.md, references/sorting.md, references/select-include.md, references/pagination-cursor.md, references/pagination-offset.md, references/distinct.md, references/count-exists.md, references/case-sensitivity.md, references/aggregations.md, references/transactions.md, references/typedsql.md, references/raw-queries.md, references/json-fields.md, references/full-text-search.md, references/views.md, references/stored-procedures.md, references/triggers.md, references/constraints.md, references/indexes-advanced.md, references/migrations.md, references/seeding.md, references/baselining.md, references/shadow-database.md, references/migration-history.md, references/squashing.md, references/hotfixing.md, references/down-migrations.md, references/data-migrations.md, references/zero-downtime.md, references/optimization.md, references/query-optimization.md, references/n-plus-one.md, references/batching.md, references/lazy-loading.md, references/caching-strategies.md, references/connection-limits.md, references/cold-starts.md, references/bundle-size.md, references/accelerate.md, references/connection-pooling.md, references/connection-urls.md, references/environment-variables.md, references/ssl-tls.md, references/sql-injection.md, references/row-level-security.md, references/encryption.md, references/audit-logging.md, references/gdpr-compliance.md, references/postgresql.md, references/mysql.md, references/sqlite.md, references/mongodb.md, references/cockroachdb.md, references/planetscale.md, references/supabase.md, references/neon.md, references/turso.md, references/extensions.md, references/driver-adapters.md, references/omit-api.md, references/middleware.md, references/soft-delete.md, references/read-replicas.md, references/multi-database.md, references/multi-schema.md, references/nextjs-integration.md, references/astro.md, references/nuxt.md, references/sveltekit.md, references/solidstart.md, references/remix.md, references/react-router.md, references/hono.md, references/express.md, references/clerk.md, references/authjs.md, references/betterauth.md, references/permit-io.md, references/deployment.md, references/vercel.md, references/netlify.md, references/railway.md, references/render.md, references/flyio.md, references/aws-lambda.md, references/cloudflare-workers.md, references/docker.md, references/heroku.md, references/deno-deploy.md, references/vscode.md, references/github-copilot.md, references/tabnine.md, references/safeql.md, references/prisma-ai.md, references/mcp-server.md, references/turborepo.md, references/pnpm-workspaces.md, references/error-handling.md, references/error-codes.md, references/logging.md, references/opentelemetry.md, references/datadog.md, references/studio.md, references/testing.md, references/vs-typeorm.md, references/vs-sequelize.md, references/vs-drizzle.md, references/vs-mongoose.md, references/vs-kysely.md, references/migrate-from-typeorm.md, references/migrate-from-sequelize.md, references/migrate-from-drizzle.md
 related-skills: nextjs-16, better-auth, solid-nextjs
 ---
 
 <objective>
-Covers Prisma 7's Rust-free TypeScript ORM: the v6→v7 breaking changes (provider renamed `prisma-client-js` → `prisma-client`, output path now REQUIRED, import moves from `@prisma/client` to the generated path, database driver adapters now required — e.g. `@prisma/adapter-pg` for PostgreSQL — and config moved to `prisma.config.ts`), schema modeling, CRUD/relations/filtering/pagination/transactions, TypedSQL for type-safe raw queries, and the Omit API for excluding sensitive fields.
+Covers Prisma 7's Rust-free TypeScript ORM: the v6→v7 breaking changes (provider renamed `prisma-client-js` → `prisma-client`, output path now REQUIRED, import moves from `@prisma/client` to the generated path, database driver adapters now required — e.g. `@prisma/adapter-pg` for PostgreSQL — and config moved to a TS config file — `prisma7.config.ts` from 7.10 (`prisma.config.*` still read as fallback), `prisma.config.ts` on 7.0–7.9), schema modeling, CRUD/relations/filtering/pagination/transactions, TypedSQL for type-safe raw queries, and the Omit API for excluding sensitive fields.
 
-Also spans migrations (baselining, shadow database, squashing, zero-downtime), performance (N+1 detection, connection pooling, Accelerate), security (SQL injection prevention, row-level security, encryption), per-database guides (PostgreSQL, MySQL, SQLite, CockroachDB, Turso — MongoDB unsupported in 7.0-7.3), framework integrations (Next.js, Astro, SvelteKit, Remix, and more), and deployment across Vercel/Netlify/Railway/AWS Lambda/Cloudflare Workers/Docker. Includes SOLID-compliant TypeScript interface references for schema design. Does not cover Better Auth's own database adapter configuration in depth (better-auth) — this skill is the ORM layer itself.
+Also spans migrations (baselining, shadow database, squashing, zero-downtime), performance (N+1 detection, connection pooling, Accelerate), security (SQL injection prevention, row-level security, encryption), per-database guides (PostgreSQL, MySQL, SQLite, CockroachDB, Turso — MongoDB unsupported in all Prisma 7.x releases through 7.10; stay on 6.19), framework integrations (Next.js, Astro, SvelteKit, Remix, and more), and deployment across Vercel/Netlify/Railway/AWS Lambda/Cloudflare Workers/Docker. Includes SOLID-compliant TypeScript interface references for schema design. Does not cover Better Auth's own database adapter configuration in depth (better-auth) — this skill is the ORM layer itself.
 </objective>
 
 # Prisma 7 ORM
@@ -65,7 +65,7 @@ After implementation, run **fuse-ai-pilot:sniper** for validation.
 | Output path | Optional | **REQUIRED** |
 | Import | `@prisma/client` | `./generated/prisma/client` |
 | Drivers | Built-in | Adapter required |
-| Config | Schema only | `prisma.config.ts` |
+| Config | Schema only | `prisma7.config.ts` (7.10+, falls back to `prisma.config.*`); `prisma.config.ts` (7.0–7.9) — edit the file `prisma init` created |
 
 ### Required Schema Changes
 
@@ -74,6 +74,20 @@ Provider must be `prisma-client` with explicit output path. No more generation t
 ### Driver Adapters Required
 
 PostgreSQL requires `@prisma/adapter-pg`, MySQL requires `@prisma/adapter-mariadb`, SQLite requires `@prisma/adapter-better-sqlite3`.
+
+### Notable 7.x Minor Releases (current stable: 7.10.0)
+
+| Version | Change |
+|---------|--------|
+| 7.4 | Query plan caching in Prisma Client; `partialIndexes` preview feature (`@@index(..., where: raw("..."))`) |
+| 7.5 | Nested transaction rollbacks via savepoints |
+| 7.6 | `prisma postgres link`; `@prisma/adapter-pg` accepts a connection string directly |
+| 7.7 | `prisma bootstrap` command |
+| 7.8 | `queryPlanCacheMaxSize` option on `PrismaClient` (`0` disables the cache) |
+| 7.9 | CLI tab completions; AI-agent safety checks extended to `db push --accept-data-loss`; TypeScript perf regression from 7.0 fixed |
+| 7.10 | Prisma Studio bound to `127.0.0.1` with origin checks; `@prisma/adapter-mariadb` accepts an existing pool |
+
+Prisma 8 is in release candidate only (npm `latest` tag points to `8.0.0-rc.*`) — pin `prisma@7` / `@prisma/client@7` for stable installs.
 
 ---
 
@@ -87,7 +101,7 @@ Database code organized in `modules/cores/db/`:
 - `modules/cores/db/generated/` - Generated client
 - `prisma/schema.prisma` - Schema definition
 - `prisma/migrations/` - Migration history
-- `prisma.config.ts` - Prisma configuration
+- `prisma7.config.ts` - Prisma configuration (7.0–7.9: `prisma.config.ts`)
 
 ### File Organization
 
@@ -354,5 +368,5 @@ Exclude fields globally or per-query. Perfect for passwords and sensitive data.
 | Import from `@prisma/client` | v7 requires generated path | Import from `./generated/prisma/client` |
 | `prisma-client-js` provider | Deprecated in v7 | Use `prisma-client` |
 | No output path | Required in v7 | Set `output` in generator |
-| MongoDB | Not supported in v7.0-7.3 | Stay on Prisma 6 |
-| url in datasource | Deprecated | Use `prisma.config.ts` |
+| MongoDB | Not supported in v7.x (7.0-7.10) | Stay on Prisma 6.19 |
+| url in datasource | Deprecated | Use the config file (`prisma7.config.ts` on 7.10+, `prisma.config.ts` on 7.0–7.9) |

@@ -1,199 +1,199 @@
 /* =============================================================
    umbrel-recode — motion.js
-   Tout le comportement d'interface de la page, en JS vanilla.
+   All the interface behaviour of the page, in vanilla JS.
 
-   Pourquoi ce fichier existe : la source ne contient AUCUN @keyframes
-   et AUCUNE règle :hover dans ses feuilles de style, alors que 50
-   `:hover` sont référencés dans son HTML. Tout son mouvement est
-   piloté par le runtime Framer. Il n'est donc pas relevable — il est
-   réécrit ici à la main, et les valeurs de timing sont marquées
-   [arbitrage] sauf mention contraire.
+   Why this file exists: the source contains NO @keyframes
+   and NO :hover rule in its stylesheets, while 50
+   `:hover` are referenced in its HTML. All of its motion is
+   driven by the Framer runtime. It therefore cannot be measured — it is
+   rewritten here by hand, and the timing values are marked
+   [decided] unless stated otherwise.
 
-     1. Garde        — prefers-reduced-motion, lu une seule fois
-     2. Apparitions  — IntersectionObserver, avec repli sans JS
-     3. Carrousel    — scroll-snap piloté aux chevrons et au clavier
-     4. Marquee      — pause au survol et au focus
+     1. Guard        — prefers-reduced-motion, read once
+     2. Reveals      — IntersectionObserver, with a no-JS fallback
+     3. Carousel     — scroll-snap driven by the chevrons and the keyboard
+     4. Marquee      — pause on hover and on focus
    ============================================================= */
 (function () {
   'use strict';
 
-  /* --- 1. Garde -----------------------------------------------
-     Une seule lecture, partagée par tous les blocs. Si l'utilisateur
-     a demandé moins de mouvement, on ne pose ni état masqué ni
-     défilement animé : le CSS neutralise déjà les animations, ce
-     drapeau évite en plus de les mettre en place. */
-  var mouvementReduit = window.matchMedia('(prefers-reduced-motion: reduce)');
+  /* --- 1. Guard -----------------------------------------------
+     A single read, shared by every block. If the user
+     asked for less motion, we set neither a hidden state nor an
+     animated scroll: the CSS already neutralises the animations, this
+     flag additionally avoids setting them up. */
+  var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
-  /* --- 2. Apparitions au défilement ----------------------------
-     Le piège de la source : 27 de ses éléments portent un état
-     initial `opacity: 0.001` écrit EN DUR dans le HTML. Quand son
-     runtime ne tourne pas, la page reste vide pour toujours.
+  /* --- 2. Reveals on scroll ------------------------------------
+     The source's trap: 27 of its elements carry an initial
+     `opacity: 0.001` state HARD-CODED in the HTML. When its
+     runtime does not run, the page stays empty forever.
 
-     La parade tient en une ligne : c'est CE script qui pose la classe
-     `.js` sur <html>, et le CSS ne masque que sous cette classe. Sans
-     JavaScript — ou en mouvement réduit — rien n'est jamais caché.
+     The countermeasure fits in one line: it is THIS script that sets the
+     `.js` class on <html>, and the CSS only hides under that class. Without
+     JavaScript — or with reduced motion — nothing is ever hidden.
 
-     IntersectionObserver plutôt que `animation-timeline: view()` :
-     ce dernier n'est pas Baseline, et sans support une image clé
-     partant de `opacity: 0` laisserait l'élément invisible pour
-     toujours — le défaut qu'on cherche justement à éviter. */
-  function installerApparitions() {
-    var cibles = document.querySelectorAll('[data-reveal]');
-    if (!cibles.length) return;
-    if (mouvementReduit.matches || !('IntersectionObserver' in window)) return;
+     IntersectionObserver rather than `animation-timeline: view()`:
+     the latter is not Baseline, and without support a keyframe
+     starting from `opacity: 0` would leave the element invisible
+     forever — the very defect we are trying to avoid. */
+  function setupReveals() {
+    var targets = document.querySelectorAll('[data-reveal]');
+    if (!targets.length) return;
+    if (reducedMotion.matches || !('IntersectionObserver' in window)) return;
 
     document.documentElement.classList.add('js');
 
-    var vigie = new IntersectionObserver(function (entrees) {
-      entrees.forEach(function (entree) {
-        if (!entree.isIntersecting) return;
-        entree.target.classList.add('est-visible');
-        vigie.unobserve(entree.target);   // une seule fois, pas d'aller-retour
+    var lookout = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('is-visible');
+        lookout.unobserve(entry.target);   // only once, no back-and-forth
       });
     }, {
-      // Déclenchement un peu avant que l'élément atteigne le bas du
-      // viewport : l'animation est finie quand il arrive à hauteur
-      // d'œil. Une marge NÉGATIVE rétrécit la zone d'observation.
-      rootMargin: '0px 0px -12% 0px',     // [arbitrage]
+      // Fires a little before the element reaches the bottom of the
+      // viewport: the animation is finished when it arrives at eye
+      // level. A NEGATIVE margin shrinks the observation zone.
+      rootMargin: '0px 0px -12% 0px',     // [decided]
       threshold: 0.05
     });
 
-    cibles.forEach(function (cible) { vigie.observe(cible); });
+    targets.forEach(function (target) { lookout.observe(target); });
   }
 
-  /* --- 3. Carrousel « superpowers » ----------------------------
-     Le rail est un conteneur `overflow-x: auto` avec
-     `scroll-snap-type: x mandatory` : défilement natif, tactile et
-     molette fonctionnent déjà sans une ligne de JS. Ce bloc n'ajoute
-     que ce que le CSS ne sait pas faire — piloter le rail depuis les
-     chevrons, et savoir quelle carte occupe le centre.
+  /* --- 3. "Superpowers" carousel --------------------------------
+     The rail is an `overflow-x: auto` container with
+     `scroll-snap-type: x mandatory`: native, touch and
+     wheel scrolling already work without a line of JS. This block only adds
+     what CSS cannot do — drive the rail from the
+     chevrons, and know which card occupies the centre.
 
-     Le pas n'est pas une constante : il se mesure sur la carte
-     réelle, largeur + gouttière. Une valeur en dur casserait au
-     premier changement de format. */
-  function installerCarrousel() {
+     The step is not a constant: it is measured on the real
+     card, width + gutter. A hard-coded value would break at the
+     first change of format. */
+  function setupCarousel() {
     var rail = document.querySelector('.rail');
     if (!rail) return;
 
-    var cartes = rail.querySelectorAll('.pouvoir');
-    if (cartes.length < 2) return;
+    var cards = rail.querySelectorAll('.power');
+    if (cards.length < 2) return;
 
-    /** Largeur d'un pas : la carte plus la gouttière qui la suit. */
-    function pas() {
-      var boite = cartes[0].getBoundingClientRect();
-      var gouttiere = parseFloat(getComputedStyle(rail).columnGap) || 0;
-      return boite.width + gouttiere;
+    /** Width of one step: the card plus the gutter that follows it. */
+    function step() {
+      var box = cards[0].getBoundingClientRect();
+      var gutter = parseFloat(getComputedStyle(rail).columnGap) || 0;
+      return box.width + gutter;
     }
 
-    /** Défile d'une carte. `sens` vaut -1 ou 1. */
-    function avancer(sens) {
+    /** Scrolls by one card. `direction` is -1 or 1. */
+    function advance(direction) {
       rail.scrollBy({
-        left: sens * pas(),
-        // Le lissage est un mouvement : il se désactive avec le reste.
-        behavior: mouvementReduit.matches ? 'auto' : 'smooth'
+        left: direction * step(),
+        // Smoothing is a motion: it is disabled with the rest.
+        behavior: reducedMotion.matches ? 'auto' : 'smooth'
       });
     }
 
-    // Les chevrons deviennent de vrais contrôles : ils n'étaient
-    // décoratifs que faute de JavaScript.
-    var chevrons = document.querySelectorAll('.carrousel__fleche');
+    // The chevrons become real controls: they were only
+    // decorative for lack of JavaScript.
+    var chevrons = document.querySelectorAll('.carousel__arrow');
     Array.prototype.forEach.call(chevrons, function (chevron) {
       chevron.setAttribute('role', 'button');
       chevron.setAttribute('tabindex', '0');
       chevron.removeAttribute('aria-hidden');
 
-      // Les libellés accessibles sont du CONTENU : ils suivent la langue
-      // du document (<html lang="en">), pas celle des commentaires.
-      var versLaDroite = chevron.classList.contains('carrousel__fleche--d');
+      // Accessible labels are CONTENT: they follow the language
+      // of the document (<html lang="en">), not that of the comments.
+      var toRight = chevron.classList.contains('carousel__arrow--right');
       chevron.setAttribute('aria-label',
-        versLaDroite ? 'Next card' : 'Previous card');
+        toRight ? 'Next card' : 'Previous card');
 
       chevron.addEventListener('click', function () {
-        avancer(versLaDroite ? 1 : -1);
+        advance(toRight ? 1 : -1);
       });
-      chevron.addEventListener('keydown', function (evenement) {
-        if (evenement.key !== 'Enter' && evenement.key !== ' ') return;
-        evenement.preventDefault();
-        avancer(versLaDroite ? 1 : -1);
+      chevron.addEventListener('keydown', function (evt) {
+        if (evt.key !== 'Enter' && evt.key !== ' ') return;
+        evt.preventDefault();
+        advance(toRight ? 1 : -1);
       });
     });
 
-    // Flèches du clavier quand le rail a le focus. Un conteneur
-    // focalisable DOIT être annoncé : `tabindex` seul donne un arrêt
-    // de tabulation muet (WCAG 4.1.2). `role="group"` + un nom qui dit
-    // aussi comment naviguer.
+    // Keyboard arrows when the rail has focus. A focusable
+    // container MUST be announced: `tabindex` alone gives a silent
+    // tab stop (WCAG 4.1.2). `role="group"` + a name that also says
+    // how to navigate.
     rail.setAttribute('role', 'group');
     rail.setAttribute('aria-label',
       'What you can do with umbrelOS — use the left and right arrow keys to browse');
     rail.setAttribute('tabindex', '0');
-    rail.addEventListener('keydown', function (evenement) {
-      if (evenement.key === 'ArrowRight') { evenement.preventDefault(); avancer(1); }
-      if (evenement.key === 'ArrowLeft')  { evenement.preventDefault(); avancer(-1); }
+    rail.addEventListener('keydown', function (evt) {
+      if (evt.key === 'ArrowRight') { evt.preventDefault(); advance(1); }
+      if (evt.key === 'ArrowLeft')  { evt.preventDefault(); advance(-1); }
     });
 
-    /* La carte la plus proche du centre reçoit `.est-au-centre`. Le
-       CSS s'en sert pour éteindre légèrement les autres : sur la
-       source, seul le fondu du masque produit cet effet ; le doubler
-       d'un état explicite rend la position lisible même pour une
-       carte pas encore masquée. [arbitrage] */
-    var mesureEnAttente = false;
+    /* The card closest to the centre receives `.is-centered`. The
+       CSS uses it to slightly dim the others: on the
+       source, only the fade of the mask produces this effect; doubling
+       it with an explicit state makes the position readable even for a
+       card not yet masked. [decided] */
+    var measurePending = false;
 
-    function marquerLaCarteCentrale() {
-      var centreDuRail = rail.scrollLeft + rail.clientWidth / 2;
-      var meilleure = null;
-      var meilleurEcart = Infinity;
+    function markCenterCard() {
+      var railCenter = rail.scrollLeft + rail.clientWidth / 2;
+      var best = null;
+      var bestGap = Infinity;
 
-      Array.prototype.forEach.call(cartes, function (carte) {
-        var centreCarte = carte.offsetLeft + carte.offsetWidth / 2;
-        var ecart = Math.abs(centreCarte - centreDuRail);
-        if (ecart < meilleurEcart) { meilleurEcart = ecart; meilleure = carte; }
+      Array.prototype.forEach.call(cards, function (card) {
+        var cardCenter = card.offsetLeft + card.offsetWidth / 2;
+        var gap = Math.abs(cardCenter - railCenter);
+        if (gap < bestGap) { bestGap = gap; best = card; }
       });
 
-      Array.prototype.forEach.call(cartes, function (carte) {
-        carte.classList.toggle('est-au-centre', carte === meilleure);
+      Array.prototype.forEach.call(cards, function (card) {
+        card.classList.toggle('is-centered', card === best);
       });
     }
 
-    // `passive: true` : on ne fait que lire, jamais preventDefault —
-    // le navigateur peut défiler sans attendre ce handler. Et une
-    // seule mesure par trame : `scroll` tire beaucoup plus vite que
-    // le rendu, et chaque mesure force un calcul de mise en page.
+    // `passive: true`: we only read, never preventDefault —
+    // the browser can scroll without waiting for this handler. And a
+    // single measurement per frame: `scroll` fires much faster than
+    // rendering, and each measurement forces a layout computation.
     rail.addEventListener('scroll', function () {
-      if (mesureEnAttente) return;
-      mesureEnAttente = true;
+      if (measurePending) return;
+      measurePending = true;
       requestAnimationFrame(function () {
-        mesureEnAttente = false;
-        marquerLaCarteCentrale();
+        measurePending = false;
+        markCenterCard();
       });
     }, { passive: true });
 
-    window.addEventListener('resize', marquerLaCarteCentrale);
-    marquerLaCarteCentrale();
+    window.addEventListener('resize', markCenterCard);
+    markCenterCard();
   }
 
   /* --- 4. Marquee ----------------------------------------------
-     Le défilement reste une animation CSS : deux copies exactes du
-     contenu et un `translateX(-50%)`, ce qui boucle sans raccord. Le
-     JS n'ajoute que la pause, pour lire une pastille sans la suivre. */
-  function installerPauseMarquee() {
+     The scrolling stays a CSS animation: two exact copies of the
+     content and a `translateX(-50%)`, which loops without a seam. The
+     JS only adds the pause, to read a chip without chasing it. */
+  function setupMarqueePause() {
     var marquee = document.querySelector('.marquee');
     if (!marquee) return;
 
-    var pistes = marquee.querySelectorAll('.marquee__piste');
+    var tracks = marquee.querySelectorAll('.marquee__track');
 
-    function etat(valeur) {
-      Array.prototype.forEach.call(pistes, function (piste) {
-        piste.style.animationPlayState = valeur;
+    function setState(value) {
+      Array.prototype.forEach.call(tracks, function (track) {
+        track.style.animationPlayState = value;
       });
     }
 
-    marquee.addEventListener('pointerenter', function () { etat('paused'); });
-    marquee.addEventListener('pointerleave', function () { etat('running'); });
-    marquee.addEventListener('focusin',  function () { etat('paused'); });
-    marquee.addEventListener('focusout', function () { etat('running'); });
+    marquee.addEventListener('pointerenter', function () { setState('paused'); });
+    marquee.addEventListener('pointerleave', function () { setState('running'); });
+    marquee.addEventListener('focusin',  function () { setState('paused'); });
+    marquee.addEventListener('focusout', function () { setState('running'); });
   }
 
-  installerApparitions();
-  installerCarrousel();
-  installerPauseMarquee();
+  setupReveals();
+  setupCarousel();
+  setupMarqueePause();
 })();

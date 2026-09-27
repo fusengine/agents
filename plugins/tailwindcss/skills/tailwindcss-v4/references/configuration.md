@@ -44,6 +44,9 @@ module.exports = {
   @variant dark {
     background: #1a1a2e;
   }
+  /* Stacked (hover AND focus) and compound (hover OR focus) forms since v4.3 */
+  @variant hover:focus { outline: 2px solid; }
+  @variant hover, focus { color: white; }
 }
 ```
 

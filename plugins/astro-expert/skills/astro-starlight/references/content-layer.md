@@ -1,7 +1,7 @@
 ---
 name: starlight-content-layer
 description: Starlight Content Layer API integration with docsLoader, docsSchema, custom frontmatter
-when-to-use: Type-safe content collections in Astro 6 Starlight projects
+when-to-use: Type-safe content collections in Astro 7 Starlight projects
 keywords: Content Layer, docsLoader, docsSchema, i18nLoader, defineCollection
 priority: medium
 requires: setup.md
@@ -12,14 +12,14 @@ related: astro-content
 
 ## When to Use
 
-- Astro 6: replacing legacy `defineCollection` from `astro:content`
+- Configuring Starlight collections with the Content Layer API (`src/content.config.ts`, Astro 5+; legacy v4 collections only via `legacy.collectionsBackwardsCompat`)
 - Adding custom frontmatter fields with type safety
 - Using i18n content collections
 
 ## Basic Setup
 
 ```ts
-// src/content/config.ts
+// src/content.config.ts
 import { defineCollection } from 'astro:content';
 import { docsLoader, i18nLoader } from '@astrojs/starlight/loaders';
 import { docsSchema, i18nSchema } from '@astrojs/starlight/schema';

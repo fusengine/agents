@@ -1,7 +1,7 @@
 ---
 name: messages-validation
-description: Script validation clés manquantes, syntaxe ICU, clés inutilisées, CI/CD
-when-to-use: validation traductions, clés manquantes, syntaxe ICU, CI checks, cleanup
+description: Validation script for missing keys, ICU syntax, unused keys, CI/CD
+when-to-use: translation validation, missing keys, ICU syntax, CI checks, cleanup
 keywords: validateMessages, ICU syntax, unused keys detection, missing translations
 priority: low
 requires: translations.md
@@ -10,12 +10,12 @@ related: extraction.md, integrations.md
 
 # next-intl Messages Validation
 
-## Script de Validation
+## Validation Script
 
 ```typescript
 // scripts/validate-messages.ts
 import en from '../modules/cores/i18n/messages/en.json'
-import fr from '../modules/cores/i18n/messages/fr.json'
+import es from '../modules/cores/i18n/messages/es.json'
 
 type Messages = typeof en
 
@@ -39,7 +39,7 @@ function validateMessages(
   return errors
 }
 
-const errors = validateMessages(en, fr)
+const errors = validateMessages(en, es)
 if (errors.length > 0) {
   console.error('Missing translations:')
   errors.forEach((e) => console.error(`  - ${e}`))

@@ -12,7 +12,7 @@ related-skills: laravel-attributes, laravel-migrations, laravel-api, laravel-tes
 <objective>
 Covers Laravel 13 Eloquent ORM with PHP 8.3 Attributes as the primary
 metadata mechanism (#[Table], #[Fillable], #[Hidden], #[Visible], #[Guarded],
-#[Casts], #[Appends], #[Touches], #[Connection]) alongside legacy property
+#[Appends], #[Touches], #[Connection], #[Refreshes]) alongside legacy property
 equivalents for backward compatibility. Includes all relationship types
 (basic, many-to-many, advanced, polymorphic), eager loading, scopes,
 accessors/mutators, events/observers, soft deletes, collections,
@@ -28,7 +28,7 @@ Before ANY implementation, spawn 3 agents in parallel, one `Agent` call each wit
 
 1. **fuse-ai-pilot:explore-codebase** - Inspect existing models, mixed property/attribute usage
 2. **fuse-ai-pilot:research-expert** - Verify Laravel 13 Eloquent + Attributes docs via Context7
-3. **mcp__context7__query-docs** - Query attribute patterns (#[Fillable], #[Casts], #[Scope])
+3. **mcp__context7__query-docs** - Query attribute patterns (#[Fillable], #[Table], #[Scope])
 
 After implementation, run **fuse-ai-pilot:sniper** for validation.
 
@@ -44,19 +44,22 @@ Laravel 13 promotes **PHP 8.3 Attributes** as the primary metadata mechanism on 
 | Mass assignment | `#[Fillable([...])]` | `protected $fillable` |
 | Hidden / Visible | `#[Hidden([...])]` / `#[Visible([...])]` | `protected $hidden` / `$visible` |
 | Guarded | `#[Guarded([...])]` / `#[Unguarded]` | `protected $guarded` |
-| Casts | `#[Casts([...])]` | `casts()` method |
+| Casts | no attribute — `casts()` method | `protected $casts` |
 | Appends | `#[Appends([...])]` | `protected $appends` |
 | Touches | `#[Touches([...])]` | `protected $touches` |
 | Connection | `#[Connection('mysql')]` | `protected $connection` |
+| Primary key | `#[Table(key: 'uuid', keyType: 'string', incrementing: false)]` | `$primaryKey` / `$keyType` / `$incrementing` |
+| Timestamps off | `#[WithoutTimestamps]` | `public $timestamps = false` |
+| Refresh after write (13.33+) | `#[Refreshes(['slug'])]` | — |
 
 ---
 
 ## Critical Rules
 
-1. **Attributes are the source of truth** - Use `#[Fillable]`, `#[Casts]`, `#[Hidden]` on new code
+1. **Attributes are the source of truth** - Use `#[Fillable]`, `#[Hidden]`, `#[Table]` on new code (casts stay in `casts()`)
 2. **Never mix attribute + property** for the same concern (`#[Fillable]` AND `$fillable`)
 3. **Eager load relationships** - Prevent N+1 queries with `with()`
-4. **No `new Model()` in `boot()`** - Throws `LogicException` in L13 (booted lifecycle protected)
+4. **No `new static()` / `new Model()` inside the model's own `boot()` / trait `boot*()`** - Throws `LogicException` in L13 (nested booting disallowed)
 5. **Use factories** in tests - Never hardcode test data
 
 ---
@@ -65,7 +68,7 @@ Laravel 13 promotes **PHP 8.3 Attributes** as the primary metadata mechanism on 
 
 ```
 app/Models/
-├── User.php              # #[Table], #[Fillable], #[Hidden], #[Casts]
+├── User.php              # #[Table], #[Fillable], #[Hidden] + casts()
 ├── Post.php              # #[Connection], #[Appends], relationships
 └── Concerns/
     └── HasUuid.php       # Reusable trait
@@ -91,7 +94,7 @@ app/Models/
 |----------|-------------|
 | [ModelBasic.php.md](references/templates/ModelBasic.php.md) | Attribute-based model |
 | [ModelRelationships.php.md](references/templates/ModelRelationships.php.md) | All relationship types |
-| [ModelCasts.php.md](references/templates/ModelCasts.php.md) | #[Casts] and accessors |
+| [ModelCasts.php.md](references/templates/ModelCasts.php.md) | casts() and accessors |
 | [Observer.php.md](references/templates/Observer.php.md) | Complete observer |
 | [Factory.php.md](references/templates/Factory.php.md) | Factory with states |
 | [Resource.php.md](references/templates/Resource.php.md) | API resource |
@@ -104,15 +107,19 @@ app/Models/
 ### Attribute-based Model (L13 MAIN)
 
 ```php
-use Illuminate\Database\Eloquent\Attributes\{Table, Fillable, Hidden, Casts};
+use Illuminate\Database\Eloquent\Attributes\{Table, Fillable, Hidden};
 use Illuminate\Database\Eloquent\Model;
 
 #[Table('users')]
 #[Fillable(['name', 'email', 'password'])]
 #[Hidden(['password', 'remember_token'])]
-#[Casts(['email_verified_at' => 'datetime', 'is_admin' => 'boolean'])]
 final class User extends Model
 {
+    protected function casts(): array
+    {
+        return ['email_verified_at' => 'datetime', 'is_admin' => 'boolean'];
+    }
+
     public function posts(): HasMany
     {
         return $this->hasMany(Post::class);
@@ -137,6 +144,17 @@ protected function published(Builder $query): void
 $posts = Post::with('author')->get();  // 2 queries, not N+1
 ```
 
+### 13.x additions
+
+```php
+#[Refreshes(['slug'])]            // 13.33+: re-read generated columns after insert/update
+final class Post extends Model {}
+
+DB::transaction(function () use ($flight) {
+    $flight->refreshForUpdate();  // 13.27+: reload with a FOR UPDATE lock
+});
+```
+
 → Legacy `$fillable` / `$hidden` style — see [legacy-properties.md](references/legacy-properties.md)
 
 ---
@@ -144,15 +162,15 @@ $posts = Post::with('author')->get();  // 2 queries, not N+1
 ## Best Practices
 
 ### DO
-- Declare metadata with **PHP Attributes** (`#[Table]`, `#[Fillable]`, `#[Casts]`, ...)
+- Declare metadata with **PHP Attributes** (`#[Table]`, `#[Fillable]`, `#[Hidden]`, ...)
 - Use `final` on model classes when not extended
 - Eager load with `with()`
 - Use factories in tests
-- Cast dates, arrays, enums via `#[Casts]`
+- Cast dates, arrays, enums via the `casts()` method (there is no `#[Casts]` attribute)
 
 ### DON'T
 - **Mix `#[Fillable]` and `$fillable`** on the same model (conflict — single source of truth)
-- **Instantiate models in `boot()` / `booted()`** — L13 throws `LogicException`
+- **Instantiate the model inside its own `boot()` / trait `boot*()`** — L13 throws `LogicException`
 - Lazy-load relationships in loops (N+1)
 - Use `#[Unguarded]` in production
 - Query inside accessors / mutators

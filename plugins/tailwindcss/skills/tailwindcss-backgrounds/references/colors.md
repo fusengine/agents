@@ -7,7 +7,7 @@ description: Background colors reference for Tailwind CSS
 
 ## Overview
 
-Background colors use the `bg-{color}` syntax with the modernized OKLCH P3 color palette in Tailwind CSS v4.1. The OKLCH color space provides perceptually uniform colors with a wider gamut than sRGB.
+Background colors use the `bg-{color}` syntax with the modernized OKLCH P3 color palette in Tailwind CSS v4.3. The OKLCH color space provides perceptually uniform colors with a wider gamut than sRGB.
 
 ## Color Families
 
@@ -32,6 +32,16 @@ Background colors use the `bg-{color}` syntax with the modernized OKLCH P3 color
 #### Stone
 - `bg-stone-50` through `bg-stone-950`
 - Warm neutral with earthy tone
+
+#### Mauve, Olive, Mist, Taupe (since v4.2)
+- `bg-mauve-*`, `bg-olive-*`, `bg-mist-*`, `bg-taupe-*` (50 through 950)
+- Neutral-adjacent grays with a tint: mauve (purple-ish, hue ≈ 322–326), olive (green-yellow, hue ≈ 107), mist (cool blue-cyan, hue ≈ 197–229), taupe (warm brown, hue ≈ 17–68)
+
+```html
+<div class="bg-mauve-950 text-mauve-100">Mauve</div>
+<div class="bg-olive-100 text-olive-950">Olive</div>
+<div class="border border-mist-200 shadow-taupe-950/10">Mist and taupe</div>
+```
 
 ### Warm Colors
 

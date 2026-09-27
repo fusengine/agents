@@ -1,19 +1,19 @@
 /**
- * hidden-text.ts — Garde-fou anti « contrôle mort ».
- * Tous les contrôles ignorent les éléments invisibles. Si une page révèle son
- * contenu au défilement (opacité 0 jusqu'à l'entrée dans le viewport) et n'honore
- * pas `prefers-reduced-motion`, la page serait mesurée quasi vide et déclarée
- * conforme à tort. On compte donc ce qui reste caché, et on le REMONTE.
+ * hidden-text.ts — Guard against a "dead check".
+ * Every check ignores invisible elements. If a page reveals its
+ * content on scroll (opacity 0 until it enters the viewport) and does not honor
+ * `prefers-reduced-motion`, the page would be measured almost empty and wrongly
+ * declared passing. We therefore count what stays hidden, and REPORT it.
  */
 import type { Warning } from "../types";
 import type { PageLike } from "../page.types";
 
 /**
- * Compte les éléments porteurs de texte rendus invisibles par l'opacité.
+ * Counts the text-bearing elements made invisible by opacity.
  *
- * @param page - Page déjà chargée
- * @param viewport - Largeur de viewport courante, en px
- * @returns Zéro ou un avertissement récapitulant le texte non mesurable
+ * @param page - Already loaded page
+ * @param viewport - Current viewport width, in px
+ * @returns Zero or one warning summarizing the unmeasurable text
  */
 export async function checkHiddenText(page: PageLike, viewport: number): Promise<Warning[]> {
   const result = await page.evaluate((): { hidden: number; total: number; sample: string } => {
@@ -29,15 +29,15 @@ export async function checkHiddenText(page: PageLike, viewport: number): Promise
       let invisible = false;
       while (node && !invisible) {
         const s = getComputedStyle(node);
-        // `display: none` est un masquage assumé (menu fermé, onglet inactif) :
-        // seul le masquage par opacité/visibilité signale une révélation en attente.
+        // `display: none` is a deliberate hide (closed menu, inactive tab):
+        // only hiding by opacity/visibility signals a pending reveal.
         if (s.display === "none") break;
         if (Number(s.opacity) <= 0.05 || s.visibility === "hidden") invisible = true;
         node = node.parentElement;
       }
       if (invisible) {
         hidden++;
-        if (!sample) sample = `${window.__lc.cssPath(el)} « ${text.slice(0, 40)} »`;
+        if (!sample) sample = `${window.__lc.cssPath(el)} "${text.slice(0, 40)}"`;
       }
     }
     return { hidden, total, sample };
@@ -50,10 +50,10 @@ export async function checkHiddenText(page: PageLike, viewport: number): Promise
       selector: result.sample,
       viewport,
       reason:
-        `${result.hidden}/${result.total} éléments porteurs de texte sont invisibles ` +
-        `(opacité/visibilité) et donc NON mesurés — révélation au défilement probable. ` +
-        `Vérifier que --motion n'a pas désactivé l'émulation reduced-motion, puis ` +
-        `relancer avec --warmup ; ce qui reste caché doit être jugé sur capture.`,
+        `${result.hidden}/${result.total} text-bearing elements are invisible ` +
+        `(opacity/visibility) and therefore NOT measured — likely a scroll reveal. ` +
+        `Check that --motion has not disabled the reduced-motion emulation, then ` +
+        `rerun with --warmup; whatever stays hidden must be judged on a screenshot.`,
     },
   ];
 }

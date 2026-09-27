@@ -7,14 +7,14 @@ related-skills: tailwindcss-core, react-shadcn
 ---
 
 <objective>
-Documents Tailwind CSS v4.1 accessibility utilities: `focus-visible` for keyboard-only focus rings, `sr-only` for screen-reader-only content, `motion-safe`/`motion-reduce` for `prefers-reduced-motion` support, and touch-target/contrast-ratio patterns for WCAG 2.2 AA/AAA compliance.
+Documents Tailwind CSS v4.3 accessibility utilities: `focus-visible` for keyboard-only focus rings, `sr-only` for screen-reader-only content, `motion-safe`/`motion-reduce` for `prefers-reduced-motion` support, and touch-target/contrast-ratio patterns for WCAG 2.2 AA/AAA compliance.
 
 Covers focus-state patterns, minimum touch target sizing (44×44px via `min-h-11 min-w-11`), and the 4.5:1/3:1 contrast floors — semantic HTML first, Tailwind utilities enhance rather than replace it.
 </objective>
 
 # Tailwind CSS Accessibility
 
-Accessible-by-default patterns using Tailwind CSS v4.1 utility classes.
+Accessible-by-default patterns using Tailwind CSS v4.3 utility classes.
 
 ## Agent Workflow (MANDATORY)
 
@@ -56,7 +56,7 @@ After implementation, run **fuse-ai-pilot:sniper** for validation.
 1. **Always use `focus-visible`** — Not `focus` for interactive elements
 2. **Never hide content from screen readers** — Use `sr-only` instead of `hidden`
 3. **Respect motion preferences** — Wrap animations in `motion-safe:`
-4. **Minimum touch target 44x44px** — Use `min-h-11 min-w-11` (2.75rem)
+4. **Minimum touch target 44x44px** — Use `min-h-11 min-w-11` (2.75rem); WCAG 2.2 AAA (SC 2.5.5), AA floor is 24x24px (SC 2.5.8)
 5. **Contrast ratios** — 4.5:1 for text, 3:1 for large text (WCAG AA)
 6. **Semantic HTML first** — Tailwind enhances, never replaces semantics
 

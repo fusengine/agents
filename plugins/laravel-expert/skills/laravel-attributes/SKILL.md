@@ -17,7 +17,7 @@ replace legacy class properties: Eloquent (#[Table], #[Fillable], #[Hidden],
 #[FailOnTimeout], #[UniqueFor]), Console (#[Signature], #[Description]),
 Controllers (#[Middleware], #[Authorize]), Validation (#[RedirectTo],
 #[StopOnFirstFailure]), API Resources (#[Collects], #[PreserveKeys]), and
-Factories/Seeders (#[UseModel], #[Seed], #[Seeder]).
+Factories/Test seeding (#[UseModel], #[Seed], #[Seeder]).
 </objective>
 
 # Laravel 13 PHP Attributes
@@ -38,20 +38,21 @@ After implementation, run **fuse-ai-pilot:sniper** for validation.
 
 | Category | Attributes |
 |---------|-------------|
-| **Eloquent** | `#[Table]` `#[Connection]` `#[Fillable]` `#[Hidden]` `#[Visible]` `#[Guarded]` `#[Unguarded]` `#[Appends]` `#[Touches]` |
-| **Queue / Job** | `#[Connection]` `#[Queue]` `#[Tries]` `#[Timeout]` `#[Backoff]` `#[MaxExceptions]` `#[FailOnTimeout]` `#[UniqueFor]` |
+| **Eloquent** | `#[Table]` `#[Connection]` `#[Fillable]` `#[Hidden]` `#[Visible]` `#[Guarded]` `#[Unguarded]` `#[Appends]` `#[Touches]` `#[WithoutTimestamps]` `#[WithoutIncrementing]` `#[DateFormat]` `#[Refreshes]` (13.33+) — no `#[Casts]` (use `casts()`) |
+| **Queue / Job** | `#[Connection]` `#[Queue]` `#[Tries]` `#[Timeout]` `#[Backoff]` `#[MaxExceptions]` `#[FailOnTimeout]` `#[UniqueFor]` `#[DeleteWhenMissingModels]` `#[Delay]` (13.4+) `#[DebounceFor]` (13.6+) |
 | **Console** | `#[Signature]` `#[Description]` |
-| **Controllers** | `#[Middleware]` `#[Authorize]` |
-| **Validation** | `#[RedirectTo]` `#[StopOnFirstFailure]` |
+| **Controllers** | `#[Middleware]` `#[Authorize]` `#[WithoutMiddleware]` (13.20+) — namespace `Illuminate\Routing\Attributes\Controllers` |
+| **Validation** | `#[RedirectTo]` `#[RedirectToRoute]` `#[ErrorBag]` `#[StopOnFirstFailure]` `#[FailOnUnknownFields]` — namespace `Illuminate\Foundation\Http\Attributes` |
 | **API Resources** | `#[Collects]` `#[PreserveKeys]` |
-| **Factories / Seeders** | `#[UseModel]` `#[Seed]` `#[Seeder]` |
+| **Factories / Testing** | `#[UseModel]` (factories) · `#[Seed]` `#[Seeder]` `#[UnitTest]` (test classes, `Illuminate\Foundation\Testing\Attributes`) |
+| **Container** | `#[BindWhen]` (13.22+, PHP 8.5) and the contextual attributes (`#[Config]`, `#[Auth]`, ...) |
 
 ---
 
 ## Critical Rules
 
 1. **NEVER mix attributes and legacy properties** - `#[Fillable(['name'])]` + `protected $fillable = [...]` causes Laravel to ignore the attribute silently
-2. **Class-level only** - All Eloquent / Job / Controller attributes apply to the class, never to private/protected methods
+2. **Class-level for Eloquent / Job** - Eloquent and queue attributes apply to the class; controller `#[Middleware]` / `#[Authorize]` also work on public action methods
 3. **Single source of truth** - Choose attributes OR properties per class; refactor in one pass to avoid drift
 4. **Inheritance is additive** - Child class attributes merge with parent attributes; redeclare to override
 5. **Import the right namespace** - `Illuminate\Database\Eloquent\Attributes\*` for Eloquent, `Illuminate\Queue\Attributes\*` for Jobs
@@ -91,7 +92,7 @@ app/
 | **Controllers** | [controllers.md](references/controllers.md) | Moving middleware/authorize from constructors |
 | **Validation** | [validation.md](references/validation.md) | FormRequest redirect + early-stop config |
 | **API Resources** | [api-resources.md](references/api-resources.md) | Collection wrapping and key preservation |
-| **Factories / Seeders** | [factories-seeders.md](references/factories-seeders.md) | Model binding and seeder discovery |
+| **Factories / Seeders** | [factories-seeders.md](references/factories-seeders.md) | Factory model binding and test seeding |
 
 ### Templates
 
@@ -143,5 +144,5 @@ class ProcessPodcast implements ShouldQueue {}
 ### DON'T
 - Don't mix `#[Fillable(['x'])]` with `protected $fillable = ['y']` - the property silently wins on some setups, the attribute on others
 - Don't place Eloquent/Job attributes on methods - they target the class only
-- Don't put `#[Authorize]` on a controller without an underlying Policy registered in `AuthServiceProvider`
+- Don't put `#[Authorize]` on a controller action without an underlying Policy (auto-discovered, `Gate::policy()` in `AppServiceProvider`, or `#[UsePolicy]` on the model)
 - Don't forget to drop the legacy `$tries`, `$backoff`, `$timeout` properties after adding the attributes - duplication is a red flag for code review

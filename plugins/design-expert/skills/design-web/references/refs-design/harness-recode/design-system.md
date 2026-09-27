@@ -9,13 +9,13 @@ Dials: `DESIGN_VARIANCE 4` · `VISUAL_DENSITY 9` · `MOTION_INTENSITY 6`.
 Tone (one extreme): **procurement plainspeak.** Every claim is written as an operation
 performed on a pipeline, not as a benefit felt by a person. The copy never jokes and never
 reaches for a metaphor — the single figurative move on the whole page is the h1 itself,
-"AI for / Everything After Code". All short strings are verbatim from the source [relevé].
+"AI for / Everything After Code". All short strings are verbatim from the source [measured].
 
 Signature element: **the widening tab card.** In each of the four modules the tab row sits
 *below* the media, the inactive cards hold a fixed width per module (130px, 220px, 180px,
 30%) and the active one expands to `max-width: 40rem` over `.2s`. Width — not a fill, not a
 rule, not a colour — is what marks the current thing. Behind every panel sits the second
-half of the signature: a blurred cyan-to-blue halo (`--halo-haut` → `--halo-bas`) that
+half of the signature: a blurred cyan-to-blue halo (`--halo-top` → `--halo-bottom`) that
 enters 300ms after its media.
 
 ## Macrostructure
@@ -32,13 +32,13 @@ Order of the body, read on `index.html`:
    the hero, not in a band of its own.
 3. `section.vd` — four anchored domain modules, each = h2 + intro + scene + tab row, with 6,
    4, 3 and 2 tabs. This is the whole product argument.
-4. `section.chiffre` — giant-number band: a counter to 100+, one paragraph, an integrations
+4. `section.stat` — giant-number band: a counter to 100+, one paragraph, an integrations
    logo plate, one text link.
-5. `section.temoignages` — one-slide-at-a-time customer carousel; navigation is the client
+5. `section.testimonials` — one-slide-at-a-time customer carousel; navigation is the client
    logos themselves, the arrows are hidden.
 6. `section.cta` — gradient-clipped heading over an **eight-field demo form** in a narrow
    centred column, closed by a full-width image faded to black.
-7. `footer.pied` — logo image, subscribe grid, five-column link grid whose first cell is a
+7. `footer.site-footer` — logo image, subscribe grid, five-column link grid whose first cell is a
    gradient-bordered promo card, then the legal row.
 
 Absent from the canonical skeleton: **no pricing section** (the nav's "Pricing" entry points
@@ -46,7 +46,7 @@ at the CTA), **no FAQ**, **no feature card grid** (features are the tab panels),
 testimonial grid** (one carousel), **no paired CTA buttons** — the closing ask is a form,
 and the hero carries a single button where the canon puts two. Present and unchanged: nav,
 hero, testimonials, CTA, footer. Below 991px the nav links are simply hidden — this rebuild
-ships **no burger** where the source has one [relevé, marked as an arbitrage in `styles.css`].
+ships **no burger** where the source has one [measured, marked [decided] in `styles.css`].
 
 Principle of organisation: **the body is the mega-menu, unrolled.** The four modules are the
 four columns of the Product panel, in the same order, carrying the same links as tabs — so
@@ -65,15 +65,15 @@ its design tokens are the same object.
 ```css
 --surface-page:        #070707;
 --surface-nav:         #000;
---surface-bas-degrade: #050505;
---surface-active:      #ffffff12;
---surface-fantome:     #ffffff0d;
---surface-voile:       #0b0b0d9c;
---texte-primaire:   #fff;      --texte-secondaire: #c8cad0;
---texte-tertiaire:  #9195a1;   --texte-lien:       #b0b1c3;
---texte-mention:    #787887;   --texte-accent:     #00ade4;
---halo-haut: #52cbf2;  --halo-bas: #005ad0;
---or-clair:  #ffeec3;  --or-milieu: #efdcb7;  --or-sombre: #938b87;
+--surface-gradient-end: #050505;
+--surface-active:       #ffffff12;
+--surface-ghost:        #ffffff0d;
+--surface-veil:         #0b0b0d9c;
+--text-primary:   #fff;      --text-secondary: #c8cad0;
+--text-tertiary:  #9195a1;   --text-link:      #b0b1c3;
+--text-notice:    #787887;   --text-accent:    #00ade4;
+--halo-top: #52cbf2;  --halo-bottom: #005ad0;
+--gold-light:  #ffeec3;  --gold-mid: #efdcb7;  --gold-dark: #938b87;
 ```
 
 Strategy: **monochrome plus one signal.** A near-black ground, a six-step neutral grey ramp
@@ -83,17 +83,17 @@ but appears **once**, clipped into the CTA heading; it is the only warm surface 
 Alternation of ground is deliberate, not accidental: sections 3 and 6 declare no background
 and let `#070707` show through, while 4, 5 and 7 lay a `linear-gradient(#070707, #050505 88%)`.
 
-Contrast floors held on `--surface-page` [estimé, computed from the relevé hex]: white 20:1 ·
-`--texte-secondaire` 12.3:1 · `--texte-lien` 9.5:1 · `--texte-accent` 7.8:1 (display sizes and
-links) · `--texte-tertiaire` 6.7:1. The lowest text value on the page is `--texte-mention`
+Contrast floors held on `--surface-page` [estimated, computed from the measured hex]: white 20:1 ·
+`--text-secondary` 12.3:1 · `--text-link` 9.5:1 · `--text-accent` 7.8:1 (display sizes and
+links) · `--text-tertiary` 6.7:1. The lowest text value on the page is `--text-notice`
 at ≈4.6:1, used only for the form-consent line.
 
 ### Typography
 
 ```css
---police-titre: Calsans, Verdana, sans-serif;
---police-corps: Geist, Verdana, sans-serif;
---police-serif: Newsreader, Georgia, serif;
+--font-heading: Calsans, Verdana, sans-serif;
+--font-body:    Geist, Verdana, sans-serif;
+--font-serif:   Newsreader, Georgia, serif;
 ```
 
 Calsans (600) and Geist (300/400/500/600) are self-hosted `woff2` on the source's own Webflow
@@ -109,7 +109,7 @@ Never used: Inter, Roboto, Arial, Helvetica, Open Sans, Poppins.
 
 Not an 8pt grid: Webflow measures, reproduced as read — 100px section padding (150px on the
 tab stack, 40/60px below 767px), then 64 / 48 / 40 / 32 / 24 / 16 / 12 / 8. Frame
-`--largeur-cadre 1440px`, content `--largeur-contenu 1200px`, side margin `2rem`.
+`--width-frame 1440px`, content `--width-content 1200px`, side margin `2rem`.
 Density profile: **dense** — a four-column mega-menu, fifteen tab panels, an eight-field
 form and a footer column of fifteen links, all above the fold count.
 

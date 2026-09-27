@@ -1,23 +1,23 @@
 #!/usr/bin/env bun
 /**
- * layout-check.ts — Contrôle de mise en page DÉTERMINISTE (point d'entrée CLI).
+ * layout-check.ts — DETERMINISTIC layout check (CLI entry point).
  *
- * Usage :
- *   bun run layout-check.ts <url-ou-chemin> [options]
+ * Usage:
+ *   bun run layout-check.ts <url-or-path> [options]
  *
- * Options :
- *   --widths 360,768,1280     largeurs testées (défaut : 360,390,768,1024,1280,1440)
- *   --height 900              hauteur de viewport
- *   --exclude "sel,sel"       sélecteurs exclus de tous les contrôles
- *   --checks "overlap,contrast"  familles activées
- *   --cta "<sélecteur>"       sélecteur des CTA (contrôle cta-wrap)
- *   --allow-overlays false    ne plus considérer absolute/z-index comme volontaire
+ * Options:
+ *   --widths 360,768,1280     widths tested (default: 360,390,768,1024,1280,1440)
+ *   --height 900              viewport height
+ *   --exclude "sel,sel"       selectors excluded from every check
+ *   --checks "overlap,contrast"  enabled families
+ *   --cta "<selector>"        CTA selector (cta-wrap check)
+ *   --allow-overlays false    stop treating absolute/z-index as intentional
  *   --contrast 4.5 --contrast-large 3 --cta-factor 1.6 --overlap-ratio 0.1
- *   --config chemin.json      config JSON partielle (fusionnée sous les drapeaux)
- *   --out rapport.json        écrit aussi le JSON dans un fichier
- *   --quiet                   n'écrit rien sur stderr
+ *   --config path.json        partial JSON config (merged under the flags)
+ *   --out report.json         also writes the JSON to a file
+ *   --quiet                   writes nothing to stderr
  *
- * Sortie : JSON sur stdout. Code de sortie 0 = conforme, 1 = violations, 2 = erreur.
+ * Output: JSON on stdout. Exit code 0 = pass, 1 = violations, 2 = error.
  */
 import { readFileSync, writeFileSync } from "node:fs";
 import { applyFlags, DEFAULT_CONFIG, mergeConfig, parseFlags } from "./config";
@@ -25,7 +25,7 @@ import { runLayoutCheck } from "./runner";
 import { formatSummary } from "./report";
 import type { LayoutCheckConfig } from "./types";
 
-/** Assemble la configuration effective : défauts → fichier `--config` → drapeaux. */
+/** Builds the effective configuration: defaults → `--config` file → flags. */
 function resolveConfig(flags: Record<string, string>): LayoutCheckConfig {
   let config = DEFAULT_CONFIG;
   if (flags.config) {
@@ -36,11 +36,11 @@ function resolveConfig(flags: Record<string, string>): LayoutCheckConfig {
 }
 
 const argv = process.argv.slice(2);
-// La cible est TOUJOURS le premier argument : aucune ambiguïté avec les drapeaux booléens.
+// The target is ALWAYS the first argument: no ambiguity with boolean flags.
 const target = argv[0] && !argv[0].startsWith("--") ? argv[0] : "";
 
 if (!target) {
-  console.error("Usage: bun run layout-check.ts <url-ou-chemin> [--widths 360,1280] [--out rapport.json]");
+  console.error("Usage: bun run layout-check.ts <url-or-path> [--widths 360,1280] [--out report.json]");
   process.exit(2);
 }
 
@@ -53,6 +53,6 @@ try {
   if (!flags.quiet) console.error(`\n${formatSummary(report)}`);
   process.exit(report.summary.pass ? 0 : 1);
 } catch (error) {
-  console.error(`Erreur : ${(error as Error).message}`);
+  console.error(`Error: ${(error as Error).message}`);
   process.exit(2);
 }

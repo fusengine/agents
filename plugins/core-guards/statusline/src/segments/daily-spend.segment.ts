@@ -1,7 +1,7 @@
 /**
- * Daily Spend Segment - Affiche les depenses quotidiennes
+ * Daily Spend Segment - Displays daily spend
  *
- * @description SRP: Affichage depenses jour uniquement
+ * @description SRP: Daily spend display only
  */
 
 import type { StatuslineConfig } from "../config/schema";

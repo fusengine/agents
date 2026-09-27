@@ -9,7 +9,7 @@ recent — `mosa`, `stash`, `parley`, `dispatch`, `stripe` — also carry an `im
 subfolder: **22 photographs on disk**, which the first ten have none of.
 
 There is **no original creation here**, and that is deliberate: every value in this folder
-was measured against something that actually shipped, which is what makes `[relevé]` mean
+was measured against something that actually shipped, which is what makes `[measured]` mean
 anything.
 
 ---
@@ -280,11 +280,10 @@ is against.
 
 Thirty-eight procedures. Section titles are cited by their opening words; several run
 longer in the file itself. Search on the number and the first few words, not on an exact
-string match. **Every `.md` in this folder is in English**; only the three markers
-`[relevé]` / `[arbitrage]` / `[estimé]` stay French, per *Conventions* below. A page's
-own visible copy may be in another language — `stripe-recode/index.html` is in French,
-because its source is `stripe.com/fr` and an English rebuild would have been an
-infidelity.
+string match. **Every file in this folder is in English** — prose, the three markers
+`[measured]` / `[decided]` / `[estimated]` (see *Conventions* below), code comments,
+identifiers and each page's visible copy. `stripe-recode/index.html` was rebuilt from
+`stripe.com/fr`; its copy is now English like the rest of the corpus.
 
 **Two traps carried by the new rows, stated here so they are not discovered the hard way:**
 
@@ -396,15 +395,14 @@ it does not prescribe imitating them on this point.** Take the mechanism, not th
 
 | Marker | Meaning |
 |---|---|
-| `[relevé]` | value read in the source or measured on the render |
-| `[arbitrage]` | judgment call by the rebuilder, justified on the line |
-| `[estimé]` | reconstructed value — the source does not carry it explicitly |
+| `[measured]` | value read in the source or measured on the render |
+| `[decided]` | judgment call by the rebuilder, justified on the line |
+| `[estimated]` | reconstructed value — the source does not carry it explicitly |
 
-These three markers stay in French on purpose: they appear identically in the comments of
-`styles.css`, `index.html` and `motion*.js`. Translating them in one place only would
-desynchronise the documentation from the code. Treat them as identifiers.
-
-Everything else in these files is English.
+These three markers appear identically in the `.md` files and in the comments of
+`styles.css`, `index.html` and `motion*.js`. Change them everywhere at once or not at all —
+renaming them in one place only would desynchronise the documentation from the code. Treat
+them as identifiers.
 
 ---
 

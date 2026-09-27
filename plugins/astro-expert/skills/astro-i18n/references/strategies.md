@@ -11,8 +11,8 @@ Default locale has no prefix. Other locales are prefixed.
 ```
 / → English (default)
 /about → English
-/fr/ → French
-/fr/about → French
+/it/ → Italian
+/it/about → Italian
 /es/ → Spanish
 ```
 
@@ -27,8 +27,8 @@ All locales have a prefix, including the default.
 ```
 /en/ → English
 /en/about → English
-/fr/ → French
-/fr/about → French
+/it/ → Italian
+/it/about → Italian
 ```
 
 **Best for:** Sites with equal language weight, or when you want explicit locale in all URLs.
@@ -39,7 +39,7 @@ All locales have a prefix, including the default.
 // prefix-other-locales (default)
 i18n: {
   defaultLocale: 'en',
-  locales: ['en', 'fr', 'es'],
+  locales: ['en', 'it', 'es'],
   routing: {
     prefixDefaultLocale: false
   }
@@ -48,7 +48,7 @@ i18n: {
 // prefix-always
 i18n: {
   defaultLocale: 'en',
-  locales: ['en', 'fr', 'es'],
+  locales: ['en', 'it', 'es'],
   routing: {
     prefixDefaultLocale: true
   }
@@ -62,11 +62,11 @@ i18n: {
 ```javascript
 // With prefixDefaultLocale: false
 getRelativeLocaleUrl('en', 'about')  // → /about
-getRelativeLocaleUrl('fr', 'about')  // → /fr/about
+getRelativeLocaleUrl('it', 'about')  // → /it/about
 
 // With prefixDefaultLocale: true
 getRelativeLocaleUrl('en', 'about')  // → /en/about
-getRelativeLocaleUrl('fr', 'about')  // → /fr/about
+getRelativeLocaleUrl('it', 'about')  // → /it/about
 ```
 
 ## Choosing a Strategy

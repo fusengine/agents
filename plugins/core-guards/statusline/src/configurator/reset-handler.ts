@@ -21,23 +21,21 @@ export async function handleReset(
 	currentConfig: StatuslineConfig,
 ): Promise<ActionResult> {
 	const confirmReset = await p.confirm({
-		message: "Êtes-vous sûr de vouloir réinitialiser la configuration ?",
+		message: "Are you sure you want to reset the configuration?",
 		initialValue: false,
 	});
 
 	if (confirmReset && !p.isCancel(confirmReset)) {
 		const spinner = p.spinner();
-		spinner.start("Réinitialisation...");
+		spinner.start("Resetting...");
 		try {
 			const resetConfig = await manager.reset();
-			spinner.stop("✓ Configuration réinitialisée");
-			p.log.success("Configuration restaurée aux valeurs par défaut");
+			spinner.stop("✓ Configuration reset");
+			p.log.success("Configuration restored to default values");
 			return { shouldContinue: true, config: resetConfig };
 		} catch (error) {
-			spinner.stop("✗ Erreur");
-			p.log.error(
-				`Impossible de réinitialiser: ${error instanceof Error ? error.message : String(error)}`,
-			);
+			spinner.stop("✗ Error");
+			p.log.error(`Unable to reset: ${error instanceof Error ? error.message : String(error)}`);
 			return { shouldContinue: true, config: currentConfig };
 		}
 	}

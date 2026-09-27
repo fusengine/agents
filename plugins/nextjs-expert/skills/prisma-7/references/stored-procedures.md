@@ -254,7 +254,7 @@ export interface BatchUpdateResult {
 
 ```typescript
 // modules/cores/db/repositories/complex-procedure-repository.ts
-import { Prisma } from '@prisma/client'
+import { Prisma } from '../generated/prisma/client'  // v7: generated path
 import type { OrgHierarchyNode, TopPost, BatchUpdateResult } from '../interfaces/hierarchy'
 
 /**

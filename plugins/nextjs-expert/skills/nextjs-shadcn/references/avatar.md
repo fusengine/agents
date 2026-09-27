@@ -10,12 +10,14 @@ related:
 
 # Avatar Component
 
+> **Base:** same API on Base UI, Radix and React Aria (verified against r/styles/{base,radix}-nova/avatar.json). Registry also exports `AvatarBadge`, `AvatarGroup`, `AvatarGroupCount` and `Avatar size`.
+
 Accessible avatar component that displays user images with fallback initials or placeholder text when images are unavailable.
 
 ## Installation
 
 ```bash
-bunx --bun shadcn-ui@latest add avatar
+bunx --bun shadcn@latest add avatar
 ```
 
 ## Basic Avatar
@@ -23,6 +25,7 @@ bunx --bun shadcn-ui@latest add avatar
 ```tsx
 import { Avatar, AvatarImage, AvatarFallback } from "@/modules/cores/shadcn/components/ui/avatar"
 
+/** Avatar with image and fallback. */
 export function BasicAvatar() {
   return (
     <Avatar>
@@ -45,6 +48,7 @@ interface UserAvatarProps {
   name: string
 }
 
+/** User avatar with initials fallback. */
 export function UserAvatar({ src, name }: UserAvatarProps) {
   // Extract initials from name
   const initials = name
@@ -78,6 +82,7 @@ interface SizedAvatarProps {
   size?: AvatarSize
 }
 
+/** Avatar with selectable size. */
 export function SizedAvatar({
   src,
   name,
@@ -123,6 +128,7 @@ interface UserListProps {
   users: User[]
 }
 
+/** List of users with avatars. */
 export function UserList({ users }: UserListProps) {
   const getInitials = (name: string) => {
     return name
@@ -163,6 +169,7 @@ interface AvatarGroupProps {
   max?: number
 }
 
+/** Overlapping avatar stack with overflow count. */
 export function AvatarGroup({ users, max = 3 }: AvatarGroupProps) {
   const displayUsers = users.slice(0, max)
   const remainingCount = users.length - max
@@ -213,6 +220,7 @@ interface UserWithStatusProps {
   status: UserStatus
 }
 
+/** Avatar with a presence-status indicator. */
 export function AvatarWithStatus({
   src,
   name,
@@ -265,6 +273,7 @@ interface CommentProps {
   comment: Comment
 }
 
+/** Comment row with author avatar. */
 export function CommentComponent({ comment }: CommentProps) {
   const getInitials = (name: string) => {
     return name
@@ -315,6 +324,7 @@ interface AvatarWithBadgeProps {
   badgeLabel: string
 }
 
+/** Avatar with a corner badge label. */
 export function AvatarWithBadge({
   src,
   name,
@@ -366,6 +376,7 @@ interface TeamCardProps {
   members: TeamMember[]
 }
 
+/** Card listing team members with avatars. */
 export function TeamCard({ members }: TeamCardProps) {
   const getInitials = (name: string) => {
     return name

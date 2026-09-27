@@ -23,17 +23,17 @@ export function detectSubscription(
 	sessions: SessionRecord[],
 	configPlan?: SubscriptionType,
 ): SubscriptionType {
-	// Si le plan est defini dans la config, l'utiliser en priorite
+	// If the plan is defined in the config, it takes priority
 	if (configPlan) return configPlan;
 
-	// Si le modele actuel est Opus, c'est forcement le plan max
+	// If the current model is Opus, the plan is necessarily max
 	if (modelId.includes("opus")) return "max";
 
-	// Verifier l'historique pour detecter si l'utilisateur a deja utilise Opus
+	// Check history to detect whether the user has already used Opus
 	const hasUsedOpus = sessions.some((s) => s.modelId?.includes("opus"));
 	if (hasUsedOpus) return "max";
 
-	// Par defaut, plan pro
+	// Default: pro plan
 	return "pro";
 }
 

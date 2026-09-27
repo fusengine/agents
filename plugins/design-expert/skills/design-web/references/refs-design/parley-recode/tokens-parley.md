@@ -2,7 +2,7 @@
 
 Reproduction of the source under the brand **Salut**, in a pearl-grey and slate-blue palette with a single signal red.
 
-Source captured 2026-08-01: full-page desktop `1365 × 10604` (`017b250dc4-desktop.png`), plus a live DOM read of the source and of its stylesheet `/assets/globals-DdnLrtTP.css` (308 345 bytes, a compiled Tailwind v4 bundle). Every value below marked `[relevé]` was read out of that markup or that stylesheet, not inferred from the capture. `[arbitrage]` marks a decision taken here. `[estimé]` marks a value the source does not expose.
+Source captured 2026-08-01: full-page desktop `1365 × 10604` (`017b250dc4-desktop.png`), plus a live DOM read of the source and of its stylesheet `/assets/globals-DdnLrtTP.css` (308 345 bytes, a compiled Tailwind v4 bundle). Every value below marked `[measured]` was read out of that markup or that stylesheet, not inferred from the capture. `[decided]` marks a decision taken here. `[estimated]` marks a value the source does not expose.
 
 This is the **first light page** in a corpus of ten dark ones. Section 11 exists because of that, and is the part of this file worth reading if you only read one.
 
@@ -28,7 +28,7 @@ grep -ac 'prefers-reduced-motion' g.css
   → 1
 ```
 
-The one real animation is the **image fade-in**. Every `<img>` in the page ships with the same class string `[relevé]`:
+The one real animation is the **image fade-in**. Every `<img>` in the page ships with the same class string `[measured]`:
 
 ```
 class="size-full object-cover transition-opacity duration-700 ease-out opacity-0"
@@ -42,14 +42,14 @@ Everything else is a CSS state transition: `transition-colors` on the buttons an
 
 | Behaviour | Value | Provenance |
 |---|---|---|
-| Image fade-in | `opacity 700ms ease-out`, fired on `load` | `[relevé]` — identical to the source |
-| Arrow nudge on CTA hover | `translateX(2px)`, 160ms | `[relevé]` — source uses `translate-x-0.5` = 2px |
-| Button press | `translateY(1px)` | `[arbitrage]` — source uses `scale(0.97)`; a scale on a pill button at 40px height reads as a wobble on a light page, a 1px drop does not |
-| Card hover | border `#d5dae2 → #c3cad6` + shadow in, 260ms | `[arbitrage]` — the source has no card hover at all |
-| Header surface at 24px scroll | background `.78 → .94` alpha, 260ms | `[arbitrage]` |
-| Section reveal | `opacity 0→1`, `translateY(14px→0)`, 620ms `cubic-bezier(.16,1,.3,1)` | `[arbitrage]` |
-| Terminal stagger | 90ms per line, 4 lines | `[arbitrage]` |
-| Live dot pulse | `opacity 1 → .45 → 1`, 2.4s, infinite | `[relevé]` in kind — the source runs `animate-pulse` on its own status dot |
+| Image fade-in | `opacity 700ms ease-out`, fired on `load` | `[measured]` — identical to the source |
+| Arrow nudge on CTA hover | `translateX(2px)`, 160ms | `[measured]` — source uses `translate-x-0.5` = 2px |
+| Button press | `translateY(1px)` | `[decided]` — source uses `scale(0.97)`; a scale on a pill button at 40px height reads as a wobble on a light page, a 1px drop does not |
+| Card hover | border `#d5dae2 → #c3cad6` + shadow in, 260ms | `[decided]` — the source has no card hover at all |
+| Header surface at 24px scroll | background `.78 → .94` alpha, 260ms | `[decided]` |
+| Section reveal | `opacity 0→1`, `translateY(14px→0)`, 620ms `cubic-bezier(.16,1,.3,1)` | `[decided]` |
+| Terminal stagger | 90ms per line, 4 lines | `[decided]` |
+| Live dot pulse | `opacity 1 → .45 → 1`, 2.4s, infinite | `[measured]` in kind — the source runs `animate-pulse` on its own status dot |
 
 The reveal and the stagger are the two additions. They are declared, not smuggled: the corpus convention is a `motion.js` of roughly 200 lines and the source gives it almost nothing to do, so the file earns its place by carrying a reveal the source does without. `DESIGN_VARIANCE 5` allows it; `MOTION_INTENSITY 3` caps how far it can go, which is why the rise is 14px and not 40.
 
@@ -75,7 +75,7 @@ if (reduce.matches) { markAllLoaded(); return; }
 
 ### 1.4 Observers, and taking them back down
 
-Two `IntersectionObserver` instances, both self-disarming inside their own callback `[relevé, MDN]`:
+Two `IntersectionObserver` instances, both self-disarming inside their own callback `[measured, MDN]`:
 
 ```js
 observer.unobserve(entry.target);   // reveal: one element at a time
@@ -98,7 +98,7 @@ grep -c 'cancelAnimationFrame' motion.js → 1
 
 ### 2.1 The source palette, read out of its stylesheet
 
-Seven custom properties, all in `oklch` `[relevé]`:
+Seven custom properties, all in `oklch` `[measured]`:
 
 ```
 grep -aoE '\-\-color-zephyr[a-z-]*: *[^;]+' g.css | sort -u
@@ -142,7 +142,7 @@ The surface chroma landed at `.004`-`.012`, in the same band as the source's `.0
 
 ### 2.3 The red, and where it is not
 
-`--signal: #d8342b` at chroma `.200` is by an order of magnitude the most saturated value on the page. Its whole design is scarcity. Uses, exhaustively `[relevé, own markup]`:
+`--signal: #d8342b` at chroma `.200` is by an order of magnitude the most saturated value on the page. Its whole design is scarcity. Uses, exhaustively `[measured, own markup]`:
 
 ```
 grep -o 'var(--signal[a-z-]*)' styles.css | wc -l   → 5
@@ -154,11 +154,11 @@ grep -o 'var(--signal[a-z-]*)' styles.css | wc -l   → 5
 4. the `Popular` badge on the Pro plan
 5. the `>` caret opening the terminal prompt
 
-Where it is deliberately **not** `[arbitrage]`:
+Where it is deliberately **not** `[decided]`:
 
 - **Not on any button.** The source's CTAs are `zephyr-ink` filled and white-bordered; ours are `--ink` filled and `--hairline` bordered. A red primary button would have been the single loudest change to a page whose whole register is restraint.
 - **Not on the pricing tickmarks.** The source uses `text-zephyr-moss` there, a green check. A red check reads as a failed item; those took `--slate-pale` on a `--slate-wash` fill. This is the one place where a literal role-swap of the source's accent would have been wrong.
-- **Not on any link, heading or numeral.** Numerals took `--slate`, matching the source's `text-zephyr-sky-deep font-elegant text-3xl` `[relevé]`.
+- **Not on any link, heading or numeral.** Numerals took `--slate`, matching the source's `text-zephyr-sky-deep font-elegant text-3xl` `[measured]`.
 
 ### 2.4 Contrast, measured
 
@@ -190,7 +190,7 @@ grep -aoE 'font-family[^;}]*' g.css | sort -u | grep -iE 'public|instrument'
   font-family: Instrument Serif, Georgia, serif
 ```
 
-and the utility that binds the second one `[relevé]`:
+and the utility that binds the second one `[measured]`:
 
 ```
 .font-elegant { font-family: Instrument Serif, Georgia, serif }
@@ -202,7 +202,7 @@ So: **Public Sans** for the grotesque, **Instrument Serif** for the display seri
 
 Every source value below is the resolved value of a Tailwind class read off the live markup.
 
-| Role | Source class `[relevé]` | Source value | Salut |
+| Role | Source class `[measured]` | Source value | Salut |
 |---|---|---|---|
 | h1 | `text-[2.75rem] sm:text-6xl lg:text-7xl` | 44 / 60 / 72px | `clamp(2.75rem, 1.6rem + 5vw, 4.5rem)` |
 | h1 leading | `leading-[1.02]` | 1.02 | 1.02 |
@@ -239,7 +239,7 @@ That last one is the honest cost: a legibility floor changed a layout decision t
 
 Uppercase is used in five places and all five are labels: the eyebrow (8 occurrences), the context-card field names, the footer column heads, the `ON YOUR PHONE` variant, and nothing else. No heading is uppercase. No button is uppercase.
 
-Italic fires twice, both times as a serif accent inside a serif phrase: `your customer.` → `to a yes.` in the h1, and `& answers` in the FAQ title. The source does exactly this, in exactly these two places `[relevé, lines 99 and 1077 of the source markup]`.
+Italic fires twice, both times as a serif accent inside a serif phrase: `your customer.` → `to a yes.` in the h1, and `& answers` in the FAQ title. The source does exactly this, in exactly these two places `[measured, lines 99 and 1077 of the source markup]`.
 
 ---
 
@@ -247,7 +247,7 @@ Italic fires twice, both times as a serif accent inside a serif phrase: `your cu
 
 ### 4.1 Section sequence
 
-Read off the source's live markup by line number `[relevé]`:
+Read off the source's live markup by line number `[measured]`:
 
 ```
 grep -an '^section\|^header\|^footer' t.txt
@@ -272,7 +272,7 @@ Reproduced one for one, in that order, with the same background alternation (`bo
 
 ### 4.2 Containers
 
-| Element | Source `[relevé]` | Salut |
+| Element | Source `[measured]` | Salut |
 |---|---|---|
 | header | `max-w-6xl px-6` (implicit via inner div) | `72rem`, `padding-inline: 24px` |
 | most sections | `max-w-6xl` = 1152px | `--wrap: 72rem` |
@@ -307,7 +307,7 @@ Eight, against `fora-recode`'s twelve and against the single value that would ha
 
 At 360px the terminal measures roughly 470px tall (four mono steps at 14px/1.65, a two-line prompt, a three-line output, 40px of padding) inside a band declared at 380px, with `overflow: hidden` on the band. It was clipped, visibly, and the screenshot proved it before the CSS did.
 
-Fix `[arbitrage]`:
+Fix `[decided]`:
 
 ```css
 @media (max-width: 639px) {
@@ -351,32 +351,32 @@ Twenty-five hairlines against fourteen shadows. On a dark page that ratio invert
 
 ### 5.1 Numbered card, ×3
 
-Source `[relevé]`: `border-zephyr-sand flex flex-col gap-3 rounded-2xl border bg-white p-7`, opening on `<span class="text-zephyr-sky-deep font-elegant text-3xl leading-none">01</span>`.
+Source `[measured]`: `border-zephyr-sand flex flex-col gap-3 rounded-2xl border bg-white p-7`, opening on `<span class="text-zephyr-sky-deep font-elegant text-3xl leading-none">01</span>`.
 
 Reproduced exactly: 28px padding (`p-7`), 12px internal gap, white fill, 1px hairline, 16px radius, a 30px serif numeral in `--slate`. The only addition is a hover that firms the border and lifts a shadow, which the source does not have.
 
 ### 5.2 Visitor-context card
 
-The strongest small component in the source and the one that carries its whole product claim: a floating card listing what the agent knows about the visitor before answering. Structure `[relevé]`: name + status badge, then three icon/label/value rows (`Reading`, `Came from`, `Identity`), then a drafted-answer block.
+The strongest small component in the source and the one that carries its whole product claim: a floating card listing what the agent knows about the visitor before answering. Structure `[measured]`: name + status badge, then three icon/label/value rows (`Reading`, `Came from`, `Identity`), then a drafted-answer block.
 
 The value rows use `truncate` in the source; ours use `overflow: hidden; text-overflow: ellipsis; white-space: nowrap` on `.ctx-value`, which is the same thing spelled out.
 
 ### 5.3 The four floating interface mocks
 
-All four are HTML and CSS, no image, as in the source `[relevé]`:
+All four are HTML and CSS, no image, as in the source `[measured]`:
 
 1. **Browser + chat widget**, overlapping the hero card's lower edge by −144px (source: `-mt-36`, = 144px; `sm:-mt-44` = 176px). Traffic lights, a pill URL bar, a skeleton page behind, the widget bottom-right.
 2. **Terminal**, `#161c24`, four tool calls with a right-aligned `done`, floating on the meadow band.
-3. **Phone**, 264px wide, 6px `#1b2129` chassis, 36/30px radii, a 520px screen (source: `w-[264px] border-[6px] rounded-[2.25rem] h-[520px]` `[relevé]` — identical).
-4. **Status card**, bottom-aligned at 12% of the peak band (source: `mb-[14%]`; ours 12% `[arbitrage]`, because our band is shorter at the small breakpoint).
+3. **Phone**, 264px wide, 6px `#1b2129` chassis, 36/30px radii, a 520px screen (source: `w-[264px] border-[6px] rounded-[2.25rem] h-[520px]` `[measured]` — identical).
+4. **Status card**, bottom-aligned at 12% of the peak band (source: `mb-[14%]`; ours 12% `[decided]`, because our band is shorter at the small breakpoint).
 
 ### 5.4 Pricing plans
 
-Three cards, the middle one flagged. Source marks it with a `Popular` pill and nothing else structural `[relevé]` — no scale, no lift, no coloured border. We added `border-color: --slate-pale` and a resting shadow `[arbitrage]`: on a light page a pill alone does not carry the emphasis, because the pill is small and the three cards are otherwise identical white rectangles. On the source's cream page the same pill works, because its white cards already stand off a warmer field.
+Three cards, the middle one flagged. Source marks it with a `Popular` pill and nothing else structural `[measured]` — no scale, no lift, no coloured border. We added `border-color: --slate-pale` and a resting shadow `[decided]`: on a light page a pill alone does not carry the emphasis, because the pill is small and the three cards are otherwise identical white rectangles. On the source's cream page the same pill works, because its white cards already stand off a warmer field.
 
 ### 5.5 FAQ
 
-Ten pairs in a two-column grid, all open, no accordion, no `<details>` `[relevé]`. This is what makes the page 10600px tall and it is a real editorial choice: the source would rather be long than make you click. Reproduced.
+Ten pairs in a two-column grid, all open, no accordion, no `<details>` `[measured]`. This is what makes the page 10600px tall and it is a real editorial choice: the source would rather be long than make you click. Reproduced.
 
 Because there is no `<summary>`, the marker-hiding trio (`summary { list-style: none }` plus `summary::-webkit-details-marker { display: none }`) is not needed here. It is noted because it was verified for this project and would be needed the moment anyone converts this grid to a disclosure.
 
@@ -399,7 +399,7 @@ Every `width`/`height` attribute in the markup is the file's real pixel size, re
 
 ### 6.1 Five bands, four files
 
-The source runs five photographic bands (`path`, `clarity`, `meadow`, `hill`, `sunrise`). We were given four images. The fourth band — the empty one between Setup and Pricing — reuses `meadow.webp` at a different crop `[arbitrage]`:
+The source runs five photographic bands (`path`, `clarity`, `meadow`, `hill`, `sunrise`). We were given four images. The fourth band — the empty one between Setup and Pricing — reuses `meadow.webp` at a different crop `[decided]`:
 
 ```html
 <img src="img/meadow.webp" class="media-img media-img-low" …>
@@ -412,7 +412,7 @@ The source runs five photographic bands (`path`, `clarity`, `meadow`, `hill`, `s
 
 ### 6.2 What we did not reproduce from the source's image handling
 
-The source ships a **base64 LQIP** as a `background-image` on every band wrapper — a ~120-byte WebP thumbnail that gives the band its colour before the real file decodes `[relevé]`. We did not: it requires an encoding step this page has no build for, and with local files on a landing page the gap it covers is a few tens of milliseconds. The band's `background: var(--pearl-tint)` covers the same moment with a flat tone.
+The source ships a **base64 LQIP** as a `background-image` on every band wrapper — a ~120-byte WebP thumbnail that gives the band its colour before the real file decodes `[measured]`. We did not: it requires an encoding step this page has no build for, and with local files on a landing page the gap it covers is a few tens of milliseconds. The band's `background: var(--pearl-tint)` covers the same moment with a flat tone.
 
 The source also ships a four-step `srcset` per band (640/1024/1600/2400w) with `sizes="100vw"`. We ship one file per band. Same reason: no build step, and the four delivered assets are already 1920px, which is the right size for a full-bleed band up to a 2× 960px viewport.
 
@@ -422,10 +422,10 @@ The source also ships a four-step `srcset` per band (640/1024/1600/2400w) with `
 
 Named on purpose, in the order the reader meets them.
 
-1. **The mobile menu.** The source's header collapses to a logo and one button below 900px, with no drawer at all — the nav links simply disappear `[relevé, mobile capture at 375px]`. We reproduced that exactly, which means this page also has no mobile navigation. It is faithful and it is a real limitation.
+1. **The mobile menu.** The source's header collapses to a logo and one button below 900px, with no drawer at all — the nav links simply disappear `[measured, mobile capture at 375px]`. We reproduced that exactly, which means this page also has no mobile navigation. It is faithful and it is a real limitation.
 2. **The LQIP placeholders** (§6.2).
 3. **The responsive `srcset`** (§6.2).
-4. **The `text-shadow` on the hero, partially.** The source runs `[text-shadow:0_1px_18px_rgba(255,255,255,0.95)]` on the whole hero body and cancels it on the button row with `[text-shadow:none]` `[relevé]`. We reproduced both halves. What we did not reproduce is its second gradient overlay stack — the source layers `from-white/88 via-white/55 to-white/10` *and* a separate `to-zephyr-bone h-28` foot fade. We ship both, but tuned to the pearl palette rather than to pure white, because a pure-white wash over a cool photograph turns the top of the hero grey-green.
+4. **The `text-shadow` on the hero, partially.** The source runs `[text-shadow:0_1px_18px_rgba(255,255,255,0.95)]` on the whole hero body and cancels it on the button row with `[text-shadow:none]` `[measured]`. We reproduced both halves. What we did not reproduce is its second gradient overlay stack — the source layers `from-white/88 via-white/55 to-white/10` *and* a separate `to-zephyr-bone h-28` foot fade. We ship both, but tuned to the pearl palette rather than to pure white, because a pure-white wash over a cool photograph turns the top of the hero grey-green.
 5. **Real links.** Every `href` on this page is an in-page anchor. There is no `/auth/signin`, no `/docs`, no external destination. The footer's social pills point at `#top`.
 6. **The `active:scale-[0.97]` press.** Replaced by `translateY(1px)` (§1.2).
 7. **The source's exact icon set.** The source uses Lucide via a React component; ours are hand-inlined SVG paths, several of them the same Lucide geometry, redrawn or simplified. The eye, sparkles, send, terminal, braces, bell and arrow are recognisably the same marks.
@@ -494,7 +494,7 @@ Run against `index.html` and `styles.css` in this directory.
 
 **Check 2, eyebrow count.** The source labels eight of its sections with a tracked uppercase eyebrow. That is above the cap and it is the source's composition, not an AI template tell: each eyebrow names a real chapter of the argument (`THE SILENT DROP-OFF`, `CLEAN CONVERSATIONS`, `BUILT FOR AGENTS`…), and removing four of them would break the alternation that gives the page its chapters. Kept, reported.
 
-**Check 3, theme lock.** The source's footer is `bg-[#0a0a0a]` under a cream page `[relevé, line 1173]`, and it is where the giant wordmark lives — the single strongest signature in the whole design. Reproduced at `#14181d`. The argument for keeping it: check 3 forbids a theme flip **mid-scroll**, and a terminal footer is not mid-scroll; it is the page ending. The two other dark surfaces on the page are a terminal and a phone chassis, both dark because the object they depict is dark, which §3's own note explicitly allows (`cursor-recode` ships the same phone chassis). Reported for the reviewer's call.
+**Check 3, theme lock.** The source's footer is `bg-[#0a0a0a]` under a cream page `[measured, line 1173]`, and it is where the giant wordmark lives — the single strongest signature in the whole design. Reproduced at `#14181d`. The argument for keeping it: check 3 forbids a theme flip **mid-scroll**, and a terminal footer is not mid-scroll; it is the page ending. The two other dark surfaces on the page are a terminal and a phone chassis, both dark because the object they depict is dark, which §3's own note explicitly allows (`cursor-recode` ships the same phone chassis). Reported for the reviewer's call.
 
 **Check 7, hero text elements.** Five, because the source has five: kicker, headline, subtext, CTA row, and a trust strip reading `Free forever · 50 conversations / month · No credit card · One snippet`. Moving the strip below the hero would break the overlap geometry, since the browser mock has to rise into the hero's bottom padding and that padding is sized around the strip. Kept, reported.
 
@@ -542,7 +542,7 @@ On a dark page shadow is nearly useless: black on black. Here it is the only too
 
 Three rules learned in the making:
 
-- **Tint the shadow with the page's ink.** `rgba(44,58,75,x)`, never `rgba(0,0,0,x)`. Black shadow on a cool light page reads as grime; the source does the same thing with its teal, `rgba(41,75,82,x)` `[relevé]`.
+- **Tint the shadow with the page's ink.** `rgba(44,58,75,x)`, never `rgba(0,0,0,x)`. Black shadow on a cool light page reads as grime; the source does the same thing with its teal, `rgba(41,75,82,x)` `[measured]`.
 - **Use a large negative spread.** `0 60px 120px -70px` puts almost the whole blur below the element and none of it around the edges. Without the negative spread, a 120px blur on a light page becomes a grey halo that flattens everything near it.
 - **Offset far more than you would in the dark.** 40 to 60px of Y-offset, against the 8-16px that reads as elevation on a dark surface. Light pages need distance to make the shadow legible at all.
 
@@ -562,7 +562,7 @@ The empty fourth band exists partly because of this: once you have used all thre
 
 At the same nominal size, a grotesque set in `#5a6779` on `#f4f5f7` reads lighter than the same face in `#a8b0bc` on `#111` — dark-on-light loses apparent weight, because the eye's blooming works against the ink instead of for it. Consequences, all of them measured against the dark refs:
 
-- **Body sits at 15px, not 14.** The corpus's dark pages routinely run 14px body. Here 14px reads thin and the source agrees: `text-[15px]` `[relevé]`.
+- **Body sits at 15px, not 14.** The corpus's dark pages routinely run 14px body. Here 14px reads thin and the source agrees: `text-[15px]` `[measured]`.
 - **Sub-headings sit at 600, not 500.** `font-semibold` on every `h3`, from the source.
 - **The display face is a serif at 400, never a grotesque at 700.** A 700 grotesque headline on a light page reads heavier than it measures, because there is no luminance headroom above it. Instrument Serif at 400 carries the same visual mass with none of the bluntness. This is probably the single biggest reason the source looks the way it does.
 - **Labels lost their alpha.** On a dark page a label is `white/50`. Here `--ink-mute` is a solid hex at 3.55:1, and it is fenced to labels only — nothing carrying a sentence uses it.

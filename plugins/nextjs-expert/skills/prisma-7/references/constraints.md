@@ -118,7 +118,7 @@ model Comment {
 
 ```typescript
 // modules/cores/db/repositories/constraint-error-handler.ts
-import { Prisma } from '@prisma/client'
+import { Prisma } from '../generated/prisma/client' // v7: generated path (modules/cores/db/generated)
 
 /**
  * Handle constraint violation errors

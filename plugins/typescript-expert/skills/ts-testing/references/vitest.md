@@ -11,11 +11,28 @@ related: choosing-runner.md, common-patterns.md
 
 ## Overview
 
-Vitest (4.x) is a Vite-powered runner with ~Jest parity, mature coverage, and
+Vitest (5.x) is a Vite-powered runner with ~Jest parity, mature coverage, and
 multi-worker CI scaling. It reads `vite.config.*` by default; add a
 `test` block or a dedicated `vitest.config.ts`.
 
-Requires Vite `^6 || ^7 || ^8` and Node `^20 || ^22 || >=24`.
+Requires Vite `>=6.4.0` (peer `^6.4 || ^7 || ^8`) and Node `^22.12 || ^24 || >=26`.
+`vite` is a **peer dependency** since 5.0 — Yarn users must add it explicitly.
+
+Source: https://vitest.dev/blog/vitest-5 + https://vitest.dev/guide/migration/
+
+---
+
+## Vitest 5 breaking changes to know
+
+| Change | Action |
+|--------|--------|
+| `clearMocks` defaults to `true` (mock call history cleared before every test) | Set `clearMocks: false` to keep v4 behavior |
+| `vi.mock` / `vi.unmock` / `vi.hoisted` inside a function or `describe` now **throws** | Move them to module top level (`vi.doMock` may still be nested) |
+| `test.sequential` / `describe.sequential` / `sequential` option removed | Use `{ concurrent: false }` |
+| Reports/artifacts (html, json, junit, traces) go to a single `.vitest/` dir | Add `.vitest` to `.gitignore` |
+| Config files are no longer looked up from parent directories | Keep `vitest.config.*` at the project root or pass `--config` |
+| Entry points `vitest/coverage`, `vitest/reporters`, `vitest/environments`, … removed | Import from `vitest/node` / `vitest/runtime` |
+| `@vitest/browser-webdriverio` moved to the vitest-community org | Update the dependency if you use WebdriverIO |
 
 ---
 
@@ -67,9 +84,10 @@ Real-browser component testing via a provider package:
 | Package | Driver |
 |---------|--------|
 | `@vitest/browser-playwright` | Playwright |
-| `@vitest/browser-webdriverio` | WebdriverIO |
+| `@vitest/browser-webdriverio` | WebdriverIO (community-maintained since 5.0) |
 
-Configure under `test.browser` (`enabled`, `provider`, `instances`).
+Configure under `test.browser` (`enabled`, `provider`, `instances`); `provider` is a
+factory call, e.g. `provider: playwright()` imported from `@vitest/browser-playwright`.
 
 ---
 
@@ -82,7 +100,8 @@ Configure under `test.browser` (`enabled`, `provider`, `instances`).
 | `vi.spyOn(obj, 'method')` | Wrap existing method |
 | `vi.useFakeTimers()` | Control time |
 
-`vi.mock` factories are hoisted above imports — keep them self-contained.
+`vi.mock` factories are hoisted above imports — keep them self-contained, and call
+`vi.mock` at module top level (Vitest 5 throws otherwise).
 
 ---
 

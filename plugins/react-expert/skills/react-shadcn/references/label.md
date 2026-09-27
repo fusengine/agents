@@ -10,6 +10,8 @@ related: input.md, textarea.md, radio-group.md, switch.md
 
 # Label Component
 
+> **Base:** same API on Base UI, Radix and React Aria (verified against r/styles/{base,radix}-nova/label.json). In forms prefer `FieldLabel` inside `Field` ([field-patterns.md](field-patterns.md)).
+
 ## Overview
 
 The Label component renders a semantic HTML `<label>` element with built-in Tailwind styling. It's designed to work with form inputs and provides proper accessibility through `htmlFor` association.
@@ -25,6 +27,7 @@ bunx --bun shadcn@latest add label
 ```tsx
 import { Label } from "@/modules/cores/shadcn/components/ui/label"
 
+/** Standalone label. */
 export function BasicLabel() {
   return <Label htmlFor="email">Email</Label>
 }
@@ -36,6 +39,7 @@ export function BasicLabel() {
 import { Input } from "@/modules/cores/shadcn/components/ui/input"
 import { Label } from "@/modules/cores/shadcn/components/ui/label"
 
+/** Label paired with an input. */
 export function LabelWithInput() {
   return (
     <div className="grid w-full gap-2">
@@ -52,6 +56,7 @@ export function LabelWithInput() {
 import { Label } from "@/modules/cores/shadcn/components/ui/label"
 import { Input } from "@/modules/cores/shadcn/components/ui/input"
 
+/** Label with a required-field marker. */
 export function LabelWithRequired() {
   return (
     <div className="grid w-full gap-2">
@@ -74,6 +79,7 @@ The Label component supports different text styling through class composition:
 ```tsx
 import { Label } from "@/modules/cores/shadcn/components/ui/label"
 
+/** Label style variations. */
 export function LabelVariants() {
   return (
     <div className="space-y-4">
@@ -110,6 +116,7 @@ export function LabelVariants() {
 import { Label } from "@/modules/cores/shadcn/components/ui/label"
 import { Input } from "@/modules/cores/shadcn/components/ui/input"
 
+/** Label wired for accessibility. */
 export function AccessibleLabel() {
   return (
     <div className="grid w-full gap-2">
@@ -139,6 +146,7 @@ export function AccessibleLabel() {
 import { Label } from "@/modules/cores/shadcn/components/ui/label"
 import { Input } from "@/modules/cores/shadcn/components/ui/input"
 
+/** Fieldset grouping labeled inputs. */
 export function GroupLabels() {
   return (
     <fieldset className="space-y-4">

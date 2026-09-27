@@ -1,7 +1,7 @@
 /**
- * Context Service - Calcul du contexte utilise
+ * Context Service - Computes the context used
  *
- * @description SRP: Calcul contexte uniquement
+ * @description SRP: Context computation only
  * @see https://github.com/anthropics/claude-code/issues/14830
  */
 
@@ -19,10 +19,10 @@ function _calculateTotalTokens(usage: TokenUsage): number {
 function _calculateSystemOverhead(estimateOverhead: boolean, overheadTokens?: number): number {
 	if (!estimateOverhead) return 0;
 
-	// Si un overhead custom est défini, l'utiliser
+	// If a custom overhead is defined, use it
 	if (overheadTokens !== undefined) return overheadTokens;
 
-	// Sinon, calculer avec les constantes par défaut
+	// Otherwise, compute with the default constants
 	const mcpTokens = OVERHEAD_ESTIMATION.MCP_PER_SERVER * OVERHEAD_ESTIMATION.DEFAULT_MCP_SERVERS;
 
 	return (
@@ -47,9 +47,9 @@ export function getContextFromInput(
 
 	const windowSize = contextWindow.context_window_size || TOKEN_LIMITS.CONTEXT_WINDOW;
 
-	// Utiliser used_percentage pre-calcule par Claude Code (le plus precis)
-	// Peut etre null (debut de session, post-/compact) ou undefined (non fourni)
-	// Sinon fallback sur le calcul manuel, rapporte a la vraie fenetre de contexte
+	// Use used_percentage precomputed by Claude Code (the most accurate)
+	// May be null (session start, post-/compact) or undefined (not provided)
+	// Otherwise fall back to the manual computation, relative to the real context window
 	// @see https://code.claude.com/docs/en/statusline
 	if (contextWindow.used_percentage !== undefined && contextWindow.used_percentage !== null) {
 		const tokens = Math.round((contextWindow.used_percentage / 100) * windowSize);
@@ -57,7 +57,7 @@ export function getContextFromInput(
 		return { tokens, maxTokens: windowSize, percentage };
 	}
 
-	// Fallback: calcul depuis totaux (moins precis car inclut tokens compactes)
+	// Fallback: computed from totals (less accurate, includes compacted tokens)
 	const totalTokens = contextWindow.total_input_tokens + contextWindow.total_output_tokens;
 	const percentage = Math.min((totalTokens / windowSize) * 100, 100);
 

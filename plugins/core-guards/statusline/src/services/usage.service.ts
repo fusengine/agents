@@ -1,7 +1,7 @@
 /**
- * Usage Service - Tracking de l'usage 5 heures
+ * Usage Service - 5-hour usage tracking
  *
- * @description SRP: Tracking usage uniquement
+ * @description SRP: Usage tracking only
  */
 
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";

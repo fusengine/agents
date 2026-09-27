@@ -6,7 +6,7 @@ keywords: config, defineConfig, integrations, vite, base, site, server
 priority: high
 ---
 
-# Astro 6 Configuration
+# Astro 7 Configuration
 
 ## When to Use
 
@@ -23,7 +23,7 @@ import { defineConfig } from 'astro/config';
 export default defineConfig({
   site: 'https://example.com',
   base: '/',
-  output: 'static', // 'static' | 'server' | 'hybrid'
+  output: 'static', // 'static' | 'server' (no 'hybrid' — use per-route prerender)
   trailingSlash: 'ignore', // 'always' | 'never' | 'ignore'
   compressHTML: 'jsx', // default in Astro 7 — JSX-style whitespace stripping
 });
@@ -41,6 +41,10 @@ export default defineConfig({
 | `adapter` | object | Server runtime adapter |
 | `vite` | object | Vite config passthrough (Vite 8) |
 | `srcDir` | string | Source directory (default: `./src`) |
+| `session` | `object \| false` | Session driver config; `false` opts out entirely (7.2+) — runtime tree-shaken, adapters skip their default driver |
+| `logger.entrypoint` | `URL \| string` | Custom logger module (option since 7.0; URL form 7.1+, relative string 7.2+) |
+| `fetchFile` | `string \| null` | Advanced Routing entrypoint (default `src/fetch.ts`); `null` disables it |
+| `cache` / `routeRules` | object | Stable route caching (7.0), e.g. `cache: { provider: memoryCache() }` |
 | `publicDir` | string | Public assets (default: `./public`) |
 
 ## Removed Experimental Flags (Astro 7)

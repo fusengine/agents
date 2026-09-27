@@ -55,24 +55,23 @@ export const auth = betterAuth({
 
 ## Client Configuration
 
-```typescript
-// lib/auth-client.ts
-import { createAuthClient } from "better-auth/react"
-import { genericOAuthClient } from "better-auth/client/plugins"
-
-export const authClient = createAuthClient({
-  plugins: [genericOAuthClient()]
-})
-```
+Since Better Auth 1.7 generic providers are first-class social providers: no
+`genericOAuthClient()` plugin is needed (it was dropped), and PKCE defaults to `true`.
 
 ## Usage
 
 ```typescript
-await authClient.signIn.oauth2({
-  providerId: "custom-provider",
+// was signIn.oauth2({ providerId }) before 1.7
+await authClient.signIn.social({
+  provider: "custom-provider",
   callbackURL: "/dashboard"
 })
+
+// Linking: was oauth2.link() before 1.7
+await authClient.linkSocial({ provider: "custom-provider", callbackURL: "/settings" })
 ```
+
+Callback URL: `${baseURL}/api/auth/callback/:providerId`.
 
 ## Available Options
 
@@ -85,7 +84,8 @@ await authClient.signIn.oauth2({
 | `tokenUrl` | Yes | Token URL |
 | `userInfoUrl` | No | User info URL |
 | `scopes` | No | Requested scopes |
-| `pkce` | No | Enable PKCE |
+| `pkce` | No | PKCE (default `true` since 1.7; set `false` if the provider rejects it) |
+| `discoveryUrl` | No | OIDC discovery document (alternative to explicit URLs) |
 
 ## Mapping User Info
 
@@ -93,7 +93,7 @@ await authClient.signIn.oauth2({
 genericOAuth({
   config: [{
     // ...
-    mapUserInfo: (userInfo) => ({
+    mapProfileToUser: (userInfo) => ({
       id: userInfo.sub,
       email: userInfo.email,
       name: userInfo.name,

@@ -32,8 +32,9 @@ const PostPage = lazy(() => import('./PostPage'))
 Enable automatic code splitting:
 
 ```typescript
-TanStackRouterVite({
-  experimental: { enableCodeSplitting: true },
+tanstackRouter({
+  target: 'react',
+  autoCodeSplitting: true,
 })
 ```
 

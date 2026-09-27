@@ -1,5 +1,5 @@
 /**
- * Constants Index - Exporte toutes les constantes
+ * Constants Index - Exports all constants
  */
 
 export { ANSI_COLORS, COLOR_THRESHOLDS } from "./colors.constant";

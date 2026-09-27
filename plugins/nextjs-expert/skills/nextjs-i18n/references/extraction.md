@@ -1,7 +1,7 @@
 ---
 name: extraction
-description: Hook useExtracted, scripts extraction messages, merge translations, CI
-when-to-use: auto-extraction messages, clés depuis composants, default values, workflow CI
+description: useExtracted hook, message extraction scripts, merge translations, CI
+when-to-use: message auto-extraction, keys from components, default values, CI workflow
 keywords: useExtracted, extract script, extraction config, merge translations
 priority: low
 requires: translations.md, messages-validation.md
@@ -10,53 +10,63 @@ related: messages-validation.md
 
 # next-intl Message Extraction
 
-## useExtracted Hook (Beta)
+## useExtracted Hook (Experimental)
 
-Extract messages from React components at build time.
+Inline source messages; keys are auto-generated and extracted during `next dev` / `next build`
+(Turbopack or Webpack loader), then `useExtracted` is compiled to `useTranslations`.
+Server-side async variant: `getExtracted()` from `next-intl/server`.
 
 ```typescript
 import { useExtracted } from 'next-intl'
 
 function Component() {
-  const t = useExtracted('Namespace')
+  const t = useExtracted('Namespace')  // namespace is optional
 
   return (
     <div>
-      {t('title', 'Default title text')}
-      {t('description', 'Default description')}
+      {t('Default title text')}
+      {t({ message: 'Right', description: 'Advance to the next slide' })}
     </div>
   )
 }
 ```
 
-## Extraction Script
+## Configuration (next.config.ts)
 
-```bash
-# Extract messages from source
-bunx next-intl extract
+```typescript
+import type { NextConfig } from 'next'
+import createNextIntlPlugin from 'next-intl/plugin'
+
+const withNextIntl = createNextIntlPlugin({
+  experimental: {
+    extract: true,  // enables useExtracted
+    messages: { path: './messages', format: 'json', locales: 'infer', sourceLocale: 'en' },  // format: 'json' | 'po' | custom
+    srcPath: './src'
+  }
+})
+
+const config: NextConfig = {}
+export default withNextIntl(config)
 ```
 
-## Configuration
+## Manual Extraction (no dev server, e.g. component libraries)
 
-```json
-// next-intl.config.json
-{
-  "extract": {
-    "include": ["src/**/*.{ts,tsx}"],
-    "exclude": ["**/*.test.ts"],
-    "output": "messages/extracted.json"
-  }
-}
+```typescript
+import { unstable_extractMessages } from 'next-intl/extractor'
+
+await unstable_extractMessages({
+  srcPath: './src',
+  messages: { path: './messages', format: 'po', locales: 'infer', sourceLocale: 'en' }
+})
 ```
 
 ## Output Format
 
 ```json
-// messages/extracted.json
+// messages/en.json (source locale) — target locales get empty entries kept in sync
 {
   "Namespace": {
-    "title": "Default title text",
-    "description": "Default description"
+    "VgH3tb": "Default title text"
   }
 }
 ```
@@ -83,7 +93,7 @@ await fs.writeFile('messages/en.json', JSON.stringify(merged, null, 2))
 jobs:
   extract:
     steps:
-      - run: bunx next-intl extract
+      - run: bunx next build  # extraction runs as part of next build
       - run: git diff --exit-code messages/
         # Fail if extracted messages changed
 ```

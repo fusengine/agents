@@ -1,7 +1,7 @@
 {
   "name": "fuse-react",
   "version": "1.0.21",
-  "description": "Expert React 19 with hooks, TanStack Router, Zustand, React Hook Form, Testing Library, shadcn/ui, and SOLID principles",
+  "description": "Expert React 19 with hooks, TanStack Router, TanStack Form, Zustand, Testing Library, shadcn/ui, and SOLID principles",
   "author": {
     "name": "Fusengine",
     "email": "hello@fusengine.ch",

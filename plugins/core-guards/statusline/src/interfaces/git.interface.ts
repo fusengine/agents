@@ -1,5 +1,5 @@
 /**
- * Git Interface - Structure des infos Git
+ * Git Interface - Git info structure
  */
 
 export interface GitInfo {

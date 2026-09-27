@@ -16,7 +16,7 @@ Prisma 7 with Next.js 16 App Router.
 
 ```typescript
 // modules/cores/db/src/interfaces/types.ts
-import type { PrismaClient } from '@prisma/client'
+import type { PrismaClient } from '../../generated/prisma/client'  // v7: generated path, not @prisma/client
 
 /**
  * Global Prisma singleton type
@@ -30,9 +30,9 @@ export interface GlobalPrisma {
 ```typescript
 // modules/cores/db/src/prisma.ts
 import 'dotenv/config'
-import type { PrismaClient } from '@prisma/client'
+import { PrismaClient } from '../generated/prisma/client'  // v7: generated path
 import { PrismaPg } from '@prisma/adapter-pg'
-import type { GlobalPrisma } from './src/interfaces/types'
+import type { GlobalPrisma } from './interfaces/types'
 
 /**
  * Initialize Prisma singleton with PostgreSQL adapter
@@ -45,9 +45,7 @@ const adapter = new PrismaPg({
   connectionString: process.env.DATABASE_URL!,
 })
 
-export const prisma = new (require('@prisma/client').PrismaClient)({
-  adapter,
-})
+export const prisma = globalForPrisma.prisma ?? new PrismaClient({ adapter })
 
 if (process.env.NODE_ENV !== 'production') {
   globalForPrisma.prisma = prisma
@@ -250,8 +248,7 @@ export default async function UsersPage() {
 ```typescript
 // modules/cores/db/src/edge-client.ts
 import { PrismaNeon } from '@prisma/adapter-neon'
-import { neon } from '@neondatabase/serverless'
-import { PrismaClient } from '@prisma/client'
+import { PrismaClient } from '../generated/prisma/client'  // v7: generated path
 
 /**
  * Create Prisma client for Edge Runtime (Vercel Edge Functions)
@@ -260,8 +257,8 @@ import { PrismaClient } from '@prisma/client'
  * @returns PrismaClient configured for edge runtime
  */
 export function getEdgePrisma() {
-  const sql = neon(process.env.DATABASE_URL!)
-  const adapter = new PrismaNeon(sql)
+  // v7: PrismaNeon takes a Pool config (use PrismaNeonHttp for the HTTP driver)
+  const adapter = new PrismaNeon({ connectionString: process.env.DATABASE_URL! })
   return new PrismaClient({ adapter })
 }
 ```

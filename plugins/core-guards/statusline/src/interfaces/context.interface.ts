@@ -1,5 +1,5 @@
 /**
- * Segment Context Interface - Contexte partage entre segments
+ * Segment Context Interface - Context shared between segments
  */
 
 import type { GitInfo } from "./git.interface";

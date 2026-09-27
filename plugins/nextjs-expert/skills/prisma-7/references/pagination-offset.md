@@ -12,7 +12,7 @@ Implement traditional page-based pagination with skip and take parameters.
 
 ```typescript
 // lib/types/offsetPagination.ts
-import type { Prisma } from "@prisma/client";
+import type { Prisma } from "@/generated/prisma/client";
 
 /**
  * Offset pagination parameters
@@ -74,7 +74,7 @@ async function getSecondPage(): Promise<PostData[]> {
 
 ```typescript
 // lib/types/paginationMeta.ts
-import type { Prisma } from "@prisma/client";
+import type { Prisma } from "@/generated/prisma/client";
 
 /**
  * Pagination metadata
@@ -154,7 +154,7 @@ async function getPaginatedPosts(
 
 ```typescript
 // lib/types/advancedPagination.ts
-import type { Prisma } from "@prisma/client";
+import type { Prisma } from "@/generated/prisma/client";
 
 /**
  * Advanced paginated response with metadata
@@ -172,6 +172,7 @@ export interface RawPaginationResult {
 }
 
 // lib/queries/advancedPaginationQueries.ts
+import { Prisma } from "@/generated/prisma/client"; // value import: Prisma.sql is used at runtime
 import type { AdvancedPaginatedResponse, RawPaginationResult } from "@/lib/types/advancedPagination";
 
 /**
@@ -216,7 +217,7 @@ async function paginate<T>(
 
 ```typescript
 // lib/types/searchPagination.ts
-import type { Prisma } from "@prisma/client";
+import type { Prisma } from "@/generated/prisma/client";
 
 /**
  * Search and filter options

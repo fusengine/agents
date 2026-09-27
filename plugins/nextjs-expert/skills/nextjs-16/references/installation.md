@@ -72,7 +72,7 @@ import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
   // Turbopack is default, no config needed
-  reactCompiler: true,      // Enable React Compiler
+  reactCompiler: true,      // Enable React Compiler (needs babel-plugin-react-compiler)
   cacheComponents: true     // Enable Cache Components
 }
 

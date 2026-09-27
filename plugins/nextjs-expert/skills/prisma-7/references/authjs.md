@@ -148,7 +148,7 @@ export const { GET, POST } = handlers
 ```typescript
 // modules/dashboard/src/services/auth-dashboard.service.ts
 import { prisma } from '@/modules/cores/db/prisma'
-import type { User, Account } from '@prisma/client'
+import type { User, Account } from '@/modules/cores/db/generated/prisma/client'
 
 interface AuthDashboardData {
   user: User

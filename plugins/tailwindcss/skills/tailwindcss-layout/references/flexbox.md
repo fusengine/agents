@@ -1,9 +1,9 @@
 ---
 name: flexbox
-description: Flexbox utilities for Tailwind CSS v4.1
+description: Flexbox utilities for Tailwind CSS v4.3
 ---
 
-# Flexbox Utilities - Tailwind CSS v4.1
+# Flexbox Utilities - Tailwind CSS v4.3
 
 ## Display & Direction
 

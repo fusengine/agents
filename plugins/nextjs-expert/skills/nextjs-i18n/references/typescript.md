@@ -1,7 +1,7 @@
 ---
 name: typescript
-description: Types pour clés messages, locale types, page props type-safe, autocomplete
-when-to-use: typage clés, erreurs compile-time, autocomplétion, interfaces messages
+description: Types for message keys, locale types, type-safe page props, autocomplete
+when-to-use: key typing, compile-time errors, autocompletion, message interfaces
 keywords: IntlMessages, Locale type, type-safe keys, autocomplete, isValidLocale
 priority: medium
 requires: installation.md, routing-setup.md
@@ -52,7 +52,7 @@ t('typo')   // ✗ TypeScript error
 
 ```typescript
 // modules/cores/i18n/src/interfaces/i18n.interface.ts
-export const locales = ['en', 'fr', 'de'] as const
+export const locales = ['en', 'es', 'de'] as const
 export type Locale = (typeof locales)[number]
 
 export function isValidLocale(locale: string): locale is Locale {

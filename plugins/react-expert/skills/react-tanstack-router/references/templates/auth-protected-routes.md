@@ -191,7 +191,6 @@ export const Route = createRootRouteWithContext<RouterContext>()({
 ```typescript
 // src/routes/login.tsx
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
-import { zodValidator } from '@tanstack/zod-adapter'
 import { z } from 'zod'
 import { redirectIfAuth } from '@/modules/cores/lib/auth/guards'
 import { LoginForm } from '@/modules/auth'
@@ -201,7 +200,7 @@ const searchSchema = z.object({
 })
 
 export const Route = createFileRoute('/login')({
-  validateSearch: zodValidator(searchSchema),
+  validateSearch: searchSchema, // Zod v4 Standard Schema
   beforeLoad: ({ context, search }) => {
     redirectIfAuth({ context, search })
   },

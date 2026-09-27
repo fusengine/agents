@@ -25,10 +25,12 @@ related: vitest-config.md, msw-setup.md, templates/basic-setup.md
 
 | Package | Version |
 |---------|---------|
-| `vitest` | 2.1.8+ |
-| `@testing-library/react` | 16.1.0+ |
-| `@testing-library/user-event` | 14.5.2+ |
-| `msw` | 2.7.0+ |
+| `vitest` | 5.0.2+ |
+| `@testing-library/react` | 16.3.3+ |
+| `@testing-library/user-event` | 14.6.7+ |
+| `msw` | 2.15.0+ |
+
+**Vitest 5** requires Vite ≥ 6.4.0 and Node.js ≥ 22.12.0 (`vite` is now a peer dependency — Yarn users add it explicitly). `clearMocks` defaults to `true`, and `vi.mock` / `vi.hoisted` outside the module top level now throw.
 
 ---
 

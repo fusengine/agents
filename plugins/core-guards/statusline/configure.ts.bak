@@ -58,7 +58,7 @@ async function interactivePreviewMode(): Promise<void> {
 		p.intro("🎨 Statusline Configurator - LIVE PREVIEW");
 
 		// ===== LIVE PREVIEW ON TOP (UPDATES IN REAL-TIME) =====
-		console.log("\n📺 LIVE PREVIEW (se met à jour instantanément):");
+		console.log("\n📺 LIVE PREVIEW (updates instantly):");
 		console.log(`┌${"─".repeat(98)}┐`);
 		console.log(`│ ${renderStatuslinePreview(currentConfig).padEnd(97)}│`);
 		console.log(`└${"─".repeat(98)}┘`);
@@ -69,14 +69,14 @@ async function interactivePreviewMode(): Promise<void> {
 		const allOptions = [
 			...menuOptions,
 			{ value: "separator", label: "───────────────────", hint: "" },
-			{ value: "save", label: "💾 Sauvegarder & Quitter", hint: "" },
-			{ value: "reset", label: "🔄 Réinitialiser", hint: "" },
-			{ value: "cancel", label: "❌ Annuler", hint: "" },
+			{ value: "save", label: "💾 Save & Quit", hint: "" },
+			{ value: "reset", label: "🔄 Reset", hint: "" },
+			{ value: "cancel", label: "❌ Cancel", hint: "" },
 		];
 
 		const choice = (await p.select({
 			message:
-				"Sélectionner une option à TOGGLE (ou action):\n💡 Les options 'Style:' cyclent entre filled → braille → dots → line\n💡 L'option 'Separator:' cycle entre │ → - → espace",
+				"Select an option to TOGGLE (or an action):\n💡 'Style:' options cycle through filled → braille → dots → line\n💡 The 'Separator:' option cycles through │ → - → space",
 			options: allOptions,
 		})) as string;
 

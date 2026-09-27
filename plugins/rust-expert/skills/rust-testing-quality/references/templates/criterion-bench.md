@@ -21,7 +21,7 @@ version = "0.1.0"
 edition = "2024"
 
 [dev-dependencies]
-criterion = "0.5"
+criterion = "0.8"
 
 [[bench]]
 name = "throughput"     # matches benches/throughput.rs
@@ -51,7 +51,9 @@ pub fn fibonacci(n: u64) -> u64 {
 ## `benches/throughput.rs`
 
 ```rust
-use criterion::{black_box, criterion_group, criterion_main, Criterion};
+use std::hint::black_box; // `criterion::black_box` is deprecated since criterion 0.6
+
+use criterion::{criterion_group, criterion_main, Criterion};
 use mycrate::fibonacci;
 
 fn bench_fibonacci(c: &mut Criterion) {

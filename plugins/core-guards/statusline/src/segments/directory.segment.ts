@@ -1,7 +1,7 @@
 /**
- * Directory Segment - Affiche le repertoire et Git
+ * Directory Segment - Displays the directory and Git
  *
- * @description SRP: Affichage repertoire et Git uniquement
+ * @description SRP: Directory and Git display only
  */
 
 import type { StatuslineConfig } from "../config/schema";

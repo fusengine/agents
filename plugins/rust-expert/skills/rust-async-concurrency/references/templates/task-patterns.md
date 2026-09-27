@@ -120,5 +120,5 @@ async fn load_b() -> Result<u32, String> { Ok(2) }
 
 ```toml
 [dependencies]
-tokio = { version = "1.52", features = ["full"] }
+tokio = { version = "1.53", features = ["full"] }
 ```

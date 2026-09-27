@@ -11,9 +11,9 @@ When a page doesn't exist for a specific locale, Astro can automatically serve t
 export default defineConfig({
   i18n: {
     defaultLocale: 'en',
-    locales: ['en', 'fr', 'es', 'pt'],
+    locales: ['en', 'it', 'es', 'pt'],
     fallback: {
-      fr: 'en',   // French falls back to English
+      it: 'en',   // Italian falls back to English
       es: 'en',   // Spanish falls back to English
       pt: 'es'    // Portuguese falls back to Spanish
     }
@@ -23,17 +23,17 @@ export default defineConfig({
 
 ## How It Works
 
-If `/fr/new-feature` doesn't exist but `/new-feature` (English) does:
+If `/it/new-feature` doesn't exist but `/new-feature` (English) does:
 
-- Astro serves the English content at the `/fr/new-feature` URL
+- Astro serves the English content at the `/it/new-feature` URL
 - No redirect — the URL stays the same
 - Useful during incremental translation
 
 ## Fallback Routing Strategy
 
 ```text
-Request: /fr/about
-→ Check: src/pages/fr/about.astro  (missing)
+Request: /it/about
+→ Check: src/pages/it/about.astro  (missing)
 → Fallback to 'en'
 → Serve: src/pages/about.astro     (found → return English content)
 ```

@@ -1,6 +1,6 @@
 # Template: Basic CSP Configuration
 
-Minimal CSP setup for a standard Astro 6 static site.
+Minimal CSP setup for a standard Astro 7 static site (CSP stable since Astro 6.0).
 
 ## astro.config.mjs
 

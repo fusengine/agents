@@ -9,7 +9,10 @@ related: zod-validation.md, templates/basic-form.md
 
 # Yup and Valibot Validators
 
-## Yup Validator Adapter
+> TanStack Form v1 accepts both as **Standard Schema** — pass the schema directly to
+> `validators` (Yup ≥ 1.7.0, Valibot ≥ 1.0.0). No `yupValidator()` / `valibotValidator()` adapter.
+
+## Yup Validator
 
 **Traditional schema-based validation library.**
 
@@ -33,7 +36,7 @@ related: zod-validation.md, templates/basic-form.md
 
 ---
 
-## Valibot Validator Adapter
+## Valibot Validator
 
 **Modern functional validation library with pipe composition.**
 

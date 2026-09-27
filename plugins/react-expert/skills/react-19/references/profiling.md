@@ -136,7 +136,7 @@ related: templates/profiling-devtools.md, react-compiler.md
 
 ## React Compiler Note
 
-With React Compiler (19.1+), many manual optimizations (memo, useMemo, useCallback) are automatic. Profile to verify compiler effectiveness rather than add manual memoization.
+With React Compiler (1.0+), many manual optimizations (memo, useMemo, useCallback) are automatic. Profile to verify compiler effectiveness rather than add manual memoization.
 
 ---
 

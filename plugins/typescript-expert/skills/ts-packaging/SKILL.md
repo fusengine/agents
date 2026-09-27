@@ -3,7 +3,7 @@ name: ts-packaging
 description: Use when publishing a TypeScript library — exports map, JSR vs npm, dual ESM/CJS, type validation, provenance. Not for application deployment.
 versions:
   node: "26"
-  attw: "0.18.4"
+  attw: "0.18.5"
 user-invocable: true
 references: references/exports-map.md, references/jsr-publishing.md, references/npm-publishing.md, references/validation.md, references/templates/package-json-dual.md, references/templates/jsr-json.md, references/templates/publish-workflow.md
 related-skills: solid-generic, ts-testing

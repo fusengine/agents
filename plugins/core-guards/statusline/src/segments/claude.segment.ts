@@ -1,7 +1,7 @@
 /**
- * Claude Segment - Affiche la version de Claude
+ * Claude Segment - Displays the Claude version
  *
- * @description SRP: Affichage version Claude uniquement
+ * @description SRP: Claude version display only
  */
 
 import type { StatuslineConfig } from "../config/schema";

@@ -1,11 +1,11 @@
 /**
- * Segment Interface - Contrat pour les segments du statusline
+ * Segment Interface - Contract for statusline segments
  *
- * @description Applique les principes SOLID:
- * - SRP: Chaque segment = une responsabilite
+ * @description Applies the SOLID principles:
+ * - SRP: Each segment = one responsibility
  * - OCP: Extension via implementation
- * - LSP: Segments substituables
- * - DIP: Dependance sur abstraction
+ * - LSP: Substitutable segments
+ * - DIP: Depend on an abstraction
  *
  * @see https://deepwiki.com/starship/starship/5-module-system
  */

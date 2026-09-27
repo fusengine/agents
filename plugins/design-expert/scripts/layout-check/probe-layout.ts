@@ -1,15 +1,15 @@
 /**
- * probe-layout.ts — Helpers de mise en page injectés dans la page (`window.__lc`).
- * Partagés par les contrôles `overlap` et `cta-wrap` (DRY) : sérialisés via
- * `toString()`, ils ne référencent que leur argument et `window.__lc`.
+ * probe-layout.ts — Layout helpers injected into the page (`window.__lc`).
+ * Shared by the `overlap` and `cta-wrap` checks (DRY): serialized via
+ * `toString()`, they reference only their argument and `window.__lc`.
  */
 
 /**
- * Superposition VOLONTAIRE : l'élément ou l'un de ses 6 premiers ancêtres est hors
- * flux, porte un z-index explicite non nul, ou n'est pas cliquable (calque décoratif).
+ * INTENTIONAL overlap: the element or one of its first 6 ancestors is out of
+ * flow, carries an explicit non-zero z-index, or is not clickable (decorative layer).
  *
- * @param el - Élément candidat
- * @returns `true` si la superposition est délibérée
+ * @param el - Candidate element
+ * @returns `true` if the overlap is deliberate
  */
 function isIntentionalOverlay(el: Element): boolean {
   let node: Element | null = el;
@@ -18,8 +18,8 @@ function isIntentionalOverlay(el: Element): boolean {
     if (s.position === "absolute" || s.position === "fixed" || s.position === "sticky") return true;
     if (s.zIndex !== "auto" && Number(s.zIndex) !== 0) return true;
     if (s.pointerEvents === "none") return true;
-    // Un `transform` explicite est un déplacement AUTEUR (composition d'images
-    // pivotées, décalage de scène) : la superposition qui en résulte est voulue.
+    // An explicit `transform` is an AUTHOR displacement (composition of rotated
+    // images, scene offset): the resulting overlap is intended.
     if (s.transform && s.transform !== "none") return true;
     node = node.parentElement;
   }
@@ -27,10 +27,10 @@ function isIntentionalOverlay(el: Element): boolean {
 }
 
 /**
- * Conteneur de bloc le plus proche.
+ * Nearest block container.
  *
- * @param el - Élément dont on cherche le contexte de lignes
- * @returns L'ancêtre bloc le plus proche, `document.body` à défaut
+ * @param el - Element whose line context is sought
+ * @returns The nearest block ancestor, `document.body` otherwise
  */
 function blockOwner(el: Element): Element {
   let node: Element | null = el.parentElement;
@@ -43,10 +43,10 @@ function blockOwner(el: Element): Element {
 }
 
 /**
- * Line-height calculé, en px.
+ * Computed line-height, in px.
  *
- * @param el - Élément mesuré
- * @returns La valeur numérique, ou 1,2 × font-size si `line-height: normal`
+ * @param el - Measured element
+ * @returns The numeric value, or 1.2 × font-size if `line-height: normal`
  */
 function lineHeightOf(el: Element): number {
   const style = getComputedStyle(el);
@@ -54,7 +54,7 @@ function lineHeightOf(el: Element): number {
   return isFinite(parsed) ? parsed : parseFloat(style.fontSize) * 1.2;
 }
 
-/** Source JS à injecter avant le chargement de la page. */
+/** JS source to inject before the page loads. */
 export const LAYOUT_PROBE_SOURCE = `window.__lc = Object.assign(window.__lc || {}, {
   isIntentionalOverlay: ${isIntentionalOverlay},
   blockOwner: ${blockOwner},

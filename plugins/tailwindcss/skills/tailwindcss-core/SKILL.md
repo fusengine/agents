@@ -5,16 +5,16 @@ user-invocable: false
 ---
 
 <objective>
-Documents Tailwind CSS v4.1's CSS-first configuration directives: `@import "tailwindcss"`, `@theme` for defining theme tokens as CSS custom properties, `@source` for scanning additional source files, `@utility`/`@variant` for custom utilities and variants, `@apply` for composing utilities in custom CSS, and `@config` for loading a legacy JS config.
+Documents Tailwind CSS v4.3's CSS-first configuration directives: `@import "tailwindcss"`, `@theme` for defining theme tokens as CSS custom properties, `@source` for scanning additional source files, `@utility`/`@variant` for custom utilities and variants, `@apply` for composing utilities in custom CSS, and `@config` for loading a legacy JS config.
 
 Also covers dark-mode variant setup, responsive breakpoints via `@theme`, CSS layer hierarchy (`theme, base, components, utilities`), and plugin integration — the full CSS-first replacement for `tailwind.config.js`.
 </objective>
 
-# Tailwind CSS Core v4.1
+# Tailwind CSS Core v4.3
 
 ## Overview
 
-Tailwind CSS v4.1 introduces a **CSS-first** approach that eliminates the need for a traditional `tailwind.config.js` file. All configuration is now done directly in your CSS files via specialized directives.
+Tailwind CSS v4 (since v4.0; current stable v4.3) uses a **CSS-first** approach that eliminates the need for a traditional `tailwind.config.js` file. All configuration is now done directly in your CSS files via specialized directives.
 
 ## Key Concepts
 
@@ -72,8 +72,15 @@ Directives to create custom utilities and variants.
   white-space: nowrap;
 }
 
-@variant group-hover {
-  .group:hover &
+/* Define a new variant with @custom-variant */
+@custom-variant theme-midnight (&:where([data-theme="midnight"] *));
+
+/* Apply an existing variant inside CSS with @variant
+   (stacked `hover:focus` and compound `hover, focus` forms since v4.3) */
+.card {
+  @variant hover:focus {
+    background: var(--color-sky-600);
+  }
 }
 ```
 
@@ -99,23 +106,22 @@ Directive to load external configuration if needed.
 @config "./tailwind.config.js";
 ```
 
-(Optional in v4.1, mainly used for backward compatibility)
+(Optional in v4, mainly used for backward compatibility)
 
 ## Dark Mode
 
-Dark mode configuration in Tailwind v4.1:
+Dark mode configuration in Tailwind v4.3:
 
 ```css
 @import "tailwindcss";
 
-/* Use system preference */
-@variant dark (&:is(.dark *));
+/* Default: `dark:` follows prefers-color-scheme — no config needed */
 ```
 
-Or via manual class:
+Or via manual class (override the `dark` variant with `@custom-variant`):
 
 ```css
-@variant dark (&.dark);
+@custom-variant dark (&:where(.dark, .dark *));
 ```
 
 ## Responsive Breakpoints
@@ -179,7 +185,7 @@ In CSS-first, import and declaration order determines specificity:
 - No complex JavaScript config file
 - Type-safe via CSS variables
 - Declarative and readable configuration
-- Better integration with CSS preprocessors
+- Replaces CSS preprocessors (Tailwind v4 is not designed to be used with Sass/Less/Stylus)
 - Simplified maintenance for large projects
 
 ## Detailed References

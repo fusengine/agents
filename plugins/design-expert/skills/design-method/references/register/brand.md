@@ -60,10 +60,10 @@ justified against the POV**, or **replaced**:
 | Furniture | Default (generic) form | Justify when… | Replace with… |
 |---|---|---|---|
 | **Ribbon 4-stats** | 4 equal-weight number+label cards in a row, no narrative | the numbers ARE the argument (e.g. a comparison the POV depends on) and are sourced, not invented | fold 1 real, load-bearing number into a section that already has a job (a proof point inside a narrative block), drop the rest |
-| **Triade de cartes** | 3 equal-weight feature cards, icon+title+2 lines, no hierarchy | the three items are genuinely peers with no lead item — rare | one dominant item + supporting list (asymmetric), or sequence them as a narrative (this, therefore this, therefore this) |
-| **FAQ accordéon** | generic Q/A list restating marketing copy as questions | real, recurring objections exist that the page hasn't already answered | fold the real objections into the body copy where they arise, or a short "reasons this might not be for you" block (more distinctive, still honest) |
+| **Card triad** | 3 equal-weight feature cards, icon+title+2 lines, no hierarchy | the three items are genuinely peers with no lead item — rare | one dominant item + supporting list (asymmetric), or sequence them as a narrative (this, therefore this, therefore this) |
+| **FAQ accordion** | generic Q/A list restating marketing copy as questions | real, recurring objections exist that the page hasn't already answered | fold the real objections into the body copy where they arise, or a short "reasons this might not be for you" block (more distinctive, still honest) |
 | **Logo-cloud** | grayscale logo grid, "Trusted by" | logos are real, permissioned, and the audience recognizes them as credibility signal | a single strong case/quote with a name and a number, or drop it — a weak logo cloud subtracts more trust than it adds |
-| **Méga-footer** | 5-6 link columns (Product/Company/Resources/Legal/Social), copied structure | the site genuinely has that much real navigable depth | a lean footer: primary nav + legal + one CTA — most marketing sites don't have 30 real destinations |
+| **Mega-footer** | 5-6 link columns (Product/Company/Resources/Legal/Social), copied structure | the site genuinely has that much real navigable depth | a lean footer: primary nav + legal + one CTA — most marketing sites don't have 30 real destinations |
 
 The bar is not "never use these" — it's **never use them as a default reached by
 omission**. Each one used must be a decision made against the POV, stated as such in the

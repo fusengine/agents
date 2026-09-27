@@ -1,10 +1,10 @@
 /**
- * overlap.probe.ts — Fonction exécutée DANS la page pour le contrôle `overlap`.
- * Sérialisée par Playwright : elle ne référence que son argument et `window.__lc`.
+ * overlap.probe.ts — Function executed IN the page for the `overlap` check.
+ * Serialized by Playwright: it references only its argument and `window.__lc`.
  */
 import type { OverlapRow } from "../page.types";
 
-/** Argument sérialisable passé à la sonde. */
+/** Serializable argument passed to the probe. */
 export interface OverlapProbeArgs {
   exclude: string[];
   tags: string;
@@ -15,16 +15,16 @@ export interface OverlapProbeArgs {
 }
 
 /**
- * Calcule toutes les paires d'éléments visibles dont les rectangles s'intersectent.
+ * Computes every pair of visible elements whose rectangles intersect.
  *
- * @param args - Seuils et exclusions, sérialisés depuis Node
- * @returns Les paires retenues, avec leurs mesures brutes
+ * @param args - Thresholds and exclusions, serialized from Node
+ * @returns The pairs kept, with their raw measurements
  */
 export function overlapProbe(args: OverlapProbeArgs): OverlapRow[] {
   const allowed = args.tags.split(",");
-  // Retenus : tout élément portant SON PROPRE texte (quelle que soit sa balise — un
-  // libellé vit souvent dans un div ou un span), plus les éléments sans texte mais
-  // porteurs de sens (contrôles de formulaire, images).
+  // Kept: every element carrying ITS OWN text (whatever its tag — a
+  // label often lives in a div or a span), plus the elements without text but
+  // carrying meaning (form controls, images).
   const items = (window.__lc.candidates(args.exclude) as Element[])
     .filter((el) => window.__lc.ownText(el) || allowed.indexOf(el.tagName) >= 0)
     .filter((el) => !(args.skipIntentional && window.__lc.isIntentionalOverlay(el)))
@@ -43,17 +43,17 @@ export function overlapProbe(args: OverlapProbeArgs): OverlapRow[] {
     for (let j = i + 1; j < items.length; j++) {
       const a = items[i] as (typeof items)[number];
       const b = items[j] as (typeof items)[number];
-      // Une relation ancêtre/descendant n'est jamais un chevauchement.
+      // An ancestor/descendant relation is never an overlap.
       if (a.el.contains(b.el) || b.el.contains(a.el)) continue;
-      // Deux inline du même bloc partagent la même grille de lignes : un élément
-      // réellement superposé serait positionné, donc plus `display: inline`.
+      // Two inlines of the same block share the same line grid: an element
+      // that really overlaps would be positioned, hence no longer `display: inline`.
       if (a.inline && b.inline && a.owner === b.owner) continue;
       const w = Math.min(a.rect.right, b.rect.right) - Math.max(a.rect.left, b.rect.left);
       const h = Math.min(a.rect.bottom, b.rect.bottom) - Math.max(a.rect.top, b.rect.top);
       if (w <= args.minPx || h <= args.minPx) continue;
-      // Bavure de boîte de ligne : deux boîtes EMPILÉES qui mordent l'une sur l'autre
-      // de moins d'une demi-ligne (jambages d'un titre à line-height serré). Aucun
-      // pixel d'encre en collision — constaté sur des titres réels.
+      // Line-box bleed: two STACKED boxes that bite into each other
+      // by less than half a line (descenders of a tight line-height heading). No
+      // ink pixel collides — observed on real headings.
       const stacked =
         Math.abs((a.rect.top + a.rect.bottom) / 2 - (b.rect.top + b.rect.bottom) / 2) >
         Math.min(a.rect.height, b.rect.height) * 0.5;

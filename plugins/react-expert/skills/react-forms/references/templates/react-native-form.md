@@ -35,7 +35,6 @@ import {
   Alert,
 } from 'react-native';
 import { useForm } from '@tanstack/react-form';
-import { zodValidator } from '@tanstack/zod-form-adapter';
 import { z } from 'zod';
 
 /**
@@ -138,7 +137,6 @@ export function ReactNativeForm({
         setIsLoading(false);
       }
     },
-    validatorAdapter: zodValidator(),
     validators: {
       onChange: mobileFormSchema,
       onBlur: mobileFormSchema,
@@ -631,10 +629,9 @@ await onSubmit(data);
 ```
 
 ### Input Validation Not Working
-Ensure `validatorAdapter` and `validators` are configured:
+Ensure `validators` receive the Zod schema directly (Standard Schema, no adapter in v1):
 ```tsx
 const form = useForm({
-  validatorAdapter: zodValidator(),
   validators: {
     onChange: mobileFormSchema,
     onBlur: mobileFormSchema,

@@ -25,8 +25,9 @@ Local view state. Source of truth for simple values.
 **Key Points:**
 - Use for view-local data only
 - Marked `private` by convention
-- Value types only (structs, enums)
+- Value types, or an `@Observable` class instance the view owns
 - Creates binding with `$property`
+- Xcode 27+: `@State` is the `State()` macro — a class value is initialized and stored only once
 
 ### @Binding
 Two-way connection to state owned elsewhere.

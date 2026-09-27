@@ -103,7 +103,7 @@ DIRECT_URL="postgresql://user:pass@localhost:5432/mydb"
  * @module app/lib/database/types
  */
 
-import type { PrismaClient } from '@prisma/client';
+import type { PrismaClient } from '@/lib/generated/prisma/client'; // v7: generated path
 
 /**
  * Connection URL configuration with type safety

@@ -59,12 +59,12 @@ Update `package.json`:
 ```prisma
 // prisma/schema.prisma
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider = "postgresql" // v7: DATABASE_URL is read in prisma.config.ts
 }
 
 generator client {
-  provider = "prisma-client-js"
+  provider = "prisma-client"
+  output   = "../src/generated/prisma" // REQUIRED in v7
 }
 
 model User {
@@ -113,7 +113,7 @@ DATABASE_URL=postgresql://user:pass@host:5432/db
  * @see /src/lib/prisma.ts
  */
 import type { NextRequest } from 'next/server'
-import type { User } from '@prisma/client'
+import type { User } from '@/generated/prisma/client'
 import { prisma } from '@/lib/prisma'
 
 /**
@@ -169,7 +169,7 @@ Create separate Render service for long-running tasks:
  * Background job processor for long-running tasks.
  * @see /src/lib/prisma.ts
  */
-import type { Job } from '@prisma/client'
+import type { Job } from '@/generated/prisma/client'
 import { prisma } from '@/lib/prisma'
 
 /**

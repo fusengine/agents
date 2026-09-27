@@ -1,7 +1,7 @@
 ---
 name: installation
-description: Installation et configuration initiale de next-intl avec structure SOLID
-when-to-use: ajouter i18n, nouveau projet multilingue, setup initial, configuration
+description: Installation and initial configuration of next-intl with a SOLID structure
+when-to-use: add i18n, new multilingual project, initial setup, configuration
 keywords: setup, bun add, package, messages, routing, configuration
 priority: high
 requires: routing-setup.md
@@ -48,7 +48,7 @@ src/
 │   │       └── request.ts
 │   └── messages/
 │       ├── en.json
-│       └── fr.json
+│       └── es.json
 └── proxy.ts
 ```
 

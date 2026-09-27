@@ -66,7 +66,7 @@ directly, which is what this skill covers.
 ```
 New project from scratch?
 ├── Static analysis → PHPStan level 8-9+ from day one (our default; nothing to baseline yet)
-├── Style → PHP-CS-Fixer @PER-CS (always-latest) or @PER-CS3.0 (pinned)
+├── Style → PHP-CS-Fixer @PER-CS (always-latest) or @PER-CS3x0 (pinned; `@PER-CS3.0` is deprecated)
 └── Rector → withPhpSets() (reads composer.json) + deadCode/codeQuality prepared sets
 
 Legacy codebase?
@@ -93,7 +93,7 @@ Legacy codebase?
 |----------|----------|
 | `references/templates/phpstan-neon.md` | Complete `phpstan.neon` (strict + baseline) |
 | `references/templates/rector-php.md` | Complete `rector.php` (upgrade + quality) |
-| `references/templates/php-cs-fixer-dist.md` | Complete `.php-cs-fixer.dist.php` (@PER-CS3.0) |
+| `references/templates/php-cs-fixer-dist.md` | Complete `.php-cs-fixer.dist.php` (@PER-CS3x0) |
 | `references/templates/composer-ci.md` | composer scripts + GitHub Actions pipeline |
 
 ---

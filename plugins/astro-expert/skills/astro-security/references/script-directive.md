@@ -49,6 +49,16 @@ resources: [
 
 Enables `'strict-dynamic'` keyword, which allows dynamically injected scripts from trusted scripts.
 
+### Scoping with `kind` (Astro 7.1+)
+
+`hashes` and `resources` entries can be objects: `{ hash, kind }` / `{ resource, kind }` with `kind: 'element'` (→ `script-src-elem`), `'attribute'` (→ `script-src-attr`) or `'default'` (→ `script-src`). Once an `'element'` hash is used, Astro's generated hashes move to `script-src-elem` too, and `strictDynamic` is inherited there.
+
+```javascript
+scriptDirective: {
+  hashes: [{ hash: 'sha256-scriptHash', kind: 'element' }]
+}
+```
+
 ## How to Compute External Script Hash
 
 ```bash

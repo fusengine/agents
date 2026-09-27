@@ -14,11 +14,15 @@ related: baseui-to-radix.md
 
 Migrating from Radix UI to Base UI involves 6 steps: package changes, import transformation, composition pattern, component renaming, data attributes, and positioning updates.
 
+Optional since July 2026: Base UI is the default for new projects, Radix stays fully supported and "you do not need to migrate". The official path is the shadcn skill (`npx skills add shadcn/ui`, then ask "migrate accordion to base-ui"): progressive, one component per commit on a branch, a report per component in `.migration/`, behavior changes flagged rather than patched. The steps below are the manual equivalent at primitive level (source: ui.shadcn.com/docs/changelog/2026-07-base-ui-default).
+
+At the `components/ui` wrapper level most shadcn names do not change (`DialogContent` stays `DialogContent`); the call-site changes are `asChild` -> `render`, `Accordion type="single" collapsible defaultValue="a"` -> `defaultValue={["a"]}` (`type="multiple"` -> `multiple`), and `Select` taking an `items` prop.
+
 ## Key Concepts
 
 | Concept | Description |
 |---------|-------------|
-| **Package swap** | Remove per-component `@radix-ui/*`, add single `@base-ui/react` |
+| **Package swap** | Remove `radix-ui` (or legacy per-component `@radix-ui/*`), add single `@base-ui/react` (Combobox in `radix-*` styles already imports `@base-ui/react`) |
 | **asChild -> render** | Composition pattern change: `asChild` becomes `render` prop |
 | **Overlay -> Backdrop** | Radix Overlay is renamed to Base UI Backdrop |
 | **Positioner** | New wrapping element required for positioned components (Select, Tooltip, Popover) |
@@ -28,24 +32,25 @@ Migrating from Radix UI to Base UI involves 6 steps: package changes, import tra
 ## Step 1: Package Changes
 
 ```bash
-# Remove Radix packages
-npm uninstall @radix-ui/react-dialog @radix-ui/react-select ...
+# Remove Radix packages (unified or legacy per-component)
+npm uninstall radix-ui @radix-ui/react-dialog @radix-ui/react-select ...
 
 # Add Base UI
 npm install @base-ui/react
 
 # Update components.json
-# Change style from "new-york"/"default" to "base-vega"
+# Change style from "radix-*"/"new-york" to the matching "base-*" (e.g. "radix-nova" -> "base-nova")
 ```
 
 ## Step 2: Import Transformation
 
 ```tsx
 // BEFORE (Radix)
-import * as Dialog from "@radix-ui/react-dialog"
+import { Dialog } from "radix-ui"
+// or legacy: import * as Dialog from "@radix-ui/react-dialog"
 
 // AFTER (Base UI)
-import { Dialog } from "@base-ui/react/Dialog"
+import { Dialog } from "@base-ui/react/dialog"
 ```
 
 ## Step 3: Composition Pattern
@@ -55,7 +60,9 @@ import { Dialog } from "@base-ui/react/Dialog"
 <Dialog.Trigger asChild>
   <Button>Open</Button>
 </Dialog.Trigger>
+```
 
+```tsx
 // AFTER (Base UI - render)
 <Dialog.Trigger render={<Button />}>
   Open
@@ -87,12 +94,18 @@ import { Dialog } from "@base-ui/react/Dialog"
 [data-side="top"] { bottom: 100%; }
 ```
 
+Tailwind classes using the `data-open:` / `data-closed:` / `data-checked:` variants need no change: `shadcn/tailwind.css` defines them to match both `[data-state="open"]` (Radix) and `[data-open]` (Base UI). Only raw `data-[state=open]:` selectors must be rewritten.
+
 ## Step 6: Positioning
 
 ```tsx
 // BEFORE (Radix - built into Content)
 <Select.Content position="popper" sideOffset={4}>
+  {/* items */}
+</Select.Content>
+```
 
+```tsx
 // AFTER (Base UI - separate Positioner)
 <Select.Positioner sideOffset={4}>
   <Select.Popup>
@@ -104,12 +117,12 @@ import { Dialog } from "@base-ui/react/Dialog"
 ## Validation
 
 ```
-[ ] All @radix-ui imports replaced
+[ ] All radix-ui / @radix-ui imports replaced
 [ ] asChild -> render prop converted
 [ ] Content -> Popup renamed
 [ ] Overlay -> Backdrop renamed
 [ ] Positioner added where needed
-[ ] data-state -> data-[state] in CSS
+[ ] data-state="open" -> data-[open] in CSS
 [ ] Tests pass
 [ ] No mixed APIs
 ```

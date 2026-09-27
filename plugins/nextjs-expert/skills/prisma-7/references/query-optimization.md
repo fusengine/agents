@@ -14,7 +14,7 @@ Query analysis patterns with SOLID Next.js principles.
 
 ```typescript
 // lib/db/analysis.ts
-import type { PrismaClient } from '@prisma/client'
+import type { PrismaClient } from '@/generated/prisma/client'
 
 /**
  * @description Analyzes query execution plan using EXPLAIN ANALYZE
@@ -54,7 +54,7 @@ export async function getActiveUsers() {
 
 ```typescript
 // lib/db/metrics.ts
-import type { PrismaClient } from '@prisma/client'
+import type { PrismaClient } from '@/generated/prisma/client'
 
 interface QueryMetrics {
   duration: number
@@ -97,7 +97,7 @@ export function configureQueryLogging(prisma: PrismaClient): void {
 
 ```typescript
 // lib/db/user-queries.ts
-import type { Prisma, User, Post, Comment } from '@prisma/client'
+import type { Prisma, User, Post, Comment } from '@/generated/prisma/client'
 
 /**
  * @description Efficient user fetch with selective nested fields
@@ -191,7 +191,7 @@ model Comment {
 
 ```typescript
 // lib/db/pagination.ts
-import type { Prisma } from '@prisma/client'
+import type { Prisma } from '@/generated/prisma/client'
 
 interface PaginationParams {
   page?: number

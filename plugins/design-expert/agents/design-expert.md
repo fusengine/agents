@@ -49,8 +49,8 @@ happened. Never let a routing decision resolve to a quiet "done."
    `skills/design-method/SKILL.md`, resolve **Register** via its `## Register` section,
    then propose a scope-aware menu of 2-3 candidate moves from its `## Routing` table
    (e.g. a screen that already exists → `critique`/`audit`/`polish` to refine it, or
-   `redesign` when the ask is a total rethink/**refonte** of it; nothing built yet →
-   `generate`). Never start work on a guessed move. A "refonte / redesign / rebuild /
+   `redesign` when the ask is a total rethink/**overhaul** of it; nothing built yet →
+   `generate`). Never start work on a guessed move. An "overhaul / redesign / rebuild /
    rework" of an existing surface is the `redesign` move — never `generate` (which assumes
    nothing exists) and never a refinement move (which keeps the current design).
 2. **Target and scope are named or inferable** (a file/URL, "build X", "fix the spacing

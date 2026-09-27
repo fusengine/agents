@@ -1,9 +1,9 @@
 ---
 name: opacity
-description: Opacity reference for Tailwind CSS v4.1
+description: Opacity reference for Tailwind CSS v4.3
 ---
 
-# Opacity Reference - Tailwind CSS v4.1
+# Opacity Reference - Tailwind CSS v4.3
 
 Complete guide for opacity and transparency utilities.
 
@@ -177,7 +177,7 @@ Apply opacity directly to color values using `/` syntax.
   Shadow at 30% opacity
 </div>
 
-<div class="inset-shadow-md inset-shadow-blue-500/40">
+<div class="inset-shadow-sm inset-shadow-blue-500/40">
   Inset shadow with color
 </div>
 ```

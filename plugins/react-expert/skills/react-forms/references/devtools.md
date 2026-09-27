@@ -9,7 +9,7 @@ related: templates/devtools-form.md
 
 # TanStack Form Devtools
 
-## FormDevtools Component
+## formDevtoolsPlugin (TanStack Devtools plugin)
 
 **Visual debugging tool for form state and validation.**
 
@@ -39,9 +39,9 @@ related: templates/devtools-form.md
 **Part of TanStack ecosystem debugging tools.**
 
 ### Integration Steps
-- Import `FormDevtools` from devtools package
-- Add as child component in form
-- Works alongside other TanStack devtools (Query, Router)
+- Install `@tanstack/react-devtools` + `@tanstack/react-form-devtools`
+- Render `<TanStackDevtools plugins={[formDevtoolsPlugin()]} />` once at the app root
+- Works alongside other TanStack devtools (Query, Router) as plugins of the same shell
 
 ### Development vs Production
 - Only renders in development environment

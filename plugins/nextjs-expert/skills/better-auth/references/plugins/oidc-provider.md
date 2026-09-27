@@ -10,6 +10,11 @@ related: plugins/sso.md
 
 # Better Auth OIDC Provider Plugin
 
+> **Removed in Better Auth 1.7.** `oidcProvider` (deprecated in 1.6) no longer exists in
+> `better-auth/plugins`. Use the OAuth 2.1 Provider package `@better-auth/oauth-provider`
+> (introduced in 1.5) for new and existing authorization-server integrations; the MCP plugin
+> moved to `@better-auth/mcp` on top of it. The code below documents the legacy (≤ 1.6) API only.
+
 ## When to Use
 
 - Building platforms with third-party integrations

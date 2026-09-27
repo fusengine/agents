@@ -22,7 +22,7 @@ export function renderUI(term: Terminal, config: StatuslineConfig): void {
 	term.cyan("╔════════════════════════════════════════════════════════════════════════════════╗\n");
 	term
 		.cyan("║")
-		.white.bold("     🎨 STATUSLINE CONFIGURATOR - TAPE UN NUMÉRO POUR TOGGLE!                  ")
+		.white.bold("     🎨 STATUSLINE CONFIGURATOR - PRESS A NUMBER TO TOGGLE!                    ")
 		.cyan("║\n");
 	term.cyan(
 		"╚════════════════════════════════════════════════════════════════════════════════╝\n\n",
@@ -51,8 +51,8 @@ export function renderUI(term: Terminal, config: StatuslineConfig): void {
 	}
 
 	term("\n");
-	term.green.bold(" [S] ").white("Sauvegarder  ");
-	term.red.bold(" [Q] ").white("Quitter  ");
+	term.green.bold(" [S] ").white("Save  ");
+	term.red.bold(" [Q] ").white("Quit  ");
 	term.yellow.bold(" [R] ").white("Reset\n");
-	term.cyan("\n TAPE 1-9, 0, a-f pour toggle rapidement!\n");
+	term.cyan("\n PRESS 1-9, 0, a-f to toggle quickly!\n");
 }

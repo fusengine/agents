@@ -1,6 +1,6 @@
-# Tailwind CSS Expert v4.1
+# Tailwind CSS Expert v4.3
 
-Expert plugin for Tailwind CSS v4.1 with CSS-native configuration, @theme, @utility, @variant and Oxide engine.
+Expert plugin for Tailwind CSS v4.3 with CSS-native configuration, @theme, @utility, @variant and Oxide engine.
 
 ## Features
 
@@ -10,7 +10,7 @@ Expert plugin for Tailwind CSS v4.1 with CSS-native configuration, @theme, @util
 - **Oxide Engine**: 5x faster builds
 - **OKLCH Colors**: Wide-gamut P3 support
 - **Container Queries**: @container, @md:*, etc.
-- **15 Specialized Skills**: Complete v4.1 documentation
+- **16 Specialized Skills**: Complete v4.3 documentation
 
 ## Installation
 
@@ -24,7 +24,7 @@ claude mcp add-json fuse-tailwindcss '{"type":"local","path":"plugins/tailwindcs
 
 | Skill | Description |
 |-------|-------------|
-| `tailwindcss-v4` | Core v4.1, @theme, directives, migration guide |
+| `tailwindcss-v4` | Core v4.3, @theme, directives, migration guide |
 | `tailwindcss-core` | @theme, @import, @source, @utility, @variant, @apply, @config |
 | `tailwindcss-utilities` | Complete utility classes reference |
 | `tailwindcss-utility-classes` | Layout, spacing, typography, colors, borders, effects |
@@ -37,18 +37,18 @@ claude mcp add-json fuse-tailwindcss '{"type":"local","path":"plugins/tailwindcs
 |-------|-------------|
 | `tailwindcss-layout` | Flexbox, Grid, Position, Container queries (@container) |
 | `tailwindcss-spacing` | Margin (m-*), Padding (p-*), Space between (space-x/y-*) |
-| `tailwindcss-sizing` | Width, Height, h-dvh (NEW), Min/Max, Aspect ratio |
+| `tailwindcss-sizing` | Width, Height, h-dvh, logical inline-*/block-* (v4.2), Min/Max, Aspect ratio |
 
 ### Styling
 
 | Skill | Description |
 |-------|-------------|
-| `tailwindcss-typography` | Fonts, Text, text-shadow (NEW), text-wrap balance/pretty |
-| `tailwindcss-backgrounds` | Colors OKLCH P3, Gradients radial/conic (NEW), Images |
-| `tailwindcss-borders` | Border, Outline, Ring, Divide |
-| `tailwindcss-effects` | shadow-color (NEW), inset-shadow (NEW), mask-* (NEW), Filters |
-| `tailwindcss-transforms` | Transform, Transition, Animation, @keyframes |
-| `tailwindcss-interactivity` | Cursor, Scroll-snap, Touch-action, Accent-color |
+| `tailwindcss-typography` | Fonts, font-features-* (v4.2), Text, text-shadow, text-wrap balance/pretty, tab-* (v4.3) |
+| `tailwindcss-backgrounds` | Colors OKLCH P3 (+ mauve/olive/mist/taupe, v4.2), Gradients radial/conic, Images |
+| `tailwindcss-borders` | Border (+ logical border-bs/be, v4.2), Outline, Ring, Divide |
+| `tailwindcss-effects` | shadow-color, inset-shadow, mask-*, Filters |
+| `tailwindcss-transforms` | Transform, zoom-* (v4.3), Transition, Animation, @keyframes |
+| `tailwindcss-interactivity` | Cursor, Scroll-snap, scrollbar-* (v4.3), Touch-action, Accent-color |
 
 ## Agent
 
@@ -58,16 +58,13 @@ The `tailwindcss-expert` agent activates automatically when you mention:
 - Responsive design, dark mode
 - Custom styles, configuration
 
-## v4.1 New Features
+## Recent Features by Version
 
-- `h-dvh` - Dynamic viewport height
-- `shadow-color-*` - Shadow color
-- `inset-shadow-*` - Inner shadows
-- `mask-*` - CSS masks
-- `text-shadow-*` - Text shadows
-- `text-wrap: balance/pretty` - Smart text wrap
-- `bg-radial-*`, `bg-conic-*` - Advanced gradients
-- OKLCH - Wide-gamut P3 palette
+- **v4.3**: `scrollbar-*` / `scrollbar-thumb-*` / `scrollbar-track-*` / `scrollbar-gutter-*`, `@container-size`, `zoom-*`, `tab-*`, stacked + compound `@variant`, `--default()` in functional `@utility`
+- **v4.2**: `mauve`/`olive`/`mist`/`taupe` palettes, `@tailwindcss/webpack`, logical `pbs-*`/`mbs-*`/`border-bs-*`/`inline-*`/`block-*`/`inset-s|e|bs|be-*` (`start-*`/`end-*` deprecated), `font-features-*`
+- **v4.1**: `text-shadow-*`, `mask-*`
+- **v4.0**: `inset-shadow-*`, `bg-conic-*` / `bg-radial-*`, OKLCH wide-gamut P3 palette
+- **Earlier (v3.x, still current)**: `h-dvh`, `text-balance`/`text-pretty` (v3.4), shadow colors (v3.0)
 
 ## Compatibility
 

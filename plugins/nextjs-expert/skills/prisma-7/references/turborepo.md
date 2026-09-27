@@ -89,12 +89,24 @@ my-monorepo/
     "studio": "prisma studio"
   },
   "devDependencies": {
-    "prisma": "^5.7.0",
-    "typescript": "^5.3.0"
+    "prisma": "^7.10.0",
+    "typescript": "^6.0.3"
   },
   "dependencies": {
-    "@prisma/client": "^5.7.0"
+    "@prisma/client": "^7.10.0",
+    "@prisma/adapter-pg": "^7.10.0",
+    "pg": "^8.23.0",
+    "dotenv": "^18.0.4"
   }
+}
+```
+
+Generator in `packages/database/prisma/schema.prisma` (v7: `output` required, matches the `src/generated/**` turbo output):
+
+```prisma
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
 }
 ```
 
@@ -105,15 +117,19 @@ my-monorepo/
 ```typescript
 // packages/database/src/index.ts
 import 'dotenv/config'
-import { PrismaClient } from '@prisma/client'
+import { PrismaPg } from '@prisma/adapter-pg'
+import { PrismaClient } from './generated/prisma/client'  // v7: generated path
 
 const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined
 }
 
+const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL! })
+
 export const prisma =
   globalForPrisma.prisma ??
   new PrismaClient({
+    adapter,
     log: ['query'],
   })
 
@@ -121,8 +137,8 @@ if (process.env.NODE_ENV !== 'production') {
   globalForPrisma.prisma = prisma
 }
 
-export { Prisma } from '@prisma/client'
-export type { User, Post } from '@prisma/client'
+export { Prisma } from './generated/prisma/client'
+export type { User, Post } from './generated/prisma/client'
 ```
 
 ---

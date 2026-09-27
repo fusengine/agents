@@ -13,11 +13,11 @@ declare(strict_types=1);
 namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\JsonApiResource;
+use Illuminate\Http\Resources\JsonApi\JsonApiResource;
 
 final class UserResource extends JsonApiResource
 {
-    public string $type = 'users';
+    // type "users" is derived from the class name
 
     /**
      * @return array<string, mixed>
@@ -36,14 +36,11 @@ final class UserResource extends JsonApiResource
     }
 
     /**
-     * @return array<string, callable>
+     * @var array<int|string, string>
      */
-    public function relationships(): array
-    {
-        return [
-            'posts' => fn () => PostResource::collection($this->whenLoaded('posts')),
-        ];
-    }
+    public $relationships = [
+        'posts' => PostResource::class,
+    ];
 
     /**
      * @return array<string, string>
@@ -51,7 +48,7 @@ final class UserResource extends JsonApiResource
     public function toLinks(Request $request): array
     {
         return [
-            'self' => route('api.users.show', $this->id),
+            'self' => route('api.users.show', $this->resource),
         ];
     }
 }

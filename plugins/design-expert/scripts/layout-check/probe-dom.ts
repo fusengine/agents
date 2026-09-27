@@ -1,7 +1,7 @@
 /**
- * probe-dom.ts — Helpers DOM injectés dans la page (namespace `window.__lc`).
- * Les fonctions sont écrites en TypeScript puis sérialisées via `toString()` :
- * elles ne doivent référencer AUCUNE variable de module, seulement `window.__lc`.
+ * probe-dom.ts — DOM helpers injected into the page (namespace `window.__lc`).
+ * The functions are written in TypeScript then serialized via `toString()`:
+ * they must reference NO module variable, only `window.__lc`.
  */
 declare global {
   interface Window {
@@ -9,7 +9,7 @@ declare global {
   }
 }
 
-/** Sélecteur CSS court et lisible identifiant un élément (4 niveaux max). */
+/** Short, readable CSS selector identifying an element (4 levels max). */
 function cssPath(el: Element): string {
   if (!el || el.nodeType !== 1) return "";
   if (el.id) return "#" + el.id;
@@ -34,12 +34,12 @@ function cssPath(el: Element): string {
   return parts.join(" > ");
 }
 
-/** Visible au rendu : boîte non nulle, et aucun ancêtre display/visibility/opacity masquant. */
+/** Visible when rendered: non-zero box, and no hiding display/visibility/opacity ancestor. */
 function isVisible(el: Element): boolean {
   const r = el.getBoundingClientRect();
-  // Une boîte de 1px ne montre aucun texte : c'est le motif `sr-only`
+  // A 1px box shows no text: this is the `sr-only` pattern
   // (`position:absolute; width:1px; height:1px; clip-path: inset(50%)`),
-  // réservé aux lecteurs d'écran et hors périmètre d'un contrôle visuel.
+  // reserved for screen readers and outside the scope of a visual check.
   if (r.width <= 1 || r.height <= 1) return false;
   const own = getComputedStyle(el);
   if (own.clipPath && own.clipPath !== "none" && own.clipPath.indexOf("inset(50%") === 0) return false;
@@ -52,7 +52,7 @@ function isVisible(el: Element): boolean {
   return true;
 }
 
-/** Texte porté DIRECTEMENT par l'élément (pas celui de ses descendants), normalisé. */
+/** Text carried DIRECTLY by the element (not its descendants'), normalized. */
 function ownText(el: Element): string {
   let text = "";
   const nodes = el.childNodes;
@@ -63,25 +63,25 @@ function ownText(el: Element): string {
   return text.replace(/\s+/g, " ").trim();
 }
 
-/** L'élément (ou un ancêtre) correspond à un sélecteur d'exclusion. */
+/** The element (or an ancestor) matches an exclusion selector. */
 function isExcluded(el: Element, selectors: string[]): boolean {
   for (let i = 0; i < selectors.length; i++) {
     try {
       if (el.matches(selectors[i] as string) || el.closest(selectors[i] as string)) return true;
     } catch {
-      /* sélecteur invalide fourni par l'utilisateur : ignoré */
+      /* invalid selector supplied by the user: ignored */
     }
   }
   return false;
 }
 
-/** Tous les éléments visibles non exclus de la page. */
+/** Every visible, non-excluded element of the page. */
 function candidates(exclude: string[]): Element[] {
   const all = Array.prototype.slice.call(document.querySelectorAll("*")) as Element[];
   return all.filter((el) => window.__lc.isVisible(el) && !window.__lc.isExcluded(el, exclude));
 }
 
-/** Source JS à injecter avant le chargement de la page. */
+/** JS source to inject before the page loads. */
 export const DOM_PROBE_SOURCE = `window.__lc = Object.assign(window.__lc || {}, {
   cssPath: ${cssPath},
   isVisible: ${isVisible},

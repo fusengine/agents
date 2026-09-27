@@ -1,12 +1,12 @@
 /**
- * Helpers pour les opérations fichiers
+ * Helpers for file operations
  */
 import { copyFileSync, existsSync, mkdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { $ } from "bun";
 
 /**
- * Copie un fichier avec création du dossier destination
+ * Copy a file, creating the destination directory
  */
 export function copyFile(src: string, dest: string): boolean {
 	if (!existsSync(src)) return false;
@@ -17,7 +17,7 @@ export function copyFile(src: string, dest: string): boolean {
 }
 
 /**
- * Copie un fichier et le rend exécutable
+ * Copy a file and make it executable
  */
 export async function copyExecutable(
 	src: string,
@@ -29,7 +29,7 @@ export async function copyExecutable(
 }
 
 /**
- * Rend tous les scripts .sh exécutables dans un répertoire
+ * Make every .sh script in a directory executable
  */
 export async function makeScriptsExecutable(dir: string): Promise<number> {
 	const result = await $`find ${dir} -name "*.sh" -type f`.quiet();
@@ -50,7 +50,7 @@ export async function installPluginDeps(dir: string): Promise<boolean> {
 }
 
 /**
- * Compare le contenu de deux fichiers
+ * Compare the contents of two files
  */
 export async function filesAreEqual(
 	path1: string,

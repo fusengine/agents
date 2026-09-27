@@ -16,7 +16,7 @@ template: templates/basic-setup.md
 ## Installation
 
 ```bash
-bun add -D @tanstack/router-devtools
+bun add -D @tanstack/react-router-devtools
 ```
 
 ---
@@ -37,7 +37,7 @@ Add in `__root.tsx` with DEV condition:
 
 | Option | Values | Default |
 |--------|--------|---------|
-| `position` | `bottom-right`, `bottom-left`, `top-right`, `top-left` | `bottom-right` |
+| `position` | `bottom-right`, `bottom-left`, `top-right`, `top-left` | `bottom-left` |
 | `initialIsOpen` | `boolean` | `false` |
 | `toggleButtonProps` | `{ style }` | - |
 

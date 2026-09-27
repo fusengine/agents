@@ -28,6 +28,7 @@ related: app-icons.md
 - App icons (all variants)
 - Launch screen
 - Correct deployment target
+- Built with Xcode 26+ and the iOS/iPadOS/tvOS/visionOS/watchOS 26 SDK or later (current upload minimum; Xcode 27 ships the 27 SDKs)
 
 **Metadata:**
 - App name and subtitle

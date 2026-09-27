@@ -2,7 +2,7 @@
 name: better-auth
 description: Use when implementing Next.js authentication with Better Auth — OAuth, 2FA, magic links, SSO, Stripe billing, or session management.
 versions:
-  better-auth: 1.2
+  better-auth: 1.7
 user-invocable: true
 references: references/installation.md, references/basic-usage.md, references/comparison.md, references/server-config.md, references/client.md, references/session.md, references/middleware.md, references/server-actions.md, references/hooks.md, references/email.md, references/rate-limiting.md, references/cli.md, references/security.md, references/api.md, references/migrations.md, references/typescript.md, references/user-accounts.md, references/errors.md, references/telemetry.md, references/faq.md, references/concepts/sessions.md, references/concepts/database.md, references/concepts/plugins.md, references/concepts/users.md, references/concepts/oauth.md, references/concepts/security.md, references/concepts/cookies.md, references/adapters/prisma.md, references/adapters/drizzle.md, references/adapters/mongodb.md, references/adapters/sql-databases.md, references/adapters/community-adapters.md, references/providers/overview.md, references/providers/google.md, references/providers/github.md, references/providers/discord.md, references/providers/apple.md, references/providers/microsoft.md, references/providers/social-providers.md, references/providers/generic-oauth.md, references/providers/oauth-providers-all.md, references/plugins/overview.md, references/plugins/2fa.md, references/plugins/admin.md, references/plugins/organization.md, references/plugins/passkey.md, references/plugins/magic-link.md, references/plugins/email-otp.md, references/plugins/phone.md, references/plugins/anonymous.md, references/plugins/username.md, references/plugins/sso.md, references/plugins/jwt.md, references/plugins/bearer.md, references/plugins/multi-session.md, references/plugins/oidc-provider.md, references/plugins/api-key.md, references/plugins/captcha.md, references/plugins/stripe.md, references/plugins/polar.md, references/plugins/scim.md, references/plugins/siwe.md, references/plugins/device-auth.md, references/integrations/nextjs.md, references/integrations/other-frameworks.md, references/integrations/frameworks-all.md, references/examples/nextjs-app-router.md, references/examples/oauth-complete.md, references/examples/2fa-complete.md, references/examples/organization-complete.md, references/examples/passkey-complete.md, references/guides/performance.md, references/guides/plugin-development.md, references/guides/saml-okta.md, references/guides/database-adapter.md, references/guides/auth0-migration.md, references/guides/clerk-migration.md, references/guides/authjs-migration.md, references/guides/supabase-migration.md, references/guides/workos-migration.md, references/guides/browser-extension.md
 related-skills: nextjs-16, prisma-7, solid-nextjs
@@ -52,6 +52,16 @@ After implementation, run **fuse-ai-pilot:sniper** for validation.
 | Self-hosted | Your data stays on your infrastructure |
 | Database flexible | Prisma, Drizzle, MongoDB, PostgreSQL, MySQL, SQLite |
 | Enterprise ready | SSO, SCIM, organizations, audit logs |
+
+### Version Notes (current stable: 1.7.x)
+
+| Since | Change |
+|-------|--------|
+| 1.5 | Standalone CLI `npx auth@latest` (`generate`, `migrate`, `secret`, `init`, `check`…) replaces `@better-auth/cli`; OAuth 2.1 Provider (`@better-auth/oauth-provider`) |
+| 1.6 | `session.freshAge` computed from `createdAt`; `oidcProvider` deprecated |
+| 1.7 | `oidcProvider` removed; generic OAuth providers use `signIn.social` (no `genericOAuthClient`); DB joins via `advanced.database.joins`; accounts keyed on `(issuer, accountId)`; `twoFactor.enable` returns a `method`-discriminated response; MCP → `@better-auth/mcp`; SCIM decoupled from organization |
+
+After upgrading to 1.7, regenerate the schema (`npx auth@latest generate`) and follow the official 1.7 upgrade guide.
 
 ---
 

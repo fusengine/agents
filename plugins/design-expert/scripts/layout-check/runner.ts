@@ -1,6 +1,6 @@
 /**
- * runner.ts — Orchestration : charge la page une fois, la mesure à chaque largeur.
- * Ajouter une famille de contrôles = ajouter une entrée ici + un module dans `checks/`.
+ * runner.ts — Orchestration: loads the page once, measures it at every width.
+ * Adding a check family = adding an entry here + a module in `checks/`.
  */
 import { launchBrowser, loadPlaywright, toTargetUrl } from "./browser";
 import { DOM_PROBE_SOURCE } from "./probe-dom";
@@ -18,10 +18,10 @@ import { buildReport } from "./report";
 import type { LayoutCheckConfig, LayoutCheckReport, Violation, Warning } from "./types";
 import type { BrowserLike, PageLike } from "./page.types";
 
-/** Délai de stabilisation du layout après un redimensionnement, en ms. */
+/** Layout settling delay after a resize, in ms. */
 const SETTLE_MS = 150;
 
-/** Mesure toutes les familles activées à une largeur donnée. */
+/** Measures every enabled family at a given width. */
 async function measureWidth(
   page: PageLike,
   config: LayoutCheckConfig,
@@ -45,12 +45,12 @@ async function measureWidth(
 }
 
 /**
- * Exécute le contrôle complet sur une cible (URL http(s) ou chemin local).
+ * Runs the full check on a target (http(s) URL or local path).
  *
- * @param target - URL ou chemin de fichier ; un chemin est converti en `file://`
- * @param config - Configuration effective (largeurs, seuils, exclusions)
- * @returns Le rapport JSON complet
- * @throws si Playwright est introuvable ou si la page ne charge pas
+ * @param target - URL or file path; a path is converted to `file://`
+ * @param config - Effective configuration (widths, thresholds, exclusions)
+ * @returns The full JSON report
+ * @throws if Playwright cannot be found or the page does not load
  */
 export async function runLayoutCheck(
   target: string,
@@ -61,13 +61,13 @@ export async function runLayoutCheck(
   const browser = (await launchBrowser(chromium)) as BrowserLike;
   const sink = { violations: [] as Violation[], warnings: [] as Warning[] };
   try {
-    // `reducedMotion: reduce` par défaut : une page qui révèle son contenu au
-    // défilement le rend alors statiquement, sinon tout serait mesuré à opacité 0.
+    // `reducedMotion: reduce` by default: a page that reveals its content on
+    // scroll then renders it statically, otherwise everything would be measured at opacity 0.
     const page = await browser.newPage({
       reducedMotion: config.reducedMotion ? "reduce" : "no-preference",
     });
-    // Injecté AVANT le chargement : disponible pour toutes les mesures, et non
-    // soumis à la CSP de la page (contrairement à une balise <script> ajoutée après).
+    // Injected BEFORE loading: available to every measurement, and not
+    // subject to the page's CSP (unlike a <script> tag added afterwards).
     await page.addInitScript({ content: DOM_PROBE_SOURCE });
     await page.addInitScript({ content: COLOR_PROBE_SOURCE });
     await page.addInitScript({ content: LAYOUT_PROBE_SOURCE });

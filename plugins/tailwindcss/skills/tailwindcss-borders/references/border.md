@@ -43,6 +43,18 @@ Default sizes: `0`, `1px`, `2px`, `4px`, `8px`
 <div class="border-y-4 border-indigo-500">border-top & border-bottom: 4px</div>
 ```
 
+### Logical Sides
+
+```html
+<!-- Inline start / end (direction-aware) -->
+<div class="border-s-4 border-indigo-500">border-inline-start: 4px</div>
+<div class="border-e-4 border-indigo-500">border-inline-end: 4px</div>
+
+<!-- Block start / end (writing-mode-aware, since v4.2) -->
+<div class="border-bs border-indigo-500">border-block-start: 1px</div>
+<div class="border-be-2 border-indigo-500">border-block-end: 2px</div>
+```
+
 ## Border Color
 
 ### Basic Colors

@@ -10,13 +10,13 @@ related: sheet.md, breadcrumb.md
 
 # Dropdown Menu
 
+> **Base:** examples use **Base UI** (shadcn default since 2026-07) — wraps Base UI `Menu`; Radix delta in "Radix variant" below; React Aria: `<DropdownMenuTrigger>` wraps the `Button` **and** the `<DropdownMenu>` content, no `render`/`asChild`. Sources: https://ui.shadcn.com/r/styles/base-nova/dropdown-menu.json, https://ui.shadcn.com/r/styles/radix-nova/dropdown-menu.json
+
 Dropdown menus provide a list of actions or navigation links that appear when triggered.
 
 ## Basic Dropdown
 
 ```tsx
-'use client'
-
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -26,17 +26,16 @@ import {
 } from '@/modules/cores/shadcn/components/ui/dropdown-menu'
 import { Button } from '@/modules/cores/shadcn/components/ui/button'
 
+/** Action menu with a destructive last item. */
 export function BasicDropdown() {
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="outline">Actions</Button>
-      </DropdownMenuTrigger>
+      <DropdownMenuTrigger render={<Button variant="outline" />}>Actions</DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem>Edit</DropdownMenuItem>
+        <DropdownMenuItem onClick={() => console.log('edit')}>Edit</DropdownMenuItem>
         <DropdownMenuItem>Duplicate</DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>Delete</DropdownMenuItem>
+        <DropdownMenuItem variant="destructive">Delete</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   )
@@ -46,8 +45,6 @@ export function BasicDropdown() {
 ## Dropdown with Icons
 
 ```tsx
-'use client'
-
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -58,26 +55,27 @@ import {
 import { Button } from '@/modules/cores/shadcn/components/ui/button'
 import { MoreHorizontal, Edit, Copy, Trash2 } from 'lucide-react'
 
+/** Icon-only trigger; item icons are sized by the wrapper. */
 export function DropdownWithIcons() {
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="sm">
-          <MoreHorizontal className="h-4 w-4" />
-        </Button>
+      <DropdownMenuTrigger
+        render={<Button variant="ghost" size="icon-sm" aria-label="More actions" />}
+      >
+        <MoreHorizontal />
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuItem>
-          <Edit className="mr-2 h-4 w-4" />
+          <Edit />
           Edit
         </DropdownMenuItem>
         <DropdownMenuItem>
-          <Copy className="mr-2 h-4 w-4" />
+          <Copy />
           Duplicate
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
-          <Trash2 className="mr-2 h-4 w-4" />
+        <DropdownMenuItem variant="destructive">
+          <Trash2 />
           Delete
         </DropdownMenuItem>
       </DropdownMenuContent>
@@ -88,9 +86,9 @@ export function DropdownWithIcons() {
 
 ## Dropdown with Grouped Items
 
-```tsx
-'use client'
+`DropdownMenuLabel` is a Base UI `GroupLabel`: keep it inside a `DropdownMenuGroup`.
 
+```tsx
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -103,28 +101,26 @@ import {
 import { Button } from '@/modules/cores/shadcn/components/ui/button'
 import { Settings, LogOut, User } from 'lucide-react'
 
+/** Account menu with a labelled group. */
 export function DropdownWithGroups() {
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="outline">Profile</Button>
-      </DropdownMenuTrigger>
+      <DropdownMenuTrigger render={<Button variant="outline" />}>Profile</DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-56">
-        <DropdownMenuLabel>My Account</DropdownMenuLabel>
-        <DropdownMenuSeparator />
         <DropdownMenuGroup>
+          <DropdownMenuLabel>My Account</DropdownMenuLabel>
           <DropdownMenuItem>
-            <User className="mr-2 h-4 w-4" />
+            <User />
             Profile
           </DropdownMenuItem>
           <DropdownMenuItem>
-            <Settings className="mr-2 h-4 w-4" />
+            <Settings />
             Settings
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuItem>
-          <LogOut className="mr-2 h-4 w-4" />
+          <LogOut />
           Log out
         </DropdownMenuItem>
       </DropdownMenuContent>
@@ -136,8 +132,6 @@ export function DropdownWithGroups() {
 ## Nested Dropdown (Sub-Menu)
 
 ```tsx
-'use client'
-
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -151,25 +145,24 @@ import {
 import { Button } from '@/modules/cores/shadcn/components/ui/button'
 import { Share2, Mail, MessageSquare } from 'lucide-react'
 
+/** Share menu with a nested submenu. */
 export function NestedDropdown() {
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="outline">Share</Button>
-      </DropdownMenuTrigger>
+      <DropdownMenuTrigger render={<Button variant="outline" />}>Share</DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuSub>
           <DropdownMenuSubTrigger>
-            <Share2 className="mr-2 h-4 w-4" />
+            <Share2 />
             Share via
           </DropdownMenuSubTrigger>
           <DropdownMenuSubContent>
             <DropdownMenuItem>
-              <Mail className="mr-2 h-4 w-4" />
+              <Mail />
               Email
             </DropdownMenuItem>
             <DropdownMenuItem>
-              <MessageSquare className="mr-2 h-4 w-4" />
+              <MessageSquare />
               Message
             </DropdownMenuItem>
           </DropdownMenuSubContent>
@@ -185,43 +178,38 @@ export function NestedDropdown() {
 ## Dropdown with Checkboxes
 
 ```tsx
-'use client'
-
 import { useState } from 'react'
 import {
   DropdownMenu,
   DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuCheckboxItem,
+  DropdownMenuGroup,
   DropdownMenuLabel,
-  DropdownMenuSeparator,
 } from '@/modules/cores/shadcn/components/ui/dropdown-menu'
 import { Button } from '@/modules/cores/shadcn/components/ui/button'
 
+/** Checkbox items; `onCheckedChange(checked: boolean, eventDetails)`. */
 export function DropdownWithCheckboxes() {
   const [showNotifications, setShowNotifications] = useState(true)
   const [showEmails, setShowEmails] = useState(false)
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="outline">Settings</Button>
-      </DropdownMenuTrigger>
+      <DropdownMenuTrigger render={<Button variant="outline" />}>Settings</DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuLabel>Notifications</DropdownMenuLabel>
-        <DropdownMenuSeparator />
-        <DropdownMenuCheckboxItem
-          checked={showNotifications}
-          onCheckedChange={setShowNotifications}
-        >
-          Push Notifications
-        </DropdownMenuCheckboxItem>
-        <DropdownMenuCheckboxItem
-          checked={showEmails}
-          onCheckedChange={setShowEmails}
-        >
-          Email Updates
-        </DropdownMenuCheckboxItem>
+        <DropdownMenuGroup>
+          <DropdownMenuLabel>Notifications</DropdownMenuLabel>
+          <DropdownMenuCheckboxItem
+            checked={showNotifications}
+            onCheckedChange={setShowNotifications}
+          >
+            Push Notifications
+          </DropdownMenuCheckboxItem>
+          <DropdownMenuCheckboxItem checked={showEmails} onCheckedChange={setShowEmails}>
+            Email Updates
+          </DropdownMenuCheckboxItem>
+        </DropdownMenuGroup>
       </DropdownMenuContent>
     </DropdownMenu>
   )
@@ -232,9 +220,9 @@ export function DropdownWithCheckboxes() {
 
 ```tsx
 <DropdownMenuContent
-  align="start" // left, center, or end (default: end)
+  align="start" // start, center, or end (default: start)
   side="bottom" // top, right, bottom, or left (default: bottom)
-  sideOffset={8} // distance from trigger
+  sideOffset={8} // distance from trigger (default: 4)
 >
   {/* items */}
 </DropdownMenuContent>
@@ -244,16 +232,28 @@ export function DropdownWithCheckboxes() {
 
 | Prop | Type | Description |
 |------|------|-------------|
-| `align` | `'start' \| 'center' \| 'end'` | Horizontal alignment relative to trigger |
-| `side` | `'top' \| 'right' \| 'bottom' \| 'left'` | Menu position relative to trigger |
-| `sideOffset` | `number` | Distance between menu and trigger |
-| `asChild` | `boolean` | Render trigger as child component |
+| `align` / `alignOffset` | `'start' \| 'center' \| 'end'` / `number` | Alignment relative to trigger (Positioner) |
+| `side` / `sideOffset` | `'top' \| 'right' \| 'bottom' \| 'left'` / `number` | Menu position relative to trigger |
+| `render` | `ReactElement` | Trigger/item rendered as another element |
+| `variant` | `'default' \| 'destructive'` | Item style |
 | `disabled` | `boolean` | Disable menu item |
 | `inset` | `boolean` | Indent menu item (for sub-items) |
 
+## Radix variant
+
+`style` `radix-*`: same parts and props; the trigger composes with `asChild`, and
+`DropdownMenuLabel` may sit directly in the content:
+
+```tsx
+<DropdownMenuTrigger asChild>
+  <Button variant="outline">Actions</Button>
+</DropdownMenuTrigger>
+// Items: onSelect (Radix) as well as onClick
+```
+
 ## Best Practices
 
-1. **Icon Usage**: Use lucide-react icons consistently (16x16 size)
+1. **Icon Usage**: Use lucide-react icons consistently (the wrapper sizes them)
 2. **Grouping**: Use `DropdownMenuGroup` and `DropdownMenuLabel` for organization
 3. **Separators**: Use `DropdownMenuSeparator` to visually group related items
 4. **Nesting**: Keep nesting to 2 levels maximum for usability

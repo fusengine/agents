@@ -1,7 +1,7 @@
 ---
 name: solid-csharp-principles
 applies-to: "**/*.cs"
-description: All 5 SOLID principles applied to C# 12/.NET 9 with interfaces, DI, and records
+description: All 5 SOLID principles applied to C# 14/.NET 10 with interfaces, DI, and records
 when-to-use: overview of SOLID for C#, quick reference, principle selection
 keywords: SOLID, C#, .NET, interfaces, DI, records
 priority: high

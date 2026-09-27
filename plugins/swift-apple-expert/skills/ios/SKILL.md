@@ -26,7 +26,7 @@ iOS-specific development with XcodeBuildMCP automation tools.
 Before ANY implementation, spawn 3 agents in parallel, one `Agent` call each with a `name`:
 
 1. **fuse-ai-pilot:explore-codebase** - Analyze existing iOS patterns
-2. **fuse-ai-pilot:research-expert** - Verify latest iOS 26 docs via Context7/Exa
+2. **fuse-ai-pilot:research-expert** - Verify latest iOS 27 docs via Context7/Exa
 3. **mcp__XcodeBuildMCP__discover_projs** - Find Xcode projects
 
 After implementation, run **fuse-ai-pilot:sniper** for validation.

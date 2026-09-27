@@ -308,9 +308,9 @@ Steps:
 <meta name="twitter:site" content="@AgencySEO">
 
 <!-- Translate title/description per language -->
-<!-- French version -->
-<meta name="twitter:title" content="Guide SEO 2026: 47 Techniques Éprouvées">
-<meta name="twitter:description" content="Découvrez les meilleures pratiques SEO 2026...">
+<!-- Spanish version -->
+<meta name="twitter:title" content="Guía SEO 2026: 47 técnicas probadas">
+<meta name="twitter:description" content="Descubre las mejores prácticas SEO de 2026...">
 
 <!-- English version (on /en/ URLs) -->
 <meta name="twitter:title" content="SEO Guide 2026: 47 Proven Techniques">

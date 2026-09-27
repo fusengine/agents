@@ -8,8 +8,8 @@ DOM capture (`wget -p -k`, 804 KB) cross-checked against the site's actual rende
 
 | Status | Meaning |
 |---|---|
-| **relevé** | value read in the source or measured on the render |
-| **estimé** | reconstructed value — the source doesn't carry it explicitly |
+| **measured** | value read in the source or measured on the render |
+| **estimated** | reconstructed value — the source doesn't carry it explicitly |
 
 ---
 
@@ -55,7 +55,7 @@ in `border-box`, on a **transparent** border. No extra
 element, no pseudo-element.
 
 ```css
-.carte {
+.card {
   border: 1px solid transparent;
   background:
     linear-gradient(#0a0a0a 0%, #0d0d0d36 100%) padding-box,
@@ -157,9 +157,9 @@ overflowing by 199px at the top and bottom, filled with a gradient that
 fades out — one toward the bottom, the other toward the top:
 
 ```css
-.filet { position:absolute; top:-199px; bottom:-199px; width:1px; }
-.filet--descend { left:200px;  background: linear-gradient(#0000 0%, #2d2a89 100%); }
-.filet--monte   { right:200px; background: linear-gradient(#2d2a89 0%, #0000 100%); }
+.rule { position:absolute; top:-199px; bottom:-199px; width:1px; }
+.rule--down { left:200px;  background: linear-gradient(#0000 0%, #2d2a89 100%); }
+.rule--up   { right:200px; background: linear-gradient(#2d2a89 0%, #0000 100%); }
 ```
 
 A horizontal variant exists (`825 × 2px`, `bottom:28px`,
@@ -214,9 +214,9 @@ Three facts change how everything that follows should be read.
 
 | Tier | Media query | status |
 |---|---|---|
-| Desktop | `min-width: 1220px` | **relevé** |
-| Tablet | `min-width: 810px` and `max-width: 1219.98px` | **relevé** |
-| Mobile | `max-width: 809.98px` | **relevé** |
+| Desktop | `min-width: 1220px` | **measured** |
+| Tablet | `min-width: 810px` and `max-width: 1219.98px` | **measured** |
+| Mobile | `max-width: 809.98px` | **measured** |
 
 The upper threshold really is **1220**, not 1200.
 
@@ -224,7 +224,7 @@ The upper threshold really is **1220**, not 1200.
 
 ## 3. Type scale
 
-Families: **Inter Display** (titles) and **Inter Variable** (labels) — relevé.
+Families: **Inter Display** (titles) and **Inter Variable** (labels) — measured.
 `Inter Tight` and `Manrope` also appear, but on third-party components
 (support widget), not on the page itself.
 
@@ -235,22 +235,22 @@ Two weights carry 99% of the text: **500** (110 occurrences) and **600**
 
 | Role | Desktop | Tablet | Mobile | Weight | Tracking | Line-height | status |
 |---|---|---|---|---|---|---|---|
-| Hero title | **48** | **36** | **30** | 600 | −0.03em | 120% | **relevé** (3 tiers) |
-| Product name (`h2`) | **43** | — | — | 600 | −0.02em | 120% | **relevé** (desktop) |
-| Section / column title | **32** | — | **24** | 600 | −0.03em | 120% | **relevé** (see § 5.4) |
-| Large card title | **27** | — | **23** | 600 | −0.03em | 120% | **relevé** |
-| Block title / price | 24 | — | — | 600 | −0.03em | 110–120% | **relevé** |
-| Lede | 20 | — | — | 500 | −0.03em | 110% | **relevé** |
-| Body / eyebrow | **18** | — | **16** | 500 | −0.03em | 124–130% | **relevé** |
-| Interface (nav, caption, button) | 14 | — | — | 500 | −0.01em | 130% | **relevé** |
-| Fine print | 13 | — | — | 500 | −0.01em | 130% | **relevé** |
-| Pill | 12 | — | — | 600–700 | −0.01em | — | **relevé** |
+| Hero title | **48** | **36** | **30** | 600 | −0.03em | 120% | **measured** (3 tiers) |
+| Product name (`h2`) | **43** | — | — | 600 | −0.02em | 120% | **measured** (desktop) |
+| Section / column title | **32** | — | **24** | 600 | −0.03em | 120% | **measured** (see § 5.4) |
+| Large card title | **27** | — | **23** | 600 | −0.03em | 120% | **measured** |
+| Block title / price | 24 | — | — | 600 | −0.03em | 110–120% | **measured** |
+| Lede | 20 | — | — | 500 | −0.03em | 110% | **measured** |
+| Body / eyebrow | **18** | — | **16** | 500 | −0.03em | 124–130% | **measured** |
+| Interface (nav, caption, button) | 14 | — | — | 500 | −0.01em | 130% | **measured** |
+| Fine print | 13 | — | — | 500 | −0.01em | 130% | **measured** |
+| Pill | 12 | — | — | 600–700 | −0.01em | — | **measured** |
 
 Sizes also present in the source, not assigned to a stable role:
-21, 15, 12.96px — **relevé**.
+21, 15, 12.96px — **measured**.
 
 The tablet/mobile tiers marked "—" aren't declared: the desktop
-value applies to all three widths. **Relevé**: the scale only
+value applies to all three widths. **Measured**: the scale only
 recalculates where it would break.
 
 ### 3.2 There is no ratio
@@ -274,27 +274,27 @@ Graduated by size, never uniform:
 
 | Tracking | Where | Occurrences | status |
 |---|---|---|---|
-| −0.03em | display, lede, body | 141 | **relevé** |
-| −0.02em | product name only | 48 | **relevé** |
-| −0.01em | interface, captions | 71 | **relevé** |
+| −0.03em | display, lede, body | 141 | **measured** |
+| −0.02em | product name only | 48 | **measured** |
+| −0.01em | interface, captions | 71 | **measured** |
 
 ### 3.4 Line-heights
 
 | Value | Usage | Occurrences | status |
 |---|---|---|---|
-| 110% | lede, feature word | 17 | **relevé** |
-| 120% | every title | 78 | **relevé** |
-| 124% | eyebrows | 15 | **relevé** |
-| 130% | paragraphs | 64 | **relevé** |
+| 110% | lede, feature word | 17 | **measured** |
+| 120% | every title | 78 | **measured** |
+| 124% | eyebrows | 15 | **measured** |
+| 130% | paragraphs | 64 | **measured** |
 
 ### 3.5 Line measure
 
 | Block | Measure | status |
 |---|---|---|
-| Hero lede | ~71 ch on **a single line** | **relevé** (measured on the 1440 render) |
-| Product-band paragraph | ~34 ch | **relevé** |
-| Support-card body | ~46 ch | **estimé** (measured, not declared) |
-| "Superpower" card body | ~40 ch | **estimé** |
+| Hero lede | ~71 ch on **a single line** | **measured** (measured on the 1440 render) |
+| Product-band paragraph | ~34 ch | **measured** |
+| Support-card body | ~46 ch | **estimated** (measured, not declared) |
+| "Superpower" card body | ~40 ch | **estimated** |
 
 The hero lede is a **deliberate outlier**: 71 characters held
 on a single line. This isn't a reading measure, it's a graphic
@@ -310,16 +310,16 @@ Measured in the `body { --token-…: … }` block of the source.
 
 | Value | Role | status |
 |---|---|---|
-| `#5351ea` | main accent — solid button, active link, hovered link. Declared **twice** under two distinct tokens | **relevé** |
-| `#131415` | deep background | **relevé** |
-| `#222426` | elevated surface | **relevé** |
-| `#1d1d1f` | text on light background | **relevé** |
-| `#f2f2f5` | light surface | **relevé** |
-| `#242424` | link text on light background | **relevé** |
-| `#848b96` / `#79797d` / `#797985` | three near-identical grays for secondary text | **relevé** |
-| `#7cb572` / `#5f8258` | green (positive state) | **relevé** |
-| `#bd9366` | wood — evokes the product's walnut finish | **relevé** |
-| `#fff` | primary text | **relevé** |
+| `#5351ea` | main accent — solid button, active link, hovered link. Declared **twice** under two distinct tokens | **measured** |
+| `#131415` | deep background | **measured** |
+| `#222426` | elevated surface | **measured** |
+| `#1d1d1f` | text on light background | **measured** |
+| `#f2f2f5` | light surface | **measured** |
+| `#242424` | link text on light background | **measured** |
+| `#848b96` / `#79797d` / `#797985` | three near-identical grays for secondary text | **measured** |
+| `#7cb572` / `#5f8258` | green (positive state) | **measured** |
+| `#bd9366` | wood — evokes the product's walnut finish | **measured** |
+| `#fff` | primary text | **measured** |
 
 ### 4.2 Colors set inline, outside the tokens
 
@@ -328,15 +328,15 @@ system, but they carry the identity.
 
 | Value | Role | status |
 |---|---|---|
-| `rgb(227, 160, 129)` | **the `h1`'s pivot word** ("home."), and nothing else on the page | **relevé** |
-| `rgba(255, 255, 255, .62)` | secondary text — transparent white, not a gray: it re-tints over a photo | **relevé** |
-| `rgb(171, 171, 171)` | card body | **relevé** |
-| `rgb(224, 224, 224)` | section eyebrow | **relevé** |
-| `rgb(28, 26, 255)` | blue of the "endlessssssssss" gradient | **relevé** |
+| `rgb(227, 160, 129)` | **the `h1`'s pivot word** ("home."), and nothing else on the page | **measured** |
+| `rgba(255, 255, 255, .62)` | secondary text — transparent white, not a gray: it re-tints over a photo | **measured** |
+| `rgb(171, 171, 171)` | card body | **measured** |
+| `rgb(224, 224, 224)` | section eyebrow | **measured** |
+| `rgb(28, 26, 255)` | blue of the "endlessssssssss" gradient | **measured** |
 
 ### 4.3 Page background
 
-**Pure black `#000`** — relevé. Not a very dark gray. This is what lets
+**Pure black `#000`** — measured. Not a very dark gray. This is what lets
 full-bleed product photos blend into the page with no visible edge.
 
 ### 4.4 Text-fill gradients
@@ -346,10 +346,10 @@ a flat white, they're a gradient applied to the glyph.
 
 | Gradient | Where | status |
 |---|---|---|
-| `linear-gradient(0deg, #fff 0%, rgba(255,255,255,.8) 100%)` | hero title | **relevé** |
-| `linear-gradient(0deg, #fff 0%, rgba(255,255,255,.75) 100%)` | card titles | **relevé** |
-| `linear-gradient(270deg, rgba(28,26,255,0) 0%, rgb(28,26,255) 36.7731%)` | word "endlessssssssss" — fades out toward the right, which *is* what makes the word's meaning | **relevé** |
-| `radial-gradient(100% 1182.8% at 100% 50%, rgb(191,88,202) 0%, rgb(94,92,255) 100%)` | word "app store." — the 1182% vertical radius flattens the gradient into a horizontal band | **relevé** |
+| `linear-gradient(0deg, #fff 0%, rgba(255,255,255,.8) 100%)` | hero title | **measured** |
+| `linear-gradient(0deg, #fff 0%, rgba(255,255,255,.75) 100%)` | card titles | **measured** |
+| `linear-gradient(270deg, rgba(28,26,255,0) 0%, rgb(28,26,255) 36.7731%)` | word "endlessssssssss" — fades out toward the right, which *is* what makes the word's meaning | **measured** |
+| `radial-gradient(100% 1182.8% at 100% 50%, rgb(191,88,202) 0%, rgb(94,92,255) 100%)` | word "app store." — the 1182% vertical radius flattens the gradient into a horizontal band | **measured** |
 
 ### 4.5 "Superpowers" cards
 
@@ -368,12 +368,12 @@ cards, which holds the series together despite five hues.
 
 Two other interiors exist in the source without being used on
 the homepage: `#006868 → #01204fe0 → #00001c` (turquoise) and
-`#7d1f1f → #3b0202 → #05001a` (garnet) — **relevé**.
+`#7d1f1f → #3b0202 → #05001a` (garnet) — **measured**.
 
 All these colors are written in **8-digit hexadecimal**
 (`#0056ff4a`), i.e. with the alpha inside the color code.
 The ring is therefore never opaque: it lets what's
-behind it show through. **Relevé.**
+behind it show through. **Measured.**
 
 ---
 
@@ -381,10 +381,10 @@ behind it show through. **Relevé.**
 
 | Measure | Value | status |
 |---|---|---|
-| Text container | **960px** (content from x=240 to x=1200 at a width of 1440) | **relevé** (measured on the render) |
-| Photo-band container | ~**1044px** | **relevé** (measured on the render) |
-| Product photo bands | full width, outside the container | **relevé** |
-| Mobile gutter | 20px | **estimé** |
+| Text container | **960px** (content from x=240 to x=1200 at a width of 1440) | **measured** (measured on the render) |
+| Photo-band container | ~**1044px** | **measured** (measured on the render) |
+| Product photo bands | full width, outside the container | **measured** |
+| Mobile gutter | 20px | **estimated** |
 
 ### 5.1 The step is 10, not 8
 
@@ -401,7 +401,7 @@ Gaps (`gap`), by frequency:
 ```
 
 The macro-scale is therefore a **rhythm of 10** (10/20/30/40/50/60/80) —
-**relevé**. This isn't an 8pt grid. Only the micro-gaps internal to
+**measured**. This isn't an 8pt grid. Only the micro-gaps internal to
 components (4, 8, 12) fall outside this rhythm, and they do so because they
 measure optical distances, not layout distances.
 
@@ -415,7 +415,7 @@ Row 2:  Careers   349px  |  gap 25  |  Newsletter 585px
                                         585 + 25 + 349 = 959
 ```
 
-**Relevé.** The wide/narrow then narrow/wide alternation breaks the symmetry without
+**Measured.** The wide/narrow then narrow/wide alternation breaks the symmetry without
 breaking the alignment — it's the page's most carefully crafted layout
 detail, and it's reproducible with 3 grid tracks (349 / 211 / 349) and explicit
 `grid-column`s.
@@ -530,20 +530,20 @@ Cases verified on section titles:
 The feature word's gradient also changes between the two:
 `linear-gradient(270deg, rgba(28,26,255,0) 15.4156%, rgb(28,26,255) 70.4955%)`
 on desktop, `0% / 36.7731%` on mobile — the fade therefore starts
-earlier on small screens. **Relevé.**
+earlier on small screens. **Measured.**
 
 ## 6. Radii
 
 | Value | Usage | Occurrences | status |
 |---|---|---|---|
-| 24px | large cards, bands | 12 | **relevé** |
-| 22px | app pills | 12 | **relevé** |
-| 20px | medium cards | 8 | **relevé** |
-| 12px | thumbnails, app icons | 10 | **relevé** |
-| 99px | buttons, fields, pills | 7 | **relevé** |
+| 24px | large cards, bands | 12 | **measured** |
+| 22px | app pills | 12 | **measured** |
+| 20px | medium cards | 8 | **measured** |
+| 12px | thumbnails, app icons | 10 | **measured** |
+| 99px | buttons, fields, pills | 7 | **measured** |
 
 Isolated values also present: 40, 36, 32, 16, 15, 13, 11, 10, 8, 7,
-6, 5px — **relevé**, but with no stable role.
+6, 5px — **measured**, but with no stable role.
 
 ---
 
@@ -551,10 +551,10 @@ Isolated values also present: 40, 36, 32, 16, 15, 13, 11, 10, 8, 7,
 
 | Element | Value | status |
 |---|---|---|
-| Card hairline | 1px, `linear-gradient(#303030 0%, #121212 100%)` in `border-box` | **relevé** |
-| App icon hairline | `1px solid #242424` | **relevé** |
-| Nav flag border | `1px solid rgba(255,255,255,.3)` | **relevé** |
-| Drop shadow | **none on blocks** | **relevé** |
+| Card hairline | 1px, `linear-gradient(#303030 0%, #121212 100%)` in `border-box` | **measured** |
+| App icon hairline | `1px solid #242424` | **measured** |
+| Nav flag border | `1px solid rgba(255,255,255,.3)` | **measured** |
+| Drop shadow | **none on blocks** | **measured** |
 
 A structural point: **the page sets no shadow and no solid-color
 border.** The relief comes from three things and three only — the
@@ -580,7 +580,7 @@ linear-gradient(#0000 0%, #000 84.0354% 100%)
 ```
 
 The source never cuts sharply between two sections: it fades toward
-black over the last 16 percent. **Relevé.**
+black over the last 16 percent. **Measured.**
 
 ### 7.2 What is measured but not placed
 
@@ -596,8 +596,8 @@ in the source lets them be attached to a specific block without
 guessing. They're documented, not placed.
 
 Same status for `radial-gradient(113.039% 100% at 50% 0, #181818 0%,
-#191919 .01%, #080808cf 100%)`: the class `.bande--teintee` exists
-in `styles.css`, commented `[relevé, non affecté]`. Verification
+#191919 .01%, #080808cf 100%)`: the class `.band--tinted` exists
+in `styles.css`, commented `[measured, not assigned]`. Verification
 done on the render, every section of this page is on pure
 black; placing it anywhere would create a gray band the source
 doesn't have.
@@ -617,13 +617,13 @@ imagine. You have to measure the **geometry** of the carrying element
 
 | Element | Value | status |
 |---|---|---|
-| **The page's only CSS transition** | `color .3s cubic-bezier(.44,0,.56,1)` | **relevé** |
-| 3D scene perspective | `1200px` | **relevé** |
-| Tablet screen rotation | `rotateX(-12deg) rotateY(24deg)` | **relevé** |
-| Phone screen rotation | `rotateX(-10deg) rotateY(-16deg)` | **relevé** |
-| Product photo framing | `object-position: 70.3% 48.4%` | **relevé** |
-| `@keyframes` | **none** | **relevé** |
-| `:hover` rules in CSS | **none**, for 50 `:hover` references in the HTML | **relevé** |
+| **The page's only CSS transition** | `color .3s cubic-bezier(.44,0,.56,1)` | **measured** |
+| 3D scene perspective | `1200px` | **measured** |
+| Tablet screen rotation | `rotateX(-12deg) rotateY(24deg)` | **measured** |
+| Phone screen rotation | `rotateX(-10deg) rotateY(-16deg)` | **measured** |
+| Product photo framing | `object-position: 70.3% 48.4%` | **measured** |
+| `@keyframes` | **none** | **measured** |
+| `:hover` rules in CSS | **none**, for 50 `:hover` references in the HTML | **measured** |
 
 The curve `cubic-bezier(.44, 0, .56, 1)` is nearly symmetrical: acceleration
 and deceleration of the same duration. It's a *state-change* curve
@@ -633,7 +633,7 @@ and deceleration of the same duration. It's a *state-change* curve
 
 **27 elements** carry `data-framer-appear-id` with an initial state
 `opacity: 0.001` accompanied by a transform. Three amplitudes observed:
-`scale(1.1)`, `translateY(20px)`, `translateY(-20px)` — **relevé**.
+`scale(1.1)`, `translateY(20px)`, `translateY(-20px)` — **measured**.
 
 These values are the state **before** the animation. A static capture freezes the
 page in this state, and a naive reading of the source concludes that the design
@@ -664,7 +664,7 @@ otherwise every event forces a layout calculation.
 ### 8.3 Marquees
 
 The "Superpowers" and "App Store" blocks duplicate their content **3 to 4
-times** in the DOM — **relevé**. It's a horizontal infinite loop.
+times** in the DOM — **measured**. It's a horizontal infinite loop.
 
 Two exact copies are enough: an animation toward `translateX(-50%)` then loops
 seamlessly, regardless of the number of elements. The extra

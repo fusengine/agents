@@ -1,7 +1,7 @@
 ---
 name: routing-config
-description: Stratégies de préfixes de locale (always, as-needed, never), domaines, URLs traduites
-when-to-use: SEO, domaines par langue, URLs traduites, préfixes locales, production setup
+description: Locale prefix strategies (always, as-needed, never), domains, translated URLs
+when-to-use: SEO, per-language domains, translated URLs, locale prefixes, production setup
 keywords: localePrefix, domains, pathnames, as-needed, always, never
 priority: high
 requires: routing-setup.md
@@ -14,8 +14,8 @@ related: seo.md, middleware-proxy.md
 
 - Multilingual project with localized URLs
 - International SEO (hreflang)
-- Domain-per-language (example.fr, example.de)
-- Translated URLs (/about → /a-propos)
+- Domain-per-language (example.es, example.de)
+- Translated URLs (/about → /acerca-de)
 
 ## Basic Config
 
@@ -24,25 +24,25 @@ related: seo.md, middleware-proxy.md
 import { defineRouting } from 'next-intl/routing'
 
 export const routing = defineRouting({
-  locales: ['en', 'fr', 'de'],
+  locales: ['en', 'es', 'de'],
   defaultLocale: 'en'
 })
 ```
 
 ## Locale Prefix Strategies
 
-| Strategy | EN URL | FR URL | Recommendation |
+| Strategy | EN URL | ES URL | Recommendation |
 |----------|--------|--------|----------------|
-| `always` | `/en/about` | `/fr/about` | **SEO optimal** |
-| `as-needed` | `/about` | `/fr/about` | Short URLs for default |
+| `always` | `/en/about` | `/es/about` | **SEO optimal** |
+| `as-needed` | `/about` | `/es/about` | Short URLs for default |
 | `never` | `/about` | `/about` | SPA, cookie detection |
 
 ```typescript
 // always (default) - Recommended for SEO
-defineRouting({ localePrefix: 'always' })  // /en/about, /fr/about
+defineRouting({ localePrefix: 'always' })  // /en/about, /es/about
 
 // as-needed - Hides prefix for defaultLocale
-defineRouting({ localePrefix: 'as-needed' })  // /about (en), /fr/about
+defineRouting({ localePrefix: 'as-needed' })  // /about (en), /es/about
 
 // never - Locale via cookie/header only
 defineRouting({ localePrefix: 'never' })  // /about (auto-detection)
@@ -54,11 +54,11 @@ For sites with dedicated domains per language.
 
 ```typescript
 defineRouting({
-  locales: ['en', 'fr', 'de'],
+  locales: ['en', 'es', 'de'],
   defaultLocale: 'en',
   domains: [
     { domain: 'example.com', defaultLocale: 'en' },
-    { domain: 'example.fr', defaultLocale: 'fr' },
+    { domain: 'example.es', defaultLocale: 'es' },
     { domain: 'example.de', defaultLocale: 'de' }
   ]
 })
@@ -70,11 +70,11 @@ Translates slugs for better local SEO.
 
 ```typescript
 defineRouting({
-  locales: ['en', 'fr'],
+  locales: ['en', 'es'],
   defaultLocale: 'en',
   pathnames: {
-    '/about': { en: '/about', fr: '/a-propos' },
-    '/products/[slug]': { en: '/products/[slug]', fr: '/produits/[slug]' }
+    '/about': { en: '/about', es: '/acerca-de' },
+    '/products/[slug]': { en: '/products/[slug]', es: '/productos/[slug]' }
   }
 })
 ```
@@ -83,7 +83,7 @@ defineRouting({
 
 ```typescript
 defineRouting({
-  locales: ['en', 'fr'],
+  locales: ['en', 'es'],
   defaultLocale: 'en',
   localeDetection: true,  // Detect Accept-Language header
   alternateLinks: true    // Auto-add <link hreflang>

@@ -1,8 +1,8 @@
 ---
 name: core-library
-description: use-intl pour React/Vite/non-Next.js, API Node.js, Cloudflare Workers
-when-to-use: projets Vite, React classique, APIs Node, workers edge, packages partagés
-keywords: use-intl, createTranslator, createFormatter, runtime agnostique
+description: use-intl for React/Vite/non-Next.js, Node.js API, Cloudflare Workers
+when-to-use: Vite projects, classic React, Node APIs, edge workers, shared packages
+keywords: use-intl, createTranslator, createFormatter, runtime agnostic
 priority: high
 requires:
 related: installation.md

@@ -1,7 +1,7 @@
 ---
 name: integrations
-description: i18n-ally VSCode, Crowdin, Storybook, CI/CD validation messages
-when-to-use: outillage, traduction teams, Storybook development, CI workflows
+description: i18n-ally VSCode, Crowdin, Storybook, CI/CD message validation
+when-to-use: tooling, translation teams, Storybook development, CI workflows
 keywords: i18n-ally, Crowdin, Storybook, VSCode extension, CI/CD, validation
 priority: low
 requires: installation.md, messages-validation.md
@@ -82,7 +82,7 @@ export const globalTypes = {
   locale: {
     name: 'Locale',
     defaultValue: 'en',
-    toolbar: { icon: 'globe', items: ['en', 'fr', 'de'] }
+    toolbar: { icon: 'globe', items: ['en', 'es', 'de'] }
   }
 }
 ```

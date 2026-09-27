@@ -161,38 +161,45 @@ module.exports = {
 
 ## CSS Generation
 
-Tailwind generates margin utilities using CSS custom properties:
+Tailwind generates margin utilities using CSS custom properties (v4.3 output; since v4.3.1 `m-0` emits `0` and `m-1` emits `var(--spacing)`):
 
 ```css
 @layer utilities {
   .m-4 {
-    margin: calc(var(--spacing) * 16);
+    margin: calc(var(--spacing) * 4);
   }
 
   .mx-4 {
-    margin-left: calc(var(--spacing) * 16);
-    margin-right: calc(var(--spacing) * 16);
+    margin-inline: calc(var(--spacing) * 4);
   }
 
   .my-4 {
-    margin-top: calc(var(--spacing) * 16);
-    margin-bottom: calc(var(--spacing) * 16);
+    margin-block: calc(var(--spacing) * 4);
   }
 
   .mt-4 {
-    margin-top: calc(var(--spacing) * 16);
+    margin-top: calc(var(--spacing) * 4);
   }
 
   .mr-4 {
-    margin-right: calc(var(--spacing) * 16);
+    margin-right: calc(var(--spacing) * 4);
   }
 
   .mb-4 {
-    margin-bottom: calc(var(--spacing) * 16);
+    margin-bottom: calc(var(--spacing) * 4);
   }
 
   .ml-4 {
-    margin-left: calc(var(--spacing) * 16);
+    margin-left: calc(var(--spacing) * 4);
+  }
+
+  /* Logical block-axis margin (since v4.2) */
+  .mbs-4 {
+    margin-block-start: calc(var(--spacing) * 4);
+  }
+
+  .mbe-4 {
+    margin-block-end: calc(var(--spacing) * 4);
   }
 }
 ```

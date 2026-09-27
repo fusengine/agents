@@ -5,9 +5,13 @@ description: JsonApiResource base class structure
 
 # JsonApiResource
 
-Namespace: `Illuminate\Http\Resources\Json\JsonApiResource`
+Namespace: `Illuminate\Http\Resources\JsonApi\JsonApiResource`
 
-Extends `JsonResource` and adds JSON:API v1.1 spec compliance.
+Extends `JsonResource` and adds JSON:API spec compliance. Generate with:
+
+```shell
+php artisan make:resource PostResource --json-api
+```
 
 ## Anatomy
 
@@ -16,57 +20,58 @@ Extends `JsonResource` and adds JSON:API v1.1 spec compliance.
 
 namespace App\Http\Resources;
 
-use Illuminate\Http\Resources\Json\JsonApiResource;
+use Illuminate\Http\Request;
+use Illuminate\Http\Resources\JsonApi\JsonApiResource;
 
 class PostResource extends JsonApiResource
 {
     /**
-     * JSON:API resource type (REQUIRED).
+     * Simple form: attribute names read from the model.
+     * (Override toAttributes() instead for full control.)
      */
-    public string $type = 'posts';
+    public $attributes = [
+        'title',
+        'body',
+        'created_at',
+    ];
 
     /**
-     * Attributes object.
+     * Includable relationships - only serialized when requested via ?include=.
      */
-    public function toAttributes($request): array
+    public $relationships = [
+        'author' => UserResource::class,
+        'comments',
+    ];
+
+    /**
+     * Optional: override the type derived from the class name (PostResource -> "posts").
+     */
+    public function toType(Request $request): string
     {
-        return [
-            'title' => $this->title,
-            'body' => $this->body,
-            'created_at' => $this->created_at->toIso8601String(),
-        ];
+        return 'posts';
     }
 
     /**
-     * Relationships object - whitelist what clients may include.
+     * Resource-level links.
      */
-    public function relationships(): array
+    public function toLinks(Request $request): array
     {
         return [
-            'author' => fn () => UserResource::make($this->whenLoaded('author')),
-            'comments' => fn () => CommentResource::collection($this->whenLoaded('comments')),
-        ];
-    }
-
-    /**
-     * Top-level links (self, related, pagination).
-     */
-    public function toLinks($request): array
-    {
-        return [
-            'self' => route('posts.show', $this->id),
+            'self' => route('posts.show', $this->resource),
         ];
     }
 
     /**
      * Optional meta object.
      */
-    public function toMeta($request): array
+    public function toMeta(Request $request): array
     {
         return ['version' => '1.0'];
     }
 }
 ```
+
+`type` defaults to the kebab-case plural of the class name (`BlogPostResource` → `blog-posts`); `id` defaults to the model key (override `toId()`).
 
 ## Response shape
 
@@ -87,4 +92,4 @@ class PostResource extends JsonApiResource
 }
 ```
 
-`Content-Type: application/vnd.api+json` is set automatically.
+`Content-Type: application/vnd.api+json` is set automatically. `$post->toResource()` / `Post::all()->toResourceCollection()` are convenience shortcuts.

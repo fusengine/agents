@@ -1,11 +1,11 @@
 /**
- * OAuth Usage Interfaces - Types pour l'API OAuth Claude Code
+ * OAuth Usage Interfaces - Types for the Claude Code OAuth API
  *
- * @description Types pour la récupération des limites d'usage via OAuth
+ * @description Types for fetching usage limits via OAuth
  */
 
 /**
- * Credentials OAuth stockés dans le Keychain macOS
+ * OAuth credentials stored in the macOS Keychain
  */
 export interface OAuthCredentials {
 	claudeAiOauth: {
@@ -17,17 +17,17 @@ export interface OAuthCredentials {
 }
 
 /**
- * Limite d'usage individuelle
+ * Individual usage limit
  */
 export interface UsageLimit {
-	/** Pourcentage d'utilisation (0.0 - 1.0) */
+	/** Utilization percentage (0.0 - 1.0) */
 	utilization: number;
-	/** Timestamp ISO du prochain reset */
+	/** ISO timestamp of the next reset */
 	resets_at: string | null;
 }
 
 /**
- * Données extra usage (overage billing)
+ * Extra usage data (overage billing)
  */
 export interface ExtraUsageLimits {
 	is_enabled: boolean;
@@ -37,23 +37,23 @@ export interface ExtraUsageLimits {
 }
 
 /**
- * Réponse de l'API OAuth /usage
+ * OAuth /usage API response
  */
 export interface OAuthUsageResponse {
-	/** Limite glissante de 5 heures */
+	/** Rolling 5-hour limit */
 	five_hour: UsageLimit;
-	/** Limite hebdomadaire tous modèles */
+	/** Weekly limit, all models */
 	seven_day: UsageLimit;
-	/** Limite hebdomadaire Opus uniquement */
+	/** Weekly limit, Opus only */
 	seven_day_opus: UsageLimit;
-	/** Limite OAuth apps (nullable) */
+	/** OAuth apps limit (nullable) */
 	seven_day_oauth_apps?: UsageLimit | null;
 	/** Extra usage / overage billing (nullable) */
 	extra_usage?: ExtraUsageLimits | null;
 }
 
 /**
- * Usage formaté pour affichage
+ * Usage formatted for display
  */
 export interface FormattedUsage {
 	fiveHour: {

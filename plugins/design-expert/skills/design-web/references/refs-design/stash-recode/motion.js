@@ -1,185 +1,185 @@
 /* ═══════════════════════════════════════════════════════════════════════════
-   MOUVEMENT — référence de design. Vanilla, sans framework ni build.
+   MOTION — design reference. Vanilla, no framework, no build.
 
-   TRAÇABILITÉ. La source ne contient NI @keyframes, NI
-   animation-timeline, et une seule durée écrite en clair : les 150ms de
-   `.landing-press button`. Tout son mouvement vient du runtime Framer Motion,
-   illisible depuis le HTML livré. Ce qui EST lisible, et qui est donc [relevé] :
-     · les états de départ, écrits dans les attributs `style` du HTML servi —
-       `opacity:0;transform:translateY(16px)` sur les cinq enfants du héros,
-       `opacity:0;transform:translateY(24px)` sur chaque bloc de section ;
-     · le fait que ces deux distances soient DIFFÉRENTES et pas interchangeables ;
-     · le fait que la zone de fil du panneau d'agent soit VIDE dans le HTML
-       (`min-h-[320px] space-y-4 p-5` sans enfant) : son contenu est mis en
-       scène par le runtime, donc joué et non affiché ;
-     · le geste de pression, `transform: scale(0.96)` en 150ms.
-   [arbitrage] = tout le reste : durées de révélation, courbes, seuils, pas de
-   cascade. Aucune durée n'est en dur ici — elles viennent des variables CSS
-   de :root, le CSS reste maître du timing.
+   TRACEABILITY. The source contains NO @keyframes, NO
+   animation-timeline, and a single duration written in plain text: the 150ms of
+   `.landing-press button`. All its motion comes from the Framer Motion runtime,
+   unreadable from the shipped HTML. What IS readable, and is therefore [measured]:
+     · the start states, written in the `style` attributes of the served HTML —
+       `opacity:0;transform:translateY(16px)` on the five hero children,
+       `opacity:0;transform:translateY(24px)` on every section block;
+     · the fact that those two distances are DIFFERENT and not interchangeable;
+     · the fact that the thread area of the agent panel is EMPTY in the HTML
+       (`min-h-[320px] space-y-4 p-5` with no child): its content is staged
+       by the runtime, so it is played, not displayed;
+     · the press gesture, `transform: scale(0.96)` over 150ms.
+   [decided] = everything else: reveal durations, curves, thresholds, cascade
+   step. No duration is hard-coded here — they come from the CSS variables of
+   :root, the CSS stays in charge of timing.
 
-   CONTRAT DE SÉCURITÉ. L'état de repos (`opacity: 0`) n'est armé que sous la
-   classe `.js-motion`, et cette classe n'est posée qu'après vérification qu'on
-   saura la lever. Script absent, IntersectionObserver indisponible ou mouvement
-   réduit : le CSS ne cache rien, la page est intégralement lisible.
+   SAFETY CONTRACT. The resting state (`opacity: 0`) is armed only under the
+   `.js-motion` class, and that class is set only after checking that we will
+   be able to lift it. Missing script, IntersectionObserver unavailable or
+   reduced motion: the CSS hides nothing, the page is fully readable.
    ═══════════════════════════════════════════════════════════════════════════ */
 (function () {
   "use strict";
 
-  /* ─── 0 ▸ Préférence de mouvement ─────────────────────────────────────────
-     `matches` pour le test instantané, `addEventListener('change')` pour le
-     suivi — `addListener()` est déprécié. Un basculement en cours de session
-     doit tout révéler, jamais tout cacher. [arbitrage] */
-  var requeteCalme = matchMedia("(prefers-reduced-motion: reduce)");
-  var calme = requeteCalme.matches;
+  /* ─── 0 ▸ Motion preference ───────────────────────────────────────────────
+     `matches` for the instant test, `addEventListener('change')` for
+     tracking — `addListener()` is deprecated. A switch mid-session must
+     reveal everything, never hide everything. [decided] */
+  var calmQuery = matchMedia("(prefers-reduced-motion: reduce)");
+  var calm = calmQuery.matches;
 
-  var montants = Array.prototype.slice.call(
-    document.querySelectorAll("[data-monte], [data-reveal]")
+  var risers = Array.prototype.slice.call(
+    document.querySelectorAll("[data-rise], [data-reveal]")
   );
-  var fils = Array.prototype.slice.call(document.querySelectorAll("[data-fil]"));
-  var vigie = null;
-  var minuteries = [];
+  var threads = Array.prototype.slice.call(document.querySelectorAll("[data-thread]"));
+  var watcher = null;
+  var timers = [];
 
-  function toutAfficher() {
-    montants.forEach(function (n) { n.classList.add("est-la"); });
-    fils.forEach(function (n) { n.classList.add("est-la"); });
+  function showAll() {
+    risers.forEach(function (n) { n.classList.add("is-visible"); });
+    threads.forEach(function (n) { n.classList.add("is-visible"); });
   }
 
-  /* ─── 1 ▸ Cascade — le décalage est porté par une variable CSS ────────────
-     `--i` est un INDEX, pas une durée : le pas (`--pas-cascade`) et la courbe
-     restent dans la feuille de style. Trois familles cascadent : les cinq
-     enfants du héros, les cellules d'une grille marquée `data-cascade`, et les
-     messages du fil de l'agent. [arbitrage] intégral. */
-  function indexer(parent, selecteur) {
-    var enfants = selecteur
-      ? parent.querySelectorAll(selecteur)
+  /* ─── 1 ▸ Cascade — the offset is carried by a CSS variable ───────────────
+     `--i` is an INDEX, not a duration: the step (`--cascade-step`) and the
+     curve stay in the stylesheet. Three families cascade: the five hero
+     children, the cells of a grid marked `data-cascade`, and the messages
+     of the agent thread. [decided] in full. */
+  function indexChildren(parent, selector) {
+    var children = selector
+      ? parent.querySelectorAll(selector)
       : parent.children;
-    Array.prototype.forEach.call(enfants, function (enfant, i) {
-      enfant.style.setProperty("--i", i);
+    Array.prototype.forEach.call(children, function (child, i) {
+      child.style.setProperty("--i", i);
     });
   }
 
-  document.querySelectorAll("[data-groupe-hero]").forEach(function (groupe) {
-    indexer(groupe, "[data-monte]");
+  document.querySelectorAll("[data-hero-group]").forEach(function (group) {
+    indexChildren(group, "[data-rise]");
   });
-  document.querySelectorAll("[data-cascade]").forEach(function (groupe) {
-    indexer(groupe, "[data-reveal]");
+  document.querySelectorAll("[data-cascade]").forEach(function (group) {
+    indexChildren(group, "[data-reveal]");
   });
-  fils.forEach(function (fil) {
-    indexer(fil, "[data-message]");
+  threads.forEach(function (thread) {
+    indexChildren(thread, "[data-message]");
   });
 
-  /* ─── 2 ▸ Accordéon ───────────────────────────────────────────────────────
-     Le HTML livre TOUS les panneaux ouverts (`aria-expanded="true"`, aucun
-     `data-plie`). C'est délibéré : sans ce script, la FAQ reste entièrement
-     lisible. Le script referme ici tout sauf le premier, puis prend la main.
-     Une seule entrée ouverte à la fois — [relevé] : la source n'ouvre jamais
-     deux réponses ensemble (`data-closed` sur les quatre items au repos). */
-  var declencheurs = Array.prototype.slice.call(
-    document.querySelectorAll(".pli__declencheur")
+  /* ─── 2 ▸ Accordion ───────────────────────────────────────────────────────
+     The HTML ships ALL panels open (`aria-expanded="true"`, no
+     `data-folded`). This is deliberate: without this script, the FAQ stays fully
+     readable. The script closes everything here except the first, then takes over.
+     Only one entry open at a time — [measured]: the source never opens
+     two answers together (`data-closed` on the four items at rest). */
+  var triggers = Array.prototype.slice.call(
+    document.querySelectorAll(".fold__trigger")
   );
 
-  function plier(bouton, plie) {
-    var panneau = document.getElementById(bouton.getAttribute("aria-controls"));
-    if (!panneau) return;
-    bouton.setAttribute("aria-expanded", plie ? "false" : "true");
-    if (plie) panneau.setAttribute("data-plie", "");
-    else panneau.removeAttribute("data-plie");
+  function fold(button, folded) {
+    var panel = document.getElementById(button.getAttribute("aria-controls"));
+    if (!panel) return;
+    button.setAttribute("aria-expanded", folded ? "false" : "true");
+    if (folded) panel.setAttribute("data-folded", "");
+    else panel.removeAttribute("data-folded");
   }
 
-  function armerAccordeon() {
-    declencheurs.forEach(function (bouton, i) {
-      plier(bouton, i !== 0);
-      bouton.addEventListener("click", function () {
-        var ouvert = bouton.getAttribute("aria-expanded") === "true";
-        declencheurs.forEach(function (autre) { plier(autre, true); });
-        if (!ouvert) plier(bouton, false);
+  function armAccordion() {
+    triggers.forEach(function (button, i) {
+      fold(button, i !== 0);
+      button.addEventListener("click", function () {
+        var open = button.getAttribute("aria-expanded") === "true";
+        triggers.forEach(function (other) { fold(other, true); });
+        if (!open) fold(button, false);
       });
     });
   }
 
-  /* ─── 3 ▸ Apparition au défilement ────────────────────────────────────────
-     IntersectionObserver et NON `animation-timeline: view()` : non Baseline, et
-     une keyframe partant d'`opacity:0` y laisserait les blocs DÉFINITIVEMENT
-     invisibles en cas d'échec. Seuil 0.14 : révélé dès qu'un septième du bloc
-     entre. rootMargin -10% en bas : la montée finit pendant que l'œil arrive.
-     Chaque cible est désarmée dans le callback — une apparition ne se rejoue
-     jamais, et l'observateur se vide de lui-même. [arbitrage] */
-  function observer() {
+  /* ─── 3 ▸ Reveal on scroll ────────────────────────────────────────────────
+     IntersectionObserver and NOT `animation-timeline: view()`: not Baseline, and
+     a keyframe starting from `opacity:0` would leave the blocks PERMANENTLY
+     invisible on failure. Threshold 0.14: revealed as soon as a seventh of the
+     block enters. rootMargin -10% at the bottom: the rise ends as the eye arrives.
+     Each target is disarmed in the callback — a reveal never replays,
+     and the observer empties itself. [decided] */
+  function startObserving() {
     document.documentElement.classList.add("js-motion");
 
-    vigie = new IntersectionObserver(function (entrees, self) {
-      entrees.forEach(function (e) {
+    watcher = new IntersectionObserver(function (entries, self) {
+      entries.forEach(function (e) {
         if (!e.isIntersecting) return;
-        e.target.classList.add("est-la");
-        self.unobserve(e.target);   /* le 2e paramètre EST l'observateur */
+        e.target.classList.add("is-visible");
+        self.unobserve(e.target);   /* the 2nd parameter IS the observer */
       });
     }, { threshold: 0.14, rootMargin: "0px 0px -10% 0px" });
 
-    montants.forEach(function (n) {
-      /* Le héros est déjà dans la fenêtre au chargement : il ne s'observe pas,
-         il se joue tout de suite, en cascade. [relevé] la source distingue elle
-         aussi une entrée de montage d'une entrée au défilement. */
-      if (n.hasAttribute("data-monte")) return;
-      vigie.observe(n);
+    risers.forEach(function (n) {
+      /* The hero is already in the viewport on load: it is not observed,
+         it plays straight away, in a cascade. [measured] the source also
+         distinguishes a mount entrance from a scroll entrance. */
+      if (n.hasAttribute("data-rise")) return;
+      watcher.observe(n);
     });
-    fils.forEach(function (n) { vigie.observe(n); });
+    threads.forEach(function (n) { watcher.observe(n); });
 
-    /* Montage du héros : un tick pour que le navigateur ait peint l'état de
-       repos, sinon la transition n'a pas lieu. */
-    minuteries.push(requestAnimationFrame(function () {
+    /* Hero mount: one tick so the browser has painted the resting
+       state, otherwise the transition does not happen. */
+    timers.push(requestAnimationFrame(function () {
       requestAnimationFrame(function () {
-        document.querySelectorAll("[data-monte]").forEach(function (n) {
-          n.classList.add("est-la");
+        document.querySelectorAll("[data-rise]").forEach(function (n) {
+          n.classList.add("is-visible");
         });
       });
     }));
   }
 
-  /* ─── 4 ▸ Démarrage ───────────────────────────────────────────────────────
-     Trois conditions pour armer : du contenu à révéler, pas de mouvement
-     réduit, et un IntersectionObserver disponible. Sinon, tout est affiché. */
-  if (montants.length && !calme && "IntersectionObserver" in window) {
-    observer();
+  /* ─── 4 ▸ Startup ─────────────────────────────────────────────────────────
+     Three conditions to arm: content to reveal, no reduced
+     motion, and an IntersectionObserver available. Otherwise, everything is shown. */
+  if (risers.length && !calm && "IntersectionObserver" in window) {
+    startObserving();
   } else {
     document.documentElement.classList.add("js-motion");
-    toutAfficher();
+    showAll();
   }
-  armerAccordeon();
+  armAccordion();
 
-  requeteCalme.addEventListener("change", function (e) {
-    calme = e.matches;
-    if (calme) {
-      demonter();
-      toutAfficher();   /* ne jamais laisser un bloc caché derrière soi */
+  calmQuery.addEventListener("change", function (e) {
+    calm = e.matches;
+    if (calm) {
+      teardown();
+      showAll();   /* never leave a block hidden behind you */
     }
   });
 
-  /* ─── 5 ▸ Désarmement ─────────────────────────────────────────────────────
-     `disconnect()` arrête TOUTES les cibles d'un coup, là où `unobserve(cible)`
-     n'en vise qu'une : c'est la bonne primitive pour un nettoyage global.
-     `visibilitychange` est le signal préférable pour annuler une frame en
-     attente ; `pagehide` sert de repli pour le cas où l'onglet est fermé sans
-     repasser par un état caché (et, sur iOS, quand la page part au cache
-     bfcache sans jamais émettre `unload`). */
-  function demonter() {
-    if (vigie) { vigie.disconnect(); vigie = null; }
-    minuteries.forEach(function (id) { cancelAnimationFrame(id); });
-    minuteries = [];
+  /* ─── 5 ▸ Disarming ───────────────────────────────────────────────────────
+     `disconnect()` stops ALL targets at once, whereas `unobserve(target)`
+     only hits one: it is the right primitive for a global cleanup.
+     `visibilitychange` is the preferred signal to cancel a pending
+     frame; `pagehide` is the fallback for when the tab is closed without
+     going through a hidden state (and, on iOS, when the page goes to the
+     bfcache without ever firing `unload`). */
+  function teardown() {
+    if (watcher) { watcher.disconnect(); watcher = null; }
+    timers.forEach(function (id) { cancelAnimationFrame(id); });
+    timers = [];
   }
 
   document.addEventListener("visibilitychange", function () {
-    if (document.visibilityState === "hidden") demonter();
+    if (document.visibilityState === "hidden") teardown();
   });
-  window.addEventListener("pagehide", demonter);
+  window.addEventListener("pagehide", teardown);
 
-  /* ─── 6 ▸ Pression ────────────────────────────────────────────────────────
-     [relevé] littéral de la source : `.landing-press button:active { transform:
-     scale(0.96) }`, sur 150ms, en transitionnant transform, background-color,
-     border-color, color et opacity. Le geste est écrit en CSS (`.bouton:active`)
-     et pas ici — un `:active` piloté en JS rate le clavier et le tactile.
-     Ce bloc ne fait donc qu'une chose que le CSS ne peut pas faire : rendre le
-     geste également disponible à la barre d'espace sur un <a role=button>.
-     Il n'y en a aucun sur cette page, la boucle est donc vide par construction
-     et laissée en commentaire plutôt qu'en code mort. */
+  /* ─── 6 ▸ Press ───────────────────────────────────────────────────────────
+     [measured] source literal: `.landing-press button:active { transform:
+     scale(0.96) }`, over 150ms, transitioning transform, background-color,
+     border-color, color and opacity. The gesture is written in CSS (`.button:active`)
+     and not here — a JS-driven `:active` misses keyboard and touch.
+     This block therefore does only one thing CSS cannot do: make the
+     gesture also available to the space bar on an <a role=button>.
+     There is none on this page, so the loop is empty by construction
+     and left as a comment rather than as dead code. */
 
 }());

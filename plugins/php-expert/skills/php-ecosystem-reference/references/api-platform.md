@@ -1,11 +1,11 @@
 ---
 name: api-platform
-description: API Platform 4.3 orientation — API-first framework on Symfony
-source: https://api-platform.com/docs/ (redirects to /docs/symfony/, edit link "4.3/symfony/index.md") — verified version 4.3
+description: API Platform 5.0 orientation — API-first framework on Symfony
+source: https://api-platform.com/docs/ (redirects to /docs/symfony/, version selector "5.0 (current)") + github.com/api-platform/core/releases (v5.0.0 2026-09-17) — verified 2026-09-27
 keywords: api-platform, api-first, symfony, rest, graphql, openapi, llms.txt
 ---
 
-# API Platform 4.3 (Orientation)
+# API Platform 5.0 (Orientation)
 
 Load when a project is API-first and built on Symfony. This is orientation — have the research
 agent confirm current APIs on api-platform.com/docs before implementing.
@@ -17,7 +17,11 @@ API Platform is an **API-first framework built on top of Symfony**. You declare 
 schema, OpenAPI/Swagger documentation, and Hydra/JSON-LD output — driven from the resource metadata
 rather than hand-written controllers.
 
-Current documented version: **4.3** (verified from the docs source path `4.3/symfony/index.md`).
+Current documented version: **5.0** (docs version selector; `api-platform/core` v5.0.1 on
+Packagist, PHP `>=8.2`). 5.0 requires Symfony `^7.4 || ^8.0` (drops 6.4 and 7.0–7.3), removes
+the APIs deprecated in 4.x and replaces the legacy PropertyInfo `Type` system with
+`symfony/type-info` — upgrading from 4.x goes through the docs' Upgrade Guide. The 4.4 line
+still receives releases for projects that cannot move yet.
 
 ## When to reach for it
 

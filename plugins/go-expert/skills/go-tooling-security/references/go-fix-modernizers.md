@@ -1,6 +1,6 @@
 ---
 name: go-fix-modernizers
-description: Go 1.26 go fix modernizers, //go:fix inline, and PGO
+description: Go 1.26–1.27 go fix modernizers, //go:fix inline, and PGO
 when-to-use: Modernizing code to current idioms, automating API migrations, or enabling PGO
 keywords: go fix, modernizers, go:fix inline, analysis, go generate, PGO, default.pgo
 priority: medium
@@ -33,6 +33,16 @@ go fix ./...            # apply the modernizer suite
 
 Source: https://go.dev/doc/go1.26
 
+### Go 1.27 changes to the suite
+
+| Change | Detail |
+|--------|--------|
+| **New modernizers** | `atomictypes`, `embedlit`, `slicesbackward`, `unsafefuncs` |
+| **Removed** | `fmtappendf` (stylistic concerns) |
+| **Renamed** | `waitgroup` → `waitgroupgo` |
+
+Source: https://go.dev/doc/go1.27 (Tools → go fix)
+
 ---
 
 ## The `//go:fix inline` Directive
@@ -53,6 +63,16 @@ Source: https://go.dev/doc/go1.26
 
 `go vet`, `go generate`, and `gofmt` have **no documented changes** in the Go 1.26 release notes — the 1.26 tooling change is `go fix`. `go mod init` now writes a lower `go` line (release `1.N` → `go 1.(N-1).0`). `cmd/doc` / `go tool doc` were removed; use `go doc`.
 Source: https://go.dev/doc/go1.26
+
+## Other Go 1.27 Tooling Changes
+
+- `go test` now runs the `stdversion` vet check by default — it reports stdlib symbols too new for the file's `go` version (from `go.mod` / build tags).
+- `go mod tidy` (modules at `go 1.27`+) merges duplicate `require` blocks into at most two: direct and indirect.
+- `go doc` accepts `pkg@version` and a new `-ex` flag to list executable examples.
+- `go test -json` output lines may carry a new `"OutputType"` field.
+- `bzr` VCS support was removed from the `go` command.
+
+Source: https://go.dev/doc/go1.27
 
 ---
 
@@ -91,6 +111,7 @@ go build ./...          # PGO applied automatically
 | Mistake | Fix |
 |---------|-----|
 | `go fix` did nothing | Ensure toolchain is Go 1.26+ and files are within the module |
+| `waitgroup` fixer "not found" | Renamed `waitgroupgo` in Go 1.27 |
 | Inline directive ignored | It must sit immediately above the func/const declaration |
 | PGO not applied | Profile must be named `default.pgo` in the `main` package dir |
 

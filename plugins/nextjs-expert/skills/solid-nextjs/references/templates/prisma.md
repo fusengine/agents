@@ -11,8 +11,9 @@ related: query.md, service.md
 # Prisma Singleton
 
 ```typescript
-// modules/cores/database/prisma.ts
-import { PrismaClient } from '@prisma/client'
+// modules/cores/database/prisma.ts — Prisma 7: generated client + required driver adapter
+import { PrismaPg } from '@prisma/adapter-pg'
+import { PrismaClient } from '@/modules/cores/database/generated/prisma/client'  // generator `output` path
 
 /**
  * Prisma client singleton for database access
@@ -21,9 +22,12 @@ const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined
 }
 
+const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL! })
+
 export const prisma =
   globalForPrisma.prisma ??
   new PrismaClient({
+    adapter,
     log: process.env.NODE_ENV === 'development' ? ['query'] : []
   })
 

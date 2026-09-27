@@ -23,11 +23,11 @@ Source: https://phpunit.de/announcements/phpunit-12.html + docs.phpunit.de/en/12
 | `@test` | `#[Test]` |
 | `@dataProvider m` | `#[DataProvider('m')]` |
 | `@covers ::class` | `#[CoversClass(Foo::class)]` |
-| `@coversNothing` | `#[CoversNothing]` |
+| `@coversNothing` | `#[CoversNothing]` (class level only since PHPUnit 13) |
 | `@depends m` | `#[Depends('m')]` |
 | `@group slow` | `#[Group('slow')]` |
 | `@testWith [...]` | `#[TestWith([...])]` |
-| `@requires PHP 8.3` | `#[RequiresPhp('8.3')]` |
+| `@requires PHP 8.3` | `#[RequiresPhp('>= 8.3')]` — PHPUnit 13 rejects a bare `'8.3'` (operator or Composer constraint required) |
 | `@doesNotPerformAssertions` | `#[DoesNotPerformAssertions]` |
 
 All attributes live under the `PHPUnit\Framework\Attributes\` namespace.
@@ -65,12 +65,12 @@ public static function provideNumbers(): array { return [[1, 1, 2]]; } // now st
 - **PHP-CS-Fixer** `@autoPHPUnitMigration:risky` covers style-level PHPUnit modernization.
 
 Both are codemods — review the diff, then run the suite on PHPUnit 11.5 (clean of
-deprecation warnings) before bumping to 12.
+deprecation warnings) before bumping to 12, then on 12.5 before bumping to 13.
 
 ## Common Mistakes
 
 | Mistake | Fix |
 |---------|-----|
 | Provider left non-static after migration | Add `static` — attributes don't fix this |
-| Migrating straight to 12 with warnings | Get green on 11.5 first |
+| Migrating straight to 12 with warnings | Get green on 11.5 first (and on 12.5 before 13) |
 | Hand-editing hundreds of tests | Run Rector's PHPUnit set first |

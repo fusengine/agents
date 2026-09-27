@@ -19,11 +19,11 @@ Laravel follows semantic versioning with annual major releases. Choose versions 
 
 | Type | Frequency | Breaking Changes |
 |------|-----------|------------------|
-| **Major** (12.0) | Yearly (~Q1) | Yes |
-| **Minor** (12.1) | Weekly | No |
-| **Patch** (12.0.1) | As needed | No |
+| **Major** (13.0) | Yearly (~Q1) | Yes |
+| **Minor** (13.1) | Weekly | No |
+| **Patch** (13.0.1) | As needed | No |
 
-**Constraint**: Always use `^12.0` in `composer.json` (not `12.*`).
+**Constraint**: Always use `^13.0` in `composer.json` (not `13.*`). Current stable: **13.33** (Sept 2026).
 
 ---
 
@@ -40,8 +40,8 @@ Laravel follows semantic versioning with annual major releases. Choose versions 
 
 | Version | PHP | Release | Bug Fixes | Security |
 |---------|-----|---------|-----------|----------|
-| **12** | 8.2 - 8.4 | Feb 2025 | Aug 2026 | Feb 2027 |
-| **13** | 8.3 - 8.4 | Q1 2026 | Q3 2027 | Q1 2028 |
+| **12** | 8.2 - 8.5 | Feb 24, 2025 | Aug 13, 2026 | Feb 24, 2027 |
+| **13** | 8.3 - 8.5 | Mar 17, 2026 | Q3 2027 | Mar 17, 2028 |
 
 **Recommendation**: Use Laravel 13 for new projects (current stable).
 
@@ -52,9 +52,11 @@ Laravel follows semantic versioning with annual major releases. Choose versions 
 | Feature | Description |
 |---------|-------------|
 | **Minimal breaking changes** | Upgrade in < 1 day |
-| **New starter kits** | React, Vue, Livewire with shadcn/ui |
-| **WorkOS AuthKit** | Social auth, passkeys, SSO |
-| **Inertia 2** | TypeScript support |
+| **PHP 8.3 minimum** | Supports PHP 8.3 - 8.5 |
+| **Laravel AI SDK** | First-party `laravel/ai` (agents, tools, embeddings) |
+| **JSON:API resources** | `JsonApiResource` base class |
+| **Vector search** | pgvector query builder methods |
+| **PHP attributes** | Eloquent, queue, controller, console, form request attributes |
 
 ### Deprecated
 
@@ -83,10 +85,10 @@ Current version supported?
 |---------|-------------|-------------|
 | 10 | 8.1 | 8.3 |
 | 11 | 8.2 | 8.4 |
-| 12 | 8.2 | 8.4 |
-| 13 | 8.3 | 8.4+ |
+| 12 | 8.2 | 8.5 |
+| 13 | 8.3 | 8.5 |
 
-**Tip**: Target PHP 8.4 for best performance and features.
+**Tip**: Target PHP 8.5 (current stable) for best performance and features — some L13 features (e.g. `#[BindWhen]`) require it.
 
 ---
 

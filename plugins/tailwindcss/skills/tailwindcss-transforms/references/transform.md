@@ -1,11 +1,11 @@
 ---
 name: transform
-description: Transform utilities for Tailwind CSS v4.1
+description: Transform utilities for Tailwind CSS v4.3
 ---
 
-# Transform Utilities - Tailwind CSS v4.1
+# Transform Utilities - Tailwind CSS v4.3
 
-Complete reference for transform operations: scale, rotate, translate, skew, and transform-origin.
+Complete reference for transform operations: scale, rotate, translate, skew, transform-origin, and the related `zoom-*` utilities.
 
 ## Scale
 
@@ -433,6 +433,34 @@ origin-top-left         0% 0%
 <div class="origin-center scale-50 hover:scale-100 transition-transform">
   Grows from center
 </div>
+```
+
+---
+
+## Zoom (since v4.3)
+
+`zoom-*` sets the CSS `zoom` property (not a transform: unlike `scale-*`, it affects layout size).
+
+### Class Reference
+```
+zoom-<number>              zoom: <number>%
+zoom-(<custom-property>)   zoom: var(<custom-property>)
+zoom-[<value>]             zoom: <value>
+```
+
+### Usage Examples
+
+```html
+<div class="zoom-75">Zoomed out</div>
+<div class="zoom-100">Normal</div>
+<div class="zoom-125">Zoomed in</div>
+
+<!-- Arbitrary value / CSS variable -->
+<div class="zoom-[1.1]">Zoomed in a little</div>
+<div class="zoom-(--preview-zoom)">Zoom from a variable</div>
+
+<!-- State + responsive -->
+<div class="zoom-100 hover:zoom-125 md:zoom-125">Interactive zoom</div>
 ```
 
 ---

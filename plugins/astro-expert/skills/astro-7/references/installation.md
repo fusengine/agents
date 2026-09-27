@@ -1,24 +1,24 @@
 ---
 name: installation
-description: Astro 6 installation, upgrade from v5, Node requirements
-when-to-use: new project, upgrading from Astro 5, setting up TypeScript
+description: Astro 7 installation, upgrade from v5/v6, Node requirements
+when-to-use: new project, upgrading from Astro 5/6, setting up TypeScript
 keywords: setup, init, create, upgrade, node, requirements
 priority: high
 ---
 
-# Astro 6 Installation
+# Astro 7 Installation
 
 ## When to Use
 
-- Starting a new Astro 6 project
-- Upgrading from Astro 4/5
-- Configuring Node 22+ environment
+- Starting a new Astro 7 project (latest stable: 7.3.5)
+- Upgrading from Astro 5/6 (see the official v7 upgrade guide)
+- Configuring Node 22.12+ environment
 
 ## Requirements
 
 | Requirement | Version |
 |-------------|---------|
-| Node.js | 22.12+ (odd-numbered Node versions unsupported) |
+| Node.js | 22.12+ (`engines.node >=22.12.0`; odd-numbered Node versions unsupported) |
 | TypeScript | 5.1+ |
 
 ## TS7 / `tsgo` Warning

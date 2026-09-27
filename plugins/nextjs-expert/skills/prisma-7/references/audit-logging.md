@@ -26,33 +26,43 @@ CREATE TABLE audit_log (
 
 ## Prisma Audit Implementation
 
-### Middleware Approach
+### Client Extension Approach
+
+`$use` middleware was removed in Prisma 7 — use a `query` Client Extension instead.
 
 ```typescript
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from './generated/prisma/client'; // v7: generated path
+import { PrismaPg } from '@prisma/adapter-pg';
 
-const prisma = new PrismaClient();
+const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL! });
+const basePrisma = new PrismaClient({ adapter });
 
 /**
- * Audit middleware to log all changes
+ * Audit extension to log all changes (writes the log with the base client)
  */
-prisma.$use(async (params, next) => {
-  const result = await next(params);
+export const prisma = basePrisma.$extends({
+  query: {
+    $allModels: {
+      async $allOperations({ model, operation, args, query }) {
+        const result = await query(args);
 
-  // Log create/update/delete operations
-  if (['create', 'update', 'delete'].includes(params.action)) {
-    await logAuditTrail({
-      tableName: params.model,
-      recordId: params.args.data?.id || result.id,
-      action: params.action.toUpperCase(),
-      newValues: params.args.data,
-      oldValues: undefined,
-      changedBy: params.args.userId || 'system',
-      ipAddress: params.args.ipAddress || undefined
-    });
+        // Log create/update/delete operations
+        if (['create', 'update', 'delete'].includes(operation)) {
+          await logAuditTrail({
+            tableName: model,
+            recordId: (result as { id: number }).id,
+            action: operation.toUpperCase(),
+            newValues: (args as { data?: unknown }).data,
+            oldValues: undefined,
+            changedBy: 'system',
+            ipAddress: undefined
+          });
+        }
+
+        return result;
+      }
+    }
   }
-
-  return result;
 });
 
 /**
@@ -67,7 +77,7 @@ async function logAuditTrail(audit: {
   changedBy: string;
   ipAddress?: string;
 }) {
-  await prisma.$executeRaw`
+  await basePrisma.$executeRaw`
     INSERT INTO audit_log
     (table_name, record_id, action, new_values, old_values, changed_by, ip_address)
     VALUES (
@@ -249,6 +259,8 @@ export type AuditQueryResult = {
  * @module app/lib/audit/audit-service
  */
 
+import { Prisma } from '@/lib/generated/prisma/client'; // v7: generated path
+import { prisma } from '@/lib/prisma';
 import type { AuditLogEntry, AuditQueryResult } from './types';
 
 /**
@@ -308,36 +320,41 @@ export async function getAuditHistory(
 }
 
 /**
- * Creates Prisma middleware for automatic audit logging
- * @module app/lib/audit/audit-middleware
+ * Creates a Prisma Client extension for automatic audit logging
+ * (v7: `$use` middleware removed — use `$extends` query extensions)
+ * @module app/lib/audit/audit-extension
  */
 
 /**
- * Middleware to automatically log all database changes
+ * Extension to automatically log all database changes
  * @param currentUserId - User ID making the change
- * @returns {Function} Prisma middleware
+ * @returns Prisma Client extension, apply with `prisma.$extends(createAuditExtension(id))`
  */
-export function createAuditMiddleware(currentUserId: string) {
-  return async (
-    params: any,
-    next: (params: any) => Promise<any>
-  ) => {
-    const result = await next(params);
+export function createAuditExtension(currentUserId: string) {
+  return Prisma.defineExtension({
+    name: 'audit',
+    query: {
+      $allModels: {
+        async $allOperations({ model, operation, args, query }) {
+          const result = await query(args);
 
-    if (['create', 'update', 'delete'].includes(params.action)) {
-      const entry: AuditLogEntry = {
-        tableName: params.model,
-        recordId: result.id,
-        action: params.action.toUpperCase() as any,
-        newValues: params.args.data || {},
-        changedBy: currentUserId,
-        changedAt: new Date()
-      };
+          if (operation === 'create' || operation === 'update' || operation === 'delete') {
+            const entry: AuditLogEntry = {
+              tableName: model,
+              recordId: (result as { id: number }).id,
+              action: operation.toUpperCase() as AuditLogEntry['action'],
+              newValues: (args as { data?: Record<string, any> }).data || {},
+              changedBy: currentUserId,
+              changedAt: new Date()
+            };
 
-      await logAuditTrail(entry);
+            await logAuditTrail(entry);
+          }
+
+          return result;
+        }
+      }
     }
-
-    return result;
-  };
+  });
 }
 ```

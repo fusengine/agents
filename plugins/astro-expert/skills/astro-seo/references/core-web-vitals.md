@@ -45,22 +45,22 @@ import heroImage from '../assets/hero.jpg';
 
 Always provide `width` and `height` on `<Image />`. Astro infers from local imports automatically.
 
-### Font Loading — Use Fonts API (Astro 6)
+### Font Loading — Use Fonts API (stable since Astro 6.0)
 
 ```js
 // astro.config.mjs
+import { defineConfig, fontProviders } from 'astro/config';
+
 export default defineConfig({
-  experimental: {
-    fonts: [{
-      provider: 'google',
-      name: 'Inter',
-      cssVariable: '--font-inter',
-    }],
-  },
+  fonts: [{
+    provider: fontProviders.google(),
+    name: 'Inter',
+    cssVariable: '--font-inter',
+  }],
 });
 ```
 
-Astro automatically adds `font-display: swap` and preloads the font. Zero CLS.
+Astro applies `font-display: swap` by default and generates optimized fallbacks; add `<Font cssVariable="--font-inter" preload />` in `<head>` to preload.
 
 ### Avoid Dynamic Content Without Dimensions
 

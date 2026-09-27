@@ -1,6 +1,6 @@
 ---
 name: dialog-example
-description: Complete Dialog component examples for both Radix UI and Base UI
+description: Complete Dialog component examples for Radix UI, Base UI and React Aria
 keywords: dialog, radix, base-ui, component, example
 ---
 
@@ -10,7 +10,10 @@ keywords: dialog, radix, base-ui, component, example
 
 ```tsx
 // components/ui/dialog.tsx (Radix UI version)
-import * as Dialog from "@radix-ui/react-dialog"
+// Unified package, as in the shadcn registry. Legacy per-component packages
+// (import * as Dialog from "@radix-ui/react-dialog") still work;
+// `{runner} shadcn@latest migrate radix` rewrites them to "radix-ui".
+import { Dialog } from "radix-ui"
 
 <Dialog.Root>
   <Dialog.Trigger asChild>
@@ -33,7 +36,7 @@ import * as Dialog from "@radix-ui/react-dialog"
 
 ```tsx
 // components/ui/dialog.tsx (Base UI version)
-import { Dialog } from "@base-ui/react/Dialog"
+import { Dialog } from "@base-ui/react/dialog"
 
 <Dialog.Root>
   <Dialog.Trigger render={<Button />}>Open</Dialog.Trigger>
@@ -48,10 +51,55 @@ import { Dialog } from "@base-ui/react/Dialog"
 </Dialog.Root>
 ```
 
+## React Aria Dialog
+
+Primitive structure used by the `aria-*` registry `dialog.tsx` (source: `ui.shadcn.com/r/styles/aria-nova/dialog.json`). No `asChild`/`render`: `DialogTrigger` wraps a pressable child and the overlay; close and title are wired through `slot`.
+
+```tsx
+// components/ui/dialog.tsx (React Aria version)
+import {
+  Button,
+  Dialog,
+  DialogTrigger,
+  Heading,
+  Modal,
+  ModalOverlay,
+} from "react-aria-components"
+
+<DialogTrigger>
+  <Button>Open</Button>
+  <ModalOverlay isDismissable className="fixed inset-0 bg-black/50 data-entering:animate-in data-exiting:animate-out">
+    <Modal className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+      <Dialog>
+        <Heading slot="title">Title</Heading>
+        <p>Description</p>
+        <Button slot="close">Close</Button>
+      </Dialog>
+    </Modal>
+  </ModalOverlay>
+</DialogTrigger>
+```
+
+shadcn wrapper usage for this base (no `DialogContent`; `Dialog` renders overlay + modal):
+
+```tsx
+import { Button } from "@/components/ui/button"
+import { Dialog, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+
+<DialogTrigger>
+  <Button variant="outline">Open</Button>
+  <Dialog>
+    <DialogHeader>
+      <DialogTitle>Title</DialogTitle>
+    </DialogHeader>
+  </Dialog>
+</DialogTrigger>
+```
+
 ## Radix UI Select
 
 ```tsx
-import * as Select from "@radix-ui/react-select"
+import { Select } from "radix-ui"
 
 <Select.Root>
   <Select.Trigger>
@@ -70,7 +118,7 @@ import * as Select from "@radix-ui/react-select"
 ## Base UI Select
 
 ```tsx
-import { Select } from "@base-ui/react/Select"
+import { Select } from "@base-ui/react/select"
 
 <Select.Root>
   <Select.Trigger>
@@ -89,7 +137,7 @@ import { Select } from "@base-ui/react/Select"
 ## Radix UI Accordion
 
 ```tsx
-import * as Accordion from "@radix-ui/react-accordion"
+import { Accordion } from "radix-ui"
 
 <Accordion.Root type="single" collapsible>
   <Accordion.Item value="item-1">
@@ -104,7 +152,7 @@ import * as Accordion from "@radix-ui/react-accordion"
 ## Base UI Accordion
 
 ```tsx
-import { Accordion } from "@base-ui/react/Accordion"
+import { Accordion } from "@base-ui/react/accordion"
 
 <Accordion.Root>
   <Accordion.Item value="item-1">
@@ -119,7 +167,7 @@ import { Accordion } from "@base-ui/react/Accordion"
 ## Radix UI Tooltip
 
 ```tsx
-import * as Tooltip from "@radix-ui/react-tooltip"
+import { Tooltip } from "radix-ui"
 
 <Tooltip.Provider>
   <Tooltip.Root>
@@ -139,17 +187,19 @@ import * as Tooltip from "@radix-ui/react-tooltip"
 ## Base UI Tooltip
 
 ```tsx
-import { Tooltip } from "@base-ui/react/Tooltip"
+import { Tooltip } from "@base-ui/react/tooltip"
 
 <Tooltip.Provider>
   <Tooltip.Root>
     <Tooltip.Trigger render={<Button />}>Hover</Tooltip.Trigger>
-    <Tooltip.Positioner>
-      <Tooltip.Popup>
-        Tooltip text
-        <Tooltip.Arrow />
-      </Tooltip.Popup>
-    </Tooltip.Positioner>
+    <Tooltip.Portal>
+      <Tooltip.Positioner sideOffset={5}>
+        <Tooltip.Popup>
+          Tooltip text
+          <Tooltip.Arrow />
+        </Tooltip.Popup>
+      </Tooltip.Positioner>
+    </Tooltip.Portal>
   </Tooltip.Root>
 </Tooltip.Provider>
 ```

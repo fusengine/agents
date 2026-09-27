@@ -52,22 +52,22 @@ thirteen alpha tiers, a tinted neutral ramp, and a single warm accent that never
 ### Colors
 
 ```css
---p-jet:      0 0% 4%;             --p-charbon: 0 0% 10%;
---p-ombre:    221 12% 14%;         --p-brume:   216 4% 51%;
---p-colombe:  222 19% 86%;         --p-nimbe:   228 21.74% 95.49%;
---p-ivoire:   40 18% 97%;          --p-blanc:   0 0% 100%;
---p-couchant: 22 100% 51.6%;       --p-aube:    37 100% 76%;
+--p-jet:      0 0% 4%;             --p-charcoal: 0 0% 10%;
+--p-umbra:    221 12% 14%;         --p-fog:      216 4% 51%;
+--p-dove:     222 19% 86%;         --p-nimbus:   228 21.74% 95.49%;
+--p-ivory:    40 18% 97%;          --p-white:    0 0% 100%;
+--p-sunset:   22 100% 51.6%;       --p-dawn:     37 100% 76%;
 
---primaire:     var(--p-jet);      /* dark: --p-blanc    */
---premier-plan: var(--p-jet);      /* dark: --p-colombe  */
---fond:         var(--p-blanc);    /* dark: --p-jet      */
---carte:        var(--p-ivoire);   /* dark: --p-charbon  */
---bordure:      var(--p-colombe);  /* dark: --p-ombre    */
---accent:       var(--p-couchant); /* dark: unchanged    */
+--primary:      var(--p-jet);      /* dark: --p-white    */
+--foreground:   var(--p-jet);      /* dark: --p-dove     */
+--background:   var(--p-white);    /* dark: --p-jet      */
+--card:         var(--p-ivory);    /* dark: --p-charcoal */
+--border:       var(--p-dove);     /* dark: --p-umbra    */
+--accent:       var(--p-sunset);   /* dark: unchanged    */
 ```
 
 Strategy: **single-ink laddering.** Colours are stored as function-less HSL triplets so
-alpha is composed at the point of use (`hsl(var(--primaire) / .5)`), and the whole
+alpha is composed at the point of use (`hsl(var(--primary) / .5)`), and the whole
 hierarchy is thirteen alpha tiers of one ink rather than a grey palette. Two tiers
 carry the page: 50% is the resting state of every interactive element (74 nodes) and
 100% is its hovered state (91 nodes) — the site's dominant gesture is the move between
@@ -76,16 +76,16 @@ three window dots, the announcement badge) and does not switch with the theme.
 Neutrals are tinted blue, 12–19% saturation; only the extremes are desaturated.
 `--primary` and `--foreground` are two distinct roles that coincide only in light mode,
 so dark-mode body text is dove, not white.
-Contrast floors: body ink on white ≈ 19:1 `[estimé]`. Below that the page runs under
+Contrast floors: body ink on white ≈ 19:1 `[estimated]`. Below that the page runs under
 the usual floor and does so deliberately — the 50% resting tier lands near 3.7:1, the
-hero subtitle at 45% near 3.1:1, metadata at 40% near 2.7:1 `[estimé]`, all recovered
+hero subtitle at 45% near 3.1:1, metadata at 40% near 2.7:1 `[estimated]`, all recovered
 to full ink on hover or focus. Recorded as the source has them.
 
 ### Typography
 
 ```css
---f-texte:   "Geist", "Repli texte", system-ui, sans-serif;
---f-display: "Geist", "Repli display", system-ui, sans-serif;
+--f-text:    "Geist", "Text Fallback", system-ui, sans-serif;
+--f-display: "Geist", "Display Fallback", system-ui, sans-serif;
 --f-mono:    "Geist Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
 ```
 
@@ -93,7 +93,7 @@ Geist and Geist Mono from the Google Fonts CDN; the source's display and text fa
 Universal Sans, proprietary. What survives the substitution intact is the source's
 **metrics-corrected fallback** — `local(Arial)` re-declared with `ascent-override`
 89.92%, `descent-override` 22.73% and `size-adjust` 105.67% for text, 97.8% for
-display — so a fallback never shifts the layout. Scale, `[relevé]` as used: one single
+display — so a fallback never shifts the layout. Scale, `[measured]` as used: one single
 running-text size, `.875rem` on 106 nodes, then a jump straight to `1.5rem`, `1.875rem`,
 `2.25rem`, `3rem`, `3.75rem`. Nothing gradual in between; the fine hierarchy is opacity,
 not size. One weight, `font-medium`, on 101 nodes against two at semibold. Line-heights

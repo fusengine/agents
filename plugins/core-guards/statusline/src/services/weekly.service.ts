@@ -1,7 +1,7 @@
 /**
- * Weekly Service - Tracking hebdomadaire
+ * Weekly Service - Weekly tracking
  *
- * @description SRP: Tracking weekly uniquement
+ * @description SRP: Weekly tracking only
  */
 
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";

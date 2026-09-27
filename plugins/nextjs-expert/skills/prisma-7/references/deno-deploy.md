@@ -14,6 +14,20 @@ related: [vercel, netlify, cloudflare-workers]
 
 ```bash
 deno init --name prisma-app
+deno run -A npm:prisma@7 init
+```
+
+```prisma
+// prisma/schema.prisma — v7: prisma-client generator with the Deno runtime
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+  runtime  = "deno"
+}
+
+datasource db {
+  provider = "postgresql"
+}
 ```
 
 ## Import Prisma
@@ -24,23 +38,19 @@ deno init --name prisma-app
  * Deno Deploy fetch handler with Prisma.
  * @see /src/lib/prisma-deno.ts
  */
-import type { User } from "npm:@prisma/client@5"
-import { PrismaClient } from "npm:@prisma/client@5"
+import { PrismaPg } from "@prisma/adapter-pg"
+import type { User } from "../generated/prisma/client.ts"
+import { PrismaClient } from "../generated/prisma/client.ts" // v7: generated path
 
 /**
  * Initialize Prisma Client for Deno Deploy.
- * Uses environment variable for database URL.
+ * Uses environment variable for database URL (v7: passed to the driver adapter).
  *
  * @returns {PrismaClient} Configured Prisma instance
  * @see /src/lib/prisma-deno.ts
  */
-const prisma = new PrismaClient({
-  datasources: {
-    db: {
-      url: Deno.env.get("DATABASE_URL")
-    }
-  }
-})
+const adapter = new PrismaPg({ connectionString: Deno.env.get("DATABASE_URL")! })
+const prisma = new PrismaClient({ adapter })
 
 /**
  * Fetch handler for HTTP requests.
@@ -66,10 +76,12 @@ export default {
  * @see /src/lib/prisma-deno.ts
  */
 import type { FreshContext } from "$fresh/server.ts"
-import type { User } from "npm:@prisma/client@5"
-import { PrismaClient } from "npm:@prisma/client@5"
+import { PrismaPg } from "@prisma/adapter-pg"
+import type { User } from "../../generated/prisma/client.ts"
+import { PrismaClient } from "../../generated/prisma/client.ts" // v7: generated path
 
-const prisma = new PrismaClient()
+const adapter = new PrismaPg({ connectionString: Deno.env.get("DATABASE_URL")! })
+const prisma = new PrismaClient({ adapter })
 
 /**
  * GET handler for users endpoint.
@@ -92,8 +104,11 @@ export const handler = async (
 
 ```json
 {
+  "nodeModulesDir": "auto",
   "imports": {
-    "@prisma/client": "npm:@prisma/client@5",
+    "@prisma/client": "npm:@prisma/client@7",
+    "@prisma/adapter-pg": "npm:@prisma/adapter-pg@7",
+    "prisma": "npm:prisma@7",
     "$fresh/": "https://deno.land/x/fresh@1.4.0/"
   },
   "tasks": {
@@ -141,10 +156,12 @@ deno deploy deploy
  * @see /src/lib/prisma-deno.ts
  */
 import type { FreshContext } from "$fresh/server.ts"
-import type { User } from "npm:@prisma/client@5"
-import { PrismaClient } from "npm:@prisma/client@5"
+import { PrismaPg } from "@prisma/adapter-pg"
+import type { User } from "../../generated/prisma/client.ts"
+import { PrismaClient } from "../../generated/prisma/client.ts" // v7: generated path
 
-const prisma = new PrismaClient()
+const adapter = new PrismaPg({ connectionString: Deno.env.get("DATABASE_URL")! })
+const prisma = new PrismaClient({ adapter })
 
 /**
  * Handlers object for different HTTP methods.
@@ -205,7 +222,10 @@ export async function handler(
 Deno Deploy has no persistent connections. Use PgBouncer or managed pooling:
 
 ```typescript
+// v7: pool settings live on the driver adapter — keep it small per isolate
+const adapter = new PrismaPg({ connectionString: Deno.env.get("DATABASE_URL")!, max: 1 })
 const prisma = new PrismaClient({
+  adapter,
   errorFormat: "pretty"
 })
 ```
@@ -228,7 +248,7 @@ Deno has TypeScript built-in:
  * User type definition for type safety.
  * @see /src/interfaces/user-repository.ts
  */
-import type { User } from "npm:@prisma/client@5"
+import type { PrismaClient, User } from "../../generated/prisma/client.ts"
 
 /**
  * Get user by ID with type safety.
@@ -258,7 +278,7 @@ Deno Deploy includes built-in KV:
  * Cache service using Deno KV storage.
  * @see /src/lib/prisma-deno.ts
  */
-import type { User } from "npm:@prisma/client@5"
+import type { PrismaClient, User } from "../../generated/prisma/client.ts"
 
 /**
  * Get users with KV caching layer.

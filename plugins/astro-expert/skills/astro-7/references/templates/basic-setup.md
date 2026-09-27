@@ -1,11 +1,11 @@
 ---
 name: basic-setup
-description: Complete Astro 6 project setup with TypeScript, output mode, and layout
-when-to-use: starting a new Astro 6 project from scratch
+description: Complete Astro 7 project setup with TypeScript, output mode, and layout
+when-to-use: starting a new Astro 7 project from scratch
 keywords: setup, project, layout, typescript, config
 ---
 
-# Astro 6 Basic Project Setup
+# Astro 7 Basic Project Setup
 
 ## Project Structure
 
@@ -68,7 +68,7 @@ const { title, description = 'My Astro site' } = Astro.props;
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 <BaseLayout title="Home">
-  <h1>Welcome to Astro 6</h1>
+  <h1>Welcome to Astro 7</h1>
 </BaseLayout>
 ```
 

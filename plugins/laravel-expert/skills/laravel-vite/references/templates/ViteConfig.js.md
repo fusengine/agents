@@ -182,11 +182,10 @@ export default defineConfig({
         "preview": "vite preview"
     },
     "devDependencies": {
-        "autoprefixer": "^10.4.20",
-        "laravel-vite-plugin": "^1.2.0",
-        "postcss": "^8.5.0",
+        "@tailwindcss/vite": "^4.0.0",
+        "laravel-vite-plugin": "^3.1",
         "tailwindcss": "^4.0.0",
-        "vite": "^6.0.0"
+        "vite": "^8.0.0"
     }
 }
 ```

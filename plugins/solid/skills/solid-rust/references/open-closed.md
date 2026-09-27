@@ -215,7 +215,7 @@ impl StorageBackend for MinIoStorage { /* ... */ }
 1. **Traits in `traits.rs`** - Keep abstraction in dedicated file (see architecture-patterns.md)
 2. **Box<dyn T>** - Runtime polymorphism, slight performance cost
 3. **Generic bounds** - Zero-cost compile-time polymorphism
-4. **#[async_trait]** - Workaround for async in traits (as of Rust 1.75, native impl traits improving)
+4. **#[async_trait]** - Native `async fn` in traits is stable since Rust 1.75, but such traits are not dyn-compatible; keep `#[async_trait]` when the trait is used as `dyn Trait` (e.g. `Box<dyn EmailService>` above)
 5. **Builder pattern** - Compose behaviors without modifying constructors
 
 ---

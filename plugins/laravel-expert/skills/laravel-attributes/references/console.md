@@ -40,6 +40,6 @@ command:name {arg} {arg?} {arg=default} {--option} {--option=} {--O|option=}
 
 ## Notes
 
-- Auto-discovered by `app/Console/Kernel.php::commands()`
+- Commands in `app/Console/Commands` are auto-registered (no Console Kernel since Laravel 11; extra paths via `->withCommands([...])` in `bootstrap/app.php`)
 - `#[AsCommand]` from Symfony is not used - Laravel ships its own attributes
 - Use `php artisan list` to verify the command is registered after migration

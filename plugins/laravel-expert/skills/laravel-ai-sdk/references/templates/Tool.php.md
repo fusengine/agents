@@ -13,27 +13,39 @@ declare(strict_types=1);
 namespace App\Ai\Tools;
 
 use App\Models\Product;
-use Laravel\Ai\Attributes\{Description, Parameter};
+use Illuminate\Contracts\JsonSchema\JsonSchema;
 use Laravel\Ai\Contracts\Tool;
+use Laravel\Ai\Tools\Request;
+use Stringable;
 
 final class SearchProducts implements Tool
 {
-    #[Description('Search the product catalog by keyword and optional category')]
-    public function __invoke(
-        #[Parameter('Search keyword to match against product name and description')]
-        string $query,
-        #[Parameter('Optional category slug filter')]
-        ?string $category = null,
-        #[Parameter('Max number of results to return')]
-        int $limit = 5,
-    ): array {
+    public function description(): Stringable|string
+    {
+        return 'Search the product catalog by keyword and optional category';
+    }
+
+    public function handle(Request $request): Stringable|string
+    {
+        $query = $request['query'];
+        $category = $request['category'] ?? null;
+
         return Product::query()
-            ->where('name', 'like', "%{$query}%")
-            ->orWhere('description', 'like', "%{$query}%")
+            ->where(fn ($q) => $q->where('name', 'like', "%{$query}%")
+                ->orWhere('description', 'like', "%{$query}%"))
             ->when($category, fn ($q) => $q->where('category_slug', $category))
-            ->limit($limit)
+            ->limit($request['limit'] ?? 5)
             ->get(['id', 'name', 'price', 'category_slug'])
-            ->toArray();
+            ->toJson();
+    }
+
+    public function schema(JsonSchema $schema): array
+    {
+        return [
+            'query' => $schema->string()->required(),
+            'category' => $schema->string(),
+            'limit' => $schema->integer()->min(1),
+        ];
     }
 }
 ```
@@ -49,6 +61,6 @@ public function tools(): iterable
 
 ## Notes
 
-- Parameter PHP types drive the JSON Schema sent to the model
-- Use nullable types + defaults for optional parameters
-- Return arrays / scalars / JsonSerializable - the SDK encodes them
+- `schema()` defines the JSON Schema sent to the model (`->required()` for mandatory args)
+- Omit `->required()` for optional args and default them in `handle()`
+- `handle()` returns `Stringable|string` - encode structured results yourself

@@ -5,14 +5,14 @@ user-invocable: false
 ---
 
 <objective>
-Complete reference for Tailwind CSS v4.1 background utilities: `bg-{color}` with the OKLCH P3 color palette, gradients (`bg-linear-*`, `bg-radial-*`, and the new `bg-conic-*`), background images (`bg-cover`/`bg-contain`/`bg-repeat`/positioning/sizing), and blend modes (`bg-blend-*`).
+Complete reference for Tailwind CSS v4.3 background utilities: `bg-{color}` with the OKLCH P3 color palette (including the `mauve`/`olive`/`mist`/`taupe` palettes added in v4.2), gradients (`bg-linear-*`, `bg-radial-*`, and `bg-conic-*`), background images (`bg-cover`/`bg-contain`/`bg-repeat`/positioning/sizing), and blend modes (`bg-blend-*`).
 
 Includes gradient color-stop control (`from-*`/`via-*`/`to-*`), custom-angle linear gradients, and theme-config extension for custom colors and background images.
 </objective>
 
 # Tailwind CSS Backgrounds Skill
 
-Complete reference for background utilities in Tailwind CSS v4.1, including colors, gradients, images, positioning, sizing, and blend modes.
+Complete reference for background utilities in Tailwind CSS v4.3, including colors, gradients, images, positioning, sizing, and blend modes.
 
 ## Background Colors
 
@@ -34,6 +34,7 @@ Use `bg-{color}` utilities to set background colors with the modernized OKLCH co
 The default Tailwind palette uses OKLCH color space for perceptually uniform colors across the wider P3 gamut:
 
 - **Neutrals**: slate, gray, zinc, neutral, stone
+- **Tinted neutrals (since v4.2)**: mauve, olive, mist, taupe
 - **Colors**: red, orange, amber, yellow, lime, green, emerald, teal, cyan, sky, blue, indigo, violet, purple, fuchsia, pink, rose
 
 Each color has 11 shades: 50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950
@@ -77,7 +78,7 @@ Create radial gradients using `bg-radial-*` utilities.
 <div class="bg-radial from-purple-200 via-blue-400 to-slate-950"></div>
 ```
 
-## Conic Gradients (NEW in v4.1)
+## Conic Gradients (since v4.0)
 
 Create conic gradients using `bg-conic-*` utilities, perfect for color wheels and circular patterns.
 

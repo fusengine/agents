@@ -10,6 +10,8 @@ related: skeleton.md, spinner.md
 
 # Progress Component
 
+> **Base:** examples use **Base UI** (shadcn default since 2026-07); Radix delta in "Radix variant" below; React Aria: same exports (`ProgressLabel`/`ProgressValue` children) over RAC `ProgressBar` — indeterminate via `isIndeterminate`. Sources: https://ui.shadcn.com/r/styles/base-nova/progress.json, https://ui.shadcn.com/r/styles/radix-nova/progress.json
+
 Import Progress from `@/modules/cores/shadcn/components/ui/progress`:
 
 ```typescript
@@ -29,6 +31,7 @@ Simple progress bar with percentage value:
 ```tsx
 import { Progress } from "@/modules/cores/shadcn/components/ui/progress"
 
+/** Static progress bar. */
 export function ProgressBasic() {
   return (
     <div className="space-y-4">
@@ -43,22 +46,40 @@ export function ProgressBasic() {
 
 ## Progress with Label
 
-Display progress percentage alongside bar:
+Display a label and the formatted value with the bar (`Progress` renders its children above the
+track; `ProgressValue` formats the current value):
 
 ```tsx
-import { Progress } from "@/modules/cores/shadcn/components/ui/progress"
+import {
+  Progress,
+  ProgressLabel,
+  ProgressValue,
+} from "@/modules/cores/shadcn/components/ui/progress"
 
+/** Progress with a label and formatted value (Base UI parts). */
 export function ProgressWithLabel() {
   return (
-    <div className="w-full space-y-2">
-      <div className="flex justify-between text-sm">
-        <span>Loading...</span>
-        <span>65%</span>
-      </div>
-      <Progress value={65} />
-    </div>
+    <Progress value={65} className="w-full">
+      <ProgressLabel>Loading...</ProgressLabel>
+      <ProgressValue />
+    </Progress>
   )
 }
+```
+
+### Radix variant
+
+Radix exports only `Progress` (no `ProgressLabel` / `ProgressValue` / `ProgressTrack` /
+`ProgressIndicator`) — render the label yourself:
+
+```tsx
+<div className="w-full space-y-2">
+  <div className="flex justify-between text-sm">
+    <span>Loading...</span>
+    <span>65%</span>
+  </div>
+  <Progress value={65} />
+</div>
 ```
 
 ## Progress with Animated Value
@@ -66,11 +87,10 @@ export function ProgressWithLabel() {
 Dynamic progress with state update:
 
 ```tsx
-"use client"
-
 import { useState, useEffect } from "react"
 import { Progress } from "@/modules/cores/shadcn/components/ui/progress"
 
+/** Progress bar advanced by a timer. */
 export function ProgressAnimated() {
   const [progress, setProgress] = useState(0)
 
@@ -104,11 +124,12 @@ Progress bar without specific value for unknown duration:
 ```tsx
 import { Progress } from "@/modules/cores/shadcn/components/ui/progress"
 
+/** Indeterminate bar (`value={null}`). */
 export function ProgressIndeterminate() {
   return (
     <div className="w-full space-y-2">
       <div className="text-sm">Loading...</div>
-      <Progress value={undefined} />
+      <Progress value={null} />
     </div>
   )
 }
@@ -119,12 +140,11 @@ export function ProgressIndeterminate() {
 File upload with progress tracking:
 
 ```tsx
-"use client"
-
 import { useState } from "react"
 import { Progress } from "@/modules/cores/shadcn/components/ui/progress"
 import { Button } from "@/modules/cores/shadcn/components/ui/button"
 
+/** File upload progress. */
 export function UploadProgress() {
   const [progress, setProgress] = useState(0)
   const [isUploading, setIsUploading] = useState(false)
@@ -165,11 +185,10 @@ export function UploadProgress() {
 Download indicator with speed information:
 
 ```tsx
-"use client"
-
 import { useState } from "react"
 import { Progress } from "@/modules/cores/shadcn/components/ui/progress"
 
+/** Download progress. */
 export function DownloadProgress() {
   const [progress, setProgress] = useState(45)
 
@@ -193,8 +212,6 @@ export function DownloadProgress() {
 Progress bar for multi-step process:
 
 ```tsx
-"use client"
-
 import { useState } from "react"
 import { Progress } from "@/modules/cores/shadcn/components/ui/progress"
 import { Button } from "@/modules/cores/shadcn/components/ui/button"
@@ -204,6 +221,7 @@ interface StepProgress {
   totalSteps: number
 }
 
+/** Progress through a multi-step flow. */
 export function MultiStepProgress({ currentStep, totalSteps }: StepProgress) {
   const progress = (currentStep / totalSteps) * 100
 
@@ -221,14 +239,11 @@ export function MultiStepProgress({ currentStep, totalSteps }: StepProgress) {
 
 ## Props
 
-```typescript
-interface ProgressProps extends React.HTMLAttributes<HTMLDivElement> {
-  value?: number | null
-}
-```
-
-- **value**: `number` (0-100) | `null` - Progress percentage or undefined for indeterminate state
-- Extends standard HTML div attributes
+- **value**: `number` (0-100) | `null` — `null` = indeterminate. Required on Base UI
+  (`Progress.Root` props); optional on Radix (`null`/`undefined` = indeterminate)
+- **max** (default 100); Base UI also takes `min` (default 0) and `format` (`Intl.NumberFormatOptions` for `ProgressValue`)
+- **children** (Base UI / React Aria): `ProgressLabel`, `ProgressValue`
+- Other props are forwarded to the primitive root (`Progress.Root` / Radix `Progress.Root`)
 
 ## Styling
 
@@ -259,6 +274,7 @@ Customize progress bar appearance:
 ### Data Loading Progress
 
 ```tsx
+/** Loaded items over a total. */
 export function DataLoadingProgress({ totalItems = 100, loadedItems = 65 }) {
   const progress = (loadedItems / totalItems) * 100
   return (
@@ -273,6 +289,7 @@ export function DataLoadingProgress({ totalItems = 100, loadedItems = 65 }) {
 ### Installation Progress
 
 ```tsx
+/** Installation progress indicator. */
 export function InstallationProgress({ isInstalling = false, progress = 0 }) {
   return (
     <div className="space-y-2">
@@ -288,13 +305,14 @@ export function InstallationProgress({ isInstalling = false, progress = 0 }) {
 ### Sync Progress
 
 ```tsx
+/** Indeterminate while syncing, full when done. */
 export function SyncProgress({ isSyncing = false }) {
   return (
     <div className="space-y-2">
       <div className="text-sm">
         {isSyncing ? "Syncing..." : "Sync complete"}
       </div>
-      <Progress value={isSyncing ? undefined : 100} />
+      <Progress value={isSyncing ? null : 100} />
     </div>
   )
 }

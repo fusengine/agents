@@ -17,7 +17,7 @@ and a monospaced body, anchored by percentage over a soft two-tone plate. It car
 twice (Cursor Desktop as a triptych — agent flank, browser preview, chat panel — plus Cursor
 CLI bottom-right), returns in feature block 3 as a Slack window and a second CLI, and again
 inside the phone chassis of the trio. Its mount is the second half of the idea: every feature
-block is drawn as **two stacked layers** on the same 24-column grid — a `.carte` layer holding
+block is drawn as **two stacked layers** on the same 24-column grid — a `.tile` layer holding
 text and surface, and a transparent layer holding the media — so the window overhangs the card
 instead of being boxed by it.
 
@@ -27,7 +27,7 @@ Name: **Ramp and Newsroom.**
 
 Order of the body, read on `index.html`:
 
-1. `header.entete` — fixed, a three-column grid that swaps order at 900px; two flyout groups;
+1. `header.header` — fixed, a three-column grid that swaps order at 900px; two flyout groups;
    a full-screen mobile panel animated on `opacity` alone.
 2. Hero — one h1 sentence, three buttons (two hidden below 660px), then the scene: a
    full-bleed plate carrying the two floating windows.
@@ -43,7 +43,7 @@ Order of the body, read on `index.html`:
 8. Team card — the same two-layer template as the feature blocks, one sentence and "Join us".
 9. Recent highlights — a second scroll-snap track, identical mechanism.
 10. Closing CTA — "Try Cursor now.", a title-only section.
-11. `footer.pied` — five link columns and a language selector reusing the nav's menu.
+11. `footer.footer` — five link columns and a language selector reusing the nav's menu.
 
 Absent from the canonical skeleton: **no pricing section**, **no FAQ**, **no numbered
 how-it-works steps**, **no metrics band**, **no comparison table**, and — the most telling
@@ -68,18 +68,18 @@ theme; every neutral is derived from the ink by `color-mix`, never hard-coded.
 ### Colors
 
 ```css
---fond-page:         #f7f7f4;
---texte-primaire:    #26251e;
---texte-primaire-02: #3b3a33;
+--page-bg:         #f7f7f4;
+--text-primary:    #26251e;
+--text-primary-02: #3b3a33;
 --accent:            #f54e00;
 --surface-01: #f2f1ed;  --surface-02: #f0efeb;  --surface-03: #ebeae5;
---surface-04: #e6e5e0;  --surface-05: #e1e0db;  --surface-chaude: #f3ede6;
---texte-secondaire: color-mix(in oklab, var(--texte-primaire) 60%, transparent);
---texte-median:     color-mix(in oklab, var(--texte-primaire) 50%, transparent);
---texte-tertiaire:  color-mix(in oklab, var(--texte-primaire) 40%, transparent);
---filet-discret: 2.5% · --filet-faible: 5% · --filet-moyen: 10% · --filet-marque: 20%
---diff-ajout: #1f8a65;  --diff-retrait: #cf2d56;
-/* dark, same names: --fond-page #14120b · --texte-primaire #edecec
+--surface-04: #e6e5e0;  --surface-05: #e1e0db;  --surface-warm: #f3ede6;
+--text-secondary: color-mix(in oklab, var(--text-primary) 60%, transparent);
+--text-mid:     color-mix(in oklab, var(--text-primary) 50%, transparent);
+--text-tertiary:  color-mix(in oklab, var(--text-primary) 40%, transparent);
+--rule-subtle: 2.5% · --rule-faint: 5% · --rule-medium: 10% · --rule-marked: 20%
+--diff-added: #1f8a65;  --diff-removed: #cf2d56;
+/* dark, same names: --page-bg #14120b · --text-primary #edecec
    · --surface-01…05 #1b1913 → #2b2923 */
 ```
 
@@ -91,15 +91,15 @@ button fill, never a background. The theme swap is two-way by construction:
 `@media (prefers-color-scheme: dark) :root:not([data-theme="light"])` plus an explicit
 `[data-theme="dark"]`, so a light choice survives a dark device.
 
-Contrast, computed from the relevé hex [estimé]: primary on page ≈14.3:1 · `--texte-secondaire`
+Contrast, computed from the measured hex [estimated]: primary on page ≈14.3:1 · `--text-secondary`
 (the 60% mix that carries most body prose) ≈4.1:1 · `--accent` on page ≈3.3:1, used on links
 only. The last two sit under 4.5:1; recorded as observed, not corrected — the page is frozen.
 
 ### Typography
 
 ```css
---police:      system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", …;
---police-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, …;
+--font:      system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", …;
+--font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, …;
 ```
 
 **No text webfont at all.** The source's single font file is an icon face, and its glyphs are
@@ -109,23 +109,23 @@ rows, window bodies). Scale: ten steps, `.6875 · .75 · .8125 · .875 · 1 · 1
 1.625 · 2.25 · 3.25 · 4.5rem`, and each type class sets size, line-height **and** tracking
 together — none of them ever sets one alone. Line-heights run 1.1 → 1.5, tracking from +.01em
 at small sizes down to −.03em at display. Every heading is `font-weight: 400`; there is no bold
-display weight in the system. Measure is capped by named containers (`.mesure`, `.mesure--large`,
-`.mesure--etroite`), never by a raw `ch` value.
+display weight in the system. Measure is capped by named containers (`.measure`, `.measure--large`,
+`.measure--narrow`), never by a raw `ch` value.
 Never used: Inter, Geist, any display serif, any variable webfont, any italic.
 
 ### Spacing
 
-Two units, and everything is a fraction of them: `--pas-h: .625rem` horizontal,
-`--pas-v: 1.4rem` vertical. Measures read `calc(var(--pas-v) * 8/12)`, `* 9/12`, `* 2.5/12`,
+Two units, and everything is a fraction of them: `--step-h: .625rem` horizontal,
+`--step-v: 1.4rem` vertical. Measures read `calc(var(--step-v) * 8/12)`, `* 9/12`, `* 2.5/12`,
 `* 2`, `* 3`, `* 5` — a twelfth-based scale, not an 8pt grid. `.section` is
-`3×pas-v 2×pas-h`; the first section of `main` opens at `5×pas-v`. Container max 1300px,
+`3×step-v 2×step-h`; the first section of `main` opens at `5×step-v`. Container max 1300px,
 header 56px (52px above 900px). The 24-column grid exists only **inside** large cards, never
 on the page itself. Density profile: airy between sections, dense inside every mockup.
 
 ### Motion
 
 `MOTION_INTENSITY 3`. One reveal keyframe carries the whole page: `opacity 0 → 1` with
-`translateY(25%) → 0`, `1s`, `cubic-bezier(.25, 1, .5, 1)`, staggered by `--rang × 60ms`.
+`translateY(25%) → 0`, `1s`, `cubic-bezier(.25, 1, .5, 1)`, staggered by `--index × 60ms`.
 Its mechanism is the point — the animation is **always declared and paused**, and JavaScript
 only lifts the pause; JS never sets `opacity: 0`. So a missing, blocked or failed script
 leaves every section visible, and `@media (scripting: none)` is kept as a second belt.

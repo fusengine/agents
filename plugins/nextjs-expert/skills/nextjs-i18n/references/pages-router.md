@@ -1,7 +1,7 @@
 ---
 name: pages-router
-description: Utilisation next-intl avec Pages Router legacy, getStaticProps, middleware.ts
-when-to-use: projets Pages Router legacy, migration, projets non-upgradeable
+description: Using next-intl with the legacy Pages Router, getStaticProps, middleware.ts
+when-to-use: legacy Pages Router projects, migration, non-upgradeable projects
 keywords: Pages Router, getStaticProps, getStaticPaths, middleware.ts, legacy
 priority: low
 requires: installation.md

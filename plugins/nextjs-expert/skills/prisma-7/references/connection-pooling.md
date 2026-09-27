@@ -18,7 +18,7 @@ Connection pool configuration with SOLID Next.js principles.
 // lib/db/pg-pool.ts
 import { Pool } from 'pg'
 import { PrismaPg } from '@prisma/adapter-pg'
-import type { PrismaClient } from '@prisma/client'
+import { PrismaClient } from '../generated/prisma/client' // v7: generated path
 
 /**
  * @description Creates PostgreSQL connection pool for Prisma
@@ -34,7 +34,8 @@ export function createPgPoolClient(): PrismaClient {
     connectionTimeoutMillis: 5000, // Connection timeout
   })
 
-  const adapter = new PrismaPg({ pool })
+  // v7: PrismaPg accepts a pg.Pool, a PoolConfig, or a connection string
+  const adapter = new PrismaPg(pool)
   return new PrismaClient({ adapter })
 }
 
@@ -49,7 +50,7 @@ export const prisma = createPgPoolClient()
 // lib/db/serverless-pool.ts
 import { Pool } from 'pg'
 import { PrismaPg } from '@prisma/adapter-pg'
-import type { PrismaClient } from '@prisma/client'
+import { PrismaClient } from '../generated/prisma/client' // v7: generated path
 
 /**
  * @description Creates serverless-optimized connection pool
@@ -66,7 +67,7 @@ export function createServerlessPoolClient(): PrismaClient {
     connectionTimeoutMillis: 5000,
   })
 
-  const adapter = new PrismaPg({ pool })
+  const adapter = new PrismaPg(pool)
   return new PrismaClient({ adapter })
 }
 ```
@@ -83,12 +84,21 @@ DATABASE_URL="postgresql://user:pass@pgbouncer:6432/db?pgbouncer=true"
 DIRECT_URL="postgresql://user:pass@postgres:5432/db"
 ```
 
+```typescript
+// prisma.config.ts — v7: the CLI URL lives here; point it at the direct URL for migrations
+import 'dotenv/config'
+import { defineConfig, env } from 'prisma/config'
+
+export default defineConfig({
+  schema: 'prisma/schema.prisma',
+  datasource: { url: env('DIRECT_URL') },
+})
+```
+
 ```prisma
-// prisma/schema.prisma
+// prisma/schema.prisma — no url/directUrl in v7
 datasource db {
-  provider  = "postgresql"
-  url       = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL") // For migrations
+  provider = "postgresql"
 }
 
 model User {
@@ -111,11 +121,10 @@ DIRECT_URL="postgresql://postgres.[project-id]:password@aws-0-region.pooler.supa
 ```
 
 ```prisma
-// prisma/schema.prisma
+// prisma/schema.prisma — v7: set datasource.url: env("DIRECT_URL") in prisma.config.ts;
+// the runtime (pooled) DATABASE_URL goes to the driver adapter
 datasource db {
-  provider  = "postgresql"
-  url       = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL")
+  provider = "postgresql"
 }
 ```
 
@@ -125,23 +134,18 @@ datasource db {
 
 ```typescript
 // lib/db/neon-pool.ts
-import { neon, neonConfig } from '@neondatabase/serverless'
 import { PrismaNeon } from '@prisma/adapter-neon'
-import type { PrismaClient } from '@prisma/client'
+import { PrismaClient } from '../generated/prisma/client' // v7: generated path
 
 /**
- * @description Creates Neon serverless pool with HTTP connections
+ * @description Creates Neon serverless pool (WebSocket) for Prisma
  * @returns PrismaClient Optimized for Neon serverless
  * @example
  * const prisma = createNeonPoolClient()
  */
 export function createNeonPoolClient(): PrismaClient {
-  // ✅ GOOD: Enable Neon connection pooling
-  neonConfig.poolConnections = true
-  neonConfig.useSecureWebSocket = true
-
-  const sql = neon(process.env.DATABASE_URL || '')
-  const adapter = new PrismaNeon(sql)
+  // ✅ GOOD: v7 adapter builds the Neon pool from its config (no manual driver instance)
+  const adapter = new PrismaNeon({ connectionString: process.env.DATABASE_URL! })
 
   return new PrismaClient({
     adapter,
@@ -190,9 +194,9 @@ export const poolConfigs = {
  * @description Connection string configurations
  */
 export const connectionStrings = {
-  /** Standard PostgreSQL with connection limits */
+  /** Standard PostgreSQL (v7: pool limits/timeouts come from poolConfigs, not URL params) */
   postgresql:
-    'postgresql://user:pass@host:5432/db?connection_limit=10&pool_timeout=30&connect_timeout=10',
+    'postgresql://user:pass@host:5432/db',
 
   /** With SSL requirement */
   postgresqlSSL:
@@ -200,7 +204,7 @@ export const connectionStrings = {
 
   /** PgBouncer transaction mode */
   pgbouncer:
-    'postgresql://user:pass@host:6432/db?pgbouncer=true&connection_limit=1',
+    'postgresql://user:pass@host:6432/db?pgbouncer=true',
 }
 ```
 
@@ -210,7 +214,7 @@ export const connectionStrings = {
 
 ```typescript
 // lib/db/shutdown.ts
-import type { PrismaClient } from '@prisma/client'
+import type { PrismaClient } from '../generated/prisma/client'
 
 /**
  * @description Registers graceful shutdown handlers
@@ -284,7 +288,7 @@ const poolConfig =
 
 ```typescript
 // lib/db/health-check.ts
-import type { PrismaClient } from '@prisma/client'
+import type { PrismaClient } from '../generated/prisma/client'
 
 /**
  * @description Performs database health check
@@ -341,7 +345,7 @@ export async function monitorPoolUsage(
 1. **Use pooler for serverless** - PgBouncer, Supavisor, or Neon
 2. **Minimize connection count** - 1-3 for serverless, scale horizontally
 3. **Set appropriate timeouts** - Prevent connection leaks and exhaustion
-4. **Use directUrl for migrations** - Bypass pooler to avoid issues
+4. **Use a direct URL for migrations** - Set it in `prisma.config.ts` to bypass the pooler
 5. **Monitor pool usage** - Alert if approaching limits
 
 ### SOLID Application

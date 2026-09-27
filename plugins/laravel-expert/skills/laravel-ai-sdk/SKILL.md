@@ -14,9 +14,10 @@ related-skills: laravel-attributes, laravel-vector-search
 Covers the `laravel/ai` package for Laravel 13: building class-based Agents
 (Agent contract + Promptable trait), tool calling (FileSearch + custom tools),
 generating and storing embeddings, structured output via JSON Schema, and
-streaming (SSE + Vercel AI SDK protocol). Supports 14+ providers through the
-unified `Lab` enum — OpenAI, Anthropic, Gemini, Azure, Groq, DeepSeek, Ollama,
-Mistral, xAI, Cohere, ElevenLabs, Jina, VoyageAI, OpenRouter.
+streaming (SSE + Vercel AI SDK protocol). Supports 17 providers through the
+unified `Lab` enum — OpenAI, OpenAI-compatible, Anthropic, Gemini, Azure,
+Bedrock, Groq, DeepSeek, Ollama, Mistral, xAI, Cohere, ElevenLabs, Jina,
+TypeSafe, VoyageAI, OpenRouter.
 </objective>
 
 # Laravel AI SDK
@@ -37,10 +38,10 @@ After implementation, run **fuse-ai-pilot:sniper** for validation.
 
 | Feature | Description |
 |---------|-------------|
-| **Unified API** | Same code surface for 14+ providers via `Lab` enum |
+| **Unified API** | Same code surface for 17 providers via `Lab` enum |
 | **Agents** | Class-based with `Agent` contract + `Promptable` trait |
 | **Tool calling** | First-party `FileSearch` + custom tools per agent |
-| **Embeddings** | `Embeddings::for([...])->generate()` + `Str::toEmbeddings()` |
+| **Embeddings** | `Embeddings::for([...])->generate()` + `Str::of(...)->toEmbeddings()` |
 | **Streaming** | Native SSE + Vercel AI SDK protocol compatibility |
 | **Structured output** | `agent(schema: fn ($s) => ...)` with `JsonSchema` |
 
@@ -135,7 +136,7 @@ Route::get('/coach', fn () => (new SalesCoach)->stream('Analyze this'));
 - Use `usingVercelDataProtocol()` for Next.js / SvelteKit frontends
 
 ### DON'T
-- Don't declare an AI Agent without `#[Tool]` declarations if it needs to call functions - tools must be registered explicitly
+- Don't expect an AI Agent to call functions without returning them from `tools()` - tools must be registered explicitly
 - Don't store API keys in `config/ai.php` directly; use `env()` so values aren't committed
 - Don't use `Lab::OpenAI` strings - use the enum for type safety
 - Don't loop manually over `Embeddings::for()` items; pass the full array - the SDK batches efficiently

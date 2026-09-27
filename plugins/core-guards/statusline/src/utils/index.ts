@@ -1,5 +1,5 @@
 /**
- * Utils Index - Exporte tous les utilitaires
+ * Utils Index - Exports all utilities
  */
 
 export type { ColorFn } from "./colors";

@@ -27,6 +27,30 @@ related: actions-api.md, templates/action-form.md, templates/use-promise.md
 - Can be called conditionally (unlike other hooks)
 - Can be called in loops
 - Replaces most `useEffect` data fetching
+- 19.3: DEV warning when a component looks unblocked by a conditional `use()`
+
+### use(browser()) — browser-only rendering (React 19.3)
+
+`browser(reason?)` from `react-dom`, passed to `use`: during server rendering the component
+suspends and the closest `<Suspense>` fallback goes into the HTML; in the browser it returns
+`undefined` and the component renders normally.
+
+```tsx
+import { Suspense, use } from 'react'
+import { browser } from 'react-dom'
+
+function SavedDraft() {
+  use(browser('The draft is stored in localStorage.'))
+  return <p>{localStorage.getItem('draft') ?? ''}</p>
+}
+
+// <Suspense fallback={<p>Loading draft...</p>}><SavedDraft /></Suspense>
+```
+
+- Replaces `typeof window` checks and `useEffect(() => setMounted(true))`
+- Must be inside `<Suspense>` (otherwise the server render fails) and in a Client Component
+- May be called conditionally; calling `browser()` without `use` does nothing — never throw it
+- Server: `onBrowserBailout(error, errorInfo)` option on `react-dom/server` APIs (`error.cause` = reason); does not fire `onError`
 
 → See `templates/use-promise.md` for code examples
 
@@ -46,7 +70,8 @@ related: actions-api.md, templates/action-form.md, templates/use-promise.md
 - Any action where you can predict the result
 
 ### Key Points
-- Returns `[optimisticState, setOptimistic]`
+- Signature: `useOptimistic(value, reducer?)` — reducer optional
+- Returns `[optimisticState, setOptimistic]` (value or updater)
 - Reverts automatically if action fails
 - Works with form actions
 
@@ -73,6 +98,7 @@ related: actions-api.md, templates/action-form.md, templates/use-promise.md
 - First argument is async function
 - Second argument is initial state
 - Error should be returned, not thrown
+- 19.3: error messages say "action state" (was "form state")
 
 → See `templates/action-form.md` for code examples
 
@@ -98,11 +124,12 @@ related: actions-api.md, templates/action-form.md, templates/use-promise.md
 
 ---
 
-## useEffectEvent (React 19.2)
+## useEffectEvent (React 19.2+)
 
 **Extract non-reactive logic from Effects.**
 
-> **Experimental**: Available since React 19.2 (October 2025).
+> **Stable** since React 19.2.0 (October 2025) — `import { useEffectEvent } from 'react'`.
+> 19.3: reads the latest values in `forwardRef` and `memo` components too.
 
 ### Purpose
 - Avoid stale closures in effects

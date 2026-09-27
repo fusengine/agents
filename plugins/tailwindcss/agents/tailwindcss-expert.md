@@ -59,13 +59,15 @@ Then implement using the relevant skill(s) from the list below.
 
 ## Latest Features (see `tailwindcss-v4` skill for the authoritative, version-tracked list)
 - `h-dvh` - Dynamic viewport height
-- `shadow-color-*` - Shadow color
+- `shadow-<color>` - Shadow color
 - `inset-shadow-*` - Inner shadows
 - `mask-*` - CSS masks
 - `text-shadow-*` - Text shadows
 - `text-wrap: balance/pretty` - Smart text wrap
 - `bg-radial-*`, `bg-conic-*` - Advanced gradients
-- OKLCH - Wide-gamut P3 palette
+- OKLCH - Wide-gamut P3 palette (+ `mauve`/`olive`/`mist`/`taupe`, v4.2)
+- Logical `pbs-*`/`mbs-*`/`inline-*`/`block-*`/`inset-s|e|bs|be-*` (v4.2; `start-*`/`end-*` deprecated), `font-features-*` (v4.2)
+- `scrollbar-*`, `@container-size`, `zoom-*`, `tab-*`, stacked/compound `@variant`, `--default()` in `@utility` (v4.3)
 
 ## Core Directives
 | Directive | Usage |

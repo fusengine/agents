@@ -12,6 +12,8 @@ Cold start optimization for serverless environments with SOLID principles.
 
 ```typescript
 // lib/examples/cold-start-antipattern.ts - PROBLEM
+import { PrismaClient } from '../generated/prisma/client'
+import { PrismaPg } from '@prisma/adapter-pg'
 
 /**
  * @deprecated This demonstrates a cold start antipattern
@@ -19,8 +21,10 @@ Cold start optimization for serverless environments with SOLID principles.
  * @returns Promise<User | null> User data
  */
 export async function getUserAntipattern(userId: string) {
-  // ❌ BAD: New PrismaClient on each request = 1-3s delay!
-  const prisma = new PrismaClient()
+  // ❌ BAD: New PrismaClient + driver pool on each request = extra connect latency!
+  const prisma = new PrismaClient({
+    adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL! }),
+  })
 
   try {
     return await prisma.user.findUnique({
@@ -38,8 +42,9 @@ export async function getUserAntipattern(userId: string) {
 
 ```typescript
 // lib/db/client.ts
-import { PrismaClient } from '@prisma/client'
-import type { PrismaClient as PrismaClientType } from '@prisma/client'
+import { PrismaClient } from '../generated/prisma/client' // v7: generated path
+import type { PrismaClient as PrismaClientType } from '../generated/prisma/client'
+import { PrismaPg } from '@prisma/adapter-pg'
 
 const globalForPrisma = global as unknown as {
   prisma: PrismaClientType | undefined
@@ -57,8 +62,10 @@ function getPrismaClient(): PrismaClientType {
     return globalForPrisma.prisma
   }
 
-  // ✅ GOOD: Create once on first call
+  // ✅ GOOD: Create once on first call (v7: driver adapter required)
+  const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL! })
   const prisma = new PrismaClient({
+    adapter,
     log:
       process.env.NODE_ENV === 'development'
         ? [{ level: 'query', emit: 'event' }]
@@ -82,7 +89,7 @@ export const prisma = getPrismaClient()
 
 ```typescript
 // lib/db/warming.ts
-import type { PrismaClient } from '@prisma/client'
+import type { PrismaClient } from '../generated/prisma/client'
 
 /**
  * @description Warms database connection with health check
@@ -121,9 +128,8 @@ export async function initializeDatabaseOnStartup(): Promise<void> {
 
 ```typescript
 // lib/db/neon-adapter.ts
-import { neon, neonConfig } from '@neondatabase/serverless'
 import { PrismaNeon } from '@prisma/adapter-neon'
-import type { PrismaClient } from '@prisma/client'
+import { PrismaClient } from '../generated/prisma/client' // v7: generated path
 
 /**
  * @description Creates Prisma client with Neon serverless adapter
@@ -132,12 +138,8 @@ import type { PrismaClient } from '@prisma/client'
  * const prisma = createNeonPrismaClient()
  */
 export function createNeonPrismaClient(): PrismaClient {
-  // ✅ GOOD: Enable connection pooling for performance
-  neonConfig.poolConnections = true
-  neonConfig.useSecureWebSocket = true
-
-  const sql = neon(process.env.DATABASE_URL || '')
-  const adapter = new PrismaNeon(sql)
+  // ✅ GOOD: v7 adapter takes the Neon pool config directly (no manual driver instance)
+  const adapter = new PrismaNeon({ connectionString: process.env.DATABASE_URL! })
 
   return new PrismaClient({
     adapter,
@@ -156,7 +158,7 @@ export const prisma = createNeonPrismaClient()
 
 ```typescript
 // lib/db/lazy-manager.ts
-import type { PrismaClient } from '@prisma/client'
+import type { PrismaClient } from '../generated/prisma/client'
 
 /**
  * @description Manages lazy Prisma client initialization
@@ -184,8 +186,10 @@ class PrismaManager {
 
     // ✅ GOOD: Initialize once in the background
     this.initPromise = (async () => {
-      const { PrismaClient } = await import('@prisma/client')
-      this.instance = new PrismaClient()
+      const { PrismaClient } = await import('../generated/prisma/client')
+      const { PrismaPg } = await import('@prisma/adapter-pg')
+      const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL! })
+      this.instance = new PrismaClient({ adapter })
       return this.instance
     })()
 
@@ -222,7 +226,7 @@ export { PrismaManager }
 
 ```typescript
 // lib/db/metrics.ts
-import type { PrismaClient } from '@prisma/client'
+import type { PrismaClient } from '../generated/prisma/client'
 
 interface ColdStartMetrics {
   initTimeMs: number
@@ -286,17 +290,15 @@ export function logColdStartMetrics(metrics: ColdStartMetrics): void {
 
 ```typescript
 // app/api/users/[id]/route.ts
-import { PrismaClient } from '@prisma/client'
+import { PrismaClient } from '@/lib/generated/prisma/client' // v7: generated path
 import { PrismaNeon } from '@prisma/adapter-neon'
-import { neon } from '@neondatabase/serverless'
 
 // ✅ GOOD: Configure for edge runtime
 export const runtime = 'edge'
 
 // ✅ GOOD: Create minimal client for edge
 function getEdgeClient() {
-  const sql = neon(process.env.DATABASE_URL || '')
-  const adapter = new PrismaNeon(sql)
+  const adapter = new PrismaNeon({ connectionString: process.env.DATABASE_URL! })
   return new PrismaClient({ adapter })
 }
 

@@ -1,7 +1,7 @@
 /**
- * Node Segment - Affiche la version Node.js
+ * Node Segment - Displays the Node.js version
  *
- * @description SRP: Affichage Node uniquement
+ * @description SRP: Node display only
  */
 
 import type { StatuslineConfig } from "../config/schema";
@@ -10,7 +10,7 @@ import { colors } from "../utils";
 
 export class NodeSegment implements ISegment {
 	readonly name = "node";
-	readonly priority = 15; // Juste après Claude (10)
+	readonly priority = 15; // Right after Claude (10)
 
 	isEnabled(config: StatuslineConfig): boolean {
 		return config.node.enabled;

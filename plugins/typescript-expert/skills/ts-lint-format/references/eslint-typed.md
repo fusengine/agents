@@ -1,27 +1,50 @@
 ---
 name: eslint-typed
-description: ESLint 9 flat config + typescript-eslint with typed linting
-when-to-use: Load when configuring ESLint 9 flat config or enabling type-aware rules
-keywords: eslint, flat-config, typescript-eslint, typed-linting, projectService, recommendedTypeChecked
+description: ESLint 10 flat config + typescript-eslint with typed linting
+when-to-use: Load when configuring ESLint 10 flat config or enabling type-aware rules
+keywords: eslint, flat-config, typescript-eslint, typed-linting, projectService, recommendedTypeChecked, typescript6
 related: tool-choice.md, biome-setup.md
 ---
 
-# ESLint 9 + typescript-eslint (Typed Linting)
+# ESLint 10 + typescript-eslint (Typed Linting)
 
 ## Overview
 
-ESLint 9 uses the **flat config** format (`eslint.config.mjs`). `typescript-eslint`
+ESLint 10 supports **only** the flat config format (`eslint.config.mjs`): eslintrc,
+`.eslintignore`, `ESLINT_USE_FLAT_CONFIG` and `/* eslint-env */` comments (now reported as
+errors) are gone. Config lookup starts from **each linted file's directory**, so a monorepo can
+hold several `eslint.config.*` files. Requires Node `^20.19.0 || ^22.13.0 || >=24`. ESLint 9 is
+EOL since 2026-08-06. `typescript-eslint`
 provides the parser, plugin, and shareable configs. Typed rules use TypeScript's
 type-checker for cross-file, type-aware analysis — the powerful `no-unsafe-*`,
 narrowing, and promise rules ESLint can't do syntactically.
 
-Source: https://typescript-eslint.io/getting-started/ + .../typed-linting/
+Source: https://typescript-eslint.io/getting-started/ + .../typed-linting/ +
+https://eslint.org/blog/2026/02/eslint-v10.0.0-released/
 
 ## Install
 
 ```bash
 npm install --save-dev eslint @eslint/js typescript typescript-eslint
 ```
+
+### TypeScript 7.0 projects
+
+typescript-eslint 8.x declares `typescript: ">=4.8.4 <6.1.0"` and needs the compiler API,
+which TS 7.0 does not ship (typescript-eslint#12518). Keep the linter on the 6.0 API via the
+official compatibility package while `tsc` runs 7.0:
+
+```json
+{
+  "devDependencies": {
+    "@typescript/native": "npm:typescript@^7.0.2",
+    "typescript": "npm:@typescript/typescript6@^6.0.2"
+  }
+}
+```
+
+`npx tsc` then runs TS 7.0; typescript-eslint resolves `typescript` to 6.0
+(devblogs.microsoft.com/typescript/announcing-typescript-7-0/).
 
 ## Base flat config (syntactic rules)
 

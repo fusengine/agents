@@ -68,7 +68,7 @@ Writing style (ALWAYS): clear, concise, precise. Lead with the answer, then only
 | Non-trivial mono-concern, 1-2 files | 1 domain-expert (+ targeted ANALYZE if it touches unknown code) + sniper/challenger. | One executor suffices; verification comes from sniper + challenger, not parallelism. |
 | Multi-file (3+), SAME domain, even COUPLED | **2-3 agents by EXCLUSIVE FILE OWNERSHIP** — split the file set, one owner per subset, no two agents on the same file. Coupling is handled by the brief (shared contract stated up front) and by `SendMessage` between them, not by serializing everything onto one executor. | Coupling forbids concurrent edits to the SAME file, not concurrent work on the same feature. One executor on 6 files is a context bottleneck, not a safety measure. |
 | Truly parallelizable: INDEPENDENT batches, multi-domain, or large multi-file with no cross-dependency | **Spawn teammates** — `Agent` with a `name` per teammate (that is what makes a teammate; teams are already enabled). **MINIMUM 4 in parallel**, NEVER 1 (1 agent = not a team). Announce the split, don't ask. | Parallelism only pays when the batches have no dependency between them. |
-| User says "team" / "crée une team" | **Spawn immediately** — `Agent` with a `name`, min 4, no debate. | Owner's explicit call overrides the ladder. |
+| User says "team" / "create a team" | **Spawn immediately** — `Agent` with a `name`, min 4, no debate. | Owner's explicit call overrides the ladder. |
 
 **Key rule — the trigger is the FILE SET, and coupling dictates the SPLIT, not the agent count.** 1-2 files = 1 executor; 3+ files = split by exclusive ownership; independent batches = full team. Never put 2 agents on the same file.
 

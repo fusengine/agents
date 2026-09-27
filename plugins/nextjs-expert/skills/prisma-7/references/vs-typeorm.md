@@ -75,7 +75,7 @@ export class User {
 ```typescript
 // Module: src/services/user.service.ts
 // Purpose: Query abstraction for user data (SOLID: SRP - single query responsibility)
-import type { Prisma } from "@prisma/client";
+import type { PrismaClient } from "@/generated/prisma/client"; // v7: generated path
 
 /**
  * User query with relations
@@ -93,7 +93,7 @@ interface UserWithPosts {
  * SOLID: DIP - depend on Prisma interface, not implementation
  */
 async function getUserWithPosts(
-  prisma: Prisma.PrismaClient,
+  prisma: PrismaClient,
   email: string
 ): Promise<UserWithPosts | null> {
   return prisma.user.findUnique({

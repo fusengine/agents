@@ -11,6 +11,9 @@ keywords: theme, setup, css, oklch, dark-mode, tailwind
 ```css
 /* app/globals.css */
 @import "tailwindcss";
+@import "shadcn/tailwind.css"; /* added by `shadcn init` (CLI 4.x); `shadcn eject` inlines it */
+
+@custom-variant dark (&:is(.dark *));
 
 :root {
   --background: oklch(100% 0 0);
@@ -28,7 +31,6 @@ keywords: theme, setup, css, oklch, dark-mode, tailwind
   --muted: oklch(96.7% 0.001 286.38);
   --muted-foreground: oklch(55.6% 0.01 285.94);
   --destructive: oklch(57.7% 0.245 27.33);
-  --destructive-foreground: oklch(98.5% 0 0);
   --border: oklch(92.2% 0.004 286.32);
   --input: oklch(92.2% 0.004 286.32);
   --ring: oklch(87.1% 0.006 286.29);
@@ -41,7 +43,9 @@ keywords: theme, setup, css, oklch, dark-mode, tailwind
   --sidebar: oklch(98.5% 0 0);
   --sidebar-foreground: oklch(14.1% 0.005 285.82);
   --sidebar-primary: oklch(20.5% 0.016 285.94);
+  --sidebar-primary-foreground: oklch(98.5% 0 0);
   --sidebar-accent: oklch(96.7% 0.001 286.38);
+  --sidebar-accent-foreground: oklch(20.5% 0.016 285.94);
   --sidebar-border: oklch(92.2% 0.004 286.32);
   --sidebar-ring: oklch(87.1% 0.006 286.29);
 }
@@ -65,30 +69,64 @@ keywords: theme, setup, css, oklch, dark-mode, tailwind
   --border: oklch(26.9% 0.006 286.03);
   --input: oklch(26.9% 0.006 286.03);
   --ring: oklch(36.2% 0.014 285.88);
+  --chart-1: oklch(48.8% 0.243 264.376);
+  --chart-2: oklch(69.6% 0.17 162.48);
+  --chart-3: oklch(76.9% 0.188 70.08);
+  --chart-4: oklch(62.7% 0.265 303.9);
+  --chart-5: oklch(64.5% 0.246 16.439);
   --sidebar: oklch(14.1% 0.005 285.82);
   --sidebar-foreground: oklch(98.5% 0 0);
   --sidebar-primary: oklch(48.8% 0.243 264.05);
+  --sidebar-primary-foreground: oklch(98.5% 0 0);
   --sidebar-accent: oklch(26.9% 0.006 286.03);
+  --sidebar-accent-foreground: oklch(98.5% 0 0);
   --sidebar-border: oklch(26.9% 0.006 286.03);
+  --sidebar-ring: oklch(36.2% 0.014 285.88);
 }
 ```
 
-## Tailwind v4 @theme Bridge
+## Tailwind v4 @theme inline Bridge
 
 ```css
-@theme {
+@theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
   --color-secondary: var(--secondary);
-  --color-accent: var(--accent);
+  --color-secondary-foreground: var(--secondary-foreground);
   --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
   --color-destructive: var(--destructive);
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
   --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
 }
 ```
 

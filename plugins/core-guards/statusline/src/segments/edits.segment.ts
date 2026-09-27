@@ -1,7 +1,7 @@
 /**
- * Edits Segment - Affiche les lignes ajoutees/supprimees
+ * Edits Segment - Displays added/removed lines
  *
- * @description SRP: Affichage edits uniquement
+ * @description SRP: Edits display only
  */
 
 import type { StatuslineConfig } from "../config/schema";

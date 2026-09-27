@@ -1,69 +1,69 @@
-/* Référence de design — page produit sombre.
-   Traçabilité : [relevé] = lu dans la feuille de la source
-   (_next/static/chunks/7cbd7ac42dbd96bf.css) ou dans un attribut du HTML source.
-   [arbitrage] = choix de cette référence, absent de la source. */
+/* Design reference — dark product page.
+   Traceability: [measured] = read in the source sheet
+   (_next/static/chunks/7cbd7ac42dbd96bf.css) or in an attribute of the source HTML.
+   [decided] = a choice made by this reference, absent from the source. */
 
 :root {
-  /* ---- Couleur, nommée par rôle ---- */
-  --fond-page:        #000;      /* [relevé] body class bg-[#000] */
-  --fond-scene:       #0a0a0a;   /* [relevé] --color-black */
-  --fond-carte:       #080808;   /* [relevé] cartes d'avis bg-[#080808] */
-  --fond-carte-haute: #2a2a2a;   /* [relevé] --color-grey-2, liseré des vignettes au survol */
-  --fond-champ:       #1e1e1e;   /* [relevé] --color-secondary */
-  --fond-action:      #373737;   /* [relevé] --color-grey-1 */
-  --texte-primaire:   #fff;      /* [relevé] --color-white */
-  --texte-secondaire: #959595;   /* [relevé] --color-grey-4 */
-  --texte-tertiaire:  #555;      /* [relevé] --color-grey-3 */
-  --trait-discret:    #373737;   /* [relevé] ring-grey-1 */
-  --trait-carte:      #505050;   /* [relevé] ring-[#505050] sur les cartes d'offre */
-  --trait-jauge:      #333;      /* [relevé] bg-[#333] de la jauge du rail */
-  --accent-promo:     #ff3dae;   /* [relevé] badge de remise bg-[#FF3DAE] */
-  --lien-avis:        #1d9bf0;   /* [relevé] .et-tweet-content a */
-  --degrade-action:   linear-gradient(97.25deg, #b8ff45 3%, #ffcb45 22%, #ff00b8 100%); /* [relevé] .ui-button-upgrade-animated */
-  --voile-haut:       linear-gradient(#000 14.73%, #000a0a00 100%);  /* [relevé] .nav-gradient */
-  --voile-bas:        linear-gradient(#0000 0%, #000 85.27%);        /* [relevé] .ui-overlay-gradient */
+  /* ---- Color, named by role ---- */
+  --bg-page:          #000;      /* [measured] body class bg-[#000] */
+  --bg-scene:         #0a0a0a;   /* [measured] --color-black */
+  --bg-card:          #080808;   /* [measured] review cards bg-[#080808] */
+  --bg-card-raised:   #2a2a2a;   /* [measured] --color-grey-2, tile hairline on hover */
+  --bg-field:         #1e1e1e;   /* [measured] --color-secondary */
+  --bg-action:        #373737;   /* [measured] --color-grey-1 */
+  --text-primary:     #fff;      /* [measured] --color-white */
+  --text-secondary:   #959595;   /* [measured] --color-grey-4 */
+  --text-tertiary:    #555;      /* [measured] --color-grey-3 */
+  --line-subtle:      #373737;   /* [measured] ring-grey-1 */
+  --line-card:        #505050;   /* [measured] ring-[#505050] on the offer cards */
+  --line-gauge:       #333;      /* [measured] bg-[#333] of the rail gauge */
+  --accent-promo:     #ff3dae;   /* [measured] discount badge bg-[#FF3DAE] */
+  --link-review:      #1d9bf0;   /* [measured] .et-tweet-content a */
+  --gradient-action:  linear-gradient(97.25deg, #b8ff45 3%, #ffcb45 22%, #ff00b8 100%); /* [measured] .ui-button-upgrade-animated */
+  --veil-top:         linear-gradient(#000 14.73%, #000a0a00 100%);  /* [measured] .nav-gradient */
+  --veil-bottom:      linear-gradient(#0000 0%, #000 85.27%);        /* [measured] .ui-overlay-gradient */
 
-  /* ---- Rayons ---- */
-  --rayon-base:     10px;  /* [relevé] --radius-base */
-  --rayon-carte:    12px;  /* [relevé] --radius-fill */
-  --rayon-controle:  7px;  /* [relevé] rounded-[7px] boutons et cadres média */
+  /* ---- Radii ---- */
+  --radius-base:     10px;  /* [measured] --radius-base */
+  --radius-card:     12px;  /* [measured] --radius-fill */
+  --radius-control:   7px;  /* [measured] rounded-[7px] buttons and media frames */
 
-  /* ---- Typographie ---- */
-  --t-legende:     12px; --t-legende-i:     14px;  /* [relevé] --text-body-secondary */
-  --t-corps:       14px; --t-corps-i:       18px;  /* [relevé] --text-body-primary */
-  --t-sous-titre:  18px; --t-sous-titre-i:  20px;  /* [relevé] --text-subtitle */
-  --t-titre-2:     24px; --t-titre-2-i:     26px;  /* [relevé] --text-title-secondary */
-  --t-titre-1:     42px; --t-titre-1-i:     46px;  /* [relevé] --text-title-primary */
-  --graisse-forte:  500;                           /* [relevé] --font-weight-medium */
-  --serrage:      -.03em;                          /* [relevé] --text-title-*--letter-spacing */
-  --serrage-doux: -.025em;                         /* [relevé] --tracking-tight */
+  /* ---- Typography ---- */
+  --t-caption:     12px; --t-caption-lh:     14px;  /* [measured] --text-body-secondary */
+  --t-body:        14px; --t-body-lh:        18px;  /* [measured] --text-body-primary */
+  --t-subtitle:    18px; --t-subtitle-lh:    20px;  /* [measured] --text-subtitle */
+  --t-title-2:     24px; --t-title-2-lh:     26px;  /* [measured] --text-title-secondary */
+  --t-title-1:     42px; --t-title-1-lh:     46px;  /* [measured] --text-title-primary */
+  --weight-strong:  500;                            /* [measured] --font-weight-medium */
+  --tracking:      -.03em;                          /* [measured] --text-title-*--letter-spacing */
+  --tracking-soft: -.025em;                         /* [measured] --tracking-tight */
 
-  /* ---- Mouvement ---- */
-  --duree-etat:  .15s;                      /* [relevé] --default-transition-duration */
-  --courbe-etat: cubic-bezier(.4, 0, .2, 1);/* [relevé] --default-transition-timing-function */
-  --duree-lente: .3s;                       /* [relevé] règle .duration-300, non employée dans la page */
-  --duree-apparition:  .5s;                        /* [arbitrage] la source anime en JS, aucune durée dans la feuille */
-  --courbe-apparition: cubic-bezier(.16, 1, .3, 1);/* [arbitrage] même famille de sortie, sans rebond */
-  --amplitude-apparition: 5px;              /* [relevé] style inline transform:translateY(5px) */
+  /* ---- Motion ---- */
+  --duration-state:  .15s;                    /* [measured] --default-transition-duration */
+  --curve-state: cubic-bezier(.4, 0, .2, 1);  /* [measured] --default-transition-timing-function */
+  --duration-slow: .3s;                       /* [measured] .duration-300 rule, not used on the page */
+  --duration-reveal:  .5s;                         /* [decided] the source animates in JS, no duration in the sheet */
+  --curve-reveal: cubic-bezier(.16, 1, .3, 1);     /* [decided] same ease-out family, no bounce */
+  --amplitude-reveal: 5px;                    /* [measured] inline style transform:translateY(5px) */
 
-  /* ---- Rythme vertical ---- */
-  --pas-section: 150px; /* [relevé] mt/mb-[150px], my-[150px] */
-  --marge-bord:   20px; /* [relevé] px-[20px] */
+  /* ---- Vertical rhythm ---- */
+  --section-step: 150px; /* [measured] mt/mb-[150px], my-[150px] */
+  --edge-margin:   20px; /* [measured] px-[20px] */
 }
-@media (min-width: 48rem) { :root { --marge-bord: 40px; } } /* [relevé] md:px-[40px], md = 48rem */
+@media (min-width: 48rem) { :root { --edge-margin: 40px; } } /* [measured] md:px-[40px], md = 48rem */
 
 *, *::before, *::after { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; }
 body {
   margin: 0;
-  background: var(--fond-page);
-  color: var(--texte-primaire);
-  font-family: Inter, ui-sans-serif, system-ui, sans-serif; /* [relevé] --font-inter */
-  font-size: var(--t-corps);
-  line-height: var(--t-corps-i);
-  -webkit-font-smoothing: antialiased;    /* [relevé] classe antialiased */
-  cursor: default;                        /* [relevé] classe cursor-default */
-  overflow-x: hidden;                     /* [arbitrage] garde-fou : les rails débordent volontairement */
+  background: var(--bg-page);
+  color: var(--text-primary);
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif; /* [measured] --font-inter */
+  font-size: var(--t-body);
+  line-height: var(--t-body-lh);
+  -webkit-font-smoothing: antialiased;    /* [measured] antialiased class */
+  cursor: default;                        /* [measured] cursor-default class */
+  overflow-x: hidden;                     /* [decided] safeguard: the rails overflow on purpose */
 }
 img, video { display: block; max-width: 100%; }
 a { color: inherit; text-decoration: none; }
@@ -71,361 +71,361 @@ h1, h2, h3, p, ul, hgroup { margin: 0; }
 ul { padding: 0; list-style: none; }
 button { font: inherit; color: inherit; background: none; border: 0; padding: 0; }
 
-/* ---------- Échelle typographique ----------
-   Cinq paliers, aucun intermédiaire : un titre vaut 24px sous 48rem et 42px au-dessus,
-   rien entre les deux — ni clamp(), ni fluide. [relevé] */
-.titre-1, .titre-2 { font-size: var(--t-titre-2); line-height: var(--t-titre-2-i); font-weight: var(--graisse-forte); letter-spacing: var(--serrage); }
-.sous-titre  { font-size: var(--t-sous-titre); line-height: var(--t-sous-titre-i); }
-.corps       { font-size: var(--t-corps); line-height: var(--t-corps-i); }
-.legende     { font-size: var(--t-legende); line-height: var(--t-legende-i); }
-.sourdine    { color: var(--texte-secondaire); }
+/* ---------- Type scale ----------
+   Five tiers, no intermediate one: a title is 24px below 48rem and 42px above,
+   nothing in between — no clamp(), nothing fluid. [measured] */
+.title-1, .title-2 { font-size: var(--t-title-2); line-height: var(--t-title-2-lh); font-weight: var(--weight-strong); letter-spacing: var(--tracking); }
+.subtitle    { font-size: var(--t-subtitle); line-height: var(--t-subtitle-lh); }
+.body-text   { font-size: var(--t-body); line-height: var(--t-body-lh); }
+.caption     { font-size: var(--t-caption); line-height: var(--t-caption-lh); }
+.muted       { color: var(--text-secondary); }
 @media (min-width: 48rem) {
-  .titre-1 { font-size: var(--t-titre-1); line-height: var(--t-titre-1-i); } /* [relevé] md:text-title-primary */
+  .title-1 { font-size: var(--t-title-1); line-height: var(--t-title-1-lh); } /* [measured] md:text-title-primary */
 }
 
-/* ---------- Apparition au défilement ----------
-   État de départ relevé sur ~18 conteneurs de la source, en style inline.
-   Ici en CSS ; motion.js pose .est-visible à l'entrée dans le viewport. */
-[data-apparition] {
+/* ---------- Reveal on scroll ----------
+   Start state measured on ~18 containers of the source, as inline style.
+   Here in CSS; motion.js sets .is-visible on entering the viewport. */
+[data-reveal] {
   opacity: 0;
-  transform: translateY(var(--amplitude-apparition));
-  transition: opacity var(--duree-apparition) var(--courbe-apparition),
-              transform var(--duree-apparition) var(--courbe-apparition);
+  transform: translateY(var(--amplitude-reveal));
+  transition: opacity var(--duration-reveal) var(--curve-reveal),
+              transform var(--duration-reveal) var(--curve-reveal);
 }
-[data-apparition].est-visible { opacity: 1; transform: none; }
+[data-reveal].is-visible { opacity: 1; transform: none; }
 
-/* ---------- Barre haute ---------- */
-.barre-haute { position: sticky; top: 0; z-index: 50; background: var(--voile-haut); } /* [relevé] sticky inset-x-0 top-0 z-50 */
-.barre-haute__interieur {
+/* ---------- Top bar ---------- */
+.top-bar { position: sticky; top: 0; z-index: 50; background: var(--veil-top); } /* [measured] sticky inset-x-0 top-0 z-50 */
+.top-bar__inner {
   display: flex; justify-content: space-between; align-items: center;
-  padding: 20px var(--marge-bord); /* [relevé] py-[20px] px-[20px] md:px-[40px] */
+  padding: 20px var(--edge-margin); /* [measured] py-[20px] px-[20px] md:px-[40px] */
 }
-.marque { font-weight: var(--graisse-forte); letter-spacing: var(--serrage); font-size: var(--t-sous-titre); } /* [arbitrage] la source pose ici un logo image de 120px (130px au-delà de md) */
-.barre-haute__actions { display: flex; gap: 10px; } /* [relevé] gap-x-[10px] */
-.pilule {
+.brand { font-weight: var(--weight-strong); letter-spacing: var(--tracking); font-size: var(--t-subtitle); } /* [decided] the source sets a 120px image logo here (130px above md) */
+.top-bar__actions { display: flex; gap: 10px; } /* [measured] gap-x-[10px] */
+.pill {
   display: inline-flex; align-items: center;
-  height: 30px; padding-inline: 20px;   /* [relevé] h-[30px] px-[20px] */
-  border-radius: 999px;                 /* [relevé] rounded-full */
-  font-size: var(--t-legende); font-weight: var(--graisse-forte); /* [relevé] text-body-secondary font-medium */
-  backdrop-filter: blur(16px);          /* [relevé] backdrop-blur-lg = --blur-lg 16px */
-  transition: background-color var(--duree-etat) var(--courbe-etat),
-              color var(--duree-etat) var(--courbe-etat);
+  height: 30px; padding-inline: 20px;   /* [measured] h-[30px] px-[20px] */
+  border-radius: 999px;                 /* [measured] rounded-full */
+  font-size: var(--t-caption); font-weight: var(--weight-strong); /* [measured] text-body-secondary font-medium */
+  backdrop-filter: blur(16px);          /* [measured] backdrop-blur-lg = --blur-lg 16px */
+  transition: background-color var(--duration-state) var(--curve-state),
+              color var(--duration-state) var(--curve-state);
 }
-/* `ring-1 ring-inset` sans classe de couleur : le liseré prend `currentColor`, donc la
-   couleur du texte — il s'éclaircit avec lui au survol, sans règle dédiée. [relevé] */
-.pilule--discrete { background: color-mix(in oklab, var(--fond-champ) 80%, transparent); color: var(--texte-secondaire); box-shadow: inset 0 0 0 1px currentColor; } /* [relevé] bg-secondary/80 text-grey-4 */
-.pilule--discrete:hover { background: var(--fond-champ); color: var(--texte-primaire); } /* [relevé] hover:bg-secondary hover:text-white */
-.pilule--pleine { background: var(--fond-action); } /* [relevé] bg-grey-1 */
-.pilule--pleine:hover { background: color-mix(in oklab, var(--fond-action) 80%, transparent); } /* [relevé] hover:bg-grey-1/80 */
+/* `ring-1 ring-inset` with no color class: the hairline takes `currentColor`, hence the
+   text color — it lightens along with it on hover, with no dedicated rule. [measured] */
+.pill--subtle { background: color-mix(in oklab, var(--bg-field) 80%, transparent); color: var(--text-secondary); box-shadow: inset 0 0 0 1px currentColor; } /* [measured] bg-secondary/80 text-grey-4 */
+.pill--subtle:hover { background: var(--bg-field); color: var(--text-primary); } /* [measured] hover:bg-secondary hover:text-white */
+.pill--solid { background: var(--bg-action); } /* [measured] bg-grey-1 */
+.pill--solid:hover { background: color-mix(in oklab, var(--bg-action) 80%, transparent); } /* [measured] hover:bg-grey-1/80 */
 
-/* ---------- Ouverture ---------- */
-.ouverture { margin-bottom: 100px; } /* [relevé] mb-[100px] */
-.colonne-etroite { max-width: 540px; margin-inline: auto; padding-inline: var(--marge-bord); } /* [relevé] max-w-[540px] md:max-w-[900px] */
-@media (min-width: 48rem) { .colonne-etroite { max-width: 900px; } }
-.ouverture__texte { text-align: center; margin-bottom: 25px; }  /* [relevé] text-center mb-[25px] */
-.ouverture__titre { margin-bottom: 10px; }                      /* [relevé] mb-[10px] */
-.ouverture__accroche { max-width: 370px; margin-inline: auto; } /* [relevé] max-w-[370px] mx-auto */
-.ouverture__action { display: flex; justify-content: center; }  /* [relevé] flex justify-center */
-.bouton-plein {
+/* ---------- Opening ---------- */
+.opening { margin-bottom: 100px; } /* [measured] mb-[100px] */
+.narrow-column { max-width: 540px; margin-inline: auto; padding-inline: var(--edge-margin); } /* [measured] max-w-[540px] md:max-w-[900px] */
+@media (min-width: 48rem) { .narrow-column { max-width: 900px; } }
+.opening__text { text-align: center; margin-bottom: 25px; }  /* [measured] text-center mb-[25px] */
+.opening__title { margin-bottom: 10px; }                     /* [measured] mb-[10px] */
+.opening__tagline { max-width: 370px; margin-inline: auto; } /* [measured] max-w-[370px] mx-auto */
+.opening__action { display: flex; justify-content: center; } /* [measured] flex justify-center */
+.button-solid {
   display: inline-flex; align-items: center; justify-content: center;
-  min-width: 95px; height: 35px; padding-inline: 25px;  /* [relevé] style inline min-width:95px;height:35px + px-[25px] */
-  border-radius: var(--rayon-base);                     /* [relevé] style inline border-radius:10px */
-  background: var(--texte-primaire); color: #000;       /* [relevé] bg-white text-black */
-  font-size: var(--t-legende); font-weight: var(--graisse-forte);
-  transition: opacity var(--duree-etat) var(--courbe-etat);
+  min-width: 95px; height: 35px; padding-inline: 25px;  /* [measured] inline style min-width:95px;height:35px + px-[25px] */
+  border-radius: var(--radius-base);                    /* [measured] inline style border-radius:10px */
+  background: var(--text-primary); color: #000;         /* [measured] bg-white text-black */
+  font-size: var(--t-caption); font-weight: var(--weight-strong);
+  transition: opacity var(--duration-state) var(--curve-state);
 }
-.bouton-plein:hover { opacity: .85; } /* [relevé] hover:opacity-85 */
+.button-solid:hover { opacity: .85; } /* [measured] hover:opacity-85 */
 
-/* Scène : hauteur FIXE, et plus haute en petit écran qu'en grand (1200 → 760).
-   Le média est recadré par cover, jamais déformé, et la hauteur du bloc ne dépend
-   d'aucun fichier. */
-.scene { position: relative; width: 100%; height: 1200px; overflow: hidden; margin-top: 50px; background: var(--fond-scene); } /* [relevé] w-full overflow-hidden h-[1200px] mt-[50px] */
-@media (min-width: 48rem) { .scene { height: 760px; } }  /* [relevé] md:h-[760px] */
-.scene__voile { position: absolute; inset-inline: 0; bottom: 0; height: 340px; background: var(--voile-bas); pointer-events: none; z-index: 40; } /* [relevé] absolute z-40 bottom-0 inset-x-0 h-[340px] pointer-events-none */
+/* Scene: FIXED height, and taller on small screens than on large ones (1200 → 760).
+   The media is cropped by cover, never distorted, and the block's height depends
+   on no file. */
+.scene { position: relative; width: 100%; height: 1200px; overflow: hidden; margin-top: 50px; background: var(--bg-scene); } /* [measured] w-full overflow-hidden h-[1200px] mt-[50px] */
+@media (min-width: 48rem) { .scene { height: 760px; } }  /* [measured] md:h-[760px] */
+.scene__veil { position: absolute; inset-inline: 0; bottom: 0; height: 340px; background: var(--veil-bottom); pointer-events: none; z-index: 40; } /* [measured] absolute z-40 bottom-0 inset-x-0 h-[340px] pointer-events-none */
 
-/* ---------- Mosaïque de l'ouverture ----------
-   Valeurs relevées dans le DOM hydraté de la page en ligne (le HTML servi ne contient
-   qu'un conteneur vide) : la grille et ses gouttières sont écrites en style inline par
-   le composant, les vignettes portent des classes utilitaires normales.
+/* ---------- Opening mosaic ----------
+   Values measured in the hydrated DOM of the live page (the served HTML contains
+   only an empty container): the grid and its gutters are written as inline style by
+   the component, the tiles carry ordinary utility classes.
 
-   Le procédé : SIX colonnes indépendantes, chacune une grille d'une seule colonne. Les
-   images gardent leur ratio naturel, donc les colonnes se désynchronisent verticalement
-   toutes seules — aucun calcul de masonry, aucune position absolue. `align-items:start`
-   empêche l'étirement. La hauteur fixe de la scène coupe la mosaïque en pleine image, et
-   le voile bas fond la coupe dans le noir : on ne voit jamais une rangée finir. */
-.mosaique { padding-inline: 8px; padding-top: 1px; }        /* [relevé] px-[8px] pt-px */
-/* La source construit six conteneurs-colonnes en style inline
+   The technique: SIX independent columns, each a single-column grid. The images
+   keep their natural ratio, so the columns desynchronize vertically on their own —
+   no masonry calculation, no absolute position. `align-items:start` prevents
+   stretching. The scene's fixed height cuts the mosaic mid-image, and the bottom
+   veil blends the cut into black: you never see a row end. */
+.mosaic { padding-inline: 8px; padding-top: 1px; }        /* [measured] px-[8px] pt-px */
+/* The source builds six column containers as inline style
    (`grid-template-columns: repeat(6, minmax(0,1fr))`, `column-gap:8px`, `row-gap:8px`,
-   `align-items:start`) et répartit les vignettes entre eux **en JavaScript**, en
-   recalculant le nombre de colonnes selon la largeur — deux colonnes en petit écran,
-   six au-delà. Les gouttières et le nombre de colonnes sont donc relevés, la
-   répartition non : elle est refaite ici par le multi-colonnes CSS, qui produit le même
-   masonry sans code. [arbitrage de mécanisme, valeurs relevées] */
-.mosaique__grille { columns: 2; column-gap: 8px; } /* [relevé] 2 colonnes sous 48rem, gouttière 8px */
-@media (min-width: 48rem) { .mosaique__grille { columns: 6; } } /* [relevé] 6 colonnes au-delà */
-.mosaique__colonne { display: contents; } /* les groupes du DOM source ne portent plus de mise en page */
-.vignette {
-  display: block; position: relative; overflow: hidden;     /* [relevé] block relative overflow-hidden */
-  break-inside: avoid; margin-bottom: 8px;                  /* [relevé] row-gap:8px, rendu par une marge en multi-colonnes */
-  border-radius: var(--rayon-base);                         /* [relevé] rounded-[10px] */
-  background: var(--fond-champ);                            /* [relevé] bg-secondary */
-  box-shadow: 0 0 0 0 var(--fond-carte-haute);              /* [relevé] ring-0 au repos */
-  transition: box-shadow var(--duree-etat) var(--courbe-etat); /* [relevé] transition */
+   `align-items:start`) and distributes the tiles among them **in JavaScript**,
+   recalculating the column count from the width — two columns on small screens,
+   six above. Gutters and column count are therefore measured, the distribution is
+   not: it is redone here with CSS multi-column, which produces the same masonry
+   with no code. [decided mechanism, measured values] */
+.mosaic__grid { columns: 2; column-gap: 8px; } /* [measured] 2 columns below 48rem, 8px gutter */
+@media (min-width: 48rem) { .mosaic__grid { columns: 6; } } /* [measured] 6 columns above */
+.mosaic__column { display: contents; } /* the source DOM groups no longer carry layout */
+.tile {
+  display: block; position: relative; overflow: hidden;     /* [measured] block relative overflow-hidden */
+  break-inside: avoid; margin-bottom: 8px;                  /* [measured] row-gap:8px, rendered as a margin in multi-column */
+  border-radius: var(--radius-base);                        /* [measured] rounded-[10px] */
+  background: var(--bg-field);                              /* [measured] bg-secondary */
+  box-shadow: 0 0 0 0 var(--bg-card-raised);                /* [measured] ring-0 at rest */
+  transition: box-shadow var(--duration-state) var(--curve-state); /* [measured] transition */
 }
-.vignette:hover { box-shadow: 0 0 0 1px var(--fond-carte-haute); } /* [relevé] hover:ring-1 ring-grey-2 */
-.vignette__image { width: 100%; height: auto; transition: opacity var(--duree-etat) var(--courbe-etat); }
-.vignette__survol {
-  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; /* [relevé] absolute inset-0 w-full h-full object-cover */
-  opacity: 0; transition: opacity var(--duree-etat) var(--courbe-etat);       /* [relevé] opacity-0 group-hover:opacity-100 */
+.tile:hover { box-shadow: 0 0 0 1px var(--bg-card-raised); } /* [measured] hover:ring-1 ring-grey-2 */
+.tile__image { width: 100%; height: auto; transition: opacity var(--duration-state) var(--curve-state); }
+.tile__hover {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; /* [measured] absolute inset-0 w-full h-full object-cover */
+  opacity: 0; transition: opacity var(--duration-state) var(--curve-state);   /* [measured] opacity-0 group-hover:opacity-100 */
 }
-.vignette:hover .vignette__image { opacity: 0; } /* [relevé] group-hover:opacity-0 */
-.vignette:hover .vignette__survol { opacity: 1; }
-/* Voile : la moitié basse seulement, du transparent au noir à 70 %. Décalé d'un pixel
-   sous le bord pour ne jamais laisser une ligne claire au ras du rayon. */
-.vignette__voile {
-  position: absolute; bottom: -1px; left: 0; right: 0; height: 50%; z-index: 10; /* [relevé] absolute -bottom-px z-10 left-0 right-0 h-[50%] */
-  background: linear-gradient(to bottom, color-mix(in oklab, var(--fond-scene) 0%, transparent), color-mix(in oklab, var(--fond-scene) 70%, transparent)); /* [relevé] bg-gradient-to-b from-black/0 to-black/70 */
+.tile:hover .tile__image { opacity: 0; } /* [measured] group-hover:opacity-0 */
+.tile:hover .tile__hover { opacity: 1; }
+/* Veil: the bottom half only, from transparent to 70% black. Offset one pixel
+   below the edge so a light line never shows right at the radius. */
+.tile__veil {
+  position: absolute; bottom: -1px; left: 0; right: 0; height: 50%; z-index: 10; /* [measured] absolute -bottom-px z-10 left-0 right-0 h-[50%] */
+  background: linear-gradient(to bottom, color-mix(in oklab, var(--bg-scene) 0%, transparent), color-mix(in oklab, var(--bg-scene) 70%, transparent)); /* [measured] bg-gradient-to-b from-black/0 to-black/70 */
   pointer-events: none;
 }
-.vignette__legende { position: absolute; bottom: 0; inset-inline: 0; z-index: 20; width: 100%; padding: 5px; } /* [relevé] absolute bottom-0 z-20 inset-x-0 p-[5px] sm:p-[10px] w-full */
-@media (min-width: 40rem) { .vignette__legende { padding: 10px; } } /* [relevé] sm:p-[10px] */
-.vignette__titre { display: block; font-size: var(--t-legende); line-height: var(--t-legende-i); font-weight: var(--graisse-forte); margin-bottom: 5px; } /* [relevé] text-body-secondary font-medium mb-[5px] */
-.vignette__etiquettes { display: flex; flex-wrap: wrap; gap: 5px; } /* [relevé] flex flex-wrap gap-[5px] */
-/* Étiquettes : 8px sur un fond blanc à 50 % avec flou d'arrière-plan. Le flou est ce qui
-   les rend lisibles sur n'importe quelle image, sans assombrir la vignette. */
-.vignette__etiquettes span {
-  font-size: 8px; line-height: 10px; padding: 5px;      /* [relevé] text-[8px] leading-[10px] p-[5px] */
-  border-radius: 999px;                                 /* [relevé] rounded-full */
-  background: color-mix(in oklab, var(--texte-primaire) 50%, transparent); /* [relevé] bg-white/50 */
+.tile__caption { position: absolute; bottom: 0; inset-inline: 0; z-index: 20; width: 100%; padding: 5px; } /* [measured] absolute bottom-0 z-20 inset-x-0 p-[5px] sm:p-[10px] w-full */
+@media (min-width: 40rem) { .tile__caption { padding: 10px; } } /* [measured] sm:p-[10px] */
+.tile__title { display: block; font-size: var(--t-caption); line-height: var(--t-caption-lh); font-weight: var(--weight-strong); margin-bottom: 5px; } /* [measured] text-body-secondary font-medium mb-[5px] */
+.tile__tags { display: flex; flex-wrap: wrap; gap: 5px; } /* [measured] flex flex-wrap gap-[5px] */
+/* Tags: 8px on a 50% white background with a backdrop blur. The blur is what makes
+   them legible on any image, without darkening the tile. */
+.tile__tags span {
+  font-size: 8px; line-height: 10px; padding: 5px;      /* [measured] text-[8px] leading-[10px] p-[5px] */
+  border-radius: 999px;                                 /* [measured] rounded-full */
+  background: color-mix(in oklab, var(--text-primary) 50%, transparent); /* [measured] bg-white/50 */
   color: #000;
-  text-transform: uppercase;                            /* [relevé] uppercase */
-  backdrop-filter: blur(24px);                          /* [relevé] backdrop-blur-xl = --blur-xl 24px */
+  text-transform: uppercase;                            /* [measured] uppercase */
+  backdrop-filter: blur(24px);                          /* [measured] backdrop-blur-xl = --blur-xl 24px */
 }
 
-/* ---------- Cadres média ----------
-   Le ratio est réservé avant tout chargement : la boîte ne bouge pas si le média
-   n'arrive jamais. --ratio est la valeur padding-bottom relevée sur chaque média,
-   toujours le ratio exact du fichier, jamais une valeur ronde.
-   La source ne pose AUCUN object-fit sur ces médias (la règle .object-cover existe
-   dans la feuille mais n'apparaît nulle part dans la page) : le ratio du cadre étant
-   celui du fichier, un simple 100%/100% ne déforme rien. Le cover ci-dessous est un
-   garde-fou pour le jour où un média serait remplacé. [arbitrage] */
-.cadre-video, .cadre-image, .fonction__vignette {
+/* ---------- Media frames ----------
+   The ratio is reserved before any loading: the box does not move if the media
+   never arrives. --ratio is the padding-bottom value measured on each media item,
+   always the file's exact ratio, never a round value.
+   The source sets NO object-fit on these media (the .object-cover rule exists in
+   the sheet but appears nowhere on the page): since the frame's ratio is the
+   file's, a plain 100%/100% distorts nothing. The cover below is a safeguard for
+   the day a media item gets replaced. [decided] */
+.frame-video, .frame-image, .feature__thumb {
   position: relative; width: 100%; padding-bottom: var(--ratio, 56.25%);
   overflow: hidden;
 }
-.cadre-video, .cadre-image { background: var(--fond-scene); } /* [arbitrage] la source laisse le cadre transparent */
-.cadre-video > *, .cadre-image > *, .fonction__vignette > * {
-  position: absolute; inset: 0; width: 100%; height: 100%; /* [relevé] style inline des médias */
-  object-fit: cover;                                       /* [arbitrage] absent de la source */
+.frame-video, .frame-image { background: var(--bg-scene); } /* [decided] the source leaves the frame transparent */
+.frame-video > *, .frame-image > *, .feature__thumb > * {
+  position: absolute; inset: 0; width: 100%; height: 100%; /* [measured] inline style of the media */
+  object-fit: cover;                                       /* [decided] absent from the source */
 }
-/* `ring-1 ring-grey-1` SANS `ring-inset` : liseré EXTERNE, il n'entame pas le média.
-   La source réserve `ring-inset` aux surfaces (cartes), jamais aux cadres média. [relevé] */
-.cadre-video--carte,
-.cadre-image { border-radius: var(--rayon-controle); box-shadow: 0 0 0 1px var(--trait-discret); } /* [relevé] rounded-[7px] ring-1 ring-grey-1 */
+/* `ring-1 ring-grey-1` WITHOUT `ring-inset`: EXTERNAL hairline, it does not eat into the media.
+   The source reserves `ring-inset` for surfaces (cards), never for media frames. [measured] */
+.frame-video--card,
+.frame-image { border-radius: var(--radius-control); box-shadow: 0 0 0 1px var(--line-subtle); } /* [measured] rounded-[7px] ring-1 ring-grey-1 */
 
-/* ---------- Démonstration ---------- */
-.demonstration { padding-inline: var(--marge-bord); }
-.entete-centre { text-align: center; }
-.entete-centre__titre { max-width: 270px; margin-inline: auto; margin-bottom: 10px; } /* [relevé] max-w-[270px] md:max-w-[620px] mx-auto mb-[10px] */
-@media (min-width: 48rem) { .entete-centre__titre { max-width: 620px; } }
-.entete-centre__accroche { max-width: 215px; margin-inline: auto; } /* [relevé] max-w-[215px] mx-auto */
-.demonstration__cadre { position: relative; max-width: 900px; margin-inline: auto; } /* [relevé] relative max-w-[900px] mx-auto */
+/* ---------- Demo ---------- */
+.demo { padding-inline: var(--edge-margin); }
+.centered-header { text-align: center; }
+.centered-header__title { max-width: 270px; margin-inline: auto; margin-bottom: 10px; } /* [measured] max-w-[270px] md:max-w-[620px] mx-auto mb-[10px] */
+@media (min-width: 48rem) { .centered-header__title { max-width: 620px; } }
+.centered-header__tagline { max-width: 215px; margin-inline: auto; } /* [measured] max-w-[215px] mx-auto */
+.demo__frame { position: relative; max-width: 900px; margin-inline: auto; } /* [measured] relative max-w-[900px] mx-auto */
 
-/* ---------- Grille de fonctions ---------- */
-.fonctions { margin-block: var(--pas-section); padding-inline: var(--marge-bord); } /* [relevé] mt-[150px] mb-[150px] px-[20px] md:px-[40px] */
-.fonctions__interieur { max-width: 1170px; margin-inline: auto; } /* [relevé] max-w-[1170px] mx-auto */
-.fonctions__titre { max-width: 280px; margin-inline: auto; margin-bottom: 50px; text-align: center; } /* [relevé] text-center max-w-[280px] mx-auto mb-[50px] */
-@media (min-width: 48rem) { .fonctions__titre { max-width: 460px; margin-bottom: 100px; } } /* [relevé] md:max-w-[460px] md:mb-[100px] */
-/* La source ne pose pas de gouttière : elle donne `px-[25px]` à chaque cellule et
-   `mx-[-25px]` au conteneur pour annuler les bords. Le rendu vaut 50px entre colonnes. */
-.grille-fonctions {
-  display: grid; grid-template-columns: repeat(2, 1fr); /* [relevé] w-[50%] */
-  column-gap: 50px;                                     /* = 2 × px-[25px] [relevé] */
-  row-gap: 50px;                                        /* [relevé] gap-y-[50px] */
+/* ---------- Feature grid ---------- */
+.features { margin-block: var(--section-step); padding-inline: var(--edge-margin); } /* [measured] mt-[150px] mb-[150px] px-[20px] md:px-[40px] */
+.features__inner { max-width: 1170px; margin-inline: auto; } /* [measured] max-w-[1170px] mx-auto */
+.features__title { max-width: 280px; margin-inline: auto; margin-bottom: 50px; text-align: center; } /* [measured] text-center max-w-[280px] mx-auto mb-[50px] */
+@media (min-width: 48rem) { .features__title { max-width: 460px; margin-bottom: 100px; } } /* [measured] md:max-w-[460px] md:mb-[100px] */
+/* The source sets no gutter: it gives `px-[25px]` to each cell and
+   `mx-[-25px]` to the container to cancel the edges. The result is 50px between columns. */
+.feature-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr); /* [measured] w-[50%] */
+  column-gap: 50px;                                     /* = 2 × px-[25px] [measured] */
+  row-gap: 50px;                                        /* [measured] gap-y-[50px] */
 }
-@media (min-width: 48rem) { .grille-fonctions { grid-template-columns: repeat(4, 1fr); } } /* [relevé] md:w-[25%] */
-.fonction { text-align: center; } /* [relevé] text-center */
-.fonction__vignette { padding-bottom: 100%; margin-bottom: 20px; } /* [relevé] pb-[100%] mb-[20px] */
-.fonction h3 { margin-bottom: 10px; } /* [relevé] mb-[10px] */
+@media (min-width: 48rem) { .feature-grid { grid-template-columns: repeat(4, 1fr); } } /* [measured] md:w-[25%] */
+.feature { text-align: center; } /* [measured] text-center */
+.feature__thumb { padding-bottom: 100%; margin-bottom: 20px; } /* [measured] pb-[100%] mb-[20px] */
+.feature h3 { margin-bottom: 10px; } /* [measured] mb-[10px] */
 
-/* ---------- Rails horizontaux ----------
-   Le HTML statique ne contient ni `overflow-x-auto`, ni `snap-*`, ni `translate-x`, ni
-   `transition-transform` : la source déplace ses rails en JS, styles posés au runtime.
-   Le défilement natif employé ici est donc un choix de cette référence. [arbitrage]
-   Sont relevés : `overflow-hidden relative` du conteneur, `flex items-end` de la piste,
-   et toutes les largeurs de cellule ci-dessous. */
-.rail { position: relative; overflow: hidden; } /* [relevé] overflow-hidden relative */
-.rail__piste {
-  display: flex; overflow-x: auto; scroll-snap-type: x mandatory;  /* [arbitrage] */
-  scrollbar-width: none; scroll-behavior: smooth;                  /* [arbitrage] */
+/* ---------- Horizontal rails ----------
+   The static HTML contains neither `overflow-x-auto`, nor `snap-*`, nor `translate-x`, nor
+   `transition-transform`: the source moves its rails in JS, with styles set at runtime.
+   The native scrolling used here is therefore a choice of this reference. [decided]
+   Measured: the container's `overflow-hidden relative`, the track's `flex items-end`,
+   and every cell width below. */
+.rail { position: relative; overflow: hidden; } /* [measured] overflow-hidden relative */
+.rail__track {
+  display: flex; overflow-x: auto; scroll-snap-type: x mandatory;  /* [decided] */
+  scrollbar-width: none; scroll-behavior: smooth;                  /* [decided] */
 }
-.rail__piste::-webkit-scrollbar { display: none; }
-.rail__cellule { flex: 0 0 85%; scroll-snap-align: center; } /* [relevé] w-[85%] */
+.rail__track::-webkit-scrollbar { display: none; }
+.rail__cell { flex: 0 0 85%; scroll-snap-align: center; } /* [measured] w-[85%] */
 
-/* Rail des offres */
-.rail__piste--tarifs { gap: 15px; max-width: 820px; margin-inline: auto; } /* [relevé] flex max-w-[820px] mx-auto gap-[15px] */
-.rail__cellule--tarif { display: flex; } /* [relevé] flex */
-.rail__cellule--tarif:first-child { margin-left: 20px; }  /* [relevé] first-of-type:ml-[20px] */
-.rail__cellule--tarif:last-child  { margin-right: 20px; } /* [relevé] last-of-type:mr-[20px] */
-@media (min-width: 40rem) {                               /* [relevé] palier sm = 40rem */
-  .rail__cellule--tarif { flex: 1 1 0; }                  /* [relevé] sm:w-full sm:flex-1 */
-  .rail__cellule--tarif:first-child { margin-left: 0; }   /* [relevé] sm:first-of-type:ml-0 */
-  .rail__cellule--tarif:last-child  { margin-right: 0; }  /* [relevé] sm:last-of-type:mr-0 */
+/* Offers rail */
+.rail__track--pricing { gap: 15px; max-width: 820px; margin-inline: auto; } /* [measured] flex max-w-[820px] mx-auto gap-[15px] */
+.rail__cell--price { display: flex; } /* [measured] flex */
+.rail__cell--price:first-child { margin-left: 20px; }  /* [measured] first-of-type:ml-[20px] */
+.rail__cell--price:last-child  { margin-right: 20px; } /* [measured] last-of-type:mr-[20px] */
+@media (min-width: 40rem) {                            /* [measured] sm breakpoint = 40rem */
+  .rail__cell--price { flex: 1 1 0; }                  /* [measured] sm:w-full sm:flex-1 */
+  .rail__cell--price:first-child { margin-left: 0; }   /* [measured] sm:first-of-type:ml-0 */
+  .rail__cell--price:last-child  { margin-right: 0; }  /* [measured] sm:last-of-type:mr-0 */
 }
 
-/* Rail des avis : cartes calées en bas, de hauteurs libres */
-.rail__piste--avis { align-items: flex-end; } /* [relevé] flex items-end */
-.rail__cellule--avis { display: flex; align-items: flex-end; padding-inline: 5px; } /* [relevé] px-[5px] h-full flex items-end */
-@media (min-width: 40rem) { .rail__cellule--avis { flex: 0 0 45%; } } /* [relevé] sm:w-[45%] */
-@media (min-width: 48rem) { .rail__cellule--avis { flex: 0 0 33.3333%; } } /* [relevé] md:w-1/3 */
+/* Reviews rail: cards aligned at the bottom, free heights */
+.rail__track--reviews { align-items: flex-end; } /* [measured] flex items-end */
+.rail__cell--review { display: flex; align-items: flex-end; padding-inline: 5px; } /* [measured] px-[5px] h-full flex items-end */
+@media (min-width: 40rem) { .rail__cell--review { flex: 0 0 45%; } } /* [measured] sm:w-[45%] */
+@media (min-width: 48rem) { .rail__cell--review { flex: 0 0 33.3333%; } } /* [measured] md:w-1/3 */
 
-.rail__commandes { display: flex; justify-content: center; align-items: center; gap: 10px; margin-top: 10px; } /* [relevé] flex justify-center items-center mt-[10px] space-x-[10px] */
-.rail__fleche {
+.rail__controls { display: flex; justify-content: center; align-items: center; gap: 10px; margin-top: 10px; } /* [measured] flex justify-center items-center mt-[10px] space-x-[10px] */
+.rail__arrow {
   display: flex; align-items: center; justify-content: center;
-  width: 40px; height: 40px; cursor: pointer; opacity: .65;  /* [relevé] w-[40px] h-[40px] cursor-pointer opacity-65 */
-  transition: opacity var(--duree-etat) var(--courbe-etat);
+  width: 40px; height: 40px; cursor: pointer; opacity: .65;  /* [measured] w-[40px] h-[40px] cursor-pointer opacity-65 */
+  transition: opacity var(--duration-state) var(--curve-state);
 }
-.rail__fleche:hover { opacity: 1; } /* [relevé] hover:opacity-100 */
-.rail__jauge { width: 50px; height: 6px; background: var(--trait-jauge); border-radius: 999px; overflow: hidden; } /* [relevé] w-[50px] h-[6px] bg-[#333] rounded-full overflow-hidden */
-.rail__jauge-remplissage { height: 100%; background: var(--texte-primaire); transition: width var(--duree-lente) var(--courbe-etat); } /* [relevé] h-full bg-white ; la transition est un [arbitrage] */
+.rail__arrow:hover { opacity: 1; } /* [measured] hover:opacity-100 */
+.rail__gauge { width: 50px; height: 6px; background: var(--line-gauge); border-radius: 999px; overflow: hidden; } /* [measured] w-[50px] h-[6px] bg-[#333] rounded-full overflow-hidden */
+.rail__gauge-fill { height: 100%; background: var(--text-primary); transition: width var(--duration-slow) var(--curve-state); } /* [measured] h-full bg-white; the transition is [decided] */
 
-/* ---------- Offres ---------- */
-.tarifs { margin-block: var(--pas-section); } /* [relevé] my-[150px] */
-@media (min-width: 40rem) { .tarifs { padding-inline: var(--marge-bord); } } /* [relevé] sm:px-[20px] md:px-[40px] — aucun padding sous 40rem */
-.tarifs__interieur { max-width: 1100px; margin-inline: auto; } /* [relevé] max-w-[1100px] mx-auto */
-.tarifs .entete-centre { margin-bottom: 45px; padding-inline: var(--marge-bord); } /* [relevé] mb-[45px] sur le hgroup */
-.entete-large { max-width: 335px; margin-inline: auto; margin-bottom: 15px; } /* [relevé] max-w-[335px] md:max-w-[820px] mx-auto mb-[15px] */
-@media (min-width: 48rem) { .entete-large { max-width: 820px; } }
-.tarifs__accroche { max-width: 335px; margin-inline: auto; } /* [relevé] max-w-[335px] md:max-w-[180px] mx-auto */
-@media (min-width: 48rem) { .tarifs__accroche { max-width: 180px; } }
+/* ---------- Offers ---------- */
+.pricing { margin-block: var(--section-step); } /* [measured] my-[150px] */
+@media (min-width: 40rem) { .pricing { padding-inline: var(--edge-margin); } } /* [measured] sm:px-[20px] md:px-[40px] — no padding below 40rem */
+.pricing__inner { max-width: 1100px; margin-inline: auto; } /* [measured] max-w-[1100px] mx-auto */
+.pricing .centered-header { margin-bottom: 45px; padding-inline: var(--edge-margin); } /* [measured] mb-[45px] on the hgroup */
+.wide-heading { max-width: 335px; margin-inline: auto; margin-bottom: 15px; } /* [measured] max-w-[335px] md:max-w-[820px] mx-auto mb-[15px] */
+@media (min-width: 48rem) { .wide-heading { max-width: 820px; } }
+.pricing__tagline { max-width: 335px; margin-inline: auto; } /* [measured] max-w-[335px] md:max-w-[180px] mx-auto */
+@media (min-width: 48rem) { .pricing__tagline { max-width: 180px; } }
 
-.bascule__enveloppe { display: flex; justify-content: center; margin-bottom: 20px; } /* [relevé] mb-[20px] flex justify-center */
-/* Le HTML source porte `text-sm` sur ce bloc, mais la feuille ne contient AUCUNE règle
-   `.text-sm` (le thème ne déclare pas `--text-sm`) : la classe est morte et la taille
-   retombe sur celle du body, 14px. C'est cette taille réelle qui est reprise. */
-.bascule { display: flex; gap: 25px; max-width: 820px; font-weight: var(--graisse-forte); letter-spacing: var(--serrage-doux); } /* [relevé] flex gap-[25px] font-medium tracking-tight max-w-[820px] */
-@media (min-width: 40rem) { .bascule { margin-left: -45px; } } /* [relevé] sm:ml-[-45px] — cale le sélecteur sur la carte, pas sur la page */
-.bascule__option { color: color-mix(in oklab, var(--texte-primaire) 30%, transparent); cursor: pointer; transition: color var(--duree-etat) var(--courbe-etat); } /* [relevé] text-white/30 transition-colors cursor-pointer */
-.bascule__option:hover { color: color-mix(in oklab, var(--texte-primaire) 75%, transparent); } /* [relevé] hover:text-white/75 */
-.bascule__option:disabled { color: var(--texte-primaire); cursor: default; } /* [relevé] disabled:text-white — l'option ACTIVE est celle qui est désactivée */
-.etiquette-promo { display: inline-flex; background: var(--accent-promo); color: var(--texte-primaire); border-radius: 999px; padding-inline: 10px; line-height: 25px; font-size: var(--t-legende); } /* [relevé] text-[12px] inline-flex leading-[25px] bg-[#FF3DAE] text-white rounded-full px-[10px] */
+.toggle__wrapper { display: flex; justify-content: center; margin-bottom: 20px; } /* [measured] mb-[20px] flex justify-center */
+/* The source HTML carries `text-sm` on this block, but the sheet contains NO
+   `.text-sm` rule (the theme does not declare `--text-sm`): the class is dead and the size
+   falls back to the body's, 14px. That actual size is the one reproduced. */
+.toggle { display: flex; gap: 25px; max-width: 820px; font-weight: var(--weight-strong); letter-spacing: var(--tracking-soft); } /* [measured] flex gap-[25px] font-medium tracking-tight max-w-[820px] */
+@media (min-width: 40rem) { .toggle { margin-left: -45px; } } /* [measured] sm:ml-[-45px] — aligns the selector on the card, not on the page */
+.toggle__option { color: color-mix(in oklab, var(--text-primary) 30%, transparent); cursor: pointer; transition: color var(--duration-state) var(--curve-state); } /* [measured] text-white/30 transition-colors cursor-pointer */
+.toggle__option:hover { color: color-mix(in oklab, var(--text-primary) 75%, transparent); } /* [measured] hover:text-white/75 */
+.toggle__option:disabled { color: var(--text-primary); cursor: default; } /* [measured] disabled:text-white — the ACTIVE option is the one that is disabled */
+.promo-tag { display: inline-flex; background: var(--accent-promo); color: var(--text-primary); border-radius: 999px; padding-inline: 10px; line-height: 25px; font-size: var(--t-caption); } /* [measured] text-[12px] inline-flex leading-[25px] bg-[#FF3DAE] text-white rounded-full px-[10px] */
 
-.carte-tarif {
-  display: flex; flex-direction: column;                  /* [relevé] flex flex-col flex-1 */
-  flex: 1; padding: 25px;                                 /* [relevé] p-[25px] */
-  border-radius: var(--rayon-carte);                      /* [relevé] rounded-[12px] */
-  box-shadow: inset 0 0 0 1px var(--trait-carte);         /* [relevé] ring-1 ring-[#505050] ring-inset */
+.price-card {
+  display: flex; flex-direction: column;                  /* [measured] flex flex-col flex-1 */
+  flex: 1; padding: 25px;                                 /* [measured] p-[25px] */
+  border-radius: var(--radius-card);                      /* [measured] rounded-[12px] */
+  box-shadow: inset 0 0 0 1px var(--line-card);           /* [measured] ring-1 ring-[#505050] ring-inset */
 }
-/* `justify-between` n'est posé que sur la carte d'essai : ses trois blocs s'écartent pour
-   occuper la hauteur imposée par la carte voisine. [relevé] */
-.carte-tarif--espacee { justify-content: space-between; }
-.carte-tarif__entete { display: flex; justify-content: space-between; margin-bottom: 35px; } /* [relevé] flex mb-[35px] justify-between */
-.carte-tarif__prix { text-align: right; } /* [relevé] text-right */
-.carte-tarif__montant { line-height: 20px; }  /* [relevé] leading-[20px] */
-.carte-tarif__mention { line-height: 15px; }  /* [relevé] leading-[15px] */
-.carte-tarif__pied { margin-top: 35px; }      /* [relevé] mt-[35px] */
-.jeton { display: inline-block; height: 35px; line-height: 35px; padding-inline: 15px; border-radius: var(--rayon-controle); font-weight: var(--graisse-forte); box-shadow: 0 0 0 1px currentColor; } /* [relevé] h-[35px] leading-[35px] px-[15px] rounded-[7px] ; `ring-1 text-white` sans ring-inset → liseré externe couleur du texte */
-.jeton--plein { background: var(--texte-primaire); color: #000; box-shadow: none; } /* [relevé] bg-white text-black */
+/* `justify-between` is set only on the trial card: its three blocks spread apart to
+   fill the height imposed by the neighboring card. [measured] */
+.price-card--spaced { justify-content: space-between; }
+.price-card__header { display: flex; justify-content: space-between; margin-bottom: 35px; } /* [measured] flex mb-[35px] justify-between */
+.price-card__price { text-align: right; } /* [measured] text-right */
+.price-card__amount { line-height: 20px; }  /* [measured] leading-[20px] */
+.price-card__note { line-height: 15px; }    /* [measured] leading-[15px] */
+.price-card__footer { margin-top: 35px; }   /* [measured] mt-[35px] */
+.token { display: inline-block; height: 35px; line-height: 35px; padding-inline: 15px; border-radius: var(--radius-control); font-weight: var(--weight-strong); box-shadow: 0 0 0 1px currentColor; } /* [measured] h-[35px] leading-[35px] px-[15px] rounded-[7px]; `ring-1 text-white` without ring-inset → external hairline in the text color */
+.token--solid { background: var(--text-primary); color: #000; box-shadow: none; } /* [measured] bg-white text-black */
 
-.liste-inclus { display: flex; flex-direction: column; gap: 20px; font-size: var(--t-legende); line-height: var(--t-legende-i); font-weight: var(--graisse-forte); } /* [relevé] flex flex-col gap-y-[20px] text-body-secondary font-medium */
-.liste-inclus li { max-width: 340px; } /* [relevé] max-w-[340px] */
-.liste-inclus__icone { margin-bottom: 5px; } /* [relevé] icône 15×15 (13×13 pour une) mb-[5px] */
-/* Titre et descriptif sont deux blocs de MÊME taille et MÊME graisse : seule la couleur
-   les distingue. La hiérarchie interne de la ligne tient entièrement au contraste. [relevé] */
-.liste-inclus span { display: block; }
-.liste-inclus__titre { color: var(--texte-primaire); }
+.included-list { display: flex; flex-direction: column; gap: 20px; font-size: var(--t-caption); line-height: var(--t-caption-lh); font-weight: var(--weight-strong); } /* [measured] flex flex-col gap-y-[20px] text-body-secondary font-medium */
+.included-list li { max-width: 340px; } /* [measured] max-w-[340px] */
+.included-list__icon { margin-bottom: 5px; } /* [measured] 15×15 icon (13×13 for one) mb-[5px] */
+/* Title and description are two blocks of the SAME size and SAME weight: only color
+   tells them apart. The row's internal hierarchy rests entirely on contrast. [measured] */
+.included-list span { display: block; }
+.included-list__title { color: var(--text-primary); }
 
-.bouton-large {
+.button-wide {
   display: block; width: 100%; text-align: center;
-  line-height: 35px; border-radius: var(--rayon-controle);  /* [relevé] leading-[35px] rounded-[7px] */
-  background: var(--texte-primaire); color: #000;           /* [relevé] bg-white text-black */
-  font-size: var(--t-corps); font-weight: var(--graisse-forte); /* [relevé] text-body-primary font-medium */
-  transition: background-color var(--duree-etat) var(--courbe-etat);
+  line-height: 35px; border-radius: var(--radius-control);  /* [measured] leading-[35px] rounded-[7px] */
+  background: var(--text-primary); color: #000;             /* [measured] bg-white text-black */
+  font-size: var(--t-body); font-weight: var(--weight-strong); /* [measured] text-body-primary font-medium */
+  transition: background-color var(--duration-state) var(--curve-state);
 }
-.bouton-large:hover { background: color-mix(in oklab, var(--texte-primaire) 90%, transparent); } /* [relevé] hover:bg-white/90 */
-/* Seule animation autonome de la page : un dégradé qui glisse en boucle, sur le seul
-   bouton qu'on veut voir. Un point saturé unique dans une page monochrome. */
-.bouton-large--degrade {
-  background-image: var(--degrade-action);
-  background-size: 200% 200%; background-repeat: no-repeat; background-position: 0%; /* [relevé] */
-  animation: glissement-degrade 1.5s ease-in-out infinite alternate;                 /* [relevé] .animate-gradient-flow */
+.button-wide:hover { background: color-mix(in oklab, var(--text-primary) 90%, transparent); } /* [measured] hover:bg-white/90 */
+/* The page's only self-running animation: a gradient sliding in a loop, on the one
+   button meant to be seen. A single saturated point in a monochrome page. */
+.button-wide--gradient {
+  background-image: var(--gradient-action);
+  background-size: 200% 200%; background-repeat: no-repeat; background-position: 0%; /* [measured] */
+  animation: gradient-slide 1.5s ease-in-out infinite alternate;                     /* [measured] .animate-gradient-flow */
 }
-.bouton-large--degrade:hover { background-color: transparent; }
-@keyframes glissement-degrade { 0% { background-position: 0%; } to { background-position: 100%; } } /* [relevé] @keyframes move-gradient */
+.button-wide--gradient:hover { background-color: transparent; }
+@keyframes gradient-slide { 0% { background-position: 0%; } to { background-position: 100%; } } /* [measured] @keyframes move-gradient */
 
-/* ---------- Témoignages ---------- */
-.temoignages { padding-inline: var(--marge-bord); margin-bottom: 100px; } /* [relevé] px-[20px] md:px-[40px] mb-[100px] */
-.entete-centre--avis { margin-bottom: 50px; } /* [relevé] mb-[50px] */
-.temoignages__accroche { max-width: 340px; margin-inline: auto; } /* [relevé] max-w-[340px] md:max-w-[440px] mx-auto */
-@media (min-width: 48rem) { .temoignages__accroche { max-width: 440px; } }
-.temoignages__cadre { position: relative; max-width: 1000px; margin-inline: auto; } /* [relevé] max-w-[1000px] mx-auto relative */
-/* En petit écran le rail sort de la colonne : marge négative de 20px et largeur de
-   viewport entier, pour que les cartes touchent les bords. Annulé au palier md. */
-.temoignages__debord { margin-left: -20px; width: 100vw; } /* [relevé] ml-[-20px] w-[100vw] */
-@media (min-width: 48rem) { .temoignages__debord { margin-left: 0; width: 100%; } } /* [relevé] md:w-full md:ml-0 */
+/* ---------- Testimonials ---------- */
+.testimonials { padding-inline: var(--edge-margin); margin-bottom: 100px; } /* [measured] px-[20px] md:px-[40px] mb-[100px] */
+.centered-header--reviews { margin-bottom: 50px; } /* [measured] mb-[50px] */
+.testimonials__tagline { max-width: 340px; margin-inline: auto; } /* [measured] max-w-[340px] md:max-w-[440px] mx-auto */
+@media (min-width: 48rem) { .testimonials__tagline { max-width: 440px; } }
+.testimonials__frame { position: relative; max-width: 1000px; margin-inline: auto; } /* [measured] max-w-[1000px] mx-auto relative */
+/* On small screens the rail leaves the column: 20px negative margin and full
+   viewport width, so the cards touch the edges. Cancelled at the md breakpoint. */
+.testimonials__bleed { margin-left: -20px; width: 100vw; } /* [measured] ml-[-20px] w-[100vw] */
+@media (min-width: 48rem) { .testimonials__bleed { margin-left: 0; width: 100%; } } /* [measured] md:w-full md:ml-0 */
 
-.carte-avis {
-  width: 100%; padding: 15px;                             /* [relevé] w-full p-[15px] */
-  background: var(--fond-carte);                          /* [relevé] bg-[#080808] */
-  border-radius: var(--rayon-carte);                      /* [relevé] rounded-fill */
-  box-shadow: inset 0 0 0 1px var(--trait-discret);       /* [relevé] ring-1 ring-grey-1 ring-inset */
-  font-weight: var(--graisse-forte);                      /* [relevé] font-medium */
-  user-select: none;                                      /* [relevé] select-none */
+.review-card {
+  width: 100%; padding: 15px;                             /* [measured] w-full p-[15px] */
+  background: var(--bg-card);                             /* [measured] bg-[#080808] */
+  border-radius: var(--radius-card);                      /* [measured] rounded-fill */
+  box-shadow: inset 0 0 0 1px var(--line-subtle);         /* [measured] ring-1 ring-grey-1 ring-inset */
+  font-weight: var(--weight-strong);                      /* [measured] font-medium */
+  user-select: none;                                      /* [measured] select-none */
 }
-.carte-avis__auteur { display: flex; align-items: center; gap: 5px; margin-bottom: 15px; } /* [relevé] flex items-center gap-x-[5px] mb-[15px] */
-.avatar { display: block; position: relative; width: 54px; height: 54px; border-radius: 999px; overflow: hidden; background: var(--fond-action); flex: none; } /* [relevé] w-[54px] h-[54px] rounded-full overflow-hidden bg-grey-1 relative */
+.review-card__author { display: flex; align-items: center; gap: 5px; margin-bottom: 15px; } /* [measured] flex items-center gap-x-[5px] mb-[15px] */
+.avatar { display: block; position: relative; width: 54px; height: 54px; border-radius: 999px; overflow: hidden; background: var(--bg-action); flex: none; } /* [measured] w-[54px] h-[54px] rounded-full overflow-hidden bg-grey-1 relative */
 .avatar img { width: 100%; height: 100%; object-fit: cover; }
-.carte-avis__identite { display: flex; flex-direction: column; font-size: var(--t-legende); line-height: var(--t-legende-i); } /* [relevé] flex flex-col text-body-secondary */
-.carte-avis__nom { display: flex; align-items: center; gap: 2.5px; } /* [relevé] flex items-center gap-x-[2.5px] */
-.badge { width: 12px; height: 12px; flex: none; } /* [relevé] w-[12px] h-[12px] */
-.carte-avis__texte { margin-bottom: 10px; } /* [relevé] text-body-primary mb-[10px] */
-.carte-avis__texte a { color: var(--lien-avis); } /* [relevé] .et-tweet-content a */
+.review-card__identity { display: flex; flex-direction: column; font-size: var(--t-caption); line-height: var(--t-caption-lh); } /* [measured] flex flex-col text-body-secondary */
+.review-card__name { display: flex; align-items: center; gap: 2.5px; } /* [measured] flex items-center gap-x-[2.5px] */
+.badge { width: 12px; height: 12px; flex: none; } /* [measured] w-[12px] h-[12px] */
+.review-card__text { margin-bottom: 10px; } /* [measured] text-body-primary mb-[10px] */
+.review-card__text a { color: var(--link-review); } /* [measured] .et-tweet-content a */
 
-/* ---------- Inscription ---------- */
-.inscription { padding-inline: var(--marge-bord); } /* [relevé] px-[20px] md:px-[40px] */
-.inscription__interieur { max-width: 450px; margin-inline: auto; } /* [relevé] max-w-[450px] mx-auto */
-.inscription__titre { max-width: 250px; margin-inline: auto; margin-bottom: 40px; text-align: center; } /* [relevé] max-w-[250px] md:max-w-full mx-auto mb-[40px] text-center */
-@media (min-width: 48rem) { .inscription__titre { max-width: none; } }
-.inscription__groupe { display: flex; flex-direction: column; align-items: center; gap: 10px; margin-bottom: 20px; } /* [relevé] flex flex-col items-center space-y-[10px] mb-[20px] */
-.champ-enveloppe { width: 100%; max-width: 310px; } /* [relevé] w-full max-w-[310px] */
-.champ {
-  width: 100%; height: 35px; padding-inline: 20px; text-align: center; /* [relevé] h-[35px] w-full px-[20px] text-center */
-  background: var(--fond-champ); color: var(--texte-primaire);         /* [relevé] bg-secondary */
-  border: 0; box-shadow: 0 0 0 1px var(--trait-discret);               /* [relevé] ring-1 ring-grey-1, sans ring-inset */
-  border-radius: var(--rayon-carte);                                   /* [relevé] rounded-fill */
-  font-size: var(--t-legende); font-weight: var(--graisse-forte);      /* [relevé] text-body-secondary font-medium */
-  outline: none; transition: box-shadow var(--duree-etat) var(--courbe-etat); /* [relevé] outline-none transition */
+/* ---------- Signup ---------- */
+.signup { padding-inline: var(--edge-margin); } /* [measured] px-[20px] md:px-[40px] */
+.signup__inner { max-width: 450px; margin-inline: auto; } /* [measured] max-w-[450px] mx-auto */
+.signup__title { max-width: 250px; margin-inline: auto; margin-bottom: 40px; text-align: center; } /* [measured] max-w-[250px] md:max-w-full mx-auto mb-[40px] text-center */
+@media (min-width: 48rem) { .signup__title { max-width: none; } }
+.signup__group { display: flex; flex-direction: column; align-items: center; gap: 10px; margin-bottom: 20px; } /* [measured] flex flex-col items-center space-y-[10px] mb-[20px] */
+.field-wrapper { width: 100%; max-width: 310px; } /* [measured] w-full max-w-[310px] */
+.field {
+  width: 100%; height: 35px; padding-inline: 20px; text-align: center; /* [measured] h-[35px] w-full px-[20px] text-center */
+  background: var(--bg-field); color: var(--text-primary);             /* [measured] bg-secondary */
+  border: 0; box-shadow: 0 0 0 1px var(--line-subtle);                 /* [measured] ring-1 ring-grey-1, without ring-inset */
+  border-radius: var(--radius-card);                                   /* [measured] rounded-fill */
+  font-size: var(--t-caption); font-weight: var(--weight-strong);      /* [measured] text-body-secondary font-medium */
+  outline: none; transition: box-shadow var(--duration-state) var(--curve-state); /* [measured] outline-none transition */
 }
-.champ::placeholder { color: var(--texte-secondaire); } /* [arbitrage] la source laisse le gris par défaut du navigateur, illisible sur ce fond */
-.champ:focus-visible { box-shadow: 0 0 0 1px var(--texte-primaire); } /* [arbitrage] la source pose `outline-none` sans rien mettre à la place */
-.bouton-soumettre {
-  width: 100%; height: 35px; border-radius: var(--rayon-carte);  /* [relevé] h-[35px] w-full rounded-fill */
-  background: var(--texte-primaire); color: #000;                /* [relevé] bg-white text-black */
-  font-size: var(--t-legende); font-weight: var(--graisse-forte); cursor: pointer;
-  transition: background-color var(--duree-etat) var(--courbe-etat);
+.field::placeholder { color: var(--text-secondary); } /* [decided] the source leaves the browser's default gray, illegible on this background */
+.field:focus-visible { box-shadow: 0 0 0 1px var(--text-primary); } /* [decided] the source sets `outline-none` with no replacement */
+.button-submit {
+  width: 100%; height: 35px; border-radius: var(--radius-card);  /* [measured] h-[35px] w-full rounded-fill */
+  background: var(--text-primary); color: #000;                  /* [measured] bg-white text-black */
+  font-size: var(--t-caption); font-weight: var(--weight-strong); cursor: pointer;
+  transition: background-color var(--duration-state) var(--curve-state);
 }
-.bouton-soumettre:hover { background: color-mix(in oklab, var(--texte-primaire) 85%, transparent); } /* [relevé] hover:bg-white/85 */
-.consentement { display: flex; justify-content: center; align-items: center; text-align: center; gap: 10px; color: var(--texte-secondaire); font-size: var(--t-legende); } /* [relevé] flex justify-center items-center text-center gap-x-[10px] text-grey-4 text-body-secondary */
-@media (min-width: 48rem) { .consentement { font-size: var(--t-corps); } } /* [relevé] md:text-body-primary */
-.consentement__case { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); } /* [relevé] sr-only */
-.consentement__marque { width: 18px; height: 18px; border: 1px solid currentColor; border-radius: 999px; cursor: pointer; transition: background-color var(--duree-etat) var(--courbe-etat); flex: none; } /* [relevé] border-current border rounded-full w-[18px] h-[18px] cursor-pointer transition */
-.consentement__case:checked + .consentement__marque { background: var(--texte-primaire); } /* [relevé] peer-checked:bg-white */
-.consentement__case:focus-visible + .consentement__marque { outline: 2px solid var(--texte-primaire); outline-offset: 2px; } /* [arbitrage] la source n'expose aucun focus visible sur cette case */
-.consentement__texte { cursor: pointer; } /* [relevé] cursor-pointer */
-.consentement__texte a { text-decoration: underline; } /* [relevé] underline */
-.consentement__texte a:hover { text-decoration: none; } /* [relevé] hover:no-underline */
+.button-submit:hover { background: color-mix(in oklab, var(--text-primary) 85%, transparent); } /* [measured] hover:bg-white/85 */
+.consent { display: flex; justify-content: center; align-items: center; text-align: center; gap: 10px; color: var(--text-secondary); font-size: var(--t-caption); } /* [measured] flex justify-center items-center text-center gap-x-[10px] text-grey-4 text-body-secondary */
+@media (min-width: 48rem) { .consent { font-size: var(--t-body); } } /* [measured] md:text-body-primary */
+.consent__checkbox { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); } /* [measured] sr-only */
+.consent__mark { width: 18px; height: 18px; border: 1px solid currentColor; border-radius: 999px; cursor: pointer; transition: background-color var(--duration-state) var(--curve-state); flex: none; } /* [measured] border-current border rounded-full w-[18px] h-[18px] cursor-pointer transition */
+.consent__checkbox:checked + .consent__mark { background: var(--text-primary); } /* [measured] peer-checked:bg-white */
+.consent__checkbox:focus-visible + .consent__mark { outline: 2px solid var(--text-primary); outline-offset: 2px; } /* [decided] the source exposes no visible focus on this checkbox */
+.consent__text { cursor: pointer; } /* [measured] cursor-pointer */
+.consent__text a { text-decoration: underline; } /* [measured] underline */
+.consent__text a:hover { text-decoration: none; } /* [measured] hover:no-underline */
 
-/* ---------- Pied ---------- */
-.pied { text-align: center; color: var(--texte-secondaire); font-size: var(--t-legende); padding-top: var(--pas-section); padding-bottom: 75px; display: flex; flex-direction: column; gap: 20px; } /* [relevé] text-center text-grey-4 text-body-secondary pt-[150px] pb-[75px] space-y-[20px] */
-@media (min-width: 48rem) { .pied { font-size: var(--t-corps); } } /* [relevé] md:text-body-primary */
-.pied__rangee { display: flex; justify-content: center; flex-wrap: wrap; gap: 20px; } /* [relevé] flex justify-center space-x-[20px] */
-.pied a { transition: color var(--duree-etat) var(--courbe-etat); } /* [relevé] transition */
-.pied a:hover { color: var(--texte-primaire); } /* [relevé] hover:text-white */
+/* ---------- Footer ---------- */
+.site-footer { text-align: center; color: var(--text-secondary); font-size: var(--t-caption); padding-top: var(--section-step); padding-bottom: 75px; display: flex; flex-direction: column; gap: 20px; } /* [measured] text-center text-grey-4 text-body-secondary pt-[150px] pb-[75px] space-y-[20px] */
+@media (min-width: 48rem) { .site-footer { font-size: var(--t-body); } } /* [measured] md:text-body-primary */
+.site-footer__row { display: flex; justify-content: center; flex-wrap: wrap; gap: 20px; } /* [measured] flex justify-center space-x-[20px] */
+.site-footer a { transition: color var(--duration-state) var(--curve-state); } /* [measured] transition */
+.site-footer a:hover { color: var(--text-primary); } /* [measured] hover:text-white */
 
-/* ---------- Mouvement réduit ----------
-   La source ne prévoit rien ici : ni pour les apparitions, ni pour l'animation de
-   dégradé, ni pour huit vidéos en lecture automatique. [arbitrage] */
+/* ---------- Reduced motion ----------
+   The source provides nothing here: not for the reveals, not for the gradient
+   animation, not for eight autoplaying videos. [decided] */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: .01ms !important;
@@ -433,7 +433,7 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
     transition-duration: .01ms !important;
     scroll-behavior: auto !important;
   }
-  [data-apparition] { opacity: 1; transform: none; }
-  .bouton-large--degrade { animation: none; background-position: 50%; }
-  .rail__piste { scroll-behavior: auto; }
+  [data-reveal] { opacity: 1; transform: none; }
+  .button-wide--gradient { animation: none; background-position: 50%; }
+  .rail__track { scroll-behavior: auto; }
 }

@@ -1,7 +1,7 @@
 ---
 name: seo
-description: Hreflang alternates, sitemaps multilingues, metadata traduites, JSON-LD
-when-to-use: SEO international, hreflang, sitemaps, contenu dupliqué, rankings locaux
+description: Hreflang alternates, multilingual sitemaps, translated metadata, JSON-LD
+when-to-use: international SEO, hreflang, sitemaps, duplicate content, local rankings
 keywords: hreflang, alternates, sitemap, metadata, JSON-LD, canonical, international SEO
 priority: medium
 requires: routing-config.md, server-components.md

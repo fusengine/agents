@@ -20,7 +20,7 @@ src/
     │   ├── common.json    # Always loaded
     │   ├── dashboard.json # Lazy loaded
     │   └── settings.json  # Lazy loaded
-    └── fr/
+    └── es/
         ├── common.json
         ├── dashboard.json
         └── settings.json
@@ -43,7 +43,7 @@ i18n
   .use(LanguageDetector)
   .use(initReactI18next)
   .init({
-    supportedLngs: ['en', 'fr'],
+    supportedLngs: ['en', 'es'],
     fallbackLng: 'en',
 
     // Only load 'common' initially

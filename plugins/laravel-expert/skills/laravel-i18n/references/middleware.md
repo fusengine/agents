@@ -11,7 +11,7 @@ keywords: middleware, setLocale, session, URL prefix, locale detection
 
 ```
 Detect locale from?
-├── URL prefix (/fr/page) → SetLocaleFromUrl middleware
+├── URL prefix (/es/page) → SetLocaleFromUrl middleware
 ├── Session → SetLocaleFromSession middleware
 ├── User preference → Check auth user first
 ├── Browser → Accept-Language header
@@ -34,7 +34,7 @@ Detect locale from?
 |--------|---------|
 | `App::setLocale($locale)` | Set current locale |
 | `App::currentLocale()` | Get current locale |
-| `App::isLocale('fr')` | Check locale |
+| `App::isLocale('es')` | Check locale |
 | `URL::defaults(['locale' => $locale])` | Set URL default |
 
 ## Configuration

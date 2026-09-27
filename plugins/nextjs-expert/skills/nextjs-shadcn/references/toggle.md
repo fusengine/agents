@@ -10,6 +10,8 @@ related: toggle-group.md, switch.md, button.md
 
 # Toggle Component
 
+> **Base:** examples use **Base UI** (shadcn default since 2026-07); Radix delta in "Radix variant" below (composition only — `pressed` / `defaultPressed` / `onPressedChange` / `variant` / `size` are the same; Base UI adds an `eventDetails` 2nd arg); React Aria: RAC `ToggleButton` — `isSelected` / `defaultSelected` / `onChange` / `isDisabled`. Sources: https://ui.shadcn.com/r/styles/base-nova/toggle.json, https://ui.shadcn.com/r/styles/radix-nova/toggle.json
+
 ## Overview
 
 The Toggle component is a button that can be pressed and released with visual feedback. It supports both text and icon content and can be used standalone or in groups.
@@ -25,6 +27,7 @@ bunx --bun shadcn@latest add toggle
 ```tsx
 import { Toggle } from "@/modules/cores/shadcn/components/ui/toggle"
 
+/** Basic toggle. */
 export function BasicToggle() {
   return <Toggle>Click me</Toggle>
 }
@@ -36,6 +39,7 @@ export function BasicToggle() {
 import { Toggle } from "@/modules/cores/shadcn/components/ui/toggle"
 import { Bold } from "lucide-react"
 
+/** Toggle with an icon. */
 export function ToggleWithIcon() {
   return (
     <Toggle>
@@ -54,6 +58,7 @@ import { useState } from "react"
 import { Toggle } from "@/modules/cores/shadcn/components/ui/toggle"
 import { Bold } from "lucide-react"
 
+/** Toggle bound to state. */
 export function ControlledToggle() {
   const [isPressed, setIsPressed] = useState(false)
 
@@ -81,6 +86,7 @@ export function ControlledToggle() {
 import { Toggle } from "@/modules/cores/shadcn/components/ui/toggle"
 import { Bold, Italic, Underline } from "lucide-react"
 
+/** Toggle variants. */
 export function ToggleVariants() {
   return (
     <div className="space-y-4">
@@ -126,6 +132,7 @@ export function ToggleVariants() {
 import { Toggle } from "@/modules/cores/shadcn/components/ui/toggle"
 import { Bold } from "lucide-react"
 
+/** Toggle sizes. */
 export function ToggleSizes() {
   return (
     <div className="space-y-4">
@@ -170,6 +177,7 @@ interface FormatState {
   strikethrough: boolean
 }
 
+/** Text formatting toolbar of toggles. */
 export function TextFormattingToolbar() {
   const [format, setFormat] = useState<FormatState>({
     bold: false,
@@ -253,6 +261,7 @@ export function TextFormattingToolbar() {
 import { Toggle } from "@/modules/cores/shadcn/components/ui/toggle"
 import { Bold } from "lucide-react"
 
+/** Disabled toggle. */
 export function DisabledToggle() {
   return (
     <div className="space-y-4">
@@ -279,6 +288,7 @@ import { useState } from "react"
 import { Toggle } from "@/modules/cores/shadcn/components/ui/toggle"
 import { Heart } from "lucide-react"
 
+/** Favorite toggle with a heart icon. */
 export function ToggleFavorite() {
   const [isFavorite, setIsFavorite] = useState(false)
 
@@ -308,6 +318,7 @@ import { useState } from "react"
 import { Toggle } from "@/modules/cores/shadcn/components/ui/toggle"
 import { Sun, Moon } from "lucide-react"
 
+/** Toggle switching dark mode on and off. */
 export function ThemeToggle() {
   const [isDark, setIsDark] = useState(false)
 
@@ -338,9 +349,14 @@ export function ThemeToggle() {
 | `variant` | `"default" \| "outline"` | "default" | Visual variant |
 | `size` | `"sm" \| "default" \| "lg"` | "default" | Toggle size |
 | `disabled` | `boolean` | false | Disable the toggle |
-| `asChild` | `boolean` | false | Use as child element |
+| `render` | `ReactElement \| function` | - | Replace the rendered `<button>` (Base UI composition) |
 | `className` | `string` | - | Additional CSS classes |
 | `aria-label` | `string` | - | Accessible label for screen readers |
+
+## Radix variant
+
+Same props except composition: Radix uses `asChild` + a child element instead of `render`
+(`<Toggle asChild><a href="/bold">B</a></Toggle>`).
 
 ## Import Paths
 

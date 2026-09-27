@@ -19,7 +19,7 @@ Expert Laravel 13 development plugin for Claude Code with comprehensive document
 | `laravel-auth` | Sanctum, Passport, policies, gates, social login |
 | `laravel-testing` | Pest, PHPUnit, feature tests, factories, mocking |
 | `laravel-queues` | Jobs, workers, batches, chains, failure handling |
-| `laravel-livewire` | Livewire 3, Volt, reactive components |
+| `laravel-livewire` | Livewire 4, Volt, reactive components |
 | `laravel-blade` | Templates, components, slots, layouts, directives |
 | `laravel-migrations` | Schema builder, indexes, foreign keys, seeders |
 | `laravel-billing` | Stripe Cashier, Paddle, subscriptions, invoices |
@@ -44,7 +44,7 @@ The agent activates automatically when you mention:
 
 ## Requirements
 
-- Laravel 12.x
+- Laravel 13.x
 - PHP 8.3+
 - Composer
 

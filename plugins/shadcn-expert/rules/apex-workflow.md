@@ -1,5 +1,5 @@
 ---
-description: "APEX workflow shadcn/ui expert - 8 phases mandatory: load skills, detect primitive (Radix UI vs Base UI), analyze components, plan tasks (<100 lines), consult MCP (shadcn + Context7), implement with correct API, self-review via elicitation, sniper validation. NEVER skip detection. NEVER mix Radix/Base UI."
+description: "APEX workflow shadcn/ui expert - 8 phases mandatory: load skills, detect primitive (Base UI vs Radix vs React Aria), analyze components, plan tasks (<100 lines), consult MCP (shadcn + Context7), implement with correct API, self-review via elicitation, sniper validation. NEVER skip detection. NEVER mix bases."
 next_step: "shadcn-rules"
 ---
 
@@ -10,7 +10,7 @@ next_step: "shadcn-rules"
 | Phase | Step | Action |
 |-------|------|--------|
 | **A** | 00-load-skills | Read required shadcn skills FIRST |
-| **A** | 01-detect-primitive | Run detection (Radix vs Base UI) |
+| **A** | 01-detect-primitive | Run detection (Base UI vs Radix vs React Aria) |
 | **A** | 02-analyze-components | `explore-codebase` → component inventory |
 | **P** | 03-plan-changes | TaskCreate + file planning (<100 lines) |
 | **E** | 04-consult-mcp | ALWAYS query shadcn MCP + Context7 |
@@ -32,8 +32,9 @@ Read skills/shadcn-migration/SKILL.md     → migration guide
 ## Step 01: Detect Primitive (MANDATORY)
 
 ```
-1. Run detect-primitive-lib.sh or manual detection
-2. Result: Radix / Base UI / Mixed / None
+1. `{runner} shadcn@latest info --json` -> config.base (base | radix | aria), then
+   the detection commands in skills/shadcn-detection/references/templates/detection-script.md
+2. Result: Base UI / Radix / React Aria / Mixed / None
 3. If Mixed → consult shadcn-migration skill
 4. If None → recommend fresh setup
 ```
@@ -54,4 +55,5 @@ mcp__shadcn__search_items_in_registries → find components
 mcp__shadcn__view_items_in_registries   → view source code
 mcp__shadcn__get_add_command_for_items  → get CLI command
 mcp__context7__query-docs               → latest documentation
+{runner} shadcn@latest docs <component> --base <base>  → per-base docs/examples/API links
 ```

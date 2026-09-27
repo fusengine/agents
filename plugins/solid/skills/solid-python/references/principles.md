@@ -1,7 +1,7 @@
 ---
 name: solid-python-principles
 applies-to: "**/*.py"
-description: All 5 SOLID principles applied to Python 3.12+ with Protocol, type hints, and DI
+description: All 5 SOLID principles applied to Python 3.14+ with Protocol, type hints, and DI
 when-to-use: overview of SOLID for Python, quick reference, principle selection
 keywords: SOLID, Python, Protocol, ABC, type hints, DI
 priority: high

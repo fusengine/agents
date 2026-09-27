@@ -40,7 +40,7 @@ export async function getNPlusOneAntipattern(): Promise<any[]> {
 
 ```typescript
 // lib/db/user-relations.service.ts
-import type { User, Post } from '@prisma/client'
+import type { User, Post } from '@/generated/prisma/client'
 
 /**
  * @description Fetches all users with their posts in single query
@@ -83,7 +83,7 @@ export async function getUsersWithRecentPosts(postsLimit: number = 5) {
 
 ```typescript
 // lib/db/queries/user-with-posts.ts
-import type { Prisma } from '@prisma/client'
+import type { Prisma } from '@/generated/prisma/client'
 
 /** @description Projection for user list with post titles */
 export const userWithPostTitlesSelect = {
@@ -141,7 +141,7 @@ export async function getUsersWithPostCount() {
 
 ```typescript
 // lib/db/batch-loader.ts
-import type { User, Post } from '@prisma/client'
+import type { User, Post } from '@/generated/prisma/client'
 
 /**
  * @description Batch loads posts for multiple users
@@ -197,7 +197,7 @@ export async function getUsersWithBatchLoadedPosts(): Promise<(User & { posts: P
 
 ```typescript
 // lib/db/monitoring.ts
-import type { PrismaClient } from '@prisma/client'
+import type { PrismaClient } from '@/generated/prisma/client'
 
 interface QueryLog {
   query: string

@@ -1,7 +1,7 @@
 /**
- * Extra Usage Segment - Affiche les dépenses extra usage via OAuth
+ * Extra Usage Segment - Displays extra usage spend via OAuth
  *
- * @description SRP: Affichage overage billing depuis l'API OAuth
+ * @description SRP: Overage billing display from the OAuth API
  */
 
 import type { StatuslineConfig } from "../config/schema";
@@ -13,12 +13,12 @@ export class ExtraUsageSegment implements ISegment {
 	readonly name = "extraUsage";
 	readonly priority = 75;
 
-	/** Vérifie si le segment est activé dans la config */
+	/** Checks whether the segment is enabled in the config */
 	isEnabled(config: StatuslineConfig): boolean {
 		return config.extraUsage?.enabled ?? false;
 	}
 
-	/** Rendu du segment extra usage depuis l'API OAuth */
+	/** Renders the extra usage segment from the OAuth API */
 	async render(_context: SegmentContext, config: StatuslineConfig): Promise<string> {
 		const usage = await getUsageLimits();
 		if (!usage?.extra_usage?.is_enabled) return "";

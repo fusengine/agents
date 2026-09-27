@@ -74,7 +74,7 @@ export async function unsafeQuery(
 
 ```typescript
 // modules/cores/db/repositories/user-repository.ts
-import { Prisma } from '@prisma/client'
+import { Prisma } from '../generated/prisma/client'  // v7: generated path
 
 /**
  * Insert multiple users in bulk
@@ -337,7 +337,7 @@ export async function transferFunds(
 
 ```typescript
 // modules/cores/db/repositories/query-wrapper.ts
-import { Prisma } from '@prisma/client'
+import { Prisma } from '../generated/prisma/client'  // v7: generated path
 
 /**
  * Execute raw query with error handling

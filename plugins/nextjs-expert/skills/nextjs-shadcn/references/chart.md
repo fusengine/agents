@@ -10,6 +10,8 @@ related: null
 
 # Chart Component
 
+> **Base:** same API on Base UI, Radix and React Aria — Recharts wrapper (verified against r/styles/{base,radix}-nova/chart.json).
+
 The Chart component wraps Recharts library with shadcn/ui styling. It provides ChartContainer, ChartTooltip, ChartLegend and other utilities for building responsive data visualizations.
 
 ## Installation
@@ -20,11 +22,12 @@ Install the Chart component using the shadcn/ui CLI:
 bunx --bun shadcn@latest add chart
 ```
 
-You'll also need to install Recharts:
+The CLI installs `recharts` (v3) as a dependency. Same component on every base (Base UI,
+Radix, React Aria) — it wraps Recharts, not a primitive library.
 
-```bash
-bun add recharts
-```
+Recharts v3 notes (https://ui.shadcn.com/docs/components/base/chart): reference theme tokens as
+`var(--chart-1)` (not `hsl(var(--chart-1))` — tokens are OKLCH), keep a height/`min-h-*`/`aspect-*`
+on `ChartContainer`, and drop `layout` from `<Bar>` when `<BarChart>` already sets it.
 
 ## Components
 
@@ -90,14 +93,15 @@ const chartData = [
 const chartConfig = {
   desktop: {
     label: "Desktop",
-    color: "hsl(var(--chart-1))",
+    color: "var(--chart-1)",
   },
   mobile: {
     label: "Mobile",
-    color: "hsl(var(--chart-2))",
+    color: "var(--chart-2)",
   },
 } satisfies ChartConfig
 
+/** Basic bar chart bound to a `ChartConfig`. */
 export function BarChartExample() {
   return (
     <ChartContainer config={chartConfig} className="h-80 w-full">
@@ -138,14 +142,15 @@ const chartData = [
 const chartConfig = {
   desktop: {
     label: "Desktop",
-    color: "hsl(var(--chart-1))",
+    color: "var(--chart-1)",
   },
   mobile: {
     label: "Mobile",
-    color: "hsl(var(--chart-2))",
+    color: "var(--chart-2)",
   },
 } satisfies ChartConfig
 
+/** Bar chart with the shadcn tooltip. */
 export function BarChartWithTooltipExample() {
   return (
     <ChartContainer config={chartConfig} className="h-80 w-full">
@@ -189,14 +194,15 @@ const chartData = [
 const chartConfig = {
   desktop: {
     label: "Desktop",
-    color: "hsl(var(--chart-1))",
+    color: "var(--chart-1)",
   },
   mobile: {
     label: "Mobile",
-    color: "hsl(var(--chart-2))",
+    color: "var(--chart-2)",
   },
 } satisfies ChartConfig
 
+/** Bar chart with the shadcn legend. */
 export function BarChartWithLegendExample() {
   return (
     <ChartContainer config={chartConfig} className="h-80 w-full">
@@ -241,10 +247,11 @@ const chartData = [
 const chartConfig = {
   value: {
     label: "Value",
-    color: "hsl(var(--chart-1))",
+    color: "var(--chart-1)",
   },
 } satisfies ChartConfig
 
+/** Line chart example. */
 export function LineChartExample() {
   return (
     <ChartContainer config={chartConfig} className="h-80 w-full">
@@ -293,10 +300,11 @@ const chartData = [
 const chartConfig = {
   value: {
     label: "Value",
-    color: "hsl(var(--chart-1))",
+    color: "var(--chart-1)",
   },
 } satisfies ChartConfig
 
+/** Area chart example. */
 export function AreaChartExample() {
   return (
     <ChartContainer config={chartConfig} className="h-80 w-full">
@@ -344,18 +352,19 @@ const chartData = [
 const chartConfig = {
   desktop: {
     label: "Desktop",
-    color: "hsl(var(--chart-1))",
+    color: "var(--chart-1)",
   },
   mobile: {
     label: "Mobile",
-    color: "hsl(var(--chart-2))",
+    color: "var(--chart-2)",
   },
   tablet: {
     label: "Tablet",
-    color: "hsl(var(--chart-3))",
+    color: "var(--chart-3)",
   },
 } satisfies ChartConfig
 
+/** Pie chart example. */
 export function PieChartExample() {
   return (
     <ChartContainer config={chartConfig} className="h-80 w-full">
@@ -417,10 +426,11 @@ const chartData = [
 const chartConfig = {
   value: {
     label: "Value",
-    color: "hsl(var(--chart-1))",
+    color: "var(--chart-1)",
   },
 } satisfies ChartConfig
 
+/** Bar chart filling a fixed-height, full-width container. */
 export function ResponsiveBarChartExample() {
   return (
     <ChartContainer config={chartConfig} className="h-80 w-full">
@@ -455,11 +465,11 @@ interface ChartConfig {
 const chartConfig = {
   revenue: {
     label: "Revenue",
-    color: "hsl(var(--chart-1))",
+    color: "var(--chart-1)",
   },
   expenses: {
     label: "Expenses",
-    color: "hsl(var(--chart-2))",
+    color: "var(--chart-2)",
   },
 } satisfies ChartConfig
 ```
@@ -502,7 +512,7 @@ const chartConfig = {
 const lightConfig = {
   value: {
     label: "Value",
-    color: "hsl(var(--chart-1))",
+    color: "var(--chart-1)",
   },
 }
 
@@ -510,7 +520,7 @@ const lightConfig = {
 const darkConfig = {
   value: {
     label: "Value",
-    color: "hsl(var(--chart-2))",
+    color: "var(--chart-2)",
   },
 }
 ```

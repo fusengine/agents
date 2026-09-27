@@ -1,9 +1,9 @@
 ---
 name: theme
-description: Tailwind CSS v4.1 theme configuration
+description: Tailwind CSS v4.3 theme configuration
 ---
 
-# Tailwind CSS v4.1 Theme Configuration
+# Tailwind CSS v4.3 Theme Configuration
 
 ## @theme Directive
 
@@ -275,5 +275,5 @@ Generates: `.rounded-lg`, `.rounded-full`, `.rounded-md`
 
 ## References
 
-- [Tailwind CSS v4.1 Theme Documentation](https://tailwindcss.com/docs/theme)
+- [Tailwind CSS v4.3 Theme Documentation](https://tailwindcss.com/docs/theme)
 - [CSS Custom Properties Configuration](https://tailwindcss.com/docs/theme#customizing-with-css-custom-properties)

@@ -1,7 +1,7 @@
 ---
 name: solid-principles
 applies-to: "**/*.java, **/*.kt"
-description: Quick reference for all 5 SOLID principles applied to Java 21+
+description: Quick reference for all 5 SOLID principles applied to Java 25+ (LTS)
 when-to-use: overview of SOLID, quick reference, principle selection
 keywords: SOLID, overview, Java, principles, quick reference
 priority: high

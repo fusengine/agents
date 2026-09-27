@@ -32,7 +32,7 @@ final class SetLocale
      *
      * @var array<string>
      */
-    private const SUPPORTED_LOCALES = ['en', 'fr', 'de', 'es'];
+    private const SUPPORTED_LOCALES = ['en', 'it', 'de', 'es'];
 
     /**
      * Handle an incoming request.
@@ -65,7 +65,7 @@ final class SetLocale
 ```php
 // routes/web.php
 Route::prefix('{locale}')
-    ->whereIn('locale', ['en', 'fr', 'de', 'es'])
+    ->whereIn('locale', ['en', 'it', 'de', 'es'])
     ->group(function () {
         Route::get('/', [HomeController::class, 'index'])->name('home');
         Route::get('/about', [PageController::class, 'about'])->name('about');

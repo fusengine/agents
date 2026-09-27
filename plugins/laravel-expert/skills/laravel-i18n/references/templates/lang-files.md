@@ -30,7 +30,7 @@ return [
 ];
 ```
 
-### File: lang/fr/messages.php
+### File: lang/es/messages.php
 
 ```php
 <?php
@@ -38,17 +38,17 @@ return [
 declare(strict_types=1);
 
 return [
-    'welcome' => 'Bienvenue sur notre application',
-    'hello' => 'Bonjour :name',
-    'goodbye' => 'Au revoir :name, à :time',
+    'welcome' => 'Bienvenido a nuestra aplicación',
+    'hello' => 'Hola :name',
+    'goodbye' => 'Adiós :name, hasta :time',
 
     'notifications' => [
-        'title' => 'Notifications',
-        'empty' => 'Aucune notification',
-        'new' => 'Vous avez :count nouvelles notifications',
+        'title' => 'Notificaciones',
+        'empty' => 'Aún no hay notificaciones',
+        'new' => 'Tienes :count notificaciones nuevas',
     ],
 
-    'items' => '{0} Aucun élément|{1} Un élément|[2,*] :count éléments',
+    'items' => '{0} Ningún elemento|{1} Un elemento|[2,*] :count elementos',
 ];
 ```
 
@@ -66,14 +66,14 @@ return [
 }
 ```
 
-### File: lang/fr.json
+### File: lang/es.json
 
 ```json
 {
-    "Welcome to our application": "Bienvenue sur notre application",
-    "Hello :name": "Bonjour :name",
-    "Sign In": "Connexion",
-    "Sign Out": "Déconnexion",
-    "Dashboard": "Tableau de bord"
+    "Welcome to our application": "Bienvenido a nuestra aplicación",
+    "Hello :name": "Hola :name",
+    "Sign In": "Iniciar sesión",
+    "Sign Out": "Cerrar sesión",
+    "Dashboard": "Panel de control"
 }
 ```

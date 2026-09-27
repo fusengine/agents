@@ -28,9 +28,9 @@ Complete, copy-paste `composer.json` for a library. Adjust vendor/namespace/PHP 
         "psr/clock": "^1.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "^11.0",
-        "friendsofphp/php-cs-fixer": "^3.64",
-        "phpstan/phpstan": "^2.0"
+        "phpunit/phpunit": "^12.5 || ^13.3",
+        "friendsofphp/php-cs-fixer": "^3.95",
+        "phpstan/phpstan": "^2.2"
     },
     "autoload": {
         "psr-4": { "Vendor\\Package\\": "src/" }
@@ -59,10 +59,12 @@ Notes:
 - `scripts` and `config` are root-only fields (ignored in dependencies).
 - `@cs` inside `check` references another script by name.
 - Bump `require.php` to `>=8.4` or `>=8.5` only when you actually use those features.
+- PHPUnit 13 needs PHP 8.4+; the `^12.5 || ^13.3` range lets Composer pick PHPUnit 12 on
+  PHP 8.3 CI jobs. Once `require.php` is `>=8.4`, use `"^13.3"` alone.
 
 ---
 
-## php-cs-fixer With PER-CS 3.0
+## php-cs-fixer With PER-CS
 
 ```php
 <?php
@@ -85,7 +87,8 @@ return (new Config())
     ->setFinder($finder);
 ```
 
-The `@PER-CS` ruleset applies PER Coding Style 3.0.
+The `@PER-CS` ruleset tracks the newest PER-CS revision PHP-CS-Fixer ships — PER-CS 3.0
+as of v3.95 (the PER-CS 3.1 spec has no dedicated set yet).
 
 ---
 

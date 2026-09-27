@@ -3,7 +3,7 @@ name: rust-web-backend
 description: Use when building a REST/HTTP backend in Rust — axum routing, extractors, shared state, middleware, error responses, sqlx database access. Not for raw async/concurrency (rust-async-concurrency).
 versions:
   axum: "0.8.9"
-  tokio: "1.52"
+  tokio: "1.53"
   sqlx: "0.9"
   tracing: "0.1"
   rust-edition: "2024"
@@ -126,4 +126,4 @@ let user = sqlx::query_as!(User, "SELECT id, name FROM users WHERE id = $1", id)
 ## Sources (verified)
 
 - tokio.rs/blog/2025-01-01-announcing-axum-0-8-0 — path syntax, Option extractor, `#[async_trait]` removal (fetched 2026-07-05)
-- crates.io — axum 0.8.9, sqlx 0.9.0, tokio 1.52.3, tracing 0.1.44 (current at fetch)
+- crates.io — axum 0.8.9, sqlx 0.9.0, tokio 1.53.1, tracing 0.1.44, tower-http 0.7.1 (current at fetch 2026-09-27)

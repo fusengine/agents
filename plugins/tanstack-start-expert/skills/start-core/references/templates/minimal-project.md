@@ -6,7 +6,7 @@ description: Complete minimal TanStack Start project - every file needed to run
 
 # Minimal TanStack Start Project (complete)
 
-Every file for a runnable app (`@tanstack/react-start` v1.166.2). Create these,
+Every file for a runnable app (`@tanstack/react-start` v1.168.58). Create these,
 then `npm run dev` → http://localhost:3000. The plugin generates
 `src/routeTree.gen.ts` on first run.
 
@@ -22,8 +22,8 @@ then `npm run dev` → http://localhost:3000. The plugin generates
     "build": "vite build"
   },
   "dependencies": {
-    "@tanstack/react-router": "^1.166.2",
-    "@tanstack/react-start": "^1.166.2",
+    "@tanstack/react-router": "^1.170.39",
+    "@tanstack/react-start": "^1.168.58",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
@@ -31,12 +31,16 @@ then `npm run dev` → http://localhost:3000. The plugin generates
     "@types/node": "^22.0.0",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
-    "@vitejs/plugin-react": "^4.3.0",
-    "typescript": "^5.7.0",
-    "vite": "^6.0.0"
+    "@vitejs/plugin-react": "^6.1.1",
+    "typescript": "^6.0.3",
+    "vite": "^8.3.1"
   }
 }
 ```
+
+> `@tanstack/react-start` peers on `vite >=7`; `@vitejs/plugin-react` 6 requires
+> `vite ^8`. The official `start-basic` example keeps the `typescript` package on
+> 6.x and installs TypeScript 7 separately as `@typescript/native`.
 
 ## `tsconfig.json`
 

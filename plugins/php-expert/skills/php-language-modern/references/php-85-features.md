@@ -40,7 +40,16 @@ $result = "Hello World"
     |> strlen(...);   // 11
 ```
 
-Right side must be a callable — use first-class callable syntax `fn(...)`.
+Right side must be a single-parameter callable — use first-class callable syntax `f(...)`.
+An arrow function on the right MUST be wrapped in parentheses, otherwise PHP 8.5 fails at
+compile time ("Arrow functions on the right hand side of |> must be parenthesized"):
+
+```php
+$slug = $title
+    |> trim(...)
+    |> (fn(string $s): string => str_replace(' ', '-', $s))
+    |> strtolower(...);
+```
 
 → See [modern-class.md](templates/modern-class.md) for pipe + clone() in context
 
@@ -55,13 +64,21 @@ final class Point
         public readonly int $x,
         public readonly int $y,
     ) {}
+
+    public function withX(int $x): self
+    {
+        return clone($this, ['x' => $x]); // readonly reassigned only during clone
+    }
 }
 
-$a = new Point(1, 2);
-$b = clone($a, ['x' => 10]); // readonly reassigned only during clone
+$b = new Point(1, 2)->withX(10);
 ```
 
-Replaces the `readonly`-clone workaround (manual `__clone` + reflection).
+Replaces the `readonly`-clone workaround (manual `__clone` + reflection). Visibility still
+applies: a `public readonly` property is implicitly `protected(set)`, so
+`clone($a, ['x' => 10])` from **outside** the class throws `Error: Cannot modify
+protected(set) readonly property` — put the call in a `with*()` method (or declare the
+property `public(set) readonly`).
 
 ---
 
@@ -85,7 +102,8 @@ Use on methods whose result is the whole point (builders returning `$this` are t
 | Mistake | Fix |
 |---------|-----|
 | Using `\|>` with a non-callable right side | Right side must be `f(...)` or a closure |
-| `clone $obj` then mutating readonly | Use `clone($obj, [...])` |
+| `clone $obj` then mutating readonly | Use `clone($obj, [...])` inside the class |
+| `\|> fn($x) => …` without parentheses | Wrap it: `\|> (fn($x) => …)` |
 | Emitting 8.5 syntax on 8.4 project | Check `require.php` first |
 
 ---

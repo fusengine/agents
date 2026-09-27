@@ -1,168 +1,168 @@
 /* =============================================================================
-   motion-nav.js — navigation : panneau mobile, flyouts d'entête, langue
-   Dépend de `window.CursorMotion` (motion.js), chargé juste avant en `defer`.
+   motion-nav.js — navigation: mobile panel, header flyouts, language
+   Depends on `window.CursorMotion` (motion.js), loaded just before with `defer`.
 
-   [relevé] = lu dans la source · [arbitrage] = choix de cette référence
+   [measured] = read in the source · [decided] = choice made by this reference
    ========================================================================== */
 
 (function () {
   'use strict';
 
-  var noyau = window.CursorMotion;
-  if (!noyau) return;   // motion.js absent : on ne casse rien, on s'abstient.
+  var core = window.CursorMotion;
+  if (!core) return;   // motion.js missing: break nothing, do nothing.
 
   /* --------------------------------------------------------------------------
-     1. NAVIGATION MOBILE
-     La source pose un attribut et laisse la transition d'opacité au CSS,
-     déclarée en style INLINE sur l'élément :
-       transition:opacity var(--duration) var(--ease-out-spring)      [relevé] H
-     Le verrouillage du défilement de fond et le renvoi du focus sont des
-     ajouts d'accessibilité.                                      [arbitrage]
+     1. MOBILE NAVIGATION
+     The source sets an attribute and leaves the opacity transition to CSS,
+     declared as an INLINE style on the element:
+       transition:opacity var(--duration) var(--ease-out-spring)      [measured] H
+     Locking background scroll and returning focus are accessibility
+     additions.                                                   [decided]
   ---------------------------------------------------------------------------*/
-  (function navigationMobile() {
-    var panneau = document.querySelector('[data-nav-mobile]');
-    var ouvrir  = document.querySelector('[data-nav-ouvrir]');
-    var fermer  = document.querySelector('[data-nav-fermer]');
-    if (!panneau || !ouvrir || !fermer) return;
+  (function mobileNavigation() {
+    var panel = document.querySelector('[data-nav-mobile]');
+    var openBtn  = document.querySelector('[data-nav-open]');
+    var closeBtn = document.querySelector('[data-nav-close]');
+    if (!panel || !openBtn || !closeBtn) return;
 
-    var pousses = panneau.querySelectorAll('[data-panneau]');
+    var pushed = panel.querySelectorAll('[data-panel]');
 
-    /** Referme tous les panneaux poussés et remet leurs boutons à false. */
-    function refermerPousses() {
-      pousses.forEach(function (p) {
-        p.dataset.ouvert = 'false';
+    /** Closes every pushed panel and resets their buttons to false. */
+    function closePushed() {
+      pushed.forEach(function (p) {
+        p.dataset.open = 'false';
         p.setAttribute('aria-hidden', 'true');
       });
-      panneau.querySelectorAll('[data-sous-menu]').forEach(function (b) {
+      panel.querySelectorAll('[data-submenu]').forEach(function (b) {
         b.setAttribute('aria-expanded', 'false');
       });
     }
 
     /**
-     * Ouvre ou ferme le panneau plein écran.
-     * @param {boolean} ouvert
+     * Opens or closes the full-screen panel.
+     * @param {boolean} open
      */
-    function basculer(ouvert) {
-      panneau.dataset.ouvert = ouvert ? 'true' : 'false';
-      ouvrir.setAttribute('aria-expanded', ouvert ? 'true' : 'false');
-      document.documentElement.style.overflow = ouvert ? 'hidden' : '';
-      if (!ouvert) refermerPousses();
-      (ouvert ? fermer : ouvrir).focus();
+    function toggle(open) {
+      panel.dataset.open = open ? 'true' : 'false';
+      openBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      document.documentElement.style.overflow = open ? 'hidden' : '';
+      if (!open) closePushed();
+      (open ? closeBtn : openBtn).focus();
     }
 
-    ouvrir.addEventListener('click', function () {
-      basculer(panneau.dataset.ouvert !== 'true');
+    openBtn.addEventListener('click', function () {
+      toggle(panel.dataset.open !== 'true');
     });
-    fermer.addEventListener('click', function () { basculer(false); });
+    closeBtn.addEventListener('click', function () { toggle(false); });
 
     document.addEventListener('keydown', function (e) {
-      if (e.key !== 'Escape' || panneau.dataset.ouvert !== 'true') return;
-      // Échap referme d'abord le sous-panneau, ensuite seulement le menu.
-      if (panneau.querySelector('[data-panneau][data-ouvert="true"]')) refermerPousses();
-      else basculer(false);
+      if (e.key !== 'Escape' || panel.dataset.open !== 'true') return;
+      // Escape first closes the sub-panel, and only then the menu.
+      if (panel.querySelector('[data-panel][data-open="true"]')) closePushed();
+      else toggle(false);
     });
 
-    // Un clic sur un LIEN referme le panneau avant la navigation. Les boutons
-    // de sous-menu, eux, ne doivent surtout pas le refermer.
-    panneau.addEventListener('click', function (e) {
-      if (e.target.closest('a')) basculer(false);
+    // A click on a LINK closes the panel before navigating. Submenu buttons,
+    // on the other hand, must never close it.
+    panel.addEventListener('click', function (e) {
+      if (e.target.closest('a')) toggle(false);
     });
 
-    /* Sous-menus poussés. Le caret de la source est « → », pas « ↓ » : le
-       mobile POUSSE un panneau latéral, il ne déplie pas vers le bas. La source
-       les rend côté client — ils sont absents du HTML aspiré, seuls les boutons
-       `aria-expanded="false"` et leur caret subsistent. [relevé] H [arbitrage] */
-    panneau.querySelectorAll('[data-sous-menu]').forEach(function (bouton) {
-      bouton.addEventListener('click', function () {
-        var cible = panneau.querySelector(
-          '[data-panneau="' + bouton.dataset.sousMenu + '"]'
+    /* Pushed submenus. The source caret is "→", not "↓": mobile PUSHES a
+       side panel, it does not unfold downwards. The source renders them
+       client-side — they are missing from the scraped HTML, only the
+       `aria-expanded="false"` buttons and their caret remain. [measured] H [decided] */
+    panel.querySelectorAll('[data-submenu]').forEach(function (button) {
+      button.addEventListener('click', function () {
+        var target = panel.querySelector(
+          '[data-panel="' + button.dataset.submenu + '"]'
         );
-        if (!cible) return;
-        refermerPousses();
-        cible.dataset.ouvert = 'true';
-        cible.setAttribute('aria-hidden', 'false');
-        bouton.setAttribute('aria-expanded', 'true');
-        var retour = cible.querySelector('[data-retour]');
-        if (retour) retour.focus();
+        if (!target) return;
+        closePushed();
+        target.dataset.open = 'true';
+        target.setAttribute('aria-hidden', 'false');
+        button.setAttribute('aria-expanded', 'true');
+        var back = target.querySelector('[data-back]');
+        if (back) back.focus();
       });
     });
 
-    panneau.querySelectorAll('[data-retour]').forEach(function (retour) {
-      retour.addEventListener('click', function () {
-        var parent = retour.closest('[data-panneau]');
-        refermerPousses();
-        var origine = panneau.querySelector(
-          '[data-sous-menu="' + (parent && parent.dataset.panneau) + '"]'
+    panel.querySelectorAll('[data-back]').forEach(function (back) {
+      back.addEventListener('click', function () {
+        var parent = back.closest('[data-panel]');
+        closePushed();
+        var origin = panel.querySelector(
+          '[data-submenu="' + (parent && parent.dataset.panel) + '"]'
         );
-        if (origine) origine.focus();
+        if (origin) origin.focus();
       });
     });
 
-    // Cascade d'entrée : `navItemSlideIn .25s var(--ease-out-spring) forwards`,
-    // amplitude 4px [relevé] M. Le décalage entre items est posé en JS dans la
-    // source, donc illisible dans son CSS : on l'expose en `--rang`, que la
-    // feuille multiplie par 30ms.                               [arbitrage]
-    panneau.querySelectorAll('.nav-item-animate').forEach(function (el, i) {
-      el.style.setProperty('--rang', i);
+    // Entry cascade: `navItemSlideIn .25s var(--ease-out-spring) forwards`,
+    // 4px amplitude [measured] M. The delay between items is set in JS in the
+    // source, hence unreadable in its CSS: we expose it as `--index`, which
+    // the stylesheet multiplies by 30ms.                         [decided]
+    panel.querySelectorAll('.nav-item-animate').forEach(function (el, i) {
+      el.style.setProperty('--index', i);
     });
   })();
 
   /* --------------------------------------------------------------------------
-     2. FLYOUTS D'ENTÊTE
-     Le CSS ouvre déjà les panneaux au `:hover` et au `:focus-within` — c'est le
-     procédé exact de la source, qui n'a AUCUN JS pour ces menus sur desktop.
-     Ce bloc ne sert qu'aux pointeurs SANS survol (tactile), où `:hover` est
-     simulé puis collant : un clic sur le chevron pose `aria-expanded`, et le
-     CSS ouvre sur cet attribut.                                  [arbitrage]
+     2. HEADER FLYOUTS
+     The CSS already opens the panels on `:hover` and `:focus-within` — that
+     is the exact technique of the source, which has NO JS for these menus on
+     desktop. This block only serves pointers WITHOUT hover (touch), where
+     `:hover` is emulated and then sticky: a click on the chevron sets
+     `aria-expanded`, and the CSS opens on that attribute.        [decided]
   ---------------------------------------------------------------------------*/
   (function flyouts() {
     document.querySelectorAll('[data-flyout]').forEach(function (chevron) {
-      function fermerCelui() { chevron.setAttribute('aria-expanded', 'false'); }
-      noyau.enregistrerFermeture(fermerCelui);
+      function closeThis() { chevron.setAttribute('aria-expanded', 'false'); }
+      core.registerCloser(closeThis);
 
       chevron.addEventListener('click', function (e) {
         e.preventDefault();
         e.stopPropagation();
-        var ouvert = chevron.getAttribute('aria-expanded') === 'true';
-        noyau.toutFermer(fermerCelui);
-        chevron.setAttribute('aria-expanded', ouvert ? 'false' : 'true');
+        var open = chevron.getAttribute('aria-expanded') === 'true';
+        core.closeAll(closeThis);
+        chevron.setAttribute('aria-expanded', open ? 'false' : 'true');
       });
     });
   })();
 
   /* --------------------------------------------------------------------------
-     3. SÉLECTEUR DE LANGUE
-     Même procédé que les flyouts, mais le panneau s'ouvre vers le HAUT
-     (`bottom-full`) : seul le CSS le sait, le JS ne fait que commuter l'état.
+     3. LANGUAGE SELECTOR
+     Same technique as the flyouts, but the panel opens UPWARDS
+     (`bottom-full`): only the CSS knows it, the JS only toggles the state.
   ---------------------------------------------------------------------------*/
-  (function selecteurLangue() {
-    var groupe = document.querySelector('[data-langue]');
-    if (!groupe) return;
-    var bouton = groupe.querySelector('[data-langue-bouton]');
-    if (!bouton) return;
+  (function languageSelector() {
+    var group = document.querySelector('[data-language]');
+    if (!group) return;
+    var button = group.querySelector('[data-language-button]');
+    if (!button) return;
 
-    function fermerCelui() {
-      bouton.setAttribute('aria-expanded', 'false');
-      groupe.dataset.ouvert = 'false';
+    function closeThis() {
+      button.setAttribute('aria-expanded', 'false');
+      group.dataset.open = 'false';
     }
-    noyau.enregistrerFermeture(fermerCelui);
+    core.registerCloser(closeThis);
 
-    bouton.addEventListener('click', function (e) {
+    button.addEventListener('click', function (e) {
       e.stopPropagation();
-      var ouvert = bouton.getAttribute('aria-expanded') === 'true';
-      noyau.toutFermer(fermerCelui);
-      bouton.setAttribute('aria-expanded', ouvert ? 'false' : 'true');
-      groupe.dataset.ouvert = ouvert ? 'false' : 'true';
+      var open = button.getAttribute('aria-expanded') === 'true';
+      core.closeAll(closeThis);
+      button.setAttribute('aria-expanded', open ? 'false' : 'true');
+      group.dataset.open = open ? 'false' : 'true';
     });
 
-    // Sélectionner une langue met à jour l'état ARIA de la liste entière.
-    var options = groupe.querySelectorAll('.langue__option');
+    // Selecting a language updates the ARIA state of the whole list.
+    var options = group.querySelectorAll('.language__option');
     options.forEach(function (option) {
       option.addEventListener('click', function () {
         options.forEach(function (o) { o.setAttribute('aria-selected', 'false'); });
         option.setAttribute('aria-selected', 'true');
-        fermerCelui();
-        bouton.focus();
+        closeThis();
+        button.focus();
       });
     });
   })();

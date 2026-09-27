@@ -1,154 +1,154 @@
 /* =============================================================================
-   motion-scroll.js — défilement : révélations, carrousels, boucles d'ambiance
-   Dépend de `window.CursorMotion` (motion.js), chargé avant en `defer`.
+   motion-scroll.js — scrolling: reveals, carousels, ambient loops
+   Depends on `window.CursorMotion` (motion.js), loaded before with `defer`.
 
-   [relevé] = lu dans la source · [arbitrage] = choix de cette référence
+   [measured] = read in the source · [decided] = choice made by this reference
    ========================================================================== */
 
 (function () {
   'use strict';
 
-  var noyau = window.CursorMotion;
-  if (!noyau) return;
+  var core = window.CursorMotion;
+  if (!core) return;
 
   /* --------------------------------------------------------------------------
-     1. RÉVÉLATION AU DÉFILEMENT — le seul effet d'apparition du site
+     1. REVEAL ON SCROLL — the site's only entrance effect
        @keyframes gallery-marquee-item-slide-up
          {0%{opacity:0;transform:translateY(25%)} to{opacity:1;transform:translate(0)}}
-       animation : 1s var(--ease-out-spring) both                   [relevé] M
+       animation: 1s var(--ease-out-spring) both                  [measured] M
 
-     Déclencheur : IntersectionObserver. Surtout PAS `animation-timeline:view()`,
-     qui n'est pas « widely available » : là où il manque, une keyframe qui
-     démarre à opacity:0 laisserait l'élément invisible pour de bon.
+     Trigger: IntersectionObserver. Above all NOT `animation-timeline:view()`,
+     which is not "widely available": where it is missing, a keyframe that
+     starts at opacity:0 would leave the element invisible for good.
 
-     Le masquage n'est PAS posé par ce fichier. La feuille déclare l'animation
-     en `animation-play-state:paused`, ce qui fige l'élément sur son image de
-     départ ; le JS ne fait que LEVER la pause via `.est-visible`. Conséquence
-     capitale : si ce script ne tourne jamais, la règle `@media (scripting:none)`
-     de la feuille remet l'animation en marche et la page se révèle seule.
-     Aucun élément ne peut rester invisible faute de JS.
+     Hiding is NOT set by this file. The stylesheet declares the animation
+     with `animation-play-state:paused`, which freezes the element on its
+     starting frame; the JS only LIFTS the pause through `.is-visible`.
+     Crucial consequence: if this script never runs, the stylesheet's
+     `@media (scripting:none)` rule restarts the animation and the page
+     reveals itself. No element can stay invisible for lack of JS.
 
-     Filet supplémentaire, absent de la source : si `IntersectionObserver`
-     manque, on pose `data-intro="true"` sur <html> et tout se débloque d'un
-     coup — la feuille a une règle pour ce cas.                    [arbitrage]
+     Extra safety net, absent from the source: if `IntersectionObserver` is
+     missing, we set `data-intro="true"` on <html> and everything unlocks at
+     once — the stylesheet has a rule for that case.               [decided]
 
-     `threshold:0.15` et la marge NÉGATIVE en bas (qui rétrécit la zone de
-     déclenchement, pour que l'élément soit franchement entré avant de
-     s'animer) sont des                                           [arbitrage].
-     `unobserve` après le premier passage : l'effet ne se rejoue pas au retour.
+     `threshold:0.15` and the NEGATIVE bottom margin (which shrinks the
+     trigger zone, so the element has clearly entered before animating) are
+     [decided].
+     `unobserve` after the first pass: the effect does not replay on the way back.
   ---------------------------------------------------------------------------*/
-  (function revelations() {
-    var cibles = document.querySelectorAll('[data-revele]');
-    if (!cibles.length) return;
+  (function reveals() {
+    var targets = document.querySelectorAll('[data-reveal]');
+    if (!targets.length) return;
 
     if (!('IntersectionObserver' in window)) {
       document.documentElement.setAttribute('data-intro', 'true');
       return;
     }
 
-    var observateur = new IntersectionObserver(function (entrees) {
-      entrees.forEach(function (entree) {
-        if (!entree.isIntersecting) return;
-        entree.target.classList.add('est-visible');
-        observateur.unobserve(entree.target);
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
       });
     }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
 
-    /* On n'arme la pause QU'UNE FOIS l'observateur construit, et juste avant de
-       lui confier les cibles. Tant que `data-js` n'est pas posé, la feuille
-       laisse l'animation se jouer : un script absent, bloqué par le réseau ou
-       en erreur ne peut donc pas laisser la page vide. L'ordre de ces deux
-       lignes EST le garde-fou — masquer avant de savoir observer rouvrirait
-       exactement le trou qu'on vient de boucher.                 [arbitrage] */
+    /* The pause is armed ONLY ONCE the observer is built, and right before
+       handing it the targets. As long as `data-js` is not set, the stylesheet
+       lets the animation play: a script that is missing, blocked by the
+       network or throwing can therefore not leave the page blank. The order
+       of these two lines IS the safeguard — hiding before knowing how to
+       observe would reopen exactly the hole we just plugged.      [decided] */
     document.documentElement.setAttribute('data-js', '');
-    cibles.forEach(function (el) { observateur.observe(el); });
+    targets.forEach(function (el) { observer.observe(el); });
   })();
 
   /* --------------------------------------------------------------------------
-     2. CARROUSELS À ANCRAGE
-     La piste défile nativement (`overflow-x:auto` + `scroll-snap-type:x
-     mandatory` [relevé] H). Le JS n'ajoute que deux boutons de défilement,
-     absents de la source, qui s'en remet au geste tactile.       [arbitrage]
+     2. SNAP CAROUSELS
+     The track scrolls natively (`overflow-x:auto` + `scroll-snap-type:x
+     mandatory` [measured] H). The JS only adds two scroll buttons, absent
+     from the source, which relies on the touch gesture.          [decided]
 
-     Deux précautions : `behavior` toujours explicite (le noyau lit
-     `prefers-reduced-motion` lui-même) ; et `scroll-snap-type:x mandatory`
-     combiné à un `scrollBy` fluide peut être interrompu et re-ancré par le
-     navigateur en cours d'animation (surtout Safari) — c'est attendu, pas un
-     bug : on ne le contre pas, on recalcule l'état des boutons après coup.
+     Two precautions: `behavior` always explicit (the core reads
+     `prefers-reduced-motion` itself); and `scroll-snap-type:x mandatory`
+     combined with a smooth `scrollBy` can be interrupted and re-snapped by
+     the browser mid-animation (Safari especially) — that is expected, not a
+     bug: we do not fight it, we recompute the button state afterwards.
   ---------------------------------------------------------------------------*/
-  (function carrousels() {
-    document.querySelectorAll('[data-piste-cadre]').forEach(function (cadre) {
-      var piste = cadre.querySelector('[data-piste]');
-      var prec  = cadre.querySelector('[data-piste-prec]');
-      var suiv  = cadre.querySelector('[data-piste-suiv]');
-      if (!piste || !prec || !suiv) return;
+  (function carousels() {
+    document.querySelectorAll('[data-track-frame]').forEach(function (frame) {
+      var track = frame.querySelector('[data-track]');
+      var prev  = frame.querySelector('[data-track-prev]');
+      var next  = frame.querySelector('[data-track-next]');
+      if (!track || !prev || !next) return;
 
-      /** Largeur d'un saut : une carte + une gouttière. Mesurée sur le DOM
-       *  plutôt que recalculée depuis la formule de grille — celle-ci vit dans
-       *  le CSS et n'a pas à être dupliquée ici. `columnGap` peut valoir
-       *  'normal' sans gap déclaré, d'où le repli sur 0.        [arbitrage]
-       *  @returns {number} Distance de défilement en pixels. */
-      function pas() {
-        var item = piste.querySelector('.piste__item');
-        var rail = piste.querySelector('.piste__rail');
-        if (!item || !rail) return piste.clientWidth;
-        var gouttiere = parseFloat(getComputedStyle(rail).columnGap) || 0;
-        return item.getBoundingClientRect().width + gouttiere;
+      /** Width of one jump: one card + one gutter. Measured on the DOM rather
+       *  than recomputed from the grid formula — that one lives in the CSS
+       *  and does not need duplicating here. `columnGap` can be 'normal'
+       *  with no declared gap, hence the fallback to 0.        [decided]
+       *  @returns {number} Scroll distance in pixels. */
+      function step() {
+        var item = track.querySelector('.track__item');
+        var rail = track.querySelector('.track__rail');
+        if (!item || !rail) return track.clientWidth;
+        var gutter = parseFloat(getComputedStyle(rail).columnGap) || 0;
+        return item.getBoundingClientRect().width + gutter;
       }
 
-      /** Grise le bouton qui ne mène plus nulle part. */
-      function majBoutons() {
-        var max = piste.scrollWidth - piste.clientWidth;
-        // Tolérance d'1px : les largeurs fractionnaires ne retombent pas juste.
-        prec.disabled = piste.scrollLeft <= 1;
-        suiv.disabled = piste.scrollLeft >= max - 1;
+      /** Disables the button that no longer leads anywhere. */
+      function updateButtons() {
+        var max = track.scrollWidth - track.clientWidth;
+        // 1px tolerance: fractional widths do not land exactly.
+        prev.disabled = track.scrollLeft <= 1;
+        next.disabled = track.scrollLeft >= max - 1;
       }
 
-      /** @param {number} sens -1 vers la gauche, +1 vers la droite. */
-      function defiler(sens) {
-        piste.scrollBy({ left: sens * pas(), behavior: noyau.comportementScroll() });
+      /** @param {number} direction -1 towards the left, +1 towards the right. */
+      function scrollTrack(direction) {
+        track.scrollBy({ left: direction * step(), behavior: core.scrollBehavior() });
       }
 
-      prec.addEventListener('click', function () { defiler(-1); });
-      suiv.addEventListener('click', function () { defiler(1); });
+      prev.addEventListener('click', function () { scrollTrack(-1); });
+      next.addEventListener('click', function () { scrollTrack(1); });
 
-      // Le défilement émet beaucoup d'événements : on les regroupe sur une
-      // frame. `passive:true` promet de ne pas appeler preventDefault, ce qui
-      // dispense le navigateur d'attendre cet écouteur.
-      var enAttente = false;
-      piste.addEventListener('scroll', function () {
-        if (enAttente) return;
-        enAttente = true;
-        requestAnimationFrame(function () { enAttente = false; majBoutons(); });
+      // Scrolling fires many events: we batch them onto one frame.
+      // `passive:true` promises not to call preventDefault, which spares the
+      // browser from waiting on this listener.
+      var pending = false;
+      track.addEventListener('scroll', function () {
+        if (pending) return;
+        pending = true;
+        requestAnimationFrame(function () { pending = false; updateButtons(); });
       }, { passive: true });
 
-      window.addEventListener('resize', majBoutons, { passive: true });
-      majBoutons();
+      window.addEventListener('resize', updateButtons, { passive: true });
+      updateButtons();
     });
   })();
 
   /* --------------------------------------------------------------------------
-     3. BOUCLES D'AMBIANCE DES DÉMOS
-     Pastilles d'état, barres d'activité et chatoiements tournent en boucle
-     infinie (2.5s à 2.8s [relevé] M). Les laisser tourner hors écran fait
-     travailler le compositeur pour rien. `animationPlayState` met en pause SANS
-     remettre à zéro : la boucle reprend où elle s'était arrêtée, sans saut
-     visible. Sous mouvement réduit, le CSS a déjà coupé ces animations — on ne
-     touche alors à rien, pour ne pas ressusciter en JS ce que le CSS a éteint.
+     3. DEMO AMBIENT LOOPS
+     Status dots, activity bars and shimmers loop forever
+     (2.5s to 2.8s [measured] M). Letting them run off-screen makes the
+     compositor work for nothing. `animationPlayState` pauses WITHOUT
+     resetting: the loop resumes where it stopped, with no visible jump. Under
+     reduced motion, the CSS has already switched these animations off — we
+     then touch nothing, so as not to resurrect in JS what the CSS turned off.
   ---------------------------------------------------------------------------*/
-  (function boucles() {
-    if (noyau.mouvementReduit() || !('IntersectionObserver' in window)) return;
-    var scenes = document.querySelectorAll('[data-boucle]');
+  (function loops() {
+    if (core.reducedMotion() || !('IntersectionObserver' in window)) return;
+    var scenes = document.querySelectorAll('[data-loop]');
     if (!scenes.length) return;
 
-    var observateur = new IntersectionObserver(function (entrees) {
-      entrees.forEach(function (entree) {
-        var etat = entree.isIntersecting ? 'running' : 'paused';
-        entree.target.querySelectorAll('.pastille, .barres i, .chatoie')
-          .forEach(function (el) { el.style.animationPlayState = etat; });
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        var state = entry.isIntersecting ? 'running' : 'paused';
+        entry.target.querySelectorAll('.dot, .bars i, .shimmer')
+          .forEach(function (el) { el.style.animationPlayState = state; });
       });
     }, { threshold: 0 });
 
-    scenes.forEach(function (s) { observateur.observe(s); });
+    scenes.forEach(function (s) { observer.observe(s); });
   })();
 })();

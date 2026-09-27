@@ -1,34 +1,47 @@
 ---
 name: react-19
-description: Use when implementing React 19.2 patterns — use(), useOptimistic, useActionState, useEffectEvent, Activity component, React Compiler.
-version: 19.2.0
+description: Use when implementing React 19.3 patterns — use(), useOptimistic, useActionState, useEffectEvent, Activity, ViewTransition, Fragment refs, use(browser()), React Compiler.
+version: 19.3.0
 user-invocable: true
 references: references/new-hooks.md, references/activity-component.md, references/actions-api.md, references/react-compiler.md, references/ref-as-prop.md, references/context-improvements.md, references/suspense-patterns.md, references/document-metadata.md, references/resource-loading.md, references/migration-18-19.md, references/virtualization.md, references/lazy-loading.md, references/profiling.md, references/templates/action-form.md, references/templates/optimistic-update.md, references/templates/activity-tabs.md, references/templates/use-promise.md, references/templates/use-context.md, references/templates/use-effect-event.md, references/templates/error-boundary.md, references/templates/ref-as-prop.md, references/templates/document-metadata.md, references/templates/resource-loading.md, references/templates/virtual-list.md, references/templates/lazy-components.md, references/templates/profiling-devtools.md, references/hooks-improved.md, references/templates/use-deferred-value.md, references/templates/use-transition-async.md, references/use-state.md, references/use-effect.md, references/use-ref.md, references/use-memo.md, references/use-callback.md, references/use-layout-effect.md, references/use-id.md, references/use-imperative-handle.md, references/use-sync-external-store.md, references/custom-hooks-patterns.md, references/templates/state-patterns.md, references/templates/effect-patterns.md, references/templates/ref-patterns.md, references/templates/custom-hooks.md, references/templates/external-store.md
 ---
 
 <objective>
-Covers React 19.2's new hooks and features: `use()` for reading promises/context in render, `useOptimistic` for instant UI updates, `useActionState` for form action state, `useFormStatus` for child-component pending state, `useEffectEvent` for non-reactive effect callbacks, the `Activity` component for hiding/showing UI while preserving state, and the React Compiler's automatic memoization (making manual `useMemo`/`useCallback` mostly obsolete).
+Covers React 19.3's hooks and features: `use()` for reading promises/context in render, `useOptimistic` for instant UI updates, `useActionState` for form action state, `useFormStatus` for child-component pending state, `useEffectEvent` for non-reactive effect callbacks, the `Activity` component for hiding/showing UI while preserving state, `<ViewTransition>` + `addTransitionType` animations, Fragment refs and `use(browser())` browser-only rendering (new in 19.3), and the React Compiler's automatic memoization (making manual `useMemo`/`useCallback` mostly obsolete).
 
 Also documents all classic hooks (useState, useEffect, useLayoutEffect, useRef, useImperativeHandle, useMemo, useCallback, useId, useSyncExternalStore) and React 18→19 breaking changes (`ref` as a prop instead of `forwardRef`, `<Context value={}>` instead of `<Context.Provider>`). This is the core React hooks/features skill — for global state see react-state, for forms see react-forms, and for SOLID architecture rules see solid-react.
 </objective>
 
-# React 19.2 Core Features
+# React 19.3 Core Features
 
 ## Agent Workflow (MANDATORY)
 
 Before ANY implementation, spawn 3 agents in parallel, one `Agent` call each with a `name`:
 
 1. **fuse-ai-pilot:explore-codebase** - Analyze existing React patterns and component structure
-2. **fuse-ai-pilot:research-expert** - Verify latest React 19.2 docs via Context7/Exa
+2. **fuse-ai-pilot:research-expert** - Verify latest React 19.3 docs via Context7/Exa
 3. **mcp__context7__query-docs** - Check use(), useOptimistic, useActionState, Activity patterns
 
 After implementation, run **fuse-ai-pilot:sniper** for validation.
 
 ---
 
-## What's New in React 19.2
+## What's New in React 19.3
 
-### New Hooks
+Stable in 19.3 (react/react-dom 19.3.0, 2026-09-09; `@types/react` 19.3 needs TypeScript ≥ 5.6):
+
+| API | Purpose | Guide |
+|-----|---------|-------|
+| `<ViewTransition>` | Animate enter/exit/update/share via the browser View Transition API | `references/suspense-patterns.md` |
+| `addTransitionType(type)` | Tag a Transition to pick a different animation | `references/suspense-patterns.md` |
+| `<Fragment ref>` | `FragmentInstance` (events, focus, observers) without a wrapper `<div>` | `references/ref-as-prop.md` |
+| `use(browser(reason?))` (`react-dom`) | Browser-only rendering: suspends on the server, Suspense fallback in HTML | `references/new-hooks.md` |
+
+Behaviour changes: Transitions no longer entangle, StrictMode double-invokes effects during hydration, DEV warning on conditional `use()` unblocking → `references/migration-18-19.md`.
+
+**RSC security:** `react-server-dom-*` must be ≥ 19.2.4 (CVE-2025-55182 RCE and follow-up DoS CVEs); prefer ≥ 19.2.7 or 19.3.0.
+
+### New Hooks (19.0–19.2)
 
 | Hook | Purpose | Guide |
 |------|---------|-------|
@@ -89,7 +102,7 @@ After implementation, run **fuse-ai-pilot:sniper** for validation.
 
 ---
 
-### Activity Component (19.2)
+### Activity Component (stable since 19.2)
 
 Hide/show components while preserving state:
 
@@ -101,7 +114,7 @@ Hide/show components while preserving state:
 
 → See `references/activity-component.md` for patterns
 
-### React Compiler (19.1+)
+### React Compiler (1.0 stable, Oct 2025 — React 17+)
 
 Automatic memoization - useMemo/useCallback mostly obsolete:
 
@@ -146,7 +159,7 @@ const [state, action, isPending] = useActionState(asyncFn, initialState)
 
 → See `references/templates/action-form.md`
 
-### useEffectEvent (19.2)
+### useEffectEvent (stable since 19.2)
 
 ```typescript
 const onEvent = useEffectEvent(() => {
@@ -230,7 +243,7 @@ Code split routes and heavy components for smaller bundles.
 Measure render performance with DevTools Profiler.
 → See `references/profiling.md`
 
-**Note:** With React Compiler (19.1+), manual memo/useMemo/useCallback optimizations are mostly obsolete. Profile first to verify if optimization is needed.
+**Note:** With React Compiler (1.0+), manual memo/useMemo/useCallback optimizations are mostly obsolete. Profile first to verify if optimization is needed.
 
 ---
 

@@ -264,7 +264,7 @@ module.exports = {
 - Test focus indicators in both light and dark modes
 - Ensure keyboard navigation shows clear focus states
 
-## v4 to v4.1 Migration
+## v3 to v4 Migration
 
 ### Ring Width Changes
 

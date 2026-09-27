@@ -12,7 +12,7 @@ Optimize query performance by selecting only needed fields and relations.
 
 ```typescript
 // lib/types/userSelect.ts
-import type { Prisma } from "@prisma/client";
+import type { Prisma } from "@/generated/prisma/client";
 
 /**
  * User safe for public display
@@ -101,7 +101,7 @@ async function getUserWithPosts(userId: string): Promise<UserWithPosts | null> {
 
 ```typescript
 // lib/types/userInclude.ts
-import type { Prisma } from "@prisma/client";
+import type { Prisma } from "@/generated/prisma/client";
 
 /**
  * Post summary for inclusion
@@ -406,7 +406,7 @@ const post = await prisma.post.findUnique({
 
 ```typescript
 // lib/constants/selects.ts
-import type { Prisma } from "@prisma/client";
+import type { Prisma } from "@/generated/prisma/client";
 
 /**
  * Reusable user select pattern
@@ -430,7 +430,9 @@ export const postSelect = {
     select: userSelect
   }
 } as const;
+```
 
+```typescript
 // lib/queries/reusableSelectQueries.ts
 import { userSelect, postSelect } from "@/lib/constants/selects";
 

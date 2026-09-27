@@ -1,7 +1,7 @@
 /**
- * Git Module - Informations Git
+ * Git Module - Git information
  *
- * @description SRP: Responsabilite unique de recuperation Git
+ * @description SRP: Single responsibility of fetching Git info
  */
 
 import { execSync } from "node:child_process";

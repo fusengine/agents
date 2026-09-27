@@ -1,8 +1,8 @@
 /**
- * Config Manager - Gestion de la configuration du statusline
+ * Config Manager - Statusline configuration management
  *
- * @description Charge et valide la configuration depuis un fichier JSON
- * Applique le principe SRP: responsabilite unique de gestion de config
+ * @description Loads and validates the configuration from a JSON file
+ * Applies SRP: single responsibility of config management
  */
 
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
@@ -16,8 +16,8 @@ const DEFAULT_CONFIG = join(STATUSLINE_ROOT, "config.json");
 const USER_CONFIG = join(STATUSLINE_ROOT, "user-config.json");
 
 /**
- * Interface pour le gestionnaire de configuration
- * Applique le principe DIP: dependance sur abstraction
+ * Configuration manager interface
+ * Applies DIP: depend on an abstraction
  */
 export interface IConfigManager {
 	load(): Promise<StatuslineConfig>;
@@ -26,28 +26,28 @@ export interface IConfigManager {
 }
 
 /**
- * Gestionnaire de configuration du statusline
+ * Statusline configuration manager
  */
 export class ConfigManager implements IConfigManager {
 	/**
-	 * Charge la configuration depuis le fichier
-	 * Priorite: USER_CONFIG > DEFAULT_CONFIG > defaultConfig
+	 * Loads the configuration from file
+	 * Priority: USER_CONFIG > DEFAULT_CONFIG > defaultConfig
 	 */
 	async load(): Promise<StatuslineConfig> {
 		try {
-			// 1. Config utilisateur (prioritaire)
+			// 1. User config (highest priority)
 			if (existsSync(USER_CONFIG)) {
 				const content = readFileSync(USER_CONFIG, "utf-8");
 				return StatuslineConfigSchema.parse(JSON.parse(content));
 			}
 
-			// 2. Config du plugin
+			// 2. Plugin config
 			if (existsSync(DEFAULT_CONFIG)) {
 				const content = readFileSync(DEFAULT_CONFIG, "utf-8");
 				return StatuslineConfigSchema.parse(JSON.parse(content));
 			}
 
-			// 3. Config par defaut
+			// 3. Default config
 			return defaultConfig;
 		} catch (error) {
 			console.error(`Config error: ${error}`);
@@ -56,7 +56,7 @@ export class ConfigManager implements IConfigManager {
 	}
 
 	/**
-	 * Sauvegarde la configuration dans le fichier utilisateur
+	 * Saves the configuration to the user file
 	 */
 	async save(config: StatuslineConfig): Promise<void> {
 		const validated = StatuslineConfigSchema.parse(config);
@@ -64,7 +64,7 @@ export class ConfigManager implements IConfigManager {
 	}
 
 	/**
-	 * Reinitialise la configuration aux valeurs par defaut
+	 * Resets the configuration to default values
 	 */
 	async reset(): Promise<StatuslineConfig> {
 		await this.save(defaultConfig);

@@ -130,14 +130,17 @@ export async function executeWithTracing<T>(
 
 ```typescript
 // modules/cores/db/prisma-with-tracing.ts
-import { PrismaClient } from '@prisma/client'
+import { PrismaPg } from '@prisma/adapter-pg'
+import { PrismaClient } from './generated/prisma/client'  // v7: generated path
 import { executeWithTracing } from '@/modules/observability/src/services/prisma-tracing.service'
 import type { PrismaQueryEvent } from '@/modules/observability/src/interfaces/tracing.interface'
+
+const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL! })
 
 /**
  * Prisma client with OpenTelemetry tracing extension
  */
-export const prisma = new PrismaClient().$extends({
+export const prisma = new PrismaClient({ adapter }).$extends({
   query: {
     async $allOperations({ operation, model, args, query }) {
       const event: PrismaQueryEvent = {

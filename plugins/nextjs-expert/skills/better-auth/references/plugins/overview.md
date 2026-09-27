@@ -79,7 +79,7 @@ export const authClient = createAuthClient({
 ## Generate Schema After Adding Plugins
 
 ```bash
-bunx @better-auth/cli generate
+bunx auth@latest generate
 bunx prisma migrate dev
 ```
 

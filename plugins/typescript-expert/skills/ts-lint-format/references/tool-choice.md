@@ -1,6 +1,6 @@
 ---
 name: tool-choice
-description: 2026 arbitrage — Biome 2.x vs ESLint 9 + typescript-eslint, with Oxlint as challenger
+description: 2026 arbitrage — Biome 2.x vs ESLint 10 + typescript-eslint, with Oxlint as challenger
 when-to-use: Load when deciding which lint/format stack a TypeScript project should adopt
 keywords: biome, eslint, typescript-eslint, oxlint, tool-choice, type-aware, prettier
 related: biome-setup.md, eslint-typed.md
@@ -17,7 +17,7 @@ Sources: https://biomejs.dev/linter/ + https://typescript-eslint.io/getting-star
 
 ## The two main options
 
-| | Biome 2.x | ESLint 9 + typescript-eslint |
+| | Biome 2.x | ESLint 10 + typescript-eslint |
 |---|-----------|------------------------------|
 | Binary | One (Rust); lint + format + import-organize | ESLint + parser + plugins (Node) |
 | Formatter | Built-in (replaces Prettier) | Prettier (separate) |
@@ -41,7 +41,8 @@ running `tsc`, but it does **not** yet cover, among others:
 **New project → Biome 2.x.** One binary, format+lint+import-sort, near-zero config,
 fast enough to run on every save and in CI. Accept the ~75% typed coverage.
 
-**Established or type-heavy codebase → ESLint 9 + typescript-eslint typed linting.**
+**Established or type-heavy codebase → ESLint 10 + typescript-eslint typed linting.**
+(On TS 7.0, typescript-eslint still runs on the TS 6.0 API via `@typescript/typescript6`.)
 When you need `no-unsafe-*`, cross-file narrowing, `import/no-cycle`, or a specific
 plugin, the full type-checker-backed rules are worth the slower runs (mitigated by
 IDE caching; teams usually run the full pass pre-push or in CI).

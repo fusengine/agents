@@ -158,7 +158,7 @@ After EVERY code change:
 **XcodeBuildMCP**:
 - [GitHub](https://github.com/cameroncooke/XcodeBuildMCP)
 - [npm](https://www.npmjs.com/package/xcodebuildmcp)
-- Version: 1.12.3
+- Version: 2.7.0 (npm, September 2026)
 
 **Apple Docs MCP**:
 - [GitHub](https://github.com/kimsungwhee/apple-docs-mcp)

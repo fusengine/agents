@@ -1,17 +1,18 @@
 ---
 name: test-doubles
-description: PHPUnit 12 stubs, mocks, fixtures, and coverage patterns
-keywords: stub, mock, createstub, createmock, fixture, fakes, coverage, template
+description: PHPUnit 13 stubs, mocks, fixtures, and coverage patterns
+keywords: stub, mock, createstub, createmock, fixture, fakes, coverage, seal, template
 ---
 
 # Test Doubles, Fixtures & Coverage Template
 
-Complete PHPUnit 12 examples. Pest exposes the same API via `$this->` in closures.
+Complete PHPUnit 13 examples. Pest exposes the same API via `$this->` in closures.
 
 ## Stub — canned return values (no expectations)
 
 Use when the double only needs to feed the code under test. `createStub()` results
-**cannot** carry expectations in PHPUnit 12.
+**cannot** carry expectations (since PHPUnit 12). Do not reach for `createMock()` +
+`$this->any()` instead — `any()` is hard-deprecated in PHPUnit 13.
 
 ```php
 <?php
@@ -49,6 +50,11 @@ public function testNotifiesOnce(): void
     (new Signup($mailer))->register('user@example.com');
 }
 ```
+
+PHPUnit 13 can **seal** a configured double: end the chain with `->seal()` and no
+further configuration is accepted; on a mock, calls to unconfigured methods then fail.
+For several calls to one method with different arguments, use
+`->withParameterSetsInOrder([...], [...])` (replacement for the removed `withConsecutive()`).
 
 ## Fixtures — lifecycle setup/teardown
 

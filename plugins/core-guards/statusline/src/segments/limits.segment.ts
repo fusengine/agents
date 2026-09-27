@@ -1,7 +1,7 @@
 /**
- * Limits Segment - Affiche les vraies limites via OAuth
+ * Limits Segment - Displays the real limits via OAuth
  *
- * @description SRP: Affichage limites OAuth uniquement
+ * @description SRP: OAuth limits display only
  */
 
 import type { StatuslineConfig } from "../config/schema";

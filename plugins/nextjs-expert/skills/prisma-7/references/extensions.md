@@ -16,7 +16,7 @@ Extend PrismaClient with custom functionality.
 
 ```typescript
 // modules/cores/db/src/extensions/modelExtension.ts
-import { Prisma } from '@prisma/client'
+import { Prisma } from '../../generated/prisma/client' // v7: generated path
 
 /**
  * Model extension for custom user query methods
@@ -51,7 +51,8 @@ export const modelExtension = Prisma.defineExtension({
 
 ```typescript
 // modules/cores/db/src/prisma.ts
-import { PrismaClient } from '@prisma/client'
+import { PrismaClient } from '../generated/prisma/client' // v7: generated path
+import { PrismaPg } from '@prisma/adapter-pg'
 import { modelExtension } from './extensions/modelExtension'
 
 const adapter = new PrismaPg({
@@ -77,7 +78,7 @@ const activeUsers = await prisma.user.findActive()
 
 ```typescript
 // modules/cores/db/src/extensions/softDeleteExtension.ts
-import { Prisma } from '@prisma/client'
+import { Prisma } from '../../generated/prisma/client' // v7: generated path
 
 /**
  * Query extension for soft delete pattern
@@ -114,6 +115,14 @@ export const softDeleteExtension = Prisma.defineExtension({
 
 ```typescript
 // modules/cores/db/src/prisma.ts
+import { PrismaClient } from '../generated/prisma/client' // v7: generated path
+import { PrismaPg } from '@prisma/adapter-pg'
+import { softDeleteExtension } from './extensions/softDeleteExtension'
+
+const adapter = new PrismaPg({
+  connectionString: process.env.DATABASE_URL!,
+})
+
 export const prisma = new PrismaClient({ adapter }).$extends(
   softDeleteExtension
 )
@@ -125,7 +134,12 @@ export const prisma = new PrismaClient({ adapter }).$extends(
 
 ```typescript
 // modules/cores/db/src/extensions/computedFieldsExtension.ts
-import { Prisma } from '@prisma/client'
+import { Prisma, PrismaClient } from '../../generated/prisma/client' // v7: generated path
+import { PrismaPg } from '@prisma/adapter-pg'
+
+const adapter = new PrismaPg({
+  connectionString: process.env.DATABASE_URL!,
+})
 
 /**
  * Result extension for computed/virtual fields
@@ -180,7 +194,12 @@ export async function getUserWithComputed(id: string) {
 
 ```typescript
 // modules/cores/db/src/extensions/healthCheckExtension.ts
-import { Prisma } from '@prisma/client'
+import { Prisma, PrismaClient } from '../../generated/prisma/client' // v7: generated path
+import { PrismaPg } from '@prisma/adapter-pg'
+
+const adapter = new PrismaPg({
+  connectionString: process.env.DATABASE_URL!,
+})
 
 /**
  * Health check interface for client extension
@@ -227,7 +246,7 @@ export async function checkHealth() {
 
 ```typescript
 // modules/cores/db/src/extensions/auditExtension.ts
-import { Prisma } from '@prisma/client'
+import { Prisma } from '../../generated/prisma/client' // v7: generated path
 
 /**
  * Audit log entry interface
@@ -303,7 +322,7 @@ export const auditExtension = Prisma.defineExtension({
 
 ```typescript
 // modules/cores/db/src/extensions/index.ts
-import { Prisma } from '@prisma/client'
+import { Prisma } from '../../generated/prisma/client' // v7: generated path
 import { softDeleteExtension } from './softDeleteExtension'
 import { auditExtension } from './auditExtension'
 
@@ -313,9 +332,9 @@ import { auditExtension } from './auditExtension'
  * @module modules/cores/db/src/extensions
  */
 export function createCompositeExtension() {
-  return (client: InstanceType<typeof Prisma.Client>) => {
-    return client.$extends(softDeleteExtension).$extends(auditExtension)
-  }
+  return Prisma.defineExtension((client) =>
+    client.$extends(softDeleteExtension).$extends(auditExtension)
+  )
 }
 
 /**
@@ -331,7 +350,8 @@ export { computedFieldsExtension } from './computedFieldsExtension'
 
 ```typescript
 // modules/cores/db/src/prisma.ts
-import { PrismaClient } from '@prisma/client'
+import { PrismaClient } from '../generated/prisma/client' // v7: generated path
+import { PrismaPg } from '@prisma/adapter-pg'
 import { createCompositeExtension } from './extensions'
 
 const adapter = new PrismaPg({
@@ -344,7 +364,7 @@ const adapter = new PrismaPg({
  * @module modules/cores/db/src
  */
 export const prisma = new PrismaClient({ adapter }).$extends(
-  createCompositeExtension() as any
+  createCompositeExtension()
 )
 ```
 

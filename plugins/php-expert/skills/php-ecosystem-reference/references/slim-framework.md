@@ -1,7 +1,7 @@
 ---
 name: slim-framework
 description: Slim micro-framework orientation — PSR-7 / PSR-15 / PSR-11 based
-source: https://www.slimframework.com/ (verified — Slim 4.15.2 released 2026-05-22)
+source: https://www.slimframework.com/ + github.com/slimphp/Slim/releases (verified — Slim 4.15.3 released 2026-09-01)
 keywords: slim, micro-framework, psr-7, psr-15, psr-11, appfactory, routing
 ---
 
@@ -21,11 +21,14 @@ built directly on the PSR HTTP standards:
 | **PSR-15** | Concentric middleware wraps the request/response — see [[php-http-psr]] |
 | **PSR-11** | Uses any PSR-11 `ContainerInterface` for dependency injection |
 
-## Version status (verified 2026-05-22)
+## Version status (verified 2026-09-27)
 
-- **Slim 4.15.2** is the current release. It fixes a reflected XSS advisory
+- **Slim 4.15.3** (2026-09-01) is the current release. It fixes a route-parameter constraint
+  bypass via double percent-encoded input (**GHSA-h377-p8x2-prf9**, Slim 4.x up to 4.15.2) —
+  relevant if you use route placeholder values without revalidating them. Use ≥ 4.15.3.
+- **Slim 4.15.2** (2026-05-22) fixed a reflected XSS advisory
   (**CVE-2026-48157 / GHSA-53h4-8rc4-f539**) affecting Slim `>= 4.4.0, <= 4.15.1` in the HTML error
-  renderer when untrusted data reaches `HttpException::setTitle()` / `setDescription()`. Use ≥ 4.15.2.
+  renderer when untrusted data reaches `HttpException::setTitle()` / `setDescription()`.
 - The older **Slim 3.13.0** line supports PHP 8.1 through 8.5.
 
 ## Minimal shape (from slimframework.com)

@@ -1,6 +1,6 @@
 # Tokens — stash
 
-Corpus of **techniques**, relevé on the source and rebuilt under a
+Corpus of **techniques**, measured on the source and rebuilt under a
 different brand. Structure, rhythm, typography, component anatomy and motion
 procedures are taken from the source. What changes: the brand name, the palette,
 the photographs, and the copy.
@@ -8,9 +8,9 @@ the photographs, and the copy.
 **This is a reproduction, not a derivation.** The section order, the grid of each
 section, the number of items per grid, the type scale, the spacing rhythm, the
 radii, the hairlines and the animation procedures are the source's. Where a value
-here differs from the source, it is marked `[arbitrage]` and the reason is given
+here differs from the source, it is marked `[decided]` and the reason is given
 in the same sentence — there are 25 such marks in `styles.css`, against 212
-`[relevé]`.
+`[measured]`.
 
 **Texts are rewritten, not paraphrased away.** They keep the same function and
 approximately the same length as the source's, because the exact length of a
@@ -30,7 +30,7 @@ single 45KB line with no trailing newline, every count below was taken with
 `grep -oa … | wc -l`; the `-a` is not optional.
 
 Marker convention, used throughout and never loosened:
-`[relevé]` = read in the source · `[arbitrage]` = decided here · `[estimé]` =
+`[measured]` = read in the source · `[decided]` = decided here · `[estimated]` =
 computed, not read.
 
 ---
@@ -63,7 +63,7 @@ grep -oa 'translateY(16px)' src.html | wc -l   # 5
 grep -oa 'translateY(24px)' src.html | wc -l   # 19
 ```
 
-**Two distances, not one, and they are not interchangeable** `[relevé]`:
+**Two distances, not one, and they are not interchangeable** `[measured]`:
 
 - **16px** — the five direct children of the hero: eyebrow, h1, paragraph, button
   row, trust strip. Five, exactly the count of the hero's text elements.
@@ -72,24 +72,24 @@ grep -oa 'translateY(24px)' src.html | wc -l   # 19
 The hero rises on *mount*, the sections on *intersection*. The source distinguishes
 an entrance at load from an entrance at scroll, and gives the first a shorter
 travel because the reader is already looking at it. Reproduced in
-`motion.js` §3: `[data-monte]` is deliberately **not** observed, it fires on the
+`motion.js` §3: `[data-rise]` is deliberately **not** observed, it fires on the
 second animation frame after paint.
 
-What the runtime hides, and is therefore `[arbitrage]` here: every duration except
+What the runtime hides, and is therefore `[decided]` here: every duration except
 150ms, every easing curve, every intersection threshold, every stagger step.
 
 ### Values used here
 
 | Token | Value | Mark | Applies to |
 |---|---|---|---|
-| `--duree-presse` | `150ms` | `[relevé]` literal | press, hover, colour change |
-| `--duree-etat` | `200ms` | `[arbitrage]` | link hover, accordion rows |
-| `--duree-revele` | `620ms` | `[arbitrage]` | a block rising into view |
-| `--pas-cascade` | `90ms` | `[arbitrage]` | one grid cell to the next |
-| `--courbe-sortie` | `cubic-bezier(0.16, 1, 0.3, 1)` | `[arbitrage]` | reveals |
-| `--courbe-etat` | `cubic-bezier(0.4, 0, 0.2, 1)` | `[relevé]` | Tailwind's implicit curve |
-| `--montee-heros` | `16px` | `[relevé]` literal | hero children |
-| `--montee-bloc` | `24px` | `[relevé]` literal | section blocks |
+| `--duration-press` | `150ms` | `[measured]` literal | press, hover, colour change |
+| `--duration-state` | `200ms` | `[decided]` | link hover, accordion rows |
+| `--duration-reveal` | `620ms` | `[decided]` | a block rising into view |
+| `--cascade-step` | `90ms` | `[decided]` | one grid cell to the next |
+| `--ease-out` | `cubic-bezier(0.16, 1, 0.3, 1)` | `[decided]` | reveals |
+| `--ease-state` | `cubic-bezier(0.4, 0, 0.2, 1)` | `[measured]` | Tailwind's implicit curve |
+| `--rise-hero` | `16px` | `[measured]` literal | hero children |
+| `--rise-block` | `24px` | `[measured]` literal | section blocks |
 
 No `cubic-bezier` on this page has a y control point above 1: no bounce, no
 elastic, no overshoot. Verified:
@@ -111,7 +111,7 @@ detail that survives the runtime:
 .landing-press button:active { transform: scale(0.96); }
 ```
 
-Five properties, one duration, one scale. Reproduced verbatim on `.bouton`. Note
+Five properties, one duration, one scale. Reproduced verbatim on `.button`. Note
 that `transform` is first in the list and that the resting scale is never
 declared — the element simply returns to `none`.
 
@@ -123,7 +123,7 @@ grep -oa 'active:scale' src.html | wc -l    # 7
 ```
 
 Of those 40 hovers, 38 are a colour or a background swap. Exactly **two** change
-geometry, and the difference between them is deliberate `[relevé]`:
+geometry, and the difference between them is deliberate `[measured]`:
 
 - the white button: `hover:scale-[1.03]`
 - the gradient button: `hover:scale-[1.02]`
@@ -141,8 +141,8 @@ page, so it is given the smaller gesture. Both reproduced at those exact values.
 The message area is **empty** in the SSR payload and carries a minimum height in
 two steps. That is the whole tell: its contents are written by the runtime, one
 message at a time, and the minimum height exists so the panel does not collapse
-before they arrive. The procedure is reproduced (`[data-fil]` / `[data-message]`,
-220ms apart); the interval is `[arbitrage]`.
+before they arrive. The procedure is reproduced (`[data-thread]` / `[data-message]`,
+220ms apart); the interval is `[decided]`.
 
 ### The no-JS contract
 
@@ -151,10 +151,10 @@ only after it has confirmed it can lift it — content present, motion not reduc
 `IntersectionObserver` available. Three failure modes therefore leave the page
 fully legible rather than blank. The accordion follows the same rule in the other
 direction: the HTML ships all four panels **open** (`aria-expanded="true"`, no
-`data-plie`), and the script closes three of them on arm.
+`data-folded`), and the script closes three of them on arm.
 
 Every observer is disarmed. `self.unobserve(e.target)` in the callback — the
-second callback parameter **is** the observer, so no closure over `vigie` is
+second callback parameter **is** the observer, so no closure over `watcher` is
 needed — and `disconnect()` plus `cancelAnimationFrame` on `visibilitychange`,
 with `pagehide` as the fallback for a tab closed without passing through a hidden
 state.
@@ -193,18 +193,18 @@ The page reads completely differently because the *field* changed, not the accen
 
 | Role | Source | Here | Mark |
 |---|---|---|---|
-| page background | `#120a10` | `#05171a` | `[arbitrage]` |
-| panel | `#160b12` | `#082024` | `[arbitrage]` |
-| card / chassis | `#1a0e15` | `#0a262a` | `[arbitrage]` |
-| raised | `#251621` | `#0e3034` | `[arbitrage]` |
-| primary text | `#f7ede8` | `#eaf6f3` | `[arbitrage]` |
-| secondary text | `#a89099` | `#93b3b0` | `[arbitrage]` |
-| text on image | `#f3dfd6` | `#dcefea` | `[arbitrage]` |
-| light accent | `#ffd9c2` | `#ffd2c2` | `[arbitrage]` |
-| plan label | `#c9a99b` | `#a4c4bd` | `[arbitrage]` |
-| placeholder | `#8a7078` | `#86aaa6` | `[arbitrage]` |
-| accent | `#ff8f70` | `#ff7a5c` | `[arbitrage]` |
-| hairlines | `.06 / .08 / .20` white | identical | `[relevé]` |
+| page background | `#120a10` | `#05171a` | `[decided]` |
+| panel | `#160b12` | `#082024` | `[decided]` |
+| card / chassis | `#1a0e15` | `#0a262a` | `[decided]` |
+| raised | `#251621` | `#0e3034` | `[decided]` |
+| primary text | `#f7ede8` | `#eaf6f3` | `[decided]` |
+| secondary text | `#a89099` | `#93b3b0` | `[decided]` |
+| text on image | `#f3dfd6` | `#dcefea` | `[decided]` |
+| light accent | `#ffd9c2` | `#ffd2c2` | `[decided]` |
+| plan label | `#c9a99b` | `#a4c4bd` | `[decided]` |
+| placeholder | `#8a7078` | `#86aaa6` | `[decided]` |
+| accent | `#ff8f70` | `#ff7a5c` | `[decided]` |
+| hairlines | `.06 / .08 / .20` white | identical | `[measured]` |
 
 ### The two gradients
 
@@ -227,7 +227,7 @@ Reproduced: same angle, same four-stop structure, same clip mechanism, different
 hues — `#ffd2bd 0% · #ff7a5c 38% · #ffa981 62% · #58d3c2 100%`. It runs warm to
 cold instead of warm to violet, which is what ties it to the teal field.
 
-One addition that is `[arbitrage]`: `padding-bottom: 0.06em` on `.degrade`. Blink
+One addition that is `[decided]`: `padding-bottom: 0.06em` on `.gradient-text`. Blink
 clips the descenders of an italic serif at the background-clip box; without it the
 tail of *&answers.* is cut.
 
@@ -238,14 +238,14 @@ The button gradient — `from-[#ff8f50] to-[#f0648e]` in the source — becomes
 
 The source sets `text-white` on both gradient surfaces (the "Most popular" badge
 and the "Go Pro" button). Measured against its darkest stop that is **≈3.0:1**,
-under the 4.5:1 floor for body-size text. Here the ink is `--sur-accent: #10231f`,
+under the 4.5:1 floor for body-size text. Here the ink is `--on-accent: #10231f`,
 a near-black teal:
 
-- against `#ff7a5c` (darkest stop): **6.35:1** `[estimé]`
-- against `#ffb27f` (lightest stop): **9.30:1** `[estimé]`
+- against `#ff7a5c` (darkest stop): **6.35:1** `[estimated]`
+- against `#ffb27f` (lightest stop): **9.30:1** `[estimated]`
 
 Geometry, radius, weight, padding and the gradient itself are unchanged. Only the
-ink is. Marked `[arbitrage]` in `styles.css` with the ratio written next to it.
+ink is. Marked `[decided]` in `styles.css` with the ratio written next to it.
 
 ### Measured contrast on the rendered page
 
@@ -261,7 +261,7 @@ with the rejected value beside the kept one.
 
 The four gradient-text runs and the three gradient surfaces come back as
 *warnings* rather than violations — the script cannot resolve a `background-image`
-into a single colour. Computed by hand against `--fond-page`: the darkest stop of
+into a single colour. Computed by hand against `--bg-page`: the darkest stop of
 the heading gradient gives **7.17:1**, the lightest **10.1:1**. Both clear the
 3:1 large-text floor with room.
 
@@ -277,7 +277,7 @@ grep -oa 'font-family:[^;]*' index-Bc6vz3Z7.css | sort -u
 #   "Instrument Serif", Georgia, serif      (inline <style>, .landing-display)
 ```
 
-`[relevé]`. The source serves both as local woff2 (`instrument-serif-regular.woff2`
+`[measured]`. The source serves both as local woff2 (`instrument-serif-regular.woff2`
 and `instrument-serif-italic.woff2`, two `@font-face` rules, `font-display: swap`).
 This rebuild pulls the same two families from the Google Fonts CDN — the same
 choice `mainframe-recode` made for Inter.
@@ -287,11 +287,11 @@ grep -oa 'landing-display' src.html | wc -l   # 22
 ```
 
 Twenty-two uses of the serif on the whole page, and **not one of them is a
-sentence**. The serif's complete territory `[relevé]`:
+sentence**. The serif's complete territory `[measured]`:
 
 1. the wordmark, in the header and the footer
 2. the italic half of each heading (7 headings)
-3. the three constat card titles
+3. the three observation card titles
 4. the three step numbers, `01 02 03`
 5. the three number-card figures, `0 folders / Under 1 sec / $5/mo`
 6. the two prices, `$0` and `$5`
@@ -313,7 +313,7 @@ Tailwind v4 default table, except the two arbitraries it writes itself
 | `--t-base` | 16 | `text-base` | the five lead paragraphs |
 | `--t-lg` | 18 | `text-lg` | wordmark, step numbers |
 | `--t-xl` | 20 | `text-xl` | step titles |
-| `--t-2xl` | 24 | `text-2xl` | constat card titles |
+| `--t-2xl` | 24 | `text-2xl` | observation card titles |
 | `--t-4xl` | 36 | `text-4xl` | every h2, below 640px |
 | `--t-5xl` | 48 | `text-5xl` | h1 below 640px, prices, pricing h2 ≥640 |
 | `--t-6xl` | 60 | `text-6xl` | every h2 ≥640px, h1 at 640–1024 |
@@ -330,13 +330,13 @@ for "Online" and 9px for the tab labels. Pre-flight check 17 floors any
 information-bearing text at **14px of rendered size at 360px**, labels and
 captions explicitly included. Every one of those tokens is therefore set to 14px
 here. It is the only typographic deviation from the source and it is
-`[arbitrage]`, marked at each of the five sites where it applies.
+`[decided]`, marked at each of the five sites where it applies.
 
 ### Weights, tracking, and what is never used
 
 Weights: **600** on the two opaque buttons, the badge and the phone screen title;
 **500** on nav, labels, step titles, list items and plan names; **400** on
-everything else. There is no 700 anywhere on the page `[relevé]` — a display page
+everything else. There is no 700 anywhere on the page `[measured]` — a display page
 with no bold heading.
 
 Tracking: `-0.025em` (`tracking-tight`) on every heading and every price;
@@ -367,8 +367,8 @@ Measured, then bisected against the gate:
 | 1.18 | 12 (reported delta 2px, still over tolerance) |
 | **1.20** | **0** |
 
-`--t-4xl-h: 1.20` and `.hero__titre { line-height: 1.2 }` are therefore
-`[arbitrage]`, and they are the largest single deviation in this rebuild. An
+`--t-4xl-h: 1.20` and `.hero__title { line-height: 1.2 }` are therefore
+`[decided]`, and they are the largest single deviation in this rebuild. An
 intermediate attempt — giving the serif `<em>` its own tighter line-height to stop
 it inflating the line box — changed nothing (19 violations before and after),
 which proved the overflow comes from the grotesque's own metrics and not from the
@@ -384,7 +384,7 @@ serif. That negative result is recorded because it is the useful half.
 grep -oa 'max-w-6xl' src.html | wc -l   # 10
 ```
 
-`[relevé]` and worth stating plainly: the page has **one** container ceiling
+`[measured]` and worth stating plainly: the page has **one** container ceiling
 (`max-w-6xl` = 72rem) used ten times, **one** gutter (`px-6` = 1.5rem) that never
 changes between 360px and 1920px, and **one** grid gap (`gap-4` = 1rem) for every
 card grid. Two blocks descend to `max-w-5xl`: the FAQ and the footer.
@@ -403,7 +403,7 @@ are the only ones with a top band, because every other section is a photographic
 card whose own interior padding does the work. The rest carry `pb` alone, so a
 card sits directly under the one above it with no dead band between them.
 
-Interior padding of the four photographic cards, all distinct `[relevé]`:
+Interior padding of the four photographic cards, all distinct `[measured]`:
 
 | Card | mobile | ≥640px |
 |---|---|---|
@@ -428,20 +428,20 @@ grep -oa 'rounded-3xl' src.html | wc -l         # 10
 grep -oa 'rounded-\[2\.5rem\]' src.html | wc -l # 4
 ```
 
-Five distinct radii plus the pill, each marking a scale of object `[relevé]`:
+Five distinct radii plus the pill, each marking a scale of object `[measured]`:
 
 | Radius | px | Objects |
 |---|---|---|
 | `2rem` | 32 | the hero card, and nothing else |
 | `2.5rem` | 40 | the four other photographic cards |
-| `1.5rem` | 24 | constat cards, plans, the agent window, the small vignette |
-| `1rem` | 16 | the two fiches inside the phone |
+| `1.5rem` | 24 | observation cards, plans, the agent window, the small thumbnail |
+| `1rem` | 16 | the two items inside the phone |
 | `0.75rem` | 12 | the agent's input field and its message bubbles |
 | pill | — | 23 buttons, pills, badges and dots |
 
 Plus the phone: `3rem` chassis, `2.4rem` screen. The 0.6rem difference is exactly
 the chassis's `p-2.5` padding, so the screen's curve is concentric with the
-chassis's `[relevé]`.
+chassis's `[measured]`.
 
 ### Two breakpoints, and they do a lot each
 
@@ -451,10 +451,10 @@ Four `@media` blocks in the rebuilt sheet, three of which matter:
   move; every band padding steps from 6rem to 8rem; the hero image grows from
   420 to 520px; the phone from 280 to 300px; the agent thread floor from 320 to
   380px; and **the iOS veil changes direction**, from `to bottom` to `to right`.
-  That last one is the source's own `sm:bg-gradient-to-r` `[relevé]` — a
+  That last one is the source's own `sm:bg-gradient-to-r` `[measured]` — a
   responsive change of *direction*, not of opacity.
 - **48rem (768px)** — the three nav links reappear. There is no burger at any
-  width: below 768px they simply do not exist `[relevé]`.
+  width: below 768px they simply do not exist `[measured]`.
 - **64rem (1024px)** — the header pill stops being inset and centres itself; the
   two duo layouts split into columns; the h1 takes its last step to 72px.
 
@@ -466,7 +466,7 @@ Both the nav and the content resolve to `max-width: 72rem; margin-inline: auto`.
 At 1440 the content box starts at x=144 and so does the pill; at 1920, x=384 for
 both. The pill's *interior* padding (1.25rem, 1.5rem ≥640) differs from the
 content gutter (1.5rem) because it is a floating object with its own border, not a
-column — that is the source's design and it is `[relevé]`, not drift.
+column — that is the source's design and it is `[measured]`, not drift.
 
 ---
 
@@ -478,15 +478,15 @@ column — that is the source's design and it is `[relevé]`, not drift.
 | 1 | hero | centred column | 5 text elements | 1 photo, full bleed |
 | 2 | problem | 1 → 3 | 3 cards | none |
 | 3 | fix | card + 1 → 3 | 3 step cells | 1 photo, 420/520px |
-| 4 | agentic | 1 → 2 | 1 vignette, 1 window | 1 photo, 224/256px |
+| 4 | agentic | 1 → 2 | 1 thumbnail, 1 window | 1 photo, 224/256px |
 | 5 | promise | card, then 1 → 3 | 5 pills, 3 numbers | 1 photo, full bleed |
-| 6 | iOS | 1 → 2 inside a card | 1 phone, 2 fiches | 1 photo, full bleed |
+| 6 | iOS | 1 → 2 inside a card | 1 phone, 2 items | 1 photo, full bleed |
 | 7 | pricing | 1 → 2 | 2 plans, 4 lines each | none |
 | 8 | FAQ | column → row | 4 entries | none |
 | 9 | closing | centred column | 3 text elements | 1 photo, full bleed |
 | — | footer | 1 → `1fr 2fr` | 4 link columns | none |
 
-Item counts are the source's, one for one: 3 constat cards, 3 steps, 5 query
+Item counts are the source's, one for one: 3 observation cards, 3 steps, 5 query
 pills, 3 numbers, 2 plans with 4 features each, 4 FAQ entries, 4 footer columns.
 
 ### The three procedures worth lifting out of this page
@@ -494,7 +494,7 @@ pills, 3 numbers, 2 plans with 4 features each, 4 FAQ entries, 4 footer columns.
 **The 1px grid gap as a separator.** The three step cells under the fix card sit in
 a grid whose `gap` is `1px` and whose *background* is the hairline colour; the
 cells carry an opaque background. Two separators are drawn by one declaration, and
-they cannot go out of sync with the cell padding `[relevé] gap-px bg-white/[0.06]`.
+they cannot go out of sync with the cell padding `[measured] gap-px bg-white/[0.06]`.
 
 **The veil that changes direction per section.** Four photographic cards, four
 different gradients: vertical three-stop on the hero (plus a second 10rem band
@@ -505,8 +505,8 @@ no card needs a different layout.
 
 **The interface drawn in CSS.** Both the agent window and the phone are markup,
 not screenshots: window dots, a status pill, message bubbles, an input field; a
-notch, a header, two fiches with 16/9 previews, a two-entry tab bar. The source
-does the same for its window, and only its *fiche thumbnails* are real images
+notch, a header, two items with 16/9 previews, a two-entry tab bar. The source
+does the same for its window, and only its *item thumbnails* are real images
 (remote CDN screenshots). Here those two thumbnails are drawn as radial gradients,
 because no screenshot was supplied — see §7.
 
@@ -551,9 +551,9 @@ in **height only** — a shift along X has no effect whatever. A first pass set
 
 | Site | `object-position` | What it frames |
 |---|---|---|
-| hero | `center 30%` | `[relevé]`, the source's own `object-[center_30%]` |
+| hero | `center 30%` | `[measured]`, the source's own `object-[center_30%]` |
 | fix | `center 45%` | the whole monolith, rocky base under the caption |
-| agent vignette | `center 36%` | the coral break, at 36% of `hills.webp`'s height |
+| agent thumbnail | `center 36%` | the coral break, at 36% of `hills.webp`'s height |
 | promise | `center 50%` | no focal point to find; any window of it serves |
 | iOS | `center 55%` | the arch opening centred, behind the phone |
 | closing | `center 50%` | the waterline at 52%; the symmetry **is** the subject |
@@ -563,14 +563,14 @@ its whole subject at `30%` (sky only) or `70%` (reflection only).
 
 Every image carries its intrinsic `width`/`height` so nothing shifts on load, a
 descriptive `alt`, and `loading="lazy"` on all but the hero, which takes
-`fetchpriority="high"` instead — the source's own arrangement `[relevé]`.
+`fetchpriority="high"` instead — the source's own arrangement `[measured]`.
 
 No `<svg>` stands in for a photograph. The 18 `<svg>` in the page are a single
 icon sprite defined once and referenced by `<use>` (arrow, check, chevron,
 sparkle, search, bookmark, settings), plus the grain, which is an inline data URI:
 
 ```css
-/* [relevé] literal, .landing-noise */
+/* [measured] literal, .landing-noise */
 opacity: .06;
 background-image: url("data:image/svg+xml,…feTurbulence
   type='fractalNoise' baseFrequency='.65' numOctaves='3' stitchTiles='stitch'…");
@@ -663,8 +663,8 @@ menu · the footer's `1fr 2fr` split and four link columns.
 | `design-system.md` | 164 | 149–164 ✓ |
 | `tokens-stash.md` | 684 | 400+ ✓ |
 
-Marker counts: 212 `[relevé]`, 25 `[arbitrage]`, 4 `[estimé]` in `styles.css`;
-13 `[relevé]` in `index.html`.
+Marker counts: 212 `[measured]`, 25 `[decided]`, 4 `[estimated]` in `styles.css`;
+13 `[measured]` in `index.html`.
 
 Gate status, run rather than asserted:
 
@@ -672,7 +672,7 @@ Gate status, run rather than asserted:
   0 violations, exit 0.** Eight warnings remain, all of them the script failing to
   resolve a `background-image` into a colour; each was computed by hand in §2.
 - **check 1** — 1 em dash in a visible string (the `<title>`), under the 2+ crutch
-  threshold. The 11 others are in French source comments.
+  threshold. The 11 others are in source comments.
 - **checks 3, 5, 6, 9, 10** — 0 hits each.
 - **checks 13, 15, 16, 17** — 44 distinct padding values; 6 `<img>`; 24
   transitions, 11 `:hover`, `:focus-visible` on every interactive element through

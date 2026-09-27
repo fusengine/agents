@@ -12,7 +12,7 @@ Handle string matching with flexible case sensitivity options.
 
 ```typescript
 // lib/types/caseInsensitive.ts
-import type { Prisma } from "@prisma/client";
+import type { Prisma } from "@/lib/generated/prisma/client";
 
 /**
  * String search mode
@@ -100,7 +100,7 @@ async function searchPostsFlexible(filter: StringFilterWithCase) {
 
 ```typescript
 // lib/types/insensitiveSearch.ts
-import type { Prisma } from "@prisma/client";
+import type { Prisma } from "@/lib/generated/prisma/client";
 
 /**
  * Case-insensitive search filter
@@ -292,7 +292,7 @@ model Product {
 
 ```typescript
 // lib/types/searchExamples.ts
-import type { Prisma } from "@prisma/client";
+import type { Prisma } from "@/lib/generated/prisma/client";
 
 /**
  * User search result

@@ -124,7 +124,7 @@ h-80:    20rem (320px)
 h-96:    24rem (384px)
 ```
 
-## Dynamic Viewport Height (NEW)
+## Dynamic Viewport Height (since v3.4)
 
 ### h-dvh vs h-screen
 ```html

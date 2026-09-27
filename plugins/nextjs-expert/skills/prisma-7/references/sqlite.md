@@ -17,17 +17,18 @@ SQLite for local development and embedded applications.
 ## Setup
 
 ```bash
-npm install sqlite3
+# v7: driver adapter required (bundles better-sqlite3)
+npm install @prisma/adapter-better-sqlite3
 ```
 
 ```prisma
 datasource db {
-  provider = "sqlite"
-  url      = "file:./dev.db"
+  provider = "sqlite" // v7: URL in prisma.config.ts, e.g. url: "file:./dev.db"
 }
 
 generator client {
   provider = "prisma-client"
+  output   = "../src/generated/prisma" // REQUIRED in v7
 }
 ```
 
@@ -99,22 +100,22 @@ npx prisma migrate dev --name init
  * SQLite Prisma client singleton for development.
  * @module modules/database/src/client
  */
-import { PrismaClient } from '@prisma/client'
-
-declare global {
-  var prisma: PrismaClient | undefined;
-}
+import { PrismaBetterSqlite3 } from '@prisma/adapter-better-sqlite3'
+import { PrismaClient } from '@/generated/prisma/client'  // v7: generated path
 
 /**
  * Get or create Prisma client (singleton pattern).
  * @returns {PrismaClient} Prisma client instance
  * @module modules/database/src/client
  */
-const globalForPrisma = global as unknown as { prisma: PrismaClient | undefined }
+const globalForPrisma = globalThis as unknown as { prisma: PrismaClient | undefined }
+
+const adapter = new PrismaBetterSqlite3({ url: process.env.DATABASE_URL ?? 'file:./dev.db' })
 
 export const prisma =
   globalForPrisma.prisma ||
   new PrismaClient({
+    adapter,
     log: ['query', 'error', 'warn'],
   })
 
@@ -257,7 +258,8 @@ npx prisma db seed
  * SQLite configuration for embedded applications (Electron/Tauri).
  * @module modules/database/src/embedded-client
  */
-import { PrismaClient } from '@prisma/client'
+import { PrismaBetterSqlite3 } from '@prisma/adapter-better-sqlite3'
+import { PrismaClient } from '@/generated/prisma/client'
 import { app } from 'electron'
 import path from 'path'
 
@@ -270,13 +272,12 @@ import path from 'path'
 function initEmbeddedDatabase(): PrismaClient {
   const dbPath = app.getPath('userData')
 
-  return new PrismaClient({
-    datasources: {
-      db: {
-        url: `file:${path.join(dbPath, 'app.db')}`,
-      },
-    },
+  // v7: the runtime DB path goes to the adapter (no `datasources` option)
+  const adapter = new PrismaBetterSqlite3({
+    url: `file:${path.join(dbPath, 'app.db')}`,
   })
+
+  return new PrismaClient({ adapter })
 }
 
 export const prisma = initEmbeddedDatabase()
@@ -303,7 +304,6 @@ export const prisma = initEmbeddedDatabase()
 ```prisma
 datasource db {
   provider = "sqlite"
-  url      = "file:./dev.db"
   // Add this to enable FK constraints
 }
 ```

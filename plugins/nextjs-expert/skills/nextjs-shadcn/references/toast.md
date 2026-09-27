@@ -10,34 +10,112 @@ related: dialog.md
 
 # Toast Component
 
-Toast notifications using Sonner library. Provides temporary, non-blocking feedback to users with support for success, error, loading, and custom toast messages with action buttons.
+Temporary, non-blocking feedback. **Which component depends on the project's base**
+(`components.json` `style`):
 
-## Installation
+| Base | Component | Install | API |
+|------|-----------|---------|-----|
+| Base UI (`base-*`, default) | **Toast** (Base UI primitive, added July 2026) | `bunx --bun shadcn@latest add toast` | `toast.add({ title, description, type })` from `ui/toast` |
+| Radix (`radix-*`, `new-york`) | **Sonner** | `bunx --bun shadcn@latest add sonner` | `toast("…")`, `toast.success(…)` from `sonner` |
+| React Aria (`aria-*`) | **Sonner** | `bunx --bun shadcn@latest add sonner` | same as Radix |
 
-```bash
-npm install sonner
-```
+> **Base:** examples below the Base UI section use Sonner. Verified 2026-09: `r/styles/base-nova/toast.json`
+> exists (`@base-ui/react`), `radix-nova/toast.json` and `aria-nova/toast.json` return 404, and
+> `/docs/components/{radix,aria}/toast` read "The toast component has been deprecated. Use the sonner
+> component instead." `r/styles/base-nova/sonner.json` still exists (deps `sonner`, `next-themes`) but
+> `/docs/components/base/sonner` redirects to Base UI Toast — Sonner is valid on Base UI, Toast is the
+> documented default. Sources: https://ui.shadcn.com/docs/components/base/toast,
+> https://ui.shadcn.com/docs/components/radix/sonner, https://ui.shadcn.com/docs/changelog/2026-07-toast.
 
-## Setup in Layout
-
-Add the Toaster component to your root layout for global access.
+## Base UI Toast
 
 ```typescript
-// app/layout.tsx
-import { Toaster } from 'sonner'
+// app/layout.tsx — mount once
+import { Toaster } from '@/modules/cores/shadcn/components/ui/toast'
 
-/**
- * Root layout with global toast provider
- */
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+/** Root layout mounting the Base UI `Toaster` once. */
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body>
-        {children}
+        <main>{children}</main>
+        <Toaster />
+      </body>
+    </html>
+  )
+}
+```
+
+```typescript
+'use client'
+
+import { toast } from '@/modules/cores/shadcn/components/ui/toast'
+import { Button } from '@/modules/cores/shadcn/components/ui/button'
+
+/**
+ * Base UI toast: title/description, status type, action, promise.
+ */
+export function BaseToastExamples() {
+  const create = () => {
+    const id = toast.add({
+      title: 'Event created',
+      description: 'Sunday, December 3 at 9:00 AM',
+      type: 'success', // success | info | warning | error | loading → status icon
+      actionProps: {
+        children: 'Undo',
+        onClick() {
+          toast.close(id)
+        },
+      },
+    })
+  }
+
+  const save = () =>
+    toast.promise(fetch('/api/settings', { method: 'POST' }), {
+      // each state takes a string, an options object ({ title, description, … }) or, for
+      // success/error, a function of the result/error returning either
+      loading: 'Saving…',
+      success: 'Saved',
+      error: 'Could not save',
+    })
+
+  return (
+    <div className="flex gap-2">
+      <Button onClick={create}>Create</Button>
+      <Button variant="outline" onClick={save}>Save</Button>
+    </div>
+  )
+}
+```
+
+`ui/toast` also exports `createToastManager` / `useToastManager` (Base UI manager API) for
+stacking, swipe dismissal and manager options — see https://base-ui.com/react/components/toast.
+
+---
+
+## Sonner (Radix / React Aria projects; optional on Base UI)
+
+Everything below uses Sonner. Install through the CLI (it adds `sonner` and the themed
+`ui/sonner.tsx` wrapper, which reads the theme via `next-themes`):
+
+```bash
+bunx --bun shadcn@latest add sonner
+```
+
+## Setup
+
+Mount the Toaster wrapper once in the root layout.
+
+```typescript
+// app/layout.tsx
+import { Toaster } from '@/modules/cores/shadcn/components/ui/sonner'
+
+/** Root layout mounting the Sonner `Toaster` once. */
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="en" suppressHydrationWarning>
+      <body>
+        <main>{children}</main>
         <Toaster />
       </body>
     </html>
@@ -183,8 +261,7 @@ export function ToastWithAction() {
 'use client'
 
 import { useForm } from '@tanstack/react-form'
-import { zodValidator } from '@tanstack/zod-form-adapter'
-import * as z from 'zod'
+import * as z from 'zod'  // TanStack Form v1: Standard Schema, no adapter
 import { toast } from 'sonner'
 import { Button } from '@/modules/cores/shadcn/components/ui/button'
 import { Input } from '@/modules/cores/shadcn/components/ui/input'
@@ -237,7 +314,7 @@ export function FormWithToast() {
       <form.Field
         name="email"
         validators={{
-          onChange: zodValidator(formSchema.pick({ email: true })),
+          onChange: formSchema.shape.email,
         }}
       >
         {(field) => (
@@ -255,7 +332,7 @@ export function FormWithToast() {
             />
             {field.state.meta.errors[0] && (
               <p className="text-red-500 text-sm mt-1">
-                {field.state.meta.errors[0]}
+                {field.state.meta.errors[0]?.message}
               </p>
             )}
           </div>
@@ -265,7 +342,7 @@ export function FormWithToast() {
       <form.Field
         name="password"
         validators={{
-          onChange: zodValidator(formSchema.pick({ password: true })),
+          onChange: formSchema.shape.password,
         }}
       >
         {(field) => (
@@ -283,7 +360,7 @@ export function FormWithToast() {
             />
             {field.state.meta.errors[0] && (
               <p className="text-red-500 text-sm mt-1">
-                {field.state.meta.errors[0]}
+                {field.state.meta.errors[0]?.message}
               </p>
             )}
           </div>
@@ -490,33 +567,13 @@ export function PromiseToast() {
 
 ## Custom Toast Styling
 
-```typescript
-// app/layout.tsx
-import { Toaster } from 'sonner'
+The `ui/sonner` wrapper forwards all Sonner `ToasterProps`:
 
-/**
- * Root layout with custom Toaster configuration
- */
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
-  return (
-    <html lang="en">
-      <body>
-        {children}
-        <Toaster
-          position="bottom-right"
-          theme="light"
-          richColors
-          closeButton
-          expand={true}
-        />
-      </body>
-    </html>
-  )
-}
+```typescript
+// app/layout.tsx (inside <body>)
+import { Toaster } from '@/modules/cores/shadcn/components/ui/sonner'
+
+<Toaster position="bottom-right" richColors closeButton expand />
 ```
 
 ## Toast Type Reference
@@ -538,7 +595,7 @@ toast.error('Error title', {
 ### Loading Toast
 ```typescript
 const id = toast.loading('Loading...')
-// Later: toast.dismiss(id) or toast.success(id, {...})
+// Later: toast.dismiss(id) or update in place: toast.success('Done', { id })
 ```
 
 ### Default Toast

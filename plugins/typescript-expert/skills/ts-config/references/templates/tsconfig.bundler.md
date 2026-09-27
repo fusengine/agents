@@ -1,12 +1,13 @@
 ---
 name: tsconfig.bundler
-description: Complete Bun/bundler tsconfig.json for TypeScript 6.0
+description: Complete Bun/bundler tsconfig.json for TypeScript 7.0 (6.0-compatible)
 keywords: tsconfig, bun, bundler, template, preserve
 ---
 
 # Complete Bundler / Bun `tsconfig.json`
 
-Mirrors what `bun init` generates (bun.sh/docs/typescript), 6.0-ready.
+Mirrors what `bun init` generates (bun.com/docs/typescript), TS 6.0/7.0-ready
+(`"types": ["bun"]` is required from TS 6.0 on).
 For a non-Bun bundler (Vite/esbuild/webpack) swap `"types": ["bun"]` for the packages
 you need (e.g. `["node"]`, `["vite/client"]`) and drop `"jsx"` if there is no JSX.
 
@@ -57,9 +58,9 @@ Add to `package.json` (works under `moduleResolution: bundler`):
 
 Then `import { foo } from "#/utils.ts"` instead of `../../utils.ts`.
 
-## Optional: CommonJS migration bridge (TS 6.0)
+## Optional: CommonJS migration bridge (TS 6.0+)
 
-When moving a CommonJS codebase off deprecated `moduleResolution: node`, TS 6.0 allows
+When moving a CommonJS codebase off `moduleResolution: node` (deprecated in 6.0, hard error in 7.0), TS 6.0+ allows
 `moduleResolution: bundler` with `module: commonjs` as an intermediate step:
 
 ```jsonc

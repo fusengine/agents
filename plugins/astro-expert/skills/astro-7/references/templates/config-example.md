@@ -1,11 +1,11 @@
 ---
 name: config-example
-description: astro.config.ts examples for static, server, and hybrid modes with adapters
+description: astro.config.ts examples for static, server, and hybrid (per-route prerender) setups with adapters
 when-to-use: configuring Astro output mode with adapter
 keywords: config, adapter, node, cloudflare, vercel, netlify, hybrid
 ---
 
-# Astro 6 Config Examples
+# Astro 7 Config Examples
 
 ## Static (Default)
 
@@ -30,29 +30,31 @@ export default defineConfig({
 });
 ```
 
-## Hybrid Mode (Cloudflare)
+## Hybrid (Cloudflare)
+
+There is no `output: 'hybrid'` — keep `output: 'static'` (default) and opt routes into on-demand rendering with `export const prerender = false`.
 
 ```typescript
 import { defineConfig } from 'astro/config';
-import cloudflare from '@astrojs/cloudflare';
+import cloudflare from '@astrojs/cloudflare'; // v14+ for Astro 7
 import react from '@astrojs/react';
 
 export default defineConfig({
-  output: 'hybrid',
-  adapter: cloudflare({ mode: 'directory' }),
+  output: 'static',
+  adapter: cloudflare(),
   integrations: [react()],
 });
 ```
 
 ## Stable Fonts + CSP (Astro 7)
 
-`fonts` and `csp` are stable top-level options — no `experimental` wrapper. The Rust compiler is now the only compiler and needs no flag.
+`fonts` (top-level) and `security.csp` are stable — no `experimental` wrapper. The Rust compiler is now the only compiler and needs no flag.
 
 ```typescript
 import { defineConfig, fontProviders } from 'astro/config';
 
 export default defineConfig({
-  csp: true,
+  security: { csp: true },
   fonts: [{
     provider: fontProviders.google(),
     name: 'Inter',

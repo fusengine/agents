@@ -1,7 +1,7 @@
 ---
 name: configuration
-description: Request config, formats globaux, plugin next.config, variables env
-when-to-use: customiser comportement, formats dates/nombres, timezone, fallbacks
+description: Request config, global formats, next.config plugin, env variables
+when-to-use: customize behavior, date/number formats, timezone, fallbacks
 keywords: getRequestConfig, formats, timeZone, onError, getMessageFallback
 priority: medium
 requires: installation.md
@@ -39,6 +39,30 @@ export default getRequestConfig(async ({ requestLocale }) => {
       return `${namespace}.${key}`
     }
   }
+})
+```
+
+## Request Configuration with next/root-params (Next.js 16.3+)
+
+With a root layout at `app/[locale]/layout.tsx`, read the locale natively — enables static
+rendering without `setRequestLocale` and better `cacheComponents` integration.
+Not available in Route Handlers / Server Actions yet: pass `locale` explicitly there.
+
+```typescript
+// modules/cores/i18n/src/services/request.ts
+import * as rootParams from 'next/root-params'
+import { getRequestConfig } from 'next-intl/server'
+import { hasLocale } from 'next-intl'
+import { notFound } from 'next/navigation'
+import { routing } from '../config/routing'
+
+export default getRequestConfig(async ({ locale }) => {
+  if (!locale) {  // explicit override from callers (e.g. Server Actions) wins
+    const paramValue = await rootParams.locale()
+    if (!hasLocale(routing.locales, paramValue)) notFound()
+    locale = paramValue
+  }
+  return { locale, messages: (await import(`../../messages/${locale}.json`)).default }
 })
 ```
 

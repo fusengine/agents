@@ -5,7 +5,7 @@ user-invocable: false
 ---
 
 <objective>
-Custom CSS authoring in Tailwind CSS v4.1 via the `@utility`, `@variant`, `@custom-variant`, `@apply`, and `@layer` directives: defining a new named utility class, writing conditional styles (including dark mode) inline with `@variant`, declaring a brand-new custom variant selector with `@custom-variant`, applying utility classes inside a custom CSS rule with `@apply`, and organizing custom CSS into `@layer components`/`@layer utilities`.
+Custom CSS authoring in Tailwind CSS v4.3 via the `@utility`, `@variant`, `@custom-variant`, `@apply`, and `@layer` directives: defining a new named utility class, writing conditional styles (including dark mode) inline with `@variant`, declaring a brand-new custom variant selector with `@custom-variant`, applying utility classes inside a custom CSS rule with `@apply`, and organizing custom CSS into `@layer components`/`@layer utilities`.
 </objective>
 
 # Custom Styles
@@ -19,12 +19,32 @@ Custom CSS authoring in Tailwind CSS v4.1 via the `@utility`, `@variant`, `@cust
 /* Usage: class="glass-effect hover:glass-effect" */
 ```
 
+### Functional utility with a default value (since v4.3)
+`--default(…)` inside `--value(…)` / `--modifier(…)` makes the bare utility work too.
+```css
+@utility tab-* {
+  tab-size: --value(integer, --default(4));
+}
+/* class="tab" → tab-size: 4; class="tab-2" → tab-size: 2 */
+```
+
 ## @variant - Conditional style
 ```css
 .card {
   background: white;
   @variant dark { background: #1a1a2e; }
   @variant hover { transform: scale(1.05); }
+}
+```
+
+### Stacked and compound @variant (since v4.3)
+```css
+.button {
+  background: var(--color-sky-500);
+  /* Stacked: hover AND focus */
+  @variant hover:focus { background: var(--color-sky-600); }
+  /* Compound: same block for hover OR focus */
+  @variant hover, focus { color: white; }
 }
 ```
 

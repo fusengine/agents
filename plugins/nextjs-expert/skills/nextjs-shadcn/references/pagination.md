@@ -10,6 +10,9 @@ related: table.md, command.md
 
 # Pagination
 
+> **Base:** same API on Base UI, Radix and React Aria (verified against r/styles/{base,radix}-nova/pagination.json; Aria's `PaginationLink` is a RAC `LinkButton`, same props).
+> `PaginationLink size` defaults to `icon`; `PaginationPrevious` / `PaginationNext` accept `text`.
+
 Implements paginated content navigation with support for previous/next buttons, numbered pages, and ellipsis for long page ranges.
 
 ## Installation
@@ -33,6 +36,7 @@ import {
   PaginationPrevious,
 } from '@/modules/cores/shadcn/components/ui/pagination'
 
+/** Static pagination links. */
 export function BasicPagination() {
   const [currentPage, setCurrentPage] = useState(1)
   const totalPages = 5
@@ -116,6 +120,7 @@ import {
   PaginationPrevious,
 } from '@/modules/cores/shadcn/components/ui/pagination'
 
+/** Pagination with an ellipsis for skipped pages. */
 export function PaginationWithEllipsis() {
   const [currentPage, setCurrentPage] = useState(1)
   const totalPages = 20
@@ -240,6 +245,7 @@ const allItems: Item[] = Array.from({ length: 47 }, (_, i) => ({
   date: new Date(Date.now() - i * 86400000).toLocaleDateString(),
 }))
 
+/** Pagination over a local data set. */
 export function PaginationWithData() {
   const [currentPage, setCurrentPage] = useState(1)
   const itemsPerPage = 10
@@ -384,6 +390,7 @@ interface PaginationUrlProps {
   currentPage: number
 }
 
+/** Pagination synced with the URL `page` param. */
 export function PaginationWithUrl({
   totalPages,
   currentPage,
@@ -510,6 +517,7 @@ const allItems = Array.from({ length: 47 }, (_, i) => ({
   title: `Item ${i + 1}`,
 }))
 
+/** Pagination with an items-per-page selector. */
 export function PaginationWithItemsPerPage() {
   const [currentPage, setCurrentPage] = useState(1)
   const [itemsPerPage, setItemsPerPage] = useState(10)

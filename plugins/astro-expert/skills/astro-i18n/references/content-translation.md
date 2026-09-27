@@ -12,7 +12,7 @@ src/content/
     ├── en/
     │   ├── getting-started.mdx
     │   └── tutorial.mdx
-    ├── fr/
+    ├── it/
     │   ├── getting-started.mdx
     │   └── tutorial.mdx
     └── es/
@@ -20,7 +20,7 @@ src/content/
 ```
 
 ```typescript
-// src/content/config.ts
+// src/content.config.ts
 import { defineCollection, z } from 'astro:content';
 
 const blog = defineCollection({
@@ -29,7 +29,7 @@ const blog = defineCollection({
     title: z.string(),
     description: z.string(),
     pubDate: z.coerce.date(),
-    locale: z.enum(['en', 'fr', 'es']).optional()
+    locale: z.enum(['en', 'it', 'es']).optional()
   })
 });
 
@@ -63,9 +63,9 @@ const translations = {
     nav: { home: 'Home', about: 'About', blog: 'Blog' },
     hero: { title: 'Welcome', cta: 'Get Started' }
   },
-  fr: {
-    nav: { home: 'Accueil', about: 'À propos', blog: 'Blog' },
-    hero: { title: 'Bienvenue', cta: 'Commencer' }
+  es: {
+    nav: { home: 'Inicio', about: 'Acerca de', blog: 'Blog' },
+    hero: { title: 'Bienvenido', cta: 'Empezar' }
   }
 } as const;
 

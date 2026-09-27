@@ -1,7 +1,7 @@
 ---
 name: middleware-proxy
-description: proxy.ts pour Next.js 16, détection locale, routing avant app, combinaison auth
-when-to-use: détection Accept-Language, redirection locales, auth + i18n, domaines multiples
+description: proxy.ts for Next.js 16, locale detection, routing before the app, auth combination
+when-to-use: Accept-Language detection, locale redirects, auth + i18n, multiple domains
 keywords: proxy.ts, createMiddleware, matcher, localeDetection, domain-based routing
 priority: high
 requires: routing-setup.md
@@ -35,7 +35,7 @@ import { routing } from '@/modules/cores/i18n/src/config/routing'
 export default createMiddleware(routing)
 
 export const config = {
-  matcher: ['/', '/(fr|en|de)/:path*']
+  matcher: ['/', '/(es|en|de)/:path*']
 }
 ```
 
@@ -88,7 +88,7 @@ export const config = {
   matcher: ['/((?!api|_next/static|_next/image|favicon.ico|.*\\..*).*)'],
 
   // Only specific locales
-  matcher: ['/', '/(en|fr|de)/:path*'],
+  matcher: ['/', '/(en|es|de)/:path*'],
 }
 ```
 
@@ -96,11 +96,11 @@ export const config = {
 
 ```typescript
 export default createMiddleware({
-  locales: ['en', 'fr'],
+  locales: ['en', 'es'],
   defaultLocale: 'en',
   domains: [
     { domain: 'example.com', defaultLocale: 'en' },
-    { domain: 'example.fr', defaultLocale: 'fr' }
+    { domain: 'example.es', defaultLocale: 'es' }
   ]
 })
 ```

@@ -16,7 +16,7 @@ one sentence cut in two by an italic serif, and the second half is the turn:
 *Keeping was never the hard part. / Finding it again is.* The copy addresses one
 reader, never a market; it names an object ("a folder named read-soon-3", "that
 teal pricing page") rather than a benefit. No exclamation, no urgency, no
-superlative, no em dash in any visible string [relevé].
+superlative, no em dash in any visible string [measured].
 
 Signature element: **the two-voice heading.** Every h2 on the page is a grotesque
 sentence interrupted by an `<em>` set in Instrument Serif italic, and that italic
@@ -27,32 +27,32 @@ white, a full-bleed image, a directional veil and a grain layer, repeated four
 times with the veil direction changing each time (vertical, top-only, horizontal,
 top-only).
 
-Macrostructure: **Surface, then Proof.** Order relevé on the source's served DOM:
+Macrostructure: **Surface, then Proof.** Order measured on the source's served DOM:
 
-- `header.entete` — a floating pill, fixed, `max-w-6xl`, three links that simply
-  vanish below 768px; **no burger, no dropdown, ever** [relevé]
+- `header.site-header` — a floating pill, fixed, `max-w-6xl`, three links that simply
+  vanish below 768px; **no burger, no dropdown, ever** [measured]
 - `section.hero` — photographic card at radius `2rem` (the only one), eyebrow,
   two-line h1, one paragraph, two buttons, a four-item trust strip
-- `section.probleme` — the only section with no image at all: eyebrow, two-voice
+- `section.problem` — the only section with no image at all: eyebrow, two-voice
   h2, paragraph, then three identical bordered cards
-- `section.remede` — photographic card whose heading sits at its bottom edge,
+- `section.fix` — photographic card whose heading sits at its bottom edge,
   then three step cells separated by a single `1px` grid gap
 - `section.agent` — two columns: copy plus a small photographic card on the left,
   an agent window drawn entirely in HTML/CSS on the right
-- `section.promesse` — photographic card with a horizontal veil, five query
+- `section.promise` — photographic card with a horizontal veil, five query
   pills in frosted glass, then three number cards pulled tight against it (`1rem`)
 - `section.ios` — photographic card, copy left, a phone chassis drawn in CSS right
-- `section.tarifs` — the only centred heading, and the only one that stops one
+- `section.pricing` — the only centred heading, and the only one that stops one
   step short of the display size; two plans, the featured one bordered in accent
 - `section.faq` — a narrow title column beside a four-entry accordion
-- `section.cloture` — photographic card, centred, repeating the hero's two buttons
-- `footer.pied` — one brand column plus four link columns, then a legal bar
+- `section.closing` — photographic card, centred, repeating the hero's two buttons
+- `footer.site-footer` — one brand column plus four link columns, then a legal bar
 
 Absent from the canonical skeleton: **testimonials in any form** — no quote, no
 logo wall, no customer name; **comparison table**; newsletter; burger menu;
 sticky sub-nav; breadcrumb; any dark/light toggle. Present but mutated: the
 "features" argument exists three times over, in three different geometries (three
-constat cards, three step cells, three number cards), so the page has no single
+observation cards, three step cells, three number cards), so the page has no single
 features block; social proof is replaced by five imagined search queries.
 
 Principle: the order alternates **a surface and its proof** — a photographic card
@@ -73,20 +73,20 @@ moves the field from plum to deep teal.
 ### Colors
 
 ```css
---fond-page:    #05171a;
---fond-panneau: #082024;
---fond-carte:   #0a262a;
---fond-eleve:   #0e3034;
---texte:        #eaf6f3;
---texte-doux:   #93b3b0;
---texte-image:  #dcefea;
---texte-clair:  #ffd2c2;
---texte-faible: #86aaa6;
+--bg-page:      #05171a;
+--bg-panel:     #082024;
+--bg-card:      #0a262a;
+--bg-raised:    #0e3034;
+--text:         #eaf6f3;
+--text-muted:   #93b3b0;
+--text-image:   #dcefea;
+--text-light:   #ffd2c2;
+--text-faint:   #86aaa6;
 --accent:       #ff7a5c;
---sur-accent:   #10231f;
---trait:        rgb(255 255 255 / 0.08);
---trait-doux:   rgb(255 255 255 / 0.06);
---trait-fort:   rgb(255 255 255 / 0.20);
+--on-accent:    #10231f;
+--line:         rgb(255 255 255 / 0.08);
+--line-soft:    rgb(255 255 255 / 0.06);
+--line-strong:  rgb(255 255 255 / 0.20);
 ```
 
 Strategy: **one cold field, one warm accent, surfaces built in opacity.** Four
@@ -104,10 +104,10 @@ white: 6.35:1 at the darkest stop against 3.0:1 in the source.
 
 Two families, and the split is absolute. **Geist** (grotesque) carries every
 sentence, label and button. **Instrument Serif** appears only as the wordmark, the
-italic half of each heading, the three constat card titles, the three step
+italic half of each heading, the three observation card titles, the three step
 numbers, the three number-card figures and the two prices — never a sentence.
 
-Scale, relevé from the source's utility classes: 14 / 15 / 16 / 18 / 20 / 24 / 36 /
+Scale, measured from the source's utility classes: 14 / 15 / 16 / 18 / 20 / 24 / 36 /
 48 / 60 / 72px. Weights: 600 on the two opaque buttons and the badge, 500 on nav,
 labels, step titles and list items, 400 on everything else — no 700 anywhere.
 Tracking: `-0.025em` on every heading, `0.2em` on the seven eyebrows, `0.025em` on
@@ -118,7 +118,7 @@ a mono face, any weight above 600, small caps, a step between 640 and 1024px.
 ### Spacing
 
 One gutter (`1.5rem`) from 360px to 1920px, one container ceiling (`72rem`) with
-`64rem` for the FAQ and footer, one grid gap (`1rem`) everywhere [relevé].
+`64rem` for the FAQ and footer, one grid gap (`1rem`) everywhere [measured].
 
 Section rhythm is **not one repeated value**: `6rem`/`8rem` bands, but each
 photographic card carries its own interior padding (`5rem`/`7rem` on the promise,
@@ -138,7 +138,7 @@ declared).
 Two reveal distances, and they are not interchangeable: the hero's five children
 rise **16px** on mount, in a 90ms cascade; every section block rises **24px** when
 it crosses into view. Both values are literal in the source's served HTML.
-Durations: 150ms for anything the user pressed (relevé, the only written duration
+Durations: 150ms for anything the user pressed (measured, the only written duration
 in the source), 200ms for hover and accordion, 620ms for a reveal. Two curves:
 `cubic-bezier(0.16, 1, 0.3, 1)` for reveals, the implicit `cubic-bezier(.4,0,.2,1)`
 for states. No bounce, no elastic, no overshoot.

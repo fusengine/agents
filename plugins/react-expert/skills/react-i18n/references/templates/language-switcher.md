@@ -14,7 +14,7 @@ import { useTransition } from 'react'
 
 const LANGUAGES = [
   { code: 'en', label: 'EN', name: 'English' },
-  { code: 'fr', label: 'FR', name: 'Français' },
+  { code: 'it', label: 'IT', name: 'Italiano' },
   { code: 'de', label: 'DE', name: 'Deutsch' },
   { code: 'es', label: 'ES', name: 'Español' },
 ] as const
@@ -70,7 +70,7 @@ import { useTransition } from 'react'
 
 const LANGUAGES = [
   { code: 'en', name: 'English', flag: '🇬🇧' },
-  { code: 'fr', name: 'Français', flag: '🇫🇷' },
+  { code: 'it', name: 'Italiano', flag: '🇮🇹' },
   { code: 'de', name: 'Deutsch', flag: '🇩🇪' },
   { code: 'es', name: 'Español', flag: '🇪🇸' },
 ] as const
@@ -146,7 +146,7 @@ import { Globe } from 'lucide-react'
 
 const LANGUAGES = [
   { code: 'en', name: 'English', flag: '🇬🇧' },
-  { code: 'fr', name: 'Français', flag: '🇫🇷' },
+  { code: 'it', name: 'Italiano', flag: '🇮🇹' },
   { code: 'de', name: 'Deutsch', flag: '🇩🇪' },
   { code: 'es', name: 'Español', flag: '🇪🇸' },
 ] as const
@@ -211,7 +211,7 @@ export function LanguageMenu() {
 import { useTranslation } from 'react-i18next'
 import { useTransition, useCallback } from 'react'
 
-export type LanguageCode = 'en' | 'fr' | 'de' | 'es'
+export type LanguageCode = 'en' | 'it' | 'de' | 'es'
 
 export interface Language {
   code: LanguageCode
@@ -222,7 +222,7 @@ export interface Language {
 
 export const LANGUAGES: Language[] = [
   { code: 'en', name: 'English', nativeName: 'English', flag: '🇬🇧' },
-  { code: 'fr', name: 'French', nativeName: 'Français', flag: '🇫🇷' },
+  { code: 'it', name: 'Italian', nativeName: 'Italiano', flag: '🇮🇹' },
   { code: 'de', name: 'German', nativeName: 'Deutsch', flag: '🇩🇪' },
   { code: 'es', name: 'Spanish', nativeName: 'Español', flag: '🇪🇸' },
 ]
@@ -316,7 +316,7 @@ export function LanguageSwitcherPersistent() {
 
   return (
     <div className="flex gap-2">
-      {['en', 'fr', 'de'].map(code => (
+      {['en', 'es', 'de'].map(code => (
         <button
           key={code}
           onClick={() => handleChange(code)}

@@ -10,6 +10,8 @@ related: scroll-area.md
 
 # Carousel Component
 
+> **Base:** same API on Base UI, Radix and React Aria — Embla-based (verified against r/styles/{base,radix}-nova/carousel.json).
+
 The Carousel component provides a feature-rich carousel/slider built on Embla Carousel. It supports touch gestures, keyboard navigation, plugins, and responsive layouts.
 
 ## Installation
@@ -37,6 +39,7 @@ import {
   CarouselPrevious,
 } from "@/modules/cores/shadcn/components/ui/carousel"
 
+/** Basic carousel with previous/next controls. */
 export function CarouselExample() {
   return (
     <Carousel>
@@ -113,8 +116,6 @@ Navigation buttons for previous/next slides.
 Enable automatic slide rotation:
 
 ```tsx
-"use client"
-
 import * as React from "react"
 import Autoplay from "embla-carousel-autoplay"
 import { Card, CardContent } from "@/modules/cores/shadcn/components/ui/card"
@@ -126,6 +127,7 @@ import {
   CarouselPrevious,
 } from "@/modules/cores/shadcn/components/ui/carousel"
 
+/** Carousel driven by an autoplay plugin. */
 export function CarouselAutoplayExample() {
   const plugin = React.useRef(
     Autoplay({ delay: 2000, stopOnInteraction: true })
@@ -170,6 +172,7 @@ import {
   CarouselPrevious,
 } from "@/modules/cores/shadcn/components/ui/carousel"
 
+/** Carousel showing more slides per view on wider screens. */
 export function ResponsiveCarouselExample() {
   return (
     <Carousel
@@ -213,6 +216,7 @@ import {
   CarouselPrevious,
 } from "@/modules/cores/shadcn/components/ui/carousel"
 
+/** Carousel with custom slide spacing (`-ml-*` / `pl-*`). */
 export function SpacedCarouselExample() {
   return (
     <Carousel
@@ -248,10 +252,7 @@ export function SpacedCarouselExample() {
 Full-featured image carousel:
 
 ```tsx
-"use client"
-
 import * as React from "react"
-import Image from "next/image"
 import {
   Carousel,
   CarouselContent,
@@ -266,6 +267,7 @@ interface GalleryImage {
   alt: string
 }
 
+/** Full-width image gallery with lazy-loaded slides. */
 export function ImageGalleryCarouselExample() {
   const images: GalleryImage[] = [
     { id: "1", src: "https://images.unsplash.com/photo-1465869185982-5a1a7522cbcb?w=800&q=80", alt: "Image 1" },
@@ -279,11 +281,11 @@ export function ImageGalleryCarouselExample() {
         {images.map((image) => (
           <CarouselItem key={image.id}>
             <div className="relative w-full aspect-video">
-              <Image
+              <img
                 src={image.src}
                 alt={image.alt}
-                fill
-                className="object-cover rounded-lg"
+                loading="lazy"
+                className="absolute inset-0 size-full object-cover rounded-lg"
               />
             </div>
           </CarouselItem>
@@ -301,10 +303,7 @@ export function ImageGalleryCarouselExample() {
 Carousel for product display:
 
 ```tsx
-"use client"
-
 import * as React from "react"
-import Image from "next/image"
 import { Button } from "@/modules/cores/shadcn/components/ui/button"
 import {
   Carousel,
@@ -321,6 +320,7 @@ interface Product {
   image: string
 }
 
+/** Product cards with add-to-cart buttons. */
 export function ProductCarouselExample() {
   const products: Product[] = [
     { id: "1", name: "Product 1", price: 99.99, image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=300&q=80" },
@@ -335,11 +335,11 @@ export function ProductCarouselExample() {
           <CarouselItem key={product.id}>
             <div className="space-y-4">
               <div className="relative w-full aspect-square bg-muted rounded-lg overflow-hidden">
-                <Image
+                <img
                   src={product.image}
                   alt={product.name}
-                  fill
-                  className="object-cover"
+                  loading="lazy"
+                  className="absolute inset-0 size-full object-cover"
                 />
               </div>
               <div>
@@ -363,8 +363,6 @@ export function ProductCarouselExample() {
 Carousel for displaying testimonials:
 
 ```tsx
-"use client"
-
 import * as React from "react"
 import Autoplay from "embla-carousel-autoplay"
 import {
@@ -382,6 +380,7 @@ interface Testimonial {
   role: string
 }
 
+/** Testimonials slider with autoplay. */
 export function TestimonialsCarouselExample() {
   const plugin = React.useRef(
     Autoplay({ delay: 4000, stopOnInteraction: true })
@@ -434,7 +433,7 @@ const opts = {
 
 1. **Always include navigation** - Previous/Next buttons or dots
 2. **Responsive sizing** - Use max-w utilities for different screen sizes
-3. **Image optimization** - Use React Image component
+3. **Image optimization** - `loading="lazy"` on slide images, sized assets (`srcSet`)
 4. **Accessibility** - Supports keyboard navigation automatically
 5. **Touch support** - Swipe gestures work on touch devices
 6. **Autoplay carefully** - Consider user preference with `stopOnInteraction`

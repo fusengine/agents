@@ -176,11 +176,8 @@ npx prisma migrate dev
  * PlanetScale Prisma client singleton pattern for production deployment.
  * @module modules/database/src/client
  */
-import { PrismaClient } from '@prisma/client'
-
-declare global {
-  var prisma: PrismaClient | undefined;
-}
+import { PrismaPlanetScale } from '@prisma/adapter-planetscale'
+import { PrismaClient } from '@/generated/prisma/client'  // v7: generated path
 
 /**
  * Get or create Prisma client (singleton).
@@ -188,11 +185,15 @@ declare global {
  * @returns {PrismaClient} Prisma client instance
  * @module modules/database/src/client
  */
-const globalForPrisma = global as unknown as { prisma: PrismaClient | undefined }
+const globalForPrisma = globalThis as unknown as { prisma: PrismaClient | undefined }
+
+// v7: driver adapter required — PlanetScale serverless driver (native fetch, Node >= 20.19)
+const adapter = new PrismaPlanetScale({ url: process.env.DATABASE_URL! })
 
 export const prisma =
   globalForPrisma.prisma ||
   new PrismaClient({
+    adapter,
     log:
       process.env.NODE_ENV === 'development'
         ? ['query', 'error', 'warn']

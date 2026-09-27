@@ -277,11 +277,11 @@ class HandleSubscriptionCanceled
 
 ```php
 <?php
-// bootstrap/app.php (Laravel 11+)
+// bootstrap/app.php (Laravel 13 — use validateCsrfTokens() on L11/L12)
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware) {
-        $middleware->validateCsrfTokens(except: [
+        $middleware->preventRequestForgery(except: [
             'stripe/*',
             'paddle/*',
         ]);

@@ -1,7 +1,7 @@
 /**
- * Weekly Segment - Affiche l'usage hebdomadaire
+ * Weekly Segment - Displays weekly usage
  *
- * @description SRP: Affichage limite 7j uniquement
+ * @description SRP: 7-day limit display only
  */
 
 import type { StatuslineConfig } from "../config/schema";

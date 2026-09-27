@@ -10,12 +10,12 @@ related: extensions.md
 
 # Middleware (Deprecated)
 
-Prisma middleware is deprecated in v7. Use extensions instead.
+Prisma middleware (`$use`) was removed in v7. Use extensions instead.
 
 ## Legacy Middleware Pattern
 
 ```typescript
-// ❌ Deprecated in Prisma 7
+// ❌ Prisma 6 and earlier only — `$use` no longer exists in Prisma 7
 prisma.$use(async (params, next) => {
   const before = Date.now()
   const result = await next(params)
@@ -33,7 +33,7 @@ prisma.$use(async (params, next) => {
 
 ```typescript
 // modules/cores/db/src/extensions/loggingExtension.ts
-import { Prisma } from '@prisma/client'
+import { Prisma } from '../../generated/prisma/client' // v7: generated path
 
 /**
  * ✅ Modern extension for operation logging
@@ -70,7 +70,7 @@ export const loggingExtension = Prisma.defineExtension({
 
 ```typescript
 // modules/cores/db/src/extensions/softDeleteExtension.ts
-import { Prisma } from '@prisma/client'
+import { Prisma } from '../../generated/prisma/client' // v7: generated path
 
 /**
  * ✅ Modern extension for soft delete pattern
@@ -120,7 +120,7 @@ export const softDeleteExtension = Prisma.defineExtension({
 
 ```typescript
 // modules/cores/db/src/extensions/timingExtension.ts
-import { Prisma } from '@prisma/client'
+import { Prisma } from '../../generated/prisma/client' // v7: generated path
 
 /**
  * Performance monitoring interface
@@ -194,13 +194,13 @@ export const timingExtension = Prisma.defineExtension({
 | Composable | No | Yes |
 | Model-specific | Manual check | Native |
 | Result access | Limited | Full |
-| Maintained | Deprecated | Active |
+| Maintained | Removed in v7 | Active |
 
 ---
 
 ## Best Practices
 
-1. **Migrate to extensions** - Middleware is deprecated
+1. **Migrate to extensions** - Middleware is removed in Prisma 7
 2. **Use $allModels** - For cross-cutting concerns
 3. **Model-specific** - For targeted behavior
 4. **Compose extensions** - Chain multiple concerns

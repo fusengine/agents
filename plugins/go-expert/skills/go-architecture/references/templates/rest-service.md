@@ -27,9 +27,9 @@ posts-api/
 ```
 module github.com/example/posts-api
 
-go 1.24
+go 1.27.0
 
-require github.com/jackc/pgx/v5 v5.10.0
+require github.com/jackc/pgx/v5 v5.11.0 // pgx v5.11 itself requires go >= 1.25.0
 ```
 
 ## internal/domain/post.go
@@ -263,3 +263,12 @@ func main() {
   identical, so handlers do not change.
 - Keep every file under the SOLID line limit (`fuse-solid:solid-go`); split
   handlers per resource as the API grows.
+- Go 1.27: `encoding/json` is now backed by the new `encoding/json/v2`
+  implementation (same behavior, error text may differ, faster unmarshal); v1
+  stays supported, so this template needs no change. `encoding/json/v2` itself
+  is stricter (rejects invalid UTF-8 and duplicate object names) — adopt it
+  deliberately. Opt out with `GOEXPERIMENT=nojsonv2`. Source:
+  https://go.dev/doc/go1.27
+- Go 1.27: `http.Server.MaxHeaderValueCount` caps accepted header values;
+  HTTP/1 `Response.Body.Close` now drains unread content (bounded) for
+  connection reuse. Source: https://go.dev/doc/go1.27 (net/http)

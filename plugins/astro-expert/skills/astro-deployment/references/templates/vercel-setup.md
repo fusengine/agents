@@ -1,6 +1,6 @@
 ---
 name: vercel-setup-template
-description: Complete Vercel setup for Astro 6 with Image CDN, ISR, and edge functions
+description: Complete Vercel setup for Astro 7 (@astrojs/vercel v11) with Image CDN, ISR, and edge functions
 type: template
 ---
 
@@ -28,7 +28,7 @@ export default defineConfig({
       bypassToken: process.env.ISR_BYPASS_TOKEN,
     },
     skewProtection: true,    // Prevent asset mismatch on deploy
-    edgeMiddleware: false,   // true = run middleware on edge
+    middlewareMode: 'classic', // 'edge' = run middleware as an edge function (replaces edgeMiddleware)
   }),
 });
 ```

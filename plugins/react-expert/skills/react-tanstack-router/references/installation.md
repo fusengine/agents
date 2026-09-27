@@ -18,15 +18,16 @@ template: templates/basic-setup.md
 | Package | Type | Description |
 |---------|------|-------------|
 | `@tanstack/react-router` | Core | Main router |
-| `@tanstack/zod-adapter` | Core | Search params validation |
-| `zod` | Core | Schema validation |
+| `zod` | Core | Schema validation (Zod v4 = Standard Schema, passed directly to `validateSearch`) |
 | `@tanstack/router-plugin` | Dev | Bundler plugin (generates routeTree) |
-| `@tanstack/router-devtools` | Dev | DevTools debugging |
+| `@tanstack/react-router-devtools` | Dev | DevTools debugging |
 
 ```bash
-bun add @tanstack/react-router @tanstack/zod-adapter zod
-bun add -D @tanstack/router-plugin @tanstack/router-devtools
+bun add @tanstack/react-router zod
+bun add -D @tanstack/router-plugin @tanstack/react-router-devtools
 ```
+
+`@tanstack/zod-adapter` (`zodValidator`, `fallback`) is only needed with **Zod v3**.
 
 ---
 
@@ -36,15 +37,15 @@ The plugin automatically generates `routeTree.gen.ts` from the `routes/` folder.
 
 ### Vite (Recommended)
 
-Use `TanStackRouterVite` in `vite.config.ts`.
+Use `tanstackRouter({ target: 'react', autoCodeSplitting: true })` from `@tanstack/router-plugin/vite` in `vite.config.ts`, placed **before** `react()` (`TanStackRouterVite` is deprecated).
 
 ### Webpack
 
-Use `TanStackRouterWebpack` in `webpack.config.js`.
+Use `tanstackRouter` from `@tanstack/router-plugin/webpack` in `webpack.config.js`.
 
 ### Rspack
 
-Use `TanStackRouterRspack` in `rspack.config.js`.
+Use `tanstackRouter` from `@tanstack/router-plugin/rspack` in `rspack.config.js`.
 
 > **Full configuration**: [templates/basic-setup.md](templates/basic-setup.md#vite-configuration)
 
@@ -54,8 +55,8 @@ Use `TanStackRouterRspack` in `rspack.config.js`.
 |--------|---------|-------------|
 | `routesDirectory` | `./src/routes` | Routes directory |
 | `generatedRouteTree` | `./src/routeTree.gen.ts` | Generated file |
-| `routeFileIgnorePattern` | `.css` | Files to ignore |
-| `experimental.enableCodeSplitting` | `false` | Auto code splitting |
+| `routeFileIgnorePrefix` | `-` | Files/folders to ignore |
+| `autoCodeSplitting` | `false` | Auto code splitting |
 
 ---
 

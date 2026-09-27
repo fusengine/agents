@@ -28,21 +28,26 @@ composer require --dev \
   pestphp/pest:^4.0 \
   --no-update
 
+# Using Laravel Boost? The official guide also bumps it:
+# composer require --dev laravel/boost:^2.0 --no-update
+
 composer update --with-all-dependencies
 ```
 
+> These are the minimums from the official upgrade guide. Once on PHP 8.4+, you may go further to `phpunit/phpunit:^13.0` + `pestphp/pest:^5.0` (+ `pestphp/pest-plugin-laravel:^5.0`, which requires Laravel `^13.23`).
+
 ## Step 3: Bump optional packages
 
-Update these if used:
+Update these if used (latest majors, all L13-compatible):
 
 ```bash
 composer require \
   laravel/cashier:^16.0 \
-  laravel/sanctum:^5.0 \
+  laravel/sanctum:^4.0 \
   laravel/scout:^11.0 \
-  laravel/socialite:^6.0 \
-  laravel/horizon:^6.0 \
-  laravel/telescope:^6.0
+  laravel/socialite:^5.0 \
+  laravel/horizon:^5.0 \
+  laravel/telescope:^5.0
 ```
 
 ## Step 4: Beanstalkd users
@@ -51,7 +56,7 @@ composer require \
 composer require pda/pheanstalk:^8.0
 ```
 
-Required: 5.x dropped in L13.
+Required: L13 supports `pda/pheanstalk` `^7.0 || ^8.0` only (5.x dropped).
 
 ## Step 5: Serializable closures
 
@@ -80,6 +85,6 @@ vendor/bin/phpunit       # or vendor/bin/pest
 | Error | Fix |
 |-------|-----|
 | `composer/semver` conflict | `composer update composer/semver` |
-| `nunomaduro/collision` | Bump to `^9.0` |
-| `spatie/laravel-permission` | Bump to L13-compatible version |
+| `nunomaduro/collision` | Bump to `^8.6` (L13 skeleton) |
+| `spatie/laravel-permission` | Bump to `^8.0` (supports L12/L13, PHP 8.3+) |
 | `barryvdh/laravel-debugbar` | Bump to `^4.0` |

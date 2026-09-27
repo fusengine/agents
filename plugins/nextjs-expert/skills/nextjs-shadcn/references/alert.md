@@ -10,6 +10,8 @@ related: alert-dialog.md
 
 # Alert Component
 
+> **Base:** same API on Base UI, Radix and React Aria (verified against r/styles/{base,radix}-nova/alert.json).
+
 Import the Alert components from `@/modules/cores/shadcn/components/ui/alert`:
 
 ```typescript
@@ -31,6 +33,7 @@ Default variant with optional icon and title:
 import { Alert, AlertTitle, AlertDescription } from "@/modules/cores/shadcn/components/ui/alert"
 import { Terminal } from "lucide-react"
 
+/** Default informational alert. */
 export function AlertDefault() {
   return (
     <Alert>
@@ -52,6 +55,7 @@ Use the `destructive` variant for error or critical messages:
 import { Alert, AlertTitle, AlertDescription } from "@/modules/cores/shadcn/components/ui/alert"
 import { AlertCircle } from "lucide-react"
 
+/** Destructive (error) alert. */
 export function AlertDestructive() {
   return (
     <Alert variant="destructive">
@@ -73,6 +77,7 @@ Combine with lucide-react icons for visual emphasis:
 import { Alert, AlertTitle, AlertDescription } from "@/modules/cores/shadcn/components/ui/alert"
 import { AlertTriangle, Check, Info } from "lucide-react"
 
+/** Alerts with leading icons. */
 export function AlertWithIcons() {
   return (
     <>
@@ -105,6 +110,7 @@ Display alert without icon:
 ```tsx
 import { Alert, AlertTitle, AlertDescription } from "@/modules/cores/shadcn/components/ui/alert"
 
+/** Alert without an icon. */
 export function AlertNoIcon() {
   return (
     <Alert>

@@ -86,7 +86,7 @@ Railway Dashboard → Variables → Add:
  * @see /src/lib/prisma.ts
  */
 import type { NextRequest } from 'next/server'
-import type { Task } from '@prisma/client'
+import type { Task } from '@/generated/prisma/client'
 import { prisma } from '@/lib/prisma'
 
 /**
@@ -140,13 +140,19 @@ railway logs
 
 Railway PostgreSQL default pooling: 20 connections.
 
-Update `datasource` if needed:
+In Prisma 7 the pool belongs to the driver adapter (`pg` pool options), not the schema:
 
-```prisma
-datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
-}
+```typescript
+// src/lib/prisma.ts
+import { PrismaPg } from '@prisma/adapter-pg'
+import { PrismaClient } from '@/generated/prisma/client'
+
+const adapter = new PrismaPg({
+  connectionString: process.env.DATABASE_URL!,
+  max: 20, // pg pool size
+})
+
+export const prisma = new PrismaClient({ adapter })
 ```
 
 ## Cost Optimization

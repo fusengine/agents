@@ -26,7 +26,7 @@
 
 ## [1.39.25] - 03-08-2026
 
-- chore(design-expert): anonymize three of the five sources added in 1.39.24 — their names no longer appear in `stash-recode`, `parley-recode`, or `dispatch-recode` (25 occurrences across `design-system.md`, `tokens-*.md`, `styles.css`, `motion.js`, plus this CHANGELOG). Owner's call, verbatim: no publicity for those three. Convention: prose URLs become "the source" / "la source"; `Source: <url>` becomes `Source: not published here (…)`, keeping the technical parenthesis; shell-command URLs move to a `$SRC` variable declared once per block with a `# the source URL is not published in this corpus` comment, so the commands stay executable and the token relevés stay replayable; the scraped working file becomes `source.html`. `mosa-ai` and `stripe.com/fr` are untouched — explicit owner decision, not an oversight. No measured value, `[relevé]`/`[arbitrage]`/`[estimé]` marker, or brand name moved. (fuse-design 2.2.7)
+- chore(design-expert): anonymize three of the five sources added in 1.39.24 — their names no longer appear in `stash-recode`, `parley-recode`, or `dispatch-recode` (25 occurrences across `design-system.md`, `tokens-*.md`, `styles.css`, `motion.js`, plus this CHANGELOG). Owner's call, verbatim: no publicity for those three. Convention: prose URLs become "the source"; `Source: <url>` becomes `Source: not published here (…)`, keeping the technical parenthesis; shell-command URLs move to a `$SRC` variable declared once per block with a `# the source URL is not published in this corpus` comment, so the commands stay executable and the token measurements stay replayable; the scraped working file becomes `source.html`. `mosa-ai` and `stripe.com/fr` are untouched — explicit owner decision, not an oversight. No measured value, `[measured]`/`[decided]`/`[estimated]` marker, or brand name moved. (fuse-design 2.2.7)
 - chore(deps): bump `@fusengine/harness` from `^0.1.86` to `^0.1.89` in `plugins/package.json` (`plugins/bun.lock` regenerated via `bun install`). `resolveMaxLines` (10 files) and `FUSE_SOLID_MAX_LINES` (3 files) confirmed present in the installed bundle — the SOLID line-count fix is compiled in, not just in source. Known gap: the deployed marketplace install (`~/.claude/plugins/marketplaces/…`) stays on `0.1.87` — its `package.json` is protected by the APEX hook guard (`[BLOCKED] APEX Hook Guard: protected path`) and can't be bumped from this repo; alignment goes through `/plugin` on the owner's machine.
 
 ## [1.39.24] - 01-08-2026
@@ -73,7 +73,7 @@
 ## [1.39.15] - 18-07-2026
 
 - feat(fuse-lessons): add `UserPromptSubmit` to `hooks.json` — the lessons dispatch (`hook claude-code lessons`) now re-injects `MEMORY/LESSON.md` on every prompt, with a "lessons injected" notice, mirroring how rules/CLAUDE.md are re-applied instead of only at SessionStart/SubagentStart. (fuse-lessons 1.0.4)
-- chore(deps): bump `@fusengine/harness` `^0.1.76→^0.1.77` in the shared plugins install (`plugins/package.json` + `plugins/bun.lock`) — notices systemMessage, TeammateIdle/TaskCompleted "Invalid input" fix, PostToolUse event fix. Aucun plugin individuel touché — bump de suite uniquement.
+- chore(deps): bump `@fusengine/harness` `^0.1.76→^0.1.77` in the shared plugins install (`plugins/package.json` + `plugins/bun.lock`) — notices systemMessage, TeammateIdle/TaskCompleted "Invalid input" fix, PostToolUse event fix. No individual plugin touched — suite-level bump only.
 
 ## [1.39.14] - 18-07-2026
 
@@ -82,11 +82,11 @@
 
 ## [1.39.13] - 17-07-2026
 
-- chore(deps): bump `@fusengine/harness` `^0.1.75→^0.1.76` in the shared plugins install (`plugins/package.json` + `plugins/bun.lock`) — fix message design gate. Aucun plugin individuel touché — bump de suite uniquement.
+- chore(deps): bump `@fusengine/harness` `^0.1.75→^0.1.76` in the shared plugins install (`plugins/package.json` + `plugins/bun.lock`) — fix message design gate. No individual plugin touched — suite-level bump only.
 
 ## [1.39.12] - 17-07-2026
 
-- chore(deps): bump `@fusengine/harness` `^0.1.74→^0.1.75` in the shared plugins install (`plugins/package.json` + `plugins/bun.lock`). Aucun plugin individuel touché — bump de suite uniquement.
+- chore(deps): bump `@fusengine/harness` `^0.1.74→^0.1.75` in the shared plugins install (`plugins/package.json` + `plugins/bun.lock`). No individual plugin touched — suite-level bump only.
 
 ## [1.39.11] - 17-07-2026
 
@@ -114,7 +114,7 @@
 
 ## [1.39.5] - 16-07-2026
 
-- fix(hooks): inject `CLAUDE_PLUGIN_ROOT` into the top-level hooks-loader spawn — rules 00-08 (claude-rules plugin) were never injected because the aggregator spawned top-level hooks without `CLAUDE_PLUGIN_ROOT` in the child env, so any hook command relying on `${CLAUDE_PLUGIN_ROOT}` resolved to nothing. `plugin-scanner` now carries `pluginPath` on every `ExecutableHook`, and `hook-executor` sets it in the spawn env (fixtures and both hook-executor test suites updated). Bumps `@fusengine/harness` ^0.1.73→^0.1.74 (embarks the matching design-agent fix: `currentPhase === 1`). Aucun plugin individuel touché — bump de suite uniquement.
+- fix(hooks): inject `CLAUDE_PLUGIN_ROOT` into the top-level hooks-loader spawn — rules 00-08 (claude-rules plugin) were never injected because the aggregator spawned top-level hooks without `CLAUDE_PLUGIN_ROOT` in the child env, so any hook command relying on `${CLAUDE_PLUGIN_ROOT}` resolved to nothing. `plugin-scanner` now carries `pluginPath` on every `ExecutableHook`, and `hook-executor` sets it in the spawn env (fixtures and both hook-executor test suites updated). Bumps `@fusengine/harness` ^0.1.73→^0.1.74 (embarks the matching design-agent fix: `currentPhase === 1`). No individual plugin touched — suite-level bump only.
 
 ## [1.39.4] - 16-07-2026
 
@@ -138,23 +138,23 @@
 
 ## [1.38.99] - 14-07-2026
 
-- docs: correction des claims survendues et des compteurs périmés (README + docs/), après audit adverse (challenger, prouvé sur disque). Les secrets ne sont PAS bloqués par un hook (advisory seulement) → les lignes « blocks secrets » (pipeline + fuse-commit-pro) reformulées vers le vrai gate machine (lint/types au pre-commit) + un scan de patterns ; le sniper est un agent invoqué par la discipline APEX, pas un hook auto-lancé → reformulé. Compteurs corrigés contre le disque : 125→196 skills, 28→23 serveurs MCP (+ docs 27/28→23), titre hooks ai-pilot « 14 entries »→« 5 dispatchers → 16 checks », exemple cartographer 17→24 plugins / 21→35 agents, Playwright→fuse-browser. « 82 hooks » (invérifiable) → « 60+ hook checks ». Badges inchangés (déjà justes). Aucun plugin touché — bump de suite uniquement.
+- docs: fix overstated claims and stale counters (README + docs/), after an adversarial audit (challenger, proven on disk). Secrets are NOT blocked by a hook (advisory only) → the "blocks secrets" lines (pipeline + fuse-commit-pro) reworded toward the real machine gate (lint/types at pre-commit) + a pattern scan; the sniper is an agent invoked by APEX discipline, not an auto-launched hook → reworded. Counters corrected against the disk: 125→196 skills, 28→23 MCP servers (+ docs 27/28→23), ai-pilot hooks title "14 entries"→"5 dispatchers → 16 checks", cartographer example 17→24 plugins / 21→35 agents, Playwright→fuse-browser. "82 hooks" (unverifiable) → "60+ hook checks". Badges unchanged (already correct). No plugin touched — suite-level bump only.
 
 ## [1.38.98] - 14-07-2026
 
-- docs(readme): GIF de démo scripté du cycle hook → agent → sniper, placé sous l'image de la statusline. Reconstitution fidèle du comportement réel (rendue avec VHS, pas un run LLM live) : détection projet → `nextjs-expert`, un hook DRY bloque un Write dupliqué de `slugify`, correction par `import`, puis sniper PASS (lint/types/dup 0) + statusline. Sources régénérables versionnées : `docs/demo/demo.sh` + `docs/demo/hook-sniper.tape` (`vhs docs/demo/hook-sniper.tape`). Aucun plugin touché — bump de suite uniquement.
+- docs(readme): scripted demo GIF of the hook → agent → sniper cycle, placed under the statusline image. Faithful reconstruction of the real behavior (rendered with VHS, not a live LLM run): project detection → `nextjs-expert`, a DRY hook blocks a duplicated Write of `slugify`, fixed with an `import`, then sniper PASS (lint/types/dup 0) + statusline. Regenerable sources versioned: `docs/demo/demo.sh` + `docs/demo/hook-sniper.tape` (`vhs docs/demo/hook-sniper.tape`). No plugin touched — suite-level bump only.
 
 ## [1.38.97] - 14-07-2026
 
-- feat(apex): nouvel agent `challenger` — vérificateur ADVERSE des claims / causes racines / plans (distinct du sniper, qui reste sur le code). Comble le trou d'APEX : eLicit est une auto-review par l'agent lui-même (mêmes angles morts), et le sniper ne challenge que le code. Model opus, read-only, contexte frais (claim + preuves seulement), sources réelles (Context7/Exa/fuse-browser/code), borné 2 rounds → verdict CONFIRMED/REFUTED/UNCERTAIN, consultatif (pas de veto). Déclenchement SYSTÉMATIQUE par TYPE de claim (comme le sniper sur toute modif de code), en tâche APEX OU en conversation, avant que le lead ne rapporte une cause racine / un « done » / une action irréversible / un fix resservi. Câblage APEX (Step 4.5 eLicit + gate artefact `challenge-{slug}.md` + routage Verify), nouvelle Critical Rule 5 (template CLAUDE.md), roadmap Phase A/B. Bumps fuse-ai-pilot 1.2.33→1.2.34, fuse-rules 1.0.12→1.0.13.
+- feat(apex): new `challenger` agent — ADVERSARIAL verifier of claims / root causes / plans (distinct from the sniper, which stays on code). Closes the APEX gap: eLicit is a self-review by the agent itself (same blind spots), and the sniper only challenges code. Model opus, read-only, fresh context (claim + evidence only), real sources (Context7/Exa/fuse-browser/code), capped at 2 rounds → verdict CONFIRMED/REFUTED/UNCERTAIN, consultative (no veto). SYSTEMATIC trigger by claim TYPE (like the sniper on any code change), in an APEX task OR in conversation, before the lead reports a root cause / a "done" / an irreversible action / a re-served fix. APEX wiring (Step 4.5 eLicit + `challenge-{slug}.md` artefact gate + Verify routing), new Critical Rule 5 (CLAUDE.md template), roadmap Phase A/B. Bumps fuse-ai-pilot 1.2.33→1.2.34, fuse-rules 1.0.12→1.0.13.
 
 ## [1.38.96] - 14-07-2026
 
-- feat(hooks): self-heal des node_modules effacés, piloté par le hooks-loader. Un update de plugin déclenche un `git clone` frais du clone marketplace qui n'emporte pas les `node_modules` gitignorés → harness + statusline cassés jusqu'à une réinstall manuelle. Le loader (versionné, restauré au re-checkout, exécuté à chaque hook) appelle désormais `ensureDeps()` en premier : il vérifie les marqueurs des 3 repos d'origine (`scripts/`, `plugins/` harness partagé, `core-guards/statusline`) et relance `bun install` in-place si absent, au 1er hook après un wipe. Chaîne built-ins-only (le réparateur ne dépend pas de ce qu'il répare) : verrou single-flight `O_EXCL` anti-course (fan-out ~11×) + anti-lock-périmé, `bun install` timeout SIGKILL, fail-open. `plugin-scanner` résout `${HOME}`/`$HOME` au runtime (le re-checkout remet le littéral, spawn direct sans shell) + fallback `HOME||USERPROFILE`. Point d'entrée standalone `scripts/ensure-harness-deps.ts`. Aucun câblage installeur (loader déjà enregistré). tsc 0, bun test 294 pass, sniper PASS.
+- feat(hooks): self-heal of wiped node_modules, driven by the hooks-loader. A plugin update triggers a fresh `git clone` of the marketplace clone, which does not carry the gitignored `node_modules` → harness + statusline broken until a manual reinstall. The loader (versioned, restored on re-checkout, run on every hook) now calls `ensureDeps()` first: it checks the markers of the 3 origin repos (`scripts/`, `plugins/` shared harness, `core-guards/statusline`) and reruns `bun install` in place if missing, on the 1st hook after a wipe. Built-ins-only chain (the repairer does not depend on what it repairs): single-flight `O_EXCL` lock against races (fan-out ~11×) + stale-lock guard, `bun install` SIGKILL timeout, fail-open. `plugin-scanner` resolves `${HOME}`/`$HOME` at runtime (the re-checkout restores the literal, direct spawn without a shell) + `HOME||USERPROFILE` fallback. Standalone entry point `scripts/ensure-harness-deps.ts`. No installer wiring (loader already registered). tsc 0, bun test 294 pass, sniper PASS.
 
 ## [1.38.95] - 13-07-2026
 
-- chore(deps): bump @fusengine/harness ^0.1.72→^0.1.73 (embarque le fix du deadlock browser du design-pipeline et l'hermeticité des tests file-size FUSE_SOLID_MAX_LINES). feat(ai-pilot): nouvelle commande /update-harness — bump la dépendance, réinstalle le node_modules partagé du marketplace, vérifie la version installée et sanity-check les markers du dist. feat(design): design-expert — fast-path fuse-browser (browser_fetch, browser_fetch_batch, browser_serp_batch) ajoutés aux tools, et modèle sonnet→opus (supériorité nette sur le design ouvert, validée par comparatif de 3 pages agence). Bumps fuse-ai-pilot 1.2.32→1.2.33, fuse-design 2.1.29→2.1.30.
+- chore(deps): bump @fusengine/harness ^0.1.72→^0.1.73 (ships the design-pipeline browser deadlock fix and the hermeticity of the FUSE_SOLID_MAX_LINES file-size tests). feat(ai-pilot): new /update-harness command — bumps the dependency, reinstalls the marketplace's shared node_modules, checks the installed version and sanity-checks the dist markers. feat(design): design-expert — fuse-browser fast-path (browser_fetch, browser_fetch_batch, browser_serp_batch) added to tools, and model sonnet→opus (clear superiority on open-ended design, validated by a comparison of 3 agency pages). Bumps fuse-ai-pilot 1.2.32→1.2.33, fuse-design 2.1.29→2.1.30.
 
 ## [1.38.94] - 13-07-2026
 

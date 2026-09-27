@@ -59,10 +59,11 @@ export default defineConfig({
         light: './src/assets/logo-light.svg',
         dark: './src/assets/logo-dark.svg',
       },
-      social: {
-        github: 'https://github.com/my/repo',
-        discord: 'https://discord.gg/...',
-      },
+      // Array syntax required since Starlight 0.33 (breaking change; old object shorthand removed)
+      social: [
+        { icon: 'github', label: 'GitHub', href: 'https://github.com/my/repo' },
+        { icon: 'discord', label: 'Discord', href: 'https://discord.gg/...' },
+      ],
       editLink: {
         baseUrl: 'https://github.com/my/repo/edit/main/',
       },

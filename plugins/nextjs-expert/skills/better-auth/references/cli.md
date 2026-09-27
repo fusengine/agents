@@ -27,29 +27,34 @@ related: installation.md, adapters/prisma.md, adapters/drizzle.md
 
 ## Commands
 
+> Since Better Auth 1.5 the CLI is the standalone `auth` package (`npx auth@latest …`),
+> replacing `@better-auth/cli` (slated for deprecation). Extra commands: `init`, `info`,
+> `check`, `create-admin`, `upgrade`.
+
 ### Generate Schema
 
 ```bash
-bunx @better-auth/cli generate
+bunx auth@latest generate
 ```
 
 Options:
 ```bash
 --config <path>    # Path to auth config (default: auto-detect)
 --output <path>    # Output directory for schema
---dialect <type>   # Database dialect (postgresql, mysql, sqlite)
+--adapter <name>   # Schema generator: prisma | drizzle | kysely (default: from config)
+--dialect <type>   # Database dialect (postgresql, mysql, sqlite) — required with --adapter drizzle
 ```
 
 ### Push Schema
 
 ```bash
-bunx @better-auth/cli migrate
+bunx auth@latest migrate
 ```
 
 ### Generate Secret
 
 ```bash
-bunx @better-auth/cli secret
+bunx auth@latest secret
 ```
 
 Output:
@@ -61,7 +66,7 @@ BETTER_AUTH_SECRET=a1b2c3d4e5f6...
 
 ```bash
 # Generate Prisma schema additions
-bunx @better-auth/cli generate --output prisma/schema.prisma
+bunx auth@latest generate --output prisma/schema.prisma
 
 # Then run Prisma migrate
 bunx prisma migrate dev
@@ -71,7 +76,7 @@ bunx prisma migrate dev
 
 ```bash
 # Generate Drizzle schema
-bunx @better-auth/cli generate --output src/db/auth-schema.ts
+bunx auth@latest generate --output src/db/auth-schema.ts
 
 # Then run Drizzle push
 bunx drizzle-kit push
@@ -87,7 +92,7 @@ The CLI auto-detects your auth config from:
 
 Or specify manually:
 ```bash
-bunx @better-auth/cli generate --config ./modules/auth/src/services/auth.ts
+bunx auth@latest generate --config ./modules/auth/src/services/auth.ts
 ```
 
 ## Environment

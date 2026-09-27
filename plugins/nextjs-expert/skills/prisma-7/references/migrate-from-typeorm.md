@@ -13,9 +13,10 @@ related: ["migrate-from-sequelize", "migrate-from-drizzle"]
 ## Step 1: Setup
 
 ```bash
-npm install @prisma/client
-npm install -D prisma
-npx prisma init
+npm install @prisma/client@7 @prisma/adapter-pg dotenv   # MySQL: @prisma/adapter-mariadb
+npm install -D prisma@7
+npx prisma init   # creates a `prisma-client` generator with `output` + the config file:
+                  # 7.10+ → prisma7.config.ts (7.0–7.9 → prisma.config.ts) — edit THAT file
 ```
 
 ## Step 2: Introspect Existing Database
@@ -118,7 +119,7 @@ model Tag {
 ```typescript
 // Module: src/services/user.service.ts
 // Purpose: User data access queries (SOLID: SRP - query logic only)
-import type { Prisma } from "@prisma/client";
+import type { Prisma } from "../generated/prisma/client"; // v7: generated path
 
 /**
  * Find user by ID
@@ -205,7 +206,7 @@ await prisma.user.delete({ where: { id: 1 } });
 ```typescript
 // Module: src/services/transaction.service.ts
 // Purpose: Database transaction handling (SOLID: SRP - transactional operations)
-import type { Prisma } from "@prisma/client";
+import type { Prisma } from "../generated/prisma/client"; // v7: generated path
 
 /**
  * TypeORM: Manual transaction management

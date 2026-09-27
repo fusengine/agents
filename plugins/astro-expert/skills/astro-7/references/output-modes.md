@@ -1,12 +1,12 @@
 ---
 name: output-modes
-description: Astro 6 output modes — static, server, hybrid — and when to use each
+description: Astro 7 output modes — static, server, and hybrid rendering via per-route prerender — and when to use each
 when-to-use: configuring project output, choosing rendering strategy
 keywords: output, static, server, hybrid, prerender, SSR, SSG
 priority: high
 ---
 
-# Astro 6 Output Modes
+# Astro 7 Output Modes
 
 ## When to Use
 
@@ -20,7 +20,9 @@ priority: high
 |------|--------|----------|
 | `static` | Default | All pages prerendered at build time |
 | `server` | `output: 'server'` | All pages rendered on demand |
-| `hybrid` | `output: 'hybrid'` | Static by default, opt-in to server per route |
+| Hybrid | `output: 'static'` + adapter | Static by default, opt-in to on-demand per route with `prerender = false` |
+
+`output` only accepts `'static' | 'server'` — the former `'hybrid'` value was merged into `'static'` (Astro 5) and is invalid in Astro 7.
 
 ## Configuration
 
@@ -30,7 +32,7 @@ import { defineConfig } from 'astro/config';
 import node from '@astrojs/node';
 
 export default defineConfig({
-  output: 'server', // or 'hybrid'
+  output: 'server', // or 'static' (default) + per-route prerender = false
   adapter: node({ mode: 'standalone' }),
 });
 ```
@@ -44,7 +46,7 @@ export const prerender = true;
 ---
 
 ---
-// In 'hybrid' mode — this route is server-rendered
+// In 'static' mode (with an adapter) — this route is rendered on demand
 export const prerender = false;
 ---
 ```

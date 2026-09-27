@@ -7,7 +7,7 @@ references: references/types.md, references/context.md, references/global.md, re
 ---
 
 <objective>
-Covers composing cross-cutting server logic in TanStack Start with createMiddleware: request middleware vs server-function middleware, chaining via .middleware([...]), sharing context with next({ context }), passing client-to-server context with sendContext, client-side middleware (.client()), global middleware declared via createStart in src/start.ts, parameterized authorization factories, and staticFunctionMiddleware ordering. Targets @tanstack/react-start v1.166.2.
+Covers composing cross-cutting server logic in TanStack Start with createMiddleware: request middleware vs server-function middleware, chaining via .middleware([...]), sharing context with next({ context }), passing client-to-server context with sendContext, client-side middleware (.client()), global middleware declared via createStart in src/start.ts, parameterized authorization factories, and staticFunctionMiddleware ordering. Targets @tanstack/react-start v1.168.58.
 
 Critical rules enforced: the method chain order is fixed (.middleware() → .validator() → .client() → .server()); shape-validated sendContext data is NOT authorization — always re-check access against the server-trusted session before using a client-sent value as a query key, filter, or path param; client context is never sent to the server unless explicitly opted in, and the client can lie about anything it sends; .client() runs on the server during SSR, so browser-only APIs need a typeof window guard; and staticFunctionMiddleware must always be last in the chain.
 
@@ -21,7 +21,7 @@ Do NOT use this skill for defining the RPC itself (use start-server-functions), 
 Middleware customizes the behavior of server functions and server routes. It is
 composable — one middleware can depend on others to form an ordered chain.
 Import `createMiddleware` from `@tanstack/react-start`. This skill targets
-`@tanstack/react-start` **v1.166.2**.
+`@tanstack/react-start` **v1.168.58**.
 
 ## Agent Workflow (MANDATORY)
 

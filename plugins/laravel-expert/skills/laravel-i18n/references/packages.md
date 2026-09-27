@@ -47,7 +47,7 @@ lang/
     └── courier/
         ├── en/
         │   └── messages.php
-        └── fr/
+        └── es/
             └── messages.php
 ```
 

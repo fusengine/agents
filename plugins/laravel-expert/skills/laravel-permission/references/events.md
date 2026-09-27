@@ -13,14 +13,18 @@ related: spatie-permission.md
 
 Since v6.15.0, Spatie Permission dispatches events when roles and permissions are attached or detached. Use these for audit logging, notifications, or triggering side effects.
 
+Events are **disabled by default** — set `'events_enabled' => true` in `config/permission.php`.
+
+> Since **v7.0.0** the classes carry an `Event` suffix (`RoleAttachedEvent`, ...). v6.15–v6.x used `RoleAttached`, `RoleDetached`, `PermissionAttached`, `PermissionDetached`.
+
 ## Available Events
 
 | Event | Triggered When |
 |-------|----------------|
-| `RoleAttached` | Role assigned to model |
-| `RoleDetached` | Role removed from model |
-| `PermissionAttached` | Permission assigned to model/role |
-| `PermissionDetached` | Permission removed from model/role |
+| `RoleAttachedEvent` | Role assigned to model |
+| `RoleDetachedEvent` | Role removed from model |
+| `PermissionAttachedEvent` | Permission assigned to model/role |
+| `PermissionDetachedEvent` | Permission removed from model/role |
 
 ## Event Classes
 
@@ -28,10 +32,12 @@ All events are in the `Spatie\Permission\Events` namespace:
 
 | Class | Properties |
 |-------|------------|
-| `RoleAttached` | `$role`, `$model` |
-| `RoleDetached` | `$role`, `$model` |
-| `PermissionAttached` | `$permission`, `$model` |
-| `PermissionDetached` | `$permission`, `$model` |
+| `RoleAttachedEvent` | `$role`, `$model` |
+| `RoleDetachedEvent` | `$role`, `$model` |
+| `PermissionAttachedEvent` | `$permission`, `$model` |
+| `PermissionDetachedEvent` | `$permission`, `$model` |
+
+The role/permission payload may be a model ID, an Eloquent record, or an array/collection of either — inspect it before acting.
 
 ## Use Cases
 
@@ -63,7 +69,7 @@ Notify external systems of permission changes.
 
 ## Listener Registration
 
-Register listeners in `EventServiceProvider` or use attribute-based discovery in Laravel 11+.
+Register listeners in `EventServiceProvider` or rely on Laravel 11+ automatic listener discovery (type-hinted `handle()` in `app/Listeners`).
 
 ## Event Properties
 
@@ -81,8 +87,8 @@ When using `syncRoles()` or `syncPermissions()`:
 
 | Method | Events Fired |
 |--------|--------------|
-| `syncRoles(['a', 'b'])` | Multiple `RoleAttached`/`RoleDetached` |
-| `syncPermissions([...])` | Multiple `PermissionAttached`/`PermissionDetached` |
+| `syncRoles(['a', 'b'])` | Multiple `RoleAttachedEvent`/`RoleDetachedEvent` |
+| `syncPermissions([...])` | Multiple `PermissionAttachedEvent`/`PermissionDetachedEvent` |
 
 ## Best Practices
 

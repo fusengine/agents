@@ -22,8 +22,8 @@ matching expert.
 | Laravel app (Eloquent, Artisan, Blade, Livewire, Sanctum…) | **`laravel-expert` agent** | Fully out of scope here; Laravel has its own dedicated expert. |
 | Framework-agnostic HTTP (PSR-7/15/17/18) | **[[php-http-psr]]** | Messages, middleware pipelines, factories, clients. |
 | One standalone Symfony component | [symfony-components.md](symfony-components.md) → research agent | Console, Process, Validator, etc. — no framework needed. |
-| API-first product on Symfony | [api-platform.md](api-platform.md) → research agent | API Platform 4.3. |
-| Small PSR-based micro-service | [slim-framework.md](slim-framework.md) → research agent | Slim 4.15+. |
+| API-first product on Symfony | [api-platform.md](api-platform.md) → research agent | API Platform 5.0. |
+| Small PSR-based micro-service | [slim-framework.md](slim-framework.md) → research agent | Slim 4.15.3+ (security fix). |
 | SOLID / file-size / interface rules for PHP | **[[solid-php]]** | Architecture enforcement. |
 
 ## The gap: no deep Symfony full-stack expert

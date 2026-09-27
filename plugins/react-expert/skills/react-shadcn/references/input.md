@@ -10,10 +10,12 @@ related: card.md
 
 # Input Component
 
+> **Base:** same API on Base UI, Radix and React Aria (verified against r/styles/{base,radix}-nova/input.json). Invalid state: `aria-invalid` on `Input` + `data-invalid` on `Field`; addons: `InputGroup`.
+
 ## Installation
 
 ```bash
-bunx shadcn-ui@latest add input label
+bunx shadcn@latest add input label
 ```
 
 Creates:
@@ -25,6 +27,7 @@ Creates:
 ```typescript
 import { Input } from '@/modules/cores/shadcn/components/ui/input'
 
+/** Plain text input. */
 export function BasicInput() {
   return <Input type="text" placeholder="Enter name..." />
 }
@@ -38,6 +41,7 @@ Combine Input and Label for accessibility:
 import { Input } from '@/modules/cores/shadcn/components/ui/input'
 import { Label } from '@/modules/cores/shadcn/components/ui/label'
 
+/** Input with an associated label. */
 export function InputWithLabel() {
   const id = 'email'
 
@@ -65,13 +69,12 @@ export function InputWithLabel() {
 Search or action input:
 
 ```typescript
-'use client'
-
 import { useState } from 'react'
 import { Input } from '@/modules/cores/shadcn/components/ui/input'
 import { Button } from '@/modules/cores/shadcn/components/ui/button'
 import { Search, Copy } from '@/modules/cores/shadcn/components/icons'
 
+/** Search field submitted by Enter or an icon button. */
 export function SearchInput() {
   const [query, setQuery] = useState('')
 
@@ -112,6 +115,7 @@ import { Input } from '@/modules/cores/shadcn/components/ui/input'
 import { DollarSign, Eye, EyeOff } from '@/modules/cores/shadcn/components/icons'
 import { useState } from 'react'
 
+/** Number input with a leading currency icon. */
 export function InputGroupPrefix() {
   return (
     <div className="relative flex items-center">
@@ -129,6 +133,7 @@ export function InputGroupPrefix() {
 ### Input with Show/Hide Password
 
 ```typescript
+/** Password input with a show/hide toggle. */
 export function PasswordInput() {
   const [showPassword, setShowPassword] = useState(false)
 
@@ -168,8 +173,6 @@ export function PasswordInput() {
 ### Basic Validation
 
 ```typescript
-'use client'
-
 import { useState } from 'react'
 import { Input } from '@/modules/cores/shadcn/components/ui/input'
 import { Label } from '@/modules/cores/shadcn/components/ui/label'
@@ -179,6 +182,7 @@ interface InputFieldProps {
   error?: string
 }
 
+/** Input showing an error message and `aria-invalid`. */
 export function ValidatedInput({ label, error }: InputFieldProps) {
   const id = label.toLowerCase()
 
@@ -210,8 +214,6 @@ export function ValidatedInput({ label, error }: InputFieldProps) {
 ### Form Validation Example
 
 ```typescript
-'use client'
-
 import { useState } from 'react'
 import { Input } from '@/modules/cores/shadcn/components/ui/input'
 import { Label } from '@/modules/cores/shadcn/components/ui/label'
@@ -222,6 +224,7 @@ interface FormData {
   password: string
 }
 
+/** Login form with local state and per-field errors. */
 export function LoginForm() {
   const [formData, setFormData] = useState<FormData>({
     email: '',
@@ -343,11 +346,10 @@ All HTML input types supported:
 State-managed input:
 
 ```typescript
-'use client'
-
 import { useState } from 'react'
 import { Input } from '@/modules/cores/shadcn/components/ui/input'
 
+/** Input bound to React state. */
 export function ControlledInput() {
   const [value, setValue] = useState('')
 
@@ -371,6 +373,7 @@ Use `defaultValue` for initial value:
 import { useRef } from 'react'
 import { Input } from '@/modules/cores/shadcn/components/ui/input'
 
+/** Uncontrolled input read through a ref. */
 export function UncontrolledInput() {
   const inputRef = useRef<HTMLInputElement>(null)
 
@@ -438,13 +441,12 @@ For input without visible label:
 ### Search with Clear Button
 
 ```typescript
-'use client'
-
 import { useState } from 'react'
 import { Input } from '@/modules/cores/shadcn/components/ui/input'
 import { Button } from '@/modules/cores/shadcn/components/ui/button'
 import { X } from '@/modules/cores/shadcn/components/icons'
 
+/** Search input with a clear button. */
 export function SearchWithClear() {
   const [search, setSearch] = useState('')
 
@@ -475,11 +477,10 @@ export function SearchWithClear() {
 ### Input with Character Count
 
 ```typescript
-'use client'
-
 import { useState } from 'react'
 import { Input } from '@/modules/cores/shadcn/components/ui/input'
 
+/** Input with a character counter. */
 export function InputWithCounter() {
   const [value, setValue] = useState('')
   const maxLength = 100
@@ -527,6 +528,7 @@ Supports all standard HTML input attributes:
 import type { ChangeEvent } from 'react'
 import { Input } from '@/modules/cores/shadcn/components/ui/input'
 
+/** Input with a typed change handler. */
 export function TypeSafeInput() {
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value

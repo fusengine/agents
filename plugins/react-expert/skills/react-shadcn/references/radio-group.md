@@ -10,9 +10,12 @@ related: switch.md, checkbox.md
 
 # Radio Group Component
 
+> **Base:** same API on Base UI and Radix (verified against r/styles/{base,radix}-nova/radio-group.json) — `RadioGroup` (`value`, `defaultValue`, `onValueChange`, `disabled`) + `RadioGroupItem` (`value`, `id`); Base UI adds an `eventDetails` 2nd arg and accepts non-string values. React Aria: same `RadioGroup defaultValue` / `RadioGroupItem value` markup, but `onChange` / `isDisabled` (RAC `RadioGroup`).
+> Invalid state: `aria-invalid` on each `RadioGroupItem`, `data-invalid` on `Field`; choice cards wrap `Field` in `FieldLabel`.
+
 ## Overview
 
-The RadioGroup component renders a group of radio buttons using Radix UI's primitive. It ensures only one option can be selected at a time and provides proper accessibility features.
+The RadioGroup component renders a group of radio buttons on Base UI (or Radix) primitives. It ensures only one option can be selected at a time and provides proper accessibility features.
 
 ## Installation
 
@@ -26,6 +29,7 @@ bunx --bun shadcn@latest add radio-group
 import { Label } from "@/modules/cores/shadcn/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/modules/cores/shadcn/components/ui/radio-group"
 
+/** Uncontrolled radio group. */
 export function BasicRadioGroup() {
   return (
     <RadioGroup defaultValue="option-one">
@@ -49,12 +53,11 @@ export function BasicRadioGroup() {
 ## Controlled Radio Group
 
 ```tsx
-"use client"
-
 import { useState } from "react"
 import { Label } from "@/modules/cores/shadcn/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/modules/cores/shadcn/components/ui/radio-group"
 
+/** Radio group bound to state. */
 export function ControlledRadioGroup() {
   const [selected, setSelected] = useState("standard")
 
@@ -89,6 +92,7 @@ export function ControlledRadioGroup() {
 import { Label } from "@/modules/cores/shadcn/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/modules/cores/shadcn/components/ui/radio-group"
 
+/** Radio group laid out horizontally. */
 export function HorizontalRadioGroup() {
   return (
     <RadioGroup defaultValue="small">
@@ -114,12 +118,11 @@ export function HorizontalRadioGroup() {
 ## With Descriptions
 
 ```tsx
-"use client"
-
 import { useState } from "react"
 import { Label } from "@/modules/cores/shadcn/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/modules/cores/shadcn/components/ui/radio-group"
 
+/** Radio options with helper descriptions. */
 export function RadioGroupWithDescriptions() {
   const [selected, setSelected] = useState("personal")
 
@@ -167,6 +170,7 @@ export function RadioGroupWithDescriptions() {
 import { Label } from "@/modules/cores/shadcn/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/modules/cores/shadcn/components/ui/radio-group"
 
+/** Radio group with disabled options. */
 export function RadioGroupDisabled() {
   return (
     <RadioGroup defaultValue="available">
@@ -192,8 +196,6 @@ export function RadioGroupDisabled() {
 ## Card-based Selection
 
 ```tsx
-"use client"
-
 import { useState } from "react"
 import { RadioGroup, RadioGroupItem } from "@/modules/cores/shadcn/components/ui/radio-group"
 
@@ -205,6 +207,7 @@ interface Plan {
   features: string[]
 }
 
+/** Radio options rendered as choice cards. */
 export function RadioGroupCards() {
   const [selected, setSelected] = useState("standard")
 
@@ -270,12 +273,11 @@ export function RadioGroupCards() {
 ## Form Integration
 
 ```tsx
-"use client"
-
 import { useState } from "react"
 import { Label } from "@/modules/cores/shadcn/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/modules/cores/shadcn/components/ui/radio-group"
 
+/** Radio group inside a form. */
 export function RadioGroupForm() {
   const [formData, setFormData] = useState({
     preference: "email"

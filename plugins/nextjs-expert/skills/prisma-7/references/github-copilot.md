@@ -29,8 +29,13 @@ code --install-extension GitHub.Copilot-Chat
 ### Example: User Queries
 
 ```typescript
-// Copilot suggests based on context:
-const prisma = new PrismaClient()
+// Copilot suggests based on context (v7: generated client + driver adapter):
+import { PrismaClient } from './generated/prisma/client'
+import { PrismaPg } from '@prisma/adapter-pg'
+
+const prisma = new PrismaClient({
+  adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL! })
+})
 
 // ✅ Suggestion: Get all users with posts
 const users = await prisma.user.findMany({

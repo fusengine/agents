@@ -17,22 +17,18 @@ i18n.use(initReactI18next).init({
 
   interpolation: {
     escapeValue: false,
-
-    // Custom format function for dates and numbers
-    format: (value, format, lng) => {
-      // Date formatting
-      if (value instanceof Date) {
-        return formatDate(value, format, lng)
-      }
-
-      // Number formatting
-      if (typeof value === 'number') {
-        return formatNumber(value, format, lng)
-      }
-
-      return value
-    },
   },
+})
+
+// i18next v26 removed `interpolation.format` — register custom formats on the built-in Formatter
+const DATE_FORMATS = ['short', 'long', 'full', 'time', 'datetime', 'relative'] as const
+const NUMBER_FORMATS = ['currency', 'percent', 'compact', 'decimal'] as const
+
+DATE_FORMATS.forEach((name) => {
+  i18n.services.formatter?.add(name, (value, lng) => formatDate(value as Date, name, lng))
+})
+NUMBER_FORMATS.forEach((name) => {
+  i18n.services.formatter?.add(name, (value, lng) => formatNumber(value as number, name, lng))
 })
 
 /**
@@ -144,7 +140,7 @@ function getCurrencyForLocale(locale: string): string {
     'en': 'USD',
     'en-GB': 'GBP',
     'en-US': 'USD',
-    'fr': 'EUR',
+    'es': 'EUR',
     'de': 'EUR',
     'ja': 'JPY',
   }
@@ -226,15 +222,15 @@ January 31, 2026, 2:30 PM
 2 hours ago
 ```
 
-### Output (French)
+### Output (Spanish)
 
 ```text
-Created: 31/01/26
-Last updated: 31 janvier 2026
-Event on vendredi 31 janvier 2026
+Created: 31/1/26
+Last updated: 31 de enero de 2026
+Event on viernes, 31 de enero de 2026
 Time: 14:30
-31 janv. 2026, 14:30
-il y a 2 heures
+31 ene 2026, 14:30
+hace 2 horas
 ```
 
 ---
@@ -276,7 +272,7 @@ export function PriceDisplay({ amount, discount }: PriceDisplayProps) {
 
 ```text
 English: Price: $99.99 | Discount: 15%
-French:  Price: 99,99 € | Discount: 15 %
+Spanish: Price: 99,99 € | Discount: 15 %
 German:  Price: 99,99 € | Discount: 15 %
 ```
 
@@ -306,8 +302,8 @@ export function UserCount({ count }: { count: number }) {
 ### Output
 
 ```text
-1234 users       → 1.2K users (en) / 1,2 k users (fr)
-1234567 users    → 1.2M users (en) / 1,2 M users (fr)
+1234 users       → 1.2K users (en) / 1,2 mil users (es)
+1234567 users    → 1.2M users (en) / 1,2 M users (es)
 ```
 
 ---
@@ -399,20 +395,20 @@ function OrderSummary({ order }: { order: Order }) {
 
 ### Date Formats
 
-| Format | English | French | German |
-|--------|---------|--------|--------|
-| short | 1/31/26 | 31/01/26 | 31.01.26 |
-| long | January 31, 2026 | 31 janvier 2026 | 31. Januar 2026 |
-| full | Friday, January 31, 2026 | vendredi 31 janvier 2026 | Freitag, 31. Januar 2026 |
+| Format | English | Spanish | German |
+|--------|---------|---------|--------|
+| short | 1/31/26 | 31/1/26 | 31.01.26 |
+| long | January 31, 2026 | 31 de enero de 2026 | 31. Januar 2026 |
+| full | Friday, January 31, 2026 | viernes, 31 de enero de 2026 | Freitag, 31. Januar 2026 |
 
 ### Number Formats
 
-| Format | English | French | German |
-|--------|---------|--------|--------|
-| decimal | 1,234.56 | 1 234,56 | 1.234,56 |
-| currency | $1,234.56 | 1 234,56 € | 1.234,56 € |
+| Format | English | Spanish | German |
+|--------|---------|---------|--------|
+| decimal | 1,234.56 | 1234,56 | 1.234,56 |
+| currency | $1,234.56 | 1234,56 € | 1.234,56 € |
 | percent | 12.3% | 12,3 % | 12,3 % |
-| compact | 1.2K | 1,2 k | 1234 |
+| compact | 1.2K | 1,2 mil | 1234 |
 
 ---
 

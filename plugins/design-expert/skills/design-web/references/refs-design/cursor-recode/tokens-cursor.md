@@ -3,7 +3,7 @@
 Reading taken on July 27, 2026 from a local copy: `index.html` (647,707 b)
 and the 4 Next.js-compiled CSS sheets.
 
-`[relevé]` = read verbatim from the source · `[arbitrage]` = a choice made by
+`[measured]` = read verbatim from the source · `[decided]` = a choice made by
 the author of this reference. In `styles.css`, every non-trivial value carries one of the two.
 
 Source abbreviations:
@@ -172,10 +172,10 @@ duration-200`, measured from `index.html`).
 on screen width but on the **pointer's hover capability**:
 
 ```css
-@media (hover: none)  { .icone { opacity: 1 } }   /* touch: always visible */
-@media (hover: hover) { .icone { opacity: 0 } }
-@media (hover: hover) { .lien:hover .icone,
-                        .lien:focus-visible .icone { opacity: 1 } }
+@media (hover: none)  { .icon { opacity: 1 } }   /* touch: always visible */
+@media (hover: hover) { .icon { opacity: 0 } }
+@media (hover: hover) { .link:hover .icon,
+                        .link:focus-visible .icon { opacity: 1 } }
 ```
 *(measured from M, for `.nav__sub-nav__link__icon` as for `.footer-link__icon`)*
 
@@ -220,7 +220,7 @@ The source cuts the effect cleanly: `@media (prefers-reduced-motion: reduce)
 
 **Trigger.** The cascade offset is set in JavaScript; it isn't
 readable in the shipped CSS. In this reference it is `60ms` per rank
-— `[arbitrage]`.
+— `[decided]`.
 
 Compatibility constraint respected in `styles.css`: the trigger is an
 `IntersectionObserver` (*Baseline widely available* since March 2019), **not**
@@ -598,7 +598,7 @@ Light and dark theme throughout.
   views of the application. Here, the panels are **redrawn** with the
   measured tokens — chassis, bars, surface ramps, diff colors, "product" scale
   sizes. The chassis and proportions are exact; the content
-  displayed inside is an [arbitrage]. It's the most visible limit
+  displayed inside is [decided]. It's the most visible limit
   when comparing the two pages side by side: my demos are paler,
   because they lack the seven-tone syntax highlighting.
 - **The house icon font** (`CursorIcons16`) and its stylistic sets
@@ -611,7 +611,7 @@ Light and dark theme throughout.
 **Corrected relative to the source**: the original page contains **two `<h1>`s**.
 This reference has only one; the block headings are `<h2>`s.
 
-**Deliberate departures**, all marked `[arbitrage]` in the CSS:
+**Deliberate departures**, all marked `[decided]` in the CSS:
 - dropdown menus and chevrons opened in pure CSS (`:hover` / `:focus-within`)
   where the source drives `aria-expanded` and `.is-active` via JavaScript. The
   source has **no** `:hover` rule at all on the chevron;
@@ -623,7 +623,7 @@ This reference has only one; the block headings are `<h2>`s.
   this width; the source, meanwhile, lets it overflow under `overflow:hidden`);
 - the reveal elements' hidden state is set **by the script**, at the very moment it
   puts the element under observation, rather than by the stylesheet. A
-  `[data-revele]{opacity:0}` written up front would make the whole page invisible if
+  `[data-reveal]{opacity:0}` written up front would make the whole page invisible if
   the observer fails to start — a case reproduced in testing;
 - `9999px` instead of `3.40282e38px` for full radii;
 - icon glyphs in ordinary Unicode characters, since the house font and its
@@ -644,8 +644,8 @@ classes and attributes, the CSS animates. `motion.js` follows the same rule — 
 computes no position, interpolates no value, touches no motion style.
 Four blocks:
 
-1. **Mobile navigation** — toggling `data-ouvert`, locking background
-   scroll, `Escape`, focus return, and setting `--rang` for the cascade.
+1. **Mobile navigation** — toggling `data-open`, locking background
+   scroll, `Escape`, focus return, and setting `--index` for the cascade.
 2. **Scroll reveal** — `IntersectionObserver`, `unobserve` after the
    first pass.
 3. **Carousels** — two scroll buttons, `scrollBy` with explicit
@@ -662,10 +662,10 @@ preference. You have to read it yourself:
 
 ```js
 var mq = window.matchMedia('(prefers-reduced-motion: reduce)');
-var reduit = mq.matches;
-mq.addEventListener('change', function (e) { reduit = e.matches; });  // addListener is deprecated
+var reduced = mq.matches;
+mq.addEventListener('change', function (e) { reduced = e.matches; });  // addListener is deprecated
 // … then, on every call:
-piste.scrollBy({ left: dx, behavior: reduit ? 'instant' : 'smooth' });
+track.scrollBy({ left: dx, behavior: reduced ? 'instant' : 'smooth' });
 ```
 
 Corollary: `behavior` must **always** be explicit. Left out, it defaults to `'auto'`
@@ -679,7 +679,7 @@ expected; it isn't countered — button state is simply recalculated afterward.
 
 ## 10. Traceability check
 
-102 assertions extracted from the `[relevé]` markers were searched
+102 assertions extracted from the `[measured]` markers were searched
 literally in the concatenated source (`index.html` + the 4 CSS files, 1,059,805 b):
 22 tokens, 23 component and animation rules, 57 markup and
 geometry readings (windows, columns, layered backgrounds, keyframes). **No misses.**

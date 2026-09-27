@@ -96,5 +96,5 @@ import { useSession } from "@/modules/auth/src/hooks/auth-client"
 
 Auth.js and Better Auth use similar schema. Run migration:
 ```bash
-bunx @better-auth/cli migrate
+bunx auth@latest migrate
 ```

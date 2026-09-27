@@ -1,8 +1,8 @@
-# CSP Overview in Astro 6
+# CSP Overview in Astro 7
 
-## What is CSP in Astro 6?
+## What is CSP in Astro 7?
 
-Content Security Policy (CSP) is a **stable** feature in Astro 6 (released as experimental in earlier versions). It minimizes XSS attack vectors by controlling which resources a page is allowed to load.
+Content Security Policy (CSP) is a **stable** feature since Astro 6.0 (released as experimental in earlier versions), configured under `security.csp`; Astro 7.1 added `*-src-elem` / `*-src-attr` scoping. It minimizes XSS attack vectors by controlling which resources a page is allowed to load.
 
 ## How Astro Implements CSP
 

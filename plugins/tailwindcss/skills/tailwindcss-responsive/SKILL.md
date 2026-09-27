@@ -37,6 +37,16 @@ Documents responsive design utilities in Tailwind CSS v4: the default breakpoint
 </div>
 ```
 
+### Size containers (since v4.3)
+`@container` creates an inline-size container; `@container-size` creates a size container so block-axis units (`cqb`, `cqh`) resolve. Name it with `@container-size/{name}`.
+```html
+<div class="@container-size">
+  <div class="h-[50cqb]">
+    <!-- Half the container's block size -->
+  </div>
+</div>
+```
+
 ## Mobile-first
 ```html
 <div class="text-sm md:text-base lg:text-lg">

@@ -1,157 +1,157 @@
-/* RÉFÉRENCE DE DESIGN — app.reve.com · comportements. [relevé] = mécanique lue
-   dans la source · [arbitrage] = choix de l'auteur. NON REPRODUIT :
-   <rv-landing-explore-frame>, absent de la page aspirée. Hook du dépôt :
-   200 lignes max — citations et prose dans tokens-reve.md §1. */
+/* DESIGN REFERENCE — app.reve.com · behaviours. [measured] = mechanism read
+   in the source · [decided] = the author's choice. NOT REPRODUCED:
+   <rv-landing-explore-frame>, absent from the scraped page. Repo hook:
+   200 lines max — quotes and prose in tokens-reve.md §1. */
 (() => {
   'use strict';
-  /* [relevé] La source neutralise le mouvement en remettant ses 5 jetons de
-     durée à 0s ; ce qui est piloté en JS l'est côté JS, même media query. */
-  const mouvementReduit = matchMedia('(prefers-reduced-motion: reduce)');
-  const tous = (sel, racine = document) => Array.from(racine.querySelectorAll(sel));
-  /* 1. IMAGES DIFFÉRÉES — [relevé] au-delà des 3 premières cartes l'URL est dans
-     data-deferred-src/-srcset. [arbitrage] résolues à 600 px du viewport. */
-  function imagesDifferees() {
-    const differees = tous('img[data-src], img[data-srcset]');
-    if (!differees.length) return;
-    const resoudre = (img) => {
+  /* [measured] The source neutralizes motion by resetting its 5 duration
+     tokens to 0s; whatever is driven in JS is handled in JS, same media query. */
+  const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+  const all = (sel, root = document) => Array.from(root.querySelectorAll(sel));
+  /* 1. DEFERRED IMAGES — [measured] beyond the first 3 cards the URL lives in
+     data-deferred-src/-srcset. [decided] resolved 600 px before the viewport. */
+  function deferredImages() {
+    const deferred = all('img[data-src], img[data-srcset]');
+    if (!deferred.length) return;
+    const resolve = (img) => {
       if (img.dataset.srcset) { img.srcset = img.dataset.srcset; delete img.dataset.srcset; }
       if (img.dataset.src) { img.src = img.dataset.src; delete img.dataset.src; }
     };
-    if (!('IntersectionObserver' in window)) return differees.forEach(resoudre);
+    if (!('IntersectionObserver' in window)) return deferred.forEach(resolve);
     const obs = new IntersectionObserver((es, o) => es.forEach((e) => {
       if (!e.isIntersecting) return;
-      resoudre(e.target); o.unobserve(e.target);
+      resolve(e.target); o.unobserve(e.target);
     }), { rootMargin: '600px' });
-    differees.forEach((img) => obs.observe(img));
+    deferred.forEach((img) => obs.observe(img));
   }
-  /* 2. BANDE DÉRIVANTE — extraite dans motion-bande.js (hero ET galerie en
-     dépendent, et le glisser-à-la-souris qu'exige la source la fait dépasser le
-     plafond de lignes du dépôt). Chargée avant ce fichier. */
-  const bandeDerivante = (bande) => window.RevBande && window.RevBande.deriver(bande);
-  /* 3. VIDÉO AU SURVOL — [relevé] la classe se pose sur la PREUVE qu'une image a
-     été rendue (requestVideoFrameCallback, repli `playing`), pas sur l'intention
-     de jouer : une vidéo lente laisse l'affiche. Fondu en CSS, 150 ms. */
-  function videoSurvol(media) {
+  /* 2. DRIFTING STRIP — extracted into motion-bande.js (hero AND gallery depend
+     on it, and the mouse drag the source requires pushes it past the repo's
+     line ceiling). Loaded before this file. */
+  const driftStrip = (strip) => window.RevStrip && window.RevStrip.drift(strip);
+  /* 3. VIDEO ON HOVER — [measured] the class is set on PROOF that a frame has
+     been rendered (requestVideoFrameCallback, `playing` fallback), not on the
+     intent to play: a slow video leaves the poster. CSS fade, 150 ms. */
+  function videoHover(media) {
     const video = media.querySelector('video');
     if (!video) return;
-    let annuler = null;
-    const rendue = () => media.classList.add('joue');
-    const jouer = () => {
-      if (mouvementReduit.matches) return; /* [arbitrage] */
-      const p = video.play();              /* preload="none" : charge ici */
+    let cancel = null;
+    const rendered = () => media.classList.add('is-playing');
+    const play = () => {
+      if (reducedMotion.matches) return; /* [decided] */
+      const p = video.play();              /* preload="none": loads here */
       if (p && p.catch) p.catch(() => {});
       if ('requestVideoFrameCallback' in video) {
-        const id = video.requestVideoFrameCallback(rendue);
-        annuler = () => video.cancelVideoFrameCallback(id);
+        const id = video.requestVideoFrameCallback(rendered);
+        cancel = () => video.cancelVideoFrameCallback(id);
       } else {
-        video.addEventListener('playing', rendue, { once: true });
-        annuler = () => video.removeEventListener('playing', rendue);
+        video.addEventListener('playing', rendered, { once: true });
+        cancel = () => video.removeEventListener('playing', rendered);
       }
     };
-    const stopper = () => {
-      if (annuler) { annuler(); annuler = null; }
-      media.classList.remove('joue'); video.pause();
-      try { video.currentTime = 0; } catch { /* source pas encore prête */ }
+    const stop = () => {
+      if (cancel) { cancel(); cancel = null; }
+      media.classList.remove('is-playing'); video.pause();
+      try { video.currentTime = 0; } catch { /* source not ready yet */ }
     };
-    ['pointerenter', 'focusin'].forEach((t) => media.addEventListener(t, jouer));
-    ['pointerleave', 'focusout'].forEach((t) => media.addEventListener(t, stopper));
+    ['pointerenter', 'focusin'].forEach((t) => media.addEventListener(t, play));
+    ['pointerleave', 'focusout'].forEach((t) => media.addEventListener(t, stop));
   }
-  /* 4. VOILE — [relevé] le flou n'est JAMAIS basculé : seule la teinte varie. */
-  function voileEntete() {
-    const teinte = document.querySelector('.voile-teinte');
-    const hero = document.querySelector('.hero-bloc');
-    if (!teinte || !hero || !('IntersectionObserver' in window)) return;
+  /* 4. VEIL — [measured] the blur is NEVER toggled: only the tint varies. */
+  function headerVeil() {
+    const tint = document.querySelector('.veil-tint');
+    const hero = document.querySelector('.hero-block');
+    if (!tint || !hero || !('IntersectionObserver' in window)) return;
     new IntersectionObserver((es) => es.forEach((e) =>
-      teinte.classList.toggle('est-visible', !e.isIntersecting)), { threshold: 0 }).observe(hero);
+      tint.classList.toggle('is-visible', !e.isIntersecting)), { threshold: 0 }).observe(hero);
   }
-  /* 5. THÈME DE L'EN-TÊTE — [relevé] .color-scheme-text / -image n'ont aucun
-     déclencheur CSS dans la source : posées en JS selon la zone survolée. */
-  function themeEntete() {
-    const zones = tous('[data-zone]'), racine = document.documentElement;
+  /* 5. HEADER THEME — [measured] .color-scheme-text / -image have no CSS
+     trigger in the source: set in JS according to the zone underneath. */
+  function headerTheme() {
+    const zones = all('[data-zone]'), root = document.documentElement;
     if (!zones.length || !('IntersectionObserver' in window)) return;
-    const h = parseFloat(getComputedStyle(racine).getPropertyValue('--hauteur-entete')) || 56;
-    const appliquer = (n) => {
-      racine.classList.toggle('color-scheme-image', n === 'image');
-      racine.classList.toggle('color-scheme-text', n === 'text');
+    const h = parseFloat(getComputedStyle(root).getPropertyValue('--header-height')) || 56;
+    const apply = (n) => {
+      root.classList.toggle('color-scheme-image', n === 'image');
+      root.classList.toggle('color-scheme-text', n === 'text');
     };
-    const visibles = new Set();
+    const visible = new Set();
     const obs = new IntersectionObserver((es) => {
-      es.forEach((e) => (e.isIntersecting ? visibles.add(e.target) : visibles.delete(e.target)));
-      /* Hero collant : plusieurs zones se chevauchent, on prend la plus basse. */
-      const derniere = zones.filter((z) => visibles.has(z)).pop();
-      if (derniere) appliquer(derniere.dataset.zone);
-    }, { rootMargin: `-${h}px 0px -100% 0px` }); /* [arbitrage] tranche sous l'en-tête */
+      es.forEach((e) => (e.isIntersecting ? visible.add(e.target) : visible.delete(e.target)));
+      /* Sticky hero: several zones overlap, take the lowest one. */
+      const last = zones.filter((z) => visible.has(z)).pop();
+      if (last) apply(last.dataset.zone);
+    }, { rootMargin: `-${h}px 0px -100% 0px` }); /* [decided] slice under the header */
     zones.forEach((z) => obs.observe(z));
-    appliquer('image'); /* [relevé] le hero ouvre la page en thème sombre */
+    apply('image'); /* [measured] the hero opens the page in dark theme */
   }
-  /* 6. ÉLÉMENTS DE RÉFÉRENCE — [relevé] cartes = <button> portant l'image en
-     data-card ; état actif entièrement rendu en CSS (150 ms sur background ET
-     box-shadow). [arbitrage] deux couches + decode() puis 200 ms. */
+  /* 6. REFERENCE ELEMENTS — [measured] cards = <button> carrying the image in
+     data-card; active state rendered entirely in CSS (150 ms on background AND
+     box-shadow). [decided] two layers + decode() then 200 ms. */
   function references() {
-    const cartes = tous('.reference-carte[data-card]');
+    const cards = all('.reference-card[data-card]');
     const base = document.querySelector('[data-ref-base]');
-    const couche = document.querySelector('[data-ref-couche]');
-    const fond = document.querySelector('[data-fond-flou]');
-    if (!cartes.length || !base || !couche) return;
-    let enCours = false;
-    const choisir = async (carte) => {
-      if (enCours || carte.classList.contains('est-active')) return;
-      enCours = true;
-      cartes.forEach((c) => {
-        c.classList.toggle('est-active', c === carte);
-        c.setAttribute('aria-pressed', String(c === carte));
+    const layer = document.querySelector('[data-ref-layer]');
+    const blurBg = document.querySelector('[data-blurred-bg]');
+    if (!cards.length || !base || !layer) return;
+    let busy = false;
+    const select = async (card) => {
+      if (busy || card.classList.contains('is-active')) return;
+      busy = true;
+      cards.forEach((c) => {
+        c.classList.toggle('is-active', c === card);
+        c.setAttribute('aria-pressed', String(c === card));
       });
-      const url = carte.dataset.card;
-      couche.srcset = ''; couche.src = url;
-      try { await couche.decode(); } catch { /* indisponible : on garde l'ancienne */ }
-      couche.classList.add('est-visible');
-      if (fond) { fond.srcset = ''; fond.src = url; } /* le flou suit le sujet */
+      const url = card.dataset.card;
+      layer.srcset = ''; layer.src = url;
+      try { await layer.decode(); } catch { /* unavailable: keep the old one */ }
+      layer.classList.add('is-visible');
+      if (blurBg) { blurBg.srcset = ''; blurBg.src = url; } /* the blur follows the subject */
       setTimeout(() => {
         base.srcset = ''; base.src = url;
-        couche.classList.remove('est-visible'); enCours = false;
-      }, mouvementReduit.matches ? 0 : 200);
+        layer.classList.remove('is-visible'); busy = false;
+      }, reducedMotion.matches ? 0 : 200);
     };
-    cartes.forEach((c) => c.addEventListener('click', () => choisir(c)));
+    cards.forEach((c) => c.addEventListener('click', () => select(c)));
   }
-  /* 7. GABARITS — [relevé] les flèches font défiler les TROIS visuels en bloc ;
-     fondu 200 ms en CSS. [arbitrage] flèches clavier au niveau du groupe. */
-  function gabarits() {
-    const rendu = document.querySelector('[data-gabarits-rendu]');
-    const vignette = document.querySelector('[data-gabarits-vignette]');
-    const champ = document.getElementById('gabarits-nom');
-    if (!rendu || !vignette) return;
-    const rendus = tous(':scope > img', rendu), vignettes = tous(':scope > img', vignette);
-    const total = Math.min(rendus.length, vignettes.length);
+  /* 7. TEMPLATES — [measured] the arrows cycle all THREE visuals as a block;
+     200 ms fade in CSS. [decided] keyboard arrows at the group level. */
+  function templates() {
+    const render = document.querySelector('[data-templates-render]');
+    const thumb = document.querySelector('[data-templates-thumb]');
+    const field = document.getElementById('templates-name');
+    if (!render || !thumb) return;
+    const renders = all(':scope > img', render), thumbs = all(':scope > img', thumb);
+    const total = Math.min(renders.length, thumbs.length);
     if (!total) return;
     let index = 0;
-    const afficher = (nouvel) => {
-      index = (nouvel + total) % total; /* cycle dans les deux sens */
-      rendus.forEach((img, i) => img.classList.toggle('est-active', i === index));
-      vignettes.forEach((img, i) => img.classList.toggle('est-active', i === index));
-      if (champ) champ.value = vignettes[index].dataset.nom || champ.value;
+    const show = (next) => {
+      index = (next + total) % total; /* cycles in both directions */
+      renders.forEach((img, i) => img.classList.toggle('is-active', i === index));
+      thumbs.forEach((img, i) => img.classList.toggle('is-active', i === index));
+      if (field) field.value = thumbs[index].dataset.name || field.value;
     };
-    tous('.gabarits-fleche[data-dir]').forEach((b) =>
-      b.addEventListener('click', () => afficher(index + Number(b.dataset.dir))));
-    const demo = rendu.closest('.gabarits-demo');
+    all('.templates-arrow[data-dir]').forEach((b) =>
+      b.addEventListener('click', () => show(index + Number(b.dataset.dir))));
+    const demo = render.closest('.templates-demo');
     if (demo) demo.addEventListener('keydown', (ev) => {
-      if (ev.key === 'ArrowRight') { afficher(index + 1); ev.preventDefault(); }
-      if (ev.key === 'ArrowLeft') { afficher(index - 1); ev.preventDefault(); }
+      if (ev.key === 'ArrowRight') { show(index + 1); ev.preventDefault(); }
+      if (ev.key === 'ArrowLeft') { show(index - 1); ev.preventDefault(); }
     });
-    afficher(0);
+    show(0);
   }
-  /* 8. PIED DIFFÉRÉ — [relevé] marqueur nul déclenchant la zone finale. */
-  function zonePiedDifferee() {
-    const galerie = document.querySelector('.galerie[data-marquee]');
-    const marqueur = document.querySelector('[data-lazy-pied]');
-    if (!galerie) return;
-    if (!marqueur || !('IntersectionObserver' in window)) return bandeDerivante(galerie);
+  /* 8. DEFERRED FOOTER — [measured] zero-height marker triggering the closing zone. */
+  function deferredFooterZone() {
+    const gallery = document.querySelector('.gallery[data-marquee]');
+    const marker = document.querySelector('[data-lazy-footer]');
+    if (!gallery) return;
+    if (!marker || !('IntersectionObserver' in window)) return driftStrip(gallery);
     new IntersectionObserver((es, o) => es.forEach((e) => {
       if (!e.isIntersecting) return;
-      bandeDerivante(galerie); o.disconnect();
-    }), { rootMargin: '400px' }).observe(marqueur);
+      driftStrip(gallery); o.disconnect();
+    }), { rootMargin: '400px' }).observe(marker);
   }
-  imagesDifferees(); voileEntete(); themeEntete(); references(); gabarits();
-  zonePiedDifferee();
-  tous('[data-video-hover]').forEach(videoSurvol);
-  tous('.hero-bande[data-marquee]').forEach(bandeDerivante);
+  deferredImages(); headerVeil(); headerTheme(); references(); templates();
+  deferredFooterZone();
+  all('[data-video-hover]').forEach(videoHover);
+  all('.hero-strip[data-marquee]').forEach(driftStrip);
 })();

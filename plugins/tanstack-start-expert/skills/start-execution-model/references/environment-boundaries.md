@@ -92,6 +92,29 @@ Behavior: SSR → `false`; first client render → `false`; after hydration → 
 
 ---
 
+## `<Hydrate>` — deferred hydration (experimental)
+
+Unlike `<ClientOnly>`, the children ARE server-rendered; `Hydrate` only delays
+their initial-document hydration until a strategy fires (and, by default, splits
+them into a separate chunk). Strategies: `visible()`, `idle()`, `interaction()`,
+`media()`, `condition()`, `never()`.
+
+```tsx
+import { Hydrate } from '@tanstack/react-start'
+import { idle, visible } from '@tanstack/react-start/hydration'
+
+<Hydrate when={visible({ rootMargin: '400px' })} prefetch={idle()}>
+  <Reviews />
+</Hydrate>
+```
+
+Props: `when` (required; function form is client-only and synchronous),
+`split` (default `true`), `prefetch` (strategy or `async ({ preload }) => {}`).
+Only affects the initial document — after client navigation it renders
+normally. Never defer primary navigation, above-the-fold forms, or CTAs.
+
+---
+
 ## Import Protection: File Markers (experimental)
 
 `*.server.ts` / `*.client.ts` filename suffixes opt a file into import protection.
@@ -125,6 +148,7 @@ default is `error` in production builds and `mock` in dev.
 | Browser utility, hard guard | `createClientOnlyFn` |
 | Same symbol, different impl per env | `createIsomorphicFn` |
 | Component renders only after hydration | `<ClientOnly>` / `useHydrated` |
+| SSR HTML now, hydrate later (experimental) | `<Hydrate when={...}>` |
 | Whole file must never cross a side | `*.server.ts` / `server-only` marker |
 
 ## Hydration Mismatch — the classic bug

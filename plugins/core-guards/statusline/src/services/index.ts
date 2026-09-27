@@ -1,5 +1,5 @@
 /**
- * Services Index - Exporte tous les services
+ * Services Index - Exports all services
  */
 
 export { getContextFromInput } from "./context.service";

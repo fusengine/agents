@@ -30,6 +30,8 @@ Source: https://go.dev/ref/mod
 | `tool` (Go 1.24+) | Register a package for `go tool` |
 
 > Go 1.26: `go mod init` now writes a lower `go` line — release `1.N` produces `go 1.(N-1).0`. Source: https://go.dev/doc/go1.26
+>
+> Go 1.27: for modules declaring `go 1.27`+, `go mod tidy` merges duplicate `require` blocks into at most two (direct, then indirect), preserving attached comments. Source: https://go.dev/doc/go1.27
 
 ---
 
@@ -43,7 +45,7 @@ Source: https://go.dev/ref/mod
 | `toolchain` / `godebug` | Suggested toolchain / workspace-wide GODEBUG settings |
 
 ```
-go 1.26.0
+go 1.27.0
 
 use (
     ./module-a

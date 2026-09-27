@@ -1,5 +1,5 @@
 /**
- * Usage Interfaces - Types pour le suivi d'usage
+ * Usage Interfaces - Types for usage tracking
  */
 
 export interface ContextResult {

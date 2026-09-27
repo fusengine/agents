@@ -137,10 +137,12 @@ function slugify(string $title): string
     return $title
         |> trim(...)
         |> strtolower(...)
-        |> fn(string $s): string => preg_replace('/[^a-z0-9]+/', '-', $s)
-        |> fn(string $s): string => trim($s, '-');
+        |> (fn(string $s): string => preg_replace('/[^a-z0-9]+/', '-', $s))
+        |> (fn(string $s): string => trim($s, '-'));
 }
 ```
+
+Arrow functions on the right of `|>` must be parenthesized — unwrapped, PHP 8.5 refuses to compile.
 
 ---
 

@@ -1,6 +1,6 @@
 ---
 name: choosing-framework
-description: PHPUnit 12 vs Pest 4 selection for framework-agnostic projects
+description: PHPUnit 13 vs Pest 5 selection for framework-agnostic projects
 when-to-use: Load when deciding which test framework a PHP project should adopt
 keywords: phpunit, pest, choice, comparison, browser-testing, mutation, dx
 priority: high
@@ -11,14 +11,15 @@ related: phpunit-12.md, pest-4.md
 
 ## Overview
 
-Both require **PHP 8.3+**. Pest 4 is built on the PHPUnit engine, so this is a
-question of ergonomics and ecosystem fit, not raw capability.
+Both require **PHP 8.4+**. Pest 5 is built on the PHPUnit 13 engine, so this is a
+question of ergonomics and ecosystem fit, not raw capability. On PHP 8.3, the
+equivalent pair is PHPUnit 12 / Pest 4.
 
-Sources: https://phpunit.de/announcements/phpunit-12.html + https://pestphp.com/docs/installation
+Sources: https://phpunit.de/announcements/phpunit-13.html + https://pestphp.com/docs/installation
 
 ## Side by side
 
-| | PHPUnit 12 | Pest 4 |
+| | PHPUnit 13 | Pest 5 |
 |---|-----------|--------|
 | Style | Class extends `TestCase` | `it()` / `test()` closures |
 | Assertions | `$this->assert*` | `expect()->to*` (+ PHPUnit asserts) |
@@ -29,11 +30,11 @@ Sources: https://phpunit.de/announcements/phpunit-12.html + https://pestphp.com/
 
 ## Decision guide
 
-**Enterprise / regulated / large mixed team → PHPUnit 12.** It is the industry
+**Enterprise / regulated / large mixed team → PHPUnit 13.** It is the industry
 baseline: explicit, ubiquitous in CI, every IDE and reporter supports it, and new
 hires already know it.
 
-**Greenfield / small team / DX-focused → Pest 4.** Less boilerplate, expressive
+**Greenfield / small team / DX-focused → Pest 5.** Less boilerplate, expressive
 expectations, and batteries-included browser/architecture/mutation testing without
 extra wiring.
 

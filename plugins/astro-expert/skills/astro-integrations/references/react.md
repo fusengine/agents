@@ -75,6 +75,7 @@ import { Counter } from '../components/react/Counter.tsx';
 
 ## React 19 Notes
 
-- React 19 is the default with Astro 6
+- React 19 is the default with Astro 7 (`astro add react` installs the latest React; `@astrojs/react` 7.x peer range: React 17–19)
+- Container API: import `getContainerRenderer` from `@astrojs/react/container-renderer` (package-root import deprecated in Astro 7)
 - Server Components are NOT supported in Astro Islands
 - Use Astro components for server-only rendering

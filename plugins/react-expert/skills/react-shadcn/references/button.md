@@ -10,10 +10,16 @@ related: input.md, card.md
 
 # Button Component
 
+> **Base:** examples use **Base UI** (shadcn default since 2026-07); only link composition differs — Radix delta in "Radix variant" below; React Aria: `onPress`/`isDisabled`, links via the exported `LinkButton`. Sources: https://ui.shadcn.com/r/styles/base-nova/button.json, https://ui.shadcn.com/r/styles/radix-nova/button.json
+
+Sizes: `default`, `xs`, `sm`, `lg`, `icon`, `icon-xs`, `icon-sm`, `icon-lg`; put
+`data-icon="inline-start" | "inline-end"` on icons/spinners. Pointer cursor is opt-in
+(`init --pointer`).
+
 ## Installation
 
 ```bash
-bunx shadcn-ui@latest add button
+bunx shadcn@latest add button
 ```
 
 Creates: `@/modules/cores/shadcn/components/ui/button.tsx`
@@ -23,6 +29,7 @@ Creates: `@/modules/cores/shadcn/components/ui/button.tsx`
 ```typescript
 import { Button } from '@/modules/cores/shadcn/components/ui/button'
 
+/** Default button. */
 export function BasicButton() {
   return <Button>Click me</Button>
 }
@@ -141,49 +148,48 @@ Square button for icons only
 
 ## Advanced Patterns
 
-### asChild Pattern (Compose with Link)
+### Link Styled as a Button (`buttonVariants`)
 
-For React navigation, use `asChild` to render as Link:
+Base UI `Button` has no `asChild`. For navigation, style the link itself with `buttonVariants`:
 
 ```typescript
 import { Link } from '@tanstack/react-router'
-import { Button } from '@/modules/cores/shadcn/components/ui/button'
+import { buttonVariants } from '@/modules/cores/shadcn/components/ui/button'
 
+/** Router link styled with `buttonVariants`. */
 export function NavButton() {
   return (
-    <Button asChild>
-      <Link href="/dashboard">Go to dashboard</Link>
-    </Button>
+    <Link to="/dashboard" className={buttonVariants()}>
+      Go to dashboard
+    </Link>
   )
 }
 ```
 
-**What it does**: Button renders as `<a>` tag via Link component
+**What it does**: renders a real `<a>` (link semantics) with button styling
 
-**Use when**:
-- Navigation between pages
-- External links with button styling
-- Want button accessibility + link semantics
+**Do not** use `<Button render={<a />} nativeButton={false} />` for links — Base UI `Button`
+always applies `role="button"`, which overrides the link role.
 
 ```typescript
-// Multiple children work too
-<Button asChild>
-  <a href="https://example.com">
-    <span>Open external site</span>
-    <ExternalLink className="w-4 h-4 ml-2" />
-  </a>
-</Button>
+// External link with icon
+<a
+  href="https://example.com"
+  className={buttonVariants({ variant: 'outline' })}
+>
+  Open external site
+  <ExternalLink data-icon="inline-end" />
+</a>
 ```
 
 ### Loading State Pattern
 
 ```typescript
-'use client'
-
 import { useState } from 'react'
 import { Button } from '@/modules/cores/shadcn/components/ui/button'
 import { Loader } from '@/modules/cores/shadcn/components/icons'
 
+/** Disables itself and shows a spinner while submitting. */
 export function LoadingButton() {
   const [isLoading, setIsLoading] = useState(false)
 
@@ -217,6 +223,7 @@ export function LoadingButton() {
 ### Button Group Pattern
 
 ```typescript
+/** Secondary + primary action pair. */
 export function ButtonGroup() {
   return (
     <div className="flex gap-2">
@@ -236,6 +243,7 @@ export function ButtonGroup() {
 ```typescript
 import { Plus } from '@/modules/cores/shadcn/components/icons'
 
+/** Button with a leading icon. */
 export function CreateButton() {
   return (
     <Button>
@@ -249,6 +257,7 @@ export function CreateButton() {
 ### Conditional Rendering
 
 ```typescript
+/** Button whose variant follows the editing state. */
 export function ContextualButton({ isEditing }: { isEditing: boolean }) {
   return (
     <Button
@@ -276,6 +285,7 @@ Add `w-full` class for 100% width
 ```typescript
 import { Button } from '@/modules/cores/shadcn/components/ui/button'
 
+/** Form with a full-width submit button. */
 export function SignUpForm() {
   return (
     <form>
@@ -344,10 +354,10 @@ Combine Button variants with Tailwind:
 ### Component Props
 
 ```typescript
-interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+// Base UI: ButtonPrimitive.Props (@base-ui/react/button) + variants
+type ButtonProps = ButtonPrimitive.Props & {
   variant?: 'default' | 'secondary' | 'destructive' | 'outline' | 'ghost' | 'link'
-  size?: 'default' | 'sm' | 'lg' | 'icon'
-  asChild?: boolean
+  size?: 'default' | 'xs' | 'sm' | 'lg' | 'icon' | 'icon-xs' | 'icon-sm' | 'icon-lg'
 }
 ```
 
@@ -383,9 +393,9 @@ All standard HTML button attributes work:
 ### Navigation Link
 
 ```typescript
-<Button asChild>
-  <Link href="/profile">View profile</Link>
-</Button>
+<Link to="/profile" className={buttonVariants()}>
+  View profile
+</Link>
 ```
 
 ### Form Submission with Loading
@@ -433,6 +443,7 @@ interface CustomButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   icon?: React.ReactNode
 }
 
+/** Button wrapper adding `loading` and `icon` props. */
 export function CustomButton({
   loading,
   icon,
@@ -449,6 +460,17 @@ export function CustomButton({
 }
 ```
 
+## Radix variant
+
+`style` `radix-*`: `Button` is a native `<button>` with `asChild` (Radix `Slot`), so links can
+compose directly (`buttonVariants` works too):
+
+```typescript
+<Button asChild>
+  <Link to="/dashboard">Go to dashboard</Link>
+</Button>
+```
+
 ## Related Components
 
 - [Input](input.md) - Text input fields
@@ -459,4 +481,4 @@ export function CustomButton({
 
 - [Dialog](https://ui.shadcn.com/docs/components/dialog) - Modal with actions
 - [Dropdown Menu](https://ui.shadcn.com/docs/components/dropdown-menu) - Button-triggered menu
-- [Toast](https://ui.shadcn.com/docs/components/toast) - Feedback after button click
+- [Toast](https://ui.shadcn.com/docs/components/base/toast) (Base UI) / [Sonner](https://ui.shadcn.com/docs/components/radix/sonner) (Radix, React Aria) - Feedback after button click

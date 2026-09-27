@@ -7,24 +7,24 @@
 export type { HookType } from "./hook-types";
 export { HOOK_TYPES } from "./hook-types";
 
-/** Configuration d'un hook individuel */
+/** Configuration of a single hook */
 export interface HookCommand {
 	type: string;
 	command: string;
 }
 
-/** Entrée de hook avec matcher */
+/** Hook entry with a matcher */
 export interface HookEntry {
 	matcher?: string;
 	hooks: HookCommand[];
 }
 
-/** Configuration complète des hooks d'un plugin */
+/** Full hooks configuration of a plugin */
 export interface HooksConfig {
 	hooks: Record<string, HookEntry[]>;
 }
 
-/** Commande à exécuter avec métadonnées */
+/** Command to execute, with metadata */
 export interface ExecutableHook {
 	command: string;
 	isAsync: boolean;
@@ -32,15 +32,15 @@ export interface ExecutableHook {
 	pluginPath: string;
 }
 
-/** Résultat du parsing d'une command de hook en argv shell-free */
+/** Result of parsing a hook command into a shell-free argv */
 export interface ParsedHookCommand {
-	/** Tokens word-split ; argv[0] est le nom littéral du programme (ex. "bun"). */
+	/** Word-split tokens; argv[0] is the literal program name (e.g. "bun"). */
 	argv: string[];
-	/** True si la command finissait par `|| true` (bash avale tout exit≠0, y compris 2). */
+	/** True if the command ended with `|| true` (bash swallows every exit≠0, including 2). */
 	ignoreExit: boolean;
 }
 
-/** Résultat d'exécution d'un hook */
+/** Result of a hook execution */
 export interface HookResult {
 	success: boolean;
 	exitCode: number;
@@ -49,7 +49,7 @@ export interface HookResult {
 	blocked: boolean;
 }
 
-/** Input JSON reçu de Claude */
+/** JSON input received from Claude */
 export interface HookInput {
 	tool_name?: string;
 	tool_input?: Record<string, unknown>;
@@ -58,12 +58,12 @@ export interface HookInput {
 	agent_type?: string;
 }
 
-/** Configuration du scanner de plugins */
+/** Plugin scanner configuration */
 export interface ScannerConfig {
 	pluginsDir: string;
 }
 
-/** Informations sur un plugin scanné */
+/** Information about a scanned plugin */
 export interface PluginInfo {
 	name: string;
 	path: string;

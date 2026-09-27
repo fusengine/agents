@@ -17,6 +17,10 @@ includes:
     # - vendor/phpstan/phpstan-strict-rules/rules.neon
     # Generated debt file; keep only while burning it down
     - phpstan-baseline.neon
+    # Bleeding Edge: preview next-major analysis in the current stable release.
+    # Include the official file — setting featureToggles.bleedingEdge alone does NOT
+    # enable the individual bleeding-edge toggles (verified on PHPStan 2.2.16).
+    - vendor/phpstan/phpstan/conf/bleedingEdge.neon
 
 parameters:
     level: 9                      # greenfield: 9-10; legacy: highest passing level
@@ -29,10 +33,6 @@ parameters:
     # Extra strictness not covered by any level
     checkUninitializedProperties: true
     checkBenevolentUnionTypes: true
-
-    # Bleeding Edge: preview next-major analysis in the current stable release
-    featureToggles:
-        bleedingEdge: true
 
     ignoreErrors:
         # Prefer fixing over ignoring; scope every ignore narrowly.

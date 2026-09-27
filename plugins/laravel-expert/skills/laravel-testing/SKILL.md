@@ -1,10 +1,10 @@
 ---
 name: laravel-testing
-description: Use when testing controllers, services, or models, or implementing TDD on Laravel 13 with Pest 4 / PHPUnit 12.
+description: Use when testing controllers, services, or models, or implementing TDD on Laravel 13 with Pest 5 / PHPUnit 13 (or Pest 4 / PHPUnit 12 on PHP 8.3).
 versions:
   laravel: "13.0"
-  pest: "4.0"
-  phpunit: "12.0"
+  pest: "5.2"
+  phpunit: "13.3"
   php: "8.3"
 user-invocable: false
 references: references/pest-basics.md, references/pest-datasets.md, references/pest-arch.md, references/http-requests.md, references/http-json.md, references/http-auth.md, references/http-assertions.md, references/database-basics.md, references/database-factories.md, references/database-assertions.md, references/mocking-services.md, references/mocking-fakes.md, references/mocking-http.md, references/console-tests.md, references/troubleshooting.md, references/templates/FeatureTest.php.md, references/templates/UnitTest.php.md, references/templates/ArchTest.php.md, references/templates/ApiTest.php.md, references/templates/PestConfig.php.md
@@ -12,7 +12,7 @@ related-skills: laravel-architecture, laravel-eloquent
 ---
 
 <objective>
-Covers Laravel 13 testing with Pest 4 and PHPUnit 12: feature tests (HTTP,
+Covers Laravel 13 testing with Pest 5 / PHPUnit 13 (Pest 4 / PHPUnit 12 on PHP 8.3): feature tests (HTTP,
 full stack), unit tests (isolated classes), and architecture tests; Pest
 syntax (it/test/describe), datasets; HTTP testing (requests, JSON
 assertions, auth/actingAs, status/redirect assertions); database testing
@@ -209,8 +209,8 @@ php artisan test
 
 ## Laravel 13 Notes
 
-### PHPUnit 12 + Pest 4
-Laravel 13 requires **PHPUnit 12** and supports **Pest 4**. PHP attributes replace docblock annotations.
+### PHPUnit 12/13 + Pest 4/5
+The Laravel 13 skeleton ships **PHPUnit 12** (`^12.5`); the framework also accepts **PHPUnit 13**. **Pest 5** (current, requires **PHP 8.4+** and PHPUnit 13, plus `pestphp/pest-plugin-laravel ^5.0` which needs Laravel `^13.23`) — stay on **Pest 4** (PHPUnit 12) if the app still runs PHP 8.3. PHP attributes replace docblock annotations.
 
 ```php
 use PHPUnit\Framework\Attributes\Test;
@@ -226,10 +226,17 @@ final class UserTest extends TestCase
 }
 ```
 
-### Str cache reset
-Laravel 13 automatically resets `Str` caches (random, slug) between tests to avoid state leak. No manual setup required.
+### Str factories reset
+Laravel 13 resets custom `Str` factories (UUID / ULID / random string) during test teardown. Tests relying on a factory persisting across methods must set it in each test or setup hook.
 
-### Migration from Pest 3
-- `pest --init` regenerates `Pest.php` with the new API
-- Datasets now support native PHP generators
-- `expect()->toBeInstanceOf()` → strict typing required
+### `#[UnitTest]` (L13)
+`Illuminate\Foundation\Testing\Attributes\UnitTest` on a test method skips booting the application for that test.
+
+### Migration from Pest 3 → 4
+- Bump `pestphp/pest` and all Pest plugins to `^4.0` (PHP 8.3+, PHPUnit 12)
+- Snapshot names changed: run `./vendor/bin/pest --update-snapshots`
+- `pest-plugin-watch` and `pest-plugin-faker` are archived
+
+### Migration from Pest 4 → 5
+- Requires **PHP 8.4+**; bump `pestphp/pest` and all Pest plugins to `^5.0` (built on PHPUnit 13)
+- New in 5: `--tia` (test impact analysis, local only), first-party PHPStan/Rector plugins, Agent and Evals plugins, time-balanced sharding

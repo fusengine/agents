@@ -93,14 +93,8 @@ export const onRequestError = Sentry.captureRequestError
 ```
 
 ## Enable Instrumentation
-```typescript
-// next.config.ts
-const nextConfig = {
-  experimental: {
-    instrumentationHook: true,
-  },
-}
-```
+No config flag needed: `instrumentation.ts` is stable since v15 and picked up
+automatically (the old `experimental.instrumentationHook` flag is obsolete).
 
 ## Error Tracking
 ```typescript

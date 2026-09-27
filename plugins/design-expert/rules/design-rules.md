@@ -95,10 +95,10 @@ Background text: ALWAYS add overlay `bg-gradient-to-t from-black/60 to-transpare
 
 | User Says | Mode | Behavior |
 |---|---|---|
-| "refonte", "redesign", "from scratch" | **FULL** | New `design-system.md` + replace ALL |
-| "crée une page", "nouvelle page" | **PAGE** | Reuse existing `design-system.md` |
-| "ameliorer", "ajuster", "modifier" | **Iteration** | Keep identity, modify targeted |
-| "petit composant", "minor" | **COMPONENT** | No browsing, existing tokens only |
+| "overhaul", "redesign", "from scratch" | **FULL** | New `design-system.md` + replace ALL |
+| "create a page", "new page" | **PAGE** | Reuse existing `design-system.md` |
+| "improve", "adjust", "modify" | **Iteration** | Keep identity, modify targeted |
+| "small component", "minor" | **COMPONENT** | No browsing, existing tokens only |
 
 > Scope-to-site-count mapping: see `skills/design-method/SKILL.md` routing table.
 

@@ -65,3 +65,4 @@ class Box {
 - **Runtime support**: standard decorators are still a Stage 3 proposal, so Node's native
   type stripping does NOT transform them — they error at runtime. Use them only where a
   compiler/bundler emits (see ts-config bundler track), not in files run by `node file.ts`.
+  Bun transpiles standard (TC39) decorators natively since 1.3.10/1.4 (bun.com/blog/bun-v1.4).

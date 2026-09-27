@@ -13,12 +13,12 @@ related: schema.md, client.md
 ## Install Dependencies
 
 ```bash
-# Core packages
-bun add @prisma/client dotenv
-bun add -d prisma
+# Core packages — pin @7: the npm `latest` tag of `prisma` points to the 8.0 RC
+bun add @prisma/client@7 dotenv
+bun add -d prisma@7
 
 # Driver adapter (PostgreSQL example)
-bun add @prisma/adapter-pg pg
+bun add @prisma/adapter-pg@7 pg
 bun add -d @types/pg
 ```
 
@@ -31,8 +31,11 @@ bunx prisma init
 ```
 
 Creates:
-- `prisma/schema.prisma` - Schema file
+- `prisma/schema.prisma` - Schema file (`prisma-client` generator with `output`)
 - `.env` - Environment variables
+- The config file — **7.10+: `prisma7.config.ts`**; 7.0–7.9: `prisma.config.ts`
+
+**Config file lookup (7.10+)**, without `--config`: root `prisma7.config.*` → `.config/prisma7.*` → `prisma.config.*` (backward-compatible fallback). If a `prisma7.config.ts` exists, a hand-written `prisma.config.ts` is ignored without error (the CLI only logs `Loaded Prisma config from prisma7.config.ts.`) — always edit the file `init` created. Existing projects with only `prisma.config.*` keep working unchanged. Extensions: `.js .ts .mjs .cjs .mts .cts`.
 
 ---
 
@@ -46,8 +49,7 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider = "postgresql"  // url moved to prisma.config.ts in v7
 }
 
 /// User account model
@@ -63,12 +65,14 @@ model User {
 
 ---
 
-## prisma.config.ts (v7 Required)
+## Prisma Config File (v7 Required)
+
+Edit the file created by `init`: `prisma7.config.ts` on 7.10+, `prisma.config.ts` on 7.0–7.9. Same content either way; with the plain `prisma` package the import stays `prisma/config` (`@prisma/prisma7/config` only when using the `@prisma/prisma7` side-by-side package next to Prisma 8).
 
 ```typescript
-// prisma.config.ts (project root)
+// prisma7.config.ts (7.10+) or prisma.config.ts (7.0–7.9) — project root
 import 'dotenv/config'
-import { defineConfig } from 'prisma/config'
+import { defineConfig, env } from 'prisma/config'
 
 /**
  * Prisma configuration file (v7 required)
@@ -79,6 +83,10 @@ export default defineConfig({
 
   migrations: {
     path: 'prisma/migrations',  // Path to migration history
+  },
+
+  datasource: {
+    url: env('DATABASE_URL'),  // Used by the CLI (migrate, introspect)
   },
 })
 ```
@@ -122,7 +130,7 @@ prisma/
 ├── schema.prisma               # Schema definition
 ├── migrations/                 # Migration history
 └── seed.ts                     # Seeding script
-prisma.config.ts                # Prisma configuration
+prisma7.config.ts               # Prisma configuration (7.0–7.9: prisma.config.ts)
 ```
 
 ---
@@ -131,7 +139,7 @@ prisma.config.ts                # Prisma configuration
 
 | Dependency | Version |
 |------------|---------|
-| prisma | >= 7.0.0 |
-| @prisma/client | >= 7.0.0 |
-| Node.js | >= 20.19.0 |
-| TypeScript | >= 5.4.0 |
+| prisma | 7.x (latest stable 7.10.0) |
+| @prisma/client | 7.x (latest stable 7.10.0) |
+| Node.js | ^20.19.0, ^22.12.0 or >= 24.0.0 |
+| TypeScript | >= 5.4.0 (peer range; skill pins 6.x — no Prisma doc/release note confirms TypeScript 7 support yet) |

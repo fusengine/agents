@@ -17,6 +17,9 @@ Logging and monitoring patterns for Prisma 7.
 ```typescript
 // modules/cores/db/prisma.ts
 import { PrismaClient } from '../generated/prisma/client'
+import { PrismaPg } from '@prisma/adapter-pg'
+
+const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL! })
 
 /**
  * Initialize Prisma Client with logging configuration
@@ -51,6 +54,9 @@ export { prisma, prismaWithEmit }
 ```typescript
 // modules/cores/db/prisma.ts
 import { PrismaClient } from '../generated/prisma/client'
+import { PrismaPg } from '@prisma/adapter-pg'
+
+const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL! })
 
 /**
  * Configure Prisma with event-based logging
@@ -119,6 +125,9 @@ export function setupSlowQueryMonitoring(prisma: PrismaClient): void {
 ```typescript
 // modules/cores/db/prisma.ts
 import { PrismaClient } from '../generated/prisma/client'
+import { PrismaPg } from '@prisma/adapter-pg'
+
+const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL! })
 
 /** Environment check for dev mode */
 const isDevelopment = process.env.NODE_ENV === 'development'
@@ -159,6 +168,10 @@ export { prisma }
 ```typescript
 import { PrismaInstrumentation } from '@prisma/instrumentation'
 import { registerInstrumentations } from '@opentelemetry/instrumentation'
+import { PrismaClient } from '../generated/prisma/client'
+import { PrismaPg } from '@prisma/adapter-pg'
+
+const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL! })
 
 registerInstrumentations({
   instrumentations: [new PrismaInstrumentation()],

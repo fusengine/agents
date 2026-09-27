@@ -1,7 +1,7 @@
 /**
- * Formatters Module - Fonctions de formatage
+ * Formatters Module - Formatting functions
  *
- * @description SRP: Responsabilite unique de formatage
+ * @description SRP: Single responsibility of formatting
  */
 
 import { basename } from "node:path";
@@ -60,9 +60,9 @@ export function formatTimeLeft(ms: number): string {
 }
 
 export function formatTokens(tokens: number, showDecimals: boolean = false): string {
-	// Branche M : jamais d'arrondi a l'entier (1.5M ne doit jamais devenir "2M").
-	// showDecimals ne pilote pas cette branche : million entier -> pas de decimale,
-	// million fractionnaire -> 1 decimale significative (precision fidele et lisible).
+	// M branch: never round to an integer (1.5M must never become "2M").
+	// showDecimals does not drive this branch: whole million -> no decimal,
+	// fractional million -> 1 significant decimal (faithful and readable precision).
 	if (tokens >= 1_000_000) {
 		const m = tokens / 1_000_000;
 		return Number.isInteger(m) ? `${m}M` : `${m.toFixed(1)}M`;

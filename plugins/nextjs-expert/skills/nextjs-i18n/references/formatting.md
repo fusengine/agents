@@ -1,7 +1,7 @@
 ---
 name: formatting
-description: Format nombres, dates, temps relatif, listes selon locale et Intl APIs
-when-to-use: prix en devises, dates localisées, temps relatif, listes conjonctions
+description: Format numbers, dates, relative time, lists by locale with Intl APIs
+when-to-use: currency prices, localized dates, relative time, conjunction lists
 keywords: useFormatter, number, dateTime, relativeTime, list, currency, localization
 priority: medium
 requires: client-components.md
@@ -32,10 +32,10 @@ function Component() {
   const format = useFormatter()
 
   format.number(1234.56)
-  // en: "1,234.56" | fr: "1 234,56"
+  // en: "1,234.56" | es: "1234,56"
 
   format.number(1234.56, { style: 'currency', currency: 'EUR' })
-  // en: "€1,234.56" | fr: "1 234,56 €"
+  // en: "€1,234.56" | es: "1234,56 €"
 
   format.number(0.85, { style: 'percent' })
   // "85%"
@@ -49,7 +49,7 @@ const format = useFormatter()
 const date = new Date('2024-01-15T10:30:00')
 
 format.dateTime(date)
-// en: "1/15/2024" | fr: "15/01/2024"
+// en: "1/15/2024" | es: "15/1/2024"
 
 format.dateTime(date, { dateStyle: 'full' })
 // en: "Monday, January 15, 2024"
@@ -85,7 +85,7 @@ const items = ['Apple', 'Banana', 'Orange']
 
 format.list(items)
 // en: "Apple, Banana, and Orange"
-// fr: "Apple, Banana et Orange"
+// es: "Apple, Banana y Orange"
 
 format.list(items, { type: 'disjunction' })
 // "Apple, Banana, or Orange"

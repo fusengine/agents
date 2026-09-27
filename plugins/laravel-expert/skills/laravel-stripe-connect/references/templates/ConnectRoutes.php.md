@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 // Webhook route - excluded from CSRF
 Route::post('/stripe/connect/webhook', [ConnectWebhookController::class, 'handle'])
     ->name('stripe.connect.webhook')
-    ->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class]);
+    ->withoutMiddleware([\Illuminate\Foundation\Http\Middleware\PreventRequestForgery::class]);
 ```
 
 ## API Routes

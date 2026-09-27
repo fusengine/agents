@@ -1,10 +1,10 @@
 /**
- * config.ts — Valeurs par défaut + fusion (fichier de config, drapeaux CLI).
- * Le script doit tourner sans aucune configuration : tout a un défaut raisonnable.
+ * config.ts — Defaults + merging (config file, CLI flags).
+ * The script must run with no configuration at all: everything has a sensible default.
  */
 import type { LayoutCheckConfig, ViolationType } from "./types";
 
-/** Configuration par défaut : largeurs mobiles → desktop, seuils WCAG AA. */
+/** Default configuration: mobile → desktop widths, WCAG AA thresholds. */
 export const DEFAULT_CONFIG: LayoutCheckConfig = {
   widths: [360, 390, 768, 1024, 1280, 1440],
   height: 900,
@@ -28,12 +28,12 @@ export const DEFAULT_CONFIG: LayoutCheckConfig = {
   },
 };
 
-/** Découpe une liste séparée par des virgules en tableau nettoyé. */
+/** Splits a comma-separated list into a cleaned array. */
 function splitList(value: string): string[] {
   return value.split(",").map((v) => v.trim()).filter(Boolean);
 }
 
-/** Applique un fichier de config JSON partiel par-dessus les défauts. */
+/** Applies a partial JSON config file on top of the defaults. */
 export function mergeConfig(
   base: LayoutCheckConfig,
   patch: Partial<LayoutCheckConfig>,
@@ -45,7 +45,7 @@ export function mergeConfig(
   };
 }
 
-/** Applique les drapeaux CLI (priorité maximale) sur une config déjà fusionnée. */
+/** Applies the CLI flags (highest priority) on an already merged config. */
 export function applyFlags(
   config: LayoutCheckConfig,
   flags: Record<string, string>,
@@ -68,7 +68,7 @@ export function applyFlags(
   return out;
 }
 
-/** Parse `--cle valeur` et `--drapeau` (⇒ "true") depuis argv. */
+/** Parses `--key value` and `--flag` (⇒ "true") from argv. */
 export function parseFlags(argv: string[]): Record<string, string> {
   const flags: Record<string, string> = {};
   for (let i = 0; i < argv.length; i++) {

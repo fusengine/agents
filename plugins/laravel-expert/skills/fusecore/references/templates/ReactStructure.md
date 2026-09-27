@@ -38,7 +38,7 @@ FuseCore/{Module}/Resources/React/
 ├── utils/
 │   └── postHelpers.ts
 └── i18n/locales/
-    ├── fr/
+    ├── es/
     │   └── posts.json
     └── en/
         └── posts.json
@@ -194,9 +194,9 @@ export const usePostStore = create<PostStore>((set) => ({
 import { z } from 'zod';
 
 export const postSchema = z.object({
-  title: z.string().min(1, 'Le titre est requis').max(255),
+  title: z.string().min(1, 'Title is required').max(255),
   slug: z.string().max(255).optional(),
-  content: z.string().min(1, 'Le contenu est requis'),
+  content: z.string().min(1, 'Content is required'),
   excerpt: z.string().max(500).optional(),
   status: z.enum(['draft', 'published']),
   tags: z.array(z.number()).optional(),
@@ -207,36 +207,36 @@ export type PostFormData = z.infer<typeof postSchema>;
 
 ## i18n Example
 
-### File: i18n/locales/fr/posts.json
+### File: i18n/locales/es/posts.json
 
 ```json
 {
   "list": {
-    "title": "Articles",
-    "empty": "Aucun article trouvé",
-    "create": "Nouvel article"
+    "title": "Artículos",
+    "empty": "No se encontraron artículos",
+    "create": "Nuevo artículo"
   },
   "form": {
-    "title": "Titre",
-    "content": "Contenu",
-    "excerpt": "Extrait",
-    "status": "Statut",
-    "tags": "Tags",
-    "submit": "Enregistrer",
-    "cancel": "Annuler"
+    "title": "Título",
+    "content": "Contenido",
+    "excerpt": "Extracto",
+    "status": "Estado",
+    "tags": "Etiquetas",
+    "submit": "Guardar",
+    "cancel": "Cancelar"
   },
   "status": {
-    "draft": "Brouillon",
-    "published": "Publié"
+    "draft": "Borrador",
+    "published": "Publicado"
   },
   "errors": {
-    "loadFailed": "Échec du chargement des articles",
-    "saveFailed": "Échec de l'enregistrement"
+    "loadFailed": "Error al cargar los artículos",
+    "saveFailed": "Error al guardar"
   },
   "notifications": {
-    "created": "Article créé avec succès",
-    "updated": "Article mis à jour",
-    "deleted": "Article supprimé"
+    "created": "Artículo creado correctamente",
+    "updated": "Artículo actualizado",
+    "deleted": "Artículo eliminado"
   }
 }
 ```

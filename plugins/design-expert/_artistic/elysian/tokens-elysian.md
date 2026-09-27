@@ -5,18 +5,19 @@ of design procedures.
 
 **Elysian is not a reproduction.** The other fifteen files in this corpus survey
 an existing site; this one surveys a page invented from nothing — a fictional
-maison, four supplied plates, no external source to check against. That
+fashion house, four supplied plates, no external source to check against. That
 changes the markers and only the markers:
 
-- `[mesuré]` = read in the code, or measured on the render. Every number
-  below carries this weight even where the marker is not repeated.
-- `[arbitrage]` = a design decision I found in the page and can explain.
-  There is no third case: nothing here is *relevé*, because there is nothing
-  to relieve from.
+- `[measured]` = read in the code, or measured on the render — never surveyed
+  from a source, since there is none. Every number below carries this weight
+  even where the marker is not repeated.
+- `[decided]` = a design decision I found in the page and can explain.
+  There is no third case: nothing here is *estimated*, because there is no
+  source to reconstruct from.
 
-The markers stay in French. They appear verbatim in the corpus and in CSS
-comments; translating them here would desynchronise the documentation from
-the code.
+The markers are the corpus-wide identifiers. They appear verbatim in the corpus
+and in CSS comments; renaming them here only would desynchronise the
+documentation from the code.
 
 **Method.** The page was served from `file://` and rendered in Chromium at
 **1440 × 900** and **390 × 844**, then probed through the DevTools protocol:
@@ -150,7 +151,7 @@ Those four *must* be typed: `--ap-s`/`--ap-t` are interpolated by
 centre. An untyped custom property interpolates discretely — the aperture
 would snap open instead of widening.
 
-`--p` is **not** registered `[arbitrage]`. It is written 60 times a second
+`--p` is **not** registered `[decided]`. It is written 60 times a second
 from the scroll; it must never carry a duration of its own. Register it and
 the first person to add `transition: --p .3s` gets a chamber that lags the
 finger by 300 ms and overshoots on flick — the single worst failure mode of
@@ -162,7 +163,7 @@ scroll-driven motion.
 if (Math.abs(p - (s._p || 0)) > 0.0008)
 ```
 
-`0.0008` of a 1,440 px span is **1.15 px of scroll** `[mesuré]`. Below that the
+`0.0008` of a 1,440 px span is **1.15 px of scroll** `[measured]`. Below that the
 style write is skipped entirely. `p.toFixed(4)` matches the threshold: four
 decimals is the finest value the guard will ever let through, so no write is
 ever a no-op string.
@@ -179,7 +180,7 @@ most one scheduled frame no matter how many scroll events arrive.
 The loop reads `getBoundingClientRect()` and writes `--p` **interleaved**, per
 chamber, rather than reading all four then writing all four. That is a textbook
 read-write interleave. Measured cost of the full pass at 1440 × 900:
-**median 0.6 ms, p95 0.7 ms, max 0.8 ms** `[mesuré]`, against a 16.7 ms budget.
+**median 0.6 ms, p95 0.7 ms, max 0.8 ms** `[measured]`, against a 16.7 ms budget.
 It is fine at four chambers. It is the first thing that would need splitting at
 twenty.
 
@@ -223,7 +224,7 @@ they put inside that box.
 
 `height: 100svh` on the pin: on mobile the URL bar collapse changes `vh`
 mid-scroll, which would resize the pinned stage while it is pinned. `svh` is
-the small viewport and never moves `[arbitrage]`.
+the small viewport and never moves `[decided]`.
 
 `html, body { overflow-x: clip }`, with the reason written in
 `00-tokens.css:104`: `overflow: hidden` makes `body` a scroll container, and a
@@ -234,7 +235,7 @@ chamber on one platform only.
 `html` also carries no `scroll-behavior: smooth`, with the reason stated at
 `00-tokens.css:91`: the page is very tall, and an animated jump to a plate
 reads as a fault. Measured height is **14.87 viewports** on desktop and
-**13.39** on mobile `[mesuré]` — the code comment says "~12", which understates
+**13.39** on mobile `[measured]` — the code comment says "~12", which understates
 it.
 
 ### 2.3 Chamber lengths are unequal on purpose
@@ -246,7 +247,7 @@ it.
 | III — pan | 2,790 px | `310vh` | 2,026 px | 1,890 px |
 | IV — type | 2,610 px | `290vh` | 1,941 px | 1,710 px |
 
-`[mesuré]` at 1440 × 900 and 390 × 844. Below 720 px every chamber drops to
+`[measured]` at 1440 × 900 and 390 × 844. Below 720 px every chamber drops to
 `200/200/240/230vh`.
 
 The **span** column is what matters: it is the denominator of `--p`. Plate III
@@ -293,8 +294,8 @@ each column shows the right seventh of a single continuous picture. At `p = 0`
 the seven columns reassemble into one plate, broken only by the gap.
 
 Measured at 1440 px: slat width `(1440 − 6 × 6.48) / 7 = 200.16 px`, image
-width **1,401 px** = 7 × 200.16 `[mesuré]`. At 390 px: slat 54 px, image
-**378 px** `[mesuré]`.
+width **1,401 px** = 7 × 200.16 `[measured]`. At 390 px: slat 54 px, image
+**378 px** `[measured]`.
 
 ### 3.2 The seven amplitudes are hand-set, and irregular
 
@@ -303,14 +304,14 @@ width **1,401 px** = 7 × 200.16 `[mesuré]`. At 390 px: slat 54 px, image
 .slat:nth-child(even) { --dir:  1; }
 .slat:nth-child(1) { --amp: 26; }   /* → −234 px at 900 vh */
 .slat:nth-child(2) { --amp: 15; }   /* → +135 px */
-.slat:nth-child(3) { --amp: 34; }   /* → −306 px  [mesuré] */
+.slat:nth-child(3) { --amp: 34; }   /* → −306 px  [measured] */
 .slat:nth-child(4) { --amp: 20; }   /* → +180 px */
 .slat:nth-child(5) { --amp: 30; }   /* → −270 px */
-.slat:nth-child(6) { --amp: 12; }   /* → +108 px  [mesuré] */
+.slat:nth-child(6) { --amp: 12; }   /* → +108 px  [measured] */
 .slat:nth-child(7) { --amp: 24; }   /* → −216 px */
 ```
 
-Direction alternates strictly; **amplitude does not** `[arbitrage]`. The
+Direction alternates strictly; **amplitude does not** `[decided]`. The
 sequence 26/15/34/20/30/12/24 has no pattern a viewer can complete. A
 regular ramp (10/20/30/40…) reads as a machine fanning cards; an irregular one
 reads as something coming apart. The largest adjacent differential is slat 3
@@ -367,13 +368,13 @@ One `clip-path: inset()` whose four offsets and radius are all driven by `--p`:
 
 Measured at 1440 × 900: `inset(26% 38% 12% round 999px 999px 4px 4px)` at
 `p = 0` — a window 345.6 × 558 px — resolving to `inset(0%)` at `p = 1`
-`[mesuré]`. At `p = 0.5` the computed value is `inset(12.9974% 18.9962%
-5.9988%)` `[mesuré]`, i.e. the interpolation is exactly linear in `p`, because
+`[measured]`. At `p = 0.5` the computed value is `inset(12.9974% 18.9962%
+5.9988%)` `[measured]`, i.e. the interpolation is exactly linear in `p`, because
 it is arithmetic and not an animation.
 
 Left and right are equal, top is 26% and bottom 12% — so the keyhole is
 **not centred vertically**: it opens from a point slightly above centre, the
-way a door in a facade sits above its threshold `[arbitrage]`.
+way a door in a facade sits above its threshold `[decided]`.
 
 ### 4.2 The counter-scale, again, and reversed
 
@@ -381,7 +382,7 @@ way a door in a facade sits above its threshold `[arbitrage]`.
 .arch img { transform: scale(calc(1.32 - var(--p) * 0.32)); }
 ```
 
-`1.32 → 1` `[mesuré]`. This is the reverse of the slats' counter-scale and it
+`1.32 → 1` `[measured]`. This is the reverse of the slats' counter-scale and it
 does more work than it looks. A clip-path reveals *more of the same pixels*;
 without the scale, widening the window would simply uncover picture that was
 already there, which reads as a curtain. Zooming the image out at the same rate
@@ -463,9 +464,9 @@ The richest of the four, and the one built out of the most independent parts.
 44.1% and 44.5% do not meet. Measured on a 900 px pin: the top band ends at
 **396.9 px**, the bottom band starts at **400.5 px**, leaving **3.6 px** of
 `--ink-abyss` showing between them, with the marigold hairline at **401.4 px**
-`[mesuré]`.
+`[measured]`.
 
-That 0.4% gap is the tear `[arbitrage]`. Two abutting bands would read as a
+That 0.4% gap is the tear `[decided]`. Two abutting bands would read as a
 split-screen; a hairline of ink between them reads as a page torn and the two
 pieces slid apart. The marigold rule sits on the *lower* lip of the tear rather
 than in its middle — the eye reads a lit edge with a shadow above it, which is
@@ -492,7 +493,7 @@ what a torn edge looks like.
 | Bottom half travel | **−685.4 px** → 0 | **−251.9 px** → 0 |
 | Relative displacement | **1,689 px = 1.17 viewport widths** | **600 px = 1.54 viewport widths** |
 
-`[mesuré]` at both widths. Three things are worth naming:
+`[measured]` at both widths. Three things are worth naming:
 
 1. **The halves are counter-phased, not just offset.** The top ends where it
    started minus 41%; the bottom *starts* at −28% and ends at 0. They meet in
@@ -503,7 +504,7 @@ what a torn edge looks like.
    exposes an edge.
 3. **Mobile pans harder, not softer.** 1.54 viewport widths against 1.17.
    The narrower the screen, the more of the landscape has to cross it for the
-   pan to read as a pan at all `[arbitrage]`.
+   pan to read as a pan at all `[decided]`.
 
 ### 5.3 The colour wipe is a mask on a duplicated layer
 
@@ -522,14 +523,14 @@ duotone, and it is the one that is masked away:
 }
 ```
 
-Measured at `p = 0.5`: `transparent → 61.01%`, `#000 from 76.01%` `[mesuré]`.
+Measured at `p = 0.5`: `transparent → 61.01%`, `#000 from 76.01%` `[measured]`.
 The transparent stop travels 0 → 122% while the soft band stays a constant
 **15% wide** — so the wipe has a fixed-width feather that never stretches. The
 duotone is fully gone at `p = 0.697` (when `p × 122 + 15 = 100`), leaving the
 last 30% of the chamber to the pan alone.
 
 Masking the *duotone* rather than the colour is the choice that matters
-`[arbitrage]`. The colour copy is always fully painted underneath; the wipe
+`[decided]`. The colour copy is always fully painted underneath; the wipe
 only removes a treatment. Fading a colour layer *in* over a grey one goes
 through a washed-out midpoint; removing a grey layer from over a colour one
 does not.
@@ -554,8 +555,8 @@ per palette.
 ```
 
 Measured at 1440: `+547.2 px → −576 px`, a travel of 1,123 px = 0.78 viewport
-widths, crossing centre at `p = 0.487` `[mesuré]`. Font size resolves to
-**160 px** at 1440 and **58.9 px** at 390 `[mesuré]`.
+widths, crossing centre at `p = 0.487` `[measured]`. Font size resolves to
+**160 px** at 1440 and **58.9 px** at 390 `[measured]`.
 
 Two independent procedures are stacked here, and both are reusable:
 
@@ -610,7 +611,7 @@ plate is left.*
 
 `background-clip: text` would have been shorter and is the reflex answer. It
 was not used, and the reason is visible in the rest of the chamber
-`[arbitrage]`: the clipped thing here is an `<image>` that must be positioned
+`[decided]`: the clipped thing here is an `<image>` that must be positioned
 independently of the text box (`x="-60" y="-190"` pushes the temple's portico
 into the letter bowls), and the whole assembly has to survive
 `transform: scale(6.4)` and `filter: blur(26px)` without the text re-rasterising
@@ -635,10 +636,10 @@ is late" for type used as a mask.
 ```
 
 Measured at `p = 1`: `scale(6.4)`, `blur(26px)`, `opacity 0` on desktop;
-`scale(5.2)` on mobile via the 4.2 fallback `[mesuré]`.
+`scale(5.2)` on mobile via the 4.2 fallback `[measured]`.
 
-The blur is **`p²`**, not `p` `[arbitrage]`. Measured at `p = 0.5`:
-**6.5 px**, i.e. a quarter of the final 26 px `[mesuré]`. Linear blur would be
+The blur is **`p²`**, not `p` `[decided]`. Measured at `p = 0.5`:
+**6.5 px**, i.e. a quarter of the final 26 px `[measured]`. Linear blur would be
 soft immediately and stay soft; squared blur keeps the letterform sharp through
 the first half of the zoom and then loses it fast. The intent, stated in the
 CSS comment, is that the in-between state read as an **optical dissolve** —
@@ -662,12 +663,12 @@ of its own.
 | 0.910 | Plate title full | — |
 
 The plate is at full strength (0.514) **before** the letterform disappears
-(0.560). A 0.046 overlap `[mesuré]` — about 79 px of scroll — in which both are
+(0.560). A 0.046 overlap `[measured]` — about 79 px of scroll — in which both are
 fully present. Sequence the other way and there is a frame of empty screen.
 **Overlap the handover; never butt it.**
 
 Alongside, three continuous ramps: `type__full` brightness `0.4 → 1`, saturate
-`0.5 → 1`, scale `1.14 → 1` `[mesuré]`; and `type__stars` opacity `0.55 → 0.20`
+`0.5 → 1`, scale `1.14 → 1` `[measured]`; and `type__stars` opacity `0.55 → 0.20`
 with an independent 78 s linear drift that owes nothing to `--p`.
 
 ### 6.4 What travels, and what breaks
@@ -725,7 +726,7 @@ lands on exactly half the width — a semicircle. So one absurd value produces a
 correct semicircular head at **every** size, with no `50%` (which would give an
 ellipse that distorts with the box) and no per-element arithmetic. Measured on
 `.aperture__window`: a 1,181 × 828 px window whose head is a true semicircle
-`[mesuré]`.
+`[measured]`.
 
 The feet differ deliberately: `0 0` for the full-bleed windows, `4px 4px` for
 the plate II arch, `2px 2px` for the pointer specimen. The head is a system
@@ -738,7 +739,7 @@ than a radius, because it has to be strokeable:
 M 12 180 L 12 94 A 82 82 0 0 1 176 94 L 176 180
 ```
 
-Square base, semicircular head, 429.6 px long `[mesuré]`. Same shape, different
+Square base, semicircular head, 429.6 px long `[measured]`. Same shape, different
 technique, because a `border-radius` cannot carry a `stroke-dashoffset`.
 
 ---
@@ -774,10 +775,10 @@ Added after the side rail was removed. `01-shell.css:201-298`.
 | Nav gap | 43.2 px (`clamp(16px, 3vw, 48px)`) | 16 px |
 | Folio `No. 001` | visible | `display: none` |
 
-`[mesuré]`. The height is identical at both widths and is **not** compensated
+`[measured]`. The height is identical at both widths and is **not** compensated
 anywhere: `.aperture` is `100svh` starting at `y = 0`, so the bar overlays the
 top of the opening plate rather than pushing it down. That is deliberate — the
-bar is a mark on the plate, not a shelf above it `[arbitrage]`.
+bar is a mark on the plate, not a shelf above it `[decided]`.
 
 Three entries, named from the page's own vocabulary — **Ledger / Plates /
 Seal**, not Home / About / Contact. The CSS comment states the reason at
@@ -802,7 +803,7 @@ fiction.
 
 Measured: `height: 1px`, `transform: matrix(0,0,0,1,0,0)`, `transform-origin:
 32.73px 0.5px` (the element's centre), `transition: transform 0.34s`
-`[mesuré]`.
+`[measured]`.
 
 The full-width element already exists and is already positioned; only its
 scale changes. Origin at 50% means the stroke grows in both directions at once
@@ -830,7 +831,7 @@ technique, three origins.**
 
 ### 9.4 No burger at any width
 
-Three entries and a wordmark fit at 390 px `[mesuré]` — verified on the render,
+Three entries and a wordmark fit at 390 px `[measured]` — verified on the render,
 with the folio dropped below 640 px and the wordmark's tracking reduced from
 `0.34em` to `0.2em` to buy the space:
 
@@ -856,7 +857,7 @@ id**.
 
 Walked the entire document at 450 px intervals: the masthead links carry
 `aria-current` at **no** scroll position; only the mobile pocket's four
-`field-*` links ever do `[mesuré]`.
+`field-*` links ever do `[measured]`.
 
 So the masthead's marigold underline is a hover/focus affordance only, never a
 "you are here" marker, and `.masthead__nav a[aria-current="true"]` is dead CSS.
@@ -880,7 +881,7 @@ checking it.**
 :root { --rail: 0px; }
 ```
 
-Measured `0px` at 1440 and at 390 `[mesuré]`, with no media query anywhere
+Measured `0px` at 1440 and at 390 `[measured]`, with no media query anywhere
 raising it. The side spine it used to drive was removed in favour of the
 masthead; the token stayed.
 
@@ -894,7 +895,7 @@ Four consumers, all still wired:
 | `.masthead` | `01-shell.css:212` | `left: var(--rail)` |
 
 Measured computed values: `main` padding-left `0px`, `.progress` left `0px`,
-`.masthead` left `0px` `[mesuré]`.
+`.masthead` left `0px` `[measured]`.
 
 **The procedure.** Removing a layout feature by deleting its rules scatters the
 knowledge of where it used to attach across five files; the next person
@@ -906,7 +907,7 @@ reason the token is not dead code.
 Two accuracies worth noting:
 
 - That comment names three consumers (`main`, `.progress`, `.masthead`).
-  `.colophon` is a fourth `[mesuré]`, and it uses `margin-left` rather than
+  `.colophon` is a fourth `[measured]`, and it uses `margin-left` rather than
   `padding-left` — correct, since the colophon has its own background and a
   padding-based offset would tint the gutter.
 - The `.masthead` z-index comment reads `under .progress (71) and the rail
@@ -938,7 +939,7 @@ checkbox.
 </script>
 ```
 
-The class is **removed**, never added `[arbitrage]`. Consequences:
+The class is **removed**, never added `[decided]`. Consequences:
 
 - No-JS and reduced-motion resolve to the same stylesheet, written once
   (`07-static.css`).
@@ -967,7 +968,7 @@ This is the substance. `06-reduced.css` only strips durations
 ```
 
 Verified in the render: computed `--p` of `0`, `1`, `0.5`, `0` respectively
-`[mesuré]`. **Each value is the most legible frame of that transformation, and
+`[measured]`. **Each value is the most legible frame of that transformation, and
 they are not the same frame.** Freezing all four at 0 would give an assembled
 still life (good), a keyhole (useless), an untorn valley (dull) and a
 letterform (good). Freezing all four at 1 would give exploded slats, an open
@@ -995,7 +996,7 @@ with `.pin` no longer positioned, absolutely-placed layers resolve against
 | Chamber I / II / III | 2,340 / 2,250 / 2,790 px | 900 / 900 / 900 px |
 | Chamber IV | 2,610 px | 1,057 px |
 
-`[mesuré]`. **The page is 47% shorter.** That is the real payoff and the reason
+`[measured]`. **The page is 47% shorter.** That is the real payoff and the reason
 this is a layout and not a switch: someone who has asked for less motion is not
 asked to scroll 15 viewports of pinned sections that no longer do anything.
 
@@ -1024,7 +1025,7 @@ opens it on a single press instead of a 900 ms hold.
 
 Measured: hidden at `translateY(-89.59px)` on a 44.8 px box — exactly −200%.
 On `Tab`, `transform: none`, box at **top 16, left 16, 225.1 × 44.8 px**
-`[mesuré]`.
+`[measured]`.
 
 `translateY(-200%)` rather than `display: none`, `visibility: hidden` or
 `left: -9999px`: the element stays in the accessibility tree and in the focus
@@ -1035,7 +1036,7 @@ duration.
 and occupies `top: 0` to `top: 50.6px` across the full width. The revealed skip
 link sits at `top: 16px`, height 44.8 — **entirely inside that band**. Confirmed
 by hit-test: `elementFromPoint` at the link's centre returns `.skip`
-`[mesuré]`. At any z-index below 69 it would be focused, announced, and
+`[measured]`. At any z-index below 69 it would be focused, announced, and
 completely invisible behind a blurred bar — the worst class of accessibility
 bug, because every automated check passes.
 
@@ -1053,7 +1054,7 @@ Full stacking order, for reference:
 
 Note that `.grain` (60) and `.vignette` (55) sit **below** all the navigation
 chrome and above all the content — the print texture lies on the plates, not on
-the interface `[arbitrage]`.
+the interface `[decided]`.
 
 ---
 
@@ -1081,10 +1082,10 @@ centre is `--mx`/`--my`. Not a light overlay — a second exposure of the same
 negative. This is why the four `@property` registrations exist: without a typed
 `<percentage>`, the mask centre would jump between values instead of tracking.
 
-Measured at rest: `opacity: 0` `[mesuré]`, mask centre at `150% 50%` — off
+Measured at rest: `opacity: 0` `[measured]`, mask centre at `150% 50%` — off
 canvas. `.aperture` sets `--mx: 150%` as its own initial value, overriding the
 registered 50%, so the lamp is parked outside the frame *and* transparent until
-a pointer arrives. Two independent guards for one effect `[arbitrage]`; the
+a pointer arrives. Two independent guards for one effect `[decided]`; the
 CSS comment says it plainly: "the lamp only exists once a pointer has actually
 picked it up".
 
@@ -1146,7 +1147,7 @@ The only press-and-hold control in the page, at `05-seal.css:87-111` and
 ```
 
 `pathLength="1"` is the whole procedure. The path's real length is
-**429.6 px** `[mesuré]`; declaring `pathLength="1"` tells SVG to treat it as
+**429.6 px** `[measured]`; declaring `pathLength="1"` tells SVG to treat it as
 1 unit long for all dash arithmetic, so `stroke-dasharray: 1` /
 `stroke-dashoffset: 1 − fill` works with `fill` as a plain 0 → 1 progress. **No
 `getTotalLength()` call, no JS-computed dash values, and the path can be
@@ -1167,7 +1168,7 @@ function step() {
 }
 ```
 
-Measured: pressed and held for 480 ms, `--fill` read **0.536** `[mesuré]` —
+Measured: pressed and held for 480 ms, `--fill` read **0.536** `[measured]` —
 linear in wall-clock time, as `performance.now()` deltas rather than a frame
 count, so the gauge is honest on a throttled tab.
 
@@ -1185,7 +1186,7 @@ is holdable from the keyboard, which press-and-hold widgets routinely are not.
    `.wax { display: none }`, `.reveal { opacity: 1; visibility: visible }`.
 
 After opening: `aria-expanded="true"`, and focus moves to the email field after
-780 ms (60 ms when static) `[mesuré]` — the delay is tuned to the reveal's own
+780 ms (60 ms when static) `[measured]` — the delay is tuned to the reveal's own
 0.28 s + 0.7 s transition, so focus lands on something already visible.
 
 The wax and the reveal share one grid cell (`.seal__stage > * { grid-area: 1/1 }`)
@@ -1261,7 +1262,7 @@ What the four transformations actually cost the reader.
 | Aperture | 900 px | 844 px | 900 px |
 | Ledger + seal + colophon | 2,496 px | 3,114 px | 2,496 px |
 
-`[mesuré]`. Three-quarters of the desktop page is pinned chambers. Mobile
+`[measured]`. Three-quarters of the desktop page is pinned chambers. Mobile
 shortens the chambers (200/200/240/230vh against 260/250/310/290) while the
 ledger and colophon grow taller as their columns stack — so the *share* drops
 ten points without anything being removed.
@@ -1289,7 +1290,7 @@ Ordered by how quietly it fails.
    is why it is not registered — but a future `@property --p` declaration
    anywhere in the sheets re-opens the door.
 8. **Chamber count against the read-write interleave.** 0.8 ms at four
-   chambers `[mesuré]`; the pattern does not scale linearly and would need
+   chambers `[measured]`; the pattern does not scale linearly and would need
    splitting into a read pass and a write pass well before twenty.
 
 ---

@@ -1,11 +1,11 @@
 /**
- * probe-color.ts — Helpers couleur injectés dans la page (namespace `window.__lc`).
- * Les couleurs sont résolues en sRGB par le navigateur lui-même (canvas 1×1) :
- * cela couvre `oklch()`, `color-mix()`, `lab()`, les variables CSS et l'alpha,
- * là où un parsing de chaîne `rgb(...)` échouerait.
+ * probe-color.ts — Color helpers injected into the page (namespace `window.__lc`).
+ * Colors are resolved to sRGB by the browser itself (1×1 canvas):
+ * this covers `oklch()`, `color-mix()`, `lab()`, CSS variables and alpha,
+ * where parsing an `rgb(...)` string would fail.
  */
 
-/** Résout n'importe quelle couleur CSS calculée en `[r, g, b, a]` sRGB. */
+/** Resolves any computed CSS color to sRGB `[r, g, b, a]`. */
 function resolveRgba(css: string): number[] {
   const cache = (window.__lc.colorCache = window.__lc.colorCache || {});
   if (cache[css]) return cache[css];
@@ -22,7 +22,7 @@ function resolveRgba(css: string): number[] {
   return (cache[css] = [d[0], d[1], d[2], d[3] / 255]);
 }
 
-/** Compose une couleur semi-transparente sur un fond opaque. */
+/** Composites a semi-transparent color over an opaque background. */
 function blend(fg: number[], bg: number[]): number[] {
   const a = fg[3] as number;
   return [
@@ -33,7 +33,7 @@ function blend(fg: number[], bg: number[]): number[] {
   ];
 }
 
-/** Luminance relative WCAG 2.x d'une couleur sRGB. */
+/** WCAG 2.x relative luminance of an sRGB color. */
 function luminance(rgb: number[]): number {
   const chan = (v: number) => {
     const s = v / 255;
@@ -42,7 +42,7 @@ function luminance(rgb: number[]): number {
   return 0.2126 * chan(rgb[0] as number) + 0.7152 * chan(rgb[1] as number) + 0.0722 * chan(rgb[2] as number);
 }
 
-/** Ratio de contraste WCAG entre deux couleurs opaques (1 → 21). */
+/** WCAG contrast ratio between two opaque colors (1 → 21). */
 function contrastRatio(a: number[], b: number[]): number {
   const la = window.__lc.luminance(a);
   const lb = window.__lc.luminance(b);
@@ -50,9 +50,9 @@ function contrastRatio(a: number[], b: number[]): number {
 }
 
 /**
- * Fond effectif derrière un élément : remonte les ancêtres tant que le fond
- * est transparent, compose les couches, et signale le premier `background-image`
- * rencontré (dégradé/image : le fond n'est alors pas résoluble en une couleur).
+ * Effective background behind an element: walks up the ancestors while the background
+ * is transparent, composites the layers, and reports the first `background-image`
+ * encountered (gradient/image: the background then cannot be resolved to one color).
  */
 function effectiveBackground(el: Element): { rgb: number[]; image: string | null } {
   const layers: number[][] = [];
@@ -75,7 +75,7 @@ function effectiveBackground(el: Element): { rgb: number[]; image: string | null
   return { rgb: out, image };
 }
 
-/** Source JS à injecter avant le chargement de la page. */
+/** JS source to inject before the page loads. */
 export const COLOR_PROBE_SOURCE = `window.__lc = Object.assign(window.__lc || {}, {
   resolveRgba: ${resolveRgba},
   blend: ${blend},

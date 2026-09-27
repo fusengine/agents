@@ -1,16 +1,16 @@
 ---
 name: activity-component
-description: Activity API (React 19.2 Experimental) - Hide components while preserving state
+description: Activity API (stable since React 19.2) - Hide components while preserving state
 when-to-use: tabs, modals, background tasks, state preservation
-keywords: Activity, visible, hidden, state preservation, tabs, experimental
+keywords: Activity, visible, hidden, state preservation, tabs, stable
 priority: high
 related: templates/activity-tabs.md, new-hooks.md
 ---
 
-# Activity Component (React 19.2)
+# Activity Component (React 19.2+)
 
-> **Experimental**: Available since React 19.2 (October 2025).
-> Import as `experimental_Activity` or `unstable_Activity`.
+> **Stable** since React 19.2.0 (October 2025) — exported as `Activity` from `react`.
+> No `experimental_` / `unstable_` prefix in stable React.
 
 ## Purpose
 
@@ -24,7 +24,7 @@ Keep components mounted but hidden, **preserving state** while:
 ## Import
 
 ```typescript
-import { experimental_Activity as Activity } from 'react'
+import { Activity } from 'react'
 ```
 
 ---
@@ -67,6 +67,13 @@ import { experimental_Activity as Activity } from 'react'
 ### Effect Handling
 - `useEffect` cleanup runs when hidden
 - Effects resume when visible again
+
+### 19.3 Fixes
+- `useSyncExternalStore` no longer misses store mutations made while hidden
+- Portal contents are hidden with the Activity
+- `<title>`/metadata are not hoisted from hidden trees
+- Errors in a hidden Activity no longer escape to the visible UI
+- Inside a `<ViewTransition>`, becoming visible/hidden in a Transition triggers its `enter`/`exit` animation
 
 ---
 

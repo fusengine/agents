@@ -1,83 +1,83 @@
-/* motion-nav.js — comportements de la référence, partie 2/2 : compteur du bloc géant,
-   parallaxe du média du hero, méga-menus et panneaux de la barre.
-   Séparé de motion.js pour ne pas dépasser le plafond de lignes imposé au projet ;
-   les deux fichiers sont indépendants et relisent chacun la préférence de mouvement. */
+/* motion-nav.js — behaviours of the reference, part 2/2: giant-block counter,
+   hero media parallax, mega-menus and bar panels.
+   Split from motion.js so as not to exceed the line ceiling imposed on the project;
+   the two files are independent and each re-reads the motion preference. */
 (function () {
   'use strict';
-  /* == 0. PRÉFÉRENCE DE MOUVEMENT — même règle qu'en partie 1 : addListener() est
-     deprecated, on écoute 'change'. Relue à chaud, jamais figée au chargement. */
+  /* == 0. MOTION PREFERENCE — same rule as in part 1: addListener() is
+     deprecated, we listen to 'change'. Re-read live, never frozen at load. */
   var mq = window.matchMedia('(prefers-reduced-motion: reduce)');
-  var reduit = mq.matches, abonnes = [];
+  var reduced = mq.matches, subscribers = [];
   mq.addEventListener('change', function (e) {
-    reduit = e.matches; abonnes.forEach(function (f) { f(reduit); });
+    reduced = e.matches; subscribers.forEach(function (f) { f(reduced); });
   });
 
-  /* == 4. COMPTEUR DU BLOC GÉANT — moteur : GSAP TextPlugin enregistré dans la source,
-     aucun appel dans le HTML livré. [arbitrage] rAF + easeOutCubic (un compteur
-     linéaire paraît mécanique) et valeur finale écrite EXPLICITEMENT : un compteur qui
-     s'arrête sur 99 est un bug visible. [arbitrage] seuil 0.6. */
-  document.querySelectorAll('[data-compteur]').forEach(function (el) {
-    var cible = parseInt(el.getAttribute('data-cible'), 10), suf = el.getAttribute('data-suffixe') || '';
-    if (isNaN(cible)) return;
-    function ecrire(v) { el.textContent = String(v) + suf; }
+  /* == 4. GIANT-BLOCK COUNTER — engine: GSAP TextPlugin registered in the source,
+     no call in the shipped HTML. [decided] rAF + easeOutCubic (a linear
+     counter feels mechanical) and final value written EXPLICITLY: a counter that
+     stops on 99 is a visible bug. [decided] threshold 0.6. */
+  document.querySelectorAll('[data-counter]').forEach(function (el) {
+    var target = parseInt(el.getAttribute('data-target'), 10), suffix = el.getAttribute('data-suffix') || '';
+    if (isNaN(target)) return;
+    function write(v) { el.textContent = String(v) + suffix; }
     new IntersectionObserver(function (es, o) {
       if (!es[0] || !es[0].isIntersecting) return;
       o.unobserve(el);
-      if (reduit) { ecrire(cible); return; }
+      if (reduced) { write(target); return; }
       var t0 = null;
-      requestAnimationFrame(function pas(ts) {
+      requestAnimationFrame(function step(ts) {
         if (t0 === null) t0 = ts;
         var t = Math.min((ts - t0) / 1400, 1);
-        ecrire(Math.round(cible * (1 - Math.pow(1 - t, 3))));
-        if (t < 1) { requestAnimationFrame(pas); } else { ecrire(cible); }
+        write(Math.round(target * (1 - Math.pow(1 - t, 3))));
+        if (t < 1) { requestAnimationFrame(step); } else { write(target); }
       });
     }, { threshold: 0.6 }).observe(el);
   });
 
-  /* == 5. PARALLAXE DU MÉDIA DU HERO — moteur : GSAP ScrollSmoother est enregistré ; le
-     média est un absolu débordant (inset:-15% -13% 0% auto) posé pour être décalé.
-     [arbitrage] scroll passif + throttle rAF, amplitude faible et bornée (12 %, 90px)
-     pour rester dans l'overflow:hidden de la section. */
-  document.querySelectorAll('[data-parallaxe]').forEach(function (el) {
-    var ticking = false, actif = !reduit;
+  /* == 5. HERO MEDIA PARALLAX — engine: GSAP ScrollSmoother is registered; the
+     media is an overflowing absolute (inset:-15% -13% 0% auto) placed to be offset.
+     [decided] passive scroll + rAF throttle, small and bounded amplitude (12 %, 90px)
+     to stay inside the section's overflow:hidden. */
+  document.querySelectorAll('[data-parallax]').forEach(function (el) {
+    var ticking = false, active = !reduced;
     function calc() {
       var d = Math.min((window.scrollY || 0) * 0.12, 90);
       el.style.transform = 'translate3d(0,' + d.toFixed(1) + 'px,0)';
       ticking = false;
     }
     window.addEventListener('scroll', function () {
-      if (!actif || ticking) return;
+      if (!active || ticking) return;
       ticking = true; requestAnimationFrame(calc);
     }, { passive: true });
-    if (actif) calc();
-    abonnes.push(function (r) { actif = !r; if (r) { el.style.transform = ''; } else { calc(); } });
+    if (active) calc();
+    subscribers.push(function (r) { active = !r; if (r) { el.style.transform = ''; } else { calc(); } });
   });
 
-  /* == 6. MÉGA-MENU, RECHERCHE ET « GET STARTED » — moteur : composant w-dropdown de
-     Webflow, trois usages du même composant dans la source. [arbitrage] vanilla ; le
-     procédé reproduit est celui du CSS (panneau 100vw décroché par un parent
-     position:static). Survol ET clic : le survol seul exclut clavier et tactile.
-     [arbitrage] le panneau de recherche ne s'ouvre PAS au survol — un panneau qui
-     couvre la page dès que la souris frôle la loupe est une gêne, pas une aide. */
+  /* == 6. MEGA-MENU, SEARCH AND "GET STARTED" — engine: Webflow w-dropdown
+     component, three uses of the same component in the source. [decided] vanilla; the
+     technique reproduced is the CSS one (100vw panel unhooked by a
+     position:static parent). Hover AND click: hover alone excludes keyboard and touch.
+     [decided] the search panel does NOT open on hover — a panel that
+     covers the page as soon as the mouse brushes the magnifier is a nuisance, not a help. */
   var menus = [].slice.call(document.querySelectorAll('[data-menu]'));
-  function fermer(m) {
+  function close(m) {
     m.classList.remove('is-open');
-    var t = m.querySelector('.nav__toggle'), p = m.querySelector('.nav__panneau');
+    var t = m.querySelector('.nav__toggle'), p = m.querySelector('.nav__panel');
     if (t) t.setAttribute('aria-expanded', 'false');
     if (p) p.setAttribute('hidden', '');
   }
   menus.forEach(function (m) {
-    var t = m.querySelector('.nav__toggle'), p = m.querySelector('.nav__panneau');
+    var t = m.querySelector('.nav__toggle'), p = m.querySelector('.nav__panel');
     if (!t || !p) return;
-    var auSurvol = !p.classList.contains('nav__panneau--recherche');
-    function ouvrir() {
-      menus.forEach(function (o) { if (o !== m) fermer(o); });
+    var onHover = !p.classList.contains('nav__panel--search');
+    function open() {
+      menus.forEach(function (o) { if (o !== m) close(o); });
       m.classList.add('is-open'); t.setAttribute('aria-expanded', 'true'); p.removeAttribute('hidden');
     }
-    t.addEventListener('click', function () { if (m.classList.contains('is-open')) { fermer(m); } else { ouvrir(); } });
-    if (auSurvol) { m.addEventListener('mouseenter', ouvrir); }
-    m.addEventListener('mouseleave', function () { if (auSurvol) fermer(m); });
-    m.addEventListener('focusout', function (e) { if (!m.contains(e.relatedTarget)) fermer(m); });
+    t.addEventListener('click', function () { if (m.classList.contains('is-open')) { close(m); } else { open(); } });
+    if (onHover) { m.addEventListener('mouseenter', open); }
+    m.addEventListener('mouseleave', function () { if (onHover) close(m); });
+    m.addEventListener('focusout', function (e) { if (!m.contains(e.relatedTarget)) close(m); });
   });
-  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') menus.forEach(fermer); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') menus.forEach(close); });
 })();

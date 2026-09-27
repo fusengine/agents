@@ -40,7 +40,7 @@ an Apple-platform developer implements.
    default for controls) and **clear** (more transparent — dim the content beneath it
    ~35% when clear sits over light content, so controls stay legible). Plus control
    morphing, concentricity between nested shapes, layered icon treatment. Source:
-   developer.apple.com/design/human-interface-guidelines/materials (Liquid Glass, iOS 26).
+   developer.apple.com/design/human-interface-guidelines/materials (Liquid Glass, introduced iOS 26, current in iOS 27).
    See `references/liquid-glass.md` — do not invent numeric corner-radius values; none are
    published.
 5. **Verify touch targets and contrast**: 44×44pt minimum touch target (see
@@ -110,8 +110,8 @@ full site audit loop).
 | `references/dynamic-type.md` | **Canonical iOS Dynamic Type scale (Large) — verified iosfontsizes.com** |
 | `references/semantic-colors.md` | **Canonical semantic color roles — verified WWDC19, still current** |
 | `references/viewports.md` | **Canonical iOS device viewports in points — verified ios-resolution.com** |
-| `references/liquid-glass.md` | **Canonical Liquid Glass facts — verified developer.apple.com, iOS 26** |
-| `references/touch-targets.md` | 44×44pt target — HIG-sourced, flagged for reconfirmation |
+| `references/liquid-glass.md` | **Canonical Liquid Glass facts — verified developer.apple.com, iOS 26–27** |
+| `references/touch-targets.md` | 44×44pt default / 28×28pt minimum control size — verified HIG Accessibility |
 | `references/mockup.md` | Device-frame HTML/CSS technique (safe areas, viewport-fit) |
 | `references/handoff-swiftui.md` | SwiftUI-ready handoff spec format |
 

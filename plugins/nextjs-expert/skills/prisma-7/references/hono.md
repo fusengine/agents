@@ -34,24 +34,22 @@ export interface HonoContext {
 }
 
 // src/db.ts
-import { PrismaClient } from '@prisma/client/edge'
-import { withAccelerate } from '@prisma/extension-accelerate'
-import type { HonoEnv } from './interfaces/env'
+// schema.prisma: generator client { provider = "prisma-client", output = "../src/generated/prisma",
+//   runtime = "workerd" }  // runtime: nodejs (default) | workerd | vercel-edge | bun | deno
+// v7: import the generated client (not `@prisma/client/edge`), no `datasources` option — pass an
+// edge-compatible driver adapter (pg over Cloudflare `connect()` needs `nodejs_compat` in wrangler.jsonc;
+// use @prisma/adapter-neon / adapter-planetscale / adapter-d1 for HTTP-based drivers)
+import { PrismaClient } from './generated/prisma/client'
+import { PrismaPg } from '@prisma/adapter-pg'
 
 /**
- * Create Prisma client for edge runtime
- * Uses Accelerate extension for connection pooling
- * @param {string} databaseUrl - Database connection string
+ * Create a per-request Prisma client (Workers: env is only available inside the handler)
+ * @param {string} databaseUrl - Direct database connection string (c.env.DATABASE_URL)
  * @returns {PrismaClient} - Configured Prisma instance
  */
 export function getPrisma(databaseUrl: string) {
-  return new PrismaClient({
-    datasources: {
-      db: {
-        url: databaseUrl,
-      },
-    },
-  }).$extends(withAccelerate())
+  const adapter = new PrismaPg({ connectionString: databaseUrl })
+  return new PrismaClient({ adapter })
 }
 ```
 
@@ -223,18 +221,26 @@ app.use('/api/protected/*', authMiddleware)
 
 ---
 
-## Accelerate Caching
+## Accelerate Caching (legacy — retired December 1, 2026)
+
+> Standalone Accelerate is being retired on 2026-12-01. In v7 an Accelerate client takes
+> `accelerateUrl` and **no** driver adapter (never pass a `prisma://` URL to `PrismaPg`).
+> Prefer the adapter-based `getPrisma()` above for new code.
 
 ```typescript
 // src/index.ts
+import { Hono } from 'hono'
+import { PrismaClient } from './generated/prisma/client'
 import { withAccelerate } from '@prisma/extension-accelerate'
 
 const app = new Hono()
 
+/** Accelerate client: `accelerateUrl` (prisma:// URL), no adapter */
+const getAcceleratePrisma = (accelerateUrl: string) =>
+  new PrismaClient({ accelerateUrl }).$extends(withAccelerate())
+
 app.get('/posts', async (c) => {
-  const prisma = getPrisma(
-    c.env.DATABASE_URL
-  ).$extends(withAccelerate())
+  const prisma = getAcceleratePrisma(c.env.DATABASE_URL)
 
   const posts = await prisma.post.findMany({
     cacheStrategy: { ttl: 60 },
@@ -244,9 +250,7 @@ app.get('/posts', async (c) => {
 })
 
 app.post('/posts', async (c) => {
-  const prisma = getPrisma(
-    c.env.DATABASE_URL
-  ).$extends(withAccelerate())
+  const prisma = getAcceleratePrisma(c.env.DATABASE_URL)
 
   const data = await c.req.json()
 
@@ -330,7 +334,7 @@ app.onError(
 
 ## Best Practices
 
-1. **Use Accelerate** - Cache frequently accessed data
+1. **Driver adapter required** - v7: generated client + edge-compatible adapter, not `@prisma/client/edge`
 2. **Edge-compatible** - Test on Cloudflare Workers
 3. **Middleware pattern** - Separate concerns with middleware
 4. **Type-safe** - Leverage Hono's type system

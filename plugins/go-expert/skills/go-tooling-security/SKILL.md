@@ -2,7 +2,7 @@
 name: go-tooling-security
 description: Use when setting up Go modules/workspaces, configuring golangci-lint v2, running govulncheck, or building a Go CI quality gate. Not for app logic or non-Go audits.
 versions:
-  go: "1.26"
+  go: "1.27"
   golangci-lint: "2"
   govulncheck: "latest"
 user-invocable: true
@@ -27,7 +27,7 @@ Before ANY tooling/security change, spawn 3 agents in parallel, one `Agent` call
 
 1. **fuse-ai-pilot:explore-codebase** - Find existing go.mod/go.work, `.golangci.yml`, CI files
 2. **fuse-ai-pilot:research-expert** - Verify latest golangci-lint v2 + govulncheck docs via Context7/Exa
-3. **mcp__context7__query-docs** - Check current Go 1.26 `go fix` modernizer set
+3. **mcp__context7__query-docs** - Check current Go 1.27 `go fix` modernizer set
 
 After changes, run **fuse-ai-pilot:sniper** for validation.
 
@@ -40,7 +40,7 @@ After changes, run **fuse-ai-pilot:sniper** for validation.
 | **Modules & Workspaces** | `go.mod` directives, `go.work` for multi-module dev without `replace` |
 | **golangci-lint v2** | Config version `"2"`, `formatters` section, `golangci-lint migrate` |
 | **govulncheck** | Reachability-based scan of the call graph against `vuln.go.dev` |
-| **go fix modernizers** | Go 1.26 suite of fixers, `//go:fix inline` for API migrations |
+| **go fix modernizers** | Suite of fixers (rebuilt in 1.26, extended in 1.27), `//go:fix inline` for API migrations |
 | **CI quality gate** | fmt → vet → golangci-lint → govulncheck → test -race |
 
 ---
@@ -127,7 +127,7 @@ govulncheck ./...                    # source mode, call-graph reachability
 ### Modernize the codebase
 
 ```bash
-go fix ./...                         # apply Go 1.26 modernizers
+go fix ./...                         # apply the modernizer suite (1.27 set)
 ```
 
 → See [go-fix-modernizers.md](references/go-fix-modernizers.md)
@@ -147,3 +147,4 @@ go fix ./...                         # apply Go 1.26 modernizers
 - Commit `go.work` in repos whose modules are also developed with external modules
 - Suppress govulncheck findings without confirming the vulnerable symbol is unreachable
 - Assume `go vet`/`gofmt` changed in 1.26 — the 1.26 change is `go fix`, not those
+- Forget that since 1.27 `go test` runs the `stdversion` vet check by default (reports stdlib symbols newer than the file's `go` version)

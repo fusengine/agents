@@ -18,7 +18,7 @@ return [
     'fallback_locale' => env('APP_FALLBACK_LOCALE', 'en'),
 
     // Add custom config
-    'available_locales' => ['en', 'fr', 'es', 'de'],
+    'available_locales' => ['en', 'it', 'es', 'de'],
 ];
 ```
 
@@ -32,7 +32,7 @@ namespace App\Enums;
 enum Locale: string
 {
     case EN = 'en';
-    case FR = 'fr';
+    case IT = 'it';
     case ES = 'es';
     case DE = 'de';
 
@@ -43,7 +43,7 @@ enum Locale: string
     {
         return match($this) {
             self::EN => 'English',
-            self::FR => 'Français',
+            self::IT => 'Italiano',
             self::ES => 'Español',
             self::DE => 'Deutsch',
         };

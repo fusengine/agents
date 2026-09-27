@@ -78,9 +78,9 @@ const nextConfig = {
 ## Experimental Features
 ```typescript
 const nextConfig = {
+  cacheComponents: true,          // PPR by default (experimental.ppr removed in v16)
+  typedRoutes: true,              // Type-safe routes (stable, top-level)
   experimental: {
-    ppr: true,                    // Partial Pre-rendering
-    typedRoutes: true,            // Type-safe routes
     serverActions: { bodySizeLimit: '2mb' },
   },
 }
@@ -95,6 +95,6 @@ const nextConfig = {
   trailingSlash: true,
   poweredByHeader: false,
   typescript: { ignoreBuildErrors: false },
-  eslint: { ignoreDuringBuilds: false },
+  // `eslint` option removed in v16 (next lint removed; run ESLint/Biome directly)
 }
 ```

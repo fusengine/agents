@@ -47,12 +47,17 @@ are path filters. Filter by test name with `-t`/`--test-name-pattern`.
 | `--rerun-each N` | Re-run each test N times to surface flakiness |
 | `--watch` | Re-run on change |
 | `--preload ./setup.ts` | Load setup/hooks before tests |
+| `--parallel[=N]` | Run files across N worker processes (default CPU count), implies `--isolate` (1.3.13+) |
+| `--isolate` | Fresh global/module registry per file (1.3.13+) |
+| `--shard=M/N` | Split files across CI machines (1.3.13+) |
+| `--changed[=<ref>]` | Only tests affected by the git diff (1.3.13+) |
 
 ---
 
 ## Concurrency Model
 
-Tests run sequentially within a file by default. Opt into parallelism:
+All files run in one process and one shared global by default (`--parallel` spreads files
+across CPU cores). Tests run sequentially within a file by default. Opt into parallelism:
 
 | Construct | Effect |
 |-----------|--------|

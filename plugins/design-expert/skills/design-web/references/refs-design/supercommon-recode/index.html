@@ -8,11 +8,11 @@
 <link rel="preconnect" href="https://framerusercontent.com" crossorigin>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<!-- Inter : substitution MESURÉE d'« Akt Variable Thin » (commerciale). À
-     56px/-.06em elle rend « two modes. named by you. » à 617 px, soit exactement
-     la largeur de la source. Voir le détail des mesures dans styles.css (--police).
-     Sans ce lien, la page retombe sur Helvetica Neue, ~8 % plus étroite : les
-     titres rétrécissent et tous les paragraphes perdent une ligne. -->
+<!-- Inter: MEASURED substitution for "Akt Variable Thin" (commercial). At
+     56px/-.06em it renders "two modes. named by you." at 617 px, exactly
+     the source's width. See the measurement details in styles.css (--font).
+     Without this link, the page falls back to Helvetica Neue, ~8 % narrower: the
+     titles shrink and every paragraph loses a line. -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400&display=swap">
 <link rel="stylesheet" href="styles.css">
 <script src="motion.js" defer></script>
@@ -20,10 +20,10 @@
 <body>
 
 <!-- ════════════════════════════════════════════════════════════════════════
-     BARRE HAUTE
-     [relevé] .framer-aers59 — row, width:1440px, padding:20px ; la variante
-     desktop .framer-v-1w353mn passe à padding:20px 40px, la variante mobile
-     .framer-v-1f7lyg6 à width:360px, padding:16px et icônes 40 x 40.
+     TOP BAR
+     [measured] .framer-aers59 — row, width:1440px, padding:20px; the desktop
+     variant .framer-v-1w353mn moves to padding:20px 40px, the mobile variant
+     .framer-v-1f7lyg6 to width:360px, padding:16px and 40 x 40 icons.
      ════════════════════════════════════════════════════════════════════════ -->
 <header class="topbar">
   <a class="topbar__side topbar__side--start" href="#">
@@ -33,9 +33,9 @@
   <div class="topbar__center">
     <a class="wordmark" href="#" aria-label="supercommon systems"></a>
   </div>
-  <!-- [relevé] .framer-kfg5j9 : l'icône vient AVANT le libellé, comme à gauche —
-       le groupe entier est simplement poussé à droite par place-content:flex-end.
-       Inverser les deux renvoie le pictogramme au bord de la fenêtre. -->
+  <!-- [measured] .framer-kfg5j9: the icon comes BEFORE the label, as on the left —
+       the whole group is simply pushed right by place-content:flex-end.
+       Swapping the two sends the pictogram to the window edge. -->
   <a class="topbar__side topbar__side--end" href="#">
     <svg class="topbar__icon" viewBox="0 0 48 48" aria-hidden="true"><use href="#svg1315259080_1634"/></svg>
     <h5 class="topbar__label">manual</h5>
@@ -45,28 +45,28 @@
 <main>
 
 <!-- ════════════════════════════════════════════════════════════════════════
-     1 + 2. BANDEAU MÉTALLIQUE — titre ET hero dans le MÊME conteneur
-     [relevé] .framer-17iwuz2 enveloppe .framer-1jrwauy (le titre) ET
-     .framer-1xblbl0 (le hero). Le dégradé en 5 arrêts se déploie donc sur
-     toute cette hauteur : le noir tient le titre (0 → 19 %), le clair
-     (#bfc6c1 à 75 %) tombe DERRIÈRE l'image du hero.
-     Les séparer — ce que j'avais fait d'abord — fait remonter le clair juste
-     sous le titre et change complètement l'impression de la page.
+     1 + 2. METALLIC BAND — title AND hero in the SAME container
+     [measured] .framer-17iwuz2 wraps .framer-1jrwauy (the title) AND
+     .framer-1xblbl0 (the hero). The 5-stop gradient therefore spreads over
+     this whole height: black holds the title (0 → 19 %), the light tone
+     (#bfc6c1 at 75 %) falls BEHIND the hero image.
+     Separating them — what I did at first — pulls the light tone up right
+     under the title and completely changes the impression of the page.
      ════════════════════════════════════════════════════════════════════════ -->
 <section class="titleband">
-  <div class="spacer" style="--h:6vh"></div><!-- [relevé] .framer-4vxme9 6vh -->
+  <div class="spacer" style="--h:6vh"></div><!-- [measured] .framer-4vxme9 6vh -->
   <div class="titleband__head" data-reveal>
     <div class="titleband__row">
-      <!-- [relevé] .framer-1skvjim : row, gap:12px, width:100% -->
+      <!-- [measured] .framer-1skvjim: row, gap:12px, width:100% -->
       <h3 class="titleband__word">interval</h3>
       <span class="mark" aria-hidden="true"><span class="mark__dots"></span></span>
       <h3 class="titleband__word">for macOS</h3>
     </div>
     <h1 class="display">time as an instrument</h1>
   </div>
-  <div class="spacer" style="--h:7vh"></div><!-- [relevé] .framer-1jlbrmj 7vh -->
+  <div class="spacer" style="--h:7vh"></div><!-- [measured] .framer-1jlbrmj 7vh -->
 
-  <!-- [relevé] .framer-1xblbl0 aspect-ratio:1.8042 (710px sous 1440) -->
+  <!-- [measured] .framer-1xblbl0 aspect-ratio:1.8042 (710px below 1440) -->
   <div class="hero">
   <img class="hero__img" alt=""
        src="https://framerusercontent.com/images/k2hTUMRvuxIEcleQsvFCANDKZk.jpg?lossless=1&width=3437&height=1905"
@@ -74,8 +74,8 @@
                https://framerusercontent.com/images/k2hTUMRvuxIEcleQsvFCANDKZk.jpg?scale-down-to=2048&lossless=1&width=3437&height=1905 2048w"
        sizes="100vw">
 
-  <!-- [relevé] .framer-jd46e4 : le scrim CONTIENT les mentions — il n'est pas
-       qu'un décor, c'est le conteneur qui les rend lisibles sur l'image. -->
+  <!-- [measured] .framer-jd46e4: the scrim CONTAINS the mentions — it is not
+       just decoration, it is the container that makes them legible on the image. -->
   <div class="hero__ramp">
     <div class="hero__notes">
       <p class="fine">direct license key - use on any two macs.</p>
@@ -84,9 +84,9 @@
     </div>
   </div>
 
-  <!-- [relevé] .framer-2j27ep : top:58%, left:50%, translate(-50%,-50%),
-       gap:16px, z-index:2. Le centrage par transform interdit d'y poser
-       l'animation d'apparition : la boîte animée est imbriquée. -->
+  <!-- [measured] .framer-2j27ep: top:58%, left:50%, translate(-50%,-50%),
+       gap:16px, z-index:2. Centering via transform forbids putting the
+       reveal animation on it: the animated box is nested. -->
   <div class="hero__offer">
     <div class="hero__offer-in" data-reveal>
       <h3 class="hero__kicker">one-time purchase</h3>
@@ -102,29 +102,29 @@
 </section>
 
 <!-- ════════════════════════════════════════════════════════════════════════
-     3. MANIFESTE — aucun visuel, un seul bloc de texte
-     [relevé] .framer-1srhlqc padding:0 40px · .framer-flwwvz max-width:1120px
+     3. MANIFESTO — no visual, a single block of text
+     [measured] .framer-1srhlqc padding:0 40px · .framer-flwwvz max-width:1120px
      ════════════════════════════════════════════════════════════════════════ -->
 <section class="band">
-  <div class="spacer" style="--h:32vh"></div><!-- [relevé] .framer-c44fd4 32vh -->
+  <div class="spacer" style="--h:32vh"></div><!-- [measured] .framer-c44fd4 32vh -->
   <div class="band__block">
-    <!-- [relevé] la source écrit bien « stilness » (un seul l) dans ce titre, alors
-         qu'elle écrit « stillness. » plus bas. Coquille conservée : c'est le texte
-         de la source, et sa longueur commande la coupe de ligne. -->
+    <!-- [measured] the source does write "stilness" (a single l) in this title, whereas
+         it writes "stillness." further down. Typo kept: it is the source's text,
+         and its length drives the line break. -->
     <h2 class="display" data-reveal>stilness vs motion.</h2>
-    <div class="spacer" style="--h:8vh"></div><!-- [relevé] .framer-1g6k1tv 8vh -->
+    <div class="spacer" style="--h:8vh"></div><!-- [measured] .framer-1g6k1tv 8vh -->
     <p class="lede" data-reveal>your brain is not a server. it doesn’t perform under constant load. it needs
       contrast to stay precise. focus and release are different states. they should not compete.
       they should alternate. we built an instrument to hold that boundary. to switch states
       without thinking. to move between modes without friction. this is not about productivity.
       it’s about control. a digital tool for a biological rhythm.</p>
   </div>
-  <div class="spacer" style="--h:5vh"></div><!-- [relevé] .framer-1bin8ru 5vh -->
+  <div class="spacer" style="--h:5vh"></div><!-- [measured] .framer-1bin8ru 5vh -->
 </section>
 
 <!-- ════════════════════════════════════════════════════════════════════════
-     4. DUO — image carrée pleine largeur, deux mots posés dessus
-     [relevé] .framer-1gg9id2 z-index:1 · .framer-pb2yt6 width:4%
+     4. DUO — full-width square image, two words laid on it
+     [measured] .framer-1gg9id2 z-index:1 · .framer-pb2yt6 width:4%
      ════════════════════════════════════════════════════════════════════════ -->
 <section class="duo">
   <img class="duo__img" alt="" loading="lazy"
@@ -133,22 +133,22 @@
     <h2 class="display duo__word">stillness.</h2>
     <h2 class="display duo__word duo__word--hot" tabindex="0">motion.</h2>
   </div>
-  <!-- [relevé] .framer-1v0tc2g : 60vh, dégradé à trois arrêts (0 / .8 à 45% / 1 à 95%) -->
+  <!-- [measured] .framer-1v0tc2g: 60vh, three-stop gradient (0 / .8 at 45% / 1 at 95%) -->
   <div class="duo__ramp" aria-hidden="true"></div>
 </section>
 
 <!-- ════════════════════════════════════════════════════════════════════════
-     5. DEUX MODES — chapeau, titre large, vidéo en boucle
+     5. TWO MODES — eyebrow, wide title, looping video
      ════════════════════════════════════════════════════════════════════════ -->
 <section class="band band--opaque">
-  <div class="spacer" style="--h:25vh;--hm:1vh"></div><!-- [relevé] .framer-1v5m74q 25vh / 1vh -->
+  <div class="spacer" style="--h:25vh;--hm:1vh"></div><!-- [measured] .framer-1v5m74q 25vh / 1vh -->
   <p class="eyebrow" data-reveal>a two-mode timer for macOS</p>
-  <div class="spacer" style="--h:4vh;--hm:1vh"></div><!-- [relevé] .framer-pttglp 4vh / 1vh -->
-  <!-- [relevé] .framer-1w9zuai padding:0 40px (20px sous 1440) -->
-  <!-- [relevé] la source sert DEUX versions de ce titre via ses ssr-variants :
-       ≥1440 en trois lignes forcées par <br>, <1440 en une seule chaîne qui se
-       replie toute seule. Ce n'est pas une redondance — la coupe imposée à
-       1440 n'a aucun sens à 390, où elle produirait six lignes très courtes. -->
+  <div class="spacer" style="--h:4vh;--hm:1vh"></div><!-- [measured] .framer-pttglp 4vh / 1vh -->
+  <!-- [measured] .framer-1w9zuai padding:0 40px (20px below 1440) -->
+  <!-- [measured] the source serves TWO versions of this title via its ssr-variants:
+       ≥1440 in three lines forced by <br>, <1440 as a single string that wraps
+       on its own. This is not redundancy — the break imposed at 1440
+       makes no sense at 390, where it would produce six very short lines. -->
   <h2 class="display display--wide display--wide-only" data-reveal>two modes. named by you.<br>any activity. any duration.<br>switch automatically or never.</h2>
   <h2 class="display display--wide display--narrow-only" data-reveal>two modes. named by you. any activity. any duration. switch automatically or never.</h2>
   <div class="media">
@@ -160,13 +160,13 @@
 </section>
 
 <!-- ════════════════════════════════════════════════════════════════════════
-     6. TROIS FORMES — contrôle segmenté + capture contextuelle
-     [relevé] .framer-sujigt padding:0 16px · .framer-1472m5q gap:2px padding:2px
+     6. THREE FORMS — segmented control + contextual screenshot
+     [measured] .framer-sujigt padding:0 16px · .framer-1472m5q gap:2px padding:2px
      ════════════════════════════════════════════════════════════════════════ -->
 <section class="band band--notch band--opaque">
-  <div class="spacer" style="--h:1vh"></div><!-- [relevé] .framer-gq2chr 1vh -->
+  <div class="spacer" style="--h:1vh"></div><!-- [measured] .framer-gq2chr 1vh -->
   <h2 class="display display--tight" data-reveal>present when needed.<br>invisible otherwise.</h2>
-  <div class="spacer" style="--h:6vh"></div><!-- [relevé] .framer-f504ui 6vh -->
+  <div class="spacer" style="--h:6vh"></div><!-- [measured] .framer-f504ui 6vh -->
 
   <div class="segmented" data-reveal role="tablist" aria-label="display density">
     <span class="segmented__thumb" aria-hidden="true"></span>
@@ -175,24 +175,24 @@
     <button class="segmented__tab" role="tab" aria-selected="false" type="button"><h6 class="segmented__label">slim</h6></button>
   </div>
 
-  <div class="spacer" style="--h:5vh"></div><!-- [relevé] .framer-lhmy7o 5vh -->
+  <div class="spacer" style="--h:5vh"></div><!-- [measured] .framer-lhmy7o 5vh -->
   <figure class="shot">
     <img class="shot__img" alt="" loading="lazy"
          src="https://framerusercontent.com/images/0KpwrRrlKBLGFd2UxFwGy8BBxA.jpg?scale-down-to=2048&lossless=1&width=3200&height=2203">
-    <!-- [relevé] .framer-uitjqc : top:82%, left:50%, width:48%, padding:0 40px -->
+    <!-- [measured] .framer-uitjqc: top:82%, left:50%, width:48%, padding:0 40px -->
     <figcaption class="shot__caption fine">interval running on macOS. background app shown for context.</figcaption>
   </figure>
 </section>
 
 <!-- ════════════════════════════════════════════════════════════════════════
-     7. CAPACITÉS — dix entrées, aucune icône, aucun filet
-     [relevé] la source sépare les entrées par un <h3> VIDE : l'espacement est
-     typographique, pas un gap. Reproduit ici par gap = une interligne.
+     7. CAPABILITIES — ten entries, no icon, no rule
+     [measured] the source separates the entries with an EMPTY <h3>: the spacing is
+     typographic, not a gap. Reproduced here by gap = one line-height.
      ════════════════════════════════════════════════════════════════════════ -->
 <section class="band">
-  <div class="spacer" style="--h:15vh"></div><!-- [relevé] .framer-1xjo61h 15vh -->
+  <div class="spacer" style="--h:15vh"></div><!-- [measured] .framer-1xjo61h 15vh -->
   <h2 class="display" data-reveal>capabilities</h2>
-  <div class="spacer" style="--h:12vh"></div><!-- [relevé] .framer-hpk8iv 12vh -->
+  <div class="spacer" style="--h:12vh"></div><!-- [measured] .framer-hpk8iv 12vh -->
   <div class="caps" data-reveal data-stagger>
     <h3 class="caps__item"><strong>two configurable states</strong><br><span>• independent, persistent</span></h3>
     <h3 class="caps__item"><strong>manual or automatic switching</strong><br><span>• user-driven or rule-based</span></h3>
@@ -208,21 +208,21 @@
 </section>
 
 <!-- ════════════════════════════════════════════════════════════════════════
-     8. GRILLE — NEUF cellules, 3 x 3
-     [relevé] .framer-28mkr5 : grid-template-rows:repeat(2,…) + grid-auto-rows,
-     3 colonnes, gap:80px 40px, max-width:800px. Une colonne sous 1440.
-     Chaque cellule : .framer-4dmrqa gap:20px · boîte d'icône .framer-1embbqn
-     height:60px · bloc texte .framer-1t6e5iq gap:10px.
-     Les pictogrammes sont les SVG de la source, repris tels quels (voir le
-     bloc #svg-templates en fin de document) — c'est là que vit la seule
-     polychromie de la page.
+     8. GRID — NINE cells, 3 x 3
+     [measured] .framer-28mkr5: grid-template-rows:repeat(2,…) + grid-auto-rows,
+     3 columns, gap:80px 40px, max-width:800px. One column below 1440.
+     Each cell: .framer-4dmrqa gap:20px · icon box .framer-1embbqn
+     height:60px · text block .framer-1t6e5iq gap:10px.
+     The pictograms are the source's SVGs, taken as-is (see the
+     #svg-templates block at the end of the document) — that is where the
+     page's only polychromy lives.
      ════════════════════════════════════════════════════════════════════════ -->
 <section class="band band--opaque">
-  <div class="spacer" style="--h:40vh"></div><!-- [relevé] .framer-1s4a1lk 40vh -->
+  <div class="spacer" style="--h:40vh"></div><!-- [measured] .framer-1s4a1lk 40vh -->
   <h2 class="display" data-reveal>time, held in place</h2>
-  <div class="spacer" style="--h:15vh;--hm:12vh"></div><!-- [relevé] .framer-174jvzv 15vh / 12vh -->
+  <div class="spacer" style="--h:15vh;--hm:12vh"></div><!-- [measured] .framer-174jvzv 15vh / 12vh -->
 
-  <!-- [relevé] .framer-1hmqa5w : colonne à gap:80px qui enveloppe la grille -->
+  <!-- [measured] .framer-1hmqa5w: column with gap:80px wrapping the grid -->
   <div class="grid-wrap">
   <div class="grid" data-reveal data-stagger>
     <div class="cell">
@@ -250,7 +250,7 @@
       <div class="cell__slot"><span class="picto picto--scrub" style="--pw:50px;--ph:48px" aria-hidden="true"></span></div>
       <div class="cell__text">
         <h3 class="cell__title">time scrubber</h3>
-        <!-- [relevé] la source emploie ici le trait d'union insécable U+2011 -->
+        <!-- [measured] the source uses the non-breaking hyphen U+2011 here -->
         <p class="cell__note">drag to adjust duration instantly, with fine‑grained tactile feedback.</p>
       </div>
     </div>
@@ -279,7 +279,7 @@
       <div class="cell__slot"><svg class="picto" style="--pw:131px;--ph:40px" viewBox="0 0 131 40" aria-hidden="true"><use href="#svg-1497144722_855"/></svg></div>
       <div class="cell__text">
         <h3 class="cell__title">hotkeys</h3>
-        <!-- [relevé] deux traits d'union insécables U+2011 dans cette phrase -->
+        <!-- [measured] two non-breaking hyphens U+2011 in this sentence -->
         <p class="cell__note">customizable multi‑key control for power users and muscle‑memory workflows.</p>
       </div>
     </div>
@@ -295,19 +295,19 @@
 </section>
 
 <!-- ════════════════════════════════════════════════════════════════════════
-     9. SORTIE — un seul bouton, surface inversée
-     [relevé] .framer-ly855p background #fff, padding:31px
+     9. EXIT — a single button, inverted surface
+     [measured] .framer-ly855p background #fff, padding:31px
      ════════════════════════════════════════════════════════════════════════ -->
 <section class="band">
-  <div class="spacer" style="--h:15vh;--hm:8vh"></div><!-- [relevé] .framer-8ks4su 15vh / 8vh -->
+  <div class="spacer" style="--h:15vh;--hm:8vh"></div><!-- [measured] .framer-8ks4su 15vh / 8vh -->
   <a class="btn btn--wide" href="#" data-reveal><h5 class="btn__label">read the full manual</h5></a>
-  <div class="spacer" style="--h:15vh"></div><!-- [relevé] .framer-10e2vk0 15vh -->
+  <div class="spacer" style="--h:15vh"></div><!-- [measured] .framer-10e2vk0 15vh -->
 </section>
 
 </main>
 
 <!-- ════════════════════════════════════════════════════════════════════════
-     PIED — [relevé] .framer-15lp0e7 height:88px, padding:0 40px, gap:52px
+     FOOTER — [measured] .framer-15lp0e7 height:88px, padding:0 40px, gap:52px
      ════════════════════════════════════════════════════════════════════════ -->
 <footer class="foot">
   <nav class="foot__side foot__side--start">
@@ -323,11 +323,11 @@
 </footer>
 
 <!-- ════════════════════════════════════════════════════════════════════════
-     SPRITES SVG — relevé INTÉGRAL du bloc #svg-templates de la source.
-     Neuf pictogrammes vectoriels, référencés par <use href="#id">. C'est le
-     procédé de la source : un seul dépôt caché en fin de document, zéro
-     requête réseau, et des pictos qui restent du texte vectoriel.
-     Ne pas reformater : ce bloc est copié au caractère près.
+     SVG SPRITES — COMPLETE measurement of the source's #svg-templates block.
+     Nine vector pictograms, referenced by <use href="#id">. This is the
+     source's procedure: a single hidden store at the end of the document, zero
+     network requests, and pictograms that remain vector text.
+     Do not reformat: this block is copied character for character.
      ════════════════════════════════════════════════════════════════════════ -->
 <div id="svg-templates" style="position: absolute; overflow: hidden; bottom: 0; left: 0; width: 0; height: 0; z-index: 0; contain: strict" aria-hidden="true">
 <svg width="48" height="48" viewBox="0 0 48 48" fill="none" id="svg-1949803328_2197">

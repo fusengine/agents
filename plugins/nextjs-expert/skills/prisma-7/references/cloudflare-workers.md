@@ -15,7 +15,8 @@ related: [vercel, netlify, aws-lambda]
 ```bash
 npm install -g wrangler
 wrangler init
-npm install @prisma/client
+npm install @prisma/client@7
+npm install -D prisma@7
 ```
 
 ## Wrangler Configuration
@@ -58,12 +59,14 @@ npm install @prisma/adapter-d1
 
 ```prisma
 generator client {
-  provider = "prisma-client-js"
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+  runtime  = "cloudflare" // or "workerd"
 }
 
 datasource db {
   provider = "sqlite"
-  url      = "file:./dev.db"
+  // v7: the CLI connection URL lives in prisma.config.ts (datasource.url), not here
 }
 
 model User {
@@ -82,7 +85,7 @@ model User {
  * @see /src/interfaces/worker-env.ts
  */
 import type { D1Database } from '@cloudflare/workers-types'
-import { PrismaClient } from '@prisma/client'
+import { PrismaClient } from './generated/prisma/client' // v7: generated path
 import { PrismaD1 } from '@prisma/adapter-d1'
 
 /**
@@ -122,8 +125,8 @@ export default {
  * @see /src/interfaces/worker-env.ts
  */
 import type { D1Database } from '@cloudflare/workers-types'
-import type { User } from '@prisma/client'
-import { PrismaClient } from '@prisma/client'
+import type { User } from './generated/prisma/client'
+import { PrismaClient } from './generated/prisma/client' // v7: generated path
 import { PrismaD1 } from '@prisma/adapter-d1'
 
 interface Env {
@@ -181,8 +184,8 @@ wrangler d1 execute app-db --file migrations/0001_users.sql
  * @see /src/interfaces/worker-env.ts
  */
 import type { D1Database, KVNamespace } from '@cloudflare/workers-types'
-import type { User } from '@prisma/client'
-import { PrismaClient } from '@prisma/client'
+import type { User } from '../generated/prisma/client'
+import { PrismaClient } from '../generated/prisma/client' // v7: generated path
 import { PrismaD1 } from '@prisma/adapter-d1'
 
 /**

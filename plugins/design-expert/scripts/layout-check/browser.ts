@@ -1,14 +1,14 @@
 /**
- * browser.ts — Résolution de Playwright et lancement du navigateur.
- * Aucune dépendance n'est ajoutée au dépôt : on réutilise le `playwright-core`
- * déjà présent (installation locale, globale, ou celui embarqué par @playwright/mcp)
- * et le Google Chrome du système via `channel: "chrome"`.
+ * browser.ts — Playwright resolution and browser launch.
+ * No dependency is added to the repo: we reuse the `playwright-core`
+ * already present (local install, global install, or the one bundled by @playwright/mcp)
+ * and the system Google Chrome via `channel: "chrome"`.
  */
 import { execFileSync } from "node:child_process";
 import { existsSync } from "node:fs";
 import { join } from "node:path";
 
-/** Chemins candidats pour un module `playwright-core` déjà installé. */
+/** Candidate paths for an already installed `playwright-core` module. */
 function candidates(): string[] {
   const list: string[] = [];
   const override = process.env.LAYOUT_CHECK_PLAYWRIGHT;
@@ -20,14 +20,14 @@ function candidates(): string[] {
     list.push(join(root, "playwright-core", "index.js"));
     list.push(join(root, "@playwright", "mcp", "node_modules", "playwright-core", "index.js"));
   } catch {
-    /* npm absent : on se contente des résolutions par nom de module */
+    /* npm missing: fall back to module-name resolution only */
   }
   return list;
 }
 
 /**
- * Importe le premier Playwright résolvable.
- * @throws si aucun `playwright`/`playwright-core` n'est installé sur la machine.
+ * Imports the first resolvable Playwright.
+ * @throws if no `playwright`/`playwright-core` is installed on the machine.
  */
 export async function loadPlaywright(): Promise<{ chromium: any; source: string }> {
   const tried: string[] = [];
@@ -42,14 +42,14 @@ export async function loadPlaywright(): Promise<{ chromium: any; source: string 
     }
   }
   throw new Error(
-    `Playwright introuvable. Testé : ${tried.join(", ")}. ` +
-      `Installez-le (npm i -g playwright) ou pointez LAYOUT_CHECK_PLAYWRIGHT sur un index.js.`,
+    `Playwright not found. Tried: ${tried.join(", ")}. ` +
+      `Install it (npm i -g playwright) or point LAYOUT_CHECK_PLAYWRIGHT at an index.js.`,
   );
 }
 
 /**
- * Lance Chromium headless : Chrome système d'abord (aucun téléchargement),
- * puis le Chromium embarqué de Playwright en secours.
+ * Launches headless Chromium: system Chrome first (no download),
+ * then Playwright's bundled Chromium as a fallback.
  */
 export async function launchBrowser(chromium: any): Promise<any> {
   try {
@@ -59,10 +59,10 @@ export async function launchBrowser(chromium: any): Promise<any> {
   }
 }
 
-/** Normalise une cible : URL http(s) laissée telle quelle, chemin local → file://. */
+/** Normalizes a target: http(s) URL left as is, local path → file://. */
 export function toTargetUrl(input: string): string {
   if (/^(https?|file):\/\//.test(input)) return input;
   const abs = input.startsWith("/") ? input : join(process.cwd(), input);
-  if (!existsSync(abs)) throw new Error(`Fichier introuvable : ${abs}`);
+  if (!existsSync(abs)) throw new Error(`File not found: ${abs}`);
   return `file://${abs}`;
 }

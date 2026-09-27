@@ -161,7 +161,7 @@
     {
       "name": "fuse-swift-apple-expert",
       "source": "./plugins/swift-apple-expert",
-      "description": "Expert Swift 6.2 + SwiftUI for iOS 26, macOS 26, iPadOS 26, watchOS 26, visionOS 26, tvOS 26 with Liquid Glass, @Observable, actors, SwiftData inheritance",
+      "description": "Expert Swift 6.4 + SwiftUI for iOS 27, macOS 27, iPadOS 27, watchOS 27, visionOS 27, tvOS 27 with Liquid Glass, @Observable, actors, SwiftData inheritance",
       "version": "1.1.20",
       "author": {
         "name": "Fusengine",
@@ -211,7 +211,7 @@
     {
       "name": "fuse-tailwindcss",
       "source": "./plugins/tailwindcss",
-      "description": "Expert Tailwind CSS v4.1 with CSS-first config, @theme, @utility, @variant, Oxide engine, OKLCH colors, container queries",
+      "description": "Expert Tailwind CSS v4.3 with CSS-first config, @theme, @utility, @variant, Oxide engine, OKLCH colors, container queries",
       "version": "1.1.11",
       "author": {
         "name": "Fusengine",
@@ -225,7 +225,7 @@
         "tailwind",
         "css",
         "utility-first",
-        "v4.1",
+        "v4.3",
         "oxide-engine",
         "oklch",
         "container-queries"
@@ -290,7 +290,7 @@
     {
       "name": "fuse-typescript",
       "source": "./plugins/typescript-expert",
-      "description": "Expert TypeScript 6.0 for pure TS projects — CLI tools, libraries, scripts, and backends on Node 24 LTS or Bun 1.3, with SOLID principles",
+      "description": "Expert TypeScript 7.0 for pure TS projects — CLI tools, libraries, scripts, and backends on Node 24 LTS (26 LTS from 2026-10-28) or Bun 1.4, with SOLID principles",
       "version": "1.0.7",
       "author": {
         "name": "Fusengine",
@@ -301,7 +301,7 @@
       "license": "MIT",
       "keywords": [
         "typescript",
-        "typescript-6",
+        "typescript-7",
         "node",
         "node-24-lts",
         "bun",
@@ -319,7 +319,7 @@
     {
       "name": "fuse-php",
       "source": "./plugins/php-expert",
-      "description": "Expert modern PHP 8.5/8.4 for non-Laravel projects — libraries, standalone Symfony components, Slim, API-first apps, and CLI tools, with PER Coding Style 3.0, PHPStan, and SOLID principles",
+      "description": "Expert modern PHP 8.5/8.4 for non-Laravel projects — libraries, standalone Symfony components, Slim, API-first apps, and CLI tools, with PER Coding Style 3.1, PHPStan, and SOLID principles",
       "version": "1.0.7",
       "author": {
         "name": "Fusengine",
@@ -349,7 +349,7 @@
     {
       "name": "fuse-rust",
       "source": "./plugins/rust-expert",
-      "description": "Expert Rust 1.96+ (2024 edition) — ownership, error handling, async/tokio, axum backends, cargo tooling, with SOLID principles",
+      "description": "Expert Rust 1.98+ (2024 edition) — ownership, error handling, async/tokio, axum backends, cargo tooling, with SOLID principles",
       "version": "1.0.7",
       "author": {
         "name": "Fusengine",
@@ -360,7 +360,7 @@
       "license": "MIT",
       "keywords": [
         "rust",
-        "rust-1-96",
+        "rust-1-98",
         "edition-2024",
         "tokio",
         "axum",
@@ -376,7 +376,7 @@
     {
       "name": "fuse-go",
       "source": "./plugins/go-expert",
-      "description": "Expert Go 1.26+ — idioms, concurrency, backend services, cargo-grade tooling (golangci-lint v2, govulncheck), with SOLID principles",
+      "description": "Expert Go 1.27+ — idioms, concurrency, backend services, cargo-grade tooling (golangci-lint v2, govulncheck), with SOLID principles",
       "version": "1.0.7",
       "author": {
         "name": "Fusengine",
@@ -388,7 +388,7 @@
       "keywords": [
         "go",
         "golang",
-        "go-1-26",
+        "go-1-27",
         "concurrency",
         "goroutines",
         "sqlc",
@@ -516,7 +516,7 @@
     {
       "name": "fuse-astro",
       "source": "./plugins/astro-expert",
-      "description": "Expert Astro 6 with Islands Architecture, Content Layer API, Server Actions, Server Islands, UI framework integrations (React/Vue/Svelte/Solid), SEO, Starlight docs, i18n, and deployment",
+      "description": "Expert Astro 7 with Islands Architecture, Content Layer API, Server Actions, Server Islands, UI framework integrations (React/Vue/Svelte/Solid), SEO, Starlight docs, i18n, and deployment",
       "version": "1.0.13",
       "author": {
         "name": "Fusengine",

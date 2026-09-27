@@ -15,12 +15,12 @@ curl -sL "$SRC" -o source.html
 
 Three markers are used throughout this document:
 
-- `[relevé]` — value read on the source. The HTML it serves is
+- `[measured]` — value read on the source. The HTML it serves is
   compiled Tailwind v4: the utility classes **are** the values, so there is
   nothing to guess. Reference command:
   `perl -0777 -pe 's/></>\n</g' source.html | grep -nE '<(section|h1|h2|h3)[ >]'`
-- `[arbitrage]` — decision of this rebuild, not deducible from the source.
-- `[estimé]` — computed, not measured directly.
+- `[decided]` — decision of this rebuild, not deducible from the source.
+- `[estimated]` — computed, not measured directly.
 
 ---
 
@@ -45,7 +45,7 @@ grep -o 'translateY(32px)' source.html | wc -l
 Three amplitudes, and three only: **24px** for an ordinary block (58
 occurrences), **32px** for the two large panels (the page-builder panel, the
 closing block), **110 %** for the two lines of the `h1`, which live inside an
-`overflow: hidden` mask. [relevé]
+`overflow: hidden` mask. [measured]
 
 So there is, across the whole page, **no** resting state starting from a `scale`,
 a `blur`, a rotation or a `clip-path`. It is a deliberately poor entrance
@@ -55,23 +55,23 @@ vocabulary: opacity + vertical translation, nothing else. Reproduced as is —
 ### 1.2 Durations and curves
 
 No entrance duration is readable on the source. Every duration on this page is an
-`[arbitrage]`, but none is hard-coded in `motion.js`: they live in CSS variables,
+`[decided]`, but none is hard-coded in `motion.js`: they live in CSS variables,
 and `motion.js` only sets classes.
 
 | Role | Value | Status |
 |---|---|---|
-| response (hover, tab, focus) | `--duree-court: 200ms` | [relevé] `duration-200` on the cards |
-| reveal of a halo | `--duree-moyen: 300ms` | [relevé] `duration-300` on the spotlight |
-| appearance of a block | `--duree-long: 700ms` | [arbitrage] |
-| rise of a headline line | `900ms` | [arbitrage] |
-| counter | `1400ms` | [arbitrage] |
-| demo gauge | `1600ms` | [arbitrage] |
-| accordion chevron | `--duree-moyen` | [relevé] `duration-300` on the source |
+| response (hover, tab, focus) | `--duration-short: 200ms` | [measured] `duration-200` on the cards |
+| reveal of a halo | `--duration-medium: 300ms` | [measured] `duration-300` on the spotlight |
+| appearance of a block | `--duration-long: 700ms` | [decided] |
+| rise of a headline line | `900ms` | [decided] |
+| counter | `1400ms` | [decided] |
+| demo gauge | `1600ms` | [decided] |
+| accordion chevron | `--duration-medium` | [measured] `duration-300` on the source |
 
-Two curves only. `cubic-bezier(0, 0, .2, 1)` (`--courbe-sortie`) for everything
+Two curves only. `cubic-bezier(0, 0, .2, 1)` (`--curve-out`) for everything
 that is a response — it is the `ease-out` curve the source defines in its
-`:root` [relevé, `--ease-out:cubic-bezier(0,0,.2,1)`]. `cubic-bezier(.22, 1,
-.36, 1)` (`--courbe-douce`) for entrance translations [arbitrage].
+`:root` [measured, `--ease-out:cubic-bezier(0,0,.2,1)`]. `cubic-bezier(.22, 1,
+.36, 1)` (`--curve-soft`) for entrance translations [decided].
 No bounce, no overshoot, no elasticity — the source contains none, and that is
 not a choice one improves on.
 
@@ -84,16 +84,16 @@ for seventeen blocks, each one naming its properties explicitly
 
 `grep -c '@keyframes' styles.css` → **3**, and not one more.
 
-1. `descente` — the SCROLL tick under the hero, 2.2s, the upper half of a
+1. `descend` — the SCROLL tick under the hero, 2.2s, the upper half of a
    28px rule that travels down then holds still for 40 % of the cycle. The source
-   animates the same bar; its duration is not readable. [relevé for the
-   procedure, arbitrage for the duration]
-2. `battement` — the terminal cursor, 1.1s in `steps(1, end)`. The source
+   animates the same bar; its duration is not readable. [measured for the
+   procedure, decided for the duration]
+2. `blink` — the terminal cursor, 1.1s in `steps(1, end)`. The source
    uses `animate-pulse` (2s, `cubic-bezier(.4,0,.6,1)`), a soft pulse.
    Replaced by a hard blink: a terminal cursor does not breathe.
-   [arbitrage, owned; deviation documented §12]
-3. `remplir` — the gauge in the Demo section, `scaleX(0 → 1)` over 1.6s, played
-   once only. Does not exist on the source, whose section is empty. [arbitrage]
+   [decided, owned; deviation documented §12]
+3. `grow` — the gauge in the Demo section, `scaleX(0 → 1)` over 1.6s, played
+   once only. Does not exist on the source, whose section is empty. [decided]
 
 All three are gated on `html.js-motion`, so absent without JS and absent under
 reduced motion.
@@ -134,7 +134,7 @@ sets `is-in` on everything — a hidden block is never left behind.
 
 On the CSS side, the `@media (prefers-reduced-motion: reduce)` block does not
 merely overwrite the durations: it explicitly restores `opacity: 1; transform:
-none` on `[data-reveal]` and `[data-ligne]`. Overwriting the duration alone would
+none` on `[data-reveal]` and `[data-line]`. Overwriting the duration alone would
 leave the page blank.
 
 ---
@@ -147,11 +147,11 @@ Background `#050508`, a blue-black. Accent `#7aa8ff` (terminal caret, step
 numerals, slider fill), `#cfe4fa` for the heading italics, `#a8cdf0` for the
 counters, `#8eafc8` for the mono eyebrows. Terminal colouring:
 `#f5a97f` (peach) for tool calls, `#9cd6ae` (sea green) for successes.
-macOS dots `#ff5f57` / `#febc2e` / `#28c840`. [relevé]
+macOS dots `#ff5f57` / `#febc2e` / `#28c840`. [measured]
 
 Every surface and every hairline is a white opacity:
 `bg-white/[0.02]`, `bg-white/[0.03]`, `bg-white/[0.05]`, `bg-white/[0.06]`,
-`border-white/5`, `border-white/8`, `border-white/10`, `border-white/15`. [relevé]
+`border-white/5`, `border-white/8`, `border-white/10`, `border-white/15`. [measured]
 
 ### 2.2 This page
 
@@ -159,15 +159,15 @@ The brief imposes **anthracite + sodium orange**. The opacity structure is taken
 over identically; only the chromatic family changes.
 
 ```css
---fond-page:      #0b0b0e;   /* anthracite, slightly warm */
---fond-terminal:  #131216;
---fond-pilule:    #131217;
+--bg-page:      #0b0b0e;   /* anthracite, slightly warm */
+--bg-terminal:  #131216;
+--bg-pill:    #131217;
 --sodium:         #ff8c2b;   /* single accent */
---sodium-clair:   #ffb066;
---ambre:          #ffcf9b;
---ambre-sourd:    #c99a6a;
---or-pale:        #f0d08a;
---terre:          #c98f5a;
+--sodium-light:   #ffb066;
+--amber:          #ffcf9b;
+--amber-muted:    #c99a6a;
+--gold-pale:        #f0d08a;
+--earth:          #c98f5a;
 ```
 
 Role-for-role correspondence with the source:
@@ -186,7 +186,7 @@ Role-for-role correspondence with the source:
 | card spotlight | `rgba(122,168,255,.09)` | `rgb(255 140 43 / .12)` |
 
 The spotlight goes from 9 % to 12 %: orange is less luminous than blue at equal
-opacity on a dark background, and 9 % was not visible. [arbitrage, measured by
+opacity on a dark background, and 9 % was not visible. [decided, measured by
 eye on the render]
 
 ### 2.3 The terminal dots
@@ -196,11 +196,11 @@ introduced a red and a green into a page that carries neither anywhere else.
 They become a **ramp rising toward the sodium**:
 `#4a4a52` → `#8a6a3a` → `#ff8c2b`. The procedure — three 12px discs aligned to
 the left of a title bar — is intact; the colour follows the palette.
-[arbitrage, deviation documented §12]
+[decided, deviation documented §12]
 
 ### 2.4 Contrasts
 
-On `#0b0b0e` (relative luminance ≈ 0.0043) [estimé]:
+On `#0b0b0e` (relative luminance ≈ 0.0043) [estimated]:
 
 | Token | Ratio | Use | Verdict |
 |---|---|---|---|
@@ -214,7 +214,7 @@ On `#0b0b0e` (relative luminance ≈ 0.0043) [estimé]:
 | `#c99a6a` | 7.2:1 | eyebrows | ✅ |
 | `#f0d08a` | 13.4:1 | terminal successes | ✅ |
 
-Only one token under 4.5:1: `--texte-35`, reserved for the **comment and echo
+Only one token under 4.5:1: `--text-35`, reserved for the **comment and echo
 lines** inside the code blocks (`$ claude`, `subject lines + body drafted`).
 Those lines are the trace of a machine, not information to be read; the source
 makes exactly the same choice with `text-white/35`. No meaning-bearing text is
@@ -225,7 +225,7 @@ written there. Every token of the source that sat at `white/40` on readable text
 
 ## 3. Typography
 
-### 3.1 The families, relevées
+### 3.1 The families, measured
 
 `curl -s "$SRC/_next/static/chunks/3d9uy71yrg96g.css"` yields four
 `@font-face`:
@@ -239,13 +239,13 @@ written there. Every token of the source that sat at `white/40` on readable text
 
 Space Grotesk is loaded by the source but no rule uses it:
 `grep -c 'font-caption' source.html` → 0 outside the module declaration. It is
-not loaded here. [relevé]
+not loaded here. [measured]
 
 The other three are taken over as they are from Google Fonts, with
 `display=swap` and two `preconnect`. Reproducing a typography means reproducing
 the fonts; substituting them would have been a rewrite, not a reproduction.
 
-### 3.2 The scale, relevée class by class
+### 3.2 The scale, measured class by class
 
 | Element | Source | Rendered | Sodium |
 |---|---|---|---|
@@ -270,7 +270,7 @@ the fonts; substituting them would have been a rewrite, not a reproduction.
 | eyebrow | `text-[11px]` | 11px | 11px → 14px < 480px |
 | SCROLL | `text-[10px]` | 10px | 11px → 14px < 480px |
 
-Body line height is `leading-relaxed` everywhere, that is **1.625** [relevé], and
+Body line height is `leading-relaxed` everywhere, that is **1.625** [measured], and
 not the default 1.5. Taken over.
 
 ### 3.3 Italics as the only typographic accent
@@ -286,10 +286,10 @@ grep -o '<em class="text-\[#cfe4fa\]">' source.html | wc -l  → 9
 Nine headings out of twelve follow that pattern on the source. Here, eight out of
 twelve — the same exceptions (the headings with a `<br />`, which are two
 sentences on two lines rather than one cut sentence). The `<em>` carries
-`--ambre` (`#ffcf9b`).
+`--amber` (`#ffcf9b`).
 
 No weight above 400 on any serif. The page's only 600 is the primary white button
-[relevé, `font-semibold`]. No `letter-spacing` outside mono.
+[measured, `font-semibold`]. No `letter-spacing` outside mono.
 
 ### 3.4 Mono as the voice of the machine
 
@@ -299,7 +299,7 @@ bar, the `→` bullets of the page builder, the calculator's tickmarks, the
 portrait caption, the signature line, the whole footer. That is the same
 distribution as the source, element for element.
 
-Tracking by role [relevé]: eyebrow `.35em` · SCROLL and footer titles `.3em` ·
+Tracking by role [measured]: eyebrow `.35em` · SCROLL and footer titles `.3em` ·
 step numeral `.3em` · calculator eyebrow `.25em` · demo time marker `.2em` ·
 calculator label `.025em` · everything else at 0.
 
@@ -317,11 +317,11 @@ grep -o 'py-28 sm:py-36' source.html | wc -l  → 3
 ```
 
 Twelve sections out of twelve, **112px then 144px beyond 640px**. No section has
-a step of its own. Reproduced by `--pas-section: 7rem` / `--pas-section-sm: 9rem`,
-applied by `.section` and `.section--large` — `grep -c 'pas-section' styles.css`
+a step of its own. Reproduced by `--section-step: 7rem` / `--section-step-sm: 9rem`,
+applied by `.section` and `.section--large` — `grep -c 'section-step' styles.css`
 → 7 uses for 2 declarations.
 
-Two exceptions relevées and taken over: the figures band at `py-24 sm:py-28`
+Two exceptions measured and taken over: the figures band at `py-24 sm:py-28`
 (96/112px, tighter because it is bordered) and the footer at `py-16 sm:py-20`.
 
 ### 4.2 The widths
@@ -359,7 +359,7 @@ All identical here, **including the item counts**: 3, 6, 4, 3, 4, 6 FAQ entries,
 3 link columns in the footer. Information density is a given of the
 reproduction, not a variable.
 
-Gutter: `gap-4` = **16px** everywhere [relevé]. One single exception, the FAQ and
+Gutter: `gap-4` = **16px** everywhere [measured]. One single exception, the FAQ and
 the duos at `gap-12 lg:gap-20` (48/80px).
 
 ### 4.4 The radii
@@ -369,19 +369,19 @@ closing) · `rounded-[28px]` for the portrait and the calculator card ·
 `rounded-3xl` = 24px for every card and both terminals ·
 `rounded-2xl` = 16px for the chat overlay · `rounded-xl` = 12px for the icon
 token · `rounded-full` for the header pill, the buttons, the chips, the dots,
-the slider thumb. [relevé, five values and not one more]
+the slider thumb. [measured, five values and not one more]
 
 ### 4.5 The hairlines
 
 Four opacities and nothing else: 5 % (list separators, band and footer borders),
 8 % (cards, accordions, calculator separator), 10 % (photographic frames,
 terminals, pill), 15 % (card hover, eyebrow pill).
-[relevé]
+[measured]
 
 ### 4.6 The overlap
 
 The page's only negative offset, and its compositional signature: the hero
-terminal carries `-mt-24`, that is **−96px** [relevé]. It bites into the
+terminal carries `-mt-24`, that is **−96px** [measured]. It bites into the
 photographic frame. Its section carries `relative z-10` to pass above it.
 Reproduced identically (`margin-top: -6rem`).
 
@@ -394,7 +394,7 @@ source does not say "it is simple", it **prints the session**.
 
 ### 5.1 The chassis
 
-Identical for both blocks, relevé to the pixel:
+Identical for both blocks, measured to the pixel:
 
 - title bar: `px-5 py-3.5` (20/14px), `border-b border-white/[0.06]`,
   `bg-white/[0.02]`, three `size-3` discs (12px) spaced 8px apart, a 12px mono
@@ -411,22 +411,22 @@ Identical for both blocks, relevé to the pixel:
 
 ### 5.2 The grammar of the session
 
-Five line roles, all relevés, all reproduced:
+Five line roles, all measured, all reproduced:
 
 | Role | Marker | Source colour | Sodium colour |
 |---|---|---|---|
-| command echo | `$ ` | `white/35` | `--texte-35` |
-| human input | `❯` | `#7aa8ff` + `white/90` | `--sodium` + `--texte-90` |
-| tool call | `⏺` | `#f5a97f` | `--terre` |
-| tool name / note | — | `white/75` / `white/35` | `--texte-75` / `--texte-35` |
-| success | `✓` | `#9cd6ae` | `--or-pale` |
+| command echo | `$ ` | `white/35` | `--text-35` |
+| human input | `❯` | `#7aa8ff` + `white/90` | `--sodium` + `--text-90` |
+| tool call | `⏺` | `#f5a97f` | `--earth` |
+| tool name / note | — | `white/75` / `white/35` | `--text-75` / `--text-35` |
+| success | `✓` | `#9cd6ae` | `--gold-pale` |
 
 The tool calls are grouped in a block with a **left rule** (`border-l
 border-white/[0.08] pl-4`): it is that rule which makes the sequence read as an
-execution sub-tree rather than as a list. [relevé, essential procedure]
+execution sub-tree rather than as a list. [measured, essential procedure]
 
 The last line carries a cursor: a 7 × 14px rectangle offset 2px downward.
-[relevé, `h-[14px] w-[7px] translate-y-[2px]`]
+[measured, `h-[14px] w-[7px] translate-y-[2px]`]
 
 ### 5.3 The syntax colouring
 
@@ -434,17 +434,17 @@ The brief forbids a generic imported theme. The seven classes in `styles.css`
 are derived from the five palette values:
 
 ```css
-.cd-pale { color: var(--texte-35); }   /* comment, echo */
+.cd-pale { color: var(--text-35); }   /* comment, echo */
 .cd-cmd  { color: var(--sodium); }     /* the typed command */
-.cd-ok   { color: var(--or-pale); }    /* success, numeric literal */
-.cd-cle  { color: var(--sodium-clair);}/* object key, property */
-.cd-txt  { color: var(--terre); }      /* string */
-.cd-mot  { color: var(--ambre); font-style: italic; }  /* keyword */
-.cd-num  { color: var(--or-pale); }
+.cd-ok   { color: var(--gold-pale); }    /* success, numeric literal */
+.cd-key  { color: var(--sodium-light);}/* object key, property */
+.cd-txt  { color: var(--earth); }      /* string */
+.cd-kw  { color: var(--amber); font-style: italic; }  /* keyword */
+.cd-num  { color: var(--gold-pale); }
 ```
 
 The keyword (`import`, `const`, `await`) is the block's only **italic** token:
-it echoes the heading italics, inside the machine. [arbitrage]
+it echoes the heading italics, inside the machine. [decided]
 
 ### 5.4 The four tabs
 
@@ -485,7 +485,7 @@ track sit at `0 %`, `15.904041823988754 %`, `66.66666666666666 %`,
 - `(log10(100000) − 3) / 3 = (5 − 3) / 3 = 66.667 %` ✓
 
 The scale is therefore **log10 from 1,000 to 1,000,000**, with no ambiguity
-possible. [relevé, demonstrated]
+possible. [measured, demonstrated]
 
 Reproduced as is: `min="3" max="6" step="0.01" value="4.7"`, same tickmarks at
 the same percentages, written inline as `style="left:…"` just as on the source.
@@ -497,11 +497,11 @@ The source displays `50,000` for a slider value of `4.69897`, that is exactly
 Sodium's is explicit in `motion.js`:
 
 ```js
-var pas = v < 10000 ? 100 : v < 100000 ? 1000 : 10000;
-return Math.max(1000, Math.round(v / pas) * pas);
+var step = v < 10000 ? 100 : v < 100000 ? 1000 : 10000;
+return Math.max(1000, Math.round(v / step) * step);
 ```
 
-Three steps, floor at 1,000. [arbitrage]
+Three steps, floor at 1,000. [decided]
 
 ### 6.3 The pricing tiers
 
@@ -521,7 +521,7 @@ lowest-cost plan".
 Standard / Scale crossover: Standard reaches $180 at
 `25000 + (162 / 0.60) × 1000 = 295,000` sends; beyond that, Scale wins. The
 calculator therefore switches over by itself around 300,000, which makes the
-pricing readable without a single sentence explaining it. [estimé, verified on
+pricing readable without a single sentence explaining it. [estimated, verified on
 the render]
 
 Three values checked on the rendered page:
@@ -547,12 +547,12 @@ and Blink does not:
 
 - Gecko: `::-moz-range-progress` paints the travelled segment, nothing to compute.
 - Blink: the track carries a `linear-gradient` whose break point is
-  `var(--remplissage)`, a variable `motion.js` rewrites on every `input`.
+  `var(--fill)`, a variable `motion.js` rewrites on every `input`.
 
 The thumb is 18px rather than the source's 12px: at 12px the touch target fell
-far below the field's 24px, and the focus halo was not legible. [arbitrage]
+far below the field's 24px, and the focus halo was not legible. [decided]
 
-Focus state: `outline: 2px solid var(--sodium-clair)` with `outline-offset:
+Focus state: `outline: 2px solid var(--sodium-light)` with `outline-offset:
 6px`, plus a 6px ring on the thumb on hover **and** on keyboard focus — the
 source sets its ring on focus only.
 
@@ -561,7 +561,7 @@ source sets its ring on focus only.
 A real `<label for="volume">`, `<output for="volume">` for the value,
 `aria-describedby` pointing at the verdict block, and `aria-live="polite"` on
 that block — the screen reader announces the new plan without interrupting. That
-is the source's arrangement [relevé, `aria-live="polite"` on the verdict
+is the source's arrangement [measured, `aria-live="polite"` on the verdict
 container], completed with the `label`/`output` the source replaces with an
 `aria-label`.
 
@@ -597,8 +597,8 @@ Treatment, identical to the source in procedure:
   `object-fit: cover` therefore locks it on **height** and crops only the sides:
   the whole height is visible, from the anthracite star field at the top down to
   the low sodium glow. Its composition being horizontally homogeneous,
-  `object-position: 50% 50%` is enough and loses no focal point. [relevé on the
-  image, arbitrage on the framing]
+  `object-position: 50% 50%` is enough and loses no focal point. [measured on the
+  image, decided on the framing]
   **Consequence on two pieces of text.** The glow occupies the lower third of the
   frame, exactly where the chip row and the word SCROLL fall. At the source's
   opacities (`text-white/60` and `text-white/40`) they fell below the contrast
@@ -614,7 +614,7 @@ Treatment, identical to the source in procedure:
 - **"why" column** — 12 % flat veil + bottom gradient, as on the source
 
 Ratios: `aspect-[4/3]` for the builder panel, `aspect-[3/4]` for the vertical
-column, `min-h-[88svh]` for the hero. [relevé]
+column, `min-h-[88svh]` for the hero. [measured]
 
 The interfaces are **never** images: the two terminals, the chat overlay, the
 demo's browser chassis and the four application cards are HTML/CSS. That is the
@@ -627,10 +627,10 @@ source's procedure and it is reproduced without exception.
 ### 8.1 Buttons
 
 Three variants, all `rounded-full`, all **52px** tall
-(`h-13`) [relevé]:
+(`h-13`) [measured]:
 
 - **white** — `#fff` on `#0b0b0e`, `font-semibold`, `px-8`, black drop shadow.
-  Hover: white at 88 %. Active: `scale(.96)` [relevé].
+  Hover: white at 88 %. Active: `scale(.96)` [measured].
 - **ghost** — white border at 30 %, black background at 20 %, `backdrop-blur`.
   The hero's second button.
 - **muted** — 15 % border, 6 % white background. The actions of the two
@@ -646,9 +646,9 @@ background at 5 %, **and** a 240px radial spotlight that follows the pointer.
 200ms transition, named properties. The spotlight is disarmed under
 `(hover: hover)` — no point attaching a `pointermove` on a touch screen.
 
-`grep -o 'class="carte' index.html | wc -l` → **85** occurrences for 17 cards,
-that is five classes per card on average (`carte`, `carte__halo`, `carte__corps`,
-`carte__titre`, `carte__texte`).
+`grep -o 'class="card' index.html | wc -l` → **85** occurrences for 17 cards,
+that is five classes per card on average (`card`, `card__halo`, `card__body`,
+`card__title`, `card__text`).
 
 ### 8.3 Accordions
 
@@ -662,7 +662,7 @@ functional without JS. Two traps handled:
    rotates 180° on `[open]` without duplicating an icon — the source ships three
    `<svg>` per trigger and hides two of them.
 
-Target: `min-height: 2.75rem` (44px) on the `summary` [relevé, `min-h-11`].
+Target: `min-height: 2.75rem` (44px) on the `summary` [measured, `min-h-11`].
 
 ### 8.4 Tabs
 
@@ -675,7 +675,7 @@ page.
 ### 8.5 Focus
 
 `grep -c 'focus-visible' styles.css` → **4**, including one global
-`:focus-visible`: `outline: 2px solid var(--sodium-clair); outline-offset: 2px`.
+`:focus-visible`: `outline: 2px solid var(--sodium-light); outline-offset: 2px`.
 It is visible on a dark background, unlike the source's (`ring-white/40`, which
 disappears on the light photographic areas). [deviation §12]
 

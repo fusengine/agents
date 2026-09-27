@@ -10,6 +10,9 @@ related: input.md, label.md
 
 # Textarea Component
 
+> **Base:** same API on Base UI, Radix and React Aria (verified against r/styles/{base,radix}-nova/textarea.json; Aria wraps react-aria-components `TextArea`, same DOM props).
+> Invalid: `aria-invalid` on `Textarea` + `data-invalid` on `Field`; character counters/addons via `InputGroupTextarea` (`add input-group`).
+
 ## Overview
 
 The Textarea component is a multi-line text input field. It extends the HTML textarea element with Tailwind styling and supports features like character counts, validation states, and customizable sizing.
@@ -25,6 +28,7 @@ bunx --bun shadcn@latest add textarea
 ```tsx
 import { Textarea } from "@/modules/cores/shadcn/components/ui/textarea"
 
+/** Plain textarea. */
 export function BasicTextarea() {
   return <Textarea placeholder="Enter your message here..." />
 }
@@ -36,6 +40,7 @@ export function BasicTextarea() {
 import { Label } from "@/modules/cores/shadcn/components/ui/label"
 import { Textarea } from "@/modules/cores/shadcn/components/ui/textarea"
 
+/** Textarea with a label. */
 export function TextareaWithLabel() {
   return (
     <div className="grid w-full gap-2">
@@ -57,6 +62,7 @@ import { Textarea } from "@/modules/cores/shadcn/components/ui/textarea"
 
 const MAX_CHARS = 500
 
+/** Textarea with a character count. */
 export function TextareaWithCharCount() {
   const [value, setValue] = useState("")
   const remaining = MAX_CHARS - value.length
@@ -91,6 +97,7 @@ import { useState } from "react"
 import { Label } from "@/modules/cores/shadcn/components/ui/label"
 import { Textarea } from "@/modules/cores/shadcn/components/ui/textarea"
 
+/** Textarea with inline validation. */
 export function TextareaValidation() {
   const [value, setValue] = useState("")
   const [error, setError] = useState("")
@@ -150,6 +157,7 @@ export function TextareaValidation() {
 import { Label } from "@/modules/cores/shadcn/components/ui/label"
 import { Textarea } from "@/modules/cores/shadcn/components/ui/textarea"
 
+/** Disabled textarea. */
 export function DisabledTextarea() {
   return (
     <div className="grid w-full gap-2">
@@ -171,6 +179,7 @@ export function DisabledTextarea() {
 import { Label } from "@/modules/cores/shadcn/components/ui/label"
 import { Textarea } from "@/modules/cores/shadcn/components/ui/textarea"
 
+/** Textarea resize behaviors. */
 export function TextareaResize() {
   return (
     <div className="space-y-6">
@@ -210,6 +219,7 @@ export function TextareaResize() {
 import { Label } from "@/modules/cores/shadcn/components/ui/label"
 import { Textarea } from "@/modules/cores/shadcn/components/ui/textarea"
 
+/** Textareas sized by `rows`. */
 export function TextareaSize() {
   return (
     <div className="space-y-6">
@@ -244,6 +254,7 @@ import { useRef, useEffect } from "react"
 import { Label } from "@/modules/cores/shadcn/components/ui/label"
 import { Textarea } from "@/modules/cores/shadcn/components/ui/textarea"
 
+/** Textarea that grows with its content. */
 export function AutoExpandingTextarea() {
   const textareaRef = useRef<HTMLTextAreaElement>(null)
 

@@ -168,7 +168,7 @@ Route::get('/', function () {
 
 // Localized routes
 Route::prefix('{locale}')
-    ->where(['locale' => 'en|fr|es|de'])
+    ->where(['locale' => 'en|it|es|de'])
     ->middleware(['locale.url'])
     ->group(function () {
 

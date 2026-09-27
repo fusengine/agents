@@ -60,9 +60,9 @@ final class StorePostRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'title.required' => 'Le titre est obligatoire.',
-            'slug.unique' => 'Ce slug est déjà utilisé.',
-            'content.required' => 'Le contenu est obligatoire.',
+            'title.required' => 'The title is required.',
+            'slug.unique' => 'This slug is already taken.',
+            'content.required' => 'The content is required.',
         ];
     }
 }

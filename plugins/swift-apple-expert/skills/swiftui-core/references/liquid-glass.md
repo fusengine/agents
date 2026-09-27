@@ -22,8 +22,8 @@ Liquid Glass uses **light lensing** (not blur) for translucency. Content behind 
 ```swift
 MyView()
     .glassEffect(.regular)                  // Standard glass
-    .glassEffect(.regular.interactive)      // Responds to touch
-    .glassEffect(.prominent)                // Stronger emphasis
+    .glassEffect(.regular.interactive())    // Responds to touch
+    .glassEffect(.clear)                    // More transparent variant
     .glassEffect(.regular, in: .capsule)    // Custom shape
 ```
 
@@ -31,8 +31,11 @@ MyView()
 
 ```swift
 Glass.regular                    // Default translucency
-Glass.prominent                  // More visible
-Glass.regular.interactive        // Touch feedback
+Glass.clear                      // Higher transparency
+Glass.identity                   // No glass (conditional toggling)
+Glass.regular.interactive()      // Touch feedback
+Glass.regular.tint(.blue)        // Tinted glass
+// Stronger emphasis on buttons: .buttonStyle(.glassProminent)
 ```
 
 ### Morphing Container
@@ -72,10 +75,10 @@ Xcode 26 recompile automatically applies to:
 
 ```swift
 TabView {
-    ContentView()
-        .tabBarMinimizingBehavior(.automatic)
+    Tab("Home", systemImage: "house") { ContentView() }
 }
-.tabBarAccessory { HStack { Button("Filter") { } } }
+.tabBarMinimizeBehavior(.onScrollDown)
+.tabViewBottomAccessory { HStack { Button("Filter") { } } }
 ```
 
 ### macOS 26 - Toolbar
@@ -125,7 +128,7 @@ Button("Play") { }
 ## Best Practices
 
 - ✅ Let system apply automatically
-- ✅ Use `.prominent` sparingly
+- ✅ Use `.glassProminent` sparingly
 - ✅ Test light/dark modes
 - ✅ Ensure text contrast
 - ❌ Don't stack glass layers

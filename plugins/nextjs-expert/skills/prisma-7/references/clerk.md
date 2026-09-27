@@ -134,7 +134,7 @@ export async function POST(req: Request) {
 ```typescript
 // modules/dashboard/src/services/dashboard.service.ts
 import { prisma } from '@/modules/cores/db/prisma'
-import type { User, Post } from '@prisma/client'
+import type { User, Post } from '@/modules/cores/db/generated/prisma/client'
 
 interface UserWithPosts {
   user: User
@@ -181,7 +181,7 @@ export default async function DashboardPage() {
 
 ```typescript
 // modules/posts/src/interfaces/post.interface.ts
-import type { Post } from '@prisma/client'
+import type { Post } from '@/modules/cores/db/generated/prisma/client'
 
 /**
  * Create post request payload

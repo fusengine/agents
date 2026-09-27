@@ -8,6 +8,8 @@ requires: button.md
 related: dropdown-menu.md, popover.md
 ---
 
+> **Base:** examples use **Base UI** (shadcn default since 2026-07); Radix delta in "Radix variant" below; React Aria: built on `MenuTrigger trigger="contextMenu"`, items take `isDisabled` — see `shadcn docs context-menu --base aria`. Sources: https://ui.shadcn.com/r/styles/base-nova/context-menu.json, https://ui.shadcn.com/r/styles/radix-nova/context-menu.json
+
 ## Installation
 
 ```bash
@@ -26,6 +28,7 @@ import {
   ContextMenuTrigger,
 } from '@/modules/cores/shadcn/components/ui/context-menu'
 
+/** Minimal right-click menu on a dashed area. */
 export default function ContextMenuBasic() {
   return (
     <ContextMenu>
@@ -45,33 +48,35 @@ export default function ContextMenuBasic() {
 ## Components
 
 ### ContextMenu
-Root component wrapping trigger and content.
+Root component wrapping trigger and content (Base UI `ContextMenu.Root`).
 
 ### ContextMenuTrigger
-Element that shows menu on right-click.
+Element that shows menu on right-click. Use `render` to make another element the trigger.
 
 ### ContextMenuContent
-Menu container with items.
+Menu container with items (Portal + Positioner + Popup).
 
 ### ContextMenuItem
-Menu action item.
+Menu action item (`onClick`).
 - `inset`: Add left padding for icons
 - `disabled`: Disable the item
+- `variant="destructive"`: Destructive styling
+
+### ContextMenuGroup / ContextMenuLabel
+`ContextMenuLabel` is a Base UI `GroupLabel`: place it inside a `ContextMenuGroup`
+(or a `ContextMenuRadioGroup`).
 
 ### ContextMenuSeparator
 Visual divider between groups.
 
-### ContextMenuLabel
-Non-interactive label for grouping items.
-
 ### ContextMenuCheckboxItem
-Item with checkbox state.
+Item with checkbox state (`checked`, `onCheckedChange(checked, eventDetails)`).
 
 ### ContextMenuRadioGroup / ContextMenuRadioItem
-Radio button group items.
+Radio button group items (`value`, `onValueChange(value, eventDetails)`).
 
 ### ContextMenuSub
-Submenu with nested items.
+Submenu with nested items (`ContextMenuSubTrigger`, `ContextMenuSubContent`).
 
 ## File Context Menu Pattern
 
@@ -82,6 +87,7 @@ import { Trash2, Copy, Edit, Download, Share2 } from 'lucide-react'
 import {
   ContextMenu,
   ContextMenuContent,
+  ContextMenuGroup,
   ContextMenuItem,
   ContextMenuLabel,
   ContextMenuSeparator,
@@ -94,6 +100,7 @@ interface FileItem {
   type: 'file' | 'folder'
 }
 
+/** File actions menu with a labelled group and a destructive item. */
 const FileContextMenu = ({ file }: { file: FileItem }) => {
   const handleCopy = () => {
     navigator.clipboard.writeText(file.name)
@@ -105,27 +112,28 @@ const FileContextMenu = ({ file }: { file: FileItem }) => {
         {file.name}
       </ContextMenuTrigger>
       <ContextMenuContent className="w-48">
-        <ContextMenuLabel>{file.name}</ContextMenuLabel>
+        <ContextMenuGroup>
+          <ContextMenuLabel>{file.name}</ContextMenuLabel>
+          <ContextMenuItem onClick={handleCopy}>
+            <Copy />
+            Copy
+          </ContextMenuItem>
+          <ContextMenuItem>
+            <Edit />
+            Rename
+          </ContextMenuItem>
+          <ContextMenuItem disabled={file.type === 'folder'}>
+            <Download />
+            Download
+          </ContextMenuItem>
+          <ContextMenuItem>
+            <Share2 />
+            Share
+          </ContextMenuItem>
+        </ContextMenuGroup>
         <ContextMenuSeparator />
-        <ContextMenuItem inset onClick={handleCopy}>
-          <Copy className="mr-2 h-4 w-4" />
-          Copy
-        </ContextMenuItem>
-        <ContextMenuItem inset>
-          <Edit className="mr-2 h-4 w-4" />
-          Rename
-        </ContextMenuItem>
-        <ContextMenuItem inset disabled={file.type === 'folder'}>
-          <Download className="mr-2 h-4 w-4" />
-          Download
-        </ContextMenuItem>
-        <ContextMenuItem inset>
-          <Share2 className="mr-2 h-4 w-4" />
-          Share
-        </ContextMenuItem>
-        <ContextMenuSeparator />
-        <ContextMenuItem inset className="text-red-500">
-          <Trash2 className="mr-2 h-4 w-4" />
+        <ContextMenuItem variant="destructive">
+          <Trash2 />
           Delete
         </ContextMenuItem>
       </ContextMenuContent>
@@ -156,36 +164,37 @@ interface TableRow {
   status: 'active' | 'inactive'
 }
 
+/** Uses the table row itself as the trigger via `render`. */
 const TableRowMenu = ({ row }: { row: TableRow }) => {
   return (
     <ContextMenu>
-      <ContextMenuTrigger asChild>
-        <tr className="border-b hover:bg-muted/50 cursor-context-menu">
-          <td className="p-4">{row.id}</td>
-          <td className="p-4">{row.name}</td>
-          <td className="p-4">
-            <span className={row.status === 'active' ? 'text-green-500' : 'text-gray-500'}>
-              {row.status}
-            </span>
-          </td>
-        </tr>
+      <ContextMenuTrigger
+        render={<tr className="border-b hover:bg-muted/50 cursor-context-menu" />}
+      >
+        <td className="p-4">{row.id}</td>
+        <td className="p-4">{row.name}</td>
+        <td className="p-4">
+          <span className={row.status === 'active' ? 'text-green-500' : 'text-gray-500'}>
+            {row.status}
+          </span>
+        </td>
       </ContextMenuTrigger>
       <ContextMenuContent>
-        <ContextMenuItem inset>
-          <Eye className="mr-2 h-4 w-4" />
+        <ContextMenuItem>
+          <Eye />
           View
         </ContextMenuItem>
-        <ContextMenuItem inset>
-          <Pencil className="mr-2 h-4 w-4" />
+        <ContextMenuItem>
+          <Pencil />
           Edit
         </ContextMenuItem>
-        <ContextMenuItem inset onClick={() => navigator.clipboard.writeText(row.id)}>
-          <Copy className="mr-2 h-4 w-4" />
+        <ContextMenuItem onClick={() => navigator.clipboard.writeText(row.id)}>
+          <Copy />
           Copy ID
         </ContextMenuItem>
         <ContextMenuSeparator />
-        <ContextMenuItem inset className="text-red-500">
-          <Trash2 className="mr-2 h-4 w-4" />
+        <ContextMenuItem variant="destructive">
+          <Trash2 />
           Delete
         </ContextMenuItem>
       </ContextMenuContent>
@@ -206,7 +215,6 @@ import {
   ContextMenu,
   ContextMenuContent,
   ContextMenuItem,
-  ContextMenuLabel,
   ContextMenuSeparator,
   ContextMenuSub,
   ContextMenuSubContent,
@@ -214,6 +222,7 @@ import {
   ContextMenuTrigger,
 } from '@/modules/cores/shadcn/components/ui/context-menu'
 
+/** Nested submenu for share actions. */
 export default function ContextMenuWithSubmenu() {
   return (
     <ContextMenu>
@@ -221,26 +230,22 @@ export default function ContextMenuWithSubmenu() {
         Right-click for menu
       </ContextMenuTrigger>
       <ContextMenuContent className="w-48">
-        <ContextMenuLabel>Share</ContextMenuLabel>
-        <ContextMenuSeparator />
         <ContextMenuSub>
-          <ContextMenuSubTrigger inset>
-            <Share2 className="mr-2 h-4 w-4" />
+          <ContextMenuSubTrigger>
+            <Share2 />
             Share Link
           </ContextMenuSubTrigger>
           <ContextMenuSubContent className="w-48">
             <ContextMenuItem>
-              <Link className="mr-2 h-4 w-4" />
+              <Link />
               Copy Link
             </ContextMenuItem>
-            <ContextMenuItem>
-              Copy Email Link
-            </ContextMenuItem>
+            <ContextMenuItem>Copy Email Link</ContextMenuItem>
           </ContextMenuSubContent>
         </ContextMenuSub>
         <ContextMenuSeparator />
-        <ContextMenuItem inset>
-          <Copy className="mr-2 h-4 w-4" />
+        <ContextMenuItem>
+          <Copy />
           Copy
         </ContextMenuItem>
       </ContextMenuContent>
@@ -249,7 +254,7 @@ export default function ContextMenuWithSubmenu() {
 }
 ```
 
-## Checkbox Items
+## Checkbox and Radio Items
 
 ```tsx
 'use client'
@@ -257,52 +262,9 @@ export default function ContextMenuWithSubmenu() {
 import { useState } from 'react'
 import {
   ContextMenu,
-  ContextMenuContent,
   ContextMenuCheckboxItem,
-  ContextMenuLabel,
-  ContextMenuSeparator,
-  ContextMenuTrigger,
-} from '@/modules/cores/shadcn/components/ui/context-menu'
-
-export default function ContextMenuCheckbox() {
-  const [showNotifications, setShowNotifications] = useState(true)
-  const [darkMode, setDarkMode] = useState(false)
-
-  return (
-    <ContextMenu>
-      <ContextMenuTrigger className="flex h-40 w-40 items-center justify-center rounded-md border">
-        Right-click
-      </ContextMenuTrigger>
-      <ContextMenuContent>
-        <ContextMenuLabel>Settings</ContextMenuLabel>
-        <ContextMenuSeparator />
-        <ContextMenuCheckboxItem
-          checked={showNotifications}
-          onCheckedChange={setShowNotifications}
-        >
-          Show Notifications
-        </ContextMenuCheckboxItem>
-        <ContextMenuCheckboxItem
-          checked={darkMode}
-          onCheckedChange={setDarkMode}
-        >
-          Dark Mode
-        </ContextMenuCheckboxItem>
-      </ContextMenuContent>
-    </ContextMenu>
-  )
-}
-```
-
-## Radio Items
-
-```tsx
-'use client'
-
-import { useState } from 'react'
-import {
-  ContextMenu,
   ContextMenuContent,
+  ContextMenuGroup,
   ContextMenuLabel,
   ContextMenuRadioGroup,
   ContextMenuRadioItem,
@@ -310,7 +272,10 @@ import {
   ContextMenuTrigger,
 } from '@/modules/cores/shadcn/components/ui/context-menu'
 
-export default function ContextMenuRadio() {
+/** Checkbox settings plus a zoom radio group; labels live inside their group. */
+export default function ContextMenuSettings() {
+  const [showNotifications, setShowNotifications] = useState(true)
+  const [darkMode, setDarkMode] = useState(false)
   const [zoom, setZoom] = useState('100')
 
   return (
@@ -319,13 +284,24 @@ export default function ContextMenuRadio() {
         Right-click
       </ContextMenuTrigger>
       <ContextMenuContent>
-        <ContextMenuLabel>Zoom</ContextMenuLabel>
+        <ContextMenuGroup>
+          <ContextMenuLabel>Settings</ContextMenuLabel>
+          <ContextMenuCheckboxItem
+            checked={showNotifications}
+            onCheckedChange={setShowNotifications}
+          >
+            Show Notifications
+          </ContextMenuCheckboxItem>
+          <ContextMenuCheckboxItem checked={darkMode} onCheckedChange={setDarkMode}>
+            Dark Mode
+          </ContextMenuCheckboxItem>
+        </ContextMenuGroup>
         <ContextMenuSeparator />
         <ContextMenuRadioGroup value={zoom} onValueChange={setZoom}>
+          <ContextMenuLabel>Zoom</ContextMenuLabel>
           <ContextMenuRadioItem value="75">75%</ContextMenuRadioItem>
           <ContextMenuRadioItem value="100">100%</ContextMenuRadioItem>
           <ContextMenuRadioItem value="150">150%</ContextMenuRadioItem>
-          <ContextMenuRadioItem value="200">200%</ContextMenuRadioItem>
         </ContextMenuRadioGroup>
       </ContextMenuContent>
     </ContextMenu>
@@ -343,11 +319,11 @@ import {
   ContextMenu,
   ContextMenuContent,
   ContextMenuItem,
-  ContextMenuLabel,
   ContextMenuSeparator,
   ContextMenuTrigger,
 } from '@/modules/cores/shadcn/components/ui/context-menu'
 
+/** Right-click actions on an image. */
 export default function ImageContextMenu() {
   return (
     <ContextMenu>
@@ -359,23 +335,21 @@ export default function ImageContextMenu() {
         />
       </ContextMenuTrigger>
       <ContextMenuContent className="w-48">
-        <ContextMenuLabel>Image</ContextMenuLabel>
-        <ContextMenuSeparator />
-        <ContextMenuItem inset>
-          <Copy className="mr-2 h-4 w-4" />
+        <ContextMenuItem>
+          <Copy />
           Copy Image
         </ContextMenuItem>
-        <ContextMenuItem inset>
-          <Download className="mr-2 h-4 w-4" />
+        <ContextMenuItem>
+          <Download />
           Download Image
         </ContextMenuItem>
-        <ContextMenuItem inset>
-          <Share2 className="mr-2 h-4 w-4" />
+        <ContextMenuItem>
+          <Share2 />
           Share Image
         </ContextMenuItem>
         <ContextMenuSeparator />
-        <ContextMenuItem inset className="text-red-500">
-          <Trash2 className="mr-2 h-4 w-4" />
+        <ContextMenuItem variant="destructive">
+          <Trash2 />
           Delete Image
         </ContextMenuItem>
       </ContextMenuContent>
@@ -384,11 +358,22 @@ export default function ImageContextMenu() {
 }
 ```
 
+## Radix variant
+
+`style` `radix-*`: same part names; a custom trigger element composes with `asChild`, and
+`ContextMenuLabel` may sit directly in the content (no group required):
+
+```tsx
+<ContextMenuTrigger asChild>
+  <tr className="border-b">{/* cells */}</tr>
+</ContextMenuTrigger>
+```
+
 ## Best Practices
 
-1. **Keyboard accessible**: Use Tab and Enter to navigate
-2. **Icon with inset**: Always use `inset` prop with icons
-3. **Destructive last**: Put delete actions at bottom
+1. **Keyboard accessible**: Arrow keys and Enter navigate items
+2. **Icon with inset**: Use `inset` on icon-less items aligned with icon items
+3. **Destructive last**: Put `variant="destructive"` actions at bottom
 4. **Contextual items**: Show only relevant actions
 5. **Disabled state**: Disable actions that don't apply
 6. **Feedback**: Visual indication after action taken

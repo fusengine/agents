@@ -9,9 +9,11 @@ related: templates/basic-form.md, async-validation.md
 
 # Zod Validation
 
-## zodValidator Adapter
+## Zod as Standard Schema (no adapter)
 
-**Bridge between Zod schemas and TanStack Form validators.**
+**Pass Zod schemas directly to TanStack Form validators** (`validators: { onChange: schema }`).
+Zod ≥ 3.24 implements Standard Schema; the old `zodValidator()` / `validatorAdapter` from
+`@tanstack/zod-form-adapter` does not exist in TanStack Form v1.
 
 ### Purpose
 - Apply Zod schemas directly to form validators

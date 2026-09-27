@@ -3,46 +3,46 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Umbrel — référence de design</title>
-<meta name="description" content="Reconstruction fidèle et légère de la page d'accueil umbrel.com, à usage de référence de design.">
+<title>Umbrel — design reference</title>
+<meta name="description" content="Faithful, lightweight rebuild of the umbrel.com home page, for use as a design reference.">
 
-<!-- Inter couvre les deux familles de la source (Inter Display pour les
-     titres, Inter Variable pour les labels). Deux graisses suffisent :
-     500 pour le texte, 600 pour les titres. -->
+<!-- Inter covers both families of the source (Inter Display for the
+     headings, Inter Variable for the labels). Two weights are enough:
+     500 for text, 600 for headings. -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700&display=swap">
 <link rel="stylesheet" href="styles.css">
-<!-- Tout le comportement d'interface vit dans motion.js : apparitions
-     au défilement, carrousel, pause du marquee. `defer` l'exécute
-     après l'analyse du document, sans bloquer le rendu. -->
+<!-- All interface behaviour lives in motion.js: reveals
+     on scroll, carousel, marquee pause. `defer` runs it
+     after the document is parsed, without blocking rendering. -->
 <script src="motion.js" defer></script>
 </head>
 <body>
 
 <!-- ============================================================
-     Navigation — pilule flottante, pas une barre pleine largeur.
+     Navigation — floating pill, not a full-width bar.
      ============================================================ -->
 <header class="nav">
-  <div class="nav__pilule">
-    <a class="nav__marque" href="#" aria-label="Umbrel, accueil">
+  <div class="nav__pill">
+    <a class="nav__brand" href="#" aria-label="Umbrel, home">
       <svg viewBox="0 0 40 20" fill="none" stroke="currentColor" stroke-width="1.7"
            stroke-linejoin="round" aria-hidden="true">
         <path d="M2.5 16.5C2.5 8.5 10.3 2.5 20 2.5s17.5 6 17.5 14c0 0-3.4-3.6-7.6-3.6
                  s-6.1 3.6-9.9 3.6-5.7-3.6-9.9-3.6-7.6 3.6-7.6 3.6Z"/>
       </svg>
     </a>
-    <nav class="nav__liens" aria-label="Principale">
+    <nav class="nav__links" aria-label="Main">
       <a href="#pro">Umbrel Pro</a>
       <a href="#home">Umbrel Home</a>
       <a href="#os">umbrelOS</a>
       <a href="#store">App Store</a>
       <a href="#careers">Careers</a>
     </nav>
-    <span class="nav__pays" role="img" aria-label="Suisse"></span>
-    <!-- Trait de menu relevé tel quel dans la source : deux lignes, pas
-         trois, arrondies, épaisseur 1,25. -->
-    <button class="nav__menu" type="button" aria-label="Ouvrir le menu">
+    <span class="nav__country" role="img" aria-label="Switzerland"></span>
+    <!-- Menu stroke measured as is in the source: two lines, not
+         three, rounded, 1.25 thick. -->
+    <button class="nav__menu" type="button" aria-label="Open the menu">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
            stroke-width="1.25" stroke-linecap="round" aria-hidden="true">
         <path d="M6 9h13M6 16h13"/>
@@ -54,37 +54,37 @@
 <main>
 
 <!-- ============================================================
-     Hero — centré, lueur radiale en fond, trois preuves d'usage.
-     La source n'a AUCUN h1 (son titre est un <span>) ; corrigé ici.
+     Hero — centred, radial glow in the background, three proofs of use.
+     The source has NO h1 (its heading is a <span>); fixed here.
      ============================================================ -->
-<section class="bande hero">
+<section class="band hero">
   <div class="shell">
-    <h1 class="titre-hero hero__titre" data-reveal>
-      <span class="fondu">Your cloud. In your </span><span class="mot-chaud">home.</span>
+    <h1 class="title-hero hero__title" data-reveal>
+      <span class="fade">Your cloud. In your </span><span class="word-warm">home.</span>
     </h1>
-    <p class="chapo hero__chapo" data-reveal>
+    <p class="lede hero__lede" data-reveal>
       Stop renting your digital life. And start owning it with a home server.
     </p>
 
-    <ul class="preuves" data-reveal>
-      <li class="preuve">
-        <span class="pile" aria-hidden="true">
+    <ul class="proofs" data-reveal>
+      <li class="proof">
+        <span class="stack" aria-hidden="true">
           <img src="https://framerusercontent.com/images/AeGrrO10RXINLS14e54r9eIfNPs.png?width=174&height=173" alt="" width="174" height="173" decoding="async">
           <img src="https://framerusercontent.com/images/anfNc8lmnhI1Hh7Ppf4xmKPmE.png?width=192&height=193" alt="" width="192" height="193" decoding="async">
           <img src="https://framerusercontent.com/images/9NMavjn7lKc6PBpF2DCb7EDcC2w.png?width=203&height=204" alt="" width="203" height="204" decoding="async">
         </span>
         <p>Store all your <b>files, photos</b>, and videos on your home cloud</p>
       </li>
-      <li class="preuve">
-        <span class="pile" aria-hidden="true">
+      <li class="proof">
+        <span class="stack" aria-hidden="true">
           <img src="https://framerusercontent.com/images/N7yCIuHkTxXnIffmtDt36hEfZ0.svg?width=256&height=256" alt="" width="256" height="256" decoding="async">
           <img src="https://framerusercontent.com/images/I5yCvDTm2j3kVgcjzLpB4uDgh9A.png?width=502&height=502" alt="" width="502" height="502" decoding="async">
           <img src="https://framerusercontent.com/images/y20pBuz1MS0Lq8djw2UmviEMQyg.png?width=255&height=255" alt="" width="255" height="255" decoding="async">
         </span>
         <p>Run <b>OpenClaw</b>, Hermes Agent, and Ollama on your hardware</p>
       </li>
-      <li class="preuve">
-        <span class="pile" aria-hidden="true">
+      <li class="proof">
+        <span class="stack" aria-hidden="true">
           <img src="https://framerusercontent.com/images/Kw6xmUwUmOeCibFLUOOPD2c2lxs.png?width=256&height=256" alt="" width="256" height="256" decoding="async">
           <img src="https://framerusercontent.com/images/FHxtDIM8oDtR6IqVRJVPD1besVI.svg?width=256&height=256" alt="" width="256" height="256" decoding="async">
           <img src="https://framerusercontent.com/images/O2QarihZ4lz2Vmed8njk9um1rko.png?width=256&height=256" alt="" width="256" height="256" decoding="async">
@@ -96,52 +96,52 @@
 </section>
 
 <!-- ============================================================
-     Umbrel Pro — photo plein cadre, texte posé à gauche.
+     Umbrel Pro — full-frame photo, text set on the left.
      ============================================================ -->
-<section class="produit bande--raccord" id="pro">
-  <img class="produit__photo" alt="Umbrel Pro in aluminum and American Walnut"
+<section class="product band--seam" id="pro">
+  <img class="product__photo" alt="Umbrel Pro in aluminum and American Walnut"
        src="https://framerusercontent.com/images/VFzB451PEWsPYR0El5GEdv7S08.jpg?lossless=1&width=2688&height=2140">
-  <div class="produit__voile" aria-hidden="true"></div>
+  <div class="product__veil" aria-hidden="true"></div>
 
   <div class="shell">
-    <div class="produit__contenu" data-reveal>
-      <p><span class="pastille">NEW</span></p>
-      <h2 class="titre-produit">Umbrel Pro</h2>
-      <p class="corps">Your personal home cloud server with up to 32TB of SSD storage.</p>
-      <p class="corps">In an all-new aluminum and American Walnut wood finish.</p>
-      <p class="produit__prix">From&nbsp;&nbsp;$699 <span>Shipping now.</span></p>
+    <div class="product__content" data-reveal>
+      <p><span class="chip">NEW</span></p>
+      <h2 class="title-product">Umbrel Pro</h2>
+      <p class="body">Your personal home cloud server with up to 32TB of SSD storage.</p>
+      <p class="body">In an all-new aluminum and American Walnut wood finish.</p>
+      <p class="product__price">From&nbsp;&nbsp;$699 <span>Shipping now.</span></p>
       <p class="actions">
-        <a class="btn btn--plein" href="#">Order now</a>
-        <a class="btn btn--voile" href="#">Explore</a>
+        <a class="btn btn--solid" href="#">Order now</a>
+        <a class="btn btn--veil" href="#">Explore</a>
       </p>
     </div>
   </div>
 </section>
 
 <!-- ============================================================
-     Duo Umbrel Home / umbrelOS — deux colonnes, deux fonds.
+     Duo Umbrel Home / umbrelOS — two columns, two backgrounds.
      ============================================================ -->
 <section class="duo">
-  <div class="duo__volet" id="home" data-reveal>
+  <div class="duo__pane" id="home" data-reveal>
     <div class="duo__scene">
       <img alt="Umbrel Home held in a hand" width="1024" height="1024" loading="lazy"
            src="https://framerusercontent.com/images/wzRrIPwmhVn2q20FWjgSSL94TI.png?width=1024&height=1024">
     </div>
-    <h2 class="titre-section">Umbrel Home</h2>
-    <p class="corps">Plug-and-play home cloud</p>
-    <p class="duo__prix">From&nbsp;&nbsp;$549</p>
+    <h2 class="title-section">Umbrel Home</h2>
+    <p class="body">Plug-and-play home cloud</p>
+    <p class="duo__price">From&nbsp;&nbsp;$549</p>
     <p class="actions">
-      <a class="btn btn--froid" href="#">Buy now</a>
-      <a class="btn btn--voile" href="#">Learn more</a>
+      <a class="btn btn--cold" href="#">Buy now</a>
+      <a class="btn btn--veil" href="#">Learn more</a>
     </p>
 
-    <!-- La grille de spécifications appartient à SA colonne : elle est
-         imbriquée dans le volet, pas posée en bande pleine largeur sous
-         les deux. C'est ce qui donne à la section ses deux récits
-         parallèles au lieu d'un empilement. Chaque tuile EST un rendu
-         qui contient déjà son titre gravé — rien n'est surimprimé. -->
+    <!-- The spec grid belongs to ITS column: it is nested inside the
+         pane, not laid as a full-width band under both. That is what
+         gives the section its two parallel stories instead of a stack.
+         Each tile IS a render that already contains its engraved
+         heading — nothing is overprinted. -->
     <div class="specs">
-      <ul class="specs__rangee">
+      <ul class="specs__row">
         <li class="spec" data-reveal>
           <img src="https://framerusercontent.com/images/acY28JOPS1FNm2kGeVFquznhZlo.png?scale-down-to=1024&width=952&height=782" alt="Room for everything that matters. Four terabytes, NVMe SSD." width="952" height="782" loading="lazy" decoding="async">
         </li>
@@ -149,7 +149,7 @@
           <img src="https://framerusercontent.com/images/ypbqV6AMNGeIzRnNsONOfvHPlWQ.png?scale-down-to=1024&width=952&height=782" alt="Snappy performance. Always. Intel N150." width="952" height="782" loading="lazy" decoding="async">
         </li>
       </ul>
-      <ul class="specs__rangee">
+      <ul class="specs__row">
         <li class="spec" data-reveal>
           <img src="https://framerusercontent.com/images/oQ4MwsUAiZ2YF5WfWZu5dzjYS6o.png?scale-down-to=1024&width=952&height=782" alt="Juggle apps. Effortlessly. 16GB RAM LPDDR5." width="952" height="782" loading="lazy" decoding="async">
         </li>
@@ -160,14 +160,14 @@
     </div>
   </div>
 
-  <div class="duo__volet duo__volet--os" id="os" data-reveal>
-    <!-- Halo. Le procédé est celui de la source et il compte plus que
-         la couleur : un CONTENEUR dimensionné qui porte l'opacité, et
-         une image qui le remplit en object-fit: cover. L'opacité n'est
-         jamais sur l'image — c'est ce qui permet de recadrer le halo
-         sans toucher à son intensité. Le srcset sert 4 paliers pour un
-         affichage à ~939 px, jamais le 3099 natif. -->
-    <div class="duo__lueur" aria-hidden="true">
+  <div class="duo__pane duo__pane--os" id="os" data-reveal>
+    <!-- Halo. The technique is the source's and it matters more than
+         the colour: a sized CONTAINER that carries the opacity, and
+         an image that fills it with object-fit: cover. The opacity is
+         never on the image — that is what allows re-framing the halo
+         without touching its intensity. The srcset serves 4 steps for a
+         display at ~939 px, never the native 3099. -->
+    <div class="duo__glow" aria-hidden="true">
       <img alt="" width="3099" height="3099" loading="lazy" decoding="async"
            sizes="(min-width: 1220px) 938.82px, (min-width: 810px) and (max-width: 1219.98px) 958.82px, (max-width: 809.98px) 957.82px"
            srcset="https://framerusercontent.com/images/79RI1LMHmDs5ElfCjulPfPDFvg.png?scale-down-to=512&width=3099&height=3099 512w,
@@ -177,18 +177,18 @@
            src="https://framerusercontent.com/images/79RI1LMHmDs5ElfCjulPfPDFvg.png?scale-down-to=1024&width=3099&height=3099">
     </div>
     <div class="duo__scene">
-      <!-- Rotations 3D relevées telles quelles dans la source. -->
-      <img class="duo__ecran--tablette" alt="umbrelOS on a tablet" width="1502" height="1179" loading="lazy"
+      <!-- 3D rotations measured as is in the source. -->
+      <img class="duo__screen--tablet" alt="umbrelOS on a tablet" width="1502" height="1179" loading="lazy"
            src="https://framerusercontent.com/images/O7kTDJvFXu8PFwYRG27B32JjzE.png?width=1502&height=1179">
-      <img class="duo__ecran--tel" alt="umbrelOS on a phone" width="1290" height="1716" loading="lazy"
+      <img class="duo__screen--phone" alt="umbrelOS on a phone" width="1290" height="1716" loading="lazy"
            src="https://framerusercontent.com/images/D6VxOGLYprxETPKdvUrtgYTXWs.png?width=1290&height=1716">
     </div>
-    <h2 class="titre-section">umbrelOS</h2>
-    <p class="corps">The ultimate OS for running<br>your own home cloud</p>
-    <p class="actions"><a class="btn btn--voile" href="#">Learn more</a></p>
+    <h2 class="title-section">umbrelOS</h2>
+    <p class="body">The ultimate OS for running<br>your own home cloud</p>
+    <p class="actions"><a class="btn btn--veil" href="#">Learn more</a></p>
 
     <div class="specs">
-      <ul class="specs__rangee">
+      <ul class="specs__row">
         <li class="spec" data-reveal>
           <img src="https://framerusercontent.com/images/hw0KjVu2GeNiXcsIZPuYZQ0hd4.png?scale-down-to=1024&width=876&height=721" alt="Store all your files &amp; media." width="876" height="721" loading="lazy" decoding="async">
         </li>
@@ -196,7 +196,7 @@
           <img src="https://framerusercontent.com/images/RijUuLN6Hw8hwVDvxHzYPI8C3tk.png?scale-down-to=1024&width=876&height=721" alt="Hundreds of self-hosted apps." width="876" height="721" loading="lazy" decoding="async">
         </li>
       </ul>
-      <ul class="specs__rangee">
+      <ul class="specs__row">
         <li class="spec" data-reveal>
           <img src="https://framerusercontent.com/images/tUCBLEvbOpelcKnfis1RDtqfoY.png?scale-down-to=1024&width=876&height=721" alt="Access everything from a web browser." width="876" height="721" loading="lazy" decoding="async">
         </li>
@@ -208,23 +208,23 @@
   </div>
 </section>
 <!-- ============================================================
-     Files — une carte large, photo en fond.
+     Files — one wide card, photo as background.
      ============================================================ -->
-<section class="bande bande--serree files-bande">
+<section class="band band--tight files-band">
   <div class="shell">
     <div class="files" data-reveal="zoom">
       <img alt="The Files app on umbrelOS" width="2100" height="900" loading="lazy"
            src="https://framerusercontent.com/images/ibiIGPQWO78Oy0aqZdi0AE8VV8.png?width=2100&height=900">
-      <div class="files__contenu">
-        <p><span class="pastille pastille--voile">Out now in umbrelOS 1.4.</span></p>
-        <p class="files__marque">
-          <img class="files__glyphe" src="https://framerusercontent.com/images/AnPmpdrq3EXLToZzZDPfSPsgS9A.png?width=203&height=204" alt="" width="203" height="204" loading="lazy" decoding="async">
-          <span class="titre-section">Files</span>
+      <div class="files__content">
+        <p><span class="chip chip--veil">Out now in umbrelOS 1.4.</span></p>
+        <p class="files__brand">
+          <img class="files__glyph" src="https://framerusercontent.com/images/AnPmpdrq3EXLToZzZDPfSPsgS9A.png?width=203&height=204" alt="" width="203" height="204" loading="lazy" decoding="async">
+          <span class="title-section">Files</span>
         </p>
-        <p class="corps">The new home for all your files &amp; documents.</p>
+        <p class="body">The new home for all your files &amp; documents.</p>
         <p class="actions">
-          <a class="btn btn--plein" href="#">Watch the launch</a>
-          <a class="btn btn--voile" href="#">Learn more</a>
+          <a class="btn btn--solid" href="#">Watch the launch</a>
+          <a class="btn btn--veil" href="#">Learn more</a>
         </p>
       </div>
     </div>
@@ -232,75 +232,75 @@
 </section>
 
 <!-- ============================================================
-     Superpowers — rail horizontal de cartes colorées.
+     Superpowers — horizontal rail of coloured cards.
      ============================================================ -->
-<section class="bande superpowers">
+<section class="band superpowers">
   <div class="shell">
-    <p class="surtitre" data-reveal>What can I do with umbrelOS?</p>
-    <!-- Le gimmick de la section : le mot illustre son propre sens. Les
-         « s » répétés s'effacent parce que le dégradé qui remplit le
-         glyphe devient transparent vers la droite. Un seul mot, aucune
-         animation, aucun découpage lettre par lettre. -->
-    <h2 class="titre-vedette" data-reveal>
-      <span class="fondu">The superpowers are </span><span class="mot-electrique">endlessssssssss</span>
+    <p class="eyebrow" data-reveal>What can I do with umbrelOS?</p>
+    <!-- The section's gimmick: the word illustrates its own meaning. The
+         repeated "s" fade out because the gradient that fills the
+         glyph turns transparent towards the right. A single word, no
+         animation, no letter-by-letter splitting. -->
+    <h2 class="title-featured" data-reveal>
+      <span class="fade">The superpowers are </span><span class="word-electric">endlessssssssss</span>
     </h2>
   </div>
 
-  <div class="carrousel" data-reveal>
+  <div class="carousel" data-reveal>
     <ul class="rail">
-      <li class="pouvoir pouvoir--nuit">
-        <img class="pouvoir__icone" src="https://framerusercontent.com/images/FimxhhXuuAjGAx7OZbE1YQqck.png?scale-down-to=512&width=256&height=256" alt="Ollama" width="256" height="256" loading="lazy" decoding="async">
-        <div class="pouvoir__carte">
-          <h3 class="fondu">Run DeepSeek R1, LLama 3, and more.</h3>
+      <li class="power power--night">
+        <img class="power__icon" src="https://framerusercontent.com/images/FimxhhXuuAjGAx7OZbE1YQqck.png?scale-down-to=512&width=256&height=256" alt="Ollama" width="256" height="256" loading="lazy" decoding="async">
+        <div class="power__card">
+          <h3 class="fade">Run DeepSeek R1, LLama 3, and more.</h3>
           <p>Download and run advanced AI models directly on your own hardware.
              Self-hosting AI models ensures full control over your data and
              protects your privacy.</p>
-          <img class="pouvoir__ecran" src="https://framerusercontent.com/images/pvRsvBbC98us2MgvBCx6a1Tc4.png?scale-down-to=1024&width=1141&height=823" alt="" width="1141" height="823" loading="lazy" decoding="async">
+          <img class="power__screen" src="https://framerusercontent.com/images/pvRsvBbC98us2MgvBCx6a1Tc4.png?scale-down-to=1024&width=1141&height=823" alt="" width="1141" height="823" loading="lazy" decoding="async">
         </div>
       </li>
-      <li class="pouvoir pouvoir--lagon">
-        <img class="pouvoir__icone" src="https://framerusercontent.com/images/MkZDQ57bdWG4x9UDtjKzldt0Lg.png?scale-down-to=512&width=192&height=193" alt="Home Assistant" width="192" height="193" loading="lazy" decoding="async">
-        <div class="pouvoir__carte">
-          <h3 class="fondu">Automate your home and appliances.</h3>
+      <li class="power power--lagoon">
+        <img class="power__icon" src="https://framerusercontent.com/images/MkZDQ57bdWG4x9UDtjKzldt0Lg.png?scale-down-to=512&width=192&height=193" alt="Home Assistant" width="192" height="193" loading="lazy" decoding="async">
+        <div class="power__card">
+          <h3 class="fade">Automate your home and appliances.</h3>
           <p>Home Assistant integrates with over a thousand different devices
              and services to make your home work for you.</p>
-          <img class="pouvoir__ecran" src="https://framerusercontent.com/images/DZtdVA1t4cCP7AeCSwwNsRzApdE.png?scale-down-to=1024&width=2560&height=1348" alt="" width="2560" height="1348" loading="lazy" decoding="async">
+          <img class="power__screen" src="https://framerusercontent.com/images/DZtdVA1t4cCP7AeCSwwNsRzApdE.png?scale-down-to=1024&width=2560&height=1348" alt="" width="2560" height="1348" loading="lazy" decoding="async">
         </div>
       </li>
-      <li class="pouvoir pouvoir--or">
-        <img class="pouvoir__icone" src="https://framerusercontent.com/images/n3cIWrnc5e1G6jA0YgpiRUIyt00.png?scale-down-to=512&width=192&height=192" alt="Plex" width="192" height="192" loading="lazy" decoding="async">
-        <div class="pouvoir__carte">
-          <h3 class="fondu">Stream your movies &amp; TV shows.</h3>
+      <li class="power power--gold">
+        <img class="power__icon" src="https://framerusercontent.com/images/n3cIWrnc5e1G6jA0YgpiRUIyt00.png?scale-down-to=512&width=192&height=192" alt="Plex" width="192" height="192" loading="lazy" decoding="async">
+        <div class="power__card">
+          <h3 class="fade">Stream your movies &amp; TV shows.</h3>
           <p>Stream the movies and TV shows you download on your umbrelOS home
              server effortlessly to your TV, computer, and phone.</p>
-          <img class="pouvoir__ecran" src="https://framerusercontent.com/images/Nf3SUCE5KohIpdurFteYcUbbY.png?scale-down-to=1024&width=2320&height=1248" alt="" width="2320" height="1248" loading="lazy" decoding="async">
+          <img class="power__screen" src="https://framerusercontent.com/images/Nf3SUCE5KohIpdurFteYcUbbY.png?scale-down-to=1024&width=2320&height=1248" alt="" width="2320" height="1248" loading="lazy" decoding="async">
         </div>
       </li>
-      <li class="pouvoir pouvoir--braise">
-        <img class="pouvoir__icone" src="https://framerusercontent.com/images/bHQIVJx38uI8kJjNS5gJY9FLk.png?scale-down-to=512&width=192&height=192" alt="Pi-hole" width="192" height="192" loading="lazy" decoding="async">
-        <div class="pouvoir__carte">
-          <h3 class="fondu">Block ads on your entire network.</h3>
+      <li class="power power--ember">
+        <img class="power__icon" src="https://framerusercontent.com/images/bHQIVJx38uI8kJjNS5gJY9FLk.png?scale-down-to=512&width=192&height=192" alt="Pi-hole" width="192" height="192" loading="lazy" decoding="async">
+        <div class="power__card">
+          <h3 class="fade">Block ads on your entire network.</h3>
           <p>Get Pi-hole® on your Umbrel and your entire network gets rid of
              ads. Yes, the entire network, not just your browser.</p>
-          <img class="pouvoir__ecran" src="https://framerusercontent.com/images/Vzt7yBHKceIQhPmsfuHzJHQduA4.png?scale-down-to=1024&width=2560&height=1348" alt="" width="2560" height="1348" loading="lazy" decoding="async">
+          <img class="power__screen" src="https://framerusercontent.com/images/Vzt7yBHKceIQhPmsfuHzJHQduA4.png?scale-down-to=1024&width=2560&height=1348" alt="" width="2560" height="1348" loading="lazy" decoding="async">
         </div>
       </li>
-      <li class="pouvoir pouvoir--ambre">
-        <img class="pouvoir__icone" src="https://framerusercontent.com/images/56rLLT6EF4I7lEcZzR65EcY5Iw.png?scale-down-to=512&width=192&height=192" alt="Bitcoin Node" width="192" height="192" loading="lazy" decoding="async">
-        <div class="pouvoir__carte">
-          <h3 class="fondu">Run your own Bitcoin node.</h3>
+      <li class="power power--amber">
+        <img class="power__icon" src="https://framerusercontent.com/images/56rLLT6EF4I7lEcZzR65EcY5Iw.png?scale-down-to=512&width=192&height=192" alt="Bitcoin Node" width="192" height="192" loading="lazy" decoding="async">
+        <div class="power__card">
+          <h3 class="fade">Run your own Bitcoin node.</h3>
           <p>Don't trust. Verify. Run your own node and achieve unparalleled
              privacy by connecting your wallets directly to your Bitcoin
              node.</p>
-          <img class="pouvoir__ecran" src="https://framerusercontent.com/images/wwvvv6s0IFQpk794oQrHEay7sW8.png?scale-down-to=1024&width=1159&height=697" alt="" width="1159" height="697" loading="lazy" decoding="async">
+          <img class="power__screen" src="https://framerusercontent.com/images/wwvvv6s0IFQpk794oQrHEay7sW8.png?scale-down-to=1024&width=1159&height=697" alt="" width="1159" height="697" loading="lazy" decoding="async">
         </div>
       </li>
     </ul>
-    <span class="carrousel__fleche carrousel__fleche--g" aria-hidden="true">
+    <span class="carousel__arrow carousel__arrow--left" aria-hidden="true">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"
            stroke-linecap="round" stroke-linejoin="round"><path d="M14 6l-6 6 6 6"/></svg>
     </span>
-    <span class="carrousel__fleche carrousel__fleche--d" aria-hidden="true">
+    <span class="carousel__arrow carousel__arrow--right" aria-hidden="true">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"
            stroke-linecap="round" stroke-linejoin="round"><path d="M10 6l6 6-6 6"/></svg>
     </span>
@@ -309,31 +309,31 @@
 
 <!-- ============================================================
      App Store.
-     Trois choses à ne pas manquer ici :
-     · la lueur de fond est une PHOTO, pas un dégradé CSS ;
-     · l'indigo #2d2a89 n'est pas un lavis de section mais des FILETS
-       de 1 px qui s'éteignent en dégradé — un décor de grille ;
-     · le marquee écrit son contenu exactement DEUX fois, ce qui rend
-       le translateX(-50%) parfaitement bouclé.
+     Three things not to miss here:
+     · the background glow is a PHOTO, not a CSS gradient;
+     · the indigo #2d2a89 is not a section wash but 1 px HAIRLINES
+       that fade out in a gradient — a grid decoration;
+     · the marquee writes its content exactly TWICE, which makes
+       the translateX(-50%) loop seamlessly.
      ============================================================ -->
-<section class="bande store" id="store">
-  <img class="store__lueur" alt="" aria-hidden="true" width="1920" height="1280" loading="lazy" decoding="async"
+<section class="band store" id="store">
+  <img class="store__glow" alt="" aria-hidden="true" width="1920" height="1280" loading="lazy" decoding="async"
        sizes="(min-width: 810px) 100vw, 580px"
        srcset="https://framerusercontent.com/images/6OFRUG07Ah8ElVZxz3GB9jftiQ.jpg?scale-down-to=1024&width=1920&height=1280 1024w,
                https://framerusercontent.com/images/6OFRUG07Ah8ElVZxz3GB9jftiQ.jpg?width=1920&height=1280 1920w"
        src="https://framerusercontent.com/images/6OFRUG07Ah8ElVZxz3GB9jftiQ.jpg?scale-down-to=1024&width=1920&height=1280">
 
-  <!-- Filets de grille. Relevés : 1 px de large, dégradé indigo qui
-       s'éteint, l'un vers le bas, l'autre vers le haut. -->
-  <span class="filet filet--descend" aria-hidden="true"></span>
-  <span class="filet filet--monte" aria-hidden="true"></span>
+  <!-- Grid hairlines. Measured: 1 px wide, indigo gradient that
+       fades out, one downward, the other upward. -->
+  <span class="rule rule--down" aria-hidden="true"></span>
+  <span class="rule rule--up" aria-hidden="true"></span>
 
   <div class="shell">
-    <p class="surtitre" data-reveal>That's all. Except not.</p>
-    <h2 class="titre-vedette" data-reveal>
-      <span class="fondu">There's an entire </span><span class="mot-iris">app store.</span>
+    <p class="eyebrow" data-reveal>That's all. Except not.</p>
+    <h2 class="title-featured" data-reveal>
+      <span class="fade">There's an entire </span><span class="word-iris">app store.</span>
     </h2>
-    <p class="corps store__chapo" data-reveal>
+    <p class="body store__lede" data-reveal>
       Discover amazing self-hosted apps in the Umbrel App Store and install them
       in one click on umbrelOS.
     </p>
@@ -344,121 +344,121 @@
          src="https://framerusercontent.com/images/eoh9h3TnTTdgbU6lni413C4xpuU.png?scale-down-to=1024&width=1268&height=808"
          alt="The Umbrel App Store on umbrelOS" width="1268" height="808">
     <p class="actions" data-reveal>
-      <a class="btn btn--froid" href="#">Browse Umbrel App Store</a>
-      <a class="btn btn--voile" href="#">Launch your own app</a>
+      <a class="btn btn--cold" href="#">Browse Umbrel App Store</a>
+      <a class="btn btn--veil" href="#">Launch your own app</a>
     </p>
   </div>
 
-  <!-- Icônes : les 19 applications de la source en portent TOUTES une.
-       Trois sont des fichiers image — Bitcoin Node, Lightning Node,
-       Nostr Relay ; les seize autres sont des tracés vectoriels repris
-       tels quels du sprite SVG de la source, rassemblés en fin de page
-       dans #sprite-applis et instanciés par <use>. La composition en
-       couches est celle du relevé : une pastille de 60 px à coins
-       arrondis qui rogne son contenu, et par-dessus une à onze couches
-       en position absolue. Leur géométrie est écrite en % de cette base
-       de 60 px : elle suit --echelle-pastille sans être recalculée.
-       [relevé] -->
+  <!-- Icons: ALL 19 applications of the source carry one.
+       Three are image files — Bitcoin Node, Lightning Node,
+       Nostr Relay; the other sixteen are vector paths taken
+       as is from the source's SVG sprite, gathered at the end of the page
+       in #sprite-apps and instantiated with <use>. The layered
+       composition is the measured one: a 60 px chip with rounded
+       corners that clips its content, and on top one to eleven layers
+       in absolute position. Their geometry is written in % of that 60 px
+       base: it follows --chip-scale without being recomputed.
+       [measured] -->
   <div class="marquee">
-    <div class="marquee__piste">
-      <ul class="marquee__groupe">
-        <li class="appli"><span class="appli__ico"><svg class="appli__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-bitcoin-node"></use></svg><img class="appli__c" src="https://framerusercontent.com/images/elGNPTDUXJZqRmMVRmZgr1bDlgc.png?width=195&amp;height=220" alt="" width="195" height="220" loading="lazy" decoding="async" style="left:8.333%;top:5%;width:81.667%;height:90%;object-fit:contain"></span>Bitcoin Node</li>
-        <li class="appli"><span class="appli__ico"><svg class="appli__c" viewBox="0 0 61 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-lightning-shell-1"></use></svg><svg class="appli__c" viewBox="0 0 61 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-lightning-shell-2"></use></svg><svg class="appli__c" viewBox="0 0 10 10" style="left:15%;top:15%;width:16.667%;height:15%" aria-hidden="true"><use href="#ico-lightning-shell-3"></use></svg><svg class="appli__c" viewBox="0 0 12 2" style="left:33.333%;top:31.667%;width:18.333%;height:1.667%" aria-hidden="true"><use href="#ico-lightning-shell-4"></use></svg></span>Lightning Shell</li>
-        <li class="appli"><span class="appli__ico"><svg class="appli__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-samourai"></use></svg></span>Samourai</li>
-        <li class="appli"><span class="appli__ico"><svg class="appli__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-lightning-node-1"></use></svg><svg class="appli__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-lightning-node-2"></use></svg><img class="appli__c" src="https://framerusercontent.com/images/wtfjZGxQ8qYhRWGrQCtDLmQGE.png?width=170&amp;height=207" alt="" width="170" height="207" loading="lazy" decoding="async" style="left:15%;top:8.333%;width:70%;height:86.667%;object-fit:contain"></span>Lightning Node</li>
-        <li class="appli"><span class="appli__ico"><svg class="appli__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-plex"></use></svg></span>Plex</li>
-        <li class="appli"><span class="appli__ico"><img class="appli__c" src="https://framerusercontent.com/images/bSOgvYMTi69dF1xyLwOv82kcL8.png?width=256&amp;height=256" alt="" width="256" height="256" loading="lazy" decoding="async" style="left:0;top:0;width:100%;height:100%;object-fit:cover"></span>Nostr Relay</li>
-        <li class="appli"><span class="appli__ico"><svg class="appli__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-ghostfolio"></use></svg></span>Ghostfolio</li>
-        <li class="appli"><span class="appli__ico"><svg class="appli__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-torq"></use></svg></span>Torq</li>
-        <li class="appli"><span class="appli__ico"><svg class="appli__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-simpletorrent-1"></use></svg><svg class="appli__c" viewBox="0 0 40 29" style="left:16.667%;top:25%;width:56.667%;height:40%" aria-hidden="true"><use href="#ico-simpletorrent-2"></use></svg></span>SimpleTorrent</li>
+    <div class="marquee__track">
+      <ul class="marquee__group">
+        <li class="app"><span class="app__ico"><svg class="app__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-bitcoin-node"></use></svg><img class="app__c" src="https://framerusercontent.com/images/elGNPTDUXJZqRmMVRmZgr1bDlgc.png?width=195&amp;height=220" alt="" width="195" height="220" loading="lazy" decoding="async" style="left:8.333%;top:5%;width:81.667%;height:90%;object-fit:contain"></span>Bitcoin Node</li>
+        <li class="app"><span class="app__ico"><svg class="app__c" viewBox="0 0 61 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-lightning-shell-1"></use></svg><svg class="app__c" viewBox="0 0 61 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-lightning-shell-2"></use></svg><svg class="app__c" viewBox="0 0 10 10" style="left:15%;top:15%;width:16.667%;height:15%" aria-hidden="true"><use href="#ico-lightning-shell-3"></use></svg><svg class="app__c" viewBox="0 0 12 2" style="left:33.333%;top:31.667%;width:18.333%;height:1.667%" aria-hidden="true"><use href="#ico-lightning-shell-4"></use></svg></span>Lightning Shell</li>
+        <li class="app"><span class="app__ico"><svg class="app__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-samourai"></use></svg></span>Samourai</li>
+        <li class="app"><span class="app__ico"><svg class="app__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-lightning-node-1"></use></svg><svg class="app__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-lightning-node-2"></use></svg><img class="app__c" src="https://framerusercontent.com/images/wtfjZGxQ8qYhRWGrQCtDLmQGE.png?width=170&amp;height=207" alt="" width="170" height="207" loading="lazy" decoding="async" style="left:15%;top:8.333%;width:70%;height:86.667%;object-fit:contain"></span>Lightning Node</li>
+        <li class="app"><span class="app__ico"><svg class="app__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-plex"></use></svg></span>Plex</li>
+        <li class="app"><span class="app__ico"><img class="app__c" src="https://framerusercontent.com/images/bSOgvYMTi69dF1xyLwOv82kcL8.png?width=256&amp;height=256" alt="" width="256" height="256" loading="lazy" decoding="async" style="left:0;top:0;width:100%;height:100%;object-fit:cover"></span>Nostr Relay</li>
+        <li class="app"><span class="app__ico"><svg class="app__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-ghostfolio"></use></svg></span>Ghostfolio</li>
+        <li class="app"><span class="app__ico"><svg class="app__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-torq"></use></svg></span>Torq</li>
+        <li class="app"><span class="app__ico"><svg class="app__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-simpletorrent-1"></use></svg><svg class="app__c" viewBox="0 0 40 29" style="left:16.667%;top:25%;width:56.667%;height:40%" aria-hidden="true"><use href="#ico-simpletorrent-2"></use></svg></span>SimpleTorrent</li>
       </ul>
-      <ul class="marquee__groupe" aria-hidden="true">
-        <li class="appli"><span class="appli__ico"><svg class="appli__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-bitcoin-node"></use></svg><img class="appli__c" src="https://framerusercontent.com/images/elGNPTDUXJZqRmMVRmZgr1bDlgc.png?width=195&amp;height=220" alt="" width="195" height="220" loading="lazy" decoding="async" style="left:8.333%;top:5%;width:81.667%;height:90%;object-fit:contain"></span>Bitcoin Node</li>
-        <li class="appli"><span class="appli__ico"><svg class="appli__c" viewBox="0 0 61 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-lightning-shell-1"></use></svg><svg class="appli__c" viewBox="0 0 61 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-lightning-shell-2"></use></svg><svg class="appli__c" viewBox="0 0 10 10" style="left:15%;top:15%;width:16.667%;height:15%" aria-hidden="true"><use href="#ico-lightning-shell-3"></use></svg><svg class="appli__c" viewBox="0 0 12 2" style="left:33.333%;top:31.667%;width:18.333%;height:1.667%" aria-hidden="true"><use href="#ico-lightning-shell-4"></use></svg></span>Lightning Shell</li>
-        <li class="appli"><span class="appli__ico"><svg class="appli__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-samourai"></use></svg></span>Samourai</li>
-        <li class="appli"><span class="appli__ico"><svg class="appli__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-lightning-node-1"></use></svg><svg class="appli__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-lightning-node-2"></use></svg><img class="appli__c" src="https://framerusercontent.com/images/wtfjZGxQ8qYhRWGrQCtDLmQGE.png?width=170&amp;height=207" alt="" width="170" height="207" loading="lazy" decoding="async" style="left:15%;top:8.333%;width:70%;height:86.667%;object-fit:contain"></span>Lightning Node</li>
-        <li class="appli"><span class="appli__ico"><svg class="appli__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-plex"></use></svg></span>Plex</li>
-        <li class="appli"><span class="appli__ico"><img class="appli__c" src="https://framerusercontent.com/images/bSOgvYMTi69dF1xyLwOv82kcL8.png?width=256&amp;height=256" alt="" width="256" height="256" loading="lazy" decoding="async" style="left:0;top:0;width:100%;height:100%;object-fit:cover"></span>Nostr Relay</li>
-        <li class="appli"><span class="appli__ico"><svg class="appli__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-ghostfolio"></use></svg></span>Ghostfolio</li>
-        <li class="appli"><span class="appli__ico"><svg class="appli__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-torq"></use></svg></span>Torq</li>
-        <li class="appli"><span class="appli__ico"><svg class="appli__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-simpletorrent-1"></use></svg><svg class="appli__c" viewBox="0 0 40 29" style="left:16.667%;top:25%;width:56.667%;height:40%" aria-hidden="true"><use href="#ico-simpletorrent-2"></use></svg></span>SimpleTorrent</li>
+      <ul class="marquee__group" aria-hidden="true">
+        <li class="app"><span class="app__ico"><svg class="app__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-bitcoin-node"></use></svg><img class="app__c" src="https://framerusercontent.com/images/elGNPTDUXJZqRmMVRmZgr1bDlgc.png?width=195&amp;height=220" alt="" width="195" height="220" loading="lazy" decoding="async" style="left:8.333%;top:5%;width:81.667%;height:90%;object-fit:contain"></span>Bitcoin Node</li>
+        <li class="app"><span class="app__ico"><svg class="app__c" viewBox="0 0 61 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-lightning-shell-1"></use></svg><svg class="app__c" viewBox="0 0 61 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-lightning-shell-2"></use></svg><svg class="app__c" viewBox="0 0 10 10" style="left:15%;top:15%;width:16.667%;height:15%" aria-hidden="true"><use href="#ico-lightning-shell-3"></use></svg><svg class="app__c" viewBox="0 0 12 2" style="left:33.333%;top:31.667%;width:18.333%;height:1.667%" aria-hidden="true"><use href="#ico-lightning-shell-4"></use></svg></span>Lightning Shell</li>
+        <li class="app"><span class="app__ico"><svg class="app__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-samourai"></use></svg></span>Samourai</li>
+        <li class="app"><span class="app__ico"><svg class="app__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-lightning-node-1"></use></svg><svg class="app__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-lightning-node-2"></use></svg><img class="app__c" src="https://framerusercontent.com/images/wtfjZGxQ8qYhRWGrQCtDLmQGE.png?width=170&amp;height=207" alt="" width="170" height="207" loading="lazy" decoding="async" style="left:15%;top:8.333%;width:70%;height:86.667%;object-fit:contain"></span>Lightning Node</li>
+        <li class="app"><span class="app__ico"><svg class="app__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-plex"></use></svg></span>Plex</li>
+        <li class="app"><span class="app__ico"><img class="app__c" src="https://framerusercontent.com/images/bSOgvYMTi69dF1xyLwOv82kcL8.png?width=256&amp;height=256" alt="" width="256" height="256" loading="lazy" decoding="async" style="left:0;top:0;width:100%;height:100%;object-fit:cover"></span>Nostr Relay</li>
+        <li class="app"><span class="app__ico"><svg class="app__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-ghostfolio"></use></svg></span>Ghostfolio</li>
+        <li class="app"><span class="app__ico"><svg class="app__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-torq"></use></svg></span>Torq</li>
+        <li class="app"><span class="app__ico"><svg class="app__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-simpletorrent-1"></use></svg><svg class="app__c" viewBox="0 0 40 29" style="left:16.667%;top:25%;width:56.667%;height:40%" aria-hidden="true"><use href="#ico-simpletorrent-2"></use></svg></span>SimpleTorrent</li>
       </ul>
     </div>
 
-    <div class="marquee__piste marquee__piste--inverse">
-      <ul class="marquee__groupe">
-        <li class="appli"><span class="appli__ico"><svg class="appli__c" viewBox="0 0 60 31" style="left:0;top:-1.667%;width:100%;height:51.667%" aria-hidden="true"><use href="#ico-mempool-1"></use></svg><svg class="appli__c" viewBox="0 0 60 31" style="left:0;top:48.333%;width:100%;height:51.667%" aria-hidden="true"><use href="#ico-mempool-2"></use></svg><svg class="appli__c" viewBox="0 0 11 48" style="left:70%;top:10%;width:18.333%;height:78.333%" aria-hidden="true"><use href="#ico-mempool-3"></use></svg></span>mempool</li>
-        <li class="appli"><span class="appli__ico"><svg class="appli__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-woofbot-1"></use></svg><svg class="appli__c" viewBox="0 0 13 22" style="left:11.667%;top:16.667%;width:21.667%;height:35%" aria-hidden="true"><use href="#ico-woofbot-2"></use></svg><svg class="appli__c" viewBox="0 0 13 22" style="left:66.667%;top:16.667%;width:20%;height:35%" aria-hidden="true"><use href="#ico-woofbot-3"></use></svg><svg class="appli__c" viewBox="0 0 32 38" style="left:23.333%;top:20%;width:50%;height:60%" aria-hidden="true"><use href="#ico-woofbot-4"></use></svg><svg class="appli__c" viewBox="0 0 18 17" style="left:35%;top:45%;width:28.333%;height:26.667%" aria-hidden="true"><use href="#ico-woofbot-5"></use></svg><svg class="appli__c" viewBox="0 0 8 7" style="left:43.333%;top:56.667%;width:11.667%;height:10%" aria-hidden="true"><use href="#ico-woofbot-6"></use></svg><svg class="appli__c" viewBox="0 0 18 12" style="left:35%;top:55%;width:28.333%;height:16.667%" aria-hidden="true"><use href="#ico-woofbot-7"></use></svg><svg class="appli__c" viewBox="0 0 48 40" style="left:10%;top:16.667%;width:76.667%;height:66.667%" aria-hidden="true"><use href="#ico-woofbot-8"></use></svg><svg class="appli__c" viewBox="0 0 6 5" style="left:31.667%;top:41.667%;width:6.667%;height:6.667%" aria-hidden="true"><use href="#ico-woofbot-9"></use></svg><svg class="appli__c" viewBox="0 0 6 5" style="left:58.333%;top:41.667%;width:6.667%;height:6.667%" aria-hidden="true"><use href="#ico-woofbot-10"></use></svg><svg class="appli__c" viewBox="0 0 6 3" style="left:45%;top:73.333%;width:10%;height:3.333%" aria-hidden="true"><use href="#ico-woofbot-11"></use></svg></span>WoofBot</li>
-        <li class="appli"><span class="appli__ico"><svg class="appli__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-libreoffice"></use></svg></span>LibreOffice</li>
-        <li class="appli"><span class="appli__ico"><svg class="appli__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-sphinx-relay-1"></use></svg><svg class="appli__c" viewBox="0 0 44 42" style="left:13.333%;top:13.333%;width:71.667%;height:68.333%" aria-hidden="true"><use href="#ico-sphinx-relay-2"></use></svg></span>Sphinx Relay</li>
-        <li class="appli"><span class="appli__ico"><svg class="appli__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-tailscale"></use></svg></span>Tailscale</li>
-        <li class="appli"><span class="appli__ico"><svg class="appli__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-nextcloud-1"></use></svg><svg class="appli__c" viewBox="0 0 46 22" style="left:11.667%;top:31.667%;width:75%;height:35%" aria-hidden="true"><use href="#ico-nextcloud-2"></use></svg></span>Nextcloud</li>
-        <li class="appli"><span class="appli__ico"><svg class="appli__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-firefox"></use></svg></span>Firefox</li>
-        <li class="appli"><span class="appli__ico"><svg class="appli__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-photoprism-1"></use></svg><svg class="appli__c" viewBox="0 0 40 35" style="left:16.667%;top:20%;width:61.667%;height:53.333%" aria-hidden="true"><use href="#ico-photoprism-2"></use></svg></span>PhotoPrism</li>
-        <li class="appli"><span class="appli__ico"><svg class="appli__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-trilium-notes"></use></svg></span>Trilium Notes</li>
-        <li class="appli"><span class="appli__ico"><svg class="appli__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-n8n"></use></svg></span>n8n</li>
+    <div class="marquee__track marquee__track--reverse">
+      <ul class="marquee__group">
+        <li class="app"><span class="app__ico"><svg class="app__c" viewBox="0 0 60 31" style="left:0;top:-1.667%;width:100%;height:51.667%" aria-hidden="true"><use href="#ico-mempool-1"></use></svg><svg class="app__c" viewBox="0 0 60 31" style="left:0;top:48.333%;width:100%;height:51.667%" aria-hidden="true"><use href="#ico-mempool-2"></use></svg><svg class="app__c" viewBox="0 0 11 48" style="left:70%;top:10%;width:18.333%;height:78.333%" aria-hidden="true"><use href="#ico-mempool-3"></use></svg></span>mempool</li>
+        <li class="app"><span class="app__ico"><svg class="app__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-woofbot-1"></use></svg><svg class="app__c" viewBox="0 0 13 22" style="left:11.667%;top:16.667%;width:21.667%;height:35%" aria-hidden="true"><use href="#ico-woofbot-2"></use></svg><svg class="app__c" viewBox="0 0 13 22" style="left:66.667%;top:16.667%;width:20%;height:35%" aria-hidden="true"><use href="#ico-woofbot-3"></use></svg><svg class="app__c" viewBox="0 0 32 38" style="left:23.333%;top:20%;width:50%;height:60%" aria-hidden="true"><use href="#ico-woofbot-4"></use></svg><svg class="app__c" viewBox="0 0 18 17" style="left:35%;top:45%;width:28.333%;height:26.667%" aria-hidden="true"><use href="#ico-woofbot-5"></use></svg><svg class="app__c" viewBox="0 0 8 7" style="left:43.333%;top:56.667%;width:11.667%;height:10%" aria-hidden="true"><use href="#ico-woofbot-6"></use></svg><svg class="app__c" viewBox="0 0 18 12" style="left:35%;top:55%;width:28.333%;height:16.667%" aria-hidden="true"><use href="#ico-woofbot-7"></use></svg><svg class="app__c" viewBox="0 0 48 40" style="left:10%;top:16.667%;width:76.667%;height:66.667%" aria-hidden="true"><use href="#ico-woofbot-8"></use></svg><svg class="app__c" viewBox="0 0 6 5" style="left:31.667%;top:41.667%;width:6.667%;height:6.667%" aria-hidden="true"><use href="#ico-woofbot-9"></use></svg><svg class="app__c" viewBox="0 0 6 5" style="left:58.333%;top:41.667%;width:6.667%;height:6.667%" aria-hidden="true"><use href="#ico-woofbot-10"></use></svg><svg class="app__c" viewBox="0 0 6 3" style="left:45%;top:73.333%;width:10%;height:3.333%" aria-hidden="true"><use href="#ico-woofbot-11"></use></svg></span>WoofBot</li>
+        <li class="app"><span class="app__ico"><svg class="app__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-libreoffice"></use></svg></span>LibreOffice</li>
+        <li class="app"><span class="app__ico"><svg class="app__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-sphinx-relay-1"></use></svg><svg class="app__c" viewBox="0 0 44 42" style="left:13.333%;top:13.333%;width:71.667%;height:68.333%" aria-hidden="true"><use href="#ico-sphinx-relay-2"></use></svg></span>Sphinx Relay</li>
+        <li class="app"><span class="app__ico"><svg class="app__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-tailscale"></use></svg></span>Tailscale</li>
+        <li class="app"><span class="app__ico"><svg class="app__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-nextcloud-1"></use></svg><svg class="app__c" viewBox="0 0 46 22" style="left:11.667%;top:31.667%;width:75%;height:35%" aria-hidden="true"><use href="#ico-nextcloud-2"></use></svg></span>Nextcloud</li>
+        <li class="app"><span class="app__ico"><svg class="app__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-firefox"></use></svg></span>Firefox</li>
+        <li class="app"><span class="app__ico"><svg class="app__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-photoprism-1"></use></svg><svg class="app__c" viewBox="0 0 40 35" style="left:16.667%;top:20%;width:61.667%;height:53.333%" aria-hidden="true"><use href="#ico-photoprism-2"></use></svg></span>PhotoPrism</li>
+        <li class="app"><span class="app__ico"><svg class="app__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-trilium-notes"></use></svg></span>Trilium Notes</li>
+        <li class="app"><span class="app__ico"><svg class="app__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-n8n"></use></svg></span>n8n</li>
       </ul>
-      <ul class="marquee__groupe" aria-hidden="true">
-        <li class="appli"><span class="appli__ico"><svg class="appli__c" viewBox="0 0 60 31" style="left:0;top:-1.667%;width:100%;height:51.667%" aria-hidden="true"><use href="#ico-mempool-1"></use></svg><svg class="appli__c" viewBox="0 0 60 31" style="left:0;top:48.333%;width:100%;height:51.667%" aria-hidden="true"><use href="#ico-mempool-2"></use></svg><svg class="appli__c" viewBox="0 0 11 48" style="left:70%;top:10%;width:18.333%;height:78.333%" aria-hidden="true"><use href="#ico-mempool-3"></use></svg></span>mempool</li>
-        <li class="appli"><span class="appli__ico"><svg class="appli__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-woofbot-1"></use></svg><svg class="appli__c" viewBox="0 0 13 22" style="left:11.667%;top:16.667%;width:21.667%;height:35%" aria-hidden="true"><use href="#ico-woofbot-2"></use></svg><svg class="appli__c" viewBox="0 0 13 22" style="left:66.667%;top:16.667%;width:20%;height:35%" aria-hidden="true"><use href="#ico-woofbot-3"></use></svg><svg class="appli__c" viewBox="0 0 32 38" style="left:23.333%;top:20%;width:50%;height:60%" aria-hidden="true"><use href="#ico-woofbot-4"></use></svg><svg class="appli__c" viewBox="0 0 18 17" style="left:35%;top:45%;width:28.333%;height:26.667%" aria-hidden="true"><use href="#ico-woofbot-5"></use></svg><svg class="appli__c" viewBox="0 0 8 7" style="left:43.333%;top:56.667%;width:11.667%;height:10%" aria-hidden="true"><use href="#ico-woofbot-6"></use></svg><svg class="appli__c" viewBox="0 0 18 12" style="left:35%;top:55%;width:28.333%;height:16.667%" aria-hidden="true"><use href="#ico-woofbot-7"></use></svg><svg class="appli__c" viewBox="0 0 48 40" style="left:10%;top:16.667%;width:76.667%;height:66.667%" aria-hidden="true"><use href="#ico-woofbot-8"></use></svg><svg class="appli__c" viewBox="0 0 6 5" style="left:31.667%;top:41.667%;width:6.667%;height:6.667%" aria-hidden="true"><use href="#ico-woofbot-9"></use></svg><svg class="appli__c" viewBox="0 0 6 5" style="left:58.333%;top:41.667%;width:6.667%;height:6.667%" aria-hidden="true"><use href="#ico-woofbot-10"></use></svg><svg class="appli__c" viewBox="0 0 6 3" style="left:45%;top:73.333%;width:10%;height:3.333%" aria-hidden="true"><use href="#ico-woofbot-11"></use></svg></span>WoofBot</li>
-        <li class="appli"><span class="appli__ico"><svg class="appli__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-libreoffice"></use></svg></span>LibreOffice</li>
-        <li class="appli"><span class="appli__ico"><svg class="appli__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-sphinx-relay-1"></use></svg><svg class="appli__c" viewBox="0 0 44 42" style="left:13.333%;top:13.333%;width:71.667%;height:68.333%" aria-hidden="true"><use href="#ico-sphinx-relay-2"></use></svg></span>Sphinx Relay</li>
-        <li class="appli"><span class="appli__ico"><svg class="appli__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-tailscale"></use></svg></span>Tailscale</li>
-        <li class="appli"><span class="appli__ico"><svg class="appli__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-nextcloud-1"></use></svg><svg class="appli__c" viewBox="0 0 46 22" style="left:11.667%;top:31.667%;width:75%;height:35%" aria-hidden="true"><use href="#ico-nextcloud-2"></use></svg></span>Nextcloud</li>
-        <li class="appli"><span class="appli__ico"><svg class="appli__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-firefox"></use></svg></span>Firefox</li>
-        <li class="appli"><span class="appli__ico"><svg class="appli__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-photoprism-1"></use></svg><svg class="appli__c" viewBox="0 0 40 35" style="left:16.667%;top:20%;width:61.667%;height:53.333%" aria-hidden="true"><use href="#ico-photoprism-2"></use></svg></span>PhotoPrism</li>
-        <li class="appli"><span class="appli__ico"><svg class="appli__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-trilium-notes"></use></svg></span>Trilium Notes</li>
-        <li class="appli"><span class="appli__ico"><svg class="appli__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-n8n"></use></svg></span>n8n</li>
+      <ul class="marquee__group" aria-hidden="true">
+        <li class="app"><span class="app__ico"><svg class="app__c" viewBox="0 0 60 31" style="left:0;top:-1.667%;width:100%;height:51.667%" aria-hidden="true"><use href="#ico-mempool-1"></use></svg><svg class="app__c" viewBox="0 0 60 31" style="left:0;top:48.333%;width:100%;height:51.667%" aria-hidden="true"><use href="#ico-mempool-2"></use></svg><svg class="app__c" viewBox="0 0 11 48" style="left:70%;top:10%;width:18.333%;height:78.333%" aria-hidden="true"><use href="#ico-mempool-3"></use></svg></span>mempool</li>
+        <li class="app"><span class="app__ico"><svg class="app__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-woofbot-1"></use></svg><svg class="app__c" viewBox="0 0 13 22" style="left:11.667%;top:16.667%;width:21.667%;height:35%" aria-hidden="true"><use href="#ico-woofbot-2"></use></svg><svg class="app__c" viewBox="0 0 13 22" style="left:66.667%;top:16.667%;width:20%;height:35%" aria-hidden="true"><use href="#ico-woofbot-3"></use></svg><svg class="app__c" viewBox="0 0 32 38" style="left:23.333%;top:20%;width:50%;height:60%" aria-hidden="true"><use href="#ico-woofbot-4"></use></svg><svg class="app__c" viewBox="0 0 18 17" style="left:35%;top:45%;width:28.333%;height:26.667%" aria-hidden="true"><use href="#ico-woofbot-5"></use></svg><svg class="app__c" viewBox="0 0 8 7" style="left:43.333%;top:56.667%;width:11.667%;height:10%" aria-hidden="true"><use href="#ico-woofbot-6"></use></svg><svg class="app__c" viewBox="0 0 18 12" style="left:35%;top:55%;width:28.333%;height:16.667%" aria-hidden="true"><use href="#ico-woofbot-7"></use></svg><svg class="app__c" viewBox="0 0 48 40" style="left:10%;top:16.667%;width:76.667%;height:66.667%" aria-hidden="true"><use href="#ico-woofbot-8"></use></svg><svg class="app__c" viewBox="0 0 6 5" style="left:31.667%;top:41.667%;width:6.667%;height:6.667%" aria-hidden="true"><use href="#ico-woofbot-9"></use></svg><svg class="app__c" viewBox="0 0 6 5" style="left:58.333%;top:41.667%;width:6.667%;height:6.667%" aria-hidden="true"><use href="#ico-woofbot-10"></use></svg><svg class="app__c" viewBox="0 0 6 3" style="left:45%;top:73.333%;width:10%;height:3.333%" aria-hidden="true"><use href="#ico-woofbot-11"></use></svg></span>WoofBot</li>
+        <li class="app"><span class="app__ico"><svg class="app__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-libreoffice"></use></svg></span>LibreOffice</li>
+        <li class="app"><span class="app__ico"><svg class="app__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-sphinx-relay-1"></use></svg><svg class="app__c" viewBox="0 0 44 42" style="left:13.333%;top:13.333%;width:71.667%;height:68.333%" aria-hidden="true"><use href="#ico-sphinx-relay-2"></use></svg></span>Sphinx Relay</li>
+        <li class="app"><span class="app__ico"><svg class="app__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-tailscale"></use></svg></span>Tailscale</li>
+        <li class="app"><span class="app__ico"><svg class="app__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-nextcloud-1"></use></svg><svg class="app__c" viewBox="0 0 46 22" style="left:11.667%;top:31.667%;width:75%;height:35%" aria-hidden="true"><use href="#ico-nextcloud-2"></use></svg></span>Nextcloud</li>
+        <li class="app"><span class="app__ico"><svg class="app__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-firefox"></use></svg></span>Firefox</li>
+        <li class="app"><span class="app__ico"><svg class="app__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-photoprism-1"></use></svg><svg class="app__c" viewBox="0 0 40 35" style="left:16.667%;top:20%;width:61.667%;height:53.333%" aria-hidden="true"><use href="#ico-photoprism-2"></use></svg></span>PhotoPrism</li>
+        <li class="app"><span class="app__ico"><svg class="app__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-trilium-notes"></use></svg></span>Trilium Notes</li>
+        <li class="app"><span class="app__ico"><svg class="app__c" viewBox="0 0 60 61" style="left:0;top:-1.667%;width:100%;height:100%" aria-hidden="true"><use href="#ico-n8n"></use></svg></span>n8n</li>
       </ul>
     </div>
   </div>
 </section>
 
 <!-- ============================================================
-     Cartes d'appui — grille volontairement asymétrique.
+     Support cards — deliberately asymmetric grid.
      ============================================================ -->
-<section class="bande bande--serree">
+<section class="band band--tight">
   <div class="shell">
-    <div class="appui">
-      <a class="carte" href="#" data-reveal>
-        <span class="carte__entete">
-          <span class="carte__titre">Community</span>
-          <span class="carte__fleche" aria-hidden="true">
+    <div class="card-grid">
+      <a class="card" href="#" data-reveal>
+        <span class="card__header">
+          <span class="card__title">Community</span>
+          <span class="card__arrow" aria-hidden="true">
             <svg viewBox="0 0 14 14"><path d="M3 11 11 3M4.5 3H11v6.5"/></svg>
           </span>
         </span>
         <p>A place to get your questions answered, and to connect with fellow sovereign individuals.</p>
       </a>
 
-      <a class="carte" href="#" data-reveal>
-        <span class="carte__entete">
-          <span class="carte__titre">Support</span>
-          <span class="carte__fleche" aria-hidden="true">
+      <a class="card" href="#" data-reveal>
+        <span class="card__header">
+          <span class="card__title">Support</span>
+          <span class="card__arrow" aria-hidden="true">
             <svg viewBox="0 0 14 14"><path d="M3 11 11 3M4.5 3H11v6.5"/></svg>
           </span>
         </span>
         <p>Get help with installing and troubleshooting umbrelOS and Umbrel Home.</p>
       </a>
 
-      <a class="carte" href="#" id="careers" data-reveal>
-        <span class="carte__entete">
-          <span class="carte__titre">Careers</span>
-          <span class="carte__fleche" aria-hidden="true">
+      <a class="card" href="#" id="careers" data-reveal>
+        <span class="card__header">
+          <span class="card__title">Careers</span>
+          <span class="card__arrow" aria-hidden="true">
             <svg viewBox="0 0 14 14"><path d="M3 11 11 3M4.5 3H11v6.5"/></svg>
           </span>
         </span>
         <p>We're hiring! Join us and shape the future of Umbrel.</p>
       </a>
 
-      <div class="carte" data-reveal>
+      <div class="card" data-reveal>
         <div>
-          <h2 class="titre-bloc">Stay in the loop</h2>
+          <h2 class="title-block">Stay in the loop</h2>
           <p style="margin-top:8px">Follow our journey in enabling sovereign individuals truly own
              their data. Better yet, be a part of it.</p>
         </div>
-        <form class="infolettre" action="#" method="post">
-          <label class="hors-ecran" for="courriel">Email</label>
-          <input id="courriel" type="email" name="email" placeholder="Email" required>
+        <form class="newsletter" action="#" method="post">
+          <label class="sr-only" for="email">Email</label>
+          <input id="email" type="email" name="email" placeholder="Email" required>
           <button type="submit">Subscribe</button>
         </form>
       </div>
@@ -469,17 +469,17 @@
 </main>
 
 <!-- ============================================================
-     Pied
+     Footer
      ============================================================ -->
 <footer class="shell">
-  <div class="pied">
-    <div class="pied__social">
+  <div class="footer">
+    <div class="footer__social">
       <a href="#" aria-label="X"><svg viewBox="0 0 24 24"><path d="M18.9 2H22l-7 8 8.2 12h-6.4l-5-7.3-5.7 7.3H2.9l7.5-8.6L2.5 2h6.6l4.5 6.7L18.9 2Z"/></svg></a>
       <a href="#" aria-label="Discord"><svg viewBox="0 0 24 24"><path d="M19.3 5.4A16 16 0 0 0 15.5 4l-.3.5a12 12 0 0 1 3 1.4 12.6 12.6 0 0 0-12.4 0A12 12 0 0 1 8.8 4.5L8.5 4a16 16 0 0 0-3.8 1.4C2.3 9 1.6 12.6 2 16.1A16 16 0 0 0 6.7 18l1-1.4a10 10 0 0 1-1.6-.8l.4-.3a11 11 0 0 0 9.4 0l.4.3a10 10 0 0 1-1.6.8l1 1.4a16 16 0 0 0 4.7-1.9c.5-4-.7-7.6-2.1-10.7ZM9 14c-.9 0-1.6-.9-1.6-1.9S8.1 10.2 9 10.2s1.6.8 1.6 1.9S9.9 14 9 14Zm6 0c-.9 0-1.6-.9-1.6-1.9s.7-1.9 1.6-1.9 1.6.8 1.6 1.9S15.9 14 15 14Z"/></svg></a>
       <a href="#" aria-label="YouTube"><svg viewBox="0 0 24 24"><path d="M23 7.5a3 3 0 0 0-2.1-2.1C19 4.9 12 4.9 12 4.9s-7 0-8.9.5A3 3 0 0 0 1 7.5 31 31 0 0 0 .5 12 31 31 0 0 0 1 16.5a3 3 0 0 0 2.1 2.1c1.9.5 8.9.5 8.9.5s7 0 8.9-.5a3 3 0 0 0 2.1-2.1 31 31 0 0 0 .5-4.5 31 31 0 0 0-.5-4.5ZM9.8 15.3V8.7l5.7 3.3-5.7 3.3Z"/></svg></a>
       <a href="#" aria-label="GitHub"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-3.2 19.5c.5.1.7-.2.7-.5v-1.7c-2.8.6-3.4-1.4-3.4-1.4-.5-1.2-1.1-1.5-1.1-1.5-1-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.6 2.4 1.1 3 .9.1-.7.4-1.1.7-1.4-2.2-.3-4.6-1.1-4.6-5 0-1.1.4-2 1-2.7-.1-.3-.4-1.3.1-2.7 0 0 .8-.3 2.7 1a9.4 9.4 0 0 1 5 0c1.9-1.3 2.7-1 2.7-1 .5 1.4.2 2.4.1 2.7.6.7 1 1.6 1 2.7 0 3.9-2.4 4.7-4.6 5 .4.3.7.9.7 1.9v2.8c0 .3.2.6.7.5A10 10 0 0 0 12 2Z"/></svg></a>
     </div>
-    <nav aria-label="Pied de page">
+    <nav aria-label="Footer">
       <a href="#careers">Careers</a>
       <a href="#">Community</a>
       <a href="#">Affiliates</a>
@@ -489,15 +489,15 @@
   </div>
 </footer>
 
-<!-- Sprite des icônes d’applications. Chaque tracé est repris tel quel
-     de la source ; défini une seule fois, instancié par <use> : le
-     marquee duplique ses items, pas ses tracés. [relevé] -->
-<!-- Le sprite est retiré du flux, PAS mis en display:none : sous
-     Chrome, un sous-arbre en display:none n'instancie pas ses
-     ressources SVG, et tout ce qui est peint par référence — dégradé,
-     masque, filtre — retombe alors à vide. Les icônes n'affichaient
-     plus que leurs aplats littéraux. -->
-<svg id="sprite-applis" aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden">
+<!-- Sprite of the application icons. Each path is taken as is
+     from the source; defined only once, instantiated with <use>: the
+     marquee duplicates its items, not its paths. [measured] -->
+<!-- The sprite is taken out of the flow, NOT set to display:none: in
+     Chrome, a display:none subtree does not instantiate its
+     SVG resources, and everything painted by reference — gradient,
+     mask, filter — then falls back to nothing. The icons only showed
+     their literal flat fills. -->
+<svg id="sprite-apps" aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden">
 <symbol fill="none" id="ico-bitcoin-node" viewBox="0 0 60 61">
 <path d="M0.000976562 0.0090332H60.0005V60.0086H0.000976562V0.0090332Z" fill="url(#svg1665701033_447_paint0_linear_832_12470)"/>
 <defs>

@@ -41,9 +41,9 @@ STRIPE_WEBHOOK_SECRET=whsec_...
 ### 3. Exclude from CSRF
 
 ```php
-// bootstrap/app.php (Laravel 11+)
+// bootstrap/app.php (Laravel 13 — use validateCsrfTokens() on L11/L12)
 ->withMiddleware(function (Middleware $middleware) {
-    $middleware->validateCsrfTokens(except: [
+    $middleware->preventRequestForgery(except: [
         'stripe/*',
     ]);
 })

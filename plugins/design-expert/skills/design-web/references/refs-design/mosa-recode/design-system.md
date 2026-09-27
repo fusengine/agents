@@ -13,36 +13,36 @@ Dials: `DESIGN_VARIANCE 4` · `VISUAL_DENSITY 8` · `MOTION_INTENSITY 5`.
 Tone (one extreme): **understated to the point of quiet.** Every heading is split in two
 colours mid-sentence and the second half is always the softer one, so the page never
 finishes a claim at full contrast. No exclamation, no metric, no urgency, no superlative,
-no em dash in any visible string [relevé on the rebuild; the source uses six].
+no em dash in any visible string [measured on the rebuild; the source uses six].
 
 Signature element: **the 4px rectangle and the fake interface inside it.** One radius runs
-the whole page (`--rayon: 4px` [relevé on the source: 69 × `rounded-sm`]) and every media
+the whole page (`--radius: 4px` [measured on the source: 69 × `rounded-sm`]) and every media
 surface is that rectangle: a photograph darkened to `brightness(.55)`, a gradient over it,
 and a **chat panel, a chip chain or a composer drawn in HTML/CSS** floating on top. Not one
 of those interface fragments is an image. The only shapes that escape the 4px rule are the
 avatar disc, the send pill, the toggle and the accordion sign, all `border-radius: 50%`
 or `999px`.
 
-Macrostructure: **Demonstrate, then enumerate, then price.** Order relevé on the source's
+Macrostructure: **Demonstrate, then enumerate, then price.** Order measured on the source's
 DOM (10 `<section>`, `grep -oE '<section[^>]*>' mosa.html | wc -l` → 10):
 
-- `header.entete` — brand, a **segmented nav pill** (four links inside one bordered box),
+- `header.header` — brand, a **segmented nav pill** (four links inside one bordered box),
   Signup + LOGIN; fixed, transparent, opaque past 24px of scroll
-- `section.heros` — `100svh` photograph, h1 and subtitle bottom-left, a **backers strip**
+- `section.hero` — `100svh` photograph, h1 and subtitle bottom-left, a **backers strip**
   bottom-right on the same baseline
-- `section#apercu` — eyebrow, split h2, **three cards**: a 4:3 scene, a mono title, a body
-- `section#usages` — eyebrow, split h2, **four tabs**, then a 1:1 scene beside a label,
+- `section#overview` — eyebrow, split h2, **three cards**: a 4:3 scene, a mono title, a body
+- `section#use-cases` — eyebrow, split h2, **four tabs**, then a 1:1 scene beside a label,
   a 24px heading and one button; the tab switch swaps the whole pair
-- `section#etapes` — eyebrow, split h2, a scene beside **three steps on a hairline rail**,
+- `section#steps` — eyebrow, split h2, a scene beside **three steps on a hairline rail**,
   the active one lit by scroll position
-- `section#benefices` — eyebrow, split h2, **six bordered cards**, disc icon, mono title
-- `section#temoignages` — eyebrow, split h2, a **full-bleed snap rail** of six quote cards
+- `section#benefits` — eyebrow, split h2, **six bordered cards**, disc icon, mono title
+- `section#testimonials` — eyebrow, split h2, a **full-bleed snap rail** of six quote cards
   with prev/next discs
-- `section#partenaires` — one bordered box divided into **ten logo cells**, no heading
-- `section#tarifs` — eyebrow, split h2, a monthly/yearly switch, **three plans**
+- `section#partners` — one bordered box divided into **ten logo cells**, no heading
+- `section#pricing` — eyebrow, split h2, a monthly/yearly switch, **three plans**
 - `section#faq` — heading column beside **seven accordions**, one open at a time
-- `section.section--cloture` — a rounded image band, centred, repeating the hero's buttons
-- `footer.pied` — a brand column plus **four link columns**, then a status bar
+- `section.section--closing` — a rounded image band, centred, repeating the hero's buttons
+- `footer.footer` — a brand column plus **four link columns**, then a status bar
 
 Absent from the canonical skeleton: **no numbered feature rows**, no comparison table, no
 video, no stats band, no team section, no blog teaser. Present but mutated: features exist
@@ -62,32 +62,32 @@ haze; this page is forest green plus brass, imposed by the brief and applied to 
 ### Colors
 
 ```css
---fond-page:      #050a07;
---surface-basse:  rgba(210, 232, 214, 0.02);
+--bg-page:        #050a07;
+--surface-low:    rgba(210, 232, 214, 0.02);
 --surface:        rgba(210, 232, 214, 0.04);
---surface-haute:  rgba(210, 232, 214, 0.07);
---trait-faible:   rgba(198, 222, 203, 0.10);
---trait:          rgba(198, 222, 203, 0.15);
---trait-fort:     rgba(198, 222, 203, 0.28);
---texte:          #f2f7f0;
---texte-2:        rgba(232, 241, 229, 0.72);
---texte-3:        rgba(232, 241, 229, 0.54);
---texte-4:        rgba(232, 241, 229, 0.40);
---laiton:         #c9a227;
---laiton-clair:   #e7cb74;
---laiton-sourd:   rgba(201, 162, 39, 0.16);
---laiton-trait:   rgba(201, 162, 39, 0.42);
---vert-mousse:    #14251a;
+--surface-high:   rgba(210, 232, 214, 0.07);
+--line-faint:     rgba(198, 222, 203, 0.10);
+--line:           rgba(198, 222, 203, 0.15);
+--line-strong:    rgba(198, 222, 203, 0.28);
+--text:           #f2f7f0;
+--text-2:         rgba(232, 241, 229, 0.72);
+--text-3:         rgba(232, 241, 229, 0.54);
+--text-4:         rgba(232, 241, 229, 0.40);
+--brass:          #c9a227;
+--brass-light:    #e7cb74;
+--brass-muted:    rgba(201, 162, 39, 0.16);
+--brass-line:     rgba(201, 162, 39, 0.42);
+--moss-green:     #14251a;
 ```
 
 Strategy: **one hue for structure, one for intent.** Every surface and every line is a
 green-tinted white at four opacities (2 / 4 / 7% for surfaces, 10 / 15 / 28% for lines) —
-the exact opacity ladder relevé on the source, retinted. Brass never builds a surface: it
+the exact opacity ladder measured on the source, retinted. Brass never builds a surface: it
 marks the active tab, the step rail, the check discs, the featured plan, the focus ring
 and the primary button, and nothing else.
 
-Contrast floors: primary `#f2f7f0` on `#050a07` ≈ 17.6:1 [estimé]. `--texte-2` ≈ 10.5:1,
-`--texte-3` ≈ 6.2:1, both above 4.5. `--texte-4` ≈ 3.9:1 [estimé] carries only ranks,
+Contrast floors: primary `#f2f7f0` on `#050a07` ≈ 17.6:1 [estimated]. `--text-2` ≈ 10.5:1,
+`--text-3` ≈ 6.2:1, both above 4.5. `--text-4` ≈ 3.9:1 [estimated] carries only ranks,
 placeholders and inactive tabs. Brass `#c9a227` on the page ≈ 8.4:1; the primary button
 inverts it, `#0a1109` on brass ≈ 8.1:1.
 
@@ -95,7 +95,7 @@ inverts it, `#0a1109` on brass ≈ 8.1:1.
 
 Geist and Geist Mono, the source's two families, kept. **Mono carries every label**: eyebrows,
 card titles, step titles, plan names, buttons, footer column heads, the brand word — sans
-carries only headings and body. Scale relevé, verbatim from the source's arbitrary values:
+carries only headings and body. Scale measured, verbatim from the source's arbitrary values:
 h1 42 → 48 → 56 → 64, h2 28 → 36 → 42 → 44, closing h2 32 → 42 → 52 → 60, use-case h3
 20 → 22 → 24, step h3 18, benefit h3 15, card h3 17, footer h3 11. Weights: 400 on every
 large heading (never 700), 500 on card titles and buttons, 600 on mono titles and the plan
@@ -128,7 +128,7 @@ Materials: `opacity`, `transform: translateY(14px)`, `scaleX` on the tab underli
 with a 60ms stagger inside a group, capped at six steps.
 
 `prefers-reduced-motion: reduce` is read **before the resting state is written**: the
-`opacity: 0` lives under a `.js-mouvement` class that JS adds only when motion is allowed,
+`opacity: 0` lives under a `.js-motion` class that JS adds only when motion is allowed,
 so a failed script or a reduced-motion user gets a fully visible page. `motion.js` paces
 nothing; every duration and curve is in CSS.
 

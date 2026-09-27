@@ -10,6 +10,8 @@ related: null
 
 # Separator Component
 
+> **Base:** same `orientation` / `className` API on Base UI, Radix and React Aria (verified against r/styles/{base,radix}-nova/separator.json). Only difference: `decorative` is **Radix-only** (default `true`); Base UI and React Aria always render a semantic `role="separator"`.
+
 The Separator component is a simple yet effective visual divider that separates content into logical groups. It supports both horizontal and vertical orientations with customizable styling.
 
 ## Installation
@@ -29,6 +31,7 @@ The default separator is horizontal and works well for dividing content sections
 ```tsx
 import { Separator } from "@/modules/cores/shadcn/components/ui/separator"
 
+/** Horizontal separator between sections. */
 export function HorizontalSeparatorExample() {
   return (
     <div className="flex max-w-sm flex-col gap-4 text-sm">
@@ -55,6 +58,7 @@ Use vertical separators to divide inline elements like navigation links:
 ```tsx
 import { Separator } from "@/modules/cores/shadcn/components/ui/separator"
 
+/** Vertical separators between inline items. */
 export function VerticalSeparatorExample() {
   return (
     <div className="flex h-5 items-center gap-4 text-sm">
@@ -75,6 +79,7 @@ Create visual separation between list items using horizontal separators:
 ```tsx
 import { Separator } from "@/modules/cores/shadcn/components/ui/separator"
 
+/** Separators between list items. */
 export function SeparatorListExample() {
   return (
     <div className="flex w-full max-w-sm flex-col gap-2 text-sm">
@@ -104,6 +109,7 @@ Separate menu sections with vertical separators and responsive hiding:
 ```tsx
 import { Separator } from "@/modules/cores/shadcn/components/ui/separator"
 
+/** Vertical separator in a menu-style row. */
 export function MenuSeparatorExample() {
   return (
     <div className="flex items-center gap-2 text-sm md:gap-4">
@@ -136,7 +142,7 @@ export function MenuSeparatorExample() {
 |------|------|---------|-------------|
 | `orientation` | `"horizontal" \| "vertical"` | `"horizontal"` | Direction of the separator |
 | `className` | `string` | - | Additional CSS classes for styling |
-| `decorative` | `boolean` | `true` | Whether separator is decorative (accessibility) |
+| `decorative` | `boolean` | `true` | **Radix only** — hide from screen readers (not on Base UI / React Aria) |
 
 ## Styling
 
@@ -167,4 +173,4 @@ Customize separator appearance using Tailwind classes:
 
 ## Accessibility
 
-The Separator component is marked as `decorative` by default, meaning screen readers ignore it. For semantic separators, set `decorative={false}`.
+On Base UI (default) and React Aria the Separator always renders `role="separator"` with `aria-orientation`, so screen readers announce it. On Radix it is `decorative` by default (ignored by screen readers); set `decorative={false}` for a semantic separator. For a purely visual line on Base UI, use a styled `div` with `aria-hidden` instead.

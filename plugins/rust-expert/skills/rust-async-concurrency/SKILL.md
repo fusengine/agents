@@ -2,7 +2,7 @@
 name: rust-async-concurrency
 description: Use when writing async Rust — spawning tasks, sharing state across tasks/threads, choosing channels vs mutexes, or hitting Send-bound errors with async traits. Not for HTTP service structure (rust-web-backend) or sync-only ownership (rust-core-language).
 versions:
-  tokio: "1.52"
+  tokio: "1.53"
   rust-edition: "2024"
 user-invocable: false
 references: references/runtime-and-tasks.md, references/shared-state.md, references/channels.md, references/async-traits.md, references/templates/task-patterns.md, references/templates/graceful-shutdown.md
@@ -124,4 +124,4 @@ do_async_work().await;
 
 - tokio.rs/tokio/tutorial — shared-state, spawning, channels (fetched 2026-07-05)
 - rust-lang.github.io/async-fundamentals-initiative/roadmap.html — AFIT status
-- crates.io — tokio 1.52.3 (current at fetch)
+- crates.io — tokio 1.53.1 (current at fetch 2026-09-27)

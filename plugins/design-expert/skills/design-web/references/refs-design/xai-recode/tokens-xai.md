@@ -258,7 +258,7 @@ Colors are stored as **function-less HSL triplets**:
 
 ```css
 --color-jet: 0 0% 4%;                 /* not hsl(...) — just the 3 numbers */
-color: hsl(var(--primaire) / .5);     /* alpha is composed at the point of use */
+color: hsl(var(--primary) / .5);      /* alpha is composed at the point of use */
 ```
 
 ### 5.2 Thirteen tiers of a single ink
@@ -319,8 +319,8 @@ The neutrals are **tinted** (`221 12% 14%`, `222 19% 86%`: blue hue,
 
 | Role | Source | Here |
 |---|---|---|
-| Display | `universalSansDisplay`, `font-display: fallback` | Geist — *arbitrage* |
-| Text | `universalSans`, `font-display: swap` | Geist — *arbitrage* |
+| Display | `universalSansDisplay`, `font-display: fallback` | Geist — *decided* |
+| Text | `universalSans`, `font-display: swap` | Geist — *decided* |
 | Mono | `GeistMono` | Geist Mono |
 
 Universal Sans is proprietary. What's reproducible and worth carrying

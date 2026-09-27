@@ -12,7 +12,7 @@ Application-level caching with SOLID Next.js principles.
 
 ```typescript
 // lib/cache/memory-cache.ts
-import type { User } from '@prisma/client'
+import type { User } from '@/lib/generated/prisma/client'
 
 interface CacheEntry<T> {
   data: T
@@ -107,7 +107,7 @@ export async function getCachedUser(id: string): Promise<User | null> {
 
 ```typescript
 // lib/cache/cache-invalidation.ts
-import type { User } from '@prisma/client'
+import type { User } from '@/lib/generated/prisma/client'
 
 const userCache = new MemoryCache<User>()
 const listCache = new MemoryCache<User[]>()
@@ -169,7 +169,7 @@ export function invalidateUserCaches(): void {
 ```typescript
 // lib/cache/redis-cache.ts
 import { Redis } from '@upstash/redis'
-import type { User } from '@prisma/client'
+import type { User } from '@/lib/generated/prisma/client'
 
 // ✅ GOOD: Single Redis instance (singleton pattern)
 const redis = new Redis({
@@ -231,7 +231,7 @@ export async function invalidateUserCacheRedis(id: string): Promise<void> {
 
 ```typescript
 // lib/cache/query-cache.ts
-import type { Prisma, User } from '@prisma/client'
+import type { Prisma, User } from '@/lib/generated/prisma/client'
 
 /**
  * @description Gets users matching filters from cache or database
@@ -311,7 +311,7 @@ export async function getCachedPaginatedUsers(
 
 ```typescript
 // lib/cache/cacheable-decorator.ts
-import type { User } from '@prisma/client'
+import type { User } from '@/lib/generated/prisma/client'
 
 /**
  * @description Decorator for adding caching to methods

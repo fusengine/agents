@@ -10,12 +10,14 @@ related:
 
 # Badge Component
 
+> **Base:** examples use **Base UI** (shadcn default since 2026-07); only "Badge as Link" differs — Radix delta in "Radix variant" below; React Aria: `render` is a function (`render={(props) => <a {...props} href="…" />}`). Sources: https://ui.shadcn.com/r/styles/base-nova/badge.json, https://ui.shadcn.com/r/styles/radix-nova/badge.json
+
 Simple, flexible badge component for displaying labels, tags, and status indicators.
 
 ## Installation
 
 ```bash
-bunx --bun shadcn-ui@latest add badge
+bunx --bun shadcn@latest add badge
 ```
 
 ## Default Badge
@@ -23,6 +25,7 @@ bunx --bun shadcn-ui@latest add badge
 ```tsx
 import { Badge } from "@/modules/cores/shadcn/components/ui/badge"
 
+/** Default badge. */
 export function DefaultBadge() {
   return <Badge>Badge</Badge>
 }
@@ -35,6 +38,7 @@ All available variants with their use cases:
 ```tsx
 import { Badge } from "@/modules/cores/shadcn/components/ui/badge"
 
+/** All badge variants side by side. */
 export function BadgeVariants() {
   return (
     <div className="flex flex-wrap gap-2">
@@ -62,6 +66,7 @@ Combine badges with icons from lucide-react:
 import { Badge } from "@/modules/cores/shadcn/components/ui/badge"
 import { CheckCircle, AlertCircle, Clock, Zap } from "lucide-react"
 
+/** Badges with inline icons. */
 export function BadgeWithIcon() {
   return (
     <div className="space-y-4">
@@ -108,6 +113,7 @@ interface StatusBadgeProps {
   status: "active" | "inactive" | "pending" | "error"
 }
 
+/** Badge whose variant is derived from a status value. */
 export function StatusBadge({ status }: StatusBadgeProps) {
   const badgeConfig = {
     active: { variant: "default" as const, label: "Active" },
@@ -124,23 +130,25 @@ export function StatusBadge({ status }: StatusBadgeProps) {
 
 ## Badge as Link
 
-Use `asChild` to render badge as a link:
+Use the `render` prop (Base UI `useRender`) to render badge as a link:
 
 ```tsx
 import { Badge } from "@/modules/cores/shadcn/components/ui/badge"
 import { Link } from '@tanstack/react-router'
 
+/** Badges rendered as router and external links via `render`. */
 export function BadgeAsLink() {
   return (
     <div className="flex gap-2">
-      <Badge asChild>
-        <Link href="/docs/components">Documentation</Link>
-      </Badge>
+      <Badge render={<Link to="/docs/components" />}>Documentation</Badge>
 
-      <Badge asChild variant="outline">
-        <a href="https://github.com" target="_blank" rel="noopener noreferrer">
-          GitHub
-        </a>
+      <Badge
+        variant="outline"
+        render={
+          <a href="https://github.com" target="_blank" rel="noopener noreferrer" />
+        }
+      >
+        GitHub
       </Badge>
     </div>
   )
@@ -164,6 +172,7 @@ interface PostListProps {
   posts: Post[]
 }
 
+/** Post list with tag badges. */
 export function PostList({ posts }: PostListProps) {
   return (
     <div className="space-y-4">
@@ -189,8 +198,6 @@ export function PostList({ posts }: PostListProps) {
 Badge with close button for removable tags:
 
 ```tsx
-"use client"
-
 import { useState } from "react"
 import { Badge } from "@/modules/cores/shadcn/components/ui/badge"
 import { X } from "lucide-react"
@@ -199,6 +206,7 @@ interface DismissibleBadgesProps {
   initialTags: string[]
 }
 
+/** Removable tag badges. */
 export function DismissibleBadges({
   initialTags,
 }: DismissibleBadgesProps) {
@@ -242,6 +250,7 @@ import {
   CardContent,
 } from "@/modules/cores/shadcn/components/ui/card"
 
+/** Card header with badges. */
 export function CardWithBadges() {
   return (
     <Card>
@@ -275,6 +284,7 @@ interface NotificationButtonProps {
   count: number
 }
 
+/** Icon button with an unread-count badge. */
 export function NotificationButton({ count }: NotificationButtonProps) {
   return (
     <div className="relative inline-block">
@@ -307,6 +317,7 @@ interface BadgeGroupProps {
   variant?: "default" | "secondary" | "destructive" | "outline"
 }
 
+/** Labeled group of badges. */
 export function BadgeGroup({
   label,
   badges,
@@ -334,6 +345,7 @@ Add hover effects to badges:
 ```tsx
 import { Badge } from "@/modules/cores/shadcn/components/ui/badge"
 
+/** Badges with hover transitions. */
 export function AnimatedBadge() {
   return (
     <div className="flex gap-2">
@@ -355,9 +367,20 @@ export function AnimatedBadge() {
 ## API Reference
 
 - `Badge` - Root component
-  - `variant` - `"default"` | `"secondary"` | `"destructive"` | `"outline"`
-  - `asChild` - Render as child element (for Link, anchor)
+  - `variant` - `"default"` | `"secondary"` | `"destructive"` | `"outline"` | `"ghost"` | `"link"`
+  - `render` - Element to render instead of the `<span>` (for Link, anchor)
   - `className` - Custom CSS classes
+- Icons inside a badge take `data-icon="inline-start" | "inline-end"`
+
+## Radix variant
+
+Only link composition changes (`style` `radix-*`) — `asChild` instead of `render`:
+
+```tsx
+<Badge asChild variant="outline">
+  <Link to="/docs/components">Documentation</Link>
+</Badge>
+```
 
 ## Styling
 

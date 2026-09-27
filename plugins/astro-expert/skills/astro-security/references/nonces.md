@@ -2,7 +2,7 @@
 
 ## Overview
 
-Nonces are cryptographically random values used for CSP with dynamically injected scripts. Astro 6 supports nonces for SSR deployments.
+Nonces are cryptographically random values used for CSP with dynamically injected scripts. Astro's built-in `security.csp` is hash-based (no nonce option); the nonce pattern below is a custom middleware setup for SSR deployments.
 
 ## When to Use Nonces vs Hashes
 

@@ -14,7 +14,7 @@ Bun bundles JS/TS/JSX via the `bun build` CLI or the `Bun.build()` JS API. It ru
 default transforms (tree-shaking, dead-code elimination) but **does not down-convert
 syntax** and **is not a typechecker or `.d.ts` generator** — keep `tsc` for that.
 
-Sources: https://bun.sh/docs/bundler + https://bun.sh/docs/bundler/executables
+Sources: https://bun.com/docs/bundler + https://bun.com/docs/bundler/executables + https://bun.com/blog/bun-v1.4
 
 ## Bundling
 
@@ -69,10 +69,17 @@ bun build --compile --target=bun-linux-x64     ./src/cli.ts --outfile myapp
 bun build --compile --target=bun-linux-arm64   ./src/cli.ts --outfile myapp
 bun build --compile --target=bun-windows-x64   ./src/cli.ts --outfile myapp # .exe auto-added
 bun build --compile --target=bun-darwin-arm64  ./src/cli.ts --outfile myapp
+bun build --compile --target=bun-windows-arm64 ./src/cli.ts --outfile myapp
 ```
 
-`-baseline` (pre-2013 CPUs) and `-modern` (2013+, faster) variants exist per target,
-e.g. `bun-linux-x64-baseline`. Default arch is x64 when unspecified.
+Other targets: `bun-darwin-x64`, `bun-linux-x64-musl`, `bun-linux-arm64-musl`. Since Bun 1.4,
+x64 ships a single binary (Nehalem/SSE4.2 baseline, AVX2/AVX-512 paths picked at runtime);
+the `-baseline` / `-modern` suffixes are still accepted for backward compatibility but resolve
+to the same binary. Default arch is x64 when unspecified.
+
+Since 1.3.4, compiled binaries no longer auto-load `tsconfig.json` / `package.json` from the
+working directory at runtime — opt back in with `--compile-autoload-tsconfig` /
+`--compile-autoload-package-json` (`.env` and `bunfig.toml` still auto-load by default).
 
 → Wire these into `package.json` scripts in
 [templates/bun-project-setup.md](templates/bun-project-setup.md)

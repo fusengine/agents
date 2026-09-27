@@ -9,6 +9,7 @@ description: Install pgvector and create vector-aware tables
 
 - PostgreSQL 16+
 - `pgvector` extension 0.7+ (ships with most managed Postgres providers; on Docker add `pgvector/pgvector:pg16` image)
+- Alternative: **MariaDB 11.7+** also supports `vector` columns, vector indexes (13.13+) and vector distance queries (13.27+) — no extension needed
 
 ## Enable extension via migration
 
@@ -26,11 +27,9 @@ return new class extends Migration {
             $table->id();
             $table->text('content');
             $table->json('metadata')->nullable();
-            $table->vector('embedding', 1536);    // OpenAI text-embedding-3-small
+            $table->vector('embedding', dimensions: 1536)->index(); // OpenAI text-embedding-3-small, HNSW cosine index
             $table->string('embedding_model')->default('text-embedding-3-small');
             $table->timestamps();
-
-            $table->vectorIndex('embedding', algorithm: 'hnsw');
         });
     }
 
@@ -52,8 +51,13 @@ return new class extends Migration {
 | **None** | None | Slow (full scan) | Exact | < 1k rows or dev |
 
 ```php
-$table->vectorIndex('embedding', algorithm: 'hnsw');
-$table->vectorIndex('embedding', algorithm: 'ivfflat');
+// HNSW + vector_cosine_ops on PostgreSQL (M=6, cosine on MariaDB) — no algorithm argument
+$table->vectorIndex('embedding');
+// or: $table->vector('embedding', dimensions: 1536)->index();
+// drop (13.30+): $table->dropVectorIndex('documents_embedding_vectorindex');
+
+// IVFFlat is not exposed by the Schema builder — use raw SQL
+DB::statement('CREATE INDEX documents_embedding_ivfflat ON documents USING ivfflat (embedding vector_cosine_ops) WITH (lists = 100)');
 ```
 
 ## Dimension sizing
@@ -70,5 +74,5 @@ Mismatch between column dimensions and embedding model = INSERT error.
 
 ## Notes
 
-- `vectorIndex` creates the index with sensible defaults; tune `m` / `ef_construction` in production only after profiling
+- `vectorIndex` creates an HNSW cosine index with defaults; to tune `m` / `ef_construction`, create the index with raw SQL after profiling
 - Build the index AFTER bulk inserts during initial ingestion to avoid per-row index update overhead

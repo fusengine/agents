@@ -374,7 +374,7 @@ No animatable technique measured: both cards are static in the source.
   transition, no `mix-blend-mode` on them. On screen, it displays round
   **photographic portraits** there — irreproducible from static HTML, no URL
   appears anywhere for them. The recode therefore places dark flat fills and
-  flags it `[arbitrage]` in `motion.js`;
+  flags it `[decided]` in `motion.js`;
 - waveform background: `absolute inset-0 bg-[url('/landing-voice-waveform.jpeg')] bg-cover opacity-15 [background-position:calc(50%_-_100px)_center]`
   with `[mask-image:linear-gradient(to_bottom,transparent_-16px,black_104px,transparent_224px)]`;
 - on top, a masked SVG carries `style="filter:saturate(1.35)"` and a
@@ -425,7 +425,7 @@ query string is kept as is. No binary is copied into the recode.
 ## 7. What remains irreproducible
 
 Four points can't be measured from the static HTML, and are flagged
-`[arbitrage]` wherever they appear:
+`[decided]` wherever they appear:
 
 1. **The discs' content.** Client component shipped empty; the source loads
    portraits there whose URLs appear nowhere in the HTML. Rendered as dark

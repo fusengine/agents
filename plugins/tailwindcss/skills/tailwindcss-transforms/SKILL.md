@@ -5,14 +5,14 @@ user-invocable: false
 ---
 
 <objective>
-Complete reference for Tailwind CSS v4.1 transform, transition, and animation utilities: transforms (`scale-*`, `rotate-*`, `translate-*`, `skew-*`, `origin-*`), transitions (`transition-*` property targeting, `duration-*`, `ease-*` timing functions, `delay-*`), and animations (built-in `animate-*` utilities plus custom `@keyframes`).
+Complete reference for Tailwind CSS v4.3 transform, transition, and animation utilities: transforms (`scale-*`, `rotate-*`, `translate-*`, `skew-*`, `origin-*`; plus the related `zoom-*`, since v4.3), transitions (`transition-*` property targeting, `duration-*`, `ease-*` timing functions, `delay-*`), and animations (built-in `animate-*` utilities plus custom `@keyframes`).
 
 Covers combining transforms/transitions/animations (hover-scale, spinners, staggered delays), performance guidance (prefer `transform`/`opacity`), and the mandatory `prefers-reduced-motion` accessibility fallback.
 </objective>
 
-# Tailwind CSS Transforms & Animations v4.1
+# Tailwind CSS Transforms & Animations v4.3
 
-Complete reference for Transform, Transition, and Animation utilities in Tailwind CSS v4.1.
+Complete reference for Transform, Transition, and Animation utilities in Tailwind CSS v4.3.
 
 ## Transform Utilities
 
@@ -178,6 +178,7 @@ Apply built-in animations or custom @keyframes.
 <div class="animate-ping">Pulsing beacon</div>
 <div class="animate-pulse">Fading pulse</div>
 <div class="animate-bounce">Bouncing motion</div>
+<!-- Not built in: define via --animate-wiggle / --animate-wave in @theme -->
 <div class="animate-wiggle">Wiggle motion</div>
 <div class="animate-wave">Wave motion</div>
 ```
@@ -335,6 +336,6 @@ Define custom animations with @keyframes.
 
 ## Detailed References
 
-- [transform.md](references/transform.md) - Load when needing the full class reference for scale/rotate/translate/skew/origin
+- [transform.md](references/transform.md) - Load when needing the full class reference for scale/rotate/translate/skew/origin or `zoom-*`
 - [transition.md](references/transition.md) - Load when needing the full class reference for transition property/duration/easing/delay
 - [animation.md](references/animation.md) - Load when needing the full built-in animation class reference or custom @keyframes patterns

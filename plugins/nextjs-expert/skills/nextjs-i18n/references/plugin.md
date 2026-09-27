@@ -1,7 +1,7 @@
 ---
 name: plugin
-description: Wrapper next.config.ts pour activer features i18n, server components, client provider
-when-to-use: intégrer next-intl, next.config setup, activer async context, combiner plugins
+description: next.config.ts wrapper to enable i18n features, server components, client provider
+when-to-use: integrate next-intl, next.config setup, enable async context, combine plugins
 keywords: createNextIntlPlugin, next.config, request config path, Turbopack, Sentry
 priority: medium
 requires: installation.md

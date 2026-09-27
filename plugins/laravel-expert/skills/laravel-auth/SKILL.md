@@ -3,7 +3,7 @@ name: laravel-auth
 description: Use when implementing user authentication, API tokens, social login, or authorization in Laravel 13.
 versions:
   laravel: "13.0"
-  sanctum: "4.0"
+  sanctum: "4.3"
   php: "8.3"
 user-invocable: true
 references: references/authentication.md, references/authorization.md, references/sanctum.md, references/passport.md, references/fortify.md, references/socialite.md, references/starter-kits.md, references/verification.md, references/passwords.md, references/session.md, references/csrf.md, references/encryption.md, references/hashing.md, references/templates/LoginController.php.md, references/templates/GatesAndPolicies.php.md, references/templates/PostPolicy.php.md, references/templates/sanctum-setup.md, references/templates/PassportSetup.php.md, references/templates/FortifySetup.php.md, references/templates/SocialiteController.php.md, references/templates/PasswordResetController.php.md
@@ -246,15 +246,17 @@ Third-party apps need access? → Passport (OAuth2)
 ## Laravel 13 Notes
 
 ### PreventRequestForgery (ex-VerifyCsrfToken)
-Laravel 13 renomme `VerifyCsrfToken` en `PreventRequestForgery`. Le middleware utilise une vérification **origin-aware** (vérifie `Origin`/`Referer` en plus du token CSRF) pour bloquer les attaques CSRF cross-origin sur les routes stateful.
+Laravel 13 renames `VerifyCsrfToken` to `PreventRequestForgery`. The middleware adds an **origin check** via the `Sec-Fetch-Site` header, falling back to the CSRF token, to block cross-origin CSRF attacks on stateful routes.
 
 ```php
 // bootstrap/app.php
 ->withMiddleware(function (Middleware $middleware) {
-    $middleware->validateOrigin(except: ['stripe/*', 'webhook/*']);
+    $middleware->preventRequestForgery(except: ['stripe/*', 'webhook/*']);
+    // $middleware->preventRequestForgery(originOnly: true);    // no token fallback
+    // $middleware->preventRequestForgery(allowSameSite: true); // accept same-site
 })
 ```
 
-- Migrer toute référence `VerifyCsrfToken::class` → `PreventRequestForgery::class`
-- Property `$except` reste compatible mais préférer `validateOrigin(except: [...])`
-- Les APIs stateless (Sanctum tokens) ne sont pas affectées
+- Migrate every `VerifyCsrfToken::class` reference → `PreventRequestForgery::class` (`VerifyCsrfToken` / `ValidateCsrfToken` remain as deprecated aliases)
+- Exclusions: `preventRequestForgery(except: [...])`
+- Stateless APIs (Sanctum tokens) are not affected

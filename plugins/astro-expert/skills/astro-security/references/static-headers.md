@@ -1,15 +1,15 @@
-# CSP with Static Headers (experimentalStaticHeaders)
+# CSP with Static Headers (staticHeaders)
 
 ## Overview
 
-For adapter deployments (Vercel, Netlify), you can deliver CSP via HTTP headers instead of `<meta>` tags using `experimentalStaticHeaders`.
+For adapter deployments (Vercel, Netlify, Node), you can deliver CSP via HTTP headers instead of `<meta>` tags using the adapter's `staticHeaders` option. It was stabilized in Astro 6 (renamed from `experimentalStaticHeaders`; available since `@astrojs/vercel@10`, `@astrojs/netlify@7`, `@astrojs/node@10`).
 
 ## Why HTTP Headers vs Meta Tags
 
 | Method | Advantage |
 |--------|-----------|
 | `<meta>` tag | Works everywhere, no adapter needed |
-| HTTP headers | Applied before page parse, stronger protection |
+| HTTP headers | Applied before page parse, stronger protection; supports directives a `<meta>` cannot carry (e.g. `frame-ancestors`) |
 
 ## Vercel Adapter Setup
 
@@ -24,7 +24,7 @@ import vercel from '@astrojs/vercel';
 
 export default defineConfig({
   adapter: vercel({
-    experimentalStaticHeaders: true
+    staticHeaders: true
   }),
   security: {
     csp: {
@@ -34,19 +34,7 @@ export default defineConfig({
 });
 ```
 
-## globalCsp Option (for Large Sites)
-
-For sites with 2,500+ static pages, the per-route CSP can exceed Vercel's 3,300KB config limit. Use `globalCsp`:
-
-```javascript
-adapter: vercel({
-  experimentalStaticHeaders: {
-    globalCsp: true  // Single catch-all route instead of per-page
-  }
-})
-```
-
-This reduces `.vercel/output/config.json` from MB to KB for large sites.
+The adapter writes the CSP of prerendered pages into Vercel's configuration instead of emitting a `<meta>` element. `staticHeaders` is a `boolean` (no object form).
 
 ## Netlify Adapter
 
@@ -54,14 +42,16 @@ This reduces `.vercel/output/config.json` from MB to KB for large sites.
 import netlify from '@astrojs/netlify';
 
 export default defineConfig({
-  adapter: netlify(),
+  adapter: netlify({
+    staticHeaders: true
+  }),
   security: {
     csp: { algorithm: 'SHA-512' }
   }
 });
 ```
 
-Netlify generates `_headers` file with CSP headers per route.
+With `staticHeaders: true`, Netlify saves the CSP headers in its Framework API config; without it, Astro keeps the `<meta>` tag.
 
 ## Verifying Headers in Production
 

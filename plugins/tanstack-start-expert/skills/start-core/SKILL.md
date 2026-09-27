@@ -7,7 +7,7 @@ references: references/project-setup.md, references/project-anatomy.md, referenc
 ---
 
 <objective>
-Covers TanStack Start project setup and anatomy: the tanstackStart() Vite (and Rsbuild) plugin, the getRouter() factory, the root route document shell (HeadContent, Outlet, Scripts), the generated routeTree.gen.ts, tsconfig, and overall src/ layout. Targets @tanstack/react-start v1.166.2.
+Covers TanStack Start project setup and anatomy: the tanstackStart() Vite (and Rsbuild) plugin, the getRouter() factory, the root route document shell (HeadContent, Outlet, Scripts), the generated routeTree.gen.ts, tsconfig, and overall src/ layout. Targets @tanstack/react-start v1.168.58.
 
 States the framework's identity clearly: Start is built on TanStack Router + Vite, not Next.js — no getServerSideProps, no "use server" directives, no app/layout.tsx. Routes live in src/routes/, server-only code uses createServerFn, code is isomorphic by default (loaders run on both server and client), and types are fully inferred (never cast or annotate inferred values).
 
@@ -21,7 +21,7 @@ Do NOT use this skill for server-only vs isomorphic execution boundaries in dept
 TanStack Start is a full-stack React framework built on **TanStack Router + Vite**
 (Rsbuild also supported). It adds SSR, streaming, server functions (type-safe
 RPCs), middleware, and universal deployment. This skill targets
-`@tanstack/react-start` **v1.166.2**.
+`@tanstack/react-start` **v1.168.58**.
 
 > **CRITICAL — Start is NOT Next.js.** No `getServerSideProps`, no `"use server"`
 > directives, no `app/layout.tsx`. Routes live in `src/routes/`; server-only code
