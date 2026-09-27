@@ -2,7 +2,7 @@
 name: ipados
 description: Use when building iPad apps — split views, external keyboard support, multitasking, or Stage Manager — adaptive layouts.
 versions:
-  ipados: 26
+  ipados: 27
 user-invocable: false
 references: references/adaptive-layouts.md, references/keyboard-shortcuts.md, references/multitasking.md
 related-skills: swift-core, swiftui-core, ios, mcp-tools

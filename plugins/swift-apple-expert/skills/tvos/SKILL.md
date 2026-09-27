@@ -2,7 +2,7 @@
 name: tvos
 description: Use when building Apple TV apps — focus-based navigation, Siri Remote interactions, or media/video streaming UI.
 versions:
-  tvos: 26
+  tvos: 27
 user-invocable: false
 references: references/focus-system.md, references/media-playback.md, references/remote-control.md
 related-skills: swift-core, swiftui-core, mcp-tools

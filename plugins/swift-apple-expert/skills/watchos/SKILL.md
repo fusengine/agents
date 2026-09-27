@@ -2,7 +2,7 @@
 name: watchos
 description: Use when building Apple Watch apps — complications, workouts, HealthKit, or iPhone-Watch connectivity.
 versions:
-  watchos: 26
+  watchos: 27
 user-invocable: false
 references: references/complications.md, references/workouts.md, references/watch-connectivity.md
 related-skills: swift-core, swiftui-core, ios, mcp-tools

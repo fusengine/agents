@@ -61,7 +61,7 @@ Expert agent that combines all skills for comprehensive Apple development.
 
 ## Covered Topics
 
-### SwiftUI (iOS 17+/26)
+### SwiftUI (iOS 17+/27)
 - @Observable, @State, @Binding, @Environment
 - NavigationStack, NavigationSplitView
 - Custom ViewModifiers
@@ -91,9 +91,9 @@ Expert agent that combines all skills for comprehensive Apple development.
 ## Version
 
 - **Plugin**: 1.0.0
-- **Swift**: 6.0+
-- **iOS**: 17.0+ (SwiftData), 26.0 (latest features)
-- **Xcode**: 16.0+
+- **Swift**: 6.4
+- **iOS**: 17.0+ (SwiftData), 27.0 (latest features)
+- **Xcode**: 27
 
 ## Author
 
