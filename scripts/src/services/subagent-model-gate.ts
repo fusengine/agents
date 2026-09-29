@@ -19,10 +19,10 @@ import type { Settings } from "./settings-manager";
 
 const KEY = "CLAUDE_CODE_SUBAGENT_MODEL";
 
-/** Options offered by the select prompt; order matters (opus is the default). */
+/** Options offered by the select prompt; order matters (sonnet is the default). */
 export const SUBAGENT_MODEL_OPTIONS = [
-	{ value: "opus", label: "Opus — latest Opus, same model as the plugin agents (recommended)" },
-	{ value: "sonnet", label: "Sonnet — capable executor, lower cost" },
+	{ value: "sonnet", label: "Sonnet — latest Sonnet, same model as the executor plugin agents (recommended)" },
+	{ value: "opus", label: "Opus — strongest reasoning, higher cost" },
 	{ value: "haiku", label: "Haiku — fastest, lowest cost" },
 	{ value: "unset", label: "Inherit the session model (remove the key)" },
 ] as const;
@@ -58,7 +58,7 @@ export async function promptSubagentModel(settings: Settings): Promise<Settings>
 	const choice = await p.select({
 		message: "Default model for sub-agents without an explicit model (CLAUDE_CODE_SUBAGENT_MODEL)?",
 		options: SUBAGENT_MODEL_OPTIONS.map((o) => ({ value: o.value, label: o.label })),
-		initialValue: (isValidCurrent ? (current as ModelChoice) : "opus") satisfies ModelChoice,
+		initialValue: (isValidCurrent ? (current as ModelChoice) : "sonnet") satisfies ModelChoice,
 	});
 	if (p.isCancel(choice)) return settings;
 

@@ -26,8 +26,8 @@ describe("resolveSubagentModelValue", () => {
 });
 
 describe("SUBAGENT_MODEL_OPTIONS", () => {
-	test("opus is the first option (visual default)", () => {
-		expect(SUBAGENT_MODEL_OPTIONS[0]?.value).toBe("opus");
+	test("sonnet is the first option (visual default)", () => {
+		expect(SUBAGENT_MODEL_OPTIONS[0]?.value).toBe("sonnet");
 	});
 
 	test("unset is present as an option", () => {

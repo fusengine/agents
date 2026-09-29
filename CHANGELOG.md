@@ -1,5 +1,9 @@
 # Release Notes
 
+## [1.39.34] - 29-09-2026
+
+- chore(agents): move 28 executor agents from `model: opus` to `model: sonnet` (alias resolving to Sonnet 5.5, Claude Code >= 2.1.284) with `effort: medium` — the 12 code experts (nextjs, react, laravel, swift, astro, tanstack-start, typescript, go, rust, php, tailwindcss, shadcn-ui), research-expert, websearch, explore-codebase, changelog-watcher, sniper-faster, seo-expert and 8 seo-* agents; `cartographer` and `commit-detector` also move to `sonnet` but keep `effort: low`. 10 agents stay on `opus` (commit, brainstorming, sniper, challenger, skill-creator, lessons-compactor, prompt-engineer, design-expert, security-expert, solid-orchestrator). Installer `CLAUDE_CODE_SUBAGENT_MODEL` step (`scripts/src/services/subagent-model-gate.ts`) now defaults to and recommends `sonnet` (first option, initialValue, labels) with tests updated; `docs/getting-started/installation.md` aligned. Supersedes the all-`opus` switch of 1.39.30 for these 28 agents. (fuse-ai-pilot 1.2.43, fuse-astro 1.0.15, fuse-cartographer 1.0.15, fuse-changelog 1.0.17, fuse-commit-pro 1.2.28, fuse-go 1.0.9, fuse-laravel 1.2.10, fuse-nextjs 1.1.26, fuse-php 1.0.9, fuse-react 1.0.23, fuse-rust 1.0.9, fuse-seo 1.0.14, fuse-shadcn-ui 1.0.20, fuse-swift-apple-expert 1.1.23, fuse-tailwindcss 1.1.13, fuse-tanstack-start 1.0.8, fuse-typescript 1.0.9)
+
 ## [1.39.33] - 27-09-2026
 
 - fix(swift-apple-expert): align skill frontmatter versions with Swift 6.4 / iOS 27 — PR #59 updated the Swift skill content but left the `versions:` frontmatter stale; bump ios/ipados/macos/tvos/visionos/watchos 26→27, xcode 26→27, swift 6.2→6.4 across 10 skills, solid-swift objective "iOS 26+"→"iOS 27+", and README SwiftUI/version section to Swift 6.4 / iOS 27.0 / Xcode 27. (fuse-swift-apple-expert 1.1.22)
