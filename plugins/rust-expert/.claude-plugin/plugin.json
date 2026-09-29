@@ -1,6 +1,6 @@
 {
   "name": "fuse-rust",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "Expert Rust 1.98+ (2024 edition) — ownership, error handling, async/tokio, axum backends, cargo tooling, with SOLID principles",
   "author": {
     "name": "Fusengine",
